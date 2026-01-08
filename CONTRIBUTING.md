@@ -1,0 +1,260 @@
+# Contributing to TermQ
+
+Thank you for your interest in contributing to TermQ! This guide will help you get started.
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Development Workflow](#development-workflow)
+- [Project Structure](#project-structure)
+- [Building](#building)
+- [Testing](#testing)
+- [Linting & Formatting](#linting--formatting)
+- [Debugging](#debugging)
+- [Releasing](#releasing)
+- [CI/CD](#cicd)
+- [Makefile Reference](#makefile-reference)
+- [Dependencies](#dependencies)
+
+## Quick Start
+
+```bash
+# Clone and build
+git clone https://github.com/eyelock/termq.git
+cd termq
+make sign
+open TermQ.app
+```
+
+## Development Workflow
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes
+4. Run checks: `make check`
+5. Commit: `git commit -m 'Add amazing feature'`
+6. Push: `git push origin feature/amazing-feature`
+7. Open a Pull Request
+
+## Project Structure
+
+```
+termq/
+├── Package.swift              # Swift Package Manager manifest
+├── VERSION                    # Current version (semver)
+├── Makefile                   # Build, test, lint, release commands
+├── TermQ.app/                 # macOS app bundle
+│   └── Contents/
+│       ├── Info.plist         # App metadata & URL scheme
+│       └── MacOS/             # Binary location
+├── TermQ.entitlements         # Code signing entitlements
+├── Sources/
+│   ├── TermQCore/             # Core library (testable models)
+│   │   ├── Board.swift
+│   │   ├── Column.swift
+│   │   ├── Tag.swift
+│   │   └── TerminalCard.swift
+│   ├── TermQ/                 # Main app
+│   │   ├── TermQApp.swift     # App entry point & URL handling
+│   │   ├── ViewModels/
+│   │   │   ├── BoardViewModel.swift
+│   │   │   └── TerminalSessionManager.swift
+│   │   └── Views/
+│   │       ├── ContentView.swift
+│   │       ├── KanbanBoardView.swift
+│   │       ├── ColumnView.swift
+│   │       ├── TerminalCardView.swift
+│   │       ├── ExpandedTerminalView.swift
+│   │       ├── TerminalHostView.swift
+│   │       ├── CardEditorView.swift
+│   │       └── ColumnEditorView.swift
+│   └── termq-cli/             # CLI tool
+│       └── main.swift
+├── Tests/
+│   └── TermQTests/            # Unit tests
+└── .github/
+    └── workflows/
+        ├── ci.yml             # CI workflow
+        └── release.yml        # Release workflow
+```
+
+## Building
+
+```bash
+make build          # Debug build
+make build-release  # Release build
+make sign           # Build and sign debug app bundle
+make release-app    # Build and sign release app bundle
+make install        # Install CLI to /usr/local/bin
+```
+
+Run the app:
+
+```bash
+open TermQ.app
+# Or directly from build output
+.build/debug/TermQ
+```
+
+## Testing
+
+Tests require full Xcode (not just Command Line Tools):
+
+```bash
+make test
+# Or
+swift test
+```
+
+> **Note:** If you only have Command Line Tools installed, tests will fail locally but will run in CI (GitHub Actions has full Xcode).
+
+## Linting & Formatting
+
+```bash
+# Install tools (first time only)
+make install-swiftlint
+make install-swift-format
+
+# Lint
+make lint           # Check for issues
+make lint-fix       # Auto-fix issues
+
+# Format
+make format         # Format all code
+make format-check   # Check formatting (CI mode)
+
+# Run all checks
+make check
+```
+
+## Debugging
+
+### Console Output
+
+Run the app from terminal to see logs:
+
+```bash
+.build/debug/TermQ
+```
+
+### Xcode Debugging
+
+Generate an Xcode project for full debugging support:
+
+```bash
+swift package generate-xcodeproj
+open TermQ.xcodeproj
+```
+
+Then use Xcode's debugger, breakpoints, and Instruments.
+
+### Key Files for Debugging
+
+| Issue | File to Check |
+|-------|---------------|
+| Terminal sessions | `TerminalSessionManager.swift` |
+| Board persistence | `BoardViewModel.swift` |
+| URL scheme handling | `TermQApp.swift` |
+| Drag & drop | `ColumnView.swift` |
+
+### URL Scheme Testing
+
+Test CLI integration:
+
+```bash
+open "termq://open?name=Test&path=/tmp"
+```
+
+## Releasing
+
+The project uses [semantic versioning](https://semver.org/). The current version is stored in the `VERSION` file.
+
+### Interactive Release
+
+```bash
+make release
+```
+
+This will:
+1. Show current version and ask for release type (major/minor/patch)
+2. Check for uncommitted changes
+3. Update the VERSION file
+4. Commit the version bump
+5. Create a git tag (e.g., `v0.1.0`)
+6. Ask to push (which triggers the release workflow)
+
+### Direct Release
+
+```bash
+make release-patch  # Bug fixes: 0.0.1 → 0.0.2
+make release-minor  # New features: 0.0.1 → 0.1.0
+make release-major  # Breaking changes: 0.0.1 → 1.0.0
+```
+
+### Manual Release
+
+```bash
+echo "1.0.0" > VERSION
+git add VERSION
+git commit -m "Bump version to 1.0.0"
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push origin main
+git push origin v1.0.0
+```
+
+## CI/CD
+
+### Pull Requests & Pushes
+
+The CI workflow (`.github/workflows/ci.yml`) runs on every push and PR:
+
+- Build verification
+- Unit tests
+- SwiftLint
+- Format check
+- Uploads build artifacts
+
+### Releases
+
+The release workflow (`.github/workflows/release.yml`) triggers on version tags (`v*`):
+
+- Builds release binaries
+- Creates signed app bundle
+- Generates checksums
+- Publishes GitHub Release with:
+  - `TermQ-{version}.zip` - App bundle
+  - `tq-cli-{version}.zip` - CLI tool
+  - `checksums.txt` - SHA-256 hashes
+
+## Makefile Reference
+
+Run `make help` for all available targets:
+
+| Target | Description |
+|--------|-------------|
+| `build` | Build debug version |
+| `build-release` | Build release version |
+| `clean` | Clean build artifacts |
+| `test` | Run tests (requires Xcode) |
+| `lint` | Run SwiftLint |
+| `lint-fix` | Run SwiftLint with auto-fix |
+| `format` | Format code with swift-format |
+| `format-check` | Check formatting (CI mode) |
+| `check` | Run all checks |
+| `app` | Build debug app bundle |
+| `sign` | Build and sign debug app |
+| `release-app` | Build and sign release app |
+| `install` | Install CLI to /usr/local/bin |
+| `uninstall` | Remove CLI |
+| `dmg` | Create distributable DMG |
+| `zip` | Create distributable zip |
+| `version` | Show current version |
+| `release` | Interactive release |
+| `release-major` | Release major version |
+| `release-minor` | Release minor version |
+| `release-patch` | Release patch version |
+
+## Dependencies
+
+- [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) - Terminal emulation
+- [swift-argument-parser](https://github.com/apple/swift-argument-parser) - CLI argument parsing

@@ -1,0 +1,88 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Show Swift version
+        run: swift --version
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Build release
+        run: swift build -c release
+
+      - name: Run tests
+        run: swift test
+
+      - name: Create app bundle
+        run: |
+          mkdir -p TermQ.app/Contents/MacOS
+          cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
+
+      - name: Sign app bundle
+        run: codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
+
+      - name: Create zip archive
+        run: |
+          zip -r TermQ-${{ steps.version.outputs.VERSION }}.zip TermQ.app
+          zip -j tq-cli-${{ steps.version.outputs.VERSION }}.zip .build/release/tq
+
+      - name: Generate checksums
+        run: |
+          shasum -a 256 TermQ-${{ steps.version.outputs.VERSION }}.zip > checksums.txt
+          shasum -a 256 tq-cli-${{ steps.version.outputs.VERSION }}.zip >> checksums.txt
+          cat checksums.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: TermQ v${{ steps.version.outputs.VERSION }}
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+          generate_release_notes: true
+          files: |
+            TermQ-${{ steps.version.outputs.VERSION }}.zip
+            tq-cli-${{ steps.version.outputs.VERSION }}.zip
+            checksums.txt
+          body: |
+            ## Installation
+
+            ### macOS App
+            1. Download `TermQ-${{ steps.version.outputs.VERSION }}.zip`
+            2. Unzip and move `TermQ.app` to your Applications folder
+            3. Right-click and select "Open" on first launch (required for unsigned apps)
+
+            ### CLI Tool
+            1. Download `tq-cli-${{ steps.version.outputs.VERSION }}.zip`
+            2. Unzip and move `tq` to `/usr/local/bin/` or another directory in your PATH
+            ```bash
+            unzip tq-cli-${{ steps.version.outputs.VERSION }}.zip
+            sudo mv tq /usr/local/bin/
+            ```
+
+            ### Homebrew (if available)
+            ```bash
+            brew install termq
+            ```
+
+            ## Checksums
+            See `checksums.txt` for SHA-256 checksums of all release artifacts.

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Disable sandboxing - terminal apps need full filesystem access -->
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+
+    <!-- Allow spawning child processes (shells) -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+
+    <!-- Allow loading arbitrary dylibs (for shell plugins, etc.) -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+
+    <!-- Allow JIT compilation (some terminal features need this) -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+
+    <!-- Inherit environment from parent process -->
+    <key>com.apple.security.inherit</key>
+    <true/>
+
+    <!-- Access to all files (when properly signed) -->
+    <key>com.apple.security.files.all</key>
+    <true/>
+
+    <!-- Access to user's home directory -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+
+    <!-- Network access for tools like git, curl, etc. -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <key>com.apple.security.network.server</key>
+    <true/>
+
+    <!-- Access to devices (for USB serial terminals, etc.) -->
+    <key>com.apple.security.device.serial</key>
+    <true/>
+</dict>
+</plist>

@@ -1,0 +1,46 @@
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.playground/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# Build artifacts
+*.o
+*.a
+*.dylib
+*.dSYM/
+
+# App bundles (keep the structure but not the binaries)
+TermQ.app/Contents/MacOS/TermQ
+TermQ.app/Contents/MacOS/tq
+
+# Distribution files
+*.dmg
+*.zip
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Thumbnails
+Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
+
+.claude/settings.local.json
