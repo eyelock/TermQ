@@ -2,6 +2,7 @@
 # Build, test, lint, and manage the project
 
 .PHONY: all build build-release clean test lint format check install uninstall app sign run help
+.PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release
 
 # Version from VERSION file
@@ -87,16 +88,38 @@ release-app: build-release
 	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
 	@echo "Release app bundle created and signed (includes termq CLI)"
 
+# Install app to /Applications
+install: release-app
+	@echo "Installing TermQ.app to /Applications..."
+	@rm -rf /Applications/TermQ.app
+	cp -R TermQ.app /Applications/
+	@echo "TermQ.app installed to /Applications"
+	@echo "You may need to restart any running instance"
+
+# Uninstall app from /Applications
+uninstall:
+	@echo "Removing TermQ.app from /Applications..."
+	rm -rf /Applications/TermQ.app
+	@echo "TermQ.app removed"
+
 # Install CLI tool to /usr/local/bin
-install: build-release
+install-cli: build-release
 	@mkdir -p /usr/local/bin
 	cp .build/release/termq /usr/local/bin/termq
 	@echo "CLI tool 'termq' installed to /usr/local/bin"
 
 # Uninstall CLI tool
-uninstall:
+uninstall-cli:
 	rm -f /usr/local/bin/termq
 	@echo "CLI tool 'termq' removed"
+
+# Install both app and CLI
+install-all: install install-cli
+	@echo "TermQ app and CLI installed"
+
+# Uninstall both app and CLI
+uninstall-all: uninstall uninstall-cli
+	@echo "TermQ app and CLI removed"
 
 # Create a distributable DMG (requires create-dmg tool)
 dmg: release-app
@@ -258,8 +281,12 @@ help:
 	@echo "  sign          - Build and sign debug app bundle"
 	@echo "  run           - Build, sign, and launch the app"
 	@echo "  release-app   - Build and sign release app bundle"
-	@echo "  install       - Install CLI tool to /usr/local/bin"
-	@echo "  uninstall     - Remove CLI tool from /usr/local/bin"
+	@echo "  install       - Build release and install app to /Applications"
+	@echo "  uninstall     - Remove app from /Applications"
+	@echo "  install-cli   - Install CLI tool to /usr/local/bin"
+	@echo "  uninstall-cli - Remove CLI tool from /usr/local/bin"
+	@echo "  install-all   - Install both app and CLI"
+	@echo "  uninstall-all - Remove both app and CLI"
 	@echo "  dmg           - Create distributable DMG"
 	@echo "  zip           - Create distributable zip archive"
 	@echo "  icon          - Generate AppIcon.icns from PNG (make icon PNG=path/to/icon.png)"
