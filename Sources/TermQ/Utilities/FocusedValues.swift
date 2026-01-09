@@ -10,14 +10,16 @@ struct TerminalActions {
     let newColumn: () -> Void
     /// Close/go back from current view
     let goBack: () -> Void
-    /// Toggle pin on current terminal
-    let togglePin: () -> Void
-    /// Switch to next pinned terminal
-    let nextPinnedTerminal: () -> Void
-    /// Switch to previous pinned terminal
-    let previousPinnedTerminal: () -> Void
+    /// Toggle favourite status on current terminal
+    let toggleFavourite: () -> Void
+    /// Switch to next tab
+    let nextTab: () -> Void
+    /// Switch to previous tab
+    let previousTab: () -> Void
     /// Open current directory in native Terminal.app
     let openInTerminalApp: () -> Void
+    /// Close current tab (without deleting the terminal)
+    let closeTab: () -> Void
     /// Delete the current terminal
     let deleteTerminal: () -> Void
 }

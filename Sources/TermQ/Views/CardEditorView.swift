@@ -17,6 +17,7 @@ struct CardEditorView: View {
     @State private var newTagKey: String = ""
     @State private var newTagValue: String = ""
     @State private var switchToTerminal: Bool = true
+    @State private var isFavourite: Bool = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -52,6 +53,12 @@ struct CardEditorView: View {
                         ForEach(columns) { column in
                             Text(column.name).tag(column.id)
                         }
+                    }
+
+                    Toggle("Favourite", isOn: $isFavourite)
+
+                    if isNewCard {
+                        Toggle("Switch to new terminal", isOn: $switchToTerminal)
                     }
                 }
 
@@ -113,11 +120,6 @@ struct CardEditorView: View {
                     }
                 }
 
-                if isNewCard {
-                    Section {
-                        Toggle("Switch to new terminal", isOn: $switchToTerminal)
-                    }
-                }
             }
             .formStyle(.grouped)
             .padding()
@@ -135,6 +137,7 @@ struct CardEditorView: View {
         shellPath = card.shellPath
         selectedColumnId = card.columnId
         tags = card.tags
+        isFavourite = card.isFavourite
     }
 
     private func saveChanges() {
@@ -144,6 +147,7 @@ struct CardEditorView: View {
         card.shellPath = shellPath
         card.columnId = selectedColumnId
         card.tags = tags
+        card.isFavourite = isFavourite
     }
 
     private func addTag() {

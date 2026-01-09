@@ -3,18 +3,20 @@ import TermQCore
 
 struct ExpandedTerminalView: View {
     @ObservedObject var card: TerminalCard
-    let onSelectPinnedCard: (TerminalCard) -> Void
-    let onEditPinnedCard: (TerminalCard) -> Void
-    let onDeletePinnedCard: (TerminalCard) -> Void
-    let pinnedCards: [TerminalCard]
+    let onSelectTab: (TerminalCard) -> Void
+    let onEditTab: (TerminalCard) -> Void
+    let onCloseTab: (TerminalCard) -> Void
+    let onDeleteTab: (TerminalCard) -> Void
+    let onMoveTab: (UUID, Int) -> Void
+    let tabCards: [TerminalCard]
 
     @State private var terminalExited = false
 
     var body: some View {
         VStack(spacing: 0) {
-            // Pinned terminals tab bar (at the very top)
-            if !pinnedCards.isEmpty {
-                pinnedTabsBar
+            // Tab bar (at the very top)
+            if !tabCards.isEmpty {
+                tabBar
                 Divider()
             }
 
@@ -57,27 +59,40 @@ struct ExpandedTerminalView: View {
         }
     }
 
-    // MARK: - Pinned Tabs Bar
+    // MARK: - Tab Bar
 
-    private var pinnedTabsBar: some View {
+    private var tabBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
-                ForEach(pinnedCards) { pinnedCard in
-                    PinnedTabView(
-                        pinnedCard: pinnedCard,
-                        isSelected: pinnedCard.id == card.id,
+                ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
+                    TabItemView(
+                        tabCard: tabCard,
+                        isSelected: tabCard.id == card.id,
                         onSelect: {
-                            if pinnedCard.id != card.id {
-                                onSelectPinnedCard(pinnedCard)
+                            if tabCard.id != card.id {
+                                onSelectTab(tabCard)
                             }
                         },
                         onEdit: {
-                            onEditPinnedCard(pinnedCard)
+                            onEditTab(tabCard)
+                        },
+                        onClose: {
+                            onCloseTab(tabCard)
                         },
                         onDelete: {
-                            onDeletePinnedCard(pinnedCard)
+                            onDeleteTab(tabCard)
                         }
                     )
+                    .draggable(tabCard.id.uuidString)
+                    .dropDestination(for: String.self) { items, _ in
+                        guard let draggedIdString = items.first,
+                            let draggedId = UUID(uuidString: draggedIdString),
+                            draggedId != tabCard.id
+                        else { return false }
+
+                        onMoveTab(draggedId, index)
+                        return true
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -87,13 +102,14 @@ struct ExpandedTerminalView: View {
     }
 }
 
-// MARK: - Pinned Tab View
+// MARK: - Tab Item View
 
-private struct PinnedTabView: View {
-    let pinnedCard: TerminalCard
+private struct TabItemView: View {
+    let tabCard: TerminalCard
     let isSelected: Bool
     let onSelect: () -> Void
     let onEdit: () -> Void
+    let onClose: () -> Void
     let onDelete: () -> Void
 
     @State private var isHovering = false
@@ -107,9 +123,15 @@ private struct PinnedTabView: View {
             // Main tab button
             Button(action: onSelect) {
                 HStack(spacing: 4) {
+                    // Show star for favourites
+                    if tabCard.isFavourite {
+                        Image(systemName: "star.fill")
+                            .font(.caption2)
+                            .foregroundColor(.yellow)
+                    }
                     Image(systemName: "terminal")
                         .font(.caption2)
-                    Text(pinnedCard.title)
+                    Text(tabCard.title)
                         .font(.subheadline)
                         .lineLimit(1)
                 }
@@ -128,15 +150,13 @@ private struct PinnedTabView: View {
                     .foregroundColor(.secondary)
                     .help("Edit terminal")
 
-                    Button {
-                        showDeleteConfirmation = true
-                    } label: {
+                    Button(action: onClose) {
                         Image(systemName: "xmark")
                             .font(.caption2)
                     }
                     .buttonStyle(.plain)
                     .foregroundColor(.secondary)
-                    .help("Close terminal")
+                    .help("Close tab (⌘W)")
                 }
             }
             .frame(width: actionButtonsWidth, alignment: .trailing)
@@ -167,14 +187,26 @@ private struct PinnedTabView: View {
                 isHovering = hovering
             }
         }
-        .help(isSelected ? "Current terminal" : "Switch to \(pinnedCard.title)")
+        .help(isSelected ? "Current terminal" : "Switch to \(tabCard.title)")
+        .contextMenu {
+            Button("Edit...") {
+                onEdit()
+            }
+            Divider()
+            Button("Close Tab") {
+                onClose()
+            }
+            Button("Delete Terminal", role: .destructive) {
+                showDeleteConfirmation = true
+            }
+        }
         .alert("Delete Terminal", isPresented: $showDeleteConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Delete", role: .destructive) {
                 onDelete()
             }
         } message: {
-            Text("Are you sure you want to delete \"\(pinnedCard.title)\"? This cannot be undone.")
+            Text("Are you sure you want to delete \"\(tabCard.title)\"? This cannot be undone.")
         }
     }
 }

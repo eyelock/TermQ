@@ -35,8 +35,8 @@ struct KanbanBoardView: View {
                             onDeleteCard: { card in
                                 viewModel.deleteCard(card)
                             },
-                            onTogglePin: { card in
-                                viewModel.togglePin(card)
+                            onToggleFavourite: { card in
+                                viewModel.toggleFavourite(card)
                             },
                             onEditColumn: {
                                 viewModel.isEditingColumn = column

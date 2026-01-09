@@ -11,6 +11,10 @@ class BoardViewModel: ObservableObject {
     @Published var isEditingColumn: Column?
     @Published var showDeleteConfirmation: Bool = false
 
+    /// Session tabs - ordered list of card IDs currently open as tabs (not persisted)
+    /// Initialized from favourites on startup, then tracks what's open during the session
+    @Published private(set) var sessionTabs: [UUID] = []
+
     private let saveURL: URL
 
     init() {
@@ -29,6 +33,16 @@ class BoardViewModel: ObservableObject {
             self.board = loaded
         } else {
             self.board = Board()
+        }
+
+        // Initialize session tabs from persisted favourite order
+        // Filter to only include existing favourite cards
+        let favouriteIds = Set(board.cards.filter { $0.isFavourite }.map { $0.id })
+        sessionTabs = board.favouriteOrder.filter { favouriteIds.contains($0) }
+
+        // Add any favourites not in the order (e.g., newly favourited while order wasn't saved)
+        for card in board.cards where card.isFavourite && !sessionTabs.contains(card.id) {
+            sessionTabs.append(card.id)
         }
     }
 
@@ -52,6 +66,9 @@ class BoardViewModel: ObservableObject {
     }
 
     func deleteCard(_ card: TerminalCard) {
+        // Remove from session tabs
+        sessionTabs.removeAll { $0 == card.id }
+
         if selectedCard?.id == card.id {
             selectedCard = nil
         }
@@ -62,23 +79,26 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
-    /// Delete a pinned card and stay in focused view if possible
-    /// Selects the tab to the left, or next available pinned tab, or goes to board if none left
-    func deletePinnedCard(_ card: TerminalCard) {
-        let pinned = pinnedCards
-        let cardIndex = pinned.firstIndex(where: { $0.id == card.id })
+    /// Delete a tab card and stay in focused view if possible
+    /// Selects the tab to the left, or next available tab, or goes to board if none left
+    func deleteTabCard(_ card: TerminalCard) {
+        let tabs = tabCards
+        let cardIndex = tabs.firstIndex(where: { $0.id == card.id })
 
         // Determine which card to select after deletion
         var nextCard: TerminalCard?
         if let index = cardIndex {
             // Try to select the tab to the left
             if index > 0 {
-                nextCard = pinned[index - 1]
-            } else if pinned.count > 1 {
+                nextCard = tabs[index - 1]
+            } else if tabs.count > 1 {
                 // If deleting first tab, select the next one
-                nextCard = pinned[1]
+                nextCard = tabs[1]
             }
         }
+
+        // Remove from session tabs
+        sessionTabs.removeAll { $0 == card.id }
 
         // Clean up terminal session
         TerminalSessionManager.shared.removeSession(for: card.id)
@@ -90,14 +110,59 @@ class BoardViewModel: ObservableObject {
         if let next = nextCard, next.id != card.id {
             selectedCard = next
         } else {
-            // Check if there are any remaining pinned cards
-            let remainingPinned = pinnedCards
-            if let first = remainingPinned.first {
+            // Check if there are any remaining tabs
+            if let first = tabCards.first {
                 selectedCard = first
             } else {
                 selectedCard = nil  // Go to board view
             }
         }
+    }
+
+    /// Close a tab without deleting the terminal card
+    /// Removes from session tabs and selects adjacent tab
+    func closeTab(_ card: TerminalCard) {
+        let tabs = tabCards
+        let cardIndex = tabs.firstIndex(where: { $0.id == card.id })
+
+        // Determine which card to select after closing
+        var nextCard: TerminalCard?
+        if let index = cardIndex {
+            if index > 0 {
+                nextCard = tabs[index - 1]
+            } else if tabs.count > 1 {
+                nextCard = tabs[1]
+            }
+        }
+
+        // Remove from session tabs (but don't delete the card)
+        sessionTabs.removeAll { $0 == card.id }
+        objectWillChange.send()
+
+        // Select the next card, or go to board if none left
+        if let next = nextCard, next.id != card.id {
+            selectedCard = next
+        } else if let first = tabCards.first {
+            selectedCard = first
+        } else {
+            selectedCard = nil  // Go to board view
+        }
+    }
+
+    /// Close all tabs that are not favourites
+    func closeUnfavouritedTabs() {
+        let favouriteIds = Set(board.cards.filter { $0.isFavourite }.map { $0.id })
+        sessionTabs = sessionTabs.filter { favouriteIds.contains($0) }
+
+        // If current selection is no longer in tabs, select first tab or go to board
+        if let current = selectedCard, !sessionTabs.contains(current.id) {
+            if let first = tabCards.first {
+                selectedCard = first
+            } else {
+                selectedCard = nil
+            }
+        }
+        objectWillChange.send()
     }
 
     func moveCard(_ card: TerminalCard, to column: Column) {
@@ -107,8 +172,13 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
+    /// Select a card and add it to session tabs if entering focused mode
     func selectCard(_ card: TerminalCard) {
         selectedCard = card
+        // Add to session tabs if not already there
+        if !sessionTabs.contains(card.id) {
+            sessionTabs.append(card.id)
+        }
     }
 
     func deselectCard() {
@@ -145,26 +215,64 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
-    // MARK: - Pinned Cards
+    // MARK: - Favourites
 
-    var pinnedCards: [TerminalCard] {
-        board.cards.filter { $0.isPinned }
+    /// Cards marked as favourites (persisted, restored on app restart)
+    var favouriteCards: [TerminalCard] {
+        board.cards.filter { $0.isFavourite }
     }
 
-    /// Cards to show as tabs - pinned cards plus current card if not pinned
-    var tabCards: [TerminalCard] {
-        var tabs = pinnedCards
-        // Add current card if it's not already pinned
-        if let current = selectedCard, !current.isPinned {
-            tabs.append(current)
+    /// Toggle favourite status for a card
+    func toggleFavourite(_ card: TerminalCard) {
+        card.isFavourite.toggle()
+
+        // If marking as favourite, ensure it's in session tabs
+        if card.isFavourite && !sessionTabs.contains(card.id) {
+            sessionTabs.append(card.id)
         }
-        return tabs
-    }
 
-    func togglePin(_ card: TerminalCard) {
-        card.isPinned.toggle()
+        // Update persisted favourite order
+        updateFavouriteOrder()
+
         objectWillChange.send()
         save()
+    }
+
+    // MARK: - Session Tabs
+
+    /// Cards to show as tabs - based on sessionTabs order
+    var tabCards: [TerminalCard] {
+        sessionTabs.compactMap { id in
+            board.cards.first { $0.id == id }
+        }
+    }
+
+    /// Move a tab from one position to another
+    func moveTab(fromIndex: Int, toIndex: Int) {
+        guard fromIndex != toIndex,
+            fromIndex >= 0, fromIndex < sessionTabs.count,
+            toIndex >= 0, toIndex < sessionTabs.count
+        else { return }
+
+        let movedId = sessionTabs.remove(at: fromIndex)
+        sessionTabs.insert(movedId, at: toIndex)
+
+        updateFavouriteOrder()
+        objectWillChange.send()
+        save()
+    }
+
+    /// Move a tab by card ID to a new index
+    func moveTab(_ cardId: UUID, toIndex: Int) {
+        guard let fromIndex = sessionTabs.firstIndex(of: cardId) else { return }
+        moveTab(fromIndex: fromIndex, toIndex: toIndex)
+    }
+
+    /// Update the persisted favourite order from current session tabs
+    private func updateFavouriteOrder() {
+        // Only persist the order of favourited tabs
+        let favouriteIds = Set(board.cards.filter { $0.isFavourite }.map { $0.id })
+        board.favouriteOrder = sessionTabs.filter { favouriteIds.contains($0) }
     }
 
     // MARK: - Quick Actions
@@ -201,44 +309,42 @@ class BoardViewModel: ObservableObject {
         let card = board.addCard(to: column, title: title)
         card.workingDirectory = workingDirectory
 
-        // If created from focused view, auto-pin so it appears as a tab
-        if selectedCard != nil {
-            card.isPinned = true
-        }
+        // Add to session tabs (don't auto-favourite)
+        sessionTabs.append(card.id)
 
         objectWillChange.send()
         save()
 
         // Switch to the new terminal immediately
-        selectCard(card)
+        selectedCard = card
     }
 
-    /// Switch to the next pinned terminal (cycles through)
-    func nextPinnedTerminal() {
-        let pinned = pinnedCards
-        guard !pinned.isEmpty else { return }
+    /// Switch to the next tab (cycles through)
+    func nextTab() {
+        let tabs = tabCards
+        guard !tabs.isEmpty else { return }
 
         if let current = selectedCard,
-            let currentIndex = pinned.firstIndex(where: { $0.id == current.id })
+            let currentIndex = tabs.firstIndex(where: { $0.id == current.id })
         {
-            let nextIndex = (currentIndex + 1) % pinned.count
-            selectCard(pinned[nextIndex])
-        } else if let first = pinned.first {
+            let nextIndex = (currentIndex + 1) % tabs.count
+            selectedCard = tabs[nextIndex]
+        } else if let first = tabs.first {
             selectCard(first)
         }
     }
 
-    /// Switch to the previous pinned terminal (cycles through)
-    func previousPinnedTerminal() {
-        let pinned = pinnedCards
-        guard !pinned.isEmpty else { return }
+    /// Switch to the previous tab (cycles through)
+    func previousTab() {
+        let tabs = tabCards
+        guard !tabs.isEmpty else { return }
 
         if let current = selectedCard,
-            let currentIndex = pinned.firstIndex(where: { $0.id == current.id })
+            let currentIndex = tabs.firstIndex(where: { $0.id == current.id })
         {
-            let prevIndex = currentIndex == 0 ? pinned.count - 1 : currentIndex - 1
-            selectCard(pinned[prevIndex])
-        } else if let last = pinned.last {
+            let prevIndex = currentIndex == 0 ? tabs.count - 1 : currentIndex - 1
+            selectedCard = tabs[prevIndex]
+        } else if let last = tabs.last {
             selectCard(last)
         }
     }

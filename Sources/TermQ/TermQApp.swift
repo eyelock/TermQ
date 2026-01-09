@@ -102,18 +102,18 @@ struct TermQApp: App {
 
                 Divider()
 
-                Button("Toggle Pin") {
-                    terminalActions?.togglePin()
+                Button("Toggle Favourite") {
+                    terminalActions?.toggleFavourite()
                 }
                 .keyboardShortcut("d", modifiers: .command)
 
-                Button("Next Pinned Terminal") {
-                    terminalActions?.nextPinnedTerminal()
+                Button("Next Tab") {
+                    terminalActions?.nextTab()
                 }
                 .keyboardShortcut("]", modifiers: .command)
 
-                Button("Previous Pinned Terminal") {
-                    terminalActions?.previousPinnedTerminal()
+                Button("Previous Tab") {
+                    terminalActions?.previousTab()
                 }
                 .keyboardShortcut("[", modifiers: .command)
 
@@ -123,6 +123,11 @@ struct TermQApp: App {
                     terminalActions?.openInTerminalApp()
                 }
                 .keyboardShortcut("t", modifiers: [.command, .shift])
+
+                Button("Close Tab") {
+                    terminalActions?.closeTab()
+                }
+                .keyboardShortcut("w", modifiers: .command)
 
                 Button("Delete Terminal") {
                     terminalActions?.deleteTerminal()

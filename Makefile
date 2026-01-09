@@ -10,6 +10,8 @@ VERSION := $(shell cat VERSION 2>/dev/null || echo "0.0.0")
 MAJOR := $(shell echo $(VERSION) | cut -d. -f1)
 MINOR := $(shell echo $(VERSION) | cut -d. -f2)
 PATCH := $(shell echo $(VERSION) | cut -d. -f3)
+# Git commit SHA (7 chars)
+GIT_SHA := $(shell git rev-parse --short=7 HEAD 2>/dev/null || echo "unknown")
 
 # Default target
 all: build
@@ -65,8 +67,11 @@ app: build
 	cp .build/debug/TermQ TermQDebug.app/Contents/MacOS/TermQ
 	cp .build/debug/termq TermQDebug.app/Contents/Resources/termq
 	cp TermQ.app/Contents/Info-Debug.plist TermQDebug.app/Contents/Info.plist
+	@# Update version info in Info.plist
+	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQDebug.app/Contents/Info.plist
+	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" TermQDebug.app/Contents/Info.plist
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQDebug.app/Contents/Resources/AppIcon.icns; fi
-	@echo "Debug app bundle updated at TermQDebug.app (includes termq CLI)"
+	@echo "Debug app bundle updated at TermQDebug.app ($(VERSION) build $(GIT_SHA))"
 
 # Sign the debug app bundle with entitlements
 sign: app
@@ -84,9 +89,12 @@ release-app: build-release
 	@mkdir -p TermQ.app/Contents/Resources
 	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
 	cp .build/release/termq TermQ.app/Contents/Resources/termq
+	@# Update version info in Info.plist
+	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQ.app/Contents/Info.plist
+	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" TermQ.app/Contents/Info.plist
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
 	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
-	@echo "Release app bundle created and signed (includes termq CLI)"
+	@echo "Release app bundle created and signed ($(VERSION) build $(GIT_SHA))"
 
 # Install app to /Applications
 install: release-app

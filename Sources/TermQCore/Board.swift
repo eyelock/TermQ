@@ -4,26 +4,31 @@ import Foundation
 public class Board: ObservableObject, Codable {
     @Published public var columns: [Column]
     @Published public var cards: [TerminalCard]
+    /// Persisted order of favourite tabs
+    @Published public var favouriteOrder: [UUID]
 
     enum CodingKeys: String, CodingKey {
-        case columns, cards
+        case columns, cards, favouriteOrder
     }
 
-    public init(columns: [Column] = Column.defaults, cards: [TerminalCard] = []) {
+    public init(columns: [Column] = Column.defaults, cards: [TerminalCard] = [], favouriteOrder: [UUID] = []) {
         self.columns = columns
         self.cards = cards
+        self.favouriteOrder = favouriteOrder
     }
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         columns = try container.decode([Column].self, forKey: .columns)
         cards = try container.decode([TerminalCard].self, forKey: .cards)
+        favouriteOrder = try container.decodeIfPresent([UUID].self, forKey: .favouriteOrder) ?? []
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(columns, forKey: .columns)
         try container.encode(cards, forKey: .cards)
+        try container.encode(favouriteOrder, forKey: .favouriteOrder)
     }
 
     public func cards(for column: Column) -> [TerminalCard] {

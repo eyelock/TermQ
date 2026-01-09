@@ -6,7 +6,7 @@ struct TerminalCardView: View {
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
-    let onTogglePin: () -> Void
+    let onToggleFavourite: () -> Void
 
     @State private var isHovering = false
     @State private var showDeleteConfirmation = false
@@ -25,15 +25,15 @@ struct TerminalCardView: View {
                 Spacer()
 
                 Button {
-                    onTogglePin()
+                    onToggleFavourite()
                 } label: {
-                    Image(systemName: card.isPinned ? "star.fill" : "star")
-                        .foregroundColor(card.isPinned ? .yellow : .secondary.opacity(0.5))
+                    Image(systemName: card.isFavourite ? "star.fill" : "star")
+                        .foregroundColor(card.isFavourite ? .yellow : .secondary.opacity(0.5))
                         .font(.caption)
                 }
                 .buttonStyle(.plain)
-                .opacity(isHovering || card.isPinned ? 1 : 0)
-                .help(card.isPinned ? "Unpin terminal" : "Pin terminal")
+                .opacity(isHovering || card.isFavourite ? 1 : 0)
+                .help(card.isFavourite ? "Remove from favourites" : "Add to favourites")
 
                 if card.isRunning {
                     Circle()
@@ -92,8 +92,8 @@ struct TerminalCardView: View {
                 onEdit()
             }
             Divider()
-            Button(card.isPinned ? "Unpin" : "Pin") {
-                onTogglePin()
+            Button(card.isFavourite ? "Remove from Favourites" : "Add to Favourites") {
+                onToggleFavourite()
             }
             Divider()
             Button("Delete", role: .destructive) {

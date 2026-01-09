@@ -12,16 +12,22 @@ struct ContentView: View {
                 // Expanded terminal view
                 ExpandedTerminalView(
                     card: selectedCard,
-                    onSelectPinnedCard: { card in
+                    onSelectTab: { card in
                         viewModel.selectCard(card)
                     },
-                    onEditPinnedCard: { card in
+                    onEditTab: { card in
                         viewModel.isEditingCard = card
                     },
-                    onDeletePinnedCard: { card in
-                        viewModel.deletePinnedCard(card)
+                    onCloseTab: { card in
+                        viewModel.closeTab(card)
                     },
-                    pinnedCards: viewModel.tabCards
+                    onDeleteTab: { card in
+                        viewModel.deleteTabCard(card)
+                    },
+                    onMoveTab: { cardId, toIndex in
+                        viewModel.moveTab(cardId, toIndex: toIndex)
+                    },
+                    tabCards: viewModel.tabCards
                 )
             } else {
                 // Kanban board view
@@ -77,7 +83,7 @@ struct ContentView: View {
             // Focused view controls
             ToolbarItemGroup(placement: .primaryAction) {
                 if let selectedCard = viewModel.selectedCard {
-                    // Move to column menu (Fix #4: pre-select current column)
+                    // Move to column menu
                     Menu {
                         ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
                             Button {
@@ -94,7 +100,8 @@ struct ContentView: View {
                         }
                     } label: {
                         // Show current column name in menu label
-                        if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId }) {
+                        if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId })
+                        {
                             HStack(spacing: 4) {
                                 Circle()
                                     .fill(Color(hex: currentColumn.color) ?? .gray)
@@ -111,7 +118,8 @@ struct ContentView: View {
 
                     Button {
                         // Use tracked current directory if available, otherwise fall back to card's starting directory
-                        let currentDir = TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
+                        let currentDir =
+                            TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
                             ?? selectedCard.workingDirectory
                         launchNativeTerminal(at: currentDir)
                     } label: {
@@ -131,15 +139,15 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "pencil")
                     }
-                    .help("Edit terminal details (⌘E)")
+                    .help("Edit terminal details")
 
                     Button {
-                        viewModel.togglePin(selectedCard)
+                        viewModel.toggleFavourite(selectedCard)
                     } label: {
-                        Image(systemName: selectedCard.isPinned ? "star.fill" : "star")
+                        Image(systemName: selectedCard.isFavourite ? "star.fill" : "star")
                     }
-                    .foregroundColor(selectedCard.isPinned ? .yellow : nil)
-                    .help(selectedCard.isPinned ? "Unpin terminal (⌘P)" : "Pin terminal (⌘P)")
+                    .foregroundColor(selectedCard.isFavourite ? .yellow : nil)
+                    .help(selectedCard.isFavourite ? "Remove from favourites (⌘D)" : "Add to favourites (⌘D)")
 
                     Button {
                         viewModel.showDeleteConfirmation = true
@@ -177,7 +185,7 @@ struct ContentView: View {
             Button("Cancel", role: .cancel) {}
             Button("Delete", role: .destructive) {
                 if let selectedCard = viewModel.selectedCard {
-                    viewModel.deleteCard(selectedCard)
+                    viewModel.deleteTabCard(selectedCard)
                 }
             }
         } message: {
@@ -201,18 +209,24 @@ struct ContentView: View {
             },
             newColumn: { viewModel.addColumn() },
             goBack: { viewModel.deselectCard() },
-            togglePin: {
+            toggleFavourite: {
                 if let card = viewModel.selectedCard {
-                    viewModel.togglePin(card)
+                    viewModel.toggleFavourite(card)
                 }
             },
-            nextPinnedTerminal: { viewModel.nextPinnedTerminal() },
-            previousPinnedTerminal: { viewModel.previousPinnedTerminal() },
+            nextTab: { viewModel.nextTab() },
+            previousTab: { viewModel.previousTab() },
             openInTerminalApp: {
                 if let selectedCard = viewModel.selectedCard {
-                    let currentDir = TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
+                    let currentDir =
+                        TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
                         ?? selectedCard.workingDirectory
                     launchNativeTerminal(at: currentDir)
+                }
+            },
+            closeTab: {
+                if let card = viewModel.selectedCard {
+                    viewModel.closeTab(card)
                 }
             },
             deleteTerminal: {

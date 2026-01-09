@@ -58,10 +58,10 @@ class TerminalContainerView: NSView {
     private func handleScrollEvent(_ event: NSEvent) -> NSEvent? {
         // Only handle if the scroll is in our terminal view
         guard let eventWindow = event.window,
-              eventWindow == self.window,
-              let locationInWindow = event.window?.mouseLocationOutsideOfEventStream,
-              let hitView = eventWindow.contentView?.hitTest(locationInWindow),
-              hitView === terminal || hitView.isDescendant(of: terminal)
+            eventWindow == self.window,
+            let locationInWindow = event.window?.mouseLocationOutsideOfEventStream,
+            let hitView = eventWindow.contentView?.hitTest(locationInWindow),
+            hitView === terminal || hitView.isDescendant(of: terminal)
         else {
             return event  // Not our event, pass through
         }
