@@ -7,6 +7,7 @@ class BoardViewModel: ObservableObject {
     @Published var board: Board
     @Published var selectedCard: TerminalCard?
     @Published var isEditingCard: TerminalCard?
+    @Published var isEditingNewCard: Bool = false
     @Published var isEditingColumn: Column?
 
     private let saveURL: URL
@@ -45,6 +46,7 @@ class BoardViewModel: ObservableObject {
         save()
 
         // Open it for editing
+        isEditingNewCard = true
         isEditingCard = card
     }
 

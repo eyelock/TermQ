@@ -44,11 +44,17 @@ struct ContentView: View {
             CardEditorView(
                 card: card,
                 columns: viewModel.board.columns,
-                onSave: {
+                isNewCard: viewModel.isEditingNewCard,
+                onSave: { switchToTerminal in
                     viewModel.updateCard(card)
+                    if switchToTerminal {
+                        viewModel.selectCard(card)
+                    }
+                    viewModel.isEditingNewCard = false
                     viewModel.isEditingCard = nil
                 },
                 onCancel: {
+                    viewModel.isEditingNewCard = false
                     viewModel.isEditingCard = nil
                 }
             )
