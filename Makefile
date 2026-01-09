@@ -89,7 +89,8 @@ release-app: build-release
 	@mkdir -p TermQ.app/Contents/Resources
 	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
 	cp .build/release/termq TermQ.app/Contents/Resources/termq
-	@# Update version info in Info.plist
+	@# Copy template and update version info in Info.plist
+	cp Info.plist.template TermQ.app/Contents/Info.plist
 	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQ.app/Contents/Info.plist
 	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" TermQ.app/Contents/Info.plist
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi

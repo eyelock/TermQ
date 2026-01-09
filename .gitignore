@@ -21,6 +21,7 @@ TermQ.app/Contents/MacOS/TermQ
 TermQ.app/Contents/MacOS/tq
 TermQ.app/Contents/Resources/termq
 TermQ.app/Contents/_CodeSignature/
+TermQ.app/Contents/Info.plist
 
 # Debug app bundle (entirely generated)
 TermQDebug.app/
