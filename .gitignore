@@ -19,6 +19,7 @@ Package.resolved
 # App bundles (keep the structure but not the binaries)
 TermQ.app/Contents/MacOS/TermQ
 TermQ.app/Contents/MacOS/tq
+TermQ.app/Contents/Resources/termq
 
 # Distribution files
 *.dmg
