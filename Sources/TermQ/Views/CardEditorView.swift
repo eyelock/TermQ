@@ -4,7 +4,8 @@ import TermQCore
 struct CardEditorView: View {
     @ObservedObject var card: TerminalCard
     let columns: [Column]
-    let onSave: () -> Void
+    let isNewCard: Bool
+    let onSave: (_ switchToTerminal: Bool) -> Void
     let onCancel: () -> Void
 
     @State private var title: String = ""
@@ -15,12 +16,13 @@ struct CardEditorView: View {
     @State private var tags: [Tag] = []
     @State private var newTagKey: String = ""
     @State private var newTagValue: String = ""
+    @State private var switchToTerminal: Bool = true
 
     var body: some View {
         VStack(spacing: 0) {
             // Header
             HStack {
-                Text("Edit Terminal")
+                Text(isNewCard ? "New Terminal" : "Edit Terminal")
                     .font(.headline)
                 Spacer()
                 Button("Cancel") {
@@ -30,7 +32,7 @@ struct CardEditorView: View {
 
                 Button("Save") {
                     saveChanges()
-                    onSave()
+                    onSave(isNewCard && switchToTerminal)
                 }
                 .keyboardShortcut(.defaultAction)
                 .buttonStyle(.borderedProminent)
@@ -108,6 +110,12 @@ struct CardEditorView: View {
                     }
                     .onSubmit {
                         addTag()
+                    }
+                }
+
+                if isNewCard {
+                    Section {
+                        Toggle("Switch to new terminal", isOn: $switchToTerminal)
                     }
                 }
             }
