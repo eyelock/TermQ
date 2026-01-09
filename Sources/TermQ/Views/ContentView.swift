@@ -117,7 +117,7 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "apple.terminal")
                     }
-                    .help("Open in Terminal.app")
+                    .help("Open in Terminal.app (⌘⇧T)")
 
                     Button {
                         viewModel.quickNewTerminal()
@@ -147,7 +147,7 @@ struct ContentView: View {
                         Image(systemName: "trash")
                     }
                     .foregroundColor(.red)
-                    .help("Delete terminal")
+                    .help("Delete terminal (⌘⌫)")
                 } else {
                     // Board view controls
                     Button {
