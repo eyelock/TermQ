@@ -10,12 +10,13 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     @Published public var orderIndex: Int
     @Published public var shellPath: String
     @Published public var workingDirectory: String
+    @Published public var isPinned: Bool
 
     // Runtime state (not persisted)
     public var isRunning: Bool = false
 
     enum CodingKeys: String, CodingKey {
-        case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
+        case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory, isPinned
     }
 
     public init(
@@ -26,7 +27,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         columnId: UUID,
         orderIndex: Int = 0,
         shellPath: String = "/bin/zsh",
-        workingDirectory: String = NSHomeDirectory()
+        workingDirectory: String = NSHomeDirectory(),
+        isPinned: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -36,6 +38,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.orderIndex = orderIndex
         self.shellPath = shellPath
         self.workingDirectory = workingDirectory
+        self.isPinned = isPinned
     }
 
     public required init(from decoder: Decoder) throws {
@@ -48,6 +51,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         orderIndex = try container.decode(Int.self, forKey: .orderIndex)
         shellPath = try container.decode(String.self, forKey: .shellPath)
         workingDirectory = try container.decode(String.self, forKey: .workingDirectory)
+        isPinned = try container.decodeIfPresent(Bool.self, forKey: .isPinned) ?? false
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -60,6 +64,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(orderIndex, forKey: .orderIndex)
         try container.encode(shellPath, forKey: .shellPath)
         try container.encode(workingDirectory, forKey: .workingDirectory)
+        try container.encode(isPinned, forKey: .isPinned)
     }
 }
 

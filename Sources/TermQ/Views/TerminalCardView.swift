@@ -23,6 +23,12 @@ struct TerminalCardView: View {
 
                 Spacer()
 
+                if card.isPinned {
+                    Image(systemName: "star.fill")
+                        .foregroundColor(.yellow)
+                        .font(.caption)
+                }
+
                 if card.isRunning {
                     Circle()
                         .fill(.green)

@@ -23,7 +23,14 @@ struct ContentView: View {
                     onMoveToColumn: { column in
                         viewModel.moveCard(selectedCard, to: column)
                     },
-                    columns: viewModel.board.columns
+                    onTogglePin: {
+                        viewModel.togglePin(selectedCard)
+                    },
+                    onSelectPinnedCard: { card in
+                        viewModel.selectCard(card)
+                    },
+                    columns: viewModel.board.columns,
+                    pinnedCards: viewModel.pinnedCards
                 )
             } else {
                 // Kanban board view

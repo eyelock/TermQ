@@ -103,4 +103,16 @@ class BoardViewModel: ObservableObject {
         objectWillChange.send()
         save()
     }
+
+    // MARK: - Pinned Cards
+
+    var pinnedCards: [TerminalCard] {
+        board.cards.filter { $0.isPinned }
+    }
+
+    func togglePin(_ card: TerminalCard) {
+        card.isPinned.toggle()
+        objectWillChange.send()
+        save()
+    }
 }

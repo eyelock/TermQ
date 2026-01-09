@@ -7,13 +7,22 @@ struct ExpandedTerminalView: View {
     let onEdit: () -> Void
     let onDelete: () -> Void
     let onMoveToColumn: (Column) -> Void
+    let onTogglePin: () -> Void
+    let onSelectPinnedCard: (TerminalCard) -> Void
     let columns: [Column]
+    let pinnedCards: [TerminalCard]
 
     @State private var terminalExited = false
     @State private var showDeleteConfirmation = false
 
     var body: some View {
         VStack(spacing: 0) {
+            // Pinned terminals tab bar (at the very top)
+            if !pinnedCards.isEmpty {
+                pinnedTabsBar
+                Divider()
+            }
+
             // Header bar
             HStack {
                 Button(action: onClose) {
@@ -86,6 +95,13 @@ struct ExpandedTerminalView: View {
                 .buttonStyle(.plain)
                 .help("Edit terminal details")
 
+                Button(action: onTogglePin) {
+                    Image(systemName: card.isPinned ? "star.fill" : "star")
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(card.isPinned ? .yellow : .secondary)
+                .help(card.isPinned ? "Unpin terminal" : "Pin terminal")
+
                 Button {
                     showDeleteConfirmation = true
                 } label: {
@@ -134,5 +150,52 @@ struct ExpandedTerminalView: View {
                 )
             }
         }
+    }
+
+    // MARK: - Pinned Tabs Bar
+
+    private var pinnedTabsBar: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 4) {
+                ForEach(pinnedCards) { pinnedCard in
+                    Button {
+                        if pinnedCard.id != card.id {
+                            onSelectPinnedCard(pinnedCard)
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "terminal")
+                                .font(.caption)
+                            Text(pinnedCard.title)
+                                .lineLimit(1)
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(
+                                    pinnedCard.id == card.id
+                                        ? Color.accentColor.opacity(0.2)
+                                        : Color.secondary.opacity(0.1)
+                                )
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(
+                                    pinnedCard.id == card.id
+                                        ? Color.accentColor
+                                        : Color.clear,
+                                    lineWidth: 1
+                                )
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundColor(pinnedCard.id == card.id ? .accentColor : .primary)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+        }
+        .background(Color(nsColor: .windowBackgroundColor).opacity(0.95))
     }
 }
