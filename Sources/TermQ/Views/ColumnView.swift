@@ -8,6 +8,7 @@ struct ColumnView: View {
     let onSelectCard: (TerminalCard) -> Void
     let onEditCard: (TerminalCard) -> Void
     let onDeleteCard: (TerminalCard) -> Void
+    let onTogglePin: (TerminalCard) -> Void
     let onEditColumn: () -> Void
     let onDeleteColumn: () -> Void
     let onDropCardId: (String) -> Void  // Takes card ID string
@@ -74,7 +75,8 @@ struct ColumnView: View {
                             card: card,
                             onSelect: { onSelectCard(card) },
                             onEdit: { onEditCard(card) },
-                            onDelete: { onDeleteCard(card) }
+                            onDelete: { onDeleteCard(card) },
+                            onTogglePin: { onTogglePin(card) }
                         )
                         .draggable(card.id.uuidString)
                     }

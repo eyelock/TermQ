@@ -155,6 +155,7 @@ struct ExpandedTerminalView: View {
                         terminalExited = true
                     }
                 )
+                .id(card.id)  // Force view recreation when switching terminals
             }
         }
     }
