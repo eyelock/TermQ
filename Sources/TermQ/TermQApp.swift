@@ -116,6 +116,18 @@ struct TermQApp: App {
                     terminalActions?.previousPinnedTerminal()
                 }
                 .keyboardShortcut("[", modifiers: .command)
+
+                Divider()
+
+                Button("Open in Terminal.app") {
+                    terminalActions?.openInTerminalApp()
+                }
+                .keyboardShortcut("t", modifiers: [.command, .shift])
+
+                Button("Delete Terminal") {
+                    terminalActions?.deleteTerminal()
+                }
+                .keyboardShortcut(.delete, modifiers: .command)
             }
         }
         .handlesExternalEvents(matching: ["termq"])

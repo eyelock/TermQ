@@ -207,7 +207,19 @@ struct ContentView: View {
                 }
             },
             nextPinnedTerminal: { viewModel.nextPinnedTerminal() },
-            previousPinnedTerminal: { viewModel.previousPinnedTerminal() }
+            previousPinnedTerminal: { viewModel.previousPinnedTerminal() },
+            openInTerminalApp: {
+                if let selectedCard = viewModel.selectedCard {
+                    let currentDir = TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
+                        ?? selectedCard.workingDirectory
+                    launchNativeTerminal(at: currentDir)
+                }
+            },
+            deleteTerminal: {
+                if viewModel.selectedCard != nil {
+                    viewModel.showDeleteConfirmation = true
+                }
+            }
         )
     }
 

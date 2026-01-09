@@ -16,6 +16,10 @@ struct TerminalActions {
     let nextPinnedTerminal: () -> Void
     /// Switch to previous pinned terminal
     let previousPinnedTerminal: () -> Void
+    /// Open current directory in native Terminal.app
+    let openInTerminalApp: () -> Void
+    /// Delete the current terminal
+    let deleteTerminal: () -> Void
 }
 
 struct TerminalActionsKey: FocusedValueKey {
