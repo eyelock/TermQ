@@ -77,6 +77,11 @@ class TerminalSessionManager: ObservableObject {
         return sessions[cardId]?.isRunning ?? false
     }
 
+    /// Check if a session exists at all (regardless of running state)
+    func sessionExists(for cardId: UUID) -> Bool {
+        return sessions[cardId] != nil
+    }
+
     /// Mark a session as terminated
     func markSessionTerminated(cardId: UUID) {
         sessions[cardId]?.isRunning = false
@@ -93,24 +98,30 @@ class TerminalSessionManager: ObservableObject {
     }
 
     /// Remove a session (when card is deleted)
+    /// Important: We remove from dictionary FIRST, then terminate.
+    /// This ensures processTerminated callback won't fire onExit for a deleted tab.
     func removeSession(for cardId: UUID) {
-        if let session = sessions[cardId] {
-            // Terminate the process if still running
-            if session.isRunning {
-                session.terminal.send(txt: "exit\n")
-            }
+        guard let session = sessions.removeValue(forKey: cardId) else { return }
+
+        // Terminate the process if still running
+        // The session is already removed from the dictionary, so when processTerminated
+        // fires, it will see the session is gone and skip the onExit callback.
+        if session.isRunning {
+            session.terminal.send(txt: "exit\n")
         }
-        sessions.removeValue(forKey: cardId)
     }
 
     /// Clean up all sessions
     func removeAllSessions() {
-        for (_, session) in sessions {
+        // Remove all sessions from dictionary first, then terminate
+        let allSessions = sessions
+        sessions.removeAll()
+
+        for (_, session) in allSessions {
             if session.isRunning {
                 session.terminal.send(txt: "exit\n")
             }
         }
-        sessions.removeAll()
     }
 
     private func escapeShellArg(_ arg: String) -> String {
@@ -150,6 +161,11 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
 
     func processTerminated(source: TerminalView, exitCode: Int32?) {
         Task { @MainActor in
+            // Only call onExit if the session still exists in the manager.
+            // If it was intentionally removed (via removeSession), we skip the callback
+            // to avoid showing "Terminal session ended" on a different tab.
+            guard self.manager?.sessionExists(for: self.cardId) == true else { return }
+
             self.manager?.markSessionTerminated(cardId: self.cardId)
             self.onExit()
         }

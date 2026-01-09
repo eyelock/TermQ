@@ -45,6 +45,16 @@ struct ExpandedTerminalView: View {
                 .id(card.id)  // Force view recreation when switching terminals
             }
         }
+        .onChange(of: card.id) { _, _ in
+            // Reset exit state when switching to a different terminal
+            // Only show exit overlay if a session exists AND has terminated
+            // If no session exists yet, let TerminalHostView create one
+            if TerminalSessionManager.shared.sessionExists(for: card.id) {
+                terminalExited = !TerminalSessionManager.shared.hasActiveSession(for: card.id)
+            } else {
+                terminalExited = false
+            }
+        }
     }
 
     // MARK: - Pinned Tabs Bar

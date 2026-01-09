@@ -57,24 +57,25 @@ format-check: install-swift-format
 # Run all checks (build, lint, format-check, test)
 check: build lint format-check test
 
-# Build the macOS app bundle
+# Build the macOS debug app bundle (separate from release)
 app: build
-	@mkdir -p TermQ.app/Contents/MacOS
-	@mkdir -p TermQ.app/Contents/Resources
-	cp .build/debug/TermQ TermQ.app/Contents/MacOS/TermQ
-	cp .build/debug/termq TermQ.app/Contents/Resources/termq
-	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
-	@echo "App bundle updated at TermQ.app (includes termq CLI)"
+	@mkdir -p TermQDebug.app/Contents/MacOS
+	@mkdir -p TermQDebug.app/Contents/Resources
+	cp .build/debug/TermQ TermQDebug.app/Contents/MacOS/TermQ
+	cp .build/debug/termq TermQDebug.app/Contents/Resources/termq
+	cp TermQ.app/Contents/Info-Debug.plist TermQDebug.app/Contents/Info.plist
+	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQDebug.app/Contents/Resources/AppIcon.icns; fi
+	@echo "Debug app bundle updated at TermQDebug.app (includes termq CLI)"
 
-# Sign the app bundle with entitlements
+# Sign the debug app bundle with entitlements
 sign: app
-	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
-	@echo "App signed successfully"
+	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQDebug.app
+	@echo "Debug app signed successfully"
 
-# Build, sign, and run the app
+# Build, sign, and run the debug app
 run: sign
-	@echo "Launching TermQ..."
-	@open TermQ.app
+	@echo "Launching TermQ Debug..."
+	@open TermQDebug.app
 
 # Build release app bundle
 release-app: build-release

@@ -22,6 +22,9 @@ TermQ.app/Contents/MacOS/tq
 TermQ.app/Contents/Resources/termq
 TermQ.app/Contents/_CodeSignature/
 
+# Debug app bundle (entirely generated)
+TermQDebug.app/
+
 # Distribution files
 *.dmg
 *.zip
