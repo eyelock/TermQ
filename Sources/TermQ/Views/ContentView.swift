@@ -99,6 +99,27 @@ struct ContentView: View {
             }
         }
         .navigationTitle(viewModel.selectedCard?.title ?? "TermQ")
+        .focusedSceneValue(\.terminalActions, terminalActions)
+    }
+
+    private var terminalActions: TerminalActions {
+        TerminalActions(
+            quickNewTerminal: { viewModel.quickNewTerminal() },
+            newTerminalWithDialog: {
+                if let firstColumn = viewModel.board.columns.first {
+                    viewModel.addTerminal(to: firstColumn)
+                }
+            },
+            newColumn: { viewModel.addColumn() },
+            goBack: { viewModel.deselectCard() },
+            togglePin: {
+                if let card = viewModel.selectedCard {
+                    viewModel.togglePin(card)
+                }
+            },
+            nextPinnedTerminal: { viewModel.nextPinnedTerminal() },
+            previousPinnedTerminal: { viewModel.previousPinnedTerminal() }
+        )
     }
 
     private func handlePendingTerminal() {

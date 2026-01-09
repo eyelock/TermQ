@@ -57,6 +57,7 @@ class URLHandler: ObservableObject {
 @main
 struct TermQApp: App {
     @StateObject private var urlHandler = URLHandler.shared
+    @FocusedValue(\.terminalActions) private var terminalActions
 
     var body: some Scene {
         WindowGroup {
@@ -68,15 +69,37 @@ struct TermQApp: App {
         .windowToolbarStyle(.unified)
         .commands {
             CommandGroup(after: .newItem) {
-                Button("New Terminal") {
-                    // Will be handled by the view
+                Button("Quick New Terminal") {
+                    terminalActions?.quickNewTerminal()
                 }
                 .keyboardShortcut("t", modifiers: .command)
 
+                Button("New Terminal...") {
+                    terminalActions?.newTerminalWithDialog()
+                }
+                .keyboardShortcut("n", modifiers: .command)
+
                 Button("New Column") {
-                    // Will be handled by the view
+                    terminalActions?.newColumn()
                 }
                 .keyboardShortcut("n", modifiers: [.command, .shift])
+
+                Divider()
+
+                Button("Toggle Pin") {
+                    terminalActions?.togglePin()
+                }
+                .keyboardShortcut("d", modifiers: .command)
+
+                Button("Next Pinned Terminal") {
+                    terminalActions?.nextPinnedTerminal()
+                }
+                .keyboardShortcut("]", modifiers: .command)
+
+                Button("Previous Pinned Terminal") {
+                    terminalActions?.previousPinnedTerminal()
+                }
+                .keyboardShortcut("[", modifiers: .command)
             }
         }
         .handlesExternalEvents(matching: ["termq"])
