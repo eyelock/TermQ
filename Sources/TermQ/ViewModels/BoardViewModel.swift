@@ -9,6 +9,7 @@ class BoardViewModel: ObservableObject {
     @Published var isEditingCard: TerminalCard?
     @Published var isEditingNewCard: Bool = false
     @Published var isEditingColumn: Column?
+    @Published var showDeleteConfirmation: Bool = false
 
     private let saveURL: URL
 
@@ -59,6 +60,44 @@ class BoardViewModel: ObservableObject {
         board.removeCard(card)
         objectWillChange.send()
         save()
+    }
+
+    /// Delete a pinned card and stay in focused view if possible
+    /// Selects the tab to the left, or next available pinned tab, or goes to board if none left
+    func deletePinnedCard(_ card: TerminalCard) {
+        let pinned = pinnedCards
+        let cardIndex = pinned.firstIndex(where: { $0.id == card.id })
+
+        // Determine which card to select after deletion
+        var nextCard: TerminalCard?
+        if let index = cardIndex {
+            // Try to select the tab to the left
+            if index > 0 {
+                nextCard = pinned[index - 1]
+            } else if pinned.count > 1 {
+                // If deleting first tab, select the next one
+                nextCard = pinned[1]
+            }
+        }
+
+        // Clean up terminal session
+        TerminalSessionManager.shared.removeSession(for: card.id)
+        board.removeCard(card)
+        objectWillChange.send()
+        save()
+
+        // Select the next card, or go to board if none left
+        if let next = nextCard, next.id != card.id {
+            selectedCard = next
+        } else {
+            // Check if there are any remaining pinned cards
+            let remainingPinned = pinnedCards
+            if let first = remainingPinned.first {
+                selectedCard = first
+            } else {
+                selectedCard = nil  // Go to board view
+            }
+        }
     }
 
     func moveCard(_ card: TerminalCard, to column: Column) {
@@ -112,6 +151,16 @@ class BoardViewModel: ObservableObject {
         board.cards.filter { $0.isPinned }
     }
 
+    /// Cards to show as tabs - pinned cards plus current card if not pinned
+    var tabCards: [TerminalCard] {
+        var tabs = pinnedCards
+        // Add current card if it's not already pinned
+        if let current = selectedCard, !current.isPinned {
+            tabs.append(current)
+        }
+        return tabs
+    }
+
     func togglePin(_ card: TerminalCard) {
         card.isPinned.toggle()
         objectWillChange.send()
@@ -151,6 +200,12 @@ class BoardViewModel: ObservableObject {
         // Create the card
         let card = board.addCard(to: column, title: title)
         card.workingDirectory = workingDirectory
+
+        // If created from focused view, auto-pin so it appears as a tab
+        if selectedCard != nil {
+            card.isPinned = true
+        }
+
         objectWillChange.send()
         save()
 

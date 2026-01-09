@@ -100,6 +100,7 @@ cp .build/release/termq /usr/local/bin/
 | ⌘T | Quick new terminal (same column and working directory as current) |
 | ⌘N | New terminal with dialog |
 | ⌘⇧N | New column |
+| ⌘B | Back to board (close terminal view) |
 | ⌘D | Toggle pin on current terminal |
 | ⌘] | Next pinned terminal |
 | ⌘[ | Previous pinned terminal |

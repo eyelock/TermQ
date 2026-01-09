@@ -11,29 +11,16 @@ struct ContentView: View {
                 // Expanded terminal view
                 ExpandedTerminalView(
                     card: selectedCard,
-                    onClose: {
-                        viewModel.deselectCard()
-                    },
-                    onEdit: {
-                        viewModel.isEditingCard = selectedCard
-                    },
-                    onDelete: {
-                        viewModel.deleteCard(selectedCard)
-                    },
-                    onMoveToColumn: { column in
-                        viewModel.moveCard(selectedCard, to: column)
-                    },
-                    onTogglePin: {
-                        viewModel.togglePin(selectedCard)
-                    },
                     onSelectPinnedCard: { card in
                         viewModel.selectCard(card)
                     },
-                    onQuickNewTerminal: {
-                        viewModel.quickNewTerminal()
+                    onEditPinnedCard: { card in
+                        viewModel.isEditingCard = card
                     },
-                    columns: viewModel.board.columns,
-                    pinnedCards: viewModel.pinnedCards
+                    onDeletePinnedCard: { card in
+                        viewModel.deletePinnedCard(card)
+                    },
+                    pinnedCards: viewModel.tabCards
                 )
             } else {
                 // Kanban board view
@@ -82,23 +69,104 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "rectangle.grid.2x2")
                     }
-                    .help("Back to board")
+                    .help("Back to board (⌘B)")
                 }
             }
 
-            ToolbarItem(placement: .primaryAction) {
-                Menu {
-                    if let firstColumn = viewModel.board.columns.first {
-                        Button("New Terminal") {
-                            viewModel.addTerminal(to: firstColumn)
+            // Focused view controls
+            ToolbarItemGroup(placement: .primaryAction) {
+                if let selectedCard = viewModel.selectedCard {
+                    // Move to column menu (Fix #4: pre-select current column)
+                    Menu {
+                        ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
+                            Button {
+                                viewModel.moveCard(selectedCard, to: column)
+                            } label: {
+                                HStack {
+                                    if column.id == selectedCard.columnId {
+                                        Image(systemName: "checkmark")
+                                    }
+                                    Text(column.name)
+                                }
+                            }
+                            .disabled(column.id == selectedCard.columnId)
+                        }
+                    } label: {
+                        // Show current column name in menu label
+                        if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId }) {
+                            HStack(spacing: 4) {
+                                Circle()
+                                    .fill(Color(hex: currentColumn.color) ?? .gray)
+                                    .frame(width: 8, height: 8)
+                                Text(currentColumn.name)
+                            }
+                        } else {
+                            Text("Move to")
                         }
                     }
-                    Button("New Column") {
-                        viewModel.addColumn()
+                    .help("Move to column")
+
+                    Divider()
+
+                    Button {
+                        viewModel.quickNewTerminal()
+                    } label: {
+                        Image(systemName: "plus.rectangle")
                     }
-                } label: {
-                    Image(systemName: "plus")
+                    .help("Quick new terminal (⌘T)")
+
+                    Button {
+                        viewModel.isEditingCard = selectedCard
+                    } label: {
+                        Image(systemName: "pencil")
+                    }
+                    .help("Edit terminal details (⌘E)")
+
+                    Button {
+                        viewModel.togglePin(selectedCard)
+                    } label: {
+                        Image(systemName: selectedCard.isPinned ? "star.fill" : "star")
+                    }
+                    .foregroundColor(selectedCard.isPinned ? .yellow : nil)
+                    .help(selectedCard.isPinned ? "Unpin terminal (⌘P)" : "Pin terminal (⌘P)")
+
+                    Button {
+                        viewModel.showDeleteConfirmation = true
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    .foregroundColor(.red)
+                    .help("Delete terminal")
+                } else {
+                    // Board view controls
+                    Menu {
+                        if let firstColumn = viewModel.board.columns.first {
+                            Button("New Terminal") {
+                                viewModel.addTerminal(to: firstColumn)
+                            }
+                        }
+                        Button("New Column") {
+                            viewModel.addColumn()
+                        }
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .help("Add new terminal or column")
                 }
+            }
+        }
+        .alert("Delete Terminal", isPresented: $viewModel.showDeleteConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            Button("Delete", role: .destructive) {
+                if let selectedCard = viewModel.selectedCard {
+                    viewModel.deleteCard(selectedCard)
+                }
+            }
+        } message: {
+            if let selectedCard = viewModel.selectedCard {
+                Text("Are you sure you want to delete \"\(selectedCard.title)\"? This cannot be undone.")
+            } else {
+                Text("Are you sure you want to delete this terminal? This cannot be undone.")
             }
         }
         .navigationTitle(viewModel.selectedCard?.title ?? "TermQ")
