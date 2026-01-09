@@ -1,0 +1,96 @@
+/*
+  Localizable.strings
+  TermQ
+
+  English localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Board View
+"board.column.options" = "Column options";
+"board.column.rename" = "Rename Column...";
+"board.column.delete" = "Delete Column";
+"board.column.delete.disabled" = "Delete Column (move terminals first)";
+"board.column.add.terminal" = "Add Terminal";
+"board.column.add.terminal.help" = "Add new terminal to this column";
+
+// MARK: - Terminal Card
+"card.pin" = "Pin terminal";
+"card.unpin" = "Unpin terminal";
+"card.running" = "Terminal is running";
+"card.open" = "Open Terminal";
+"card.edit" = "Edit Details...";
+"card.delete" = "Delete";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Terminal session ended";
+"terminal.restart" = "Restart Terminal";
+"terminal.restart.help" = "Start a new terminal session";
+"terminal.current" = "Current terminal";
+"terminal.switch.to" = "Switch to %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Back to board (Escape)";
+"toolbar.move.to" = "Move to column";
+"toolbar.new.quick" = "Quick new terminal";
+"toolbar.new.quick.shortcut" = "Quick new terminal (⌘T)";
+"toolbar.edit" = "Edit terminal details";
+"toolbar.edit.shortcut" = "Edit terminal details (⌘E)";
+"toolbar.pin" = "Pin terminal (⌘P)";
+"toolbar.unpin" = "Unpin terminal (⌘P)";
+"toolbar.delete" = "Delete terminal";
+"toolbar.add" = "Add new terminal or column";
+
+// MARK: - Menu Commands
+"menu.new.terminal.quick" = "Quick New Terminal";
+"menu.new.terminal" = "New Terminal...";
+"menu.new.terminal.dialog" = "New Terminal";
+"menu.new.column" = "New Column";
+"menu.back" = "Back to Board";
+"menu.toggle.pin" = "Toggle Pin";
+"menu.next.pinned" = "Next Pinned Terminal";
+"menu.previous.pinned" = "Previous Pinned Terminal";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Delete Terminal";
+"delete.message" = "Are you sure you want to delete \"%@\"? This cannot be undone.";
+"delete.cancel" = "Cancel";
+"delete.confirm" = "Delete";
+
+// MARK: - Card Editor
+"editor.title.new" = "New Terminal";
+"editor.title.edit" = "Edit Terminal";
+"editor.field.name" = "Name";
+"editor.field.name.placeholder" = "Terminal name";
+"editor.field.description" = "Description";
+"editor.field.description.placeholder" = "Optional description";
+"editor.field.column" = "Column";
+"editor.field.directory" = "Working Directory";
+"editor.field.tags" = "Tags";
+"editor.tag.add" = "Add Tag";
+"editor.tag.key.placeholder" = "key";
+"editor.tag.value.placeholder" = "value";
+"editor.cancel" = "Cancel";
+"editor.save" = "Save";
+"editor.save.open" = "Save & Open";
+
+// MARK: - Column Editor
+"column.editor.title" = "Edit Column";
+"column.editor.field.name" = "Name";
+"column.editor.field.name.placeholder" = "Column name";
+"column.editor.field.color" = "Color";
+"column.editor.cancel" = "Cancel";
+"column.editor.save" = "Save";
+
+// MARK: - Settings
+"settings.title" = "TermQ Settings";
+"settings.cli.title" = "CLI Tool";
+"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
+"settings.cli.path" = "Install Location";
+"settings.cli.install" = "Install CLI";
+"settings.cli.uninstall" = "Uninstall";
+"settings.cli.installed" = "Installed";
+"settings.cli.not.installed" = "Not installed";
+"settings.cli.usage" = "Usage:";

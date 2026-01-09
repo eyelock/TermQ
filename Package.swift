@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "TermQ",
+    defaultLocalization: "en",
     platforms: [
         .macOS(.v14)
     ],
@@ -29,7 +30,10 @@ let package = Package(
                 "TermQCore",
                 .product(name: "SwiftTerm", package: "SwiftTerm")
             ],
-            path: "Sources/TermQ"
+            path: "Sources/TermQ",
+            resources: [
+                .process("Resources")
+            ]
         ),
         // CLI tool
         .executableTarget(

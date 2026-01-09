@@ -3,18 +3,12 @@ import TermQCore
 
 struct ExpandedTerminalView: View {
     @ObservedObject var card: TerminalCard
-    let onClose: () -> Void
-    let onEdit: () -> Void
-    let onDelete: () -> Void
-    let onMoveToColumn: (Column) -> Void
-    let onTogglePin: () -> Void
     let onSelectPinnedCard: (TerminalCard) -> Void
-    let onQuickNewTerminal: () -> Void
-    let columns: [Column]
+    let onEditPinnedCard: (TerminalCard) -> Void
+    let onDeletePinnedCard: (TerminalCard) -> Void
     let pinnedCards: [TerminalCard]
 
     @State private var terminalExited = false
-    @State private var showDeleteConfirmation = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -24,115 +18,7 @@ struct ExpandedTerminalView: View {
                 Divider()
             }
 
-            // Header bar
-            HStack {
-                Button(action: onClose) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "chevron.left")
-                        Text("Back to Board")
-                    }
-                }
-                .buttonStyle(.plain)
-                .foregroundColor(.accentColor)
-
-                Spacer()
-
-                // Card title and current column
-                HStack(spacing: 12) {
-                    HStack {
-                        Image(systemName: "terminal")
-                            .foregroundColor(.green)
-                        Text(card.title)
-                            .font(.headline)
-                    }
-
-                    // Show current column
-                    if let currentColumn = columns.first(where: { $0.id == card.columnId }) {
-                        HStack(spacing: 4) {
-                            Circle()
-                                .fill(Color(hex: currentColumn.color) ?? .gray)
-                                .frame(width: 8, height: 8)
-                            Text(currentColumn.name)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(
-                            Capsule()
-                                .fill(Color.secondary.opacity(0.15))
-                        )
-                    }
-                }
-
-                Spacer()
-
-                // Move to column menu
-                Menu {
-                    ForEach(columns) { column in
-                        Button {
-                            onMoveToColumn(column)
-                        } label: {
-                            HStack {
-                                if column.id == card.columnId {
-                                    Image(systemName: "checkmark")
-                                }
-                                Text(column.name)
-                            }
-                        }
-                        .disabled(column.id == card.columnId)
-                    }
-                } label: {
-                    HStack {
-                        Text("Move to")
-                        Image(systemName: "chevron.down")
-                    }
-                }
-                .menuStyle(.borderlessButton)
-
-                Button(action: onQuickNewTerminal) {
-                    Image(systemName: "plus.rectangle")
-                }
-                .buttonStyle(.plain)
-                .help("Quick new terminal (⌘T)")
-
-                Button(action: onEdit) {
-                    Image(systemName: "pencil")
-                }
-                .buttonStyle(.plain)
-                .help("Edit terminal details")
-
-                Button(action: onTogglePin) {
-                    Image(systemName: card.isPinned ? "star.fill" : "star")
-                }
-                .buttonStyle(.plain)
-                .foregroundColor(card.isPinned ? .yellow : .secondary)
-                .help(card.isPinned ? "Unpin terminal" : "Pin terminal")
-
-                Button {
-                    showDeleteConfirmation = true
-                } label: {
-                    Image(systemName: "trash")
-                }
-                .buttonStyle(.plain)
-                .foregroundColor(.red)
-                .help("Delete terminal")
-            }
-            .alert("Delete Terminal", isPresented: $showDeleteConfirmation) {
-                Button("Cancel", role: .cancel) {}
-                Button("Delete", role: .destructive) {
-                    onDelete()
-                }
-            } message: {
-                Text("Are you sure you want to delete \"\(card.title)\"? This cannot be undone.")
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .background(Color(nsColor: .windowBackgroundColor))
-
-            Divider()
-
-            // Terminal view with padding
+            // Terminal view
             if terminalExited {
                 VStack {
                     Image(systemName: "terminal")
@@ -145,6 +31,7 @@ struct ExpandedTerminalView: View {
                         terminalExited = false
                     }
                     .padding(.top, 8)
+                    .help("Start a new terminal session")
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.black)
@@ -166,44 +53,118 @@ struct ExpandedTerminalView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
                 ForEach(pinnedCards) { pinnedCard in
-                    Button {
-                        if pinnedCard.id != card.id {
-                            onSelectPinnedCard(pinnedCard)
+                    PinnedTabView(
+                        pinnedCard: pinnedCard,
+                        isSelected: pinnedCard.id == card.id,
+                        onSelect: {
+                            if pinnedCard.id != card.id {
+                                onSelectPinnedCard(pinnedCard)
+                            }
+                        },
+                        onEdit: {
+                            onEditPinnedCard(pinnedCard)
+                        },
+                        onDelete: {
+                            onDeletePinnedCard(pinnedCard)
                         }
-                    } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: "terminal")
-                                .font(.caption)
-                            Text(pinnedCard.title)
-                                .lineLimit(1)
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(
-                                    pinnedCard.id == card.id
-                                        ? Color.accentColor.opacity(0.2)
-                                        : Color.secondary.opacity(0.1)
-                                )
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(
-                                    pinnedCard.id == card.id
-                                        ? Color.accentColor
-                                        : Color.clear,
-                                    lineWidth: 1
-                                )
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundColor(pinnedCard.id == card.id ? .accentColor : .primary)
+                    )
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.vertical, 6)
         }
         .background(Color(nsColor: .windowBackgroundColor).opacity(0.95))
+    }
+}
+
+// MARK: - Pinned Tab View
+
+private struct PinnedTabView: View {
+    let pinnedCard: TerminalCard
+    let isSelected: Bool
+    let onSelect: () -> Void
+    let onEdit: () -> Void
+    let onDelete: () -> Void
+
+    @State private var isHovering = false
+    @State private var showDeleteConfirmation = false
+
+    // Fixed width for action buttons area to prevent size jumping
+    private let actionButtonsWidth: CGFloat = 32
+
+    var body: some View {
+        HStack(spacing: 2) {
+            // Main tab button
+            Button(action: onSelect) {
+                HStack(spacing: 4) {
+                    Image(systemName: "terminal")
+                        .font(.caption2)
+                    Text(pinnedCard.title)
+                        .font(.subheadline)
+                        .lineLimit(1)
+                }
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(isSelected ? .accentColor : .primary)
+
+            // Action buttons area (fixed width to prevent jumping)
+            HStack(spacing: 1) {
+                if isHovering {
+                    Button(action: onEdit) {
+                        Image(systemName: "pencil")
+                            .font(.caption2)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundColor(.secondary)
+                    .help("Edit terminal")
+
+                    Button {
+                        showDeleteConfirmation = true
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.caption2)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundColor(.secondary)
+                    .help("Close terminal")
+                }
+            }
+            .frame(width: actionButtonsWidth, alignment: .trailing)
+            .opacity(isHovering ? 1 : 0)
+        }
+        .padding(.leading, 8)
+        .padding(.trailing, 4)
+        .padding(.vertical, 5)
+        .background(
+            RoundedRectangle(cornerRadius: 6)
+                .fill(
+                    isSelected
+                        ? Color.accentColor.opacity(0.2)
+                        : isHovering
+                            ? Color.secondary.opacity(0.15)
+                            : Color.secondary.opacity(0.1)
+                )
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(
+                    isSelected ? Color.accentColor : Color.clear,
+                    lineWidth: 1
+                )
+        )
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHovering = hovering
+            }
+        }
+        .help(isSelected ? "Current terminal" : "Switch to \(pinnedCard.title)")
+        .alert("Delete Terminal", isPresented: $showDeleteConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            Button("Delete", role: .destructive) {
+                onDelete()
+            }
+        } message: {
+            Text("Are you sure you want to delete \"\(pinnedCard.title)\"? This cannot be undone.")
+        }
     }
 }

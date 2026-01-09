@@ -60,6 +60,7 @@ struct ColumnView: View {
                 }
                 .menuStyle(.borderlessButton)
                 .frame(width: 20)
+                .help("Column options")
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
@@ -102,8 +103,9 @@ struct ColumnView: View {
             }
             .buttonStyle(.plain)
             .foregroundColor(.secondary)
+            .help("Add new terminal to this column")
         }
-        .frame(width: 280)
+        .frame(minWidth: 200)
         .background(Color(nsColor: .windowBackgroundColor))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .overlay(

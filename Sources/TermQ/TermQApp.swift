@@ -86,6 +86,13 @@ struct TermQApp: App {
 
                 Divider()
 
+                Button("Back to Board") {
+                    terminalActions?.goBack()
+                }
+                .keyboardShortcut("b", modifiers: .command)
+
+                Divider()
+
                 Button("Toggle Pin") {
                     terminalActions?.togglePin()
                 }

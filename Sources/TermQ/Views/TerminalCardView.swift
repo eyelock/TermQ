@@ -39,6 +39,7 @@ struct TerminalCardView: View {
                     Circle()
                         .fill(.green)
                         .frame(width: 8, height: 8)
+                        .help("Terminal is running")
                 }
             }
 
