@@ -23,6 +23,9 @@ struct KanbanBoardView: View {
                         onDeleteCard: { card in
                             viewModel.deleteCard(card)
                         },
+                        onTogglePin: { card in
+                            viewModel.togglePin(card)
+                        },
                         onEditColumn: {
                             viewModel.isEditingColumn = column
                         },
