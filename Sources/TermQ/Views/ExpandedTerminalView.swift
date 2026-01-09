@@ -5,10 +5,12 @@ struct ExpandedTerminalView: View {
     @ObservedObject var card: TerminalCard
     let onClose: () -> Void
     let onEdit: () -> Void
+    let onDelete: () -> Void
     let onMoveToColumn: (Column) -> Void
     let columns: [Column]
 
     @State private var terminalExited = false
+    @State private var showDeleteConfirmation = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -83,6 +85,23 @@ struct ExpandedTerminalView: View {
                 }
                 .buttonStyle(.plain)
                 .help("Edit terminal details")
+
+                Button {
+                    showDeleteConfirmation = true
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(.red)
+                .help("Delete terminal")
+            }
+            .alert("Delete Terminal", isPresented: $showDeleteConfirmation) {
+                Button("Cancel", role: .cancel) {}
+                Button("Delete", role: .destructive) {
+                    onDelete()
+                }
+            } message: {
+                Text("Are you sure you want to delete \"\(card.title)\"? This cannot be undone.")
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 10)

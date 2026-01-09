@@ -17,6 +17,9 @@ struct ContentView: View {
                     onEdit: {
                         viewModel.isEditingCard = selectedCard
                     },
+                    onDelete: {
+                        viewModel.deleteCard(selectedCard)
+                    },
                     onMoveToColumn: { column in
                         viewModel.moveCard(selectedCard, to: column)
                     },

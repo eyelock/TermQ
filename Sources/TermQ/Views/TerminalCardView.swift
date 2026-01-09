@@ -8,6 +8,7 @@ struct TerminalCardView: View {
     let onDelete: () -> Void
 
     @State private var isHovering = false
+    @State private var showDeleteConfirmation = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -79,8 +80,16 @@ struct TerminalCardView: View {
             }
             Divider()
             Button("Delete", role: .destructive) {
+                showDeleteConfirmation = true
+            }
+        }
+        .alert("Delete Terminal", isPresented: $showDeleteConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            Button("Delete", role: .destructive) {
                 onDelete()
             }
+        } message: {
+            Text("Are you sure you want to delete \"\(card.title)\"? This cannot be undone.")
         }
     }
 
