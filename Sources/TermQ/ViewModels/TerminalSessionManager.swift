@@ -15,6 +15,7 @@ class TerminalSessionManager: ObservableObject {
         let terminal: TermQTerminalView
         let container: TerminalContainerView
         var isRunning: Bool = true
+        var currentDirectory: String?
     }
 
     private init() {}
@@ -81,6 +82,16 @@ class TerminalSessionManager: ObservableObject {
         sessions[cardId]?.isRunning = false
     }
 
+    /// Update the current directory for a session
+    func updateCurrentDirectory(cardId: UUID, directory: String?) {
+        sessions[cardId]?.currentDirectory = directory
+    }
+
+    /// Get the current directory for a session (falls back to nil if not tracked)
+    func getCurrentDirectory(for cardId: UUID) -> String? {
+        return sessions[cardId]?.currentDirectory
+    }
+
     /// Remove a session (when card is deleted)
     func removeSession(for cardId: UUID) {
         if let session = sessions[cardId] {
@@ -123,7 +134,19 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
 
     func setTerminalTitle(source: LocalProcessTerminalView, title: String) {}
 
-    func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {}
+    func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {
+        // Track the current directory when the shell reports it via OSC 7
+        Task { @MainActor in
+            if let dir = directory {
+                // Parse file:// URL if present
+                if let url = URL(string: dir), url.scheme == "file" {
+                    self.manager?.updateCurrentDirectory(cardId: self.cardId, directory: url.path)
+                } else {
+                    self.manager?.updateCurrentDirectory(cardId: self.cardId, directory: dir)
+                }
+            }
+        }
+    }
 
     func processTerminated(source: TerminalView, exitCode: Int32?) {
         Task { @MainActor in

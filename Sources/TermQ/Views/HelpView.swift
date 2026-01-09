@@ -89,8 +89,11 @@ enum HelpContent {
                 • Edit Details
                 • Pin/Unpin
                 • Delete
+
+                **Native Terminal:**
+                Click the Terminal button in the toolbar to open macOS Terminal.app at the current working directory.
                 """,
-            keywords: ["terminal", "card", "create", "new", "session", "shell"]
+            keywords: ["terminal", "card", "create", "new", "session", "shell", "native", "Terminal.app"]
         ),
 
         HelpTopic(
@@ -216,8 +219,10 @@ enum HelpContent {
                 • **Right-click cards** for quick access to edit, delete, and pin options
 
                 • **Tab hover actions** let you edit or close terminals without switching to them first
+
+                • **Open in Terminal.app** - Click the Terminal button to open the current directory in native macOS Terminal
                 """,
-            keywords: ["tip", "trick", "productivity", "efficient", "workflow", "advice"]
+            keywords: ["tip", "trick", "productivity", "efficient", "workflow", "advice", "native"]
         ),
 
         HelpTopic(
@@ -232,6 +237,7 @@ enum HelpContent {
                 • Kanban board layout with customizable columns
                 • Persistent terminal sessions
                 • Pinned terminals with tab navigation
+                • Native Terminal.app integration
                 • Rich metadata (titles, descriptions, tags)
                 • Drag & drop organization
                 • CLI tool for shell integration
