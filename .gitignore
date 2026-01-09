@@ -20,6 +20,7 @@ Package.resolved
 TermQ.app/Contents/MacOS/TermQ
 TermQ.app/Contents/MacOS/tq
 TermQ.app/Contents/Resources/termq
+TermQ.app/Contents/_CodeSignature/
 
 # Distribution files
 *.dmg
