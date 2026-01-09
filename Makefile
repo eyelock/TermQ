@@ -1,7 +1,7 @@
 # TermQ Makefile
 # Build, test, lint, and manage the project
 
-.PHONY: all build build-release clean test lint format check install uninstall app sign help
+.PHONY: all build build-release clean test lint format check install uninstall app sign run help
 .PHONY: version release release-major release-minor release-patch tag-release
 
 # Version from VERSION file
@@ -70,6 +70,11 @@ app: build
 sign: app
 	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
 	@echo "App signed successfully"
+
+# Build, sign, and run the app
+run: sign
+	@echo "Launching TermQ..."
+	@open TermQ.app
 
 # Build release app bundle
 release-app: build-release
@@ -250,6 +255,7 @@ help:
 	@echo "  check         - Run all checks (build, lint, format-check, test)"
 	@echo "  app           - Build debug app bundle"
 	@echo "  sign          - Build and sign debug app bundle"
+	@echo "  run           - Build, sign, and launch the app"
 	@echo "  release-app   - Build and sign release app bundle"
 	@echo "  install       - Install CLI tool to /usr/local/bin"
 	@echo "  uninstall     - Remove CLI tool from /usr/local/bin"
