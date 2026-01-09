@@ -8,7 +8,7 @@ let package = Package(
     ],
     products: [
         .executable(name: "TermQ", targets: ["TermQ"]),
-        .executable(name: "tq", targets: ["termq-cli"]),  // CLI tool renamed to avoid case collision
+        .executable(name: "termq", targets: ["termq-cli"]),
         .library(name: "TermQCore", targets: ["TermQCore"])
     ],
     dependencies: [

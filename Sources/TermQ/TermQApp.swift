@@ -80,6 +80,10 @@ struct TermQApp: App {
             }
         }
         .handlesExternalEvents(matching: ["termq"])
+
+        Settings {
+            SettingsView()
+        }
     }
 
     init() {

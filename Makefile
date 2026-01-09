@@ -62,8 +62,9 @@ app: build
 	@mkdir -p TermQ.app/Contents/MacOS
 	@mkdir -p TermQ.app/Contents/Resources
 	cp .build/debug/TermQ TermQ.app/Contents/MacOS/TermQ
+	cp .build/debug/termq TermQ.app/Contents/Resources/termq
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
-	@echo "App bundle updated at TermQ.app"
+	@echo "App bundle updated at TermQ.app (includes termq CLI)"
 
 # Sign the app bundle with entitlements
 sign: app
@@ -75,20 +76,21 @@ release-app: build-release
 	@mkdir -p TermQ.app/Contents/MacOS
 	@mkdir -p TermQ.app/Contents/Resources
 	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
+	cp .build/release/termq TermQ.app/Contents/Resources/termq
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
 	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
-	@echo "Release app bundle created and signed"
+	@echo "Release app bundle created and signed (includes termq CLI)"
 
 # Install CLI tool to /usr/local/bin
 install: build-release
 	@mkdir -p /usr/local/bin
-	cp .build/release/tq /usr/local/bin/tq
-	@echo "CLI tool 'tq' installed to /usr/local/bin"
+	cp .build/release/termq /usr/local/bin/termq
+	@echo "CLI tool 'termq' installed to /usr/local/bin"
 
 # Uninstall CLI tool
 uninstall:
-	rm -f /usr/local/bin/tq
-	@echo "CLI tool 'tq' removed"
+	rm -f /usr/local/bin/termq
+	@echo "CLI tool 'termq' removed"
 
 # Create a distributable DMG (requires create-dmg tool)
 dmg: release-app

@@ -22,7 +22,7 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
 - **Rich Metadata** - Add titles, descriptions, and key=value tags to each terminal
 - **Drag & Drop** - Move terminals between columns with drag and drop
 - **Shell Environment** - Full access to your shell configuration (.zshrc, .bashrc)
-- **CLI Tool** - Open new terminals from the command line with `tq open`
+- **CLI Tool** - Open new terminals from the command line with `termq open`
 
 ## Requirements
 
@@ -68,14 +68,14 @@ See the [Contributing Guide](./CONTRIBUTING.md) for detailed build instructions.
 
 ### CLI Tool
 
-The `tq` command lets you open terminals from the command line:
+The `termq` command lets you open terminals from the command line:
 
 ```bash
 # Install after building
 make install
 
 # Or manually
-cp .build/release/tq /usr/local/bin/
+cp .build/release/termq /usr/local/bin/
 ```
 
 ## Usage
@@ -93,19 +93,19 @@ cp .build/release/tq /usr/local/bin/
 
 ```bash
 # Open a new terminal in the current directory
-tq open
+termq open
 
 # Open with a specific name and description
-tq open --name "API Server" --description "Running the backend"
+termq open --name "API Server" --description "Running the backend"
 
 # Open in a specific column
-tq open --column "In Progress"
+termq open --column "In Progress"
 
 # Open with tags
-tq open --name "Build" --tag env=prod --tag version=1.0
+termq open --name "Build" --tag env=prod --tag version=1.0
 
 # Open in a specific directory
-tq open --path /path/to/project
+termq open --path /path/to/project
 ```
 
 ## Configuration
