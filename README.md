@@ -21,6 +21,7 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
 - **Kanban Board Layout** - Organize terminals in customizable columns (To Do, In Progress, Blocked, Done)
 - **Persistent Sessions** - Terminal sessions persist when navigating between views
 - **Pinned Terminals** - Pin frequently-used terminals for quick access via tabs in focus mode
+- **Native Terminal Integration** - Launch macOS Terminal.app at the current working directory with one click
 - **Rich Metadata** - Add titles, descriptions, and key=value tags to each terminal
 - **Drag & Drop** - Move terminals between columns with drag and drop
 - **Keyboard Shortcuts** - Quick terminal creation and navigation with standard shortcuts
@@ -92,6 +93,7 @@ cp .build/release/termq /usr/local/bin/
 5. Drag cards between columns to organize your workflow
 6. Use the column menu (⋯) to rename or delete columns
 7. Pin terminals with the ⭐ button to access them quickly via tabs
+8. Click the Terminal button (⌘) to open macOS Terminal.app at the current directory
 
 ### Keyboard Shortcuts
 

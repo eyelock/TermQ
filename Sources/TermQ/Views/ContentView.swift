@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQCore
 
@@ -109,6 +110,16 @@ struct ContentView: View {
                     Divider()
 
                     Button {
+                        // Use tracked current directory if available, otherwise fall back to card's starting directory
+                        let currentDir = TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
+                            ?? selectedCard.workingDirectory
+                        launchNativeTerminal(at: currentDir)
+                    } label: {
+                        Image(systemName: "apple.terminal")
+                    }
+                    .help("Open in Terminal.app")
+
+                    Button {
                         viewModel.quickNewTerminal()
                     } label: {
                         Image(systemName: "plus.rectangle")
@@ -139,6 +150,13 @@ struct ContentView: View {
                     .help("Delete terminal")
                 } else {
                     // Board view controls
+                    Button {
+                        launchNativeTerminal()
+                    } label: {
+                        Image(systemName: "apple.terminal")
+                    }
+                    .help("Open Terminal.app")
+
                     Menu {
                         if let firstColumn = viewModel.board.columns.first {
                             Button("New Terminal") {
@@ -191,6 +209,25 @@ struct ContentView: View {
             nextPinnedTerminal: { viewModel.nextPinnedTerminal() },
             previousPinnedTerminal: { viewModel.previousPinnedTerminal() }
         )
+    }
+
+    /// Launch native Terminal.app at the specified directory
+    private func launchNativeTerminal(at directory: String? = nil) {
+        let path = directory ?? NSHomeDirectory()
+        let script = """
+            tell application "Terminal"
+                activate
+                do script "cd '\(path.replacingOccurrences(of: "'", with: "'\\''"))'"
+            end tell
+            """
+
+        if let appleScript = NSAppleScript(source: script) {
+            var error: NSDictionary?
+            appleScript.executeAndReturnError(&error)
+            if let error = error {
+                print("AppleScript error: \(error)")
+            }
+        }
     }
 
     private func handlePendingTerminal() {
