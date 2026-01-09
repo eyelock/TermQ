@@ -3,12 +3,18 @@ import SwiftTerm
 import SwiftUI
 import TermQCore
 
+/// Custom terminal view - using default SwiftTerm behavior
+/// Note: Copy/paste should work via Edit menu or right-click context menu
+class TermQTerminalView: LocalProcessTerminalView {
+    // Use SwiftTerm's built-in copy/paste - no customization needed
+}
+
 /// Container view that adds padding around the terminal
 class TerminalContainerView: NSView {
-    let terminal: LocalProcessTerminalView
+    let terminal: TermQTerminalView
     let padding: CGFloat = 12
 
-    init(terminal: LocalProcessTerminalView) {
+    init(terminal: TermQTerminalView) {
         self.terminal = terminal
         super.init(frame: .zero)
 

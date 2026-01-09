@@ -12,7 +12,7 @@ class TerminalSessionManager: ObservableObject {
     private var sessions: [UUID: TerminalSession] = [:]
 
     struct TerminalSession {
-        let terminal: LocalProcessTerminalView
+        let terminal: TermQTerminalView
         let container: TerminalContainerView
         var isRunning: Bool = true
     }
@@ -30,8 +30,8 @@ class TerminalSessionManager: ObservableObject {
             return session.container
         }
 
-        // Create new terminal
-        let terminal = LocalProcessTerminalView(frame: .zero)
+        // Create new terminal (using our subclass that fixes copy/paste)
+        let terminal = TermQTerminalView(frame: .zero)
 
         // Configure terminal appearance
         terminal.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
