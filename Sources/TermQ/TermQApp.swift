@@ -58,6 +58,7 @@ class URLHandler: ObservableObject {
 struct TermQApp: App {
     @StateObject private var urlHandler = URLHandler.shared
     @FocusedValue(\.terminalActions) private var terminalActions
+    @Environment(\.openWindow) private var openWindow
 
     var body: some Scene {
         WindowGroup {
@@ -68,6 +69,14 @@ struct TermQApp: App {
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)
         .commands {
+            // Help menu
+            CommandGroup(replacing: .help) {
+                Button("TermQ Help") {
+                    openWindow(id: "help")
+                }
+                .keyboardShortcut("?", modifiers: .command)
+            }
+
             CommandGroup(after: .newItem) {
                 Button("Quick New Terminal") {
                     terminalActions?.quickNewTerminal()
@@ -114,6 +123,13 @@ struct TermQApp: App {
         Settings {
             SettingsView()
         }
+
+        Window("TermQ Help", id: "help") {
+            HelpView()
+        }
+        .windowStyle(.titleBar)
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
     }
 
     init() {
