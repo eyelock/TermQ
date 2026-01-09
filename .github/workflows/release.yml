@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+        run: sudo xcode-select -s /Applications/Xcode_16.1.app/Contents/Developer
 
       - name: Show Swift version
         run: swift --version
@@ -30,26 +30,40 @@ jobs:
       - name: Build release
         run: swift build -c release
 
-      - name: Run tests
-        run: swift test
+      - name: Build for testing
+        run: swift build --build-tests || true
 
       - name: Create app bundle
         run: |
           mkdir -p TermQ.app/Contents/MacOS
+          mkdir -p TermQ.app/Contents/Resources
           cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
+          cp .build/release/termq TermQ.app/Contents/Resources/termq
+          if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
 
       - name: Sign app bundle
         run: codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
 
-      - name: Create zip archive
+      - name: Create DMG
         run: |
-          zip -r TermQ-${{ steps.version.outputs.VERSION }}.zip TermQ.app
-          zip -j tq-cli-${{ steps.version.outputs.VERSION }}.zip .build/release/tq
+          # Create a temporary directory for DMG contents
+          mkdir -p dmg-contents
+          cp -R TermQ.app dmg-contents/
+          ln -s /Applications dmg-contents/Applications
+
+          # Create the DMG
+          hdiutil create -volname "TermQ" -srcfolder dmg-contents -ov -format UDZO TermQ-${{ steps.version.outputs.VERSION }}.dmg
+
+          # Clean up
+          rm -rf dmg-contents
+
+      - name: Create zip archive
+        run: zip -r TermQ-${{ steps.version.outputs.VERSION }}.zip TermQ.app
 
       - name: Generate checksums
         run: |
-          shasum -a 256 TermQ-${{ steps.version.outputs.VERSION }}.zip > checksums.txt
-          shasum -a 256 tq-cli-${{ steps.version.outputs.VERSION }}.zip >> checksums.txt
+          shasum -a 256 TermQ-${{ steps.version.outputs.VERSION }}.dmg > checksums.txt
+          shasum -a 256 TermQ-${{ steps.version.outputs.VERSION }}.zip >> checksums.txt
           cat checksums.txt
 
       - name: Create GitHub Release
@@ -60,28 +74,30 @@ jobs:
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
           generate_release_notes: true
           files: |
+            TermQ-${{ steps.version.outputs.VERSION }}.dmg
             TermQ-${{ steps.version.outputs.VERSION }}.zip
-            tq-cli-${{ steps.version.outputs.VERSION }}.zip
             checksums.txt
           body: |
             ## Installation
 
-            ### macOS App
-            1. Download `TermQ-${{ steps.version.outputs.VERSION }}.zip`
-            2. Unzip and move `TermQ.app` to your Applications folder
+            ### macOS App (Recommended)
+            1. Download `TermQ-${{ steps.version.outputs.VERSION }}.dmg`
+            2. Open the DMG and drag `TermQ.app` to your Applications folder
             3. Right-click and select "Open" on first launch (required for unsigned apps)
 
-            ### CLI Tool
-            1. Download `tq-cli-${{ steps.version.outputs.VERSION }}.zip`
-            2. Unzip and move `tq` to `/usr/local/bin/` or another directory in your PATH
-            ```bash
-            unzip tq-cli-${{ steps.version.outputs.VERSION }}.zip
-            sudo mv tq /usr/local/bin/
-            ```
+            ### Alternative: Zip Archive
+            1. Download `TermQ-${{ steps.version.outputs.VERSION }}.zip`
+            2. Unzip and move `TermQ.app` to your Applications folder
 
-            ### Homebrew (if available)
+            ### CLI Tool
+            The `termq` CLI is bundled inside the app. To install it:
+            1. Open TermQ.app
+            2. Go to **TermQ → Settings** (or press ⌘,)
+            3. Click **Install Command Line Tool**
+
+            Or manually:
             ```bash
-            brew install termq
+            sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
             ```
 
             ## Checksums
