@@ -9,6 +9,7 @@ struct ExpandedTerminalView: View {
     let onMoveToColumn: (Column) -> Void
     let onTogglePin: () -> Void
     let onSelectPinnedCard: (TerminalCard) -> Void
+    let onQuickNewTerminal: () -> Void
     let columns: [Column]
     let pinnedCards: [TerminalCard]
 
@@ -88,6 +89,12 @@ struct ExpandedTerminalView: View {
                     }
                 }
                 .menuStyle(.borderlessButton)
+
+                Button(action: onQuickNewTerminal) {
+                    Image(systemName: "plus.rectangle")
+                }
+                .buttonStyle(.plain)
+                .help("Quick new terminal (⌘T)")
 
                 Button(action: onEdit) {
                     Image(systemName: "pencil")

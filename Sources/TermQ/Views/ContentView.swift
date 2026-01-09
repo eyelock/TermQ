@@ -29,6 +29,9 @@ struct ContentView: View {
                     onSelectPinnedCard: { card in
                         viewModel.selectCard(card)
                     },
+                    onQuickNewTerminal: {
+                        viewModel.quickNewTerminal()
+                    },
                     columns: viewModel.board.columns,
                     pinnedCards: viewModel.pinnedCards
                 )
