@@ -10,6 +10,7 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
 - [Installation](#installation)
 - [Usage](#usage)
   - [GUI Application](#gui-application)
+  - [Keyboard Shortcuts](#keyboard-shortcuts)
   - [CLI Tool](#cli-tool)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
@@ -19,8 +20,10 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
 
 - **Kanban Board Layout** - Organize terminals in customizable columns (To Do, In Progress, Blocked, Done)
 - **Persistent Sessions** - Terminal sessions persist when navigating between views
+- **Pinned Terminals** - Pin frequently-used terminals for quick access via tabs in focus mode
 - **Rich Metadata** - Add titles, descriptions, and key=value tags to each terminal
 - **Drag & Drop** - Move terminals between columns with drag and drop
+- **Keyboard Shortcuts** - Quick terminal creation and navigation with standard shortcuts
 - **Shell Environment** - Full access to your shell configuration (.zshrc, .bashrc)
 - **CLI Tool** - Open new terminals from the command line with `termq open`
 
@@ -88,6 +91,18 @@ cp .build/release/termq /usr/local/bin/
 4. Right-click cards for options (Edit, Delete)
 5. Drag cards between columns to organize your workflow
 6. Use the column menu (⋯) to rename or delete columns
+7. Pin terminals with the ⭐ button to access them quickly via tabs
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| ⌘T | Quick new terminal (same column and working directory as current) |
+| ⌘N | New terminal with dialog |
+| ⌘⇧N | New column |
+| ⌘D | Toggle pin on current terminal |
+| ⌘] | Next pinned terminal |
+| ⌘[ | Previous pinned terminal |
 
 ### CLI Tool
 
