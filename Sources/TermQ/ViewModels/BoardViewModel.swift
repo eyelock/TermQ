@@ -117,4 +117,74 @@ class BoardViewModel: ObservableObject {
         objectWillChange.send()
         save()
     }
+
+    // MARK: - Quick Actions
+
+    /// Create a new terminal immediately without showing the editor dialog
+    /// Uses current terminal's column and working directory if available
+    func quickNewTerminal() {
+        // Determine column and working directory
+        let column: Column
+        let workingDirectory: String
+
+        if let current = selectedCard,
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+            workingDirectory = current.workingDirectory
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+            workingDirectory = NSHomeDirectory()
+        } else {
+            return  // No columns available
+        }
+
+        // Generate a unique title
+        let existingTitles = Set(board.cards.map { $0.title })
+        var counter = 1
+        var title = "Terminal \(counter)"
+        while existingTitles.contains(title) {
+            counter += 1
+            title = "Terminal \(counter)"
+        }
+
+        // Create the card
+        let card = board.addCard(to: column, title: title)
+        card.workingDirectory = workingDirectory
+        objectWillChange.send()
+        save()
+
+        // Switch to the new terminal immediately
+        selectCard(card)
+    }
+
+    /// Switch to the next pinned terminal (cycles through)
+    func nextPinnedTerminal() {
+        let pinned = pinnedCards
+        guard !pinned.isEmpty else { return }
+
+        if let current = selectedCard,
+            let currentIndex = pinned.firstIndex(where: { $0.id == current.id })
+        {
+            let nextIndex = (currentIndex + 1) % pinned.count
+            selectCard(pinned[nextIndex])
+        } else if let first = pinned.first {
+            selectCard(first)
+        }
+    }
+
+    /// Switch to the previous pinned terminal (cycles through)
+    func previousPinnedTerminal() {
+        let pinned = pinnedCards
+        guard !pinned.isEmpty else { return }
+
+        if let current = selectedCard,
+            let currentIndex = pinned.firstIndex(where: { $0.id == current.id })
+        {
+            let prevIndex = currentIndex == 0 ? pinned.count - 1 : currentIndex - 1
+            selectCard(pinned[prevIndex])
+        } else if let last = pinned.last {
+            selectCard(last)
+        }
+    }
 }
