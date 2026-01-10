@@ -74,6 +74,7 @@ struct ColumnView: View {
                     ForEach(cards) { card in
                         TerminalCardView(
                             card: card,
+                            columnColor: columnColor,
                             onSelect: { onSelectCard(card) },
                             onEdit: { onEditCard(card) },
                             onDelete: { onDeleteCard(card) },
@@ -107,11 +108,7 @@ struct ColumnView: View {
         }
         .frame(minWidth: 200)
         .background(Color(nsColor: .windowBackgroundColor))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-        )
+        .contentShape(RoundedRectangle(cornerRadius: 8))  // Define hit-test area for drop
         .dropDestination(for: String.self) { items, _ in
             guard let uuidString = items.first,
                 let _ = UUID(uuidString: uuidString)
@@ -124,6 +121,11 @@ struct ColumnView: View {
         } isTargeted: { targeted in
             isTargeted = targeted
         }
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+        )
     }
 }
 
