@@ -18,6 +18,10 @@ class BoardViewModel: ObservableObject {
     /// Tabs that need attention (received a bell) - cleared when selected
     @Published private(set) var needsAttention: Set<UUID> = []
 
+    /// Transient terminals - not persisted, exist only as tabs until promoted
+    /// Promoted to board when: edited & saved, or marked as favourite
+    private var transientCards: [UUID: TerminalCard] = [:]
+
     private let saveURL: URL
 
     init() {
@@ -105,9 +109,16 @@ class BoardViewModel: ObservableObject {
 
         // Clean up terminal session
         TerminalSessionManager.shared.removeSession(for: card.id)
-        board.removeCard(card)
+
+        // Remove from appropriate storage
+        if card.isTransient {
+            transientCards.removeValue(forKey: card.id)
+        } else {
+            board.removeCard(card)
+            save()
+        }
+
         objectWillChange.send()
-        save()
 
         // Select the next card, or go to board if none left
         if let next = nextCard, next.id != card.id {
@@ -122,7 +133,8 @@ class BoardViewModel: ObservableObject {
         }
     }
 
-    /// Close a tab without deleting the terminal card
+    /// Close a tab without deleting the terminal card (unless transient)
+    /// Transient cards are removed entirely when closed
     /// Removes from session tabs and selects adjacent tab
     func closeTab(_ card: TerminalCard) {
         let tabs = tabCards
@@ -138,8 +150,15 @@ class BoardViewModel: ObservableObject {
             }
         }
 
-        // Remove from session tabs (but don't delete the card)
+        // Remove from session tabs
         sessionTabs.removeAll { $0 == card.id }
+
+        // If transient, remove the card entirely (it was never persisted)
+        if card.isTransient {
+            transientCards.removeValue(forKey: card.id)
+            TerminalSessionManager.shared.removeSession(for: card.id)
+        }
+
         objectWillChange.send()
 
         // Select the next card, or go to board if none left
@@ -153,8 +172,17 @@ class BoardViewModel: ObservableObject {
     }
 
     /// Close all tabs that are not favourites
+    /// Transient (non-favourite) tabs are removed entirely
     func closeUnfavouritedTabs() {
         let favouriteIds = Set(board.cards.filter { $0.isFavourite }.map { $0.id })
+
+        // Find transient cards to remove
+        let transientToRemove = sessionTabs.filter { transientCards[$0] != nil }
+        for id in transientToRemove {
+            transientCards.removeValue(forKey: id)
+            TerminalSessionManager.shared.removeSession(for: id)
+        }
+
         sessionTabs = sessionTabs.filter { favouriteIds.contains($0) }
 
         // If current selection is no longer in tabs, select first tab or go to board
@@ -218,7 +246,14 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
+    /// Update a card's details
+    /// If updating a transient card, promotes it to persistent (user intentionally edited it)
     func updateCard(_ card: TerminalCard) {
+        // Promote transient card when user edits it
+        if card.isTransient {
+            promoteTransientCard(card)
+        }
+
         objectWillChange.send()
         save()
     }
@@ -236,8 +271,14 @@ class BoardViewModel: ObservableObject {
     }
 
     /// Toggle favourite status for a card
+    /// If marking a transient card as favourite, promotes it to persistent
     func toggleFavourite(_ card: TerminalCard) {
         card.isFavourite.toggle()
+
+        // If marking as favourite, promote transient card to persistent
+        if card.isFavourite && card.isTransient {
+            promoteTransientCard(card)
+        }
 
         // If marking as favourite, ensure it's in session tabs
         if card.isFavourite && !sessionTabs.contains(card.id) {
@@ -254,10 +295,17 @@ class BoardViewModel: ObservableObject {
     // MARK: - Session Tabs
 
     /// Cards to show as tabs - based on sessionTabs order
+    /// Includes both persisted (board) and transient cards
     var tabCards: [TerminalCard] {
         sessionTabs.compactMap { id in
-            board.cards.first { $0.id == id }
+            // Check transient cards first, then board cards
+            transientCards[id] ?? board.cards.first { $0.id == id }
         }
+    }
+
+    /// Look up a card by ID (from board or transient)
+    func card(for id: UUID) -> TerminalCard? {
+        transientCards[id] ?? board.cards.first { $0.id == id }
     }
 
     /// Move a tab from one position to another
@@ -290,7 +338,8 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Quick Actions
 
-    /// Create a new terminal immediately without showing the editor dialog
+    /// Create a new transient terminal immediately without showing the editor dialog
+    /// Transient terminals are not saved to the board until edited or favourited
     /// Uses current terminal's column and working directory if available
     func quickNewTerminal() {
         // Determine column and working directory
@@ -301,7 +350,10 @@ class BoardViewModel: ObservableObject {
             let currentColumn = board.columns.first(where: { $0.id == current.columnId })
         {
             column = currentColumn
-            workingDirectory = current.workingDirectory
+            // Use tracked current directory if available
+            workingDirectory =
+                TerminalSessionManager.shared.getCurrentDirectory(for: current.id)
+                ?? current.workingDirectory
         } else if let firstColumn = board.columns.first {
             column = firstColumn
             workingDirectory = NSHomeDirectory()
@@ -309,8 +361,8 @@ class BoardViewModel: ObservableObject {
             return  // No columns available
         }
 
-        // Generate a unique title
-        let existingTitles = Set(board.cards.map { $0.title })
+        // Generate a unique title (check both board and transient cards)
+        let existingTitles = Set(board.cards.map { $0.title } + transientCards.values.map { $0.title })
         var counter = 1
         var title = "Terminal \(counter)"
         while existingTitles.contains(title) {
@@ -318,18 +370,44 @@ class BoardViewModel: ObservableObject {
             title = "Terminal \(counter)"
         }
 
-        // Create the card
-        let card = board.addCard(to: column, title: title)
-        card.workingDirectory = workingDirectory
+        // Create a transient card (not added to board)
+        let card = TerminalCard(
+            title: title,
+            columnId: column.id,
+            workingDirectory: workingDirectory
+        )
+        card.isTransient = true
+        transientCards[card.id] = card
 
-        // Add to session tabs (don't auto-favourite)
-        sessionTabs.append(card.id)
+        // Insert tab after current tab (or at end if no selection)
+        if let current = selectedCard,
+            let currentIndex = sessionTabs.firstIndex(of: current.id)
+        {
+            sessionTabs.insert(card.id, at: currentIndex + 1)
+        } else {
+            sessionTabs.append(card.id)
+        }
 
         objectWillChange.send()
-        save()
+        // Don't save - transient cards are not persisted
 
         // Switch to the new terminal immediately
         selectedCard = card
+    }
+
+    /// Promote a transient card to a persistent board card
+    private func promoteTransientCard(_ card: TerminalCard) {
+        guard card.isTransient, transientCards[card.id] != nil else { return }
+
+        // Remove from transient storage
+        transientCards.removeValue(forKey: card.id)
+
+        // Add to board
+        card.isTransient = false
+        board.cards.append(card)
+
+        objectWillChange.send()
+        save()
     }
 
     /// Switch to the next tab (cycles through)

@@ -14,6 +14,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
 
     // Runtime state (not persisted)
     public var isRunning: Bool = false
+    public var isTransient: Bool = false
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory, isFavourite
