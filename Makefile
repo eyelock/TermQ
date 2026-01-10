@@ -152,10 +152,10 @@ zip: release-app
 	zip -r TermQ.zip TermQ.app
 	@echo "Archive created: TermQ.zip"
 
-# Generate icns from a 1024x1024 PNG (usage: make icon PNG=path/to/icon.png)
+# Generate icns from a 1024x1024 PNG (usage: make icon PNG=./Docs/Images/icon.png)
 icon:
 ifndef PNG
-	$(error Usage: make icon PNG=path/to/your/1024x1024/icon.png)
+	$(error Usage: make icon PNG=./Docs/Images/icon.png)
 endif
 	@echo "Generating AppIcon.icns from $(PNG)..."
 	@mkdir -p AppIcon.iconset
