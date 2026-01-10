@@ -15,6 +15,10 @@ struct ExpandedTerminalView: View {
 
     @State private var terminalExited = false
     @Binding var isZoomed: Bool
+    @Binding var isSearching: Bool
+    @State private var searchText = ""
+    @State private var searchResults: [String] = []
+    @State private var currentResultIndex = 0
 
     var body: some View {
         VStack(spacing: 0) {
@@ -41,6 +45,11 @@ struct ExpandedTerminalView: View {
                 .onTapGesture {
                     isZoomed = false
                 }
+            }
+
+            // Search bar
+            if isSearching {
+                searchBar
             }
 
             // Terminal view
@@ -84,12 +93,104 @@ struct ExpandedTerminalView: View {
             }
         }
         .onKeyPress(.escape) {
+            if isSearching {
+                isSearching = false
+                searchText = ""
+                return .handled
+            }
             if isZoomed {
                 isZoomed = false
                 return .handled
             }
             return .ignored
         }
+    }
+
+    /// Toggle search mode
+    func toggleSearch() {
+        withAnimation(.easeInOut(duration: 0.15)) {
+            isSearching.toggle()
+            if !isSearching {
+                searchText = ""
+            }
+        }
+    }
+
+    // MARK: - Search Bar
+
+    private var searchBar: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.secondary)
+
+            TextField("Search in terminal...", text: $searchText)
+                .textFieldStyle(.plain)
+                .onSubmit {
+                    performSearch()
+                }
+
+            if !searchText.isEmpty {
+                Text("\(searchResults.count) matches")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Button {
+                    previousResult()
+                } label: {
+                    Image(systemName: "chevron.up")
+                }
+                .buttonStyle(.plain)
+                .disabled(searchResults.isEmpty)
+
+                Button {
+                    nextResult()
+                } label: {
+                    Image(systemName: "chevron.down")
+                }
+                .buttonStyle(.plain)
+                .disabled(searchResults.isEmpty)
+            }
+
+            Button {
+                isSearching = false
+                searchText = ""
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(.secondary)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color(nsColor: .windowBackgroundColor))
+    }
+
+    private func performSearch() {
+        guard !searchText.isEmpty else {
+            searchResults = []
+            return
+        }
+
+        // Get the terminal content and search
+        if let terminalView = TerminalSessionManager.shared.getTerminalView(for: card.id) {
+            let terminal = terminalView.getTerminal()
+            let bufferData = terminal.getBufferAsData()
+            if let content = String(data: bufferData, encoding: .utf8) {
+                let lines = content.components(separatedBy: CharacterSet.newlines)
+                searchResults = lines.filter { $0.localizedCaseInsensitiveContains(searchText) }
+                currentResultIndex = 0
+            }
+        }
+    }
+
+    private func nextResult() {
+        guard !searchResults.isEmpty else { return }
+        currentResultIndex = (currentResultIndex + 1) % searchResults.count
+    }
+
+    private func previousResult() {
+        guard !searchResults.isEmpty else { return }
+        currentResultIndex = currentResultIndex > 0 ? currentResultIndex - 1 : searchResults.count - 1
     }
 
     // MARK: - Tab Bar

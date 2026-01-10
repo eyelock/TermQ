@@ -131,6 +131,11 @@ class TerminalSessionManager: ObservableObject {
         return sessions[cardId]?.currentDirectory
     }
 
+    /// Get the terminal view for a session (for searching, etc.)
+    func getTerminalView(for cardId: UUID) -> TermQTerminalView? {
+        return sessions[cardId]?.terminal
+    }
+
     /// Update the last activity time for a session
     func updateActivityTime(cardId: UUID) {
         sessions[cardId]?.lastActivityTime = Date()

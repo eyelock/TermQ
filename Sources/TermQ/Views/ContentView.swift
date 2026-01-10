@@ -6,6 +6,7 @@ struct ContentView: View {
     @StateObject private var viewModel = BoardViewModel()
     @EnvironmentObject var urlHandler: URLHandler
     @State private var isZoomed = false
+    @State private var isSearching = false
 
     var body: some View {
         ZStack {
@@ -34,7 +35,8 @@ struct ContentView: View {
                     tabCards: viewModel.tabCards,
                     columns: viewModel.board.columns,
                     needsAttention: viewModel.needsAttention,
-                    isZoomed: $isZoomed
+                    isZoomed: $isZoomed,
+                    isSearching: $isSearching
                 )
             } else {
                 // Kanban board view
@@ -221,6 +223,7 @@ struct ContentView: View {
             newColumn: { viewModel.addColumn() },
             goBack: {
                 isZoomed = false
+                isSearching = false
                 viewModel.deselectCard()
             },
             toggleFavourite: {
@@ -251,6 +254,11 @@ struct ContentView: View {
             toggleZoom: {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     isZoomed.toggle()
+                }
+            },
+            toggleSearch: {
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    isSearching.toggle()
                 }
             }
         )

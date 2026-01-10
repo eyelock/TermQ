@@ -140,6 +140,11 @@ struct TermQApp: App {
                     terminalActions?.toggleZoom()
                 }
                 .keyboardShortcut("z", modifiers: [.command, .shift])
+
+                Button("Find...") {
+                    terminalActions?.toggleSearch()
+                }
+                .keyboardShortcut("f", modifiers: .command)
             }
         }
         .handlesExternalEvents(matching: ["termq"])
