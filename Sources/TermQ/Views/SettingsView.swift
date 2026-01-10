@@ -8,8 +8,18 @@ struct SettingsView: View {
     @State private var showAlert = false
     @State private var alertIsError = false
 
+    // Terminal preferences
+    @AppStorage("copyOnSelect") private var copyOnSelect = false
+
     var body: some View {
         Form {
+            Section {
+                Toggle("Copy on select", isOn: $copyOnSelect)
+                    .help("Automatically copy selected text to clipboard")
+            } header: {
+                Text("Terminal")
+            }
+
             Section {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {

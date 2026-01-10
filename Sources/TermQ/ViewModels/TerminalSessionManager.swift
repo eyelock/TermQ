@@ -60,6 +60,9 @@ class TerminalSessionManager: ObservableObject {
         // Set up OSC handlers for clipboard, notifications, etc.
         terminal.setupOscHandlers()
 
+        // Set up copy-on-select event monitor
+        terminal.setupCopyOnSelect()
+
         // Get current environment
         var env = ProcessInfo.processInfo.environment
         env["TERM"] = "xterm-256color"

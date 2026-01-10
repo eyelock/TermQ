@@ -25,6 +25,10 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Throttle activity callbacks to avoid excessive updates
     private var lastActivityCallback: Date = .distantPast
 
+    deinit {
+        cleanupCopyOnSelect()
+    }
+
     /// Called when terminal view needs redrawing (indicates new content)
     override func setNeedsDisplay(_ invalidRect: NSRect) {
         super.setNeedsDisplay(invalidRect)
@@ -66,6 +70,56 @@ class TermQTerminalView: LocalProcessTerminalView {
         super.bell(source: source)
         onBell?()
         showVisualBell()
+    }
+
+    // MARK: - Copy on Select
+
+    /// Event monitor for copy-on-select feature
+    private var copyOnSelectMonitor: Any?
+
+    /// Set up copy-on-select event monitor
+    func setupCopyOnSelect() {
+        // Remove existing monitor if any
+        if let monitor = copyOnSelectMonitor {
+            NSEvent.removeMonitor(monitor)
+        }
+
+        // Add local event monitor for mouse up
+        copyOnSelectMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseUp) {
+            [weak self] event in
+            self?.handleMouseUpForCopyOnSelect(event)
+            return event
+        }
+    }
+
+    /// Clean up copy-on-select monitor
+    func cleanupCopyOnSelect() {
+        if let monitor = copyOnSelectMonitor {
+            NSEvent.removeMonitor(monitor)
+            copyOnSelectMonitor = nil
+        }
+    }
+
+    /// Handle mouse up for copy-on-select
+    private func handleMouseUpForCopyOnSelect(_ event: NSEvent) {
+        // Check if copy-on-select is enabled
+        let copyOnSelect = UserDefaults.standard.bool(forKey: "copyOnSelect")
+        guard copyOnSelect else { return }
+
+        // Check if the mouse up was in our view
+        guard let eventWindow = event.window,
+            eventWindow == self.window,
+            let locationInWindow = event.window?.mouseLocationOutsideOfEventStream,
+            let hitView = eventWindow.contentView?.hitTest(locationInWindow),
+            hitView === self || hitView.isDescendant(of: self)
+        else { return }
+
+        // Small delay to let selection finalize
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            // Use the public copy method which handles selection internally
+            guard let self = self else { return }
+            self.copy(self)
+        }
     }
 
     // MARK: - Smart Paste
