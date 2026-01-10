@@ -4,6 +4,8 @@ import TermQCore
 struct TerminalCardView: View {
     @ObservedObject var card: TerminalCard
     let columnColor: Color
+    var needsAttention: Bool = false
+    var isProcessing: Bool = false
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
@@ -25,22 +27,42 @@ struct TerminalCardView: View {
 
                 Spacer()
 
-                Button {
-                    onToggleFavourite()
-                } label: {
-                    Image(systemName: card.isFavourite ? "star.fill" : "star")
-                        .foregroundColor(card.isFavourite ? .yellow : .secondary.opacity(0.5))
-                        .font(.caption)
-                }
-                .buttonStyle(.plain)
-                .opacity(isHovering || card.isFavourite ? 1 : 0)
-                .help(card.isFavourite ? "Remove from favourites" : "Add to favourites")
+                // Status indicators
+                HStack(spacing: 6) {
+                    // Needs attention indicator (bell received)
+                    if needsAttention {
+                        Circle()
+                            .fill(Color.orange)
+                            .frame(width: 8, height: 8)
+                            .help("Needs attention")
+                    }
 
-                if card.isRunning {
-                    Circle()
-                        .fill(.green)
-                        .frame(width: 8, height: 8)
-                        .help("Terminal is running")
+                    // Processing indicator (recent output activity)
+                    if isProcessing {
+                        ProgressView()
+                            .scaleEffect(0.5)
+                            .frame(width: 12, height: 12)
+                            .help("Processing")
+                    }
+
+                    Button {
+                        onToggleFavourite()
+                    } label: {
+                        Image(systemName: card.isFavourite ? "star.fill" : "star")
+                            .foregroundColor(card.isFavourite ? .yellow : .secondary.opacity(0.5))
+                            .font(.caption)
+                    }
+                    .buttonStyle(.plain)
+                    .opacity(isHovering || card.isFavourite ? 1 : 0)
+                    .help(card.isFavourite ? "Remove from favourites" : "Add to favourites")
+
+                    // Running status
+                    if card.isRunning && !isProcessing {
+                        Circle()
+                            .fill(.green)
+                            .frame(width: 8, height: 8)
+                            .help("Terminal is running")
+                    }
                 }
             }
 

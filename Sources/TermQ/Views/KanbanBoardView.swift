@@ -23,6 +23,8 @@ struct KanbanBoardView: View {
                         ColumnView(
                             column: column,
                             cards: viewModel.board.cards(for: column),
+                            needsAttention: viewModel.needsAttention,
+                            processingCards: viewModel.processingCards,
                             onAddCard: {
                                 viewModel.addTerminal(to: column)
                             },

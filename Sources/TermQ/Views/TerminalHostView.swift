@@ -16,8 +16,26 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Callback when bell is received
     var onBell: (() -> Void)?
 
+    /// Callback when terminal has output activity (throttled)
+    var onActivity: (() -> Void)?
+
     /// Flash overlay for visual bell
     private var flashOverlay: NSView?
+
+    /// Throttle activity callbacks to avoid excessive updates
+    private var lastActivityCallback: Date = .distantPast
+
+    /// Called when terminal view needs redrawing (indicates new content)
+    override func setNeedsDisplay(_ invalidRect: NSRect) {
+        super.setNeedsDisplay(invalidRect)
+
+        // Throttle activity callbacks to max once per 0.3 seconds
+        let now = Date()
+        if now.timeIntervalSince(lastActivityCallback) > 0.3 {
+            lastActivityCallback = now
+            onActivity?()
+        }
+    }
 
     /// Set up custom OSC handlers after the terminal is initialized
     func setupOscHandlers() {
@@ -275,13 +293,15 @@ struct TerminalHostView: NSViewRepresentable {
     let card: TerminalCard
     let onExit: () -> Void
     var onBell: (() -> Void)?
+    var onActivity: (() -> Void)?
 
     func makeNSView(context: Context) -> TerminalContainerView {
         // Get or create session from the manager
         let container = TerminalSessionManager.shared.getOrCreateSession(
             for: card,
             onExit: onExit,
-            onBell: { onBell?() }
+            onBell: { onBell?() },
+            onActivity: { onActivity?() }
         )
         return container
     }

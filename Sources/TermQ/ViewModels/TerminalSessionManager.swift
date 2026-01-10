@@ -16,13 +16,17 @@ class TerminalSessionManager: ObservableObject {
         let container: TerminalContainerView
         var isRunning: Bool = true
         var currentDirectory: String?
+        var lastActivityTime: Date = Date()
     }
 
     private init() {}
 
     /// Get or create a terminal session for a card
     func getOrCreateSession(
-        for card: TerminalCard, onExit: @escaping () -> Void, onBell: @escaping () -> Void
+        for card: TerminalCard,
+        onExit: @escaping () -> Void,
+        onBell: @escaping () -> Void,
+        onActivity: @escaping () -> Void
     ) -> TerminalContainerView {
         // Return existing session if available
         if let session = sessions[card.id], session.isRunning {
@@ -38,6 +42,10 @@ class TerminalSessionManager: ObservableObject {
         terminal.cardId = card.id
         terminal.terminalTitle = card.title
         terminal.onBell = onBell
+        terminal.onActivity = { [weak self] in
+            self?.updateActivityTime(cardId: card.id)
+            onActivity()
+        }
 
         // Configure terminal appearance
         terminal.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
@@ -103,6 +111,28 @@ class TerminalSessionManager: ObservableObject {
     /// Get the current directory for a session (falls back to nil if not tracked)
     func getCurrentDirectory(for cardId: UUID) -> String? {
         return sessions[cardId]?.currentDirectory
+    }
+
+    /// Update the last activity time for a session
+    func updateActivityTime(cardId: UUID) {
+        sessions[cardId]?.lastActivityTime = Date()
+    }
+
+    /// Check if a session has had recent activity (is "processing")
+    /// Returns true if activity within the last `threshold` seconds
+    func isProcessing(cardId: UUID, threshold: TimeInterval = 2.0) -> Bool {
+        guard let session = sessions[cardId], session.isRunning else { return false }
+        return Date().timeIntervalSince(session.lastActivityTime) < threshold
+    }
+
+    /// Get all card IDs that are currently processing
+    func processingCardIds(threshold: TimeInterval = 2.0) -> Set<UUID> {
+        let now = Date()
+        return Set(
+            sessions.filter { _, session in
+                session.isRunning && now.timeIntervalSince(session.lastActivityTime) < threshold
+            }.keys
+        )
     }
 
     /// Remove a session (when card is deleted)

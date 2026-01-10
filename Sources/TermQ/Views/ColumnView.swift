@@ -4,6 +4,8 @@ import TermQCore
 struct ColumnView: View {
     @ObservedObject var column: Column
     let cards: [TerminalCard]
+    let needsAttention: Set<UUID>
+    let processingCards: Set<UUID>
     let onAddCard: () -> Void
     let onSelectCard: (TerminalCard) -> Void
     let onEditCard: (TerminalCard) -> Void
@@ -75,6 +77,8 @@ struct ColumnView: View {
                         TerminalCardView(
                             card: card,
                             columnColor: columnColor,
+                            needsAttention: needsAttention.contains(card.id),
+                            isProcessing: processingCards.contains(card.id),
                             onSelect: { onSelectCard(card) },
                             onEdit: { onEditCard(card) },
                             onDelete: { onDeleteCard(card) },

@@ -18,9 +18,15 @@ class BoardViewModel: ObservableObject {
     /// Tabs that need attention (received a bell) - cleared when selected
     @Published private(set) var needsAttention: Set<UUID> = []
 
+    /// Terminals currently processing (have recent output activity)
+    @Published private(set) var processingCards: Set<UUID> = []
+
     /// Transient terminals - not persisted, exist only as tabs until promoted
     /// Promoted to board when: edited & saved, or marked as favourite
     private var transientCards: [UUID: TerminalCard] = [:]
+
+    /// Timer for updating processing status
+    private var processingTimer: Timer?
 
     private let saveURL: URL
 
@@ -50,6 +56,26 @@ class BoardViewModel: ObservableObject {
         // Add any favourites not in the order (e.g., newly favourited while order wasn't saved)
         for card in board.cards where card.isFavourite && !sessionTabs.contains(card.id) {
             sessionTabs.append(card.id)
+        }
+
+        // Start timer to periodically update processing status
+        startProcessingTimer()
+    }
+
+    /// Start timer to update processing status
+    private func startProcessingTimer() {
+        processingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.refreshProcessingStatus()
+            }
+        }
+    }
+
+    /// Refresh which cards are currently processing
+    private func refreshProcessingStatus() {
+        let newProcessing = TerminalSessionManager.shared.processingCardIds()
+        if newProcessing != processingCards {
+            processingCards = newProcessing
         }
     }
 
