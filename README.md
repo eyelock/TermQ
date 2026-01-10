@@ -1,6 +1,16 @@
 # TermQ
 
+[![CI](https://github.com/eyelock/termq/actions/workflows/ci.yml/badge.svg)](https://github.com/eyelock/termq/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/eyelock/termq)](https://github.com/eyelock/termq/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![macOS](https://img.shields.io/badge/macOS-14.0%2B-blue)](https://www.apple.com/macos/)
+[![Swift](https://img.shields.io/badge/Swift-5.9-orange)](https://swift.org)
+
 A Kanban-style terminal queue manager for macOS. Organize multiple terminal sessions in a visual board layout, drag them between columns, and never lose track of your running tasks.
+
+> **Note**: This is a personal project developed in my spare time. It works well for my workflow but may have rough edges. Use at your own risk - contributions and feedback welcome!
+
+> **Credits**: The heavy lifting for terminal emulation is done by [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) - a fantastic library by Miguel de Icaza. This project was built with significant assistance from [Claude Code](https://claude.ai/code), Anthropic's AI coding assistant.
 
 ## Table of Contents
 
@@ -13,6 +23,7 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
   - [Keyboard Shortcuts](#keyboard-shortcuts)
   - [CLI Tool](#cli-tool)
 - [Configuration](#configuration)
+- [Known Limitations](#known-limitations)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -150,6 +161,16 @@ The app stores its data at:
 ```
 
 This JSON file contains all columns, cards, and their metadata. You can back it up or edit it manually if needed.
+
+## Known Limitations
+
+- **macOS only** - Built specifically for macOS using SwiftUI and AppKit
+- **Unsigned app** - Requires right-click "Open" on first launch (no Apple Developer certificate)
+- **No cloud sync** - Board data is stored locally only
+- **Single window** - One board per application instance
+- **No terminal multiplexing** - Each card is a single terminal session (no splits/panes)
+
+These limitations may be addressed in future versions based on community interest.
 
 ## Contributing
 

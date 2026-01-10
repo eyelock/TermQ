@@ -5,6 +5,7 @@ Thank you for your interest in contributing to TermQ! This guide will help you g
 ## Table of Contents
 
 - [Quick Start](#quick-start)
+- [Requirements](#requirements)
 - [Development Workflow](#development-workflow)
 - [Project Structure](#project-structure)
 - [Building](#building)
@@ -25,6 +26,18 @@ cd termq
 make sign
 open TermQ.app
 ```
+
+## Requirements
+
+| Requirement | For | Notes |
+|-------------|-----|-------|
+| macOS 14.0+ | Building & running | Required |
+| Xcode Command Line Tools | Building | `xcode-select --install` |
+| Full Xcode.app | Unit tests & linting | Download from App Store |
+| SwiftLint | Linting | `brew install swiftlint` (requires Xcode) |
+| swift-format | Formatting | `brew install swift-format` |
+
+> **Important**: Unit tests and SwiftLint require the full Xcode.app installation, not just Command Line Tools. If you only have Command Line Tools, you can still build and run the app - tests will run in CI.
 
 ## Development Workflow
 

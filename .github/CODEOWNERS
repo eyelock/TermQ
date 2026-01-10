@@ -1,0 +1,10 @@
+# Default owners for everything in the repo
+* @eyelock
+
+# Swift source code
+/Sources/ @eyelock
+/Tests/ @eyelock
+
+# Build and CI
+/Makefile @eyelock
+/.github/workflows/ @eyelock

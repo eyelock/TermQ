@@ -1,0 +1,22 @@
+title: "[Idea]: "
+labels:
+  - idea
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share your ideas for TermQ! We'd love to hear how you think the app could be improved.
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your Idea
+      description: Describe your idea for improving TermQ
+      placeholder: I think it would be great if...
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: How would you use this in your workflow?
+      placeholder: I would use this when...
