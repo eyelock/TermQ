@@ -26,6 +26,8 @@ struct TerminalActions {
     let toggleZoom: () -> Void
     /// Toggle search bar
     let toggleSearch: () -> Void
+    /// Export terminal session to file
+    let exportSession: () -> Void
 }
 
 struct TerminalActionsKey: FocusedValueKey {

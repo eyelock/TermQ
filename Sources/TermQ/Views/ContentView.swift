@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 import TermQCore
+import UniformTypeIdentifiers
 
 struct ContentView: View {
     @StateObject private var viewModel = BoardViewModel()
@@ -260,6 +261,11 @@ struct ContentView: View {
                 withAnimation(.easeInOut(duration: 0.15)) {
                     isSearching.toggle()
                 }
+            },
+            exportSession: {
+                if let selectedCard = viewModel.selectedCard {
+                    exportTerminalSession(for: selectedCard)
+                }
             }
         )
     }
@@ -279,6 +285,34 @@ struct ContentView: View {
             appleScript.executeAndReturnError(&error)
             if let error = error {
                 print("AppleScript error: \(error)")
+            }
+        }
+    }
+
+    /// Export terminal session content to a file
+    private func exportTerminalSession(for card: TerminalCard) {
+        guard let terminalView = TerminalSessionManager.shared.getTerminalView(for: card.id) else {
+            return
+        }
+
+        let terminal = terminalView.getTerminal()
+        let bufferData = terminal.getBufferAsData()
+
+        guard let content = String(data: bufferData, encoding: .utf8) else {
+            return
+        }
+
+        // Show save panel
+        let panel = NSSavePanel()
+        panel.allowedContentTypes = [.plainText]
+        panel.nameFieldStringValue = "\(card.title).txt"
+        panel.message = "Export terminal session content"
+
+        if panel.runModal() == .OK, let url = panel.url {
+            do {
+                try content.write(to: url, atomically: true, encoding: .utf8)
+            } catch {
+                print("Failed to export session: \(error)")
             }
         }
     }

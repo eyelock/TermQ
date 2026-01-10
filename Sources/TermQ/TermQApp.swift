@@ -145,6 +145,13 @@ struct TermQApp: App {
                     terminalActions?.toggleSearch()
                 }
                 .keyboardShortcut("f", modifiers: .command)
+
+                Divider()
+
+                Button("Export Session...") {
+                    terminalActions?.exportSession()
+                }
+                .keyboardShortcut("s", modifiers: [.command, .shift])
             }
         }
         .handlesExternalEvents(matching: ["termq"])
