@@ -19,6 +19,12 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Callback when terminal has output activity (throttled)
     var onActivity: (() -> Void)?
 
+    /// Whether safe paste warnings are enabled for this terminal
+    var safePasteEnabled: Bool = true
+
+    /// Callback when user wants to disable safe paste for this terminal
+    var onDisableSafePaste: (() -> Void)?
+
     /// Flash overlay for visual bell
     private var flashOverlay: NSView?
 
@@ -68,6 +74,7 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Called when the terminal receives a bell character (ASCII 7 / \a)
     override func bell(source: Terminal) {
         super.bell(source: source)
+        print("[TermQ] Bell received for terminal: \(terminalTitle), cardId: \(cardId?.uuidString ?? "nil")")
         onBell?()
         showVisualBell()
     }
@@ -127,6 +134,12 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Override paste to warn about potentially dangerous content
     override func paste(_ sender: Any) {
         guard let text = NSPasteboard.general.string(forType: .string) else {
+            super.paste(sender)
+            return
+        }
+
+        // Skip check if safe paste is disabled for this terminal
+        guard safePasteEnabled else {
             super.paste(sender)
             return
         }
@@ -199,11 +212,20 @@ class TermQTerminalView: LocalProcessTerminalView {
         alert.alertStyle = .warning
         alert.addButton(withTitle: "Paste Anyway")
         alert.addButton(withTitle: "Cancel")
+        alert.addButton(withTitle: "Disable for Terminal")
 
         let response = alert.runModal()
-        if response == .alertFirstButtonReturn {
+        switch response {
+        case .alertFirstButtonReturn:
             // User confirmed - proceed with paste
             insertText(text, replacementRange: NSRange(location: 0, length: 0))
+        case .alertThirdButtonReturn:
+            // Disable safe paste for this terminal and paste
+            safePasteEnabled = false
+            onDisableSafePaste?()
+            insertText(text, replacementRange: NSRange(location: 0, length: 0))
+        default:
+            break  // Cancel
         }
     }
 
@@ -434,6 +456,7 @@ struct TerminalHostView: NSViewRepresentable {
     let onExit: () -> Void
     var onBell: (() -> Void)?
     var onActivity: (() -> Void)?
+    var isSearching: Bool = false
 
     func makeNSView(context: Context) -> TerminalContainerView {
         // Get or create session from the manager
@@ -447,8 +470,10 @@ struct TerminalHostView: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: TerminalContainerView, context: Context) {
-        // Ensure terminal has focus when view updates
-        nsView.focusTerminal()
+        // Only focus terminal when not in search mode
+        if !isSearching {
+            nsView.focusTerminal()
+        }
     }
 
     func makeCoordinator() -> Coordinator {

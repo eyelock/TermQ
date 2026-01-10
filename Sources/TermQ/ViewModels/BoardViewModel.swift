@@ -242,9 +242,13 @@ class BoardViewModel: ObservableObject {
 
     /// Mark a tab as needing attention (e.g., from terminal bell)
     func markNeedsAttention(_ cardId: UUID) {
+        print("[TermQ] markNeedsAttention called for: \(cardId), selectedCard: \(selectedCard?.id.uuidString ?? "nil")")
         // Only mark if not the currently selected card
         if selectedCard?.id != cardId {
             needsAttention.insert(cardId)
+            print("[TermQ] Added to needsAttention set, count: \(needsAttention.count)")
+        } else {
+            print("[TermQ] Skipped - card is currently selected")
         }
     }
 

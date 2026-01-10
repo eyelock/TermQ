@@ -19,6 +19,7 @@ struct ExpandedTerminalView: View {
     @State private var searchText = ""
     @State private var searchResults: [String] = []
     @State private var currentResultIndex = 0
+    @FocusState private var isSearchFieldFocused: Bool
 
     var body: some View {
         VStack(spacing: 0) {
@@ -77,7 +78,8 @@ struct ExpandedTerminalView: View {
                     },
                     onBell: {
                         onBell(card.id)
-                    }
+                    },
+                    isSearching: isSearching
                 )
                 .id(card.id)  // Force view recreation when switching terminals
             }
@@ -110,8 +112,14 @@ struct ExpandedTerminalView: View {
     func toggleSearch() {
         withAnimation(.easeInOut(duration: 0.15)) {
             isSearching.toggle()
-            if !isSearching {
+            if isSearching {
+                // Focus search field after a brief delay for animation
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    isSearchFieldFocused = true
+                }
+            } else {
                 searchText = ""
+                isSearchFieldFocused = false
             }
         }
     }
@@ -125,6 +133,7 @@ struct ExpandedTerminalView: View {
 
             TextField("Search in terminal...", text: $searchText)
                 .textFieldStyle(.plain)
+                .focused($isSearchFieldFocused)
                 .onSubmit {
                     performSearch()
                 }

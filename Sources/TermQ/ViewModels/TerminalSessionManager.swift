@@ -57,6 +57,11 @@ class TerminalSessionManager: ObservableObject {
         let terminal = TermQTerminalView(frame: .zero)
         terminal.cardId = card.id
         terminal.terminalTitle = card.title
+        terminal.safePasteEnabled = card.safePasteEnabled
+        terminal.onDisableSafePaste = {
+            // Persist the change to the card model
+            card.safePasteEnabled = false
+        }
         terminal.onBell = onBell
         terminal.onActivity = { [weak self] in
             self?.updateActivityTime(cardId: card.id)
@@ -73,8 +78,10 @@ class TerminalSessionManager: ObservableObject {
         }
         terminal.font = terminalFont
 
-        // Apply current theme
-        applyTheme(to: terminal)
+        // Apply theme (per-terminal or global default)
+        let effectiveThemeId = card.themeId.isEmpty ? themeId : card.themeId
+        let theme = TerminalTheme.theme(for: effectiveThemeId)
+        applyTheme(to: terminal, theme: theme)
 
         // Set up OSC handlers for clipboard, notifications, etc.
         terminal.setupOscHandlers()
@@ -211,8 +218,8 @@ class TerminalSessionManager: ObservableObject {
     // MARK: - Theme Support
 
     /// Apply theme to a terminal view
-    func applyTheme(to terminal: TermQTerminalView) {
-        let theme = currentTheme
+    func applyTheme(to terminal: TermQTerminalView, theme: TerminalTheme? = nil) {
+        let theme = theme ?? currentTheme
 
         // Set foreground and background colors
         terminal.nativeForegroundColor = theme.foreground

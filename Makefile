@@ -29,9 +29,9 @@ clean:
 	swift package clean
 	rm -rf .build
 
-# Run tests (requires Xcode, not just CommandLineTools)
+# Run tests (requires Xcode for XCTest - uses Xcode's developer directory)
 test:
-	swift test
+	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
 
 # Install SwiftLint if not present (using Homebrew)
 install-swiftlint:

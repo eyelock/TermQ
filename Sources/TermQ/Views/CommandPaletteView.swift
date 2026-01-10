@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQCore
 
@@ -12,6 +13,7 @@ struct CommandPaletteView: View {
 
     @State private var searchText = ""
     @State private var selectedIndex = 0
+    @State private var keyMonitor: Any?
     @FocusState private var isSearchFocused: Bool
 
     enum PaletteAction: Identifiable {
@@ -183,25 +185,49 @@ struct CommandPaletteView: View {
         .onAppear {
             isSearchFocused = true
             selectedIndex = 0
+            setupKeyMonitor()
+        }
+        .onDisappear {
+            removeKeyMonitor()
         }
         .onChange(of: searchText) { _, _ in
             selectedIndex = 0
         }
-        .onKeyPress(.upArrow) {
-            if selectedIndex > 0 {
-                selectedIndex -= 1
-            }
-            return .handled
-        }
-        .onKeyPress(.downArrow) {
-            if selectedIndex < totalItemCount - 1 {
-                selectedIndex += 1
-            }
-            return .handled
-        }
         .onKeyPress(.escape) {
             isPresented = false
             return .handled
+        }
+    }
+
+    private func setupKeyMonitor() {
+        keyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [self] event in
+            guard isPresented else { return event }
+
+            switch event.keyCode {
+            case 126:  // Up arrow
+                if selectedIndex > 0 {
+                    DispatchQueue.main.async {
+                        selectedIndex -= 1
+                    }
+                }
+                return nil  // Consume event
+            case 125:  // Down arrow
+                if selectedIndex < totalItemCount - 1 {
+                    DispatchQueue.main.async {
+                        selectedIndex += 1
+                    }
+                }
+                return nil  // Consume event
+            default:
+                return event
+            }
+        }
+    }
+
+    private func removeKeyMonitor() {
+        if let monitor = keyMonitor {
+            NSEvent.removeMonitor(monitor)
+            keyMonitor = nil
         }
     }
 

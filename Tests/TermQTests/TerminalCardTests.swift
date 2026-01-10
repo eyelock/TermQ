@@ -117,4 +117,136 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertEqual(card.shellPath, "/bin/sh")
         XCTAssertEqual(card.workingDirectory, "/usr/local")
     }
+
+    // MARK: - Safe Paste Tests
+
+    func testSafePasteEnabledDefaultsToTrue() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId)
+
+        XCTAssertTrue(card.safePasteEnabled)
+    }
+
+    func testSafePasteEnabledCustomValue() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId, safePasteEnabled: false)
+
+        XCTAssertFalse(card.safePasteEnabled)
+    }
+
+    func testSafePasteEnabledCodableRoundTrip() throws {
+        let columnId = UUID()
+        let original = TerminalCard(columnId: columnId, safePasteEnabled: false)
+
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(original)
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertEqual(decoded.safePasteEnabled, original.safePasteEnabled)
+        XCTAssertFalse(decoded.safePasteEnabled)
+    }
+
+    func testSafePasteEnabledDefaultsToTrueWhenMissingInJSON() throws {
+        // Simulate loading old data without safePasteEnabled field
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test",
+                "description": "",
+                "tags": [],
+                "columnId": "\(columnId.uuidString)",
+                "orderIndex": 0,
+                "shellPath": "/bin/zsh",
+                "workingDirectory": "/tmp",
+                "isFavourite": false,
+                "initCommand": "",
+                "llmPrompt": "",
+                "badge": "",
+                "fontName": "",
+                "fontSize": 0
+            }
+            """
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
+
+        // Should default to true when missing
+        XCTAssertTrue(decoded.safePasteEnabled)
+    }
+
+    // MARK: - Theme ID Tests
+
+    func testThemeIdDefaultsToEmpty() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId)
+
+        XCTAssertEqual(card.themeId, "")
+    }
+
+    func testThemeIdCustomValue() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId, themeId: "dracula")
+
+        XCTAssertEqual(card.themeId, "dracula")
+    }
+
+    func testThemeIdCodableRoundTrip() throws {
+        let columnId = UUID()
+        let original = TerminalCard(columnId: columnId, themeId: "monokai")
+
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(original)
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertEqual(decoded.themeId, original.themeId)
+        XCTAssertEqual(decoded.themeId, "monokai")
+    }
+
+    func testThemeIdDefaultsToEmptyWhenMissingInJSON() throws {
+        // Simulate loading old data without themeId field
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test",
+                "description": "",
+                "tags": [],
+                "columnId": "\(columnId.uuidString)",
+                "orderIndex": 0,
+                "shellPath": "/bin/zsh",
+                "workingDirectory": "/tmp",
+                "isFavourite": false,
+                "initCommand": "",
+                "llmPrompt": "",
+                "badge": "",
+                "fontName": "",
+                "fontSize": 0,
+                "safePasteEnabled": true
+            }
+            """
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
+
+        // Should default to empty when missing
+        XCTAssertEqual(decoded.themeId, "")
+    }
+
+    func testThemeIdObservable() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId)
+
+        XCTAssertEqual(card.themeId, "")
+
+        card.themeId = "nord"
+        XCTAssertEqual(card.themeId, "nord")
+
+        card.themeId = ""
+        XCTAssertEqual(card.themeId, "")
+    }
 }

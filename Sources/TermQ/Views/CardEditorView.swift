@@ -24,6 +24,8 @@ struct CardEditorView: View {
     @State private var badge: String = ""
     @State private var fontName: String = ""
     @State private var fontSize: CGFloat = 13
+    @State private var safePasteEnabled: Bool = true
+    @State private var themeId: String = ""
 
     /// Available monospace fonts
     private var monospaceFonts: [String] {
@@ -114,9 +116,19 @@ struct CardEditorView: View {
 
                     TextField("Badge", text: $badge)
                         .help("Short label shown on card (e.g., 'prod', 'dev', 'api')")
+
+                    Toggle("Safe Paste", isOn: $safePasteEnabled)
+                        .help("Show warnings when pasting potentially dangerous commands (sudo, rm -rf, etc.)")
                 }
 
-                Section("Font") {
+                Section("Appearance") {
+                    Picker("Theme", selection: $themeId) {
+                        Text("Default (Global)").tag("")
+                        ForEach(TerminalTheme.allThemes) { theme in
+                            Text(theme.name).tag(theme.id)
+                        }
+                    }
+
                     Picker("Font", selection: $fontName) {
                         ForEach(monospaceFonts, id: \.self) { font in
                             Text(font).tag(font == "System Default" ? "" : font)
@@ -130,13 +142,14 @@ struct CardEditorView: View {
                             .frame(width: 40)
                     }
 
-                    // Font preview
+                    // Font preview with theme colors
+                    let previewTheme = themeId.isEmpty ? TerminalTheme.defaultDark : TerminalTheme.theme(for: themeId)
                     Text("AaBbCc 123 ~/code $ ls -la")
                         .font(previewFont)
                         .padding(8)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.black)
-                        .foregroundColor(.green)
+                        .background(Color(nsColor: previewTheme.background))
+                        .foregroundColor(Color(nsColor: previewTheme.foreground))
                         .cornerRadius(4)
                 }
 
@@ -207,6 +220,8 @@ struct CardEditorView: View {
         badge = card.badge
         fontName = card.fontName
         fontSize = card.fontSize > 0 ? card.fontSize : 13
+        safePasteEnabled = card.safePasteEnabled
+        themeId = card.themeId
     }
 
     private func saveChanges() {
@@ -222,6 +237,8 @@ struct CardEditorView: View {
         card.badge = badge
         card.fontName = fontName
         card.fontSize = fontSize
+        card.safePasteEnabled = safePasteEnabled
+        card.themeId = themeId
     }
 
     private func addTag() {

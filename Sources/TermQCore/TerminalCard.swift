@@ -27,13 +27,19 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Font size in points (0 = default 13pt)
     @Published public var fontSize: CGFloat
 
+    /// Whether to show warnings when pasting potentially dangerous content
+    @Published public var safePasteEnabled: Bool
+
+    /// Terminal color theme ID (empty = use global default theme)
+    @Published public var themeId: String
+
     // Runtime state (not persisted)
     public var isRunning: Bool = false
     public var isTransient: Bool = false
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
-        case isFavourite, initCommand, llmPrompt, badge, fontName, fontSize
+        case isFavourite, initCommand, llmPrompt, badge, fontName, fontSize, safePasteEnabled, themeId
     }
 
     public init(
@@ -50,7 +56,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         llmPrompt: String = "",
         badge: String = "",
         fontName: String = "",
-        fontSize: CGFloat = 0
+        fontSize: CGFloat = 0,
+        safePasteEnabled: Bool = true,
+        themeId: String = ""
     ) {
         self.id = id
         self.title = title
@@ -66,6 +74,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.badge = badge
         self.fontName = fontName
         self.fontSize = fontSize
+        self.safePasteEnabled = safePasteEnabled
+        self.themeId = themeId
     }
 
     public required init(from decoder: Decoder) throws {
@@ -84,6 +94,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         badge = try container.decodeIfPresent(String.self, forKey: .badge) ?? ""
         fontName = try container.decodeIfPresent(String.self, forKey: .fontName) ?? ""
         fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize) ?? 0
+        safePasteEnabled = try container.decodeIfPresent(Bool.self, forKey: .safePasteEnabled) ?? true
+        themeId = try container.decodeIfPresent(String.self, forKey: .themeId) ?? ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -102,6 +114,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(badge, forKey: .badge)
         try container.encode(fontName, forKey: .fontName)
         try container.encode(fontSize, forKey: .fontSize)
+        try container.encode(safePasteEnabled, forKey: .safePasteEnabled)
+        try container.encode(themeId, forKey: .themeId)
     }
 }
 
