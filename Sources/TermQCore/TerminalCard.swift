@@ -21,13 +21,19 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Badge text to display on the card (e.g., "prod", "dev", git branch)
     @Published public var badge: String
 
+    /// Custom font name (empty = system default monospace)
+    @Published public var fontName: String
+
+    /// Font size in points (0 = default 13pt)
+    @Published public var fontSize: CGFloat
+
     // Runtime state (not persisted)
     public var isRunning: Bool = false
     public var isTransient: Bool = false
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
-        case isFavourite, initCommand, llmPrompt, badge
+        case isFavourite, initCommand, llmPrompt, badge, fontName, fontSize
     }
 
     public init(
@@ -42,7 +48,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         isFavourite: Bool = false,
         initCommand: String = "",
         llmPrompt: String = "",
-        badge: String = ""
+        badge: String = "",
+        fontName: String = "",
+        fontSize: CGFloat = 0
     ) {
         self.id = id
         self.title = title
@@ -56,6 +64,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.initCommand = initCommand
         self.llmPrompt = llmPrompt
         self.badge = badge
+        self.fontName = fontName
+        self.fontSize = fontSize
     }
 
     public required init(from decoder: Decoder) throws {
@@ -72,6 +82,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         initCommand = try container.decodeIfPresent(String.self, forKey: .initCommand) ?? ""
         llmPrompt = try container.decodeIfPresent(String.self, forKey: .llmPrompt) ?? ""
         badge = try container.decodeIfPresent(String.self, forKey: .badge) ?? ""
+        fontName = try container.decodeIfPresent(String.self, forKey: .fontName) ?? ""
+        fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize) ?? 0
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -88,6 +100,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(initCommand, forKey: .initCommand)
         try container.encode(llmPrompt, forKey: .llmPrompt)
         try container.encode(badge, forKey: .badge)
+        try container.encode(fontName, forKey: .fontName)
+        try container.encode(fontSize, forKey: .fontSize)
     }
 }
 

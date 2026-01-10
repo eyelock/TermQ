@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQCore
 
@@ -21,6 +22,29 @@ struct CardEditorView: View {
     @State private var initCommand: String = ""
     @State private var llmPrompt: String = ""
     @State private var badge: String = ""
+    @State private var fontName: String = ""
+    @State private var fontSize: CGFloat = 13
+
+    /// Available monospace fonts
+    private var monospaceFonts: [String] {
+        let fontManager = NSFontManager.shared
+        let monoFonts = fontManager.availableFontFamilies.filter { family in
+            if let font = NSFont(name: family, size: 12) {
+                return font.isFixedPitch
+            }
+            return false
+        }
+        return ["System Default"] + monoFonts.sorted()
+    }
+
+    /// Preview font based on current selection
+    private var previewFont: Font {
+        if fontName.isEmpty {
+            return .system(size: fontSize, design: .monospaced)
+        } else {
+            return .custom(fontName, size: fontSize)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -92,6 +116,30 @@ struct CardEditorView: View {
                         .help("Short label shown on card (e.g., 'prod', 'dev', 'api')")
                 }
 
+                Section("Font") {
+                    Picker("Font", selection: $fontName) {
+                        ForEach(monospaceFonts, id: \.self) { font in
+                            Text(font).tag(font == "System Default" ? "" : font)
+                        }
+                    }
+
+                    HStack {
+                        Text("Size:")
+                        Slider(value: $fontSize, in: 9...24, step: 1)
+                        Text("\(Int(fontSize)) pt")
+                            .frame(width: 40)
+                    }
+
+                    // Font preview
+                    Text("AaBbCc 123 ~/code $ ls -la")
+                        .font(previewFont)
+                        .padding(8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.black)
+                        .foregroundColor(.green)
+                        .cornerRadius(4)
+                }
+
                 Section("LLM Context") {
                     TextField("LLM Prompt", text: $llmPrompt, axis: .vertical)
                         .lineLimit(3...8)
@@ -140,7 +188,7 @@ struct CardEditorView: View {
             .formStyle(.grouped)
             .padding()
         }
-        .frame(width: 600, height: 700)
+        .frame(width: 600, height: 800)
         .onAppear {
             loadFromCard()
         }
@@ -157,6 +205,8 @@ struct CardEditorView: View {
         initCommand = card.initCommand
         llmPrompt = card.llmPrompt
         badge = card.badge
+        fontName = card.fontName
+        fontSize = card.fontSize > 0 ? card.fontSize : 13
     }
 
     private func saveChanges() {
@@ -170,6 +220,8 @@ struct CardEditorView: View {
         card.initCommand = initCommand
         card.llmPrompt = llmPrompt
         card.badge = badge
+        card.fontName = fontName
+        card.fontSize = fontSize
     }
 
     private func addTag() {

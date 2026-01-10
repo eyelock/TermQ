@@ -47,8 +47,15 @@ class TerminalSessionManager: ObservableObject {
             onActivity()
         }
 
-        // Configure terminal appearance
-        terminal.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
+        // Configure terminal appearance with custom font if specified
+        let terminalFont: NSFont
+        let size = card.fontSize > 0 ? card.fontSize : 13
+        if !card.fontName.isEmpty, let customFont = NSFont(name: card.fontName, size: size) {
+            terminalFont = customFont
+        } else {
+            terminalFont = NSFont.monospacedSystemFont(ofSize: size, weight: .regular)
+        }
+        terminal.font = terminalFont
 
         // Set up OSC handlers for clipboard, notifications, etc.
         terminal.setupOscHandlers()
