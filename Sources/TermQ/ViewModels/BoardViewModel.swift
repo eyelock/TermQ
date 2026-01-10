@@ -289,6 +289,13 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
+    /// Move a column to a new position (for drag-drop reordering)
+    func moveColumn(_ column: Column, toIndex: Int) {
+        board.moveColumn(column, to: toIndex)
+        objectWillChange.send()
+        save()
+    }
+
     // MARK: - Favourites
 
     /// Cards marked as favourites (persisted, restored on app restart)

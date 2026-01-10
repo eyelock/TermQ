@@ -8,6 +8,8 @@ struct KanbanBoardView: View {
     private let columnSpacing: CGFloat = 16
     private let horizontalPadding: CGFloat = 16
 
+    @State private var draggedColumnId: UUID?
+
     var body: some View {
         GeometryReader { geometry in
             let columnCount = max(1, viewModel.board.columns.count)
@@ -56,6 +58,34 @@ struct KanbanBoardView: View {
                             }
                         )
                         .frame(width: columnWidth)
+                        .opacity(draggedColumnId == column.id ? 0.5 : 1.0)
+                        .draggable(column.id.uuidString) {
+                            // Drag preview
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color(hex: column.color)?.opacity(0.3) ?? Color.gray.opacity(0.3))
+                                .frame(width: columnWidth, height: 100)
+                                .overlay(
+                                    Text(column.name)
+                                        .font(.headline)
+                                )
+                        }
+                        .dropDestination(for: String.self) { items, _ in
+                            guard let droppedIdString = items.first,
+                                  let droppedId = UUID(uuidString: droppedIdString),
+                                  let droppedColumn = viewModel.board.columns.first(where: { $0.id == droppedId }),
+                                  let targetIndex = viewModel.board.columns.firstIndex(where: { $0.id == column.id })
+                            else {
+                                return false
+                            }
+                            viewModel.moveColumn(droppedColumn, toIndex: targetIndex)
+                            return true
+                        } isTargeted: { isTargeted in
+                            // Optional: visual feedback when hovering
+                        }
+                        .onDrag {
+                            draggedColumnId = column.id
+                            return NSItemProvider(object: column.id.uuidString as NSString)
+                        }
                     }
                 }
                 .padding(.horizontal, horizontalPadding)
@@ -64,5 +94,8 @@ struct KanbanBoardView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(nsColor: .underPageBackgroundColor))
+        .onChange(of: draggedColumnId) { _, _ in
+            // Reset when drag ends
+        }
     }
 }

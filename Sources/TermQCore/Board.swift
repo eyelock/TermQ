@@ -83,4 +83,19 @@ public class Board: ObservableObject, Codable {
         }
         columns.removeAll { $0.id == column.id }
     }
+
+    /// Move a column to a new position
+    public func moveColumn(_ column: Column, to targetIndex: Int) {
+        guard let currentIndex = columns.firstIndex(where: { $0.id == column.id }) else { return }
+        guard currentIndex != targetIndex else { return }
+
+        columns.remove(at: currentIndex)
+        let insertIndex = min(targetIndex, columns.count)
+        columns.insert(column, at: insertIndex)
+
+        // Update order indices
+        for (i, col) in columns.enumerated() {
+            col.orderIndex = i
+        }
+    }
 }
