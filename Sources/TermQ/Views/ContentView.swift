@@ -5,6 +5,7 @@ import TermQCore
 struct ContentView: View {
     @StateObject private var viewModel = BoardViewModel()
     @EnvironmentObject var urlHandler: URLHandler
+    @State private var isZoomed = false
 
     var body: some View {
         ZStack {
@@ -32,7 +33,8 @@ struct ContentView: View {
                     },
                     tabCards: viewModel.tabCards,
                     columns: viewModel.board.columns,
-                    needsAttention: viewModel.needsAttention
+                    needsAttention: viewModel.needsAttention,
+                    isZoomed: $isZoomed
                 )
             } else {
                 // Kanban board view
@@ -217,7 +219,10 @@ struct ContentView: View {
                 }
             },
             newColumn: { viewModel.addColumn() },
-            goBack: { viewModel.deselectCard() },
+            goBack: {
+                isZoomed = false
+                viewModel.deselectCard()
+            },
             toggleFavourite: {
                 if let card = viewModel.selectedCard {
                     viewModel.toggleFavourite(card)
@@ -241,6 +246,11 @@ struct ContentView: View {
             deleteTerminal: {
                 if viewModel.selectedCard != nil {
                     viewModel.showDeleteConfirmation = true
+                }
+            },
+            toggleZoom: {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isZoomed.toggle()
                 }
             }
         )

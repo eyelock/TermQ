@@ -71,9 +71,9 @@ struct KanbanBoardView: View {
                         }
                         .dropDestination(for: String.self) { items, _ in
                             guard let droppedIdString = items.first,
-                                  let droppedId = UUID(uuidString: droppedIdString),
-                                  let droppedColumn = viewModel.board.columns.first(where: { $0.id == droppedId }),
-                                  let targetIndex = viewModel.board.columns.firstIndex(where: { $0.id == column.id })
+                                let droppedId = UUID(uuidString: droppedIdString),
+                                let droppedColumn = viewModel.board.columns.first(where: { $0.id == droppedId }),
+                                let targetIndex = viewModel.board.columns.firstIndex(where: { $0.id == column.id })
                             else {
                                 return false
                             }

@@ -14,13 +14,33 @@ struct ExpandedTerminalView: View {
     let needsAttention: Set<UUID>
 
     @State private var terminalExited = false
+    @Binding var isZoomed: Bool
 
     var body: some View {
         VStack(spacing: 0) {
-            // Tab bar (at the very top)
-            if !tabCards.isEmpty {
+            // Tab bar (at the very top) - hidden in zoom mode
+            if !tabCards.isEmpty && !isZoomed {
                 tabBar
                 Divider()
+            }
+
+            // Zoom indicator bar
+            if isZoomed {
+                HStack {
+                    Spacer()
+                    Text("Zoom Mode")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Text("⇧⌘Z to exit")
+                        .font(.caption2)
+                        .foregroundColor(.secondary.opacity(0.7))
+                    Spacer()
+                }
+                .padding(.vertical, 4)
+                .background(Color(nsColor: .windowBackgroundColor).opacity(0.8))
+                .onTapGesture {
+                    isZoomed = false
+                }
             }
 
             // Terminal view
@@ -62,6 +82,13 @@ struct ExpandedTerminalView: View {
             } else {
                 terminalExited = false
             }
+        }
+        .onKeyPress(.escape) {
+            if isZoomed {
+                isZoomed = false
+                return .handled
+            }
+            return .ignored
         }
     }
 

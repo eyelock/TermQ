@@ -117,8 +117,8 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
 
         // Check for curl/wget piped to shell (common attack vector)
-        if (text.contains("curl ") || text.contains("wget ")) &&
-            (text.contains("| bash") || text.contains("| sh") || text.contains("|bash") || text.contains("|sh"))
+        if (text.contains("curl ") || text.contains("wget "))
+            && (text.contains("| bash") || text.contains("| sh") || text.contains("|bash") || text.contains("|sh"))
         {
             warnings.append("Downloads and executes remote script - verify source first")
         }

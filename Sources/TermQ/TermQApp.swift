@@ -133,6 +133,13 @@ struct TermQApp: App {
                     terminalActions?.deleteTerminal()
                 }
                 .keyboardShortcut(.delete, modifiers: .command)
+
+                Divider()
+
+                Button("Toggle Zoom Mode") {
+                    terminalActions?.toggleZoom()
+                }
+                .keyboardShortcut("z", modifiers: [.command, .shift])
             }
         }
         .handlesExternalEvents(matching: ["termq"])

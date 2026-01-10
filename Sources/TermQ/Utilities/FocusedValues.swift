@@ -22,6 +22,8 @@ struct TerminalActions {
     let closeTab: () -> Void
     /// Delete the current terminal
     let deleteTerminal: () -> Void
+    /// Toggle zoom mode (hide tabs, maximize terminal)
+    let toggleZoom: () -> Void
 }
 
 struct TerminalActionsKey: FocusedValueKey {
