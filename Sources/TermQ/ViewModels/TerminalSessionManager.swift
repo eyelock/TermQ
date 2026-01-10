@@ -8,6 +8,19 @@ import TermQCore
 class TerminalSessionManager: ObservableObject {
     static let shared = TerminalSessionManager()
 
+    /// Current theme ID (stored in UserDefaults)
+    @Published var themeId: String {
+        didSet {
+            UserDefaults.standard.set(themeId, forKey: "terminalTheme")
+            applyThemeToAllSessions()
+        }
+    }
+
+    /// Current theme
+    var currentTheme: TerminalTheme {
+        TerminalTheme.theme(for: themeId)
+    }
+
     /// Active terminal sessions keyed by card ID
     private var sessions: [UUID: TerminalSession] = [:]
 
@@ -19,7 +32,10 @@ class TerminalSessionManager: ObservableObject {
         var lastActivityTime: Date = Date()
     }
 
-    private init() {}
+    private init() {
+        // Load saved theme or use default
+        self.themeId = UserDefaults.standard.string(forKey: "terminalTheme") ?? "default-dark"
+    }
 
     /// Get or create a terminal session for a card
     func getOrCreateSession(
@@ -56,6 +72,9 @@ class TerminalSessionManager: ObservableObject {
             terminalFont = NSFont.monospacedSystemFont(ofSize: size, weight: .regular)
         }
         terminal.font = terminalFont
+
+        // Apply current theme
+        applyTheme(to: terminal)
 
         // Set up OSC handlers for clipboard, notifications, etc.
         terminal.setupOscHandlers()
@@ -187,6 +206,41 @@ class TerminalSessionManager: ObservableObject {
 
     private func escapeShellArg(_ arg: String) -> String {
         return "'" + arg.replacingOccurrences(of: "'", with: "'\"'\"'") + "'"
+    }
+
+    // MARK: - Theme Support
+
+    /// Apply theme to a terminal view
+    func applyTheme(to terminal: TermQTerminalView) {
+        let theme = currentTheme
+
+        // Set foreground and background colors
+        terminal.nativeForegroundColor = theme.foreground
+        terminal.nativeBackgroundColor = theme.background
+
+        // Set cursor color
+        terminal.caretColor = theme.cursor
+
+        // Install the ANSI color palette
+        terminal.installColors(theme.swiftTermColors)
+
+        // Update container background if available
+        if let container = terminal.superview as? TerminalContainerView {
+            container.layer?.backgroundColor = theme.background.cgColor
+        }
+
+        // Force redraw
+        terminal.setNeedsDisplay(terminal.bounds)
+    }
+
+    /// Apply theme to all active sessions
+    func applyThemeToAllSessions() {
+        let theme = currentTheme
+        for (_, session) in sessions {
+            applyTheme(to: session.terminal)
+            // Also update container background
+            session.container.layer?.backgroundColor = theme.background.cgColor
+        }
     }
 }
 

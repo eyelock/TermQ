@@ -10,10 +10,22 @@ struct SettingsView: View {
 
     // Terminal preferences
     @AppStorage("copyOnSelect") private var copyOnSelect = false
+    @ObservedObject private var sessionManager = TerminalSessionManager.shared
 
     var body: some View {
         Form {
             Section {
+                Picker("Theme", selection: $sessionManager.themeId) {
+                    ForEach(TerminalTheme.allThemes) { theme in
+                        HStack {
+                            ThemePreviewSwatch(theme: theme)
+                            Text(theme.name)
+                        }
+                        .tag(theme.id)
+                    }
+                }
+                .help("Color scheme for terminal windows")
+
                 Toggle("Copy on select", isOn: $copyOnSelect)
                     .help("Automatically copy selected text to clipboard")
             } header: {
@@ -126,7 +138,7 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 500, height: 380)
+        .frame(width: 500, height: 420)
         .alert(alertIsError ? "Error" : "Success", isPresented: $showAlert) {
             Button("OK") {}
         } message: {
@@ -189,5 +201,37 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Theme Preview Swatch
+
+struct ThemePreviewSwatch: View {
+    let theme: TerminalTheme
+
+    var body: some View {
+        HStack(spacing: 1) {
+            // Background sample
+            Rectangle()
+                .fill(Color(nsColor: theme.background))
+                .frame(width: 12, height: 12)
+
+            // Foreground sample
+            Rectangle()
+                .fill(Color(nsColor: theme.foreground))
+                .frame(width: 12, height: 12)
+
+            // A few ANSI colors
+            ForEach(0..<4, id: \.self) { index in
+                Rectangle()
+                    .fill(Color(nsColor: theme.ansiColors[index + 1]))  // Skip black, show R/G/Y/B
+                    .frame(width: 8, height: 12)
+            }
+        }
+        .cornerRadius(3)
+        .overlay(
+            RoundedRectangle(cornerRadius: 3)
+                .stroke(Color.secondary.opacity(0.3), lineWidth: 0.5)
+        )
     }
 }

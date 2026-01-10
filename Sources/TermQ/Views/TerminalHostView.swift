@@ -320,9 +320,10 @@ class TerminalContainerView: NSView {
         self.terminal = terminal
         super.init(frame: .zero)
 
-        // Set background color
+        // Set background color from current theme
         wantsLayer = true
-        layer?.backgroundColor = NSColor.black.cgColor
+        let theme = TerminalSessionManager.shared.currentTheme
+        layer?.backgroundColor = theme.background.cgColor
 
         // Only add as subview if not already added
         if terminal.superview == nil {
