@@ -25,6 +25,20 @@ struct TerminalCardView: View {
                     .font(.headline)
                     .lineLimit(1)
 
+                // Badge
+                if !card.badge.isEmpty {
+                    Text(card.badge)
+                        .font(.caption2)
+                        .fontWeight(.medium)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(columnColor.opacity(0.2))
+                        )
+                        .foregroundColor(columnColor)
+                }
+
                 Spacer()
 
                 // Status indicators

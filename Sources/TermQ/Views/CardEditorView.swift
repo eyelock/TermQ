@@ -18,6 +18,9 @@ struct CardEditorView: View {
     @State private var newTagValue: String = ""
     @State private var switchToTerminal: Bool = true
     @State private var isFavourite: Bool = false
+    @State private var initCommand: String = ""
+    @State private var llmPrompt: String = ""
+    @State private var badge: String = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -80,6 +83,19 @@ struct CardEditorView: View {
 
                     TextField("Shell Path", text: $shellPath)
                         .help("e.g., /bin/zsh, /bin/bash")
+
+                    TextField("Init Command", text: $initCommand, axis: .vertical)
+                        .lineLimit(2...4)
+                        .help("Command(s) to run when terminal starts (e.g., 'source .env && npm run dev')")
+
+                    TextField("Badge", text: $badge)
+                        .help("Short label shown on card (e.g., 'prod', 'dev', 'api')")
+                }
+
+                Section("LLM Context") {
+                    TextField("LLM Prompt", text: $llmPrompt, axis: .vertical)
+                        .lineLimit(3...8)
+                        .help("Initial prompt or context for LLM-based tasks")
                 }
 
                 Section("Tags") {
@@ -124,7 +140,7 @@ struct CardEditorView: View {
             .formStyle(.grouped)
             .padding()
         }
-        .frame(width: 600, height: 550)
+        .frame(width: 600, height: 700)
         .onAppear {
             loadFromCard()
         }
@@ -138,6 +154,9 @@ struct CardEditorView: View {
         selectedColumnId = card.columnId
         tags = card.tags
         isFavourite = card.isFavourite
+        initCommand = card.initCommand
+        llmPrompt = card.llmPrompt
+        badge = card.badge
     }
 
     private func saveChanges() {
@@ -148,6 +167,9 @@ struct CardEditorView: View {
         card.columnId = selectedColumnId
         card.tags = tags
         card.isFavourite = isFavourite
+        card.initCommand = initCommand
+        card.llmPrompt = llmPrompt
+        card.badge = badge
     }
 
     private func addTag() {

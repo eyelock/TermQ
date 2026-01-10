@@ -85,6 +85,14 @@ class TerminalSessionManager: ObservableObject {
         // Store session
         sessions[card.id] = TerminalSession(terminal: terminal, container: container)
 
+        // Run init command if specified (after a short delay to let shell initialize)
+        if !card.initCommand.isEmpty {
+            let initCmd = card.initCommand
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                terminal.send(txt: initCmd + "\n")
+            }
+        }
+
         return container
     }
 
