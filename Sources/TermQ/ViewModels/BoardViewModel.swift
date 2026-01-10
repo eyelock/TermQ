@@ -15,6 +15,9 @@ class BoardViewModel: ObservableObject {
     /// Initialized from favourites on startup, then tracks what's open during the session
     @Published private(set) var sessionTabs: [UUID] = []
 
+    /// Tabs that need attention (received a bell) - cleared when selected
+    @Published private(set) var needsAttention: Set<UUID> = []
+
     private let saveURL: URL
 
     init() {
@@ -178,6 +181,16 @@ class BoardViewModel: ObservableObject {
         // Add to session tabs if not already there
         if !sessionTabs.contains(card.id) {
             sessionTabs.append(card.id)
+        }
+        // Clear attention indicator when tab is selected
+        needsAttention.remove(card.id)
+    }
+
+    /// Mark a tab as needing attention (e.g., from terminal bell)
+    func markNeedsAttention(_ cardId: UUID) {
+        // Only mark if not the currently selected card
+        if selectedCard?.id != cardId {
+            needsAttention.insert(cardId)
         }
     }
 

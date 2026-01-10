@@ -2,11 +2,155 @@ import AppKit
 import SwiftTerm
 import SwiftUI
 import TermQCore
+import UserNotifications
 
 /// Custom terminal view - using default SwiftTerm behavior
 /// Note: Copy/paste should work via Edit menu or right-click context menu
 class TermQTerminalView: LocalProcessTerminalView {
-    // Use SwiftTerm's built-in copy/paste - no customization needed
+    /// The card ID this terminal belongs to
+    var cardId: UUID?
+
+    /// Terminal title for notifications
+    var terminalTitle: String = "Terminal"
+
+    /// Callback when bell is received
+    var onBell: (() -> Void)?
+
+    /// Flash overlay for visual bell
+    private var flashOverlay: NSView?
+
+    /// Set up custom OSC handlers after the terminal is initialized
+    func setupOscHandlers() {
+        let terminal = getTerminal()
+
+        // OSC 52 - Clipboard: ESC ] 52 ; c ; <base64> BEL
+        // SwiftTerm already parses this, but we need to handle it via the terminal delegate
+        // Since we can't override the delegate method, we'll register our own handler
+        // Note: SwiftTerm's built-in OSC 52 handler calls clipboardCopy delegate,
+        // but the delegate method isn't exposed for override. We register a replacement.
+        terminal.registerOscHandler(code: 52) { [weak self] data in
+            self?.handleClipboardOsc(data)
+        }
+
+        // OSC 777 - Notification: ESC ] 777 ; notify ; <title> ; <body> BEL
+        terminal.registerOscHandler(code: 777) { [weak self] data in
+            self?.handleNotificationOsc(data)
+        }
+
+        // OSC 9 - Windows Terminal notification: ESC ] 9 ; <message> BEL
+        terminal.registerOscHandler(code: 9) { [weak self] data in
+            self?.handleSimpleNotificationOsc(data)
+        }
+    }
+
+    /// Called when the terminal receives a bell character (ASCII 7 / \a)
+    override func bell(source: Terminal) {
+        super.bell(source: source)
+        onBell?()
+        showVisualBell()
+    }
+
+    // MARK: - OSC Handlers
+
+    /// Handle OSC 52 clipboard command
+    private func handleClipboardOsc(_ data: ArraySlice<UInt8>) {
+        // Format: c;<base64-data> (c = clipboard target)
+        guard data.count >= 2,
+            data[data.startIndex] == UInt8(ascii: "c"),
+            data[data.startIndex + 1] == UInt8(ascii: ";")
+        else {
+            return
+        }
+
+        let base64Data = Data(data[(data.startIndex + 2)...])
+        guard let decoded = Data(base64Encoded: base64Data),
+            let string = String(data: decoded, encoding: .utf8)
+        else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            let pasteboard = NSPasteboard.general
+            pasteboard.clearContents()
+            pasteboard.setString(string, forType: .string)
+        }
+    }
+
+    /// Handle OSC 777 notification command
+    private func handleNotificationOsc(_ data: ArraySlice<UInt8>) {
+        // Format: notify;<title>;<body>
+        guard let text = String(bytes: data, encoding: .utf8) else { return }
+
+        let parts = text.components(separatedBy: ";")
+        guard parts.count >= 3, parts[0] == "notify" else { return }
+
+        let title = parts[1]
+        let body = parts[2...].joined(separator: ";")
+
+        DispatchQueue.main.async { [weak self] in
+            self?.showDesktopNotification(title: title, body: body)
+        }
+    }
+
+    /// Handle OSC 9 simple notification (Windows Terminal format)
+    private func handleSimpleNotificationOsc(_ data: ArraySlice<UInt8>) {
+        // Format: just the message text
+        guard let message = String(bytes: data, encoding: .utf8) else { return }
+
+        DispatchQueue.main.async { [weak self] in
+            self?.showDesktopNotification(title: self?.terminalTitle ?? "Terminal", body: message)
+        }
+    }
+
+    // MARK: - Visual Bell
+
+    private func showVisualBell() {
+        guard flashOverlay == nil else { return }
+
+        // Create a semi-transparent white overlay
+        let overlay = NSView(frame: bounds)
+        overlay.wantsLayer = true
+        overlay.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.3).cgColor
+        overlay.autoresizingMask = [.width, .height]
+
+        addSubview(overlay)
+        flashOverlay = overlay
+
+        // Fade out and remove
+        NSAnimationContext.runAnimationGroup(
+            { context in
+                context.duration = 0.15
+                overlay.animator().alphaValue = 0
+            },
+            completionHandler: { [weak self] in
+                overlay.removeFromSuperview()
+                self?.flashOverlay = nil
+            })
+    }
+
+    // MARK: - Desktop Notifications
+
+    private func showDesktopNotification(title: String, body: String) {
+        let center = UNUserNotificationCenter.current()
+
+        // Request permission if needed
+        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
+            guard granted else { return }
+
+            let content = UNMutableNotificationContent()
+            content.title = title.isEmpty ? self.terminalTitle : title
+            content.body = body
+            content.sound = .default
+
+            let request = UNNotificationRequest(
+                identifier: UUID().uuidString,
+                content: content,
+                trigger: nil  // Deliver immediately
+            )
+
+            center.add(request)
+        }
+    }
 }
 
 /// Container view that adds padding around the terminal and handles alternate scroll mode
@@ -130,10 +274,15 @@ class TerminalContainerView: NSView {
 struct TerminalHostView: NSViewRepresentable {
     let card: TerminalCard
     let onExit: () -> Void
+    var onBell: (() -> Void)?
 
     func makeNSView(context: Context) -> TerminalContainerView {
         // Get or create session from the manager
-        let container = TerminalSessionManager.shared.getOrCreateSession(for: card, onExit: onExit)
+        let container = TerminalSessionManager.shared.getOrCreateSession(
+            for: card,
+            onExit: onExit,
+            onBell: { onBell?() }
+        )
         return container
     }
 

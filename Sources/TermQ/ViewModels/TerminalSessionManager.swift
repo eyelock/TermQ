@@ -21,7 +21,9 @@ class TerminalSessionManager: ObservableObject {
     private init() {}
 
     /// Get or create a terminal session for a card
-    func getOrCreateSession(for card: TerminalCard, onExit: @escaping () -> Void) -> TerminalContainerView {
+    func getOrCreateSession(
+        for card: TerminalCard, onExit: @escaping () -> Void, onBell: @escaping () -> Void
+    ) -> TerminalContainerView {
         // Return existing session if available
         if let session = sessions[card.id], session.isRunning {
             // Re-focus the terminal
@@ -33,9 +35,15 @@ class TerminalSessionManager: ObservableObject {
 
         // Create new terminal (using our subclass that fixes copy/paste)
         let terminal = TermQTerminalView(frame: .zero)
+        terminal.cardId = card.id
+        terminal.terminalTitle = card.title
+        terminal.onBell = onBell
 
         // Configure terminal appearance
         terminal.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
+
+        // Set up OSC handlers for clipboard, notifications, etc.
+        terminal.setupOscHandlers()
 
         // Get current environment
         var env = ProcessInfo.processInfo.environment

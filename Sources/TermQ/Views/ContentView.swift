@@ -27,7 +27,12 @@ struct ContentView: View {
                     onMoveTab: { cardId, toIndex in
                         viewModel.moveTab(cardId, toIndex: toIndex)
                     },
-                    tabCards: viewModel.tabCards
+                    onBell: { cardId in
+                        viewModel.markNeedsAttention(cardId)
+                    },
+                    tabCards: viewModel.tabCards,
+                    columns: viewModel.board.columns,
+                    needsAttention: viewModel.needsAttention
                 )
             } else {
                 // Kanban board view
@@ -51,6 +56,10 @@ struct ContentView: View {
                     viewModel.isEditingCard = nil
                 },
                 onCancel: {
+                    // If cancelling a new card, delete it
+                    if viewModel.isEditingNewCard {
+                        viewModel.deleteCard(card)
+                    }
                     viewModel.isEditingNewCard = false
                     viewModel.isEditingCard = nil
                 }

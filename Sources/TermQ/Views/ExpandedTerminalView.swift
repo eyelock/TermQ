@@ -8,7 +8,10 @@ struct ExpandedTerminalView: View {
     let onCloseTab: (TerminalCard) -> Void
     let onDeleteTab: (TerminalCard) -> Void
     let onMoveTab: (UUID, Int) -> Void
+    let onBell: (UUID) -> Void
     let tabCards: [TerminalCard]
+    let columns: [Column]
+    let needsAttention: Set<UUID>
 
     @State private var terminalExited = false
 
@@ -42,6 +45,9 @@ struct ExpandedTerminalView: View {
                     card: card,
                     onExit: {
                         terminalExited = true
+                    },
+                    onBell: {
+                        onBell(card.id)
                     }
                 )
                 .id(card.id)  // Force view recreation when switching terminals
@@ -61,13 +67,24 @@ struct ExpandedTerminalView: View {
 
     // MARK: - Tab Bar
 
+    private func columnInfo(for tabCard: TerminalCard) -> (color: Color, name: String) {
+        if let column = columns.first(where: { $0.id == tabCard.columnId }) {
+            return (Color(hex: column.color) ?? .gray, column.name)
+        }
+        return (.gray, "Unknown")
+    }
+
     private var tabBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
                 ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
+                    let info = columnInfo(for: tabCard)
                     TabItemView(
                         tabCard: tabCard,
+                        columnColor: info.color,
+                        columnName: info.name,
                         isSelected: tabCard.id == card.id,
+                        needsAttention: needsAttention.contains(tabCard.id),
                         onSelect: {
                             if tabCard.id != card.id {
                                 onSelectTab(tabCard)
@@ -106,7 +123,10 @@ struct ExpandedTerminalView: View {
 
 private struct TabItemView: View {
     let tabCard: TerminalCard
+    let columnColor: Color
+    let columnName: String
     let isSelected: Bool
+    let needsAttention: Bool
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onClose: () -> Void
@@ -123,14 +143,22 @@ private struct TabItemView: View {
             // Main tab button
             Button(action: onSelect) {
                 HStack(spacing: 4) {
+                    // Attention indicator (bell was received)
+                    if needsAttention {
+                        Circle()
+                            .fill(Color.orange)
+                            .frame(width: 6, height: 6)
+                    }
                     // Show star for favourites
                     if tabCard.isFavourite {
                         Image(systemName: "star.fill")
                             .font(.caption2)
                             .foregroundColor(.yellow)
                     }
+                    // Terminal icon colored by column
                     Image(systemName: "terminal")
                         .font(.caption2)
+                        .foregroundColor(columnColor)
                     Text(tabCard.title)
                         .font(.subheadline)
                         .lineLimit(1)
@@ -187,7 +215,7 @@ private struct TabItemView: View {
                 isHovering = hovering
             }
         }
-        .help(isSelected ? "Current terminal" : "Switch to \(tabCard.title)")
+        .help("\(tabCard.title) • \(columnName)")
         .contextMenu {
             Button("Edit...") {
                 onEdit()
