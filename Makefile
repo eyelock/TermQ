@@ -273,6 +273,66 @@ endif
 		echo "  git push origin HEAD && git push origin v$(NEW_VERSION)"; \
 	fi
 
+# Worktree Management
+worktree:
+	@BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	if [ "$$BRANCH" = "main" ]; then \
+		echo "Error: Create a feature branch first: git checkout -b <branch>"; \
+		exit 1; \
+	fi; \
+	if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Error: Uncommitted changes. Commit or stash first."; \
+		exit 1; \
+	fi; \
+	git worktree prune; \
+	git checkout main; \
+	git worktree add ../TermQ-$$BRANCH $$BRANCH; \
+	echo "Worktree created: ../TermQ-$$BRANCH"
+
+worktree.update:
+	@if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Error: Uncommitted changes. Commit or stash first."; \
+		exit 1; \
+	fi; \
+	BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	git fetch origin; \
+	if [ "$$BRANCH" = "main" ]; then \
+		git pull origin main; \
+	else \
+		git rebase origin/main || { echo "Resolve conflicts, then: git rebase --continue"; exit 1; }; \
+	fi
+
+worktree.delete:
+	@GIT_DIR=$$(git rev-parse --git-dir 2>/dev/null); \
+	GIT_COMMON=$$(git rev-parse --git-common-dir 2>/dev/null); \
+	if [ "$$GIT_DIR" = "$$GIT_COMMON" ] || [ "$$GIT_DIR" = ".git" ]; then \
+		echo "Error: Not in a worktree."; \
+		exit 1; \
+	fi; \
+	if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Error: Uncommitted changes. Commit or stash first."; \
+		exit 1; \
+	fi; \
+	BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	git fetch origin; \
+	LOCAL=$$(git rev-parse HEAD); \
+	REMOTE=$$(git rev-parse origin/$$BRANCH 2>/dev/null || echo ""); \
+	if [ -z "$$REMOTE" ]; then \
+		echo "Error: Branch not on remote. Push first: git push -u origin $$BRANCH"; \
+		exit 1; \
+	fi; \
+	if [ "$$LOCAL" != "$$REMOTE" ]; then \
+		echo "Error: Not synced with remote. Push or pull first."; \
+		exit 1; \
+	fi; \
+	WORKTREE=$$(basename $$(pwd)); \
+	read -p "Delete worktree '$$WORKTREE'? [y/N] " CONFIRM; \
+	if [ "$$CONFIRM" != "y" ] && [ "$$CONFIRM" != "Y" ]; then exit 1; fi; \
+	cd .. && rm -rf "$$WORKTREE" && cd TermQ && \
+	git pull && git worktree prune; \
+	echo "Worktree deleted: $$WORKTREE"
+
+
 # Show help
 help:
 	@echo "TermQ Makefile targets:"
@@ -305,6 +365,8 @@ help:
 	@echo "  release-major - Release new major version ($(MAJOR).x.x -> $$(($(MAJOR)+1)).0.0)"
 	@echo "  release-minor - Release new minor version (x.$(MINOR).x -> x.$$(($(MINOR)+1)).0)"
 	@echo "  release-patch - Release new patch version (x.x.$(PATCH) -> x.x.$$(($(PATCH)+1)))"
+	@echo ""
+	@echo "  Worktree:     - worktree worktree.update worktree.delete"
 	@echo ""
 	@echo "  help          - Show this help message"
 	@echo ""
