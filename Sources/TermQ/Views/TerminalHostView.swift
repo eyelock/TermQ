@@ -68,6 +68,91 @@ class TermQTerminalView: LocalProcessTerminalView {
         showVisualBell()
     }
 
+    // MARK: - Smart Paste
+
+    /// Override paste to warn about potentially dangerous content
+    override func paste(_ sender: Any) {
+        guard let text = NSPasteboard.general.string(forType: .string) else {
+            super.paste(sender)
+            return
+        }
+
+        // Check for potentially dangerous content
+        let warnings = analyzepasteContent(text)
+
+        if warnings.isEmpty {
+            // Safe to paste
+            super.paste(sender)
+        } else {
+            // Show warning dialog
+            showPasteWarning(text: text, warnings: warnings)
+        }
+    }
+
+    /// Analyze paste content for potential dangers
+    private func analyzepasteContent(_ text: String) -> [String] {
+        var warnings: [String] = []
+
+        // Check for multiline content
+        let lines = text.components(separatedBy: .newlines).filter { !$0.isEmpty }
+        if lines.count > 1 {
+            warnings.append("Contains \(lines.count) lines - commands will execute automatically")
+        }
+
+        // Check for sudo
+        if text.contains("sudo ") || text.hasPrefix("sudo") {
+            warnings.append("Contains 'sudo' - will run with elevated privileges")
+        }
+
+        // Check for potentially destructive commands
+        let destructivePatterns = [
+            "rm -rf", "rm -fr", "mkfs", "dd if=", "> /dev/",
+            ":(){:|:&};:", "chmod -R 777", "chmod 777",
+        ]
+        for pattern in destructivePatterns {
+            if text.contains(pattern) {
+                warnings.append("Contains potentially destructive command: \(pattern)")
+                break
+            }
+        }
+
+        // Check for curl/wget piped to shell (common attack vector)
+        if (text.contains("curl ") || text.contains("wget ")) &&
+            (text.contains("| bash") || text.contains("| sh") || text.contains("|bash") || text.contains("|sh"))
+        {
+            warnings.append("Downloads and executes remote script - verify source first")
+        }
+
+        // Check for environment variable manipulation
+        if text.contains("export ") && (text.contains("PATH=") || text.contains("LD_")) {
+            warnings.append("Modifies environment variables")
+        }
+
+        return warnings
+    }
+
+    /// Show warning dialog for paste
+    private func showPasteWarning(text: String, warnings: [String]) {
+        let alert = NSAlert()
+        alert.messageText = "Paste Warning"
+        alert.informativeText =
+            """
+            \(warnings.joined(separator: "\n"))
+
+            Preview (first 200 chars):
+            \(String(text.prefix(200)))\(text.count > 200 ? "..." : "")
+            """
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Paste Anyway")
+        alert.addButton(withTitle: "Cancel")
+
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            // User confirmed - proceed with paste
+            insertText(text, replacementRange: NSRange(location: 0, length: 0))
+        }
+    }
+
     // MARK: - OSC Handlers
 
     /// Handle OSC 52 clipboard command
