@@ -152,6 +152,13 @@ struct TermQApp: App {
                     terminalActions?.exportSession()
                 }
                 .keyboardShortcut("s", modifiers: [.command, .shift])
+
+                Divider()
+
+                Button("Command Palette...") {
+                    terminalActions?.showCommandPalette()
+                }
+                .keyboardShortcut("k", modifiers: .command)
             }
         }
         .handlesExternalEvents(matching: ["termq"])

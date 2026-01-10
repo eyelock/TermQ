@@ -336,6 +336,25 @@ class BoardViewModel: ObservableObject {
         }
     }
 
+    /// All terminals across the board and transient storage
+    /// Useful for command palette and global search
+    var allTerminals: [TerminalCard] {
+        var terminals = board.cards
+        // Add transient cards that aren't already in board
+        for (_, card) in transientCards {
+            if !terminals.contains(where: { $0.id == card.id }) {
+                terminals.append(card)
+            }
+        }
+        // Sort favourites first, then by title
+        return terminals.sorted { lhs, rhs in
+            if lhs.isFavourite != rhs.isFavourite {
+                return lhs.isFavourite
+            }
+            return lhs.title.localizedCompare(rhs.title) == .orderedAscending
+        }
+    }
+
     /// Look up a card by ID (from board or transient)
     func card(for id: UUID) -> TerminalCard? {
         transientCards[id] ?? board.cards.first { $0.id == id }

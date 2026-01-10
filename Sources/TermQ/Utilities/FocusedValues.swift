@@ -28,6 +28,8 @@ struct TerminalActions {
     let toggleSearch: () -> Void
     /// Export terminal session to file
     let exportSession: () -> Void
+    /// Show command palette
+    let showCommandPalette: () -> Void
 }
 
 struct TerminalActionsKey: FocusedValueKey {

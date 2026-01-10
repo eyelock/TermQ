@@ -8,6 +8,7 @@ struct ContentView: View {
     @EnvironmentObject var urlHandler: URLHandler
     @State private var isZoomed = false
     @State private var isSearching = false
+    @State private var showCommandPalette = false
 
     var body: some View {
         ZStack {
@@ -42,6 +43,28 @@ struct ContentView: View {
             } else {
                 // Kanban board view
                 KanbanBoardView(viewModel: viewModel)
+            }
+
+            // Command palette overlay
+            if showCommandPalette {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        showCommandPalette = false
+                    }
+
+                CommandPaletteView(
+                    isPresented: $showCommandPalette,
+                    terminals: viewModel.allTerminals,
+                    columns: viewModel.board.columns,
+                    currentTerminalId: viewModel.selectedCard?.id,
+                    onSelectTerminal: { terminal in
+                        viewModel.selectCard(terminal)
+                    },
+                    onAction: { action in
+                        handlePaletteAction(action)
+                    }
+                )
             }
         }
         .onChange(of: urlHandler.pendingTerminal?.id) { _, _ in
@@ -266,8 +289,48 @@ struct ContentView: View {
                 if let selectedCard = viewModel.selectedCard {
                     exportTerminalSession(for: selectedCard)
                 }
+            },
+            showCommandPalette: {
+                showCommandPalette = true
             }
         )
+    }
+
+    /// Handle command palette actions
+    private func handlePaletteAction(_ action: CommandPaletteView.PaletteAction) {
+        switch action {
+        case .newTerminal:
+            viewModel.quickNewTerminal()
+        case .newColumn:
+            viewModel.addColumn()
+        case .toggleZoom:
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isZoomed.toggle()
+            }
+        case .toggleSearch:
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isSearching.toggle()
+            }
+        case .exportSession:
+            if let selectedCard = viewModel.selectedCard {
+                exportTerminalSession(for: selectedCard)
+            }
+        case .backToBoard:
+            isZoomed = false
+            isSearching = false
+            viewModel.deselectCard()
+        case .openInTerminalApp:
+            if let selectedCard = viewModel.selectedCard {
+                let currentDir =
+                    TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
+                    ?? selectedCard.workingDirectory
+                launchNativeTerminal(at: currentDir)
+            }
+        case .toggleFavourite:
+            if let card = viewModel.selectedCard {
+                viewModel.toggleFavourite(card)
+            }
+        }
     }
 
     /// Launch native Terminal.app at the specified directory
