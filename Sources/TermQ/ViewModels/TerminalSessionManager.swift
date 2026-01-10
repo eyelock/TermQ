@@ -89,6 +89,9 @@ class TerminalSessionManager: ObservableObject {
         // Set up copy-on-select event monitor
         terminal.setupCopyOnSelect()
 
+        // Set up auto-scroll during selection drag
+        terminal.setupAutoScrollDuringSelection()
+
         // Get current environment
         var env = ProcessInfo.processInfo.environment
         env["TERM"] = "xterm-256color"

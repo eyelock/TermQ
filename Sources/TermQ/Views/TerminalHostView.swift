@@ -31,7 +31,18 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Throttle activity callbacks to avoid excessive updates
     private var lastActivityCallback: Date = .distantPast
 
+    /// Timer for auto-scrolling during selection drag
+    private var autoScrollTimer: Timer?
+
+    /// Direction and speed of auto-scroll (-1 = up, 1 = down, magnitude = speed)
+    private var autoScrollDelta: Int = 0
+
+    /// Last known mouse position during drag (for extending selection after scroll)
+    private var lastDragPosition: NSPoint?
+
     deinit {
+        autoScrollTimer?.invalidate()
+        cleanupAutoScrollDuringSelection()
         cleanupCopyOnSelect()
     }
 
@@ -74,9 +85,125 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Called when the terminal receives a bell character (ASCII 7 / \a)
     override func bell(source: Terminal) {
         super.bell(source: source)
-        print("[TermQ] Bell received for terminal: \(terminalTitle), cardId: \(cardId?.uuidString ?? "nil")")
         onBell?()
         showVisualBell()
+    }
+
+    // MARK: - Auto-scroll During Selection
+
+    /// Event monitor for mouse drag
+    private var dragEventMonitor: Any?
+
+    /// Set up auto-scroll during selection
+    func setupAutoScrollDuringSelection() {
+        cleanupAutoScrollDuringSelection()
+
+        // Monitor for mouse dragged events
+        dragEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDragged, .leftMouseUp]) {
+            [weak self] event in
+            self?.handleMouseEventForAutoScroll(event)
+            return event
+        }
+    }
+
+    /// Clean up auto-scroll event monitor
+    func cleanupAutoScrollDuringSelection() {
+        if let monitor = dragEventMonitor {
+            NSEvent.removeMonitor(monitor)
+            dragEventMonitor = nil
+        }
+        stopAutoScrollTimer()
+    }
+
+    /// Handle mouse events for auto-scroll during selection
+    private func handleMouseEventForAutoScroll(_ event: NSEvent) {
+        // Check if event is in our view
+        guard let eventWindow = event.window,
+            eventWindow == self.window
+        else { return }
+
+        if event.type == .leftMouseUp {
+            stopAutoScrollTimer()
+            lastDragPosition = nil
+            return
+        }
+
+        // It's a drag event
+        lastDragPosition = event.locationInWindow
+
+        // Calculate if mouse is above or below the visible area
+        let localPoint = convert(event.locationInWindow, from: nil)
+
+        // Only process if drag originated in our view (check if within x bounds)
+        guard localPoint.x >= 0, localPoint.x <= bounds.width else {
+            stopAutoScrollTimer()
+            return
+        }
+
+        let viewHeight = bounds.height
+        autoScrollDelta = 0
+
+        if localPoint.y > viewHeight {
+            // Mouse is above the view (NSView y=0 is at bottom)
+            // We want to scroll up (show earlier content in history)
+            let overshoot = localPoint.y - viewHeight
+            autoScrollDelta = -calcScrollSpeed(overshoot: overshoot)
+        } else if localPoint.y < 0 {
+            // Mouse is below the view
+            // We want to scroll down (show later content)
+            let overshoot = -localPoint.y
+            autoScrollDelta = calcScrollSpeed(overshoot: overshoot)
+        }
+
+        // Start or stop timer based on whether we need to scroll
+        if autoScrollDelta != 0 {
+            startAutoScrollTimer()
+        } else {
+            stopAutoScrollTimer()
+        }
+    }
+
+    /// Calculate scroll speed based on how far outside the view the mouse is
+    private func calcScrollSpeed(overshoot: CGFloat) -> Int {
+        if overshoot > 100 {
+            return 5
+        } else if overshoot > 50 {
+            return 3
+        } else if overshoot > 20 {
+            return 2
+        }
+        return 1
+    }
+
+    /// Start the auto-scroll timer if not already running
+    private func startAutoScrollTimer() {
+        guard autoScrollTimer == nil else { return }
+
+        autoScrollTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
+            self?.autoScrollTimerFired()
+        }
+    }
+
+    /// Stop the auto-scroll timer
+    private func stopAutoScrollTimer() {
+        autoScrollTimer?.invalidate()
+        autoScrollTimer = nil
+        autoScrollDelta = 0
+    }
+
+    /// Called when auto-scroll timer fires
+    private func autoScrollTimerFired() {
+        guard autoScrollDelta != 0 else { return }
+
+        if autoScrollDelta < 0 {
+            // Scroll up (show earlier content)
+            scrollUp(lines: abs(autoScrollDelta))
+        } else {
+            // Scroll down (show later content)
+            scrollDown(lines: autoScrollDelta)
+        }
+
+        setNeedsDisplay(bounds)
     }
 
     // MARK: - Copy on Select
