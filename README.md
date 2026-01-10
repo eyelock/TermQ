@@ -22,11 +22,19 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
 - **Persistent Sessions** - Terminal sessions persist when navigating between views
 - **Pinned Terminals** - Pin frequently-used terminals for quick access via tabs in focus mode
 - **Native Terminal Integration** - Launch macOS Terminal.app at the current working directory with one click
-- **Rich Metadata** - Add titles, descriptions, and key=value tags to each terminal
-- **Drag & Drop** - Move terminals between columns with drag and drop
+- **Rich Metadata** - Add titles, descriptions, badges, and key=value tags to each terminal
+- **Drag & Drop** - Move terminals and columns with drag and drop reordering
 - **Keyboard Shortcuts** - Quick terminal creation and navigation with standard shortcuts
 - **Shell Environment** - Full access to your shell configuration (.zshrc, .bashrc)
 - **CLI Tool** - Open new terminals from the command line with `termq open`
+- **Command Palette** - Quick switcher for terminals and actions (⌘K)
+- **Color Themes** - 8 built-in themes including Dracula, Nord, Solarized, One Dark, and more
+- **Zoom Mode** - Maximize terminal view with hidden tabs (⌘⇧Z)
+- **Search in Terminal** - Find text in terminal buffer (⌘F)
+- **Session Export** - Save terminal session content to a text file (⌘⇧S)
+- **Smart Paste** - Warnings for potentially dangerous paste content
+- **Custom Fonts** - Per-terminal font and size configuration
+- **Init Commands** - Run commands automatically when a terminal starts
 
 ## Requirements
 
@@ -103,9 +111,16 @@ cp .build/release/termq /usr/local/bin/
 | ⌘N | New terminal with dialog |
 | ⌘⇧N | New column |
 | ⌘B | Back to board (close terminal view) |
-| ⌘D | Toggle pin on current terminal |
-| ⌘] | Next pinned terminal |
-| ⌘[ | Previous pinned terminal |
+| ⌘K | Open command palette |
+| ⌘D | Toggle favourite on current terminal |
+| ⌘] | Next tab |
+| ⌘[ | Previous tab |
+| ⌘W | Close current tab |
+| ⌘⌫ | Delete current terminal |
+| ⌘⇧T | Open current directory in Terminal.app |
+| ⌘⇧Z | Toggle zoom mode |
+| ⌘F | Find in terminal buffer |
+| ⌘⇧S | Export session to file |
 
 ### CLI Tool
 

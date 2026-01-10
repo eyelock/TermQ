@@ -54,14 +54,23 @@ enum HelpContent {
                 • **⌘T** - Quick new terminal (same column and working directory)
                 • **⌘N** - New terminal with dialog
                 • **⌘⇧N** - New column
+                • **⌘W** - Close current tab
+                • **⌘⌫** - Delete current terminal
 
                 **Navigation:**
                 • **⌘B** - Back to board (close terminal view)
-                • **⌘]** - Next pinned terminal
-                • **⌘[** - Previous pinned terminal
+                • **⌘K** - Open command palette
+                • **⌘]** - Next tab
+                • **⌘[** - Previous tab
+
+                **View & Search:**
+                • **⌘⇧Z** - Toggle zoom mode (maximized view)
+                • **⌘F** - Find in terminal buffer
+                • **⌘⇧S** - Export session to file
 
                 **Actions:**
-                • **⌘D** - Toggle pin on current terminal
+                • **⌘D** - Toggle favourite on current terminal
+                • **⌘⇧T** - Open in Terminal.app
                 """,
             keywords: ["shortcut", "keyboard", "hotkey", "key", "command", "ctrl", "cmd"]
         ),
@@ -179,6 +188,93 @@ enum HelpContent {
         ),
 
         HelpTopic(
+            title: "Command Palette",
+            icon: "magnifyingglass",
+            content: """
+                **Quick Access:**
+                Press **⌘K** to open the command palette for fast navigation and actions.
+
+                **Search:**
+                • Type to filter terminals by name, description, or working directory
+                • Filter actions by name
+
+                **Navigation:**
+                • Use **↑** and **↓** arrow keys to select
+                • Press **Enter** to execute
+                • Press **Escape** to close
+
+                **Available Actions:**
+                • New Terminal
+                • New Column
+                • Toggle Zoom Mode
+                • Find in Terminal
+                • Export Session
+                • Back to Board
+                • Open in Terminal.app
+                • Toggle Favourite
+                """,
+            keywords: ["command", "palette", "search", "quick", "switch", "navigate"]
+        ),
+
+        HelpTopic(
+            title: "Themes & Appearance",
+            icon: "paintpalette",
+            content: """
+                **Color Themes:**
+                TermQ includes 8 built-in color themes:
+                • Default Dark
+                • Dracula
+                • One Dark
+                • Nord
+                • Solarized Dark
+                • Solarized Light
+                • GitHub Dark
+                • Monokai
+
+                **Changing Theme:**
+                1. Open Settings (**⌘,**)
+                2. Select a theme from the Theme dropdown
+                3. Theme applies instantly to all terminals
+
+                **Per-Terminal Fonts:**
+                Each terminal can have its own font settings:
+                1. Edit a terminal card
+                2. Select a custom font and size
+                3. Save to apply
+                """,
+            keywords: ["theme", "color", "appearance", "font", "dark", "light", "dracula", "nord", "solarized"]
+        ),
+
+        HelpTopic(
+            title: "Zoom Mode & Search",
+            icon: "arrow.up.left.and.arrow.down.right",
+            content: """
+                **Zoom Mode:**
+                Maximize your terminal view by hiding the tab bar.
+
+                • Press **⌘⇧Z** to toggle zoom mode
+                • Click the "Zoom Mode" indicator to exit
+                • Escape also exits zoom mode
+
+                **Search in Terminal:**
+                Find text in your terminal's scroll buffer.
+
+                • Press **⌘F** to open the search bar
+                • Type to search (case-insensitive)
+                • Use **↑** and **↓** buttons to navigate matches
+                • Press **Escape** to close search
+
+                **Export Session:**
+                Save terminal content to a text file.
+
+                • Press **⌘⇧S** to export
+                • Choose a location and filename
+                • Useful for logging and documentation
+                """,
+            keywords: ["zoom", "fullscreen", "maximize", "search", "find", "export", "save"]
+        ),
+
+        HelpTopic(
             title: "Configuration & Data",
             icon: "gearshape",
             content: """
@@ -196,6 +292,11 @@ enum HelpContent {
                 **Settings:**
                 Access Settings via **⌘,** or the TermQ menu.
 
+                Available settings:
+                • **Theme** - Choose from 8 color schemes
+                • **Copy on Select** - Automatically copy selected text
+                • **CLI Installation** - Install/manage the termq command
+
                 **CLI Installation:**
                 The Settings window shows CLI tool status and provides install/uninstall options.
                 """,
@@ -208,19 +309,27 @@ enum HelpContent {
             content: """
                 **Productivity Tips:**
 
+                • **Command Palette (⌘K)** - The fastest way to switch terminals or run actions
+
                 • **Quick Terminal (⌘T)** creates a terminal with the same working directory as the current one - great for parallel tasks
+
+                • **Zoom Mode (⌘⇧Z)** - Hide tabs for a distraction-free terminal experience
 
                 • **Pin your most-used terminals** to quickly switch between them with ⌘] and ⌘[
 
+                • **Use badges** to show quick identifiers like "prod" or "local" on terminal cards
+
                 • **Use tags** to add metadata like `env=prod` or `project=api` for easy identification
 
-                • **Columns auto-expand** to fill the window - resize the window to fit more columns
+                • **Init commands** can auto-run commands when a terminal starts (e.g., `npm run dev`)
+
+                • **Smart paste warnings** protect you from accidentally pasting dangerous commands
 
                 • **Right-click cards** for quick access to edit, delete, and pin options
 
                 • **Tab hover actions** let you edit or close terminals without switching to them first
 
-                • **Open in Terminal.app** - Click the Terminal button to open the current directory in native macOS Terminal
+                • **Drag columns** to reorder them on your board
                 """,
             keywords: ["tip", "trick", "productivity", "efficient", "workflow", "advice", "native"]
         ),
@@ -237,11 +346,17 @@ enum HelpContent {
                 • Kanban board layout with customizable columns
                 • Persistent terminal sessions
                 • Pinned terminals with tab navigation
+                • Command palette for quick navigation
+                • 8 built-in color themes
+                • Zoom mode and terminal search
+                • Session export to text files
+                • Smart paste with safety warnings
+                • Per-terminal fonts and init commands
                 • Native Terminal.app integration
-                • Rich metadata (titles, descriptions, tags)
-                • Drag & drop organization
+                • Rich metadata (titles, descriptions, badges, tags)
+                • Drag & drop for terminals and columns
                 • CLI tool for shell integration
-                • Keyboard shortcuts for power users
+                • Comprehensive keyboard shortcuts
 
                 **Requirements:**
                 • macOS 14.0 (Sonoma) or later
