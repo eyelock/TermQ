@@ -7,17 +7,17 @@ struct ColumnEditorView: View {
     let onCancel: () -> Void
 
     @State private var name: String = ""
-    @State private var selectedColor: String = "#6B7280"
+    @State private var selectedColor: Color = .gray
 
-    private let colorOptions = [
-        ("#6B7280", "Gray"),
-        ("#3B82F6", "Blue"),
-        ("#10B981", "Green"),
-        ("#EF4444", "Red"),
-        ("#F59E0B", "Yellow"),
-        ("#8B5CF6", "Purple"),
-        ("#EC4899", "Pink"),
-        ("#06B6D4", "Cyan"),
+    private let presetColors: [(Color, String)] = [
+        (Color(hex: "#6B7280") ?? .gray, "Gray"),
+        (Color(hex: "#3B82F6") ?? .blue, "Blue"),
+        (Color(hex: "#10B981") ?? .green, "Green"),
+        (Color(hex: "#EF4444") ?? .red, "Red"),
+        (Color(hex: "#F59E0B") ?? .yellow, "Yellow"),
+        (Color(hex: "#8B5CF6") ?? .purple, "Purple"),
+        (Color(hex: "#EC4899") ?? .pink, "Pink"),
+        (Color(hex: "#06B6D4") ?? .cyan, "Cyan"),
     ]
 
     var body: some View {
@@ -35,18 +35,28 @@ struct ColumnEditorView: View {
                     .foregroundColor(.secondary)
 
                 HStack(spacing: 8) {
-                    ForEach(colorOptions, id: \.0) { (hex, _) in
+                    // Preset color options
+                    ForEach(Array(presetColors.enumerated()), id: \.offset) { _, colorPair in
                         Circle()
-                            .fill(Color(hex: hex) ?? .gray)
+                            .fill(colorPair.0)
                             .frame(width: 24, height: 24)
                             .overlay(
                                 Circle()
-                                    .stroke(Color.primary, lineWidth: selectedColor == hex ? 2 : 0)
+                                    .stroke(Color.primary, lineWidth: colorsMatch(selectedColor, colorPair.0) ? 2 : 0)
                             )
                             .onTapGesture {
-                                selectedColor = hex
+                                selectedColor = colorPair.0
                             }
+                            .help(colorPair.1)
                     }
+
+                    Divider()
+                        .frame(height: 24)
+
+                    // Custom color picker
+                    ColorPicker("", selection: $selectedColor, supportsOpacity: false)
+                        .labelsHidden()
+                        .help("Custom color")
                 }
             }
 
@@ -60,7 +70,7 @@ struct ColumnEditorView: View {
 
                 Button("Save") {
                     column.name = name
-                    column.color = selectedColor
+                    column.color = selectedColor.toHex() ?? "#6B7280"
                     onSave()
                 }
                 .keyboardShortcut(.defaultAction)
@@ -68,10 +78,28 @@ struct ColumnEditorView: View {
             }
         }
         .padding()
-        .frame(width: 300)
+        .frame(width: 320)
         .onAppear {
             name = column.name
-            selectedColor = column.color
+            selectedColor = Color(hex: column.color) ?? .gray
         }
+    }
+
+    /// Check if two colors are approximately equal
+    private func colorsMatch(_ c1: Color, _ c2: Color) -> Bool {
+        guard let hex1 = c1.toHex(), let hex2 = c2.toHex() else { return false }
+        return hex1 == hex2
+    }
+}
+
+// MARK: - Color to Hex Extension
+
+extension Color {
+    func toHex() -> String? {
+        guard let components = NSColor(self).usingColorSpace(.deviceRGB) else { return nil }
+        let r = Int(components.redComponent * 255)
+        let g = Int(components.greenComponent * 255)
+        let b = Int(components.blueComponent * 255)
+        return String(format: "#%02X%02X%02X", r, g, b)
     }
 }

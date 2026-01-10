@@ -3,6 +3,7 @@ import TermQCore
 
 struct TerminalCardView: View {
     @ObservedObject var card: TerminalCard
+    let columnColor: Color
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
@@ -16,7 +17,7 @@ struct TerminalCardView: View {
             // Header with title and status
             HStack {
                 Image(systemName: "terminal")
-                    .foregroundColor(.green)
+                    .foregroundColor(columnColor)
 
                 Text(card.title)
                     .font(.headline)
