@@ -98,6 +98,9 @@ class TerminalSessionManager: ObservableObject {
         // Set up auto-scroll during selection drag
         terminal.setupAutoScrollDuringSelection()
 
+        // Set up key input monitor to track user typing (for spinner logic)
+        terminal.setupKeyInputMonitor()
+
         // Get current environment
         var env = ProcessInfo.processInfo.environment
         env["TERM"] = "xterm-256color"

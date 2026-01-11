@@ -164,25 +164,23 @@ struct ContentView: View {
                         if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId })
                         {
                             let columnColor = Color(hex: currentColumn.color) ?? .gray
-                            HStack(spacing: 4) {
+                            Label {
                                 Text(currentColumn.name)
-                                    .font(.caption)
-                                    .fontWeight(.medium)
+                            } icon: {
                                 Image(systemName: "chevron.down")
-                                    .font(.caption2)
                             }
-                            .foregroundColor(columnColor.isLight ? .black : .white)
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundStyle(columnColor.isLight ? .black : .white)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .background(
-                                Capsule()
-                                    .fill(columnColor)
-                            )
+                            .background(columnColor, in: Capsule())
                         } else {
                             Text("Move to")
                         }
                     }
-                    .menuStyle(.borderlessButton)
+                    .menuIndicator(.hidden)
+                    .buttonStyle(.plain)
                     .help("Move to column")
 
                     Divider()

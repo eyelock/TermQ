@@ -31,6 +31,12 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Throttle activity callbacks to avoid excessive updates
     private var lastActivityCallback: Date = .distantPast
 
+    /// Track when user last sent input (typing) - used to distinguish user input from process output
+    private var lastUserInputTime: Date = .distantPast
+
+    /// Event monitor for tracking key input
+    private var keyInputMonitor: Any?
+
     /// Timer for auto-scrolling during selection drag
     private var autoScrollTimer: Timer?
 
@@ -44,15 +50,48 @@ class TermQTerminalView: LocalProcessTerminalView {
         autoScrollTimer?.invalidate()
         cleanupAutoScrollDuringSelection()
         cleanupCopyOnSelect()
+        cleanupKeyInputMonitor()
+    }
+
+    /// Set up event monitor to track key input (to distinguish user typing from process output)
+    func setupKeyInputMonitor() {
+        cleanupKeyInputMonitor()
+
+        keyInputMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            // Check if the keystroke is going to our terminal
+            if let self = self,
+                let window = event.window,
+                window == self.window,
+                window.firstResponder === self
+            {
+                self.lastUserInputTime = Date()
+            }
+            return event
+        }
+    }
+
+    /// Clean up key input monitor
+    func cleanupKeyInputMonitor() {
+        if let monitor = keyInputMonitor {
+            NSEvent.removeMonitor(monitor)
+            keyInputMonitor = nil
+        }
     }
 
     /// Called when terminal view needs redrawing (indicates new content)
     override func setNeedsDisplay(_ invalidRect: NSRect) {
         super.setNeedsDisplay(invalidRect)
 
-        // Throttle activity callbacks to max once per 0.3 seconds
+        // Only trigger activity if:
+        // 1. Enough time since last callback (throttle)
+        // 2. Enough time since user input (avoid spinner while typing)
         let now = Date()
-        if now.timeIntervalSince(lastActivityCallback) > 0.3 {
+        let timeSinceLastCallback = now.timeIntervalSince(lastActivityCallback)
+        let timeSinceUserInput = now.timeIntervalSince(lastUserInputTime)
+
+        // Only show spinner if it's been >0.5s since user typed (to catch command output after pressing enter)
+        // AND the normal throttle interval has passed
+        if timeSinceLastCallback > 0.3 && timeSinceUserInput > 0.5 {
             lastActivityCallback = now
             onActivity?()
         }

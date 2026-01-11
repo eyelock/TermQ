@@ -114,8 +114,8 @@ struct CardEditorView: View {
                         .lineLimit(2...4)
                         .help("Command(s) to run when terminal starts (e.g., 'source .env && npm run dev')")
 
-                    TextField("Badge", text: $badge)
-                        .help("Short label shown on card (e.g., 'prod', 'dev', 'api')")
+                    TextField("Badges", text: $badge)
+                        .help("Use comma separated values (e.g., 'prod, api, v2')")
 
                     Toggle("Safe Paste", isOn: $safePasteEnabled)
                         .help("Show warnings when pasting potentially dangerous commands (sudo, rm -rf, etc.)")

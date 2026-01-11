@@ -6,6 +6,7 @@ struct TerminalCardView: View {
     let columnColor: Color
     var needsAttention: Bool = false
     var isProcessing: Bool = false
+    var isOpenAsTab: Bool = false
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
@@ -13,6 +14,22 @@ struct TerminalCardView: View {
 
     @State private var isHovering = false
     @State private var showDeleteConfirmation = false
+
+    /// Background color - tinted with column color when open as tab
+    private var cardBackground: Color {
+        if isOpenAsTab {
+            return columnColor.opacity(0.15)
+        }
+        return Color(nsColor: .controlBackgroundColor)
+    }
+
+    /// Parse comma-separated badges into individual strings
+    private var badges: [String] {
+        card.badge
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -25,16 +42,16 @@ struct TerminalCardView: View {
                     .font(.headline)
                     .lineLimit(1)
 
-                // Badge
-                if !card.badge.isEmpty {
-                    Text(card.badge)
+                // Open as tab indicator
+                if isOpenAsTab {
+                    Text("Open")
                         .font(.caption2)
                         .fontWeight(.medium)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(
                             Capsule()
-                                .fill(columnColor.opacity(0.2))
+                                .fill(columnColor.opacity(0.3))
                         )
                         .foregroundColor(columnColor)
                 }
@@ -88,6 +105,24 @@ struct TerminalCardView: View {
                     .lineLimit(2)
             }
 
+            // Badges
+            if !badges.isEmpty {
+                FlowLayout(spacing: 4) {
+                    ForEach(badges, id: \.self) { badge in
+                        Text(badge)
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(columnColor.opacity(0.2))
+                            )
+                            .foregroundColor(columnColor)
+                    }
+                }
+            }
+
             // Tags
             if !card.tags.isEmpty {
                 FlowLayout(spacing: 4) {
@@ -106,7 +141,7 @@ struct TerminalCardView: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color(nsColor: .controlBackgroundColor))
+                .fill(cardBackground)
                 .shadow(color: .black.opacity(isHovering ? 0.2 : 0.1), radius: isHovering ? 4 : 2)
         )
         .overlay(

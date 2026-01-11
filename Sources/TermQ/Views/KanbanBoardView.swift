@@ -27,6 +27,7 @@ struct KanbanBoardView: View {
                             cards: viewModel.board.cards(for: column),
                             needsAttention: viewModel.needsAttention,
                             processingCards: viewModel.processingCards,
+                            openTabs: Set(viewModel.sessionTabs),
                             onAddCard: {
                                 viewModel.addTerminal(to: column)
                             },
