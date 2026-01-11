@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
@@ -67,7 +67,7 @@ jobs:
           cat checksums.txt
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           name: TermQ v${{ steps.version.outputs.VERSION }}
           draft: false
