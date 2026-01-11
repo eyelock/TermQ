@@ -10,6 +10,7 @@ struct ContentView: View {
     @State private var isSearching = false
     @State private var showCommandPalette = false
     @State private var showBin = false
+    @State private var showColumnPicker = false
 
     var body: some View {
         ZStack {
@@ -138,52 +139,66 @@ struct ContentView: View {
                                 .clipShape(Capsule())
                         }
                     }
+                    .padding(.horizontal, 8)
                 }
             }
 
             // Focused view controls
             ToolbarItemGroup(placement: .primaryAction) {
                 if let selectedCard = viewModel.selectedCard {
-                    // Move to column menu
-                    Menu {
-                        ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
-                            Button {
-                                viewModel.moveCard(selectedCard, to: column)
-                            } label: {
-                                HStack {
-                                    if column.id == selectedCard.columnId {
-                                        Image(systemName: "checkmark")
-                                    }
-                                    Text(column.name)
-                                }
-                            }
-                            .disabled(column.id == selectedCard.columnId)
-                        }
-                    } label: {
-                        // Show current column name in colored pill
-                        if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId })
-                        {
-                            let columnColor = Color(hex: currentColumn.color) ?? .gray
-                            Label {
+                    // Move to column button with popover
+                    if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId })
+                    {
+                        let columnColor = Color(hex: currentColumn.color) ?? .gray
+                        let textColor = columnColor.isLight ? Color.black : Color.white
+                        Button {
+                            showColumnPicker.toggle()
+                        } label: {
+                            HStack(spacing: 4) {
                                 Text(currentColumn.name)
-                            } icon: {
                                 Image(systemName: "chevron.down")
+                                    .font(.system(size: 8, weight: .bold))
                             }
                             .font(.caption)
                             .fontWeight(.medium)
-                            .foregroundStyle(columnColor.isLight ? .black : .white)
+                            .foregroundColor(textColor)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
                             .background(columnColor, in: Capsule())
-                        } else {
-                            Text("Move to")
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.leading, 8)
+                        .help("Move to column")
+                        .popover(isPresented: $showColumnPicker, arrowEdge: .bottom) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
+                                    Button {
+                                        viewModel.moveCard(selectedCard, to: column)
+                                        showColumnPicker = false
+                                    } label: {
+                                        HStack {
+                                            if column.id == selectedCard.columnId {
+                                                Image(systemName: "checkmark")
+                                                    .frame(width: 16)
+                                            } else {
+                                                Color.clear.frame(width: 16)
+                                            }
+                                            Text(column.name)
+                                            Spacer()
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 6)
+                                        .contentShape(Rectangle())
+                                    }
+                                    .buttonStyle(.plain)
+                                    .disabled(column.id == selectedCard.columnId)
+                                }
+                            }
+                            .padding(.vertical, 4)
+                            .padding(.leading, 4)
+                            .frame(minWidth: 150)
                         }
                     }
-                    .menuIndicator(.hidden)
-                    .buttonStyle(.plain)
-                    .help("Move to column")
-
-                    Divider()
 
                     Button {
                         // Use tracked current directory if available, otherwise fall back to card's starting directory

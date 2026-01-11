@@ -58,9 +58,9 @@ copy-help:
 	@rsync -a --delete Docs/Help/ Sources/TermQ/Resources/Help/
 	@echo "Help documentation copied to Resources"
 
-# Build debug version
+# Build debug version (with DEBUG flag for conditional compilation)
 build: copy-help
-	set +o pipefail; swift build 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -Xswiftc -DDEBUG 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 # Build release version
 build-release: copy-help

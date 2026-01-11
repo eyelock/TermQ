@@ -133,9 +133,22 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Event monitor for mouse drag
     private var dragEventMonitor: Any?
 
+    /// Event monitor for mouse down (to track drag origin)
+    private var mouseDownMonitor: Any?
+
+    /// Whether current drag started inside the terminal
+    private var dragStartedInTerminal: Bool = false
+
     /// Set up auto-scroll during selection
     func setupAutoScrollDuringSelection() {
         cleanupAutoScrollDuringSelection()
+
+        // Monitor for mouse down to track where drag starts
+        mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {
+            [weak self] event in
+            self?.handleMouseDownForAutoScroll(event)
+            return event
+        }
 
         // Monitor for mouse dragged events
         dragEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDragged, .leftMouseUp]) {
@@ -151,12 +164,31 @@ class TermQTerminalView: LocalProcessTerminalView {
             NSEvent.removeMonitor(monitor)
             dragEventMonitor = nil
         }
+        if let monitor = mouseDownMonitor {
+            NSEvent.removeMonitor(monitor)
+            mouseDownMonitor = nil
+        }
         stopAutoScrollTimer()
+        dragStartedInTerminal = false
+    }
+
+    /// Handle mouse down to track if drag starts in terminal
+    private func handleMouseDownForAutoScroll(_ event: NSEvent) {
+        // Check if mouse down is in our terminal view
+        guard let eventWindow = event.window,
+            eventWindow == self.window
+        else {
+            dragStartedInTerminal = false
+            return
+        }
+
+        let localPoint = convert(event.locationInWindow, from: nil)
+        dragStartedInTerminal = bounds.contains(localPoint)
     }
 
     /// Handle mouse events for auto-scroll during selection
     private func handleMouseEventForAutoScroll(_ event: NSEvent) {
-        // Check if event is in our view
+        // Check if event is in our window
         guard let eventWindow = event.window,
             eventWindow == self.window
         else { return }
@@ -164,8 +196,12 @@ class TermQTerminalView: LocalProcessTerminalView {
         if event.type == .leftMouseUp {
             stopAutoScrollTimer()
             lastDragPosition = nil
+            dragStartedInTerminal = false
             return
         }
+
+        // Only process drag if it started inside the terminal (not toolbar/titlebar)
+        guard dragStartedInTerminal else { return }
 
         // It's a drag event
         lastDragPosition = event.locationInWindow
