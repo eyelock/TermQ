@@ -13,7 +13,8 @@ let package = Package(
         .library(name: "TermQCore", targets: ["TermQCore"])
     ],
     dependencies: [
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", branch: "main"),
+        // Pinned to specific commit for build stability
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "5e9b2e31fc893021c7d081c4b52bf383fc654a80"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0")
     ],
     targets: [
