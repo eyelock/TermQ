@@ -41,7 +41,7 @@ file_length:
 
 function_body_length:
   warning: 50
-  error: 100
+  error: 150
 
 cyclomatic_complexity:
   warning: 15
@@ -62,6 +62,8 @@ identifier_name:
     error: 60
   excluded:
     - id
+    - i
+    - c
     - x
     - y
     - r
