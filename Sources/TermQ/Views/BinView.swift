@@ -8,8 +8,21 @@ struct BinView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
+            // Header with window controls
             HStack {
+                // Close button (standard macOS sheet control)
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .help("Close (Esc)")
+
+                Spacer()
+
                 Image(systemName: "trash")
                     .font(.title2)
                 Text("Bin")
@@ -23,6 +36,9 @@ struct BinView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.red)
+                } else {
+                    // Invisible placeholder to balance the close button
+                    Color.clear.frame(width: 80)
                 }
             }
             .padding()

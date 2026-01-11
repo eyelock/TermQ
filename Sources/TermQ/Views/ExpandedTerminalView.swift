@@ -12,6 +12,7 @@ struct ExpandedTerminalView: View {
     let tabCards: [TerminalCard]
     let columns: [Column]
     let needsAttention: Set<UUID>
+    let processingCards: Set<UUID>
 
     @State private var terminalExited = false
     @Binding var isZoomed: Bool
@@ -222,6 +223,7 @@ struct ExpandedTerminalView: View {
                         columnName: info.name,
                         isSelected: tabCard.id == card.id,
                         needsAttention: needsAttention.contains(tabCard.id),
+                        isProcessing: processingCards.contains(tabCard.id),
                         onSelect: {
                             if tabCard.id != card.id {
                                 onSelectTab(tabCard)
@@ -264,6 +266,7 @@ private struct TabItemView: View {
     let columnName: String
     let isSelected: Bool
     let needsAttention: Bool
+    let isProcessing: Bool
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onClose: () -> Void
@@ -280,8 +283,14 @@ private struct TabItemView: View {
             // Main tab button
             Button(action: onSelect) {
                 HStack(spacing: 4) {
+                    // Processing indicator (recent output activity)
+                    if isProcessing {
+                        ProgressView()
+                            .scaleEffect(0.4)
+                            .frame(width: 10, height: 10)
+                    }
                     // Attention indicator (bell was received)
-                    if needsAttention {
+                    if needsAttention && !isProcessing {
                         Circle()
                             .fill(Color.orange)
                             .frame(width: 6, height: 6)

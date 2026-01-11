@@ -46,6 +46,12 @@ class TerminalSessionManager: ObservableObject {
     ) -> TerminalContainerView {
         // Return existing session if available
         if let session = sessions[card.id], session.isRunning {
+            // Update callbacks (views may be recreated, especially in release builds)
+            session.terminal.onBell = onBell
+            session.terminal.onActivity = { [weak self] in
+                self?.updateActivityTime(cardId: card.id)
+                onActivity()
+            }
             // Re-focus the terminal
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 session.container.window?.makeFirstResponder(session.terminal)

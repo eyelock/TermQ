@@ -38,6 +38,7 @@ struct ContentView: View {
                     tabCards: viewModel.tabCards,
                     columns: viewModel.board.columns,
                     needsAttention: viewModel.needsAttention,
+                    processingCards: viewModel.processingCards,
                     isZoomed: $isZoomed,
                     isSearching: $isSearching
                 )
@@ -173,13 +174,15 @@ struct ContentView: View {
                             .foregroundColor(columnColor.isLight ? .black : .white)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .background(columnColor)
-                            .clipShape(Capsule())
+                            .background(
+                                Capsule()
+                                    .fill(columnColor)
+                            )
                         } else {
                             Text("Move to")
                         }
                     }
-                    .buttonStyle(.plain)
+                    .menuStyle(.borderlessButton)
                     .help("Move to column")
 
                     Divider()
