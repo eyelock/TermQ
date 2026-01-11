@@ -235,8 +235,8 @@ The release workflow (`.github/workflows/release.yml`) triggers on version tags 
 - Creates signed app bundle
 - Generates checksums
 - Publishes GitHub Release with:
-  - `TermQ-{version}.zip` - App bundle
-  - `tq-cli-{version}.zip` - CLI tool
+  - `TermQ-{version}.dmg` - Installer disk image
+  - `TermQ-{version}.zip` - App bundle (CLI tool bundled inside)
   - `checksums.txt` - SHA-256 hashes
 
 ## Makefile Reference
