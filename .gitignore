@@ -16,6 +16,9 @@ Package.resolved
 *.dylib
 *.dSYM/
 
+# Generated resources (copied from Docs/Help at build time)
+Sources/TermQ/Resources/Help/
+
 # App bundles (keep the structure but not the binaries)
 TermQ.app/Contents/MacOS/TermQ
 TermQ.app/Contents/MacOS/tq

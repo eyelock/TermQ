@@ -4,6 +4,7 @@
 .PHONY: all build build-release clean test lint format check install uninstall app sign run help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release
+.PHONY: copy-help
 
 # Version from VERSION file
 VERSION := $(shell cat VERSION 2>/dev/null || echo "0.0.0")
@@ -16,18 +17,25 @@ GIT_SHA := $(shell git rev-parse --short=7 HEAD 2>/dev/null || echo "unknown")
 # Default target
 all: build
 
+# Copy help documentation to Resources (must run before swift build)
+copy-help:
+	@mkdir -p Sources/TermQ/Resources/Help
+	@rsync -a --delete Docs/Help/ Sources/TermQ/Resources/Help/
+	@echo "Help documentation copied to Resources"
+
 # Build debug version
-build:
+build: copy-help
 	swift build
 
 # Build release version
-build-release:
+build-release: copy-help
 	swift build -c release
 
 # Clean build artifacts
 clean:
 	swift package clean
 	rm -rf .build
+	rm -rf Sources/TermQ/Resources/Help
 
 # Run tests (requires Xcode for XCTest - uses Xcode's developer directory)
 test:
@@ -152,10 +160,10 @@ zip: release-app
 	zip -r TermQ.zip TermQ.app
 	@echo "Archive created: TermQ.zip"
 
-# Generate icns from a 1024x1024 PNG (usage: make icon PNG=./Docs/Images/icon.png)
+# Generate icns from a 1024x1024 PNG (usage: make icon PNG=./Assets/icon.png)
 icon:
 ifndef PNG
-	$(error Usage: make icon PNG=./Docs/Images/icon.png)
+	$(error Usage: make icon PNG=./Assets/icon.png)
 endif
 	@echo "Generating AppIcon.icns from $(PNG)..."
 	@mkdir -p AppIcon.iconset
@@ -337,7 +345,8 @@ worktree.delete:
 help:
 	@echo "TermQ Makefile targets:"
 	@echo ""
-	@echo "  build         - Build debug version"
+	@echo "  copy-help     - Copy help docs from Docs/Help to Resources"
+	@echo "  build         - Build debug version (runs copy-help first)"
 	@echo "  build-release - Build release version"
 	@echo "  clean         - Clean build artifacts"
 	@echo "  test          - Run tests (requires Xcode)"
