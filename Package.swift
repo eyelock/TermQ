@@ -32,7 +32,8 @@ let package = Package(
             ],
             path: "Sources/TermQ",
             resources: [
-                .process("Resources")
+                .copy("Resources/Help"),
+                .process("Resources/en.lproj")
             ]
         ),
         // CLI tool

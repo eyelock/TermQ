@@ -2,21 +2,19 @@ import SwiftUI
 
 // MARK: - Help Topic Model
 
-struct HelpTopic: Identifiable, Hashable {
-    let id = UUID()
+struct HelpTopicMetadata: Codable, Identifiable, Hashable {
+    let id: String
     let title: String
     let icon: String
-    let content: String
     let keywords: [String]
 
     func matches(_ query: String) -> Bool {
         let lowercasedQuery = query.lowercased()
         return title.lowercased().contains(lowercasedQuery)
-            || content.lowercased().contains(lowercasedQuery)
             || keywords.contains { $0.lowercased().contains(lowercasedQuery) }
     }
 
-    static func == (lhs: HelpTopic, rhs: HelpTopic) -> Bool {
+    static func == (lhs: HelpTopicMetadata, rhs: HelpTopicMetadata) -> Bool {
         lhs.id == rhs.id
     }
 
@@ -25,389 +23,68 @@ struct HelpTopic: Identifiable, Hashable {
     }
 }
 
-// MARK: - Help Content
-
-enum HelpContent {
-    static let topics: [HelpTopic] = [
-        HelpTopic(
-            title: "Getting Started",
-            icon: "star",
-            content: """
-                Welcome to TermQ - a Kanban-style terminal queue manager for macOS.
-
-                **Quick Start:**
-                1. Click the **+** button in the toolbar to add a new terminal or column
-                2. Click on a terminal card to open it in full view
-                3. Drag cards between columns to organize your workflow
-                4. Pin frequently-used terminals with the ⭐ button for quick access
-
-                TermQ helps you organize multiple terminal sessions in a visual board layout, so you never lose track of your running tasks.
-                """,
-            keywords: ["start", "begin", "intro", "introduction", "overview", "welcome"]
-        ),
-
-        HelpTopic(
-            title: "Keyboard Shortcuts",
-            icon: "keyboard",
-            content: """
-                **Terminal Management:**
-                • **⌘T** - Quick new terminal (same column and working directory)
-                • **⌘N** - New terminal with dialog
-                • **⌘⇧N** - New column
-                • **⌘W** - Close current tab
-                • **⌘⌫** - Delete current terminal (moves to bin)
-                • **⌘⇧⌫** - Open Bin
-
-                **Navigation:**
-                • **⌘B** - Back to board (close terminal view)
-                • **⌘K** - Open command palette
-                • **⌘]** - Next tab
-                • **⌘[** - Previous tab
-
-                **View & Search:**
-                • **⌘⇧Z** - Toggle zoom mode (maximized view)
-                • **⌘F** - Find in terminal buffer
-                • **⌘⇧S** - Export session to file
-
-                **Actions:**
-                • **⌘D** - Toggle favourite on current terminal
-                • **⌘⇧T** - Open in Terminal.app
-                """,
-            keywords: ["shortcut", "keyboard", "hotkey", "key", "command", "ctrl", "cmd"]
-        ),
-
-        HelpTopic(
-            title: "Working with Terminals",
-            icon: "terminal",
-            content: """
-                **Creating Terminals:**
-                • Click **Add Terminal** at the bottom of any column
-                • Use **⌘N** for the new terminal dialog
-                • Use **⌘T** for a quick terminal in the same column
-
-                **Terminal Cards:**
-                Each terminal card shows:
-                • Title and description
-                • Tags (key=value pairs)
-                • Working directory
-                • Running status (green dot)
-                • Pin status (star icon)
-
-                **Context Menu:**
-                Right-click any terminal card for options:
-                • Open Terminal
-                • Edit Details
-                • Pin/Unpin
-                • Delete
-
-                **Native Terminal:**
-                Click the Terminal button in the toolbar to open macOS Terminal.app at the current working directory.
-                """,
-            keywords: ["terminal", "card", "create", "new", "session", "shell", "native", "Terminal.app"]
-        ),
-
-        HelpTopic(
-            title: "Bin & Recovery",
-            icon: "trash",
-            content: """
-                **Soft Delete:**
-                When you delete a terminal, it's moved to the Bin instead of being permanently removed. This gives you time to recover accidentally deleted terminals.
-
-                **Accessing the Bin:**
-                • Click the **Bin** button in the board view toolbar
-                • Use **⌘⇧⌫** from anywhere
-
-                **Bin Features:**
-                • View all deleted terminals with deletion date
-                • See how many days remain before auto-deletion
-                • **Restore** - Bring a terminal back to the board
-                • **Delete Permanently** - Remove immediately
-                • **Empty Bin** - Clear all deleted terminals at once
-
-                **Auto-Cleanup:**
-                Deleted terminals are automatically removed after a configurable period (default: 14 days). Change this in Settings > Bin.
-                """,
-            keywords: ["bin", "trash", "delete", "recover", "restore", "undo", "retention"]
-        ),
-
-        HelpTopic(
-            title: "Pinned Terminals & Tabs",
-            icon: "star.fill",
-            content: """
-                **Pinning Terminals:**
-                Pin frequently-used terminals to access them quickly via tabs.
-
-                • Click the ⭐ button on a card or in the toolbar
-                • Use **⌘D** to toggle pin status
-                • Pinned terminals appear as tabs at the top of the focused view
-
-                **Tab Navigation:**
-                • Click a tab to switch to that terminal
-                • Use **⌘]** and **⌘[** to cycle through pinned terminals
-                • Hover over a tab to see Edit and Delete buttons
-
-                **Smart Behavior:**
-                • Creating a new terminal while focused auto-pins it
-                • The current terminal always shows as a tab (even if not pinned)
-                • Deleting a tab focuses the adjacent tab instead of returning to board
-                """,
-            keywords: ["pin", "tab", "favorite", "star", "quick", "access"]
-        ),
-
-        HelpTopic(
-            title: "Columns & Organization",
-            icon: "rectangle.split.3x1",
-            content: """
-                **Managing Columns:**
-                • Click **⌘⇧N** or use the + menu to add a new column
-                • Click the **⋯** menu on a column header for options
-                • Rename columns to match your workflow
-                • Delete empty columns (move terminals first)
-
-                **Drag & Drop:**
-                • Drag terminal cards between columns to reorganize
-                • Cards show a highlight when hovering over a valid drop target
-
-                **Suggested Workflows:**
-                • **To Do / In Progress / Done** - Track task status
-                • **Dev / Staging / Prod** - Organize by environment
-                • **Project A / Project B** - Group by project
-                """,
-            keywords: ["column", "organize", "drag", "drop", "move", "workflow", "kanban"]
-        ),
-
-        HelpTopic(
-            title: "CLI Tool",
-            icon: "apple.terminal",
-            content: """
-                **Installation:**
-                The `termq` CLI tool lets you open terminals from your shell.
-
-                ```
-                # Install after building
-                make install
-
-                # Or manually copy
-                cp .build/release/termq /usr/local/bin/
-                ```
-
-                **Usage Examples:**
-                ```
-                # Open in current directory
-                termq open
-
-                # Open with name and description
-                termq open --name "API Server" --description "Backend"
-
-                # Open in specific column
-                termq open --column "In Progress"
-
-                # Open with tags
-                termq open --name "Build" --tag env=prod --tag version=1.0
-
-                # Open in specific directory
-                termq open --path /path/to/project
-                ```
-                """,
-            keywords: ["cli", "command", "line", "terminal", "shell", "install", "termq"]
-        ),
-
-        HelpTopic(
-            title: "Command Palette",
-            icon: "magnifyingglass",
-            content: """
-                **Quick Access:**
-                Press **⌘K** to open the command palette for fast navigation and actions.
-
-                **Search:**
-                • Type to filter terminals by name, description, or working directory
-                • Filter actions by name
-
-                **Navigation:**
-                • Use **↑** and **↓** arrow keys to select
-                • Press **Enter** to execute
-                • Press **Escape** to close
-
-                **Available Actions:**
-                • New Terminal
-                • New Column
-                • Toggle Zoom Mode
-                • Find in Terminal
-                • Export Session
-                • Back to Board
-                • Open in Terminal.app
-                • Toggle Favourite
-                """,
-            keywords: ["command", "palette", "search", "quick", "switch", "navigate"]
-        ),
-
-        HelpTopic(
-            title: "Themes & Appearance",
-            icon: "paintpalette",
-            content: """
-                **Color Themes:**
-                TermQ includes 8 built-in color themes:
-                • Default Dark
-                • Dracula
-                • One Dark
-                • Nord
-                • Solarized Dark
-                • Solarized Light
-                • GitHub Dark
-                • Monokai
-
-                **Changing Theme:**
-                1. Open Settings (**⌘,**)
-                2. Select a theme from the Theme dropdown
-                3. Theme applies instantly to all terminals
-
-                **Per-Terminal Fonts:**
-                Each terminal can have its own font settings:
-                1. Edit a terminal card
-                2. Select a custom font and size
-                3. Save to apply
-                """,
-            keywords: ["theme", "color", "appearance", "font", "dark", "light", "dracula", "nord", "solarized"]
-        ),
-
-        HelpTopic(
-            title: "Zoom Mode & Search",
-            icon: "arrow.up.left.and.arrow.down.right",
-            content: """
-                **Zoom Mode:**
-                Maximize your terminal view by hiding the tab bar.
-
-                • Press **⌘⇧Z** to toggle zoom mode
-                • Click the "Zoom Mode" indicator to exit
-                • Escape also exits zoom mode
-
-                **Search in Terminal:**
-                Find text in your terminal's scroll buffer.
-
-                • Press **⌘F** to open the search bar
-                • Type to search (case-insensitive)
-                • Use **↑** and **↓** buttons to navigate matches
-                • Press **Escape** to close search
-
-                **Export Session:**
-                Save terminal content to a text file.
-
-                • Press **⌘⇧S** to export
-                • Choose a location and filename
-                • Useful for logging and documentation
-                """,
-            keywords: ["zoom", "fullscreen", "maximize", "search", "find", "export", "save"]
-        ),
-
-        HelpTopic(
-            title: "Configuration & Data",
-            icon: "gearshape",
-            content: """
-                **Data Storage:**
-                TermQ stores its data at:
-                ```
-                ~/Library/Application Support/TermQ/board.json
-                ```
-
-                This JSON file contains all columns, cards, and their metadata. You can:
-                • Back it up manually
-                • Edit it with a text editor (when app is closed)
-                • Sync it via cloud storage
-
-                **Settings:**
-                Access Settings via **⌘,** or the TermQ menu.
-
-                Available settings:
-                • **Theme** - Choose from 8 color schemes
-                • **Copy on Select** - Automatically copy selected text
-                • **CLI Installation** - Install/manage the termq command
-
-                **CLI Installation:**
-                The Settings window shows CLI tool status and provides install/uninstall options.
-                """,
-            keywords: ["config", "settings", "data", "storage", "json", "backup", "preferences"]
-        ),
-
-        HelpTopic(
-            title: "Tips & Tricks",
-            icon: "lightbulb",
-            content: """
-                **Productivity Tips:**
-
-                • **Command Palette (⌘K)** - The fastest way to switch terminals or run actions
-
-                • **Quick Terminal (⌘T)** creates a terminal with the same working directory as the current one - great for parallel tasks
-
-                • **Zoom Mode (⌘⇧Z)** - Hide tabs for a distraction-free terminal experience
-
-                • **Pin your most-used terminals** to quickly switch between them with ⌘] and ⌘[
-
-                • **Use badges** to show quick identifiers like "prod" or "local" on terminal cards
-
-                • **Use tags** to add metadata like `env=prod` or `project=api` for easy identification
-
-                • **Init commands** can auto-run commands when a terminal starts (e.g., `npm run dev`)
-
-                • **Smart paste warnings** protect you from accidentally pasting dangerous commands
-
-                • **Right-click cards** for quick access to edit, delete, and pin options
-
-                • **Tab hover actions** let you edit or close terminals without switching to them first
-
-                • **Drag columns** to reorder them on your board
-                """,
-            keywords: ["tip", "trick", "productivity", "efficient", "workflow", "advice", "native"]
-        ),
-
-        HelpTopic(
-            title: "About TermQ",
-            icon: "info.circle",
-            content: """
-                **TermQ** - Kanban-style Terminal Queue Manager
-
-                A macOS application for organizing multiple terminal sessions in a visual board layout.
-
-                **Features:**
-                • Kanban board layout with customizable columns
-                • Persistent terminal sessions
-                • Pinned terminals with tab navigation
-                • Command palette for quick navigation
-                • 8 built-in color themes
-                • Zoom mode and terminal search
-                • Session export to text files
-                • Smart paste with safety warnings
-                • Per-terminal fonts and init commands
-                • Native Terminal.app integration
-                • Rich metadata (titles, descriptions, badges, tags)
-                • Drag & drop for terminals and columns
-                • CLI tool for shell integration
-                • Comprehensive keyboard shortcuts
-
-                **Requirements:**
-                • macOS 14.0 (Sonoma) or later
-
-                **License:**
-                MIT License
-
-                **Source Code:**
-                https://github.com/eyelock/TermQ
-                """,
-            keywords: ["about", "info", "version", "license", "credit", "github"]
-        ),
-    ]
+struct HelpIndex: Codable {
+    let topics: [HelpTopicMetadata]
+}
+
+// MARK: - Help Content Loader
+
+enum HelpContentLoader {
+    /// The bundle containing help resources
+    private static var resourceBundle: Bundle {
+        #if SWIFT_PACKAGE
+            return Bundle.module
+        #else
+            return Bundle.main
+        #endif
+    }
+
+    /// Load the help index from bundle
+    static func loadIndex() -> [HelpTopicMetadata] {
+        guard let url = resourceBundle.url(forResource: "index", withExtension: "json", subdirectory: "Help"),
+            let data = try? Data(contentsOf: url),
+            let index = try? JSONDecoder().decode(HelpIndex.self, from: data)
+        else {
+            print("Failed to load help index from bundle")
+            return []
+        }
+        return index.topics
+    }
+
+    /// Load markdown content for a topic
+    static func loadContent(for topicId: String) -> String {
+        guard let url = resourceBundle.url(forResource: topicId, withExtension: "md", subdirectory: "Help"),
+            let content = try? String(contentsOf: url, encoding: .utf8)
+        else {
+            return "Content not found for topic: \(topicId)"
+        }
+        return content
+    }
+
+    /// Load an image from the Help/Images folder
+    static func loadImage(named name: String) -> NSImage? {
+        // Try Help/Images first
+        if let url = resourceBundle.url(
+            forResource: name, withExtension: nil, subdirectory: "Help/Images")
+        {
+            return NSImage(contentsOf: url)
+        }
+        return nil
+    }
 }
 
 // MARK: - Help View
 
 struct HelpView: View {
     @State private var searchText = ""
-    @State private var selectedTopic: HelpTopic?
+    @State private var selectedTopic: HelpTopicMetadata?
+    @State private var topics: [HelpTopicMetadata] = []
 
-    private var filteredTopics: [HelpTopic] {
+    private var filteredTopics: [HelpTopicMetadata] {
         if searchText.isEmpty {
-            return HelpContent.topics
+            return topics
         }
-        return HelpContent.topics.filter { $0.matches(searchText) }
+        return topics.filter { $0.matches(searchText) }
     }
 
     var body: some View {
@@ -441,9 +118,9 @@ struct HelpView: View {
         }
         .frame(minWidth: 700, minHeight: 500)
         .onAppear {
-            // Select first topic by default
+            topics = HelpContentLoader.loadIndex()
             if selectedTopic == nil {
-                selectedTopic = HelpContent.topics.first
+                selectedTopic = topics.first
             }
         }
     }
@@ -452,7 +129,7 @@ struct HelpView: View {
 // MARK: - Help Topic Row
 
 private struct HelpTopicRow: View {
-    let topic: HelpTopic
+    let topic: HelpTopicMetadata
 
     var body: some View {
         Label {
@@ -467,7 +144,8 @@ private struct HelpTopicRow: View {
 // MARK: - Help Detail View
 
 private struct HelpDetailView: View {
-    let topic: HelpTopic
+    let topic: HelpTopicMetadata
+    @State private var content: String = ""
 
     var body: some View {
         ScrollView {
@@ -485,15 +163,303 @@ private struct HelpDetailView: View {
 
                 Divider()
 
-                // Content
-                Text(LocalizedStringKey(topic.content))
-                    .font(.body)
-                    .textSelection(.enabled)
+                // Content - render markdown
+                MarkdownContentView(markdown: content)
 
                 Spacer()
             }
             .padding(24)
             .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .onAppear {
+            content = HelpContentLoader.loadContent(for: topic.id)
+        }
+        .onChange(of: topic.id) { _, newId in
+            content = HelpContentLoader.loadContent(for: newId)
+        }
+    }
+}
+
+// MARK: - Markdown Content View
+
+private struct MarkdownContentView: View {
+    let markdown: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            ForEach(Array(parseMarkdown().enumerated()), id: \.offset) { _, element in
+                element
+            }
+        }
+        .textSelection(.enabled)
+    }
+
+    private func parseMarkdown() -> [AnyView] {
+        var views: [AnyView] = []
+        let lines = markdown.components(separatedBy: "\n")
+        var i = 0
+
+        while i < lines.count {
+            let line = lines[i]
+
+            // Skip the title (first H1) since we show it in the header
+            if line.hasPrefix("# ") && views.isEmpty {
+                i += 1
+                continue
+            }
+
+            // H2 headers
+            if line.hasPrefix("## ") {
+                let text = String(line.dropFirst(3))
+                views.append(
+                    AnyView(
+                        Text(text)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .padding(.top, 8)
+                    ))
+                i += 1
+                continue
+            }
+
+            // H3 headers
+            if line.hasPrefix("### ") {
+                let text = String(line.dropFirst(4))
+                views.append(
+                    AnyView(
+                        Text(text)
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .padding(.top, 4)
+                    ))
+                i += 1
+                continue
+            }
+
+            // Images
+            if line.contains("![") && line.contains("](") {
+                if let imageView = parseImageLine(line) {
+                    views.append(imageView)
+                }
+                i += 1
+                continue
+            }
+
+            // Code blocks
+            if line.hasPrefix("```") {
+                var codeLines: [String] = []
+                i += 1
+                while i < lines.count && !lines[i].hasPrefix("```") {
+                    codeLines.append(lines[i])
+                    i += 1
+                }
+                let code = codeLines.joined(separator: "\n")
+                views.append(
+                    AnyView(
+                        Text(code)
+                            .font(.system(.body, design: .monospaced))
+                            .padding(12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(nsColor: .textBackgroundColor).opacity(0.5))
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                    ))
+                i += 1
+                continue
+            }
+
+            // Tables
+            if line.contains("|") && i + 1 < lines.count && lines[i + 1].contains("---") {
+                var tableLines: [String] = [line]
+                i += 1
+                while i < lines.count && lines[i].contains("|") {
+                    tableLines.append(lines[i])
+                    i += 1
+                }
+                views.append(parseTable(tableLines))
+                continue
+            }
+
+            // Bullet points
+            if line.hasPrefix("- ") || line.hasPrefix("* ") {
+                let text = String(line.dropFirst(2))
+                views.append(
+                    AnyView(
+                        HStack(alignment: .top, spacing: 8) {
+                            Text("•")
+                            Text(parseInlineMarkdown(text))
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ))
+                i += 1
+                continue
+            }
+
+            // Numbered list
+            if let match = line.wholeMatch(of: #/^(\d+)\.\s+(.+)/#) {
+                let text = String(match.2)
+                let number = String(match.1)
+                views.append(
+                    AnyView(
+                        HStack(alignment: .top, spacing: 8) {
+                            Text("\(number).")
+                                .frame(width: 20, alignment: .trailing)
+                            Text(parseInlineMarkdown(text))
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ))
+                i += 1
+                continue
+            }
+
+            // Regular paragraph
+            if !line.trimmingCharacters(in: .whitespaces).isEmpty {
+                views.append(
+                    AnyView(
+                        Text(parseInlineMarkdown(line))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    ))
+            }
+
+            i += 1
+        }
+
+        return views
+    }
+
+    private func parseImageLine(_ line: String) -> AnyView? {
+        // Parse ![alt](path)
+        guard let altStart = line.firstIndex(of: "["),
+            let altEnd = line.firstIndex(of: "]"),
+            let pathStart = line.firstIndex(of: "("),
+            let pathEnd = line.lastIndex(of: ")")
+        else {
+            return nil
+        }
+
+        let altText = String(line[line.index(after: altStart)..<altEnd])
+        var path = String(line[line.index(after: pathStart)..<pathEnd])
+
+        // Handle relative paths like ../Images/foo.png
+        if path.hasPrefix("../Images/") {
+            path = String(path.dropFirst(10))  // Remove ../Images/
+        } else if path.hasPrefix("Images/") {
+            path = String(path.dropFirst(7))  // Remove Images/
+        }
+
+        // Try to load the image
+        let imageName = (path as NSString).deletingPathExtension
+        let imageExt = (path as NSString).pathExtension
+
+        // Use resource bundle for SPM
+        let resourceBundle: Bundle = {
+            #if SWIFT_PACKAGE
+                return Bundle.module
+            #else
+                return Bundle.main
+            #endif
+        }()
+
+        if let url = resourceBundle.url(
+            forResource: imageName, withExtension: imageExt, subdirectory: "Help/Images"),
+            let nsImage = NSImage(contentsOf: url)
+        {
+            return AnyView(
+                VStack(alignment: .leading, spacing: 4) {
+                    Image(nsImage: nsImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 500)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                        )
+                    if !altText.isEmpty {
+                        Text(altText)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.vertical, 8)
+            )
+        }
+
+        // Image not found - show placeholder
+        return AnyView(
+            Text("[\(altText)]")
+                .foregroundColor(.secondary)
+                .italic()
+        )
+    }
+
+    private func parseTable(_ lines: [String]) -> AnyView {
+        guard lines.count >= 2 else { return AnyView(EmptyView()) }
+
+        // Parse header
+        let headerCells =
+            lines[0]
+            .split(separator: "|")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+
+        // Skip separator line (index 1)
+
+        // Parse body rows
+        var bodyRows: [[String]] = []
+        for i in 2..<lines.count {
+            let cells =
+                lines[i]
+                .split(separator: "|")
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+                .filter { !$0.isEmpty }
+            if !cells.isEmpty {
+                bodyRows.append(cells)
+            }
+        }
+
+        return AnyView(
+            VStack(alignment: .leading, spacing: 0) {
+                // Header row
+                HStack(spacing: 0) {
+                    ForEach(Array(headerCells.enumerated()), id: \.offset) { _, cell in
+                        Text(parseInlineMarkdown(cell))
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(8)
+                    }
+                }
+                .background(Color.secondary.opacity(0.1))
+
+                Divider()
+
+                // Body rows
+                ForEach(Array(bodyRows.enumerated()), id: \.offset) { _, row in
+                    HStack(spacing: 0) {
+                        ForEach(Array(row.enumerated()), id: \.offset) { _, cell in
+                            Text(parseInlineMarkdown(cell))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(8)
+                        }
+                    }
+                    Divider()
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+            )
+            .padding(.vertical, 8)
+        )
+    }
+
+    private func parseInlineMarkdown(_ text: String) -> AttributedString {
+        // Use SwiftUI's built-in markdown parsing for inline elements
+        // This handles **bold**, *italic*, `code`, and [links](url)
+        do {
+            return try AttributedString(markdown: text)
+        } catch {
+            return AttributedString(text)
         }
     }
 }
