@@ -7,7 +7,7 @@ SHELL := /bin/bash
 
 .PHONY: all build build-release clean test lint format check install uninstall app sign run help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
-.PHONY: version release release-major release-minor release-patch tag-release
+.PHONY: version release release-major release-minor release-patch tag-release publish-release
 .PHONY: copy-help docs.help
 
 # Version from VERSION file
@@ -316,6 +316,61 @@ endif
 		echo "  git push origin HEAD && git push origin v$(NEW_VERSION)"; \
 	fi
 
+# Publish a release to GitHub (manual release when CI is unavailable)
+# Usage: make publish-release
+# This creates release artifacts and publishes them to GitHub
+publish-release: release-app
+	@echo ""
+	@echo "=========================================="
+	@echo "Publishing release v$(VERSION)"
+	@echo "=========================================="
+	@echo ""
+	@# Check gh CLI is installed
+	@which gh > /dev/null || (echo "Error: GitHub CLI (gh) not installed. Run: brew install gh" && exit 1)
+	@# Check gh is authenticated
+	@gh auth status > /dev/null 2>&1 || (echo "Error: Not authenticated with GitHub CLI. Run: gh auth login" && exit 1)
+	@# Create release artifacts
+	@echo "Creating release artifacts..."
+	@rm -f TermQ-$(VERSION).dmg TermQ-$(VERSION).zip checksums.txt
+	@# Create DMG
+	@mkdir -p dmg-contents
+	@cp -R TermQ.app dmg-contents/
+	@ln -s /Applications dmg-contents/Applications
+	@hdiutil create -volname "TermQ" -srcfolder dmg-contents -ov -format UDZO TermQ-$(VERSION).dmg
+	@rm -rf dmg-contents
+	@echo "Created: TermQ-$(VERSION).dmg"
+	@# Create zip
+	@zip -r TermQ-$(VERSION).zip TermQ.app
+	@echo "Created: TermQ-$(VERSION).zip"
+	@# Generate checksums
+	@shasum -a 256 TermQ-$(VERSION).dmg > checksums.txt
+	@shasum -a 256 TermQ-$(VERSION).zip >> checksums.txt
+	@echo "Created: checksums.txt"
+	@cat checksums.txt
+	@echo ""
+	@# Check if tag exists, create if not
+	@if ! git tag -l "v$(VERSION)" | grep -q .; then \
+		echo "Creating tag v$(VERSION)..."; \
+		git tag -a "v$(VERSION)" -m "Release v$(VERSION)"; \
+		git push origin "v$(VERSION)"; \
+	else \
+		echo "Tag v$(VERSION) already exists"; \
+	fi
+	@echo ""
+	@echo "Creating GitHub release..."
+	@gh release create "v$(VERSION)" \
+		--title "TermQ v$(VERSION)" \
+		--generate-notes \
+		TermQ-$(VERSION).dmg \
+		TermQ-$(VERSION).zip \
+		checksums.txt
+	@echo ""
+	@echo "=========================================="
+	@echo "Release v$(VERSION) published!"
+	@echo "=========================================="
+	@# Cleanup local artifacts
+	@rm -f TermQ-$(VERSION).dmg TermQ-$(VERSION).zip checksums.txt
+
 # Worktree Management
 worktree:
 	@BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
@@ -416,6 +471,7 @@ help:
 	@echo "  release-major - Release new major version ($(MAJOR).x.x -> $$(($(MAJOR)+1)).0.0)"
 	@echo "  release-minor - Release new minor version (x.$(MINOR).x -> x.$$(($(MINOR)+1)).0)"
 	@echo "  release-patch - Release new patch version (x.x.$(PATCH) -> x.x.$$(($(PATCH)+1)))"
+	@echo "  publish-release - Build and publish release to GitHub (manual release)"
 	@echo ""
 	@echo "  Worktree:     - worktree worktree.update worktree.delete"
 	@echo ""
