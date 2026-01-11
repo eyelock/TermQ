@@ -1,6 +1,10 @@
 # TermQ Makefile
 # Build, test, lint, and manage the project
 
+# Use bash for PIPESTATUS support in build filtering
+SHELL := /bin/bash
+.SHELLFLAGS := -o pipefail -c
+
 .PHONY: all build build-release clean test lint format check install uninstall app sign run help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release
@@ -14,6 +18,37 @@ PATCH := $(shell echo $(VERSION) | cut -d. -f3)
 # Git commit SHA (7 chars)
 GIT_SHA := $(shell git rev-parse --short=7 HEAD 2>/dev/null || echo "unknown")
 
+# =============================================================================
+# Build Warning Filters
+# =============================================================================
+# These patterns filter harmless warnings from third-party dependencies.
+# We can't fix these - they come from upstream packages we don't control.
+# Add new patterns as needed, using -e "pattern" for each.
+#
+# To test a pattern: swift build 2>&1 | grep "your pattern"
+# To disable filtering temporarily: make build-release FILTER_WARNINGS=cat
+# =============================================================================
+FILTER_WARNINGS = grep -v \
+	-e "'swiftterm': found .* unhandled" \
+	-e "checkouts/SwiftTerm.*README.md" \
+	-e "process_shims.h" \
+	-e "<module-includes>" \
+	-e "pointer is missing a nullability type specifier" \
+	-e "target_conditionals.h" \
+	-e "_Nonnull" \
+	-e "_Nullable" \
+	-e "_subprocess_pthread" \
+	-e "^ *[0-9]* | *$$"
+# Filter explanations:
+#   'swiftterm': found .* unhandled / checkouts/SwiftTerm.*README.md
+#       SwiftTerm has a README.md not declared as a resource - cosmetic only
+#   process_shims.h / <module-includes> / target_conditionals.h
+#       File path noise from swift-subprocess C shim headers
+#   pointer is missing a nullability type specifier / _Nonnull / _Nullable / _subprocess_pthread
+#       Clang warning about ObjC nullability in Apple's swift-subprocess
+#   ^ *[0-9]* | *$$
+#       Empty code context lines (e.g., " 42 | ") from Clang warnings
+
 # Default target
 all: build
 
@@ -25,11 +60,11 @@ copy-help:
 
 # Build debug version
 build: copy-help
-	swift build
+	set +o pipefail; swift build 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 # Build release version
 build-release: copy-help
-	swift build -c release
+	set +o pipefail; swift build -c release 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 # Clean build artifacts
 clean:
