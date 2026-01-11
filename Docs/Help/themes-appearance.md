@@ -19,6 +19,8 @@ TermQ includes 8 built-in color themes:
 2. Select a theme from the Theme dropdown
 3. Theme applies instantly to all terminals
 
+![TermQ Settings](Images/termq-settings.png)
+
 ## Per-Terminal Fonts
 
 Each terminal can have its own font settings:
@@ -27,6 +29,10 @@ Each terminal can have its own font settings:
 2. Select a custom font and size
 3. Save to apply
 
+![TermQ Settings](Images/terminal-details-lower.png)
+
 ## Per-Terminal Themes
 
 You can also set a specific color theme for individual terminals, overriding the global theme setting.
+
+![TermQ Settings](Images/terminal-details-lower.png)

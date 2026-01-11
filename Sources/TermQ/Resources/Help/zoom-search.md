@@ -8,6 +8,8 @@ Maximize your terminal view by hiding the tab bar.
 - Click the "Zoom Mode" indicator to exit
 - Escape also exits zoom mode
 
+![Terminal Zoom](Images/terminal-zoom.png)
+
 ## Search in Terminal
 
 Find text in your terminal's scroll buffer.
@@ -17,6 +19,8 @@ Find text in your terminal's scroll buffer.
 - Use **↑** and **↓** buttons to navigate matches
 - Press **Escape** to close search
 
+![Terminal Search](Images/terminal-search.png)
+
 ## Export Session
 
 Save terminal content to a text file.
@@ -24,3 +28,5 @@ Save terminal content to a text file.
 - Press **⌘⇧S** to export
 - Choose a location and filename
 - Useful for logging and documentation
+
+![Terminal Export](Images/terminal-export.png)

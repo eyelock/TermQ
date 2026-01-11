@@ -22,9 +22,24 @@ A macOS application for organizing multiple terminal sessions in a visual board 
 - Comprehensive keyboard shortcuts
 - Bin with soft-delete and recovery
 
+## Credits
+
+- The heavy lifting for terminal emulation is done by [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) - a fantastic library by Miguel de Icaza. 
+- This project was built with significant assistance from [Claude Code](https://claude.ai/code), Anthropic's AI coding assistant.
+
 ## Requirements
 
 - macOS 14.0 (Sonoma) or later
+
+## Known Limitations
+
+- **macOS only** - Built specifically for macOS using SwiftUI and AppKit
+- **Unsigned app** - Requires right-click "Open" on first launch (no Apple Developer certificate)
+- **No cloud sync** - Board data is stored locally only
+- **Single window** - One board per application instance
+- **No terminal multiplexing** - Each card is a single terminal session (no splits/panes)
+
+These limitations may be addressed in future versions based on community interest.
 
 ## License
 

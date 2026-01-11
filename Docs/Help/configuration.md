@@ -25,6 +25,10 @@ Available settings:
 - **Bin Retention** - Days before auto-deleting binned terminals
 - **CLI Installation** - Install/manage the termq command
 
+![TermQ Settings](Images/termq-settings.png)
+
 ## CLI Installation
 
 The Settings window shows CLI tool status and provides install/uninstall options.
+
+![TermQ Settings](Images/termq-settings.png)

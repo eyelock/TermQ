@@ -1,5 +1,7 @@
 # CLI Tool
 
+> NOTE: Sorry, currently this isn't working!!!
+
 ## Installation
 
 The `termq` CLI tool lets you open terminals from your shell.

@@ -4,10 +4,14 @@
 
 Press **⌘K** to open the command palette for fast navigation and actions.
 
+![Command Palette Open](Images/command-palette-open.png)
+
 ## Search
 
 - Type to filter terminals by name, description, or working directory
 - Filter actions by name
+
+![Command Palette Search](Images/command-palette-search.png)
 
 ## Navigation
 
@@ -25,3 +29,5 @@ Press **⌘K** to open the command palette for fast navigation and actions.
 - Back to Board
 - Open in Terminal.app
 - Toggle Favourite
+
+![Command Palette Actions](Images/command-palette-actions.png)

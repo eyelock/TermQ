@@ -14,10 +14,13 @@ Pin frequently-used terminals to access them quickly via tabs.
 - Use **⌘]** and **⌘[** to cycle through pinned terminals
 - Hover over a tab to see Edit and Delete buttons
 
+![Terminal Tabs](Images/terminal-tabs.png)
+
 ## Smart Behavior
 
-- Creating a new terminal while focused auto-pins it
-- The current terminal always shows as a tab (even if not pinned)
+- Creating a new terminal while focussed will not automatically create a card
+  - As soon as you edit the details for a terminal, it will automatically becomon a card
+- Pinned terminals will be auto created when you restart TermQ and be available in the tab view
 - Deleting a tab focuses the adjacent tab instead of returning to board
 
-![Terminal Focused View](Images/termq-terminal-focussed.png)
+

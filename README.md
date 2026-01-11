@@ -1,75 +1,29 @@
 # TermQ
 
-[![CI](https://github.com/eyelock/termq/actions/workflows/ci.yml/badge.svg)](https://github.com/eyelock/termq/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/eyelock/termq)](https://github.com/eyelock/termq/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![macOS](https://img.shields.io/badge/macOS-14.0%2B-blue)](https://www.apple.com/macos/)
-[![Swift](https://img.shields.io/badge/Swift-5.9-orange)](https://swift.org)
-
 A Kanban-style terminal queue manager for macOS. Organize multiple terminal sessions in a visual board layout, drag them between columns, and never lose track of your running tasks.
 
-> **Note**: This is a personal project developed in my spare time. It works well for my workflow but may have rough edges. Use at your own risk - contributions and feedback welcome!
+![TermQ Board View](./Docs/Help/Images/board-view.png)
 
-> **Credits**: The heavy lifting for terminal emulation is done by [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) - a fantastic library by Miguel de Icaza. This project was built with significant assistance from [Claude Code](https://claude.ai/code), Anthropic's AI coding assistant.
-
-## Table of Contents
-
-- [Features](#features)
-- [Requirements](#requirements)
-- [Screenshots](#screenshots)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [GUI Application](#gui-application)
-  - [Keyboard Shortcuts](#keyboard-shortcuts)
-  - [CLI Tool](#cli-tool)
-- [Configuration](#configuration)
-- [Known Limitations](#known-limitations)
-- [Contributing](#contributing)
-- [License](#license)
+> **Note**: This is a personal project developed in my spare time. It works well for my workflow but may have rough edges. Contributions and feedback welcome!
 
 ## Features
 
-- **Kanban Board Layout** - Organize terminals in customizable columns (To Do, In Progress, Blocked, Done)
-- **Persistent Sessions** - Terminal sessions persist when navigating between views
-- **Pinned Terminals** - Pin frequently-used terminals for quick access via tabs in focus mode
-- **Native Terminal Integration** - Launch macOS Terminal.app at the current working directory with one click
-- **Rich Metadata** - Add titles, descriptions, badges, and key=value tags to each terminal
-- **Drag & Drop** - Move terminals and columns with drag and drop reordering
-- **Keyboard Shortcuts** - Quick terminal creation and navigation with standard shortcuts
-- **Shell Environment** - Full access to your shell configuration (.zshrc, .bashrc)
-- **CLI Tool** - Open new terminals from the command line with `termq open`
-- **Command Palette** - Quick switcher for terminals and actions (⌘K)
-- **Color Themes** - 8 built-in themes including Dracula, Nord, Solarized, One Dark, and more
-- **Zoom Mode** - Maximize terminal view with hidden tabs (⌘⇧Z)
-- **Search in Terminal** - Find text in terminal buffer (⌘F)
-- **Session Export** - Save terminal session content to a text file (⌘⇧S)
-- **Smart Paste** - Warnings for potentially dangerous paste content
-- **Custom Fonts** - Per-terminal font and size configuration
-- **Init Commands** - Run commands automatically when a terminal starts
-- **Bin & Recovery** - Deleted terminals go to a bin for easy recovery; auto-cleanup after configurable days
+| Feature | Description |
+|---------|-------------|
+| **Kanban Board** | Organize terminals in customizable columns |
+| **Persistent Sessions** | Terminal sessions persist when navigating views |
+| **Pinned Terminals** | Quick access via tabs in focus mode |
+| **Command Palette** | Fast terminal switching with ⌘K |
+| **Rich Metadata** | Titles, descriptions, badges, and key=value tags |
+| **Drag & Drop** | Reorder terminals and columns freely |
+| **8 Color Themes** | Dracula, Nord, Solarized, One Dark, and more |
+| **Zoom & Search** | Maximize view (⌘⇧Z) and find in buffer (⌘F) |
+| **Session Export** | Save terminal content to text files |
+| **Native Integration** | Launch Terminal.app at current directory |
+| **CLI Tool** | Open terminals from the command line |
+| **Bin & Recovery** | Soft-delete with configurable auto-cleanup |
 
-## Requirements
-
-- macOS 14.0 (Sonoma) or later
-- Xcode Command Line Tools (for building from source)
-
-## Screenshots
-
-### Queue Window
-
-![TermQ Queue Window](./Docs/Images/termq-queue-view.png "TermQ Queue Window showing the default Kanban like columns")
-
-### Terminal Focussed
-
-![TermQ Terminal Focussed](./Docs/Images/termq-terminal-focussed.png "TermQ Terminal Focussed with navigation back to the board")
-
-### New Terminal
-
-![TermQ New Terminal](./Docs/Images/termq-new-terminal.png "TermQ New Terminal showing the options available to enter")
-
-### Managing Columns
-
-![TermQ Managing Columns](./Docs/Images/termq-queue-new.png "TermQ Managing Columns showing that you can add/edit your own columns")
+![Terminal Focused](./Docs/Help/Images/terminal-tabs.png)
 
 ## Installation
 
@@ -88,100 +42,38 @@ make sign
 open TermQ.app
 ```
 
-See the [Contributing Guide](./CONTRIBUTING.md) for detailed build instructions.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed build instructions.
 
-### CLI Tool
+## Requirements
 
-The `termq` command lets you open terminals from the command line:
+- macOS 14.0 (Sonoma) or later
 
-```bash
-# Install after building
-make install
+## Documentation
 
-# Or manually
-cp .build/release/termq /usr/local/bin/
-```
+Full user documentation is available at **[Docs/Help](./Docs/Help/)**:
 
-## Usage
-
-### GUI Application
-
-1. Launch `TermQ.app`
-2. Click the **+** button in the toolbar to add a new terminal or column
-3. Click on a terminal card to open it in full view
-4. Right-click cards for options (Edit, Delete)
-5. Drag cards between columns to organize your workflow
-6. Use the column menu (⋯) to rename or delete columns
-7. Pin terminals with the ⭐ button to access them quickly via tabs
-8. Click the Terminal button (⌘) to open macOS Terminal.app at the current directory
-
-### Keyboard Shortcuts
-
-| Shortcut | Action |
-|----------|--------|
-| ⌘T | Quick new terminal (same column and working directory as current) |
-| ⌘N | New terminal with dialog |
-| ⌘⇧N | New column |
-| ⌘B | Back to board (close terminal view) |
-| ⌘K | Open command palette |
-| ⌘D | Toggle favourite on current terminal |
-| ⌘] | Next tab |
-| ⌘[ | Previous tab |
-| ⌘W | Close current tab |
-| ⌘⌫ | Delete current terminal (moves to bin) |
-| ⌘⇧⌫ | Open Bin |
-| ⌘⇧T | Open current directory in Terminal.app |
-| ⌘⇧Z | Toggle zoom mode |
-| ⌘F | Find in terminal buffer |
-| ⌘⇧S | Export session to file |
-
-### CLI Tool
-
-```bash
-# Open a new terminal in the current directory
-termq open
-
-# Open with a specific name and description
-termq open --name "API Server" --description "Running the backend"
-
-# Open in a specific column
-termq open --column "In Progress"
-
-# Open with tags
-termq open --name "Build" --tag env=prod --tag version=1.0
-
-# Open in a specific directory
-termq open --path /path/to/project
-```
-
-## Configuration
-
-The app stores its data at:
-
-```
-~/Library/Application Support/TermQ/board.json
-```
-
-This JSON file contains all columns, cards, and their metadata. You can back it up or edit it manually if needed.
-
-## Known Limitations
-
-- **macOS only** - Built specifically for macOS using SwiftUI and AppKit
-- **Unsigned app** - Requires right-click "Open" on first launch (no Apple Developer certificate)
-- **No cloud sync** - Board data is stored locally only
-- **Single window** - One board per application instance
-- **No terminal multiplexing** - Each card is a single terminal session (no splits/panes)
-
-These limitations may be addressed in future versions based on community interest.
+- [Getting Started](./Docs/Help/getting-started.md)
+- [Working with Terminals](./Docs/Help/working-with-terminals.md)
+- [Columns & Organization](./Docs/Help/columns-organization.md)
+- [Keyboard Shortcuts](./Docs/Help/keyboard-shortcuts.md)
+- [Command Palette](./Docs/Help/command-palette.md)
+- [Themes & Appearance](./Docs/Help/themes-appearance.md)
+- [Configuration & Data](./Docs/Help/configuration.md)
+- [About & Limitations](./Docs/Help/about.md)
 
 ## Contributing
 
-Contributions are welcome! See the [Contributing Guide](./CONTRIBUTING.md) for:
+Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for:
 
-- Development setup
+- Development setup and requirements
 - Project structure
-- Building and testing
+- Building, testing, and linting
 - Release process
+
+## Credits
+
+- Terminal emulation powered by [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) by Miguel de Icaza
+- Built with assistance from [Claude Code](https://claude.ai/code), Anthropic's AI coding assistant
 
 ## License
 

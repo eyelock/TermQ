@@ -9,6 +9,8 @@ When you delete a terminal, it's moved to the Bin instead of being permanently r
 - Click the **Bin** button in the board view toolbar
 - Use **⌘⇧⌫** from anywhere
 
+![Bin location](Images/board-bin-location.png)
+
 ## Bin Features
 
 - View all deleted terminals with deletion date
@@ -17,6 +19,10 @@ When you delete a terminal, it's moved to the Bin instead of being permanently r
 - **Delete Permanently** - Remove immediately
 - **Empty Bin** - Clear all deleted terminals at once
 
+![Bin Screen](Images/bin-screen.png)
+
 ## Auto-Cleanup
 
 Deleted terminals are automatically removed after a configurable period (default: 14 days). Change this in Settings > Bin.
+
+![Bin Screen](Images/termq-settings.png)

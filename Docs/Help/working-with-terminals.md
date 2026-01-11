@@ -6,7 +6,7 @@
 - Use **⌘N** for the new terminal dialog
 - Use **⌘T** for a quick terminal in the same column
 
-![New Terminal Dialog](Images/termq-new-terminal.png)
+![New Terminal Dialog](Images/new-terminal.png)
 
 ## Terminal Cards
 
@@ -18,6 +18,8 @@ Each terminal card shows:
 - Running status (green dot)
 - Pin status (star icon)
 
+![Board Terminal Card](Images/board-terminal-card.png)
+
 ## Context Menu
 
 Right-click any terminal card for options:
@@ -27,6 +29,11 @@ Right-click any terminal card for options:
 - Pin/Unpin
 - Delete
 
+![Board Card Context Menu](Images/board-card-context-menu.png)
+
 ## Native Terminal
 
 Click the Terminal button in the toolbar to open macOS Terminal.app at the current working directory.
+
+![Native Terminal Launch](Images/native-terminal-launch.png)
+

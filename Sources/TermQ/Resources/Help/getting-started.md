@@ -11,4 +11,4 @@ Welcome to TermQ - a Kanban-style terminal queue manager for macOS.
 
 TermQ helps you organize multiple terminal sessions in a visual board layout, so you never lose track of your running tasks.
 
-![TermQ Board View](Images/termq-queue-view.png)
+![TermQ Board View](Images/board-view.png)
