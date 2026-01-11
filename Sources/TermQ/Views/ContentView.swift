@@ -121,6 +121,25 @@ struct ContentView: View {
                 }
             }
 
+            ToolbarItem(placement: .principal) {
+                if let selectedCard = viewModel.selectedCard {
+                    HStack(spacing: 8) {
+                        Text(selectedCard.title)
+                            .font(.headline)
+
+                        // Display badges
+                        ForEach(selectedCard.badges, id: \.self) { badge in
+                            Text(badge)
+                                .font(.caption)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color.secondary.opacity(0.2))
+                                .clipShape(Capsule())
+                        }
+                    }
+                }
+            }
+
             // Focused view controls
             ToolbarItemGroup(placement: .primaryAction) {
                 if let selectedCard = viewModel.selectedCard {
@@ -140,19 +159,27 @@ struct ContentView: View {
                             .disabled(column.id == selectedCard.columnId)
                         }
                     } label: {
-                        // Show current column name in menu label
+                        // Show current column name in colored pill
                         if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId })
                         {
+                            let columnColor = Color(hex: currentColumn.color) ?? .gray
                             HStack(spacing: 4) {
-                                Circle()
-                                    .fill(Color(hex: currentColumn.color) ?? .gray)
-                                    .frame(width: 8, height: 8)
                                 Text(currentColumn.name)
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                Image(systemName: "chevron.down")
+                                    .font(.caption2)
                             }
+                            .foregroundColor(columnColor.isLight ? .black : .white)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(columnColor)
+                            .clipShape(Capsule())
                         } else {
                             Text("Move to")
                         }
                     }
+                    .buttonStyle(.plain)
                     .help("Move to column")
 
                     Divider()
@@ -254,7 +281,7 @@ struct ContentView: View {
                 Text("Move this terminal to the Bin? You can restore it later.")
             }
         }
-        .navigationTitle(viewModel.selectedCard?.title ?? "TermQ")
+        .navigationTitle(viewModel.selectedCard == nil ? "TermQ" : "")
         .focusedSceneValue(\.terminalActions, terminalActions)
     }
 

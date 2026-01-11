@@ -130,6 +130,16 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     public var isDeleted: Bool {
         deletedAt != nil
     }
+
+    /// Parsed badges from comma-separated badge string (trimmed)
+    public var badges: [String] {
+        guard !badge.isEmpty else { return [] }
+        return
+            badge
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+    }
 }
 
 // MARK: - Equatable

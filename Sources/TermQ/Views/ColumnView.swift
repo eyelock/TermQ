@@ -147,4 +147,14 @@ extension Color {
 
         self.init(red: r, green: g, blue: b)
     }
+
+    /// Returns true if the color is perceived as light (for text contrast decisions)
+    var isLight: Bool {
+        guard let components = NSColor(self).usingColorSpace(.deviceRGB) else { return false }
+        // Calculate relative luminance using sRGB formula
+        let luminance =
+            0.299 * components.redComponent + 0.587 * components.greenComponent
+            + 0.114 * components.blueComponent
+        return luminance > 0.5
+    }
 }
