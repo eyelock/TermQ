@@ -97,15 +97,7 @@ struct TerminalCardView: View {
                 }
             }
 
-            // Description
-            if !card.description.isEmpty {
-                Text(card.description)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
-            }
-
-            // Badges
+            // Badges (right after header)
             if !badges.isEmpty {
                 FlowLayout(spacing: 4) {
                     ForEach(badges, id: \.self) { badge in
@@ -123,13 +115,12 @@ struct TerminalCardView: View {
                 }
             }
 
-            // Tags
-            if !card.tags.isEmpty {
-                FlowLayout(spacing: 4) {
-                    ForEach(card.tags) { tag in
-                        TagView(tag: tag)
-                    }
-                }
+            // Description
+            if !card.description.isEmpty {
+                Text(card.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(2)
             }
 
             // Working directory hint
@@ -137,6 +128,15 @@ struct TerminalCardView: View {
                 .font(.caption2)
                 .foregroundColor(.secondary)
                 .lineLimit(1)
+
+            // Tags (at bottom since they can be verbose)
+            if !card.tags.isEmpty {
+                FlowLayout(spacing: 4) {
+                    ForEach(card.tags) { tag in
+                        TagView(tag: tag)
+                    }
+                }
+            }
         }
         .padding(12)
         .background(
