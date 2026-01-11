@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 import TermQCore
 
-/// Shared state for handling URL-based terminal creation
+/// Shared state for handling URL-based terminal creation and modification
 @MainActor
 class URLHandler: ObservableObject {
     static let shared = URLHandler()
@@ -19,13 +19,24 @@ class URLHandler: ObservableObject {
     }
 
     func handleURL(_ url: URL) {
-        guard url.scheme == "termq",
-            url.host == "open"
-        else { return }
+        guard url.scheme == "termq" else { return }
 
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let queryItems = components?.queryItems ?? []
 
+        switch url.host {
+        case "open":
+            handleOpen(queryItems: queryItems)
+        case "update":
+            handleUpdate(queryItems: queryItems)
+        case "move":
+            handleMove(queryItems: queryItems)
+        default:
+            break
+        }
+    }
+
+    private func handleOpen(queryItems: [URLQueryItem]) {
         let path = queryItems.first { $0.name == "path" }?.value ?? NSHomeDirectory()
         let name = queryItems.first { $0.name == "name" }?.value
         let description = queryItems.first { $0.name == "description" }?.value
@@ -51,6 +62,92 @@ class URLHandler: ObservableObject {
             column: column,
             tags: tags
         )
+    }
+
+    private func handleUpdate(queryItems: [URLQueryItem]) {
+        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
+            let cardId = UUID(uuidString: idString)
+        else { return }
+
+        let viewModel = BoardViewModel.shared
+
+        guard let card = viewModel.card(for: cardId) else { return }
+
+        // Update name
+        if let name = queryItems.first(where: { $0.name == "name" })?.value {
+            card.title = name
+        }
+
+        // Update description
+        if let description = queryItems.first(where: { $0.name == "description" })?.value {
+            card.description = description
+        }
+
+        // Update badge
+        if let badge = queryItems.first(where: { $0.name == "badge" })?.value {
+            card.badge = badge
+        }
+
+        // Update LLM prompt
+        if let llmPrompt = queryItems.first(where: { $0.name == "llmPrompt" })?.value {
+            card.llmPrompt = llmPrompt
+        }
+
+        // Update favourite status
+        if let favouriteStr = queryItems.first(where: { $0.name == "favourite" })?.value {
+            let shouldBeFavourite = favouriteStr.lowercased() == "true"
+            if card.isFavourite != shouldBeFavourite {
+                viewModel.toggleFavourite(card)
+            }
+        }
+
+        // Parse and add tags
+        let newTags: [Tag] =
+            queryItems
+            .filter { $0.name == "tag" }
+            .compactMap { item -> Tag? in
+                guard let value = item.value,
+                    let eqIndex = value.firstIndex(of: "=")
+                else { return nil }
+                let key = String(value[..<eqIndex])
+                let val = String(value[value.index(after: eqIndex)...])
+                return Tag(key: key, value: val)
+            }
+        if !newTags.isEmpty {
+            card.tags.append(contentsOf: newTags)
+        }
+
+        // Update column if specified
+        if let columnName = queryItems.first(where: { $0.name == "column" })?.value {
+            let columnLower = columnName.lowercased()
+            if let targetColumn = viewModel.board.columns.first(where: {
+                $0.name.lowercased() == columnLower
+            }) {
+                viewModel.moveCard(card, to: targetColumn)
+            }
+        }
+
+        viewModel.updateCard(card)
+    }
+
+    private func handleMove(queryItems: [URLQueryItem]) {
+        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
+            let cardId = UUID(uuidString: idString),
+            let columnName = queryItems.first(where: { $0.name == "column" })?.value
+        else { return }
+
+        let viewModel = BoardViewModel.shared
+
+        guard let card = viewModel.card(for: cardId) else { return }
+
+        let columnLower = columnName.lowercased()
+        guard
+            let targetColumn = viewModel.board.columns.first(where: {
+                $0.name.lowercased() == columnLower
+            })
+        else { return }
+
+        viewModel.moveCard(card, to: targetColumn)
     }
 }
 
