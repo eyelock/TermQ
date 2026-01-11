@@ -33,6 +33,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Terminal color theme ID (empty = use global default theme)
     @Published public var themeId: String
 
+    /// When the card was soft-deleted (nil = active, set = in bin)
+    @Published public var deletedAt: Date?
+
     // Runtime state (not persisted)
     public var isRunning: Bool = false
     public var isTransient: Bool = false
@@ -40,6 +43,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, badge, fontName, fontSize, safePasteEnabled, themeId
+        case deletedAt
     }
 
     public init(
@@ -58,7 +62,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         fontName: String = "",
         fontSize: CGFloat = 0,
         safePasteEnabled: Bool = true,
-        themeId: String = ""
+        themeId: String = "",
+        deletedAt: Date? = nil
     ) {
         self.id = id
         self.title = title
@@ -76,6 +81,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.fontSize = fontSize
         self.safePasteEnabled = safePasteEnabled
         self.themeId = themeId
+        self.deletedAt = deletedAt
     }
 
     public required init(from decoder: Decoder) throws {
@@ -96,6 +102,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize) ?? 0
         safePasteEnabled = try container.decodeIfPresent(Bool.self, forKey: .safePasteEnabled) ?? true
         themeId = try container.decodeIfPresent(String.self, forKey: .themeId) ?? ""
+        deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -116,6 +123,12 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(fontSize, forKey: .fontSize)
         try container.encode(safePasteEnabled, forKey: .safePasteEnabled)
         try container.encode(themeId, forKey: .themeId)
+        try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
+    }
+
+    /// Whether this card is in the bin (soft-deleted)
+    public var isDeleted: Bool {
+        deletedAt != nil
     }
 }
 

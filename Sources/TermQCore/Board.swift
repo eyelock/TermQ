@@ -31,8 +31,20 @@ public class Board: ObservableObject, Codable {
         try container.encode(favouriteOrder, forKey: .favouriteOrder)
     }
 
+    /// All active (non-deleted) cards
+    public var activeCards: [TerminalCard] {
+        cards.filter { !$0.isDeleted }
+    }
+
+    /// All deleted cards (in the bin)
+    public var deletedCards: [TerminalCard] {
+        cards.filter { $0.isDeleted }
+            .sorted { ($0.deletedAt ?? .distantPast) > ($1.deletedAt ?? .distantPast) }
+    }
+
+    /// Active cards for a specific column (excludes deleted)
     public func cards(for column: Column) -> [TerminalCard] {
-        cards.filter { $0.columnId == column.id }
+        cards.filter { $0.columnId == column.id && !$0.isDeleted }
             .sorted { $0.orderIndex < $1.orderIndex }
     }
 

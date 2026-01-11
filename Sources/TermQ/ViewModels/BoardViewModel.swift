@@ -4,6 +4,9 @@ import TermQCore
 
 @MainActor
 class BoardViewModel: ObservableObject {
+    /// Shared instance for app-wide access (e.g., from Settings window)
+    static let shared = BoardViewModel()
+
     @Published var board: Board
     @Published var selectedCard: TerminalCard?
     @Published var isEditingCard: TerminalCard?
@@ -49,14 +52,17 @@ class BoardViewModel: ObservableObject {
         }
 
         // Initialize session tabs from persisted favourite order
-        // Filter to only include existing favourite cards
-        let favouriteIds = Set(board.cards.filter { $0.isFavourite }.map { $0.id })
+        // Filter to only include existing active favourite cards (exclude deleted)
+        let favouriteIds = Set(board.activeCards.filter { $0.isFavourite }.map { $0.id })
         sessionTabs = board.favouriteOrder.filter { favouriteIds.contains($0) }
 
         // Add any favourites not in the order (e.g., newly favourited while order wasn't saved)
-        for card in board.cards where card.isFavourite && !sessionTabs.contains(card.id) {
+        for card in board.activeCards where card.isFavourite && !sessionTabs.contains(card.id) {
             sessionTabs.append(card.id)
         }
+
+        // Purge expired cards from bin on startup
+        purgeExpiredCards()
 
         // Start timer to periodically update processing status
         startProcessingTimer()
@@ -98,6 +104,7 @@ class BoardViewModel: ObservableObject {
         isEditingCard = card
     }
 
+    /// Soft delete a card (move to bin)
     func deleteCard(_ card: TerminalCard) {
         // Remove from session tabs
         sessionTabs.removeAll { $0 == card.id }
@@ -107,12 +114,15 @@ class BoardViewModel: ObservableObject {
         }
         // Clean up terminal session
         TerminalSessionManager.shared.removeSession(for: card.id)
-        board.removeCard(card)
+
+        // Soft delete: set deletedAt instead of removing
+        card.deletedAt = Date()
+
         objectWillChange.send()
         save()
     }
 
-    /// Delete a tab card and stay in focused view if possible
+    /// Soft delete a tab card and stay in focused view if possible
     /// Selects the tab to the left, or next available tab, or goes to board if none left
     func deleteTabCard(_ card: TerminalCard) {
         let tabs = tabCards
@@ -136,11 +146,13 @@ class BoardViewModel: ObservableObject {
         // Clean up terminal session
         TerminalSessionManager.shared.removeSession(for: card.id)
 
-        // Remove from appropriate storage
+        // Handle deletion based on card type
         if card.isTransient {
+            // Transient cards are permanently deleted (never persisted)
             transientCards.removeValue(forKey: card.id)
         } else {
-            board.removeCard(card)
+            // Soft delete: set deletedAt instead of removing
+            card.deletedAt = Date()
             save()
         }
 
@@ -302,9 +314,9 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Favourites
 
-    /// Cards marked as favourites (persisted, restored on app restart)
+    /// Active cards marked as favourites (persisted, restored on app restart)
     var favouriteCards: [TerminalCard] {
-        board.cards.filter { $0.isFavourite }
+        board.activeCards.filter { $0.isFavourite }
     }
 
     /// Toggle favourite status for a card
@@ -340,10 +352,10 @@ class BoardViewModel: ObservableObject {
         }
     }
 
-    /// All terminals across the board and transient storage
+    /// All active terminals across the board and transient storage (excludes deleted)
     /// Useful for command palette and global search
     var allTerminals: [TerminalCard] {
-        var terminals = board.cards
+        var terminals = board.activeCards
         // Add transient cards that aren't already in board
         for (_, card) in transientCards {
             if !terminals.contains(where: { $0.id == card.id }) {
@@ -387,8 +399,8 @@ class BoardViewModel: ObservableObject {
 
     /// Update the persisted favourite order from current session tabs
     private func updateFavouriteOrder() {
-        // Only persist the order of favourited tabs
-        let favouriteIds = Set(board.cards.filter { $0.isFavourite }.map { $0.id })
+        // Only persist the order of active favourited tabs
+        let favouriteIds = Set(board.activeCards.filter { $0.isFavourite }.map { $0.id })
         board.favouriteOrder = sessionTabs.filter { favouriteIds.contains($0) }
     }
 
@@ -493,6 +505,65 @@ class BoardViewModel: ObservableObject {
             selectedCard = tabs[prevIndex]
         } else if let last = tabs.last {
             selectCard(last)
+        }
+    }
+
+    // MARK: - Bin (Soft Delete)
+
+    /// Cards currently in the bin (soft-deleted)
+    var binCards: [TerminalCard] {
+        board.deletedCards
+    }
+
+    /// Permanently delete a card (remove from board entirely)
+    func permanentlyDeleteCard(_ card: TerminalCard) {
+        board.removeCard(card)
+        objectWillChange.send()
+        save()
+    }
+
+    /// Restore a card from the bin
+    func restoreCard(_ card: TerminalCard) {
+        card.deletedAt = nil
+
+        // If the original column no longer exists, move to first column
+        if !board.columns.contains(where: { $0.id == card.columnId }) {
+            if let firstColumn = board.columns.first {
+                card.columnId = firstColumn.id
+            }
+        }
+
+        objectWillChange.send()
+        save()
+    }
+
+    /// Permanently delete all cards in the bin
+    func emptyBin() {
+        let deletedCards = board.deletedCards
+        for card in deletedCards {
+            board.removeCard(card)
+        }
+        objectWillChange.send()
+        save()
+    }
+
+    /// Purge cards that have been in the bin longer than retention period
+    private func purgeExpiredCards() {
+        let retentionDays = UserDefaults.standard.integer(forKey: "binRetentionDays")
+        let effectiveRetentionDays = retentionDays > 0 ? retentionDays : 14  // Default 14 days
+
+        let cutoffDate = Calendar.current.date(byAdding: .day, value: -effectiveRetentionDays, to: Date()) ?? Date()
+
+        var purged = false
+        for card in board.deletedCards {
+            if let deletedAt = card.deletedAt, deletedAt < cutoffDate {
+                board.removeCard(card)
+                purged = true
+            }
+        }
+
+        if purged {
+            save()
         }
     }
 }

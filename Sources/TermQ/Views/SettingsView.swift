@@ -10,7 +10,9 @@ struct SettingsView: View {
 
     // Terminal preferences
     @AppStorage("copyOnSelect") private var copyOnSelect = false
+    @AppStorage("binRetentionDays") private var binRetentionDays = 14
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
+    @ObservedObject private var boardViewModel = BoardViewModel.shared
 
     var body: some View {
         Form {
@@ -30,6 +32,30 @@ struct SettingsView: View {
                     .help("Automatically copy selected text to clipboard")
             } header: {
                 Text("Terminal")
+            }
+
+            Section {
+                Stepper(
+                    "Auto-empty after \(binRetentionDays) days",
+                    value: $binRetentionDays,
+                    in: 1...90
+                )
+                .help("Deleted terminals are automatically removed after this many days")
+
+                HStack {
+                    let binCount = boardViewModel.binCards.count
+                    Text(binCount == 0 ? "Bin is empty" : "\(binCount) item\(binCount == 1 ? "" : "s") in bin")
+                        .foregroundColor(.secondary)
+
+                    Spacer()
+
+                    Button("Empty Bin Now", role: .destructive) {
+                        boardViewModel.emptyBin()
+                    }
+                    .disabled(boardViewModel.binCards.isEmpty)
+                }
+            } header: {
+                Text("Bin")
             }
 
             Section {
@@ -138,7 +164,7 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 500, height: 420)
+        .frame(width: 500, height: 520)
         .alert(alertIsError ? "Error" : "Success", isPresented: $showAlert) {
             Button("OK") {}
         } message: {

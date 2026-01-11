@@ -30,6 +30,8 @@ struct TerminalActions {
     let exportSession: () -> Void
     /// Show command palette
     let showCommandPalette: () -> Void
+    /// Show the bin (deleted terminals)
+    let showBin: () -> Void
 }
 
 struct TerminalActionsKey: FocusedValueKey {

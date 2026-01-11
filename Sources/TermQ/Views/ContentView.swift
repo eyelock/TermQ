@@ -4,11 +4,12 @@ import TermQCore
 import UniformTypeIdentifiers
 
 struct ContentView: View {
-    @StateObject private var viewModel = BoardViewModel()
+    @StateObject private var viewModel = BoardViewModel.shared
     @EnvironmentObject var urlHandler: URLHandler
     @State private var isZoomed = false
     @State private var isSearching = false
     @State private var showCommandPalette = false
+    @State private var showBin = false
 
     var body: some View {
         ZStack {
@@ -105,6 +106,9 @@ struct ContentView: View {
                 }
             )
         }
+        .sheet(isPresented: $showBin) {
+            BinView(viewModel: viewModel)
+        }
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 if viewModel.selectedCard != nil {
@@ -196,6 +200,24 @@ struct ContentView: View {
                 } else {
                     // Board view controls
                     Button {
+                        showBin = true
+                    } label: {
+                        ZStack(alignment: .topTrailing) {
+                            Image(systemName: "trash")
+                            if !viewModel.binCards.isEmpty {
+                                Text("\(viewModel.binCards.count)")
+                                    .font(.system(size: 9, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(3)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .offset(x: 6, y: -6)
+                            }
+                        }
+                    }
+                    .help("Open Bin (\(viewModel.binCards.count) items)")
+
+                    Button {
                         launchNativeTerminal()
                     } label: {
                         Image(systemName: "apple.terminal")
@@ -220,16 +242,16 @@ struct ContentView: View {
         }
         .alert("Delete Terminal", isPresented: $viewModel.showDeleteConfirmation) {
             Button("Cancel", role: .cancel) {}
-            Button("Delete", role: .destructive) {
+            Button("Move to Bin", role: .destructive) {
                 if let selectedCard = viewModel.selectedCard {
                     viewModel.deleteTabCard(selectedCard)
                 }
             }
         } message: {
             if let selectedCard = viewModel.selectedCard {
-                Text("Are you sure you want to delete \"\(selectedCard.title)\"? This cannot be undone.")
+                Text("Move \"\(selectedCard.title)\" to the Bin? You can restore it later from the Bin.")
             } else {
-                Text("Are you sure you want to delete this terminal? This cannot be undone.")
+                Text("Move this terminal to the Bin? You can restore it later.")
             }
         }
         .navigationTitle(viewModel.selectedCard?.title ?? "TermQ")
@@ -292,6 +314,9 @@ struct ContentView: View {
             },
             showCommandPalette: {
                 showCommandPalette = true
+            },
+            showBin: {
+                showBin = true
             }
         )
     }

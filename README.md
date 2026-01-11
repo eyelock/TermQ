@@ -46,6 +46,7 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
 - **Smart Paste** - Warnings for potentially dangerous paste content
 - **Custom Fonts** - Per-terminal font and size configuration
 - **Init Commands** - Run commands automatically when a terminal starts
+- **Bin & Recovery** - Deleted terminals go to a bin for easy recovery; auto-cleanup after configurable days
 
 ## Requirements
 
@@ -127,7 +128,8 @@ cp .build/release/termq /usr/local/bin/
 | ⌘] | Next tab |
 | ⌘[ | Previous tab |
 | ⌘W | Close current tab |
-| ⌘⌫ | Delete current terminal |
+| ⌘⌫ | Delete current terminal (moves to bin) |
+| ⌘⇧⌫ | Open Bin |
 | ⌘⇧T | Open current directory in Terminal.app |
 | ⌘⇧Z | Toggle zoom mode |
 | ⌘F | Find in terminal buffer |
