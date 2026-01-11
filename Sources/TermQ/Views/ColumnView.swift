@@ -14,9 +14,11 @@ struct ColumnView: View {
     let onToggleFavourite: (TerminalCard) -> Void
     let onEditColumn: () -> Void
     let onDeleteColumn: () -> Void
-    let onDropCardId: (String) -> Void  // Takes card ID string
+    let onDropCardId: (String) -> Void  // Takes card ID string (for end of column)
+    let onDropCardBefore: (String, Int) -> Void  // Takes card ID string and target index
 
     @State private var isTargeted = false
+    @State private var targetedCardIndex: Int? = nil
 
     var columnColor: Color {
         Color(hex: column.color) ?? .gray
@@ -74,7 +76,7 @@ struct ColumnView: View {
             // Cards
             ScrollView {
                 LazyVStack(spacing: 8) {
-                    ForEach(cards) { card in
+                    ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
                         TerminalCardView(
                             card: card,
                             columnColor: columnColor,
@@ -86,7 +88,28 @@ struct ColumnView: View {
                             onDelete: { onDeleteCard(card) },
                             onToggleFavourite: { onToggleFavourite(card) }
                         )
+                        .overlay(alignment: .top) {
+                            // Drop indicator line above this card
+                            if targetedCardIndex == index {
+                                Rectangle()
+                                    .fill(columnColor)
+                                    .frame(height: 3)
+                                    .offset(y: -5)
+                            }
+                        }
                         .draggable(card.id.uuidString)
+                        .dropDestination(for: String.self) { items, location in
+                            guard let uuidString = items.first,
+                                  uuidString != card.id.uuidString,  // Don't drop on self
+                                  UUID(uuidString: uuidString) != nil
+                            else {
+                                return false
+                            }
+                            onDropCardBefore(uuidString, index)
+                            return true
+                        } isTargeted: { targeted in
+                            targetedCardIndex = targeted ? index : nil
+                        }
                     }
                 }
                 .padding(8)

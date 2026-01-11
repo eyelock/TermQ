@@ -245,6 +245,12 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
+    func moveCard(_ card: TerminalCard, to column: Column, at index: Int) {
+        board.moveCard(card, to: column, at: index)
+        objectWillChange.send()
+        save()
+    }
+
     /// Select a card and add it to session tabs if entering focused mode
     func selectCard(_ card: TerminalCard) {
         selectedCard = card

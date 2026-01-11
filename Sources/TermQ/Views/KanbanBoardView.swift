@@ -56,6 +56,14 @@ struct KanbanBoardView: View {
                                     return
                                 }
                                 viewModel.moveCard(card, to: column)
+                            },
+                            onDropCardBefore: { cardIdString, targetIndex in
+                                guard let cardId = UUID(uuidString: cardIdString),
+                                    let card = viewModel.board.cards.first(where: { $0.id == cardId })
+                                else {
+                                    return
+                                }
+                                viewModel.moveCard(card, to: column, at: targetIndex)
                             }
                         )
                         .frame(width: columnWidth)
