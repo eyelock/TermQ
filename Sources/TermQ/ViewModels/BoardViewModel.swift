@@ -12,6 +12,7 @@ class BoardViewModel: ObservableObject {
     @Published var isEditingCard: TerminalCard?
     @Published var isEditingNewCard: Bool = false
     @Published var isEditingColumn: Column?
+    @Published var isEditingNewColumn: Bool = false
     @Published var showDeleteConfirmation: Bool = false
 
     /// Session tabs - ordered list of card IDs currently open as tabs (not persisted)
@@ -282,6 +283,7 @@ class BoardViewModel: ObservableObject {
         let column = board.addColumn(name: "New Column")
         objectWillChange.send()
         save()
+        isEditingNewColumn = true
         isEditingColumn = column
     }
 

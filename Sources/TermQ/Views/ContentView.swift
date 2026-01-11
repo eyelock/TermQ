@@ -101,9 +101,15 @@ struct ContentView: View {
                 column: column,
                 onSave: {
                     viewModel.updateColumn(column)
+                    viewModel.isEditingNewColumn = false
                     viewModel.isEditingColumn = nil
                 },
                 onCancel: {
+                    // If cancelling a new column, delete it
+                    if viewModel.isEditingNewColumn {
+                        viewModel.deleteColumn(column)
+                    }
+                    viewModel.isEditingNewColumn = false
                     viewModel.isEditingColumn = nil
                 }
             )
