@@ -8,7 +8,7 @@ SHELL := /bin/bash
 .PHONY: all build build-release clean test lint format check install uninstall app sign run help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release
-.PHONY: copy-help
+.PHONY: copy-help docs.help
 
 # Version from VERSION file
 VERSION := $(shell cat VERSION 2>/dev/null || echo "0.0.0")
@@ -376,6 +376,13 @@ worktree.delete:
 	echo "Worktree deleted: $$WORKTREE"
 
 
+# Serve help documentation with docsify (live reload)
+docs.help:
+	@echo "Starting docsify server for Help documentation..."
+	@echo "View at http://localhost:3000"
+	@echo "Press Ctrl+C to stop"
+	@npx docsify-cli serve Docs/Help --port 3000
+
 # Show help
 help:
 	@echo "TermQ Makefile targets:"
@@ -412,6 +419,7 @@ help:
 	@echo ""
 	@echo "  Worktree:     - worktree worktree.update worktree.delete"
 	@echo ""
+	@echo "  docs.help     - Serve Help docs with docsify (live reload at localhost:3000)"
 	@echo "  help          - Show this help message"
 	@echo ""
 	@echo "Current version: $(VERSION)"
