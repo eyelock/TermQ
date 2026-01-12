@@ -1,10 +1,8 @@
 # CLI Tool
 
-> NOTE: Sorry, currently this isn't working!!!
+The `termq` CLI tool lets you open and manage terminals from your shell.
 
 ## Installation
-
-The `termq` CLI tool lets you open terminals from your shell.
 
 ```bash
 # Install after building
