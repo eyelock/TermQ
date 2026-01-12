@@ -170,8 +170,12 @@ struct TermQCLI: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "termq",
         abstract: "Command-line interface for TermQ - Terminal Queue Manager",
+        discussion: """
+            LLM/AI Assistants: Run 'termq context' for a complete usage guide \
+            with examples and best practices for terminal management.
+            """,
         version: "1.0.0",
-        subcommands: [Open.self, Create.self, Launch.self, List.self, Find.self, Set.self, Move.self]
+        subcommands: [Open.self, Create.self, Launch.self, List.self, Find.self, Set.self, Move.self, Context.self]
     )
 }
 
@@ -212,7 +216,8 @@ struct Open: ParsableCommand {
 
             // Try as path (exact match or ends with)
             if targetCard == nil {
-                let normalizedPath = terminal.hasSuffix("/")
+                let normalizedPath =
+                    terminal.hasSuffix("/")
                     ? String(terminal.dropLast())
                     : terminal
                 targetCard = board.activeCards.first { card in
@@ -775,8 +780,7 @@ struct Set: ParsableCommand {
 
 struct Move: ParsableCommand {
     static let configuration = CommandConfiguration(
-        abstract: "Move a terminal to a different column",
-        discussion: "Move a terminal between columns via URL scheme."
+        abstract: "Move a terminal to a different column"
     )
 
     @Argument(help: "Terminal identifier (UUID or name)")
@@ -845,5 +849,115 @@ struct Move: ParsableCommand {
             printErrorJSON("Unexpected error: \(error.localizedDescription)")
             throw ExitCode.failure
         }
+    }
+}
+
+// MARK: - Context Command (LLM Discovery)
+
+struct Context: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        abstract: "Show LLM-friendly context and usage guide",
+        discussion: "Outputs documentation for AI assistants to understand how to use the termq CLI."
+    )
+
+    func run() throws {
+        let context = """
+            # TermQ CLI - Context for LLM Assistants
+
+            TermQ is a Kanban-style terminal manager. Each terminal has:
+            - **name**: Display name
+            - **description**: What this terminal is for
+            - **column**: Workflow stage (e.g., "To Do", "In Progress", "Done")
+            - **path**: Working directory
+            - **tags**: Key-value metadata (e.g., env=prod)
+            - **llmPrompt**: Persistent context for you (never auto-cleared)
+            - **llmNextAction**: One-time task (auto-cleared after terminal opens)
+
+            ## Quick Reference
+
+            ```bash
+            # List all terminals (JSON output)
+            termq list
+
+            # Open/focus existing terminal (returns JSON with llmPrompt/llmNextAction)
+            termq open "Terminal Name"
+            termq open "UUID"
+            termq open "/path/to/project"
+
+            # Create new terminal
+            termq create --name "Name" --column "In Progress" --path /path
+
+            # Update terminal properties
+            termq set "Name" --llm-prompt "Project context here"
+            termq set "Name" --llm-next-action "Task for next session"
+            termq set "Name" --column "Done"
+            termq set "Name" --tag env=prod
+
+            # Move terminal to different column
+            termq move "Name" "Done"
+
+            # Find terminals
+            termq find --name "api"
+            termq find --column "In Progress"
+            termq find --tag env=prod
+            termq find --favourites
+            ```
+
+            ## LLM Workflow Pattern
+
+            1. **On session start**: Run `termq open "Name"` to get terminal context
+               - Check `llmNextAction` first - this is a queued task for you
+               - Read `llmPrompt` for persistent project context
+
+            2. **During work**: Use terminal info to understand the project
+
+            3. **Before ending session**: Queue work for next time
+               ```bash
+               termq set "Name" --llm-next-action "Continue from X, implement Y"
+               ```
+
+            4. **Update persistent context** when you learn something important:
+               ```bash
+               termq set "Name" --llm-prompt "Node.js backend, PostgreSQL, entry: src/index.ts"
+               ```
+
+            ## JSON Output Format
+
+            All commands output JSON. Example from `termq list`:
+            ```json
+            [{
+              "id": "UUID",
+              "name": "Terminal Name",
+              "description": "Description",
+              "column": "In Progress",
+              "path": "/working/dir",
+              "tags": {"env": "prod"},
+              "llmPrompt": "Persistent context",
+              "llmNextAction": "One-time task"
+            }]
+            ```
+
+            ## Useful jq Patterns
+
+            ```bash
+            # Get names and LLM context
+            termq list | jq '.[] | {name, llmPrompt, llmNextAction}'
+
+            # Find terminals with pending actions
+            termq list | jq '.[] | select(.llmNextAction != "")'
+
+            # Get terminals in a specific column
+            termq list | jq '.[] | select(.column == "In Progress")'
+            ```
+
+            ## Tips
+
+            - Use `termq open` to resume work, not `termq create`
+            - Set `llmNextAction` when parking work - it runs on next terminal open
+            - Keep `llmPrompt` updated with project context
+            - Use columns to track workflow state
+            - Tags are great for categorization (env, project, priority)
+            """
+        print(context)
     }
 }

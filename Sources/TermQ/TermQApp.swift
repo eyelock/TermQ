@@ -285,21 +285,21 @@ struct TermQApp: App {
             }
 
             #if DEBUG
-            CommandMenu("Debug") {
-                Button("Copy from Production Config") {
-                    copyProductionConfig()
-                }
+                CommandMenu("Debug") {
+                    Button("Copy from Production Config") {
+                        copyProductionConfig()
+                    }
 
-                Divider()
+                    Divider()
 
-                Button("Open Debug Data Folder") {
-                    openDebugDataFolder()
-                }
+                    Button("Open Debug Data Folder") {
+                        openDebugDataFolder()
+                    }
 
-                Button("Open Production Data Folder") {
-                    openProductionDataFolder()
+                    Button("Open Production Data Folder") {
+                        openProductionDataFolder()
+                    }
                 }
-            }
             #endif
         }
         .handlesExternalEvents(matching: ["termq"])
@@ -345,83 +345,83 @@ class URLEventHandler: NSObject {
 // MARK: - Debug Menu Helpers
 
 #if DEBUG
-/// Copy production config to debug data folder
-private func copyProductionConfig() {
-    let fileManager = FileManager.default
-    let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+    /// Copy production config to debug data folder
+    private func copyProductionConfig() {
+        let fileManager = FileManager.default
+        let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
 
-    let productionFolder = appSupport.appendingPathComponent("TermQ")
-    let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
-    let productionBoard = productionFolder.appendingPathComponent("board.json")
-    let debugBoard = debugFolder.appendingPathComponent("board.json")
+        let productionFolder = appSupport.appendingPathComponent("TermQ")
+        let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
+        let productionBoard = productionFolder.appendingPathComponent("board.json")
+        let debugBoard = debugFolder.appendingPathComponent("board.json")
 
-    // Ensure debug folder exists
-    try? fileManager.createDirectory(at: debugFolder, withIntermediateDirectories: true)
+        // Ensure debug folder exists
+        try? fileManager.createDirectory(at: debugFolder, withIntermediateDirectories: true)
 
-    // Check if production config exists
-    guard fileManager.fileExists(atPath: productionBoard.path) else {
-        let alert = NSAlert()
-        alert.messageText = "No Production Config"
-        alert.informativeText = "Could not find board.json in the production folder."
-        alert.alertStyle = .warning
-        alert.runModal()
-        return
-    }
-
-    // Confirm overwrite if debug config exists
-    if fileManager.fileExists(atPath: debugBoard.path) {
-        let alert = NSAlert()
-        alert.messageText = "Replace Debug Config?"
-        alert.informativeText = "This will replace your current debug board.json with the production version."
-        alert.addButton(withTitle: "Replace")
-        alert.addButton(withTitle: "Cancel")
-        alert.alertStyle = .warning
-
-        if alert.runModal() != .alertFirstButtonReturn {
+        // Check if production config exists
+        guard fileManager.fileExists(atPath: productionBoard.path) else {
+            let alert = NSAlert()
+            alert.messageText = "No Production Config"
+            alert.informativeText = "Could not find board.json in the production folder."
+            alert.alertStyle = .warning
+            alert.runModal()
             return
         }
 
-        try? fileManager.removeItem(at: debugBoard)
+        // Confirm overwrite if debug config exists
+        if fileManager.fileExists(atPath: debugBoard.path) {
+            let alert = NSAlert()
+            alert.messageText = "Replace Debug Config?"
+            alert.informativeText = "This will replace your current debug board.json with the production version."
+            alert.addButton(withTitle: "Replace")
+            alert.addButton(withTitle: "Cancel")
+            alert.alertStyle = .warning
+
+            if alert.runModal() != .alertFirstButtonReturn {
+                return
+            }
+
+            try? fileManager.removeItem(at: debugBoard)
+        }
+
+        do {
+            try fileManager.copyItem(at: productionBoard, to: debugBoard)
+
+            let alert = NSAlert()
+            alert.messageText = "Config Copied"
+            alert.informativeText = "Production config has been copied to the debug folder. Restart TermQ to load it."
+            alert.alertStyle = .informational
+            alert.runModal()
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "Copy Failed"
+            alert.informativeText = error.localizedDescription
+            alert.alertStyle = .critical
+            alert.runModal()
+        }
     }
 
-    do {
-        try fileManager.copyItem(at: productionBoard, to: debugBoard)
+    /// Open the debug data folder in Finder
+    private func openDebugDataFolder() {
+        let fileManager = FileManager.default
+        let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
 
-        let alert = NSAlert()
-        alert.messageText = "Config Copied"
-        alert.informativeText = "Production config has been copied to the debug folder. Restart TermQ to load it."
-        alert.alertStyle = .informational
-        alert.runModal()
-    } catch {
-        let alert = NSAlert()
-        alert.messageText = "Copy Failed"
-        alert.informativeText = error.localizedDescription
-        alert.alertStyle = .critical
-        alert.runModal()
+        // Ensure folder exists
+        try? fileManager.createDirectory(at: debugFolder, withIntermediateDirectories: true)
+
+        NSWorkspace.shared.open(debugFolder)
     }
-}
 
-/// Open the debug data folder in Finder
-private func openDebugDataFolder() {
-    let fileManager = FileManager.default
-    let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-    let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
+    /// Open the production data folder in Finder
+    private func openProductionDataFolder() {
+        let fileManager = FileManager.default
+        let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let productionFolder = appSupport.appendingPathComponent("TermQ")
 
-    // Ensure folder exists
-    try? fileManager.createDirectory(at: debugFolder, withIntermediateDirectories: true)
+        // Ensure folder exists
+        try? fileManager.createDirectory(at: productionFolder, withIntermediateDirectories: true)
 
-    NSWorkspace.shared.open(debugFolder)
-}
-
-/// Open the production data folder in Finder
-private func openProductionDataFolder() {
-    let fileManager = FileManager.default
-    let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-    let productionFolder = appSupport.appendingPathComponent("TermQ")
-
-    // Ensure folder exists
-    try? fileManager.createDirectory(at: productionFolder, withIntermediateDirectories: true)
-
-    NSWorkspace.shared.open(productionFolder)
-}
+        NSWorkspace.shared.open(productionFolder)
+    }
 #endif

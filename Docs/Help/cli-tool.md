@@ -61,7 +61,22 @@ termq open "/path/to/project"
 termq open "api"
 ```
 
-**Output:** Returns the terminal's full details as JSON, which is useful for LLM assistants to read context.
+**Output:** Returns the terminal's full details as JSON:
+
+```json
+{
+  "id": "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88",
+  "name": "API Server",
+  "description": "Backend service",
+  "column": "In Progress",
+  "columnId": "UUID",
+  "tags": {"env": "prod", "version": "2.0"},
+  "path": "/path/to/project",
+  "isFavourite": false,
+  "llmPrompt": "Node.js backend using PostgreSQL",
+  "llmNextAction": "Continue implementing rate limiting"
+}
+```
 
 ### Create a Terminal
 
@@ -225,6 +240,17 @@ All commands output JSON for easy parsing:
 {"error": "Error message", "code": 1}
 ```
 
+### Common Error Codes
+
+| Code | Meaning | Example |
+|------|---------|---------|
+| `1` | General error | Invalid arguments, file not found |
+| `1` | Terminal not found | `termq open "nonexistent"` |
+| `1` | Column not found | `termq move "Terminal" "Bad Column"` |
+| `1` | No matches | `termq find --name "xyz"` returns empty `[]` |
+
+> **Note:** Currently all errors return code `1`. Check the `error` message for details. An empty result (e.g., `[]` from `find`) is not an error—it means no matches.
+
 ## LLM Integration
 
 TermQ supports any LLM CLI tool through **Init Command tokens**. This vendor-agnostic approach lets you use Claude Code, Aider, GitHub Copilot, or any other tool.
@@ -253,6 +279,8 @@ gh copilot suggest "{{LLM_NEXT_ACTION}}"
 # Custom script
 my-llm-wrapper.sh --context "{{LLM_PROMPT}}" --task "{{LLM_NEXT_ACTION}}"
 ```
+
+> **Note:** The Init Command is configured in the TermQ app UI (terminal editor → Advanced section), not via CLI. The CLI is used to set the `llmPrompt` and `llmNextAction` values that get substituted into the Init Command.
 
 ### Setting LLM Fields via CLI
 
