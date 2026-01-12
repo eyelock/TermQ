@@ -95,23 +95,23 @@ struct Open: ParsableCommand {
 
             var launched = false
             for appPath in possiblePaths {
-                let appURL = URL(fileURLWithPath: appPath)
                 if FileManager.default.fileExists(atPath: appPath) {
-                    let config = NSWorkspace.OpenConfiguration()
-                    let semaphore = DispatchSemaphore(value: 0)
-                    var launchError: Error?
+                    // Use Process with /usr/bin/open to avoid deadlock with
+                    // DispatchSemaphore + NSWorkspace.openApplication async callback
+                    let process = Process()
+                    process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
+                    process.arguments = ["-a", appPath, "--wait-apps"]
+                    process.standardOutput = FileHandle.nullDevice
+                    process.standardError = FileHandle.nullDevice
 
-                    workspace.openApplication(at: appURL, configuration: config) { _, error in
-                        launchError = error
-                        semaphore.signal()
-                    }
-                    semaphore.wait()
-
-                    if launchError == nil {
-                        launched = true
-                        // Wait for app to start
+                    do {
+                        try process.run()
+                        // Wait briefly for app to initialize
                         Thread.sleep(forTimeInterval: 1.0)
+                        launched = true
                         break
+                    } catch {
+                        continue
                     }
                 }
             }
@@ -151,8 +151,6 @@ struct Launch: ParsableCommand {
     )
 
     func run() throws {
-        let workspace = NSWorkspace.shared
-
         let possiblePaths = [
             "/Applications/TermQ.app",
             "\(NSHomeDirectory())/Applications/TermQ.app",
@@ -160,21 +158,25 @@ struct Launch: ParsableCommand {
         ]
 
         for appPath in possiblePaths {
-            let appURL = URL(fileURLWithPath: appPath)
             if FileManager.default.fileExists(atPath: appPath) {
-                let config = NSWorkspace.OpenConfiguration()
-                let semaphore = DispatchSemaphore(value: 0)
-                var launchError: Error?
+                // Use Process with /usr/bin/open to avoid deadlock with
+                // DispatchSemaphore + NSWorkspace.openApplication async callback
+                let process = Process()
+                process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
+                process.arguments = ["-a", appPath]
+                process.standardOutput = FileHandle.nullDevice
+                process.standardError = FileHandle.nullDevice
 
-                workspace.openApplication(at: appURL, configuration: config) { _, error in
-                    launchError = error
-                    semaphore.signal()
-                }
-                semaphore.wait()
+                do {
+                    try process.run()
+                    process.waitUntilExit()
 
-                if launchError == nil {
-                    print("Launched TermQ from: \(appPath)")
-                    return
+                    if process.terminationStatus == 0 {
+                        print("Launched TermQ from: \(appPath)")
+                        return
+                    }
+                } catch {
+                    continue
                 }
             }
         }
