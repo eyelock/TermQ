@@ -133,31 +133,26 @@ class TerminalSessionManager: ObservableObject {
         // Store session
         sessions[card.id] = TerminalSession(terminal: terminal, container: container)
 
-        // Track if we're running an LLM action (for init command delay)
-        let hasLlmAction = !card.llmNextAction.isEmpty
+        // Run init command if specified (after a short delay to let shell initialize)
+        // Supports token replacement for LLM integration:
+        //   {{LLM_PROMPT}} - replaced with persistent context
+        //   {{LLM_NEXT_ACTION}} - replaced with one-time action (then cleared)
+        if !card.initCommand.isEmpty {
+            let hasNextActionToken = card.initCommand.contains("{{LLM_NEXT_ACTION}}")
+            let hadNextAction = !card.llmNextAction.isEmpty
 
-        // Run LLM next action if specified (one-time, then clear)
-        if hasLlmAction {
-            let llmAction = card.llmNextAction
-            // Escape quotes in the prompt for shell
-            let escapedPrompt = llmAction.replacingOccurrences(of: "\"", with: "\\\"")
-            let llmCommand = "claude \"\(escapedPrompt)\""
+            // Perform token replacement
+            var initCmd = card.initCommand
+            initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: card.llmPrompt)
+            initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: card.llmNextAction)
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                terminal.send(txt: llmCommand + "\n")
+            // Clear llmNextAction after use (if token was present and had a value)
+            if hasNextActionToken && hadNextAction {
+                card.llmNextAction = ""
+                BoardViewModel.shared.updateCard(card)
             }
 
-            // Clear the next action and save
-            card.llmNextAction = ""
-            BoardViewModel.shared.updateCard(card)
-        }
-
-        // Run init command if specified (after a short delay to let shell initialize)
-        if !card.initCommand.isEmpty {
-            let initCmd = card.initCommand
-            // Delay slightly more if llmNextAction was also run
-            let delay = hasLlmAction ? 1.0 : 0.5
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 terminal.send(txt: initCmd + "\n")
             }
         }

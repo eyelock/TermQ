@@ -227,42 +227,65 @@ All commands output JSON for easy parsing:
 
 ## LLM Integration
 
-TermQ has two LLM-related fields that enable powerful automation workflows:
+TermQ supports any LLM CLI tool through **Init Command tokens**. This vendor-agnostic approach lets you use Claude Code, Aider, GitHub Copilot, or any other tool.
 
-### Persistent Context (`llmPrompt`)
+### Token Placeholders
 
-Background information that's always available. Never auto-cleared.
+Use these tokens in a terminal's **Init Command** field:
+
+| Token | Description |
+|-------|-------------|
+| `{{LLM_PROMPT}}` | Persistent context (never auto-cleared) |
+| `{{LLM_NEXT_ACTION}}` | One-time action (cleared after terminal opens) |
+
+### Example Init Commands
 
 ```bash
-# Set persistent context
-termq set "API Server" --llm-prompt "Node.js backend. Entry: src/index.ts. Uses PostgreSQL."
+# Claude Code - start interactive session with context
+claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 
-# Read context
-termq list | jq '.[] | {name, llmPrompt}'
+# Aider - pass task directly
+aider --message "{{LLM_NEXT_ACTION}}"
+
+# GitHub Copilot
+gh copilot suggest "{{LLM_NEXT_ACTION}}"
+
+# Custom script
+my-llm-wrapper.sh --context "{{LLM_PROMPT}}" --task "{{LLM_NEXT_ACTION}}"
 ```
 
-**Use for:**
-- Project background info
-- Tech stack details
-- Important notes that should persist
-
-### Next Action (`llmNextAction`)
-
-A one-time task that runs when the terminal opens, then clears automatically.
-
-When set, opening the terminal will:
-1. Run `claude "{your action}"` in the terminal
-2. Clear the `llmNextAction` field
+### Setting LLM Fields via CLI
 
 ```bash
-# Set a task for next session
+# Set persistent context (always available)
+termq set "API Server" --llm-prompt "Node.js backend. Entry: src/index.ts. Uses PostgreSQL."
+
+# Set one-time action (runs once, then clears)
 termq set "API Server" --llm-next-action "Implement rate limiting. See plan in context."
+
+# Read LLM fields
+termq list | jq '.[] | {name, llmPrompt, llmNextAction}'
 
 # Check pending actions
 termq list | jq '.[] | select(.llmNextAction != "") | {name, llmNextAction}'
 ```
 
-**Use for:**
+### How It Works
+
+1. User sets **Init Command** with tokens (e.g., `claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"`)
+2. User or LLM sets `llmPrompt` and/or `llmNextAction` via CLI or UI
+3. When terminal opens, tokens are replaced with actual values
+4. If `{{LLM_NEXT_ACTION}}` was in the command and had a value, it's cleared after use
+5. Empty tokens become empty strings (your LLM tool handles gracefully)
+
+### Use Cases
+
+**Persistent Context (`llmPrompt`):**
+- Project background info
+- Tech stack details
+- Important notes that should persist
+
+**Next Action (`llmNextAction`):**
 - Parking work with "resume from here" instructions
 - Queueing tasks for later
 - Handoff between sessions
@@ -288,7 +311,7 @@ If you're an LLM assistant helping a user with TermQ:
 1. **Use `termq open <name>`** to resume work - returns terminal details including both LLM fields
 2. **Check `llmNextAction`** first - this is a pending task queued for you
 3. **Check `llmPrompt`** for persistent background context
-4. **Set `llmNextAction`** when parking work - it will auto-run on next open
+4. **Set `llmNextAction`** when parking work - user's Init Command will inject it on next open
 5. **Update `llmPrompt`** for context that should persist (project info, notes)
 6. **Use `termq create`** only when starting genuinely new work
 7. **Use columns** to track workflow (To Do → In Progress → Done)
@@ -304,7 +327,8 @@ termq open "API Project"
 termq set "API Project" --llm-next-action "Continue implementing rate limiting from line 42"
 
 # Session 2: User opens terminal again
-# TermQ automatically runs: claude "Continue implementing rate limiting from line 42"
+# Init Command: claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+# Becomes:      claude "Node.js backend Continue implementing rate limiting from line 42"
 # llmNextAction is cleared, you pick up where you left off
 ```
 
