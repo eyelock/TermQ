@@ -1,6 +1,6 @@
 # CLI Tool
 
-The `termq` CLI tool lets you manage terminals from your shell. It's designed for LLM-friendly automation with JSON output.
+The `termq` CLI tool lets you manage terminals from your shell. It outputs JSON for easy scripting and works great with LLM assistants like Claude.
 
 ## Installation
 
@@ -11,6 +11,32 @@ make install
 # Or manually copy
 cp .build/release/termq /usr/local/bin/
 ```
+
+## Quick Start
+
+```bash
+# See what's in your board
+termq list
+
+# Open a new terminal for your current project
+termq open --name "My Project" --column "In Progress"
+
+# Find terminals by name
+termq find --name "api"
+
+# Move a terminal to Done when finished
+termq move "My Project" "Done"
+```
+
+## Understanding the Board
+
+TermQ organizes terminals in a **Kanban board** with columns like "To Do", "In Progress", and "Done". Each terminal has:
+
+- **Name & Description** - What this terminal is for
+- **Column** - Current workflow stage
+- **Tags** - Key-value metadata (e.g., `env=prod`)
+- **Badges** - Visual labels
+- **LLM Prompt** - Notes/context for AI assistants (see below)
 
 ## Commands
 
@@ -172,10 +198,47 @@ All commands output JSON for easy parsing:
 {"error": "Error message", "code": 1}
 ```
 
-## LLM Integration Tips
+## Using the LLM Prompt Field
 
-1. Use `termq list` to get all terminals as structured JSON
-2. Use `termq find` to filter terminals by criteria
-3. Parse the `llmPrompt` field for context about each terminal's purpose
-4. Use `termq set --llm-prompt` to store LLM-relevant context
-5. Use `termq move` to organize terminals into workflow columns
+The `llmPrompt` field lets you store context about a terminal that persists between sessions. This is useful for both humans leaving notes and AI assistants tracking state.
+
+**Setting context:**
+```bash
+termq set "API Server" --llm-prompt "Running the backend API. Start with: npm run dev. Check logs for errors."
+```
+
+**Reading context:**
+```bash
+termq list | jq '.[].llmPrompt'
+```
+
+**Example uses:**
+- What commands to run in this terminal
+- Current task or objective
+- Important notes or warnings
+- State that should persist between sessions
+
+## Automation & Scripting
+
+The CLI outputs JSON for easy parsing in scripts or by AI assistants.
+
+**Example: Find all production terminals**
+```bash
+termq find --tag env=prod | jq '.[].name'
+```
+
+**Example: Move all "In Progress" to "Review"**
+```bash
+termq find --column "In Progress" | jq -r '.[].id' | xargs -I {} termq move {} "Review"
+```
+
+## Tips for AI Assistants
+
+If you're an LLM assistant helping a user with TermQ:
+
+1. **Start with `termq list`** to understand what terminals exist
+2. **Check `llmPrompt`** fields for context left by the user or previous sessions
+3. **Update `llmPrompt`** when you learn something important about a terminal
+4. **Use columns** to track workflow (To Do → In Progress → Done)
+5. **Use tags** for categorization (e.g., `project=myapp`, `env=prod`)
+6. **Be descriptive** with names and descriptions so the board is self-documenting
