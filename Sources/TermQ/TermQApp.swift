@@ -31,6 +31,8 @@ class URLHandler: ObservableObject {
             handleUpdate(queryItems: queryItems)
         case "move":
             handleMove(queryItems: queryItems)
+        case "focus":
+            handleFocus(queryItems: queryItems)
         default:
             break
         }
@@ -93,6 +95,11 @@ class URLHandler: ObservableObject {
             card.llmPrompt = llmPrompt
         }
 
+        // Update LLM next action
+        if let llmNextAction = queryItems.first(where: { $0.name == "llmNextAction" })?.value {
+            card.llmNextAction = llmNextAction
+        }
+
         // Update favourite status
         if let favouriteStr = queryItems.first(where: { $0.name == "favourite" })?.value {
             let shouldBeFavourite = favouriteStr.lowercased() == "true"
@@ -148,6 +155,18 @@ class URLHandler: ObservableObject {
         else { return }
 
         viewModel.moveCard(card, to: targetColumn)
+    }
+
+    private func handleFocus(queryItems: [URLQueryItem]) {
+        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
+            let cardId = UUID(uuidString: idString)
+        else { return }
+
+        let viewModel = BoardViewModel.shared
+
+        guard let card = viewModel.card(for: cardId) else { return }
+
+        viewModel.selectCard(card)
     }
 }
 
