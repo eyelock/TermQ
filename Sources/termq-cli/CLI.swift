@@ -31,6 +31,7 @@ struct CLICard: Codable {
     let isFavourite: Bool
     let badge: String
     let llmPrompt: String
+    let llmNextAction: String
     let deletedAt: Date?
 
     var isDeleted: Bool { deletedAt != nil }
@@ -58,6 +59,7 @@ struct TerminalOutput: Encodable {
     let badges: [String]
     let isFavourite: Bool
     let llmPrompt: String
+    let llmNextAction: String
 }
 
 /// Error output format
@@ -125,7 +127,8 @@ func cardToOutput(_ card: CLICard, columnName: String) -> TerminalOutput {
         path: card.workingDirectory,
         badges: badges,
         isFavourite: card.isFavourite,
-        llmPrompt: card.llmPrompt
+        llmPrompt: card.llmPrompt,
+        llmNextAction: card.llmNextAction
     )
 }
 
@@ -168,14 +171,121 @@ struct TermQCLI: ParsableCommand {
         commandName: "termq",
         abstract: "Command-line interface for TermQ - Terminal Queue Manager",
         version: "1.0.0",
-        subcommands: [Open.self, Launch.self, List.self, Find.self, Set.self, Move.self],
-        defaultSubcommand: Open.self
+        subcommands: [Open.self, Create.self, Launch.self, List.self, Find.self, Set.self, Move.self]
     )
 }
 
 struct Open: ParsableCommand {
     static let configuration = CommandConfiguration(
-        abstract: "Open a new terminal in TermQ at the current directory"
+        abstract: "Open an existing terminal by name, ID, or path",
+        discussion: "Finds and focuses an existing terminal in TermQ. Returns terminal details as JSON."
+    )
+
+    @Argument(help: "Terminal identifier (name, UUID, or path)")
+    var terminal: String
+
+    @Flag(name: .long, help: "Use debug data directory (TermQ-Debug)")
+    var debug: Bool = false
+
+    func run() throws {
+        do {
+            let board = try loadBoard(debug: debug)
+
+            // Build column lookup
+            var columnLookup: [UUID: String] = [:]
+            for col in board.columns {
+                columnLookup[col.id] = col.name
+            }
+
+            var targetCard: CLICard?
+
+            // Try as UUID first
+            if let uuid = UUID(uuidString: terminal) {
+                targetCard = board.activeCards.first { $0.id == uuid }
+            }
+
+            // Try as exact name (case-insensitive)
+            if targetCard == nil {
+                let terminalLower = terminal.lowercased()
+                targetCard = board.activeCards.first { $0.title.lowercased() == terminalLower }
+            }
+
+            // Try as path (exact match or ends with)
+            if targetCard == nil {
+                let normalizedPath = terminal.hasSuffix("/")
+                    ? String(terminal.dropLast())
+                    : terminal
+                targetCard = board.activeCards.first { card in
+                    card.workingDirectory == normalizedPath
+                        || card.workingDirectory == terminal
+                        || card.workingDirectory.hasSuffix("/\(normalizedPath)")
+                }
+            }
+
+            // Try as partial name match
+            if targetCard == nil {
+                let terminalLower = terminal.lowercased()
+                targetCard = board.activeCards.first { $0.title.lowercased().contains(terminalLower) }
+            }
+
+            guard let card = targetCard else {
+                printErrorJSON("Terminal not found: \(terminal)")
+                throw ExitCode.failure
+            }
+
+            // Build URL to focus the terminal
+            var components = URLComponents()
+            components.scheme = "termq"
+            components.host = "focus"
+            components.queryItems = [
+                URLQueryItem(name: "id", value: card.id.uuidString)
+            ]
+
+            guard let url = components.url else {
+                printErrorJSON("Failed to construct URL")
+                throw ExitCode.failure
+            }
+
+            // Ensure TermQ is running and focus the terminal
+            let workspace = NSWorkspace.shared
+            let bundleId = "com.termq.app"
+            let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
+
+            if runningApps.isEmpty {
+                // Launch TermQ first
+                if !launchTermQ() {
+                    printErrorJSON("Could not find or launch TermQ.app")
+                    throw ExitCode.failure
+                }
+            }
+
+            let success = workspace.open(url)
+
+            if success {
+                // Output terminal details as JSON
+                let output = cardToOutput(card, columnName: columnLookup[card.columnId] ?? "Unknown")
+                printJSON(output)
+            } else {
+                printErrorJSON("Failed to communicate with TermQ. Is it running?")
+                throw ExitCode.failure
+            }
+
+        } catch let error as CLIError {
+            printErrorJSON(error.localizedDescription)
+            throw ExitCode.failure
+        } catch let error as ExitCode {
+            throw error
+        } catch {
+            printErrorJSON("Unexpected error: \(error.localizedDescription)")
+            throw ExitCode.failure
+        }
+    }
+}
+
+struct Create: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        abstract: "Create a new terminal in TermQ",
+        discussion: "Creates a new terminal at the specified or current directory."
     )
 
     @Option(name: [.short, .long], help: "Name/title for the terminal")
@@ -228,53 +338,14 @@ struct Open: ParsableCommand {
             throw ExitCode.failure
         }
 
-        // First, ensure TermQ is running
+        // Ensure TermQ is running
         let workspace = NSWorkspace.shared
         let bundleId = "com.termq.app"
-
-        // Check if TermQ is running
         let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
 
         if runningApps.isEmpty {
-            // Try to launch TermQ using 'open' command (avoids semaphore deadlock)
             print("TermQ is not running. Launching...")
-
-            // Try common locations
-            let possiblePaths = [
-                "/Applications/TermQ.app",
-                "\(NSHomeDirectory())/Applications/TermQ.app",
-                "\(FileManager.default.currentDirectoryPath)/TermQ.app",
-                // Also check the build directory relative to the CLI
-                URL(fileURLWithPath: #file)
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .appendingPathComponent("TermQ.app")
-                    .path,
-            ]
-
-            var launched = false
-            for appPath in possiblePaths {
-                if FileManager.default.fileExists(atPath: appPath) {
-                    let process = Process()
-                    process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
-                    process.arguments = ["-a", appPath, "--wait-apps"]
-                    process.standardOutput = FileHandle.nullDevice
-                    process.standardError = FileHandle.nullDevice
-
-                    do {
-                        try process.run()
-                        // Wait briefly for app to initialize
-                        Thread.sleep(forTimeInterval: 1.0)
-                        launched = true
-                        break
-                    } catch {
-                        continue
-                    }
-                }
-            }
-
-            if !launched {
+            if !launchTermQ() {
                 print("Error: Could not find or launch TermQ.app")
                 print("Please ensure TermQ.app is in /Applications or current directory")
                 throw ExitCode.failure
@@ -285,7 +356,7 @@ struct Open: ParsableCommand {
         let success = workspace.open(url)
 
         if success {
-            print("Opening terminal in TermQ: \(cwd)")
+            print("Creating terminal in TermQ: \(cwd)")
             if let name = name {
                 print("  Name: \(name)")
             }
@@ -301,6 +372,34 @@ struct Open: ParsableCommand {
             throw ExitCode.failure
         }
     }
+}
+
+/// Helper to launch TermQ app
+func launchTermQ() -> Bool {
+    let possiblePaths = [
+        "/Applications/TermQ.app",
+        "\(NSHomeDirectory())/Applications/TermQ.app",
+        "\(FileManager.default.currentDirectoryPath)/TermQ.app",
+    ]
+
+    for appPath in possiblePaths {
+        if FileManager.default.fileExists(atPath: appPath) {
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
+            process.arguments = ["-a", appPath, "--wait-apps"]
+            process.standardOutput = FileHandle.nullDevice
+            process.standardError = FileHandle.nullDevice
+
+            do {
+                try process.run()
+                Thread.sleep(forTimeInterval: 1.0)
+                return true
+            } catch {
+                continue
+            }
+        }
+    }
+    return false
 }
 
 struct Launch: ParsableCommand {
@@ -559,8 +658,11 @@ struct Set: ParsableCommand {
     @Option(name: .long, help: "Set badge text")
     var badge: String?
 
-    @Option(name: .long, help: "Set LLM prompt/context for this terminal")
+    @Option(name: .long, help: "Set persistent LLM context for this terminal")
     var llmPrompt: String?
+
+    @Option(name: .long, help: "Set one-time LLM action (runs on next open, then clears)")
+    var llmNextAction: String?
 
     @Option(name: .long, parsing: .upToNextOption, help: "Add tags in key=value format")
     var tag: [String] = []
@@ -621,6 +723,10 @@ struct Set: ParsableCommand {
 
             if let llmPrompt = llmPrompt {
                 queryItems.append(URLQueryItem(name: "llmPrompt", value: llmPrompt))
+            }
+
+            if let llmNextAction = llmNextAction {
+                queryItems.append(URLQueryItem(name: "llmNextAction", value: llmNextAction))
             }
 
             for tagStr in tag {
