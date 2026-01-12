@@ -217,6 +217,48 @@ termq move "Terminal Name" "Done"
 termq move "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88" "In Progress"
 ```
 
+### Get LLM Context
+
+Output comprehensive documentation for LLM/AI assistants.
+
+```bash
+termq context
+```
+
+This outputs a complete guide including:
+- Terminal field descriptions
+- Quick reference for all commands
+- LLM workflow patterns
+- JSON output format examples
+- Useful jq patterns
+
+**Tip for LLM agents:** Run this command first to understand how to use the CLI effectively.
+
+## Getting Help
+
+All commands support `--help` for quick reference:
+
+```bash
+# Main help (lists all commands)
+termq --help
+
+# Command-specific help
+termq open --help
+termq set --help
+termq find --help
+```
+
+Example output from `termq --help`:
+```
+OVERVIEW: Command-line interface for TermQ - Terminal Queue Manager
+
+LLM/AI Assistants: Run 'termq context' for a complete usage guide with examples
+and best practices for terminal management.
+
+SUBCOMMANDS:
+  open, create, launch, list, find, set, move, context
+```
+
 ## Debug Mode
 
 All read commands (`list`, `find`) support `--debug` to use the debug data directory (`~/Library/Application Support/TermQ-Debug/`).
