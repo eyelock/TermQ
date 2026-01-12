@@ -133,10 +133,31 @@ class TerminalSessionManager: ObservableObject {
         // Store session
         sessions[card.id] = TerminalSession(terminal: terminal, container: container)
 
+        // Track if we're running an LLM action (for init command delay)
+        let hasLlmAction = !card.llmNextAction.isEmpty
+
+        // Run LLM next action if specified (one-time, then clear)
+        if hasLlmAction {
+            let llmAction = card.llmNextAction
+            // Escape quotes in the prompt for shell
+            let escapedPrompt = llmAction.replacingOccurrences(of: "\"", with: "\\\"")
+            let llmCommand = "claude \"\(escapedPrompt)\""
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                terminal.send(txt: llmCommand + "\n")
+            }
+
+            // Clear the next action and save
+            card.llmNextAction = ""
+            BoardViewModel.shared.updateCard(card)
+        }
+
         // Run init command if specified (after a short delay to let shell initialize)
         if !card.initCommand.isEmpty {
             let initCmd = card.initCommand
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // Delay slightly more if llmNextAction was also run
+            let delay = hasLlmAction ? 1.0 : 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 terminal.send(txt: initCmd + "\n")
             }
         }
