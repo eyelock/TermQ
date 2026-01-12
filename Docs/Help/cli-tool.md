@@ -4,13 +4,13 @@ The `termq` CLI tool lets you manage terminals from your shell. It outputs JSON 
 
 ## Installation
 
-```bash
-# Install after building
-make install
+1. Open **TermQ → Settings** (or press ⌘,)
+2. Click **Install Command Line Tool**
+3. Enter your password when prompted
 
-# Or manually copy
-cp .build/release/termq /usr/local/bin/
-```
+The CLI will be installed to `/usr/local/bin/termq`.
+
+![Install CLI from Settings](Images/install-cli.png)
 
 ## Quick Start
 
@@ -18,8 +18,11 @@ cp .build/release/termq /usr/local/bin/
 # See what's in your board
 termq list
 
-# Open a new terminal for your current project
-termq open --name "My Project" --column "In Progress"
+# Open an existing terminal by name
+termq open "My Project"
+
+# Create a new terminal for your current project
+termq create --name "My Project" --column "In Progress"
 
 # Find terminals by name
 termq find --name "api"
@@ -42,23 +45,43 @@ TermQ organizes terminals in a **Kanban board** with columns like "To Do", "In P
 
 ### Open a Terminal
 
-Open a new terminal in TermQ at the current directory.
+Open an existing terminal by name, ID, or path. Returns terminal details as JSON (including `llmPrompt` for context).
 
 ```bash
-# Open in current directory
-termq open
+# Open by name
+termq open "API Server"
 
-# Open with name and description
-termq open --name "API Server" --description "Backend"
+# Open by UUID
+termq open "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88"
 
-# Open in specific column
-termq open --column "In Progress"
+# Open by path (matches working directory)
+termq open "/path/to/project"
 
-# Open with tags
-termq open --name "Build" --tag env=prod --tag version=1.0
+# Open with partial name match
+termq open "api"
+```
 
-# Open in specific directory
-termq open --path /path/to/project
+**Output:** Returns the terminal's full details as JSON, which is useful for LLM assistants to read context.
+
+### Create a Terminal
+
+Create a new terminal in TermQ.
+
+```bash
+# Create in current directory
+termq create
+
+# Create with name and description
+termq create --name "API Server" --description "Backend"
+
+# Create in specific column
+termq create --column "In Progress"
+
+# Create with tags
+termq create --name "Build" --tag env=prod --tag version=1.0
+
+# Create in specific directory
+termq create --path /path/to/project
 ```
 
 ### Launch TermQ
@@ -98,7 +121,8 @@ termq list --columns
     "path": "/working/directory",
     "badges": ["badge1", "badge2"],
     "isFavourite": false,
-    "llmPrompt": "Context for LLM"
+    "llmPrompt": "Persistent context",
+    "llmNextAction": "One-time task (runs on next open)"
   }
 ]
 ```
@@ -147,8 +171,11 @@ termq set "Terminal Name" --column "Done"
 # Set badge
 termq set "Terminal Name" --badge "prod, v2.0"
 
-# Set LLM prompt/context
-termq set "Terminal Name" --llm-prompt "This terminal runs the API server"
+# Set persistent LLM context
+termq set "Terminal Name" --llm-prompt "Node.js API server, uses PostgreSQL"
+
+# Set one-time LLM action (runs on next open, then clears)
+termq set "Terminal Name" --llm-next-action "Fix the auth bug discussed in issue #42"
 
 # Add tags
 termq set "Terminal Name" --tag env=prod --tag version=2.0
@@ -198,25 +225,47 @@ All commands output JSON for easy parsing:
 {"error": "Error message", "code": 1}
 ```
 
-## Using the LLM Prompt Field
+## LLM Integration
 
-The `llmPrompt` field lets you store context about a terminal that persists between sessions. This is useful for both humans leaving notes and AI assistants tracking state.
+TermQ has two LLM-related fields that enable powerful automation workflows:
 
-**Setting context:**
+### Persistent Context (`llmPrompt`)
+
+Background information that's always available. Never auto-cleared.
+
 ```bash
-termq set "API Server" --llm-prompt "Running the backend API. Start with: npm run dev. Check logs for errors."
+# Set persistent context
+termq set "API Server" --llm-prompt "Node.js backend. Entry: src/index.ts. Uses PostgreSQL."
+
+# Read context
+termq list | jq '.[] | {name, llmPrompt}'
 ```
 
-**Reading context:**
+**Use for:**
+- Project background info
+- Tech stack details
+- Important notes that should persist
+
+### Next Action (`llmNextAction`)
+
+A one-time task that runs when the terminal opens, then clears automatically.
+
+When set, opening the terminal will:
+1. Run `claude "{your action}"` in the terminal
+2. Clear the `llmNextAction` field
+
 ```bash
-termq list | jq '.[].llmPrompt'
+# Set a task for next session
+termq set "API Server" --llm-next-action "Implement rate limiting. See plan in context."
+
+# Check pending actions
+termq list | jq '.[] | select(.llmNextAction != "") | {name, llmNextAction}'
 ```
 
-**Example uses:**
-- What commands to run in this terminal
-- Current task or objective
-- Important notes or warnings
-- State that should persist between sessions
+**Use for:**
+- Parking work with "resume from here" instructions
+- Queueing tasks for later
+- Handoff between sessions
 
 ## Automation & Scripting
 
@@ -236,9 +285,33 @@ termq find --column "In Progress" | jq -r '.[].id' | xargs -I {} termq move {} "
 
 If you're an LLM assistant helping a user with TermQ:
 
-1. **Start with `termq list`** to understand what terminals exist
-2. **Check `llmPrompt`** fields for context left by the user or previous sessions
-3. **Update `llmPrompt`** when you learn something important about a terminal
-4. **Use columns** to track workflow (To Do → In Progress → Done)
-5. **Use tags** for categorization (e.g., `project=myapp`, `env=prod`)
-6. **Be descriptive** with names and descriptions so the board is self-documenting
+1. **Use `termq open <name>`** to resume work - returns terminal details including both LLM fields
+2. **Check `llmNextAction`** first - this is a pending task queued for you
+3. **Check `llmPrompt`** for persistent background context
+4. **Set `llmNextAction`** when parking work - it will auto-run on next open
+5. **Update `llmPrompt`** for context that should persist (project info, notes)
+6. **Use `termq create`** only when starting genuinely new work
+7. **Use columns** to track workflow (To Do → In Progress → Done)
+
+**Complete Workflow Example:**
+
+```bash
+# Session 1: User opens terminal, you do some work
+termq open "API Project"
+# Returns: llmPrompt="Node.js backend", llmNextAction=""
+
+# You implement a feature, but need to pause. Queue next action:
+termq set "API Project" --llm-next-action "Continue implementing rate limiting from line 42"
+
+# Session 2: User opens terminal again
+# TermQ automatically runs: claude "Continue implementing rate limiting from line 42"
+# llmNextAction is cleared, you pick up where you left off
+```
+
+**Parking Work Pattern:**
+```bash
+# Before ending session, queue the next task
+termq set "My Terminal" \
+  --llm-prompt "React frontend, uses Redux" \
+  --llm-next-action "Implement the login form. See design in Figma link in description."
+```
