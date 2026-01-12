@@ -5,7 +5,7 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -o pipefail -c
 
-.PHONY: all build build-release clean test lint format check install uninstall app sign run help
+.PHONY: all build build-release clean test lint format check install uninstall app sign run debug help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release publish-release
 .PHONY: copy-help docs.help
@@ -121,10 +121,27 @@ sign: app
 	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQDebug.app
 	@echo "Debug app signed successfully"
 
-# Build, sign, and run the debug app
-run: sign
+# Build, sign, and run the debug app (auto-quits existing instance)
+debug: sign
+	@if pgrep -f "TermQDebug.app/Contents/MacOS" >/dev/null 2>&1; then \
+		echo "Quitting running TermQ Debug..."; \
+		osascript -e 'tell application "TermQDebug" to quit' 2>/dev/null || true; \
+		sleep 1; \
+	fi
 	@echo "Launching TermQ Debug..."
 	@open TermQDebug.app
+
+# Build and run the release app (errors if production app is running)
+run: release-app
+	@if pgrep -f "TermQ.app/Contents/MacOS" >/dev/null 2>&1; then \
+		echo ""; \
+		echo "Error: TermQ (Production) is already running."; \
+		echo "Please quit it manually before running 'make run'."; \
+		echo ""; \
+		exit 1; \
+	fi
+	@echo "Launching TermQ (Release)..."
+	@open TermQ.app
 
 # Build release app bundle
 release-app: build-release
@@ -434,9 +451,13 @@ worktree.delete:
 # Serve help documentation with docsify (live reload)
 docs.help:
 	@echo "Starting docsify server for Help documentation..."
-	@echo "View at http://localhost:3000"
 	@echo "Press Ctrl+C to stop"
-	@npx docsify-cli serve Docs/Help --port 3000
+	@if lsof -i :3000 >/dev/null 2>&1; then \
+		echo "Port 3000 in use, using random port..."; \
+		npx docsify-cli serve Docs/Help; \
+	else \
+		npx docsify-cli serve Docs/Help --port 3000; \
+	fi
 
 # Show help
 help:
@@ -454,7 +475,8 @@ help:
 	@echo "  check         - Run all checks (build, lint, format-check, test)"
 	@echo "  app           - Build debug app bundle"
 	@echo "  sign          - Build and sign debug app bundle"
-	@echo "  run           - Build, sign, and launch the app"
+	@echo "  run           - Build release and launch TermQ.app"
+	@echo "  debug         - Build debug and launch TermQDebug.app"
 	@echo "  release-app   - Build and sign release app bundle"
 	@echo "  install       - Build release and install app to /Applications"
 	@echo "  uninstall     - Remove app from /Applications"
@@ -475,7 +497,7 @@ help:
 	@echo ""
 	@echo "  Worktree:     - worktree worktree.update worktree.delete"
 	@echo ""
-	@echo "  docs.help     - Serve Help docs with docsify (live reload at localhost:3000)"
+	@echo "  docs.help     - Serve Help docs with docsify (live reload)"
 	@echo "  help          - Show this help message"
 	@echo ""
 	@echo "Current version: $(VERSION)"
