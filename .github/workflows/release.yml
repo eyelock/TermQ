@@ -9,9 +9,58 @@ permissions:
   contents: write
 
 jobs:
+  verify-ci:
+    name: Verify CI Passed
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check CI status for commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Checking CI status for commit ${{ github.sha }}..."
+
+          # Wait up to 5 minutes for CI to complete (in case it's still running)
+          for i in {1..30}; do
+            # Get CI workflow runs for this commit
+            CI_RUN=$(gh run list \
+              --repo ${{ github.repository }} \
+              --commit ${{ github.sha }} \
+              --workflow ci.yml \
+              --json status,conclusion \
+              --jq '.[0]' 2>/dev/null || echo '{}')
+
+            STATUS=$(echo "$CI_RUN" | jq -r '.status // "not_found"')
+            CONCLUSION=$(echo "$CI_RUN" | jq -r '.conclusion // "pending"')
+
+            echo "Attempt $i: status=$STATUS, conclusion=$CONCLUSION"
+
+            if [ "$STATUS" = "completed" ]; then
+              if [ "$CONCLUSION" = "success" ]; then
+                echo "✅ CI passed for commit ${{ github.sha }}"
+                exit 0
+              else
+                echo "❌ CI failed for commit ${{ github.sha }} (conclusion: $CONCLUSION)"
+                exit 1
+              fi
+            fi
+
+            if [ "$STATUS" = "not_found" ]; then
+              echo "⏳ No CI run found yet, waiting..."
+            else
+              echo "⏳ CI still running ($STATUS), waiting..."
+            fi
+
+            sleep 10
+          done
+
+          echo "❌ Timeout waiting for CI to complete"
+          exit 1
+
   build-and-release:
     name: Build and Release
     runs-on: macos-15
+    needs: verify-ci
 
     steps:
       - name: Checkout
@@ -26,6 +75,9 @@ jobs:
       - name: Get version from tag
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Copy Help Resources
+        run: make copy-help
 
       - name: Build release
         run: swift build -c release
