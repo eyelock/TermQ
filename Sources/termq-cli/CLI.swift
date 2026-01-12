@@ -171,11 +171,13 @@ struct TermQCLI: ParsableCommand {
         commandName: "termq",
         abstract: "Command-line interface for TermQ - Terminal Queue Manager",
         discussion: """
-            LLM/AI Assistants: Run 'termq context' for a complete usage guide \
-            with examples and best practices for terminal management.
+            LLM/AI Assistants: Run 'termq pending' at session start, then \
+            'termq context' for the complete cross-session workflow guide.
             """,
         version: "1.0.0",
-        subcommands: [Open.self, Create.self, Launch.self, List.self, Find.self, Set.self, Move.self, Context.self]
+        subcommands: [
+            Open.self, Create.self, Launch.self, List.self, Find.self, Set.self, Move.self, Pending.self, Context.self,
+        ]
     )
 }
 
@@ -852,111 +854,290 @@ struct Move: ParsableCommand {
     }
 }
 
+// MARK: - Pending Command (LLM Session Start)
+
+struct PendingOutput: Encodable {
+    let terminals: [PendingTerminal]
+    let summary: PendingSummary
+}
+
+struct PendingTerminal: Encodable {
+    let id: String
+    let name: String
+    let column: String
+    let path: String
+    let llmNextAction: String
+    let llmPrompt: String
+    let staleness: String
+    let tags: [String: String]
+}
+
+struct PendingSummary: Encodable {
+    let total: Int
+    let withNextAction: Int
+    let stale: Int
+    let fresh: Int
+}
+
+struct Pending: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        abstract: "Show terminals needing attention (LLM session start)",
+        discussion: """
+            Run this at the START of every LLM session. Shows terminals with:
+            - Pending llmNextAction (queued tasks for you)
+            - Staleness indicators based on tags
+
+            This is your entry point for cross-session continuity.
+            """
+    )
+
+    @Flag(name: .long, help: "Use debug data directory (TermQ-Debug)")
+    var debug: Bool = false
+
+    @Flag(name: .long, help: "Only show terminals with llmNextAction set")
+    var actionsOnly: Bool = false
+
+    func run() throws {
+        do {
+            let board = try loadBoard(debug: debug)
+            let columnLookup = buildColumnLookup(from: board)
+            let cards = getFilteredAndSortedCards(from: board)
+            let output = buildPendingOutput(cards: cards, columnLookup: columnLookup)
+
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            let data = try encoder.encode(output)
+            if let json = String(data: data, encoding: .utf8) {
+                print(json)
+            }
+        } catch {
+            printErrorJSON("Failed to load board: \(error.localizedDescription)")
+            throw ExitCode.failure
+        }
+    }
+
+    private func buildColumnLookup(from board: CLIBoard) -> [UUID: String] {
+        var lookup: [UUID: String] = [:]
+        for col in board.columns {
+            lookup[col.id] = col.name
+        }
+        return lookup
+    }
+
+    private func getFilteredAndSortedCards(from board: CLIBoard) -> [CLICard] {
+        var cards = board.activeCards
+
+        if actionsOnly {
+            cards = cards.filter { !$0.llmNextAction.isEmpty }
+        }
+
+        cards.sort { card1, card2 in
+            let has1 = !card1.llmNextAction.isEmpty
+            let has2 = !card2.llmNextAction.isEmpty
+            if has1 != has2 { return has1 }
+
+            let staleness1 = getStalenessRank(card1)
+            let staleness2 = getStalenessRank(card2)
+            if staleness1 != staleness2 { return staleness1 > staleness2 }
+
+            return card1.title < card2.title
+        }
+        return cards
+    }
+
+    private func buildPendingOutput(cards: [CLICard], columnLookup: [UUID: String]) -> PendingOutput {
+        var pendingTerminals: [PendingTerminal] = []
+        var withNextAction = 0
+        var staleCount = 0
+        var freshCount = 0
+
+        for card in cards {
+            let staleness = getStalenessTags(card)
+            if !card.llmNextAction.isEmpty { withNextAction += 1 }
+            switch staleness {
+            case "stale", "old": staleCount += 1
+            case "fresh": freshCount += 1
+            default: break
+            }
+
+            pendingTerminals.append(buildPendingTerminal(card, columnLookup, staleness))
+        }
+
+        return PendingOutput(
+            terminals: pendingTerminals,
+            summary: PendingSummary(
+                total: pendingTerminals.count, withNextAction: withNextAction, stale: staleCount, fresh: freshCount)
+        )
+    }
+
+    private func buildPendingTerminal(_ card: CLICard, _ cols: [UUID: String], _ stale: String) -> PendingTerminal {
+        var tagDict: [String: String] = [:]
+        for tag in card.tags { tagDict[tag.key] = tag.value }
+
+        return PendingTerminal(
+            id: card.id.uuidString,
+            name: card.title,
+            column: cols[card.columnId] ?? "Unknown",
+            path: card.workingDirectory,
+            llmNextAction: card.llmNextAction,
+            llmPrompt: card.llmPrompt,
+            staleness: stale,
+            tags: tagDict
+        )
+    }
+
+    private func getStalenessRank(_ card: CLICard) -> Int {
+        let staleness = getStalenessTags(card)
+        switch staleness {
+        case "stale", "old":
+            return 3
+        case "ageing":
+            return 2
+        case "fresh":
+            return 1
+        default:
+            return 0
+        }
+    }
+
+    private func getStalenessTags(_ card: CLICard) -> String {
+        // Check for staleness tag
+        if let stalenessTag = card.tags.first(where: { $0.key.lowercased() == "staleness" }) {
+            return stalenessTag.value.lowercased()
+        }
+        return "unknown"
+    }
+}
+
 // MARK: - Context Command (LLM Discovery)
 
 struct Context: ParsableCommand {
     static let configuration = CommandConfiguration(
         abstract: "Show LLM-friendly context and usage guide",
-        discussion: "Outputs documentation for AI assistants to understand how to use the termq CLI."
+        discussion: "Outputs comprehensive documentation for AI assistants including cross-session workflows."
     )
 
     func run() throws {
         let context = """
-            # TermQ CLI - Context for LLM Assistants
+            # TermQ CLI - LLM Assistant Guide
 
-            TermQ is a Kanban-style terminal manager. Each terminal has:
+            You are working with TermQ, a Kanban-style terminal manager that enables
+            cross-session continuity for LLM assistants.
+
+            ## ⚡ SESSION START CHECKLIST (Do This First!)
+
+            1. Run `termq pending` to see what needs attention:
+               ```bash
+               termq pending
+               ```
+               This shows terminals with queued tasks (llmNextAction) and staleness.
+
+            2. Check the summary in the output:
+               - `withNextAction`: Terminals with tasks queued for you
+               - `stale`: Terminals that haven't been touched recently
+
+            3. If there are pending actions, handle them or acknowledge to user.
+
+            ## 🛑 SESSION END CHECKLIST (Do This Before Ending!)
+
+            1. **Queue next action** if work is incomplete:
+               ```bash
+               termq set "Terminal" --llm-next-action "Continue from: [specific point]"
+               ```
+
+            2. **Update staleness** to mark as recently worked:
+               ```bash
+               termq set "Terminal" --tag staleness=fresh
+               ```
+
+            3. **Update persistent context** if you learned something important:
+               ```bash
+               termq set "Terminal" --llm-prompt "Updated project context..."
+               ```
+
+            ## 📋 TAG SCHEMA (Cross-Session State Tracking)
+
+            Use these tags to track state across sessions:
+
+            | Tag | Values | Purpose |
+            |-----|--------|---------|
+            | `staleness` | fresh, ageing, stale | How recently worked on |
+            | `status` | pending, active, blocked, review | Work state |
+            | `project` | org/repo | Project identifier |
+            | `worktree` | branch-name | Current git branch |
+            | `priority` | high, medium, low | Importance |
+            | `blocked-by` | ci, review, user | What's blocking |
+            | `type` | feature, bugfix, chore, docs | Work category |
+
+            Set tags with:
+            ```bash
+            termq set "Terminal" --tag staleness=fresh --tag status=active
+            ```
+
+            ## 🔧 COMMAND REFERENCE
+
+            ### Essential Commands
+            ```bash
+            termq pending                    # SESSION START - see what needs attention
+            termq open "Name"                # Open terminal, get context
+            termq set "Name" --llm-next-action "..."  # Queue task for next session
+            termq set "Name" --llm-prompt "..."       # Update persistent context
+            termq set "Name" --tag key=value          # Update state tags
+            ```
+
+            ### Discovery Commands
+            ```bash
+            termq list                       # All terminals as JSON
+            termq find --tag staleness=stale # Find stale terminals
+            termq find --column "In Progress" # Find by workflow stage
+            termq find --tag project=org/repo # Find by project
+            ```
+
+            ### Workflow Commands
+            ```bash
+            termq move "Name" "Done"         # Move to column
+            termq create --name "New" --column "To Do"  # New terminal
+            ```
+
+            ## 📊 TERMINAL FIELDS
+
+            Each terminal has:
             - **name**: Display name
             - **description**: What this terminal is for
-            - **column**: Workflow stage (e.g., "To Do", "In Progress", "Done")
+            - **column**: Workflow stage (To Do, In Progress, Done)
             - **path**: Working directory
-            - **tags**: Key-value metadata (e.g., env=prod)
-            - **llmPrompt**: Persistent context for you (never auto-cleared)
-            - **llmNextAction**: One-time task (auto-cleared after terminal opens)
+            - **tags**: Key-value metadata (use for state tracking!)
+            - **llmPrompt**: Persistent context (never auto-cleared)
+            - **llmNextAction**: One-time task (cleared after terminal opens)
 
-            ## Quick Reference
-
-            ```bash
-            # List all terminals (JSON output)
-            termq list
-
-            # Open/focus existing terminal (returns JSON with llmPrompt/llmNextAction)
-            termq open "Terminal Name"
-            termq open "UUID"
-            termq open "/path/to/project"
-
-            # Create new terminal
-            termq create --name "Name" --column "In Progress" --path /path
-
-            # Update terminal properties
-            termq set "Name" --llm-prompt "Project context here"
-            termq set "Name" --llm-next-action "Task for next session"
-            termq set "Name" --column "Done"
-            termq set "Name" --tag env=prod
-
-            # Move terminal to different column
-            termq move "Name" "Done"
-
-            # Find terminals
-            termq find --name "api"
-            termq find --column "In Progress"
-            termq find --tag env=prod
-            termq find --favourites
-            ```
-
-            ## LLM Workflow Pattern
-
-            1. **On session start**: Run `termq open "Name"` to get terminal context
-               - Check `llmNextAction` first - this is a queued task for you
-               - Read `llmPrompt` for persistent project context
-
-            2. **During work**: Use terminal info to understand the project
-
-            3. **Before ending session**: Queue work for next time
-               ```bash
-               termq set "Name" --llm-next-action "Continue from X, implement Y"
-               ```
-
-            4. **Update persistent context** when you learn something important:
-               ```bash
-               termq set "Name" --llm-prompt "Node.js backend, PostgreSQL, entry: src/index.ts"
-               ```
-
-            ## JSON Output Format
-
-            All commands output JSON. Example from `termq list`:
-            ```json
-            [{
-              "id": "UUID",
-              "name": "Terminal Name",
-              "description": "Description",
-              "column": "In Progress",
-              "path": "/working/dir",
-              "tags": {"env": "prod"},
-              "llmPrompt": "Persistent context",
-              "llmNextAction": "One-time task"
-            }]
-            ```
-
-            ## Useful jq Patterns
+            ## 🔄 CROSS-SESSION WORKFLOW EXAMPLE
 
             ```bash
-            # Get names and LLM context
-            termq list | jq '.[] | {name, llmPrompt, llmNextAction}'
+            # Session 1: Starting work
+            termq pending  # Check what needs attention
+            termq open "API Project"  # Get context
+            # ... do work ...
+            termq set "API Project" --llm-next-action "Implement auth middleware"
+            termq set "API Project" --tag staleness=fresh --tag status=active
 
-            # Find terminals with pending actions
-            termq list | jq '.[] | select(.llmNextAction != "")'
-
-            # Get terminals in a specific column
-            termq list | jq '.[] | select(.column == "In Progress")'
+            # Session 2: Resuming
+            termq pending  # Shows "API Project" with pending action
+            # You see: "Implement auth middleware"
+            termq open "API Project"  # Get full context
+            # ... continue work ...
+            termq set "API Project" --llm-next-action ""  # Clear if done
+            termq set "API Project" --tag status=review
+            termq move "API Project" "Review"
             ```
 
-            ## Tips
+            ## 💡 TIPS
 
-            - Use `termq open` to resume work, not `termq create`
-            - Set `llmNextAction` when parking work - it runs on next terminal open
-            - Keep `llmPrompt` updated with project context
-            - Use columns to track workflow state
-            - Tags are great for categorization (env, project, priority)
+            - ALWAYS run `termq pending` at session start
+            - ALWAYS set `llmNextAction` when parking incomplete work
+            - Use `staleness` tag to track what needs attention
+            - Use `project` tag to group related terminals
+            - Keep `llmPrompt` updated with key project context
+            - Move terminals through columns as work progresses
             """
         print(context)
     }

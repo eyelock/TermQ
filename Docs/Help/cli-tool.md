@@ -2,6 +2,16 @@
 
 The `termq` CLI tool lets you manage terminals from your shell. It outputs JSON for easy scripting and works great with LLM assistants like Claude.
 
+## For LLM Assistants
+
+**Start every session with:**
+```bash
+termq pending   # See terminals needing attention
+termq context   # Get full workflow guide
+```
+
+The `pending` command shows terminals with queued tasks (`llmNextAction`) and staleness indicators. The `context` command outputs comprehensive documentation for cross-session workflows.
+
 ## Installation
 
 1. Open **TermQ → Settings** (or press ⌘,)
@@ -217,22 +227,57 @@ termq move "Terminal Name" "Done"
 termq move "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88" "In Progress"
 ```
 
+### Check Pending Work (LLM Session Start)
+
+Show terminals needing attention. **Run this at the start of every LLM session.**
+
+```bash
+# See all terminals with pending actions and staleness
+termq pending
+
+# Only show terminals with llmNextAction set
+termq pending --actions-only
+```
+
+**Output format:**
+```json
+{
+  "terminals": [
+    {
+      "id": "UUID",
+      "name": "API Project",
+      "column": "In Progress",
+      "path": "/path/to/project",
+      "llmNextAction": "Continue implementing auth middleware",
+      "llmPrompt": "Node.js backend using PostgreSQL",
+      "staleness": "fresh",
+      "tags": {"project": "org/repo", "status": "active"}
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "withNextAction": 1,
+    "stale": 2,
+    "fresh": 2
+  }
+}
+```
+
+Terminals are sorted with pending actions first, then by staleness (stale → ageing → fresh).
+
 ### Get LLM Context
 
-Output comprehensive documentation for LLM/AI assistants.
+Output comprehensive documentation for LLM/AI assistants including cross-session workflow.
 
 ```bash
 termq context
 ```
 
 This outputs a complete guide including:
-- Terminal field descriptions
-- Quick reference for all commands
-- LLM workflow patterns
-- JSON output format examples
-- Useful jq patterns
-
-**Tip for LLM agents:** Run this command first to understand how to use the CLI effectively.
+- **Session Start/End Checklists** - What to do at beginning and end of each session
+- **Tag Schema** - Recommended tags for cross-session state tracking
+- **Command Reference** - All commands with examples
+- **Workflow Examples** - How to maintain continuity across sessions
 
 ## Getting Help
 
@@ -252,11 +297,11 @@ Example output from `termq --help`:
 ```
 OVERVIEW: Command-line interface for TermQ - Terminal Queue Manager
 
-LLM/AI Assistants: Run 'termq context' for a complete usage guide with examples
-and best practices for terminal management.
+LLM/AI Assistants: Run 'termq pending' at session start, then 'termq context'
+for the complete cross-session workflow guide.
 
 SUBCOMMANDS:
-  open, create, launch, list, find, set, move, context
+  open, create, launch, list, find, set, move, pending, context
 ```
 
 ## Debug Mode
@@ -359,6 +404,38 @@ termq list | jq '.[] | select(.llmNextAction != "") | {name, llmNextAction}'
 - Parking work with "resume from here" instructions
 - Queueing tasks for later
 - Handoff between sessions
+
+## Cross-Session State Tracking
+
+Use tags to track work state across multiple LLM sessions:
+
+| Tag | Values | Purpose |
+|-----|--------|---------|
+| `staleness` | `fresh`, `ageing`, `stale` | How recently worked on |
+| `status` | `pending`, `active`, `blocked`, `review` | Current work state |
+| `project` | `org/repo` | Project identifier |
+| `worktree` | `branch-name` | Current git branch |
+| `priority` | `high`, `medium`, `low` | Work importance |
+| `blocked-by` | `ci`, `review`, `user` | What's blocking progress |
+| `type` | `feature`, `bugfix`, `chore`, `docs` | Work category |
+
+**Setting tags:**
+```bash
+termq set "Terminal" --tag staleness=fresh --tag status=active
+termq set "Terminal" --tag project=eyelock/TermQ --tag worktree=feat/new-feature
+```
+
+**Finding by tags:**
+```bash
+termq find --tag staleness=stale    # Find work that needs attention
+termq find --tag status=blocked     # Find blocked work
+termq find --tag project=org/repo   # Find all terminals for a project
+```
+
+**Recommended workflow:**
+1. **Session start**: Run `termq pending` to see what needs attention
+2. **During work**: Keep `status` tag updated
+3. **Session end**: Set `llmNextAction` if incomplete, update `staleness=fresh`
 
 ## Automation & Scripting
 
