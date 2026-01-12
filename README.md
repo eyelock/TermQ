@@ -50,7 +50,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed build instructions.
 
 ## Documentation
 
-Full user documentation is available at **[Docs/Help](./Docs/Help/)**:
+📖 **[View Online Documentation](https://eyelock.github.io/TermQ/)** | [Source](./Docs/Help/)
 
 - [Getting Started](./Docs/Help/getting-started.md)
 - [Working with Terminals](./Docs/Help/working-with-terminals.md)
