@@ -15,6 +15,7 @@ struct TerminalOutput: Codable, Sendable {
     let isFavourite: Bool
     let llmPrompt: String
     let llmNextAction: String
+    let allowAutorun: Bool
 
     init(from card: MCPCard, columnName: String) {
         self.id = card.id.uuidString
@@ -28,6 +29,7 @@ struct TerminalOutput: Codable, Sendable {
         self.isFavourite = card.isFavourite
         self.llmPrompt = card.llmPrompt
         self.llmNextAction = card.llmNextAction
+        self.allowAutorun = card.allowAutorun
     }
 }
 
@@ -56,6 +58,7 @@ struct PendingTerminalOutput: Codable, Sendable {
     let path: String
     let llmNextAction: String
     let llmPrompt: String
+    let allowAutorun: Bool
     let staleness: String
     let tags: [String: String]
 
@@ -66,6 +69,7 @@ struct PendingTerminalOutput: Codable, Sendable {
         self.path = card.workingDirectory
         self.llmNextAction = card.llmNextAction
         self.llmPrompt = card.llmPrompt
+        self.allowAutorun = card.allowAutorun
         self.staleness = staleness
         self.tags = card.tagsDictionary
     }

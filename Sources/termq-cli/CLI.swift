@@ -33,6 +33,7 @@ struct CLICard: Codable {
     let badge: String
     let llmPrompt: String
     let llmNextAction: String
+    let allowAutorun: Bool?
     let deletedAt: Date?
 
     var isDeleted: Bool { deletedAt != nil }
@@ -61,6 +62,7 @@ struct TerminalOutput: Encodable {
     let isFavourite: Bool
     let llmPrompt: String
     let llmNextAction: String
+    let allowAutorun: Bool
 }
 
 /// Error output format
@@ -129,7 +131,8 @@ func cardToOutput(_ card: CLICard, columnName: String) -> TerminalOutput {
         badges: badges,
         isFavourite: card.isFavourite,
         llmPrompt: card.llmPrompt,
-        llmNextAction: card.llmNextAction
+        llmNextAction: card.llmNextAction,
+        allowAutorun: card.allowAutorun ?? false
     )
 }
 

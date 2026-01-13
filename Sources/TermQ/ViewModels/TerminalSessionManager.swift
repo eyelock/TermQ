@@ -136,20 +136,31 @@ class TerminalSessionManager: ObservableObject {
         // Run init command if specified (after a short delay to let shell initialize)
         // Supports token replacement for LLM integration:
         //   {{LLM_PROMPT}} - replaced with persistent context
-        //   {{LLM_NEXT_ACTION}} - replaced with one-time action (then cleared)
+        //   {{LLM_NEXT_ACTION}} - replaced with one-time action (then cleared if autorun enabled)
         if !card.initCommand.isEmpty {
             let hasNextActionToken = card.initCommand.contains("{{LLM_NEXT_ACTION}}")
             let hadNextAction = !card.llmNextAction.isEmpty
 
+            // Check if autorun is enabled (global AND per-terminal)
+            let globalAutorunEnabled = UserDefaults.standard.bool(forKey: "enableTerminalAutorun")
+            let autorunAllowed = globalAutorunEnabled && card.allowAutorun
+
             // Perform token replacement
             var initCmd = card.initCommand
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: card.llmPrompt)
-            initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: card.llmNextAction)
 
-            // Clear llmNextAction after use (if token was present and had a value)
-            if hasNextActionToken && hadNextAction {
-                card.llmNextAction = ""
-                BoardViewModel.shared.updateCard(card)
+            // Only inject LLM_NEXT_ACTION if autorun is enabled
+            if autorunAllowed {
+                initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: card.llmNextAction)
+
+                // Clear llmNextAction after use (if token was present and had a value)
+                if hasNextActionToken && hadNextAction {
+                    card.llmNextAction = ""
+                    BoardViewModel.shared.updateCard(card)
+                }
+            } else {
+                // Replace token with empty string (don't consume the action)
+                initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

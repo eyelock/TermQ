@@ -54,6 +54,7 @@ struct MCPCard: Codable, Sendable {
     let badge: String
     let llmPrompt: String
     let llmNextAction: String
+    let allowAutorun: Bool
     let deletedAt: Date?
 
     // Custom decoding to handle missing fields for backwards compatibility
@@ -70,12 +71,13 @@ struct MCPCard: Codable, Sendable {
         badge = try container.decodeIfPresent(String.self, forKey: .badge) ?? ""
         llmPrompt = try container.decodeIfPresent(String.self, forKey: .llmPrompt) ?? ""
         llmNextAction = try container.decodeIfPresent(String.self, forKey: .llmNextAction) ?? ""
+        allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
     }
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex
-        case workingDirectory, isFavourite, badge, llmPrompt, llmNextAction, deletedAt
+        case workingDirectory, isFavourite, badge, llmPrompt, llmNextAction, allowAutorun, deletedAt
     }
 
     var isDeleted: Bool { deletedAt != nil }

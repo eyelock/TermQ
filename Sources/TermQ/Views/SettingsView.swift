@@ -21,6 +21,7 @@ struct SettingsView: View {
     // Terminal preferences
     @AppStorage("copyOnSelect") private var copyOnSelect = false
     @AppStorage("binRetentionDays") private var binRetentionDays = 14
+    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @State private var selectedTab: SettingsTab = .general
@@ -154,6 +155,13 @@ struct SettingsView: View {
                         .font(.caption)
                     }
                 }
+
+                Divider()
+
+                Toggle("Enable Terminal Autorun", isOn: $enableTerminalAutorun)
+                    .help(
+                        "Allow agents to run commands automatically when terminals open. Per-terminal setting must also be enabled."
+                    )
 
                 Divider()
 

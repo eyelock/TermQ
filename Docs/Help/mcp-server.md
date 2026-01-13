@@ -213,6 +213,74 @@ Update terminal properties. Returns CLI command for safety.
 | `worktree` | branch-name | Current git branch |
 | `priority` | high, medium, low | Importance |
 
+## Agent Autorun
+
+TermQ supports automatic execution of queued actions when terminals open. This enables LLM agents to queue work that runs automatically on the next terminal session.
+
+### How It Works
+
+1. An LLM sets `llmNextAction` on a terminal (e.g., "run tests and check for regressions")
+2. The terminal's init command contains the `{{LLM_NEXT_ACTION}}` token
+3. When the terminal opens, the token is replaced with the queued action
+4. The action executes automatically and is cleared from the terminal
+
+### Permission Model
+
+Autorun requires **two permissions** to be enabled:
+
+| Level | Setting | Location | Default |
+|-------|---------|----------|---------|
+| Global | Enable Terminal Autorun | Settings > Tools | Off |
+| Per-Terminal | Allow Autorun | Terminal Editor > Terminal > Security | Off |
+
+Both must be enabled for autorun to function. This two-level model ensures:
+- Users explicitly opt-in to automatic command execution
+- Individual terminals can be protected even when global autorun is enabled
+- Sensitive terminals (production, databases) can remain protected
+
+### Enabling Autorun
+
+1. **Enable globally**: Settings > Tools > Enable Terminal Autorun
+2. **Enable per-terminal**: Edit terminal > Terminal tab > Security > Allow Autorun
+3. **Configure init command**: Include `{{LLM_NEXT_ACTION}}` token in the terminal's init command
+
+Example init command:
+```bash
+{{LLM_NEXT_ACTION}}
+```
+
+Or combined with other setup:
+```bash
+source .env && {{LLM_NEXT_ACTION}}
+```
+
+### Behavior When Disabled
+
+When autorun is disabled (either globally or per-terminal):
+- The `{{LLM_NEXT_ACTION}}` token is replaced with an empty string
+- The queued `llmNextAction` is **not** consumed (preserved for later)
+- The terminal opens normally without executing the queued action
+
+### MCP Output
+
+Terminal responses include the `allowAutorun` field so LLMs can check if autorun is enabled:
+
+```json
+{
+  "id": "...",
+  "name": "My Terminal",
+  "allowAutorun": true,
+  "llmNextAction": "run npm test"
+}
+```
+
+### Security Considerations
+
+- **Opt-in by design**: Both global and per-terminal settings default to off
+- **Safe Paste still applies**: Dangerous commands may still trigger paste warnings
+- **Review queued actions**: Use `termq_pending` to see what actions are queued before enabling autorun
+- **Audit trail**: Consider keeping terminals with autorun disabled for sensitive environments
+
 ## Security
 
 - **Local Only**: The server is intended for local use only
