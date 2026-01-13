@@ -21,6 +21,7 @@ struct CardEditorView: View {
     @State private var isFavourite: Bool = false
     @State private var initCommand: String = ""
     @State private var llmPrompt: String = ""
+    @State private var llmNextAction: String = ""
     @State private var badge: String = ""
     @State private var fontName: String = ""
     @State private var fontSize: CGFloat = 13
@@ -154,9 +155,23 @@ struct CardEditorView: View {
                 }
 
                 Section("LLM Context") {
-                    TextField("LLM Prompt", text: $llmPrompt, axis: .vertical)
-                        .lineLimit(3...8)
-                        .help("Initial prompt or context for LLM-based tasks")
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Persistent Context")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        TextField("Background info always available to LLM", text: $llmPrompt, axis: .vertical)
+                            .lineLimit(2...6)
+                            .help("Persistent context about this terminal (never auto-cleared)")
+                    }
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Next Action (runs once)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        TextField("Task to run on next open, then clear", text: $llmNextAction, axis: .vertical)
+                            .lineLimit(2...6)
+                            .help("One-time prompt: seeds into init command on next open, then clears automatically")
+                    }
                 }
 
                 Section("Tags") {
@@ -217,6 +232,7 @@ struct CardEditorView: View {
         isFavourite = card.isFavourite
         initCommand = card.initCommand
         llmPrompt = card.llmPrompt
+        llmNextAction = card.llmNextAction
         badge = card.badge
         fontName = card.fontName
         fontSize = card.fontSize > 0 ? card.fontSize : 13
@@ -234,6 +250,7 @@ struct CardEditorView: View {
         card.isFavourite = isFavourite
         card.initCommand = initCommand
         card.llmPrompt = llmPrompt
+        card.llmNextAction = llmNextAction
         card.badge = badge
         card.fontName = fontName
         card.fontSize = fontSize

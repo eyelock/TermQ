@@ -249,4 +249,95 @@ final class TerminalCardTests: XCTestCase {
         card.themeId = ""
         XCTAssertEqual(card.themeId, "")
     }
+
+    // MARK: - LLM Next Action Tests
+
+    func testLlmNextActionDefaultsToEmpty() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId)
+
+        XCTAssertEqual(card.llmNextAction, "")
+    }
+
+    func testLlmNextActionCustomValue() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId, llmNextAction: "Fix the auth bug")
+
+        XCTAssertEqual(card.llmNextAction, "Fix the auth bug")
+    }
+
+    func testLlmNextActionCodableRoundTrip() throws {
+        let columnId = UUID()
+        let original = TerminalCard(columnId: columnId, llmNextAction: "Continue from line 42")
+
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(original)
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertEqual(decoded.llmNextAction, original.llmNextAction)
+        XCTAssertEqual(decoded.llmNextAction, "Continue from line 42")
+    }
+
+    func testLlmNextActionDefaultsToEmptyWhenMissingInJSON() throws {
+        // Simulate loading old data without llmNextAction field
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test",
+                "description": "",
+                "tags": [],
+                "columnId": "\(columnId.uuidString)",
+                "orderIndex": 0,
+                "shellPath": "/bin/zsh",
+                "workingDirectory": "/tmp",
+                "isFavourite": false,
+                "initCommand": "",
+                "llmPrompt": "",
+                "badge": "",
+                "fontName": "",
+                "fontSize": 0,
+                "safePasteEnabled": true,
+                "themeId": ""
+            }
+            """
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
+
+        // Should default to empty when missing
+        XCTAssertEqual(decoded.llmNextAction, "")
+    }
+
+    func testLlmNextActionObservable() {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId)
+
+        XCTAssertEqual(card.llmNextAction, "")
+
+        card.llmNextAction = "Implement feature X"
+        XCTAssertEqual(card.llmNextAction, "Implement feature X")
+
+        card.llmNextAction = ""
+        XCTAssertEqual(card.llmNextAction, "")
+    }
+
+    func testBothLlmFieldsCoexist() {
+        let columnId = UUID()
+        let card = TerminalCard(
+            columnId: columnId,
+            llmPrompt: "Node.js backend",
+            llmNextAction: "Fix the auth bug"
+        )
+
+        XCTAssertEqual(card.llmPrompt, "Node.js backend")
+        XCTAssertEqual(card.llmNextAction, "Fix the auth bug")
+
+        // Clear next action (simulating after use)
+        card.llmNextAction = ""
+        XCTAssertEqual(card.llmPrompt, "Node.js backend")  // Prompt unchanged
+        XCTAssertEqual(card.llmNextAction, "")
+    }
 }

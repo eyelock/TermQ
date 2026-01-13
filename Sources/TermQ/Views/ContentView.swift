@@ -153,8 +153,7 @@ struct ContentView: View {
             ToolbarItemGroup(placement: .primaryAction) {
                 if let selectedCard = viewModel.selectedCard {
                     // Move to column button with popover
-                    if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId })
-                    {
+                    if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId }) {
                         let columnColor = Color(hex: currentColumn.color) ?? .gray
                         let textColor = columnColor.isLight ? Color.black : Color.white
                         Button {

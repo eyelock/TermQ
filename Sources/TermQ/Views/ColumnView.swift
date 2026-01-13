@@ -100,8 +100,8 @@ struct ColumnView: View {
                         .draggable(card.id.uuidString)
                         .dropDestination(for: String.self) { items, location in
                             guard let uuidString = items.first,
-                                  uuidString != card.id.uuidString,  // Don't drop on self
-                                  UUID(uuidString: uuidString) != nil
+                                uuidString != card.id.uuidString,  // Don't drop on self
+                                UUID(uuidString: uuidString) != nil
                             else {
                                 return false
                             }

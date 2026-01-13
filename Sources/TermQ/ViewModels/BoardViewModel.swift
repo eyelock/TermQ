@@ -37,9 +37,9 @@ class BoardViewModel: ObservableObject {
     init() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         #if DEBUG
-        let termqDir = appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
+            let termqDir = appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
         #else
-        let termqDir = appSupport.appendingPathComponent("TermQ", isDirectory: true)
+            let termqDir = appSupport.appendingPathComponent("TermQ", isDirectory: true)
         #endif
 
         // Create directory if needed
