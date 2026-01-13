@@ -64,11 +64,20 @@ struct KanbanBoardView: View {
                                     return
                                 }
                                 viewModel.moveCard(card, to: column, at: targetIndex)
+                            },
+                            onDropColumnId: { columnIdString in
+                                guard let droppedId = UUID(uuidString: columnIdString),
+                                    let droppedColumn = viewModel.board.columns.first(where: { $0.id == droppedId }),
+                                    let targetIndex = viewModel.board.columns.firstIndex(where: { $0.id == column.id })
+                                else {
+                                    return
+                                }
+                                viewModel.moveColumn(droppedColumn, toIndex: targetIndex)
                             }
                         )
                         .frame(width: columnWidth)
                         .opacity(draggedColumnId == column.id ? 0.5 : 1.0)
-                        .draggable(column.id.uuidString) {
+                        .draggable("column:\(column.id.uuidString)") {
                             // Drag preview
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Color(hex: column.color)?.opacity(0.3) ?? Color.gray.opacity(0.3))
@@ -78,22 +87,9 @@ struct KanbanBoardView: View {
                                         .font(.headline)
                                 )
                         }
-                        .dropDestination(for: String.self) { items, _ in
-                            guard let droppedIdString = items.first,
-                                let droppedId = UUID(uuidString: droppedIdString),
-                                let droppedColumn = viewModel.board.columns.first(where: { $0.id == droppedId }),
-                                let targetIndex = viewModel.board.columns.firstIndex(where: { $0.id == column.id })
-                            else {
-                                return false
-                            }
-                            viewModel.moveColumn(droppedColumn, toIndex: targetIndex)
-                            return true
-                        } isTargeted: { isTargeted in
-                            // Optional: visual feedback when hovering
-                        }
                         .onDrag {
                             draggedColumnId = column.id
-                            return NSItemProvider(object: column.id.uuidString as NSString)
+                            return NSItemProvider(object: "column:\(column.id.uuidString)" as NSString)
                         }
                     }
                 }

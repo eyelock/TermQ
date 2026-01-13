@@ -16,9 +16,10 @@ struct ColumnView: View {
     let onDeleteColumn: () -> Void
     let onDropCardId: (String) -> Void  // Takes card ID string (for end of column)
     let onDropCardBefore: (String, Int) -> Void  // Takes card ID string and target index
+    let onDropColumnId: (String) -> Void  // Takes column ID string (for column reordering)
 
     @State private var isTargeted = false
-    @State private var targetedCardIndex: Int? = nil
+    @State private var targetedCardIndex: Int?
 
     var columnColor: Color {
         Color(hex: column.color) ?? .gray
@@ -98,7 +99,7 @@ struct ColumnView: View {
                             }
                         }
                         .draggable(card.id.uuidString)
-                        .dropDestination(for: String.self) { items, location in
+                        .dropDestination(for: String.self) { items, _ in
                             guard let uuidString = items.first,
                                 uuidString != card.id.uuidString,  // Don't drop on self
                                 UUID(uuidString: uuidString) != nil
@@ -139,13 +140,22 @@ struct ColumnView: View {
         .background(Color(nsColor: .windowBackgroundColor))
         .contentShape(RoundedRectangle(cornerRadius: 8))  // Define hit-test area for drop
         .dropDestination(for: String.self) { items, _ in
-            guard let uuidString = items.first,
-                let _ = UUID(uuidString: uuidString)
-            else {
+            guard let droppedItem = items.first else {
                 return false
             }
-            // Call the callback with the card ID
-            onDropCardId(uuidString)
+
+            // Check if this is a column being dropped (for reordering)
+            if droppedItem.hasPrefix("column:") {
+                let columnIdString = String(droppedItem.dropFirst("column:".count))
+                onDropColumnId(columnIdString)
+                return true
+            }
+
+            // Otherwise, treat as a card drop
+            guard UUID(uuidString: droppedItem) != nil else {
+                return false
+            }
+            onDropCardId(droppedItem)
             return true
         } isTargeted: { targeted in
             isTargeted = targeted
