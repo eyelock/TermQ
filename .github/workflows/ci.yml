@@ -3,8 +3,27 @@ name: CI
 on:
   push:
     branches: [main, master]
+    paths-ignore:
+      # AI assistant / IDE configuration - not part of built app
+      - '.claude/**'
+      - '.cursor/**'
+      # GitHub workflows/config - don't affect built app
+      - '.github/**'
+      # Developer documentation - not bundled in app
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - '.gitignore'
+      # Note: Docs/Help/** IS bundled in app, so changes there SHOULD trigger CI
+      # Note: VERSION IS displayed in app, so changes there SHOULD trigger CI
   pull_request:
     branches: [main, master]
+    paths-ignore:
+      - '.claude/**'
+      - '.cursor/**'
+      - '.github/**'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - '.gitignore'
   workflow_dispatch:
 
 jobs:

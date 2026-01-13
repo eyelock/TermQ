@@ -23,6 +23,22 @@ When I say "let me give you feedback" or similar phrases indicating I want to pr
 - ALWAYS put your plans in .claude/plans 
 - ALWAYS put your session handovers in .claude/sessions 
 
+## RELEASE PROCESS
+
+When creating a release:
+
+1. **Update VERSION file** - The `VERSION` file in the repo root MUST be updated to match the release version (e.g., `0.4.5`)
+2. **Create git tag** - Tag format is `v{VERSION}` (e.g., `v0.4.5`)
+3. **Push tag** - `git push origin v{VERSION}`
+4. **GitHub Actions** - The `release.yml` workflow will:
+   - Verify CI passed for the commit
+   - Build the release binary
+   - Create app bundle with CLI tools
+   - Sign and package as DMG and ZIP
+   - Create GitHub Release with assets
+
+**IMPORTANT**: The VERSION file is the source of truth for the app version displayed in the UI. The git tag triggers the release workflow but the VERSION file must also be updated.
+
 ## CODE HYGIENE
 
 Want to do this workflow at the end of any significant development work, especially in the middle of 
