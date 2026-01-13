@@ -259,7 +259,10 @@ class TermQTerminalView: LocalProcessTerminalView {
         guard autoScrollTimer == nil else { return }
 
         autoScrollTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
-            self?.autoScrollTimerFired()
+            // Timer callbacks run on main thread but need MainActor annotation for Swift 6
+            MainActor.assumeIsolated {
+                self?.autoScrollTimerFired()
+            }
         }
     }
 
