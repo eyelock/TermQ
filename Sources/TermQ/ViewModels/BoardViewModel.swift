@@ -13,6 +13,8 @@ class BoardViewModel: ObservableObject {
     @Published var isEditingNewCard: Bool = false
     @Published var isEditingColumn: Column?
     @Published var isEditingNewColumn: Bool = false
+    /// Draft column being created (not yet added to board)
+    @Published var draftColumn: Column?
     @Published var showDeleteConfirmation: Bool = false
 
     /// Session tabs - ordered list of card IDs currently open as tabs (not persisted)
@@ -280,11 +282,26 @@ class BoardViewModel: ObservableObject {
     }
 
     func addColumn() {
-        let column = board.addColumn(name: "New Column")
-        objectWillChange.send()
-        save()
+        // Create a draft column (not added to board yet)
+        let maxIndex = board.columns.map(\.orderIndex).max() ?? -1
+        let column = Column(name: "New Column", orderIndex: maxIndex + 1)
+        draftColumn = column
         isEditingNewColumn = true
         isEditingColumn = column
+    }
+
+    /// Add the draft column to the board (called when Save is clicked)
+    func commitDraftColumn() {
+        guard let column = draftColumn else { return }
+        board.columns.append(column)
+        draftColumn = nil
+        objectWillChange.send()
+        save()
+    }
+
+    /// Discard the draft column (called when Cancel is clicked)
+    func discardDraftColumn() {
+        draftColumn = nil
     }
 
     /// Check if a column can be deleted (must be empty)

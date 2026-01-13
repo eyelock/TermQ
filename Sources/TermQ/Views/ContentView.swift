@@ -100,14 +100,20 @@ struct ContentView: View {
             ColumnEditorView(
                 column: column,
                 onSave: {
-                    viewModel.updateColumn(column)
+                    if viewModel.isEditingNewColumn {
+                        // New column: add the draft to the board
+                        viewModel.commitDraftColumn()
+                    } else {
+                        // Existing column: just update
+                        viewModel.updateColumn(column)
+                    }
                     viewModel.isEditingNewColumn = false
                     viewModel.isEditingColumn = nil
                 },
                 onCancel: {
-                    // If cancelling a new column, delete it
                     if viewModel.isEditingNewColumn {
-                        viewModel.deleteColumn(column)
+                        // New column: discard the draft (it was never added)
+                        viewModel.discardDraftColumn()
                     }
                     viewModel.isEditingNewColumn = false
                     viewModel.isEditingColumn = nil
