@@ -5,6 +5,7 @@
 - [Pinned Terminals & Tabs](pinned-terminals.md)
 - [Columns & Organization](columns-organization.md)
 - [CLI Tool](cli-tool.md)
+- [MCP Server](mcp-server.md)
 - [Command Palette](command-palette.md)
 - [Themes & Appearance](themes-appearance.md)
 - [Zoom Mode & Search](zoom-search.md)
