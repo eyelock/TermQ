@@ -7,6 +7,7 @@ struct ColumnEditorView: View {
     let onCancel: () -> Void
 
     @State private var name: String = ""
+    @State private var description: String = ""
     @State private var selectedColor: Color = .gray
 
     private let presetColors: [(Color, String)] = [
@@ -26,6 +27,9 @@ struct ColumnEditorView: View {
                 .font(.headline)
 
             TextField("Column Name", text: $name)
+                .textFieldStyle(.roundedBorder)
+
+            TextField("Description (optional)", text: $description)
                 .textFieldStyle(.roundedBorder)
 
             // Color picker
@@ -70,6 +74,7 @@ struct ColumnEditorView: View {
 
                 Button("Save") {
                     column.name = name
+                    column.description = description
                     column.color = selectedColor.toHex() ?? "#6B7280"
                     onSave()
                 }
@@ -81,6 +86,7 @@ struct ColumnEditorView: View {
         .frame(width: 320)
         .onAppear {
             name = column.name
+            description = column.description
             selectedColor = Color(hex: column.color) ?? .gray
         }
     }

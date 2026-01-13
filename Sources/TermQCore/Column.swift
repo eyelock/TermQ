@@ -4,21 +4,24 @@ import Foundation
 public class Column: Identifiable, ObservableObject, Codable {
     public let id: UUID
     @Published public var name: String
+    @Published public var description: String
     @Published public var orderIndex: Int
     @Published public var color: String  // Hex color string
 
     enum CodingKeys: String, CodingKey {
-        case id, name, orderIndex, color
+        case id, name, description, orderIndex, color
     }
 
     public init(
         id: UUID = UUID(),
         name: String,
+        description: String = "",
         orderIndex: Int,
         color: String = "#6B7280"
     ) {
         self.id = id
         self.name = name
+        self.description = description
         self.orderIndex = orderIndex
         self.color = color
     }
@@ -27,6 +30,7 @@ public class Column: Identifiable, ObservableObject, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
+        description = try container.decodeIfPresent(String.self, forKey: .description) ?? ""
         orderIndex = try container.decode(Int.self, forKey: .orderIndex)
         color = try container.decode(String.self, forKey: .color)
     }
@@ -35,6 +39,7 @@ public class Column: Identifiable, ObservableObject, Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
+        try container.encode(description, forKey: .description)
         try container.encode(orderIndex, forKey: .orderIndex)
         try container.encode(color, forKey: .color)
     }
