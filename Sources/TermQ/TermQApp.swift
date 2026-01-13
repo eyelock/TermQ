@@ -347,7 +347,7 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
 
 #if DEBUG
     /// Copy production config to debug data folder
-    private func copyProductionConfig() {
+    @MainActor private func copyProductionConfig() {
         let fileManager = FileManager.default
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
 
@@ -403,7 +403,7 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
     }
 
     /// Open the debug data folder in Finder
-    private func openDebugDataFolder() {
+    @MainActor private func openDebugDataFolder() {
         let fileManager = FileManager.default
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
@@ -415,7 +415,7 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
     }
 
     /// Open the production data folder in Finder
-    private func openProductionDataFolder() {
+    @MainActor private func openProductionDataFolder() {
         let fileManager = FileManager.default
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let productionFolder = appSupport.appendingPathComponent("TermQ")
