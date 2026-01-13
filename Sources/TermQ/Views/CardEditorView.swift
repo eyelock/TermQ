@@ -31,7 +31,9 @@ struct CardEditorView: View {
 
     private enum EditorTab: String, CaseIterable {
         case general = "General"
-        case advanced = "Advanced"
+        case terminal = "Terminal"
+        case metadata = "Metadata"
+        case agents = "Agents"
     }
 
     /// Available monospace fonts
@@ -90,16 +92,21 @@ struct CardEditorView: View {
 
             // Form with tabbed content
             Form {
-                if selectedTab == .general {
+                switch selectedTab {
+                case .general:
                     generalContent
-                } else {
-                    advancedContent
+                case .terminal:
+                    terminalContent
+                case .metadata:
+                    metadataContent
+                case .agents:
+                    agentsContent
                 }
             }
             .formStyle(.grouped)
             .padding()
         }
-        .frame(width: 600, height: 700)
+        .frame(width: 600, height: 580)
         .onAppear {
             loadFromCard()
         }
@@ -109,11 +116,15 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var generalContent: some View {
-        Section("Basic Info") {
+        Section("Display") {
             TextField("Title", text: $title)
             TextField("Description", text: $description, axis: .vertical)
                 .lineLimit(3...6)
+            TextField("Badges", text: $badge)
+                .help("Comma separated values (e.g., 'prod, api, v2')")
+        }
 
+        Section("Behaviour") {
             Picker("Column", selection: $selectedColumnId) {
                 ForEach(columns) { column in
                     Text(column.name).tag(column.id)
@@ -122,39 +133,12 @@ struct CardEditorView: View {
 
             Toggle("Favourite", isOn: $isFavourite)
 
+            Toggle("Safe Paste", isOn: $safePasteEnabled)
+                .help("Warn when pasting potentially dangerous commands")
+
             if isNewCard {
                 Toggle("Switch to new terminal", isOn: $switchToTerminal)
             }
-        }
-
-        Section("Terminal Settings") {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Working Directory")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                HStack {
-                    Text(workingDirectory)
-                        .font(.system(.body, design: .monospaced))
-                        .textSelection(.enabled)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Button("Browse...") {
-                        browseDirectory()
-                    }
-                }
-            }
-
-            TextField("Shell Path", text: $shellPath)
-                .help("e.g., /bin/zsh, /bin/bash")
-
-            TextField("Init Command", text: $initCommand, axis: .vertical)
-                .lineLimit(2...4)
-                .help("Command(s) to run when terminal starts (e.g., 'source .env && npm run dev')")
-
-            TextField("Badges", text: $badge)
-                .help("Use comma separated values (e.g., 'prod, api, v2')")
-
-            Toggle("Safe Paste", isOn: $safePasteEnabled)
-                .help("Show warnings when pasting potentially dangerous commands (sudo, rm -rf, etc.)")
         }
 
         Section("Appearance") {
@@ -191,30 +175,42 @@ struct CardEditorView: View {
         }
     }
 
-    // MARK: - Advanced Tab Content
+    // MARK: - Terminal Tab Content
 
     @ViewBuilder
-    private var advancedContent: some View {
-        Section("LLM Context") {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Persistent Context")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextField("Background info always available to LLM", text: $llmPrompt, axis: .vertical)
-                    .lineLimit(2...6)
-                    .help("Persistent context about this terminal (never auto-cleared)")
+    private var terminalContent: some View {
+        Section("Open") {
+            HStack {
+                TextField("Working Directory", text: $workingDirectory)
+                    .font(.system(.body, design: .monospaced))
+                    .help("Path where terminal opens (paste or type)")
+                Button("Browse...") {
+                    browseDirectory()
+                }
             }
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Next Action (runs once)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextField("Task to run on next open, then clear", text: $llmNextAction, axis: .vertical)
-                    .lineLimit(2...6)
-                    .help("One-time prompt: seeds into init command on next open, then clears automatically")
-            }
+            TextField("Shell Path", text: $shellPath)
+                .font(.system(.body, design: .monospaced))
+                .help("e.g., /bin/zsh, /bin/bash (leave empty for default)")
         }
 
+        Section("Initialisation") {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Init Command")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                TextField("Commands to run on start", text: $initCommand, axis: .vertical)
+                    .lineLimit(3...8)
+                    .help("e.g., 'source .env && npm run dev'")
+            }
+            // TODO: Add "Allow Agent Autorun" toggle here
+        }
+    }
+
+    // MARK: - Metadata Tab Content
+
+    @ViewBuilder
+    private var metadataContent: some View {
         Section("Tags") {
             ForEach(tags) { tag in
                 HStack {
@@ -251,7 +247,42 @@ struct CardEditorView: View {
             .onSubmit {
                 addTag()
             }
+
+            if tags.isEmpty {
+                Text("Tags help organize and search terminals (e.g., env=prod, team=backend)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
+    }
+
+    // MARK: - Agents Tab Content
+
+    @ViewBuilder
+    private var agentsContent: some View {
+        // TODO: Add MCP Server section here (Is Installed?, Last used?)
+
+        Section("Agent Context") {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Persistent Context")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                TextField("Background info always available to agents", text: $llmPrompt, axis: .vertical)
+                    .lineLimit(3...8)
+                    .help("Context about this terminal (never auto-cleared)")
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Next Action (runs once)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                TextField("Task to run on next open, then clear", text: $llmNextAction, axis: .vertical)
+                    .lineLimit(3...8)
+                    .help("Seeds into init command on next open, then clears")
+            }
+        }
+
+        // TODO: Add Generate Init Command section here (Vendor, Non-interactive)
     }
 
     private func loadFromCard() {
