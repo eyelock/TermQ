@@ -12,6 +12,7 @@ The `termqmcp` binary is a standalone MCP server that:
 - Exposes TermQ's terminal management as MCP tools
 - Provides resources for board data and workflow context
 - Offers prompts for session initialization and guidance
+- Supports smart search across terminal metadata
 
 ## Installation
 
@@ -26,38 +27,6 @@ Or install manually:
 # From TermQ.app bundle
 cp /Applications/TermQ.app/Contents/Resources/termqmcp /usr/local/bin/
 ```
-
-## Usage
-
-### Stdio Mode (Default)
-
-For integration with Claude Code:
-
-```bash
-termqmcp
-```
-
-### HTTP Mode
-
-For network transport with authentication:
-
-```bash
-termqmcp --http --port 8742 --secret "your-uuid-token"
-```
-
-The `--secret` is required for HTTP mode and uses Bearer token authentication.
-
-### Options
-
-| Option | Description |
-|--------|-------------|
-| `--http` | Run HTTP server instead of stdio |
-| `--port <port>` | HTTP port (default: 8742) |
-| `--secret <token>` | Bearer token for HTTP auth (required with --http) |
-| `--debug` | Use debug data directory |
-| `--verbose` | Enable verbose logging |
-| `--help` | Show help information |
-| `--version` | Show version |
 
 ## Claude Code Configuration
 
@@ -74,41 +43,182 @@ Add to your Claude Code MCP settings (`~/.claude/mcp.json`):
 }
 ```
 
+## Command Line Options
+
+| Option | Description |
+|--------|-------------|
+| `--http` | Run HTTP server instead of stdio |
+| `--port <port>` | HTTP port (default: 8742) |
+| `--secret <token>` | Bearer token for HTTP auth (required with --http) |
+| `--debug` | Use debug data directory |
+| `--verbose` | Enable verbose logging |
+| `--help` | Show help information |
+| `--version` | Show version |
+
+### Stdio Mode (Default)
+
+For integration with Claude Code and other MCP clients:
+
+```bash
+termqmcp
+```
+
+### HTTP Mode
+
+For network transport with authentication:
+
+```bash
+termqmcp --http --port 8742 --secret "your-uuid-token"
+```
+
+The `--secret` is required for HTTP mode and uses Bearer token authentication.
+
 ## Available Tools
 
-| Tool | Description |
-|------|-------------|
-| `termq_pending` | Check terminals needing attention (run at session start) |
-| `termq_context` | Get comprehensive LLM workflow documentation |
-| `termq_list` | List all terminals or filter by column |
-| `termq_find` | Search terminals by name, column, tag, badge, or UUID |
-| `termq_open` | Open a terminal by name, UUID, or path |
-| `termq_create` | Create a new terminal |
-| `termq_set` | Update terminal properties |
-| `termq_move` | Move terminal to a different column |
+### termq_pending
+
+Check terminals needing attention. **Run this at the START of every LLM session.**
+
+Returns terminals with pending actions (`llmNextAction`) and staleness indicators, sorted: pending actions first, then by staleness (stale → ageing → fresh).
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `actionsOnly` | boolean | Only show terminals with `llmNextAction` set |
+
+### termq_context
+
+Output comprehensive documentation for LLM/AI assistants. Includes session start/end checklists, tag schema, command reference, and workflow examples.
+
+No parameters required.
+
+### termq_list
+
+List all terminals or filter by column.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `column` | string | Filter by column name |
+| `columnsOnly` | boolean | Return only column names |
+
+### termq_find
+
+Search for terminals by various criteria. All filters are AND-combined.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `query` | string | **Smart search**: matches words across name, description, path, and tags |
+| `name` | string | Filter by name (word-based matching) |
+| `column` | string | Filter by column name |
+| `tag` | string | Filter by tag (format: `key` or `key=value`) |
+| `id` | string | Filter by UUID |
+| `badge` | string | Filter by badge |
+| `favourites` | boolean | Only show favourites |
+
+#### Smart Search
+
+The `query` parameter provides intelligent multi-word search:
+
+- **Word normalization**: Separators like `-`, `_`, `:`, `/`, `.` are treated as word boundaries
+- **Multi-field**: Searches across name, description, path, and tags simultaneously
+- **Relevance scoring**: Results sorted by match quality (title matches score highest)
+
+**Example**: Searching for `"MCP Toolkit Migrate"` will find a terminal named `"mcp-toolkit: migrate workflows/hooks"` because:
+- `mcp` matches `mcp` in the name
+- `toolkit` matches `toolkit` in the name
+- `migrate` matches `migrate` in the name
+
+### termq_open
+
+Open an existing terminal by name, UUID, or path. Returns terminal details including `llmPrompt` (persistent context) and `llmNextAction` (one-time task).
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `identifier` | string | Terminal name, UUID, or path (partial match supported) |
+
+### termq_move
+
+Move a terminal to a different column (workflow stage). This operation modifies the board directly.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `identifier` | string | Terminal name or UUID |
+| `column` | string | Target column name |
+
+### termq_create
+
+Create a new terminal in TermQ. Returns CLI command for safety (creation requires app context).
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | string | Terminal name |
+| `description` | string | Terminal description |
+| `column` | string | Column name (e.g., 'In Progress') |
+| `path` | string | Working directory path |
+| `llmPrompt` | string | Persistent LLM context |
+| `llmNextAction` | string | One-time action for next session |
+
+### termq_set
+
+Update terminal properties. Returns CLI command for safety.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `identifier` | string | Terminal name or UUID (required) |
+| `name` | string | New name |
+| `description` | string | New description |
+| `column` | string | Move to column |
+| `badge` | string | Comma-separated badges |
+| `llmPrompt` | string | Set persistent LLM context |
+| `llmNextAction` | string | Set one-time action |
+| `favourite` | boolean | Set favourite status |
 
 ## Available Resources
 
-| URI | Description |
-|-----|-------------|
-| `termq://terminals` | All terminals as JSON |
-| `termq://columns` | Board columns as JSON |
-| `termq://pending` | Pending work summary |
-| `termq://context` | Workflow guide (markdown) |
+| URI | Description | MIME Type |
+|-----|-------------|-----------|
+| `termq://terminals` | All terminals as JSON | application/json |
+| `termq://columns` | Board columns as JSON | application/json |
+| `termq://pending` | Pending work summary | application/json |
+| `termq://context` | Workflow guide | text/markdown |
 
 ## Available Prompts
 
-| Prompt | Description |
-|--------|-------------|
-| `session_start` | Initialize LLM session with pending work overview |
-| `workflow_guide` | Cross-session continuity guide |
-| `terminal_summary` | Context and status for specific terminal |
+| Prompt | Description | Arguments |
+|--------|-------------|-----------|
+| `session_start` | Initialize LLM session with pending work overview | None |
+| `workflow_guide` | Cross-session continuity guide | None |
+| `terminal_summary` | Context and status for specific terminal | `terminal` (required) |
+
+## LLM Workflow
+
+### Session Start
+
+1. Call `termq_pending` to see terminals needing attention
+2. Check `withNextAction` count for queued tasks
+3. Address pending actions or acknowledge to user
+
+### Session End
+
+1. Set `llmNextAction` for incomplete work
+2. Update `staleness` tag to `fresh`
+3. Update `llmPrompt` with new context if needed
+
+### Cross-Session State Tags
+
+| Tag | Values | Purpose |
+|-----|--------|---------|
+| `staleness` | fresh, ageing, stale | How recently worked on |
+| `status` | pending, active, blocked, review | Work state |
+| `project` | org/repo | Project identifier |
+| `worktree` | branch-name | Current git branch |
+| `priority` | high, medium, low | Importance |
 
 ## Security
 
 - **Local Only**: The server is intended for local use only
 - **HTTP Auth**: HTTP mode requires a shared secret (Bearer token)
 - **No Remote**: Never expose the server to the internet
+- **Read-Safe**: Most write operations return CLI commands instead of modifying directly
 
 ## Related
 
