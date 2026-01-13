@@ -151,6 +151,7 @@ extension TermQMCPServer {
     }
 
     func handleFind(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let query = arguments?["query"]?.stringValue
         let nameFilter = arguments?["name"]?.stringValue
         let columnFilter = arguments?["column"]?.stringValue
         let tagFilter = arguments?["tag"]?.stringValue
@@ -161,6 +162,25 @@ extension TermQMCPServer {
         do {
             let board = try loadBoard()
             var cards = board.activeCards
+            var relevanceScores: [UUID: Int] = [:]
+
+            // Smart query search (multi-word, multi-field)
+            if let query = query, !query.isEmpty {
+                let queryWords = normalizeToWords(query)
+                guard !queryWords.isEmpty else {
+                    let json = try JSONHelper.encode([TerminalOutput]())
+                    return CallTool.Result(content: [.text(json)])
+                }
+
+                cards = cards.filter { card in
+                    let score = calculateRelevanceScore(card: card, queryWords: queryWords)
+                    if score > 0 {
+                        relevanceScores[card.id] = score
+                        return true
+                    }
+                    return false
+                }
+            }
 
             // Filter by ID (exact match)
             if let idFilter = idFilter {
@@ -220,6 +240,15 @@ extension TermQMCPServer {
                 cards = cards.filter { $0.isFavourite }
             }
 
+            // Sort by relevance if query was used, otherwise maintain default order
+            if !relevanceScores.isEmpty {
+                cards.sort { card1, card2 in
+                    let score1 = relevanceScores[card1.id] ?? 0
+                    let score2 = relevanceScores[card2.id] ?? 0
+                    return score1 > score2
+                }
+            }
+
             let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
             let json = try JSONHelper.encode(output)
             return CallTool.Result(content: [.text(json)])
@@ -227,6 +256,62 @@ extension TermQMCPServer {
         } catch {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
+    }
+
+    // MARK: - Smart Search Helpers
+
+    /// Normalize text to searchable words (lowercase, remove punctuation, split on separators)
+    private func normalizeToWords(_ text: String) -> Set<String> {
+        // Replace common separators with spaces
+        let normalized =
+            text
+            .lowercased()
+            .replacingOccurrences(of: "-", with: " ")
+            .replacingOccurrences(of: "_", with: " ")
+            .replacingOccurrences(of: ":", with: " ")
+            .replacingOccurrences(of: "/", with: " ")
+            .replacingOccurrences(of: ".", with: " ")
+
+        // Split into words and filter out empty/short words
+        let words =
+            normalized
+            .components(separatedBy: .whitespacesAndNewlines)
+            .map { $0.trimmingCharacters(in: .punctuationCharacters) }
+            .filter { $0.count >= 2 }
+
+        return Set(words)
+    }
+
+    /// Calculate relevance score for a card based on query words
+    private func calculateRelevanceScore(card: MCPCard, queryWords: Set<String>) -> Int {
+        var score = 0
+
+        // Get searchable words from card fields
+        let titleWords = normalizeToWords(card.title)
+        let descriptionWords = normalizeToWords(card.description)
+        let pathWords = normalizeToWords(card.workingDirectory)
+        var tagWords = Set<String>()
+        for tag in card.tags {
+            tagWords.formUnion(normalizeToWords(tag.key))
+            tagWords.formUnion(normalizeToWords(tag.value))
+        }
+
+        // Score each query word
+        for queryWord in queryWords {
+            // Exact word matches (higher score)
+            if titleWords.contains(queryWord) { score += 10 }
+            if descriptionWords.contains(queryWord) { score += 5 }
+            if pathWords.contains(queryWord) { score += 3 }
+            if tagWords.contains(queryWord) { score += 7 }
+
+            // Prefix matches (lower score but still useful)
+            if titleWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 4 }
+            if descriptionWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 2 }
+            if pathWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 1 }
+            if tagWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 3 }
+        }
+
+        return score
     }
 
     func handleOpen(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -258,20 +343,28 @@ extension TermQMCPServer {
     }
 
     func handleCreate(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        // MCP server is read-only by design - creation requires app interaction
-        // Return instructions for how to create via CLI or app
         let name = arguments?["name"]?.stringValue ?? "New Terminal"
-        let column = arguments?["column"]?.stringValue ?? "To Do"
-        let path = arguments?["path"]?.stringValue ?? "."
+        let column = arguments?["column"]?.stringValue
+        let path = arguments?["path"]?.stringValue ?? FileManager.default.currentDirectoryPath
+        let description = arguments?["description"]?.stringValue ?? ""
 
-        let message = """
-            MCP Server is read-only for safety. To create a terminal, use the CLI:
+        do {
+            let card = try BoardWriter.createCard(
+                name: name,
+                columnName: column,
+                workingDirectory: path,
+                description: description,
+                dataDirectory: dataDirectory
+            )
 
-            termq create --name "\(name)" --column "\(column)" --path "\(path)"
+            let board = try loadBoard()
+            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(json)])
 
-            Or create it directly in the TermQ app.
-            """
-        return CallTool.Result(content: [.text(message)])
+        } catch {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
     }
 
     func handleSet(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -279,40 +372,60 @@ extension TermQMCPServer {
             throw MCPError.invalidParams("identifier is required")
         }
 
-        // MCP server is read-only by design - modification requires app interaction
-        // Build CLI command for the user
-        var cliArgs: [String] = ["termq set \"\(identifier)\""]
+        // Build updates dictionary
+        var updates: [String: Any] = [:]
 
         if let name = arguments?["name"]?.stringValue {
-            cliArgs.append("--name \"\(name)\"")
+            updates["title"] = name
         }
         if let description = arguments?["description"]?.stringValue {
-            cliArgs.append("--description \"\(description)\"")
-        }
-        if let column = arguments?["column"]?.stringValue {
-            cliArgs.append("--column \"\(column)\"")
+            updates["description"] = description
         }
         if let badge = arguments?["badge"]?.stringValue {
-            cliArgs.append("--badge \"\(badge)\"")
+            updates["badge"] = badge
         }
         if let llmPrompt = arguments?["llmPrompt"]?.stringValue {
-            cliArgs.append("--llm-prompt \"\(llmPrompt)\"")
+            updates["llmPrompt"] = llmPrompt
         }
         if let llmNextAction = arguments?["llmNextAction"]?.stringValue {
-            cliArgs.append("--llm-next-action \"\(llmNextAction)\"")
+            updates["llmNextAction"] = llmNextAction
         }
         if let favourite = arguments?["favourite"]?.boolValue {
-            cliArgs.append(favourite ? "--favourite" : "--unfavourite")
+            updates["isFavourite"] = favourite
         }
 
-        let cliCommand = cliArgs.joined(separator: " ")
+        // Handle column change separately (uses move logic)
+        if let column = arguments?["column"]?.stringValue {
+            do {
+                _ = try BoardWriter.moveCard(identifier: identifier, toColumn: column, dataDirectory: dataDirectory)
+            } catch {
+                return CallTool.Result(
+                    content: [.text("Error moving to column: \(error.localizedDescription)")], isError: true)
+            }
+        }
 
-        let message = """
-            MCP Server is read-only for safety. To modify the terminal, use the CLI:
+        do {
+            let card: MCPCard
+            if updates.isEmpty {
+                // No field updates, just return current state
+                let board = try loadBoard()
+                guard let found = board.findTerminal(identifier: identifier) else {
+                    return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
+                }
+                card = found
+            } else {
+                card = try BoardWriter.updateCard(
+                    identifier: identifier, updates: updates, dataDirectory: dataDirectory)
+            }
 
-            \(cliCommand)
-            """
-        return CallTool.Result(content: [.text(message)])
+            let board = try loadBoard()
+            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(json)])
+
+        } catch {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
     }
 
     func handleMove(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -322,12 +435,16 @@ extension TermQMCPServer {
             throw MCPError.invalidParams("identifier and column are required")
         }
 
-        // MCP server is read-only by design
-        let message = """
-            MCP Server is read-only for safety. To move the terminal, use the CLI:
+        do {
+            let card = try BoardWriter.moveCard(identifier: identifier, toColumn: column, dataDirectory: dataDirectory)
 
-            termq move "\(identifier)" "\(column)"
-            """
-        return CallTool.Result(content: [.text(message)])
+            let board = try loadBoard()
+            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(json)])
+
+        } catch {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
     }
 }

@@ -109,6 +109,7 @@ app: build
 	@mkdir -p TermQDebug.app/Contents/Resources
 	cp .build/debug/TermQ TermQDebug.app/Contents/MacOS/TermQ
 	cp .build/debug/termq TermQDebug.app/Contents/Resources/termq
+	cp .build/debug/termqmcp TermQDebug.app/Contents/Resources/termqmcp
 	cp TermQ.app/Contents/Info-Debug.plist TermQDebug.app/Contents/Info.plist
 	@# Update version info in Info.plist
 	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQDebug.app/Contents/Info.plist
@@ -149,6 +150,7 @@ release-app: build-release
 	@mkdir -p TermQ.app/Contents/Resources
 	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
 	cp .build/release/termq TermQ.app/Contents/Resources/termq
+	cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
 	@# Copy template and update version info in Info.plist
 	cp Info.plist.template TermQ.app/Contents/Info.plist
 	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQ.app/Contents/Info.plist

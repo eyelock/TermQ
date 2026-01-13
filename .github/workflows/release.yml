@@ -91,6 +91,7 @@ jobs:
           mkdir -p TermQ.app/Contents/Resources
           cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
           cp .build/release/termq TermQ.app/Contents/Resources/termq
+          cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
           if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
 
       - name: Sign app bundle

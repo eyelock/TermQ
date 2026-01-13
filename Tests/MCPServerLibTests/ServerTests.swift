@@ -1,4 +1,5 @@
 import XCTest
+
 @testable import MCPServerLib
 
 final class ServerTests: XCTestCase {

@@ -86,6 +86,12 @@ final class MCPIntegrationTests: XCTestCase {
                 isFavourite: true,
                 badge: "urgent,important"
             ),
+            createTestCard(
+                title: "mcp-toolkit: migrate workflows/hooks",
+                columnId: columns[1].id,
+                workingDirectory: "/Users/test/mcp-toolkit",
+                description: "MCP server migration and session handling"
+            ),
         ]
 
         return MCPBoard(columns: columns, cards: cards)
@@ -99,13 +105,14 @@ final class MCPIntegrationTests: XCTestCase {
         badge: String = "",
         llmPrompt: String = "",
         llmNextAction: String = "",
-        tags: [MCPTag] = []
+        tags: [MCPTag] = [],
+        description: String? = nil
     ) -> MCPCard {
         // Create JSON and decode to get proper MCPCard with custom decoder
         let json: [String: Any] = [
             "id": UUID().uuidString,
             "title": title,
-            "description": "Test description for \(title)",
+            "description": description ?? "Test description for \(title)",
             "columnId": columnId.uuidString,
             "orderIndex": 0,
             "workingDirectory": workingDirectory,
@@ -125,7 +132,7 @@ final class MCPIntegrationTests: XCTestCase {
         let board = try server.loadBoard()
 
         XCTAssertEqual(board.columns.count, 3)
-        XCTAssertEqual(board.activeCards.count, 3)
+        XCTAssertEqual(board.activeCards.count, 4)
     }
 
     func testBoardLoaderBackwardsCompatibility() throws {
@@ -181,7 +188,7 @@ final class MCPIntegrationTests: XCTestCase {
         let data = json.data(using: .utf8)!
         let output = try JSONDecoder().decode(PendingOutput.self, from: data)
 
-        XCTAssertEqual(output.summary.total, 3)
+        XCTAssertEqual(output.summary.total, 4)
         XCTAssertEqual(output.summary.withNextAction, 1)  // Only Test Terminal 1 has llmNextAction
         XCTAssertEqual(output.summary.stale, 1)  // Only Test Terminal 2 is stale
         XCTAssertEqual(output.summary.fresh, 1)  // Only Test Terminal 1 is fresh
@@ -233,7 +240,7 @@ final class MCPIntegrationTests: XCTestCase {
         let data = json.data(using: .utf8)!
         let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
 
-        XCTAssertEqual(terminals.count, 3)
+        XCTAssertEqual(terminals.count, 4)
     }
 
     func testTermqListToolWithColumnFilter() async throws {
@@ -345,6 +352,87 @@ final class MCPIntegrationTests: XCTestCase {
         XCTAssertTrue(terminals[0].badges.contains("urgent"))
     }
 
+    // MARK: - Smart Query Tests
+
+    func testTermqFindToolSmartQueryMatchesNormalizedWords() async throws {
+        // Test the user's exact use case: searching for "MCP Toolkit Migrate"
+        // should find "mcp-toolkit: migrate workflows/hooks"
+        let args: [String: Value] = ["query": .string("MCP Toolkit Migrate")]
+        let result = try await server.handleFind(args)
+
+        XCTAssertFalse(result.isError ?? false)
+
+        guard case .text(let json) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+
+        let data = json.data(using: .utf8)!
+        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+
+        // Should find the mcp-toolkit terminal
+        XCTAssertTrue(terminals.contains { $0.name.contains("mcp-toolkit") })
+    }
+
+    func testTermqFindToolSmartQueryMatchesDescription() async throws {
+        // Search for words that appear in description but not title
+        let args: [String: Value] = ["query": .string("server migration session")]
+        let result = try await server.handleFind(args)
+
+        XCTAssertFalse(result.isError ?? false)
+
+        guard case .text(let json) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+
+        let data = json.data(using: .utf8)!
+        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+
+        // Should find the mcp-toolkit terminal by its description
+        XCTAssertTrue(terminals.contains { $0.name.contains("mcp-toolkit") })
+    }
+
+    func testTermqFindToolSmartQueryReturnsNoResultsForUnmatchedQuery() async throws {
+        let args: [String: Value] = ["query": .string("completely unrelated query that matches nothing")]
+        let result = try await server.handleFind(args)
+
+        XCTAssertFalse(result.isError ?? false)
+
+        guard case .text(let json) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+
+        let data = json.data(using: .utf8)!
+        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+
+        XCTAssertEqual(terminals.count, 0)
+    }
+
+    func testTermqFindToolSmartQueryWithOtherFilters() async throws {
+        // Smart query combined with column filter
+        let args: [String: Value] = [
+            "query": .string("toolkit"),
+            "column": .string("In Progress"),
+        ]
+        let result = try await server.handleFind(args)
+
+        XCTAssertFalse(result.isError ?? false)
+
+        guard case .text(let json) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+
+        let data = json.data(using: .utf8)!
+        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+
+        // Should find mcp-toolkit (matches query and is in "In Progress")
+        XCTAssertEqual(terminals.count, 1)
+        XCTAssertTrue(terminals[0].name.contains("mcp-toolkit"))
+    }
+
     func testTermqOpenToolByName() async throws {
         let args: [String: Value] = ["identifier": .string("Test Terminal 1")]
         let result = try await server.handleOpen(args)
@@ -394,9 +482,9 @@ final class MCPIntegrationTests: XCTestCase {
             return
         }
 
-        XCTAssertTrue(message.contains("MCP Server is read-only"))
-        XCTAssertTrue(message.contains("termq create"))
-        XCTAssertTrue(message.contains("--name \"New Terminal\""))
+        // Create should now actually create a terminal and return its details
+        XCTAssertTrue(message.contains("New Terminal"), "Should contain the terminal name")
+        XCTAssertTrue(message.contains("/Users/test/new") || message.contains("path"), "Should contain the path")
     }
 
     func testTermqSetToolReturnsCliCommand() async throws {
@@ -413,12 +501,13 @@ final class MCPIntegrationTests: XCTestCase {
             return
         }
 
-        XCTAssertTrue(message.contains("MCP Server is read-only"))
-        XCTAssertTrue(message.contains("termq set"))
-        XCTAssertTrue(message.contains("--llm-next-action"))
+        // Set should now actually update the terminal and return its details
+        XCTAssertTrue(message.contains("Test Terminal 1"), "Should contain the terminal name")
+        XCTAssertTrue(
+            message.contains("New action") || message.contains("llmNextAction"), "Should contain the updated action")
     }
 
-    func testTermqMoveToolReturnsCliCommand() async throws {
+    func testTermqMoveToolActuallyMovesCard() async throws {
         let args: [String: Value] = [
             "identifier": .string("Test Terminal 1"),
             "column": .string("Done"),
@@ -432,8 +521,9 @@ final class MCPIntegrationTests: XCTestCase {
             return
         }
 
-        XCTAssertTrue(message.contains("MCP Server is read-only"))
-        XCTAssertTrue(message.contains("termq move"))
+        // Move should now actually move the terminal and return its details
+        XCTAssertTrue(message.contains("Test Terminal 1"), "Should contain the terminal name")
+        XCTAssertTrue(message.contains("Done"), "Should contain the new column name")
     }
 
     // MARK: - Schema Definition Tests

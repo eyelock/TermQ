@@ -80,8 +80,9 @@ enum MCPServerInstaller {
     }
 
     /// Install the MCP server to a custom path
-    static func install(toPath path: String, requiresAdmin: Bool? = nil) async -> Result<String, MCPServerInstallerError>
-    {
+    static func install(
+        toPath path: String, requiresAdmin: Bool? = nil
+    ) async -> Result<String, MCPServerInstallerError> {
         guard let sourcePath = bundledMCPServerPath else {
             return .failure(.bundledMCPServerNotFound)
         }
@@ -171,8 +172,9 @@ enum MCPServerInstaller {
     }
 
     /// Uninstall the MCP server from a custom path
-    static func uninstall(fromPath path: String, requiresAdmin: Bool? = nil) async -> Result<String, MCPServerInstallerError>
-    {
+    static func uninstall(
+        fromPath path: String, requiresAdmin: Bool? = nil
+    ) async -> Result<String, MCPServerInstallerError> {
         let expandedPath = NSString(string: path).expandingTildeInPath
 
         guard FileManager.default.fileExists(atPath: expandedPath) else {

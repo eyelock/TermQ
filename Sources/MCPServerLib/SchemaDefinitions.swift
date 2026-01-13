@@ -58,15 +58,21 @@ extension TermQMCPServer {
             Tool(
                 name: "termq_find",
                 description: """
-                    Search for terminals by various criteria. All filters are AND-combined.
-                    Returns matching terminals as JSON array.
+                    Search for terminals by various criteria. Use 'query' for smart multi-word search
+                    across name, description, path, and tags. All filters are AND-combined.
+                    Returns matching terminals as JSON array sorted by relevance.
                     """,
                 inputSchema: .object([
                     "type": "object",
                     "properties": .object([
-                        "name": .object(["type": "string", "description": "Partial name match (case-insensitive)"]),
+                        "query": .object([
+                            "type": "string",
+                            "description":
+                                "Smart search: matches ANY word across name, description, path, tags. Best for natural language queries.",
+                        ]),
+                        "name": .object(["type": "string", "description": "Filter by name (word-based matching)"]),
                         "column": .object(["type": "string", "description": "Filter by column name"]),
-                        "tag": .object(["type": "string", "description": "Filter by tag (format: key=value)"]),
+                        "tag": .object(["type": "string", "description": "Filter by tag (format: key or key=value)"]),
                         "id": .object(["type": "string", "description": "Filter by UUID"]),
                         "badge": .object(["type": "string", "description": "Filter by badge"]),
                         "favourites": .object(["type": "boolean", "description": "Only show favourites"]),

@@ -2,7 +2,7 @@ import AppKit
 import SwiftTerm
 import SwiftUI
 import TermQCore
-import UserNotifications
+@preconcurrency import UserNotifications
 
 /// Custom terminal view - using default SwiftTerm behavior
 /// Note: Copy/paste should work via Edit menu or right-click context menu
@@ -511,22 +511,29 @@ class TermQTerminalView: LocalProcessTerminalView {
                 overlay.animator().alphaValue = 0
             },
             completionHandler: { [weak self] in
-                overlay.removeFromSuperview()
-                self?.flashOverlay = nil
+                // Schedule cleanup on main actor
+                Task { @MainActor in
+                    overlay.removeFromSuperview()
+                    self?.flashOverlay = nil
+                }
             })
     }
 
     // MARK: - Desktop Notifications
 
     private func showDesktopNotification(title: String, body: String) {
-        let center = UNUserNotificationCenter.current()
+        // Capture MainActor-isolated property before async work
+        let notificationTitle = title.isEmpty ? terminalTitle : title
 
-        // Request permission if needed
-        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
-            guard granted else { return }
+        Task {
+            let center = UNUserNotificationCenter.current()
+
+            // Request permission if needed
+            let granted = try? await center.requestAuthorization(options: [.alert, .sound])
+            guard granted == true else { return }
 
             let content = UNMutableNotificationContent()
-            content.title = title.isEmpty ? self.terminalTitle : title
+            content.title = notificationTitle
             content.body = body
             content.sound = .default
 
@@ -536,7 +543,7 @@ class TermQTerminalView: LocalProcessTerminalView {
                 trigger: nil  // Deliver immediately
             )
 
-            center.add(request)
+            try? await center.add(request)
         }
     }
 }
