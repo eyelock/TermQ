@@ -150,6 +150,25 @@ extension TermQMCPServer {
                     "required": .array([.string("identifier"), .string("column")]),
                 ])
             ),
+            Tool(
+                name: "termq_get",
+                description: """
+                    Get terminal context by ID. Use with TERMQ_TERMINAL_ID environment variable
+                    to get context for the terminal you're currently running in.
+                    Returns full terminal details including tags, llmPrompt, and llmNextAction.
+                    """,
+                inputSchema: .object([
+                    "type": "object",
+                    "properties": .object([
+                        "id": .object([
+                            "type": "string",
+                            "description":
+                                "Terminal UUID (use $TERMQ_TERMINAL_ID from your environment)",
+                        ])
+                    ]),
+                    "required": .array([.string("id")]),
+                ])
+            ),
         ]
     }
 }
