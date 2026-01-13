@@ -29,7 +29,8 @@ struct ColumnEditorView: View {
             TextField("Column Name", text: $name)
                 .textFieldStyle(.roundedBorder)
 
-            TextField("Description (optional)", text: $description)
+            TextField("Description (optional)", text: $description, axis: .vertical)
+                .lineLimit(2...4)
                 .textFieldStyle(.roundedBorder)
 
             // Color picker

@@ -15,6 +15,7 @@ struct CLITag: Codable {
 struct CLIColumn: Codable {
     let id: UUID
     let name: String
+    let description: String?
     let orderIndex: Int
     let color: String
 }
@@ -478,12 +479,19 @@ struct List: ParsableCommand {
 
             // If --columns flag, output column info
             if columns {
+                struct ColumnOutput: Encodable {
+                    let id: String
+                    let name: String
+                    let description: String
+                    let color: String
+                }
                 let columnOutput = board.columns.sorted { $0.orderIndex < $1.orderIndex }.map { col in
-                    [
-                        "id": col.id.uuidString,
-                        "name": col.name,
-                        "color": col.color,
-                    ]
+                    ColumnOutput(
+                        id: col.id.uuidString,
+                        name: col.name,
+                        description: col.description ?? "",
+                        color: col.color
+                    )
                 }
                 printJSON(columnOutput)
                 return

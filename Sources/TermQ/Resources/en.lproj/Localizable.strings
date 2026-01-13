@@ -10,7 +10,7 @@
 
 // MARK: - Board View
 "board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
+"board.column.edit" = "Edit Column...";
 "board.column.delete" = "Delete Column";
 "board.column.delete.disabled" = "Delete Column (move terminals first)";
 "board.column.add.terminal" = "Add Terminal";
