@@ -32,6 +32,28 @@ struct MCPCard: Codable, Sendable {
     let llmNextAction: String
     let deletedAt: Date?
 
+    // Custom decoding to handle missing fields for backwards compatibility
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        description = try container.decodeIfPresent(String.self, forKey: .description) ?? ""
+        tags = try container.decodeIfPresent([MCPTag].self, forKey: .tags) ?? []
+        columnId = try container.decode(UUID.self, forKey: .columnId)
+        orderIndex = try container.decodeIfPresent(Int.self, forKey: .orderIndex) ?? 0
+        workingDirectory = try container.decodeIfPresent(String.self, forKey: .workingDirectory) ?? ""
+        isFavourite = try container.decodeIfPresent(Bool.self, forKey: .isFavourite) ?? false
+        badge = try container.decodeIfPresent(String.self, forKey: .badge) ?? ""
+        llmPrompt = try container.decodeIfPresent(String.self, forKey: .llmPrompt) ?? ""
+        llmNextAction = try container.decodeIfPresent(String.self, forKey: .llmNextAction) ?? ""
+        deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, description, tags, columnId, orderIndex
+        case workingDirectory, isFavourite, badge, llmPrompt, llmNextAction, deletedAt
+    }
+
     var isDeleted: Bool { deletedAt != nil }
 
     /// Parsed badges from comma-separated badge string
