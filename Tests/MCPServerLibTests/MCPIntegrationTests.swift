@@ -54,9 +54,9 @@ final class MCPIntegrationTests: XCTestCase {
 
     private func createTestBoard() -> MCPBoard {
         let columns = [
-            MCPColumn(id: UUID(), name: "To Do", orderIndex: 0, color: "#FF0000"),
-            MCPColumn(id: UUID(), name: "In Progress", orderIndex: 1, color: "#00FF00"),
-            MCPColumn(id: UUID(), name: "Done", orderIndex: 2, color: "#0000FF"),
+            MCPColumn(id: UUID(), name: "To Do", description: "Tasks to start", orderIndex: 0, color: "#FF0000"),
+            MCPColumn(id: UUID(), name: "In Progress", description: "Active work", orderIndex: 1, color: "#00FF00"),
+            MCPColumn(id: UUID(), name: "Done", description: "", orderIndex: 2, color: "#0000FF"),
         ]
 
         let cards = [
@@ -169,6 +169,8 @@ final class MCPIntegrationTests: XCTestCase {
         XCTAssertEqual(board.cards[0].title, "Minimal Card")
         XCTAssertEqual(board.cards[0].llmNextAction, "")  // Default value
         XCTAssertEqual(board.cards[0].llmPrompt, "")  // Default value
+        // Column description should default to empty string for old format
+        XCTAssertEqual(board.columns[0].description, "")  // Default value
     }
 
     // MARK: - Tool Handler Tests
@@ -277,6 +279,28 @@ final class MCPIntegrationTests: XCTestCase {
         XCTAssertEqual(columns.count, 3)
         XCTAssertEqual(columns[0].name, "To Do")
         XCTAssertEqual(columns[0].terminalCount, 2)
+    }
+
+    func testTermqListToolColumnsIncludesDescription() async throws {
+        let args: [String: Value] = ["columnsOnly": .bool(true)]
+        let result = try await server.handleList(args)
+
+        XCTAssertFalse(result.isError ?? false)
+
+        guard case .text(let json) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+
+        let data = json.data(using: .utf8)!
+        let columns = try JSONDecoder().decode([ColumnOutput].self, from: data)
+
+        // First column has a description
+        XCTAssertEqual(columns[0].description, "Tasks to start")
+        // Second column has a description
+        XCTAssertEqual(columns[1].description, "Active work")
+        // Third column has empty description
+        XCTAssertEqual(columns[2].description, "")
     }
 
     func testTermqFindToolByName() async throws {

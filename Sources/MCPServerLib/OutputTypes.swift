@@ -35,12 +35,14 @@ struct TerminalOutput: Codable, Sendable {
 struct ColumnOutput: Codable, Sendable {
     let id: String
     let name: String
+    let description: String
     let color: String
     let terminalCount: Int
 
     init(from column: MCPColumn, terminalCount: Int) {
         self.id = column.id.uuidString
         self.name = column.name
+        self.description = column.description
         self.color = column.color
         self.terminalCount = terminalCount
     }
