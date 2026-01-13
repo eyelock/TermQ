@@ -48,7 +48,7 @@ struct ColumnView: View {
                 Spacer()
 
                 Menu {
-                    Button("Rename Column...") {
+                    Button("Edit Column...") {
                         onEditColumn()
                     }
                     Divider()
