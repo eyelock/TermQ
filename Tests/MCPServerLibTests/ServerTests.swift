@@ -1,6 +1,5 @@
 import XCTest
 @testable import MCPServerLib
-@testable import TermQCore
 
 final class ServerTests: XCTestCase {
     func testServerInitialization() {

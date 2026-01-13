@@ -53,7 +53,6 @@ let package = Package(
         .target(
             name: "MCPServerLib",
             dependencies: [
-                "TermQCore",
                 .product(name: "MCP", package: "swift-sdk")
             ],
             path: "Sources/MCPServerLib"
@@ -75,7 +74,7 @@ let package = Package(
         ),
         .testTarget(
             name: "MCPServerLibTests",
-            dependencies: ["MCPServerLib", "TermQCore"],
+            dependencies: ["MCPServerLib"],
             path: "Tests/MCPServerLibTests"
         )
     ]
