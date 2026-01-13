@@ -28,6 +28,7 @@ struct CardEditorView: View {
     @State private var safePasteEnabled: Bool = true
     @State private var themeId: String = ""
     @State private var selectedTab: EditorTab = .general
+    @State private var mcpInstalled: Bool = false
 
     private enum EditorTab: String, CaseIterable {
         case general = "General"
@@ -109,6 +110,7 @@ struct CardEditorView: View {
         .frame(width: 600, height: 580)
         .onAppear {
             loadFromCard()
+            mcpInstalled = MCPServerInstaller.currentInstallLocation != nil
         }
     }
 
@@ -260,7 +262,26 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var agentsContent: some View {
-        // TODO: Add MCP Server section here (Is Installed?, Last used?)
+        Section("MCP Server") {
+            HStack {
+                Image(systemName: mcpInstalled ? "checkmark.circle.fill" : "xmark.circle")
+                    .foregroundColor(mcpInstalled ? .green : .secondary)
+                Text(mcpInstalled ? "Installed" : "Not Installed")
+                    .foregroundColor(mcpInstalled ? .primary : .secondary)
+                Spacer()
+                if !mcpInstalled {
+                    Text("Install in Settings > Tools")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+
+            if mcpInstalled {
+                Text("LLM agents can access this terminal's context and pending actions via the MCP protocol.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
 
         Section("Agent Context") {
             VStack(alignment: .leading, spacing: 4) {
