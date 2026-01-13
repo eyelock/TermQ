@@ -3,7 +3,7 @@ import Foundation
 // MARK: - JSON Output Types for MCP
 
 /// Standard terminal output format
-struct TerminalOutput: Encodable, Sendable {
+struct TerminalOutput: Codable, Sendable {
     let id: String
     let name: String
     let description: String
@@ -32,7 +32,7 @@ struct TerminalOutput: Encodable, Sendable {
 }
 
 /// Column output format
-struct ColumnOutput: Encodable, Sendable {
+struct ColumnOutput: Codable, Sendable {
     let id: String
     let name: String
     let color: String
@@ -47,7 +47,7 @@ struct ColumnOutput: Encodable, Sendable {
 }
 
 /// Pending terminal output format
-struct PendingTerminalOutput: Encodable, Sendable {
+struct PendingTerminalOutput: Codable, Sendable {
     let id: String
     let name: String
     let column: String
@@ -70,7 +70,7 @@ struct PendingTerminalOutput: Encodable, Sendable {
 }
 
 /// Pending summary output format
-struct PendingSummary: Encodable, Sendable {
+struct PendingSummary: Codable, Sendable {
     let total: Int
     let withNextAction: Int
     let stale: Int
@@ -78,13 +78,13 @@ struct PendingSummary: Encodable, Sendable {
 }
 
 /// Complete pending output format
-struct PendingOutput: Encodable, Sendable {
+struct PendingOutput: Codable, Sendable {
     let terminals: [PendingTerminalOutput]
     let summary: PendingSummary
 }
 
 /// Error output format
-struct ErrorOutput: Encodable, Sendable {
+struct ErrorOutput: Codable, Sendable {
     let error: String
     let code: Int
 }
