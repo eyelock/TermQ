@@ -328,7 +328,8 @@ struct TermQApp: App {
 }
 
 /// Handles Apple Events for URL schemes
-class URLEventHandler: NSObject {
+@MainActor
+final class URLEventHandler: NSObject, @unchecked Sendable {
     static let shared = URLEventHandler()
 
     @objc func handleURL(_ event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
