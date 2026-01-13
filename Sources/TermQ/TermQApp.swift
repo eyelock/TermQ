@@ -328,7 +328,8 @@ struct TermQApp: App {
 }
 
 /// Handles Apple Events for URL schemes
-class URLEventHandler: NSObject {
+@MainActor
+final class URLEventHandler: NSObject, @unchecked Sendable {
     static let shared = URLEventHandler()
 
     @objc func handleURL(_ event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
@@ -346,7 +347,7 @@ class URLEventHandler: NSObject {
 
 #if DEBUG
     /// Copy production config to debug data folder
-    private func copyProductionConfig() {
+    @MainActor private func copyProductionConfig() {
         let fileManager = FileManager.default
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
 
@@ -402,7 +403,7 @@ class URLEventHandler: NSObject {
     }
 
     /// Open the debug data folder in Finder
-    private func openDebugDataFolder() {
+    @MainActor private func openDebugDataFolder() {
         let fileManager = FileManager.default
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
@@ -414,7 +415,7 @@ class URLEventHandler: NSObject {
     }
 
     /// Open the production data folder in Finder
-    private func openProductionDataFolder() {
+    @MainActor private func openProductionDataFolder() {
         let fileManager = FileManager.default
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let productionFolder = appSupport.appendingPathComponent("TermQ")

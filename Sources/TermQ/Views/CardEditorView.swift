@@ -28,6 +28,9 @@ struct CardEditorView: View {
     @State private var safePasteEnabled: Bool = true
     @State private var themeId: String = ""
     @State private var selectedTab: EditorTab = .general
+    @State private var mcpInstalled: Bool = false
+    @State private var allowAutorun: Bool = false
+    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
 
     private enum EditorTab: String, CaseIterable {
         case general = "General"
@@ -109,6 +112,7 @@ struct CardEditorView: View {
         .frame(width: 600, height: 580)
         .onAppear {
             loadFromCard()
+            mcpInstalled = MCPServerInstaller.currentInstallLocation != nil
         }
     }
 
@@ -132,9 +136,6 @@ struct CardEditorView: View {
             }
 
             Toggle("Favourite", isOn: $isFavourite)
-
-            Toggle("Safe Paste", isOn: $safePasteEnabled)
-                .help("Warn when pasting potentially dangerous commands")
 
             if isNewCard {
                 Toggle("Switch to new terminal", isOn: $switchToTerminal)
@@ -203,7 +204,26 @@ struct CardEditorView: View {
                     .lineLimit(3...8)
                     .help("e.g., 'source .env && npm run dev'")
             }
-            // TODO: Add "Allow Agent Autorun" toggle here
+        }
+
+        Section("Security") {
+            Toggle("Safe Paste", isOn: $safePasteEnabled)
+                .help("Warn when pasting potentially dangerous commands")
+
+            if enableTerminalAutorun {
+                Toggle("Allow Autorun", isOn: $allowAutorun)
+                    .help("Allow agents to run init commands automatically when this terminal opens")
+            } else {
+                HStack {
+                    Text("Allow Autorun")
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("Disabled globally")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .help("Enable 'Enable Terminal Autorun' in Settings > Tools first")
+            }
         }
     }
 
@@ -260,7 +280,37 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var agentsContent: some View {
-        // TODO: Add MCP Server section here (Is Installed?, Last used?)
+        Section("Tools") {
+            HStack {
+                Text("MCP Server")
+                Spacer()
+                Image(systemName: mcpInstalled ? "checkmark.circle.fill" : "xmark.circle")
+                    .foregroundColor(mcpInstalled ? .green : .secondary)
+                Text(mcpInstalled ? "Installed" : "Not Installed")
+                    .foregroundColor(mcpInstalled ? .primary : .secondary)
+            }
+
+            HStack {
+                Text("Terminal Allows Autorun")
+                Spacer()
+                if enableTerminalAutorun {
+                    Image(systemName: allowAutorun ? "checkmark.circle.fill" : "xmark.circle")
+                        .foregroundColor(allowAutorun ? .green : .secondary)
+                    Text(allowAutorun ? "Enabled" : "Disabled")
+                        .foregroundColor(allowAutorun ? .primary : .secondary)
+                } else {
+                    Image(systemName: "xmark.circle")
+                        .foregroundColor(.secondary)
+                    Text("Disabled globally")
+                        .foregroundColor(.secondary)
+                }
+            }
+            .help(
+                enableTerminalAutorun
+                    ? "Whether agents can run init commands automatically"
+                    : "Enable 'Enable Terminal Autorun' in Settings > Tools first"
+            )
+        }
 
         Section("Agent Context") {
             VStack(alignment: .leading, spacing: 4) {
@@ -301,6 +351,7 @@ struct CardEditorView: View {
         fontSize = card.fontSize > 0 ? card.fontSize : 13
         safePasteEnabled = card.safePasteEnabled
         themeId = card.themeId
+        allowAutorun = card.allowAutorun
     }
 
     private func saveChanges() {
@@ -319,6 +370,7 @@ struct CardEditorView: View {
         card.fontSize = fontSize
         card.safePasteEnabled = safePasteEnabled
         card.themeId = themeId
+        card.allowAutorun = allowAutorun
     }
 
     private func addTag() {

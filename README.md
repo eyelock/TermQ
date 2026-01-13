@@ -21,6 +21,7 @@ A Kanban-style terminal queue manager for macOS. Organize multiple terminal sess
 | **Session Export** | Save terminal content to text files |
 | **Native Integration** | Launch Terminal.app at current directory |
 | **CLI Tool** | Open terminals from the command line |
+| **MCP Server** | Model Context Protocol for LLM integration |
 | **Bin & Recovery** | Soft-delete with configurable auto-cleanup |
 
 ![Terminal Focused](./Docs/Help/Images/terminal-tabs.png)
@@ -59,6 +60,8 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed build instructions.
 - [Command Palette](./Docs/Help/command-palette.md)
 - [Themes & Appearance](./Docs/Help/themes-appearance.md)
 - [Configuration & Data](./Docs/Help/configuration.md)
+- [CLI Tool](./Docs/Help/cli-tool.md) *(early release)*
+- [MCP Server](./Docs/Help/mcp-server.md) *(early release)*
 - [About & Limitations](./Docs/Help/about.md)
 
 ## Contributing

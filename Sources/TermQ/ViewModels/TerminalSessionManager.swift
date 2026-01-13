@@ -40,7 +40,7 @@ class TerminalSessionManager: ObservableObject {
     /// Get or create a terminal session for a card
     func getOrCreateSession(
         for card: TerminalCard,
-        onExit: @escaping () -> Void,
+        onExit: @escaping @Sendable @MainActor () -> Void,
         onBell: @escaping () -> Void,
         onActivity: @escaping () -> Void
     ) -> TerminalContainerView {
@@ -136,20 +136,31 @@ class TerminalSessionManager: ObservableObject {
         // Run init command if specified (after a short delay to let shell initialize)
         // Supports token replacement for LLM integration:
         //   {{LLM_PROMPT}} - replaced with persistent context
-        //   {{LLM_NEXT_ACTION}} - replaced with one-time action (then cleared)
+        //   {{LLM_NEXT_ACTION}} - replaced with one-time action (then cleared if autorun enabled)
         if !card.initCommand.isEmpty {
             let hasNextActionToken = card.initCommand.contains("{{LLM_NEXT_ACTION}}")
             let hadNextAction = !card.llmNextAction.isEmpty
 
+            // Check if autorun is enabled (global AND per-terminal)
+            let globalAutorunEnabled = UserDefaults.standard.bool(forKey: "enableTerminalAutorun")
+            let autorunAllowed = globalAutorunEnabled && card.allowAutorun
+
             // Perform token replacement
             var initCmd = card.initCommand
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: card.llmPrompt)
-            initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: card.llmNextAction)
 
-            // Clear llmNextAction after use (if token was present and had a value)
-            if hasNextActionToken && hadNextAction {
-                card.llmNextAction = ""
-                BoardViewModel.shared.updateCard(card)
+            // Only inject LLM_NEXT_ACTION if autorun is enabled
+            if autorunAllowed {
+                initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: card.llmNextAction)
+
+                // Clear llmNextAction after use (if token was present and had a value)
+                if hasNextActionToken && hadNextAction {
+                    card.llmNextAction = ""
+                    BoardViewModel.shared.updateCard(card)
+                }
+            } else {
+                // Replace token with empty string (don't consume the action)
+                initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -283,9 +294,9 @@ class TerminalSessionManager: ObservableObject {
 class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
     let cardId: UUID
     weak var manager: TerminalSessionManager?
-    let onExit: () -> Void
+    let onExit: @Sendable @MainActor () -> Void
 
-    init(cardId: UUID, manager: TerminalSessionManager, onExit: @escaping () -> Void) {
+    init(cardId: UUID, manager: TerminalSessionManager, onExit: @escaping @Sendable @MainActor () -> Void) {
         self.cardId = cardId
         self.manager = manager
         self.onExit = onExit
@@ -297,27 +308,34 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
 
     func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {
         // Track the current directory when the shell reports it via OSC 7
+        // Capture values before Task to avoid Swift 6 Sendable issues
+        let cardId = self.cardId
+        let manager = self.manager
         Task { @MainActor in
             if let dir = directory {
                 // Parse file:// URL if present
                 if let url = URL(string: dir), url.scheme == "file" {
-                    self.manager?.updateCurrentDirectory(cardId: self.cardId, directory: url.path)
+                    manager?.updateCurrentDirectory(cardId: cardId, directory: url.path)
                 } else {
-                    self.manager?.updateCurrentDirectory(cardId: self.cardId, directory: dir)
+                    manager?.updateCurrentDirectory(cardId: cardId, directory: dir)
                 }
             }
         }
     }
 
     func processTerminated(source: TerminalView, exitCode: Int32?) {
+        // Capture values before Task to avoid Swift 6 Sendable issues
+        let cardId = self.cardId
+        let manager = self.manager
+        let onExit = self.onExit
         Task { @MainActor in
             // Only call onExit if the session still exists in the manager.
             // If it was intentionally removed (via removeSession), we skip the callback
             // to avoid showing "Terminal session ended" on a different tab.
-            guard self.manager?.sessionExists(for: self.cardId) == true else { return }
+            guard manager?.sessionExists(for: cardId) == true else { return }
 
-            self.manager?.markSessionTerminated(cardId: self.cardId)
-            self.onExit()
+            manager?.markSessionTerminated(cardId: cardId)
+            onExit()
         }
     }
 }

@@ -36,6 +36,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Terminal color theme ID (empty = use global default theme)
     @Published public var themeId: String
 
+    /// Whether this terminal allows agent autorun commands (requires global enableTerminalAutorun)
+    @Published public var allowAutorun: Bool
+
     /// When the card was soft-deleted (nil = active, set = in bin)
     @Published public var deletedAt: Date?
 
@@ -46,7 +49,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
-        case deletedAt
+        case allowAutorun, deletedAt
     }
 
     public init(
@@ -67,6 +70,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         fontSize: CGFloat = 0,
         safePasteEnabled: Bool = true,
         themeId: String = "",
+        allowAutorun: Bool = false,
         deletedAt: Date? = nil
     ) {
         self.id = id
@@ -86,6 +90,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.fontSize = fontSize
         self.safePasteEnabled = safePasteEnabled
         self.themeId = themeId
+        self.allowAutorun = allowAutorun
         self.deletedAt = deletedAt
     }
 
@@ -108,6 +113,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize) ?? 0
         safePasteEnabled = try container.decodeIfPresent(Bool.self, forKey: .safePasteEnabled) ?? true
         themeId = try container.decodeIfPresent(String.self, forKey: .themeId) ?? ""
+        allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
     }
 
@@ -130,6 +136,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(fontSize, forKey: .fontSize)
         try container.encode(safePasteEnabled, forKey: .safePasteEnabled)
         try container.encode(themeId, forKey: .themeId)
+        try container.encode(allowAutorun, forKey: .allowAutorun)
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
     }
 

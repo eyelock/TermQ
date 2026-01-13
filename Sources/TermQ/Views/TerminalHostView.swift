@@ -2,7 +2,7 @@ import AppKit
 import SwiftTerm
 import SwiftUI
 import TermQCore
-import UserNotifications
+@preconcurrency import UserNotifications
 
 /// Custom terminal view - using default SwiftTerm behavior
 /// Note: Copy/paste should work via Edit menu or right-click context menu
@@ -47,10 +47,14 @@ class TermQTerminalView: LocalProcessTerminalView {
     private var lastDragPosition: NSPoint?
 
     deinit {
-        autoScrollTimer?.invalidate()
-        cleanupAutoScrollDuringSelection()
-        cleanupCopyOnSelect()
-        cleanupKeyInputMonitor()
+        // Use MainActor.assumeIsolated since deinit is nonisolated in Swift 6
+        // but we're always deallocated on the main thread for NSView subclasses
+        MainActor.assumeIsolated {
+            autoScrollTimer?.invalidate()
+            cleanupAutoScrollDuringSelection()
+            cleanupCopyOnSelect()
+            cleanupKeyInputMonitor()
+        }
     }
 
     /// Set up event monitor to track key input (to distinguish user typing from process output)
@@ -255,7 +259,10 @@ class TermQTerminalView: LocalProcessTerminalView {
         guard autoScrollTimer == nil else { return }
 
         autoScrollTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
-            self?.autoScrollTimerFired()
+            // Timer callbacks run on main thread but need MainActor annotation for Swift 6
+            MainActor.assumeIsolated {
+                self?.autoScrollTimerFired()
+            }
         }
     }
 
@@ -504,22 +511,29 @@ class TermQTerminalView: LocalProcessTerminalView {
                 overlay.animator().alphaValue = 0
             },
             completionHandler: { [weak self] in
-                overlay.removeFromSuperview()
-                self?.flashOverlay = nil
+                // Schedule cleanup on main actor
+                Task { @MainActor in
+                    overlay.removeFromSuperview()
+                    self?.flashOverlay = nil
+                }
             })
     }
 
     // MARK: - Desktop Notifications
 
     private func showDesktopNotification(title: String, body: String) {
-        let center = UNUserNotificationCenter.current()
+        // Capture MainActor-isolated property before async work
+        let notificationTitle = title.isEmpty ? terminalTitle : title
 
-        // Request permission if needed
-        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
-            guard granted else { return }
+        Task {
+            let center = UNUserNotificationCenter.current()
+
+            // Request permission if needed
+            let granted = try? await center.requestAuthorization(options: [.alert, .sound])
+            guard granted == true else { return }
 
             let content = UNMutableNotificationContent()
-            content.title = title.isEmpty ? self.terminalTitle : title
+            content.title = notificationTitle
             content.body = body
             content.sound = .default
 
@@ -529,7 +543,7 @@ class TermQTerminalView: LocalProcessTerminalView {
                 trigger: nil  // Deliver immediately
             )
 
-            center.add(request)
+            try? await center.add(request)
         }
     }
 }
@@ -574,8 +588,12 @@ class TerminalContainerView: NSView {
     }
 
     deinit {
-        if let monitor = scrollEventMonitor {
-            NSEvent.removeMonitor(monitor)
+        // Use MainActor.assumeIsolated since deinit is nonisolated in Swift 6
+        // but we're always deallocated on the main thread for NSView subclasses
+        MainActor.assumeIsolated {
+            if let monitor = scrollEventMonitor {
+                NSEvent.removeMonitor(monitor)
+            }
         }
     }
 
@@ -655,7 +673,7 @@ class TerminalContainerView: NSView {
 /// Uses TerminalSessionManager to persist sessions across navigations
 struct TerminalHostView: NSViewRepresentable {
     let card: TerminalCard
-    let onExit: () -> Void
+    let onExit: @Sendable @MainActor () -> Void
     var onBell: (() -> Void)?
     var onActivity: (() -> Void)?
     var isSearching: Bool = false
