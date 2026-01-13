@@ -672,9 +672,14 @@ struct TerminalHostView: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: TerminalContainerView, context: Context) {
-        // Only focus terminal when not in search mode
+        // Only focus terminal when:
+        // 1. Not in search mode
+        // 2. Terminal doesn't already have focus (avoid interrupting text selection)
         if !isSearching {
-            nsView.focusTerminal()
+            let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
+            if !alreadyFocused {
+                nsView.focusTerminal()
+            }
         }
     }
 
