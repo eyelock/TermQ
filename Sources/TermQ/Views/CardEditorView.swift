@@ -36,6 +36,7 @@ struct CardEditorView: View {
     /// Supported LLM CLI tools for init command generation
     private enum LLMVendor: String, CaseIterable {
         case claudeCode = "Claude Code"
+        case cursor = "Cursor"
         case aider = "Aider"
         case copilot = "GitHub Copilot"
         case custom = "Custom"
@@ -44,6 +45,8 @@ struct CardEditorView: View {
             switch self {
             case .claudeCode:
                 return "claude \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+            case .cursor:
+                return "cursor agent -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
             case .aider:
                 return "aider --message \"{{LLM_NEXT_ACTION}}\""
             case .copilot:
@@ -53,9 +56,10 @@ struct CardEditorView: View {
             }
         }
 
-        var supportsPrompt: Bool {
+        /// Whether this tool's template includes persistent context
+        var includesPrompt: Bool {
             switch self {
-            case .claudeCode, .custom:
+            case .claudeCode, .cursor, .custom:
                 return true
             case .aider, .copilot:
                 return false
@@ -384,8 +388,8 @@ struct CardEditorView: View {
                     .cornerRadius(4)
             }
 
-            if !selectedLLMVendor.supportsPrompt {
-                Text("Note: \(selectedLLMVendor.rawValue) only uses {{LLM_NEXT_ACTION}}")
+            if !selectedLLMVendor.includesPrompt {
+                Text("Note: This template doesn't include {{LLM_PROMPT}} (persistent context)")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

@@ -357,6 +357,9 @@ Use these tokens in a terminal's **Init Command** field:
 # Claude Code - start interactive session with context
 claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 
+# Cursor - headless agent mode
+cursor agent -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+
 # Aider - pass task directly
 aider --message "{{LLM_NEXT_ACTION}}"
 
@@ -367,7 +370,9 @@ gh copilot suggest "{{LLM_NEXT_ACTION}}"
 my-llm-wrapper.sh --context "{{LLM_PROMPT}}" --task "{{LLM_NEXT_ACTION}}"
 ```
 
-> **Note:** The Init Command is configured in the TermQ app UI (terminal editor → Advanced section), not via CLI. The CLI is used to set the `llmPrompt` and `llmNextAction` values that get substituted into the Init Command.
+> **Tip:** Use the **Generate Init Command** section in the terminal editor's Agents tab to quickly create these templates for popular LLM tools.
+
+> **Note:** The Init Command is configured in the TermQ app UI (terminal editor → Agents tab), not via CLI. The CLI is used to set the `llmPrompt` and `llmNextAction` values that get substituted into the Init Command.
 
 ### Setting LLM Fields via CLI
 
