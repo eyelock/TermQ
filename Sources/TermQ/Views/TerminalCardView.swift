@@ -7,7 +7,6 @@ struct TerminalCardView: View {
     var needsAttention: Bool = false
     var isProcessing: Bool = false
     var isOpenAsTab: Bool = false
-    var hasMCPActivity: Bool = false
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
@@ -57,8 +56,8 @@ struct TerminalCardView: View {
                         .foregroundColor(columnColor)
                 }
 
-                // MCP activity indicator - shows when agent has modified board
-                if hasMCPActivity {
+                // Wired indicator - shows when LLM has called termq_get for this terminal
+                if card.isWired {
                     Text("Wired")
                         .font(.caption2)
                         .fontWeight(.medium)
@@ -69,7 +68,7 @@ struct TerminalCardView: View {
                                 .fill(Color.green.opacity(0.3))
                         )
                         .foregroundColor(.green)
-                        .help("Agent activity detected")
+                        .help("LLM is aware of this terminal")
                 }
 
                 Spacer()

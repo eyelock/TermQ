@@ -322,16 +322,16 @@ struct ContentView: View {
         .focusedSceneValue(\.terminalActions, terminalActions)
     }
 
-    /// MCP server status indicator
+    /// MCP server status indicator - shows if current terminal's LLM is aware of TermQ
     @ViewBuilder
     private var mcpStatusIndicator: some View {
         let isInstalled = MCPServerInstaller.currentInstallLocation != nil
-        let hasActivity = viewModel.hasMCPActivity
+        let isWired = viewModel.selectedCard?.isWired ?? false
 
         Image(systemName: "cpu")
             .foregroundColor(
                 isInstalled
-                    ? (hasActivity ? .green : .secondary)
+                    ? (isWired ? .green : .secondary)
                     : .secondary.opacity(0.3)
             )
             .help(mcpStatusTooltip)
@@ -339,14 +339,14 @@ struct ContentView: View {
 
     private var mcpStatusTooltip: String {
         let isInstalled = MCPServerInstaller.currentInstallLocation != nil
-        let hasActivity = viewModel.hasMCPActivity
+        let isWired = viewModel.selectedCard?.isWired ?? false
 
         if !isInstalled {
             return "MCP Server not installed. Install via Settings > CLI to enable agent integration."
-        } else if hasActivity {
-            return "MCP Server active - recent agent activity detected"
+        } else if isWired {
+            return "LLM is aware of this terminal (called termq_get)"
         } else {
-            return "MCP Server installed - waiting for agent activity"
+            return "MCP Server installed - LLM has not identified itself yet"
         }
     }
 

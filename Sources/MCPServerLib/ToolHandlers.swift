@@ -358,6 +358,18 @@ extension TermQMCPServer {
         }
 
         do {
+            // Record the LLM handshake - this terminal's LLM now knows about TermQ
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            let nowString = formatter.string(from: Date())
+
+            _ = try BoardWriter.updateCard(
+                identifier: id,
+                updates: ["lastLLMGet": nowString],
+                dataDirectory: dataDirectory
+            )
+
+            // Reload to get updated card
             let board = try loadBoard()
 
             guard let card = board.findTerminal(identifier: id) else {

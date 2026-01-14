@@ -27,12 +27,6 @@ class BoardViewModel: ObservableObject {
     /// Terminals currently processing (have recent output activity)
     @Published private(set) var processingCards: Set<UUID> = []
 
-    /// Whether there has been recent MCP activity (external file changes detected)
-    @Published private(set) var hasMCPActivity: Bool = false
-
-    /// Timestamp of last external file change
-    private var lastExternalChangeTime: Date?
-
     /// Transient terminals - not persisted, exist only as tabs until promoted
     /// Promoted to board when: edited & saved, or marked as favourite
     private var transientCards: [UUID: TerminalCard] = [:]
@@ -118,14 +112,6 @@ class BoardViewModel: ObservableObject {
         if newProcessing != processingCards {
             processingCards = newProcessing
         }
-
-        // Fade MCP activity indicator after 30 seconds
-        if hasMCPActivity,
-            let lastChange = lastExternalChangeTime,
-            Date().timeIntervalSince(lastChange) > 30
-        {
-            hasMCPActivity = false
-        }
     }
 
     // MARK: - File Monitoring
@@ -184,10 +170,6 @@ class BoardViewModel: ObservableObject {
             print("[BoardViewModel] File change detected, reloading...")
         #endif
 
-        // Mark MCP activity
-        lastExternalChangeTime = Date()
-        hasMCPActivity = true
-
         guard let data = try? Data(contentsOf: saveURL),
             let loaded = try? JSONDecoder().decode(Board.self, from: data)
         else {
@@ -220,6 +202,7 @@ class BoardViewModel: ObservableObject {
                 existingCard.themeId = loadedCard.themeId
                 existingCard.allowAutorun = loadedCard.allowAutorun
                 existingCard.deletedAt = loadedCard.deletedAt
+                existingCard.lastLLMGet = loadedCard.lastLLMGet
             } else {
                 // New card from external source
                 board.cards.append(loadedCard)
