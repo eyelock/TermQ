@@ -79,7 +79,7 @@ clean:
 	rm -rf Sources/TermQ/Resources/Help
 
 # Run tests (requires Xcode for XCTest - uses Xcode's developer directory)
-test:
+test: copy-help
 	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
 
 # Install SwiftLint if not present (using Homebrew)
