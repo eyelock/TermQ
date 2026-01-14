@@ -23,6 +23,8 @@ extension TermQMCPServer {
             return try await handleSet(params.arguments)
         case "termq_move":
             return try await handleMove(params.arguments)
+        case "termq_get":
+            return try await handleGet(params.arguments)
         default:
             throw MCPError.invalidRequest("Unknown tool: \(params.name)")
         }
@@ -335,6 +337,38 @@ extension TermQMCPServer {
             // Note: MCP server is read-only, it cannot open terminals in the GUI
             // The CLI uses URL schemes to communicate with the app
             // For MCP, we just return the terminal data
+            return CallTool.Result(content: [.text(json)])
+
+        } catch {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
+    }
+
+    func handleGet(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        guard let id = arguments?["id"]?.stringValue else {
+            throw MCPError.invalidParams("id is required (use $TERMQ_TERMINAL_ID from environment)")
+        }
+
+        // Validate UUID format
+        guard UUID(uuidString: id) != nil else {
+            return CallTool.Result(
+                content: [.text("Error: Invalid UUID format: \(id)")],
+                isError: true
+            )
+        }
+
+        do {
+            let board = try loadBoard()
+
+            guard let card = board.findTerminal(identifier: id) else {
+                return CallTool.Result(
+                    content: [.text("Error: Terminal not found with ID: \(id)")],
+                    isError: true
+                )
+            }
+
+            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+            let json = try JSONHelper.encode(output)
             return CallTool.Result(content: [.text(json)])
 
         } catch {

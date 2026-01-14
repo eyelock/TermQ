@@ -172,6 +172,23 @@ Update terminal properties. Returns CLI command for safety.
 | `llmNextAction` | string | Set one-time action |
 | `favourite` | boolean | Set favourite status |
 
+### termq_get
+
+Get terminal context by UUID. Use with the `TERMQ_TERMINAL_ID` environment variable to get context for the terminal you're currently running in.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | Terminal UUID (use `$TERMQ_TERMINAL_ID` from environment) |
+
+**Example usage from within a TermQ terminal:**
+
+```bash
+# Get current terminal's context via MCP
+termq_get id="$TERMQ_TERMINAL_ID"
+```
+
+This is useful for LLM agents that need to check their current terminal's persistent context (`llmPrompt`), pending actions (`llmNextAction`), tags, and metadata.
+
 ## Available Resources
 
 | URI | Description | MIME Type |

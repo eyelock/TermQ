@@ -107,6 +107,17 @@ class TerminalSessionManager: ObservableObject {
         env["COLORTERM"] = "truecolor"
         env["LANG"] = env["LANG"] ?? "en_US.UTF-8"
 
+        // Add TermQ-specific environment variables
+        env["TERMQ_TERMINAL_ID"] = card.id.uuidString
+
+        // Add tag environment variables (TERMQ_TERMINAL_TAG_<KEY>=value)
+        for tag in card.tags {
+            let sanitizedKey = sanitizeEnvVarName(tag.key)
+            if !sanitizedKey.isEmpty {
+                env["TERMQ_TERMINAL_TAG_\(sanitizedKey)"] = tag.value
+            }
+        }
+
         // Start shell in the correct working directory using exec
         // This avoids the visible "cd" command flash by:
         // 1. Starting /bin/sh (non-interactive)
@@ -252,6 +263,29 @@ class TerminalSessionManager: ObservableObject {
 
     private func escapeShellArg(_ arg: String) -> String {
         return "'" + arg.replacingOccurrences(of: "'", with: "'\"'\"'") + "'"
+    }
+
+    /// Sanitize a string to be a valid environment variable name suffix
+    /// - Converts to uppercase
+    /// - Replaces invalid characters with underscores
+    /// - Removes leading digits
+    private func sanitizeEnvVarName(_ name: String) -> String {
+        var result = name.uppercased()
+
+        // Replace any character that isn't A-Z, 0-9, or underscore with underscore
+        result = result.map { char -> Character in
+            if char.isLetter || char.isNumber || char == "_" {
+                return char
+            }
+            return "_"
+        }.reduce("") { String($0) + String($1) }
+
+        // Remove leading digits/underscores
+        while let first = result.first, first.isNumber || first == "_" {
+            result.removeFirst()
+        }
+
+        return result
     }
 
     // MARK: - Theme Support
