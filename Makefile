@@ -18,6 +18,10 @@ PATCH := $(shell echo $(VERSION) | cut -d. -f3)
 # Git commit SHA (7 chars)
 GIT_SHA := $(shell git rev-parse --short=7 HEAD 2>/dev/null || echo "unknown")
 
+# CI environment detection - enables GitHub-specific features when running in CI
+# GitHub Actions sets CI=true automatically
+SWIFTLINT_REPORTER := $(if $(CI),--reporter github-actions-logging,)
+
 # =============================================================================
 # Build Warning Filters
 # =============================================================================
@@ -75,7 +79,7 @@ clean:
 	rm -rf Sources/TermQ/Resources/Help
 
 # Run tests (requires Xcode for XCTest - uses Xcode's developer directory)
-test:
+test: copy-help
 	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
 
 # Install SwiftLint if not present (using Homebrew)
@@ -86,9 +90,9 @@ install-swiftlint:
 install-swift-format:
 	@which swift-format > /dev/null || brew install swift-format
 
-# Run SwiftLint
+# Run SwiftLint (auto-detects CI for GitHub annotations)
 lint: install-swiftlint
-	swiftlint lint --config .swiftlint.yml
+	swiftlint lint --config .swiftlint.yml $(SWIFTLINT_REPORTER)
 
 # Run SwiftLint with auto-fix
 lint-fix: install-swiftlint

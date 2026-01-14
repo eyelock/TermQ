@@ -76,22 +76,20 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
-      - name: Copy Help Resources
-        run: make copy-help
-
       - name: Build release
-        run: swift build -c release
-
-      - name: Build for testing
-        run: swift build --build-tests || true
+        run: make build-release
 
       - name: Create app bundle
         run: |
           mkdir -p TermQ.app/Contents/MacOS
           mkdir -p TermQ.app/Contents/Resources
           cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
-          cp .build/release/termq TermQ.app/Contents/Resources/termq
+          cp .build/release/termqcli TermQ.app/Contents/Resources/termqcli
           cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
+          # Copy localization resources bundle
+          if [ -d ".build/release/TermQ_TermQ.bundle" ]; then
+            cp -R .build/release/TermQ_TermQ.bundle TermQ.app/Contents/Resources/
+          fi
           if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
 
           # Create Info.plist with version info
@@ -148,14 +146,14 @@ jobs:
             2. Unzip and move `TermQ.app` to your Applications folder
 
             ### CLI Tool
-            The `termq` CLI is bundled inside the app. To install it:
+            The `termqcli` CLI is bundled inside the app. To install it:
             1. Open TermQ.app
             2. Go to **TermQ → Settings** (or press ⌘,)
             3. Click **Install Command Line Tool**
 
             Or manually:
             ```bash
-            sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
+            sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli
             ```
 
             ## Checksums
