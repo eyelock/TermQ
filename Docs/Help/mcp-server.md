@@ -146,7 +146,7 @@ Move a terminal to a different column (workflow stage). This operation modifies 
 
 ### termq_create
 
-Create a new terminal in TermQ. Returns CLI command for safety (creation requires app context).
+Create a new terminal in TermQ.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -159,7 +159,7 @@ Create a new terminal in TermQ. Returns CLI command for safety (creation require
 
 ### termq_set
 
-Update terminal properties. Returns CLI command for safety.
+Update terminal properties.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -303,7 +303,6 @@ Terminal responses include the `allowAutorun` field so LLMs can check if autorun
 - **Local Only**: The server is intended for local use only
 - **HTTP Auth**: HTTP mode requires a shared secret (Bearer token)
 - **No Remote**: Never expose the server to the internet
-- **Read-Safe**: Most write operations return CLI commands instead of modifying directly
 
 ## Related
 

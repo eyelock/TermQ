@@ -53,9 +53,9 @@ struct CardEditorView: View {
                 }
             case .cursor:
                 if interactive {
-                    return "cursor agent \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                    return "agent \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
                 } else {
-                    return "cursor agent -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                    return "agent -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
                 }
             case .aider:
                 // Aider is inherently non-interactive with --message

@@ -361,10 +361,10 @@ claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 claude -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 
 # Cursor - interactive agent mode
-cursor agent "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+agent "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 
 # Cursor - non-interactive (headless)
-cursor agent -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+agent -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 
 # Aider - pass task directly
 aider --message "{{LLM_NEXT_ACTION}}"
