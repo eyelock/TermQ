@@ -32,6 +32,7 @@ struct CardEditorView: View {
     @State private var allowAutorun: Bool = false
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
+    @State private var interactiveMode: Bool = true
 
     /// Supported LLM CLI tools for init command generation
     private enum LLMVendor: String, CaseIterable {
@@ -41,13 +42,23 @@ struct CardEditorView: View {
         case copilot = "GitHub Copilot"
         case custom = "Custom"
 
-        var commandTemplate: String {
+        /// Generate command template based on interactive mode
+        func commandTemplate(interactive: Bool) -> String {
             switch self {
             case .claudeCode:
-                return "claude \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                if interactive {
+                    return "claude \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                } else {
+                    return "claude -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                }
             case .cursor:
-                return "cursor agent -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                if interactive {
+                    return "cursor agent \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                } else {
+                    return "cursor agent -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                }
             case .aider:
+                // Aider is inherently non-interactive with --message
                 return "aider --message \"{{LLM_NEXT_ACTION}}\""
             case .copilot:
                 return "gh copilot suggest \"{{LLM_NEXT_ACTION}}\""
@@ -62,6 +73,16 @@ struct CardEditorView: View {
             case .claudeCode, .cursor, .custom:
                 return true
             case .aider, .copilot:
+                return false
+            }
+        }
+
+        /// Whether this tool supports interactive mode toggle
+        var supportsInteractiveToggle: Bool {
+            switch self {
+            case .claudeCode, .cursor:
+                return true
+            case .aider, .copilot, .custom:
                 return false
             }
         }
@@ -375,11 +396,18 @@ struct CardEditorView: View {
             }
             .pickerStyle(.menu)
 
+            if selectedLLMVendor.supportsInteractiveToggle {
+                Toggle("Interactive Mode", isOn: $interactiveMode)
+                    .help(
+                        "When off, adds -p flag for non-interactive/headless execution (useful for automated tasks)"
+                    )
+            }
+
             VStack(alignment: .leading, spacing: 4) {
                 Text("Preview")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                Text(selectedLLMVendor.commandTemplate)
+                Text(selectedLLMVendor.commandTemplate(interactive: interactiveMode))
                     .font(.system(.body, design: .monospaced))
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -394,10 +422,16 @@ struct CardEditorView: View {
                     .foregroundColor(.secondary)
             }
 
+            if !interactiveMode && selectedLLMVendor.supportsInteractiveToggle {
+                Text("Non-interactive mode runs the task and exits without user prompts")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
             HStack {
                 Spacer()
                 Button("Apply to Init Command") {
-                    initCommand = selectedLLMVendor.commandTemplate
+                    initCommand = selectedLLMVendor.commandTemplate(interactive: interactiveMode)
                     selectedTab = .terminal
                 }
                 .help("Sets this template as the init command and switches to Terminal tab")

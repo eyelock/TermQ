@@ -354,10 +354,16 @@ Use these tokens in a terminal's **Init Command** field:
 ### Example Init Commands
 
 ```bash
-# Claude Code - start interactive session with context
+# Claude Code - interactive session with context
 claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 
-# Cursor - headless agent mode
+# Claude Code - non-interactive (headless)
+claude -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+
+# Cursor - interactive agent mode
+cursor agent "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+
+# Cursor - non-interactive (headless)
 cursor agent -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
 
 # Aider - pass task directly
@@ -371,6 +377,15 @@ my-llm-wrapper.sh --context "{{LLM_PROMPT}}" --task "{{LLM_NEXT_ACTION}}"
 ```
 
 > **Tip:** Use the **Generate Init Command** section in the terminal editor's Agents tab to quickly create these templates for popular LLM tools.
+
+### Interactive vs Non-Interactive Mode
+
+Some LLM tools support a **non-interactive mode** (using the `-p` flag) that's useful for:
+- Automated/headless execution without user prompts
+- Long-running tasks that produce a single output
+- CI/CD pipelines or scheduled tasks
+
+When generating init commands in the UI, toggle **Interactive Mode** off to add the `-p` flag for supported tools (Claude Code, Cursor).
 
 > **Note:** The Init Command is configured in the TermQ app UI (terminal editor → Agents tab), not via CLI. The CLI is used to set the `llmPrompt` and `llmNextAction` values that get substituted into the Init Command.
 
