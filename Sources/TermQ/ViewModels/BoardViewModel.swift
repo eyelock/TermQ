@@ -1,8 +1,10 @@
+import Combine
 import Foundation
 import SwiftUI
 import TermQCore
 
 @MainActor
+// swiftlint:disable:next type_body_length
 class BoardViewModel: ObservableObject {
     /// Shared instance for app-wide access (e.g., from Settings window)
     static let shared = BoardViewModel()
@@ -40,6 +42,10 @@ class BoardViewModel: ObservableObject {
     /// These are nonisolated(unsafe) because they need to be accessed from deinit
     nonisolated(unsafe) private var fileDescriptor: Int32 = -1
     nonisolated(unsafe) private var fileMonitorSource: DispatchSourceFileSystemObject?
+
+    /// Subject for file change notifications (used to avoid capturing self in dispatch callbacks)
+    private let fileChangeSubject = PassthroughSubject<Void, Never>()
+    private var fileChangeCancellable: AnyCancellable?
 
     init() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -120,6 +126,17 @@ class BoardViewModel: ObservableObject {
     private func startFileMonitoring() {
         let path = saveURL.path
 
+        // Subscribe to file change events on main thread
+        // This avoids Swift concurrency issues by not capturing self in the dispatch callback
+        fileChangeCancellable = fileChangeSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.handleFileChange()
+                // Re-establish monitoring after atomic writes replace the file
+                // (atomic writes create a new inode, making our fd stale)
+                self?.restartFileMonitoring()
+            }
+
         // Open file descriptor for monitoring
         let fd = open(path, O_EVTONLY)
         guard fd >= 0 else {
@@ -136,10 +153,10 @@ class BoardViewModel: ObservableObject {
             queue: DispatchQueue.global(qos: .utility)
         )
 
-        source.setEventHandler { [weak self] in
-            Task { @MainActor in
-                self?.handleFileChange()
-            }
+        // Capture only the subject (which is Sendable), not self
+        let subject = fileChangeSubject
+        source.setEventHandler {
+            subject.send()
         }
 
         source.setCancelHandler {
@@ -162,6 +179,45 @@ class BoardViewModel: ObservableObject {
         fileMonitorSource = nil
         // File descriptor is closed by the cancel handler
         fileDescriptor = -1
+    }
+
+    /// Re-establish file monitoring after an atomic write replaces the file
+    private func restartFileMonitoring() {
+        stopFileMonitoring()
+        // Re-setup file monitoring (but keep the same Combine subscription)
+        let path = saveURL.path
+
+        let fd = open(path, O_EVTONLY)
+        guard fd >= 0 else {
+            #if DEBUG
+                print("[BoardViewModel] Failed to reopen file for monitoring: \(path)")
+            #endif
+            return
+        }
+
+        let source = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: fd,
+            eventMask: [.write, .rename, .delete],
+            queue: DispatchQueue.global(qos: .utility)
+        )
+
+        let subject = fileChangeSubject
+        source.setEventHandler {
+            subject.send()
+        }
+
+        source.setCancelHandler {
+            close(fd)
+        }
+
+        source.resume()
+
+        self.fileDescriptor = fd
+        self.fileMonitorSource = source
+
+        #if DEBUG
+            print("[BoardViewModel] Restarted file monitoring for: \(path)")
+        #endif
     }
 
     /// Handle file change notification - reload board from disk
