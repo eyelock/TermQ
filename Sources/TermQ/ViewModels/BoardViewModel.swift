@@ -3,6 +3,75 @@ import Foundation
 import SwiftUI
 import TermQCore
 
+// MARK: - File Monitor Helper
+
+/// Non-actor-isolated helper class for file system monitoring
+/// This class exists to avoid Swift 6 strict concurrency issues with dispatch sources
+/// When a @MainActor class creates a dispatch source handler closure, Swift 6 rejects it
+/// because the closure inherits actor isolation but executes on a different queue
+final class FileMonitor: @unchecked Sendable {
+    private var fileDescriptor: Int32 = -1
+    private var source: DispatchSourceFileSystemObject?
+    private let onChange: @Sendable () -> Void
+
+    init(path: String, onChange: @escaping @Sendable () -> Void) {
+        self.onChange = onChange
+        startMonitoring(path: path)
+    }
+
+    deinit {
+        stopMonitoring()
+    }
+
+    func restartMonitoring(path: String) {
+        stopMonitoring()
+        startMonitoring(path: path)
+    }
+
+    private func startMonitoring(path: String) {
+        let fd = open(path, O_EVTONLY)
+        guard fd >= 0 else {
+            #if DEBUG
+                print("[FileMonitor] Failed to open file for monitoring: \(path)")
+            #endif
+            return
+        }
+
+        let source = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: fd,
+            eventMask: [.write, .rename, .delete],
+            queue: DispatchQueue.global(qos: .utility)
+        )
+
+        // Capture onChange - it's @Sendable so safe to call from any queue
+        let callback = self.onChange
+        source.setEventHandler {
+            callback()
+        }
+
+        source.setCancelHandler {
+            close(fd)
+        }
+
+        source.resume()
+
+        self.fileDescriptor = fd
+        self.source = source
+
+        #if DEBUG
+            print("[FileMonitor] Started monitoring: \(path)")
+        #endif
+    }
+
+    private func stopMonitoring() {
+        source?.cancel()
+        source = nil
+        fileDescriptor = -1
+    }
+}
+
+// MARK: - Board View Model
+
 @MainActor
 // swiftlint:disable:next type_body_length
 class BoardViewModel: ObservableObject {
@@ -39,13 +108,8 @@ class BoardViewModel: ObservableObject {
     private let saveURL: URL
 
     /// File system monitoring for external changes (e.g., from MCP server)
-    /// These are nonisolated(unsafe) because they need to be accessed from deinit
-    nonisolated(unsafe) private var fileDescriptor: Int32 = -1
-    nonisolated(unsafe) private var fileMonitorSource: DispatchSourceFileSystemObject?
-
-    /// Subject for file change notifications (used to avoid capturing self in dispatch callbacks)
-    private let fileChangeSubject = PassthroughSubject<Void, Never>()
-    private var fileChangeCancellable: AnyCancellable?
+    /// Uses a separate non-actor-isolated helper to avoid Swift 6 concurrency issues
+    nonisolated(unsafe) private var fileMonitor: FileMonitor?
 
     init() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -99,8 +163,8 @@ class BoardViewModel: ObservableObject {
     }
 
     deinit {
-        // Cancel file monitoring - must access nonisolated
-        fileMonitorSource?.cancel()
+        // FileMonitor cleans up in its own deinit
+        fileMonitor = nil
     }
 
     /// Start timer to update processing status
@@ -126,98 +190,20 @@ class BoardViewModel: ObservableObject {
     private func startFileMonitoring() {
         let path = saveURL.path
 
-        // Subscribe to file change events on main thread
-        // This avoids Swift concurrency issues by not capturing self in the dispatch callback
-        fileChangeCancellable = fileChangeSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.handleFileChange()
+        // Use the non-actor-isolated FileMonitor helper class
+        // This avoids Swift 6 strict concurrency issues where closures created
+        // in @MainActor context cannot be used as dispatch source handlers
+        fileMonitor = FileMonitor(path: path) { [weak self] in
+            // This callback runs on a background queue
+            // Dispatch to main actor to handle the change
+            Task { @MainActor in
+                guard let self else { return }
+                self.handleFileChange()
                 // Re-establish monitoring after atomic writes replace the file
-                // (atomic writes create a new inode, making our fd stale)
-                self?.restartFileMonitoring()
+                // (atomic writes create a new inode, making the fd stale)
+                self.fileMonitor?.restartMonitoring(path: self.saveURL.path)
             }
-
-        // Open file descriptor for monitoring
-        let fd = open(path, O_EVTONLY)
-        guard fd >= 0 else {
-            #if DEBUG
-                print("[BoardViewModel] Failed to open file for monitoring: \(path)")
-            #endif
-            return
         }
-
-        // Create dispatch source to monitor file changes
-        let source = DispatchSource.makeFileSystemObjectSource(
-            fileDescriptor: fd,
-            eventMask: [.write, .rename, .delete],
-            queue: DispatchQueue.global(qos: .utility)
-        )
-
-        // Capture only the subject (which is Sendable), not self
-        let subject = fileChangeSubject
-        source.setEventHandler {
-            subject.send()
-        }
-
-        source.setCancelHandler {
-            close(fd)
-        }
-
-        source.resume()
-
-        self.fileDescriptor = fd
-        self.fileMonitorSource = source
-
-        #if DEBUG
-            print("[BoardViewModel] Started file monitoring for: \(path)")
-        #endif
-    }
-
-    /// Stop file monitoring and clean up resources
-    private func stopFileMonitoring() {
-        fileMonitorSource?.cancel()
-        fileMonitorSource = nil
-        // File descriptor is closed by the cancel handler
-        fileDescriptor = -1
-    }
-
-    /// Re-establish file monitoring after an atomic write replaces the file
-    private func restartFileMonitoring() {
-        stopFileMonitoring()
-        // Re-setup file monitoring (but keep the same Combine subscription)
-        let path = saveURL.path
-
-        let fd = open(path, O_EVTONLY)
-        guard fd >= 0 else {
-            #if DEBUG
-                print("[BoardViewModel] Failed to reopen file for monitoring: \(path)")
-            #endif
-            return
-        }
-
-        let source = DispatchSource.makeFileSystemObjectSource(
-            fileDescriptor: fd,
-            eventMask: [.write, .rename, .delete],
-            queue: DispatchQueue.global(qos: .utility)
-        )
-
-        let subject = fileChangeSubject
-        source.setEventHandler {
-            subject.send()
-        }
-
-        source.setCancelHandler {
-            close(fd)
-        }
-
-        source.resume()
-
-        self.fileDescriptor = fd
-        self.fileMonitorSource = source
-
-        #if DEBUG
-            print("[BoardViewModel] Restarted file monitoring for: \(path)")
-        #endif
     }
 
     /// Handle file change notification - reload board from disk

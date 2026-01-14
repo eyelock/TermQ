@@ -62,9 +62,11 @@ copy-help:
 build: copy-help
 	set +o pipefail; swift build -Xswiftc -DDEBUG 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
-# Build release version
+# Build release version (builds each product explicitly to avoid incremental build issues)
 build-release: copy-help
-	set +o pipefail; swift build -c release 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -c release --product termq 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -c release --product termqmcp 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -c release --product TermQ 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 # Clean build artifacts
 clean:
@@ -148,6 +150,13 @@ run: release-app
 release-app: build-release
 	@mkdir -p TermQ.app/Contents/MacOS
 	@mkdir -p TermQ.app/Contents/Resources
+	@# Verify GUI binary is correct (should be >4MB, CLI is only ~2MB)
+	@SIZE=$$(stat -f%z .build/release/TermQ); \
+	if [ $$SIZE -lt 4000000 ]; then \
+		echo "ERROR: TermQ binary is too small ($$SIZE bytes) - likely CLI instead of GUI"; \
+		echo "Try: rm -rf .build/release && make build-release"; \
+		exit 1; \
+	fi
 	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
 	cp .build/release/termq TermQ.app/Contents/Resources/termq
 	cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
