@@ -42,6 +42,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// When the card was soft-deleted (nil = active, set = in bin)
     @Published public var deletedAt: Date?
 
+    /// When an LLM last called termq_get for this terminal (nil = never, set = LLM is aware of TermQ)
+    @Published public var lastLLMGet: Date?
+
     // Runtime state (not persisted)
     public var isRunning: Bool = false
     public var isTransient: Bool = false
@@ -49,7 +52,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
-        case allowAutorun, deletedAt
+        case allowAutorun, deletedAt, lastLLMGet
     }
 
     public init(
@@ -71,7 +74,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         safePasteEnabled: Bool = true,
         themeId: String = "",
         allowAutorun: Bool = false,
-        deletedAt: Date? = nil
+        deletedAt: Date? = nil,
+        lastLLMGet: Date? = nil
     ) {
         self.id = id
         self.title = title
@@ -92,6 +96,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.themeId = themeId
         self.allowAutorun = allowAutorun
         self.deletedAt = deletedAt
+        self.lastLLMGet = lastLLMGet
     }
 
     public required init(from decoder: Decoder) throws {
@@ -115,6 +120,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         themeId = try container.decodeIfPresent(String.self, forKey: .themeId) ?? ""
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
+        lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -138,11 +144,18 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(themeId, forKey: .themeId)
         try container.encode(allowAutorun, forKey: .allowAutorun)
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
+        try container.encodeIfPresent(lastLLMGet, forKey: .lastLLMGet)
     }
 
     /// Whether this card is in the bin (soft-deleted)
     public var isDeleted: Bool {
         deletedAt != nil
+    }
+
+    /// Whether the LLM has recently identified itself via termq_get (within last 10 minutes)
+    public var isWired: Bool {
+        guard let lastGet = lastLLMGet else { return false }
+        return Date().timeIntervalSince(lastGet) < 600  // 10 minutes
     }
 
     /// Parsed badges from comma-separated badge string (trimmed)

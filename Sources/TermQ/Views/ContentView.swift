@@ -138,6 +138,9 @@ struct ContentView: View {
             ToolbarItem(placement: .principal) {
                 if let selectedCard = viewModel.selectedCard {
                     HStack(spacing: 8) {
+                        // MCP status indicator
+                        mcpStatusIndicator
+
                         Text(selectedCard.title)
                             .font(.headline)
 
@@ -152,6 +155,13 @@ struct ContentView: View {
                         }
                     }
                     .padding(.horizontal, 8)
+                } else {
+                    // Board view - show MCP status in title area
+                    HStack(spacing: 8) {
+                        mcpStatusIndicator
+                        Text("TermQ")
+                            .font(.headline)
+                    }
                 }
             }
 
@@ -310,6 +320,34 @@ struct ContentView: View {
         }
         .navigationTitle(viewModel.selectedCard == nil ? "TermQ" : "")
         .focusedSceneValue(\.terminalActions, terminalActions)
+    }
+
+    /// MCP server status indicator - shows if current terminal's LLM is aware of TermQ
+    @ViewBuilder
+    private var mcpStatusIndicator: some View {
+        let isInstalled = MCPServerInstaller.currentInstallLocation != nil
+        let isWired = viewModel.selectedCard?.isWired ?? false
+
+        Image(systemName: "cpu")
+            .foregroundColor(
+                isInstalled
+                    ? (isWired ? .green : .secondary)
+                    : .secondary.opacity(0.3)
+            )
+            .help(mcpStatusTooltip)
+    }
+
+    private var mcpStatusTooltip: String {
+        let isInstalled = MCPServerInstaller.currentInstallLocation != nil
+        let isWired = viewModel.selectedCard?.isWired ?? false
+
+        if !isInstalled {
+            return "MCP Server not installed. Install via Settings > CLI to enable agent integration."
+        } else if isWired {
+            return "LLM is aware of this terminal (called termq_get)"
+        } else {
+            return "MCP Server installed - LLM has not identified itself yet"
+        }
     }
 
     private var terminalActions: TerminalActions {

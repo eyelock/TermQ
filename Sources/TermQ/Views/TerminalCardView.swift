@@ -56,6 +56,21 @@ struct TerminalCardView: View {
                         .foregroundColor(columnColor)
                 }
 
+                // Wired indicator - shows when LLM has called termq_get for this terminal
+                if card.isWired {
+                    Text("Wired")
+                        .font(.caption2)
+                        .fontWeight(.medium)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(Color.green.opacity(0.3))
+                        )
+                        .foregroundColor(.green)
+                        .help("LLM is aware of this terminal")
+                }
+
                 Spacer()
 
                 // Status indicators
