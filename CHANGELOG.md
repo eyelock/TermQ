@@ -5,6 +5,32 @@ All notable changes to TermQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-01-14
+
+### Added
+
+- **MCP Server Integration** (`termqmcp`): LLM agents can now interact with TermQ via Model Context Protocol
+  - `termq_list`, `termq_get`, `termq_find`, `termq_open` tools for reading terminal state
+  - `termq_create`, `termq_set`, `termq_move`, `termq_pending`, `termq_context` for automation
+- **File monitoring**: Board changes from MCP server are automatically detected and refreshed
+- **MCP status indicator**: Shows whether the MCP server is installed and if LLM has accessed current terminal
+- **Generate Init Command**: New section in Settings > Agents to generate terminal init commands
+- **Terminal environment variables**: `TERMQ_ID`, `TERMQ_NAME`, etc. available in terminal sessions
+- **LLM-friendly CLI commands**: `termq list`, `termq get`, `termq set`, `termq pending` for automation
+- Column descriptions: Add optional descriptions to columns
+
+### Changed
+
+- Settings reorganized into General/Tools tabs
+- Terminal Editor reorganized into General/Advanced tabs
+- Claude AI assistant configuration added
+
+### Fixed
+
+- Focus stealing prevented during terminal text selection
+- Column drag-to-reorder functionality restored
+- CLI deadlock when launching TermQ app resolved
+
 ## [0.4.0] - 2026-01-11
 
 ### Added
@@ -84,6 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Visible delete button with confirmation dialog
 - Basic terminal card management
 
+[0.5.0]: https://github.com/eyelock/TermQ/releases/tag/v0.5.0
 [0.4.0]: https://github.com/eyelock/TermQ/releases/tag/v0.4.0
 [0.3.1]: https://github.com/eyelock/TermQ/releases/tag/v0.3.1
 [0.3.0]: https://github.com/eyelock/TermQ/releases/tag/v0.3.0
