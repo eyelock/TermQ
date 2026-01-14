@@ -23,31 +23,52 @@ When I say "let me give you feedback" or similar phrases indicating I want to pr
 - ALWAYS put your plans in .claude/plans 
 - ALWAYS put your session handovers in .claude/sessions 
 
+## RESPONSIBLE CI/CD USAGE
+
+**Every CI run consumes energy. Be responsible.**
+
+Before pushing ANY code:
+1. Run `make check` locally - this runs the same checks as CI
+2. Fix ALL errors before pushing
+3. Never push "to see if CI catches something" - run checks locally first
+
+This project uses path filtering - CI only runs when code-relevant files change. Documentation-only changes won't trigger CI.
+
 ## PRE-PUSH / PRE-PR REQUIREMENTS (MANDATORY)
 
 **NEVER push code or create a PR without running these checks locally first:**
 
-1. `swift build` - Must complete with zero errors
-2. `swift-format format -r -i Sources/` - Format all code
-3. `swiftlint lint` - Must have zero errors (warnings acceptable but minimize)
-4. `swift test` - All tests must pass
-
-**IMPORTANT: Use Xcode toolchain, not CommandLineTools:**
-If tests fail with "no such module 'XCTest'" or SwiftLint crashes with SourceKit errors, prefix commands with:
 ```bash
-DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
-DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swiftlint lint
+make build         # Must complete with zero errors
+make format        # Format all code
+make lint          # Must have zero errors (warnings acceptable but minimize)
+make test          # All tests must pass
 ```
-This ensures proper XCTest availability and SourceKit functionality.
 
-This prevents wasting CI resources and reduces environmental impact. Run these checks BEFORE:
-- Any `git push`
-- Creating or updating a PR
-- Requesting code review
+Or run all checks at once:
+```bash
+make check         # Runs build, lint, format-check, and test
+```
 
-If SwiftLint crashes locally (SourceKit issues), at minimum verify the build succeeds and check line counts on modified files against SwiftLint rules (e.g., type_body_length max 500 lines).
+**Note:** The Makefile automatically handles:
+- DEVELOPER_DIR for Xcode toolchain (fixes "no such module 'XCTest'" errors)
+- CI detection for GitHub-specific SwiftLint output
+- Tool installation (SwiftLint, swift-format) if missing
 
-**If local checks pass but CI fails**: This is a BUG. Investigate the discrepancy - local and CI environments should produce identical results. File an issue to track and fix the root cause.
+**If local checks pass but CI fails**: This is a BUG. Local and CI environments use identical make targets. Investigate the discrepancy and file an issue.
+
+## RELEASE PROCESS
+
+Releases are automated via GitHub Actions when a version tag is pushed.
+
+1. Ensure all changes are committed and pushed to main
+2. Run `make release` - interactive prompt for major/minor/patch
+3. Or use specific targets: `make release-patch`, `make release-minor`, `make release-major`
+4. The release workflow will:
+   - Verify CI passed for the commit
+   - Build the release app bundle
+   - Create DMG and zip artifacts
+   - Publish to GitHub Releases with checksums
 
 ## LOCALIZATION REQUIREMENTS (MANDATORY)
 

@@ -112,15 +112,13 @@ open TermQ.app
 
 ## Testing
 
-Tests require full Xcode (not just Command Line Tools):
-
 ```bash
 make test
-# Or
-swift test
 ```
 
-> **Note:** If you only have Command Line Tools installed, tests will fail locally but will run in CI (GitHub Actions has full Xcode).
+The Makefile automatically sets `DEVELOPER_DIR` to use the full Xcode toolchain, avoiding "no such module 'XCTest'" errors that occur with just Command Line Tools.
+
+> **Note:** Tests require full Xcode.app installed (not just Command Line Tools). If unavailable locally, tests will still run in CI.
 
 ## Linting & Formatting
 
@@ -235,15 +233,32 @@ git push origin v1.0.0
 
 ## CI/CD
 
+### Local/CI Parity
+
+**The same Makefile targets run locally and in CI.** This ensures:
+- What passes locally will pass in CI
+- No surprises from environment differences
+- Reduced CI debugging cycles
+
+Always run `make check` before pushing.
+
+### Path Filtering
+
+CI only runs when code-relevant files change:
+- `Sources/**`, `Tests/**`, `Package.swift`, `Makefile`
+- `.swiftlint.yml`, `.swift-format`, `.github/workflows/**`
+
+Documentation-only changes (README, CONTRIBUTING, etc.) won't trigger CI, reducing energy usage.
+
 ### Pull Requests & Pushes
 
-The CI workflow (`.github/workflows/ci.yml`) runs on every push and PR:
+The CI workflow (`.github/workflows/ci.yml`) runs:
 
-- Build verification
-- Unit tests
-- SwiftLint
-- Format check
-- Uploads build artifacts
+- `make build` - Build verification
+- `make test` - Unit tests
+- `make lint` - SwiftLint (with GitHub annotations in CI)
+- `make format-check` - Format check
+- `make build-release` - Release build verification
 
 ### Releases
 

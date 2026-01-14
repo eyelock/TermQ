@@ -3,8 +3,26 @@ name: CI
 on:
   push:
     branches: [main, master]
+    paths:
+      - 'Sources/**'
+      - 'Tests/**'
+      - 'Package.swift'
+      - 'Package.resolved'
+      - 'Makefile'
+      - '.swiftlint.yml'
+      - '.swift-format'
+      - '.github/workflows/**'
   pull_request:
     branches: [main, master]
+    paths:
+      - 'Sources/**'
+      - 'Tests/**'
+      - 'Package.swift'
+      - 'Package.resolved'
+      - 'Makefile'
+      - '.swiftlint.yml'
+      - '.swift-format'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
@@ -22,11 +40,8 @@ jobs:
       - name: Show Swift version
         run: swift --version
 
-      - name: Copy Help Resources
-        run: make copy-help
-
       - name: Build
-        run: swift build
+        run: make build
 
   test:
     name: Test
@@ -39,11 +54,8 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
 
-      - name: Copy Help Resources
-        run: make copy-help
-
       - name: Run tests
-        run: swift test
+        run: make test
 
   lint:
     name: Lint
@@ -53,11 +65,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install SwiftLint
-        run: brew install swiftlint
-
       - name: Run SwiftLint
-        run: swiftlint lint --config .swiftlint.yml --reporter github-actions-logging
+        run: make lint
 
   format:
     name: Format Check
@@ -67,11 +76,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install swift-format
-        run: brew install swift-format
-
       - name: Check formatting
-        run: swift-format lint --configuration .swift-format --recursive Sources/ Tests/
+        run: make format-check
 
   build-release:
     name: Build Release
@@ -85,10 +91,7 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
 
-      - name: Copy Help Resources
-        run: make copy-help
-
       - name: Build release
-        run: swift build -c release
+        run: make build-release
       # Note: Full packaging (app bundle, signing, DMG) happens in release.yml
       # This job just validates the release build compiles successfully
