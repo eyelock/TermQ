@@ -73,12 +73,6 @@ struct SettingsView: View {
     @ViewBuilder
     private var generalContent: some View {
         Section {
-            languagePickerContent
-        } header: {
-            Text("Language")
-        }
-
-        Section {
             Picker("Theme", selection: $sessionManager.themeId) {
                 ForEach(TerminalTheme.allThemes) { theme in
                     HStack {
@@ -133,6 +127,12 @@ struct SettingsView: View {
         } header: {
             Text("About")
         }
+
+        Section {
+            languagePickerContent
+        } header: {
+            Text("Language")
+        }
     }
 
     // MARK: - Language Picker
@@ -140,6 +140,16 @@ struct SettingsView: View {
     @ViewBuilder
     private var languagePickerContent: some View {
         VStack(alignment: .leading, spacing: 12) {
+            // Currently selected display
+            LabeledContent("Current") {
+                if selectedLanguage.code.isEmpty {
+                    Text("System Default")
+                        .foregroundColor(.secondary)
+                } else {
+                    Text("\(selectedLanguage.nativeName) (\(selectedLanguage.code))")
+                }
+            }
+
             // Search field
             HStack {
                 Image(systemName: "magnifyingglass")
