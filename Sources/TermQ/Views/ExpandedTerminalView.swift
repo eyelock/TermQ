@@ -26,6 +26,13 @@ struct ExpandedTerminalView: View {
     @State private var searchResults: [String] = []
     @State private var currentResultIndex = 0
     @FocusState private var isSearchFieldFocused: Bool
+    @State private var showPaneControls = false
+    @ObservedObject private var sessionManager = TerminalSessionManager.shared
+
+    /// Whether the current terminal is using tmux backend
+    private var isTmuxSession: Bool {
+        sessionManager.getBackend(for: card.id) == .tmux
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -57,6 +64,11 @@ struct ExpandedTerminalView: View {
             // Search bar
             if isSearching {
                 searchBar
+            }
+
+            // Pane controls bar (only for tmux sessions)
+            if isTmuxSession && showPaneControls {
+                paneControlsBar
             }
 
             // Terminal view
@@ -180,6 +192,132 @@ struct ExpandedTerminalView: View {
         .background(Color(nsColor: .windowBackgroundColor))
     }
 
+    // MARK: - Pane Controls Bar
+
+    private var paneControlsBar: some View {
+        HStack(spacing: 12) {
+            // Split controls
+            HStack(spacing: 4) {
+                Text("Split:")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Button {
+                    sessionManager.splitPaneHorizontally(cardId: card.id)
+                } label: {
+                    Image(systemName: "rectangle.split.1x2")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .help("Split horizontally (top/bottom)")
+
+                Button {
+                    sessionManager.splitPaneVertically(cardId: card.id)
+                } label: {
+                    Image(systemName: "rectangle.split.2x1")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .help("Split vertically (left/right)")
+            }
+
+            Divider()
+                .frame(height: 16)
+
+            // Navigate controls
+            HStack(spacing: 4) {
+                Text("Navigate:")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Button {
+                    sessionManager.selectPane(direction: .up, cardId: card.id)
+                } label: {
+                    Image(systemName: "arrow.up")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .help("Move to pane above")
+
+                Button {
+                    sessionManager.selectPane(direction: .down, cardId: card.id)
+                } label: {
+                    Image(systemName: "arrow.down")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .help("Move to pane below")
+
+                Button {
+                    sessionManager.selectPane(direction: .left, cardId: card.id)
+                } label: {
+                    Image(systemName: "arrow.left")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .help("Move to pane on left")
+
+                Button {
+                    sessionManager.selectPane(direction: .right, cardId: card.id)
+                } label: {
+                    Image(systemName: "arrow.right")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .help("Move to pane on right")
+            }
+
+            Divider()
+                .frame(height: 16)
+
+            // Zoom and close
+            HStack(spacing: 4) {
+                Button {
+                    sessionManager.togglePaneZoom(cardId: card.id)
+                } label: {
+                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .help("Zoom pane (toggle fullscreen)")
+
+                Button {
+                    sessionManager.closeCurrentPane(cardId: card.id)
+                } label: {
+                    Image(systemName: "xmark.rectangle")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(.red.opacity(0.8))
+                .help("Close current pane")
+            }
+
+            Spacer()
+
+            // Close button for the bar
+            Button {
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    showPaneControls = false
+                }
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color(nsColor: .windowBackgroundColor).opacity(0.9))
+    }
+
+    /// Toggle pane controls visibility
+    func togglePaneControls() {
+        withAnimation(.easeInOut(duration: 0.15)) {
+            showPaneControls.toggle()
+        }
+    }
+
     private func performSearch() {
         guard !searchText.isEmpty else {
             searchResults = []
@@ -218,70 +356,94 @@ struct ExpandedTerminalView: View {
     }
 
     private var tabBar: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 4) {
-                ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
-                    let info = columnInfo(for: tabCard)
-                    TabItemView(
-                        tabCard: tabCard,
-                        columnColor: info.color,
-                        columnName: info.name,
-                        isSelected: tabCard.id == card.id,
-                        needsAttention: needsAttention.contains(tabCard.id),
-                        isProcessing: processingCards.contains(tabCard.id),
-                        hasActiveSession: activeSessionCards.contains(tabCard.id),
-                        onSelect: {
-                            if tabCard.id != card.id {
-                                onSelectTab(tabCard)
+        HStack(spacing: 0) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 4) {
+                    ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
+                        let info = columnInfo(for: tabCard)
+                        TabItemView(
+                            tabCard: tabCard,
+                            columnColor: info.color,
+                            columnName: info.name,
+                            isSelected: tabCard.id == card.id,
+                            needsAttention: needsAttention.contains(tabCard.id),
+                            isProcessing: processingCards.contains(tabCard.id),
+                            hasActiveSession: activeSessionCards.contains(tabCard.id),
+                            onSelect: {
+                                if tabCard.id != card.id {
+                                    onSelectTab(tabCard)
+                                }
+                            },
+                            onEdit: {
+                                onEditTab(tabCard)
+                            },
+                            onClose: {
+                                onCloseTab(tabCard)
+                            },
+                            onDelete: {
+                                onDeleteTab(tabCard)
+                            },
+                            onDuplicate: {
+                                onDuplicateTab(tabCard)
+                            },
+                            onCloseSession: {
+                                onCloseSession(tabCard)
+                            },
+                            onRestartSession: {
+                                onRestartSession(tabCard)
                             }
-                        },
-                        onEdit: {
-                            onEditTab(tabCard)
-                        },
-                        onClose: {
-                            onCloseTab(tabCard)
-                        },
-                        onDelete: {
-                            onDeleteTab(tabCard)
-                        },
-                        onDuplicate: {
-                            onDuplicateTab(tabCard)
-                        },
-                        onCloseSession: {
-                            onCloseSession(tabCard)
-                        },
-                        onRestartSession: {
-                            onRestartSession(tabCard)
-                        }
-                    )
-                    .draggable(tabCard.id.uuidString)
-                    .dropDestination(for: String.self) { items, _ in
-                        guard let draggedIdString = items.first,
-                            let draggedId = UUID(uuidString: draggedIdString),
-                            draggedId != tabCard.id
-                        else { return false }
-
-                        onMoveTab(draggedId, index)
-                        return true
-                    }
-                }
-
-                // New tab button
-                Button(action: onNewTab) {
-                    Image(systemName: "plus")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(6)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color.secondary.opacity(0.1))
                         )
+                        .draggable(tabCard.id.uuidString)
+                        .dropDestination(for: String.self) { items, _ in
+                            guard let draggedIdString = items.first,
+                                let draggedId = UUID(uuidString: draggedIdString),
+                                draggedId != tabCard.id
+                            else { return false }
+
+                            onMoveTab(draggedId, index)
+                            return true
+                        }
+                    }
+
+                    // New tab button
+                    Button(action: onNewTab) {
+                        Image(systemName: "plus")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .fill(Color.secondary.opacity(0.1))
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .help(Strings.Terminal.newTabHelp)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 6)
+            }
+
+            // tmux pane controls toggle (only for tmux sessions)
+            if isTmuxSession {
+                Divider()
+                    .frame(height: 24)
+                    .padding(.horizontal, 4)
+
+                Button {
+                    togglePaneControls()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "rectangle.split.3x3")
+                            .font(.caption)
+                        Text("Panes")
+                            .font(.caption)
+                    }
+                    .foregroundColor(showPaneControls ? .accentColor : .secondary)
                 }
                 .buttonStyle(.plain)
-                .help(Strings.Terminal.newTabHelp)
+                .padding(.trailing, 12)
+                .help("Toggle tmux pane controls")
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 6)
         }
         .background(Color(nsColor: .windowBackgroundColor).opacity(0.95))
     }

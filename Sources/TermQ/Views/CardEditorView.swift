@@ -33,6 +33,8 @@ struct CardEditorView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
     @State private var interactiveMode: Bool = true
+    @State private var backend: TerminalBackend = .tmux
+    @ObservedObject private var tmuxManager = TmuxManager.shared
 
     private enum EditorTab: CaseIterable {
         case general
@@ -236,6 +238,46 @@ struct CardEditorView: View {
                 .help(Strings.Editor.fieldAutorunEnableHint)
             }
         }
+
+        Section("Session Backend") {
+            if tmuxManager.isAvailable {
+                Picker("Backend", selection: $backend) {
+                    ForEach(TerminalBackend.allCases, id: \.self) { backend in
+                        Text(backend.displayName).tag(backend)
+                    }
+                }
+                .pickerStyle(.radioGroup)
+
+                Text(backend.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                if backend == .tmux {
+                    HStack {
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.blue)
+                        Text("tmux sessions persist even when TermQ quits. Reattach on next launch.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            } else {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundColor(.orange)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("tmux not installed")
+                            .foregroundColor(.secondary)
+                        Text("Install with: brew install tmux")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                Text("Using direct shell mode (sessions end when TermQ closes)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
     }
 
     // MARK: - Metadata Tab Content
@@ -409,6 +451,7 @@ struct CardEditorView: View {
         safePasteEnabled = card.safePasteEnabled
         themeId = card.themeId
         allowAutorun = card.allowAutorun
+        backend = card.backend
     }
 
     private func saveChanges() {
@@ -428,6 +471,7 @@ struct CardEditorView: View {
         card.safePasteEnabled = safePasteEnabled
         card.themeId = themeId
         card.allowAutorun = allowAutorun
+        card.backend = backend
     }
 
     private func addTag() {

@@ -24,6 +24,7 @@ struct SettingsView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
+    @ObservedObject private var tmuxManager = TmuxManager.shared
     @State private var selectedTab: SettingsTab = .general
 
     // Language preferences
@@ -157,6 +158,115 @@ struct SettingsView: View {
 
     @ViewBuilder
     private var toolsContent: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "rectangle.split.3x3")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("tmux")
+                            .font(.headline)
+                        Text("Terminal multiplexer for persistent sessions and pane splitting")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if tmuxManager.isAvailable {
+                        HStack(spacing: 4) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                            Text("Installed")
+                                .foregroundColor(.green)
+                        }
+                        .font(.caption)
+                    } else {
+                        HStack(spacing: 4) {
+                            Image(systemName: "xmark.circle")
+                                .foregroundColor(.secondary)
+                            Text("Not Installed")
+                                .foregroundColor(.secondary)
+                        }
+                        .font(.caption)
+                    }
+                }
+
+                Divider()
+
+                if tmuxManager.isAvailable {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Version:")
+                                .foregroundColor(.secondary)
+                            Text(tmuxManager.version ?? "Unknown")
+                                .font(.system(.body, design: .monospaced))
+                        }
+                        .font(.caption)
+
+                        if let path = tmuxManager.tmuxPath {
+                            HStack {
+                                Text("Path:")
+                                    .foregroundColor(.secondary)
+                                Text(path)
+                                    .font(.system(.body, design: .monospaced))
+                                    .textSelection(.enabled)
+                            }
+                            .font(.caption)
+                        }
+
+                        HStack {
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.blue)
+                            Text("tmux sessions persist when TermQ closes. Enable per-terminal in Terminal settings.")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                } else {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("tmux enables persistent terminal sessions that survive app restarts, and split panes within a single terminal.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        Text("Install using Homebrew:")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        HStack {
+                            Text("brew install tmux")
+                                .font(.system(.body, design: .monospaced))
+                                .padding(6)
+                                .background(Color.secondary.opacity(0.1))
+                                .cornerRadius(4)
+
+                            Button {
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setString("brew install tmux", forType: .string)
+                            } label: {
+                                Image(systemName: "doc.on.doc")
+                                    .font(.caption)
+                            }
+                            .buttonStyle(.bordered)
+                            .help("Copy to clipboard")
+                        }
+
+                        Button("Check Again") {
+                            Task {
+                                await tmuxManager.detectTmux()
+                            }
+                        }
+                        .font(.caption)
+                    }
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text("Session Backend")
+        }
+
         Section {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
