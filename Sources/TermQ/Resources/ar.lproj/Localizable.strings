@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Arabic localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "موافق";
+"common.cancel" = "إلغاء";
+"common.save" = "حفظ";
+"common.delete" = "حذف";
+"common.edit" = "تعديل";
+"common.close" = "إغلاق";
+"common.add" = "إضافة";
+"common.reinstall" = "إعادة التثبيت";
+"common.uninstall" = "إلغاء التثبيت";
+"common.installed" = "مثبّت";
+"common.browse" = "استعراض...";
+"common.apply" = "تطبيق";
+"common.preview" = "معاينة";
+
+// MARK: - Board View
+"board.column.options" = "خيارات العمود";
+"board.column.rename" = "إعادة تسمية العمود...";
+"board.column.delete" = "حذف العمود";
+"board.column.delete.disabled" = "حذف العمود (انقل الطرفيات أولاً)";
+"board.column.add.terminal" = "إضافة طرفية";
+"board.column.add.terminal.help" = "إضافة طرفية جديدة إلى هذا العمود";
+"board.column.edit" = "تعديل العمود...";
+
+// MARK: - Terminal Card
+"card.pin" = "تثبيت الطرفية";
+"card.unpin" = "إلغاء تثبيت الطرفية";
+"card.running" = "الطرفية تعمل";
+"card.open" = "مفتوح";
+"card.edit" = "تعديل التفاصيل...";
+"card.delete" = "حذف";
+"card.wired" = "متصل";
+"card.wired.help" = "متصل بوكيل MCP";
+"card.needs.attention" = "يحتاج انتباه";
+"card.processing" = "جارٍ المعالجة...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "انتهت جلسة الطرفية";
+"terminal.restart" = "إعادة تشغيل الطرفية";
+"terminal.restart.help" = "بدء جلسة طرفية جديدة";
+"terminal.current" = "الطرفية الحالية";
+"terminal.edit.help" = "تعديل تفاصيل الطرفية";
+"terminal.close.tab.help" = "إغلاق علامة تبويب الطرفية هذه";
+"terminal.switch.to %@" = "التبديل إلى %@";
+"terminal.tab.help %@ %@" = "%@ في %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "رجوع";
+"toolbar.back.help" = "العودة إلى اللوحة (Escape)";
+"toolbar.move.to" = "نقل إلى عمود";
+"toolbar.new.quick" = "طرفية سريعة";
+"toolbar.new.quick.help" = "طرفية سريعة جديدة (⌘T)";
+"toolbar.edit" = "تعديل";
+"toolbar.edit.help" = "تعديل تفاصيل الطرفية (⌘E)";
+"toolbar.pin" = "تثبيت";
+"toolbar.pin.help" = "تثبيت الطرفية (⌘P)";
+"toolbar.unpin" = "إلغاء التثبيت";
+"toolbar.unpin.help" = "إلغاء تثبيت الطرفية (⌘P)";
+"toolbar.delete" = "حذف";
+"toolbar.delete.help" = "حذف الطرفية";
+"toolbar.add" = "إضافة";
+"toolbar.add.help" = "إضافة طرفية أو عمود جديد";
+"toolbar.open.terminal.app" = "فتح في Terminal";
+"toolbar.open.terminal.app.help" = "فتح في Terminal.app";
+"toolbar.new.terminal" = "طرفية جديدة";
+"toolbar.new.column" = "عمود جديد";
+"toolbar.bin.count %lld" = "سلة المحذوفات (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "طرفية سريعة جديدة";
+"menu.new.terminal" = "طرفية جديدة...";
+"menu.new.terminal.dialog" = "طرفية جديدة";
+"menu.new.column" = "عمود جديد";
+"menu.back" = "العودة إلى اللوحة";
+"menu.toggle.pin" = "تبديل التثبيت";
+"menu.next.pinned" = "الطرفية المثبتة التالية";
+"menu.previous.pinned" = "الطرفية المثبتة السابقة";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "حذف الطرفية";
+"delete.move.to.bin" = "نقل إلى سلة المحذوفات";
+"delete.message %@" = "هل أنت متأكد من حذف \"%@\"؟";
+"delete.bin.message %@" = "سيتم نقل \"%@\" إلى سلة المحذوفات حيث يمكن استعادتها لمدة 30 يومًا.";
+"delete.cancel" = "إلغاء";
+"delete.confirm" = "حذف";
+"delete.permanent" = "حذف نهائي";
+
+// MARK: - Card Editor
+"editor.title.new" = "طرفية جديدة";
+"editor.title.edit" = "تعديل الطرفية";
+"editor.tab.general" = "عام";
+"editor.tab.advanced" = "متقدم";
+
+// Editor - Details section
+"editor.section.details" = "التفاصيل";
+"editor.field.name" = "الاسم";
+"editor.field.name.placeholder" = "اسم الطرفية";
+"editor.field.description" = "الوصف";
+"editor.field.description.placeholder" = "وصف اختياري";
+"editor.field.column" = "العمود";
+"editor.field.badges" = "الشارات";
+"editor.field.badges.placeholder" = "شارة1، شارة2";
+"editor.field.badges.help" = "شارات مفصولة بفواصل على البطاقة";
+
+// Editor - Appearance section
+"editor.section.appearance" = "المظهر";
+"editor.field.theme" = "السمة";
+"editor.field.theme.default" = "الافتراضي";
+"editor.field.font.size" = "حجم الخط";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "الطرفية";
+"editor.field.directory" = "مجلد العمل";
+"editor.field.directory.help" = "المجلد الابتدائي للطرفية";
+"editor.field.shell" = "الصدفة";
+"editor.field.shell.help" = "الصدفة المستخدمة (فارغ = افتراضي)";
+
+// Editor - Automation section
+"editor.section.automation" = "الأتمتة";
+"editor.field.init.command" = "أمر البدء";
+"editor.field.init.command.help" = "أمر للتشغيل عند بدء الطرفية";
+"editor.field.safe.paste" = "لصق آمن";
+"editor.field.safe.paste.help" = "إظهار تأكيد قبل لصق نص متعدد الأسطر";
+"editor.field.allow.autorun" = "السماح بالتشغيل التلقائي";
+"editor.field.allow.autorun.help" = "السماح لـ CLI بتشغيل الأوامر تلقائيًا";
+"editor.field.autorun.disabled.globally" = "التشغيل التلقائي معطل عالميًا";
+"editor.field.autorun.enable.hint" = "تفعيل في الإعدادات > الأدوات";
+
+// Editor - Tags section
+"editor.section.tags" = "الوسوم";
+"editor.field.tags" = "الوسوم";
+"editor.tag.add" = "إضافة وسم";
+"editor.tag.key.placeholder" = "مفتاح";
+"editor.tag.value.placeholder" = "قيمة";
+"editor.tags.help" = "أزواج مفتاح-قيمة للتنظيم";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "إعدادات الوكيل";
+"editor.field.terminal.allows.autorun" = "الطرفية تسمح بالأوامر";
+"editor.field.persistent.context" = "سياق دائم";
+"editor.field.persistent.context.help" = "يُحفظ السياق عبر الجلسات";
+"editor.field.next.action" = "الإجراء التالي";
+"editor.field.next.action.help" = "إجراء للتنفيذ في المرة القادمة";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "مولّد الأوامر";
+"editor.field.apply.to.init.command" = "تطبيق كأمر بدء";
+"editor.field.apply.to.init.command.help" = "استخدام الأمر المُنشأ كأمر بدء";
+"editor.no.llm.prompt.warning" = "لم يتم تكوين موجه LLM";
+"editor.non.interactive.note" = "ملاحظة: الأوامر تعمل بشكل غير تفاعلي";
+
+"editor.cancel" = "إلغاء";
+"editor.save" = "حفظ";
+"editor.save.open" = "حفظ وفتح";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "عمود جديد";
+"column.editor.title.edit" = "تعديل العمود";
+"column.editor.field.name" = "الاسم";
+"column.editor.field.name.placeholder" = "اسم العمود";
+"column.editor.field.description" = "الوصف";
+"column.editor.field.description.placeholder" = "وصف اختياري";
+"column.editor.field.color" = "اللون";
+"column.editor.cancel" = "إلغاء";
+"column.editor.save" = "حفظ";
+
+// MARK: - Bin
+"bin.title" = "سلة المحذوفات";
+"bin.empty" = "سلة المحذوفات فارغة";
+"bin.empty.button" = "إفراغ سلة المحذوفات";
+"bin.close.help" = "إغلاق سلة المحذوفات";
+"bin.restore.help" = "استعادة الطرفية";
+"bin.delete.help" = "حذف نهائي";
+"bin.deleted %@" = "تم الحذف %@";
+"bin.days.remaining %lld" = "متبقي %lld يوم";
+
+// MARK: - Settings
+"settings.title" = "الإعدادات";
+"settings.tab.general" = "عام";
+"settings.tab.tools" = "الأدوات";
+
+// Settings - Terminal section
+"settings.section.terminal" = "الطرفية";
+"settings.field.theme" = "السمة";
+"settings.field.theme.help" = "السمة الافتراضية للطرفيات الجديدة";
+"settings.field.copy.on.select" = "نسخ عند التحديد";
+"settings.field.copy.on.select.help" = "نسخ النص المحدد تلقائيًا";
+
+// Settings - Bin section
+"settings.section.bin" = "سلة المحذوفات";
+"settings.auto.empty %lld" = "إفراغ تلقائي بعد %lld يوم";
+"settings.auto.empty.help" = "إزالة العناصر القديمة تلقائيًا من السلة";
+"settings.bin.empty" = "سلة المحذوفات فارغة";
+"settings.bin.items %lld" = "%lld عنصر في السلة";
+"settings.empty.bin.now" = "إفراغ السلة الآن";
+
+// Settings - About section
+"settings.section.about" = "حول";
+"settings.field.version" = "الإصدار";
+"settings.field.build" = "البناء";
+
+// Settings - Language section
+"settings.section.language" = "اللغة";
+"settings.field.current" = "الحالية";
+"settings.system.default" = "افتراضي النظام";
+"settings.search.languages" = "البحث عن لغات...";
+"settings.using.system.language" = "استخدام لغة النظام";
+"settings.restart.required" = "إعادة التشغيل مطلوبة لتغيير اللغة";
+
+// Settings - CLI section
+"settings.section.cli" = "سطر الأوامر";
+"settings.cli.title" = "أداة CLI";
+"settings.cli.description" = "تتيح لك أداة سطر الأوامر termqcli فتح الطرفيات من الصدفة.";
+"settings.cli.path" = "موقع التثبيت";
+"settings.cli.install" = "تثبيت CLI";
+"settings.cli.uninstall" = "إلغاء التثبيت";
+"settings.cli.installed" = "مثبّت";
+"settings.cli.not.installed" = "غير مثبّت";
+"settings.cli.usage" = "الاستخدام:";
+"settings.cli.location" = "الموقع";
+"settings.enable.terminal.autorun" = "تفعيل التشغيل التلقائي للطرفية";
+"settings.enable.terminal.autorun.help" = "السماح لـ CLI بتشغيل الأوامر في الطرفيات";
+
+// Settings - MCP section
+"settings.section.mcp" = "خادم MCP";
+"settings.mcp.title" = "خادم MCP";
+"settings.mcp.description" = "خادم Model Context Protocol للتكامل مع وكلاء الذكاء الاصطناعي.";
+"settings.mcp.location" = "موقع الخادم";
+"settings.mcp.claude.config" = "إعدادات Claude Desktop";
+"settings.mcp.local.only" = "الاتصالات المحلية فقط";
+"settings.mcp.install.description" = "أضف إلى إعدادات Claude Desktop:";
+"settings.config.copied" = "تم نسخ الإعدادات!";
+"settings.copy.config" = "نسخ الإعدادات";
+
+// Settings - Agents section
+"settings.section.agents" = "الوكلاء";
+
+// MARK: - Command Palette
+"palette.placeholder" = "البحث عن أوامر...";
+"palette.no.results" = "لم يتم العثور على نتائج";
+
+// MARK: - Help View
+"help.title" = "المساعدة";
+"help.search.placeholder" = "البحث في المساعدة...";
+
+// MARK: - Alerts
+"alert.error" = "خطأ";
+"alert.success" = "نجاح";

@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Hebrew localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "אישור";
+"common.cancel" = "ביטול";
+"common.save" = "שמירה";
+"common.delete" = "מחיקה";
+"common.edit" = "עריכה";
+"common.close" = "סגירה";
+"common.add" = "הוספה";
+"common.reinstall" = "התקנה מחדש";
+"common.uninstall" = "הסרה";
+"common.installed" = "מותקן";
+"common.browse" = "עיון...";
+"common.apply" = "החלה";
+"common.preview" = "תצוגה מקדימה";
+
+// MARK: - Board View
+"board.column.options" = "אפשרויות עמודה";
+"board.column.rename" = "שינוי שם עמודה...";
+"board.column.delete" = "מחיקת עמודה";
+"board.column.delete.disabled" = "מחיקת עמודה (העבר מסופים קודם)";
+"board.column.add.terminal" = "הוספת מסוף";
+"board.column.add.terminal.help" = "הוספת מסוף חדש לעמודה זו";
+"board.column.edit" = "עריכת עמודה...";
+
+// MARK: - Terminal Card
+"card.pin" = "הצמדת מסוף";
+"card.unpin" = "ביטול הצמדת מסוף";
+"card.running" = "המסוף פועל";
+"card.open" = "פתוח";
+"card.edit" = "עריכת פרטים...";
+"card.delete" = "מחיקה";
+"card.wired" = "מחובר";
+"card.wired.help" = "מחובר לסוכן MCP";
+"card.needs.attention" = "דורש תשומת לב";
+"card.processing" = "מעבד...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "הפעלת המסוף הסתיימה";
+"terminal.restart" = "הפעלה מחדש של מסוף";
+"terminal.restart.help" = "התחל הפעלת מסוף חדשה";
+"terminal.current" = "מסוף נוכחי";
+"terminal.edit.help" = "עריכת פרטי מסוף";
+"terminal.close.tab.help" = "סגירת לשונית מסוף זו";
+"terminal.switch.to %@" = "מעבר אל %@";
+"terminal.tab.help %@ %@" = "%@ ב-%@";
+
+// MARK: - Toolbar
+"toolbar.back" = "חזרה";
+"toolbar.back.help" = "חזרה ללוח (Escape)";
+"toolbar.move.to" = "העברה לעמודה";
+"toolbar.new.quick" = "מסוף מהיר";
+"toolbar.new.quick.help" = "מסוף מהיר חדש (⌘T)";
+"toolbar.edit" = "עריכה";
+"toolbar.edit.help" = "עריכת פרטי מסוף (⌘E)";
+"toolbar.pin" = "הצמדה";
+"toolbar.pin.help" = "הצמדת מסוף (⌘P)";
+"toolbar.unpin" = "ביטול הצמדה";
+"toolbar.unpin.help" = "ביטול הצמדת מסוף (⌘P)";
+"toolbar.delete" = "מחיקה";
+"toolbar.delete.help" = "מחיקת מסוף";
+"toolbar.add" = "הוספה";
+"toolbar.add.help" = "הוספת מסוף או עמודה חדשים";
+"toolbar.open.terminal.app" = "פתיחה ב-Terminal";
+"toolbar.open.terminal.app.help" = "פתיחה ב-Terminal.app";
+"toolbar.new.terminal" = "מסוף חדש";
+"toolbar.new.column" = "עמודה חדשה";
+"toolbar.bin.count %lld" = "פח (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "מסוף מהיר חדש";
+"menu.new.terminal" = "מסוף חדש...";
+"menu.new.terminal.dialog" = "מסוף חדש";
+"menu.new.column" = "עמודה חדשה";
+"menu.back" = "חזרה ללוח";
+"menu.toggle.pin" = "החלפת הצמדה";
+"menu.next.pinned" = "המסוף המוצמד הבא";
+"menu.previous.pinned" = "המסוף המוצמד הקודם";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "מחיקת מסוף";
+"delete.move.to.bin" = "העברה לפח";
+"delete.message %@" = "האם אתה בטוח שברצונך למחוק את \"%@\"?";
+"delete.bin.message %@" = "\"%@\" יועבר לפח שם ניתן לשחזר אותו למשך 30 יום.";
+"delete.cancel" = "ביטול";
+"delete.confirm" = "מחיקה";
+"delete.permanent" = "מחיקה לצמיתות";
+
+// MARK: - Card Editor
+"editor.title.new" = "מסוף חדש";
+"editor.title.edit" = "עריכת מסוף";
+"editor.tab.general" = "כללי";
+"editor.tab.advanced" = "מתקדם";
+
+// Editor - Details section
+"editor.section.details" = "פרטים";
+"editor.field.name" = "שם";
+"editor.field.name.placeholder" = "שם המסוף";
+"editor.field.description" = "תיאור";
+"editor.field.description.placeholder" = "תיאור אופציונלי";
+"editor.field.column" = "עמודה";
+"editor.field.badges" = "תגים";
+"editor.field.badges.placeholder" = "תג1, תג2";
+"editor.field.badges.help" = "תגים מופרדים בפסיקים על הכרטיס";
+
+// Editor - Appearance section
+"editor.section.appearance" = "מראה";
+"editor.field.theme" = "ערכת נושא";
+"editor.field.theme.default" = "ברירת מחדל";
+"editor.field.font.size" = "גודל גופן";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "מסוף";
+"editor.field.directory" = "ספריית עבודה";
+"editor.field.directory.help" = "ספריית התחלה למסוף";
+"editor.field.shell" = "מעטפת";
+"editor.field.shell.help" = "מעטפת לשימוש (ריק = ברירת מחדל)";
+
+// Editor - Automation section
+"editor.section.automation" = "אוטומציה";
+"editor.field.init.command" = "פקודת אתחול";
+"editor.field.init.command.help" = "פקודה להרצה בעת הפעלת המסוף";
+"editor.field.safe.paste" = "הדבקה בטוחה";
+"editor.field.safe.paste.help" = "הצג אישור לפני הדבקת טקסט מרובה שורות";
+"editor.field.allow.autorun" = "אפשר הרצה אוטומטית";
+"editor.field.allow.autorun.help" = "אפשר ל-CLI להריץ פקודות אוטומטית";
+"editor.field.autorun.disabled.globally" = "הרצה אוטומטית מושבתת גלובלית";
+"editor.field.autorun.enable.hint" = "הפעל בהגדרות > כלים";
+
+// Editor - Tags section
+"editor.section.tags" = "תוויות";
+"editor.field.tags" = "תוויות";
+"editor.tag.add" = "הוספת תווית";
+"editor.tag.key.placeholder" = "מפתח";
+"editor.tag.value.placeholder" = "ערך";
+"editor.tags.help" = "זוגות מפתח-ערך לארגון";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "תצורת סוכן";
+"editor.field.terminal.allows.autorun" = "המסוף מאפשר פקודות";
+"editor.field.persistent.context" = "הקשר קבוע";
+"editor.field.persistent.context.help" = "ההקשר נשמר בין הפעלות";
+"editor.field.next.action" = "פעולה הבאה";
+"editor.field.next.action.help" = "פעולה לביצוע בפעם הבאה";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "מחולל פקודות";
+"editor.field.apply.to.init.command" = "החל כפקודת אתחול";
+"editor.field.apply.to.init.command.help" = "השתמש בפקודה המיוצרת כפקודת אתחול";
+"editor.no.llm.prompt.warning" = "לא הוגדרה הנחיית LLM";
+"editor.non.interactive.note" = "הערה: פקודות רצות באופן לא אינטראקטיבי";
+
+"editor.cancel" = "ביטול";
+"editor.save" = "שמירה";
+"editor.save.open" = "שמירה ופתיחה";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "עמודה חדשה";
+"column.editor.title.edit" = "עריכת עמודה";
+"column.editor.field.name" = "שם";
+"column.editor.field.name.placeholder" = "שם העמודה";
+"column.editor.field.description" = "תיאור";
+"column.editor.field.description.placeholder" = "תיאור אופציונלי";
+"column.editor.field.color" = "צבע";
+"column.editor.cancel" = "ביטול";
+"column.editor.save" = "שמירה";
+
+// MARK: - Bin
+"bin.title" = "פח";
+"bin.empty" = "הפח ריק";
+"bin.empty.button" = "ריקון פח";
+"bin.close.help" = "סגירת פח";
+"bin.restore.help" = "שחזור מסוף";
+"bin.delete.help" = "מחיקה לצמיתות";
+"bin.deleted %@" = "נמחק %@";
+"bin.days.remaining %lld" = "נותרו %lld ימים";
+
+// MARK: - Settings
+"settings.title" = "הגדרות";
+"settings.tab.general" = "כללי";
+"settings.tab.tools" = "כלים";
+
+// Settings - Terminal section
+"settings.section.terminal" = "מסוף";
+"settings.field.theme" = "ערכת נושא";
+"settings.field.theme.help" = "ערכת נושא ברירת מחדל למסופים חדשים";
+"settings.field.copy.on.select" = "העתקה בבחירה";
+"settings.field.copy.on.select.help" = "העתק אוטומטית טקסט נבחר";
+
+// Settings - Bin section
+"settings.section.bin" = "פח";
+"settings.auto.empty %lld" = "ריקון אוטומטי אחרי %lld ימים";
+"settings.auto.empty.help" = "הסרה אוטומטית של פריטים ישנים מהפח";
+"settings.bin.empty" = "הפח ריק";
+"settings.bin.items %lld" = "%lld פריטים בפח";
+"settings.empty.bin.now" = "רוקן פח עכשיו";
+
+// Settings - About section
+"settings.section.about" = "אודות";
+"settings.field.version" = "גרסה";
+"settings.field.build" = "בניה";
+
+// Settings - Language section
+"settings.section.language" = "שפה";
+"settings.field.current" = "נוכחית";
+"settings.system.default" = "ברירת מחדל מערכת";
+"settings.search.languages" = "חיפוש שפות...";
+"settings.using.system.language" = "משתמש בשפת המערכת";
+"settings.restart.required" = "נדרשת הפעלה מחדש לשינוי שפה";
+
+// Settings - CLI section
+"settings.section.cli" = "שורת פקודה";
+"settings.cli.title" = "כלי CLI";
+"settings.cli.description" = "כלי שורת הפקודה termqcli מאפשר לך לפתוח מסופים מהמעטפת שלך.";
+"settings.cli.path" = "מיקום התקנה";
+"settings.cli.install" = "התקנת CLI";
+"settings.cli.uninstall" = "הסרה";
+"settings.cli.installed" = "מותקן";
+"settings.cli.not.installed" = "לא מותקן";
+"settings.cli.usage" = "שימוש:";
+"settings.cli.location" = "מיקום";
+"settings.enable.terminal.autorun" = "הפעל הרצה אוטומטית של מסוף";
+"settings.enable.terminal.autorun.help" = "אפשר ל-CLI להריץ פקודות במסופים";
+
+// Settings - MCP section
+"settings.section.mcp" = "שרת MCP";
+"settings.mcp.title" = "שרת MCP";
+"settings.mcp.description" = "שרת Model Context Protocol לאינטגרציה עם סוכני AI.";
+"settings.mcp.location" = "מיקום שרת";
+"settings.mcp.claude.config" = "תצורת Claude Desktop";
+"settings.mcp.local.only" = "חיבורים מקומיים בלבד";
+"settings.mcp.install.description" = "הוסף לתצורת Claude Desktop שלך:";
+"settings.config.copied" = "התצורה הועתקה!";
+"settings.copy.config" = "העתק תצורה";
+
+// Settings - Agents section
+"settings.section.agents" = "סוכנים";
+
+// MARK: - Command Palette
+"palette.placeholder" = "חיפוש פקודות...";
+"palette.no.results" = "לא נמצאו תוצאות";
+
+// MARK: - Help View
+"help.title" = "עזרה";
+"help.search.placeholder" = "חיפוש בעזרה...";
+
+// MARK: - Alerts
+"alert.error" = "שגיאה";
+"alert.success" = "הצלחה";

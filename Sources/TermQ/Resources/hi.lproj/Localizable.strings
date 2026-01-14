@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Hindi localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "ठीक है";
+"common.cancel" = "रद्द करें";
+"common.save" = "सहेजें";
+"common.delete" = "हटाएं";
+"common.edit" = "संपादित करें";
+"common.close" = "बंद करें";
+"common.add" = "जोड़ें";
+"common.reinstall" = "पुनः इंस्टॉल करें";
+"common.uninstall" = "अनइंस्टॉल करें";
+"common.installed" = "इंस्टॉल हो गया";
+"common.browse" = "ब्राउज़ करें...";
+"common.apply" = "लागू करें";
+"common.preview" = "पूर्वावलोकन";
+
+// MARK: - Board View
+"board.column.options" = "कॉलम विकल्प";
+"board.column.rename" = "कॉलम का नाम बदलें...";
+"board.column.delete" = "कॉलम हटाएं";
+"board.column.delete.disabled" = "कॉलम हटाएं (पहले टर्मिनल हटाएं)";
+"board.column.add.terminal" = "टर्मिनल जोड़ें";
+"board.column.add.terminal.help" = "इस कॉलम में नया टर्मिनल जोड़ें";
+"board.column.edit" = "कॉलम संपादित करें...";
+
+// MARK: - Terminal Card
+"card.pin" = "टर्मिनल पिन करें";
+"card.unpin" = "टर्मिनल अनपिन करें";
+"card.running" = "टर्मिनल चल रहा है";
+"card.open" = "खुला";
+"card.edit" = "विवरण संपादित करें...";
+"card.delete" = "हटाएं";
+"card.wired" = "जुड़ा हुआ";
+"card.wired.help" = "MCP एजेंट से जुड़ा";
+"card.needs.attention" = "ध्यान आवश्यक";
+"card.processing" = "प्रोसेस हो रहा है...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "टर्मिनल सत्र समाप्त";
+"terminal.restart" = "टर्मिनल पुनः आरंभ करें";
+"terminal.restart.help" = "नया टर्मिनल सत्र शुरू करें";
+"terminal.current" = "वर्तमान टर्मिनल";
+"terminal.edit.help" = "टर्मिनल विवरण संपादित करें";
+"terminal.close.tab.help" = "यह टर्मिनल टैब बंद करें";
+"terminal.switch.to %@" = "%@ पर स्विच करें";
+"terminal.tab.help %@ %@" = "%@ में %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "वापस";
+"toolbar.back.help" = "बोर्ड पर वापस जाएं (Escape)";
+"toolbar.move.to" = "कॉलम में ले जाएं";
+"toolbar.new.quick" = "त्वरित टर्मिनल";
+"toolbar.new.quick.help" = "नया त्वरित टर्मिनल (⌘T)";
+"toolbar.edit" = "संपादित करें";
+"toolbar.edit.help" = "टर्मिनल विवरण संपादित करें (⌘E)";
+"toolbar.pin" = "पिन करें";
+"toolbar.pin.help" = "टर्मिनल पिन करें (⌘P)";
+"toolbar.unpin" = "अनपिन करें";
+"toolbar.unpin.help" = "टर्मिनल अनपिन करें (⌘P)";
+"toolbar.delete" = "हटाएं";
+"toolbar.delete.help" = "टर्मिनल हटाएं";
+"toolbar.add" = "जोड़ें";
+"toolbar.add.help" = "नया टर्मिनल या कॉलम जोड़ें";
+"toolbar.open.terminal.app" = "Terminal में खोलें";
+"toolbar.open.terminal.app.help" = "Terminal.app में खोलें";
+"toolbar.new.terminal" = "नया टर्मिनल";
+"toolbar.new.column" = "नया कॉलम";
+"toolbar.bin.count %lld" = "ट्रैश (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "त्वरित नया टर्मिनल";
+"menu.new.terminal" = "नया टर्मिनल...";
+"menu.new.terminal.dialog" = "नया टर्मिनल";
+"menu.new.column" = "नया कॉलम";
+"menu.back" = "बोर्ड पर वापस जाएं";
+"menu.toggle.pin" = "पिन टॉगल करें";
+"menu.next.pinned" = "अगला पिन किया टर्मिनल";
+"menu.previous.pinned" = "पिछला पिन किया टर्मिनल";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "टर्मिनल हटाएं";
+"delete.move.to.bin" = "ट्रैश में ले जाएं";
+"delete.message %@" = "क्या आप वाकई \"%@\" को हटाना चाहते हैं?";
+"delete.bin.message %@" = "\"%@\" को ट्रैश में ले जाया जाएगा जहां इसे 30 दिनों तक पुनर्स्थापित किया जा सकता है।";
+"delete.cancel" = "रद्द करें";
+"delete.confirm" = "हटाएं";
+"delete.permanent" = "स्थायी रूप से हटाएं";
+
+// MARK: - Card Editor
+"editor.title.new" = "नया टर्मिनल";
+"editor.title.edit" = "टर्मिनल संपादित करें";
+"editor.tab.general" = "सामान्य";
+"editor.tab.advanced" = "उन्नत";
+
+// Editor - Details section
+"editor.section.details" = "विवरण";
+"editor.field.name" = "नाम";
+"editor.field.name.placeholder" = "टर्मिनल का नाम";
+"editor.field.description" = "विवरण";
+"editor.field.description.placeholder" = "वैकल्पिक विवरण";
+"editor.field.column" = "कॉलम";
+"editor.field.badges" = "बैज";
+"editor.field.badges.placeholder" = "बैज1, बैज2";
+"editor.field.badges.help" = "कार्ड पर अल्पविराम से अलग किए गए बैज";
+
+// Editor - Appearance section
+"editor.section.appearance" = "दिखावट";
+"editor.field.theme" = "थीम";
+"editor.field.theme.default" = "डिफ़ॉल्ट";
+"editor.field.font.size" = "फ़ॉन्ट आकार";
+"editor.font.preview" = "AaBbCc हिंदी 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "टर्मिनल";
+"editor.field.directory" = "कार्य निर्देशिका";
+"editor.field.directory.help" = "टर्मिनल के लिए प्रारंभिक निर्देशिका";
+"editor.field.shell" = "शेल";
+"editor.field.shell.help" = "उपयोग करने के लिए शेल (खाली = डिफ़ॉल्ट)";
+
+// Editor - Automation section
+"editor.section.automation" = "स्वचालन";
+"editor.field.init.command" = "इनिट कमांड";
+"editor.field.init.command.help" = "टर्मिनल शुरू होने पर चलाने के लिए कमांड";
+"editor.field.safe.paste" = "सुरक्षित पेस्ट";
+"editor.field.safe.paste.help" = "बहु-पंक्ति टेक्स्ट पेस्ट करने से पहले पुष्टि दिखाएं";
+"editor.field.allow.autorun" = "ऑटोरन की अनुमति दें";
+"editor.field.allow.autorun.help" = "CLI को स्वचालित रूप से कमांड चलाने की अनुमति दें";
+"editor.field.autorun.disabled.globally" = "ऑटोरन वैश्विक रूप से अक्षम है";
+"editor.field.autorun.enable.hint" = "सेटिंग्स > उपकरण में सक्षम करें";
+
+// Editor - Tags section
+"editor.section.tags" = "टैग";
+"editor.field.tags" = "टैग";
+"editor.tag.add" = "टैग जोड़ें";
+"editor.tag.key.placeholder" = "कुंजी";
+"editor.tag.value.placeholder" = "मान";
+"editor.tags.help" = "संगठन के लिए कुंजी-मान जोड़े";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "एजेंट कॉन्फ़िगरेशन";
+"editor.field.terminal.allows.autorun" = "टर्मिनल कमांड की अनुमति देता है";
+"editor.field.persistent.context" = "स्थायी संदर्भ";
+"editor.field.persistent.context.help" = "संदर्भ सत्रों में बनाए रखा जाता है";
+"editor.field.next.action" = "अगली क्रिया";
+"editor.field.next.action.help" = "अगली बार करने के लिए क्रिया";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "कमांड जेनरेटर";
+"editor.field.apply.to.init.command" = "इनिट कमांड पर लागू करें";
+"editor.field.apply.to.init.command.help" = "जेनरेट किए गए कमांड को इनिट कमांड के रूप में उपयोग करें";
+"editor.no.llm.prompt.warning" = "कोई LLM प्रॉम्प्ट कॉन्फ़िगर नहीं किया गया";
+"editor.non.interactive.note" = "नोट: कमांड गैर-इंटरैक्टिव रूप से चलते हैं";
+
+"editor.cancel" = "रद्द करें";
+"editor.save" = "सहेजें";
+"editor.save.open" = "सहेजें और खोलें";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "नया कॉलम";
+"column.editor.title.edit" = "कॉलम संपादित करें";
+"column.editor.field.name" = "नाम";
+"column.editor.field.name.placeholder" = "कॉलम का नाम";
+"column.editor.field.description" = "विवरण";
+"column.editor.field.description.placeholder" = "वैकल्पिक विवरण";
+"column.editor.field.color" = "रंग";
+"column.editor.cancel" = "रद्द करें";
+"column.editor.save" = "सहेजें";
+
+// MARK: - Bin
+"bin.title" = "ट्रैश";
+"bin.empty" = "ट्रैश खाली है";
+"bin.empty.button" = "ट्रैश खाली करें";
+"bin.close.help" = "ट्रैश बंद करें";
+"bin.restore.help" = "टर्मिनल पुनर्स्थापित करें";
+"bin.delete.help" = "स्थायी रूप से हटाएं";
+"bin.deleted %@" = "%@ हटाया गया";
+"bin.days.remaining %lld" = "%lld दिन शेष";
+
+// MARK: - Settings
+"settings.title" = "सेटिंग्स";
+"settings.tab.general" = "सामान्य";
+"settings.tab.tools" = "उपकरण";
+
+// Settings - Terminal section
+"settings.section.terminal" = "टर्मिनल";
+"settings.field.theme" = "थीम";
+"settings.field.theme.help" = "नए टर्मिनल के लिए डिफ़ॉल्ट थीम";
+"settings.field.copy.on.select" = "चयन पर कॉपी करें";
+"settings.field.copy.on.select.help" = "चयनित टेक्स्ट स्वचालित रूप से कॉपी करें";
+
+// Settings - Bin section
+"settings.section.bin" = "ट्रैश";
+"settings.auto.empty %lld" = "%lld दिनों के बाद स्वचालित रूप से खाली करें";
+"settings.auto.empty.help" = "ट्रैश से पुरानी वस्तुओं को स्वचालित रूप से हटाएं";
+"settings.bin.empty" = "ट्रैश खाली है";
+"settings.bin.items %lld" = "ट्रैश में %lld आइटम";
+"settings.empty.bin.now" = "अभी ट्रैश खाली करें";
+
+// Settings - About section
+"settings.section.about" = "के बारे में";
+"settings.field.version" = "संस्करण";
+"settings.field.build" = "बिल्ड";
+
+// Settings - Language section
+"settings.section.language" = "भाषा";
+"settings.field.current" = "वर्तमान";
+"settings.system.default" = "सिस्टम डिफ़ॉल्ट";
+"settings.search.languages" = "भाषाएं खोजें...";
+"settings.using.system.language" = "सिस्टम भाषा का उपयोग कर रहे हैं";
+"settings.restart.required" = "भाषा बदलने के लिए पुनः आरंभ आवश्यक";
+
+// Settings - CLI section
+"settings.section.cli" = "कमांड लाइन";
+"settings.cli.title" = "CLI टूल";
+"settings.cli.description" = "termqcli कमांड-लाइन टूल आपको अपने शेल से टर्मिनल खोलने देता है।";
+"settings.cli.path" = "इंस्टॉल स्थान";
+"settings.cli.install" = "CLI इंस्टॉल करें";
+"settings.cli.uninstall" = "अनइंस्टॉल करें";
+"settings.cli.installed" = "इंस्टॉल हो गया";
+"settings.cli.not.installed" = "इंस्टॉल नहीं है";
+"settings.cli.usage" = "उपयोग:";
+"settings.cli.location" = "स्थान";
+"settings.enable.terminal.autorun" = "टर्मिनल ऑटोरन सक्षम करें";
+"settings.enable.terminal.autorun.help" = "CLI को टर्मिनल में कमांड चलाने की अनुमति दें";
+
+// Settings - MCP section
+"settings.section.mcp" = "MCP सर्वर";
+"settings.mcp.title" = "MCP सर्वर";
+"settings.mcp.description" = "AI एजेंट एकीकरण के लिए Model Context Protocol सर्वर।";
+"settings.mcp.location" = "सर्वर स्थान";
+"settings.mcp.claude.config" = "Claude Desktop कॉन्फ़िग";
+"settings.mcp.local.only" = "केवल स्थानीय कनेक्शन";
+"settings.mcp.install.description" = "अपने Claude Desktop कॉन्फ़िगरेशन में जोड़ें:";
+"settings.config.copied" = "कॉन्फ़िगरेशन कॉपी हो गया!";
+"settings.copy.config" = "कॉन्फ़िगरेशन कॉपी करें";
+
+// Settings - Agents section
+"settings.section.agents" = "एजेंट";
+
+// MARK: - Command Palette
+"palette.placeholder" = "कमांड खोजें...";
+"palette.no.results" = "कोई परिणाम नहीं मिला";
+
+// MARK: - Help View
+"help.title" = "सहायता";
+"help.search.placeholder" = "सहायता में खोजें...";
+
+// MARK: - Alerts
+"alert.error" = "त्रुटि";
+"alert.success" = "सफल";

@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Danish localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Annuller";
+"common.save" = "Gem";
+"common.delete" = "Slet";
+"common.edit" = "Rediger";
+"common.close" = "Luk";
+"common.add" = "Tilføj";
+"common.reinstall" = "Geninstaller";
+"common.uninstall" = "Afinstaller";
+"common.installed" = "Installeret";
+"common.browse" = "Gennemse...";
+"common.apply" = "Anvend";
+"common.preview" = "Forhåndsvisning";
+
+// MARK: - Board View
+"board.column.options" = "Kolonneindstillinger";
+"board.column.rename" = "Omdøb kolonne...";
+"board.column.delete" = "Slet kolonne";
+"board.column.delete.disabled" = "Slet kolonne (flyt terminaler først)";
+"board.column.add.terminal" = "Tilføj terminal";
+"board.column.add.terminal.help" = "Tilføj ny terminal til denne kolonne";
+"board.column.edit" = "Rediger kolonne...";
+
+// MARK: - Terminal Card
+"card.pin" = "Fastgør terminal";
+"card.unpin" = "Frigør terminal";
+"card.running" = "Terminal kører";
+"card.open" = "Åben";
+"card.edit" = "Rediger detaljer...";
+"card.delete" = "Slet";
+"card.wired" = "Forbundet";
+"card.wired.help" = "Forbundet til MCP-agent";
+"card.needs.attention" = "Kræver opmærksomhed";
+"card.processing" = "Behandler...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Terminalsession afsluttet";
+"terminal.restart" = "Genstart terminal";
+"terminal.restart.help" = "Start en ny terminalsession";
+"terminal.current" = "Aktuel terminal";
+"terminal.edit.help" = "Rediger terminaldetaljer";
+"terminal.close.tab.help" = "Luk denne terminalfane";
+"terminal.switch.to %@" = "Skift til %@";
+"terminal.tab.help %@ %@" = "%@ i %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Tilbage";
+"toolbar.back.help" = "Tilbage til tavlen (Escape)";
+"toolbar.move.to" = "Flyt til kolonne";
+"toolbar.new.quick" = "Hurtig terminal";
+"toolbar.new.quick.help" = "Ny hurtig terminal (⌘T)";
+"toolbar.edit" = "Rediger";
+"toolbar.edit.help" = "Rediger terminaldetaljer (⌘E)";
+"toolbar.pin" = "Fastgør";
+"toolbar.pin.help" = "Fastgør terminal (⌘P)";
+"toolbar.unpin" = "Frigør";
+"toolbar.unpin.help" = "Frigør terminal (⌘P)";
+"toolbar.delete" = "Slet";
+"toolbar.delete.help" = "Slet terminal";
+"toolbar.add" = "Tilføj";
+"toolbar.add.help" = "Tilføj ny terminal eller kolonne";
+"toolbar.open.terminal.app" = "Åbn i Terminal";
+"toolbar.open.terminal.app.help" = "Åbn i Terminal.app";
+"toolbar.new.terminal" = "Ny terminal";
+"toolbar.new.column" = "Ny kolonne";
+"toolbar.bin.count %lld" = "Papirkurv (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Ny hurtig terminal";
+"menu.new.terminal" = "Ny terminal...";
+"menu.new.terminal.dialog" = "Ny terminal";
+"menu.new.column" = "Ny kolonne";
+"menu.back" = "Tilbage til tavlen";
+"menu.toggle.pin" = "Skift fastgørelse";
+"menu.next.pinned" = "Næste fastgjorte terminal";
+"menu.previous.pinned" = "Forrige fastgjorte terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Slet terminal";
+"delete.move.to.bin" = "Flyt til papirkurv";
+"delete.message %@" = "Er du sikker på, at du vil slette \"%@\"?";
+"delete.bin.message %@" = "\"%@\" flyttes til papirkurven, hvor den kan gendannes i 30 dage.";
+"delete.cancel" = "Annuller";
+"delete.confirm" = "Slet";
+"delete.permanent" = "Slet permanent";
+
+// MARK: - Card Editor
+"editor.title.new" = "Ny terminal";
+"editor.title.edit" = "Rediger terminal";
+"editor.tab.general" = "Generelt";
+"editor.tab.advanced" = "Avanceret";
+
+// Editor - Details section
+"editor.section.details" = "Detaljer";
+"editor.field.name" = "Navn";
+"editor.field.name.placeholder" = "Terminalnavn";
+"editor.field.description" = "Beskrivelse";
+"editor.field.description.placeholder" = "Valgfri beskrivelse";
+"editor.field.column" = "Kolonne";
+"editor.field.badges" = "Badges";
+"editor.field.badges.placeholder" = "badge1, badge2";
+"editor.field.badges.help" = "Kommaseparerede badges på kortet";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Udseende";
+"editor.field.theme" = "Tema";
+"editor.field.theme.default" = "Standard";
+"editor.field.font.size" = "Skriftstørrelse";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Terminal";
+"editor.field.directory" = "Arbejdsmappe";
+"editor.field.directory.help" = "Startmappe for terminalen";
+"editor.field.shell" = "Shell";
+"editor.field.shell.help" = "Shell at bruge (lad stå tom for standard)";
+
+// Editor - Automation section
+"editor.section.automation" = "Automatisering";
+"editor.field.init.command" = "Startkommando";
+"editor.field.init.command.help" = "Kommando at køre ved terminalstart";
+"editor.field.safe.paste" = "Sikker indsætning";
+"editor.field.safe.paste.help" = "Vis bekræftelse før indsætning af tekst med flere linjer";
+"editor.field.allow.autorun" = "Tillad autokørsel";
+"editor.field.allow.autorun.help" = "Tillad CLI at køre kommandoer automatisk";
+"editor.field.autorun.disabled.globally" = "Autokørsel deaktiveret globalt";
+"editor.field.autorun.enable.hint" = "Aktiver i Indstillinger > Værktøjer";
+
+// Editor - Tags section
+"editor.section.tags" = "Tags";
+"editor.field.tags" = "Tags";
+"editor.tag.add" = "Tilføj tag";
+"editor.tag.key.placeholder" = "nøgle";
+"editor.tag.value.placeholder" = "værdi";
+"editor.tags.help" = "Nøgle-værdi-par til organisering";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Agentkonfiguration";
+"editor.field.terminal.allows.autorun" = "Terminal tillader kommandoer";
+"editor.field.persistent.context" = "Vedvarende kontekst";
+"editor.field.persistent.context.help" = "Kontekst bevaret på tværs af sessioner";
+"editor.field.next.action" = "Næste handling";
+"editor.field.next.action.help" = "Handling at udføre næste gang";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Kommandogenerator";
+"editor.field.apply.to.init.command" = "Anvend på startkommando";
+"editor.field.apply.to.init.command.help" = "Brug genereret kommando som startkommando";
+"editor.no.llm.prompt.warning" = "Ingen LLM-prompt konfigureret";
+"editor.non.interactive.note" = "Bemærk: Kommandoer køres ikke-interaktivt";
+
+"editor.cancel" = "Annuller";
+"editor.save" = "Gem";
+"editor.save.open" = "Gem & Åbn";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Ny kolonne";
+"column.editor.title.edit" = "Rediger kolonne";
+"column.editor.field.name" = "Navn";
+"column.editor.field.name.placeholder" = "Kolonnenavn";
+"column.editor.field.description" = "Beskrivelse";
+"column.editor.field.description.placeholder" = "Valgfri beskrivelse";
+"column.editor.field.color" = "Farve";
+"column.editor.cancel" = "Annuller";
+"column.editor.save" = "Gem";
+
+// MARK: - Bin
+"bin.title" = "Papirkurv";
+"bin.empty" = "Papirkurven er tom";
+"bin.empty.button" = "Tøm papirkurv";
+"bin.close.help" = "Luk papirkurv";
+"bin.restore.help" = "Gendan terminal";
+"bin.delete.help" = "Slet permanent";
+"bin.deleted %@" = "Slettet %@";
+"bin.days.remaining %lld" = "%lld dage tilbage";
+
+// MARK: - Settings
+"settings.title" = "Indstillinger";
+"settings.tab.general" = "Generelt";
+"settings.tab.tools" = "Værktøjer";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Terminal";
+"settings.field.theme" = "Tema";
+"settings.field.theme.help" = "Standardtema for nye terminaler";
+"settings.field.copy.on.select" = "Kopier ved markering";
+"settings.field.copy.on.select.help" = "Kopier automatisk markeret tekst";
+
+// Settings - Bin section
+"settings.section.bin" = "Papirkurv";
+"settings.auto.empty %lld" = "Tøm automatisk efter %lld dage";
+"settings.auto.empty.help" = "Tøm automatisk gamle elementer fra papirkurven";
+"settings.bin.empty" = "Papirkurven er tom";
+"settings.bin.items %lld" = "%lld elementer i papirkurven";
+"settings.empty.bin.now" = "Tøm papirkurv nu";
+
+// Settings - About section
+"settings.section.about" = "Om";
+"settings.field.version" = "Version";
+"settings.field.build" = "Build";
+
+// Settings - Language section
+"settings.section.language" = "Sprog";
+"settings.field.current" = "Aktuel";
+"settings.system.default" = "Systemstandard";
+"settings.search.languages" = "Søg sprog...";
+"settings.using.system.language" = "Bruger systemsprog";
+"settings.restart.required" = "Genstart påkrævet for sprogændring";
+
+// Settings - CLI section
+"settings.section.cli" = "Kommandolinje";
+"settings.cli.title" = "CLI-værktøj";
+"settings.cli.description" = "Termqcli kommandolinjeværktøjet lader dig åbne terminaler fra din shell.";
+"settings.cli.path" = "Installationsplacering";
+"settings.cli.install" = "Installer CLI";
+"settings.cli.uninstall" = "Afinstaller";
+"settings.cli.installed" = "Installeret";
+"settings.cli.not.installed" = "Ikke installeret";
+"settings.cli.usage" = "Brug:";
+"settings.cli.location" = "Placering";
+"settings.enable.terminal.autorun" = "Aktiver terminalautokørsel";
+"settings.enable.terminal.autorun.help" = "Tillad CLI at køre kommandoer i terminaler";
+
+// Settings - MCP section
+"settings.section.mcp" = "MCP-server";
+"settings.mcp.title" = "MCP-server";
+"settings.mcp.description" = "Model Context Protocol-server til AI-agentintegration.";
+"settings.mcp.location" = "Serverplacering";
+"settings.mcp.claude.config" = "Claude Desktop-konfiguration";
+"settings.mcp.local.only" = "Kun lokale forbindelser";
+"settings.mcp.install.description" = "Tilføj til din Claude Desktop-konfiguration:";
+"settings.config.copied" = "Konfiguration kopieret!";
+"settings.copy.config" = "Kopier konfiguration";
+
+// Settings - Agents section
+"settings.section.agents" = "Agenter";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Søg kommandoer...";
+"palette.no.results" = "Ingen resultater fundet";
+
+// MARK: - Help View
+"help.title" = "Hjælp";
+"help.search.placeholder" = "Søg i hjælp...";
+
+// MARK: - Alerts
+"alert.error" = "Fejl";
+"alert.success" = "Succes";

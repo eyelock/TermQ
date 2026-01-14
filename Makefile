@@ -64,7 +64,7 @@ build: copy-help
 
 # Build release version (builds each product explicitly to avoid incremental build issues)
 build-release: copy-help
-	set +o pipefail; swift build -c release --product termq 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -c release --product termqcli 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 	set +o pipefail; swift build -c release --product termqmcp 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 	set +o pipefail; swift build -c release --product TermQ 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
@@ -110,9 +110,13 @@ app: build
 	@mkdir -p TermQDebug.app/Contents/MacOS
 	@mkdir -p TermQDebug.app/Contents/Resources
 	cp .build/debug/TermQ TermQDebug.app/Contents/MacOS/TermQ
-	cp .build/debug/termq TermQDebug.app/Contents/Resources/termq
+	cp .build/debug/termqcli TermQDebug.app/Contents/Resources/termqcli
 	cp .build/debug/termqmcp TermQDebug.app/Contents/Resources/termqmcp
 	cp TermQ.app/Contents/Info-Debug.plist TermQDebug.app/Contents/Info.plist
+	@# Copy localization resources bundle
+	@if [ -d ".build/debug/TermQ_TermQ.bundle" ]; then \
+		cp -R .build/debug/TermQ_TermQ.bundle TermQDebug.app/Contents/Resources/; \
+	fi
 	@# Update version info in Info.plist
 	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQDebug.app/Contents/Info.plist
 	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" TermQDebug.app/Contents/Info.plist
@@ -158,8 +162,12 @@ release-app: build-release
 		exit 1; \
 	fi
 	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
-	cp .build/release/termq TermQ.app/Contents/Resources/termq
+	cp .build/release/termqcli TermQ.app/Contents/Resources/termqcli
 	cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
+	@# Copy localization resources bundle
+	@if [ -d ".build/release/TermQ_TermQ.bundle" ]; then \
+		cp -R .build/release/TermQ_TermQ.bundle TermQ.app/Contents/Resources/; \
+	fi
 	@# Copy template and update version info in Info.plist
 	cp Info.plist.template TermQ.app/Contents/Info.plist
 	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQ.app/Contents/Info.plist
@@ -185,13 +193,13 @@ uninstall:
 # Install CLI tool to /usr/local/bin
 install-cli: build-release
 	@mkdir -p /usr/local/bin
-	cp .build/release/termq /usr/local/bin/termq
-	@echo "CLI tool 'termq' installed to /usr/local/bin"
+	cp .build/release/termqcli /usr/local/bin/termqcli
+	@echo "CLI tool 'termqcli' installed to /usr/local/bin"
 
 # Uninstall CLI tool
 uninstall-cli:
-	rm -f /usr/local/bin/termq
-	@echo "CLI tool 'termq' removed"
+	rm -f /usr/local/bin/termqcli
+	@echo "CLI tool 'termqcli' removed"
 
 # Install both app and CLI
 install-all: install install-cli

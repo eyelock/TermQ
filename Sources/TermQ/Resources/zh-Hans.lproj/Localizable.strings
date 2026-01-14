@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Simplified Chinese localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "确定";
+"common.cancel" = "取消";
+"common.save" = "保存";
+"common.delete" = "删除";
+"common.edit" = "编辑";
+"common.close" = "关闭";
+"common.add" = "添加";
+"common.reinstall" = "重新安装";
+"common.uninstall" = "卸载";
+"common.installed" = "已安装";
+"common.browse" = "浏览...";
+"common.apply" = "应用";
+"common.preview" = "预览";
+
+// MARK: - Board View
+"board.column.options" = "列选项";
+"board.column.rename" = "重命名列...";
+"board.column.delete" = "删除列";
+"board.column.delete.disabled" = "删除列（请先移动终端）";
+"board.column.add.terminal" = "添加终端";
+"board.column.add.terminal.help" = "向此列添加新终端";
+"board.column.edit" = "编辑列...";
+
+// MARK: - Terminal Card
+"card.pin" = "固定终端";
+"card.unpin" = "取消固定终端";
+"card.running" = "终端运行中";
+"card.open" = "打开";
+"card.edit" = "编辑详情...";
+"card.delete" = "删除";
+"card.wired" = "已连接";
+"card.wired.help" = "已连接到 MCP 代理";
+"card.needs.attention" = "需要关注";
+"card.processing" = "处理中...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "终端会话已结束";
+"terminal.restart" = "重启终端";
+"terminal.restart.help" = "启动新的终端会话";
+"terminal.current" = "当前终端";
+"terminal.edit.help" = "编辑终端详情";
+"terminal.close.tab.help" = "关闭此终端标签页";
+"terminal.switch.to %@" = "切换到 %@";
+"terminal.tab.help %@ %@" = "%@ 在 %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "返回";
+"toolbar.back.help" = "返回看板 (Escape)";
+"toolbar.move.to" = "移动到列";
+"toolbar.new.quick" = "快速终端";
+"toolbar.new.quick.help" = "新建快速终端 (⌘T)";
+"toolbar.edit" = "编辑";
+"toolbar.edit.help" = "编辑终端详情 (⌘E)";
+"toolbar.pin" = "固定";
+"toolbar.pin.help" = "固定终端 (⌘P)";
+"toolbar.unpin" = "取消固定";
+"toolbar.unpin.help" = "取消固定终端 (⌘P)";
+"toolbar.delete" = "删除";
+"toolbar.delete.help" = "删除终端";
+"toolbar.add" = "添加";
+"toolbar.add.help" = "添加新终端或列";
+"toolbar.open.terminal.app" = "在终端中打开";
+"toolbar.open.terminal.app.help" = "在 Terminal.app 中打开";
+"toolbar.new.terminal" = "新建终端";
+"toolbar.new.column" = "新建列";
+"toolbar.bin.count %lld" = "回收站 (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "快速新建终端";
+"menu.new.terminal" = "新建终端...";
+"menu.new.terminal.dialog" = "新建终端";
+"menu.new.column" = "新建列";
+"menu.back" = "返回看板";
+"menu.toggle.pin" = "切换固定";
+"menu.next.pinned" = "下一个固定终端";
+"menu.previous.pinned" = "上一个固定终端";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "删除终端";
+"delete.move.to.bin" = "移至回收站";
+"delete.message %@" = "确定要删除"%@"吗？";
+"delete.bin.message %@" = ""%@"将被移至回收站，可在 30 天内恢复。";
+"delete.cancel" = "取消";
+"delete.confirm" = "删除";
+"delete.permanent" = "永久删除";
+
+// MARK: - Card Editor
+"editor.title.new" = "新建终端";
+"editor.title.edit" = "编辑终端";
+"editor.tab.general" = "常规";
+"editor.tab.advanced" = "高级";
+
+// Editor - Details section
+"editor.section.details" = "详情";
+"editor.field.name" = "名称";
+"editor.field.name.placeholder" = "终端名称";
+"editor.field.description" = "描述";
+"editor.field.description.placeholder" = "可选描述";
+"editor.field.column" = "列";
+"editor.field.badges" = "徽章";
+"editor.field.badges.placeholder" = "徽章1, 徽章2";
+"editor.field.badges.help" = "卡片上显示的逗号分隔徽章";
+
+// Editor - Appearance section
+"editor.section.appearance" = "外观";
+"editor.field.theme" = "主题";
+"editor.field.theme.default" = "默认";
+"editor.field.font.size" = "字体大小";
+"editor.font.preview" = "AaBbCc 中文 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "终端";
+"editor.field.directory" = "工作目录";
+"editor.field.directory.help" = "终端的起始目录";
+"editor.field.shell" = "Shell";
+"editor.field.shell.help" = "使用的 Shell（留空使用默认）";
+
+// Editor - Automation section
+"editor.section.automation" = "自动化";
+"editor.field.init.command" = "初始化命令";
+"editor.field.init.command.help" = "终端启动时运行的命令";
+"editor.field.safe.paste" = "安全粘贴";
+"editor.field.safe.paste.help" = "粘贴多行文本前显示确认";
+"editor.field.allow.autorun" = "允许自动运行";
+"editor.field.allow.autorun.help" = "允许 CLI 自动运行命令";
+"editor.field.autorun.disabled.globally" = "自动运行已全局禁用";
+"editor.field.autorun.enable.hint" = "在设置 > 工具中启用";
+
+// Editor - Tags section
+"editor.section.tags" = "标签";
+"editor.field.tags" = "标签";
+"editor.tag.add" = "添加标签";
+"editor.tag.key.placeholder" = "键";
+"editor.tag.value.placeholder" = "值";
+"editor.tags.help" = "用于组织的键值对";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "代理配置";
+"editor.field.terminal.allows.autorun" = "终端允许命令";
+"editor.field.persistent.context" = "持久上下文";
+"editor.field.persistent.context.help" = "上下文在会话间保持";
+"editor.field.next.action" = "下一步操作";
+"editor.field.next.action.help" = "下次执行的操作";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "命令生成器";
+"editor.field.apply.to.init.command" = "应用为初始化命令";
+"editor.field.apply.to.init.command.help" = "将生成的命令用作初始化命令";
+"editor.no.llm.prompt.warning" = "未配置 LLM 提示";
+"editor.non.interactive.note" = "注意：命令以非交互方式运行";
+
+"editor.cancel" = "取消";
+"editor.save" = "保存";
+"editor.save.open" = "保存并打开";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "新建列";
+"column.editor.title.edit" = "编辑列";
+"column.editor.field.name" = "名称";
+"column.editor.field.name.placeholder" = "列名称";
+"column.editor.field.description" = "描述";
+"column.editor.field.description.placeholder" = "可选描述";
+"column.editor.field.color" = "颜色";
+"column.editor.cancel" = "取消";
+"column.editor.save" = "保存";
+
+// MARK: - Bin
+"bin.title" = "回收站";
+"bin.empty" = "回收站为空";
+"bin.empty.button" = "清空回收站";
+"bin.close.help" = "关闭回收站";
+"bin.restore.help" = "恢复终端";
+"bin.delete.help" = "永久删除";
+"bin.deleted %@" = "已删除 %@";
+"bin.days.remaining %lld" = "剩余 %lld 天";
+
+// MARK: - Settings
+"settings.title" = "设置";
+"settings.tab.general" = "常规";
+"settings.tab.tools" = "工具";
+
+// Settings - Terminal section
+"settings.section.terminal" = "终端";
+"settings.field.theme" = "主题";
+"settings.field.theme.help" = "新终端的默认主题";
+"settings.field.copy.on.select" = "选中时复制";
+"settings.field.copy.on.select.help" = "自动复制选中的文本";
+
+// Settings - Bin section
+"settings.section.bin" = "回收站";
+"settings.auto.empty %lld" = "%lld 天后自动清空";
+"settings.auto.empty.help" = "自动清空回收站中的旧项目";
+"settings.bin.empty" = "回收站为空";
+"settings.bin.items %lld" = "回收站中有 %lld 个项目";
+"settings.empty.bin.now" = "立即清空回收站";
+
+// Settings - About section
+"settings.section.about" = "关于";
+"settings.field.version" = "版本";
+"settings.field.build" = "构建";
+
+// Settings - Language section
+"settings.section.language" = "语言";
+"settings.field.current" = "当前";
+"settings.system.default" = "系统默认";
+"settings.search.languages" = "搜索语言...";
+"settings.using.system.language" = "使用系统语言";
+"settings.restart.required" = "更改语言需要重启";
+
+// Settings - CLI section
+"settings.section.cli" = "命令行";
+"settings.cli.title" = "CLI 工具";
+"settings.cli.description" = "termqclicli 命令行工具可让您从 Shell 中打开终端。";
+"settings.cli.path" = "安装位置";
+"settings.cli.install" = "安装 CLI";
+"settings.cli.uninstall" = "卸载";
+"settings.cli.installed" = "已安装";
+"settings.cli.not.installed" = "未安装";
+"settings.cli.usage" = "用法：";
+"settings.cli.location" = "位置";
+"settings.enable.terminal.autorun" = "启用终端自动运行";
+"settings.enable.terminal.autorun.help" = "允许 CLI 在终端中运行命令";
+
+// Settings - MCP section
+"settings.section.mcp" = "MCP 服务器";
+"settings.mcp.title" = "MCP 服务器";
+"settings.mcp.description" = "用于 AI 代理集成的模型上下文协议服务器。";
+"settings.mcp.location" = "服务器位置";
+"settings.mcp.claude.config" = "Claude Desktop 配置";
+"settings.mcp.local.only" = "仅限本地连接";
+"settings.mcp.install.description" = "添加到您的 Claude Desktop 配置：";
+"settings.config.copied" = "配置已复制！";
+"settings.copy.config" = "复制配置";
+
+// Settings - Agents section
+"settings.section.agents" = "代理";
+
+// MARK: - Command Palette
+"palette.placeholder" = "搜索命令...";
+"palette.no.results" = "未找到结果";
+
+// MARK: - Help View
+"help.title" = "帮助";
+"help.search.placeholder" = "搜索帮助...";
+
+// MARK: - Alerts
+"alert.error" = "错误";
+"alert.success" = "成功";

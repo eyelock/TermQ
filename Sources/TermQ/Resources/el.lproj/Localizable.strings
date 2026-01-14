@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Greek localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Ακύρωση";
+"common.save" = "Αποθήκευση";
+"common.delete" = "Διαγραφή";
+"common.edit" = "Επεξεργασία";
+"common.close" = "Κλείσιμο";
+"common.add" = "Προσθήκη";
+"common.reinstall" = "Επανεγκατάσταση";
+"common.uninstall" = "Απεγκατάσταση";
+"common.installed" = "Εγκατεστημένο";
+"common.browse" = "Περιήγηση...";
+"common.apply" = "Εφαρμογή";
+"common.preview" = "Προεπισκόπηση";
+
+// MARK: - Board View
+"board.column.options" = "Επιλογές στήλης";
+"board.column.rename" = "Μετονομασία στήλης...";
+"board.column.delete" = "Διαγραφή στήλης";
+"board.column.delete.disabled" = "Διαγραφή στήλης (μετακινήστε πρώτα τα τερματικά)";
+"board.column.add.terminal" = "Προσθήκη τερματικού";
+"board.column.add.terminal.help" = "Προσθήκη νέου τερματικού σε αυτή τη στήλη";
+"board.column.edit" = "Επεξεργασία στήλης...";
+
+// MARK: - Terminal Card
+"card.pin" = "Καρφίτσωμα τερματικού";
+"card.unpin" = "Ξεκαρφίτσωμα τερματικού";
+"card.running" = "Το τερματικό εκτελείται";
+"card.open" = "Ανοικτό";
+"card.edit" = "Επεξεργασία λεπτομερειών...";
+"card.delete" = "Διαγραφή";
+"card.wired" = "Συνδεδεμένο";
+"card.wired.help" = "Συνδεδεμένο σε πράκτορα MCP";
+"card.needs.attention" = "Χρειάζεται προσοχή";
+"card.processing" = "Επεξεργασία...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Η συνεδρία τερματικού τελείωσε";
+"terminal.restart" = "Επανεκκίνηση τερματικού";
+"terminal.restart.help" = "Έναρξη νέας συνεδρίας τερματικού";
+"terminal.current" = "Τρέχον τερματικό";
+"terminal.edit.help" = "Επεξεργασία λεπτομερειών τερματικού";
+"terminal.close.tab.help" = "Κλείσιμο αυτής της καρτέλας τερματικού";
+"terminal.switch.to %@" = "Εναλλαγή σε %@";
+"terminal.tab.help %@ %@" = "%@ σε %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Πίσω";
+"toolbar.back.help" = "Πίσω στον πίνακα (Escape)";
+"toolbar.move.to" = "Μετακίνηση σε στήλη";
+"toolbar.new.quick" = "Γρήγορο τερματικό";
+"toolbar.new.quick.help" = "Νέο γρήγορο τερματικό (⌘T)";
+"toolbar.edit" = "Επεξεργασία";
+"toolbar.edit.help" = "Επεξεργασία λεπτομερειών τερματικού (⌘E)";
+"toolbar.pin" = "Καρφίτσωμα";
+"toolbar.pin.help" = "Καρφίτσωμα τερματικού (⌘P)";
+"toolbar.unpin" = "Ξεκαρφίτσωμα";
+"toolbar.unpin.help" = "Ξεκαρφίτσωμα τερματικού (⌘P)";
+"toolbar.delete" = "Διαγραφή";
+"toolbar.delete.help" = "Διαγραφή τερματικού";
+"toolbar.add" = "Προσθήκη";
+"toolbar.add.help" = "Προσθήκη νέου τερματικού ή στήλης";
+"toolbar.open.terminal.app" = "Άνοιγμα στο Terminal";
+"toolbar.open.terminal.app.help" = "Άνοιγμα στο Terminal.app";
+"toolbar.new.terminal" = "Νέο τερματικό";
+"toolbar.new.column" = "Νέα στήλη";
+"toolbar.bin.count %lld" = "Κάδος (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Νέο γρήγορο τερματικό";
+"menu.new.terminal" = "Νέο τερματικό...";
+"menu.new.terminal.dialog" = "Νέο τερματικό";
+"menu.new.column" = "Νέα στήλη";
+"menu.back" = "Πίσω στον πίνακα";
+"menu.toggle.pin" = "Εναλλαγή καρφιτσώματος";
+"menu.next.pinned" = "Επόμενο καρφιτσωμένο τερματικό";
+"menu.previous.pinned" = "Προηγούμενο καρφιτσωμένο τερματικό";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Διαγραφή τερματικού";
+"delete.move.to.bin" = "Μετακίνηση στον κάδο";
+"delete.message %@" = "Είστε σίγουροι ότι θέλετε να διαγράψετε το \"%@\";";
+"delete.bin.message %@" = "Το \"%@\" θα μετακινηθεί στον κάδο όπου μπορεί να αποκατασταθεί για 30 ημέρες.";
+"delete.cancel" = "Ακύρωση";
+"delete.confirm" = "Διαγραφή";
+"delete.permanent" = "Μόνιμη διαγραφή";
+
+// MARK: - Card Editor
+"editor.title.new" = "Νέο τερματικό";
+"editor.title.edit" = "Επεξεργασία τερματικού";
+"editor.tab.general" = "Γενικά";
+"editor.tab.advanced" = "Προχωρημένα";
+
+// Editor - Details section
+"editor.section.details" = "Λεπτομέρειες";
+"editor.field.name" = "Όνομα";
+"editor.field.name.placeholder" = "Όνομα τερματικού";
+"editor.field.description" = "Περιγραφή";
+"editor.field.description.placeholder" = "Προαιρετική περιγραφή";
+"editor.field.column" = "Στήλη";
+"editor.field.badges" = "Σήματα";
+"editor.field.badges.placeholder" = "σήμα1, σήμα2";
+"editor.field.badges.help" = "Σήματα διαχωρισμένα με κόμμα στην κάρτα";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Εμφάνιση";
+"editor.field.theme" = "Θέμα";
+"editor.field.theme.default" = "Προεπιλογή";
+"editor.field.font.size" = "Μέγεθος γραμματοσειράς";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Τερματικό";
+"editor.field.directory" = "Κατάλογος εργασίας";
+"editor.field.directory.help" = "Αρχικός κατάλογος για το τερματικό";
+"editor.field.shell" = "Κέλυφος";
+"editor.field.shell.help" = "Κέλυφος προς χρήση (κενό = προεπιλογή)";
+
+// Editor - Automation section
+"editor.section.automation" = "Αυτοματισμός";
+"editor.field.init.command" = "Αρχική εντολή";
+"editor.field.init.command.help" = "Εντολή για εκτέλεση κατά την εκκίνηση του τερματικού";
+"editor.field.safe.paste" = "Ασφαλής επικόλληση";
+"editor.field.safe.paste.help" = "Εμφάνιση επιβεβαίωσης πριν την επικόλληση πολλών γραμμών";
+"editor.field.allow.autorun" = "Επιτροπή αυτόματης εκτέλεσης";
+"editor.field.allow.autorun.help" = "Επιτροπή στο CLI να εκτελεί εντολές αυτόματα";
+"editor.field.autorun.disabled.globally" = "Η αυτόματη εκτέλεση είναι απενεργοποιημένη καθολικά";
+"editor.field.autorun.enable.hint" = "Ενεργοποίηση στις Ρυθμίσεις > Εργαλεία";
+
+// Editor - Tags section
+"editor.section.tags" = "Ετικέτες";
+"editor.field.tags" = "Ετικέτες";
+"editor.tag.add" = "Προσθήκη ετικέτας";
+"editor.tag.key.placeholder" = "κλειδί";
+"editor.tag.value.placeholder" = "τιμή";
+"editor.tags.help" = "Ζεύγη κλειδιού-τιμής για οργάνωση";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Διαμόρφωση πράκτορα";
+"editor.field.terminal.allows.autorun" = "Το τερματικό επιτρέπει εντολές";
+"editor.field.persistent.context" = "Μόνιμο πλαίσιο";
+"editor.field.persistent.context.help" = "Το πλαίσιο διατηρείται μεταξύ συνεδριών";
+"editor.field.next.action" = "Επόμενη ενέργεια";
+"editor.field.next.action.help" = "Ενέργεια προς εκτέλεση την επόμενη φορά";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Γεννήτρια εντολών";
+"editor.field.apply.to.init.command" = "Εφαρμογή ως αρχική εντολή";
+"editor.field.apply.to.init.command.help" = "Χρήση της παραγόμενης εντολής ως αρχική";
+"editor.no.llm.prompt.warning" = "Δεν έχει διαμορφωθεί προτροπή LLM";
+"editor.non.interactive.note" = "Σημείωση: Οι εντολές εκτελούνται μη διαδραστικά";
+
+"editor.cancel" = "Ακύρωση";
+"editor.save" = "Αποθήκευση";
+"editor.save.open" = "Αποθήκευση & Άνοιγμα";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Νέα στήλη";
+"column.editor.title.edit" = "Επεξεργασία στήλης";
+"column.editor.field.name" = "Όνομα";
+"column.editor.field.name.placeholder" = "Όνομα στήλης";
+"column.editor.field.description" = "Περιγραφή";
+"column.editor.field.description.placeholder" = "Προαιρετική περιγραφή";
+"column.editor.field.color" = "Χρώμα";
+"column.editor.cancel" = "Ακύρωση";
+"column.editor.save" = "Αποθήκευση";
+
+// MARK: - Bin
+"bin.title" = "Κάδος";
+"bin.empty" = "Ο κάδος είναι άδειος";
+"bin.empty.button" = "Άδειασμα κάδου";
+"bin.close.help" = "Κλείσιμο κάδου";
+"bin.restore.help" = "Αποκατάσταση τερματικού";
+"bin.delete.help" = "Μόνιμη διαγραφή";
+"bin.deleted %@" = "Διαγράφηκε %@";
+"bin.days.remaining %lld" = "Απομένουν %lld ημέρες";
+
+// MARK: - Settings
+"settings.title" = "Ρυθμίσεις";
+"settings.tab.general" = "Γενικά";
+"settings.tab.tools" = "Εργαλεία";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Τερματικό";
+"settings.field.theme" = "Θέμα";
+"settings.field.theme.help" = "Προεπιλεγμένο θέμα για νέα τερματικά";
+"settings.field.copy.on.select" = "Αντιγραφή κατά την επιλογή";
+"settings.field.copy.on.select.help" = "Αυτόματη αντιγραφή επιλεγμένου κειμένου";
+
+// Settings - Bin section
+"settings.section.bin" = "Κάδος";
+"settings.auto.empty %lld" = "Αυτόματο άδειασμα μετά από %lld ημέρες";
+"settings.auto.empty.help" = "Αυτόματη αφαίρεση παλιών στοιχείων από τον κάδο";
+"settings.bin.empty" = "Ο κάδος είναι άδειος";
+"settings.bin.items %lld" = "%lld στοιχεία στον κάδο";
+"settings.empty.bin.now" = "Άδειασμα κάδου τώρα";
+
+// Settings - About section
+"settings.section.about" = "Σχετικά";
+"settings.field.version" = "Έκδοση";
+"settings.field.build" = "Κατασκευή";
+
+// Settings - Language section
+"settings.section.language" = "Γλώσσα";
+"settings.field.current" = "Τρέχουσα";
+"settings.system.default" = "Προεπιλογή συστήματος";
+"settings.search.languages" = "Αναζήτηση γλωσσών...";
+"settings.using.system.language" = "Χρήση γλώσσας συστήματος";
+"settings.restart.required" = "Απαιτείται επανεκκίνηση για αλλαγή γλώσσας";
+
+// Settings - CLI section
+"settings.section.cli" = "Γραμμή εντολών";
+"settings.cli.title" = "Εργαλείο CLI";
+"settings.cli.description" = "Το εργαλείο γραμμής εντολών termqcli σας επιτρέπει να ανοίγετε τερματικά από το κέλυφός σας.";
+"settings.cli.path" = "Θέση εγκατάστασης";
+"settings.cli.install" = "Εγκατάσταση CLI";
+"settings.cli.uninstall" = "Απεγκατάσταση";
+"settings.cli.installed" = "Εγκατεστημένο";
+"settings.cli.not.installed" = "Δεν έχει εγκατασταθεί";
+"settings.cli.usage" = "Χρήση:";
+"settings.cli.location" = "Θέση";
+"settings.enable.terminal.autorun" = "Ενεργοποίηση αυτόματης εκτέλεσης τερματικού";
+"settings.enable.terminal.autorun.help" = "Επιτροπή στο CLI να εκτελεί εντολές σε τερματικά";
+
+// Settings - MCP section
+"settings.section.mcp" = "Διακομιστής MCP";
+"settings.mcp.title" = "Διακομιστής MCP";
+"settings.mcp.description" = "Διακομιστής Model Context Protocol για ενσωμάτωση με πράκτορες AI.";
+"settings.mcp.location" = "Θέση διακομιστή";
+"settings.mcp.claude.config" = "Διαμόρφωση Claude Desktop";
+"settings.mcp.local.only" = "Μόνο τοπικές συνδέσεις";
+"settings.mcp.install.description" = "Προσθέστε στη διαμόρφωση Claude Desktop:";
+"settings.config.copied" = "Η διαμόρφωση αντιγράφηκε!";
+"settings.copy.config" = "Αντιγραφή διαμόρφωσης";
+
+// Settings - Agents section
+"settings.section.agents" = "Πράκτορες";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Αναζήτηση εντολών...";
+"palette.no.results" = "Δεν βρέθηκαν αποτελέσματα";
+
+// MARK: - Help View
+"help.title" = "Βοήθεια";
+"help.search.placeholder" = "Αναζήτηση στη βοήθεια...";
+
+// MARK: - Alerts
+"alert.error" = "Σφάλμα";
+"alert.success" = "Επιτυχία";

@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Russian localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Отмена";
+"common.save" = "Сохранить";
+"common.delete" = "Удалить";
+"common.edit" = "Изменить";
+"common.close" = "Закрыть";
+"common.add" = "Добавить";
+"common.reinstall" = "Переустановить";
+"common.uninstall" = "Удалить";
+"common.installed" = "Установлено";
+"common.browse" = "Обзор...";
+"common.apply" = "Применить";
+"common.preview" = "Просмотр";
+
+// MARK: - Board View
+"board.column.options" = "Параметры колонки";
+"board.column.rename" = "Переименовать колонку...";
+"board.column.delete" = "Удалить колонку";
+"board.column.delete.disabled" = "Удалить колонку (сначала переместите терминалы)";
+"board.column.add.terminal" = "Добавить терминал";
+"board.column.add.terminal.help" = "Добавить новый терминал в эту колонку";
+"board.column.edit" = "Редактировать колонку...";
+
+// MARK: - Terminal Card
+"card.pin" = "Закрепить терминал";
+"card.unpin" = "Открепить терминал";
+"card.running" = "Терминал работает";
+"card.open" = "Открыто";
+"card.edit" = "Изменить детали...";
+"card.delete" = "Удалить";
+"card.wired" = "Подключён";
+"card.wired.help" = "Подключён к агенту MCP";
+"card.needs.attention" = "Требует внимания";
+"card.processing" = "Обработка...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Сеанс терминала завершён";
+"terminal.restart" = "Перезапустить терминал";
+"terminal.restart.help" = "Начать новый сеанс терминала";
+"terminal.current" = "Текущий терминал";
+"terminal.edit.help" = "Изменить детали терминала";
+"terminal.close.tab.help" = "Закрыть эту вкладку терминала";
+"terminal.switch.to %@" = "Переключиться на %@";
+"terminal.tab.help %@ %@" = "%@ в %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Назад";
+"toolbar.back.help" = "Вернуться к доске (Escape)";
+"toolbar.move.to" = "Переместить в колонку";
+"toolbar.new.quick" = "Быстрый терминал";
+"toolbar.new.quick.help" = "Новый быстрый терминал (⌘T)";
+"toolbar.edit" = "Изменить";
+"toolbar.edit.help" = "Изменить детали терминала (⌘E)";
+"toolbar.pin" = "Закрепить";
+"toolbar.pin.help" = "Закрепить терминал (⌘P)";
+"toolbar.unpin" = "Открепить";
+"toolbar.unpin.help" = "Открепить терминал (⌘P)";
+"toolbar.delete" = "Удалить";
+"toolbar.delete.help" = "Удалить терминал";
+"toolbar.add" = "Добавить";
+"toolbar.add.help" = "Добавить новый терминал или колонку";
+"toolbar.open.terminal.app" = "Открыть в Терминале";
+"toolbar.open.terminal.app.help" = "Открыть в Terminal.app";
+"toolbar.new.terminal" = "Новый терминал";
+"toolbar.new.column" = "Новая колонка";
+"toolbar.bin.count %lld" = "Корзина (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Новый быстрый терминал";
+"menu.new.terminal" = "Новый терминал...";
+"menu.new.terminal.dialog" = "Новый терминал";
+"menu.new.column" = "Новая колонка";
+"menu.back" = "Вернуться к доске";
+"menu.toggle.pin" = "Переключить закрепление";
+"menu.next.pinned" = "Следующий закреплённый терминал";
+"menu.previous.pinned" = "Предыдущий закреплённый терминал";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Удалить терминал";
+"delete.move.to.bin" = "Переместить в корзину";
+"delete.message %@" = "Вы уверены, что хотите удалить \"%@\"?";
+"delete.bin.message %@" = "\"%@\" будет перемещён в корзину, где его можно восстановить в течение 30 дней.";
+"delete.cancel" = "Отмена";
+"delete.confirm" = "Удалить";
+"delete.permanent" = "Удалить навсегда";
+
+// MARK: - Card Editor
+"editor.title.new" = "Новый терминал";
+"editor.title.edit" = "Редактировать терминал";
+"editor.tab.general" = "Основные";
+"editor.tab.advanced" = "Дополнительно";
+
+// Editor - Details section
+"editor.section.details" = "Детали";
+"editor.field.name" = "Название";
+"editor.field.name.placeholder" = "Название терминала";
+"editor.field.description" = "Описание";
+"editor.field.description.placeholder" = "Необязательное описание";
+"editor.field.column" = "Колонка";
+"editor.field.badges" = "Значки";
+"editor.field.badges.placeholder" = "значок1, значок2";
+"editor.field.badges.help" = "Значки через запятую на карточке";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Внешний вид";
+"editor.field.theme" = "Тема";
+"editor.field.theme.default" = "По умолчанию";
+"editor.field.font.size" = "Размер шрифта";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Терминал";
+"editor.field.directory" = "Рабочий каталог";
+"editor.field.directory.help" = "Начальный каталог для терминала";
+"editor.field.shell" = "Оболочка";
+"editor.field.shell.help" = "Используемая оболочка (пусто = по умолчанию)";
+
+// Editor - Automation section
+"editor.section.automation" = "Автоматизация";
+"editor.field.init.command" = "Начальная команда";
+"editor.field.init.command.help" = "Команда для выполнения при запуске терминала";
+"editor.field.safe.paste" = "Безопасная вставка";
+"editor.field.safe.paste.help" = "Показывать подтверждение перед вставкой многострочного текста";
+"editor.field.allow.autorun" = "Разрешить автозапуск";
+"editor.field.allow.autorun.help" = "Разрешить CLI автоматически выполнять команды";
+"editor.field.autorun.disabled.globally" = "Автозапуск отключён глобально";
+"editor.field.autorun.enable.hint" = "Включите в Настройки > Инструменты";
+
+// Editor - Tags section
+"editor.section.tags" = "Теги";
+"editor.field.tags" = "Теги";
+"editor.tag.add" = "Добавить тег";
+"editor.tag.key.placeholder" = "ключ";
+"editor.tag.value.placeholder" = "значение";
+"editor.tags.help" = "Пары ключ-значение для организации";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Настройка агента";
+"editor.field.terminal.allows.autorun" = "Терминал разрешает команды";
+"editor.field.persistent.context" = "Постоянный контекст";
+"editor.field.persistent.context.help" = "Контекст сохраняется между сеансами";
+"editor.field.next.action" = "Следующее действие";
+"editor.field.next.action.help" = "Действие для выполнения в следующий раз";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Генератор команд";
+"editor.field.apply.to.init.command" = "Применить к начальной команде";
+"editor.field.apply.to.init.command.help" = "Использовать сгенерированную команду как начальную";
+"editor.no.llm.prompt.warning" = "Промпт LLM не настроен";
+"editor.non.interactive.note" = "Примечание: Команды выполняются неинтерактивно";
+
+"editor.cancel" = "Отмена";
+"editor.save" = "Сохранить";
+"editor.save.open" = "Сохранить и открыть";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Новая колонка";
+"column.editor.title.edit" = "Редактировать колонку";
+"column.editor.field.name" = "Название";
+"column.editor.field.name.placeholder" = "Название колонки";
+"column.editor.field.description" = "Описание";
+"column.editor.field.description.placeholder" = "Необязательное описание";
+"column.editor.field.color" = "Цвет";
+"column.editor.cancel" = "Отмена";
+"column.editor.save" = "Сохранить";
+
+// MARK: - Bin
+"bin.title" = "Корзина";
+"bin.empty" = "Корзина пуста";
+"bin.empty.button" = "Очистить корзину";
+"bin.close.help" = "Закрыть корзину";
+"bin.restore.help" = "Восстановить терминал";
+"bin.delete.help" = "Удалить навсегда";
+"bin.deleted %@" = "Удалено %@";
+"bin.days.remaining %lld" = "Осталось %lld дней";
+
+// MARK: - Settings
+"settings.title" = "Настройки";
+"settings.tab.general" = "Основные";
+"settings.tab.tools" = "Инструменты";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Терминал";
+"settings.field.theme" = "Тема";
+"settings.field.theme.help" = "Тема по умолчанию для новых терминалов";
+"settings.field.copy.on.select" = "Копировать при выделении";
+"settings.field.copy.on.select.help" = "Автоматически копировать выделенный текст";
+
+// Settings - Bin section
+"settings.section.bin" = "Корзина";
+"settings.auto.empty %lld" = "Автоочистка через %lld дней";
+"settings.auto.empty.help" = "Автоматически удалять старые элементы из корзины";
+"settings.bin.empty" = "Корзина пуста";
+"settings.bin.items %lld" = "%lld элементов в корзине";
+"settings.empty.bin.now" = "Очистить корзину сейчас";
+
+// Settings - About section
+"settings.section.about" = "О приложении";
+"settings.field.version" = "Версия";
+"settings.field.build" = "Сборка";
+
+// Settings - Language section
+"settings.section.language" = "Язык";
+"settings.field.current" = "Текущий";
+"settings.system.default" = "Системный по умолчанию";
+"settings.search.languages" = "Поиск языков...";
+"settings.using.system.language" = "Используется системный язык";
+"settings.restart.required" = "Для смены языка требуется перезапуск";
+
+// Settings - CLI section
+"settings.section.cli" = "Командная строка";
+"settings.cli.title" = "Инструмент CLI";
+"settings.cli.description" = "Инструмент командной строки termqcli позволяет открывать терминалы из оболочки.";
+"settings.cli.path" = "Путь установки";
+"settings.cli.install" = "Установить CLI";
+"settings.cli.uninstall" = "Удалить";
+"settings.cli.installed" = "Установлено";
+"settings.cli.not.installed" = "Не установлено";
+"settings.cli.usage" = "Использование:";
+"settings.cli.location" = "Расположение";
+"settings.enable.terminal.autorun" = "Включить автозапуск терминала";
+"settings.enable.terminal.autorun.help" = "Разрешить CLI выполнять команды в терминалах";
+
+// Settings - MCP section
+"settings.section.mcp" = "Сервер MCP";
+"settings.mcp.title" = "Сервер MCP";
+"settings.mcp.description" = "Сервер Model Context Protocol для интеграции с ИИ-агентами.";
+"settings.mcp.location" = "Расположение сервера";
+"settings.mcp.claude.config" = "Конфигурация Claude Desktop";
+"settings.mcp.local.only" = "Только локальные подключения";
+"settings.mcp.install.description" = "Добавьте в конфигурацию Claude Desktop:";
+"settings.config.copied" = "Конфигурация скопирована!";
+"settings.copy.config" = "Копировать конфигурацию";
+
+// Settings - Agents section
+"settings.section.agents" = "Агенты";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Поиск команд...";
+"palette.no.results" = "Результаты не найдены";
+
+// MARK: - Help View
+"help.title" = "Справка";
+"help.search.placeholder" = "Поиск в справке...";
+
+// MARK: - Alerts
+"alert.error" = "Ошибка";
+"alert.success" = "Успешно";

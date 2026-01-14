@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Hungarian localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Mégse";
+"common.save" = "Mentés";
+"common.delete" = "Törlés";
+"common.edit" = "Szerkesztés";
+"common.close" = "Bezárás";
+"common.add" = "Hozzáadás";
+"common.reinstall" = "Újratelepítés";
+"common.uninstall" = "Eltávolítás";
+"common.installed" = "Telepítve";
+"common.browse" = "Tallózás...";
+"common.apply" = "Alkalmazás";
+"common.preview" = "Előnézet";
+
+// MARK: - Board View
+"board.column.options" = "Oszlop beállításai";
+"board.column.rename" = "Oszlop átnevezése...";
+"board.column.delete" = "Oszlop törlése";
+"board.column.delete.disabled" = "Oszlop törlése (először helyezze át a terminálokat)";
+"board.column.add.terminal" = "Terminál hozzáadása";
+"board.column.add.terminal.help" = "Új terminál hozzáadása ehhez az oszlophoz";
+"board.column.edit" = "Oszlop szerkesztése...";
+
+// MARK: - Terminal Card
+"card.pin" = "Terminál rögzítése";
+"card.unpin" = "Terminál feloldása";
+"card.running" = "Terminál fut";
+"card.open" = "Nyitva";
+"card.edit" = "Részletek szerkesztése...";
+"card.delete" = "Törlés";
+"card.wired" = "Csatlakoztatva";
+"card.wired.help" = "Csatlakoztatva MCP agenthez";
+"card.needs.attention" = "Figyelmet igényel";
+"card.processing" = "Feldolgozás...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Terminál munkamenet befejeződött";
+"terminal.restart" = "Terminál újraindítása";
+"terminal.restart.help" = "Új terminál munkamenet indítása";
+"terminal.current" = "Jelenlegi terminál";
+"terminal.edit.help" = "Terminál részleteinek szerkesztése";
+"terminal.close.tab.help" = "Terminál lap bezárása";
+"terminal.switch.to %@" = "Váltás ide: %@";
+"terminal.tab.help %@ %@" = "%@ itt: %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Vissza";
+"toolbar.back.help" = "Vissza a táblához (Escape)";
+"toolbar.move.to" = "Áthelyezés oszlopba";
+"toolbar.new.quick" = "Gyors terminál";
+"toolbar.new.quick.help" = "Új gyors terminál (⌘T)";
+"toolbar.edit" = "Szerkesztés";
+"toolbar.edit.help" = "Terminál részleteinek szerkesztése (⌘E)";
+"toolbar.pin" = "Rögzítés";
+"toolbar.pin.help" = "Terminál rögzítése (⌘P)";
+"toolbar.unpin" = "Feloldás";
+"toolbar.unpin.help" = "Terminál feloldása (⌘P)";
+"toolbar.delete" = "Törlés";
+"toolbar.delete.help" = "Terminál törlése";
+"toolbar.add" = "Hozzáadás";
+"toolbar.add.help" = "Új terminál vagy oszlop hozzáadása";
+"toolbar.open.terminal.app" = "Megnyitás a Terminálban";
+"toolbar.open.terminal.app.help" = "Megnyitás a Terminal.app-ban";
+"toolbar.new.terminal" = "Új terminál";
+"toolbar.new.column" = "Új oszlop";
+"toolbar.bin.count %lld" = "Kuka (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Új gyors terminál";
+"menu.new.terminal" = "Új terminál...";
+"menu.new.terminal.dialog" = "Új terminál";
+"menu.new.column" = "Új oszlop";
+"menu.back" = "Vissza a táblához";
+"menu.toggle.pin" = "Rögzítés váltása";
+"menu.next.pinned" = "Következő rögzített terminál";
+"menu.previous.pinned" = "Előző rögzített terminál";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Terminál törlése";
+"delete.move.to.bin" = "Áthelyezés a kukába";
+"delete.message %@" = "Biztosan törölni szeretné a következőt: \"%@\"?";
+"delete.bin.message %@" = "\"%@\" a kukába kerül, ahol 30 napig visszaállítható.";
+"delete.cancel" = "Mégse";
+"delete.confirm" = "Törlés";
+"delete.permanent" = "Végleges törlés";
+
+// MARK: - Card Editor
+"editor.title.new" = "Új terminál";
+"editor.title.edit" = "Terminál szerkesztése";
+"editor.tab.general" = "Általános";
+"editor.tab.advanced" = "Speciális";
+
+// Editor - Details section
+"editor.section.details" = "Részletek";
+"editor.field.name" = "Név";
+"editor.field.name.placeholder" = "Terminál neve";
+"editor.field.description" = "Leírás";
+"editor.field.description.placeholder" = "Opcionális leírás";
+"editor.field.column" = "Oszlop";
+"editor.field.badges" = "Jelvények";
+"editor.field.badges.placeholder" = "jelvény1, jelvény2";
+"editor.field.badges.help" = "Vesszővel elválasztott jelvények a kártyán";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Megjelenés";
+"editor.field.theme" = "Téma";
+"editor.field.theme.default" = "Alapértelmezett";
+"editor.field.font.size" = "Betűméret";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Terminál";
+"editor.field.directory" = "Munkakönyvtár";
+"editor.field.directory.help" = "Kezdő könyvtár a terminálhoz";
+"editor.field.shell" = "Shell";
+"editor.field.shell.help" = "Használandó shell (üres = alapértelmezett)";
+
+// Editor - Automation section
+"editor.section.automation" = "Automatizálás";
+"editor.field.init.command" = "Kezdő parancs";
+"editor.field.init.command.help" = "Parancs futtatása a terminál indításakor";
+"editor.field.safe.paste" = "Biztonságos beillesztés";
+"editor.field.safe.paste.help" = "Megerősítés kérése többsoros szöveg beillesztése előtt";
+"editor.field.allow.autorun" = "Automatikus futtatás engedélyezése";
+"editor.field.allow.autorun.help" = "CLI automatikus parancsfuttatásának engedélyezése";
+"editor.field.autorun.disabled.globally" = "Automatikus futtatás globálisan letiltva";
+"editor.field.autorun.enable.hint" = "Engedélyezés: Beállítások > Eszközök";
+
+// Editor - Tags section
+"editor.section.tags" = "Címkék";
+"editor.field.tags" = "Címkék";
+"editor.tag.add" = "Címke hozzáadása";
+"editor.tag.key.placeholder" = "kulcs";
+"editor.tag.value.placeholder" = "érték";
+"editor.tags.help" = "Kulcs-érték párok szervezéshez";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Agent konfiguráció";
+"editor.field.terminal.allows.autorun" = "Terminál engedélyezi a parancsokat";
+"editor.field.persistent.context" = "Állandó kontextus";
+"editor.field.persistent.context.help" = "Kontextus megőrzése munkamenetek között";
+"editor.field.next.action" = "Következő művelet";
+"editor.field.next.action.help" = "Legközelebb végrehajtandó művelet";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Parancs generátor";
+"editor.field.apply.to.init.command" = "Alkalmazás kezdő parancsként";
+"editor.field.apply.to.init.command.help" = "Generált parancs használata kezdő parancsként";
+"editor.no.llm.prompt.warning" = "Nincs LLM prompt konfigurálva";
+"editor.non.interactive.note" = "Megjegyzés: A parancsok nem interaktívan futnak";
+
+"editor.cancel" = "Mégse";
+"editor.save" = "Mentés";
+"editor.save.open" = "Mentés és megnyitás";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Új oszlop";
+"column.editor.title.edit" = "Oszlop szerkesztése";
+"column.editor.field.name" = "Név";
+"column.editor.field.name.placeholder" = "Oszlop neve";
+"column.editor.field.description" = "Leírás";
+"column.editor.field.description.placeholder" = "Opcionális leírás";
+"column.editor.field.color" = "Szín";
+"column.editor.cancel" = "Mégse";
+"column.editor.save" = "Mentés";
+
+// MARK: - Bin
+"bin.title" = "Kuka";
+"bin.empty" = "A kuka üres";
+"bin.empty.button" = "Kuka ürítése";
+"bin.close.help" = "Kuka bezárása";
+"bin.restore.help" = "Terminál visszaállítása";
+"bin.delete.help" = "Végleges törlés";
+"bin.deleted %@" = "Törölve: %@";
+"bin.days.remaining %lld" = "%lld nap van hátra";
+
+// MARK: - Settings
+"settings.title" = "Beállítások";
+"settings.tab.general" = "Általános";
+"settings.tab.tools" = "Eszközök";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Terminál";
+"settings.field.theme" = "Téma";
+"settings.field.theme.help" = "Alapértelmezett téma új terminálokhoz";
+"settings.field.copy.on.select" = "Másolás kijelöléskor";
+"settings.field.copy.on.select.help" = "Kijelölt szöveg automatikus másolása";
+
+// Settings - Bin section
+"settings.section.bin" = "Kuka";
+"settings.auto.empty %lld" = "Automatikus ürítés %lld nap után";
+"settings.auto.empty.help" = "Régi elemek automatikus törlése a kukából";
+"settings.bin.empty" = "A kuka üres";
+"settings.bin.items %lld" = "%lld elem a kukában";
+"settings.empty.bin.now" = "Kuka ürítése most";
+
+// Settings - About section
+"settings.section.about" = "Névjegy";
+"settings.field.version" = "Verzió";
+"settings.field.build" = "Build";
+
+// Settings - Language section
+"settings.section.language" = "Nyelv";
+"settings.field.current" = "Jelenlegi";
+"settings.system.default" = "Rendszer alapértelmezett";
+"settings.search.languages" = "Nyelvek keresése...";
+"settings.using.system.language" = "Rendszernyelv használata";
+"settings.restart.required" = "Újraindítás szükséges a nyelvváltáshoz";
+
+// Settings - CLI section
+"settings.section.cli" = "Parancssor";
+"settings.cli.title" = "CLI eszköz";
+"settings.cli.description" = "A termqcli parancssori eszköz lehetővé teszi terminálok megnyitását a shellből.";
+"settings.cli.path" = "Telepítési hely";
+"settings.cli.install" = "CLI telepítése";
+"settings.cli.uninstall" = "Eltávolítás";
+"settings.cli.installed" = "Telepítve";
+"settings.cli.not.installed" = "Nincs telepítve";
+"settings.cli.usage" = "Használat:";
+"settings.cli.location" = "Hely";
+"settings.enable.terminal.autorun" = "Terminál automatikus futtatás engedélyezése";
+"settings.enable.terminal.autorun.help" = "CLI parancsfuttatásának engedélyezése terminálokban";
+
+// Settings - MCP section
+"settings.section.mcp" = "MCP szerver";
+"settings.mcp.title" = "MCP szerver";
+"settings.mcp.description" = "Model Context Protocol szerver AI agent integrációhoz.";
+"settings.mcp.location" = "Szerver helye";
+"settings.mcp.claude.config" = "Claude Desktop konfiguráció";
+"settings.mcp.local.only" = "Csak helyi kapcsolatok";
+"settings.mcp.install.description" = "Adja hozzá a Claude Desktop konfigurációhoz:";
+"settings.config.copied" = "Konfiguráció másolva!";
+"settings.copy.config" = "Konfiguráció másolása";
+
+// Settings - Agents section
+"settings.section.agents" = "Agentek";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Parancsok keresése...";
+"palette.no.results" = "Nincs találat";
+
+// MARK: - Help View
+"help.title" = "Súgó";
+"help.search.placeholder" = "Keresés a súgóban...";
+
+// MARK: - Alerts
+"alert.error" = "Hiba";
+"alert.success" = "Sikeres";

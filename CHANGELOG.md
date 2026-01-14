@@ -5,6 +5,15 @@ All notable changes to TermQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **CLI renamed**: `termq` → `termqcli` to fix Swift Package Manager case-insensitivity issue
+  - On case-insensitive filesystems (macOS default), `termq` and `TermQ` resolve to the same file
+  - This caused build issues where the CLI binary would overwrite the GUI binary
+  - All CLI commands now use `termqcli` prefix: `termqcli list`, `termqcli open`, etc.
+
 ## [0.5.2] - 2026-01-14
 
 ### Fixed

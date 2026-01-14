@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Thai localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "ตกลง";
+"common.cancel" = "ยกเลิก";
+"common.save" = "บันทึก";
+"common.delete" = "ลบ";
+"common.edit" = "แก้ไข";
+"common.close" = "ปิด";
+"common.add" = "เพิ่ม";
+"common.reinstall" = "ติดตั้งใหม่";
+"common.uninstall" = "ถอนการติดตั้ง";
+"common.installed" = "ติดตั้งแล้ว";
+"common.browse" = "เรียกดู...";
+"common.apply" = "นำไปใช้";
+"common.preview" = "แสดงตัวอย่าง";
+
+// MARK: - Board View
+"board.column.options" = "ตัวเลือกคอลัมน์";
+"board.column.rename" = "เปลี่ยนชื่อคอลัมน์...";
+"board.column.delete" = "ลบคอลัมน์";
+"board.column.delete.disabled" = "ลบคอลัมน์ (ย้ายเทอร์มินัลก่อน)";
+"board.column.add.terminal" = "เพิ่มเทอร์มินัล";
+"board.column.add.terminal.help" = "เพิ่มเทอร์มินัลใหม่ในคอลัมน์นี้";
+"board.column.edit" = "แก้ไขคอลัมน์...";
+
+// MARK: - Terminal Card
+"card.pin" = "ปักหมุดเทอร์มินัล";
+"card.unpin" = "เลิกปักหมุดเทอร์มินัล";
+"card.running" = "เทอร์มินัลกำลังทำงาน";
+"card.open" = "เปิด";
+"card.edit" = "แก้ไขรายละเอียด...";
+"card.delete" = "ลบ";
+"card.wired" = "เชื่อมต่อแล้ว";
+"card.wired.help" = "เชื่อมต่อกับตัวแทน MCP";
+"card.needs.attention" = "ต้องการความสนใจ";
+"card.processing" = "กำลังประมวลผล...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "เซสชันเทอร์มินัลสิ้นสุดแล้ว";
+"terminal.restart" = "รีสตาร์ทเทอร์มินัล";
+"terminal.restart.help" = "เริ่มเซสชันเทอร์มินัลใหม่";
+"terminal.current" = "เทอร์มินัลปัจจุบัน";
+"terminal.edit.help" = "แก้ไขรายละเอียดเทอร์มินัล";
+"terminal.close.tab.help" = "ปิดแท็บเทอร์มินัลนี้";
+"terminal.switch.to %@" = "สลับไปที่ %@";
+"terminal.tab.help %@ %@" = "%@ ใน %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "ย้อนกลับ";
+"toolbar.back.help" = "กลับไปที่บอร์ด (Escape)";
+"toolbar.move.to" = "ย้ายไปคอลัมน์";
+"toolbar.new.quick" = "เทอร์มินัลด่วน";
+"toolbar.new.quick.help" = "เทอร์มินัลด่วนใหม่ (⌘T)";
+"toolbar.edit" = "แก้ไข";
+"toolbar.edit.help" = "แก้ไขรายละเอียดเทอร์มินัล (⌘E)";
+"toolbar.pin" = "ปักหมุด";
+"toolbar.pin.help" = "ปักหมุดเทอร์มินัล (⌘P)";
+"toolbar.unpin" = "เลิกปักหมุด";
+"toolbar.unpin.help" = "เลิกปักหมุดเทอร์มินัล (⌘P)";
+"toolbar.delete" = "ลบ";
+"toolbar.delete.help" = "ลบเทอร์มินัล";
+"toolbar.add" = "เพิ่ม";
+"toolbar.add.help" = "เพิ่มเทอร์มินัลหรือคอลัมน์ใหม่";
+"toolbar.open.terminal.app" = "เปิดใน Terminal";
+"toolbar.open.terminal.app.help" = "เปิดใน Terminal.app";
+"toolbar.new.terminal" = "เทอร์มินัลใหม่";
+"toolbar.new.column" = "คอลัมน์ใหม่";
+"toolbar.bin.count %lld" = "ถังขยะ (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "เทอร์มินัลด่วนใหม่";
+"menu.new.terminal" = "เทอร์มินัลใหม่...";
+"menu.new.terminal.dialog" = "เทอร์มินัลใหม่";
+"menu.new.column" = "คอลัมน์ใหม่";
+"menu.back" = "กลับไปที่บอร์ด";
+"menu.toggle.pin" = "สลับการปักหมุด";
+"menu.next.pinned" = "เทอร์มินัลปักหมุดถัดไป";
+"menu.previous.pinned" = "เทอร์มินัลปักหมุดก่อนหน้า";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "ลบเทอร์มินัล";
+"delete.move.to.bin" = "ย้ายไปถังขยะ";
+"delete.message %@" = "คุณแน่ใจหรือไม่ว่าต้องการลบ \"%@\"?";
+"delete.bin.message %@" = "\"%@\" จะถูกย้ายไปถังขยะ ซึ่งสามารถกู้คืนได้ภายใน 30 วัน";
+"delete.cancel" = "ยกเลิก";
+"delete.confirm" = "ลบ";
+"delete.permanent" = "ลบถาวร";
+
+// MARK: - Card Editor
+"editor.title.new" = "เทอร์มินัลใหม่";
+"editor.title.edit" = "แก้ไขเทอร์มินัล";
+"editor.tab.general" = "ทั่วไป";
+"editor.tab.advanced" = "ขั้นสูง";
+
+// Editor - Details section
+"editor.section.details" = "รายละเอียด";
+"editor.field.name" = "ชื่อ";
+"editor.field.name.placeholder" = "ชื่อเทอร์มินัล";
+"editor.field.description" = "คำอธิบาย";
+"editor.field.description.placeholder" = "คำอธิบาย (ไม่บังคับ)";
+"editor.field.column" = "คอลัมน์";
+"editor.field.badges" = "ป้าย";
+"editor.field.badges.placeholder" = "ป้าย1, ป้าย2";
+"editor.field.badges.help" = "ป้ายที่คั่นด้วยเครื่องหมายจุลภาคบนการ์ด";
+
+// Editor - Appearance section
+"editor.section.appearance" = "รูปลักษณ์";
+"editor.field.theme" = "ธีม";
+"editor.field.theme.default" = "ค่าเริ่มต้น";
+"editor.field.font.size" = "ขนาดตัวอักษร";
+"editor.font.preview" = "AaBbCc กขค 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "เทอร์มินัล";
+"editor.field.directory" = "ไดเรกทอรีทำงาน";
+"editor.field.directory.help" = "ไดเรกทอรีเริ่มต้นสำหรับเทอร์มินัล";
+"editor.field.shell" = "เชลล์";
+"editor.field.shell.help" = "เชลล์ที่จะใช้ (ว่างเปล่า = ค่าเริ่มต้น)";
+
+// Editor - Automation section
+"editor.section.automation" = "ระบบอัตโนมัติ";
+"editor.field.init.command" = "คำสั่งเริ่มต้น";
+"editor.field.init.command.help" = "คำสั่งที่จะรันเมื่อเทอร์มินัลเริ่มต้น";
+"editor.field.safe.paste" = "วางอย่างปลอดภัย";
+"editor.field.safe.paste.help" = "แสดงการยืนยันก่อนวางข้อความหลายบรรทัด";
+"editor.field.allow.autorun" = "อนุญาตการรันอัตโนมัติ";
+"editor.field.allow.autorun.help" = "อนุญาตให้ CLI รันคำสั่งอัตโนมัติ";
+"editor.field.autorun.disabled.globally" = "การรันอัตโนมัติถูกปิดใช้งานทั้งระบบ";
+"editor.field.autorun.enable.hint" = "เปิดใช้งานใน การตั้งค่า > เครื่องมือ";
+
+// Editor - Tags section
+"editor.section.tags" = "แท็ก";
+"editor.field.tags" = "แท็ก";
+"editor.tag.add" = "เพิ่มแท็ก";
+"editor.tag.key.placeholder" = "คีย์";
+"editor.tag.value.placeholder" = "ค่า";
+"editor.tags.help" = "คู่คีย์-ค่าสำหรับการจัดระเบียบ";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "การกำหนดค่าตัวแทน";
+"editor.field.terminal.allows.autorun" = "เทอร์มินัลอนุญาตคำสั่ง";
+"editor.field.persistent.context" = "บริบทถาวร";
+"editor.field.persistent.context.help" = "บริบทถูกเก็บรักษาข้ามเซสชัน";
+"editor.field.next.action" = "การดำเนินการถัดไป";
+"editor.field.next.action.help" = "การดำเนินการที่จะทำต่อไป";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "ตัวสร้างคำสั่ง";
+"editor.field.apply.to.init.command" = "ใช้เป็นคำสั่งเริ่มต้น";
+"editor.field.apply.to.init.command.help" = "ใช้คำสั่งที่สร้างเป็นคำสั่งเริ่มต้น";
+"editor.no.llm.prompt.warning" = "ไม่ได้กำหนดค่าพรอมต์ LLM";
+"editor.non.interactive.note" = "หมายเหตุ: คำสั่งรันแบบไม่โต้ตอบ";
+
+"editor.cancel" = "ยกเลิก";
+"editor.save" = "บันทึก";
+"editor.save.open" = "บันทึกและเปิด";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "คอลัมน์ใหม่";
+"column.editor.title.edit" = "แก้ไขคอลัมน์";
+"column.editor.field.name" = "ชื่อ";
+"column.editor.field.name.placeholder" = "ชื่อคอลัมน์";
+"column.editor.field.description" = "คำอธิบาย";
+"column.editor.field.description.placeholder" = "คำอธิบาย (ไม่บังคับ)";
+"column.editor.field.color" = "สี";
+"column.editor.cancel" = "ยกเลิก";
+"column.editor.save" = "บันทึก";
+
+// MARK: - Bin
+"bin.title" = "ถังขยะ";
+"bin.empty" = "ถังขยะว่างเปล่า";
+"bin.empty.button" = "ล้างถังขยะ";
+"bin.close.help" = "ปิดถังขยะ";
+"bin.restore.help" = "กู้คืนเทอร์มินัล";
+"bin.delete.help" = "ลบถาวร";
+"bin.deleted %@" = "ลบแล้ว %@";
+"bin.days.remaining %lld" = "เหลือ %lld วัน";
+
+// MARK: - Settings
+"settings.title" = "การตั้งค่า";
+"settings.tab.general" = "ทั่วไป";
+"settings.tab.tools" = "เครื่องมือ";
+
+// Settings - Terminal section
+"settings.section.terminal" = "เทอร์มินัล";
+"settings.field.theme" = "ธีม";
+"settings.field.theme.help" = "ธีมเริ่มต้นสำหรับเทอร์มินัลใหม่";
+"settings.field.copy.on.select" = "คัดลอกเมื่อเลือก";
+"settings.field.copy.on.select.help" = "คัดลอกข้อความที่เลือกโดยอัตโนมัติ";
+
+// Settings - Bin section
+"settings.section.bin" = "ถังขยะ";
+"settings.auto.empty %lld" = "ล้างอัตโนมัติหลังจาก %lld วัน";
+"settings.auto.empty.help" = "ลบรายการเก่าจากถังขยะโดยอัตโนมัติ";
+"settings.bin.empty" = "ถังขยะว่างเปล่า";
+"settings.bin.items %lld" = "%lld รายการในถังขยะ";
+"settings.empty.bin.now" = "ล้างถังขยะตอนนี้";
+
+// Settings - About section
+"settings.section.about" = "เกี่ยวกับ";
+"settings.field.version" = "เวอร์ชัน";
+"settings.field.build" = "บิลด์";
+
+// Settings - Language section
+"settings.section.language" = "ภาษา";
+"settings.field.current" = "ปัจจุบัน";
+"settings.system.default" = "ค่าเริ่มต้นของระบบ";
+"settings.search.languages" = "ค้นหาภาษา...";
+"settings.using.system.language" = "ใช้ภาษาของระบบ";
+"settings.restart.required" = "ต้องรีสตาร์ทเพื่อเปลี่ยนภาษา";
+
+// Settings - CLI section
+"settings.section.cli" = "บรรทัดคำสั่ง";
+"settings.cli.title" = "เครื่องมือ CLI";
+"settings.cli.description" = "เครื่องมือบรรทัดคำสั่ง termqcli ช่วยให้คุณเปิดเทอร์มินัลจากเชลล์";
+"settings.cli.path" = "ตำแหน่งการติดตั้ง";
+"settings.cli.install" = "ติดตั้ง CLI";
+"settings.cli.uninstall" = "ถอนการติดตั้ง";
+"settings.cli.installed" = "ติดตั้งแล้ว";
+"settings.cli.not.installed" = "ยังไม่ได้ติดตั้ง";
+"settings.cli.usage" = "การใช้งาน:";
+"settings.cli.location" = "ตำแหน่ง";
+"settings.enable.terminal.autorun" = "เปิดใช้งานการรันเทอร์มินัลอัตโนมัติ";
+"settings.enable.terminal.autorun.help" = "อนุญาตให้ CLI รันคำสั่งในเทอร์มินัล";
+
+// Settings - MCP section
+"settings.section.mcp" = "เซิร์ฟเวอร์ MCP";
+"settings.mcp.title" = "เซิร์ฟเวอร์ MCP";
+"settings.mcp.description" = "เซิร์ฟเวอร์ Model Context Protocol สำหรับการรวมตัวแทน AI";
+"settings.mcp.location" = "ตำแหน่งเซิร์ฟเวอร์";
+"settings.mcp.claude.config" = "การกำหนดค่า Claude Desktop";
+"settings.mcp.local.only" = "เฉพาะการเชื่อมต่อภายใน";
+"settings.mcp.install.description" = "เพิ่มในการกำหนดค่า Claude Desktop ของคุณ:";
+"settings.config.copied" = "คัดลอกการกำหนดค่าแล้ว!";
+"settings.copy.config" = "คัดลอกการกำหนดค่า";
+
+// Settings - Agents section
+"settings.section.agents" = "ตัวแทน";
+
+// MARK: - Command Palette
+"palette.placeholder" = "ค้นหาคำสั่ง...";
+"palette.no.results" = "ไม่พบผลลัพธ์";
+
+// MARK: - Help View
+"help.title" = "ความช่วยเหลือ";
+"help.search.placeholder" = "ค้นหาความช่วยเหลือ...";
+
+// MARK: - Alerts
+"alert.error" = "ข้อผิดพลาด";
+"alert.success" = "สำเร็จ";

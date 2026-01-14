@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  European Portuguese localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Cancelar";
+"common.save" = "Guardar";
+"common.delete" = "Eliminar";
+"common.edit" = "Editar";
+"common.close" = "Fechar";
+"common.add" = "Adicionar";
+"common.reinstall" = "Reinstalar";
+"common.uninstall" = "Desinstalar";
+"common.installed" = "Instalado";
+"common.browse" = "Procurar...";
+"common.apply" = "Aplicar";
+"common.preview" = "Pré-visualização";
+
+// MARK: - Board View
+"board.column.options" = "Opções da coluna";
+"board.column.rename" = "Renomear Coluna...";
+"board.column.delete" = "Eliminar Coluna";
+"board.column.delete.disabled" = "Eliminar Coluna (mova os terminais primeiro)";
+"board.column.add.terminal" = "Adicionar Terminal";
+"board.column.add.terminal.help" = "Adicionar novo terminal a esta coluna";
+"board.column.edit" = "Editar Coluna...";
+
+// MARK: - Terminal Card
+"card.pin" = "Fixar terminal";
+"card.unpin" = "Desafixar terminal";
+"card.running" = "Terminal em execução";
+"card.open" = "Aberto";
+"card.edit" = "Editar Detalhes...";
+"card.delete" = "Eliminar";
+"card.wired" = "Ligado";
+"card.wired.help" = "Ligado ao agente MCP";
+"card.needs.attention" = "Necessita de atenção";
+"card.processing" = "A processar...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Sessão de terminal terminada";
+"terminal.restart" = "Reiniciar Terminal";
+"terminal.restart.help" = "Iniciar uma nova sessão de terminal";
+"terminal.current" = "Terminal actual";
+"terminal.edit.help" = "Editar detalhes do terminal";
+"terminal.close.tab.help" = "Fechar este separador de terminal";
+"terminal.switch.to %@" = "Mudar para %@";
+"terminal.tab.help %@ %@" = "%@ em %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Voltar";
+"toolbar.back.help" = "Voltar ao quadro (Escape)";
+"toolbar.move.to" = "Mover para coluna";
+"toolbar.new.quick" = "Terminal Rápido";
+"toolbar.new.quick.help" = "Novo terminal rápido (⌘T)";
+"toolbar.edit" = "Editar";
+"toolbar.edit.help" = "Editar detalhes do terminal (⌘E)";
+"toolbar.pin" = "Fixar";
+"toolbar.pin.help" = "Fixar terminal (⌘P)";
+"toolbar.unpin" = "Desafixar";
+"toolbar.unpin.help" = "Desafixar terminal (⌘P)";
+"toolbar.delete" = "Eliminar";
+"toolbar.delete.help" = "Eliminar terminal";
+"toolbar.add" = "Adicionar";
+"toolbar.add.help" = "Adicionar novo terminal ou coluna";
+"toolbar.open.terminal.app" = "Abrir no Terminal";
+"toolbar.open.terminal.app.help" = "Abrir no Terminal.app";
+"toolbar.new.terminal" = "Novo Terminal";
+"toolbar.new.column" = "Nova Coluna";
+"toolbar.bin.count %lld" = "Reciclagem (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Novo Terminal Rápido";
+"menu.new.terminal" = "Novo Terminal...";
+"menu.new.terminal.dialog" = "Novo Terminal";
+"menu.new.column" = "Nova Coluna";
+"menu.back" = "Voltar ao Quadro";
+"menu.toggle.pin" = "Alternar Fixação";
+"menu.next.pinned" = "Próximo Terminal Fixado";
+"menu.previous.pinned" = "Terminal Fixado Anterior";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Eliminar Terminal";
+"delete.move.to.bin" = "Mover para Reciclagem";
+"delete.message %@" = "Tem a certeza de que pretende eliminar \"%@\"?";
+"delete.bin.message %@" = "\"%@\" será movido para a Reciclagem onde poderá ser restaurado durante 30 dias.";
+"delete.cancel" = "Cancelar";
+"delete.confirm" = "Eliminar";
+"delete.permanent" = "Eliminar Permanentemente";
+
+// MARK: - Card Editor
+"editor.title.new" = "Novo Terminal";
+"editor.title.edit" = "Editar Terminal";
+"editor.tab.general" = "Geral";
+"editor.tab.advanced" = "Avançado";
+
+// Editor - Details section
+"editor.section.details" = "Detalhes";
+"editor.field.name" = "Nome";
+"editor.field.name.placeholder" = "Nome do terminal";
+"editor.field.description" = "Descrição";
+"editor.field.description.placeholder" = "Descrição opcional";
+"editor.field.column" = "Coluna";
+"editor.field.badges" = "Distintivos";
+"editor.field.badges.placeholder" = "distintivo1, distintivo2";
+"editor.field.badges.help" = "Distintivos separados por vírgulas mostrados no cartão";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Aparência";
+"editor.field.theme" = "Tema";
+"editor.field.theme.default" = "Predefinido";
+"editor.field.font.size" = "Tamanho da Letra";
+"editor.font.preview" = "AaBbCc Portugal 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Terminal";
+"editor.field.directory" = "Directório de Trabalho";
+"editor.field.directory.help" = "Directório inicial para o terminal";
+"editor.field.shell" = "Shell";
+"editor.field.shell.help" = "Shell a utilizar (deixe vazio para predefinição)";
+
+// Editor - Automation section
+"editor.section.automation" = "Automatização";
+"editor.field.init.command" = "Comando Inicial";
+"editor.field.init.command.help" = "Comando a executar quando o terminal inicia";
+"editor.field.safe.paste" = "Colagem Segura";
+"editor.field.safe.paste.help" = "Mostrar confirmação antes de colar texto multilinha";
+"editor.field.allow.autorun" = "Permitir Execução Auto";
+"editor.field.allow.autorun.help" = "Permitir que o CLI execute comandos automaticamente";
+"editor.field.autorun.disabled.globally" = "Execução auto está desactivada globalmente";
+"editor.field.autorun.enable.hint" = "Activar em Definições > Ferramentas";
+
+// Editor - Tags section
+"editor.section.tags" = "Etiquetas";
+"editor.field.tags" = "Etiquetas";
+"editor.tag.add" = "Adicionar Etiqueta";
+"editor.tag.key.placeholder" = "chave";
+"editor.tag.value.placeholder" = "valor";
+"editor.tags.help" = "Pares chave-valor para organização";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Configuração do Agente";
+"editor.field.terminal.allows.autorun" = "O terminal permite comandos";
+"editor.field.persistent.context" = "Contexto Persistente";
+"editor.field.persistent.context.help" = "Contexto mantido entre sessões";
+"editor.field.next.action" = "Próxima Acção";
+"editor.field.next.action.help" = "Acção a executar a seguir";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Gerador de Comandos";
+"editor.field.apply.to.init.command" = "Aplicar ao Comando Inicial";
+"editor.field.apply.to.init.command.help" = "Usar comando gerado como comando inicial";
+"editor.no.llm.prompt.warning" = "Nenhum prompt de LLM configurado";
+"editor.non.interactive.note" = "Nota: Os comandos são executados de forma não interactiva";
+
+"editor.cancel" = "Cancelar";
+"editor.save" = "Guardar";
+"editor.save.open" = "Guardar e Abrir";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Nova Coluna";
+"column.editor.title.edit" = "Editar Coluna";
+"column.editor.field.name" = "Nome";
+"column.editor.field.name.placeholder" = "Nome da coluna";
+"column.editor.field.description" = "Descrição";
+"column.editor.field.description.placeholder" = "Descrição opcional";
+"column.editor.field.color" = "Cor";
+"column.editor.cancel" = "Cancelar";
+"column.editor.save" = "Guardar";
+
+// MARK: - Bin
+"bin.title" = "Reciclagem";
+"bin.empty" = "A reciclagem está vazia";
+"bin.empty.button" = "Esvaziar Reciclagem";
+"bin.close.help" = "Fechar reciclagem";
+"bin.restore.help" = "Restaurar terminal";
+"bin.delete.help" = "Eliminar permanentemente";
+"bin.deleted %@" = "Eliminado %@";
+"bin.days.remaining %lld" = "%lld dias restantes";
+
+// MARK: - Settings
+"settings.title" = "Definições";
+"settings.tab.general" = "Geral";
+"settings.tab.tools" = "Ferramentas";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Terminal";
+"settings.field.theme" = "Tema";
+"settings.field.theme.help" = "Tema predefinido para novos terminais";
+"settings.field.copy.on.select" = "Copiar ao Seleccionar";
+"settings.field.copy.on.select.help" = "Copiar automaticamente o texto seleccionado";
+
+// Settings - Bin section
+"settings.section.bin" = "Reciclagem";
+"settings.auto.empty %lld" = "Esvaziar automaticamente após %lld dias";
+"settings.auto.empty.help" = "Esvaziar automaticamente itens antigos da reciclagem";
+"settings.bin.empty" = "A reciclagem está vazia";
+"settings.bin.items %lld" = "%lld itens na reciclagem";
+"settings.empty.bin.now" = "Esvaziar Reciclagem Agora";
+
+// Settings - About section
+"settings.section.about" = "Sobre";
+"settings.field.version" = "Versão";
+"settings.field.build" = "Compilação";
+
+// Settings - Language section
+"settings.section.language" = "Idioma";
+"settings.field.current" = "Actual";
+"settings.system.default" = "Predefinição do Sistema";
+"settings.search.languages" = "Procurar idiomas...";
+"settings.using.system.language" = "A utilizar idioma do sistema";
+"settings.restart.required" = "Reinício necessário para alterar o idioma";
+
+// Settings - CLI section
+"settings.section.cli" = "Linha de Comandos";
+"settings.cli.title" = "Ferramenta CLI";
+"settings.cli.description" = "A ferramenta de linha de comandos termqcli permite-lhe abrir terminais a partir da sua shell.";
+"settings.cli.path" = "Local de Instalação";
+"settings.cli.install" = "Instalar CLI";
+"settings.cli.uninstall" = "Desinstalar";
+"settings.cli.installed" = "Instalado";
+"settings.cli.not.installed" = "Não instalado";
+"settings.cli.usage" = "Utilização:";
+"settings.cli.location" = "Localização";
+"settings.enable.terminal.autorun" = "Activar Execução Auto do Terminal";
+"settings.enable.terminal.autorun.help" = "Permitir que o CLI execute comandos nos terminais";
+
+// Settings - MCP section
+"settings.section.mcp" = "Servidor MCP";
+"settings.mcp.title" = "Servidor MCP";
+"settings.mcp.description" = "Servidor Model Context Protocol para integração de agentes de IA.";
+"settings.mcp.location" = "Localização do Servidor";
+"settings.mcp.claude.config" = "Configuração do Claude Desktop";
+"settings.mcp.local.only" = "Apenas ligações locais";
+"settings.mcp.install.description" = "Adicionar à sua configuração do Claude Desktop:";
+"settings.config.copied" = "Configuração copiada!";
+"settings.copy.config" = "Copiar Configuração";
+
+// Settings - Agents section
+"settings.section.agents" = "Agentes";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Procurar comandos...";
+"palette.no.results" = "Nenhum resultado encontrado";
+
+// MARK: - Help View
+"help.title" = "Ajuda";
+"help.search.placeholder" = "Procurar na ajuda...";
+
+// MARK: - Alerts
+"alert.error" = "Erro";
+"alert.success" = "Sucesso";

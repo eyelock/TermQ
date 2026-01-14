@@ -26,7 +26,7 @@ enum InstallLocation: String, CaseIterable, Identifiable {
     }
 
     var fullPath: String {
-        "\(path)/termq"
+        "\(path)/termqcli"
     }
 
     var requiresAdmin: Bool {
@@ -48,9 +48,9 @@ enum InstallLocation: String, CaseIterable, Identifiable {
     }
 }
 
-/// Handles installation of the termq CLI tool
+/// Handles installation of the termqcli CLI tool
 enum CLIInstaller {
-    static let bundledCLIName = "termq"
+    static let bundledCLIName = "termqcli"
 
     /// Get the path to the bundled CLI tool within the app bundle
     static var bundledCLIPath: URL? {
@@ -64,7 +64,7 @@ enum CLIInstaller {
 
     /// Check if the CLI tool is installed at a custom path
     static func isInstalled(atPath path: String) -> Bool {
-        let fullPath = path.hasSuffix("/termq") ? path : "\(path)/termq"
+        let fullPath = path.hasSuffix("/termqcli") ? path : "\(path)/termqcli"
         let expanded = NSString(string: fullPath).expandingTildeInPath
         return FileManager.default.fileExists(atPath: expanded)
     }
@@ -86,7 +86,7 @@ enum CLIInstaller {
         }
 
         let expandedPath = NSString(string: path).expandingTildeInPath
-        let fullPath = "\(expandedPath)/termq"
+        let fullPath = "\(expandedPath)/termqcli"
 
         // Determine if admin is needed (if not explicitly specified, check if path is writable)
         let needsAdmin = requiresAdmin ?? !FileManager.default.isWritableFile(atPath: expandedPath)

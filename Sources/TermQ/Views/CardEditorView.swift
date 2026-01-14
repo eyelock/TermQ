@@ -88,11 +88,20 @@ struct CardEditorView: View {
         }
     }
 
-    private enum EditorTab: String, CaseIterable {
-        case general = "General"
-        case terminal = "Terminal"
-        case metadata = "Metadata"
-        case agents = "Agents"
+    private enum EditorTab: CaseIterable {
+        case general
+        case terminal
+        case metadata
+        case agents
+
+        var title: String {
+            switch self {
+            case .general: return Strings.Editor.tabGeneral
+            case .terminal: return Strings.Editor.sectionTerminal
+            case .metadata: return Strings.Editor.sectionTags
+            case .agents: return Strings.Editor.sectionAgent
+            }
+        }
     }
 
     /// Available monospace fonts
@@ -120,15 +129,15 @@ struct CardEditorView: View {
         VStack(spacing: 0) {
             // Header
             HStack {
-                Text(isNewCard ? "New Terminal" : "Edit Terminal")
+                Text(isNewCard ? Strings.Editor.titleNew : Strings.Editor.titleEdit)
                     .font(.headline)
                 Spacer()
-                Button("Cancel") {
+                Button(Strings.Editor.cancel) {
                     onCancel()
                 }
                 .keyboardShortcut(.cancelAction)
 
-                Button("Save") {
+                Button(Strings.Editor.save) {
                     saveChanges()
                     onSave(isNewCard && switchToTerminal)
                 }
@@ -142,7 +151,7 @@ struct CardEditorView: View {
             // Tab picker
             Picker("", selection: $selectedTab) {
                 ForEach(EditorTab.allCases, id: \.self) { tab in
-                    Text(tab.rawValue).tag(tab)
+                    Text(tab.title).tag(tab)
                 }
             }
             .pickerStyle(.segmented)
@@ -176,44 +185,44 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var generalContent: some View {
-        Section("Display") {
-            TextField("Title", text: $title)
-            TextField("Description", text: $description, axis: .vertical)
+        Section(Strings.Editor.sectionDetails) {
+            TextField(Strings.Editor.fieldName, text: $title)
+            TextField(Strings.Editor.fieldDescription, text: $description, axis: .vertical)
                 .lineLimit(3...6)
-            TextField("Badges", text: $badge)
-                .help("Comma separated values (e.g., 'prod, api, v2')")
+            TextField(Strings.Editor.fieldBadges, text: $badge)
+                .help(Strings.Editor.fieldBadgesHelp)
         }
 
-        Section("Behaviour") {
-            Picker("Column", selection: $selectedColumnId) {
+        Section(Strings.Editor.fieldColumn) {
+            Picker(Strings.Editor.fieldColumn, selection: $selectedColumnId) {
                 ForEach(columns) { column in
                     Text(column.name).tag(column.id)
                 }
             }
 
-            Toggle("Favourite", isOn: $isFavourite)
+            Toggle(Strings.Card.pin, isOn: $isFavourite)
 
             if isNewCard {
-                Toggle("Switch to new terminal", isOn: $switchToTerminal)
+                Toggle(Strings.Editor.saveOpen, isOn: $switchToTerminal)
             }
         }
 
-        Section("Appearance") {
-            Picker("Theme", selection: $themeId) {
-                Text("Default (Global)").tag("")
+        Section(Strings.Editor.sectionAppearance) {
+            Picker(Strings.Editor.fieldTheme, selection: $themeId) {
+                Text(Strings.Editor.fieldThemeDefault).tag("")
                 ForEach(TerminalTheme.allThemes) { theme in
                     Text(theme.name).tag(theme.id)
                 }
             }
 
-            Picker("Font", selection: $fontName) {
+            Picker(Strings.Editor.fieldFontSize, selection: $fontName) {
                 ForEach(monospaceFonts, id: \.self) { font in
                     Text(font).tag(font == "System Default" ? "" : font)
                 }
             }
 
             HStack {
-                Text("Size:")
+                Text(Strings.Editor.fieldFontSize)
                 Slider(value: $fontSize, in: 9...24, step: 1)
                 Text("\(Int(fontSize)) pt")
                     .frame(width: 40)
@@ -222,7 +231,7 @@ struct CardEditorView: View {
             // Font preview with theme colors
             let previewTheme =
                 themeId.isEmpty ? TerminalTheme.defaultDark : TerminalTheme.theme(for: themeId)
-            Text("AaBbCc 123 ~/code $ ls -la")
+            Text(Strings.Editor.fontPreview)
                 .font(previewFont)
                 .padding(8)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -236,49 +245,49 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var terminalContent: some View {
-        Section("Open") {
+        Section(Strings.Editor.sectionTerminal) {
             HStack {
-                TextField("Working Directory", text: $workingDirectory)
+                TextField(Strings.Editor.fieldDirectory, text: $workingDirectory)
                     .font(.system(.body, design: .monospaced))
-                    .help("Path where terminal opens (paste or type)")
-                Button("Browse...") {
+                    .help(Strings.Editor.fieldDirectoryHelp)
+                Button(Strings.Common.browse) {
                     browseDirectory()
                 }
             }
 
-            TextField("Shell Path", text: $shellPath)
+            TextField(Strings.Editor.fieldShell, text: $shellPath)
                 .font(.system(.body, design: .monospaced))
-                .help("e.g., /bin/zsh, /bin/bash (leave empty for default)")
+                .help(Strings.Editor.fieldShellHelp)
         }
 
-        Section("Initialisation") {
+        Section(Strings.Editor.sectionAutomation) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Init Command")
+                Text(Strings.Editor.fieldInitCommand)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                TextField("Commands to run on start", text: $initCommand, axis: .vertical)
+                TextField(Strings.Editor.fieldInitCommandHelp, text: $initCommand, axis: .vertical)
                     .lineLimit(3...8)
-                    .help("e.g., 'source .env && npm run dev'")
+                    .help(Strings.Editor.fieldInitCommandHelp)
             }
         }
 
-        Section("Security") {
-            Toggle("Safe Paste", isOn: $safePasteEnabled)
-                .help("Warn when pasting potentially dangerous commands")
+        Section(Strings.Editor.fieldSafePaste) {
+            Toggle(Strings.Editor.fieldSafePaste, isOn: $safePasteEnabled)
+                .help(Strings.Editor.fieldSafePasteHelp)
 
             if enableTerminalAutorun {
-                Toggle("Allow Autorun", isOn: $allowAutorun)
-                    .help("Allow agents to run init commands automatically when this terminal opens")
+                Toggle(Strings.Editor.fieldAllowAutorun, isOn: $allowAutorun)
+                    .help(Strings.Editor.fieldAllowAutorunHelp)
             } else {
                 HStack {
-                    Text("Allow Autorun")
+                    Text(Strings.Editor.fieldAllowAutorun)
                         .foregroundColor(.secondary)
                     Spacer()
-                    Text("Disabled globally")
+                    Text(Strings.Editor.fieldAutorunDisabledGlobally)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                .help("Enable 'Enable Terminal Autorun' in Settings > Tools first")
+                .help(Strings.Editor.fieldAutorunEnableHint)
             }
         }
     }
@@ -287,7 +296,7 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var metadataContent: some View {
-        Section("Tags") {
+        Section(Strings.Editor.sectionTags) {
             ForEach(tags) { tag in
                 HStack {
                     Text(tag.key)
@@ -306,14 +315,14 @@ struct CardEditorView: View {
             }
 
             HStack(spacing: 8) {
-                TextField("Key", text: $newTagKey)
+                TextField(Strings.Editor.tagKeyPlaceholder, text: $newTagKey)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 120)
                 Text("=")
                     .foregroundColor(.secondary)
-                TextField("Value", text: $newTagValue)
+                TextField(Strings.Editor.tagValuePlaceholder, text: $newTagValue)
                     .textFieldStyle(.roundedBorder)
-                Button("Add") {
+                Button(Strings.Editor.tagAdd) {
                     addTag()
                 }
                 .disabled(
@@ -325,7 +334,7 @@ struct CardEditorView: View {
             }
 
             if tags.isEmpty {
-                Text("Tags help organize and search terminals (e.g., env=prod, team=backend)")
+                Text(Strings.Editor.tagsHelp)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -336,60 +345,60 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var agentsContent: some View {
-        Section("Tools") {
+        Section(Strings.Settings.sectionMcp) {
             HStack {
-                Text("MCP Server")
+                Text(Strings.Settings.mcpTitle)
                 Spacer()
                 Image(systemName: mcpInstalled ? "checkmark.circle.fill" : "xmark.circle")
                     .foregroundColor(mcpInstalled ? .green : .secondary)
-                Text(mcpInstalled ? "Installed" : "Not Installed")
+                Text(mcpInstalled ? Strings.Settings.cliInstalled : Strings.Settings.cliNotInstalled)
                     .foregroundColor(mcpInstalled ? .primary : .secondary)
             }
 
             HStack {
-                Text("Terminal Allows Autorun")
+                Text(Strings.Editor.fieldTerminalAllowsAutorun)
                 Spacer()
                 if enableTerminalAutorun {
                     Image(systemName: allowAutorun ? "checkmark.circle.fill" : "xmark.circle")
                         .foregroundColor(allowAutorun ? .green : .secondary)
-                    Text(allowAutorun ? "Enabled" : "Disabled")
+                    Text(allowAutorun ? Strings.Common.installed : Strings.Editor.fieldAutorunDisabledGlobally)
                         .foregroundColor(allowAutorun ? .primary : .secondary)
                 } else {
                     Image(systemName: "xmark.circle")
                         .foregroundColor(.secondary)
-                    Text("Disabled globally")
+                    Text(Strings.Editor.fieldAutorunDisabledGlobally)
                         .foregroundColor(.secondary)
                 }
             }
             .help(
                 enableTerminalAutorun
-                    ? "Whether agents can run init commands automatically"
-                    : "Enable 'Enable Terminal Autorun' in Settings > Tools first"
+                    ? Strings.Editor.fieldAllowAutorunHelp
+                    : Strings.Editor.fieldAutorunEnableHint
             )
         }
 
-        Section("Agent Context") {
+        Section(Strings.Editor.sectionAgent) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Persistent Context")
+                Text(Strings.Editor.fieldPersistentContext)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                TextField("Background info always available to agents", text: $llmPrompt, axis: .vertical)
+                TextField(Strings.Editor.fieldPersistentContextHelp, text: $llmPrompt, axis: .vertical)
                     .lineLimit(3...8)
-                    .help("Context about this terminal (never auto-cleared)")
+                    .help(Strings.Editor.fieldPersistentContextHelp)
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Next Action (runs once)")
+                Text(Strings.Editor.fieldNextAction)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                TextField("Task to run on next open, then clear", text: $llmNextAction, axis: .vertical)
+                TextField(Strings.Editor.fieldNextActionHelp, text: $llmNextAction, axis: .vertical)
                     .lineLimit(3...8)
-                    .help("Seeds into init command on next open, then clears")
+                    .help(Strings.Editor.fieldNextActionHelp)
             }
         }
 
-        Section("Generate Init Command") {
-            Picker("LLM Tool", selection: $selectedLLMVendor) {
+        Section(Strings.Editor.sectionCommandGenerator) {
+            Picker(Strings.Editor.sectionCommandGenerator, selection: $selectedLLMVendor) {
                 ForEach(LLMVendor.allCases, id: \.self) { vendor in
                     Text(vendor.rawValue).tag(vendor)
                 }
@@ -397,14 +406,12 @@ struct CardEditorView: View {
             .pickerStyle(.menu)
 
             if selectedLLMVendor.supportsInteractiveToggle {
-                Toggle("Interactive Mode", isOn: $interactiveMode)
-                    .help(
-                        "When off, adds -p flag for non-interactive/headless execution (useful for automated tasks)"
-                    )
+                Toggle(Strings.Editor.nonInteractiveNote, isOn: $interactiveMode)
+                    .help(Strings.Editor.nonInteractiveNote)
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Preview")
+                Text(Strings.Common.preview)
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Text(selectedLLMVendor.commandTemplate(interactive: interactiveMode))
@@ -417,24 +424,24 @@ struct CardEditorView: View {
             }
 
             if !selectedLLMVendor.includesPrompt {
-                Text("Note: This template doesn't include {{LLM_PROMPT}} (persistent context)")
+                Text(Strings.Editor.noLlmPromptWarning)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
 
             if !interactiveMode && selectedLLMVendor.supportsInteractiveToggle {
-                Text("Non-interactive mode runs the task and exits without user prompts")
+                Text(Strings.Editor.nonInteractiveNote)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
 
             HStack {
                 Spacer()
-                Button("Apply to Init Command") {
+                Button(Strings.Editor.fieldApplyToInitCommand) {
                     initCommand = selectedLLMVendor.commandTemplate(interactive: interactiveMode)
                     selectedTab = .terminal
                 }
-                .help("Sets this template as the init command and switches to Terminal tab")
+                .help(Strings.Editor.fieldApplyToInitCommandHelp)
             }
         }
     }

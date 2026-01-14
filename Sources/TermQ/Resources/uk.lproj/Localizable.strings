@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Ukrainian localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Скасувати";
+"common.save" = "Зберегти";
+"common.delete" = "Видалити";
+"common.edit" = "Редагувати";
+"common.close" = "Закрити";
+"common.add" = "Додати";
+"common.reinstall" = "Перевстановити";
+"common.uninstall" = "Видалити";
+"common.installed" = "Встановлено";
+"common.browse" = "Огляд...";
+"common.apply" = "Застосувати";
+"common.preview" = "Попередній перегляд";
+
+// MARK: - Board View
+"board.column.options" = "Параметри колонки";
+"board.column.rename" = "Перейменувати колонку...";
+"board.column.delete" = "Видалити колонку";
+"board.column.delete.disabled" = "Видалити колонку (спочатку перемістіть термінали)";
+"board.column.add.terminal" = "Додати термінал";
+"board.column.add.terminal.help" = "Додати новий термінал до цієї колонки";
+"board.column.edit" = "Редагувати колонку...";
+
+// MARK: - Terminal Card
+"card.pin" = "Закріпити термінал";
+"card.unpin" = "Відкріпити термінал";
+"card.running" = "Термінал працює";
+"card.open" = "Відкрито";
+"card.edit" = "Редагувати деталі...";
+"card.delete" = "Видалити";
+"card.wired" = "Підключено";
+"card.wired.help" = "Підключено до агента MCP";
+"card.needs.attention" = "Потребує уваги";
+"card.processing" = "Обробка...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Сеанс терміналу завершено";
+"terminal.restart" = "Перезапустити термінал";
+"terminal.restart.help" = "Розпочати новий сеанс терміналу";
+"terminal.current" = "Поточний термінал";
+"terminal.edit.help" = "Редагувати деталі терміналу";
+"terminal.close.tab.help" = "Закрити цю вкладку терміналу";
+"terminal.switch.to %@" = "Перейти до %@";
+"terminal.tab.help %@ %@" = "%@ у %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Назад";
+"toolbar.back.help" = "Повернутися до дошки (Escape)";
+"toolbar.move.to" = "Перемістити до колонки";
+"toolbar.new.quick" = "Швидкий термінал";
+"toolbar.new.quick.help" = "Новий швидкий термінал (⌘T)";
+"toolbar.edit" = "Редагувати";
+"toolbar.edit.help" = "Редагувати деталі терміналу (⌘E)";
+"toolbar.pin" = "Закріпити";
+"toolbar.pin.help" = "Закріпити термінал (⌘P)";
+"toolbar.unpin" = "Відкріпити";
+"toolbar.unpin.help" = "Відкріпити термінал (⌘P)";
+"toolbar.delete" = "Видалити";
+"toolbar.delete.help" = "Видалити термінал";
+"toolbar.add" = "Додати";
+"toolbar.add.help" = "Додати новий термінал або колонку";
+"toolbar.open.terminal.app" = "Відкрити в Терміналі";
+"toolbar.open.terminal.app.help" = "Відкрити в Terminal.app";
+"toolbar.new.terminal" = "Новий термінал";
+"toolbar.new.column" = "Нова колонка";
+"toolbar.bin.count %lld" = "Кошик (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Новий швидкий термінал";
+"menu.new.terminal" = "Новий термінал...";
+"menu.new.terminal.dialog" = "Новий термінал";
+"menu.new.column" = "Нова колонка";
+"menu.back" = "Повернутися до дошки";
+"menu.toggle.pin" = "Перемкнути закріплення";
+"menu.next.pinned" = "Наступний закріплений термінал";
+"menu.previous.pinned" = "Попередній закріплений термінал";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Видалити термінал";
+"delete.move.to.bin" = "Перемістити до кошика";
+"delete.message %@" = "Ви впевнені, що хочете видалити \"%@\"?";
+"delete.bin.message %@" = "\"%@\" буде переміщено до кошика, де його можна відновити протягом 30 днів.";
+"delete.cancel" = "Скасувати";
+"delete.confirm" = "Видалити";
+"delete.permanent" = "Видалити назавжди";
+
+// MARK: - Card Editor
+"editor.title.new" = "Новий термінал";
+"editor.title.edit" = "Редагувати термінал";
+"editor.tab.general" = "Загальні";
+"editor.tab.advanced" = "Додатково";
+
+// Editor - Details section
+"editor.section.details" = "Деталі";
+"editor.field.name" = "Назва";
+"editor.field.name.placeholder" = "Назва терміналу";
+"editor.field.description" = "Опис";
+"editor.field.description.placeholder" = "Необовʼязковий опис";
+"editor.field.column" = "Колонка";
+"editor.field.badges" = "Значки";
+"editor.field.badges.placeholder" = "значок1, значок2";
+"editor.field.badges.help" = "Значки через кому на картці";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Зовнішній вигляд";
+"editor.field.theme" = "Тема";
+"editor.field.theme.default" = "Типова";
+"editor.field.font.size" = "Розмір шрифту";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Термінал";
+"editor.field.directory" = "Робочий каталог";
+"editor.field.directory.help" = "Початковий каталог для терміналу";
+"editor.field.shell" = "Оболонка";
+"editor.field.shell.help" = "Оболонка для використання (порожнє = типова)";
+
+// Editor - Automation section
+"editor.section.automation" = "Автоматизація";
+"editor.field.init.command" = "Початкова команда";
+"editor.field.init.command.help" = "Команда для виконання при запуску терміналу";
+"editor.field.safe.paste" = "Безпечне вставлення";
+"editor.field.safe.paste.help" = "Показувати підтвердження перед вставленням багаторядкового тексту";
+"editor.field.allow.autorun" = "Дозволити автозапуск";
+"editor.field.allow.autorun.help" = "Дозволити CLI автоматично виконувати команди";
+"editor.field.autorun.disabled.globally" = "Автозапуск вимкнено глобально";
+"editor.field.autorun.enable.hint" = "Увімкніть у Налаштування > Інструменти";
+
+// Editor - Tags section
+"editor.section.tags" = "Теги";
+"editor.field.tags" = "Теги";
+"editor.tag.add" = "Додати тег";
+"editor.tag.key.placeholder" = "ключ";
+"editor.tag.value.placeholder" = "значення";
+"editor.tags.help" = "Пари ключ-значення для організації";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Налаштування агента";
+"editor.field.terminal.allows.autorun" = "Термінал дозволяє команди";
+"editor.field.persistent.context" = "Постійний контекст";
+"editor.field.persistent.context.help" = "Контекст зберігається між сеансами";
+"editor.field.next.action" = "Наступна дія";
+"editor.field.next.action.help" = "Дія для виконання наступного разу";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Генератор команд";
+"editor.field.apply.to.init.command" = "Застосувати до початкової команди";
+"editor.field.apply.to.init.command.help" = "Використовувати згенеровану команду як початкову";
+"editor.no.llm.prompt.warning" = "Промпт LLM не налаштовано";
+"editor.non.interactive.note" = "Примітка: Команди виконуються неінтерактивно";
+
+"editor.cancel" = "Скасувати";
+"editor.save" = "Зберегти";
+"editor.save.open" = "Зберегти і відкрити";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Нова колонка";
+"column.editor.title.edit" = "Редагувати колонку";
+"column.editor.field.name" = "Назва";
+"column.editor.field.name.placeholder" = "Назва колонки";
+"column.editor.field.description" = "Опис";
+"column.editor.field.description.placeholder" = "Необовʼязковий опис";
+"column.editor.field.color" = "Колір";
+"column.editor.cancel" = "Скасувати";
+"column.editor.save" = "Зберегти";
+
+// MARK: - Bin
+"bin.title" = "Кошик";
+"bin.empty" = "Кошик порожній";
+"bin.empty.button" = "Очистити кошик";
+"bin.close.help" = "Закрити кошик";
+"bin.restore.help" = "Відновити термінал";
+"bin.delete.help" = "Видалити назавжди";
+"bin.deleted %@" = "Видалено %@";
+"bin.days.remaining %lld" = "Залишилось %lld днів";
+
+// MARK: - Settings
+"settings.title" = "Налаштування";
+"settings.tab.general" = "Загальні";
+"settings.tab.tools" = "Інструменти";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Термінал";
+"settings.field.theme" = "Тема";
+"settings.field.theme.help" = "Типова тема для нових терміналів";
+"settings.field.copy.on.select" = "Копіювати при виділенні";
+"settings.field.copy.on.select.help" = "Автоматично копіювати виділений текст";
+
+// Settings - Bin section
+"settings.section.bin" = "Кошик";
+"settings.auto.empty %lld" = "Автоочищення через %lld днів";
+"settings.auto.empty.help" = "Автоматично видаляти старі елементи з кошика";
+"settings.bin.empty" = "Кошик порожній";
+"settings.bin.items %lld" = "%lld елементів у кошику";
+"settings.empty.bin.now" = "Очистити кошик зараз";
+
+// Settings - About section
+"settings.section.about" = "Про програму";
+"settings.field.version" = "Версія";
+"settings.field.build" = "Збірка";
+
+// Settings - Language section
+"settings.section.language" = "Мова";
+"settings.field.current" = "Поточна";
+"settings.system.default" = "Системна типова";
+"settings.search.languages" = "Пошук мов...";
+"settings.using.system.language" = "Використовується системна мова";
+"settings.restart.required" = "Для зміни мови потрібен перезапуск";
+
+// Settings - CLI section
+"settings.section.cli" = "Командний рядок";
+"settings.cli.title" = "Інструмент CLI";
+"settings.cli.description" = "Інструмент командного рядка termqcli дозволяє відкривати термінали з оболонки.";
+"settings.cli.path" = "Шлях встановлення";
+"settings.cli.install" = "Встановити CLI";
+"settings.cli.uninstall" = "Видалити";
+"settings.cli.installed" = "Встановлено";
+"settings.cli.not.installed" = "Не встановлено";
+"settings.cli.usage" = "Використання:";
+"settings.cli.location" = "Розташування";
+"settings.enable.terminal.autorun" = "Увімкнути автозапуск терміналу";
+"settings.enable.terminal.autorun.help" = "Дозволити CLI виконувати команди в терміналах";
+
+// Settings - MCP section
+"settings.section.mcp" = "Сервер MCP";
+"settings.mcp.title" = "Сервер MCP";
+"settings.mcp.description" = "Сервер Model Context Protocol для інтеграції з ШІ-агентами.";
+"settings.mcp.location" = "Розташування сервера";
+"settings.mcp.claude.config" = "Конфігурація Claude Desktop";
+"settings.mcp.local.only" = "Лише локальні зʼєднання";
+"settings.mcp.install.description" = "Додайте до конфігурації Claude Desktop:";
+"settings.config.copied" = "Конфігурацію скопійовано!";
+"settings.copy.config" = "Копіювати конфігурацію";
+
+// Settings - Agents section
+"settings.section.agents" = "Агенти";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Пошук команд...";
+"palette.no.results" = "Результатів не знайдено";
+
+// MARK: - Help View
+"help.title" = "Довідка";
+"help.search.placeholder" = "Пошук у довідці...";
+
+// MARK: - Alerts
+"alert.error" = "Помилка";
+"alert.success" = "Успішно";

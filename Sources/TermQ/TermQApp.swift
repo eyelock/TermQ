@@ -187,31 +187,31 @@ struct TermQApp: App {
         .commands {
             // Help menu
             CommandGroup(replacing: .help) {
-                Button("TermQ Help") {
+                Button(Strings.Menu.help) {
                     openWindow(id: "help")
                 }
                 .keyboardShortcut("?", modifiers: .command)
             }
 
             CommandGroup(after: .newItem) {
-                Button("Quick New Terminal") {
+                Button(Strings.Menu.newTerminalQuick) {
                     terminalActions?.quickNewTerminal()
                 }
                 .keyboardShortcut("t", modifiers: .command)
 
-                Button("New Terminal...") {
+                Button(Strings.Menu.newTerminal) {
                     terminalActions?.newTerminalWithDialog()
                 }
                 .keyboardShortcut("n", modifiers: .command)
 
-                Button("New Column") {
+                Button(Strings.Menu.newColumn) {
                     terminalActions?.newColumn()
                 }
                 .keyboardShortcut("n", modifiers: [.command, .shift])
 
                 Divider()
 
-                Button("Back to Board") {
+                Button(Strings.Menu.back) {
                     terminalActions?.goBack()
                 }
                 .keyboardShortcut("b", modifiers: .command)

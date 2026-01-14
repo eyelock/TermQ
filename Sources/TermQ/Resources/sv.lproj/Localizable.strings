@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Swedish localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "OK";
+"common.cancel" = "Avbryt";
+"common.save" = "Spara";
+"common.delete" = "Radera";
+"common.edit" = "Redigera";
+"common.close" = "Stäng";
+"common.add" = "Lägg till";
+"common.reinstall" = "Installera om";
+"common.uninstall" = "Avinstallera";
+"common.installed" = "Installerad";
+"common.browse" = "Bläddra...";
+"common.apply" = "Använd";
+"common.preview" = "Förhandsvisa";
+
+// MARK: - Board View
+"board.column.options" = "Kolumnalternativ";
+"board.column.rename" = "Byt namn på kolumn...";
+"board.column.delete" = "Radera kolumn";
+"board.column.delete.disabled" = "Radera kolumn (flytta terminaler först)";
+"board.column.add.terminal" = "Lägg till terminal";
+"board.column.add.terminal.help" = "Lägg till ny terminal i denna kolumn";
+"board.column.edit" = "Redigera kolumn...";
+
+// MARK: - Terminal Card
+"card.pin" = "Fäst terminal";
+"card.unpin" = "Lossa terminal";
+"card.running" = "Terminalen körs";
+"card.open" = "Öppen";
+"card.edit" = "Redigera detaljer...";
+"card.delete" = "Radera";
+"card.wired" = "Ansluten";
+"card.wired.help" = "Ansluten till MCP-agent";
+"card.needs.attention" = "Kräver uppmärksamhet";
+"card.processing" = "Bearbetar...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Terminalsessionen avslutad";
+"terminal.restart" = "Starta om terminal";
+"terminal.restart.help" = "Starta en ny terminalsession";
+"terminal.current" = "Aktuell terminal";
+"terminal.edit.help" = "Redigera terminaldetaljer";
+"terminal.close.tab.help" = "Stäng denna terminalflik";
+"terminal.switch.to %@" = "Växla till %@";
+"terminal.tab.help %@ %@" = "%@ i %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Tillbaka";
+"toolbar.back.help" = "Tillbaka till tavlan (Escape)";
+"toolbar.move.to" = "Flytta till kolumn";
+"toolbar.new.quick" = "Snabbterminal";
+"toolbar.new.quick.help" = "Ny snabbterminal (⌘T)";
+"toolbar.edit" = "Redigera";
+"toolbar.edit.help" = "Redigera terminaldetaljer (⌘E)";
+"toolbar.pin" = "Fäst";
+"toolbar.pin.help" = "Fäst terminal (⌘P)";
+"toolbar.unpin" = "Lossa";
+"toolbar.unpin.help" = "Lossa terminal (⌘P)";
+"toolbar.delete" = "Radera";
+"toolbar.delete.help" = "Radera terminal";
+"toolbar.add" = "Lägg till";
+"toolbar.add.help" = "Lägg till ny terminal eller kolumn";
+"toolbar.open.terminal.app" = "Öppna i Terminal";
+"toolbar.open.terminal.app.help" = "Öppna i Terminal.app";
+"toolbar.new.terminal" = "Ny terminal";
+"toolbar.new.column" = "Ny kolumn";
+"toolbar.bin.count %lld" = "Papperskorg (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Ny snabbterminal";
+"menu.new.terminal" = "Ny terminal...";
+"menu.new.terminal.dialog" = "Ny terminal";
+"menu.new.column" = "Ny kolumn";
+"menu.back" = "Tillbaka till tavlan";
+"menu.toggle.pin" = "Växla fästning";
+"menu.next.pinned" = "Nästa fästa terminal";
+"menu.previous.pinned" = "Föregående fästa terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Radera terminal";
+"delete.move.to.bin" = "Flytta till papperskorgen";
+"delete.message %@" = "Är du säker på att du vill radera \"%@\"?";
+"delete.bin.message %@" = "\"%@\" flyttas till papperskorgen där den kan återställas i 30 dagar.";
+"delete.cancel" = "Avbryt";
+"delete.confirm" = "Radera";
+"delete.permanent" = "Radera permanent";
+
+// MARK: - Card Editor
+"editor.title.new" = "Ny terminal";
+"editor.title.edit" = "Redigera terminal";
+"editor.tab.general" = "Allmänt";
+"editor.tab.advanced" = "Avancerat";
+
+// Editor - Details section
+"editor.section.details" = "Detaljer";
+"editor.field.name" = "Namn";
+"editor.field.name.placeholder" = "Terminalnamn";
+"editor.field.description" = "Beskrivning";
+"editor.field.description.placeholder" = "Valfri beskrivning";
+"editor.field.column" = "Kolumn";
+"editor.field.badges" = "Märken";
+"editor.field.badges.placeholder" = "märke1, märke2";
+"editor.field.badges.help" = "Kommaseparerade märken på kortet";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Utseende";
+"editor.field.theme" = "Tema";
+"editor.field.theme.default" = "Standard";
+"editor.field.font.size" = "Teckenstorlek";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Terminal";
+"editor.field.directory" = "Arbetskatalog";
+"editor.field.directory.help" = "Startkatalog för terminalen";
+"editor.field.shell" = "Skal";
+"editor.field.shell.help" = "Skal att använda (lämna tomt för standard)";
+
+// Editor - Automation section
+"editor.section.automation" = "Automatisering";
+"editor.field.init.command" = "Startkommando";
+"editor.field.init.command.help" = "Kommando att köra när terminalen startar";
+"editor.field.safe.paste" = "Säker inklistring";
+"editor.field.safe.paste.help" = "Visa bekräftelse innan flerradigt text klistras in";
+"editor.field.allow.autorun" = "Tillåt autokörning";
+"editor.field.allow.autorun.help" = "Tillåt CLI att köra kommandon automatiskt";
+"editor.field.autorun.disabled.globally" = "Autokörning inaktiverad globalt";
+"editor.field.autorun.enable.hint" = "Aktivera i Inställningar > Verktyg";
+
+// Editor - Tags section
+"editor.section.tags" = "Taggar";
+"editor.field.tags" = "Taggar";
+"editor.tag.add" = "Lägg till tagg";
+"editor.tag.key.placeholder" = "nyckel";
+"editor.tag.value.placeholder" = "värde";
+"editor.tags.help" = "Nyckel-värdepar för organisation";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Agentkonfiguration";
+"editor.field.terminal.allows.autorun" = "Terminalen tillåter kommandon";
+"editor.field.persistent.context" = "Beständig kontext";
+"editor.field.persistent.context.help" = "Kontext bevarad mellan sessioner";
+"editor.field.next.action" = "Nästa åtgärd";
+"editor.field.next.action.help" = "Åtgärd att utföra härnäst";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Kommandogenerator";
+"editor.field.apply.to.init.command" = "Tillämpa på startkommando";
+"editor.field.apply.to.init.command.help" = "Använd genererat kommando som startkommando";
+"editor.no.llm.prompt.warning" = "Ingen LLM-prompt konfigurerad";
+"editor.non.interactive.note" = "Obs: Kommandon körs icke-interaktivt";
+
+"editor.cancel" = "Avbryt";
+"editor.save" = "Spara";
+"editor.save.open" = "Spara & Öppna";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Ny kolumn";
+"column.editor.title.edit" = "Redigera kolumn";
+"column.editor.field.name" = "Namn";
+"column.editor.field.name.placeholder" = "Kolumnnamn";
+"column.editor.field.description" = "Beskrivning";
+"column.editor.field.description.placeholder" = "Valfri beskrivning";
+"column.editor.field.color" = "Färg";
+"column.editor.cancel" = "Avbryt";
+"column.editor.save" = "Spara";
+
+// MARK: - Bin
+"bin.title" = "Papperskorg";
+"bin.empty" = "Papperskorgen är tom";
+"bin.empty.button" = "Töm papperskorgen";
+"bin.close.help" = "Stäng papperskorgen";
+"bin.restore.help" = "Återställ terminal";
+"bin.delete.help" = "Radera permanent";
+"bin.deleted %@" = "Raderad %@";
+"bin.days.remaining %lld" = "%lld dagar kvar";
+
+// MARK: - Settings
+"settings.title" = "Inställningar";
+"settings.tab.general" = "Allmänt";
+"settings.tab.tools" = "Verktyg";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Terminal";
+"settings.field.theme" = "Tema";
+"settings.field.theme.help" = "Standardtema för nya terminaler";
+"settings.field.copy.on.select" = "Kopiera vid markering";
+"settings.field.copy.on.select.help" = "Kopiera markerad text automatiskt";
+
+// Settings - Bin section
+"settings.section.bin" = "Papperskorg";
+"settings.auto.empty %lld" = "Töm automatiskt efter %lld dagar";
+"settings.auto.empty.help" = "Töm automatiskt gamla objekt från papperskorgen";
+"settings.bin.empty" = "Papperskorgen är tom";
+"settings.bin.items %lld" = "%lld objekt i papperskorgen";
+"settings.empty.bin.now" = "Töm papperskorgen nu";
+
+// Settings - About section
+"settings.section.about" = "Om";
+"settings.field.version" = "Version";
+"settings.field.build" = "Bygge";
+
+// Settings - Language section
+"settings.section.language" = "Språk";
+"settings.field.current" = "Aktuellt";
+"settings.system.default" = "Systemstandard";
+"settings.search.languages" = "Sök språk...";
+"settings.using.system.language" = "Använder systemspråk";
+"settings.restart.required" = "Omstart krävs för språkändring";
+
+// Settings - CLI section
+"settings.section.cli" = "Kommandorad";
+"settings.cli.title" = "CLI-verktyg";
+"settings.cli.description" = "Termqcli kommandoradsverktyget låter dig öppna terminaler från ditt skal.";
+"settings.cli.path" = "Installationsplats";
+"settings.cli.install" = "Installera CLI";
+"settings.cli.uninstall" = "Avinstallera";
+"settings.cli.installed" = "Installerad";
+"settings.cli.not.installed" = "Ej installerad";
+"settings.cli.usage" = "Användning:";
+"settings.cli.location" = "Plats";
+"settings.enable.terminal.autorun" = "Aktivera terminalautokörning";
+"settings.enable.terminal.autorun.help" = "Tillåt CLI att köra kommandon i terminaler";
+
+// Settings - MCP section
+"settings.section.mcp" = "MCP-server";
+"settings.mcp.title" = "MCP-server";
+"settings.mcp.description" = "Model Context Protocol-server för AI-agentintegration.";
+"settings.mcp.location" = "Serverplats";
+"settings.mcp.claude.config" = "Claude Desktop-konfiguration";
+"settings.mcp.local.only" = "Endast lokala anslutningar";
+"settings.mcp.install.description" = "Lägg till i din Claude Desktop-konfiguration:";
+"settings.config.copied" = "Konfiguration kopierad!";
+"settings.copy.config" = "Kopiera konfiguration";
+
+// Settings - Agents section
+"settings.section.agents" = "Agenter";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Sök kommandon...";
+"palette.no.results" = "Inga resultat hittades";
+
+// MARK: - Help View
+"help.title" = "Hjälp";
+"help.search.placeholder" = "Sök i hjälpen...";
+
+// MARK: - Alerts
+"alert.error" = "Fel";
+"alert.success" = "Lyckades";

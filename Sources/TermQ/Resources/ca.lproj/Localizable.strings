@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Catalan localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "D'acord";
+"common.cancel" = "Cancel·lar";
+"common.save" = "Desar";
+"common.delete" = "Eliminar";
+"common.edit" = "Editar";
+"common.close" = "Tancar";
+"common.add" = "Afegir";
+"common.reinstall" = "Reinstal·lar";
+"common.uninstall" = "Desinstal·lar";
+"common.installed" = "Instal·lat";
+"common.browse" = "Explorar...";
+"common.apply" = "Aplicar";
+"common.preview" = "Previsualització";
+
+// MARK: - Board View
+"board.column.options" = "Opcions de columna";
+"board.column.rename" = "Canviar nom de columna...";
+"board.column.delete" = "Eliminar columna";
+"board.column.delete.disabled" = "Eliminar columna (mou els terminals primer)";
+"board.column.add.terminal" = "Afegir terminal";
+"board.column.add.terminal.help" = "Afegir un terminal nou a aquesta columna";
+"board.column.edit" = "Editar columna...";
+
+// MARK: - Terminal Card
+"card.pin" = "Fixar terminal";
+"card.unpin" = "Desfer fixar terminal";
+"card.running" = "Terminal en execució";
+"card.open" = "Obert";
+"card.edit" = "Editar detalls...";
+"card.delete" = "Eliminar";
+"card.wired" = "Connectat";
+"card.wired.help" = "Connectat a l'agent MCP";
+"card.needs.attention" = "Requereix atenció";
+"card.processing" = "Processant...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "La sessió del terminal ha finalitzat";
+"terminal.restart" = "Reiniciar terminal";
+"terminal.restart.help" = "Iniciar una nova sessió de terminal";
+"terminal.current" = "Terminal actual";
+"terminal.edit.help" = "Editar detalls del terminal";
+"terminal.close.tab.help" = "Tancar aquesta pestanya de terminal";
+"terminal.switch.to %@" = "Canviar a %@";
+"terminal.tab.help %@ %@" = "%@ a %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Enrere";
+"toolbar.back.help" = "Tornar al tauler (Escape)";
+"toolbar.move.to" = "Moure a columna";
+"toolbar.new.quick" = "Terminal ràpid";
+"toolbar.new.quick.help" = "Nou terminal ràpid (⌘T)";
+"toolbar.edit" = "Editar";
+"toolbar.edit.help" = "Editar detalls del terminal (⌘E)";
+"toolbar.pin" = "Fixar";
+"toolbar.pin.help" = "Fixar terminal (⌘P)";
+"toolbar.unpin" = "Desfer fixar";
+"toolbar.unpin.help" = "Desfer fixar terminal (⌘P)";
+"toolbar.delete" = "Eliminar";
+"toolbar.delete.help" = "Eliminar terminal";
+"toolbar.add" = "Afegir";
+"toolbar.add.help" = "Afegir nou terminal o columna";
+"toolbar.open.terminal.app" = "Obrir a Terminal";
+"toolbar.open.terminal.app.help" = "Obrir a Terminal.app";
+"toolbar.new.terminal" = "Nou terminal";
+"toolbar.new.column" = "Nova columna";
+"toolbar.bin.count %lld" = "Paperera (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Nou terminal ràpid";
+"menu.new.terminal" = "Nou terminal...";
+"menu.new.terminal.dialog" = "Nou terminal";
+"menu.new.column" = "Nova columna";
+"menu.back" = "Tornar al tauler";
+"menu.toggle.pin" = "Alternar fixar";
+"menu.next.pinned" = "Següent terminal fixat";
+"menu.previous.pinned" = "Anterior terminal fixat";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Eliminar terminal";
+"delete.move.to.bin" = "Moure a la paperera";
+"delete.message %@" = "Esteu segur que voleu eliminar \"%@\"?";
+"delete.bin.message %@" = "\"%@\" es mourà a la paperera on es pot restaurar durant 30 dies.";
+"delete.cancel" = "Cancel·lar";
+"delete.confirm" = "Eliminar";
+"delete.permanent" = "Eliminar permanentment";
+
+// MARK: - Card Editor
+"editor.title.new" = "Nou terminal";
+"editor.title.edit" = "Editar terminal";
+"editor.tab.general" = "General";
+"editor.tab.advanced" = "Avançat";
+
+// Editor - Details section
+"editor.section.details" = "Detalls";
+"editor.field.name" = "Nom";
+"editor.field.name.placeholder" = "Nom del terminal";
+"editor.field.description" = "Descripció";
+"editor.field.description.placeholder" = "Descripció opcional";
+"editor.field.column" = "Columna";
+"editor.field.badges" = "Distintius";
+"editor.field.badges.placeholder" = "distintiu1, distintiu2";
+"editor.field.badges.help" = "Distintius separats per comes mostrats a la targeta";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Aparença";
+"editor.field.theme" = "Tema";
+"editor.field.theme.default" = "Per defecte";
+"editor.field.font.size" = "Mida de la lletra";
+"editor.font.preview" = "AaBbCc Català 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Terminal";
+"editor.field.directory" = "Directori de treball";
+"editor.field.directory.help" = "Directori inicial per al terminal";
+"editor.field.shell" = "Shell";
+"editor.field.shell.help" = "Shell a utilitzar (deixeu buit per defecte)";
+
+// Editor - Automation section
+"editor.section.automation" = "Automatització";
+"editor.field.init.command" = "Comanda inicial";
+"editor.field.init.command.help" = "Comanda a executar quan s'inicia el terminal";
+"editor.field.safe.paste" = "Enganxar segur";
+"editor.field.safe.paste.help" = "Mostrar confirmació abans d'enganxar text multilínia";
+"editor.field.allow.autorun" = "Permetre execució automàtica";
+"editor.field.allow.autorun.help" = "Permetre que CLI executi comandes automàticament";
+"editor.field.autorun.disabled.globally" = "L'execució automàtica està desactivada globalment";
+"editor.field.autorun.enable.hint" = "Activeu a Configuració > Eines";
+
+// Editor - Tags section
+"editor.section.tags" = "Etiquetes";
+"editor.field.tags" = "Etiquetes";
+"editor.tag.add" = "Afegir etiqueta";
+"editor.tag.key.placeholder" = "clau";
+"editor.tag.value.placeholder" = "valor";
+"editor.tags.help" = "Parells clau-valor per a l'organització";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Configuració de l'agent";
+"editor.field.terminal.allows.autorun" = "El terminal permet comandes";
+"editor.field.persistent.context" = "Context persistent";
+"editor.field.persistent.context.help" = "El context es manté entre sessions";
+"editor.field.next.action" = "Pròxima acció";
+"editor.field.next.action.help" = "Acció a realitzar a continuació";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Generador de comandes";
+"editor.field.apply.to.init.command" = "Aplicar a comanda inicial";
+"editor.field.apply.to.init.command.help" = "Utilitzar la comanda generada com a comanda inicial";
+"editor.no.llm.prompt.warning" = "No hi ha prompt LLM configurat";
+"editor.non.interactive.note" = "Nota: Les comandes s'executen de manera no interactiva";
+
+"editor.cancel" = "Cancel·lar";
+"editor.save" = "Desar";
+"editor.save.open" = "Desar i obrir";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Nova columna";
+"column.editor.title.edit" = "Editar columna";
+"column.editor.field.name" = "Nom";
+"column.editor.field.name.placeholder" = "Nom de la columna";
+"column.editor.field.description" = "Descripció";
+"column.editor.field.description.placeholder" = "Descripció opcional";
+"column.editor.field.color" = "Color";
+"column.editor.cancel" = "Cancel·lar";
+"column.editor.save" = "Desar";
+
+// MARK: - Bin
+"bin.title" = "Paperera";
+"bin.empty" = "La paperera és buida";
+"bin.empty.button" = "Buidar paperera";
+"bin.close.help" = "Tancar paperera";
+"bin.restore.help" = "Restaurar terminal";
+"bin.delete.help" = "Eliminar permanentment";
+"bin.deleted %@" = "Eliminat %@";
+"bin.days.remaining %lld" = "%lld dies restants";
+
+// MARK: - Settings
+"settings.title" = "Configuració";
+"settings.tab.general" = "General";
+"settings.tab.tools" = "Eines";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Terminal";
+"settings.field.theme" = "Tema";
+"settings.field.theme.help" = "Tema per defecte per a nous terminals";
+"settings.field.copy.on.select" = "Copiar en seleccionar";
+"settings.field.copy.on.select.help" = "Copiar automàticament el text seleccionat";
+
+// Settings - Bin section
+"settings.section.bin" = "Paperera";
+"settings.auto.empty %lld" = "Buidar automàticament després de %lld dies";
+"settings.auto.empty.help" = "Buidar automàticament els elements antics de la paperera";
+"settings.bin.empty" = "La paperera és buida";
+"settings.bin.items %lld" = "%lld elements a la paperera";
+"settings.empty.bin.now" = "Buidar paperera ara";
+
+// Settings - About section
+"settings.section.about" = "Quant a";
+"settings.field.version" = "Versió";
+"settings.field.build" = "Compilació";
+
+// Settings - Language section
+"settings.section.language" = "Idioma";
+"settings.field.current" = "Actual";
+"settings.system.default" = "Per defecte del sistema";
+"settings.search.languages" = "Cercar idiomes...";
+"settings.using.system.language" = "Utilitzant l'idioma del sistema";
+"settings.restart.required" = "Cal reiniciar per canviar l'idioma";
+
+// Settings - CLI section
+"settings.section.cli" = "Línia de comandes";
+"settings.cli.title" = "Eina CLI";
+"settings.cli.description" = "L'eina de línia de comandes termqclicli us permet obrir terminals des del vostre shell.";
+"settings.cli.path" = "Ubicació d'instal·lació";
+"settings.cli.install" = "Instal·lar CLI";
+"settings.cli.uninstall" = "Desinstal·lar";
+"settings.cli.installed" = "Instal·lat";
+"settings.cli.not.installed" = "No instal·lat";
+"settings.cli.usage" = "Ús:";
+"settings.cli.location" = "Ubicació";
+"settings.enable.terminal.autorun" = "Activar execució automàtica del terminal";
+"settings.enable.terminal.autorun.help" = "Permetre que CLI executi comandes als terminals";
+
+// Settings - MCP section
+"settings.section.mcp" = "Servidor MCP";
+"settings.mcp.title" = "Servidor MCP";
+"settings.mcp.description" = "Servidor Model Context Protocol per a la integració d'agents IA.";
+"settings.mcp.location" = "Ubicació del servidor";
+"settings.mcp.claude.config" = "Configuració de Claude Desktop";
+"settings.mcp.local.only" = "Només connexions locals";
+"settings.mcp.install.description" = "Afegiu a la vostra configuració de Claude Desktop:";
+"settings.config.copied" = "Configuració copiada!";
+"settings.copy.config" = "Copiar configuració";
+
+// Settings - Agents section
+"settings.section.agents" = "Agents";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Cercar comandes...";
+"palette.no.results" = "No s'han trobat resultats";
+
+// MARK: - Help View
+"help.title" = "Ajuda";
+"help.search.placeholder" = "Cercar ajuda...";
+
+// MARK: - Alerts
+"alert.error" = "Error";
+"alert.success" = "Èxit";

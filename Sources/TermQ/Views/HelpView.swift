@@ -94,7 +94,7 @@ struct HelpView: View {
                     .tag(topic)
             }
             .listStyle(.sidebar)
-            .searchable(text: $searchText, prompt: "Search help topics")
+            .searchable(text: $searchText, prompt: Strings.Help.searchPlaceholder)
             .frame(minWidth: 200)
         } detail: {
             if let topic = selectedTopic {
@@ -104,10 +104,10 @@ struct HelpView: View {
                     Image(systemName: "questionmark.circle")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
-                    Text("Select a topic")
+                    Text(Strings.Help.title)
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Text("Choose a help topic from the sidebar or search for specific information.")
+                    Text(Strings.Help.searchPlaceholder)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)

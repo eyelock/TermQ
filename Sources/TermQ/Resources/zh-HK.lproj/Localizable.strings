@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Hong Kong Chinese localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "確定";
+"common.cancel" = "取消";
+"common.save" = "儲存";
+"common.delete" = "刪除";
+"common.edit" = "編輯";
+"common.close" = "關閉";
+"common.add" = "新增";
+"common.reinstall" = "重新安裝";
+"common.uninstall" = "解除安裝";
+"common.installed" = "已安裝";
+"common.browse" = "瀏覽...";
+"common.apply" = "套用";
+"common.preview" = "預覽";
+
+// MARK: - Board View
+"board.column.options" = "欄選項";
+"board.column.rename" = "重新命名欄...";
+"board.column.delete" = "刪除欄";
+"board.column.delete.disabled" = "刪除欄（請先移動終端機）";
+"board.column.add.terminal" = "新增終端機";
+"board.column.add.terminal.help" = "將新終端機新增至此欄";
+"board.column.edit" = "編輯欄...";
+
+// MARK: - Terminal Card
+"card.pin" = "釘選終端機";
+"card.unpin" = "取消釘選終端機";
+"card.running" = "終端機運行中";
+"card.open" = "開啟";
+"card.edit" = "編輯詳情...";
+"card.delete" = "刪除";
+"card.wired" = "已連線";
+"card.wired.help" = "已連線至 MCP 代理";
+"card.needs.attention" = "需要注意";
+"card.processing" = "處理中...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "終端機工作階段已結束";
+"terminal.restart" = "重新啟動終端機";
+"terminal.restart.help" = "啟動新嘅終端機工作階段";
+"terminal.current" = "目前終端機";
+"terminal.edit.help" = "編輯終端機詳情";
+"terminal.close.tab.help" = "關閉呢個終端機標籤頁";
+"terminal.switch.to %@" = "切換至 %@";
+"terminal.tab.help %@ %@" = "%@ 喺 %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "返回";
+"toolbar.back.help" = "返回睇板 (Escape)";
+"toolbar.move.to" = "移至欄";
+"toolbar.new.quick" = "快速終端機";
+"toolbar.new.quick.help" = "新增快速終端機 (⌘T)";
+"toolbar.edit" = "編輯";
+"toolbar.edit.help" = "編輯終端機詳情 (⌘E)";
+"toolbar.pin" = "釘選";
+"toolbar.pin.help" = "釘選終端機 (⌘P)";
+"toolbar.unpin" = "取消釘選";
+"toolbar.unpin.help" = "取消釘選終端機 (⌘P)";
+"toolbar.delete" = "刪除";
+"toolbar.delete.help" = "刪除終端機";
+"toolbar.add" = "新增";
+"toolbar.add.help" = "新增終端機或欄";
+"toolbar.open.terminal.app" = "喺終端機開啟";
+"toolbar.open.terminal.app.help" = "喺 Terminal.app 開啟";
+"toolbar.new.terminal" = "新增終端機";
+"toolbar.new.column" = "新增欄";
+"toolbar.bin.count %lld" = "垃圾桶 (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "快速新增終端機";
+"menu.new.terminal" = "新增終端機...";
+"menu.new.terminal.dialog" = "新增終端機";
+"menu.new.column" = "新增欄";
+"menu.back" = "返回睇板";
+"menu.toggle.pin" = "切換釘選";
+"menu.next.pinned" = "下一個釘選終端機";
+"menu.previous.pinned" = "上一個釘選終端機";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "刪除終端機";
+"delete.move.to.bin" = "移至垃圾桶";
+"delete.message %@" = "確定要刪除「%@」？";
+"delete.bin.message %@" = "「%@」會移至垃圾桶，可以喺 30 日內還原。";
+"delete.cancel" = "取消";
+"delete.confirm" = "刪除";
+"delete.permanent" = "永久刪除";
+
+// MARK: - Card Editor
+"editor.title.new" = "新增終端機";
+"editor.title.edit" = "編輯終端機";
+"editor.tab.general" = "一般";
+"editor.tab.advanced" = "進階";
+
+// Editor - Details section
+"editor.section.details" = "詳情";
+"editor.field.name" = "名稱";
+"editor.field.name.placeholder" = "終端機名稱";
+"editor.field.description" = "描述";
+"editor.field.description.placeholder" = "選填描述";
+"editor.field.column" = "欄";
+"editor.field.badges" = "徽章";
+"editor.field.badges.placeholder" = "徽章1, 徽章2";
+"editor.field.badges.help" = "卡片上顯示嘅逗號分隔徽章";
+
+// Editor - Appearance section
+"editor.section.appearance" = "外觀";
+"editor.field.theme" = "主題";
+"editor.field.theme.default" = "預設";
+"editor.field.font.size" = "字體大小";
+"editor.font.preview" = "AaBbCc 中文 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "終端機";
+"editor.field.directory" = "工作目錄";
+"editor.field.directory.help" = "終端機嘅起始目錄";
+"editor.field.shell" = "Shell";
+"editor.field.shell.help" = "使用嘅 Shell（留空使用預設）";
+
+// Editor - Automation section
+"editor.section.automation" = "自動化";
+"editor.field.init.command" = "初始化指令";
+"editor.field.init.command.help" = "終端機啟動時執行嘅指令";
+"editor.field.safe.paste" = "安全貼上";
+"editor.field.safe.paste.help" = "貼上多行文字前顯示確認";
+"editor.field.allow.autorun" = "允許自動執行";
+"editor.field.allow.autorun.help" = "允許 CLI 自動執行指令";
+"editor.field.autorun.disabled.globally" = "自動執行已全域停用";
+"editor.field.autorun.enable.hint" = "喺設定 > 工具度啟用";
+
+// Editor - Tags section
+"editor.section.tags" = "標籤";
+"editor.field.tags" = "標籤";
+"editor.tag.add" = "新增標籤";
+"editor.tag.key.placeholder" = "鍵";
+"editor.tag.value.placeholder" = "值";
+"editor.tags.help" = "用嚟組織嘅鍵值對";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "代理設定";
+"editor.field.terminal.allows.autorun" = "終端機允許指令";
+"editor.field.persistent.context" = "持續性內容";
+"editor.field.persistent.context.help" = "內容喺工作階段之間保持";
+"editor.field.next.action" = "下一步動作";
+"editor.field.next.action.help" = "下次執行嘅動作";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "指令產生器";
+"editor.field.apply.to.init.command" = "套用為初始化指令";
+"editor.field.apply.to.init.command.help" = "將產生嘅指令用作初始化指令";
+"editor.no.llm.prompt.warning" = "未設定 LLM 提示";
+"editor.non.interactive.note" = "注意：指令以非互動方式執行";
+
+"editor.cancel" = "取消";
+"editor.save" = "儲存";
+"editor.save.open" = "儲存並開啟";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "新增欄";
+"column.editor.title.edit" = "編輯欄";
+"column.editor.field.name" = "名稱";
+"column.editor.field.name.placeholder" = "欄名稱";
+"column.editor.field.description" = "描述";
+"column.editor.field.description.placeholder" = "選填描述";
+"column.editor.field.color" = "顏色";
+"column.editor.cancel" = "取消";
+"column.editor.save" = "儲存";
+
+// MARK: - Bin
+"bin.title" = "垃圾桶";
+"bin.empty" = "垃圾桶係空嘅";
+"bin.empty.button" = "清空垃圾桶";
+"bin.close.help" = "關閉垃圾桶";
+"bin.restore.help" = "還原終端機";
+"bin.delete.help" = "永久刪除";
+"bin.deleted %@" = "已刪除 %@";
+"bin.days.remaining %lld" = "剩餘 %lld 日";
+
+// MARK: - Settings
+"settings.title" = "設定";
+"settings.tab.general" = "一般";
+"settings.tab.tools" = "工具";
+
+// Settings - Terminal section
+"settings.section.terminal" = "終端機";
+"settings.field.theme" = "主題";
+"settings.field.theme.help" = "新終端機嘅預設主題";
+"settings.field.copy.on.select" = "選取時複製";
+"settings.field.copy.on.select.help" = "自動複製選取嘅文字";
+
+// Settings - Bin section
+"settings.section.bin" = "垃圾桶";
+"settings.auto.empty %lld" = "%lld 日後自動清空";
+"settings.auto.empty.help" = "自動清空垃圾桶入面嘅舊項目";
+"settings.bin.empty" = "垃圾桶係空嘅";
+"settings.bin.items %lld" = "垃圾桶入面有 %lld 個項目";
+"settings.empty.bin.now" = "即刻清空垃圾桶";
+
+// Settings - About section
+"settings.section.about" = "關於";
+"settings.field.version" = "版本";
+"settings.field.build" = "組建";
+
+// Settings - Language section
+"settings.section.language" = "語言";
+"settings.field.current" = "目前";
+"settings.system.default" = "系統預設";
+"settings.search.languages" = "搜尋語言...";
+"settings.using.system.language" = "使用系統語言";
+"settings.restart.required" = "變更語言需要重新啟動";
+
+// Settings - CLI section
+"settings.section.cli" = "命令列";
+"settings.cli.title" = "CLI 工具";
+"settings.cli.description" = "termqclicli 命令列工具可以畀你喺 Shell 入面開啟終端機。";
+"settings.cli.path" = "安裝位置";
+"settings.cli.install" = "安裝 CLI";
+"settings.cli.uninstall" = "解除安裝";
+"settings.cli.installed" = "已安裝";
+"settings.cli.not.installed" = "未安裝";
+"settings.cli.usage" = "用法：";
+"settings.cli.location" = "位置";
+"settings.enable.terminal.autorun" = "啟用終端機自動執行";
+"settings.enable.terminal.autorun.help" = "允許 CLI 喺終端機入面執行指令";
+
+// Settings - MCP section
+"settings.section.mcp" = "MCP 伺服器";
+"settings.mcp.title" = "MCP 伺服器";
+"settings.mcp.description" = "用嚟整合 AI 代理嘅模型內容協定伺服器。";
+"settings.mcp.location" = "伺服器位置";
+"settings.mcp.claude.config" = "Claude Desktop 設定";
+"settings.mcp.local.only" = "只限本機連線";
+"settings.mcp.install.description" = "新增至你嘅 Claude Desktop 設定：";
+"settings.config.copied" = "設定已複製！";
+"settings.copy.config" = "複製設定";
+
+// Settings - Agents section
+"settings.section.agents" = "代理";
+
+// MARK: - Command Palette
+"palette.placeholder" = "搜尋指令...";
+"palette.no.results" = "搵唔到結果";
+
+// MARK: - Help View
+"help.title" = "說明";
+"help.search.placeholder" = "搜尋說明...";
+
+// MARK: - Alerts
+"alert.error" = "錯誤";
+"alert.success" = "成功";

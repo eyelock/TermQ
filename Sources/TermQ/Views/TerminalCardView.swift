@@ -44,7 +44,7 @@ struct TerminalCardView: View {
 
                 // Open as tab indicator
                 if isOpenAsTab {
-                    Text("Open")
+                    Text(Strings.Card.open)
                         .font(.caption2)
                         .fontWeight(.medium)
                         .padding(.horizontal, 6)
@@ -58,7 +58,7 @@ struct TerminalCardView: View {
 
                 // Wired indicator - shows when LLM has called termq_get for this terminal
                 if card.isWired {
-                    Text("Wired")
+                    Text(Strings.Card.wired)
                         .font(.caption2)
                         .fontWeight(.medium)
                         .padding(.horizontal, 6)
@@ -68,7 +68,7 @@ struct TerminalCardView: View {
                                 .fill(Color.green.opacity(0.3))
                         )
                         .foregroundColor(.green)
-                        .help("LLM is aware of this terminal")
+                        .help(Strings.Card.wiredHelp)
                 }
 
                 Spacer()
@@ -80,7 +80,7 @@ struct TerminalCardView: View {
                         Circle()
                             .fill(Color.orange)
                             .frame(width: 8, height: 8)
-                            .help("Needs attention")
+                            .help(Strings.Card.needsAttention)
                     }
 
                     // Processing indicator (recent output activity)
@@ -88,7 +88,7 @@ struct TerminalCardView: View {
                         ProgressView()
                             .scaleEffect(0.5)
                             .frame(width: 12, height: 12)
-                            .help("Processing")
+                            .help(Strings.Card.processing)
                     }
 
                     Button {
@@ -100,14 +100,14 @@ struct TerminalCardView: View {
                     }
                     .buttonStyle(.plain)
                     .opacity(isHovering || card.isFavourite ? 1 : 0)
-                    .help(card.isFavourite ? "Remove from favourites" : "Add to favourites")
+                    .help(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin)
 
                     // Running status
                     if card.isRunning && !isProcessing {
                         Circle()
                             .fill(.green)
                             .frame(width: 8, height: 8)
-                            .help("Terminal is running")
+                            .help(Strings.Card.running)
                     }
                 }
             }
@@ -172,28 +172,28 @@ struct TerminalCardView: View {
             onSelect()
         }
         .contextMenu {
-            Button("Open Terminal") {
+            Button(Strings.Card.open) {
                 onSelect()
             }
-            Button("Edit Details...") {
+            Button(Strings.Card.edit) {
                 onEdit()
             }
             Divider()
-            Button(card.isFavourite ? "Remove from Favourites" : "Add to Favourites") {
+            Button(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin) {
                 onToggleFavourite()
             }
             Divider()
-            Button("Delete", role: .destructive) {
+            Button(Strings.Card.delete, role: .destructive) {
                 showDeleteConfirmation = true
             }
         }
-        .alert("Delete Terminal", isPresented: $showDeleteConfirmation) {
-            Button("Cancel", role: .cancel) {}
-            Button("Delete", role: .destructive) {
+        .alert(Strings.Delete.title, isPresented: $showDeleteConfirmation) {
+            Button(Strings.Delete.cancel, role: .cancel) {}
+            Button(Strings.Delete.confirm, role: .destructive) {
                 onDelete()
             }
         } message: {
-            Text("Are you sure you want to delete \"\(card.title)\"? This cannot be undone.")
+            Text(Strings.Delete.message(card.title))
         }
     }
 

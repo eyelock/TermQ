@@ -23,9 +23,67 @@ When I say "let me give you feedback" or similar phrases indicating I want to pr
 - ALWAYS put your plans in .claude/plans 
 - ALWAYS put your session handovers in .claude/sessions 
 
+## PRE-PUSH / PRE-PR REQUIREMENTS (MANDATORY)
+
+**NEVER push code or create a PR without running these checks locally first:**
+
+1. `swift build` - Must complete with zero errors
+2. `swift-format format -r -i Sources/` - Format all code
+3. `swiftlint lint` - Must have zero errors (warnings acceptable but minimize)
+4. `swift test` - All tests must pass
+
+**IMPORTANT: Use Xcode toolchain, not CommandLineTools:**
+If tests fail with "no such module 'XCTest'" or SwiftLint crashes with SourceKit errors, prefix commands with:
+```bash
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swiftlint lint
+```
+This ensures proper XCTest availability and SourceKit functionality.
+
+This prevents wasting CI resources and reduces environmental impact. Run these checks BEFORE:
+- Any `git push`
+- Creating or updating a PR
+- Requesting code review
+
+If SwiftLint crashes locally (SourceKit issues), at minimum verify the build succeeds and check line counts on modified files against SwiftLint rules (e.g., type_body_length max 500 lines).
+
+**If local checks pass but CI fails**: This is a BUG. Investigate the discrepancy - local and CI environments should produce identical results. File an issue to track and fix the root cause.
+
+## LOCALIZATION REQUIREMENTS (MANDATORY)
+
+**NEVER use hardcoded user-facing strings in SwiftUI views or UI code.**
+
+All user-visible text MUST use the centralized `Strings` enum:
+
+```swift
+// ❌ WRONG - hardcoded string
+Text("New Terminal")
+Button("Cancel") { ... }
+.help("Close window")
+
+// ✅ CORRECT - localized string
+Text(Strings.Editor.titleNew)
+Button(Strings.Editor.cancel) { ... }
+.help(Strings.Common.close)
+```
+
+**Before any PR involving UI changes:**
+1. Search for hardcoded strings: `grep -r "Text(\"" Sources/TermQ/Views/`
+2. Verify all new strings are added to `Strings.swift`
+3. Run `./scripts/localization/validate-strings.sh` to ensure all 40 language files are in sync
+
+**Key files:**
+- `Sources/TermQ/Strings.swift` - Centralized string enum using `localizedBundle`
+- `Sources/TermQ/Resources/*.lproj/Localizable.strings` - Translation files (40 languages)
+
+**Adding new strings:**
+1. Add the key to `Strings.swift` with appropriate category
+2. Add the English string to `Sources/TermQ/Resources/en.lproj/Localizable.strings`
+3. Run the localization script to propagate to all language files
+
 ## CODE HYGIENE
 
-Want to do this workflow at the end of any significant development work, especially in the middle of 
+Run this workflow at the end of any significant development work:
 
 * Use ACME if it is available
 * Clean the software, including dependencies
@@ -33,6 +91,9 @@ Want to do this workflow at the end of any significant development work, especia
 * Build the project, zero error tolerance and strive for zero warning tolerance
 * Format the code, add any changes as needed
 * Lint the code, zero error tolerance and strive for zero warning tolerance
+* Validate localization strings: `./scripts/localization/validate-strings.sh`
+  * Ensure all 40 language files have matching keys
+  * Run this before any release
 * Specific technologies
   * Typescript
     * Always check the Typescript for errors regularly, it's a lot of wasted time trying to fix a massive batch of them

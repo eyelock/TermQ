@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Slovenian localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "V redu";
+"common.cancel" = "Prekliči";
+"common.save" = "Shrani";
+"common.delete" = "Izbriši";
+"common.edit" = "Uredi";
+"common.close" = "Zapri";
+"common.add" = "Dodaj";
+"common.reinstall" = "Ponovno namesti";
+"common.uninstall" = "Odstrani";
+"common.installed" = "Nameščeno";
+"common.browse" = "Prebrskaj...";
+"common.apply" = "Uporabi";
+"common.preview" = "Predogled";
+
+// MARK: - Board View
+"board.column.options" = "Možnosti stolpca";
+"board.column.rename" = "Preimenuj stolpec...";
+"board.column.delete" = "Izbriši stolpec";
+"board.column.delete.disabled" = "Izbriši stolpec (najprej premakni terminale)";
+"board.column.add.terminal" = "Dodaj terminal";
+"board.column.add.terminal.help" = "Dodaj nov terminal v ta stolpec";
+"board.column.edit" = "Uredi stolpec...";
+
+// MARK: - Terminal Card
+"card.pin" = "Pripni terminal";
+"card.unpin" = "Odpni terminal";
+"card.running" = "Terminal deluje";
+"card.open" = "Odprto";
+"card.edit" = "Uredi podrobnosti...";
+"card.delete" = "Izbriši";
+"card.wired" = "Povezano";
+"card.wired.help" = "Povezano z agentom MCP";
+"card.needs.attention" = "Zahteva pozornost";
+"card.processing" = "Obdelava...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "Seja terminala končana";
+"terminal.restart" = "Ponovno zaženi terminal";
+"terminal.restart.help" = "Zaženi novo sejo terminala";
+"terminal.current" = "Trenutni terminal";
+"terminal.edit.help" = "Uredi podrobnosti terminala";
+"terminal.close.tab.help" = "Zapri ta zavihek terminala";
+"terminal.switch.to %@" = "Preklopi na %@";
+"terminal.tab.help %@ %@" = "%@ v %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "Nazaj";
+"toolbar.back.help" = "Nazaj na tablo (Escape)";
+"toolbar.move.to" = "Premakni v stolpec";
+"toolbar.new.quick" = "Hitri terminal";
+"toolbar.new.quick.help" = "Nov hitri terminal (⌘T)";
+"toolbar.edit" = "Uredi";
+"toolbar.edit.help" = "Uredi podrobnosti terminala (⌘E)";
+"toolbar.pin" = "Pripni";
+"toolbar.pin.help" = "Pripni terminal (⌘P)";
+"toolbar.unpin" = "Odpni";
+"toolbar.unpin.help" = "Odpni terminal (⌘P)";
+"toolbar.delete" = "Izbriši";
+"toolbar.delete.help" = "Izbriši terminal";
+"toolbar.add" = "Dodaj";
+"toolbar.add.help" = "Dodaj nov terminal ali stolpec";
+"toolbar.open.terminal.app" = "Odpri v Terminalu";
+"toolbar.open.terminal.app.help" = "Odpri v Terminal.app";
+"toolbar.new.terminal" = "Nov terminal";
+"toolbar.new.column" = "Nov stolpec";
+"toolbar.bin.count %lld" = "Koš (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "Nov hitri terminal";
+"menu.new.terminal" = "Nov terminal...";
+"menu.new.terminal.dialog" = "Nov terminal";
+"menu.new.column" = "Nov stolpec";
+"menu.back" = "Nazaj na tablo";
+"menu.toggle.pin" = "Preklopi pripenjanje";
+"menu.next.pinned" = "Naslednji pripeti terminal";
+"menu.previous.pinned" = "Prejšnji pripeti terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "Izbriši terminal";
+"delete.move.to.bin" = "Premakni v koš";
+"delete.message %@" = "Ali ste prepričani, da želite izbrisati \"%@\"?";
+"delete.bin.message %@" = "\"%@\" bo premaknjen v koš, kjer ga je mogoče obnoviti 30 dni.";
+"delete.cancel" = "Prekliči";
+"delete.confirm" = "Izbriši";
+"delete.permanent" = "Trajno izbriši";
+
+// MARK: - Card Editor
+"editor.title.new" = "Nov terminal";
+"editor.title.edit" = "Uredi terminal";
+"editor.tab.general" = "Splošno";
+"editor.tab.advanced" = "Napredno";
+
+// Editor - Details section
+"editor.section.details" = "Podrobnosti";
+"editor.field.name" = "Ime";
+"editor.field.name.placeholder" = "Ime terminala";
+"editor.field.description" = "Opis";
+"editor.field.description.placeholder" = "Izbirni opis";
+"editor.field.column" = "Stolpec";
+"editor.field.badges" = "Značke";
+"editor.field.badges.placeholder" = "značka1, značka2";
+"editor.field.badges.help" = "Značke ločene z vejico na kartici";
+
+// Editor - Appearance section
+"editor.section.appearance" = "Videz";
+"editor.field.theme" = "Tema";
+"editor.field.theme.default" = "Privzeto";
+"editor.field.font.size" = "Velikost pisave";
+"editor.font.preview" = "AaBbCc 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "Terminal";
+"editor.field.directory" = "Delovna mapa";
+"editor.field.directory.help" = "Začetna mapa za terminal";
+"editor.field.shell" = "Lupina";
+"editor.field.shell.help" = "Lupina za uporabo (prazno = privzeto)";
+
+// Editor - Automation section
+"editor.section.automation" = "Avtomatizacija";
+"editor.field.init.command" = "Začetni ukaz";
+"editor.field.init.command.help" = "Ukaz za zagon ob zagonu terminala";
+"editor.field.safe.paste" = "Varno lepljenje";
+"editor.field.safe.paste.help" = "Prikaži potrditev pred lepljenjem večvrstičnega besedila";
+"editor.field.allow.autorun" = "Dovoli samodejni zagon";
+"editor.field.allow.autorun.help" = "Dovoli CLI samodejno izvajanje ukazov";
+"editor.field.autorun.disabled.globally" = "Samodejni zagon je globalno onemogočen";
+"editor.field.autorun.enable.hint" = "Omogoči v Nastavitve > Orodja";
+
+// Editor - Tags section
+"editor.section.tags" = "Oznake";
+"editor.field.tags" = "Oznake";
+"editor.tag.add" = "Dodaj oznako";
+"editor.tag.key.placeholder" = "ključ";
+"editor.tag.value.placeholder" = "vrednost";
+"editor.tags.help" = "Pari ključ-vrednost za organizacijo";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "Konfiguracija agenta";
+"editor.field.terminal.allows.autorun" = "Terminal dovoljuje ukaze";
+"editor.field.persistent.context" = "Trajni kontekst";
+"editor.field.persistent.context.help" = "Kontekst se ohranja med sejami";
+"editor.field.next.action" = "Naslednje dejanje";
+"editor.field.next.action.help" = "Dejanje za izvedbo naslednjič";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "Generator ukazov";
+"editor.field.apply.to.init.command" = "Uporabi za začetni ukaz";
+"editor.field.apply.to.init.command.help" = "Uporabi generirani ukaz kot začetni";
+"editor.no.llm.prompt.warning" = "Poziv LLM ni konfiguriran";
+"editor.non.interactive.note" = "Opomba: Ukazi se izvajajo neinteraktivno";
+
+"editor.cancel" = "Prekliči";
+"editor.save" = "Shrani";
+"editor.save.open" = "Shrani in odpri";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "Nov stolpec";
+"column.editor.title.edit" = "Uredi stolpec";
+"column.editor.field.name" = "Ime";
+"column.editor.field.name.placeholder" = "Ime stolpca";
+"column.editor.field.description" = "Opis";
+"column.editor.field.description.placeholder" = "Izbirni opis";
+"column.editor.field.color" = "Barva";
+"column.editor.cancel" = "Prekliči";
+"column.editor.save" = "Shrani";
+
+// MARK: - Bin
+"bin.title" = "Koš";
+"bin.empty" = "Koš je prazen";
+"bin.empty.button" = "Izprazni koš";
+"bin.close.help" = "Zapri koš";
+"bin.restore.help" = "Obnovi terminal";
+"bin.delete.help" = "Trajno izbriši";
+"bin.deleted %@" = "Izbrisano %@";
+"bin.days.remaining %lld" = "Preostalo %lld dni";
+
+// MARK: - Settings
+"settings.title" = "Nastavitve";
+"settings.tab.general" = "Splošno";
+"settings.tab.tools" = "Orodja";
+
+// Settings - Terminal section
+"settings.section.terminal" = "Terminal";
+"settings.field.theme" = "Tema";
+"settings.field.theme.help" = "Privzeta tema za nove terminale";
+"settings.field.copy.on.select" = "Kopiraj ob izbiri";
+"settings.field.copy.on.select.help" = "Samodejno kopiraj izbrano besedilo";
+
+// Settings - Bin section
+"settings.section.bin" = "Koš";
+"settings.auto.empty %lld" = "Samodejno izprazni po %lld dneh";
+"settings.auto.empty.help" = "Samodejno odstrani stare elemente iz koša";
+"settings.bin.empty" = "Koš je prazen";
+"settings.bin.items %lld" = "%lld elementov v košu";
+"settings.empty.bin.now" = "Izprazni koš zdaj";
+
+// Settings - About section
+"settings.section.about" = "O aplikaciji";
+"settings.field.version" = "Različica";
+"settings.field.build" = "Gradnja";
+
+// Settings - Language section
+"settings.section.language" = "Jezik";
+"settings.field.current" = "Trenutni";
+"settings.system.default" = "Sistemsko privzeto";
+"settings.search.languages" = "Išči jezike...";
+"settings.using.system.language" = "Uporablja se sistemski jezik";
+"settings.restart.required" = "Za spremembo jezika je potreben ponovni zagon";
+
+// Settings - CLI section
+"settings.section.cli" = "Ukazna vrstica";
+"settings.cli.title" = "Orodje CLI";
+"settings.cli.description" = "Orodje ukazne vrstice termqcli omogoča odpiranje terminalov iz lupine.";
+"settings.cli.path" = "Mesto namestitve";
+"settings.cli.install" = "Namesti CLI";
+"settings.cli.uninstall" = "Odstrani";
+"settings.cli.installed" = "Nameščeno";
+"settings.cli.not.installed" = "Ni nameščeno";
+"settings.cli.usage" = "Uporaba:";
+"settings.cli.location" = "Mesto";
+"settings.enable.terminal.autorun" = "Omogoči samodejni zagon terminala";
+"settings.enable.terminal.autorun.help" = "Dovoli CLI izvajanje ukazov v terminalih";
+
+// Settings - MCP section
+"settings.section.mcp" = "Strežnik MCP";
+"settings.mcp.title" = "Strežnik MCP";
+"settings.mcp.description" = "Strežnik Model Context Protocol za integracijo z agenti AI.";
+"settings.mcp.location" = "Mesto strežnika";
+"settings.mcp.claude.config" = "Konfiguracija Claude Desktop";
+"settings.mcp.local.only" = "Samo lokalne povezave";
+"settings.mcp.install.description" = "Dodajte v konfiguracijo Claude Desktop:";
+"settings.config.copied" = "Konfiguracija kopirana!";
+"settings.copy.config" = "Kopiraj konfiguracijo";
+
+// Settings - Agents section
+"settings.section.agents" = "Agenti";
+
+// MARK: - Command Palette
+"palette.placeholder" = "Išči ukaze...";
+"palette.no.results" = "Ni rezultatov";
+
+// MARK: - Help View
+"help.title" = "Pomoč";
+"help.search.placeholder" = "Išči v pomoči...";
+
+// MARK: - Alerts
+"alert.error" = "Napaka";
+"alert.success" = "Uspeh";

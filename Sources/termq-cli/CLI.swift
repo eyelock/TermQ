@@ -172,11 +172,11 @@ enum CLIError: Error, LocalizedError {
 @main
 struct TermQCLI: ParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "termq",
+        commandName: "termqcli",
         abstract: "Command-line interface for TermQ - Terminal Queue Manager",
         discussion: """
-            LLM/AI Assistants: Run 'termq pending' at session start, then \
-            'termq context' for the complete cross-session workflow guide.
+            LLM/AI Assistants: Run 'termqcli pending' at session start, then \
+            'termqcli context' for the complete cross-session workflow guide.
             """,
         version: "1.0.0",
         subcommands: [

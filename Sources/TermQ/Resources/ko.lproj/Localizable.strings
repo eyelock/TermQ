@@ -1,0 +1,271 @@
+/*
+  Localizable.strings
+  TermQ
+
+  Korean localization strings.
+*/
+
+// MARK: - App
+"app.name" = "TermQ";
+
+// MARK: - Common
+"common.ok" = "확인";
+"common.cancel" = "취소";
+"common.save" = "저장";
+"common.delete" = "삭제";
+"common.edit" = "편집";
+"common.close" = "닫기";
+"common.add" = "추가";
+"common.reinstall" = "재설치";
+"common.uninstall" = "제거";
+"common.installed" = "설치됨";
+"common.browse" = "찾아보기...";
+"common.apply" = "적용";
+"common.preview" = "미리보기";
+
+// MARK: - Board View
+"board.column.options" = "열 옵션";
+"board.column.rename" = "열 이름 변경...";
+"board.column.delete" = "열 삭제";
+"board.column.delete.disabled" = "열 삭제 (먼저 터미널을 이동하세요)";
+"board.column.add.terminal" = "터미널 추가";
+"board.column.add.terminal.help" = "이 열에 새 터미널 추가";
+"board.column.edit" = "열 편집...";
+
+// MARK: - Terminal Card
+"card.pin" = "터미널 고정";
+"card.unpin" = "터미널 고정 해제";
+"card.running" = "터미널 실행 중";
+"card.open" = "열림";
+"card.edit" = "세부 정보 편집...";
+"card.delete" = "삭제";
+"card.wired" = "연결됨";
+"card.wired.help" = "MCP 에이전트에 연결됨";
+"card.needs.attention" = "주의 필요";
+"card.processing" = "처리 중...";
+
+// MARK: - Expanded Terminal View
+"terminal.ended" = "터미널 세션이 종료됨";
+"terminal.restart" = "터미널 재시작";
+"terminal.restart.help" = "새 터미널 세션 시작";
+"terminal.current" = "현재 터미널";
+"terminal.edit.help" = "터미널 세부 정보 편집";
+"terminal.close.tab.help" = "이 터미널 탭 닫기";
+"terminal.switch.to %@" = "%@(으)로 전환";
+"terminal.tab.help %@ %@" = "%@ - %@";
+
+// MARK: - Toolbar
+"toolbar.back" = "뒤로";
+"toolbar.back.help" = "보드로 돌아가기 (Escape)";
+"toolbar.move.to" = "열로 이동";
+"toolbar.new.quick" = "빠른 터미널";
+"toolbar.new.quick.help" = "새 빠른 터미널 (⌘T)";
+"toolbar.edit" = "편집";
+"toolbar.edit.help" = "터미널 세부 정보 편집 (⌘E)";
+"toolbar.pin" = "고정";
+"toolbar.pin.help" = "터미널 고정 (⌘P)";
+"toolbar.unpin" = "고정 해제";
+"toolbar.unpin.help" = "터미널 고정 해제 (⌘P)";
+"toolbar.delete" = "삭제";
+"toolbar.delete.help" = "터미널 삭제";
+"toolbar.add" = "추가";
+"toolbar.add.help" = "새 터미널 또는 열 추가";
+"toolbar.open.terminal.app" = "터미널에서 열기";
+"toolbar.open.terminal.app.help" = "Terminal.app에서 열기";
+"toolbar.new.terminal" = "새 터미널";
+"toolbar.new.column" = "새 열";
+"toolbar.bin.count %lld" = "휴지통 (%lld)";
+
+// MARK: - Menu Commands
+"menu.help" = "TermQ Help";
+"menu.new.terminal.quick" = "빠른 새 터미널";
+"menu.new.terminal" = "새 터미널...";
+"menu.new.terminal.dialog" = "새 터미널";
+"menu.new.column" = "새 열";
+"menu.back" = "보드로 돌아가기";
+"menu.toggle.pin" = "고정 전환";
+"menu.next.pinned" = "다음 고정 터미널";
+"menu.previous.pinned" = "이전 고정 터미널";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
+
+// MARK: - Delete Confirmation
+"delete.title" = "터미널 삭제";
+"delete.move.to.bin" = "휴지통으로 이동";
+"delete.message %@" = "\"%@\"을(를) 삭제하시겠습니까?";
+"delete.bin.message %@" = "\"%@\"이(가) 휴지통으로 이동되며 30일 동안 복원할 수 있습니다.";
+"delete.cancel" = "취소";
+"delete.confirm" = "삭제";
+"delete.permanent" = "영구 삭제";
+
+// MARK: - Card Editor
+"editor.title.new" = "새 터미널";
+"editor.title.edit" = "터미널 편집";
+"editor.tab.general" = "일반";
+"editor.tab.advanced" = "고급";
+
+// Editor - Details section
+"editor.section.details" = "세부 정보";
+"editor.field.name" = "이름";
+"editor.field.name.placeholder" = "터미널 이름";
+"editor.field.description" = "설명";
+"editor.field.description.placeholder" = "선택적 설명";
+"editor.field.column" = "열";
+"editor.field.badges" = "배지";
+"editor.field.badges.placeholder" = "배지1, 배지2";
+"editor.field.badges.help" = "카드에 표시되는 쉼표로 구분된 배지";
+
+// Editor - Appearance section
+"editor.section.appearance" = "모양";
+"editor.field.theme" = "테마";
+"editor.field.theme.default" = "기본값";
+"editor.field.font.size" = "글꼴 크기";
+"editor.font.preview" = "AaBbCc 가나다 123";
+
+// Editor - Terminal section
+"editor.section.terminal" = "터미널";
+"editor.field.directory" = "작업 디렉토리";
+"editor.field.directory.help" = "터미널의 시작 디렉토리";
+"editor.field.shell" = "셸";
+"editor.field.shell.help" = "사용할 셸 (비워두면 기본값)";
+
+// Editor - Automation section
+"editor.section.automation" = "자동화";
+"editor.field.init.command" = "초기화 명령";
+"editor.field.init.command.help" = "터미널 시작 시 실행할 명령";
+"editor.field.safe.paste" = "안전 붙여넣기";
+"editor.field.safe.paste.help" = "여러 줄 텍스트 붙여넣기 전 확인 표시";
+"editor.field.allow.autorun" = "자동 실행 허용";
+"editor.field.allow.autorun.help" = "CLI의 자동 명령 실행 허용";
+"editor.field.autorun.disabled.globally" = "자동 실행이 전역적으로 비활성화됨";
+"editor.field.autorun.enable.hint" = "설정 > 도구에서 활성화";
+
+// Editor - Tags section
+"editor.section.tags" = "태그";
+"editor.field.tags" = "태그";
+"editor.tag.add" = "태그 추가";
+"editor.tag.key.placeholder" = "키";
+"editor.tag.value.placeholder" = "값";
+"editor.tags.help" = "구성을 위한 키-값 쌍";
+
+// Editor - Agent Configuration section
+"editor.section.agent" = "에이전트 구성";
+"editor.field.terminal.allows.autorun" = "터미널이 명령 허용";
+"editor.field.persistent.context" = "지속 컨텍스트";
+"editor.field.persistent.context.help" = "세션 간 컨텍스트 유지";
+"editor.field.next.action" = "다음 동작";
+"editor.field.next.action.help" = "다음에 수행할 동작";
+
+// Editor - Command Generator section
+"editor.section.command.generator" = "명령 생성기";
+"editor.field.apply.to.init.command" = "초기화 명령에 적용";
+"editor.field.apply.to.init.command.help" = "생성된 명령을 초기화 명령으로 사용";
+"editor.no.llm.prompt.warning" = "LLM 프롬프트가 구성되지 않음";
+"editor.non.interactive.note" = "참고: 명령이 비대화형으로 실행됩니다";
+
+"editor.cancel" = "취소";
+"editor.save" = "저장";
+"editor.save.open" = "저장 후 열기";
+
+// MARK: - Column Editor
+"column.editor.title.new" = "새 열";
+"column.editor.title.edit" = "열 편집";
+"column.editor.field.name" = "이름";
+"column.editor.field.name.placeholder" = "열 이름";
+"column.editor.field.description" = "설명";
+"column.editor.field.description.placeholder" = "선택적 설명";
+"column.editor.field.color" = "색상";
+"column.editor.cancel" = "취소";
+"column.editor.save" = "저장";
+
+// MARK: - Bin
+"bin.title" = "휴지통";
+"bin.empty" = "휴지통이 비어 있음";
+"bin.empty.button" = "휴지통 비우기";
+"bin.close.help" = "휴지통 닫기";
+"bin.restore.help" = "터미널 복원";
+"bin.delete.help" = "영구 삭제";
+"bin.deleted %@" = "%@ 삭제됨";
+"bin.days.remaining %lld" = "%lld일 남음";
+
+// MARK: - Settings
+"settings.title" = "설정";
+"settings.tab.general" = "일반";
+"settings.tab.tools" = "도구";
+
+// Settings - Terminal section
+"settings.section.terminal" = "터미널";
+"settings.field.theme" = "테마";
+"settings.field.theme.help" = "새 터미널의 기본 테마";
+"settings.field.copy.on.select" = "선택 시 복사";
+"settings.field.copy.on.select.help" = "선택한 텍스트 자동 복사";
+
+// Settings - Bin section
+"settings.section.bin" = "휴지통";
+"settings.auto.empty %lld" = "%lld일 후 자동 비우기";
+"settings.auto.empty.help" = "휴지통의 오래된 항목 자동 삭제";
+"settings.bin.empty" = "휴지통이 비어 있음";
+"settings.bin.items %lld" = "휴지통에 %lld개 항목";
+"settings.empty.bin.now" = "지금 휴지통 비우기";
+
+// Settings - About section
+"settings.section.about" = "정보";
+"settings.field.version" = "버전";
+"settings.field.build" = "빌드";
+
+// Settings - Language section
+"settings.section.language" = "언어";
+"settings.field.current" = "현재";
+"settings.system.default" = "시스템 기본값";
+"settings.search.languages" = "언어 검색...";
+"settings.using.system.language" = "시스템 언어 사용 중";
+"settings.restart.required" = "언어 변경을 위해 재시작 필요";
+
+// Settings - CLI section
+"settings.section.cli" = "명령줄";
+"settings.cli.title" = "CLI 도구";
+"settings.cli.description" = "termqcli 명령줄 도구를 사용하면 셸에서 터미널을 열 수 있습니다.";
+"settings.cli.path" = "설치 위치";
+"settings.cli.install" = "CLI 설치";
+"settings.cli.uninstall" = "제거";
+"settings.cli.installed" = "설치됨";
+"settings.cli.not.installed" = "설치되지 않음";
+"settings.cli.usage" = "사용법:";
+"settings.cli.location" = "위치";
+"settings.enable.terminal.autorun" = "터미널 자동 실행 활성화";
+"settings.enable.terminal.autorun.help" = "CLI의 터미널 명령 실행 허용";
+
+// Settings - MCP section
+"settings.section.mcp" = "MCP 서버";
+"settings.mcp.title" = "MCP 서버";
+"settings.mcp.description" = "AI 에이전트 통합을 위한 Model Context Protocol 서버.";
+"settings.mcp.location" = "서버 위치";
+"settings.mcp.claude.config" = "Claude Desktop 구성";
+"settings.mcp.local.only" = "로컬 연결만";
+"settings.mcp.install.description" = "Claude Desktop 구성에 추가:";
+"settings.config.copied" = "구성이 복사됨!";
+"settings.copy.config" = "구성 복사";
+
+// Settings - Agents section
+"settings.section.agents" = "에이전트";
+
+// MARK: - Command Palette
+"palette.placeholder" = "명령 검색...";
+"palette.no.results" = "결과를 찾을 수 없음";
+
+// MARK: - Help View
+"help.title" = "도움말";
+"help.search.placeholder" = "도움말 검색...";
+
+// MARK: - Alerts
+"alert.error" = "오류";
+"alert.success" = "성공";
