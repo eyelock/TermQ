@@ -102,6 +102,30 @@ class BoardViewModel: ObservableObject {
 
     func save() {
         persistence.save(board)
+
+        // Trigger automatic backup if configured
+        BackupManager.backupIfNeeded()
+    }
+
+    /// Reload board from disk (used after restore)
+    func reloadFromDisk() {
+        guard let loaded = persistence.reloadForExternalChanges() else {
+            #if DEBUG
+                print("[BoardViewModel] Failed to reload board from disk")
+            #endif
+            return
+        }
+
+        self.board = loaded
+
+        // Re-initialize tabs from restored favourites
+        tabManager.reinitializeFromBoard(board)
+
+        objectWillChange.send()
+
+        #if DEBUG
+            print("[BoardViewModel] Reloaded board from disk with \(board.cards.count) cards")
+        #endif
     }
 
     // MARK: - Card Operations

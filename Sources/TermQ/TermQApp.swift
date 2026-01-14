@@ -176,11 +176,27 @@ struct TermQApp: App {
     @FocusedValue(\.terminalActions) private var terminalActions
     @Environment(\.openWindow) private var openWindow
 
+    // Restore offer state
+    @State private var showRestoreOffer = false
+    @State private var backupToRestore: URL?
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .frame(minWidth: 800, minHeight: 600)
                 .environmentObject(urlHandler)
+                .onAppear {
+                    checkForOrphanedBackup()
+                }
+                .sheet(isPresented: $showRestoreOffer) {
+                    if let backupURL = backupToRestore {
+                        RestoreOfferView(
+                            backupURL: backupURL,
+                            onRestore: { showRestoreOffer = false },
+                            onSkip: { showRestoreOffer = false }
+                        )
+                    }
+                }
         }
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)
@@ -324,6 +340,14 @@ struct TermQApp: App {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+    }
+
+    /// Check if we should offer to restore from backup on startup
+    private func checkForOrphanedBackup() {
+        if let backupURL = BackupManager.checkAndOfferRestore() {
+            backupToRestore = backupURL
+            showRestoreOffer = true
+        }
     }
 }
 
