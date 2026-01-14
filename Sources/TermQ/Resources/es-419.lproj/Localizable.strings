@@ -36,7 +36,7 @@
 "card.pin" = "Fijar terminal";
 "card.unpin" = "Desfijar terminal";
 "card.running" = "Terminal ejecutándose";
-"card.open" = "Abrir Terminal";
+"card.open" = "Abierto";
 "card.edit" = "Editar detalles...";
 "card.delete" = "Eliminar";
 "card.wired" = "Conectado";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Papelera (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Nueva terminal rápida";
 "menu.new.terminal" = "Nueva Terminal...";
 "menu.new.terminal.dialog" = "Nueva Terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Alternar fijado";
 "menu.next.pinned" = "Siguiente terminal fijada";
 "menu.previous.pinned" = "Terminal fijada anterior";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Eliminar Terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Línea de comandos";
 "settings.cli.title" = "Herramienta CLI";
-"settings.cli.description" = "La herramienta de línea de comandos termq te permite abrir terminales desde tu shell.";
+"settings.cli.description" = "La herramienta de línea de comandos termqcli te permite abrir terminales desde tu shell.";
 "settings.cli.path" = "Ubicación de instalación";
 "settings.cli.install" = "Instalar CLI";
 "settings.cli.uninstall" = "Desinstalar";

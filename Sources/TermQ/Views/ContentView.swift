@@ -131,7 +131,7 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "rectangle.grid.2x2")
                     }
-                    .help("Back to board (⌘B)")
+                    .help(Strings.Toolbar.backHelp)
                 }
             }
 
@@ -159,9 +159,13 @@ struct ContentView: View {
                     // Board view - show MCP status in title area
                     HStack(spacing: 8) {
                         mcpStatusIndicator
-                        Text("TermQ")
+                        Text(Strings.appName)
                             .font(.headline)
                     }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.secondary.opacity(0.15))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
             }
 
@@ -189,7 +193,7 @@ struct ContentView: View {
                         }
                         .buttonStyle(.plain)
                         .padding(.leading, 8)
-                        .help("Move to column")
+                        .help(Strings.Toolbar.moveTo)
                         .popover(isPresented: $showColumnPicker, arrowEdge: .bottom) {
                             VStack(alignment: .leading, spacing: 0) {
                                 ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
@@ -230,21 +234,21 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "apple.terminal")
                     }
-                    .help("Open in Terminal.app (⌘⇧T)")
+                    .help(Strings.Toolbar.openTerminalAppHelp)
 
                     Button {
                         viewModel.quickNewTerminal()
                     } label: {
                         Image(systemName: "plus.rectangle")
                     }
-                    .help("Quick new terminal (⌘T)")
+                    .help(Strings.Toolbar.newQuickHelp)
 
                     Button {
                         viewModel.isEditingCard = selectedCard
                     } label: {
                         Image(systemName: "pencil")
                     }
-                    .help("Edit terminal details")
+                    .help(Strings.Toolbar.editHelp)
 
                     Button {
                         viewModel.toggleFavourite(selectedCard)
@@ -252,7 +256,7 @@ struct ContentView: View {
                         Image(systemName: selectedCard.isFavourite ? "star.fill" : "star")
                     }
                     .foregroundColor(selectedCard.isFavourite ? .yellow : nil)
-                    .help(selectedCard.isFavourite ? "Remove from favourites (⌘D)" : "Add to favourites (⌘D)")
+                    .help(selectedCard.isFavourite ? Strings.Toolbar.unpinHelp : Strings.Toolbar.pinHelp)
 
                     Button {
                         viewModel.showDeleteConfirmation = true
@@ -260,7 +264,7 @@ struct ContentView: View {
                         Image(systemName: "trash")
                     }
                     .foregroundColor(.red)
-                    .help("Delete terminal (⌘⌫)")
+                    .help(Strings.Toolbar.deleteHelp)
                 } else {
                     // Board view controls
                     Button {
@@ -279,46 +283,46 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .help("Open Bin (\(viewModel.binCards.count) items)")
+                    .help(Strings.Toolbar.binCount(viewModel.binCards.count))
 
                     Button {
                         launchNativeTerminal()
                     } label: {
                         Image(systemName: "apple.terminal")
                     }
-                    .help("Open Terminal.app")
+                    .help(Strings.Toolbar.openTerminalApp)
 
                     Menu {
                         if let firstColumn = viewModel.board.columns.first {
-                            Button("New Terminal") {
+                            Button(Strings.Toolbar.newTerminal) {
                                 viewModel.addTerminal(to: firstColumn)
                             }
                         }
-                        Button("New Column") {
+                        Button(Strings.Toolbar.newColumn) {
                             viewModel.addColumn()
                         }
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .help("Add new terminal or column")
+                    .help(Strings.Toolbar.addHelp)
                 }
             }
         }
-        .alert("Delete Terminal", isPresented: $viewModel.showDeleteConfirmation) {
-            Button("Cancel", role: .cancel) {}
-            Button("Move to Bin", role: .destructive) {
+        .alert(Strings.Delete.title, isPresented: $viewModel.showDeleteConfirmation) {
+            Button(Strings.Delete.cancel, role: .cancel) {}
+            Button(Strings.Delete.moveToBin, role: .destructive) {
                 if let selectedCard = viewModel.selectedCard {
                     viewModel.deleteTabCard(selectedCard)
                 }
             }
         } message: {
             if let selectedCard = viewModel.selectedCard {
-                Text("Move \"\(selectedCard.title)\" to the Bin? You can restore it later from the Bin.")
+                Text(Strings.Delete.binMessage(selectedCard.title))
             } else {
-                Text("Move this terminal to the Bin? You can restore it later.")
+                Text(Strings.Delete.binMessage(""))
             }
         }
-        .navigationTitle(viewModel.selectedCard == nil ? "TermQ" : "")
+        .navigationTitle(viewModel.selectedCard == nil ? Strings.appName : "")
         .focusedSceneValue(\.terminalActions, terminalActions)
     }
 
@@ -342,11 +346,11 @@ struct ContentView: View {
         let isWired = viewModel.selectedCard?.isWired ?? false
 
         if !isInstalled {
-            return "MCP Server not installed. Install via Settings > CLI to enable agent integration."
+            return Strings.Settings.mcpInstallDescription
         } else if isWired {
-            return "LLM is aware of this terminal (called termq_get)"
+            return Strings.Card.wiredHelp
         } else {
-            return "MCP Server installed - LLM has not identified itself yet"
+            return Strings.Settings.mcpDescription
         }
     }
 

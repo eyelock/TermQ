@@ -36,7 +36,7 @@
 "card.pin" = "Prikvači terminal";
 "card.unpin" = "Otkvači terminal";
 "card.running" = "Terminal je aktivan";
-"card.open" = "Otvori terminal";
+"card.open" = "Otvoreno";
 "card.edit" = "Uredi detalje...";
 "card.delete" = "Obriši";
 "card.wired" = "Povezano";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Smeće (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Novi brzi terminal";
 "menu.new.terminal" = "Novi terminal...";
 "menu.new.terminal.dialog" = "Novi terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Uključi/isključi prikvačivanje";
 "menu.next.pinned" = "Sljedeći prikvačeni terminal";
 "menu.previous.pinned" = "Prethodni prikvačeni terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Obriši terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Naredbeni redak";
 "settings.cli.title" = "CLI alat";
-"settings.cli.description" = "Termq alat naredbenog retka omogućuje otvaranje terminala iz ljuske.";
+"settings.cli.description" = "Termqcli alat naredbenog retka omogućuje otvaranje terminala iz ljuske.";
 "settings.cli.path" = "Lokacija instalacije";
 "settings.cli.install" = "Instaliraj CLI";
 "settings.cli.uninstall" = "Deinstaliraj";

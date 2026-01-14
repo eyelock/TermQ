@@ -48,16 +48,16 @@ struct ColumnView: View {
                 Spacer()
 
                 Menu {
-                    Button("Edit Column...") {
+                    Button(Strings.Board.editColumn) {
                         onEditColumn()
                     }
                     Divider()
                     if cards.isEmpty {
-                        Button("Delete Column", role: .destructive) {
+                        Button(Strings.Board.columnDelete, role: .destructive) {
                             onDeleteColumn()
                         }
                     } else {
-                        Text("Delete Column (move terminals first)")
+                        Text(Strings.Board.columnDeleteDisabled)
                             .foregroundColor(.secondary)
                     }
                 } label: {
@@ -66,7 +66,7 @@ struct ColumnView: View {
                 }
                 .menuStyle(.borderlessButton)
                 .frame(width: 20)
-                .help("Column options")
+                .help(Strings.Board.columnOptions)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
@@ -127,14 +127,14 @@ struct ColumnView: View {
             Button(action: onAddCard) {
                 HStack {
                     Image(systemName: "plus")
-                    Text("Add Terminal")
+                    Text(Strings.Board.addTerminal)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
             }
             .buttonStyle(.plain)
             .foregroundColor(.secondary)
-            .help("Add new terminal to this column")
+            .help(Strings.Board.addTerminalHelp)
         }
         .frame(minWidth: 200)
         .background(Color(nsColor: .windowBackgroundColor))

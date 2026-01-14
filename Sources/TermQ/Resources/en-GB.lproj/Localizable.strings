@@ -36,7 +36,7 @@
 "card.pin" = "Pin terminal";
 "card.unpin" = "Unpin terminal";
 "card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
+"card.open" = "Open";
 "card.edit" = "Edit Details...";
 "card.delete" = "Delete";
 "card.wired" = "Wired";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Bin (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Quick New Terminal";
 "menu.new.terminal" = "New Terminal...";
 "menu.new.terminal.dialog" = "New Terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Toggle Pin";
 "menu.next.pinned" = "Next Pinned Terminal";
 "menu.previous.pinned" = "Previous Pinned Terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Delete Terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Command Line";
 "settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
+"settings.cli.description" = "The termqclicli command-line tool lets you open terminals from your shell.";
 "settings.cli.path" = "Install Location";
 "settings.cli.install" = "Install CLI";
 "settings.cli.uninstall" = "Uninstall";

@@ -36,7 +36,7 @@
 "card.pin" = "터미널 고정";
 "card.unpin" = "터미널 고정 해제";
 "card.running" = "터미널 실행 중";
-"card.open" = "터미널 열기";
+"card.open" = "열림";
 "card.edit" = "세부 정보 편집...";
 "card.delete" = "삭제";
 "card.wired" = "연결됨";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "휴지통 (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "빠른 새 터미널";
 "menu.new.terminal" = "새 터미널...";
 "menu.new.terminal.dialog" = "새 터미널";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "고정 전환";
 "menu.next.pinned" = "다음 고정 터미널";
 "menu.previous.pinned" = "이전 고정 터미널";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "터미널 삭제";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "명령줄";
 "settings.cli.title" = "CLI 도구";
-"settings.cli.description" = "termq 명령줄 도구를 사용하면 셸에서 터미널을 열 수 있습니다.";
+"settings.cli.description" = "termqcli 명령줄 도구를 사용하면 셸에서 터미널을 열 수 있습니다.";
 "settings.cli.path" = "설치 위치";
 "settings.cli.install" = "CLI 설치";
 "settings.cli.uninstall" = "제거";

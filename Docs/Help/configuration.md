@@ -23,7 +23,7 @@ Available settings:
 - **Theme** - Choose from 8 color schemes
 - **Copy on Select** - Automatically copy selected text
 - **Bin Retention** - Days before auto-deleting binned terminals
-- **CLI Installation** - Install/manage the termq command
+- **CLI Installation** - Install/manage the termqcli command
 
 ![TermQ Settings](Images/termq-settings.png)
 

@@ -32,6 +32,14 @@ When I say "let me give you feedback" or similar phrases indicating I want to pr
 3. `swiftlint lint` - Must have zero errors (warnings acceptable but minimize)
 4. `swift test` - All tests must pass
 
+**IMPORTANT: Use Xcode toolchain, not CommandLineTools:**
+If tests fail with "no such module 'XCTest'" or SwiftLint crashes with SourceKit errors, prefix commands with:
+```bash
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swiftlint lint
+```
+This ensures proper XCTest availability and SourceKit functionality.
+
 This prevents wasting CI resources and reduces environmental impact. Run these checks BEFORE:
 - Any `git push`
 - Creating or updating a PR
@@ -40,6 +48,38 @@ This prevents wasting CI resources and reduces environmental impact. Run these c
 If SwiftLint crashes locally (SourceKit issues), at minimum verify the build succeeds and check line counts on modified files against SwiftLint rules (e.g., type_body_length max 500 lines).
 
 **If local checks pass but CI fails**: This is a BUG. Investigate the discrepancy - local and CI environments should produce identical results. File an issue to track and fix the root cause.
+
+## LOCALIZATION REQUIREMENTS (MANDATORY)
+
+**NEVER use hardcoded user-facing strings in SwiftUI views or UI code.**
+
+All user-visible text MUST use the centralized `Strings` enum:
+
+```swift
+// ❌ WRONG - hardcoded string
+Text("New Terminal")
+Button("Cancel") { ... }
+.help("Close window")
+
+// ✅ CORRECT - localized string
+Text(Strings.Editor.titleNew)
+Button(Strings.Editor.cancel) { ... }
+.help(Strings.Common.close)
+```
+
+**Before any PR involving UI changes:**
+1. Search for hardcoded strings: `grep -r "Text(\"" Sources/TermQ/Views/`
+2. Verify all new strings are added to `Strings.swift`
+3. Run `./scripts/localization/validate-strings.sh` to ensure all 40 language files are in sync
+
+**Key files:**
+- `Sources/TermQ/Strings.swift` - Centralized string enum using `localizedBundle`
+- `Sources/TermQ/Resources/*.lproj/Localizable.strings` - Translation files (40 languages)
+
+**Adding new strings:**
+1. Add the key to `Strings.swift` with appropriate category
+2. Add the English string to `Sources/TermQ/Resources/en.lproj/Localizable.strings`
+3. Run the localization script to propagate to all language files
 
 ## CODE HYGIENE
 

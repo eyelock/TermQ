@@ -36,7 +36,7 @@
 "card.pin" = "Terminál rögzítése";
 "card.unpin" = "Terminál feloldása";
 "card.running" = "Terminál fut";
-"card.open" = "Terminál megnyitása";
+"card.open" = "Nyitva";
 "card.edit" = "Részletek szerkesztése...";
 "card.delete" = "Törlés";
 "card.wired" = "Csatlakoztatva";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Kuka (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Új gyors terminál";
 "menu.new.terminal" = "Új terminál...";
 "menu.new.terminal.dialog" = "Új terminál";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Rögzítés váltása";
 "menu.next.pinned" = "Következő rögzített terminál";
 "menu.previous.pinned" = "Előző rögzített terminál";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Terminál törlése";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Parancssor";
 "settings.cli.title" = "CLI eszköz";
-"settings.cli.description" = "A termq parancssori eszköz lehetővé teszi terminálok megnyitását a shellből.";
+"settings.cli.description" = "A termqcli parancssori eszköz lehetővé teszi terminálok megnyitását a shellből.";
 "settings.cli.path" = "Telepítési hely";
 "settings.cli.install" = "CLI telepítése";
 "settings.cli.uninstall" = "Eltávolítás";

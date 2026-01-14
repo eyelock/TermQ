@@ -34,10 +34,10 @@ struct ExpandedTerminalView: View {
             if isZoomed {
                 HStack {
                     Spacer()
-                    Text("Zoom Mode")
+                    Text(Strings.Terminal.current)
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    Text("⇧⌘Z to exit")
+                    Text("⇧⌘Z")
                         .font(.caption2)
                         .foregroundColor(.secondary.opacity(0.7))
                     Spacer()
@@ -60,14 +60,14 @@ struct ExpandedTerminalView: View {
                     Image(systemName: "terminal")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
-                    Text("Terminal session ended")
+                    Text(Strings.Terminal.ended)
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Button("Restart Terminal") {
+                    Button(Strings.Terminal.restart) {
                         terminalExited = false
                     }
                     .padding(.top, 8)
-                    .help("Start a new terminal session")
+                    .help(Strings.Terminal.restartHelp)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.black)
@@ -132,7 +132,7 @@ struct ExpandedTerminalView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.secondary)
 
-            TextField("Search in terminal...", text: $searchText)
+            TextField(Strings.Help.searchPlaceholder, text: $searchText)
                 .textFieldStyle(.plain)
                 .focused($isSearchFieldFocused)
                 .onSubmit {
@@ -140,7 +140,7 @@ struct ExpandedTerminalView: View {
                 }
 
             if !searchText.isEmpty {
-                Text("\(searchResults.count) matches")
+                Text("\(searchResults.count)")
                     .font(.caption)
                     .foregroundColor(.secondary)
 
@@ -322,7 +322,7 @@ private struct TabItemView: View {
                     }
                     .buttonStyle(.plain)
                     .foregroundColor(.secondary)
-                    .help("Edit terminal")
+                    .help(Strings.Terminal.editHelp)
 
                     Button(action: onClose) {
                         Image(systemName: "xmark")
@@ -330,7 +330,7 @@ private struct TabItemView: View {
                     }
                     .buttonStyle(.plain)
                     .foregroundColor(.secondary)
-                    .help("Close tab (⌘W)")
+                    .help(Strings.Terminal.closeTabHelp)
                 }
             }
             .frame(width: actionButtonsWidth, alignment: .trailing)
@@ -361,26 +361,26 @@ private struct TabItemView: View {
                 isHovering = hovering
             }
         }
-        .help("\(tabCard.title) • \(columnName)")
+        .help(Strings.Terminal.tabHelp(tabCard.title, columnName))
         .contextMenu {
-            Button("Edit...") {
+            Button(Strings.Card.edit) {
                 onEdit()
             }
             Divider()
-            Button("Close Tab") {
+            Button(Strings.Common.close) {
                 onClose()
             }
-            Button("Delete Terminal", role: .destructive) {
+            Button(Strings.Card.delete, role: .destructive) {
                 showDeleteConfirmation = true
             }
         }
-        .alert("Delete Terminal", isPresented: $showDeleteConfirmation) {
-            Button("Cancel", role: .cancel) {}
-            Button("Delete", role: .destructive) {
+        .alert(Strings.Delete.title, isPresented: $showDeleteConfirmation) {
+            Button(Strings.Delete.cancel, role: .cancel) {}
+            Button(Strings.Delete.confirm, role: .destructive) {
                 onDelete()
             }
         } message: {
-            Text("Are you sure you want to delete \"\(tabCard.title)\"? This cannot be undone.")
+            Text(Strings.Delete.message(tabCard.title))
         }
     }
 }

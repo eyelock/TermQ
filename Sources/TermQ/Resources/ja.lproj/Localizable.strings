@@ -36,7 +36,7 @@
 "card.pin" = "ターミナルをピン留め";
 "card.unpin" = "ターミナルのピン留めを解除";
 "card.running" = "ターミナル実行中";
-"card.open" = "ターミナルを開く";
+"card.open" = "開く";
 "card.edit" = "詳細を編集...";
 "card.delete" = "削除";
 "card.wired" = "接続済み";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "ゴミ箱 (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "クイック新規ターミナル";
 "menu.new.terminal" = "新規ターミナル...";
 "menu.new.terminal.dialog" = "新規ターミナル";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "ピン留めを切り替え";
 "menu.next.pinned" = "次のピン留めターミナル";
 "menu.previous.pinned" = "前のピン留めターミナル";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "ターミナルを削除";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "コマンドライン";
 "settings.cli.title" = "CLIツール";
-"settings.cli.description" = "termqコマンドラインツールを使用すると、シェルからターミナルを開くことができます。";
+"settings.cli.description" = "termqcliコマンドラインツールを使用すると、シェルからターミナルを開くことができます。";
 "settings.cli.path" = "インストール場所";
 "settings.cli.install" = "CLIをインストール";
 "settings.cli.uninstall" = "アンインストール";

@@ -36,7 +36,7 @@
 "card.pin" = "Fixar terminal";
 "card.unpin" = "Desfer fixar terminal";
 "card.running" = "Terminal en execució";
-"card.open" = "Obrir terminal";
+"card.open" = "Obert";
 "card.edit" = "Editar detalls...";
 "card.delete" = "Eliminar";
 "card.wired" = "Connectat";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Paperera (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Nou terminal ràpid";
 "menu.new.terminal" = "Nou terminal...";
 "menu.new.terminal.dialog" = "Nou terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Alternar fixar";
 "menu.next.pinned" = "Següent terminal fixat";
 "menu.previous.pinned" = "Anterior terminal fixat";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Eliminar terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Línia de comandes";
 "settings.cli.title" = "Eina CLI";
-"settings.cli.description" = "L'eina de línia de comandes termq us permet obrir terminals des del vostre shell.";
+"settings.cli.description" = "L'eina de línia de comandes termqclicli us permet obrir terminals des del vostre shell.";
 "settings.cli.path" = "Ubicació d'instal·lació";
 "settings.cli.install" = "Instal·lar CLI";
 "settings.cli.uninstall" = "Desinstal·lar";

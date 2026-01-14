@@ -23,19 +23,19 @@ struct ColumnEditorView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Edit Column")
+            Text(Strings.ColumnEditor.titleEdit)
                 .font(.headline)
 
-            TextField("Column Name", text: $name)
+            TextField(Strings.ColumnEditor.fieldName, text: $name)
                 .textFieldStyle(.roundedBorder)
 
-            TextField("Description (optional)", text: $description, axis: .vertical)
+            TextField(Strings.ColumnEditor.fieldDescription, text: $description, axis: .vertical)
                 .lineLimit(2...4)
                 .textFieldStyle(.roundedBorder)
 
             // Color picker
             VStack(alignment: .leading, spacing: 8) {
-                Text("Color")
+                Text(Strings.ColumnEditor.fieldColor)
                     .font(.caption)
                     .foregroundColor(.secondary)
 
@@ -61,19 +61,19 @@ struct ColumnEditorView: View {
                     // Custom color picker
                     ColorPicker("", selection: $selectedColor, supportsOpacity: false)
                         .labelsHidden()
-                        .help("Custom color")
+                        .help(Strings.ColumnEditor.fieldColor)
                 }
             }
 
             HStack {
-                Button("Cancel") {
+                Button(Strings.ColumnEditor.cancel) {
                     onCancel()
                 }
                 .keyboardShortcut(.cancelAction)
 
                 Spacer()
 
-                Button("Save") {
+                Button(Strings.ColumnEditor.save) {
                     column.name = name
                     column.description = description
                     column.color = selectedColor.toHex() ?? "#6B7280"

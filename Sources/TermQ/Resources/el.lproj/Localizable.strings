@@ -36,7 +36,7 @@
 "card.pin" = "Καρφίτσωμα τερματικού";
 "card.unpin" = "Ξεκαρφίτσωμα τερματικού";
 "card.running" = "Το τερματικό εκτελείται";
-"card.open" = "Άνοιγμα τερματικού";
+"card.open" = "Ανοικτό";
 "card.edit" = "Επεξεργασία λεπτομερειών...";
 "card.delete" = "Διαγραφή";
 "card.wired" = "Συνδεδεμένο";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Κάδος (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Νέο γρήγορο τερματικό";
 "menu.new.terminal" = "Νέο τερματικό...";
 "menu.new.terminal.dialog" = "Νέο τερματικό";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Εναλλαγή καρφιτσώματος";
 "menu.next.pinned" = "Επόμενο καρφιτσωμένο τερματικό";
 "menu.previous.pinned" = "Προηγούμενο καρφιτσωμένο τερματικό";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Διαγραφή τερματικού";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Γραμμή εντολών";
 "settings.cli.title" = "Εργαλείο CLI";
-"settings.cli.description" = "Το εργαλείο γραμμής εντολών termq σας επιτρέπει να ανοίγετε τερματικά από το κέλυφός σας.";
+"settings.cli.description" = "Το εργαλείο γραμμής εντολών termqcli σας επιτρέπει να ανοίγετε τερματικά από το κέλυφός σας.";
 "settings.cli.path" = "Θέση εγκατάστασης";
 "settings.cli.install" = "Εγκατάσταση CLI";
 "settings.cli.uninstall" = "Απεγκατάσταση";

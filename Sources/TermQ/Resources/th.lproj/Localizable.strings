@@ -36,7 +36,7 @@
 "card.pin" = "ปักหมุดเทอร์มินัล";
 "card.unpin" = "เลิกปักหมุดเทอร์มินัล";
 "card.running" = "เทอร์มินัลกำลังทำงาน";
-"card.open" = "เปิดเทอร์มินัล";
+"card.open" = "เปิด";
 "card.edit" = "แก้ไขรายละเอียด...";
 "card.delete" = "ลบ";
 "card.wired" = "เชื่อมต่อแล้ว";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "ถังขยะ (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "เทอร์มินัลด่วนใหม่";
 "menu.new.terminal" = "เทอร์มินัลใหม่...";
 "menu.new.terminal.dialog" = "เทอร์มินัลใหม่";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "สลับการปักหมุด";
 "menu.next.pinned" = "เทอร์มินัลปักหมุดถัดไป";
 "menu.previous.pinned" = "เทอร์มินัลปักหมุดก่อนหน้า";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "ลบเทอร์มินัล";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "บรรทัดคำสั่ง";
 "settings.cli.title" = "เครื่องมือ CLI";
-"settings.cli.description" = "เครื่องมือบรรทัดคำสั่ง termq ช่วยให้คุณเปิดเทอร์มินัลจากเชลล์";
+"settings.cli.description" = "เครื่องมือบรรทัดคำสั่ง termqcli ช่วยให้คุณเปิดเทอร์มินัลจากเชลล์";
 "settings.cli.path" = "ตำแหน่งการติดตั้ง";
 "settings.cli.install" = "ติดตั้ง CLI";
 "settings.cli.uninstall" = "ถอนการติดตั้ง";

@@ -36,7 +36,7 @@
 "card.pin" = "टर्मिनल पिन करें";
 "card.unpin" = "टर्मिनल अनपिन करें";
 "card.running" = "टर्मिनल चल रहा है";
-"card.open" = "टर्मिनल खोलें";
+"card.open" = "खुला";
 "card.edit" = "विवरण संपादित करें...";
 "card.delete" = "हटाएं";
 "card.wired" = "जुड़ा हुआ";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "ट्रैश (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "त्वरित नया टर्मिनल";
 "menu.new.terminal" = "नया टर्मिनल...";
 "menu.new.terminal.dialog" = "नया टर्मिनल";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "पिन टॉगल करें";
 "menu.next.pinned" = "अगला पिन किया टर्मिनल";
 "menu.previous.pinned" = "पिछला पिन किया टर्मिनल";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "टर्मिनल हटाएं";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "कमांड लाइन";
 "settings.cli.title" = "CLI टूल";
-"settings.cli.description" = "termq कमांड-लाइन टूल आपको अपने शेल से टर्मिनल खोलने देता है।";
+"settings.cli.description" = "termqcli कमांड-लाइन टूल आपको अपने शेल से टर्मिनल खोलने देता है।";
 "settings.cli.path" = "इंस्टॉल स्थान";
 "settings.cli.install" = "CLI इंस्टॉल करें";
 "settings.cli.uninstall" = "अनइंस्टॉल करें";

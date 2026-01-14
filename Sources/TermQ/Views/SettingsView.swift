@@ -29,9 +29,16 @@ struct SettingsView: View {
     // Language preferences
     @State private var selectedLanguage: SupportedLanguage = LanguageManager.currentLanguage
 
-    private enum SettingsTab: String, CaseIterable {
-        case general = "General"
-        case tools = "Tools"
+    private enum SettingsTab: CaseIterable {
+        case general
+        case tools
+
+        var title: String {
+            switch self {
+            case .general: return Strings.Settings.tabGeneral
+            case .tools: return Strings.Settings.tabTools
+            }
+        }
     }
 
     var body: some View {
@@ -39,7 +46,7 @@ struct SettingsView: View {
             // Tab picker
             Picker("", selection: $selectedTab) {
                 ForEach(SettingsTab.allCases, id: \.self) { tab in
-                    Text(tab.rawValue).tag(tab)
+                    Text(tab.title).tag(tab)
                 }
             }
             .pickerStyle(.segmented)
@@ -55,8 +62,8 @@ struct SettingsView: View {
             .formStyle(.grouped)
         }
         .frame(width: 500, height: 700)
-        .alert(alertIsError ? "Error" : "Success", isPresented: $showAlert) {
-            Button("OK") {}
+        .alert(alertIsError ? Strings.Alert.error : Strings.Alert.success, isPresented: $showAlert) {
+            Button(Strings.Common.ok) {}
         } message: {
             Text(alertMessage ?? "")
         }
@@ -71,7 +78,7 @@ struct SettingsView: View {
     @ViewBuilder
     private var generalContent: some View {
         Section {
-            Picker("Theme", selection: $sessionManager.themeId) {
+            Picker(Strings.Settings.fieldTheme, selection: $sessionManager.themeId) {
                 ForEach(TerminalTheme.allThemes) { theme in
                     HStack {
                         ThemePreviewSwatch(theme: theme)
@@ -80,56 +87,58 @@ struct SettingsView: View {
                     .tag(theme.id)
                 }
             }
-            .help("Color scheme for terminal windows")
+            .help(Strings.Settings.fieldThemeHelp)
 
-            Toggle("Copy on select", isOn: $copyOnSelect)
-                .help("Automatically copy selected text to clipboard")
+            Toggle(Strings.Settings.fieldCopyOnSelect, isOn: $copyOnSelect)
+                .help(Strings.Settings.fieldCopyOnSelectHelp)
         } header: {
-            Text("Terminal")
+            Text(Strings.Settings.sectionTerminal)
         }
 
         Section {
             Stepper(
-                "Auto-empty after \(binRetentionDays) days",
+                Strings.Settings.autoEmpty(binRetentionDays),
                 value: $binRetentionDays,
                 in: 1...90
             )
-            .help("Deleted terminals are automatically removed after this many days")
+            .help(Strings.Settings.autoEmptyHelp)
 
             HStack {
                 let binCount = boardViewModel.binCards.count
                 Text(
                     binCount == 0
-                        ? "Bin is empty" : "\(binCount) item\(binCount == 1 ? "" : "s") in bin"
+                        ? Strings.Settings.binEmpty : Strings.Settings.binItems(binCount)
                 )
                 .foregroundColor(.secondary)
 
                 Spacer()
 
-                Button("Empty Bin Now", role: .destructive) {
+                Button(Strings.Settings.emptyBinNow, role: .destructive) {
                     boardViewModel.emptyBin()
                 }
                 .disabled(boardViewModel.binCards.isEmpty)
             }
         } header: {
-            Text("Bin")
+            Text(Strings.Settings.sectionBin)
         }
 
         Section {
             LabeledContent(
-                "Version",
+                Strings.Settings.fieldVersion,
                 value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
             )
             LabeledContent(
-                "Build", value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown")
+                Strings.Settings.fieldBuild,
+                value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+            )
         } header: {
-            Text("About")
+            Text(Strings.Settings.sectionAbout)
         }
 
         Section {
             LanguagePickerView(selectedLanguage: $selectedLanguage)
         } header: {
-            Text("Language")
+            Text(Strings.Settings.sectionLanguage)
         }
     }
 
@@ -145,9 +154,9 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Command Line Tool")
+                        Text(Strings.Settings.cliTitle)
                             .font(.headline)
-                        Text("termq - Open terminals from the command line")
+                        Text(Strings.Settings.cliDescription)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -158,7 +167,7 @@ struct SettingsView: View {
                         HStack(spacing: 4) {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(.green)
-                            Text("Installed")
+                            Text(Strings.Settings.cliInstalled)
                                 .foregroundColor(.green)
                         }
                         .font(.caption)
@@ -167,10 +176,8 @@ struct SettingsView: View {
 
                 Divider()
 
-                Toggle("Enable Terminal Autorun", isOn: $enableTerminalAutorun)
-                    .help(
-                        "Allow agents to run commands automatically when terminals open. Per-terminal setting must also be enabled."
-                    )
+                Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
+                    .help(Strings.Settings.enableTerminalAutorunHelp)
 
                 Divider()
 
@@ -178,7 +185,7 @@ struct SettingsView: View {
                     // Already installed
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text("Location:")
+                            Text(Strings.Settings.cliLocation)
                                 .foregroundColor(.secondary)
                             Text(location.fullPath)
                                 .font(.system(.body, design: .monospaced))
@@ -186,18 +193,18 @@ struct SettingsView: View {
                         }
                         .font(.caption)
 
-                        Text("Usage: termq open [--name \"My Terminal\"] [--column \"In Progress\"]")
+                        Text(Strings.Settings.cliUsage)
                             .font(.system(.caption, design: .monospaced))
                             .foregroundColor(.secondary)
                             .textSelection(.enabled)
 
                         HStack {
-                            Button("Reinstall") {
+                            Button(Strings.Common.reinstall) {
                                 installCLI()
                             }
                             .disabled(isInstalling)
 
-                            Button("Uninstall", role: .destructive) {
+                            Button(Strings.Common.uninstall, role: .destructive) {
                                 uninstallCLI()
                             }
                             .disabled(isInstalling)
@@ -206,13 +213,11 @@ struct SettingsView: View {
                 } else {
                     // Not installed - show install options
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(
-                            "The CLI tool allows you to open new terminals in TermQ from any terminal window."
-                        )
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        Text(Strings.Settings.cliDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
 
-                        Picker("Install to:", selection: $selectedLocation) {
+                        Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
                             ForEach(InstallLocation.allCases) { location in
                                 Text(location.displayName).tag(location)
                             }
@@ -231,7 +236,7 @@ struct SettingsView: View {
                                     ProgressView()
                                         .controlSize(.small)
                                 }
-                                Text(isInstalling ? "Installing..." : "Install Command Line Tool")
+                                Text(Strings.Settings.cliInstall)
                             }
                         }
                         .disabled(isInstalling)
@@ -240,7 +245,7 @@ struct SettingsView: View {
             }
             .padding(.vertical, 4)
         } header: {
-            Text("CLI Tools")
+            Text(Strings.Settings.sectionCli)
         }
 
         Section {
@@ -251,9 +256,9 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("MCP Server")
+                        Text(Strings.Settings.mcpTitle)
                             .font(.headline)
-                        Text("termqmcp - Enable LLM assistants to access TermQ")
+                        Text(Strings.Settings.mcpDescription)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -264,7 +269,7 @@ struct SettingsView: View {
                         HStack(spacing: 4) {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(.green)
-                            Text("Installed")
+                            Text(Strings.Common.installed)
                                 .foregroundColor(.green)
                         }
                         .font(.caption)
@@ -277,7 +282,7 @@ struct SettingsView: View {
                     // Already installed
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text("Location:")
+                            Text(Strings.Settings.mcpLocation)
                                 .foregroundColor(.secondary)
                             Text(location.fullPath)
                                 .font(.system(.body, design: .monospaced))
@@ -287,7 +292,7 @@ struct SettingsView: View {
 
                         // Configuration section
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Claude Code Configuration:")
+                            Text(Strings.Settings.mcpClaudeConfig)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
 
@@ -305,7 +310,7 @@ struct SettingsView: View {
                                 } label: {
                                     HStack(spacing: 4) {
                                         Image(systemName: configCopied ? "checkmark" : "doc.on.doc")
-                                        Text(configCopied ? "Copied!" : "Copy")
+                                        Text(configCopied ? Strings.Settings.configCopied : Strings.Settings.copyConfig)
                                     }
                                     .font(.caption)
                                 }
@@ -314,12 +319,12 @@ struct SettingsView: View {
                         }
 
                         HStack {
-                            Button("Reinstall") {
+                            Button(Strings.Common.reinstall) {
                                 installMCPServer()
                             }
                             .disabled(isInstallingMCP)
 
-                            Button("Uninstall", role: .destructive) {
+                            Button(Strings.Common.uninstall, role: .destructive) {
                                 uninstallMCPServer()
                             }
                             .disabled(isInstallingMCP)
@@ -328,21 +333,19 @@ struct SettingsView: View {
                 } else {
                     // Not installed - show install options
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(
-                            "The MCP server enables AI assistants like Claude Code to interact with TermQ for cross-session workflow continuity."
-                        )
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        Text(Strings.Settings.mcpInstallDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
 
                         HStack(spacing: 4) {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .foregroundColor(.orange)
-                            Text("LOCAL USE ONLY: Do not expose to networks or deploy.")
+                            Text(Strings.Settings.mcpLocalOnly)
                                 .font(.caption2)
                                 .foregroundColor(.orange)
                         }
 
-                        Picker("Install to:", selection: $selectedMCPLocation) {
+                        Picker(Strings.Settings.cliPath, selection: $selectedMCPLocation) {
                             ForEach(MCPInstallLocation.allCases) { location in
                                 Text(location.displayName).tag(location)
                             }
@@ -361,7 +364,7 @@ struct SettingsView: View {
                                     ProgressView()
                                         .controlSize(.small)
                                 }
-                                Text(isInstallingMCP ? "Installing..." : "Install MCP Server")
+                                Text(Strings.Settings.cliInstall)
                             }
                         }
                         .disabled(isInstallingMCP)
@@ -370,7 +373,7 @@ struct SettingsView: View {
             }
             .padding(.vertical, 4)
         } header: {
-            Text("MCP Integration")
+            Text(Strings.Settings.sectionMcp)
         }
     }
 

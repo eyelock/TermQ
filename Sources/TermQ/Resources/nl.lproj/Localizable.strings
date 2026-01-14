@@ -36,7 +36,7 @@
 "card.pin" = "Zet terminal vast";
 "card.unpin" = "Maak terminal los";
 "card.running" = "Terminal is actief";
-"card.open" = "Open terminal";
+"card.open" = "Open";
 "card.edit" = "Wijzig details...";
 "card.delete" = "Verwijder";
 "card.wired" = "Verbonden";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Prullenbak (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Nieuwe snelle terminal";
 "menu.new.terminal" = "Nieuwe terminal...";
 "menu.new.terminal.dialog" = "Nieuwe terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Vastzetten aan/uit";
 "menu.next.pinned" = "Volgende vastgezette terminal";
 "menu.previous.pinned" = "Vorige vastgezette terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Verwijder terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Opdrachtregel";
 "settings.cli.title" = "CLI-hulpmiddel";
-"settings.cli.description" = "Het termq opdrachtregelhulpmiddel laat je terminals openen vanuit je shell.";
+"settings.cli.description" = "Het termqclicli opdrachtregelhulpmiddel laat je terminals openen vanuit je shell.";
 "settings.cli.path" = "Installatielocatie";
 "settings.cli.install" = "Installeer CLI";
 "settings.cli.uninstall" = "Verwijder";

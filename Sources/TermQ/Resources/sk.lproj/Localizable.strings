@@ -36,7 +36,7 @@
 "card.pin" = "Pripnúť terminál";
 "card.unpin" = "Odopnúť terminál";
 "card.running" = "Terminál beží";
-"card.open" = "Otvoriť terminál";
+"card.open" = "Otvorené";
 "card.edit" = "Upraviť podrobnosti...";
 "card.delete" = "Zmazať";
 "card.wired" = "Pripojené";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Kôš (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Nový rýchly terminál";
 "menu.new.terminal" = "Nový terminál...";
 "menu.new.terminal.dialog" = "Nový terminál";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Prepnúť pripnutie";
 "menu.next.pinned" = "Ďalší pripnutý terminál";
 "menu.previous.pinned" = "Predchádzajúci pripnutý terminál";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Zmazať terminál";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Príkazový riadok";
 "settings.cli.title" = "Nástroj CLI";
-"settings.cli.description" = "Nástroj príkazového riadku termq umožňuje otvárať terminály zo shellu.";
+"settings.cli.description" = "Nástroj príkazového riadku termqcli umožňuje otvárať terminály zo shellu.";
 "settings.cli.path" = "Umiestnenie inštalácie";
 "settings.cli.install" = "Nainštalovať CLI";
 "settings.cli.uninstall" = "Odinštalovať";

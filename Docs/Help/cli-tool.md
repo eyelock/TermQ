@@ -1,13 +1,13 @@
 # CLI Tool
 
-The `termq` CLI tool lets you manage terminals from your shell. It outputs JSON for easy scripting and works great with LLM assistants like Claude.
+The `termqcli` CLI tool lets you manage terminals from your shell. It outputs JSON for easy scripting and works great with LLM assistants like Claude.
 
 ## For LLM Assistants
 
 **Start every session with:**
 ```bash
-termq pending   # See terminals needing attention
-termq context   # Get full workflow guide
+termqclipending   # See terminals needing attention
+termqclicontext   # Get full workflow guide
 ```
 
 The `pending` command shows terminals with queued tasks (`llmNextAction`) and staleness indicators. The `context` command outputs comprehensive documentation for cross-session workflows.
@@ -18,7 +18,7 @@ The `pending` command shows terminals with queued tasks (`llmNextAction`) and st
 2. Click **Install Command Line Tool**
 3. Enter your password when prompted
 
-The CLI will be installed to `/usr/local/bin/termq`.
+The CLI will be installed to `/usr/local/bin/termqcli`.
 
 ![Install CLI from Settings](Images/install-cli.png)
 
@@ -26,19 +26,19 @@ The CLI will be installed to `/usr/local/bin/termq`.
 
 ```bash
 # See what's in your board
-termq list
+termqclilist
 
 # Open an existing terminal by name
-termq open "My Project"
+termqcliopen "My Project"
 
 # Create a new terminal for your current project
-termq create --name "My Project" --column "In Progress"
+termqclicreate --name "My Project" --column "In Progress"
 
 # Find terminals by name
-termq find --name "api"
+termqclifind --name "api"
 
 # Move a terminal to Done when finished
-termq move "My Project" "Done"
+termqclimove "My Project" "Done"
 ```
 
 ## Understanding the Board
@@ -59,16 +59,16 @@ Open an existing terminal by name, ID, or path. Returns terminal details as JSON
 
 ```bash
 # Open by name
-termq open "API Server"
+termqcliopen "API Server"
 
 # Open by UUID
-termq open "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88"
+termqcliopen "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88"
 
 # Open by path (matches working directory)
-termq open "/path/to/project"
+termqcliopen "/path/to/project"
 
 # Open with partial name match
-termq open "api"
+termqcliopen "api"
 ```
 
 **Output:** Returns the terminal's full details as JSON:
@@ -94,25 +94,25 @@ Create a new terminal in TermQ.
 
 ```bash
 # Create in current directory
-termq create
+termqclicreate
 
 # Create with name and description
-termq create --name "API Server" --description "Backend"
+termqclicreate --name "API Server" --description "Backend"
 
 # Create in specific column
-termq create --column "In Progress"
+termqclicreate --column "In Progress"
 
 # Create with tags
-termq create --name "Build" --tag env=prod --tag version=1.0
+termqclicreate --name "Build" --tag env=prod --tag version=1.0
 
 # Create in specific directory
-termq create --path /path/to/project
+termqclicreate --path /path/to/project
 ```
 
 ### Launch TermQ
 
 ```bash
-termq launch
+termqclilaunch
 ```
 
 ### List Terminals
@@ -121,16 +121,16 @@ List all terminals as JSON (ideal for LLM consumption).
 
 ```bash
 # List all terminals
-termq list
+termqclilist
 
 # Use debug data directory
-termq list --debug
+termqclilist --debug
 
 # Filter by column
-termq list --column "In Progress"
+termqclilist --column "In Progress"
 
 # List columns only
-termq list --columns
+termqclilist --columns
 ```
 
 **Output format:**
@@ -158,25 +158,25 @@ Search for terminals by various criteria.
 
 ```bash
 # Find by name (partial, case-insensitive)
-termq find --name "api"
+termqclifind --name "api"
 
 # Find by column
-termq find --column "In Progress"
+termqclifind --column "In Progress"
 
 # Find by tag
-termq find --tag env=prod
+termqclifind --tag env=prod
 
 # Find by ID
-termq find --id "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88"
+termqclifind --id "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88"
 
 # Find by badge
-termq find --badge "prod"
+termqclifind --badge "prod"
 
 # Find favourites only
-termq find --favourites
+termqclifind --favourites
 
 # Combine filters
-termq find --column "In Progress" --tag env=prod
+termqclifind --column "In Progress" --tag env=prod
 ```
 
 ### Modify Terminals
@@ -185,34 +185,34 @@ Update terminal properties via URL scheme (requires TermQ to be running).
 
 ```bash
 # Rename a terminal
-termq set "Terminal Name" --name "New Name"
+termqcliset "Terminal Name" --name "New Name"
 
 # Set description
-termq set "Terminal Name" --set-description "New description"
+termqcliset "Terminal Name" --set-description "New description"
 
 # Move to column
-termq set "Terminal Name" --column "Done"
+termqcliset "Terminal Name" --column "Done"
 
 # Set badge
-termq set "Terminal Name" --badge "prod, v2.0"
+termqcliset "Terminal Name" --badge "prod, v2.0"
 
 # Set persistent LLM context
-termq set "Terminal Name" --llm-prompt "Node.js API server, uses PostgreSQL"
+termqcliset "Terminal Name" --llm-prompt "Node.js API server, uses PostgreSQL"
 
 # Set one-time LLM action (runs on next open, then clears)
-termq set "Terminal Name" --llm-next-action "Fix the auth bug discussed in issue #42"
+termqcliset "Terminal Name" --llm-next-action "Fix the auth bug discussed in issue #42"
 
 # Add tags
-termq set "Terminal Name" --tag env=prod --tag version=2.0
+termqcliset "Terminal Name" --tag env=prod --tag version=2.0
 
 # Mark as favourite
-termq set "Terminal Name" --favourite
+termqcliset "Terminal Name" --favourite
 
 # Remove favourite
-termq set "Terminal Name" --unfavourite
+termqcliset "Terminal Name" --unfavourite
 
 # Use UUID instead of name
-termq set "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88" --name "New Name"
+termqcliset "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88" --name "New Name"
 ```
 
 ### Move Terminals
@@ -221,10 +221,10 @@ Move a terminal to a different column.
 
 ```bash
 # Move by name
-termq move "Terminal Name" "Done"
+termqclimove "Terminal Name" "Done"
 
 # Move by UUID
-termq move "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88" "In Progress"
+termqclimove "70D8ECF5-E3E3-4FAC-A2A1-7E0F18C94B88" "In Progress"
 ```
 
 ### Check Pending Work (LLM Session Start)
@@ -233,10 +233,10 @@ Show terminals needing attention. **Run this at the start of every LLM session.*
 
 ```bash
 # See all terminals with pending actions and staleness
-termq pending
+termqclipending
 
 # Only show terminals with llmNextAction set
-termq pending --actions-only
+termqclipending --actions-only
 ```
 
 **Output format:**
@@ -270,7 +270,7 @@ Terminals are sorted with pending actions first, then by staleness (stale → ag
 Output comprehensive documentation for LLM/AI assistants including cross-session workflow.
 
 ```bash
-termq context
+termqclicontext
 ```
 
 This outputs a complete guide including:
@@ -285,19 +285,19 @@ All commands support `--help` for quick reference:
 
 ```bash
 # Main help (lists all commands)
-termq --help
+termqcli--help
 
 # Command-specific help
-termq open --help
-termq set --help
-termq find --help
+termqcliopen --help
+termqcliset --help
+termqclifind --help
 ```
 
-Example output from `termq --help`:
+Example output from `termqcli--help`:
 ```
 OVERVIEW: Command-line interface for TermQ - Terminal Queue Manager
 
-LLM/AI Assistants: Run 'termq pending' at session start, then 'termq context'
+LLM/AI Assistants: Run 'termqclipending' at session start, then 'termqclicontext'
 for the complete cross-session workflow guide.
 
 SUBCOMMANDS:
@@ -309,8 +309,8 @@ SUBCOMMANDS:
 All read commands (`list`, `find`) support `--debug` to use the debug data directory (`~/Library/Application Support/TermQ-Debug/`).
 
 ```bash
-termq list --debug
-termq find --debug --name "test"
+termqclilist --debug
+termqclifind --debug --name "test"
 ```
 
 ## Error Handling
@@ -332,9 +332,9 @@ All commands output JSON for easy parsing:
 | Code | Meaning | Example |
 |------|---------|---------|
 | `1` | General error | Invalid arguments, file not found |
-| `1` | Terminal not found | `termq open "nonexistent"` |
-| `1` | Column not found | `termq move "Terminal" "Bad Column"` |
-| `1` | No matches | `termq find --name "xyz"` returns empty `[]` |
+| `1` | Terminal not found | `termqcliopen "nonexistent"` |
+| `1` | Column not found | `termqclimove "Terminal" "Bad Column"` |
+| `1` | No matches | `termqclifind --name "xyz"` returns empty `[]` |
 
 > **Note:** Currently all errors return code `1`. Check the `error` message for details. An empty result (e.g., `[]` from `find`) is not an error—it means no matches.
 
@@ -393,16 +393,16 @@ When generating init commands in the UI, toggle **Interactive Mode** off to add 
 
 ```bash
 # Set persistent context (always available)
-termq set "API Server" --llm-prompt "Node.js backend. Entry: src/index.ts. Uses PostgreSQL."
+termqcliset "API Server" --llm-prompt "Node.js backend. Entry: src/index.ts. Uses PostgreSQL."
 
 # Set one-time action (runs once, then clears)
-termq set "API Server" --llm-next-action "Implement rate limiting. See plan in context."
+termqcliset "API Server" --llm-next-action "Implement rate limiting. See plan in context."
 
 # Read LLM fields
-termq list | jq '.[] | {name, llmPrompt, llmNextAction}'
+termqclilist | jq '.[] | {name, llmPrompt, llmNextAction}'
 
 # Check pending actions
-termq list | jq '.[] | select(.llmNextAction != "") | {name, llmNextAction}'
+termqclilist | jq '.[] | select(.llmNextAction != "") | {name, llmNextAction}'
 ```
 
 ### How It Works
@@ -441,19 +441,19 @@ Use tags to track work state across multiple LLM sessions:
 
 **Setting tags:**
 ```bash
-termq set "Terminal" --tag staleness=fresh --tag status=active
-termq set "Terminal" --tag project=eyelock/TermQ --tag worktree=feat/new-feature
+termqcliset "Terminal" --tag staleness=fresh --tag status=active
+termqcliset "Terminal" --tag project=eyelock/TermQ --tag worktree=feat/new-feature
 ```
 
 **Finding by tags:**
 ```bash
-termq find --tag staleness=stale    # Find work that needs attention
-termq find --tag status=blocked     # Find blocked work
-termq find --tag project=org/repo   # Find all terminals for a project
+termqclifind --tag staleness=stale    # Find work that needs attention
+termqclifind --tag status=blocked     # Find blocked work
+termqclifind --tag project=org/repo   # Find all terminals for a project
 ```
 
 **Recommended workflow:**
-1. **Session start**: Run `termq pending` to see what needs attention
+1. **Session start**: Run `termqclipending` to see what needs attention
 2. **During work**: Keep `status` tag updated
 3. **Session end**: Set `llmNextAction` if incomplete, update `staleness=fresh`
 
@@ -463,35 +463,35 @@ The CLI outputs JSON for easy parsing in scripts or by AI assistants.
 
 **Example: Find all production terminals**
 ```bash
-termq find --tag env=prod | jq '.[].name'
+termqclifind --tag env=prod | jq '.[].name'
 ```
 
 **Example: Move all "In Progress" to "Review"**
 ```bash
-termq find --column "In Progress" | jq -r '.[].id' | xargs -I {} termq move {} "Review"
+termqclifind --column "In Progress" | jq -r '.[].id' | xargs -I {} termqclimove {} "Review"
 ```
 
 ## Tips for AI Assistants
 
 If you're an LLM assistant helping a user with TermQ:
 
-1. **Use `termq open <name>`** to resume work - returns terminal details including both LLM fields
+1. **Use `termqcliopen <name>`** to resume work - returns terminal details including both LLM fields
 2. **Check `llmNextAction`** first - this is a pending task queued for you
 3. **Check `llmPrompt`** for persistent background context
 4. **Set `llmNextAction`** when parking work - user's Init Command will inject it on next open
 5. **Update `llmPrompt`** for context that should persist (project info, notes)
-6. **Use `termq create`** only when starting genuinely new work
+6. **Use `termqclicreate`** only when starting genuinely new work
 7. **Use columns** to track workflow (To Do → In Progress → Done)
 
 **Complete Workflow Example:**
 
 ```bash
 # Session 1: User opens terminal, you do some work
-termq open "API Project"
+termqcliopen "API Project"
 # Returns: llmPrompt="Node.js backend", llmNextAction=""
 
 # You implement a feature, but need to pause. Queue next action:
-termq set "API Project" --llm-next-action "Continue implementing rate limiting from line 42"
+termqcliset "API Project" --llm-next-action "Continue implementing rate limiting from line 42"
 
 # Session 2: User opens terminal again
 # Init Command: claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
@@ -502,7 +502,7 @@ termq set "API Project" --llm-next-action "Continue implementing rate limiting f
 **Parking Work Pattern:**
 ```bash
 # Before ending session, queue the next task
-termq set "My Terminal" \
+termqcliset "My Terminal" \
   --llm-prompt "React frontend, uses Redux" \
   --llm-next-action "Implement the login form. See design in Figma link in description."
 ```

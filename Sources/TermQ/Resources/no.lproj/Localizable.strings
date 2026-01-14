@@ -36,7 +36,7 @@
 "card.pin" = "Fest terminal";
 "card.unpin" = "Løsne terminal";
 "card.running" = "Terminal kjører";
-"card.open" = "Åpne terminal";
+"card.open" = "Åpen";
 "card.edit" = "Rediger detaljer...";
 "card.delete" = "Slett";
 "card.wired" = "Tilkoblet";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Papirkurv (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Ny hurtigterminal";
 "menu.new.terminal" = "Ny terminal...";
 "menu.new.terminal.dialog" = "Ny terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Veksle festing";
 "menu.next.pinned" = "Neste festede terminal";
 "menu.previous.pinned" = "Forrige festede terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Slett terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Kommandolinje";
 "settings.cli.title" = "CLI-verktøy";
-"settings.cli.description" = "Termq kommandolinjeverktøyet lar deg åpne terminaler fra skallet.";
+"settings.cli.description" = "Termqcli kommandolinjeverktøyet lar deg åpne terminaler fra skallet.";
 "settings.cli.path" = "Installasjonssted";
 "settings.cli.install" = "Installer CLI";
 "settings.cli.uninstall" = "Avinstaller";

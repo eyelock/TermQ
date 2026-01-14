@@ -36,7 +36,7 @@
 "card.pin" = "Fixare terminal";
 "card.unpin" = "Eliberare terminal";
 "card.running" = "Terminalul rulează";
-"card.open" = "Deschidere terminal";
+"card.open" = "Deschis";
 "card.edit" = "Editare detalii...";
 "card.delete" = "Ștergere";
 "card.wired" = "Conectat";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Coș de gunoi (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Terminal rapid nou";
 "menu.new.terminal" = "Terminal nou...";
 "menu.new.terminal.dialog" = "Terminal nou";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Comutare fixare";
 "menu.next.pinned" = "Următorul terminal fixat";
 "menu.previous.pinned" = "Terminalul fixat anterior";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Ștergere terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Linie de comandă";
 "settings.cli.title" = "Instrument CLI";
-"settings.cli.description" = "Instrumentul de linie de comandă termq permite deschiderea terminalelor din shell.";
+"settings.cli.description" = "Instrumentul de linie de comandă termqcli permite deschiderea terminalelor din shell.";
 "settings.cli.path" = "Locație instalare";
 "settings.cli.install" = "Instalare CLI";
 "settings.cli.uninstall" = "Dezinstalare";

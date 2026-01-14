@@ -36,7 +36,7 @@
 "card.pin" = "تثبيت الطرفية";
 "card.unpin" = "إلغاء تثبيت الطرفية";
 "card.running" = "الطرفية تعمل";
-"card.open" = "فتح الطرفية";
+"card.open" = "مفتوح";
 "card.edit" = "تعديل التفاصيل...";
 "card.delete" = "حذف";
 "card.wired" = "متصل";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "سلة المحذوفات (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "طرفية سريعة جديدة";
 "menu.new.terminal" = "طرفية جديدة...";
 "menu.new.terminal.dialog" = "طرفية جديدة";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "تبديل التثبيت";
 "menu.next.pinned" = "الطرفية المثبتة التالية";
 "menu.previous.pinned" = "الطرفية المثبتة السابقة";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "حذف الطرفية";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "سطر الأوامر";
 "settings.cli.title" = "أداة CLI";
-"settings.cli.description" = "تتيح لك أداة سطر الأوامر termq فتح الطرفيات من الصدفة.";
+"settings.cli.description" = "تتيح لك أداة سطر الأوامر termqcli فتح الطرفيات من الصدفة.";
 "settings.cli.path" = "موقع التثبيت";
 "settings.cli.install" = "تثبيت CLI";
 "settings.cli.uninstall" = "إلغاء التثبيت";

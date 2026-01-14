@@ -36,7 +36,7 @@
 "card.pin" = "Pripni terminal";
 "card.unpin" = "Odpni terminal";
 "card.running" = "Terminal deluje";
-"card.open" = "Odpri terminal";
+"card.open" = "Odprto";
 "card.edit" = "Uredi podrobnosti...";
 "card.delete" = "Izbriši";
 "card.wired" = "Povezano";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Koš (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Nov hitri terminal";
 "menu.new.terminal" = "Nov terminal...";
 "menu.new.terminal.dialog" = "Nov terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Preklopi pripenjanje";
 "menu.next.pinned" = "Naslednji pripeti terminal";
 "menu.previous.pinned" = "Prejšnji pripeti terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Izbriši terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Ukazna vrstica";
 "settings.cli.title" = "Orodje CLI";
-"settings.cli.description" = "Orodje ukazne vrstice termq omogoča odpiranje terminalov iz lupine.";
+"settings.cli.description" = "Orodje ukazne vrstice termqcli omogoča odpiranje terminalov iz lupine.";
 "settings.cli.path" = "Mesto namestitve";
 "settings.cli.install" = "Namesti CLI";
 "settings.cli.uninstall" = "Odstrani";

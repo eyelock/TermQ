@@ -19,19 +19,19 @@ struct BinView: View {
                         .foregroundColor(.secondary)
                 }
                 .buttonStyle(.plain)
-                .help("Close (Esc)")
+                .help(Strings.Bin.closeHelp)
 
                 Spacer()
 
                 Image(systemName: "trash")
                     .font(.title2)
-                Text("Bin")
+                Text(Strings.Bin.title)
                     .font(.headline)
 
                 Spacer()
 
                 if !viewModel.binCards.isEmpty {
-                    Button("Empty Bin", role: .destructive) {
+                    Button(Strings.Bin.emptyButton, role: .destructive) {
                         viewModel.emptyBin()
                     }
                     .buttonStyle(.borderedProminent)
@@ -52,16 +52,14 @@ struct BinView: View {
                     Image(systemName: "trash.slash")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
-                    Text("Bin is Empty")
+                    Text(Strings.Bin.empty)
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Text(
-                        "Deleted terminals will appear here for \(binRetentionDays) days before being permanently removed."
-                    )
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 250)
+                    Text(Strings.Settings.autoEmptyHelp)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 250)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
@@ -117,11 +115,11 @@ struct BinItemRow: View {
                     .lineLimit(1)
 
                 HStack(spacing: 8) {
-                    Text("Deleted \(deletedDateString)")
+                    Text(Strings.Bin.deleted(deletedDateString))
                         .font(.caption)
                         .foregroundColor(.secondary)
 
-                    Text("\(daysRemaining) day\(daysRemaining == 1 ? "" : "s") remaining")
+                    Text(Strings.Bin.daysRemaining(daysRemaining))
                         .font(.caption)
                         .foregroundColor(daysRemaining <= 3 ? .orange : .secondary)
                 }
@@ -136,7 +134,7 @@ struct BinItemRow: View {
                     Image(systemName: "arrow.uturn.backward")
                 }
                 .buttonStyle(.borderless)
-                .help("Restore terminal")
+                .help(Strings.Bin.restoreHelp)
 
                 Button(role: .destructive) {
                     onDelete()
@@ -144,7 +142,7 @@ struct BinItemRow: View {
                     Image(systemName: "trash")
                 }
                 .buttonStyle(.borderless)
-                .help("Delete permanently")
+                .help(Strings.Bin.deleteHelp)
             }
         }
         .padding(.vertical, 4)

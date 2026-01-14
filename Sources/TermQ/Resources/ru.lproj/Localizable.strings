@@ -36,7 +36,7 @@
 "card.pin" = "Закрепить терминал";
 "card.unpin" = "Открепить терминал";
 "card.running" = "Терминал работает";
-"card.open" = "Открыть терминал";
+"card.open" = "Открыто";
 "card.edit" = "Изменить детали...";
 "card.delete" = "Удалить";
 "card.wired" = "Подключён";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Корзина (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Новый быстрый терминал";
 "menu.new.terminal" = "Новый терминал...";
 "menu.new.terminal.dialog" = "Новый терминал";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Переключить закрепление";
 "menu.next.pinned" = "Следующий закреплённый терминал";
 "menu.previous.pinned" = "Предыдущий закреплённый терминал";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Удалить терминал";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Командная строка";
 "settings.cli.title" = "Инструмент CLI";
-"settings.cli.description" = "Инструмент командной строки termq позволяет открывать терминалы из оболочки.";
+"settings.cli.description" = "Инструмент командной строки termqcli позволяет открывать терминалы из оболочки.";
 "settings.cli.path" = "Путь установки";
 "settings.cli.install" = "Установить CLI";
 "settings.cli.uninstall" = "Удалить";

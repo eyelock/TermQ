@@ -36,7 +36,7 @@
 "card.pin" = "Fäst terminal";
 "card.unpin" = "Lossa terminal";
 "card.running" = "Terminalen körs";
-"card.open" = "Öppna terminal";
+"card.open" = "Öppen";
 "card.edit" = "Redigera detaljer...";
 "card.delete" = "Radera";
 "card.wired" = "Ansluten";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Papperskorg (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Ny snabbterminal";
 "menu.new.terminal" = "Ny terminal...";
 "menu.new.terminal.dialog" = "Ny terminal";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Växla fästning";
 "menu.next.pinned" = "Nästa fästa terminal";
 "menu.previous.pinned" = "Föregående fästa terminal";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Radera terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Kommandorad";
 "settings.cli.title" = "CLI-verktyg";
-"settings.cli.description" = "Termq kommandoradsverktyget låter dig öppna terminaler från ditt skal.";
+"settings.cli.description" = "Termqcli kommandoradsverktyget låter dig öppna terminaler från ditt skal.";
 "settings.cli.path" = "Installationsplats";
 "settings.cli.install" = "Installera CLI";
 "settings.cli.uninstall" = "Avinstallera";

@@ -7,9 +7,9 @@ struct LanguagePickerView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             // Currently selected display
-            LabeledContent("Current") {
+            LabeledContent(Strings.Settings.fieldCurrent) {
                 if selectedLanguage.code.isEmpty {
-                    Text("System Default")
+                    Text(Strings.Settings.systemDefault)
                         .foregroundColor(.secondary)
                 } else {
                     Text("\(selectedLanguage.nativeName) (\(selectedLanguage.code))")
@@ -20,7 +20,7 @@ struct LanguagePickerView: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
-                TextField("Search languages...", text: $languageSearchText)
+                TextField(Strings.Settings.searchLanguages, text: $languageSearchText)
                     .textFieldStyle(.plain)
                 if !languageSearchText.isEmpty {
                     Button {
@@ -50,11 +50,11 @@ struct LanguagePickerView: View {
 
             // Current selection info
             if selectedLanguage.code.isEmpty {
-                Text("Using system language preference")
+                Text(Strings.Settings.usingSystemLanguage)
                     .font(.caption)
                     .foregroundColor(.secondary)
             } else {
-                Text("Restart TermQ for language change to take effect")
+                Text(Strings.Settings.restartRequired)
                     .font(.caption)
                     .foregroundColor(.orange)
             }
@@ -90,7 +90,7 @@ struct LanguagePickerView: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     if language.code.isEmpty {
-                        Text("System Default")
+                        Text(Strings.Settings.systemDefault)
                             .fontWeight(selectedLanguage.code == language.code ? .semibold : .regular)
                     } else {
                         Text(language.nativeName)

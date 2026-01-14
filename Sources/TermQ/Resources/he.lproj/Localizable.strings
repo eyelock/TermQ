@@ -36,7 +36,7 @@
 "card.pin" = "הצמדת מסוף";
 "card.unpin" = "ביטול הצמדת מסוף";
 "card.running" = "המסוף פועל";
-"card.open" = "פתיחת מסוף";
+"card.open" = "פתוח";
 "card.edit" = "עריכת פרטים...";
 "card.delete" = "מחיקה";
 "card.wired" = "מחובר";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "פח (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "מסוף מהיר חדש";
 "menu.new.terminal" = "מסוף חדש...";
 "menu.new.terminal.dialog" = "מסוף חדש";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "החלפת הצמדה";
 "menu.next.pinned" = "המסוף המוצמד הבא";
 "menu.previous.pinned" = "המסוף המוצמד הקודם";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "מחיקת מסוף";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "שורת פקודה";
 "settings.cli.title" = "כלי CLI";
-"settings.cli.description" = "כלי שורת הפקודה termq מאפשר לך לפתוח מסופים מהמעטפת שלך.";
+"settings.cli.description" = "כלי שורת הפקודה termqcli מאפשר לך לפתוח מסופים מהמעטפת שלך.";
 "settings.cli.path" = "מיקום התקנה";
 "settings.cli.install" = "התקנת CLI";
 "settings.cli.uninstall" = "הסרה";

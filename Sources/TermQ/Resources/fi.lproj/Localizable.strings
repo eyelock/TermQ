@@ -36,7 +36,7 @@
 "card.pin" = "Kiinnitä terminaali";
 "card.unpin" = "Irrota terminaali";
 "card.running" = "Terminaali käynnissä";
-"card.open" = "Avaa terminaali";
+"card.open" = "Auki";
 "card.edit" = "Muokkaa tietoja...";
 "card.delete" = "Poista";
 "card.wired" = "Yhdistetty";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Roskakori (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Uusi pikaterminaali";
 "menu.new.terminal" = "Uusi terminaali...";
 "menu.new.terminal.dialog" = "Uusi terminaali";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Vaihda kiinnitys";
 "menu.next.pinned" = "Seuraava kiinnitetty terminaali";
 "menu.previous.pinned" = "Edellinen kiinnitetty terminaali";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Poista terminaali";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Komentorivi";
 "settings.cli.title" = "CLI-työkalu";
-"settings.cli.description" = "Termq-komentorivityökalu mahdollistaa terminaalien avaamisen komentotulkista.";
+"settings.cli.description" = "Termqcli-komentorivityökalu mahdollistaa terminaalien avaamisen komentotulkista.";
 "settings.cli.path" = "Asennussijainti";
 "settings.cli.install" = "Asenna CLI";
 "settings.cli.uninstall" = "Poista asennus";

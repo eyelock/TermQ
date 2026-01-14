@@ -36,7 +36,7 @@
 "card.pin" = "Semat terminal";
 "card.unpin" = "Nyahsemat terminal";
 "card.running" = "Terminal sedang berjalan";
-"card.open" = "Buka Terminal";
+"card.open" = "Terbuka";
 "card.edit" = "Edit Butiran...";
 "card.delete" = "Padam";
 "card.wired" = "Bersambung";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Tong Sampah (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Terminal Pantas Baru";
 "menu.new.terminal" = "Terminal Baru...";
 "menu.new.terminal.dialog" = "Terminal Baru";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Togol Semat";
 "menu.next.pinned" = "Terminal Tersemat Seterusnya";
 "menu.previous.pinned" = "Terminal Tersemat Sebelumnya";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Padam Terminal";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Baris Perintah";
 "settings.cli.title" = "Alat CLI";
-"settings.cli.description" = "Alat baris perintah termq membolehkan anda membuka terminal dari shell.";
+"settings.cli.description" = "Alat baris perintah termqcli membolehkan anda membuka terminal dari shell.";
 "settings.cli.path" = "Lokasi Pemasangan";
 "settings.cli.install" = "Pasang CLI";
 "settings.cli.uninstall" = "Nyahpasang";

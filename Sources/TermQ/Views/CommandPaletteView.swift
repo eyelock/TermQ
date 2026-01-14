@@ -30,14 +30,14 @@ struct CommandPaletteView: View {
 
         var title: String {
             switch self {
-            case .newTerminal: return "New Terminal"
-            case .newColumn: return "New Column"
-            case .toggleZoom: return "Toggle Zoom Mode"
-            case .toggleSearch: return "Find in Terminal"
-            case .exportSession: return "Export Session"
-            case .backToBoard: return "Back to Board"
-            case .openInTerminalApp: return "Open in Terminal.app"
-            case .toggleFavourite: return "Toggle Favourite"
+            case .newTerminal: return Strings.CommandPalette.newTerminal
+            case .newColumn: return Strings.CommandPalette.newColumn
+            case .toggleZoom: return Strings.CommandPalette.toggleZoom
+            case .toggleSearch: return Strings.CommandPalette.findInTerminal
+            case .exportSession: return Strings.CommandPalette.exportSession
+            case .backToBoard: return Strings.CommandPalette.backToBoard
+            case .openInTerminalApp: return Strings.CommandPalette.openInTerminalApp
+            case .toggleFavourite: return Strings.CommandPalette.toggleFavourite
             }
         }
 
@@ -99,7 +99,7 @@ struct CommandPaletteView: View {
             HStack(spacing: 8) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
-                TextField("Search terminals and actions...", text: $searchText)
+                TextField(Strings.Palette.placeholder, text: $searchText)
                     .textFieldStyle(.plain)
                     .font(.title3)
                     .focused($isSearchFocused)
@@ -160,7 +160,7 @@ struct CommandPaletteView: View {
                         }
 
                         if filteredTerminals.isEmpty && filteredActions.isEmpty {
-                            Text("No results found")
+                            Text(Strings.Palette.noResults)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding()

@@ -36,7 +36,7 @@
 "card.pin" = "Закріпити термінал";
 "card.unpin" = "Відкріпити термінал";
 "card.running" = "Термінал працює";
-"card.open" = "Відкрити термінал";
+"card.open" = "Відкрито";
 "card.edit" = "Редагувати деталі...";
 "card.delete" = "Видалити";
 "card.wired" = "Підключено";
@@ -77,6 +77,7 @@
 "toolbar.bin.count %lld" = "Кошик (%lld)";
 
 // MARK: - Menu Commands
+"menu.help" = "TermQ Help";
 "menu.new.terminal.quick" = "Новий швидкий термінал";
 "menu.new.terminal" = "Новий термінал...";
 "menu.new.terminal.dialog" = "Новий термінал";
@@ -85,6 +86,17 @@
 "menu.toggle.pin" = "Перемкнути закріплення";
 "menu.next.pinned" = "Наступний закріплений термінал";
 "menu.previous.pinned" = "Попередній закріплений термінал";
+
+
+// MARK: - Command Palette
+"command.palette.new.terminal" = "New Terminal";
+"command.palette.new.column" = "New Column";
+"command.palette.toggle.zoom" = "Toggle Zoom Mode";
+"command.palette.find" = "Find in Terminal";
+"command.palette.export" = "Export Session";
+"command.palette.back" = "Back to Board";
+"command.palette.open.terminal.app" = "Open in Terminal.app";
+"command.palette.toggle.favourite" = "Toggle Favourite";
 
 // MARK: - Delete Confirmation
 "delete.title" = "Видалити термінал";
@@ -221,7 +233,7 @@
 // Settings - CLI section
 "settings.section.cli" = "Командний рядок";
 "settings.cli.title" = "Інструмент CLI";
-"settings.cli.description" = "Інструмент командного рядка termq дозволяє відкривати термінали з оболонки.";
+"settings.cli.description" = "Інструмент командного рядка termqcli дозволяє відкривати термінали з оболонки.";
 "settings.cli.path" = "Шлях встановлення";
 "settings.cli.install" = "Встановити CLI";
 "settings.cli.uninstall" = "Видалити";
