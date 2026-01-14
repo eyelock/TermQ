@@ -178,18 +178,19 @@ extension TermQMCPServer {
 
         ## AVAILABLE MCP TOOLS
 
-        ### Read-Only Tools (Fully Implemented)
+        ### Query Tools
         - `termq_pending` - Check terminals needing attention (SESSION START)
         - `termq_context` - Get this documentation
         - `termq_list` - List all terminals or filter by column
         - `termq_find` - Search terminals by name, column, tag, etc.
         - `termq_open` - Get terminal details by name, UUID, or path
+        - `termq_get` - Get terminal by UUID (use with $TERMQ_TERMINAL_ID)
 
-        ### Write Tools (Return CLI Commands)
-        The MCP server is read-only for safety. These tools return CLI commands:
-        - `termq_create` - Returns CLI command to create terminal
-        - `termq_set` - Returns CLI command to modify terminal
-        - `termq_move` - Returns CLI command to move terminal
+        ### Write Tools
+        These tools modify the board directly:
+        - `termq_create` - Create a new terminal
+        - `termq_set` - Modify terminal properties (name, badge, llmPrompt, etc.)
+        - `termq_move` - Move terminal to a different column
 
         ## TERMINAL FIELDS
 
