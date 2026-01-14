@@ -15,6 +15,7 @@ Thank you for your interest in contributing to TermQ! This guide will help you g
 - [Releasing](#releasing)
 - [CI/CD](#cicd)
 - [Makefile Reference](#makefile-reference)
+- [Localization](#localization)
 - [Dependencies](#dependencies)
 
 ## Quick Start
@@ -182,6 +183,23 @@ open "termq://open?name=Test&path=/tmp"
 
 The project uses [semantic versioning](https://semver.org/). The current version is stored in the `VERSION` file.
 
+### Pre-Release Checklist
+
+Before releasing, ensure code hygiene:
+
+```bash
+# 1. Run all checks
+make check
+
+# 2. Validate localization strings
+./scripts/localization/validate-strings.sh
+
+# 3. Run tests
+make test
+```
+
+> **Important**: The localization validation ensures all 40 language files have matching keys. Any missing translations will cause the release to fail in CI.
+
 ### Interactive Release
 
 ```bash
@@ -266,6 +284,66 @@ Run `make help` for all available targets:
 | `release-major` | Release major version |
 | `release-minor` | Release minor version |
 | `release-patch` | Release patch version |
+
+## Localization
+
+TermQ supports 40 languages. All user-facing strings should be localized.
+
+### Adding New Strings
+
+1. Add the key to `Sources/TermQ/Utilities/Strings.swift`:
+```swift
+enum Settings {
+    static let newOption = String(localized: "settings.new.option")
+}
+```
+
+2. Add the English translation to `Sources/TermQ/Resources/en.lproj/Localizable.strings`:
+```
+"settings.new.option" = "New Option";
+```
+
+3. Add to all other language files (or run the template script):
+```bash
+./scripts/localization/generate-translations.sh
+```
+
+4. Validate all languages have the key:
+```bash
+./scripts/localization/validate-strings.sh
+```
+
+### Translation Workflow
+
+For LLM-assisted translation:
+```bash
+# Extract strings to JSON
+./scripts/localization/extract-to-json.sh > strings.json
+
+# Have Claude translate the JSON, then update the .strings files
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `Sources/TermQ/Utilities/Strings.swift` | Centralized string key definitions |
+| `Sources/TermQ/Utilities/SupportedLanguage.swift` | Language picker model |
+| `Sources/TermQ/Resources/en.lproj/Localizable.strings` | English (base) translations |
+| `Sources/TermQ/Resources/<lang>.lproj/Localizable.strings` | Other language translations |
+| `scripts/localization/*.sh` | Translation management scripts |
+| `.claude/commands/localization.md` | Claude command for localization tasks |
+
+### Key Naming Convention
+
+Keys follow the pattern: `domain.description.qualifier`
+- `board.column.options` - Board domain, column options
+- `editor.field.name` - Editor domain, name field
+- `settings.section.language` - Settings domain, language section
+
+### Language Support
+
+The app supports all macOS languages including: English, Spanish, French, German, Italian, Portuguese, Dutch, Swedish, Danish, Finnish, Norwegian, Polish, Russian, Ukrainian, Czech, Slovak, Hungarian, Romanian, Croatian, Slovenian, Greek, Turkish, Hebrew, Arabic, Thai, Vietnamese, Indonesian, Malay, Chinese (Simplified, Traditional, Hong Kong), Japanese, Korean, Hindi, and Catalan.
 
 ## Dependencies
 

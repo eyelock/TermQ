@@ -25,7 +25,7 @@ When I say "let me give you feedback" or similar phrases indicating I want to pr
 
 ## CODE HYGIENE
 
-Want to do this workflow at the end of any significant development work, especially in the middle of 
+Want to do this workflow at the end of any significant development work, especially in the middle of
 
 * Use ACME if it is available
 * Clean the software, including dependencies
@@ -33,6 +33,9 @@ Want to do this workflow at the end of any significant development work, especia
 * Build the project, zero error tolerance and strive for zero warning tolerance
 * Format the code, add any changes as needed
 * Lint the code, zero error tolerance and strive for zero warning tolerance
+* Validate localization strings: `./scripts/localization/validate-strings.sh`
+  * Ensure all 40 language files have matching keys
+  * Run this before any release
 * Specific technologies
   * Typescript
     * Always check the Typescript for errors regularly, it's a lot of wasted time trying to fix a massive batch of them

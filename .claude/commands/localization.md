@@ -102,26 +102,46 @@ When this command is invoked, follow these workflows:
 
 ## Language Codes
 
-| Code      | Language            |
-|-----------|---------------------|
-| en        | English (base)      |
-| es        | Spanish             |
-| de        | German              |
-| fr        | French              |
-| ja        | Japanese            |
-| zh-Hans   | Simplified Chinese  |
-| zh-Hant   | Traditional Chinese |
-| ko        | Korean              |
-| pt-BR     | Brazilian Portuguese|
-| it        | Italian             |
+TermQ supports all 40 macOS languages:
+
+| Code      | Language            | Code      | Language            |
+|-----------|---------------------|-----------|---------------------|
+| en        | English (base)      | pl        | Polish              |
+| en-GB     | English (UK)        | ru        | Russian             |
+| en-AU     | English (Australia) | uk        | Ukrainian           |
+| es        | Spanish             | cs        | Czech               |
+| es-419    | Spanish (Latin Am)  | sk        | Slovak              |
+| fr        | French              | hu        | Hungarian           |
+| fr-CA     | French (Canada)     | ro        | Romanian            |
+| de        | German              | hr        | Croatian            |
+| it        | Italian             | sl        | Slovenian           |
+| pt        | Portuguese          | el        | Greek               |
+| pt-PT     | Portuguese (Portugal)| tr       | Turkish             |
+| nl        | Dutch               | he        | Hebrew              |
+| sv        | Swedish             | ar        | Arabic              |
+| da        | Danish              | th        | Thai                |
+| fi        | Finnish             | vi        | Vietnamese          |
+| no        | Norwegian           | id        | Indonesian          |
+| zh-Hans   | Chinese (Simplified)| ms        | Malay               |
+| zh-Hant   | Chinese (Traditional)| hi       | Hindi               |
+| zh-HK     | Chinese (Hong Kong) | ca        | Catalan             |
+| ja        | Japanese            |           |                     |
+| ko        | Korean              |           |                     |
 
 ---
 
 ## Key Files
 
 - `Sources/TermQ/Utilities/Strings.swift` - String key definitions
+- `Sources/TermQ/Utilities/SupportedLanguage.swift` - Language picker model
 - `Sources/TermQ/Resources/en.lproj/Localizable.strings` - English translations
 - `Sources/TermQ/Resources/<lang>.lproj/Localizable.strings` - Other languages
+
+## Scripts
+
+- `scripts/localization/generate-translations.sh` - Create translation templates for all languages
+- `scripts/localization/validate-strings.sh` - Validate all translations have matching keys
+- `scripts/localization/extract-to-json.sh` - Export strings to JSON for LLM translation
 
 ---
 
