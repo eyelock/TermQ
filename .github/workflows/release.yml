@@ -94,6 +94,11 @@ jobs:
           cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
           if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
 
+          # Create Info.plist with version info
+          cp Info.plist.template TermQ.app/Contents/Info.plist
+          plutil -replace CFBundleShortVersionString -string "${{ steps.version.outputs.VERSION }}" TermQ.app/Contents/Info.plist
+          plutil -replace CFBundleVersion -string "$(git rev-parse --short=7 HEAD)" TermQ.app/Contents/Info.plist
+
       - name: Sign app bundle
         run: codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
 
