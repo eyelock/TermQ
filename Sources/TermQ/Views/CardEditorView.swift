@@ -31,6 +31,37 @@ struct CardEditorView: View {
     @State private var mcpInstalled: Bool = false
     @State private var allowAutorun: Bool = false
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
+    @State private var selectedLLMVendor: LLMVendor = .claudeCode
+
+    /// Supported LLM CLI tools for init command generation
+    private enum LLMVendor: String, CaseIterable {
+        case claudeCode = "Claude Code"
+        case aider = "Aider"
+        case copilot = "GitHub Copilot"
+        case custom = "Custom"
+
+        var commandTemplate: String {
+            switch self {
+            case .claudeCode:
+                return "claude \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+            case .aider:
+                return "aider --message \"{{LLM_NEXT_ACTION}}\""
+            case .copilot:
+                return "gh copilot suggest \"{{LLM_NEXT_ACTION}}\""
+            case .custom:
+                return "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+            }
+        }
+
+        var supportsPrompt: Bool {
+            switch self {
+            case .claudeCode, .custom:
+                return true
+            case .aider, .copilot:
+                return false
+            }
+        }
+    }
 
     private enum EditorTab: String, CaseIterable {
         case general = "General"
@@ -332,7 +363,42 @@ struct CardEditorView: View {
             }
         }
 
-        // TODO: Add Generate Init Command section here (Vendor, Non-interactive)
+        Section("Generate Init Command") {
+            Picker("LLM Tool", selection: $selectedLLMVendor) {
+                ForEach(LLMVendor.allCases, id: \.self) { vendor in
+                    Text(vendor.rawValue).tag(vendor)
+                }
+            }
+            .pickerStyle(.menu)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Preview")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Text(selectedLLMVendor.commandTemplate)
+                    .font(.system(.body, design: .monospaced))
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(8)
+                    .background(Color(NSColor.textBackgroundColor))
+                    .cornerRadius(4)
+            }
+
+            if !selectedLLMVendor.supportsPrompt {
+                Text("Note: \(selectedLLMVendor.rawValue) only uses {{LLM_NEXT_ACTION}}")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            HStack {
+                Spacer()
+                Button("Apply to Init Command") {
+                    initCommand = selectedLLMVendor.commandTemplate
+                    selectedTab = .terminal
+                }
+                .help("Sets this template as the init command and switches to Terminal tab")
+            }
+        }
     }
 
     private func loadFromCard() {
