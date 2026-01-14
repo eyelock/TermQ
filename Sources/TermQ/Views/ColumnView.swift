@@ -7,6 +7,7 @@ struct ColumnView: View {
     let needsAttention: Set<UUID>
     let processingCards: Set<UUID>
     let openTabs: Set<UUID>
+    let hasMCPActivity: Bool
     let onAddCard: () -> Void
     let onSelectCard: (TerminalCard) -> Void
     let onEditCard: (TerminalCard) -> Void
@@ -84,6 +85,7 @@ struct ColumnView: View {
                             needsAttention: needsAttention.contains(card.id),
                             isProcessing: processingCards.contains(card.id),
                             isOpenAsTab: openTabs.contains(card.id),
+                            hasMCPActivity: hasMCPActivity,
                             onSelect: { onSelectCard(card) },
                             onEdit: { onEditCard(card) },
                             onDelete: { onDeleteCard(card) },

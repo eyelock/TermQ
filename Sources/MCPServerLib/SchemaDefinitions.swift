@@ -130,7 +130,11 @@ extension TermQMCPServer {
                         "name": .object(["type": "string", "description": "New name"]),
                         "description": .object(["type": "string", "description": "New description"]),
                         "column": .object(["type": "string", "description": "Move to column"]),
-                        "badge": .object(["type": "string", "description": "Comma-separated badges"]),
+                        "badge": .object([
+                            "type": "string",
+                            "description":
+                                "Badge text (comma-separated for multiple, e.g. 'WIP,urgent'). Replaces existing badges.",
+                        ]),
                         "llmPrompt": .object(["type": "string", "description": "Set persistent LLM context"]),
                         "llmNextAction": .object(["type": "string", "description": "Set one-time action"]),
                         "favourite": .object(["type": "boolean", "description": "Set favourite status"]),

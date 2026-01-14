@@ -27,6 +27,12 @@ class BoardViewModel: ObservableObject {
     /// Terminals currently processing (have recent output activity)
     @Published private(set) var processingCards: Set<UUID> = []
 
+    /// Whether there has been recent MCP activity (external file changes detected)
+    @Published private(set) var hasMCPActivity: Bool = false
+
+    /// Timestamp of last external file change
+    private var lastExternalChangeTime: Date?
+
     /// Transient terminals - not persisted, exist only as tabs until promoted
     /// Promoted to board when: edited & saved, or marked as favourite
     private var transientCards: [UUID: TerminalCard] = [:]
@@ -35,6 +41,11 @@ class BoardViewModel: ObservableObject {
     private var processingTimer: Timer?
 
     private let saveURL: URL
+
+    /// File system monitoring for external changes (e.g., from MCP server)
+    /// These are nonisolated(unsafe) because they need to be accessed from deinit
+    nonisolated(unsafe) private var fileDescriptor: Int32 = -1
+    nonisolated(unsafe) private var fileMonitorSource: DispatchSourceFileSystemObject?
 
     init() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -54,8 +65,17 @@ class BoardViewModel: ObservableObject {
             let loaded = try? JSONDecoder().decode(Board.self, from: data)
         {
             self.board = loaded
+            #if DEBUG
+                print("[BoardViewModel] Loaded board from: \(saveURL.path)")
+                for card in loaded.cards.prefix(3) {
+                    print("[BoardViewModel] Card '\(card.title)' badge: '\(card.badge)'")
+                }
+            #endif
         } else {
             self.board = Board()
+            #if DEBUG
+                print("[BoardViewModel] Created new empty board")
+            #endif
         }
 
         // Initialize session tabs from persisted favourite order
@@ -73,6 +93,14 @@ class BoardViewModel: ObservableObject {
 
         // Start timer to periodically update processing status
         startProcessingTimer()
+
+        // Start monitoring file for external changes (e.g., from MCP server)
+        startFileMonitoring()
+    }
+
+    deinit {
+        // Cancel file monitoring - must access nonisolated
+        fileMonitorSource?.cancel()
     }
 
     /// Start timer to update processing status
@@ -90,6 +118,123 @@ class BoardViewModel: ObservableObject {
         if newProcessing != processingCards {
             processingCards = newProcessing
         }
+
+        // Fade MCP activity indicator after 30 seconds
+        if hasMCPActivity,
+            let lastChange = lastExternalChangeTime,
+            Date().timeIntervalSince(lastChange) > 30
+        {
+            hasMCPActivity = false
+        }
+    }
+
+    // MARK: - File Monitoring
+
+    /// Start monitoring the board file for external changes
+    private func startFileMonitoring() {
+        let path = saveURL.path
+
+        // Open file descriptor for monitoring
+        let fd = open(path, O_EVTONLY)
+        guard fd >= 0 else {
+            #if DEBUG
+                print("[BoardViewModel] Failed to open file for monitoring: \(path)")
+            #endif
+            return
+        }
+
+        // Create dispatch source to monitor file changes
+        let source = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: fd,
+            eventMask: [.write, .rename, .delete],
+            queue: DispatchQueue.global(qos: .utility)
+        )
+
+        source.setEventHandler { [weak self] in
+            Task { @MainActor in
+                self?.handleFileChange()
+            }
+        }
+
+        source.setCancelHandler {
+            close(fd)
+        }
+
+        source.resume()
+
+        self.fileDescriptor = fd
+        self.fileMonitorSource = source
+
+        #if DEBUG
+            print("[BoardViewModel] Started file monitoring for: \(path)")
+        #endif
+    }
+
+    /// Stop file monitoring and clean up resources
+    private func stopFileMonitoring() {
+        fileMonitorSource?.cancel()
+        fileMonitorSource = nil
+        // File descriptor is closed by the cancel handler
+        fileDescriptor = -1
+    }
+
+    /// Handle file change notification - reload board from disk
+    private func handleFileChange() {
+        #if DEBUG
+            print("[BoardViewModel] File change detected, reloading...")
+        #endif
+
+        // Mark MCP activity
+        lastExternalChangeTime = Date()
+        hasMCPActivity = true
+
+        guard let data = try? Data(contentsOf: saveURL),
+            let loaded = try? JSONDecoder().decode(Board.self, from: data)
+        else {
+            #if DEBUG
+                print("[BoardViewModel] Failed to reload board from file")
+            #endif
+            return
+        }
+
+        // Merge changes: update existing cards, add new ones
+        // Preserve session state (tabs, selection) while updating card properties
+        for loadedCard in loaded.cards {
+            if let existingCard = board.cards.first(where: { $0.id == loadedCard.id }) {
+                // Update existing card properties
+                existingCard.title = loadedCard.title
+                existingCard.description = loadedCard.description
+                existingCard.workingDirectory = loadedCard.workingDirectory
+                existingCard.shellPath = loadedCard.shellPath
+                existingCard.columnId = loadedCard.columnId
+                existingCard.orderIndex = loadedCard.orderIndex
+                existingCard.isFavourite = loadedCard.isFavourite
+                existingCard.tags = loadedCard.tags
+                existingCard.initCommand = loadedCard.initCommand
+                existingCard.llmPrompt = loadedCard.llmPrompt
+                existingCard.llmNextAction = loadedCard.llmNextAction
+                existingCard.badge = loadedCard.badge
+                existingCard.fontName = loadedCard.fontName
+                existingCard.fontSize = loadedCard.fontSize
+                existingCard.safePasteEnabled = loadedCard.safePasteEnabled
+                existingCard.themeId = loadedCard.themeId
+                existingCard.allowAutorun = loadedCard.allowAutorun
+                existingCard.deletedAt = loadedCard.deletedAt
+            } else {
+                // New card from external source
+                board.cards.append(loadedCard)
+            }
+        }
+
+        // Update columns
+        board.columns = loaded.columns
+        board.favouriteOrder = loaded.favouriteOrder
+
+        objectWillChange.send()
+
+        #if DEBUG
+            print("[BoardViewModel] Reloaded board with \(board.cards.count) cards")
+        #endif
     }
 
     func save() {
