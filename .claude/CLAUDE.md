@@ -23,9 +23,27 @@ When I say "let me give you feedback" or similar phrases indicating I want to pr
 - ALWAYS put your plans in .claude/plans 
 - ALWAYS put your session handovers in .claude/sessions 
 
+## PRE-PUSH / PRE-PR REQUIREMENTS (MANDATORY)
+
+**NEVER push code or create a PR without running these checks locally first:**
+
+1. `swift build` - Must complete with zero errors
+2. `swift-format format -r -i Sources/` - Format all code
+3. `swiftlint lint` - Must have zero errors (warnings acceptable but minimize)
+4. `swift test` - All tests must pass
+
+This prevents wasting CI resources and reduces environmental impact. Run these checks BEFORE:
+- Any `git push`
+- Creating or updating a PR
+- Requesting code review
+
+If SwiftLint crashes locally (SourceKit issues), at minimum verify the build succeeds and check line counts on modified files against SwiftLint rules (e.g., type_body_length max 500 lines).
+
+**If local checks pass but CI fails**: This is a BUG. Investigate the discrepancy - local and CI environments should produce identical results. File an issue to track and fix the root cause.
+
 ## CODE HYGIENE
 
-Want to do this workflow at the end of any significant development work, especially in the middle of
+Run this workflow at the end of any significant development work:
 
 * Use ACME if it is available
 * Clean the software, including dependencies
