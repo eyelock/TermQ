@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  nl localization strings.
+  Dutch localization strings.
 */
 
 // MARK: - App
@@ -10,250 +10,250 @@
 
 // MARK: - Common
 "common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.cancel" = "Annuleer";
+"common.save" = "Bewaar";
+"common.delete" = "Verwijder";
+"common.edit" = "Wijzig";
+"common.close" = "Sluit";
+"common.add" = "Voeg toe";
+"common.reinstall" = "Herinstalleer";
+"common.uninstall" = "Verwijder";
+"common.installed" = "Geïnstalleerd";
+"common.browse" = "Blader...";
+"common.apply" = "Pas toe";
+"common.preview" = "Voorvertoning";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "Kolomopties";
+"board.column.rename" = "Hernoem kolom...";
+"board.column.delete" = "Verwijder kolom";
+"board.column.delete.disabled" = "Verwijder kolom (verplaats eerst terminals)";
+"board.column.add.terminal" = "Voeg terminal toe";
+"board.column.add.terminal.help" = "Voeg nieuwe terminal toe aan deze kolom";
+"board.column.edit" = "Wijzig kolom...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "Zet terminal vast";
+"card.unpin" = "Maak terminal los";
+"card.running" = "Terminal is actief";
+"card.open" = "Open terminal";
+"card.edit" = "Wijzig details...";
+"card.delete" = "Verwijder";
+"card.wired" = "Verbonden";
+"card.wired.help" = "Verbonden met MCP-agent";
+"card.needs.attention" = "Heeft aandacht nodig";
+"card.processing" = "Verwerken...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
+"terminal.ended" = "Terminalsessie beëindigd";
+"terminal.restart" = "Herstart terminal";
+"terminal.restart.help" = "Start een nieuwe terminalsessie";
+"terminal.current" = "Huidige terminal";
+"terminal.edit.help" = "Wijzig terminaldetails";
+"terminal.close.tab.help" = "Sluit dit terminaltabblad";
+"terminal.switch.to %@" = "Schakel naar %@";
 "terminal.tab.help %@ %@" = "%@ in %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
+"toolbar.back" = "Terug";
+"toolbar.back.help" = "Terug naar bord (Escape)";
+"toolbar.move.to" = "Verplaats naar kolom";
+"toolbar.new.quick" = "Snelle terminal";
+"toolbar.new.quick.help" = "Nieuwe snelle terminal (⌘T)";
+"toolbar.edit" = "Wijzig";
+"toolbar.edit.help" = "Wijzig terminaldetails (⌘E)";
+"toolbar.pin" = "Vastzetten";
+"toolbar.pin.help" = "Zet terminal vast (⌘P)";
+"toolbar.unpin" = "Losmaken";
+"toolbar.unpin.help" = "Maak terminal los (⌘P)";
+"toolbar.delete" = "Verwijder";
+"toolbar.delete.help" = "Verwijder terminal";
+"toolbar.add" = "Voeg toe";
+"toolbar.add.help" = "Voeg nieuwe terminal of kolom toe";
 "toolbar.open.terminal.app" = "Open in Terminal";
 "toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.new.terminal" = "Nieuwe terminal";
+"toolbar.new.column" = "Nieuwe kolom";
+"toolbar.bin.count %lld" = "Prullenbak (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "Nieuwe snelle terminal";
+"menu.new.terminal" = "Nieuwe terminal...";
+"menu.new.terminal.dialog" = "Nieuwe terminal";
+"menu.new.column" = "Nieuwe kolom";
+"menu.back" = "Terug naar bord";
+"menu.toggle.pin" = "Vastzetten aan/uit";
+"menu.next.pinned" = "Volgende vastgezette terminal";
+"menu.previous.pinned" = "Vorige vastgezette terminal";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "Verwijder terminal";
+"delete.move.to.bin" = "Verplaats naar prullenbak";
+"delete.message %@" = "Weet je zeker dat je \"%@\" wilt verwijderen?";
+"delete.bin.message %@" = "\"%@\" wordt naar de prullenbak verplaatst waar het 30 dagen hersteld kan worden.";
+"delete.cancel" = "Annuleer";
+"delete.confirm" = "Verwijder";
+"delete.permanent" = "Permanent verwijderen";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "Nieuwe terminal";
+"editor.title.edit" = "Wijzig terminal";
+"editor.tab.general" = "Algemeen";
+"editor.tab.advanced" = "Geavanceerd";
 
 // Editor - Details section
 "editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
+"editor.field.name" = "Naam";
+"editor.field.name.placeholder" = "Terminalnaam";
+"editor.field.description" = "Beschrijving";
+"editor.field.description.placeholder" = "Optionele beschrijving";
+"editor.field.column" = "Kolom";
 "editor.field.badges" = "Badges";
 "editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.field.badges.help" = "Kommagescheiden badges op kaart";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
+"editor.section.appearance" = "Weergave";
+"editor.field.theme" = "Thema";
+"editor.field.theme.default" = "Standaard";
+"editor.field.font.size" = "Lettergrootte";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
 "editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
+"editor.field.directory" = "Werkmap";
+"editor.field.directory.help" = "Startmap voor de terminal";
 "editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.field.shell.help" = "Te gebruiken shell (leeg voor standaard)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "Automatisering";
+"editor.field.init.command" = "Startcommando";
+"editor.field.init.command.help" = "Commando bij terminal start";
+"editor.field.safe.paste" = "Veilig plakken";
+"editor.field.safe.paste.help" = "Bevestiging tonen voor meerdere regels plakken";
+"editor.field.allow.autorun" = "Autorun toestaan";
+"editor.field.allow.autorun.help" = "CLI automatisch commando's laten uitvoeren";
+"editor.field.autorun.disabled.globally" = "Autorun globaal uitgeschakeld";
+"editor.field.autorun.enable.hint" = "Inschakelen in Instellingen > Hulpmiddelen";
 
 // Editor - Tags section
 "editor.section.tags" = "Tags";
 "editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.tag.add" = "Tag toevoegen";
+"editor.tag.key.placeholder" = "sleutel";
+"editor.tag.value.placeholder" = "waarde";
+"editor.tags.help" = "Sleutel-waardeparen voor organisatie";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "Agentconfiguratie";
+"editor.field.terminal.allows.autorun" = "Terminal staat commando's toe";
+"editor.field.persistent.context" = "Persistente context";
+"editor.field.persistent.context.help" = "Context behouden tussen sessies";
+"editor.field.next.action" = "Volgende actie";
+"editor.field.next.action.help" = "Volgende uit te voeren actie";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "Commandogenerator";
+"editor.field.apply.to.init.command" = "Toepassen op startcommando";
+"editor.field.apply.to.init.command.help" = "Gegenereerd commando als startcommando gebruiken";
+"editor.no.llm.prompt.warning" = "Geen LLM-prompt geconfigureerd";
+"editor.non.interactive.note" = "Let op: Commando's worden niet-interactief uitgevoerd";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "Annuleer";
+"editor.save" = "Bewaar";
+"editor.save.open" = "Bewaar & Open";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "Nieuwe kolom";
+"column.editor.title.edit" = "Wijzig kolom";
+"column.editor.field.name" = "Naam";
+"column.editor.field.name.placeholder" = "Kolomnaam";
+"column.editor.field.description" = "Beschrijving";
+"column.editor.field.description.placeholder" = "Optionele beschrijving";
+"column.editor.field.color" = "Kleur";
+"column.editor.cancel" = "Annuleer";
+"column.editor.save" = "Bewaar";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "Prullenbak";
+"bin.empty" = "Prullenbak is leeg";
+"bin.empty.button" = "Leeg prullenbak";
+"bin.close.help" = "Sluit prullenbak";
+"bin.restore.help" = "Herstel terminal";
+"bin.delete.help" = "Permanent verwijderen";
+"bin.deleted %@" = "Verwijderd %@";
+"bin.days.remaining %lld" = "%lld dagen resterend";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "Instellingen";
+"settings.tab.general" = "Algemeen";
+"settings.tab.tools" = "Hulpmiddelen";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.field.theme" = "Thema";
+"settings.field.theme.help" = "Standaardthema voor nieuwe terminals";
+"settings.field.copy.on.select" = "Kopiëren bij selectie";
+"settings.field.copy.on.select.help" = "Geselecteerde tekst automatisch kopiëren";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "Prullenbak";
+"settings.auto.empty %lld" = "Automatisch legen na %lld dagen";
+"settings.auto.empty.help" = "Oude items automatisch uit prullenbak verwijderen";
+"settings.bin.empty" = "Prullenbak is leeg";
+"settings.bin.items %lld" = "%lld items in prullenbak";
+"settings.empty.bin.now" = "Prullenbak nu legen";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
+"settings.section.about" = "Over";
+"settings.field.version" = "Versie";
 "settings.field.build" = "Build";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "Taal";
+"settings.field.current" = "Huidig";
+"settings.system.default" = "Systeemstandaard";
+"settings.search.languages" = "Zoek talen...";
+"settings.using.system.language" = "Systeemtaal wordt gebruikt";
+"settings.restart.required" = "Herstart vereist voor taalwijziging";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "Opdrachtregel";
+"settings.cli.title" = "CLI-hulpmiddel";
+"settings.cli.description" = "Het termq opdrachtregelhulpmiddel laat je terminals openen vanuit je shell.";
+"settings.cli.path" = "Installatielocatie";
+"settings.cli.install" = "Installeer CLI";
+"settings.cli.uninstall" = "Verwijder";
+"settings.cli.installed" = "Geïnstalleerd";
+"settings.cli.not.installed" = "Niet geïnstalleerd";
+"settings.cli.usage" = "Gebruik:";
+"settings.cli.location" = "Locatie";
+"settings.enable.terminal.autorun" = "Terminal autorun inschakelen";
+"settings.enable.terminal.autorun.help" = "CLI commando's laten uitvoeren in terminals";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "MCP-server";
+"settings.mcp.title" = "MCP-server";
+"settings.mcp.description" = "Model Context Protocol-server voor AI-agentintegratie.";
+"settings.mcp.location" = "Serverlocatie";
+"settings.mcp.claude.config" = "Claude Desktop-configuratie";
+"settings.mcp.local.only" = "Alleen lokale verbindingen";
+"settings.mcp.install.description" = "Voeg toe aan je Claude Desktop-configuratie:";
+"settings.config.copied" = "Configuratie gekopieerd!";
+"settings.copy.config" = "Kopieer configuratie";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "Agenten";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "Zoek commando's...";
+"palette.no.results" = "Geen resultaten gevonden";
 
 // MARK: - Help View
 "help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.search.placeholder" = "Zoek in help...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "Fout";
+"alert.success" = "Gelukt";

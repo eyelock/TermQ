@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  sk localization strings.
+  Slovak localization strings.
 */
 
 // MARK: - App
@@ -10,250 +10,250 @@
 
 // MARK: - Common
 "common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.cancel" = "Zrušiť";
+"common.save" = "Uložiť";
+"common.delete" = "Zmazať";
+"common.edit" = "Upraviť";
+"common.close" = "Zavrieť";
+"common.add" = "Pridať";
+"common.reinstall" = "Preinštalovať";
+"common.uninstall" = "Odinštalovať";
+"common.installed" = "Nainštalované";
+"common.browse" = "Prehľadávať...";
+"common.apply" = "Použiť";
+"common.preview" = "Náhľad";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "Možnosti stĺpca";
+"board.column.rename" = "Premenovať stĺpec...";
+"board.column.delete" = "Zmazať stĺpec";
+"board.column.delete.disabled" = "Zmazať stĺpec (najprv presuňte terminály)";
+"board.column.add.terminal" = "Pridať terminál";
+"board.column.add.terminal.help" = "Pridať nový terminál do tohto stĺpca";
+"board.column.edit" = "Upraviť stĺpec...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "Pripnúť terminál";
+"card.unpin" = "Odopnúť terminál";
+"card.running" = "Terminál beží";
+"card.open" = "Otvoriť terminál";
+"card.edit" = "Upraviť podrobnosti...";
+"card.delete" = "Zmazať";
+"card.wired" = "Pripojené";
+"card.wired.help" = "Pripojené k agentovi MCP";
+"card.needs.attention" = "Vyžaduje pozornosť";
+"card.processing" = "Spracúvanie...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "Relácia terminálu ukončená";
+"terminal.restart" = "Reštartovať terminál";
+"terminal.restart.help" = "Spustiť novú reláciu terminálu";
+"terminal.current" = "Aktuálny terminál";
+"terminal.edit.help" = "Upraviť podrobnosti terminálu";
+"terminal.close.tab.help" = "Zavrieť túto kartu terminálu";
+"terminal.switch.to %@" = "Prepnúť na %@";
+"terminal.tab.help %@ %@" = "%@ v %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "Späť";
+"toolbar.back.help" = "Späť na nástenku (Escape)";
+"toolbar.move.to" = "Presunúť do stĺpca";
+"toolbar.new.quick" = "Rýchly terminál";
+"toolbar.new.quick.help" = "Nový rýchly terminál (⌘T)";
+"toolbar.edit" = "Upraviť";
+"toolbar.edit.help" = "Upraviť podrobnosti terminálu (⌘E)";
+"toolbar.pin" = "Pripnúť";
+"toolbar.pin.help" = "Pripnúť terminál (⌘P)";
+"toolbar.unpin" = "Odopnúť";
+"toolbar.unpin.help" = "Odopnúť terminál (⌘P)";
+"toolbar.delete" = "Zmazať";
+"toolbar.delete.help" = "Zmazať terminál";
+"toolbar.add" = "Pridať";
+"toolbar.add.help" = "Pridať nový terminál alebo stĺpec";
+"toolbar.open.terminal.app" = "Otvoriť v Termináli";
+"toolbar.open.terminal.app.help" = "Otvoriť v Terminal.app";
+"toolbar.new.terminal" = "Nový terminál";
+"toolbar.new.column" = "Nový stĺpec";
+"toolbar.bin.count %lld" = "Kôš (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "Nový rýchly terminál";
+"menu.new.terminal" = "Nový terminál...";
+"menu.new.terminal.dialog" = "Nový terminál";
+"menu.new.column" = "Nový stĺpec";
+"menu.back" = "Späť na nástenku";
+"menu.toggle.pin" = "Prepnúť pripnutie";
+"menu.next.pinned" = "Ďalší pripnutý terminál";
+"menu.previous.pinned" = "Predchádzajúci pripnutý terminál";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "Zmazať terminál";
+"delete.move.to.bin" = "Presunúť do koša";
+"delete.message %@" = "Naozaj chcete zmazať \"%@\"?";
+"delete.bin.message %@" = "\"%@\" bude presunutý do koša, kde ho možno obnoviť po dobu 30 dní.";
+"delete.cancel" = "Zrušiť";
+"delete.confirm" = "Zmazať";
+"delete.permanent" = "Zmazať natrvalo";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "Nový terminál";
+"editor.title.edit" = "Upraviť terminál";
+"editor.tab.general" = "Všeobecné";
+"editor.tab.advanced" = "Pokročilé";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "Podrobnosti";
+"editor.field.name" = "Názov";
+"editor.field.name.placeholder" = "Názov terminálu";
+"editor.field.description" = "Popis";
+"editor.field.description.placeholder" = "Voliteľný popis";
+"editor.field.column" = "Stĺpec";
+"editor.field.badges" = "Odznaky";
+"editor.field.badges.placeholder" = "odznak1, odznak2";
+"editor.field.badges.help" = "Odznaky oddelené čiarkami na karte";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
+"editor.section.appearance" = "Vzhľad";
+"editor.field.theme" = "Téma";
+"editor.field.theme.default" = "Predvolená";
+"editor.field.font.size" = "Veľkosť písma";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
-"editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
+"editor.section.terminal" = "Terminál";
+"editor.field.directory" = "Pracovný adresár";
+"editor.field.directory.help" = "Počiatočný adresár pre terminál";
 "editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.field.shell.help" = "Shell na použitie (prázdne = predvolený)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "Automatizácia";
+"editor.field.init.command" = "Počiatočný príkaz";
+"editor.field.init.command.help" = "Príkaz na spustenie pri štarte terminálu";
+"editor.field.safe.paste" = "Bezpečné vkladanie";
+"editor.field.safe.paste.help" = "Zobraziť potvrdenie pred vložením viacriadkového textu";
+"editor.field.allow.autorun" = "Povoliť automatické spustenie";
+"editor.field.allow.autorun.help" = "Povoliť CLI automaticky spúšťať príkazy";
+"editor.field.autorun.disabled.globally" = "Automatické spustenie globálne vypnuté";
+"editor.field.autorun.enable.hint" = "Povoliť v Nastavenia > Nástroje";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "Štítky";
+"editor.field.tags" = "Štítky";
+"editor.tag.add" = "Pridať štítok";
+"editor.tag.key.placeholder" = "kľúč";
+"editor.tag.value.placeholder" = "hodnota";
+"editor.tags.help" = "Páry kľúč-hodnota pre organizáciu";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "Konfigurácia agenta";
+"editor.field.terminal.allows.autorun" = "Terminál povoľuje príkazy";
+"editor.field.persistent.context" = "Trvalý kontext";
+"editor.field.persistent.context.help" = "Kontext zachovaný medzi reláciami";
+"editor.field.next.action" = "Ďalšia akcia";
+"editor.field.next.action.help" = "Akcia na vykonanie nabudúce";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "Generátor príkazov";
+"editor.field.apply.to.init.command" = "Použiť na počiatočný príkaz";
+"editor.field.apply.to.init.command.help" = "Použiť vygenerovaný príkaz ako počiatočný";
+"editor.no.llm.prompt.warning" = "Prompt LLM nie je nakonfigurovaný";
+"editor.non.interactive.note" = "Poznámka: Príkazy sa spúšťajú neinteraktívne";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "Zrušiť";
+"editor.save" = "Uložiť";
+"editor.save.open" = "Uložiť a otvoriť";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "Nový stĺpec";
+"column.editor.title.edit" = "Upraviť stĺpec";
+"column.editor.field.name" = "Názov";
+"column.editor.field.name.placeholder" = "Názov stĺpca";
+"column.editor.field.description" = "Popis";
+"column.editor.field.description.placeholder" = "Voliteľný popis";
+"column.editor.field.color" = "Farba";
+"column.editor.cancel" = "Zrušiť";
+"column.editor.save" = "Uložiť";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "Kôš";
+"bin.empty" = "Kôš je prázdny";
+"bin.empty.button" = "Vysypať kôš";
+"bin.close.help" = "Zavrieť kôš";
+"bin.restore.help" = "Obnoviť terminál";
+"bin.delete.help" = "Zmazať natrvalo";
+"bin.deleted %@" = "Zmazané %@";
+"bin.days.remaining %lld" = "Zostáva %lld dní";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "Nastavenia";
+"settings.tab.general" = "Všeobecné";
+"settings.tab.tools" = "Nástroje";
 
 // Settings - Terminal section
-"settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.section.terminal" = "Terminál";
+"settings.field.theme" = "Téma";
+"settings.field.theme.help" = "Predvolená téma pre nové terminály";
+"settings.field.copy.on.select" = "Kopírovať pri výbere";
+"settings.field.copy.on.select.help" = "Automaticky kopírovať vybraný text";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "Kôš";
+"settings.auto.empty %lld" = "Automaticky vysypať po %lld dňoch";
+"settings.auto.empty.help" = "Automaticky odstrániť staré položky z koša";
+"settings.bin.empty" = "Kôš je prázdny";
+"settings.bin.items %lld" = "%lld položiek v koši";
+"settings.empty.bin.now" = "Vysypať kôš teraz";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "O aplikácii";
+"settings.field.version" = "Verzia";
+"settings.field.build" = "Zostava";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "Jazyk";
+"settings.field.current" = "Aktuálny";
+"settings.system.default" = "Systémový predvolený";
+"settings.search.languages" = "Hľadať jazyky...";
+"settings.using.system.language" = "Používa sa systémový jazyk";
+"settings.restart.required" = "Pre zmenu jazyka je vyžadovaný reštart";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "Príkazový riadok";
+"settings.cli.title" = "Nástroj CLI";
+"settings.cli.description" = "Nástroj príkazového riadku termq umožňuje otvárať terminály zo shellu.";
+"settings.cli.path" = "Umiestnenie inštalácie";
+"settings.cli.install" = "Nainštalovať CLI";
+"settings.cli.uninstall" = "Odinštalovať";
+"settings.cli.installed" = "Nainštalované";
+"settings.cli.not.installed" = "Nenainštalované";
+"settings.cli.usage" = "Použitie:";
+"settings.cli.location" = "Umiestnenie";
+"settings.enable.terminal.autorun" = "Povoliť automatické spustenie terminálu";
+"settings.enable.terminal.autorun.help" = "Povoliť CLI spúšťať príkazy v termináloch";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "Server MCP";
+"settings.mcp.title" = "Server MCP";
+"settings.mcp.description" = "Server Model Context Protocol pre integráciu s AI agentmi.";
+"settings.mcp.location" = "Umiestnenie servera";
+"settings.mcp.claude.config" = "Konfigurácia Claude Desktop";
+"settings.mcp.local.only" = "Iba lokálne pripojenia";
+"settings.mcp.install.description" = "Pridajte do konfigurácie Claude Desktop:";
+"settings.config.copied" = "Konfigurácia skopírovaná!";
+"settings.copy.config" = "Kopírovať konfiguráciu";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "Agenti";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "Hľadať príkazy...";
+"palette.no.results" = "Nenašli sa žiadne výsledky";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "Pomocník";
+"help.search.placeholder" = "Hľadať v pomocníkovi...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "Chyba";
+"alert.success" = "Úspech";

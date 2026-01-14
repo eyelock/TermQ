@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  ru localization strings.
+  Russian localization strings.
 */
 
 // MARK: - App
@@ -10,250 +10,250 @@
 
 // MARK: - Common
 "common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.cancel" = "Отмена";
+"common.save" = "Сохранить";
+"common.delete" = "Удалить";
+"common.edit" = "Изменить";
+"common.close" = "Закрыть";
+"common.add" = "Добавить";
+"common.reinstall" = "Переустановить";
+"common.uninstall" = "Удалить";
+"common.installed" = "Установлено";
+"common.browse" = "Обзор...";
+"common.apply" = "Применить";
+"common.preview" = "Просмотр";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "Параметры колонки";
+"board.column.rename" = "Переименовать колонку...";
+"board.column.delete" = "Удалить колонку";
+"board.column.delete.disabled" = "Удалить колонку (сначала переместите терминалы)";
+"board.column.add.terminal" = "Добавить терминал";
+"board.column.add.terminal.help" = "Добавить новый терминал в эту колонку";
+"board.column.edit" = "Редактировать колонку...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "Закрепить терминал";
+"card.unpin" = "Открепить терминал";
+"card.running" = "Терминал работает";
+"card.open" = "Открыть терминал";
+"card.edit" = "Изменить детали...";
+"card.delete" = "Удалить";
+"card.wired" = "Подключён";
+"card.wired.help" = "Подключён к агенту MCP";
+"card.needs.attention" = "Требует внимания";
+"card.processing" = "Обработка...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "Сеанс терминала завершён";
+"terminal.restart" = "Перезапустить терминал";
+"terminal.restart.help" = "Начать новый сеанс терминала";
+"terminal.current" = "Текущий терминал";
+"terminal.edit.help" = "Изменить детали терминала";
+"terminal.close.tab.help" = "Закрыть эту вкладку терминала";
+"terminal.switch.to %@" = "Переключиться на %@";
+"terminal.tab.help %@ %@" = "%@ в %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "Назад";
+"toolbar.back.help" = "Вернуться к доске (Escape)";
+"toolbar.move.to" = "Переместить в колонку";
+"toolbar.new.quick" = "Быстрый терминал";
+"toolbar.new.quick.help" = "Новый быстрый терминал (⌘T)";
+"toolbar.edit" = "Изменить";
+"toolbar.edit.help" = "Изменить детали терминала (⌘E)";
+"toolbar.pin" = "Закрепить";
+"toolbar.pin.help" = "Закрепить терминал (⌘P)";
+"toolbar.unpin" = "Открепить";
+"toolbar.unpin.help" = "Открепить терминал (⌘P)";
+"toolbar.delete" = "Удалить";
+"toolbar.delete.help" = "Удалить терминал";
+"toolbar.add" = "Добавить";
+"toolbar.add.help" = "Добавить новый терминал или колонку";
+"toolbar.open.terminal.app" = "Открыть в Терминале";
+"toolbar.open.terminal.app.help" = "Открыть в Terminal.app";
+"toolbar.new.terminal" = "Новый терминал";
+"toolbar.new.column" = "Новая колонка";
+"toolbar.bin.count %lld" = "Корзина (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "Новый быстрый терминал";
+"menu.new.terminal" = "Новый терминал...";
+"menu.new.terminal.dialog" = "Новый терминал";
+"menu.new.column" = "Новая колонка";
+"menu.back" = "Вернуться к доске";
+"menu.toggle.pin" = "Переключить закрепление";
+"menu.next.pinned" = "Следующий закреплённый терминал";
+"menu.previous.pinned" = "Предыдущий закреплённый терминал";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "Удалить терминал";
+"delete.move.to.bin" = "Переместить в корзину";
+"delete.message %@" = "Вы уверены, что хотите удалить \"%@\"?";
+"delete.bin.message %@" = "\"%@\" будет перемещён в корзину, где его можно восстановить в течение 30 дней.";
+"delete.cancel" = "Отмена";
+"delete.confirm" = "Удалить";
+"delete.permanent" = "Удалить навсегда";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "Новый терминал";
+"editor.title.edit" = "Редактировать терминал";
+"editor.tab.general" = "Основные";
+"editor.tab.advanced" = "Дополнительно";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "Детали";
+"editor.field.name" = "Название";
+"editor.field.name.placeholder" = "Название терминала";
+"editor.field.description" = "Описание";
+"editor.field.description.placeholder" = "Необязательное описание";
+"editor.field.column" = "Колонка";
+"editor.field.badges" = "Значки";
+"editor.field.badges.placeholder" = "значок1, значок2";
+"editor.field.badges.help" = "Значки через запятую на карточке";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
+"editor.section.appearance" = "Внешний вид";
+"editor.field.theme" = "Тема";
+"editor.field.theme.default" = "По умолчанию";
+"editor.field.font.size" = "Размер шрифта";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
-"editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
-"editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.section.terminal" = "Терминал";
+"editor.field.directory" = "Рабочий каталог";
+"editor.field.directory.help" = "Начальный каталог для терминала";
+"editor.field.shell" = "Оболочка";
+"editor.field.shell.help" = "Используемая оболочка (пусто = по умолчанию)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "Автоматизация";
+"editor.field.init.command" = "Начальная команда";
+"editor.field.init.command.help" = "Команда для выполнения при запуске терминала";
+"editor.field.safe.paste" = "Безопасная вставка";
+"editor.field.safe.paste.help" = "Показывать подтверждение перед вставкой многострочного текста";
+"editor.field.allow.autorun" = "Разрешить автозапуск";
+"editor.field.allow.autorun.help" = "Разрешить CLI автоматически выполнять команды";
+"editor.field.autorun.disabled.globally" = "Автозапуск отключён глобально";
+"editor.field.autorun.enable.hint" = "Включите в Настройки > Инструменты";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "Теги";
+"editor.field.tags" = "Теги";
+"editor.tag.add" = "Добавить тег";
+"editor.tag.key.placeholder" = "ключ";
+"editor.tag.value.placeholder" = "значение";
+"editor.tags.help" = "Пары ключ-значение для организации";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "Настройка агента";
+"editor.field.terminal.allows.autorun" = "Терминал разрешает команды";
+"editor.field.persistent.context" = "Постоянный контекст";
+"editor.field.persistent.context.help" = "Контекст сохраняется между сеансами";
+"editor.field.next.action" = "Следующее действие";
+"editor.field.next.action.help" = "Действие для выполнения в следующий раз";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "Генератор команд";
+"editor.field.apply.to.init.command" = "Применить к начальной команде";
+"editor.field.apply.to.init.command.help" = "Использовать сгенерированную команду как начальную";
+"editor.no.llm.prompt.warning" = "Промпт LLM не настроен";
+"editor.non.interactive.note" = "Примечание: Команды выполняются неинтерактивно";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "Отмена";
+"editor.save" = "Сохранить";
+"editor.save.open" = "Сохранить и открыть";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "Новая колонка";
+"column.editor.title.edit" = "Редактировать колонку";
+"column.editor.field.name" = "Название";
+"column.editor.field.name.placeholder" = "Название колонки";
+"column.editor.field.description" = "Описание";
+"column.editor.field.description.placeholder" = "Необязательное описание";
+"column.editor.field.color" = "Цвет";
+"column.editor.cancel" = "Отмена";
+"column.editor.save" = "Сохранить";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "Корзина";
+"bin.empty" = "Корзина пуста";
+"bin.empty.button" = "Очистить корзину";
+"bin.close.help" = "Закрыть корзину";
+"bin.restore.help" = "Восстановить терминал";
+"bin.delete.help" = "Удалить навсегда";
+"bin.deleted %@" = "Удалено %@";
+"bin.days.remaining %lld" = "Осталось %lld дней";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "Настройки";
+"settings.tab.general" = "Основные";
+"settings.tab.tools" = "Инструменты";
 
 // Settings - Terminal section
-"settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.section.terminal" = "Терминал";
+"settings.field.theme" = "Тема";
+"settings.field.theme.help" = "Тема по умолчанию для новых терминалов";
+"settings.field.copy.on.select" = "Копировать при выделении";
+"settings.field.copy.on.select.help" = "Автоматически копировать выделенный текст";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "Корзина";
+"settings.auto.empty %lld" = "Автоочистка через %lld дней";
+"settings.auto.empty.help" = "Автоматически удалять старые элементы из корзины";
+"settings.bin.empty" = "Корзина пуста";
+"settings.bin.items %lld" = "%lld элементов в корзине";
+"settings.empty.bin.now" = "Очистить корзину сейчас";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "О приложении";
+"settings.field.version" = "Версия";
+"settings.field.build" = "Сборка";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "Язык";
+"settings.field.current" = "Текущий";
+"settings.system.default" = "Системный по умолчанию";
+"settings.search.languages" = "Поиск языков...";
+"settings.using.system.language" = "Используется системный язык";
+"settings.restart.required" = "Для смены языка требуется перезапуск";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "Командная строка";
+"settings.cli.title" = "Инструмент CLI";
+"settings.cli.description" = "Инструмент командной строки termq позволяет открывать терминалы из оболочки.";
+"settings.cli.path" = "Путь установки";
+"settings.cli.install" = "Установить CLI";
+"settings.cli.uninstall" = "Удалить";
+"settings.cli.installed" = "Установлено";
+"settings.cli.not.installed" = "Не установлено";
+"settings.cli.usage" = "Использование:";
+"settings.cli.location" = "Расположение";
+"settings.enable.terminal.autorun" = "Включить автозапуск терминала";
+"settings.enable.terminal.autorun.help" = "Разрешить CLI выполнять команды в терминалах";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "Сервер MCP";
+"settings.mcp.title" = "Сервер MCP";
+"settings.mcp.description" = "Сервер Model Context Protocol для интеграции с ИИ-агентами.";
+"settings.mcp.location" = "Расположение сервера";
+"settings.mcp.claude.config" = "Конфигурация Claude Desktop";
+"settings.mcp.local.only" = "Только локальные подключения";
+"settings.mcp.install.description" = "Добавьте в конфигурацию Claude Desktop:";
+"settings.config.copied" = "Конфигурация скопирована!";
+"settings.copy.config" = "Копировать конфигурацию";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "Агенты";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "Поиск команд...";
+"palette.no.results" = "Результаты не найдены";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "Справка";
+"help.search.placeholder" = "Поиск в справке...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "Ошибка";
+"alert.success" = "Успешно";

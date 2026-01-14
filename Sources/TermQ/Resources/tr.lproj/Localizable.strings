@@ -2,258 +2,258 @@
   Localizable.strings
   TermQ
 
-  tr localization strings.
+  Turkish localization strings.
 */
 
 // MARK: - App
 "app.name" = "TermQ";
 
 // MARK: - Common
-"common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.ok" = "Tamam";
+"common.cancel" = "İptal";
+"common.save" = "Kaydet";
+"common.delete" = "Sil";
+"common.edit" = "Düzenle";
+"common.close" = "Kapat";
+"common.add" = "Ekle";
+"common.reinstall" = "Yeniden Yükle";
+"common.uninstall" = "Kaldır";
+"common.installed" = "Yüklü";
+"common.browse" = "Gözat...";
+"common.apply" = "Uygula";
+"common.preview" = "Önizleme";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "Sütun seçenekleri";
+"board.column.rename" = "Sütunu Yeniden Adlandır...";
+"board.column.delete" = "Sütunu Sil";
+"board.column.delete.disabled" = "Sütunu Sil (önce terminalleri taşıyın)";
+"board.column.add.terminal" = "Terminal Ekle";
+"board.column.add.terminal.help" = "Bu sütuna yeni terminal ekle";
+"board.column.edit" = "Sütunu Düzenle...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "Terminali sabitle";
+"card.unpin" = "Terminal sabitlemesini kaldır";
+"card.running" = "Terminal çalışıyor";
+"card.open" = "Terminali Aç";
+"card.edit" = "Ayrıntıları Düzenle...";
+"card.delete" = "Sil";
+"card.wired" = "Bağlı";
+"card.wired.help" = "MCP aracısına bağlı";
+"card.needs.attention" = "Dikkat gerekiyor";
+"card.processing" = "İşleniyor...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "Terminal oturumu sona erdi";
+"terminal.restart" = "Terminali Yeniden Başlat";
+"terminal.restart.help" = "Yeni bir terminal oturumu başlat";
+"terminal.current" = "Geçerli terminal";
+"terminal.edit.help" = "Terminal ayrıntılarını düzenle";
+"terminal.close.tab.help" = "Bu terminal sekmesini kapat";
+"terminal.switch.to %@" = "%@ öğesine geç";
+"terminal.tab.help %@ %@" = "%@ içinde %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "Geri";
+"toolbar.back.help" = "Panoya geri dön (Escape)";
+"toolbar.move.to" = "Sütuna taşı";
+"toolbar.new.quick" = "Hızlı Terminal";
+"toolbar.new.quick.help" = "Yeni hızlı terminal (⌘T)";
+"toolbar.edit" = "Düzenle";
+"toolbar.edit.help" = "Terminal ayrıntılarını düzenle (⌘E)";
+"toolbar.pin" = "Sabitle";
+"toolbar.pin.help" = "Terminali sabitle (⌘P)";
+"toolbar.unpin" = "Sabitlemeyi Kaldır";
+"toolbar.unpin.help" = "Terminal sabitlemesini kaldır (⌘P)";
+"toolbar.delete" = "Sil";
+"toolbar.delete.help" = "Terminali sil";
+"toolbar.add" = "Ekle";
+"toolbar.add.help" = "Yeni terminal veya sütun ekle";
+"toolbar.open.terminal.app" = "Terminal'de Aç";
+"toolbar.open.terminal.app.help" = "Terminal.app'te aç";
+"toolbar.new.terminal" = "Yeni Terminal";
+"toolbar.new.column" = "Yeni Sütun";
+"toolbar.bin.count %lld" = "Çöp Kutusu (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "Yeni Hızlı Terminal";
+"menu.new.terminal" = "Yeni Terminal...";
+"menu.new.terminal.dialog" = "Yeni Terminal";
+"menu.new.column" = "Yeni Sütun";
+"menu.back" = "Panoya Geri Dön";
+"menu.toggle.pin" = "Sabitlemeyi Değiştir";
+"menu.next.pinned" = "Sonraki Sabitlenmiş Terminal";
+"menu.previous.pinned" = "Önceki Sabitlenmiş Terminal";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "Terminali Sil";
+"delete.move.to.bin" = "Çöp Kutusuna Taşı";
+"delete.message %@" = "\"%@\" öğesini silmek istediğinizden emin misiniz?";
+"delete.bin.message %@" = "\"%@\" 30 gün boyunca geri yüklenebileceği Çöp Kutusu'na taşınacak.";
+"delete.cancel" = "İptal";
+"delete.confirm" = "Sil";
+"delete.permanent" = "Kalıcı Olarak Sil";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "Yeni Terminal";
+"editor.title.edit" = "Terminali Düzenle";
+"editor.tab.general" = "Genel";
+"editor.tab.advanced" = "Gelişmiş";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "Ayrıntılar";
+"editor.field.name" = "Ad";
+"editor.field.name.placeholder" = "Terminal adı";
+"editor.field.description" = "Açıklama";
+"editor.field.description.placeholder" = "İsteğe bağlı açıklama";
+"editor.field.column" = "Sütun";
+"editor.field.badges" = "Rozetler";
+"editor.field.badges.placeholder" = "rozet1, rozet2";
+"editor.field.badges.help" = "Kartta virgülle ayrılmış rozetler";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
+"editor.section.appearance" = "Görünüm";
+"editor.field.theme" = "Tema";
+"editor.field.theme.default" = "Varsayılan";
+"editor.field.font.size" = "Yazı Tipi Boyutu";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
 "editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
-"editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.field.directory" = "Çalışma Dizini";
+"editor.field.directory.help" = "Terminal için başlangıç dizini";
+"editor.field.shell" = "Kabuk";
+"editor.field.shell.help" = "Kullanılacak kabuk (boş = varsayılan)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "Otomasyon";
+"editor.field.init.command" = "Başlangıç Komutu";
+"editor.field.init.command.help" = "Terminal başladığında çalıştırılacak komut";
+"editor.field.safe.paste" = "Güvenli Yapıştırma";
+"editor.field.safe.paste.help" = "Çok satırlı metin yapıştırmadan önce onay göster";
+"editor.field.allow.autorun" = "Otomatik Çalıştırmaya İzin Ver";
+"editor.field.allow.autorun.help" = "CLI'nin komutları otomatik çalıştırmasına izin ver";
+"editor.field.autorun.disabled.globally" = "Otomatik çalıştırma genel olarak devre dışı";
+"editor.field.autorun.enable.hint" = "Ayarlar > Araçlar'da etkinleştir";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "Etiketler";
+"editor.field.tags" = "Etiketler";
+"editor.tag.add" = "Etiket Ekle";
+"editor.tag.key.placeholder" = "anahtar";
+"editor.tag.value.placeholder" = "değer";
+"editor.tags.help" = "Düzenleme için anahtar-değer çiftleri";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "Aracı Yapılandırması";
+"editor.field.terminal.allows.autorun" = "Terminal komutlara izin veriyor";
+"editor.field.persistent.context" = "Kalıcı Bağlam";
+"editor.field.persistent.context.help" = "Bağlam oturumlar arasında korunur";
+"editor.field.next.action" = "Sonraki Eylem";
+"editor.field.next.action.help" = "Sonra gerçekleştirilecek eylem";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "Komut Oluşturucu";
+"editor.field.apply.to.init.command" = "Başlangıç Komutuna Uygula";
+"editor.field.apply.to.init.command.help" = "Oluşturulan komutu başlangıç komutu olarak kullan";
+"editor.no.llm.prompt.warning" = "LLM istemi yapılandırılmadı";
+"editor.non.interactive.note" = "Not: Komutlar etkileşimsiz çalışır";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "İptal";
+"editor.save" = "Kaydet";
+"editor.save.open" = "Kaydet ve Aç";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "Yeni Sütun";
+"column.editor.title.edit" = "Sütunu Düzenle";
+"column.editor.field.name" = "Ad";
+"column.editor.field.name.placeholder" = "Sütun adı";
+"column.editor.field.description" = "Açıklama";
+"column.editor.field.description.placeholder" = "İsteğe bağlı açıklama";
+"column.editor.field.color" = "Renk";
+"column.editor.cancel" = "İptal";
+"column.editor.save" = "Kaydet";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "Çöp Kutusu";
+"bin.empty" = "Çöp kutusu boş";
+"bin.empty.button" = "Çöp Kutusunu Boşalt";
+"bin.close.help" = "Çöp kutusunu kapat";
+"bin.restore.help" = "Terminali geri yükle";
+"bin.delete.help" = "Kalıcı olarak sil";
+"bin.deleted %@" = "Silindi %@";
+"bin.days.remaining %lld" = "%lld gün kaldı";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "Ayarlar";
+"settings.tab.general" = "Genel";
+"settings.tab.tools" = "Araçlar";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.field.theme" = "Tema";
+"settings.field.theme.help" = "Yeni terminaller için varsayılan tema";
+"settings.field.copy.on.select" = "Seçimde Kopyala";
+"settings.field.copy.on.select.help" = "Seçilen metni otomatik kopyala";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "Çöp Kutusu";
+"settings.auto.empty %lld" = "%lld gün sonra otomatik boşalt";
+"settings.auto.empty.help" = "Çöp kutusundaki eski öğeleri otomatik kaldır";
+"settings.bin.empty" = "Çöp kutusu boş";
+"settings.bin.items %lld" = "Çöp kutusunda %lld öğe";
+"settings.empty.bin.now" = "Çöp Kutusunu Şimdi Boşalt";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "Hakkında";
+"settings.field.version" = "Sürüm";
+"settings.field.build" = "Yapı";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "Dil";
+"settings.field.current" = "Geçerli";
+"settings.system.default" = "Sistem Varsayılanı";
+"settings.search.languages" = "Dil ara...";
+"settings.using.system.language" = "Sistem dili kullanılıyor";
+"settings.restart.required" = "Dil değişikliği için yeniden başlatma gerekli";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "Komut Satırı";
+"settings.cli.title" = "CLI Aracı";
+"settings.cli.description" = "termq komut satırı aracı, kabuğunuzdan terminal açmanızı sağlar.";
+"settings.cli.path" = "Kurulum Konumu";
+"settings.cli.install" = "CLI'yi Yükle";
+"settings.cli.uninstall" = "Kaldır";
+"settings.cli.installed" = "Yüklü";
+"settings.cli.not.installed" = "Yüklü değil";
+"settings.cli.usage" = "Kullanım:";
+"settings.cli.location" = "Konum";
+"settings.enable.terminal.autorun" = "Terminal Otomatik Çalıştırmayı Etkinleştir";
+"settings.enable.terminal.autorun.help" = "CLI'nin terminallerde komut çalıştırmasına izin ver";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "MCP Sunucusu";
+"settings.mcp.title" = "MCP Sunucusu";
+"settings.mcp.description" = "AI aracı entegrasyonu için Model Context Protocol sunucusu.";
+"settings.mcp.location" = "Sunucu Konumu";
+"settings.mcp.claude.config" = "Claude Desktop Yapılandırması";
+"settings.mcp.local.only" = "Yalnızca yerel bağlantılar";
+"settings.mcp.install.description" = "Claude Desktop yapılandırmanıza ekleyin:";
+"settings.config.copied" = "Yapılandırma kopyalandı!";
+"settings.copy.config" = "Yapılandırmayı Kopyala";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "Aracılar";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "Komut ara...";
+"palette.no.results" = "Sonuç bulunamadı";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "Yardım";
+"help.search.placeholder" = "Yardımda ara...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "Hata";
+"alert.success" = "Başarılı";

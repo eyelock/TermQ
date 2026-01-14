@@ -2,258 +2,258 @@
   Localizable.strings
   TermQ
 
-  zh-Hant localization strings.
+  Traditional Chinese localization strings.
 */
 
 // MARK: - App
 "app.name" = "TermQ";
 
 // MARK: - Common
-"common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.ok" = "確定";
+"common.cancel" = "取消";
+"common.save" = "儲存";
+"common.delete" = "刪除";
+"common.edit" = "編輯";
+"common.close" = "關閉";
+"common.add" = "新增";
+"common.reinstall" = "重新安裝";
+"common.uninstall" = "解除安裝";
+"common.installed" = "已安裝";
+"common.browse" = "瀏覽...";
+"common.apply" = "套用";
+"common.preview" = "預覽";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "欄位選項";
+"board.column.rename" = "重新命名欄位...";
+"board.column.delete" = "刪除欄位";
+"board.column.delete.disabled" = "刪除欄位（請先移動終端機）";
+"board.column.add.terminal" = "新增終端機";
+"board.column.add.terminal.help" = "將新終端機新增至此欄位";
+"board.column.edit" = "編輯欄位...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "釘選終端機";
+"card.unpin" = "取消釘選終端機";
+"card.running" = "終端機執行中";
+"card.open" = "開啟終端機";
+"card.edit" = "編輯詳細資訊...";
+"card.delete" = "刪除";
+"card.wired" = "已連線";
+"card.wired.help" = "已連線至 MCP 代理程式";
+"card.needs.attention" = "需要注意";
+"card.processing" = "處理中...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "終端機工作階段已結束";
+"terminal.restart" = "重新啟動終端機";
+"terminal.restart.help" = "啟動新的終端機工作階段";
+"terminal.current" = "目前終端機";
+"terminal.edit.help" = "編輯終端機詳細資訊";
+"terminal.close.tab.help" = "關閉此終端機標籤頁";
+"terminal.switch.to %@" = "切換至 %@";
+"terminal.tab.help %@ %@" = "%@ 在 %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "返回";
+"toolbar.back.help" = "返回看板 (Escape)";
+"toolbar.move.to" = "移至欄位";
+"toolbar.new.quick" = "快速終端機";
+"toolbar.new.quick.help" = "新增快速終端機 (⌘T)";
+"toolbar.edit" = "編輯";
+"toolbar.edit.help" = "編輯終端機詳細資訊 (⌘E)";
+"toolbar.pin" = "釘選";
+"toolbar.pin.help" = "釘選終端機 (⌘P)";
+"toolbar.unpin" = "取消釘選";
+"toolbar.unpin.help" = "取消釘選終端機 (⌘P)";
+"toolbar.delete" = "刪除";
+"toolbar.delete.help" = "刪除終端機";
+"toolbar.add" = "新增";
+"toolbar.add.help" = "新增終端機或欄位";
+"toolbar.open.terminal.app" = "在終端機中開啟";
+"toolbar.open.terminal.app.help" = "在 Terminal.app 中開啟";
+"toolbar.new.terminal" = "新增終端機";
+"toolbar.new.column" = "新增欄位";
+"toolbar.bin.count %lld" = "垃圾桶 (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "快速新增終端機";
+"menu.new.terminal" = "新增終端機...";
+"menu.new.terminal.dialog" = "新增終端機";
+"menu.new.column" = "新增欄位";
+"menu.back" = "返回看板";
+"menu.toggle.pin" = "切換釘選";
+"menu.next.pinned" = "下一個釘選終端機";
+"menu.previous.pinned" = "上一個釘選終端機";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "刪除終端機";
+"delete.move.to.bin" = "移至垃圾桶";
+"delete.message %@" = "確定要刪除「%@」嗎？";
+"delete.bin.message %@" = "「%@」將移至垃圾桶，可在 30 天內還原。";
+"delete.cancel" = "取消";
+"delete.confirm" = "刪除";
+"delete.permanent" = "永久刪除";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "新增終端機";
+"editor.title.edit" = "編輯終端機";
+"editor.tab.general" = "一般";
+"editor.tab.advanced" = "進階";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "詳細資訊";
+"editor.field.name" = "名稱";
+"editor.field.name.placeholder" = "終端機名稱";
+"editor.field.description" = "描述";
+"editor.field.description.placeholder" = "選填描述";
+"editor.field.column" = "欄位";
+"editor.field.badges" = "徽章";
+"editor.field.badges.placeholder" = "徽章1, 徽章2";
+"editor.field.badges.help" = "卡片上顯示的逗號分隔徽章";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
-"editor.font.preview" = "AaBbCc 123";
+"editor.section.appearance" = "外觀";
+"editor.field.theme" = "佈景主題";
+"editor.field.theme.default" = "預設";
+"editor.field.font.size" = "字體大小";
+"editor.font.preview" = "AaBbCc 中文 123";
 
 // Editor - Terminal section
-"editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
+"editor.section.terminal" = "終端機";
+"editor.field.directory" = "工作目錄";
+"editor.field.directory.help" = "終端機的起始目錄";
 "editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.field.shell.help" = "使用的 Shell（留空使用預設）";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "自動化";
+"editor.field.init.command" = "初始化指令";
+"editor.field.init.command.help" = "終端機啟動時執行的指令";
+"editor.field.safe.paste" = "安全貼上";
+"editor.field.safe.paste.help" = "貼上多行文字前顯示確認";
+"editor.field.allow.autorun" = "允許自動執行";
+"editor.field.allow.autorun.help" = "允許 CLI 自動執行指令";
+"editor.field.autorun.disabled.globally" = "自動執行已全域停用";
+"editor.field.autorun.enable.hint" = "在設定 > 工具中啟用";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "標籤";
+"editor.field.tags" = "標籤";
+"editor.tag.add" = "新增標籤";
+"editor.tag.key.placeholder" = "鍵";
+"editor.tag.value.placeholder" = "值";
+"editor.tags.help" = "用於組織的鍵值對";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "代理程式設定";
+"editor.field.terminal.allows.autorun" = "終端機允許指令";
+"editor.field.persistent.context" = "持續性內容";
+"editor.field.persistent.context.help" = "內容在工作階段間保持";
+"editor.field.next.action" = "下一步動作";
+"editor.field.next.action.help" = "下次執行的動作";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "指令產生器";
+"editor.field.apply.to.init.command" = "套用為初始化指令";
+"editor.field.apply.to.init.command.help" = "將產生的指令用作初始化指令";
+"editor.no.llm.prompt.warning" = "未設定 LLM 提示";
+"editor.non.interactive.note" = "注意：指令以非互動方式執行";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "取消";
+"editor.save" = "儲存";
+"editor.save.open" = "儲存並開啟";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "新增欄位";
+"column.editor.title.edit" = "編輯欄位";
+"column.editor.field.name" = "名稱";
+"column.editor.field.name.placeholder" = "欄位名稱";
+"column.editor.field.description" = "描述";
+"column.editor.field.description.placeholder" = "選填描述";
+"column.editor.field.color" = "顏色";
+"column.editor.cancel" = "取消";
+"column.editor.save" = "儲存";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "垃圾桶";
+"bin.empty" = "垃圾桶是空的";
+"bin.empty.button" = "清空垃圾桶";
+"bin.close.help" = "關閉垃圾桶";
+"bin.restore.help" = "還原終端機";
+"bin.delete.help" = "永久刪除";
+"bin.deleted %@" = "已刪除 %@";
+"bin.days.remaining %lld" = "剩餘 %lld 天";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "設定";
+"settings.tab.general" = "一般";
+"settings.tab.tools" = "工具";
 
 // Settings - Terminal section
-"settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.section.terminal" = "終端機";
+"settings.field.theme" = "佈景主題";
+"settings.field.theme.help" = "新終端機的預設佈景主題";
+"settings.field.copy.on.select" = "選取時複製";
+"settings.field.copy.on.select.help" = "自動複製選取的文字";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "垃圾桶";
+"settings.auto.empty %lld" = "%lld 天後自動清空";
+"settings.auto.empty.help" = "自動清空垃圾桶中的舊項目";
+"settings.bin.empty" = "垃圾桶是空的";
+"settings.bin.items %lld" = "垃圾桶中有 %lld 個項目";
+"settings.empty.bin.now" = "立即清空垃圾桶";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "關於";
+"settings.field.version" = "版本";
+"settings.field.build" = "組建";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "語言";
+"settings.field.current" = "目前";
+"settings.system.default" = "系統預設";
+"settings.search.languages" = "搜尋語言...";
+"settings.using.system.language" = "使用系統語言";
+"settings.restart.required" = "變更語言需要重新啟動";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "命令列";
+"settings.cli.title" = "CLI 工具";
+"settings.cli.description" = "termq 命令列工具可讓您從 Shell 中開啟終端機。";
+"settings.cli.path" = "安裝位置";
+"settings.cli.install" = "安裝 CLI";
+"settings.cli.uninstall" = "解除安裝";
+"settings.cli.installed" = "已安裝";
+"settings.cli.not.installed" = "未安裝";
+"settings.cli.usage" = "用法：";
+"settings.cli.location" = "位置";
+"settings.enable.terminal.autorun" = "啟用終端機自動執行";
+"settings.enable.terminal.autorun.help" = "允許 CLI 在終端機中執行指令";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "MCP 伺服器";
+"settings.mcp.title" = "MCP 伺服器";
+"settings.mcp.description" = "用於 AI 代理程式整合的模型內容協定伺服器。";
+"settings.mcp.location" = "伺服器位置";
+"settings.mcp.claude.config" = "Claude Desktop 設定";
+"settings.mcp.local.only" = "僅限本機連線";
+"settings.mcp.install.description" = "新增至您的 Claude Desktop 設定：";
+"settings.config.copied" = "設定已複製！";
+"settings.copy.config" = "複製設定";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "代理程式";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "搜尋指令...";
+"palette.no.results" = "找不到結果";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "說明";
+"help.search.placeholder" = "搜尋說明...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "錯誤";
+"alert.success" = "成功";

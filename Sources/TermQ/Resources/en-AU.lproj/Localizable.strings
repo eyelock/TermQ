@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  en-AU localization strings.
+  Australian English localization strings.
 */
 
 // MARK: - App
@@ -143,7 +143,7 @@
 "editor.tag.add" = "Add Tag";
 "editor.tag.key.placeholder" = "key";
 "editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.tags.help" = "Key-value pairs for organisation";
 
 // Editor - Agent Configuration section
 "editor.section.agent" = "Agent Configuration";
@@ -171,7 +171,7 @@
 "column.editor.field.name.placeholder" = "Column name";
 "column.editor.field.description" = "Description";
 "column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
+"column.editor.field.color" = "Colour";
 "column.editor.cancel" = "Cancel";
 "column.editor.save" = "Save";
 

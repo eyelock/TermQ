@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  ro localization strings.
+  Romanian localization strings.
 */
 
 // MARK: - App
@@ -10,250 +10,250 @@
 
 // MARK: - Common
 "common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.cancel" = "Anulare";
+"common.save" = "Salvare";
+"common.delete" = "Ștergere";
+"common.edit" = "Editare";
+"common.close" = "Închidere";
+"common.add" = "Adăugare";
+"common.reinstall" = "Reinstalare";
+"common.uninstall" = "Dezinstalare";
+"common.installed" = "Instalat";
+"common.browse" = "Răsfoire...";
+"common.apply" = "Aplicare";
+"common.preview" = "Previzualizare";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "Opțiuni coloană";
+"board.column.rename" = "Redenumire coloană...";
+"board.column.delete" = "Ștergere coloană";
+"board.column.delete.disabled" = "Ștergere coloană (mutați mai întâi terminalele)";
+"board.column.add.terminal" = "Adăugare terminal";
+"board.column.add.terminal.help" = "Adăugare terminal nou în această coloană";
+"board.column.edit" = "Editare coloană...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "Fixare terminal";
+"card.unpin" = "Eliberare terminal";
+"card.running" = "Terminalul rulează";
+"card.open" = "Deschidere terminal";
+"card.edit" = "Editare detalii...";
+"card.delete" = "Ștergere";
+"card.wired" = "Conectat";
+"card.wired.help" = "Conectat la agentul MCP";
+"card.needs.attention" = "Necesită atenție";
+"card.processing" = "Se procesează...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "Sesiunea terminalului s-a încheiat";
+"terminal.restart" = "Repornire terminal";
+"terminal.restart.help" = "Pornire sesiune nouă de terminal";
+"terminal.current" = "Terminal curent";
+"terminal.edit.help" = "Editare detalii terminal";
+"terminal.close.tab.help" = "Închidere această filă de terminal";
+"terminal.switch.to %@" = "Comutare la %@";
+"terminal.tab.help %@ %@" = "%@ în %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "Înapoi";
+"toolbar.back.help" = "Înapoi la tablă (Escape)";
+"toolbar.move.to" = "Mutare în coloană";
+"toolbar.new.quick" = "Terminal rapid";
+"toolbar.new.quick.help" = "Terminal rapid nou (⌘T)";
+"toolbar.edit" = "Editare";
+"toolbar.edit.help" = "Editare detalii terminal (⌘E)";
+"toolbar.pin" = "Fixare";
+"toolbar.pin.help" = "Fixare terminal (⌘P)";
+"toolbar.unpin" = "Eliberare";
+"toolbar.unpin.help" = "Eliberare terminal (⌘P)";
+"toolbar.delete" = "Ștergere";
+"toolbar.delete.help" = "Ștergere terminal";
+"toolbar.add" = "Adăugare";
+"toolbar.add.help" = "Adăugare terminal sau coloană nouă";
+"toolbar.open.terminal.app" = "Deschidere în Terminal";
+"toolbar.open.terminal.app.help" = "Deschidere în Terminal.app";
+"toolbar.new.terminal" = "Terminal nou";
+"toolbar.new.column" = "Coloană nouă";
+"toolbar.bin.count %lld" = "Coș de gunoi (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "Terminal rapid nou";
+"menu.new.terminal" = "Terminal nou...";
+"menu.new.terminal.dialog" = "Terminal nou";
+"menu.new.column" = "Coloană nouă";
+"menu.back" = "Înapoi la tablă";
+"menu.toggle.pin" = "Comutare fixare";
+"menu.next.pinned" = "Următorul terminal fixat";
+"menu.previous.pinned" = "Terminalul fixat anterior";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "Ștergere terminal";
+"delete.move.to.bin" = "Mutare în coșul de gunoi";
+"delete.message %@" = "Sigur doriți să ștergeți \"%@\"?";
+"delete.bin.message %@" = "\"%@\" va fi mutat în coșul de gunoi unde poate fi restaurat timp de 30 de zile.";
+"delete.cancel" = "Anulare";
+"delete.confirm" = "Ștergere";
+"delete.permanent" = "Ștergere permanentă";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
+"editor.title.new" = "Terminal nou";
+"editor.title.edit" = "Editare terminal";
 "editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.tab.advanced" = "Avansat";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "Detalii";
+"editor.field.name" = "Nume";
+"editor.field.name.placeholder" = "Nume terminal";
+"editor.field.description" = "Descriere";
+"editor.field.description.placeholder" = "Descriere opțională";
+"editor.field.column" = "Coloană";
+"editor.field.badges" = "Insigne";
+"editor.field.badges.placeholder" = "insignă1, insignă2";
+"editor.field.badges.help" = "Insigne separate prin virgulă pe card";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
+"editor.section.appearance" = "Aspect";
+"editor.field.theme" = "Temă";
+"editor.field.theme.default" = "Implicit";
+"editor.field.font.size" = "Dimensiune font";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
 "editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
+"editor.field.directory" = "Director de lucru";
+"editor.field.directory.help" = "Director inițial pentru terminal";
 "editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.field.shell.help" = "Shell de utilizat (gol = implicit)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "Automatizare";
+"editor.field.init.command" = "Comandă inițială";
+"editor.field.init.command.help" = "Comandă de rulat la pornirea terminalului";
+"editor.field.safe.paste" = "Lipire sigură";
+"editor.field.safe.paste.help" = "Afișare confirmare înainte de lipirea textului multilinie";
+"editor.field.allow.autorun" = "Permitere rulare automată";
+"editor.field.allow.autorun.help" = "Permitere CLI să ruleze comenzi automat";
+"editor.field.autorun.disabled.globally" = "Rulare automată dezactivată global";
+"editor.field.autorun.enable.hint" = "Activare în Setări > Instrumente";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "Etichete";
+"editor.field.tags" = "Etichete";
+"editor.tag.add" = "Adăugare etichetă";
+"editor.tag.key.placeholder" = "cheie";
+"editor.tag.value.placeholder" = "valoare";
+"editor.tags.help" = "Perechi cheie-valoare pentru organizare";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "Configurare agent";
+"editor.field.terminal.allows.autorun" = "Terminalul permite comenzi";
+"editor.field.persistent.context" = "Context persistent";
+"editor.field.persistent.context.help" = "Contextul este păstrat între sesiuni";
+"editor.field.next.action" = "Următoarea acțiune";
+"editor.field.next.action.help" = "Acțiune de efectuat data viitoare";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "Generator de comenzi";
+"editor.field.apply.to.init.command" = "Aplicare ca comandă inițială";
+"editor.field.apply.to.init.command.help" = "Utilizare comandă generată ca inițială";
+"editor.no.llm.prompt.warning" = "Prompt LLM neconfigurat";
+"editor.non.interactive.note" = "Notă: Comenzile rulează non-interactiv";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "Anulare";
+"editor.save" = "Salvare";
+"editor.save.open" = "Salvare și deschidere";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "Coloană nouă";
+"column.editor.title.edit" = "Editare coloană";
+"column.editor.field.name" = "Nume";
+"column.editor.field.name.placeholder" = "Nume coloană";
+"column.editor.field.description" = "Descriere";
+"column.editor.field.description.placeholder" = "Descriere opțională";
+"column.editor.field.color" = "Culoare";
+"column.editor.cancel" = "Anulare";
+"column.editor.save" = "Salvare";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "Coș de gunoi";
+"bin.empty" = "Coșul de gunoi este gol";
+"bin.empty.button" = "Golire coș de gunoi";
+"bin.close.help" = "Închidere coș de gunoi";
+"bin.restore.help" = "Restaurare terminal";
+"bin.delete.help" = "Ștergere permanentă";
+"bin.deleted %@" = "Șters %@";
+"bin.days.remaining %lld" = "%lld zile rămase";
 
 // MARK: - Settings
-"settings.title" = "Settings";
+"settings.title" = "Setări";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.tab.tools" = "Instrumente";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.field.theme" = "Temă";
+"settings.field.theme.help" = "Temă implicită pentru terminale noi";
+"settings.field.copy.on.select" = "Copiere la selectare";
+"settings.field.copy.on.select.help" = "Copiere automată text selectat";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "Coș de gunoi";
+"settings.auto.empty %lld" = "Golire automată după %lld zile";
+"settings.auto.empty.help" = "Ștergere automată elemente vechi din coș";
+"settings.bin.empty" = "Coșul de gunoi este gol";
+"settings.bin.items %lld" = "%lld elemente în coșul de gunoi";
+"settings.empty.bin.now" = "Golire coș de gunoi acum";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
+"settings.section.about" = "Despre";
+"settings.field.version" = "Versiune";
 "settings.field.build" = "Build";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "Limbă";
+"settings.field.current" = "Curent";
+"settings.system.default" = "Implicit sistem";
+"settings.search.languages" = "Căutare limbi...";
+"settings.using.system.language" = "Se utilizează limba sistemului";
+"settings.restart.required" = "Repornire necesară pentru schimbarea limbii";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "Linie de comandă";
+"settings.cli.title" = "Instrument CLI";
+"settings.cli.description" = "Instrumentul de linie de comandă termq permite deschiderea terminalelor din shell.";
+"settings.cli.path" = "Locație instalare";
+"settings.cli.install" = "Instalare CLI";
+"settings.cli.uninstall" = "Dezinstalare";
+"settings.cli.installed" = "Instalat";
+"settings.cli.not.installed" = "Neinstalat";
+"settings.cli.usage" = "Utilizare:";
+"settings.cli.location" = "Locație";
+"settings.enable.terminal.autorun" = "Activare rulare automată terminal";
+"settings.enable.terminal.autorun.help" = "Permitere CLI să ruleze comenzi în terminale";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "Server MCP";
+"settings.mcp.title" = "Server MCP";
+"settings.mcp.description" = "Server Model Context Protocol pentru integrare cu agenți AI.";
+"settings.mcp.location" = "Locație server";
+"settings.mcp.claude.config" = "Configurare Claude Desktop";
+"settings.mcp.local.only" = "Doar conexiuni locale";
+"settings.mcp.install.description" = "Adăugați la configurarea Claude Desktop:";
+"settings.config.copied" = "Configurare copiată!";
+"settings.copy.config" = "Copiere configurare";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "Agenți";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "Căutare comenzi...";
+"palette.no.results" = "Nu s-au găsit rezultate";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "Ajutor";
+"help.search.placeholder" = "Căutare în ajutor...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "Eroare";
+"alert.success" = "Succes";

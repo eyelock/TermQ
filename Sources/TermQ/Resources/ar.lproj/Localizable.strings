@@ -2,258 +2,258 @@
   Localizable.strings
   TermQ
 
-  ar localization strings.
+  Arabic localization strings.
 */
 
 // MARK: - App
 "app.name" = "TermQ";
 
 // MARK: - Common
-"common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.ok" = "موافق";
+"common.cancel" = "إلغاء";
+"common.save" = "حفظ";
+"common.delete" = "حذف";
+"common.edit" = "تعديل";
+"common.close" = "إغلاق";
+"common.add" = "إضافة";
+"common.reinstall" = "إعادة التثبيت";
+"common.uninstall" = "إلغاء التثبيت";
+"common.installed" = "مثبّت";
+"common.browse" = "استعراض...";
+"common.apply" = "تطبيق";
+"common.preview" = "معاينة";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "خيارات العمود";
+"board.column.rename" = "إعادة تسمية العمود...";
+"board.column.delete" = "حذف العمود";
+"board.column.delete.disabled" = "حذف العمود (انقل الطرفيات أولاً)";
+"board.column.add.terminal" = "إضافة طرفية";
+"board.column.add.terminal.help" = "إضافة طرفية جديدة إلى هذا العمود";
+"board.column.edit" = "تعديل العمود...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "تثبيت الطرفية";
+"card.unpin" = "إلغاء تثبيت الطرفية";
+"card.running" = "الطرفية تعمل";
+"card.open" = "فتح الطرفية";
+"card.edit" = "تعديل التفاصيل...";
+"card.delete" = "حذف";
+"card.wired" = "متصل";
+"card.wired.help" = "متصل بوكيل MCP";
+"card.needs.attention" = "يحتاج انتباه";
+"card.processing" = "جارٍ المعالجة...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "انتهت جلسة الطرفية";
+"terminal.restart" = "إعادة تشغيل الطرفية";
+"terminal.restart.help" = "بدء جلسة طرفية جديدة";
+"terminal.current" = "الطرفية الحالية";
+"terminal.edit.help" = "تعديل تفاصيل الطرفية";
+"terminal.close.tab.help" = "إغلاق علامة تبويب الطرفية هذه";
+"terminal.switch.to %@" = "التبديل إلى %@";
+"terminal.tab.help %@ %@" = "%@ في %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "رجوع";
+"toolbar.back.help" = "العودة إلى اللوحة (Escape)";
+"toolbar.move.to" = "نقل إلى عمود";
+"toolbar.new.quick" = "طرفية سريعة";
+"toolbar.new.quick.help" = "طرفية سريعة جديدة (⌘T)";
+"toolbar.edit" = "تعديل";
+"toolbar.edit.help" = "تعديل تفاصيل الطرفية (⌘E)";
+"toolbar.pin" = "تثبيت";
+"toolbar.pin.help" = "تثبيت الطرفية (⌘P)";
+"toolbar.unpin" = "إلغاء التثبيت";
+"toolbar.unpin.help" = "إلغاء تثبيت الطرفية (⌘P)";
+"toolbar.delete" = "حذف";
+"toolbar.delete.help" = "حذف الطرفية";
+"toolbar.add" = "إضافة";
+"toolbar.add.help" = "إضافة طرفية أو عمود جديد";
+"toolbar.open.terminal.app" = "فتح في Terminal";
+"toolbar.open.terminal.app.help" = "فتح في Terminal.app";
+"toolbar.new.terminal" = "طرفية جديدة";
+"toolbar.new.column" = "عمود جديد";
+"toolbar.bin.count %lld" = "سلة المحذوفات (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "طرفية سريعة جديدة";
+"menu.new.terminal" = "طرفية جديدة...";
+"menu.new.terminal.dialog" = "طرفية جديدة";
+"menu.new.column" = "عمود جديد";
+"menu.back" = "العودة إلى اللوحة";
+"menu.toggle.pin" = "تبديل التثبيت";
+"menu.next.pinned" = "الطرفية المثبتة التالية";
+"menu.previous.pinned" = "الطرفية المثبتة السابقة";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "حذف الطرفية";
+"delete.move.to.bin" = "نقل إلى سلة المحذوفات";
+"delete.message %@" = "هل أنت متأكد من حذف \"%@\"؟";
+"delete.bin.message %@" = "سيتم نقل \"%@\" إلى سلة المحذوفات حيث يمكن استعادتها لمدة 30 يومًا.";
+"delete.cancel" = "إلغاء";
+"delete.confirm" = "حذف";
+"delete.permanent" = "حذف نهائي";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "طرفية جديدة";
+"editor.title.edit" = "تعديل الطرفية";
+"editor.tab.general" = "عام";
+"editor.tab.advanced" = "متقدم";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "التفاصيل";
+"editor.field.name" = "الاسم";
+"editor.field.name.placeholder" = "اسم الطرفية";
+"editor.field.description" = "الوصف";
+"editor.field.description.placeholder" = "وصف اختياري";
+"editor.field.column" = "العمود";
+"editor.field.badges" = "الشارات";
+"editor.field.badges.placeholder" = "شارة1، شارة2";
+"editor.field.badges.help" = "شارات مفصولة بفواصل على البطاقة";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
+"editor.section.appearance" = "المظهر";
+"editor.field.theme" = "السمة";
+"editor.field.theme.default" = "الافتراضي";
+"editor.field.font.size" = "حجم الخط";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
-"editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
-"editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.section.terminal" = "الطرفية";
+"editor.field.directory" = "مجلد العمل";
+"editor.field.directory.help" = "المجلد الابتدائي للطرفية";
+"editor.field.shell" = "الصدفة";
+"editor.field.shell.help" = "الصدفة المستخدمة (فارغ = افتراضي)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "الأتمتة";
+"editor.field.init.command" = "أمر البدء";
+"editor.field.init.command.help" = "أمر للتشغيل عند بدء الطرفية";
+"editor.field.safe.paste" = "لصق آمن";
+"editor.field.safe.paste.help" = "إظهار تأكيد قبل لصق نص متعدد الأسطر";
+"editor.field.allow.autorun" = "السماح بالتشغيل التلقائي";
+"editor.field.allow.autorun.help" = "السماح لـ CLI بتشغيل الأوامر تلقائيًا";
+"editor.field.autorun.disabled.globally" = "التشغيل التلقائي معطل عالميًا";
+"editor.field.autorun.enable.hint" = "تفعيل في الإعدادات > الأدوات";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "الوسوم";
+"editor.field.tags" = "الوسوم";
+"editor.tag.add" = "إضافة وسم";
+"editor.tag.key.placeholder" = "مفتاح";
+"editor.tag.value.placeholder" = "قيمة";
+"editor.tags.help" = "أزواج مفتاح-قيمة للتنظيم";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "إعدادات الوكيل";
+"editor.field.terminal.allows.autorun" = "الطرفية تسمح بالأوامر";
+"editor.field.persistent.context" = "سياق دائم";
+"editor.field.persistent.context.help" = "يُحفظ السياق عبر الجلسات";
+"editor.field.next.action" = "الإجراء التالي";
+"editor.field.next.action.help" = "إجراء للتنفيذ في المرة القادمة";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "مولّد الأوامر";
+"editor.field.apply.to.init.command" = "تطبيق كأمر بدء";
+"editor.field.apply.to.init.command.help" = "استخدام الأمر المُنشأ كأمر بدء";
+"editor.no.llm.prompt.warning" = "لم يتم تكوين موجه LLM";
+"editor.non.interactive.note" = "ملاحظة: الأوامر تعمل بشكل غير تفاعلي";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "إلغاء";
+"editor.save" = "حفظ";
+"editor.save.open" = "حفظ وفتح";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "عمود جديد";
+"column.editor.title.edit" = "تعديل العمود";
+"column.editor.field.name" = "الاسم";
+"column.editor.field.name.placeholder" = "اسم العمود";
+"column.editor.field.description" = "الوصف";
+"column.editor.field.description.placeholder" = "وصف اختياري";
+"column.editor.field.color" = "اللون";
+"column.editor.cancel" = "إلغاء";
+"column.editor.save" = "حفظ";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "سلة المحذوفات";
+"bin.empty" = "سلة المحذوفات فارغة";
+"bin.empty.button" = "إفراغ سلة المحذوفات";
+"bin.close.help" = "إغلاق سلة المحذوفات";
+"bin.restore.help" = "استعادة الطرفية";
+"bin.delete.help" = "حذف نهائي";
+"bin.deleted %@" = "تم الحذف %@";
+"bin.days.remaining %lld" = "متبقي %lld يوم";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "الإعدادات";
+"settings.tab.general" = "عام";
+"settings.tab.tools" = "الأدوات";
 
 // Settings - Terminal section
-"settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.section.terminal" = "الطرفية";
+"settings.field.theme" = "السمة";
+"settings.field.theme.help" = "السمة الافتراضية للطرفيات الجديدة";
+"settings.field.copy.on.select" = "نسخ عند التحديد";
+"settings.field.copy.on.select.help" = "نسخ النص المحدد تلقائيًا";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "سلة المحذوفات";
+"settings.auto.empty %lld" = "إفراغ تلقائي بعد %lld يوم";
+"settings.auto.empty.help" = "إزالة العناصر القديمة تلقائيًا من السلة";
+"settings.bin.empty" = "سلة المحذوفات فارغة";
+"settings.bin.items %lld" = "%lld عنصر في السلة";
+"settings.empty.bin.now" = "إفراغ السلة الآن";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "حول";
+"settings.field.version" = "الإصدار";
+"settings.field.build" = "البناء";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "اللغة";
+"settings.field.current" = "الحالية";
+"settings.system.default" = "افتراضي النظام";
+"settings.search.languages" = "البحث عن لغات...";
+"settings.using.system.language" = "استخدام لغة النظام";
+"settings.restart.required" = "إعادة التشغيل مطلوبة لتغيير اللغة";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "سطر الأوامر";
+"settings.cli.title" = "أداة CLI";
+"settings.cli.description" = "تتيح لك أداة سطر الأوامر termq فتح الطرفيات من الصدفة.";
+"settings.cli.path" = "موقع التثبيت";
+"settings.cli.install" = "تثبيت CLI";
+"settings.cli.uninstall" = "إلغاء التثبيت";
+"settings.cli.installed" = "مثبّت";
+"settings.cli.not.installed" = "غير مثبّت";
+"settings.cli.usage" = "الاستخدام:";
+"settings.cli.location" = "الموقع";
+"settings.enable.terminal.autorun" = "تفعيل التشغيل التلقائي للطرفية";
+"settings.enable.terminal.autorun.help" = "السماح لـ CLI بتشغيل الأوامر في الطرفيات";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "خادم MCP";
+"settings.mcp.title" = "خادم MCP";
+"settings.mcp.description" = "خادم Model Context Protocol للتكامل مع وكلاء الذكاء الاصطناعي.";
+"settings.mcp.location" = "موقع الخادم";
+"settings.mcp.claude.config" = "إعدادات Claude Desktop";
+"settings.mcp.local.only" = "الاتصالات المحلية فقط";
+"settings.mcp.install.description" = "أضف إلى إعدادات Claude Desktop:";
+"settings.config.copied" = "تم نسخ الإعدادات!";
+"settings.copy.config" = "نسخ الإعدادات";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "الوكلاء";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "البحث عن أوامر...";
+"palette.no.results" = "لم يتم العثور على نتائج";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "المساعدة";
+"help.search.placeholder" = "البحث في المساعدة...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "خطأ";
+"alert.success" = "نجاح";

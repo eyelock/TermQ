@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  ja localization strings.
+  Japanese localization strings.
 */
 
 // MARK: - App
@@ -10,250 +10,250 @@
 
 // MARK: - Common
 "common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.cancel" = "キャンセル";
+"common.save" = "保存";
+"common.delete" = "削除";
+"common.edit" = "編集";
+"common.close" = "閉じる";
+"common.add" = "追加";
+"common.reinstall" = "再インストール";
+"common.uninstall" = "アンインストール";
+"common.installed" = "インストール済み";
+"common.browse" = "参照...";
+"common.apply" = "適用";
+"common.preview" = "プレビュー";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "カラムオプション";
+"board.column.rename" = "カラム名を変更...";
+"board.column.delete" = "カラムを削除";
+"board.column.delete.disabled" = "カラムを削除（先にターミナルを移動してください）";
+"board.column.add.terminal" = "ターミナルを追加";
+"board.column.add.terminal.help" = "このカラムに新しいターミナルを追加";
+"board.column.edit" = "カラムを編集...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "ターミナルをピン留め";
+"card.unpin" = "ターミナルのピン留めを解除";
+"card.running" = "ターミナル実行中";
+"card.open" = "ターミナルを開く";
+"card.edit" = "詳細を編集...";
+"card.delete" = "削除";
+"card.wired" = "接続済み";
+"card.wired.help" = "MCPエージェントに接続中";
+"card.needs.attention" = "要確認";
+"card.processing" = "処理中...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "ターミナルセッションが終了しました";
+"terminal.restart" = "ターミナルを再起動";
+"terminal.restart.help" = "新しいターミナルセッションを開始";
+"terminal.current" = "現在のターミナル";
+"terminal.edit.help" = "ターミナルの詳細を編集";
+"terminal.close.tab.help" = "このターミナルタブを閉じる";
+"terminal.switch.to %@" = "%@ に切り替え";
+"terminal.tab.help %@ %@" = "%@ - %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "戻る";
+"toolbar.back.help" = "ボードに戻る (Escape)";
+"toolbar.move.to" = "カラムに移動";
+"toolbar.new.quick" = "クイックターミナル";
+"toolbar.new.quick.help" = "新規クイックターミナル (⌘T)";
+"toolbar.edit" = "編集";
+"toolbar.edit.help" = "ターミナルの詳細を編集 (⌘E)";
+"toolbar.pin" = "ピン留め";
+"toolbar.pin.help" = "ターミナルをピン留め (⌘P)";
+"toolbar.unpin" = "ピン留め解除";
+"toolbar.unpin.help" = "ターミナルのピン留めを解除 (⌘P)";
+"toolbar.delete" = "削除";
+"toolbar.delete.help" = "ターミナルを削除";
+"toolbar.add" = "追加";
+"toolbar.add.help" = "新しいターミナルまたはカラムを追加";
+"toolbar.open.terminal.app" = "ターミナルで開く";
+"toolbar.open.terminal.app.help" = "Terminal.appで開く";
+"toolbar.new.terminal" = "新規ターミナル";
+"toolbar.new.column" = "新規カラム";
+"toolbar.bin.count %lld" = "ゴミ箱 (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "クイック新規ターミナル";
+"menu.new.terminal" = "新規ターミナル...";
+"menu.new.terminal.dialog" = "新規ターミナル";
+"menu.new.column" = "新規カラム";
+"menu.back" = "ボードに戻る";
+"menu.toggle.pin" = "ピン留めを切り替え";
+"menu.next.pinned" = "次のピン留めターミナル";
+"menu.previous.pinned" = "前のピン留めターミナル";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "ターミナルを削除";
+"delete.move.to.bin" = "ゴミ箱に移動";
+"delete.message %@" = "「%@」を削除してもよろしいですか？";
+"delete.bin.message %@" = "「%@」はゴミ箱に移動され、30日間復元できます。";
+"delete.cancel" = "キャンセル";
+"delete.confirm" = "削除";
+"delete.permanent" = "完全に削除";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "新規ターミナル";
+"editor.title.edit" = "ターミナルを編集";
+"editor.tab.general" = "一般";
+"editor.tab.advanced" = "詳細設定";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "詳細";
+"editor.field.name" = "名前";
+"editor.field.name.placeholder" = "ターミナル名";
+"editor.field.description" = "説明";
+"editor.field.description.placeholder" = "説明（任意）";
+"editor.field.column" = "カラム";
+"editor.field.badges" = "バッジ";
+"editor.field.badges.placeholder" = "バッジ1, バッジ2";
+"editor.field.badges.help" = "カードに表示するカンマ区切りのバッジ";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
-"editor.font.preview" = "AaBbCc 123";
+"editor.section.appearance" = "外観";
+"editor.field.theme" = "テーマ";
+"editor.field.theme.default" = "デフォルト";
+"editor.field.font.size" = "フォントサイズ";
+"editor.font.preview" = "AaBbCc あいう 123";
 
 // Editor - Terminal section
-"editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
-"editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.section.terminal" = "ターミナル";
+"editor.field.directory" = "作業ディレクトリ";
+"editor.field.directory.help" = "ターミナルの開始ディレクトリ";
+"editor.field.shell" = "シェル";
+"editor.field.shell.help" = "使用するシェル（空欄でデフォルト）";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "自動化";
+"editor.field.init.command" = "初期化コマンド";
+"editor.field.init.command.help" = "ターミナル起動時に実行するコマンド";
+"editor.field.safe.paste" = "安全な貼り付け";
+"editor.field.safe.paste.help" = "複数行テキストの貼り付け前に確認を表示";
+"editor.field.allow.autorun" = "自動実行を許可";
+"editor.field.allow.autorun.help" = "CLIによるコマンドの自動実行を許可";
+"editor.field.autorun.disabled.globally" = "自動実行はグローバルで無効です";
+"editor.field.autorun.enable.hint" = "設定 > ツールで有効化";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "タグ";
+"editor.field.tags" = "タグ";
+"editor.tag.add" = "タグを追加";
+"editor.tag.key.placeholder" = "キー";
+"editor.tag.value.placeholder" = "値";
+"editor.tags.help" = "整理用のキーと値のペア";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "エージェント設定";
+"editor.field.terminal.allows.autorun" = "ターミナルがコマンドを許可";
+"editor.field.persistent.context" = "永続コンテキスト";
+"editor.field.persistent.context.help" = "セッション間でコンテキストを維持";
+"editor.field.next.action" = "次のアクション";
+"editor.field.next.action.help" = "次に実行するアクション";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "コマンドジェネレーター";
+"editor.field.apply.to.init.command" = "初期化コマンドに適用";
+"editor.field.apply.to.init.command.help" = "生成したコマンドを初期化コマンドとして使用";
+"editor.no.llm.prompt.warning" = "LLMプロンプトが設定されていません";
+"editor.non.interactive.note" = "注意：コマンドは非対話モードで実行されます";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "キャンセル";
+"editor.save" = "保存";
+"editor.save.open" = "保存して開く";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "新規カラム";
+"column.editor.title.edit" = "カラムを編集";
+"column.editor.field.name" = "名前";
+"column.editor.field.name.placeholder" = "カラム名";
+"column.editor.field.description" = "説明";
+"column.editor.field.description.placeholder" = "説明（任意）";
+"column.editor.field.color" = "色";
+"column.editor.cancel" = "キャンセル";
+"column.editor.save" = "保存";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "ゴミ箱";
+"bin.empty" = "ゴミ箱は空です";
+"bin.empty.button" = "ゴミ箱を空にする";
+"bin.close.help" = "ゴミ箱を閉じる";
+"bin.restore.help" = "ターミナルを復元";
+"bin.delete.help" = "完全に削除";
+"bin.deleted %@" = "%@ を削除しました";
+"bin.days.remaining %lld" = "残り %lld 日";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "設定";
+"settings.tab.general" = "一般";
+"settings.tab.tools" = "ツール";
 
 // Settings - Terminal section
-"settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.section.terminal" = "ターミナル";
+"settings.field.theme" = "テーマ";
+"settings.field.theme.help" = "新規ターミナルのデフォルトテーマ";
+"settings.field.copy.on.select" = "選択時にコピー";
+"settings.field.copy.on.select.help" = "選択したテキストを自動的にコピー";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "ゴミ箱";
+"settings.auto.empty %lld" = "%lld 日後に自動削除";
+"settings.auto.empty.help" = "ゴミ箱内の古いアイテムを自動的に削除";
+"settings.bin.empty" = "ゴミ箱は空です";
+"settings.bin.items %lld" = "ゴミ箱に %lld 個のアイテム";
+"settings.empty.bin.now" = "今すぐゴミ箱を空にする";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "情報";
+"settings.field.version" = "バージョン";
+"settings.field.build" = "ビルド";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "言語";
+"settings.field.current" = "現在";
+"settings.system.default" = "システムのデフォルト";
+"settings.search.languages" = "言語を検索...";
+"settings.using.system.language" = "システム言語を使用中";
+"settings.restart.required" = "言語を変更するには再起動が必要です";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "コマンドライン";
+"settings.cli.title" = "CLIツール";
+"settings.cli.description" = "termqコマンドラインツールを使用すると、シェルからターミナルを開くことができます。";
+"settings.cli.path" = "インストール場所";
+"settings.cli.install" = "CLIをインストール";
+"settings.cli.uninstall" = "アンインストール";
+"settings.cli.installed" = "インストール済み";
+"settings.cli.not.installed" = "未インストール";
+"settings.cli.usage" = "使用方法：";
+"settings.cli.location" = "場所";
+"settings.enable.terminal.autorun" = "ターミナル自動実行を有効化";
+"settings.enable.terminal.autorun.help" = "CLIによるターミナルでのコマンド実行を許可";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "MCPサーバー";
+"settings.mcp.title" = "MCPサーバー";
+"settings.mcp.description" = "AIエージェント統合用のModel Context Protocolサーバー。";
+"settings.mcp.location" = "サーバーの場所";
+"settings.mcp.claude.config" = "Claude Desktop設定";
+"settings.mcp.local.only" = "ローカル接続のみ";
+"settings.mcp.install.description" = "Claude Desktop設定に追加：";
+"settings.config.copied" = "設定をコピーしました！";
+"settings.copy.config" = "設定をコピー";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "エージェント";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "コマンドを検索...";
+"palette.no.results" = "結果が見つかりません";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "ヘルプ";
+"help.search.placeholder" = "ヘルプを検索...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "エラー";
+"alert.success" = "成功";

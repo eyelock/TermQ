@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  ms localization strings.
+  Malay localization strings.
 */
 
 // MARK: - App
@@ -10,250 +10,250 @@
 
 // MARK: - Common
 "common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
+"common.cancel" = "Batal";
+"common.save" = "Simpan";
+"common.delete" = "Padam";
 "common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.close" = "Tutup";
+"common.add" = "Tambah";
+"common.reinstall" = "Pasang Semula";
+"common.uninstall" = "Nyahpasang";
+"common.installed" = "Dipasang";
+"common.browse" = "Semak Imbas...";
+"common.apply" = "Gunakan";
+"common.preview" = "Pratonton";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "Pilihan lajur";
+"board.column.rename" = "Namakan Semula Lajur...";
+"board.column.delete" = "Padam Lajur";
+"board.column.delete.disabled" = "Padam Lajur (alihkan terminal dahulu)";
+"board.column.add.terminal" = "Tambah Terminal";
+"board.column.add.terminal.help" = "Tambah terminal baru ke lajur ini";
+"board.column.edit" = "Edit Lajur...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "Semat terminal";
+"card.unpin" = "Nyahsemat terminal";
+"card.running" = "Terminal sedang berjalan";
+"card.open" = "Buka Terminal";
+"card.edit" = "Edit Butiran...";
+"card.delete" = "Padam";
+"card.wired" = "Bersambung";
+"card.wired.help" = "Bersambung ke ejen MCP";
+"card.needs.attention" = "Perlu perhatian";
+"card.processing" = "Memproses...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "Sesi terminal tamat";
+"terminal.restart" = "Mulakan Semula Terminal";
+"terminal.restart.help" = "Mulakan sesi terminal baru";
+"terminal.current" = "Terminal semasa";
+"terminal.edit.help" = "Edit butiran terminal";
+"terminal.close.tab.help" = "Tutup tab terminal ini";
+"terminal.switch.to %@" = "Tukar ke %@";
+"terminal.tab.help %@ %@" = "%@ dalam %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
+"toolbar.back" = "Kembali";
+"toolbar.back.help" = "Kembali ke papan (Escape)";
+"toolbar.move.to" = "Alih ke lajur";
+"toolbar.new.quick" = "Terminal Pantas";
+"toolbar.new.quick.help" = "Terminal pantas baru (⌘T)";
 "toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.edit.help" = "Edit butiran terminal (⌘E)";
+"toolbar.pin" = "Semat";
+"toolbar.pin.help" = "Semat terminal (⌘P)";
+"toolbar.unpin" = "Nyahsemat";
+"toolbar.unpin.help" = "Nyahsemat terminal (⌘P)";
+"toolbar.delete" = "Padam";
+"toolbar.delete.help" = "Padam terminal";
+"toolbar.add" = "Tambah";
+"toolbar.add.help" = "Tambah terminal atau lajur baru";
+"toolbar.open.terminal.app" = "Buka dalam Terminal";
+"toolbar.open.terminal.app.help" = "Buka dalam Terminal.app";
+"toolbar.new.terminal" = "Terminal Baru";
+"toolbar.new.column" = "Lajur Baru";
+"toolbar.bin.count %lld" = "Tong Sampah (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "Terminal Pantas Baru";
+"menu.new.terminal" = "Terminal Baru...";
+"menu.new.terminal.dialog" = "Terminal Baru";
+"menu.new.column" = "Lajur Baru";
+"menu.back" = "Kembali ke Papan";
+"menu.toggle.pin" = "Togol Semat";
+"menu.next.pinned" = "Terminal Tersemat Seterusnya";
+"menu.previous.pinned" = "Terminal Tersemat Sebelumnya";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "Padam Terminal";
+"delete.move.to.bin" = "Alih ke Tong Sampah";
+"delete.message %@" = "Adakah anda pasti mahu memadam \"%@\"?";
+"delete.bin.message %@" = "\"%@\" akan dialihkan ke Tong Sampah dan boleh dipulihkan selama 30 hari.";
+"delete.cancel" = "Batal";
+"delete.confirm" = "Padam";
+"delete.permanent" = "Padam Kekal";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
+"editor.title.new" = "Terminal Baru";
 "editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.tab.general" = "Umum";
+"editor.tab.advanced" = "Lanjutan";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "Butiran";
+"editor.field.name" = "Nama";
+"editor.field.name.placeholder" = "Nama terminal";
+"editor.field.description" = "Penerangan";
+"editor.field.description.placeholder" = "Penerangan pilihan";
+"editor.field.column" = "Lajur";
+"editor.field.badges" = "Lencana";
+"editor.field.badges.placeholder" = "lencana1, lencana2";
+"editor.field.badges.help" = "Lencana dipisahkan koma yang ditunjukkan pada kad";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
-"editor.font.preview" = "AaBbCc 123";
+"editor.section.appearance" = "Penampilan";
+"editor.field.theme" = "Tema";
+"editor.field.theme.default" = "Lalai";
+"editor.field.font.size" = "Saiz Fon";
+"editor.font.preview" = "AaBbCc Melayu 123";
 
 // Editor - Terminal section
 "editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
+"editor.field.directory" = "Direktori Kerja";
+"editor.field.directory.help" = "Direktori permulaan untuk terminal";
 "editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.field.shell.help" = "Shell untuk digunakan (kosongkan untuk lalai)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "Automasi";
+"editor.field.init.command" = "Perintah Permulaan";
+"editor.field.init.command.help" = "Perintah untuk dijalankan apabila terminal bermula";
+"editor.field.safe.paste" = "Tampal Selamat";
+"editor.field.safe.paste.help" = "Tunjukkan pengesahan sebelum menampal teks berbilang baris";
+"editor.field.allow.autorun" = "Benarkan Autorun";
+"editor.field.allow.autorun.help" = "Benarkan CLI menjalankan perintah secara automatik";
+"editor.field.autorun.disabled.globally" = "Autorun dinyahdayakan secara global";
+"editor.field.autorun.enable.hint" = "Dayakan dalam Tetapan > Alat";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "Tag";
+"editor.field.tags" = "Tag";
+"editor.tag.add" = "Tambah Tag";
+"editor.tag.key.placeholder" = "kunci";
+"editor.tag.value.placeholder" = "nilai";
+"editor.tags.help" = "Pasangan kunci-nilai untuk organisasi";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "Konfigurasi Ejen";
+"editor.field.terminal.allows.autorun" = "Terminal membenarkan perintah";
+"editor.field.persistent.context" = "Konteks Berterusan";
+"editor.field.persistent.context.help" = "Konteks dikekalkan merentas sesi";
+"editor.field.next.action" = "Tindakan Seterusnya";
+"editor.field.next.action.help" = "Tindakan untuk dilakukan seterusnya";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "Penjana Perintah";
+"editor.field.apply.to.init.command" = "Gunakan pada Perintah Permulaan";
+"editor.field.apply.to.init.command.help" = "Gunakan perintah yang dijana sebagai perintah permulaan";
+"editor.no.llm.prompt.warning" = "Tiada prompt LLM dikonfigurasi";
+"editor.non.interactive.note" = "Nota: Perintah berjalan secara tidak interaktif";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "Batal";
+"editor.save" = "Simpan";
+"editor.save.open" = "Simpan & Buka";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "Lajur Baru";
+"column.editor.title.edit" = "Edit Lajur";
+"column.editor.field.name" = "Nama";
+"column.editor.field.name.placeholder" = "Nama lajur";
+"column.editor.field.description" = "Penerangan";
+"column.editor.field.description.placeholder" = "Penerangan pilihan";
+"column.editor.field.color" = "Warna";
+"column.editor.cancel" = "Batal";
+"column.editor.save" = "Simpan";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "Tong Sampah";
+"bin.empty" = "Tong sampah kosong";
+"bin.empty.button" = "Kosongkan Tong Sampah";
+"bin.close.help" = "Tutup tong sampah";
+"bin.restore.help" = "Pulihkan terminal";
+"bin.delete.help" = "Padam kekal";
+"bin.deleted %@" = "Dipadam %@";
+"bin.days.remaining %lld" = "%lld hari berbaki";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "Tetapan";
+"settings.tab.general" = "Umum";
+"settings.tab.tools" = "Alat";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.field.theme" = "Tema";
+"settings.field.theme.help" = "Tema lalai untuk terminal baru";
+"settings.field.copy.on.select" = "Salin apabila Memilih";
+"settings.field.copy.on.select.help" = "Salin teks yang dipilih secara automatik";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "Tong Sampah";
+"settings.auto.empty %lld" = "Kosongkan automatik selepas %lld hari";
+"settings.auto.empty.help" = "Kosongkan item lama dari tong sampah secara automatik";
+"settings.bin.empty" = "Tong sampah kosong";
+"settings.bin.items %lld" = "%lld item dalam tong sampah";
+"settings.empty.bin.now" = "Kosongkan Tong Sampah Sekarang";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "Perihal";
+"settings.field.version" = "Versi";
+"settings.field.build" = "Binaan";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "Bahasa";
+"settings.field.current" = "Semasa";
+"settings.system.default" = "Lalai Sistem";
+"settings.search.languages" = "Cari bahasa...";
+"settings.using.system.language" = "Menggunakan bahasa sistem";
+"settings.restart.required" = "Perlu dimulakan semula untuk menukar bahasa";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "Baris Perintah";
+"settings.cli.title" = "Alat CLI";
+"settings.cli.description" = "Alat baris perintah termq membolehkan anda membuka terminal dari shell.";
+"settings.cli.path" = "Lokasi Pemasangan";
+"settings.cli.install" = "Pasang CLI";
+"settings.cli.uninstall" = "Nyahpasang";
+"settings.cli.installed" = "Dipasang";
+"settings.cli.not.installed" = "Tidak dipasang";
+"settings.cli.usage" = "Penggunaan:";
+"settings.cli.location" = "Lokasi";
+"settings.enable.terminal.autorun" = "Dayakan Autorun Terminal";
+"settings.enable.terminal.autorun.help" = "Benarkan CLI menjalankan perintah dalam terminal";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "Pelayan MCP";
+"settings.mcp.title" = "Pelayan MCP";
+"settings.mcp.description" = "Pelayan Model Context Protocol untuk integrasi ejen AI.";
+"settings.mcp.location" = "Lokasi Pelayan";
+"settings.mcp.claude.config" = "Konfigurasi Claude Desktop";
+"settings.mcp.local.only" = "Sambungan tempatan sahaja";
+"settings.mcp.install.description" = "Tambah ke konfigurasi Claude Desktop anda:";
+"settings.config.copied" = "Konfigurasi disalin!";
+"settings.copy.config" = "Salin Konfigurasi";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "Ejen";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "Cari perintah...";
+"palette.no.results" = "Tiada hasil ditemui";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "Bantuan";
+"help.search.placeholder" = "Cari bantuan...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "Ralat";
+"alert.success" = "Berjaya";

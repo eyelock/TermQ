@@ -2,7 +2,7 @@
   Localizable.strings
   TermQ
 
-  fi localization strings.
+  Finnish localization strings.
 */
 
 // MARK: - App
@@ -10,250 +10,250 @@
 
 // MARK: - Common
 "common.ok" = "OK";
-"common.cancel" = "Cancel";
-"common.save" = "Save";
-"common.delete" = "Delete";
-"common.edit" = "Edit";
-"common.close" = "Close";
-"common.add" = "Add";
-"common.reinstall" = "Reinstall";
-"common.uninstall" = "Uninstall";
-"common.installed" = "Installed";
-"common.browse" = "Browse...";
-"common.apply" = "Apply";
-"common.preview" = "Preview";
+"common.cancel" = "Kumoa";
+"common.save" = "Tallenna";
+"common.delete" = "Poista";
+"common.edit" = "Muokkaa";
+"common.close" = "Sulje";
+"common.add" = "Lisää";
+"common.reinstall" = "Asenna uudelleen";
+"common.uninstall" = "Poista asennus";
+"common.installed" = "Asennettu";
+"common.browse" = "Selaa...";
+"common.apply" = "Käytä";
+"common.preview" = "Esikatselu";
 
 // MARK: - Board View
-"board.column.options" = "Column options";
-"board.column.rename" = "Rename Column...";
-"board.column.delete" = "Delete Column";
-"board.column.delete.disabled" = "Delete Column (move terminals first)";
-"board.column.add.terminal" = "Add Terminal";
-"board.column.add.terminal.help" = "Add new terminal to this column";
-"board.column.edit" = "Edit Column...";
+"board.column.options" = "Sarakkeen asetukset";
+"board.column.rename" = "Nimeä sarake uudelleen...";
+"board.column.delete" = "Poista sarake";
+"board.column.delete.disabled" = "Poista sarake (siirrä terminaalit ensin)";
+"board.column.add.terminal" = "Lisää terminaali";
+"board.column.add.terminal.help" = "Lisää uusi terminaali tähän sarakkeeseen";
+"board.column.edit" = "Muokkaa saraketta...";
 
 // MARK: - Terminal Card
-"card.pin" = "Pin terminal";
-"card.unpin" = "Unpin terminal";
-"card.running" = "Terminal is running";
-"card.open" = "Open Terminal";
-"card.edit" = "Edit Details...";
-"card.delete" = "Delete";
-"card.wired" = "Wired";
-"card.wired.help" = "Connected to MCP agent";
-"card.needs.attention" = "Needs attention";
-"card.processing" = "Processing...";
+"card.pin" = "Kiinnitä terminaali";
+"card.unpin" = "Irrota terminaali";
+"card.running" = "Terminaali käynnissä";
+"card.open" = "Avaa terminaali";
+"card.edit" = "Muokkaa tietoja...";
+"card.delete" = "Poista";
+"card.wired" = "Yhdistetty";
+"card.wired.help" = "Yhdistetty MCP-agenttiin";
+"card.needs.attention" = "Vaatii huomiota";
+"card.processing" = "Käsitellään...";
 
 // MARK: - Expanded Terminal View
-"terminal.ended" = "Terminal session ended";
-"terminal.restart" = "Restart Terminal";
-"terminal.restart.help" = "Start a new terminal session";
-"terminal.current" = "Current terminal";
-"terminal.edit.help" = "Edit terminal details";
-"terminal.close.tab.help" = "Close this terminal tab";
-"terminal.switch.to %@" = "Switch to %@";
-"terminal.tab.help %@ %@" = "%@ in %@";
+"terminal.ended" = "Terminaali-istunto päättyi";
+"terminal.restart" = "Käynnistä terminaali uudelleen";
+"terminal.restart.help" = "Aloita uusi terminaali-istunto";
+"terminal.current" = "Nykyinen terminaali";
+"terminal.edit.help" = "Muokkaa terminaalin tietoja";
+"terminal.close.tab.help" = "Sulje tämä terminaalivälilehti";
+"terminal.switch.to %@" = "Vaihda kohteeseen %@";
+"terminal.tab.help %@ %@" = "%@ kohteessa %@";
 
 // MARK: - Toolbar
-"toolbar.back" = "Back";
-"toolbar.back.help" = "Back to board (Escape)";
-"toolbar.move.to" = "Move to column";
-"toolbar.new.quick" = "Quick Terminal";
-"toolbar.new.quick.help" = "Quick new terminal (⌘T)";
-"toolbar.edit" = "Edit";
-"toolbar.edit.help" = "Edit terminal details (⌘E)";
-"toolbar.pin" = "Pin";
-"toolbar.pin.help" = "Pin terminal (⌘P)";
-"toolbar.unpin" = "Unpin";
-"toolbar.unpin.help" = "Unpin terminal (⌘P)";
-"toolbar.delete" = "Delete";
-"toolbar.delete.help" = "Delete terminal";
-"toolbar.add" = "Add";
-"toolbar.add.help" = "Add new terminal or column";
-"toolbar.open.terminal.app" = "Open in Terminal";
-"toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "New Terminal";
-"toolbar.new.column" = "New Column";
-"toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.back" = "Takaisin";
+"toolbar.back.help" = "Takaisin tauluun (Escape)";
+"toolbar.move.to" = "Siirrä sarakkeeseen";
+"toolbar.new.quick" = "Pikateminaali";
+"toolbar.new.quick.help" = "Uusi pikaterminaali (⌘T)";
+"toolbar.edit" = "Muokkaa";
+"toolbar.edit.help" = "Muokkaa terminaalin tietoja (⌘E)";
+"toolbar.pin" = "Kiinnitä";
+"toolbar.pin.help" = "Kiinnitä terminaali (⌘P)";
+"toolbar.unpin" = "Irrota";
+"toolbar.unpin.help" = "Irrota terminaali (⌘P)";
+"toolbar.delete" = "Poista";
+"toolbar.delete.help" = "Poista terminaali";
+"toolbar.add" = "Lisää";
+"toolbar.add.help" = "Lisää uusi terminaali tai sarake";
+"toolbar.open.terminal.app" = "Avaa Terminaalissa";
+"toolbar.open.terminal.app.help" = "Avaa Terminal.appissa";
+"toolbar.new.terminal" = "Uusi terminaali";
+"toolbar.new.column" = "Uusi sarake";
+"toolbar.bin.count %lld" = "Roskakori (%lld)";
 
 // MARK: - Menu Commands
-"menu.new.terminal.quick" = "Quick New Terminal";
-"menu.new.terminal" = "New Terminal...";
-"menu.new.terminal.dialog" = "New Terminal";
-"menu.new.column" = "New Column";
-"menu.back" = "Back to Board";
-"menu.toggle.pin" = "Toggle Pin";
-"menu.next.pinned" = "Next Pinned Terminal";
-"menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.new.terminal.quick" = "Uusi pikaterminaali";
+"menu.new.terminal" = "Uusi terminaali...";
+"menu.new.terminal.dialog" = "Uusi terminaali";
+"menu.new.column" = "Uusi sarake";
+"menu.back" = "Takaisin tauluun";
+"menu.toggle.pin" = "Vaihda kiinnitys";
+"menu.next.pinned" = "Seuraava kiinnitetty terminaali";
+"menu.previous.pinned" = "Edellinen kiinnitetty terminaali";
 
 // MARK: - Delete Confirmation
-"delete.title" = "Delete Terminal";
-"delete.move.to.bin" = "Move to Bin";
-"delete.message %@" = "Are you sure you want to delete \"%@\"?";
-"delete.bin.message %@" = "\"%@\" will be moved to the Bin where it can be restored for 30 days.";
-"delete.cancel" = "Cancel";
-"delete.confirm" = "Delete";
-"delete.permanent" = "Delete Permanently";
+"delete.title" = "Poista terminaali";
+"delete.move.to.bin" = "Siirrä roskakoriin";
+"delete.message %@" = "Haluatko varmasti poistaa \"%@\"?";
+"delete.bin.message %@" = "\"%@\" siirretään roskakoriin, jossa se voidaan palauttaa 30 päivän ajan.";
+"delete.cancel" = "Kumoa";
+"delete.confirm" = "Poista";
+"delete.permanent" = "Poista pysyvästi";
 
 // MARK: - Card Editor
-"editor.title.new" = "New Terminal";
-"editor.title.edit" = "Edit Terminal";
-"editor.tab.general" = "General";
-"editor.tab.advanced" = "Advanced";
+"editor.title.new" = "Uusi terminaali";
+"editor.title.edit" = "Muokkaa terminaalia";
+"editor.tab.general" = "Yleiset";
+"editor.tab.advanced" = "Lisäasetukset";
 
 // Editor - Details section
-"editor.section.details" = "Details";
-"editor.field.name" = "Name";
-"editor.field.name.placeholder" = "Terminal name";
-"editor.field.description" = "Description";
-"editor.field.description.placeholder" = "Optional description";
-"editor.field.column" = "Column";
-"editor.field.badges" = "Badges";
-"editor.field.badges.placeholder" = "badge1, badge2";
-"editor.field.badges.help" = "Comma-separated badges shown on card";
+"editor.section.details" = "Tiedot";
+"editor.field.name" = "Nimi";
+"editor.field.name.placeholder" = "Terminaalin nimi";
+"editor.field.description" = "Kuvaus";
+"editor.field.description.placeholder" = "Valinnainen kuvaus";
+"editor.field.column" = "Sarake";
+"editor.field.badges" = "Merkit";
+"editor.field.badges.placeholder" = "merkki1, merkki2";
+"editor.field.badges.help" = "Pilkuilla erotetut merkit kortilla";
 
 // Editor - Appearance section
-"editor.section.appearance" = "Appearance";
-"editor.field.theme" = "Theme";
-"editor.field.theme.default" = "Default";
-"editor.field.font.size" = "Font Size";
+"editor.section.appearance" = "Ulkoasu";
+"editor.field.theme" = "Teema";
+"editor.field.theme.default" = "Oletus";
+"editor.field.font.size" = "Fonttikoko";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
-"editor.section.terminal" = "Terminal";
-"editor.field.directory" = "Working Directory";
-"editor.field.directory.help" = "Starting directory for the terminal";
-"editor.field.shell" = "Shell";
-"editor.field.shell.help" = "Shell to use (leave empty for default)";
+"editor.section.terminal" = "Terminaali";
+"editor.field.directory" = "Työhakemisto";
+"editor.field.directory.help" = "Terminaalin aloitushakemisto";
+"editor.field.shell" = "Komentotulkki";
+"editor.field.shell.help" = "Käytettävä komentotulkki (tyhjä = oletus)";
 
 // Editor - Automation section
-"editor.section.automation" = "Automation";
-"editor.field.init.command" = "Init Command";
-"editor.field.init.command.help" = "Command to run when terminal starts";
-"editor.field.safe.paste" = "Safe Paste";
-"editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
-"editor.field.allow.autorun" = "Allow Autorun";
-"editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
-"editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
-"editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
+"editor.section.automation" = "Automaatio";
+"editor.field.init.command" = "Aloituskomento";
+"editor.field.init.command.help" = "Komento suoritettavaksi terminaalin käynnistyessä";
+"editor.field.safe.paste" = "Turvallinen liittäminen";
+"editor.field.safe.paste.help" = "Näytä vahvistus ennen moniriviisen tekstin liittämistä";
+"editor.field.allow.autorun" = "Salli automaattiajo";
+"editor.field.allow.autorun.help" = "Salli CLI:n suorittaa komentoja automaattisesti";
+"editor.field.autorun.disabled.globally" = "Automaattiajo poistettu käytöstä";
+"editor.field.autorun.enable.hint" = "Ota käyttöön kohdassa Asetukset > Työkalut";
 
 // Editor - Tags section
-"editor.section.tags" = "Tags";
-"editor.field.tags" = "Tags";
-"editor.tag.add" = "Add Tag";
-"editor.tag.key.placeholder" = "key";
-"editor.tag.value.placeholder" = "value";
-"editor.tags.help" = "Key-value pairs for organization";
+"editor.section.tags" = "Tunnisteet";
+"editor.field.tags" = "Tunnisteet";
+"editor.tag.add" = "Lisää tunniste";
+"editor.tag.key.placeholder" = "avain";
+"editor.tag.value.placeholder" = "arvo";
+"editor.tags.help" = "Avain-arvo-parit järjestelyyn";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent Configuration";
-"editor.field.terminal.allows.autorun" = "Terminal allows commands";
-"editor.field.persistent.context" = "Persistent Context";
-"editor.field.persistent.context.help" = "Context maintained across sessions";
-"editor.field.next.action" = "Next Action";
-"editor.field.next.action.help" = "Action to perform next";
+"editor.section.agent" = "Agentin asetukset";
+"editor.field.terminal.allows.autorun" = "Terminaali sallii komennot";
+"editor.field.persistent.context" = "Pysyvä konteksti";
+"editor.field.persistent.context.help" = "Konteksti säilyy istuntojen välillä";
+"editor.field.next.action" = "Seuraava toiminto";
+"editor.field.next.action.help" = "Seuraavaksi suoritettava toiminto";
 
 // Editor - Command Generator section
-"editor.section.command.generator" = "Command Generator";
-"editor.field.apply.to.init.command" = "Apply to Init Command";
-"editor.field.apply.to.init.command.help" = "Use generated command as init command";
-"editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.section.command.generator" = "Komentogeneraattori";
+"editor.field.apply.to.init.command" = "Käytä aloituskomentona";
+"editor.field.apply.to.init.command.help" = "Käytä generoitua komentoa aloituskomentona";
+"editor.no.llm.prompt.warning" = "LLM-kehotetta ei määritetty";
+"editor.non.interactive.note" = "Huom: Komennot suoritetaan ei-interaktiivisesti";
 
-"editor.cancel" = "Cancel";
-"editor.save" = "Save";
-"editor.save.open" = "Save & Open";
+"editor.cancel" = "Kumoa";
+"editor.save" = "Tallenna";
+"editor.save.open" = "Tallenna ja avaa";
 
 // MARK: - Column Editor
-"column.editor.title.new" = "New Column";
-"column.editor.title.edit" = "Edit Column";
-"column.editor.field.name" = "Name";
-"column.editor.field.name.placeholder" = "Column name";
-"column.editor.field.description" = "Description";
-"column.editor.field.description.placeholder" = "Optional description";
-"column.editor.field.color" = "Color";
-"column.editor.cancel" = "Cancel";
-"column.editor.save" = "Save";
+"column.editor.title.new" = "Uusi sarake";
+"column.editor.title.edit" = "Muokkaa saraketta";
+"column.editor.field.name" = "Nimi";
+"column.editor.field.name.placeholder" = "Sarakkeen nimi";
+"column.editor.field.description" = "Kuvaus";
+"column.editor.field.description.placeholder" = "Valinnainen kuvaus";
+"column.editor.field.color" = "Väri";
+"column.editor.cancel" = "Kumoa";
+"column.editor.save" = "Tallenna";
 
 // MARK: - Bin
-"bin.title" = "Bin";
-"bin.empty" = "Bin is empty";
-"bin.empty.button" = "Empty Bin";
-"bin.close.help" = "Close bin";
-"bin.restore.help" = "Restore terminal";
-"bin.delete.help" = "Delete permanently";
-"bin.deleted %@" = "Deleted %@";
-"bin.days.remaining %lld" = "%lld days remaining";
+"bin.title" = "Roskakori";
+"bin.empty" = "Roskakori on tyhjä";
+"bin.empty.button" = "Tyhjennä roskakori";
+"bin.close.help" = "Sulje roskakori";
+"bin.restore.help" = "Palauta terminaali";
+"bin.delete.help" = "Poista pysyvästi";
+"bin.deleted %@" = "Poistettu %@";
+"bin.days.remaining %lld" = "%lld päivää jäljellä";
 
 // MARK: - Settings
-"settings.title" = "Settings";
-"settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
+"settings.title" = "Asetukset";
+"settings.tab.general" = "Yleiset";
+"settings.tab.tools" = "Työkalut";
 
 // Settings - Terminal section
-"settings.section.terminal" = "Terminal";
-"settings.field.theme" = "Theme";
-"settings.field.theme.help" = "Default theme for new terminals";
-"settings.field.copy.on.select" = "Copy on Select";
-"settings.field.copy.on.select.help" = "Automatically copy selected text";
+"settings.section.terminal" = "Terminaali";
+"settings.field.theme" = "Teema";
+"settings.field.theme.help" = "Oletusteema uusille terminaaleille";
+"settings.field.copy.on.select" = "Kopioi valittaessa";
+"settings.field.copy.on.select.help" = "Kopioi valittu teksti automaattisesti";
 
 // Settings - Bin section
-"settings.section.bin" = "Bin";
-"settings.auto.empty %lld" = "Auto-empty after %lld days";
-"settings.auto.empty.help" = "Automatically empty old items from bin";
-"settings.bin.empty" = "Bin is empty";
-"settings.bin.items %lld" = "%lld items in bin";
-"settings.empty.bin.now" = "Empty Bin Now";
+"settings.section.bin" = "Roskakori";
+"settings.auto.empty %lld" = "Tyhjennä automaattisesti %lld päivän jälkeen";
+"settings.auto.empty.help" = "Poista vanhat kohteet roskakorista automaattisesti";
+"settings.bin.empty" = "Roskakori on tyhjä";
+"settings.bin.items %lld" = "%lld kohdetta roskakorissa";
+"settings.empty.bin.now" = "Tyhjennä roskakori nyt";
 
 // Settings - About section
-"settings.section.about" = "About";
-"settings.field.version" = "Version";
-"settings.field.build" = "Build";
+"settings.section.about" = "Tietoja";
+"settings.field.version" = "Versio";
+"settings.field.build" = "Koontiversio";
 
 // Settings - Language section
-"settings.section.language" = "Language";
-"settings.field.current" = "Current";
-"settings.system.default" = "System Default";
-"settings.search.languages" = "Search languages...";
-"settings.using.system.language" = "Using system language";
-"settings.restart.required" = "Restart required for language change";
+"settings.section.language" = "Kieli";
+"settings.field.current" = "Nykyinen";
+"settings.system.default" = "Järjestelmän oletus";
+"settings.search.languages" = "Etsi kieliä...";
+"settings.using.system.language" = "Käytetään järjestelmän kieltä";
+"settings.restart.required" = "Uudelleenkäynnistys vaaditaan kielen vaihtoon";
 
 // Settings - CLI section
-"settings.section.cli" = "Command Line";
-"settings.cli.title" = "CLI Tool";
-"settings.cli.description" = "The termq command-line tool lets you open terminals from your shell.";
-"settings.cli.path" = "Install Location";
-"settings.cli.install" = "Install CLI";
-"settings.cli.uninstall" = "Uninstall";
-"settings.cli.installed" = "Installed";
-"settings.cli.not.installed" = "Not installed";
-"settings.cli.usage" = "Usage:";
-"settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable Terminal Autorun";
-"settings.enable.terminal.autorun.help" = "Allow CLI to run commands in terminals";
+"settings.section.cli" = "Komentorivi";
+"settings.cli.title" = "CLI-työkalu";
+"settings.cli.description" = "Termq-komentorivityökalu mahdollistaa terminaalien avaamisen komentotulkista.";
+"settings.cli.path" = "Asennussijainti";
+"settings.cli.install" = "Asenna CLI";
+"settings.cli.uninstall" = "Poista asennus";
+"settings.cli.installed" = "Asennettu";
+"settings.cli.not.installed" = "Ei asennettu";
+"settings.cli.usage" = "Käyttö:";
+"settings.cli.location" = "Sijainti";
+"settings.enable.terminal.autorun" = "Ota terminaalin automaattiajo käyttöön";
+"settings.enable.terminal.autorun.help" = "Salli CLI:n suorittaa komentoja terminaaleissa";
 
 // Settings - MCP section
-"settings.section.mcp" = "MCP Server";
-"settings.mcp.title" = "MCP Server";
-"settings.mcp.description" = "Model Context Protocol server for AI agent integration.";
-"settings.mcp.location" = "Server Location";
-"settings.mcp.claude.config" = "Claude Desktop Config";
-"settings.mcp.local.only" = "Local connections only";
-"settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
-"settings.config.copied" = "Configuration copied!";
-"settings.copy.config" = "Copy Configuration";
+"settings.section.mcp" = "MCP-palvelin";
+"settings.mcp.title" = "MCP-palvelin";
+"settings.mcp.description" = "Model Context Protocol -palvelin tekoälyagenttien integrointiin.";
+"settings.mcp.location" = "Palvelimen sijainti";
+"settings.mcp.claude.config" = "Claude Desktop -määritykset";
+"settings.mcp.local.only" = "Vain paikalliset yhteydet";
+"settings.mcp.install.description" = "Lisää Claude Desktop -määrityksiin:";
+"settings.config.copied" = "Määritykset kopioitu!";
+"settings.copy.config" = "Kopioi määritykset";
 
 // Settings - Agents section
-"settings.section.agents" = "Agents";
+"settings.section.agents" = "Agentit";
 
 // MARK: - Command Palette
-"palette.placeholder" = "Search commands...";
-"palette.no.results" = "No results found";
+"palette.placeholder" = "Etsi komentoja...";
+"palette.no.results" = "Tuloksia ei löytynyt";
 
 // MARK: - Help View
-"help.title" = "Help";
-"help.search.placeholder" = "Search help...";
+"help.title" = "Ohje";
+"help.search.placeholder" = "Etsi ohjeesta...";
 
 // MARK: - Alerts
-"alert.error" = "Error";
-"alert.success" = "Success";
+"alert.error" = "Virhe";
+"alert.success" = "Onnistui";
