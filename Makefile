@@ -103,12 +103,13 @@ install-swift-format:
 	@which swift-format > /dev/null || brew install swift-format
 
 # Run SwiftLint (auto-detects CI for GitHub annotations)
+# Requires Xcode for SourceKit - uses Xcode's developer directory
 lint: install-swiftlint
-	swiftlint lint --config .swiftlint.yml $(SWIFTLINT_REPORTER)
+	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swiftlint lint --config .swiftlint.yml $(SWIFTLINT_REPORTER)
 
 # Run SwiftLint with auto-fix
 lint-fix: install-swiftlint
-	swiftlint lint --config .swiftlint.yml --fix
+	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swiftlint lint --config .swiftlint.yml --fix
 
 # Format code with swift-format
 format: install-swift-format
