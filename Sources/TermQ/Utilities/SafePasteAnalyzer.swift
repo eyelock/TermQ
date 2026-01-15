@@ -55,6 +55,7 @@ enum SafePasteAnalyzer {
 
     /// Show warning dialog for paste with dangerous content
     /// Returns the user's choice
+    @MainActor
     static func showWarningDialog(text: String, warnings: [Warning]) -> PasteDecision {
         let alert = NSAlert()
         alert.messageText = "Paste Warning"
