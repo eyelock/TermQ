@@ -114,6 +114,60 @@ final class BoardTests: XCTestCase {
         XCTAssertEqual(targetCards[1].title, "Existing")
     }
 
+    func testMoveCardWithinSameColumnForward() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        let cardA = TerminalCard(title: "A", columnId: column.id, orderIndex: 0)
+        let cardB = TerminalCard(title: "B", columnId: column.id, orderIndex: 1)
+        let cardC = TerminalCard(title: "C", columnId: column.id, orderIndex: 2)
+
+        let board = Board(columns: [column], cards: [cardA, cardB, cardC])
+
+        // Move A to position 2 (before C, so A should end up between B and C)
+        board.moveCard(cardA, to: column, at: 2)
+
+        let cards = board.cards(for: column)
+        XCTAssertEqual(cards.count, 3)
+        XCTAssertEqual(cards[0].title, "B")
+        XCTAssertEqual(cards[1].title, "A")  // A moved forward to before C
+        XCTAssertEqual(cards[2].title, "C")
+    }
+
+    func testMoveCardWithinSameColumnBackward() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        let cardA = TerminalCard(title: "A", columnId: column.id, orderIndex: 0)
+        let cardB = TerminalCard(title: "B", columnId: column.id, orderIndex: 1)
+        let cardC = TerminalCard(title: "C", columnId: column.id, orderIndex: 2)
+
+        let board = Board(columns: [column], cards: [cardA, cardB, cardC])
+
+        // Move C to position 0 (before A)
+        board.moveCard(cardC, to: column, at: 0)
+
+        let cards = board.cards(for: column)
+        XCTAssertEqual(cards.count, 3)
+        XCTAssertEqual(cards[0].title, "C")  // C moved to front
+        XCTAssertEqual(cards[1].title, "A")
+        XCTAssertEqual(cards[2].title, "B")
+    }
+
+    func testMoveCardToSamePositionNoChange() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        let cardA = TerminalCard(title: "A", columnId: column.id, orderIndex: 0)
+        let cardB = TerminalCard(title: "B", columnId: column.id, orderIndex: 1)
+
+        let board = Board(columns: [column], cards: [cardA, cardB])
+
+        // Move A to position 0 (same position)
+        board.moveCard(cardA, to: column, at: 0)
+
+        let cards = board.cards(for: column)
+        XCTAssertEqual(cards[0].title, "A")
+        XCTAssertEqual(cards[1].title, "B")
+    }
+
     func testRemoveCard() {
         let column = Column(name: "Test", orderIndex: 0)
         let card = TerminalCard(title: "To Remove", columnId: column.id)

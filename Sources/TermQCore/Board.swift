@@ -61,11 +61,25 @@ public class Board: ObservableObject, Codable {
     }
 
     public func moveCard(_ card: TerminalCard, to column: Column, at index: Int) {
+        // Check if moving within the same column and find current position
+        let isWithinSameColumn = card.columnId == column.id
+        let currentIndex =
+            isWithinSameColumn
+            ? cards(for: column).firstIndex(where: { $0.id == card.id }) ?? -1
+            : -1
+
         card.columnId = column.id
+
+        // Adjust target index for same-column moves where source is before target
+        // (removing the source card shifts subsequent indices down by 1)
+        var adjustedIndex = index
+        if isWithinSameColumn && currentIndex >= 0 && currentIndex < index {
+            adjustedIndex -= 1
+        }
 
         // Reorder cards in the target column
         var columnCards = cards(for: column).filter { $0.id != card.id }
-        columnCards.insert(card, at: min(index, columnCards.count))
+        columnCards.insert(card, at: min(adjustedIndex, columnCards.count))
 
         for (i, c) in columnCards.enumerated() {
             c.orderIndex = i
