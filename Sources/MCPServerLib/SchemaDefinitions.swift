@@ -1,6 +1,9 @@
 import Foundation
 import MCP
 
+// Type alias for cleaner schema building
+private typealias S = SchemaBuilder
+
 // MARK: - Tool Definitions
 
 extension TermQMCPServer {
@@ -13,15 +16,8 @@ extension TermQMCPServer {
                     Returns terminals with pending actions (llmNextAction) and staleness indicators.
                     Terminals are sorted: pending actions first, then by staleness (stale → ageing → fresh).
                     """,
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "actionsOnly": .object([
-                            "type": "boolean",
-                            "description": "Only show terminals with llmNextAction set",
-                        ])
-                    ]),
-                    "required": .array([]),
+                inputSchema: S.objectSchema([
+                    S.bool("actionsOnly", "Only show terminals with llmNextAction set")
                 ])
             ),
             Tool(
@@ -31,28 +27,14 @@ extension TermQMCPServer {
                     Includes session start/end checklists, tag schema, command reference,
                     and workflow examples for cross-session continuity.
                     """,
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([:]),
-                    "required": .array([]),
-                ])
+                inputSchema: S.emptySchema()
             ),
             Tool(
                 name: "termq_list",
                 description: "List all terminals or filter by column. Supports listing columns only.",
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "column": .object([
-                            "type": "string",
-                            "description": "Filter by column name",
-                        ]),
-                        "columnsOnly": .object([
-                            "type": "boolean",
-                            "description": "Return only column names",
-                        ]),
-                    ]),
-                    "required": .array([]),
+                inputSchema: S.objectSchema([
+                    S.string("column", "Filter by column name"),
+                    S.bool("columnsOnly", "Return only column names"),
                 ])
             ),
             Tool(
@@ -62,22 +44,17 @@ extension TermQMCPServer {
                     across name, description, path, and tags. All filters are AND-combined.
                     Returns matching terminals as JSON array sorted by relevance.
                     """,
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "query": .object([
-                            "type": "string",
-                            "description":
-                                "Smart search: matches ANY word across name, description, path, tags. Best for natural language queries.",
-                        ]),
-                        "name": .object(["type": "string", "description": "Filter by name (word-based matching)"]),
-                        "column": .object(["type": "string", "description": "Filter by column name"]),
-                        "tag": .object(["type": "string", "description": "Filter by tag (format: key or key=value)"]),
-                        "id": .object(["type": "string", "description": "Filter by UUID"]),
-                        "badge": .object(["type": "string", "description": "Filter by badge"]),
-                        "favourites": .object(["type": "boolean", "description": "Only show favourites"]),
-                    ]),
-                    "required": .array([]),
+                inputSchema: S.objectSchema([
+                    S.string(
+                        "query",
+                        "Smart search: matches ANY word across name, description, path, tags. Best for natural language queries."
+                    ),
+                    S.string("name", "Filter by name (word-based matching)"),
+                    S.string("column", "Filter by column name"),
+                    S.string("tag", "Filter by tag (format: key or key=value)"),
+                    S.string("id", "Filter by UUID"),
+                    S.string("badge", "Filter by badge"),
+                    S.bool("favourites", "Only show favourites"),
                 ])
             ),
             Tool(
@@ -87,15 +64,8 @@ extension TermQMCPServer {
                     including llmPrompt (persistent context) and llmNextAction (one-time task).
                     Use partial name matching for convenience.
                     """,
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "identifier": .object([
-                            "type": "string",
-                            "description": "Terminal name, UUID, or path (partial match supported)",
-                        ])
-                    ]),
-                    "required": .array([.string("identifier")]),
+                inputSchema: S.objectSchema([
+                    S.string("identifier", "Terminal name, UUID, or path (partial match supported)", required: true)
                 ])
             ),
             Tool(
@@ -104,17 +74,13 @@ extension TermQMCPServer {
                     Create a new terminal in TermQ. Optionally specify name, description, column,
                     path, tags, and LLM context. Returns the created terminal's details.
                     """,
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "name": .object(["type": "string", "description": "Terminal name"]),
-                        "description": .object(["type": "string", "description": "Terminal description"]),
-                        "column": .object(["type": "string", "description": "Column name (e.g., 'In Progress')"]),
-                        "path": .object(["type": "string", "description": "Working directory path"]),
-                        "llmPrompt": .object(["type": "string", "description": "Persistent LLM context"]),
-                        "llmNextAction": .object(["type": "string", "description": "One-time action for next session"]),
-                    ]),
-                    "required": .array([]),
+                inputSchema: S.objectSchema([
+                    S.string("name", "Terminal name"),
+                    S.string("description", "Terminal description"),
+                    S.string("column", "Column name (e.g., 'In Progress')"),
+                    S.string("path", "Working directory path"),
+                    S.string("llmPrompt", "Persistent LLM context"),
+                    S.string("llmNextAction", "One-time action for next session"),
                 ])
             ),
             Tool(
@@ -123,35 +89,25 @@ extension TermQMCPServer {
                     Update terminal properties. Identify terminal by name or UUID.
                     Can set name, description, column, badges, LLM fields, tags, and favourite status.
                     """,
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "identifier": .object(["type": "string", "description": "Terminal name or UUID"]),
-                        "name": .object(["type": "string", "description": "New name"]),
-                        "description": .object(["type": "string", "description": "New description"]),
-                        "column": .object(["type": "string", "description": "Move to column"]),
-                        "badge": .object([
-                            "type": "string",
-                            "description":
-                                "Badge text (comma-separated for multiple, e.g. 'WIP,urgent'). Replaces existing badges.",
-                        ]),
-                        "llmPrompt": .object(["type": "string", "description": "Set persistent LLM context"]),
-                        "llmNextAction": .object(["type": "string", "description": "Set one-time action"]),
-                        "favourite": .object(["type": "boolean", "description": "Set favourite status"]),
-                    ]),
-                    "required": .array([.string("identifier")]),
+                inputSchema: S.objectSchema([
+                    S.string("identifier", "Terminal name or UUID", required: true),
+                    S.string("name", "New name"),
+                    S.string("description", "New description"),
+                    S.string("column", "Move to column"),
+                    S.string(
+                        "badge",
+                        "Badge text (comma-separated for multiple, e.g. 'WIP,urgent'). Replaces existing badges."),
+                    S.string("llmPrompt", "Set persistent LLM context"),
+                    S.string("llmNextAction", "Set one-time action"),
+                    S.bool("favourite", "Set favourite status"),
                 ])
             ),
             Tool(
                 name: "termq_move",
                 description: "Move a terminal to a different column (workflow stage).",
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "identifier": .object(["type": "string", "description": "Terminal name or UUID"]),
-                        "column": .object(["type": "string", "description": "Target column name"]),
-                    ]),
-                    "required": .array([.string("identifier"), .string("column")]),
+                inputSchema: S.objectSchema([
+                    S.string("identifier", "Terminal name or UUID", required: true),
+                    S.string("column", "Target column name", required: true),
                 ])
             ),
             Tool(
@@ -161,16 +117,8 @@ extension TermQMCPServer {
                     to get context for the terminal you're currently running in.
                     Returns full terminal details including tags, llmPrompt, and llmNextAction.
                     """,
-                inputSchema: .object([
-                    "type": "object",
-                    "properties": .object([
-                        "id": .object([
-                            "type": "string",
-                            "description":
-                                "Terminal UUID (use $TERMQ_TERMINAL_ID from your environment)",
-                        ])
-                    ]),
-                    "required": .array([.string("id")]),
+                inputSchema: S.objectSchema([
+                    S.string("id", "Terminal UUID (use $TERMQ_TERMINAL_ID from your environment)", required: true)
                 ])
             ),
         ]
