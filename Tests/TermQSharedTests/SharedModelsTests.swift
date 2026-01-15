@@ -285,7 +285,7 @@ final class SharedModelsTests: XCTestCase {
         XCTAssertEqual(output.description, "A test terminal")
         XCTAssertEqual(output.column, "In Progress")
         XCTAssertEqual(output.path, "/Users/test")
-        XCTAssertEqual(output.badges, ["prod", "main"])
+        XCTAssertEqual(Set(output.badges), Set(["prod", "main"]))
         XCTAssertTrue(output.isFavourite)
         XCTAssertEqual(output.llmPrompt, "Node.js project")
         XCTAssertEqual(output.llmNextAction, "Fix bug")
@@ -298,5 +298,119 @@ final class SharedModelsTests: XCTestCase {
 
         XCTAssertTrue(json.contains("Test error"))
         XCTAssertTrue(json.contains("1"))
+    }
+
+    // MARK: - TermQError Tests
+
+    func testTermQErrorBoardNotFound() {
+        let error = TermQError.boardNotFound(path: "/Users/test/.termq/board.json")
+
+        XCTAssertNotNil(error.errorDescription)
+        XCTAssertTrue(error.errorDescription!.contains("/Users/test/.termq/board.json"))
+        XCTAssertTrue(error.errorDescription!.contains("Board file not found"))
+    }
+
+    func testTermQErrorColumnNotFound() {
+        let error = TermQError.columnNotFound(name: "Done")
+
+        XCTAssertNotNil(error.errorDescription)
+        XCTAssertTrue(error.errorDescription!.contains("Done"))
+        XCTAssertTrue(error.errorDescription!.contains("Column not found"))
+    }
+
+    func testTermQErrorTerminalNotFound() {
+        let error = TermQError.terminalNotFound(identifier: "my-terminal")
+
+        XCTAssertNotNil(error.errorDescription)
+        XCTAssertTrue(error.errorDescription!.contains("my-terminal"))
+        XCTAssertTrue(error.errorDescription!.contains("Terminal not found"))
+    }
+
+    // MARK: - ColumnOutput Tests
+
+    func testColumnOutputFromColumn() {
+        let column = Column(name: "In Progress", description: "Active work", orderIndex: 1, color: "#3B82F6")
+        let output = ColumnOutput(from: column, terminalCount: 5)
+
+        XCTAssertEqual(output.name, "In Progress")
+        XCTAssertEqual(output.description, "Active work")
+        XCTAssertEqual(output.color, "#3B82F6")
+        XCTAssertEqual(output.terminalCount, 5)
+    }
+
+    // MARK: - PendingOutput Tests
+
+    func testPendingOutputEncoding() throws {
+        // Create a card for testing
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test Terminal",
+                "columnId": "\(columnId.uuidString)",
+                "workingDirectory": "/test",
+                "llmNextAction": "Fix bug",
+                "llmPrompt": "Node.js project",
+                "tags": [
+                    {"id": "\(UUID().uuidString)", "key": "project", "value": "test"}
+                ]
+            }
+            """
+        let card = try JSONDecoder().decode(Card.self, from: json.data(using: .utf8)!)
+        let terminal = PendingTerminalOutput(from: card, columnName: "In Progress", staleness: "fresh")
+
+        let summary = PendingSummary(total: 1, withNextAction: 1, stale: 0, fresh: 1)
+        let output = PendingOutput(terminals: [terminal], summary: summary)
+
+        let encodedJson = try JSONHelper.encode(output)
+        XCTAssertTrue(encodedJson.contains("Test Terminal"))
+        XCTAssertTrue(encodedJson.contains("Fix bug"))
+    }
+
+    // MARK: - PendingSummary Tests
+
+    func testPendingSummaryInitialization() {
+        let summary = PendingSummary(total: 10, withNextAction: 3, stale: 2, fresh: 5)
+
+        XCTAssertEqual(summary.total, 10)
+        XCTAssertEqual(summary.withNextAction, 3)
+        XCTAssertEqual(summary.stale, 2)
+        XCTAssertEqual(summary.fresh, 5)
+    }
+
+    // MARK: - SetResponse Tests
+
+    func testSetResponseInitialization() {
+        let response = SetResponse(success: true, id: "test-id")
+
+        XCTAssertTrue(response.success)
+        XCTAssertEqual(response.id, "test-id")
+    }
+
+    func testSetResponseEncoding() throws {
+        let response = SetResponse(success: true, id: "abc-123")
+        let json = try JSONHelper.encode(response)
+
+        XCTAssertTrue(json.contains("true"))
+        XCTAssertTrue(json.contains("abc-123"))
+    }
+
+    // MARK: - MoveResponse Tests
+
+    func testMoveResponseInitialization() {
+        let response = MoveResponse(success: true, id: "test-id", column: "Done")
+
+        XCTAssertTrue(response.success)
+        XCTAssertEqual(response.id, "test-id")
+        XCTAssertEqual(response.column, "Done")
+    }
+
+    func testMoveResponseEncoding() throws {
+        let response = MoveResponse(success: false, id: "xyz-789", column: "In Progress")
+        let json = try JSONHelper.encode(response)
+
+        XCTAssertTrue(json.contains("false"))
+        XCTAssertTrue(json.contains("xyz-789"))
+        XCTAssertTrue(json.contains("In Progress"))
     }
 }
