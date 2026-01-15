@@ -61,6 +61,11 @@ class BoardViewModel: ObservableObject {
         // Start timer to periodically update processing status
         startProcessingTimer()
 
+        // Set up centralized bell handler for reliable notification across all sessions
+        TerminalSessionManager.shared.onBellForCard = { [weak self] cardId in
+            self?.markNeedsAttention(cardId)
+        }
+
         // Start monitoring file for external changes
         persistence.startFileMonitoring { [weak self] in
             self?.handleFileChange()
