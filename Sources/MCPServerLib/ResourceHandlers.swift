@@ -1,5 +1,6 @@
 import Foundation
 import MCP
+import TermQShared
 
 // MARK: - Resource Handler Implementations
 

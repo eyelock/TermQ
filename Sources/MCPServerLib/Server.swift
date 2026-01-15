@@ -1,5 +1,6 @@
 import Foundation
 import MCP
+import TermQShared
 
 /// TermQ MCP Server implementation
 ///
@@ -97,7 +98,7 @@ public final class TermQMCPServer: @unchecked Sendable {
     // MARK: - Helpers
 
     /// Load the board from the data directory
-    func loadBoard() throws -> MCPBoard {
+    func loadBoard() throws -> Board {
         try BoardLoader.loadBoard(dataDirectory: dataDirectory)
     }
 }

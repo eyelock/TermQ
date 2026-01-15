@@ -1,5 +1,6 @@
 import Foundation
 import MCP
+import TermQShared
 
 // MARK: - Tool Handler Implementations
 
@@ -33,7 +34,7 @@ extension TermQMCPServer {
     // MARK: - Tool Implementations
 
     func handlePending(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let actionsOnly = arguments?["actionsOnly"]?.boolValue ?? false
+        let actionsOnly = InputValidator.optionalBool("actionsOnly", from: arguments)
 
         do {
             let board = try loadBoard()
@@ -104,8 +105,8 @@ extension TermQMCPServer {
     }
 
     func handleList(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let columnFilter = arguments?["column"]?.stringValue
-        let columnsOnly = arguments?["columnsOnly"]?.boolValue ?? false
+        let columnFilter = InputValidator.optionalString("column", from: arguments)
+        let columnsOnly = InputValidator.optionalBool("columnsOnly", from: arguments)
 
         do {
             let board = try loadBoard()
@@ -153,13 +154,20 @@ extension TermQMCPServer {
     }
 
     func handleFind(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let query = arguments?["query"]?.stringValue
-        let nameFilter = arguments?["name"]?.stringValue
-        let columnFilter = arguments?["column"]?.stringValue
-        let tagFilter = arguments?["tag"]?.stringValue
-        let idFilter = arguments?["id"]?.stringValue
-        let badgeFilter = arguments?["badge"]?.stringValue
-        let favouritesOnly = arguments?["favourites"]?.boolValue ?? false
+        let query = InputValidator.optionalString("query", from: arguments)
+        let nameFilter = InputValidator.optionalString("name", from: arguments)
+        let columnFilter = InputValidator.optionalString("column", from: arguments)
+        let tagFilter = InputValidator.optionalString("tag", from: arguments)
+        let badgeFilter = InputValidator.optionalString("badge", from: arguments)
+        let favouritesOnly = InputValidator.optionalBool("favourites", from: arguments)
+
+        // Validate optional UUID filter
+        let idFilter: UUID?
+        do {
+            idFilter = try InputValidator.optionalUUID("id", from: arguments)
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
 
         do {
             let board = try loadBoard()
@@ -186,13 +194,7 @@ extension TermQMCPServer {
 
             // Filter by ID (exact match)
             if let idFilter = idFilter {
-                if let uuid = UUID(uuidString: idFilter) {
-                    cards = cards.filter { $0.id == uuid }
-                } else {
-                    // Invalid UUID format - return empty
-                    let json = try JSONHelper.encode([TerminalOutput]())
-                    return CallTool.Result(content: [.text(json)])
-                }
+                cards = cards.filter { $0.id == idFilter }
             }
 
             // Filter by name (case-insensitive partial match)
@@ -285,7 +287,7 @@ extension TermQMCPServer {
     }
 
     /// Calculate relevance score for a card based on query words
-    private func calculateRelevanceScore(card: MCPCard, queryWords: Set<String>) -> Int {
+    private func calculateRelevanceScore(card: Card, queryWords: Set<String>) -> Int {
         var score = 0
 
         // Get searchable words from card fields
@@ -317,8 +319,11 @@ extension TermQMCPServer {
     }
 
     func handleOpen(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        guard let identifier = arguments?["identifier"]?.stringValue else {
-            throw MCPError.invalidParams("identifier is required")
+        let identifier: String
+        do {
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_open")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
         do {
@@ -345,16 +350,12 @@ extension TermQMCPServer {
     }
 
     func handleGet(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        guard let id = arguments?["id"]?.stringValue else {
-            throw MCPError.invalidParams("id is required (use $TERMQ_TERMINAL_ID from environment)")
-        }
-
-        // Validate UUID format
-        guard UUID(uuidString: id) != nil else {
-            return CallTool.Result(
-                content: [.text("Error: Invalid UUID format: \(id)")],
-                isError: true
-            )
+        let id: String
+        do {
+            let uuid = try InputValidator.requireUUID("id", from: arguments, tool: "termq_get")
+            id = uuid.uuidString
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
         do {
@@ -389,10 +390,21 @@ extension TermQMCPServer {
     }
 
     func handleCreate(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let name = arguments?["name"]?.stringValue ?? "New Terminal"
-        let column = arguments?["column"]?.stringValue
-        let path = arguments?["path"]?.stringValue ?? FileManager.default.currentDirectoryPath
-        let description = arguments?["description"]?.stringValue ?? ""
+        let name = InputValidator.optionalString("name", from: arguments) ?? "New Terminal"
+        let column = InputValidator.optionalString("column", from: arguments)
+        let description = InputValidator.optionalString("description", from: arguments) ?? ""
+
+        // Validate path if provided (don't require existence - user can create terminals pointing anywhere)
+        let path: String
+        do {
+            if let providedPath = try InputValidator.optionalPath("path", from: arguments, mustExist: false) {
+                path = providedPath
+            } else {
+                path = FileManager.default.currentDirectoryPath
+            }
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
 
         do {
             let card = try BoardWriter.createCard(
@@ -414,8 +426,11 @@ extension TermQMCPServer {
     }
 
     func handleSet(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        guard let identifier = arguments?["identifier"]?.stringValue else {
-            throw MCPError.invalidParams("identifier is required")
+        let identifier: String
+        do {
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_set")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
         // Build updates dictionary
@@ -451,7 +466,7 @@ extension TermQMCPServer {
         }
 
         do {
-            let card: MCPCard
+            let card: Card
             if updates.isEmpty {
                 // No field updates, just return current state
                 let board = try loadBoard()
@@ -475,10 +490,13 @@ extension TermQMCPServer {
     }
 
     func handleMove(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        guard let identifier = arguments?["identifier"]?.stringValue,
-            let column = arguments?["column"]?.stringValue
-        else {
-            throw MCPError.invalidParams("identifier and column are required")
+        let identifier: String
+        let column: String
+        do {
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_move")
+            column = try InputValidator.requireNonEmptyString("column", from: arguments, tool: "termq_move")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
         do {

@@ -23,7 +23,9 @@ Sources/TermQ/Resources/Help/
 TermQ.app/Contents/MacOS/TermQ
 TermQ.app/Contents/MacOS/tq
 TermQ.app/Contents/Resources/termq
+TermQ.app/Contents/Resources/termqcli
 TermQ.app/Contents/Resources/termqmcp
+TermQ.app/Contents/Resources/TermQ_TermQ.bundle/
 TermQ.app/Contents/_CodeSignature/
 TermQ.app/Contents/Info.plist
 

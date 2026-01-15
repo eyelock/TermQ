@@ -3,77 +3,9 @@ import Foundation
 import SwiftUI
 import TermQCore
 
-// MARK: - File Monitor Helper
-
-/// Non-actor-isolated helper class for file system monitoring
-/// This class exists to avoid Swift 6 strict concurrency issues with dispatch sources
-/// When a @MainActor class creates a dispatch source handler closure, Swift 6 rejects it
-/// because the closure inherits actor isolation but executes on a different queue
-final class FileMonitor: @unchecked Sendable {
-    private var fileDescriptor: Int32 = -1
-    private var source: DispatchSourceFileSystemObject?
-    private let onChange: @Sendable () -> Void
-
-    init(path: String, onChange: @escaping @Sendable () -> Void) {
-        self.onChange = onChange
-        startMonitoring(path: path)
-    }
-
-    deinit {
-        stopMonitoring()
-    }
-
-    func restartMonitoring(path: String) {
-        stopMonitoring()
-        startMonitoring(path: path)
-    }
-
-    private func startMonitoring(path: String) {
-        let fd = open(path, O_EVTONLY)
-        guard fd >= 0 else {
-            #if DEBUG
-                print("[FileMonitor] Failed to open file for monitoring: \(path)")
-            #endif
-            return
-        }
-
-        let source = DispatchSource.makeFileSystemObjectSource(
-            fileDescriptor: fd,
-            eventMask: [.write, .rename, .delete],
-            queue: DispatchQueue.global(qos: .utility)
-        )
-
-        // Capture onChange - it's @Sendable so safe to call from any queue
-        let callback = self.onChange
-        source.setEventHandler {
-            callback()
-        }
-
-        source.setCancelHandler {
-            close(fd)
-        }
-
-        source.resume()
-
-        self.fileDescriptor = fd
-        self.source = source
-
-        #if DEBUG
-            print("[FileMonitor] Started monitoring: \(path)")
-        #endif
-    }
-
-    private func stopMonitoring() {
-        source?.cancel()
-        source = nil
-        fileDescriptor = -1
-    }
-}
-
 // MARK: - Board View Model
 
 @MainActor
-// swiftlint:disable:next type_body_length
 class BoardViewModel: ObservableObject {
     /// Shared instance for app-wide access (e.g., from Settings window)
     static let shared = BoardViewModel()
@@ -84,73 +16,41 @@ class BoardViewModel: ObservableObject {
     @Published var isEditingNewCard: Bool = false
     @Published var isEditingColumn: Column?
     @Published var isEditingNewColumn: Bool = false
-    /// Draft column being created (not yet added to board)
     @Published var draftColumn: Column?
     @Published var showDeleteConfirmation: Bool = false
-
-    /// Session tabs - ordered list of card IDs currently open as tabs (not persisted)
-    /// Initialized from favourites on startup, then tracks what's open during the session
-    @Published private(set) var sessionTabs: [UUID] = []
-
-    /// Tabs that need attention (received a bell) - cleared when selected
-    @Published private(set) var needsAttention: Set<UUID> = []
 
     /// Terminals currently processing (have recent output activity)
     @Published private(set) var processingCards: Set<UUID> = []
 
-    /// Transient terminals - not persisted, exist only as tabs until promoted
-    /// Promoted to board when: edited & saved, or marked as favourite
-    private var transientCards: [UUID: TerminalCard] = [:]
-
     /// Timer for updating processing status
     private var processingTimer: Timer?
 
-    private let saveURL: URL
+    // MARK: - Extracted Managers
 
-    /// File system monitoring for external changes (e.g., from MCP server)
-    /// Uses a separate non-actor-isolated helper to avoid Swift 6 concurrency issues
-    nonisolated(unsafe) private var fileMonitor: FileMonitor?
+    private let persistence: BoardPersistence
+    let tabManager: TabManager
+
+    // MARK: - Published Proxies (for backwards compatibility)
+
+    /// Session tabs - proxied from TabManager
+    var sessionTabs: [UUID] { tabManager.sessionTabs }
+
+    /// Tabs that need attention - proxied from TabManager
+    var needsAttention: Set<UUID> { tabManager.needsAttention }
 
     init() {
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        #if DEBUG
-            let termqDir = appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
-        #else
-            let termqDir = appSupport.appendingPathComponent("TermQ", isDirectory: true)
-        #endif
+        self.persistence = BoardPersistence()
+        self.tabManager = TabManager()
+        self.board = persistence.loadBoard()
 
-        // Create directory if needed
-        try? FileManager.default.createDirectory(at: termqDir, withIntermediateDirectories: true)
+        // Configure TabManager callbacks after all properties initialized
+        tabManager.configure(
+            board: { [weak self] in self?.board ?? Board() },
+            onSave: { [weak self] in self?.save() }
+        )
 
-        self.saveURL = termqDir.appendingPathComponent("board.json")
-
-        // Try to load saved board
-        if let data = try? Data(contentsOf: saveURL),
-            let loaded = try? JSONDecoder().decode(Board.self, from: data)
-        {
-            self.board = loaded
-            #if DEBUG
-                print("[BoardViewModel] Loaded board from: \(saveURL.path)")
-                for card in loaded.cards.prefix(3) {
-                    print("[BoardViewModel] Card '\(card.title)' badge: '\(card.badge)'")
-                }
-            #endif
-        } else {
-            self.board = Board()
-            #if DEBUG
-                print("[BoardViewModel] Created new empty board")
-            #endif
-        }
-
-        // Initialize session tabs from persisted favourite order
-        // Filter to only include existing active favourite cards (exclude deleted)
-        let favouriteIds = Set(board.activeCards.filter { $0.isFavourite }.map { $0.id })
-        sessionTabs = board.favouriteOrder.filter { favouriteIds.contains($0) }
-
-        // Add any favourites not in the order (e.g., newly favourited while order wasn't saved)
-        for card in board.activeCards where card.isFavourite && !sessionTabs.contains(card.id) {
-            sessionTabs.append(card.id)
-        }
+        // Initialize tabs from favourites
+        tabManager.initializeFromFavourites()
 
         // Purge expired cards from bin on startup
         purgeExpiredCards()
@@ -158,16 +58,14 @@ class BoardViewModel: ObservableObject {
         // Start timer to periodically update processing status
         startProcessingTimer()
 
-        // Start monitoring file for external changes (e.g., from MCP server)
-        startFileMonitoring()
+        // Start monitoring file for external changes
+        persistence.startFileMonitoring { [weak self] in
+            self?.handleFileChange()
+        }
     }
 
-    deinit {
-        // FileMonitor cleans up in its own deinit
-        fileMonitor = nil
-    }
+    // MARK: - Private Helpers
 
-    /// Start timer to update processing status
     private func startProcessingTimer() {
         processingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             Task { @MainActor in
@@ -176,7 +74,6 @@ class BoardViewModel: ObservableObject {
         }
     }
 
-    /// Refresh which cards are currently processing
     private func refreshProcessingStatus() {
         let newProcessing = TerminalSessionManager.shared.processingCardIds()
         if newProcessing != processingCards {
@@ -184,225 +81,94 @@ class BoardViewModel: ObservableObject {
         }
     }
 
-    // MARK: - File Monitoring
-
-    /// Start monitoring the board file for external changes
-    private func startFileMonitoring() {
-        let path = saveURL.path
-
-        // Use the non-actor-isolated FileMonitor helper class
-        // This avoids Swift 6 strict concurrency issues where closures created
-        // in @MainActor context cannot be used as dispatch source handlers
-        fileMonitor = FileMonitor(path: path) { [weak self] in
-            // This callback runs on a background queue
-            // Dispatch to main actor to handle the change
-            Task { @MainActor in
-                guard let self else { return }
-                self.handleFileChange()
-                // Re-establish monitoring after atomic writes replace the file
-                // (atomic writes create a new inode, making the fd stale)
-                self.fileMonitor?.restartMonitoring(path: self.saveURL.path)
-            }
-        }
-    }
-
-    /// Handle file change notification - reload board from disk
     private func handleFileChange() {
-        #if DEBUG
-            print("[BoardViewModel] File change detected, reloading...")
-        #endif
-
-        guard let data = try? Data(contentsOf: saveURL),
-            let loaded = try? JSONDecoder().decode(Board.self, from: data)
-        else {
-            #if DEBUG
-                print("[BoardViewModel] Failed to reload board from file")
-            #endif
-            return
-        }
-
-        // Merge changes: update existing cards, add new ones
-        // Preserve session state (tabs, selection) while updating card properties
-        for loadedCard in loaded.cards {
-            if let existingCard = board.cards.first(where: { $0.id == loadedCard.id }) {
-                // Update existing card properties
-                existingCard.title = loadedCard.title
-                existingCard.description = loadedCard.description
-                existingCard.workingDirectory = loadedCard.workingDirectory
-                existingCard.shellPath = loadedCard.shellPath
-                existingCard.columnId = loadedCard.columnId
-                existingCard.orderIndex = loadedCard.orderIndex
-                existingCard.isFavourite = loadedCard.isFavourite
-                existingCard.tags = loadedCard.tags
-                existingCard.initCommand = loadedCard.initCommand
-                existingCard.llmPrompt = loadedCard.llmPrompt
-                existingCard.llmNextAction = loadedCard.llmNextAction
-                existingCard.badge = loadedCard.badge
-                existingCard.fontName = loadedCard.fontName
-                existingCard.fontSize = loadedCard.fontSize
-                existingCard.safePasteEnabled = loadedCard.safePasteEnabled
-                existingCard.themeId = loadedCard.themeId
-                existingCard.allowAutorun = loadedCard.allowAutorun
-                existingCard.deletedAt = loadedCard.deletedAt
-                existingCard.lastLLMGet = loadedCard.lastLLMGet
-            } else {
-                // New card from external source
-                board.cards.append(loadedCard)
-            }
-        }
-
-        // Update columns
-        board.columns = loaded.columns
-        board.favouriteOrder = loaded.favouriteOrder
-
+        guard let loaded = persistence.reloadForExternalChanges() else { return }
+        BoardPersistence.mergeExternalChanges(from: loaded, into: board)
         objectWillChange.send()
-
-        #if DEBUG
-            print("[BoardViewModel] Reloaded board with \(board.cards.count) cards")
-        #endif
     }
 
     func save() {
-        do {
-            let data = try JSONEncoder().encode(board)
-            try data.write(to: saveURL)
-        } catch {
-            print("Failed to save board: \(error)")
-        }
+        persistence.save(board)
     }
+
+    // MARK: - Card Operations
 
     func addTerminal(to column: Column) {
         let card = board.addCard(to: column)
         objectWillChange.send()
         save()
 
-        // Open it for editing
         isEditingNewCard = true
         isEditingCard = card
     }
 
-    /// Soft delete a card (move to bin)
     func deleteCard(_ card: TerminalCard) {
-        // Remove from session tabs
-        sessionTabs.removeAll { $0 == card.id }
+        tabManager.removeTab(card.id)
 
         if selectedCard?.id == card.id {
             selectedCard = nil
         }
-        // Clean up terminal session
         TerminalSessionManager.shared.removeSession(for: card.id)
 
-        // Soft delete: set deletedAt instead of removing
         card.deletedAt = Date()
 
         objectWillChange.send()
         save()
     }
 
-    /// Soft delete a tab card and stay in focused view if possible
-    /// Selects the tab to the left, or next available tab, or goes to board if none left
     func deleteTabCard(_ card: TerminalCard) {
-        let tabs = tabCards
-        let cardIndex = tabs.firstIndex(where: { $0.id == card.id })
+        let nextCardId = tabManager.adjacentTabId(to: card.id)
 
-        // Determine which card to select after deletion
-        var nextCard: TerminalCard?
-        if let index = cardIndex {
-            // Try to select the tab to the left
-            if index > 0 {
-                nextCard = tabs[index - 1]
-            } else if tabs.count > 1 {
-                // If deleting first tab, select the next one
-                nextCard = tabs[1]
-            }
-        }
-
-        // Remove from session tabs
-        sessionTabs.removeAll { $0 == card.id }
-
-        // Clean up terminal session
+        tabManager.removeTab(card.id)
         TerminalSessionManager.shared.removeSession(for: card.id)
 
-        // Handle deletion based on card type
         if card.isTransient {
-            // Transient cards are permanently deleted (never persisted)
-            transientCards.removeValue(forKey: card.id)
+            tabManager.removeTransientCard(card.id)
         } else {
-            // Soft delete: set deletedAt instead of removing
             card.deletedAt = Date()
             save()
         }
 
         objectWillChange.send()
 
-        // Select the next card, or go to board if none left
-        if let next = nextCard, next.id != card.id {
+        if let nextId = nextCardId, let next = tabManager.card(for: nextId) {
             selectedCard = next
+        } else if let first = tabManager.tabCards.first {
+            selectedCard = first
         } else {
-            // Check if there are any remaining tabs
-            if let first = tabCards.first {
-                selectedCard = first
-            } else {
-                selectedCard = nil  // Go to board view
-            }
+            selectedCard = nil
         }
     }
 
-    /// Close a tab without deleting the terminal card (unless transient)
-    /// Transient cards are removed entirely when closed
-    /// Removes from session tabs and selects adjacent tab
     func closeTab(_ card: TerminalCard) {
-        let tabs = tabCards
-        let cardIndex = tabs.firstIndex(where: { $0.id == card.id })
+        let nextCardId = tabManager.adjacentTabId(to: card.id)
 
-        // Determine which card to select after closing
-        var nextCard: TerminalCard?
-        if let index = cardIndex {
-            if index > 0 {
-                nextCard = tabs[index - 1]
-            } else if tabs.count > 1 {
-                nextCard = tabs[1]
-            }
-        }
+        tabManager.removeTab(card.id)
 
-        // Remove from session tabs
-        sessionTabs.removeAll { $0 == card.id }
-
-        // If transient, remove the card entirely (it was never persisted)
         if card.isTransient {
-            transientCards.removeValue(forKey: card.id)
+            tabManager.removeTransientCard(card.id)
             TerminalSessionManager.shared.removeSession(for: card.id)
         }
 
         objectWillChange.send()
 
-        // Select the next card, or go to board if none left
-        if let next = nextCard, next.id != card.id {
+        if let nextId = nextCardId, let next = tabManager.card(for: nextId) {
             selectedCard = next
-        } else if let first = tabCards.first {
+        } else if let first = tabManager.tabCards.first {
             selectedCard = first
         } else {
-            selectedCard = nil  // Go to board view
+            selectedCard = nil
         }
     }
 
-    /// Close all tabs that are not favourites
-    /// Transient (non-favourite) tabs are removed entirely
     func closeUnfavouritedTabs() {
-        let favouriteIds = Set(board.cards.filter { $0.isFavourite }.map { $0.id })
-
-        // Find transient cards to remove
-        let transientToRemove = sessionTabs.filter { transientCards[$0] != nil }
-        for id in transientToRemove {
-            transientCards.removeValue(forKey: id)
+        let removedIds = tabManager.closeUnfavouritedTabs()
+        for id in removedIds {
             TerminalSessionManager.shared.removeSession(for: id)
         }
 
-        sessionTabs = sessionTabs.filter { favouriteIds.contains($0) }
-
-        // If current selection is no longer in tabs, select first tab or go to board
-        if let current = selectedCard, !sessionTabs.contains(current.id) {
-            if let first = tabCards.first {
+        if let current = selectedCard, !tabManager.hasTab(current.id) {
+            if let first = tabManager.tabCards.first {
                 selectedCard = first
             } else {
                 selectedCard = nil
@@ -424,35 +190,31 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
-    /// Select a card and add it to session tabs if entering focused mode
     func selectCard(_ card: TerminalCard) {
         selectedCard = card
-        // Add to session tabs if not already there
-        if !sessionTabs.contains(card.id) {
-            sessionTabs.append(card.id)
-        }
-        // Clear attention indicator when tab is selected
-        needsAttention.remove(card.id)
+        tabManager.addTab(card.id)
+        tabManager.clearAttention(card.id)
     }
 
-    /// Mark a tab as needing attention (e.g., from terminal bell)
     func markNeedsAttention(_ cardId: UUID) {
-        print("[TermQ] markNeedsAttention called for: \(cardId), selectedCard: \(selectedCard?.id.uuidString ?? "nil")")
-        // Only mark if not the currently selected card
-        if selectedCard?.id != cardId {
-            needsAttention.insert(cardId)
-            print("[TermQ] Added to needsAttention set, count: \(needsAttention.count)")
-        } else {
-            print("[TermQ] Skipped - card is currently selected")
-        }
+        tabManager.markNeedsAttention(cardId, currentSelection: selectedCard?.id)
     }
 
     func deselectCard() {
         selectedCard = nil
     }
 
+    func updateCard(_ card: TerminalCard) {
+        if card.isTransient {
+            promoteTransientCard(card)
+        }
+        objectWillChange.send()
+        save()
+    }
+
+    // MARK: - Column Operations
+
     func addColumn() {
-        // Create a draft column (not added to board yet)
         let maxIndex = board.columns.map(\.orderIndex).max() ?? -1
         let column = Column(name: "New Column", orderIndex: maxIndex + 1)
         draftColumn = column
@@ -460,7 +222,6 @@ class BoardViewModel: ObservableObject {
         isEditingColumn = column
     }
 
-    /// Add the draft column to the board (called when Save is clicked)
     func commitDraftColumn() {
         guard let column = draftColumn else { return }
         board.columns.append(column)
@@ -469,32 +230,17 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
-    /// Discard the draft column (called when Cancel is clicked)
     func discardDraftColumn() {
         draftColumn = nil
     }
 
-    /// Check if a column can be deleted (must be empty)
     func canDeleteColumn(_ column: Column) -> Bool {
         return board.cards(for: column).isEmpty
     }
 
     func deleteColumn(_ column: Column) {
-        // Only delete if column is empty
         guard canDeleteColumn(column) else { return }
         board.removeColumn(column)
-        objectWillChange.send()
-        save()
-    }
-
-    /// Update a card's details
-    /// If updating a transient card, promotes it to persistent (user intentionally edited it)
-    func updateCard(_ card: TerminalCard) {
-        // Promote transient card when user edits it
-        if card.isTransient {
-            promoteTransientCard(card)
-        }
-
         objectWillChange.send()
         save()
     }
@@ -504,7 +250,6 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
-    /// Move a column to a new position (for drag-drop reordering)
     func moveColumn(_ column: Column, toIndex: Int) {
         board.moveColumn(column, to: toIndex)
         objectWillChange.send()
@@ -513,55 +258,39 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Favourites
 
-    /// Active cards marked as favourites (persisted, restored on app restart)
     var favouriteCards: [TerminalCard] {
         board.activeCards.filter { $0.isFavourite }
     }
 
-    /// Toggle favourite status for a card
-    /// If marking a transient card as favourite, promotes it to persistent
     func toggleFavourite(_ card: TerminalCard) {
         card.isFavourite.toggle()
 
-        // If marking as favourite, promote transient card to persistent
         if card.isFavourite && card.isTransient {
             promoteTransientCard(card)
         }
 
-        // If marking as favourite, ensure it's in session tabs
-        if card.isFavourite && !sessionTabs.contains(card.id) {
-            sessionTabs.append(card.id)
+        if card.isFavourite {
+            tabManager.addTab(card.id)
         }
 
-        // Update persisted favourite order
-        updateFavouriteOrder()
-
+        tabManager.updateFavouriteOrder()
         objectWillChange.send()
         save()
     }
 
-    // MARK: - Session Tabs
+    // MARK: - Tab Proxies (for backwards compatibility)
 
-    /// Cards to show as tabs - based on sessionTabs order
-    /// Includes both persisted (board) and transient cards
     var tabCards: [TerminalCard] {
-        sessionTabs.compactMap { id in
-            // Check transient cards first, then board cards
-            transientCards[id] ?? board.cards.first { $0.id == id }
-        }
+        tabManager.tabCards
     }
 
-    /// All active terminals across the board and transient storage (excludes deleted)
-    /// Useful for command palette and global search
     var allTerminals: [TerminalCard] {
         var terminals = board.activeCards
-        // Add transient cards that aren't already in board
-        for (_, card) in transientCards {
+        for (_, card) in tabManager.transientCards {
             if !terminals.contains(where: { $0.id == card.id }) {
                 terminals.append(card)
             }
         }
-        // Sort favourites first, then by title
         return terminals.sorted { lhs, rhs in
             if lhs.isFavourite != rhs.isFavourite {
                 return lhs.isFavourite
@@ -570,46 +299,23 @@ class BoardViewModel: ObservableObject {
         }
     }
 
-    /// Look up a card by ID (from board or transient)
     func card(for id: UUID) -> TerminalCard? {
-        transientCards[id] ?? board.cards.first { $0.id == id }
+        tabManager.card(for: id)
     }
 
-    /// Move a tab from one position to another
     func moveTab(fromIndex: Int, toIndex: Int) {
-        guard fromIndex != toIndex,
-            fromIndex >= 0, fromIndex < sessionTabs.count,
-            toIndex >= 0, toIndex < sessionTabs.count
-        else { return }
-
-        let movedId = sessionTabs.remove(at: fromIndex)
-        sessionTabs.insert(movedId, at: toIndex)
-
-        updateFavouriteOrder()
+        tabManager.moveTab(fromIndex: fromIndex, toIndex: toIndex)
         objectWillChange.send()
-        save()
     }
 
-    /// Move a tab by card ID to a new index
     func moveTab(_ cardId: UUID, toIndex: Int) {
-        guard let fromIndex = sessionTabs.firstIndex(of: cardId) else { return }
-        moveTab(fromIndex: fromIndex, toIndex: toIndex)
-    }
-
-    /// Update the persisted favourite order from current session tabs
-    private func updateFavouriteOrder() {
-        // Only persist the order of active favourited tabs
-        let favouriteIds = Set(board.activeCards.filter { $0.isFavourite }.map { $0.id })
-        board.favouriteOrder = sessionTabs.filter { favouriteIds.contains($0) }
+        tabManager.moveTab(cardId, toIndex: toIndex)
+        objectWillChange.send()
     }
 
     // MARK: - Quick Actions
 
-    /// Create a new transient terminal immediately without showing the editor dialog
-    /// Transient terminals are not saved to the board until edited or favourited
-    /// Uses current terminal's column and working directory if available
     func quickNewTerminal() {
-        // Determine column and working directory
         let column: Column
         let workingDirectory: String
 
@@ -617,7 +323,6 @@ class BoardViewModel: ObservableObject {
             let currentColumn = board.columns.first(where: { $0.id == current.columnId })
         {
             column = currentColumn
-            // Use tracked current directory if available
             workingDirectory =
                 TerminalSessionManager.shared.getCurrentDirectory(for: current.id)
                 ?? current.workingDirectory
@@ -625,11 +330,10 @@ class BoardViewModel: ObservableObject {
             column = firstColumn
             workingDirectory = NSHomeDirectory()
         } else {
-            return  // No columns available
+            return
         }
 
-        // Generate a unique title (check both board and transient cards)
-        let existingTitles = Set(board.cards.map { $0.title } + transientCards.values.map { $0.title })
+        let existingTitles = Set(board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
         var counter = 1
         var title = "Terminal \(counter)"
         while existingTitles.contains(title) {
@@ -637,95 +341,64 @@ class BoardViewModel: ObservableObject {
             title = "Terminal \(counter)"
         }
 
-        // Create a transient card (not added to board)
         let card = TerminalCard(
             title: title,
             columnId: column.id,
             workingDirectory: workingDirectory
         )
         card.isTransient = true
-        transientCards[card.id] = card
+        tabManager.addTransientCard(card)
 
-        // Insert tab after current tab (or at end if no selection)
-        if let current = selectedCard,
-            let currentIndex = sessionTabs.firstIndex(of: current.id)
-        {
-            sessionTabs.insert(card.id, at: currentIndex + 1)
+        if let current = selectedCard {
+            tabManager.insertTab(card.id, after: current.id)
         } else {
-            sessionTabs.append(card.id)
+            tabManager.addTab(card.id)
         }
 
         objectWillChange.send()
-        // Don't save - transient cards are not persisted
-
-        // Switch to the new terminal immediately
         selectedCard = card
     }
 
-    /// Promote a transient card to a persistent board card
     private func promoteTransientCard(_ card: TerminalCard) {
-        guard card.isTransient, transientCards[card.id] != nil else { return }
-
-        // Remove from transient storage
-        transientCards.removeValue(forKey: card.id)
-
-        // Add to board
-        card.isTransient = false
-        board.cards.append(card)
-
-        objectWillChange.send()
-        save()
-    }
-
-    /// Switch to the next tab (cycles through)
-    func nextTab() {
-        let tabs = tabCards
-        guard !tabs.isEmpty else { return }
-
-        if let current = selectedCard,
-            let currentIndex = tabs.firstIndex(where: { $0.id == current.id })
-        {
-            let nextIndex = (currentIndex + 1) % tabs.count
-            selectedCard = tabs[nextIndex]
-        } else if let first = tabs.first {
-            selectCard(first)
+        guard card.isTransient else { return }
+        if let promoted = tabManager.promoteTransientCard(card.id) {
+            board.cards.append(promoted)
+            objectWillChange.send()
+            save()
         }
     }
 
-    /// Switch to the previous tab (cycles through)
-    func previousTab() {
-        let tabs = tabCards
-        guard !tabs.isEmpty else { return }
-
-        if let current = selectedCard,
-            let currentIndex = tabs.firstIndex(where: { $0.id == current.id })
+    func nextTab() {
+        if let nextId = tabManager.nextTabId(from: selectedCard?.id),
+            let next = tabManager.card(for: nextId)
         {
-            let prevIndex = currentIndex == 0 ? tabs.count - 1 : currentIndex - 1
-            selectedCard = tabs[prevIndex]
-        } else if let last = tabs.last {
-            selectCard(last)
+            selectedCard = next
+        }
+    }
+
+    func previousTab() {
+        if let prevId = tabManager.previousTabId(from: selectedCard?.id),
+            let prev = tabManager.card(for: prevId)
+        {
+            selectedCard = prev
         }
     }
 
     // MARK: - Bin (Soft Delete)
 
-    /// Cards currently in the bin (soft-deleted)
     var binCards: [TerminalCard] {
         board.deletedCards
     }
 
-    /// Permanently delete a card (remove from board entirely)
     func permanentlyDeleteCard(_ card: TerminalCard) {
         board.removeCard(card)
         objectWillChange.send()
         save()
     }
 
-    /// Restore a card from the bin
     func restoreCard(_ card: TerminalCard) {
         card.deletedAt = nil
 
-        // If the original column no longer exists, move to first column
         if !board.columns.contains(where: { $0.id == card.columnId }) {
             if let firstColumn = board.columns.first {
                 card.columnId = firstColumn.id
@@ -736,7 +409,6 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
-    /// Permanently delete all cards in the bin
     func emptyBin() {
         let deletedCards = board.deletedCards
         for card in deletedCards {
@@ -746,10 +418,9 @@ class BoardViewModel: ObservableObject {
         save()
     }
 
-    /// Purge cards that have been in the bin longer than retention period
     private func purgeExpiredCards() {
         let retentionDays = UserDefaults.standard.integer(forKey: "binRetentionDays")
-        let effectiveRetentionDays = retentionDays > 0 ? retentionDays : 14  // Default 14 days
+        let effectiveRetentionDays = retentionDays > 0 ? retentionDays : 14
 
         let cutoffDate = Calendar.current.date(byAdding: .day, value: -effectiveRetentionDays, to: Date()) ?? Date()
 

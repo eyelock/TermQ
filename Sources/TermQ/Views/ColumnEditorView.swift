@@ -10,16 +10,9 @@ struct ColumnEditorView: View {
     @State private var description: String = ""
     @State private var selectedColor: Color = .gray
 
-    private let presetColors: [(Color, String)] = [
-        (Color(hex: "#6B7280") ?? .gray, "Gray"),
-        (Color(hex: "#3B82F6") ?? .blue, "Blue"),
-        (Color(hex: "#10B981") ?? .green, "Green"),
-        (Color(hex: "#EF4444") ?? .red, "Red"),
-        (Color(hex: "#F59E0B") ?? .yellow, "Yellow"),
-        (Color(hex: "#8B5CF6") ?? .purple, "Purple"),
-        (Color(hex: "#EC4899") ?? .pink, "Pink"),
-        (Color(hex: "#06B6D4") ?? .cyan, "Cyan"),
-    ]
+    private var presetColors: [(Color, String)] {
+        Constants.ColorPalette.columnColors.map { (Color(hex: $0.hex) ?? .gray, $0.name) }
+    }
 
     var body: some View {
         VStack(spacing: 16) {
@@ -76,7 +69,7 @@ struct ColumnEditorView: View {
                 Button(Strings.ColumnEditor.save) {
                     column.name = name
                     column.description = description
-                    column.color = selectedColor.toHex() ?? "#6B7280"
+                    column.color = selectedColor.toHex() ?? Constants.Columns.defaultColor
                     onSave()
                 }
                 .keyboardShortcut(.defaultAction)

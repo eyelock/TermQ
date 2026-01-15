@@ -12,6 +12,7 @@ let package = Package(
         .executable(name: "termqcli", targets: ["termq-cli"]),
         .executable(name: "termqmcp", targets: ["termqmcp"]),
         .library(name: "TermQCore", targets: ["TermQCore"]),
+        .library(name: "TermQShared", targets: ["TermQShared"]),
         .library(name: "MCPServerLib", targets: ["MCPServerLib"])
     ],
     dependencies: [
@@ -27,6 +28,12 @@ let package = Package(
             name: "TermQCore",
             dependencies: [],
             path: "Sources/TermQCore"
+        ),
+        // Shared models and utilities for CLI and MCP (no SwiftUI dependencies)
+        .target(
+            name: "TermQShared",
+            dependencies: [],
+            path: "Sources/TermQShared"
         ),
         // Main app
         .executableTarget(
@@ -85,6 +92,7 @@ let package = Package(
         .executableTarget(
             name: "termq-cli",
             dependencies: [
+                "TermQShared",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
             path: "Sources/termq-cli"
@@ -93,6 +101,7 @@ let package = Package(
         .target(
             name: "MCPServerLib",
             dependencies: [
+                "TermQShared",
                 .product(name: "MCP", package: "swift-sdk")
             ],
             path: "Sources/MCPServerLib"
@@ -114,8 +123,13 @@ let package = Package(
         ),
         .testTarget(
             name: "MCPServerLibTests",
-            dependencies: ["MCPServerLib"],
+            dependencies: ["MCPServerLib", "TermQShared"],
             path: "Tests/MCPServerLibTests"
+        ),
+        .testTarget(
+            name: "TermQSharedTests",
+            dependencies: ["TermQShared"],
+            path: "Tests/TermQSharedTests"
         )
     ]
 )

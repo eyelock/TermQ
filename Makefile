@@ -5,7 +5,7 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -o pipefail -c
 
-.PHONY: all build build-release clean test lint format check install uninstall app sign run debug help
+.PHONY: all build build-release clean test test.coverage lint format check install uninstall app sign run debug help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release publish-release
 .PHONY: copy-help docs.help
@@ -81,6 +81,18 @@ clean:
 # Run tests (requires Xcode for XCTest - uses Xcode's developer directory)
 test: copy-help
 	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
+
+# Run tests with coverage report
+test.coverage: copy-help
+	@echo "Running tests with code coverage..."
+	@DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --enable-code-coverage
+	@echo ""
+	@echo "Coverage Report:"
+	@echo "================"
+	@xcrun llvm-cov report \
+		.build/debug/TermQPackageTests.xctest/Contents/MacOS/TermQPackageTests \
+		--instr-profile=.build/debug/codecov/default.profdata \
+		--sources Sources/
 
 # Install SwiftLint if not present (using Homebrew)
 install-swiftlint:
@@ -491,6 +503,7 @@ help:
 	@echo "  build-release - Build release version"
 	@echo "  clean         - Clean build artifacts"
 	@echo "  test          - Run tests (requires Xcode)"
+	@echo "  test.coverage - Run tests with coverage report"
 	@echo "  lint          - Run SwiftLint"
 	@echo "  lint-fix      - Run SwiftLint with auto-fix"
 	@echo "  format        - Format code with swift-format"

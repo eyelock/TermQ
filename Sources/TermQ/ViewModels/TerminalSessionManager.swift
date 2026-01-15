@@ -8,18 +8,22 @@ import TermQCore
 class TerminalSessionManager: ObservableObject {
     static let shared = TerminalSessionManager()
 
-    /// Current theme ID (stored in UserDefaults)
-    @Published var themeId: String {
-        didSet {
-            UserDefaults.standard.set(themeId, forKey: "terminalTheme")
-            applyThemeToAllSessions()
-        }
+    // MARK: - Theme Management (delegated)
+
+    let themeManager = TerminalThemeManager()
+
+    /// Current theme ID - proxied to theme manager
+    var themeId: String {
+        get { themeManager.themeId }
+        set { themeManager.themeId = newValue }
     }
 
-    /// Current theme
+    /// Current theme - proxied to theme manager
     var currentTheme: TerminalTheme {
-        TerminalTheme.theme(for: themeId)
+        themeManager.currentTheme
     }
+
+    // MARK: - Session Storage
 
     /// Active terminal sessions keyed by card ID
     private var sessions: [UUID: TerminalSession] = [:]
@@ -33,8 +37,10 @@ class TerminalSessionManager: ObservableObject {
     }
 
     private init() {
-        // Load saved theme or use default
-        self.themeId = UserDefaults.standard.string(forKey: "terminalTheme") ?? "default-dark"
+        // Set up theme change callback
+        themeManager.onThemeChanged = { [weak self] in
+            self?.applyThemeToAllSessions()
+        }
     }
 
     /// Get or create a terminal session for a card
@@ -85,9 +91,8 @@ class TerminalSessionManager: ObservableObject {
         terminal.font = terminalFont
 
         // Apply theme (per-terminal or global default)
-        let effectiveThemeId = card.themeId.isEmpty ? themeId : card.themeId
-        let theme = TerminalTheme.theme(for: effectiveThemeId)
-        applyTheme(to: terminal, theme: theme)
+        let theme = themeManager.theme(for: card.themeId)
+        themeManager.applyTheme(to: terminal, theme: theme)
 
         // Set up OSC handlers for clipboard, notifications, etc.
         terminal.setupOscHandlers()
@@ -103,9 +108,9 @@ class TerminalSessionManager: ObservableObject {
 
         // Get current environment
         var env = ProcessInfo.processInfo.environment
-        env["TERM"] = "xterm-256color"
-        env["COLORTERM"] = "truecolor"
-        env["LANG"] = env["LANG"] ?? "en_US.UTF-8"
+        env["TERM"] = Constants.Terminal.termType
+        env["COLORTERM"] = Constants.Terminal.colorTerm
+        env["LANG"] = env["LANG"] ?? Constants.Terminal.defaultLang
 
         // Add TermQ-specific environment variables
         env["TERMQ_TERMINAL_ID"] = card.id.uuidString
@@ -120,12 +125,12 @@ class TerminalSessionManager: ObservableObject {
 
         // Start shell in the correct working directory using exec
         // This avoids the visible "cd" command flash by:
-        // 1. Starting /bin/sh (non-interactive)
+        // 1. Starting command shell (non-interactive)
         // 2. cd to the working directory
         // 3. exec the user's shell as a login shell (replaces the process)
         let startCommand = "cd \(escapeShellArg(card.workingDirectory)) && exec \(escapeShellArg(card.shellPath)) -l"
         terminal.startProcess(
-            executable: "/bin/sh",
+            executable: Constants.Shell.commandShell,
             args: ["-c", startCommand],
             environment: Array(env.map { "\($0.key)=\($0.value)" }),
             execName: nil
@@ -219,13 +224,13 @@ class TerminalSessionManager: ObservableObject {
 
     /// Check if a session has had recent activity (is "processing")
     /// Returns true if activity within the last `threshold` seconds
-    func isProcessing(cardId: UUID, threshold: TimeInterval = 2.0) -> Bool {
+    func isProcessing(cardId: UUID, threshold: TimeInterval = Constants.Activity.processingThreshold) -> Bool {
         guard let session = sessions[cardId], session.isRunning else { return false }
         return Date().timeIntervalSince(session.lastActivityTime) < threshold
     }
 
     /// Get all card IDs that are currently processing
-    func processingCardIds(threshold: TimeInterval = 2.0) -> Set<UUID> {
+    func processingCardIds(threshold: TimeInterval = Constants.Activity.processingThreshold) -> Set<UUID> {
         let now = Date()
         return Set(
             sessions.filter { _, session in
@@ -290,35 +295,16 @@ class TerminalSessionManager: ObservableObject {
 
     // MARK: - Theme Support
 
-    /// Apply theme to a terminal view
+    /// Apply theme to a terminal view (delegates to theme manager)
     func applyTheme(to terminal: TermQTerminalView, theme: TerminalTheme? = nil) {
-        let theme = theme ?? currentTheme
-
-        // Set foreground and background colors
-        terminal.nativeForegroundColor = theme.foreground
-        terminal.nativeBackgroundColor = theme.background
-
-        // Set cursor color
-        terminal.caretColor = theme.cursor
-
-        // Install the ANSI color palette
-        terminal.installColors(theme.swiftTermColors)
-
-        // Update container background if available
-        if let container = terminal.superview as? TerminalContainerView {
-            container.layer?.backgroundColor = theme.background.cgColor
-        }
-
-        // Force redraw
-        terminal.setNeedsDisplay(terminal.bounds)
+        themeManager.applyTheme(to: terminal, theme: theme)
     }
 
     /// Apply theme to all active sessions
     func applyThemeToAllSessions() {
         let theme = currentTheme
         for (_, session) in sessions {
-            applyTheme(to: session.terminal)
-            // Also update container background
+            themeManager.applyTheme(to: session.terminal, theme: theme)
             session.container.layer?.backgroundColor = theme.background.cgColor
         }
     }
