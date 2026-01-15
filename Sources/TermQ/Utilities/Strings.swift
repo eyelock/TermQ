@@ -110,6 +110,7 @@ enum Strings {
         static var current: String { localized("terminal.current") }
         static var editHelp: String { localized("terminal.edit.help") }
         static var closeTabHelp: String { localized("terminal.close.tab.help") }
+        static var newTabHelp: String { localized("terminal.new.tab.help") }
         static func switchTo(_ name: String) -> String {
             localized("terminal.switch.to %@", name)
         }

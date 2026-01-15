@@ -57,6 +57,7 @@
 "terminal.current" = "מסוף נוכחי";
 "terminal.edit.help" = "עריכת פרטי מסוף";
 "terminal.close.tab.help" = "סגירת לשונית מסוף זו";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "מעבר אל %@";
 "terminal.tab.help %@ %@" = "%@ ב-%@";
 

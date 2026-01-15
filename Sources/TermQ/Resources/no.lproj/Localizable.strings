@@ -57,6 +57,7 @@
 "terminal.current" = "Gjeldende terminal";
 "terminal.edit.help" = "Rediger terminaldetaljer";
 "terminal.close.tab.help" = "Lukk denne terminalfanen";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Bytt til %@";
 "terminal.tab.help %@ %@" = "%@ i %@";
 

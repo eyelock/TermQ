@@ -57,6 +57,7 @@
 "terminal.current" = "現在のターミナル";
 "terminal.edit.help" = "ターミナルの詳細を編集";
 "terminal.close.tab.help" = "このターミナルタブを閉じる";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@ に切り替え";
 "terminal.tab.help %@ %@" = "%@ - %@";
 

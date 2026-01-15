@@ -57,6 +57,7 @@
 "terminal.current" = "เทอร์มินัลปัจจุบัน";
 "terminal.edit.help" = "แก้ไขรายละเอียดเทอร์มินัล";
 "terminal.close.tab.help" = "ปิดแท็บเทอร์มินัลนี้";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "สลับไปที่ %@";
 "terminal.tab.help %@ %@" = "%@ ใน %@";
 

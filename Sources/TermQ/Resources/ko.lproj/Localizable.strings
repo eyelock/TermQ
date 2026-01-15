@@ -57,6 +57,7 @@
 "terminal.current" = "현재 터미널";
 "terminal.edit.help" = "터미널 세부 정보 편집";
 "terminal.close.tab.help" = "이 터미널 탭 닫기";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@(으)로 전환";
 "terminal.tab.help %@ %@" = "%@ - %@";
 

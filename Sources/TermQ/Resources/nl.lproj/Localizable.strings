@@ -57,6 +57,7 @@
 "terminal.current" = "Huidige terminal";
 "terminal.edit.help" = "Wijzig terminaldetails";
 "terminal.close.tab.help" = "Sluit dit terminaltabblad";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Schakel naar %@";
 "terminal.tab.help %@ %@" = "%@ in %@";
 

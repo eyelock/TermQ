@@ -57,6 +57,7 @@
 "terminal.current" = "Τρέχον τερματικό";
 "terminal.edit.help" = "Επεξεργασία λεπτομερειών τερματικού";
 "terminal.close.tab.help" = "Κλείσιμο αυτής της καρτέλας τερματικού";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Εναλλαγή σε %@";
 "terminal.tab.help %@ %@" = "%@ σε %@";
 

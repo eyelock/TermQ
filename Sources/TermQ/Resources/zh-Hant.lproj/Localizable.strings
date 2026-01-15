@@ -57,6 +57,7 @@
 "terminal.current" = "目前終端機";
 "terminal.edit.help" = "編輯終端機詳細資訊";
 "terminal.close.tab.help" = "關閉此終端機標籤頁";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "切換至 %@";
 "terminal.tab.help %@ %@" = "%@ 在 %@";
 

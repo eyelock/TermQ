@@ -57,6 +57,7 @@
 "terminal.current" = "Aktuální terminál";
 "terminal.edit.help" = "Upravit podrobnosti terminálu";
 "terminal.close.tab.help" = "Zavřít tuto kartu terminálu";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Přepnout na %@";
 "terminal.tab.help %@ %@" = "%@ v %@";
 

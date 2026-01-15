@@ -57,6 +57,7 @@
 "terminal.current" = "Текущий терминал";
 "terminal.edit.help" = "Изменить детали терминала";
 "terminal.close.tab.help" = "Закрыть эту вкладку терминала";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Переключиться на %@";
 "terminal.tab.help %@ %@" = "%@ в %@";
 

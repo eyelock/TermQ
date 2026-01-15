@@ -57,6 +57,7 @@
 "terminal.current" = "Trenutni terminal";
 "terminal.edit.help" = "Uredi podrobnosti terminala";
 "terminal.close.tab.help" = "Zapri ta zavihek terminala";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Preklopi na %@";
 "terminal.tab.help %@ %@" = "%@ v %@";
 

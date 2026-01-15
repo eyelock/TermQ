@@ -57,6 +57,7 @@
 "terminal.current" = "Nykyinen terminaali";
 "terminal.edit.help" = "Muokkaa terminaalin tietoja";
 "terminal.close.tab.help" = "Sulje tämä terminaalivälilehti";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Vaihda kohteeseen %@";
 "terminal.tab.help %@ %@" = "%@ kohteessa %@";
 

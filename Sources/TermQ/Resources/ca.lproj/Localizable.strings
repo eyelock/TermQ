@@ -57,6 +57,7 @@
 "terminal.current" = "Terminal actual";
 "terminal.edit.help" = "Editar detalls del terminal";
 "terminal.close.tab.help" = "Tancar aquesta pestanya de terminal";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Canviar a %@";
 "terminal.tab.help %@ %@" = "%@ a %@";
 
