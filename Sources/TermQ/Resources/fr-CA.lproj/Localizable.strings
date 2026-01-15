@@ -269,6 +269,26 @@
 // Settings - Agents section
 "settings.section.agents" = "Agents";
 
+// Settings - Status section
+"settings.section.status" = "Status";
+"settings.status.ready" = "Ready";
+"settings.status.enabled" = "Enabled";
+"settings.status.disabled" = "Disabled";
+"settings.not.installed" = "Not Installed";
+
+// Settings - tmux section
+"settings.section.tmux" = "Session Backend";
+"settings.tmux.description" = "Terminal multiplexer for persistent sessions and pane splitting";
+"settings.tmux.enabled" = "Enable tmux Backend";
+"settings.tmux.enabled.help" = "Use tmux for persistent terminal sessions that survive app restarts";
+"settings.tmux.version" = "Version:";
+"settings.tmux.path" = "Path:";
+"settings.tmux.info" = "When enabled, terminal sessions persist when TermQ closes. Sessions can be recovered on restart.";
+"settings.tmux.not.installed.description" = "tmux enables persistent terminal sessions that survive app restarts, and split panes within a single terminal.";
+"settings.tmux.install.hint" = "Install using Homebrew:";
+"settings.tmux.check.again" = "Check Again";
+"settings.copy.to.clipboard" = "Copy to clipboard";
+
 // MARK: - Command Palette
 "palette.placeholder" = "Rechercher des commandes...";
 "palette.no.results" = "Aucun résultat trouvé";

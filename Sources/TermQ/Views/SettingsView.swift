@@ -22,6 +22,7 @@ struct SettingsView: View {
     @AppStorage("copyOnSelect") private var copyOnSelect = false
     @AppStorage("binRetentionDays") private var binRetentionDays = 14
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
+    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
@@ -158,219 +159,32 @@ struct SettingsView: View {
 
     @ViewBuilder
     private var toolsContent: some View {
+        // Status section showing all tools at a glance
         Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "rectangle.split.3x3")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("tmux")
-                            .font(.headline)
-                        Text("Terminal multiplexer for persistent sessions and pane splitting")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-
-                    if tmuxManager.isAvailable {
-                        HStack(spacing: 4) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                            Text("Installed")
-                                .foregroundColor(.green)
-                        }
-                        .font(.caption)
-                    } else {
-                        HStack(spacing: 4) {
-                            Image(systemName: "xmark.circle")
-                                .foregroundColor(.secondary)
-                            Text("Not Installed")
-                                .foregroundColor(.secondary)
-                        }
-                        .font(.caption)
-                    }
-                }
-
-                Divider()
-
-                if tmuxManager.isAvailable {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Version:")
-                                .foregroundColor(.secondary)
-                            Text(tmuxManager.version ?? "Unknown")
-                                .font(.system(.body, design: .monospaced))
-                        }
-                        .font(.caption)
-
-                        if let path = tmuxManager.tmuxPath {
-                            HStack {
-                                Text("Path:")
-                                    .foregroundColor(.secondary)
-                                Text(path)
-                                    .font(.system(.body, design: .monospaced))
-                                    .textSelection(.enabled)
-                            }
-                            .font(.caption)
-                        }
-
-                        HStack {
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.blue)
-                            Text("tmux sessions persist when TermQ closes. Enable per-terminal in Terminal settings.")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                } else {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(
-                            "tmux enables persistent terminal sessions that survive app restarts, and split panes within a single terminal."
-                        )
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                        Text("Install using Homebrew:")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-
-                        HStack {
-                            Text("brew install tmux")
-                                .font(.system(.body, design: .monospaced))
-                                .padding(6)
-                                .background(Color.secondary.opacity(0.1))
-                                .cornerRadius(4)
-
-                            Button {
-                                NSPasteboard.general.clearContents()
-                                NSPasteboard.general.setString("brew install tmux", forType: .string)
-                            } label: {
-                                Image(systemName: "doc.on.doc")
-                                    .font(.caption)
-                            }
-                            .buttonStyle(.bordered)
-                            .help("Copy to clipboard")
-                        }
-
-                        Button("Check Again") {
-                            Task {
-                                await tmuxManager.detectTmux()
-                            }
-                        }
-                        .font(.caption)
-                    }
-                }
+            VStack(alignment: .leading, spacing: 8) {
+                toolStatusRow(
+                    icon: "server.rack",
+                    name: Strings.Settings.mcpTitle,
+                    isInstalled: installedMCPLocation != nil
+                )
+                toolStatusRow(
+                    icon: "terminal",
+                    name: Strings.Settings.cliTitle,
+                    isInstalled: installedLocation != nil
+                )
+                toolStatusRow(
+                    icon: "rectangle.split.3x3",
+                    name: "tmux",
+                    isInstalled: tmuxManager.isAvailable,
+                    isEnabled: tmuxManager.isAvailable ? tmuxEnabled : nil
+                )
             }
             .padding(.vertical, 4)
         } header: {
-            Text("Session Backend")
+            Text(Strings.Settings.sectionStatus)
         }
 
-        Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "terminal")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(Strings.Settings.cliTitle)
-                            .font(.headline)
-                        Text(Strings.Settings.cliDescription)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-
-                    if installedLocation != nil {
-                        HStack(spacing: 4) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                            Text(Strings.Settings.cliInstalled)
-                                .foregroundColor(.green)
-                        }
-                        .font(.caption)
-                    }
-                }
-
-                Divider()
-
-                Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
-                    .help(Strings.Settings.enableTerminalAutorunHelp)
-
-                Divider()
-
-                if let location = installedLocation {
-                    // Already installed
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text(Strings.Settings.cliLocation)
-                                .foregroundColor(.secondary)
-                            Text(location.fullPath)
-                                .font(.system(.body, design: .monospaced))
-                                .textSelection(.enabled)
-                        }
-                        .font(.caption)
-
-                        Text(Strings.Settings.cliUsage)
-                            .font(.system(.caption, design: .monospaced))
-                            .foregroundColor(.secondary)
-                            .textSelection(.enabled)
-
-                        HStack {
-                            Button(Strings.Common.reinstall) {
-                                installCLI()
-                            }
-                            .disabled(isInstalling)
-
-                            Button(Strings.Common.uninstall, role: .destructive) {
-                                uninstallCLI()
-                            }
-                            .disabled(isInstalling)
-                        }
-                    }
-                } else {
-                    // Not installed - show install options
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text(Strings.Settings.cliDescription)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-
-                        Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
-                            ForEach(InstallLocation.allCases) { location in
-                                Text(location.displayName).tag(location)
-                            }
-                        }
-                        .pickerStyle(.radioGroup)
-
-                        Text(selectedLocation.pathNote)
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-
-                        Button {
-                            installCLI()
-                        } label: {
-                            HStack {
-                                if isInstalling {
-                                    ProgressView()
-                                        .controlSize(.small)
-                                }
-                                Text(Strings.Settings.cliInstall)
-                            }
-                        }
-                        .disabled(isInstalling)
-                    }
-                }
-            }
-            .padding(.vertical, 4)
-        } header: {
-            Text(Strings.Settings.sectionCli)
-        }
-
+        // MCP Server section (first)
         Section {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
@@ -389,13 +203,7 @@ struct SettingsView: View {
                     Spacer()
 
                     if installedMCPLocation != nil {
-                        HStack(spacing: 4) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                            Text(Strings.Common.installed)
-                                .foregroundColor(.green)
-                        }
-                        .font(.caption)
+                        installedBadge
                     }
                 }
 
@@ -497,6 +305,279 @@ struct SettingsView: View {
             .padding(.vertical, 4)
         } header: {
             Text(Strings.Settings.sectionMcp)
+        }
+
+        // CLI section (second)
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "terminal")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Settings.cliTitle)
+                            .font(.headline)
+                        Text(Strings.Settings.cliDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if installedLocation != nil {
+                        installedBadge
+                    }
+                }
+
+                Divider()
+
+                Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
+                    .help(Strings.Settings.enableTerminalAutorunHelp)
+
+                Divider()
+
+                if let location = installedLocation {
+                    // Already installed
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text(Strings.Settings.cliLocation)
+                                .foregroundColor(.secondary)
+                            Text(location.fullPath)
+                                .font(.system(.body, design: .monospaced))
+                                .textSelection(.enabled)
+                        }
+                        .font(.caption)
+
+                        Text(Strings.Settings.cliUsage)
+                            .font(.system(.caption, design: .monospaced))
+                            .foregroundColor(.secondary)
+                            .textSelection(.enabled)
+
+                        HStack {
+                            Button(Strings.Common.reinstall) {
+                                installCLI()
+                            }
+                            .disabled(isInstalling)
+
+                            Button(Strings.Common.uninstall, role: .destructive) {
+                                uninstallCLI()
+                            }
+                            .disabled(isInstalling)
+                        }
+                    }
+                } else {
+                    // Not installed - show install options
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(Strings.Settings.cliDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
+                            ForEach(InstallLocation.allCases) { location in
+                                Text(location.displayName).tag(location)
+                            }
+                        }
+                        .pickerStyle(.radioGroup)
+
+                        Text(selectedLocation.pathNote)
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+
+                        Button {
+                            installCLI()
+                        } label: {
+                            HStack {
+                                if isInstalling {
+                                    ProgressView()
+                                        .controlSize(.small)
+                                }
+                                Text(Strings.Settings.cliInstall)
+                            }
+                        }
+                        .disabled(isInstalling)
+                    }
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Settings.sectionCli)
+        }
+
+        // tmux section (last)
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "rectangle.split.3x3")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("tmux")
+                            .font(.headline)
+                        Text(Strings.Settings.tmuxDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if tmuxManager.isAvailable {
+                        installedBadge
+                    } else {
+                        notInstalledBadge
+                    }
+                }
+
+                Divider()
+
+                if tmuxManager.isAvailable {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Toggle(Strings.Settings.tmuxEnabled, isOn: $tmuxEnabled)
+                            .help(Strings.Settings.tmuxEnabledHelp)
+
+                        Divider()
+
+                        HStack {
+                            Text(Strings.Settings.tmuxVersion)
+                                .foregroundColor(.secondary)
+                            Text(tmuxManager.version ?? "Unknown")
+                                .font(.system(.body, design: .monospaced))
+                        }
+                        .font(.caption)
+
+                        if let path = tmuxManager.tmuxPath {
+                            HStack {
+                                Text(Strings.Settings.tmuxPath)
+                                    .foregroundColor(.secondary)
+                                Text(path)
+                                    .font(.system(.body, design: .monospaced))
+                                    .textSelection(.enabled)
+                            }
+                            .font(.caption)
+                        }
+
+                        HStack {
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.blue)
+                            Text(Strings.Settings.tmuxInfo)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                } else {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(Strings.Settings.tmuxNotInstalledDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        Text(Strings.Settings.tmuxInstallHint)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        HStack {
+                            Text("brew install tmux")
+                                .font(.system(.body, design: .monospaced))
+                                .padding(6)
+                                .background(Color.secondary.opacity(0.1))
+                                .cornerRadius(4)
+
+                            Button {
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setString("brew install tmux", forType: .string)
+                            } label: {
+                                Image(systemName: "doc.on.doc")
+                                    .font(.caption)
+                            }
+                            .buttonStyle(.bordered)
+                            .help(Strings.Settings.copyToClipboard)
+                        }
+
+                        Button(Strings.Settings.tmuxCheckAgain) {
+                            Task {
+                                await tmuxManager.detectTmux()
+                            }
+                        }
+                        .font(.caption)
+                    }
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Settings.sectionTmux)
+        }
+    }
+
+    // MARK: - Helper Views
+
+    private var installedBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+            Text(Strings.Common.installed)
+                .foregroundColor(.green)
+        }
+        .font(.caption)
+    }
+
+    private var notInstalledBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "xmark.circle")
+                .foregroundColor(.secondary)
+            Text(Strings.Settings.notInstalled)
+                .foregroundColor(.secondary)
+        }
+        .font(.caption)
+    }
+
+    @ViewBuilder
+    private func toolStatusRow(
+        icon: String,
+        name: String,
+        isInstalled: Bool,
+        isEnabled: Bool? = nil
+    ) -> some View {
+        HStack {
+            Image(systemName: icon)
+                .font(.body)
+                .foregroundColor(.secondary)
+                .frame(width: 24)
+
+            Text(name)
+                .font(.body)
+
+            Spacer()
+
+            if isInstalled {
+                if let enabled = isEnabled {
+                    HStack(spacing: 4) {
+                        Circle()
+                            .fill(enabled ? Color.green : Color.orange)
+                            .frame(width: 8, height: 8)
+                        Text(enabled ? Strings.Settings.statusEnabled : Strings.Settings.statusDisabled)
+                            .foregroundColor(enabled ? .green : .orange)
+                    }
+                    .font(.caption)
+                } else {
+                    HStack(spacing: 4) {
+                        Circle()
+                            .fill(Color.green)
+                            .frame(width: 8, height: 8)
+                        Text(Strings.Settings.statusReady)
+                            .foregroundColor(.green)
+                    }
+                    .font(.caption)
+                }
+            } else {
+                HStack(spacing: 4) {
+                    Circle()
+                        .fill(Color.secondary)
+                        .frame(width: 8, height: 8)
+                    Text(Strings.Settings.notInstalled)
+                        .foregroundColor(.secondary)
+                }
+                .font(.caption)
+            }
         }
     }
 

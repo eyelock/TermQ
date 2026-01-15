@@ -352,6 +352,26 @@ enum Strings {
 
         // Tools - Agents section
         static var sectionAgents: String { localized("settings.section.agents") }
+
+        // Tools - Status section
+        static var sectionStatus: String { localized("settings.section.status") }
+        static var statusReady: String { localized("settings.status.ready") }
+        static var statusEnabled: String { localized("settings.status.enabled") }
+        static var statusDisabled: String { localized("settings.status.disabled") }
+        static var notInstalled: String { localized("settings.not.installed") }
+
+        // Tools - tmux section
+        static var sectionTmux: String { localized("settings.section.tmux") }
+        static var tmuxDescription: String { localized("settings.tmux.description") }
+        static var tmuxEnabled: String { localized("settings.tmux.enabled") }
+        static var tmuxEnabledHelp: String { localized("settings.tmux.enabled.help") }
+        static var tmuxVersion: String { localized("settings.tmux.version") }
+        static var tmuxPath: String { localized("settings.tmux.path") }
+        static var tmuxInfo: String { localized("settings.tmux.info") }
+        static var tmuxNotInstalledDescription: String { localized("settings.tmux.not.installed.description") }
+        static var tmuxInstallHint: String { localized("settings.tmux.install.hint") }
+        static var tmuxCheckAgain: String { localized("settings.tmux.check.again") }
+        static var copyToClipboard: String { localized("settings.copy.to.clipboard") }
     }
 
     // MARK: - Command Palette
