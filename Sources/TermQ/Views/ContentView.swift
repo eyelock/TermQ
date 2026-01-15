@@ -326,32 +326,9 @@ struct ContentView: View {
         .focusedSceneValue(\.terminalActions, terminalActions)
     }
 
-    /// MCP server status indicator - shows if current terminal's LLM is aware of TermQ
-    @ViewBuilder
+    /// MCP server status indicator
     private var mcpStatusIndicator: some View {
-        let isInstalled = MCPServerInstaller.currentInstallLocation != nil
-        let isWired = viewModel.selectedCard?.isWired ?? false
-
-        Image(systemName: "cpu")
-            .foregroundColor(
-                isInstalled
-                    ? (isWired ? .green : .secondary)
-                    : .secondary.opacity(0.3)
-            )
-            .help(mcpStatusTooltip)
-    }
-
-    private var mcpStatusTooltip: String {
-        let isInstalled = MCPServerInstaller.currentInstallLocation != nil
-        let isWired = viewModel.selectedCard?.isWired ?? false
-
-        if !isInstalled {
-            return Strings.Settings.mcpInstallDescription
-        } else if isWired {
-            return Strings.Card.wiredHelp
-        } else {
-            return Strings.Settings.mcpDescription
-        }
+        MCPStatusView(isWired: viewModel.selectedCard?.isWired ?? false)
     }
 
     private var terminalActions: TerminalActions {
