@@ -593,6 +593,138 @@ final class MCPIntegrationTests: XCTestCase {
         XCTAssertTrue(promptNames.contains("terminal_summary"))
     }
 
+    // MARK: - Resource Handler Tests
+
+    func testResourceTerminals() async throws {
+        let params = ReadResource.Parameters(uri: "termq://terminals")
+        let result = try await server.dispatchResourceRead(params)
+
+        XCTAssertEqual(result.contents.count, 1)
+        let json = extractResourceText(from: result)
+        let data = Data(json.utf8)
+        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        XCTAssertEqual(terminals.count, 4)
+    }
+
+    func testResourceColumns() async throws {
+        let params = ReadResource.Parameters(uri: "termq://columns")
+        let result = try await server.dispatchResourceRead(params)
+
+        XCTAssertEqual(result.contents.count, 1)
+        let json = extractResourceText(from: result)
+        let data = Data(json.utf8)
+        let columns = try JSONDecoder().decode([ColumnOutput].self, from: data)
+        XCTAssertEqual(columns.count, 3)
+        XCTAssertEqual(columns[0].name, "To Do")
+    }
+
+    func testResourcePending() async throws {
+        let params = ReadResource.Parameters(uri: "termq://pending")
+        let result = try await server.dispatchResourceRead(params)
+
+        XCTAssertEqual(result.contents.count, 1)
+        let json = extractResourceText(from: result)
+        let data = Data(json.utf8)
+        let output = try JSONDecoder().decode(PendingOutput.self, from: data)
+        XCTAssertEqual(output.summary.total, 4)
+    }
+
+    func testResourceContext() async throws {
+        let params = ReadResource.Parameters(uri: "termq://context")
+        let result = try await server.dispatchResourceRead(params)
+
+        XCTAssertEqual(result.contents.count, 1)
+        let content = extractResourceText(from: result)
+        XCTAssertTrue(content.contains("TermQ MCP Server"))
+        XCTAssertTrue(content.contains("SESSION START CHECKLIST"))
+    }
+
+    func testResourceUnknownUri() async throws {
+        let params = ReadResource.Parameters(uri: "termq://unknown")
+
+        do {
+            _ = try await server.dispatchResourceRead(params)
+            XCTFail("Should have thrown for unknown resource")
+        } catch {
+            XCTAssertTrue(String(describing: error).contains("Unknown resource"))
+        }
+    }
+
+    // Helper to extract text from resource contents
+    private func extractResourceText(from result: ReadResource.Result) -> String {
+        guard let firstContent = result.contents.first else { return "" }
+        return firstContent.text ?? ""
+    }
+
+    // MARK: - Prompt Handler Tests
+
+    func testPromptSessionStart() async throws {
+        let params = GetPrompt.Parameters(name: "session_start", arguments: nil)
+        let result = try await server.dispatchPromptGet(params)
+
+        XCTAssertEqual(result.description, "TermQ Session Start")
+        XCTAssertEqual(result.messages.count, 1)
+
+        // Extract and verify content
+        let text = extractPromptText(from: result.messages[0])
+        XCTAssertTrue(text.contains("TermQ Session Start"))
+        XCTAssertTrue(text.contains("Board Overview"))
+    }
+
+    func testPromptWorkflowGuide() async throws {
+        let params = GetPrompt.Parameters(name: "workflow_guide", arguments: nil)
+        let result = try await server.dispatchPromptGet(params)
+
+        XCTAssertEqual(result.description, "TermQ Workflow Guide")
+        XCTAssertEqual(result.messages.count, 1)
+
+        let text = extractPromptText(from: result.messages[0])
+        XCTAssertTrue(text.contains("SESSION START CHECKLIST"))
+    }
+
+    func testPromptTerminalSummary() async throws {
+        let params = GetPrompt.Parameters(
+            name: "terminal_summary",
+            arguments: ["terminal": .string("Test Terminal 1")]
+        )
+        let result = try await server.dispatchPromptGet(params)
+
+        XCTAssertTrue(result.description?.contains("Terminal Summary") ?? false)
+
+        let text = extractPromptText(from: result.messages[0])
+        XCTAssertTrue(text.contains("Terminal Summary"))
+    }
+
+    func testPromptTerminalSummaryNotFound() async throws {
+        let params = GetPrompt.Parameters(
+            name: "terminal_summary",
+            arguments: ["terminal": .string("NonExistent")]
+        )
+        let result = try await server.dispatchPromptGet(params)
+
+        let text = extractPromptText(from: result.messages[0])
+        XCTAssertTrue(text.contains("Terminal not found"))
+    }
+
+    func testPromptUnknown() async throws {
+        let params = GetPrompt.Parameters(name: "unknown_prompt", arguments: nil)
+
+        do {
+            _ = try await server.dispatchPromptGet(params)
+            XCTFail("Should have thrown for unknown prompt")
+        } catch {
+            XCTAssertTrue(String(describing: error).contains("Unknown prompt"))
+        }
+    }
+
+    // Helper to extract text from prompt messages
+    private func extractPromptText(from message: Prompt.Message) -> String {
+        if case .text(let text) = message.content {
+            return text
+        }
+        return ""
+    }
+
     // MARK: - Error Handling Tests
 
     func testBoardNotFoundError() throws {
