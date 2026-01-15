@@ -57,6 +57,7 @@
 "terminal.current" = "Trenutni terminal";
 "terminal.edit.help" = "Uredi detalje terminala";
 "terminal.close.tab.help" = "Zatvori ovu karticu terminala";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Prebaci na %@";
 "terminal.tab.help %@ %@" = "%@ u %@";
 

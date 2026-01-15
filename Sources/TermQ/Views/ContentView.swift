@@ -39,6 +39,9 @@ struct ContentView: View {
                     onMoveTab: { cardId, toIndex in
                         viewModel.moveTab(cardId, toIndex: toIndex)
                     },
+                    onNewTab: {
+                        viewModel.quickNewTerminal()
+                    },
                     onBell: { cardId in
                         viewModel.markNeedsAttention(cardId)
                     },

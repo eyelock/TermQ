@@ -57,6 +57,7 @@
 "terminal.current" = "当前终端";
 "terminal.edit.help" = "编辑终端详情";
 "terminal.close.tab.help" = "关闭此终端标签页";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "切换到 %@";
 "terminal.tab.help %@ %@" = "%@ 在 %@";
 

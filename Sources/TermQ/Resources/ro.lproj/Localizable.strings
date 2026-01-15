@@ -57,6 +57,7 @@
 "terminal.current" = "Terminal curent";
 "terminal.edit.help" = "Editare detalii terminal";
 "terminal.close.tab.help" = "Închidere această filă de terminal";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Comutare la %@";
 "terminal.tab.help %@ %@" = "%@ în %@";
 

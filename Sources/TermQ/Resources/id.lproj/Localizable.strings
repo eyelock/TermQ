@@ -57,6 +57,7 @@
 "terminal.current" = "Terminal saat ini";
 "terminal.edit.help" = "Edit detail terminal";
 "terminal.close.tab.help" = "Tutup tab terminal ini";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Beralih ke %@";
 "terminal.tab.help %@ %@" = "%@ di %@";
 

@@ -57,6 +57,7 @@
 "terminal.current" = "Geçerli terminal";
 "terminal.edit.help" = "Terminal ayrıntılarını düzenle";
 "terminal.close.tab.help" = "Bu terminal sekmesini kapat";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@ öğesine geç";
 "terminal.tab.help %@ %@" = "%@ içinde %@";
 

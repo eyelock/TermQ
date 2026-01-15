@@ -57,6 +57,7 @@
 "terminal.current" = "Terminal hiện tại";
 "terminal.edit.help" = "Sửa chi tiết terminal";
 "terminal.close.tab.help" = "Đóng tab terminal này";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Chuyển đến %@";
 "terminal.tab.help %@ %@" = "%@ trong %@";
 

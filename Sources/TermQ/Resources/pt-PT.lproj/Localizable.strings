@@ -57,6 +57,7 @@
 "terminal.current" = "Terminal actual";
 "terminal.edit.help" = "Editar detalhes do terminal";
 "terminal.close.tab.help" = "Fechar este separador de terminal";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Mudar para %@";
 "terminal.tab.help %@ %@" = "%@ em %@";
 

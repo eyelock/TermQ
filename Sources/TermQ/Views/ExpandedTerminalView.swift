@@ -10,6 +10,7 @@ struct ExpandedTerminalView: View {
     let onCloseSession: (TerminalCard) -> Void
     let onRestartSession: (TerminalCard) -> Void
     let onMoveTab: (UUID, Int) -> Void
+    let onNewTab: () -> Void
     let onBell: (UUID) -> Void
     let tabCards: [TerminalCard]
     let columns: [Column]
@@ -260,6 +261,20 @@ struct ExpandedTerminalView: View {
                         return true
                     }
                 }
+
+                // New tab button
+                Button(action: onNewTab) {
+                    Image(systemName: "plus")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color.secondary.opacity(0.1))
+                        )
+                }
+                .buttonStyle(.plain)
+                .help(Strings.Terminal.newTabHelp)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 6)

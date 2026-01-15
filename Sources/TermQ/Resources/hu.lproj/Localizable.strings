@@ -57,6 +57,7 @@
 "terminal.current" = "Jelenlegi terminál";
 "terminal.edit.help" = "Terminál részleteinek szerkesztése";
 "terminal.close.tab.help" = "Terminál lap bezárása";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Váltás ide: %@";
 "terminal.tab.help %@ %@" = "%@ itt: %@";
 

@@ -57,6 +57,7 @@
 "terminal.current" = "वर्तमान टर्मिनल";
 "terminal.edit.help" = "टर्मिनल विवरण संपादित करें";
 "terminal.close.tab.help" = "यह टर्मिनल टैब बंद करें";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@ पर स्विच करें";
 "terminal.tab.help %@ %@" = "%@ में %@";
 

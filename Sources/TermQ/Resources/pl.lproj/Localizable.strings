@@ -57,6 +57,7 @@
 "terminal.current" = "Bieżący terminal";
 "terminal.edit.help" = "Edytuj szczegóły terminala";
 "terminal.close.tab.help" = "Zamknij tę kartę terminala";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Przełącz na %@";
 "terminal.tab.help %@ %@" = "%@ w %@";
 

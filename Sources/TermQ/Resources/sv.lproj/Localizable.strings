@@ -57,6 +57,7 @@
 "terminal.current" = "Aktuell terminal";
 "terminal.edit.help" = "Redigera terminaldetaljer";
 "terminal.close.tab.help" = "Stäng denna terminalflik";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Växla till %@";
 "terminal.tab.help %@ %@" = "%@ i %@";
 

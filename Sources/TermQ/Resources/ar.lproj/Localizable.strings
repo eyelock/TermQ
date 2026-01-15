@@ -57,6 +57,7 @@
 "terminal.current" = "الطرفية الحالية";
 "terminal.edit.help" = "تعديل تفاصيل الطرفية";
 "terminal.close.tab.help" = "إغلاق علامة تبويب الطرفية هذه";
+"terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "التبديل إلى %@";
 "terminal.tab.help %@ %@" = "%@ في %@";
 
