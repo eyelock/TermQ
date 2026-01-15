@@ -402,9 +402,9 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Uninstall TermQ")
+                        Text(Strings.Uninstall.title)
                             .font(.headline)
-                        Text("Remove CLI tools and app data")
+                        Text(Strings.Uninstall.description)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -414,19 +414,17 @@ struct SettingsView: View {
 
                 Divider()
 
-                Text(
-                    "Completely remove TermQ from your system, including CLI tools, MCP server, and optionally your board data."
-                )
-                .font(.caption)
-                .foregroundColor(.secondary)
+                Text(Strings.Uninstall.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
 
-                Button("Uninstall TermQ...", role: .destructive) {
+                Button(Strings.Uninstall.buttonTitle, role: .destructive) {
                     showUninstallSheet = true
                 }
             }
             .padding(.vertical, 4)
         } header: {
-            Text("Uninstall")
+            Text(Strings.Uninstall.sectionHeader)
         }
     }
 

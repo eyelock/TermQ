@@ -28,6 +28,9 @@ Review existing translations for quality, consistency, and potential issues.
 ### `add-string <key>` - Add a new localizable string
 Interactively add a new string key to Strings.swift and all Localizable.strings files.
 
+### `sync` - Sync missing keys to all languages
+Propagate any missing keys from English base to all other language files (using English as placeholder).
+
 ---
 
 ## Instructions for Claude
@@ -98,6 +101,16 @@ When this command is invoked, follow these workflows:
 5. Add to `en.lproj/Localizable.strings`
 6. For each existing language, add the key with `/* NEEDS TRANSLATION */` marker
 
+### For `sync`:
+1. Read `Sources/TermQ/Resources/en.lproj/Localizable.strings` as the base
+2. For each language directory:
+   - Read existing `Localizable.strings`
+   - Find keys present in English but missing in target language
+   - Append missing keys with English values as placeholders
+   - Optionally add `/* NEEDS TRANSLATION */` comment for new strings
+3. Run `./scripts/localization/validate-strings.sh` to verify sync
+4. Output a summary of keys added to each language
+
 ---
 
 ## Language Codes
@@ -165,4 +178,7 @@ TermQ supports all 40 macOS languages:
 
 # Add a new string
 /localization add-string settings.theme_label
+
+# Sync missing keys to all languages after adding new strings
+/localization sync
 ```

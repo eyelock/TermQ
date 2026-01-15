@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct BackupSettingsView: View {
     @State private var backupLocation: String = BackupManager.backupLocation
@@ -7,7 +8,6 @@ struct BackupSettingsView: View {
     @State private var isBackingUp = false
     @State private var isRestoring = false
     @State private var showLocationPicker = false
-    @State private var showRestorePicker = false
 
     // Alert state
     @State private var alertMessage: String?
@@ -136,7 +136,7 @@ struct BackupSettingsView: View {
                         .disabled(isBackingUp || isRestoring)
 
                         Button("Restore from Backup...") {
-                            showRestorePicker = true
+                            browseForRestoreFile()
                         }
                         .disabled(isBackingUp || isRestoring)
                     }
@@ -150,13 +150,6 @@ struct BackupSettingsView: View {
             Button("OK") {}
         } message: {
             Text(alertMessage ?? "")
-        }
-        .fileImporter(
-            isPresented: $showRestorePicker,
-            allowedContentTypes: [.json],
-            allowsMultipleSelection: false
-        ) { result in
-            handleRestoreFileSelection(result)
         }
     }
 
@@ -174,6 +167,24 @@ struct BackupSettingsView: View {
         if panel.runModal() == .OK, let url = panel.url {
             backupLocation = url.path
             BackupManager.backupLocation = url.path
+        }
+    }
+
+    private func browseForRestoreFile() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.allowedContentTypes = [.json]
+        panel.prompt = "Restore"
+        panel.message = "Select a backup file to restore"
+
+        // Set initial directory to the configured backup location
+        let backupDir = NSString(string: BackupManager.backupLocation).expandingTildeInPath
+        panel.directoryURL = URL(fileURLWithPath: backupDir)
+
+        if panel.runModal() == .OK, let url = panel.url {
+            performRestore(from: url)
         }
     }
 
@@ -198,18 +209,6 @@ struct BackupSettingsView: View {
                     showAlert = true
                 }
             }
-        }
-    }
-
-    private func handleRestoreFileSelection(_ result: Result<[URL], Error>) {
-        switch result {
-        case .success(let urls):
-            guard let url = urls.first else { return }
-            performRestore(from: url)
-        case .failure(let error):
-            alertMessage = error.localizedDescription
-            alertIsError = true
-            showAlert = true
         }
     }
 

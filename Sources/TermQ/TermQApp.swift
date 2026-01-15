@@ -176,9 +176,8 @@ struct TermQApp: App {
     @FocusedValue(\.terminalActions) private var terminalActions
     @Environment(\.openWindow) private var openWindow
 
-    // Restore offer state
-    @State private var showRestoreOffer = false
-    @State private var backupToRestore: URL?
+    // Restore offer state - using IdentifiableURL wrapper for sheet(item:)
+    @State private var backupToRestore: IdentifiableURL?
 
     var body: some Scene {
         WindowGroup {
@@ -188,14 +187,12 @@ struct TermQApp: App {
                 .onAppear {
                     checkForOrphanedBackup()
                 }
-                .sheet(isPresented: $showRestoreOffer) {
-                    if let backupURL = backupToRestore {
-                        RestoreOfferView(
-                            backupURL: backupURL,
-                            onRestore: { showRestoreOffer = false },
-                            onSkip: { showRestoreOffer = false }
-                        )
-                    }
+                .sheet(item: $backupToRestore) { item in
+                    RestoreOfferView(
+                        backupURL: item.url,
+                        onRestore: { backupToRestore = nil },
+                        onSkip: { backupToRestore = nil }
+                    )
                 }
         }
         .windowStyle(.titleBar)
@@ -345,10 +342,15 @@ struct TermQApp: App {
     /// Check if we should offer to restore from backup on startup
     private func checkForOrphanedBackup() {
         if let backupURL = BackupManager.checkAndOfferRestore() {
-            backupToRestore = backupURL
-            showRestoreOffer = true
+            backupToRestore = IdentifiableURL(url: backupURL)
         }
     }
+}
+
+/// Wrapper to make URL identifiable for sheet(item:) usage
+struct IdentifiableURL: Identifiable {
+    let id = UUID()
+    let url: URL
 }
 
 /// Handles Apple Events for URL schemes
