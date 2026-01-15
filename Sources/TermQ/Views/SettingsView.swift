@@ -23,6 +23,7 @@ struct SettingsView: View {
     @AppStorage("binRetentionDays") private var binRetentionDays = 14
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @AppStorage("tmuxEnabled") private var tmuxEnabled = true
+    @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
@@ -157,6 +158,24 @@ struct SettingsView: View {
 
     // MARK: - Tools Tab Content
 
+    // Computed properties for consistent status checking
+    // Use direct installer checks to ensure Status section matches individual sections
+    private var isCLIInstalled: Bool {
+        CLIInstaller.currentInstallLocation != nil
+    }
+
+    private var isMCPInstalled: Bool {
+        MCPServerInstaller.currentInstallLocation != nil
+    }
+
+    /// Count of active tmux sessions for this TermQ instance
+    private var activeTmuxSessionCount: Int {
+        boardViewModel.activeSessionCards.filter { cardId in
+            guard boardViewModel.card(for: cardId) != nil else { return false }
+            return TerminalSessionManager.shared.getBackend(for: cardId) == .tmux
+        }.count
+    }
+
     @ViewBuilder
     private var toolsContent: some View {
         // Status section showing all tools at a glance
@@ -165,18 +184,21 @@ struct SettingsView: View {
                 toolStatusRow(
                     icon: "server.rack",
                     name: Strings.Settings.mcpTitle,
-                    isInstalled: installedMCPLocation != nil
+                    isInstalled: isMCPInstalled
                 )
                 toolStatusRow(
                     icon: "terminal",
                     name: Strings.Settings.cliTitle,
-                    isInstalled: installedLocation != nil
+                    isInstalled: isCLIInstalled
                 )
                 toolStatusRow(
                     icon: "rectangle.split.3x3",
                     name: "tmux",
                     isInstalled: tmuxManager.isAvailable,
-                    isEnabled: tmuxManager.isAvailable ? tmuxEnabled : nil
+                    isEnabled: tmuxManager.isAvailable ? tmuxEnabled : nil,
+                    detail: tmuxManager.isAvailable && tmuxEnabled
+                        ? "\(tmuxManager.version ?? "") · \(activeTmuxSessionCount) active"
+                        : tmuxManager.version
                 )
             }
             .padding(.vertical, 4)
@@ -436,6 +458,10 @@ struct SettingsView: View {
                         Toggle(Strings.Settings.tmuxEnabled, isOn: $tmuxEnabled)
                             .help(Strings.Settings.tmuxEnabledHelp)
 
+                        Toggle(Strings.Settings.tmuxAutoReattach, isOn: $tmuxAutoReattach)
+                            .help(Strings.Settings.tmuxAutoReattachHelp)
+                            .disabled(!tmuxEnabled)
+
                         Divider()
 
                         HStack {
@@ -535,7 +561,8 @@ struct SettingsView: View {
         icon: String,
         name: String,
         isInstalled: Bool,
-        isEnabled: Bool? = nil
+        isEnabled: Bool? = nil,
+        detail: String? = nil
     ) -> some View {
         HStack {
             Image(systemName: icon)
@@ -543,8 +570,15 @@ struct SettingsView: View {
                 .foregroundColor(.secondary)
                 .frame(width: 24)
 
-            Text(name)
-                .font(.body)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(name)
+                    .font(.body)
+                if let detail = detail {
+                    Text(detail)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
 
             Spacer()
 

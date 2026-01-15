@@ -86,6 +86,7 @@ class BoardViewModel: ObservableObject {
     // MARK: - TMUX Session Recovery
 
     /// Check for tmux sessions that can be recovered
+    /// If auto-reattach is enabled, silently reattach sessions that have matching cards
     func checkForRecoverableSessions() async {
         let tmuxManager = TmuxManager.shared
 
@@ -93,6 +94,13 @@ class BoardViewModel: ObservableObject {
         await tmuxManager.detectTmux()
 
         guard tmuxManager.isAvailable else {
+            recoverableSessions = []
+            return
+        }
+
+        // Check if tmux is enabled globally (default true to match @AppStorage)
+        let tmuxEnabled = UserDefaults.standard.object(forKey: "tmuxEnabled") as? Bool ?? true
+        guard tmuxEnabled else {
             recoverableSessions = []
             return
         }
@@ -108,9 +116,37 @@ class BoardViewModel: ObservableObject {
                 return card.tmuxSessionName
             })
 
-        recoverableSessions = detached.filter { !openCardIds.contains($0.name) }
+        let candidates = detached.filter { !openCardIds.contains($0.name) }
 
-        // Show recovery sheet if there are sessions to recover
+        // Check auto-reattach setting
+        let autoReattach = UserDefaults.standard.object(forKey: "tmuxAutoReattach") as? Bool ?? true
+
+        if autoReattach {
+            // Silently reattach sessions that have matching cards
+            var orphanSessions: [TmuxSessionInfo] = []
+
+            for session in candidates {
+                let prefix = session.cardIdPrefix.lowercased()
+                if let matchingCard = board.cards.first(where: {
+                    $0.tmuxSessionName == session.name
+                        || $0.id.uuidString.prefix(8).lowercased() == prefix
+                }) {
+                    // Auto-reattach: add to tabs silently
+                    tabManager.addTab(matchingCard.id)
+                    tmuxManager.markSessionRecovered(name: session.name)
+                } else {
+                    // No matching card - this is an orphan session
+                    orphanSessions.append(session)
+                }
+            }
+
+            recoverableSessions = orphanSessions
+        } else {
+            // Auto-reattach disabled - show all recoverable sessions
+            recoverableSessions = candidates
+        }
+
+        // Show recovery sheet only if there are orphan sessions (or all if auto-reattach disabled)
         if !recoverableSessions.isEmpty {
             showSessionRecovery = true
         }

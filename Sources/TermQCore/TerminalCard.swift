@@ -104,7 +104,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         allowAutorun: Bool = false,
         deletedAt: Date? = nil,
         lastLLMGet: Date? = nil,
-        backend: TerminalBackend = .tmux
+        backend: TerminalBackend = .direct
     ) {
         self.id = id
         self.title = title
@@ -151,8 +151,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
-        // Default to tmux for new terminals, but preserve direct for existing ones
-        backend = try container.decodeIfPresent(TerminalBackend.self, forKey: .backend) ?? .tmux
+        // Default to direct for cards without backend field (pre-tmux cards were direct mode)
+        backend = try container.decodeIfPresent(TerminalBackend.self, forKey: .backend) ?? .direct
     }
 
     public func encode(to encoder: Encoder) throws {

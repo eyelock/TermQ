@@ -169,7 +169,7 @@
 "editor.tags.help" = "Пары ключ-значение для организации";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Настройка агента";
+"editor.section.agent" = "Agent";
 "editor.field.terminal.allows.autorun" = "Терминал разрешает команды";
 "editor.field.persistent.context" = "Постоянный контекст";
 "editor.field.persistent.context.help" = "Контекст сохраняется между сеансами";
@@ -358,3 +358,20 @@
 "uninstall.removed.mcp" = "Removed MCP server";
 "uninstall.removed.data" = "Removed application data";
 "uninstall.error.data %@" = "Failed to remove app data: %@";
+
+// MARK: - tmux Session Recovery (added)
+"settings.section.tmux.status" = "tmux Status";
+"settings.tmux.status.ready" = "Ready - Sessions will persist";
+"settings.tmux.status.disabled" = "Disabled globally";
+"settings.tmux.active.sessions %lld" = "%lld active session(s)";
+"settings.tmux.enable.hint" = "Enable tmux to get persistent terminal sessions that survive app restarts.";
+"settings.tmux.enable.button" = "Enable tmux";
+"settings.tmux.auto.reattach" = "Auto-reattach Sessions";
+"settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+"editor.section.backend" = "Session Backend";
+"editor.field.backend" = "Backend";
+"editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
+"alert.quit.direct.sessions" = "Running Terminal Sessions";
+"alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
+"alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"common.quit" = "Quit";

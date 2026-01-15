@@ -16,10 +16,15 @@ Each terminal card can use one of two backends:
 
 | Backend | Description | Use Case |
 |---------|-------------|----------|
-| **tmux (Persistent)** | Session runs via tmux, persists across restarts | Long-running tasks, development work |
 | **Direct** | Traditional shell, ends when app closes | Quick one-off commands |
+| **tmux (Persistent)** | Session runs via tmux, persists across restarts | Long-running tasks, development work |
 
-New terminals default to tmux backend. You can change this in the terminal's settings.
+New terminals default to **Direct** backend. To use tmux persistence, you must:
+1. Have tmux installed (see Troubleshooting section)
+2. Enable tmux globally in Settings > Tools
+3. Set the terminal's backend to "TMUX (Persistent)" in the card editor
+
+**Note:** The backend picker only appears in the card editor when tmux is installed and enabled globally.
 
 ## Configuring Backend Mode
 
@@ -29,15 +34,30 @@ New terminals default to tmux backend. You can change this in the terminal's set
    - **TMUX (Persistent)** - Recommended for most use cases
    - **Direct** - For temporary sessions
 
-![Backend Selection](Images/backend-selection.png)
+![Backend Selection](Images/tmux-backend-selection.png)
 
 ## Session Recovery
 
 When TermQ launches, it automatically detects any tmux sessions that were running when the app last closed.
 
+### Auto-Reattach (Default)
+
+By default, TermQ automatically reconnects tmux sessions that have matching terminal cards. This means:
+
+- Sessions silently reattach when you reopen TermQ
+- No dialog interruption for matched sessions
+- Your terminals are ready to use immediately
+
+You can disable auto-reattach in **Settings > Tools > tmux section** by unchecking "Auto-reattach Sessions".
+
 ### Recovery Dialog
 
-If orphaned sessions are found, you'll see the Session Recovery dialog:
+The Session Recovery dialog only appears when:
+
+- **Auto-reattach is disabled** - Shows all recoverable sessions for manual action
+- **Orphan sessions exist** - tmux sessions without matching terminal cards
+
+Available actions:
 
 - **Reattach** - Reconnect the session to its original terminal card
 - **Dismiss** - Keep the session running but hide from the list
@@ -46,6 +66,8 @@ If orphaned sessions are found, you'll see the Session Recovery dialog:
 ### Session Naming
 
 tmux sessions are named using the pattern `termq-<cardId>` where `cardId` is the first 8 characters of the terminal card's UUID. This allows TermQ to match sessions back to their cards.
+
+![Session Recovery](Images/tmux-session-recovery.png)
 
 ## Pane Management
 
@@ -78,18 +100,35 @@ Common shortcuts:
 - `Ctrl+B z` - Toggle pane zoom
 - `Ctrl+B x` - Close pane (with confirmation)
 
+![Pane Management](Images/tmux-pane-management.png)
+
 ## tmux Status
 
 You can verify tmux is working correctly in Settings:
 
 1. Open **Settings** (⌘,)
-2. Navigate to the **CLI** tab
-3. Check the **tmux Status** section
+2. Navigate to the **Tools** tab
+3. The **tmux Status** section appears at the top (when tmux is installed)
 
 This shows:
-- Whether tmux is installed and its version
-- Number of active TermQ sessions
-- Total pane count
+- tmux version and status (Ready/Disabled)
+- Number of active tmux sessions
+- Quick enable button if tmux is disabled
+
+### Enabling tmux
+
+To enable tmux backend support:
+
+1. Open **Settings > Tools**
+2. If tmux is installed, you'll see the tmux Status section
+3. Enable "Enable tmux Backend" in the Session Backend section
+4. Optionally enable "Auto-reattach Sessions" for seamless reconnection
+
+![tmux Status](Images/tmux-status.png)
+
+### Quit Warning
+
+When you quit TermQ with running **Direct** (non-tmux) sessions, you'll see a warning that those sessions will be terminated. tmux sessions persist automatically and don't trigger this warning.
 
 ## Troubleshooting
 

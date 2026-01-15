@@ -33,8 +33,9 @@ struct CardEditorView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
     @State private var interactiveMode: Bool = true
-    @State private var backend: TerminalBackend = .tmux
+    @State private var backend: TerminalBackend = .direct
     @ObservedObject private var tmuxManager = TmuxManager.shared
+    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
 
     private enum EditorTab: CaseIterable {
         case general
@@ -193,6 +194,22 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var terminalContent: some View {
+        // Session Backend at top - only show if tmux is available and enabled globally
+        if tmuxManager.isAvailable && tmuxEnabled {
+            Section(Strings.Editor.sectionBackend) {
+                Picker(Strings.Editor.fieldBackend, selection: $backend) {
+                    ForEach(TerminalBackend.allCases, id: \.self) { backend in
+                        Text(backend.displayName).tag(backend)
+                    }
+                }
+                .pickerStyle(.radioGroup)
+
+                Text(backend.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+
         Section(Strings.Editor.sectionTerminal) {
             HStack {
                 TextField(Strings.Editor.fieldDirectory, text: $workingDirectory)
@@ -236,46 +253,6 @@ struct CardEditorView: View {
                         .foregroundColor(.secondary)
                 }
                 .help(Strings.Editor.fieldAutorunEnableHint)
-            }
-        }
-
-        Section("Session Backend") {
-            if tmuxManager.isAvailable {
-                Picker("Backend", selection: $backend) {
-                    ForEach(TerminalBackend.allCases, id: \.self) { backend in
-                        Text(backend.displayName).tag(backend)
-                    }
-                }
-                .pickerStyle(.radioGroup)
-
-                Text(backend.description)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                if backend == .tmux {
-                    HStack {
-                        Image(systemName: "info.circle")
-                            .foregroundColor(.blue)
-                        Text("tmux sessions persist even when TermQ quits. Reattach on next launch.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-            } else {
-                HStack {
-                    Image(systemName: "exclamationmark.triangle")
-                        .foregroundColor(.orange)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("tmux not installed")
-                            .foregroundColor(.secondary)
-                        Text("Install with: brew install tmux")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                Text("Using direct shell mode (sessions end when TermQ closes)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
             }
         }
     }

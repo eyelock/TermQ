@@ -237,14 +237,22 @@ class TerminalSessionManager: ObservableObject {
 
         // Check if session exists, create if not, then attach
         // Using shell script for atomicity
+        // NOTE: Configuration options are applied on EVERY attach (not just new sessions)
+        // to ensure existing sessions get updated settings and to prevent escape sequence leaks
         let script = """
             # Create session if it doesn't exist
             if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
                 \(escapeShellArg(tmuxPath)) new-session -d -s \(escapeShellArg(sessionName)) -c \(escapeShellArg(card.workingDirectory)) \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \(escapeShellArg(card.shellPath)) -l
-                # Configure session for TermQ (disable status bar, etc.)
-                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
-                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse on 2>/dev/null || true
             fi
+            # Configure session for TermQ (applied on every attach to ensure consistency)
+            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
+            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse on 2>/dev/null || true
+            # Set terminal type to match SwiftTerm capabilities
+            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) default-terminal 'xterm-256color' 2>/dev/null || true
+            # Reduce escape time for better responsiveness
+            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) escape-time 10 2>/dev/null || true
+            # Disable escape sequence passthrough that can cause display artifacts
+            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) allow-passthrough off 2>/dev/null || true
             # Attach to the session
             exec \(escapeShellArg(tmuxPath)) attach-session -t \(escapeShellArg(sessionName))
             """

@@ -69,6 +69,7 @@ enum Strings {
         static var browse: String { localized("common.browse") }
         static var apply: String { localized("common.apply") }
         static var preview: String { localized("common.preview") }
+        static var quit: String { localized("common.quit") }
     }
 
     // MARK: - Board View
@@ -255,6 +256,11 @@ enum Strings {
         static var cancel: String { localized("editor.cancel") }
         static var save: String { localized("editor.save") }
         static var saveOpen: String { localized("editor.save.open") }
+
+        // Backend section
+        static var sectionBackend: String { localized("editor.section.backend") }
+        static var fieldBackend: String { localized("editor.field.backend") }
+        static var tmuxPersistNote: String { localized("editor.tmux.persist.note") }
     }
 
     // MARK: - Column Editor
@@ -372,6 +378,18 @@ enum Strings {
         static var tmuxInstallHint: String { localized("settings.tmux.install.hint") }
         static var tmuxCheckAgain: String { localized("settings.tmux.check.again") }
         static var copyToClipboard: String { localized("settings.copy.to.clipboard") }
+
+        // tmux Status section
+        static var sectionTmuxStatus: String { localized("settings.section.tmux.status") }
+        static var tmuxStatusReady: String { localized("settings.tmux.status.ready") }
+        static var tmuxStatusDisabled: String { localized("settings.tmux.status.disabled") }
+        static func tmuxActiveSessions(_ count: Int) -> String {
+            localized("settings.tmux.active.sessions %lld", count)
+        }
+        static var tmuxEnableHint: String { localized("settings.tmux.enable.hint") }
+        static var tmuxEnableButton: String { localized("settings.tmux.enable.button") }
+        static var tmuxAutoReattach: String { localized("settings.tmux.auto.reattach") }
+        static var tmuxAutoReattachHelp: String { localized("settings.tmux.auto.reattach.help") }
     }
 
     // MARK: - Command Palette
@@ -390,6 +408,13 @@ enum Strings {
     enum Alert {
         static var error: String { localized("alert.error") }
         static var success: String { localized("alert.success") }
+        static var quitWithDirectSessions: String { localized("alert.quit.direct.sessions") }
+        static func quitWithDirectSessionsMessage(_ count: Int) -> String {
+            localized("alert.quit.direct.sessions.message.simple %lld", count)
+        }
+        static func quitWithDirectSessionsMessageWithTmux(_ count: Int) -> String {
+            localized("alert.quit.direct.sessions.message %lld", count)
+        }
     }
 
     // MARK: - Backup

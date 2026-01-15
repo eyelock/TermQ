@@ -29,6 +29,11 @@ enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtoco
         "\(path)/termqcli"
     }
 
+    /// Legacy path for backwards compatibility (older versions installed as "termq")
+    var legacyFullPath: String {
+        "\(path)/termq"
+    }
+
     var requiresAdmin: Bool {
         switch self {
         case .usrLocalBin:
@@ -63,8 +68,10 @@ enum CLIInstaller {
     }
 
     /// Check if the CLI tool is installed at a specific location
+    /// Also checks for legacy name "termq" for backwards compatibility
     static func isInstalled(at location: InstallLocation) -> Bool {
         ComponentInstaller<InstallLocation>.isInstalled(at: location, config: config)
+            || FileManager.default.fileExists(atPath: location.legacyFullPath)
     }
 
     /// Check if the CLI tool is installed at a custom path
@@ -73,8 +80,9 @@ enum CLIInstaller {
     }
 
     /// Find where the CLI is currently installed (if anywhere)
+    /// Checks for both current name "termqcli" and legacy name "termq"
     static var currentInstallLocation: InstallLocation? {
-        ComponentInstaller<InstallLocation>.currentInstallLocation(config: config)
+        InstallLocation.allCases.first { isInstalled(at: $0) }
     }
 
     /// Install the CLI tool to a standard location

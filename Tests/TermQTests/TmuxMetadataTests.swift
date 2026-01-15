@@ -10,11 +10,11 @@ final class TmuxMetadataTests: XCTestCase {
 
     // MARK: - TerminalCard Backend Tests
 
-    func testBackendDefaultsToTmux() {
+    func testBackendDefaultsToDirect() {
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId)
 
-        XCTAssertEqual(card.backend, .tmux)
+        XCTAssertEqual(card.backend, .direct)
     }
 
     func testBackendCanBeSetToDirect() {
@@ -51,8 +51,8 @@ final class TmuxMetadataTests: XCTestCase {
         XCTAssertEqual(decoded.backend, .direct)
     }
 
-    func testBackendDefaultsToTmuxWhenMissingInJSON() throws {
-        // Simulate loading old data without backend field
+    func testBackendDefaultsToDirectWhenMissingInJSON() throws {
+        // Simulate loading old data without backend field (pre-tmux feature cards)
         let columnId = UUID()
         let json = """
             {
@@ -80,8 +80,8 @@ final class TmuxMetadataTests: XCTestCase {
         let decoder = JSONDecoder()
         let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
 
-        // Should default to tmux when missing
-        XCTAssertEqual(decoded.backend, .tmux)
+        // Should default to direct when missing (pre-tmux cards were direct mode)
+        XCTAssertEqual(decoded.backend, .direct)
     }
 
     // MARK: - tmux Session Name Tests
@@ -133,13 +133,13 @@ final class TmuxMetadataTests: XCTestCase {
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId)
 
-        XCTAssertEqual(card.backend, .tmux)
-
-        card.backend = .direct
         XCTAssertEqual(card.backend, .direct)
 
         card.backend = .tmux
         XCTAssertEqual(card.backend, .tmux)
+
+        card.backend = .direct
+        XCTAssertEqual(card.backend, .direct)
     }
 
     // MARK: - isWired Tests (LLM awareness tracking)
