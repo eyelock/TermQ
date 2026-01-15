@@ -47,6 +47,8 @@
 "card.close.session" = "Close Session";
 "card.live.help" = "Terminal has an active background session";
 "card.live" = "LIVE";
+"card.kill.terminal.help" = "Forcefully terminate the terminal process";
+"card.kill.terminal" = "Kill Terminal";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "เซสชันเทอร์มินัลสิ้นสุดแล้ว";

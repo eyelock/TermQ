@@ -15,6 +15,7 @@ struct ColumnView: View {
     let onToggleFavourite: (TerminalCard) -> Void
     let onCloseSession: (TerminalCard) -> Void
     let onRestartSession: (TerminalCard) -> Void
+    let onKillTerminal: (TerminalCard) -> Void
     let onEditColumn: () -> Void
     let onDeleteColumn: () -> Void
     let onDropCardId: (String) -> Void  // Takes card ID string (for end of column)
@@ -93,7 +94,8 @@ struct ColumnView: View {
                             onDelete: { onDeleteCard(card) },
                             onToggleFavourite: { onToggleFavourite(card) },
                             onCloseSession: { onCloseSession(card) },
-                            onRestartSession: { onRestartSession(card) }
+                            onRestartSession: { onRestartSession(card) },
+                            onKillTerminal: { onKillTerminal(card) }
                         )
                         .overlay(alignment: .top) {
                             // Drop indicator line above this card

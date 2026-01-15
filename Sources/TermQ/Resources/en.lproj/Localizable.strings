@@ -47,6 +47,8 @@
 "card.live.help" = "Terminal has an active background session";
 "card.close.session" = "Close Session";
 "card.restart.session" = "Restart Session";
+"card.kill.terminal" = "Kill Terminal";
+"card.kill.terminal.help" = "Forcefully terminate the terminal process";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Terminal session ended";

@@ -50,6 +50,9 @@ struct KanbanBoardView: View {
                             onRestartSession: { card in
                                 viewModel.restartSession(for: card)
                             },
+                            onKillTerminal: { card in
+                                viewModel.killTerminal(for: card)
+                            },
                             onEditColumn: {
                                 viewModel.isEditingColumn = column
                             },
