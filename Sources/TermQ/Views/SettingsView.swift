@@ -32,14 +32,19 @@ struct SettingsView: View {
     private enum SettingsTab: CaseIterable {
         case general
         case tools
+        case data
 
         var title: String {
             switch self {
             case .general: return Strings.Settings.tabGeneral
             case .tools: return Strings.Settings.tabTools
+            case .data: return Strings.Settings.tabData
             }
         }
     }
+
+    // Uninstall sheet state
+    @State private var showUninstallSheet = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -53,15 +58,21 @@ struct SettingsView: View {
             .padding()
 
             Form {
-                if selectedTab == .general {
+                switch selectedTab {
+                case .general:
                     generalContent
-                } else {
+                case .tools:
                     toolsContent
+                case .data:
+                    dataContent
                 }
             }
             .formStyle(.grouped)
         }
-        .frame(width: 500, height: 700)
+        .frame(width: 500, height: 750)
+        .sheet(isPresented: $showUninstallSheet) {
+            UninstallView()
+        }
         .alert(alertIsError ? Strings.Alert.error : Strings.Alert.success, isPresented: $showAlert) {
             Button(Strings.Common.ok) {}
         } message: {
@@ -374,6 +385,46 @@ struct SettingsView: View {
             .padding(.vertical, 4)
         } header: {
             Text(Strings.Settings.sectionMcp)
+        }
+    }
+
+    // MARK: - Data Tab Content
+
+    @ViewBuilder
+    private var dataContent: some View {
+        BackupSettingsView()
+
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "trash")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Uninstall.title)
+                            .font(.headline)
+                        Text(Strings.Uninstall.description)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+                }
+
+                Divider()
+
+                Text(Strings.Uninstall.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Button(Strings.Uninstall.buttonTitle, role: .destructive) {
+                    showUninstallSheet = true
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Uninstall.sectionHeader)
         }
     }
 

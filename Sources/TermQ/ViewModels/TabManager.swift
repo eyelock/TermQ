@@ -45,6 +45,21 @@ public final class TabManager: ObservableObject {
         }
     }
 
+    /// Re-initialize tabs from board after restore (clears transients)
+    func reinitializeFromBoard(_ board: Board) {
+        // Clear transient cards - they don't survive restore
+        transientCards.removeAll()
+        needsAttention.removeAll()
+
+        // Re-initialize session tabs from restored data
+        let favouriteIds = Set(board.activeCards.filter { $0.isFavourite }.map { $0.id })
+        sessionTabs = board.favouriteOrder.filter { favouriteIds.contains($0) }
+
+        for card in board.activeCards where card.isFavourite && !sessionTabs.contains(card.id) {
+            sessionTabs.append(card.id)
+        }
+    }
+
     // MARK: - Tab State
 
     /// Cards to show as tabs - based on sessionTabs order

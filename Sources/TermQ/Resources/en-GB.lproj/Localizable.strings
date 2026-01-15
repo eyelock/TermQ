@@ -280,3 +280,61 @@
 // MARK: - Alerts
 "alert.error" = "Error";
 "alert.success" = "Success";
+
+// MARK: - Settings Data Tab
+"settings.tab.data" = "Data";
+
+// MARK: - Backup
+"backup.title" = "Data Backup";
+"backup.description" = "Back up your board data to a location that survives app uninstall";
+"backup.exists" = "Backup exists";
+"backup.location.label" = "Backup Location";
+"backup.location.placeholder" = "~/.termq";
+"backup.location.help" = "This location persists even if TermQ is uninstalled";
+"backup.frequency.label" = "Backup Frequency";
+"backup.frequency.picker" = "Frequency";
+"backup.last" = "Last backup:";
+"backup.ago" = "ago";
+"backup.location" = "Location:";
+"backup.backing.up" = "Backing up...";
+"backup.now" = "Backup Now";
+"backup.restore" = "Restore...";
+"backup.section.header" = "Backup";
+"backup.select" = "Select";
+"backup.choose.location" = "Choose a location for backups";
+"backup.restart.notice" = "Please restart TermQ to load the restored data.";
+
+// MARK: - Restore
+"restore.welcome" = "Welcome Back";
+"restore.found.backup" = "We found a backup of your TermQ data.";
+"restore.question" = "Would you like to restore your previous terminals?";
+"restore.start.fresh" = "Start Fresh";
+"restore.restoring" = "Restoring...";
+"restore.button" = "Restore Backup";
+
+// MARK: - Uninstall
+"uninstall.title" = "Uninstall TermQ";
+"uninstall.section.header" = "Uninstall";
+"uninstall.description" = "Completely remove TermQ from your system, including CLI tools, MCP server, and optionally your board data.";
+"uninstall.button.title" = "Uninstall TermQ...";
+"uninstall.will.remove" = "Select what to remove:";
+"uninstall.cli.tool" = "CLI Tool (termq)";
+"uninstall.mcp.server" = "MCP Server (termqmcp)";
+"uninstall.app.data" = "Application Data";
+"uninstall.backup.warning" = "Warning: This will delete all your terminals. A backup will be created first.";
+"uninstall.continue.button" = "Continue";
+"uninstall.creating.backup" = "Creating Backup...";
+"uninstall.backup.location" = "Backup will be saved to:";
+"uninstall.backup.complete" = "Backup Complete";
+"uninstall.data.backed.up" = "Your data has been backed up to:";
+"uninstall.ready.remove" = "Ready to remove:";
+"uninstall.processing" = "Uninstalling...";
+"uninstall.complete" = "Uninstall Complete";
+"uninstall.to.complete" = "To complete the uninstall:";
+"uninstall.drag.to.trash" = "Drag TermQ.app to the Trash";
+"uninstall.backup.preserved" = "Your backup has been preserved at:";
+"uninstall.done" = "Done";
+"uninstall.removed.cli" = "Removed CLI tool";
+"uninstall.removed.mcp" = "Removed MCP server";
+"uninstall.removed.data" = "Removed application data";
+"uninstall.error.data %@" = "Failed to remove app data: %@";
