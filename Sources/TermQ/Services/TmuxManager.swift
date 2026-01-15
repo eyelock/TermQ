@@ -259,15 +259,20 @@ public class TmuxManager: ObservableObject {
         do {
             try await setSessionMetadata(name: sessionName, key: MetadataKey.cardId.rawValue, value: card.id.uuidString)
             try await setSessionMetadata(name: sessionName, key: MetadataKey.title.rawValue, value: card.title)
-            try await setSessionMetadata(name: sessionName, key: MetadataKey.description.rawValue, value: card.description)
-            try await setSessionMetadata(name: sessionName, key: MetadataKey.tags.rawValue, value: encodeTagsToString(card.tags))
+            try await setSessionMetadata(
+                name: sessionName, key: MetadataKey.description.rawValue, value: card.description)
+            try await setSessionMetadata(
+                name: sessionName, key: MetadataKey.tags.rawValue, value: encodeTagsToString(card.tags))
             try await setSessionMetadata(name: sessionName, key: MetadataKey.llmPrompt.rawValue, value: card.llmPrompt)
-            try await setSessionMetadata(name: sessionName, key: MetadataKey.llmNextAction.rawValue, value: card.llmNextAction)
+            try await setSessionMetadata(
+                name: sessionName, key: MetadataKey.llmNextAction.rawValue, value: card.llmNextAction)
             try await setSessionMetadata(name: sessionName, key: MetadataKey.badge.rawValue, value: card.badge)
             if let columnId = card.columnId {
-                try await setSessionMetadata(name: sessionName, key: MetadataKey.columnId.rawValue, value: columnId.uuidString)
+                try await setSessionMetadata(
+                    name: sessionName, key: MetadataKey.columnId.rawValue, value: columnId.uuidString)
             }
-            try await setSessionMetadata(name: sessionName, key: MetadataKey.isFavourite.rawValue, value: card.isFavourite ? "1" : "0")
+            try await setSessionMetadata(
+                name: sessionName, key: MetadataKey.isFavourite.rawValue, value: card.isFavourite ? "1" : "0")
         } catch {
             print("TmuxManager: Failed to sync metadata for \(sessionName): \(error)")
         }
@@ -280,7 +285,8 @@ public class TmuxManager: ObservableObject {
 
         // Card ID is required - if missing, no metadata was stored
         guard let cardIdString = await getSessionMetadata(name: sessionName, key: MetadataKey.cardId.rawValue),
-              let cardId = UUID(uuidString: cardIdString) else {
+            let cardId = UUID(uuidString: cardIdString)
+        else {
             return nil
         }
 
@@ -291,7 +297,8 @@ public class TmuxManager: ObservableObject {
         let llmNextAction = await getSessionMetadata(name: sessionName, key: MetadataKey.llmNextAction.rawValue) ?? ""
         let badge = await getSessionMetadata(name: sessionName, key: MetadataKey.badge.rawValue) ?? ""
         let columnIdString = await getSessionMetadata(name: sessionName, key: MetadataKey.columnId.rawValue) ?? ""
-        let isFavouriteString = await getSessionMetadata(name: sessionName, key: MetadataKey.isFavourite.rawValue) ?? "0"
+        let isFavouriteString =
+            await getSessionMetadata(name: sessionName, key: MetadataKey.isFavourite.rawValue) ?? "0"
 
         let columnId = UUID(uuidString: columnIdString)
         let tags = decodeTagsFromString(tagsString)
@@ -311,9 +318,11 @@ public class TmuxManager: ObservableObject {
     }
 
     /// Update a single metadata field in the tmux session
-    public func updateSessionMetadata(sessionName: String, title: String? = nil, description: String? = nil,
-                                       tags: [Tag]? = nil, llmPrompt: String? = nil, llmNextAction: String? = nil,
-                                       badge: String? = nil, columnId: UUID? = nil, isFavourite: Bool? = nil) async {
+    public func updateSessionMetadata(
+        sessionName: String, title: String? = nil, description: String? = nil,
+        tags: [Tag]? = nil, llmPrompt: String? = nil, llmNextAction: String? = nil,
+        badge: String? = nil, columnId: UUID? = nil, isFavourite: Bool? = nil
+    ) async {
         guard tmuxPath != nil else { return }
 
         do {
@@ -321,25 +330,30 @@ public class TmuxManager: ObservableObject {
                 try await setSessionMetadata(name: sessionName, key: MetadataKey.title.rawValue, value: title)
             }
             if let description = description {
-                try await setSessionMetadata(name: sessionName, key: MetadataKey.description.rawValue, value: description)
+                try await setSessionMetadata(
+                    name: sessionName, key: MetadataKey.description.rawValue, value: description)
             }
             if let tags = tags {
-                try await setSessionMetadata(name: sessionName, key: MetadataKey.tags.rawValue, value: encodeTagsToString(tags))
+                try await setSessionMetadata(
+                    name: sessionName, key: MetadataKey.tags.rawValue, value: encodeTagsToString(tags))
             }
             if let llmPrompt = llmPrompt {
                 try await setSessionMetadata(name: sessionName, key: MetadataKey.llmPrompt.rawValue, value: llmPrompt)
             }
             if let llmNextAction = llmNextAction {
-                try await setSessionMetadata(name: sessionName, key: MetadataKey.llmNextAction.rawValue, value: llmNextAction)
+                try await setSessionMetadata(
+                    name: sessionName, key: MetadataKey.llmNextAction.rawValue, value: llmNextAction)
             }
             if let badge = badge {
                 try await setSessionMetadata(name: sessionName, key: MetadataKey.badge.rawValue, value: badge)
             }
             if let columnId = columnId {
-                try await setSessionMetadata(name: sessionName, key: MetadataKey.columnId.rawValue, value: columnId.uuidString)
+                try await setSessionMetadata(
+                    name: sessionName, key: MetadataKey.columnId.rawValue, value: columnId.uuidString)
             }
             if let isFavourite = isFavourite {
-                try await setSessionMetadata(name: sessionName, key: MetadataKey.isFavourite.rawValue, value: isFavourite ? "1" : "0")
+                try await setSessionMetadata(
+                    name: sessionName, key: MetadataKey.isFavourite.rawValue, value: isFavourite ? "1" : "0")
             }
         } catch {
             print("TmuxManager: Failed to update metadata for \(sessionName): \(error)")

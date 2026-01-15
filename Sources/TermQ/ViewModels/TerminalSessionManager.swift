@@ -238,16 +238,16 @@ class TerminalSessionManager: ObservableObject {
         // Check if session exists, create if not, then attach
         // Using shell script for atomicity
         let script = """
-        # Create session if it doesn't exist
-        if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
-            \(escapeShellArg(tmuxPath)) new-session -d -s \(escapeShellArg(sessionName)) -c \(escapeShellArg(card.workingDirectory)) \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \(escapeShellArg(card.shellPath)) -l
-            # Configure session for TermQ (disable status bar, etc.)
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse on 2>/dev/null || true
-        fi
-        # Attach to the session
-        exec \(escapeShellArg(tmuxPath)) attach-session -t \(escapeShellArg(sessionName))
-        """
+            # Create session if it doesn't exist
+            if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
+                \(escapeShellArg(tmuxPath)) new-session -d -s \(escapeShellArg(sessionName)) -c \(escapeShellArg(card.workingDirectory)) \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \(escapeShellArg(card.shellPath)) -l
+                # Configure session for TermQ (disable status bar, etc.)
+                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
+                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse on 2>/dev/null || true
+            fi
+            # Attach to the session
+            exec \(escapeShellArg(tmuxPath)) attach-session -t \(escapeShellArg(sessionName))
+            """
 
         terminal.startProcess(
             executable: "/bin/sh",
@@ -258,7 +258,7 @@ class TerminalSessionManager: ObservableObject {
 
         // Sync full metadata to tmux session after a brief delay (allow session creation)
         Task {
-            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+            try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
             let metadata = TerminalCardMetadata.from(card)
             await tmuxManager.syncMetadataToSession(sessionName: sessionName, card: metadata)
         }
@@ -446,7 +446,7 @@ class TerminalSessionManager: ObservableObject {
                 }
                 // Otherwise just detach - the tmux session keeps running
                 // When user closes the tab, they're just detaching, not killing
-                session.terminal.send(txt: "\u{02}d") // Ctrl+B, d to detach
+                session.terminal.send(txt: "\u{02}d")  // Ctrl+B, d to detach
             }
         }
     }
@@ -508,8 +508,8 @@ class TerminalSessionManager: ObservableObject {
     /// Send a tmux command to the session (for pane operations, etc.)
     func sendTmuxCommand(_ command: String, to cardId: UUID) {
         guard let session = sessions[cardId],
-              session.backend == .tmux,
-              session.isRunning
+            session.backend == .tmux,
+            session.isRunning
         else { return }
 
         // tmux commands are sent via the prefix key (Ctrl+B by default)
@@ -529,8 +529,8 @@ class TerminalSessionManager: ObservableObject {
     /// Split the current pane horizontally (top/bottom)
     func splitPaneHorizontally(cardId: UUID) {
         guard let session = sessions[cardId],
-              session.backend == .tmux,
-              let tmuxPath = tmuxManager.tmuxPath
+            session.backend == .tmux,
+            let tmuxPath = tmuxManager.tmuxPath
         else { return }
 
         let sessionName = tmuxManager.sessionName(for: cardId)
@@ -546,8 +546,8 @@ class TerminalSessionManager: ObservableObject {
     /// Split the current pane vertically (left/right)
     func splitPaneVertically(cardId: UUID) {
         guard let session = sessions[cardId],
-              session.backend == .tmux,
-              let tmuxPath = tmuxManager.tmuxPath
+            session.backend == .tmux,
+            let tmuxPath = tmuxManager.tmuxPath
         else { return }
 
         let sessionName = tmuxManager.sessionName(for: cardId)
@@ -563,8 +563,8 @@ class TerminalSessionManager: ObservableObject {
     /// Navigate to adjacent pane
     func selectPane(direction: PaneDirection, cardId: UUID) {
         guard let session = sessions[cardId],
-              session.backend == .tmux,
-              let tmuxPath = tmuxManager.tmuxPath
+            session.backend == .tmux,
+            let tmuxPath = tmuxManager.tmuxPath
         else { return }
 
         let sessionName = tmuxManager.sessionName(for: cardId)
@@ -588,8 +588,8 @@ class TerminalSessionManager: ObservableObject {
     /// Close the current pane (if multiple panes exist)
     func closeCurrentPane(cardId: UUID) {
         guard let session = sessions[cardId],
-              session.backend == .tmux,
-              let tmuxPath = tmuxManager.tmuxPath
+            session.backend == .tmux,
+            let tmuxPath = tmuxManager.tmuxPath
         else { return }
 
         let sessionName = tmuxManager.sessionName(for: cardId)
@@ -605,8 +605,8 @@ class TerminalSessionManager: ObservableObject {
     /// Zoom/unzoom the current pane (fullscreen toggle)
     func togglePaneZoom(cardId: UUID) {
         guard let session = sessions[cardId],
-              session.backend == .tmux,
-              let tmuxPath = tmuxManager.tmuxPath
+            session.backend == .tmux,
+            let tmuxPath = tmuxManager.tmuxPath
         else { return }
 
         let sessionName = tmuxManager.sessionName(for: cardId)

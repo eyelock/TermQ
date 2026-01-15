@@ -358,13 +358,13 @@ public struct TmuxControlModeView: View {
 // MARK: - Preview
 
 #if DEBUG
-struct TmuxPaneView_Previews: PreviewProvider {
-    static var previews: some View {
-        TmuxPaneView(
-            pane: TmuxPane(id: "0", windowId: "0", width: 80, height: 24, x: 0, y: 0),
-            isSelected: true
-        )
-        .frame(width: 400, height: 300)
+    struct TmuxPaneView_Previews: PreviewProvider {
+        static var previews: some View {
+            TmuxPaneView(
+                pane: TmuxPane(id: "0", windowId: "0", width: 80, height: 24, x: 0, y: 0),
+                isSelected: true
+            )
+            .frame(width: 400, height: 300)
+        }
     }
-}
 #endif

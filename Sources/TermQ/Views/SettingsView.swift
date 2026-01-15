@@ -227,9 +227,11 @@ struct SettingsView: View {
                     }
                 } else {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("tmux enables persistent terminal sessions that survive app restarts, and split panes within a single terminal.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                        Text(
+                            "tmux enables persistent terminal sessions that survive app restarts, and split panes within a single terminal."
+                        )
+                        .font(.caption)
+                        .foregroundColor(.secondary)
 
                         Text("Install using Homebrew:")
                             .font(.caption)

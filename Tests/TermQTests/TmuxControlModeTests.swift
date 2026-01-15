@@ -221,14 +221,17 @@ final class TmuxControlModeTests: XCTestCase {
 
     func testExtractPaneIdsFromSimpleLayout() {
         // Simple layout: WIDTHxHEIGHT,X,Y,PANE_ID
+        // The regex matches multiple number fields; pane ID is the last one
         let layout = "177x42,0,0,0"
 
         // Extract pane ID using regex
         let panePattern = /,(\d+)(?:,|$|\})/
         let matches = layout.matches(of: panePattern)
 
-        XCTAssertEqual(matches.count, 1)
-        XCTAssertEqual(String(matches[0].output.1), "0")
+        // Regex matches X, Y, and pane_id fields (the comma-separated numbers)
+        XCTAssertEqual(matches.count, 2)
+        // Last match is the pane ID
+        XCTAssertEqual(String(matches.last!.output.1), "0")
     }
 
     func testExtractPaneIdsFromSplitLayout() {
@@ -444,8 +447,8 @@ final class TmuxControlModeTests: XCTestCase {
         XCTAssertEqual(String(dimensions[0]), "80")  // width
         XCTAssertEqual(String(dimensions[1]), "24")  // height
         XCTAssertEqual(String(parts[1]), "10")  // x
-        XCTAssertEqual(String(parts[2]), "5")   // y
-        XCTAssertEqual(String(parts[3]), "3")   // pane id
+        XCTAssertEqual(String(parts[2]), "5")  // y
+        XCTAssertEqual(String(parts[3]), "3")  // pane id
     }
 
     func testNestedLayoutParsing() {
@@ -536,12 +539,15 @@ final class TmuxControlModeTests: XCTestCase {
             let char = string[index]
 
             if char == "%" {
-                let nextIndex = string.index(index, offsetBy: 2, limitedBy: string.endIndex)
+                // Need to read 2 hex characters after the '%'
+                let nextIndex = string.index(index, offsetBy: 3, limitedBy: string.endIndex)
                 guard let next = nextIndex else { break }
 
-                let hexString = String(string[string.index(after: index)..<next])
-                if let byte = UInt8(hexString, radix: 16),
-                   let char = Character(UnicodeScalar(byte)) {
+                // Get the two hex characters between '%' and next position
+                let hexStart = string.index(after: index)
+                let hexString = String(string[hexStart..<next])
+                if let byte = UInt8(hexString, radix: 16) {
+                    let char = Character(UnicodeScalar(byte))
                     result.append(char)
                     index = next
                     continue

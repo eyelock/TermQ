@@ -131,7 +131,7 @@ public class TmuxControlModeParser: ObservableObject {
                 pendingCommands.removeValue(forKey: id)
                 return response
             }
-            try? await Task.sleep(nanoseconds: 10_000_000) // 10ms
+            try? await Task.sleep(nanoseconds: 10_000_000)  // 10ms
         }
 
         return nil
@@ -194,7 +194,8 @@ public class TmuxControlModeParser: ObservableObject {
     private func handleBegin(_ parts: [String.SubSequence]) {
         // %begin <timestamp> <number> <flags>
         guard parts.count >= 3,
-              let commandId = Int(parts[2]) else {
+            let commandId = Int(parts[2])
+        else {
             return
         }
 
@@ -204,7 +205,8 @@ public class TmuxControlModeParser: ObservableObject {
     private func handleEnd(_ parts: [String.SubSequence]) {
         // %end <timestamp> <number> <flags>
         guard parts.count >= 3,
-              let commandId = Int(parts[2]) else {
+            let commandId = Int(parts[2])
+        else {
             return
         }
 
@@ -320,14 +322,15 @@ public class TmuxControlModeParser: ObservableObject {
         for match in matches {
             let paneId = String(match.output.1)
             if !newPanes.contains(where: { $0.id == paneId }) {
-                newPanes.append(TmuxPane(
-                    id: paneId,
-                    windowId: "", // Would need more context to set
-                    width: 0,
-                    height: 0,
-                    x: 0,
-                    y: 0
-                ))
+                newPanes.append(
+                    TmuxPane(
+                        id: paneId,
+                        windowId: "",  // Would need more context to set
+                        width: 0,
+                        height: 0,
+                        x: 0,
+                        y: 0
+                    ))
             }
         }
 
@@ -492,7 +495,7 @@ public class TmuxControlModeSession: ObservableObject {
         self.process = proc
 
         // Wait for connection confirmation
-        try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+        try await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
         isConnected = parser.isConnected
     }
 

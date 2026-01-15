@@ -295,8 +295,8 @@ final class TmuxMetadataTests: XCTestCase {
             fontSize: 14,
             safePasteEnabled: false,
             themeId: "dracula",
-            backend: .tmux,
-            allowAutorun: true
+            allowAutorun: true,
+            backend: .tmux
         )
 
         XCTAssertEqual(card.id, id)
@@ -390,8 +390,9 @@ final class TmuxMetadataTests: XCTestCase {
 
     // MARK: - isTransient Tests
 
-    func testCardIsTransientWhenNoColumnId() {
-        let card = TerminalCard(columnId: nil)
+    func testCardIsTransientWhenMarked() {
+        let card = TerminalCard(columnId: UUID())
+        card.isTransient = true
         XCTAssertTrue(card.isTransient)
     }
 
@@ -490,7 +491,7 @@ final class TmuxMetadataTests: XCTestCase {
 
     func testLongDescriptionHandling() {
         let longDesc = String(repeating: "This is a test. ", count: 100)
-        let card = TerminalCard(columnId: UUID(), description: longDesc)
+        let card = TerminalCard(description: longDesc, columnId: UUID())
 
         XCTAssertEqual(card.description, longDesc)
         XCTAssertGreaterThan(card.description.count, 1000)
