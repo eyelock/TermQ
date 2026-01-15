@@ -274,6 +274,20 @@ class TerminalSessionManager: ObservableObject {
         }
     }
 
+    /// Forcefully kill a terminal session (SIGKILL)
+    /// Use this for stuck/unresponsive terminals that won't respond to graceful exit
+    func killSession(for cardId: UUID) {
+        guard let session = sessions.removeValue(forKey: cardId) else { return }
+
+        // Send SIGKILL to forcefully terminate the process
+        if session.isRunning {
+            let pid = session.terminal.process.shellPid
+            if pid != 0 {
+                kill(pid, SIGKILL)
+            }
+        }
+    }
+
     /// Clean up all sessions
     func removeAllSessions() {
         // Remove all sessions from dictionary first, then terminate

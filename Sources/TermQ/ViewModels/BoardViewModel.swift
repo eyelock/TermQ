@@ -185,6 +185,13 @@ class BoardViewModel: ObservableObject {
         objectWillChange.send()
     }
 
+    /// Forcefully kill a terminal session (for stuck/unresponsive terminals)
+    /// After killing, the terminal can be re-opened fresh
+    func killTerminal(for card: TerminalCard) {
+        TerminalSessionManager.shared.killSession(for: card.id)
+        objectWillChange.send()
+    }
+
     func moveCard(_ card: TerminalCard, to column: Column) {
         let targetCards = board.cards(for: column)
         board.moveCard(card, to: column, at: targetCards.count)

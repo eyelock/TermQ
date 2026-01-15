@@ -14,6 +14,7 @@ struct TerminalCardView: View {
     let onToggleFavourite: () -> Void
     let onCloseSession: () -> Void
     let onRestartSession: () -> Void
+    let onKillTerminal: () -> Void
 
     @State private var isHovering = false
     @State private var showDeleteConfirmation = false
@@ -207,6 +208,9 @@ struct TerminalCardView: View {
                 }
                 Button(Strings.Card.restartSession) {
                     onRestartSession()
+                }
+                Button(Strings.Card.killTerminal, role: .destructive) {
+                    onKillTerminal()
                 }
             }
             Divider()
