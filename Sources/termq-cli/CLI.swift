@@ -1,156 +1,9 @@
 import AppKit
 import ArgumentParser
 import Foundation
+import TermQShared
 
-// MARK: - Data Structures for Reading Board
-
-/// Minimal Tag representation for CLI
-struct CLITag: Codable {
-    let id: UUID
-    let key: String
-    let value: String
-}
-
-/// Minimal Column representation for CLI
-struct CLIColumn: Codable {
-    let id: UUID
-    let name: String
-    let description: String?
-    let orderIndex: Int
-    let color: String
-}
-
-/// Minimal TerminalCard representation for CLI
-struct CLICard: Codable {
-    let id: UUID
-    let title: String
-    let description: String
-    let tags: [CLITag]
-    let columnId: UUID
-    let orderIndex: Int
-    let workingDirectory: String
-    let isFavourite: Bool
-    let badge: String
-    let llmPrompt: String
-    let llmNextAction: String
-    let allowAutorun: Bool?
-    let deletedAt: Date?
-
-    var isDeleted: Bool { deletedAt != nil }
-}
-
-/// Minimal Board representation for CLI
-struct CLIBoard: Codable {
-    let columns: [CLIColumn]
-    let cards: [CLICard]
-
-    var activeCards: [CLICard] {
-        cards.filter { !$0.isDeleted }
-    }
-}
-
-/// JSON output format for terminals
-struct TerminalOutput: Encodable {
-    let id: String
-    let name: String
-    let description: String
-    let column: String
-    let columnId: String
-    let tags: [String: String]
-    let path: String
-    let badges: [String]
-    let isFavourite: Bool
-    let llmPrompt: String
-    let llmNextAction: String
-    let allowAutorun: Bool
-}
-
-/// Error output format
-struct ErrorOutput: Encodable {
-    let error: String
-    let code: Int
-}
-
-/// Success response for set command
-struct SetResponse: Encodable {
-    let success: Bool
-    let id: String
-}
-
-/// Success response for move command
-struct MoveResponse: Encodable {
-    let success: Bool
-    let id: String
-    let column: String
-}
-
-// MARK: - Shared Helpers
-
-/// Get the TermQ data directory path
-func getDataDirectoryPath(debug: Bool) -> URL {
-    let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-    let dirName = debug ? "TermQ-Debug" : "TermQ"
-    return appSupport.appendingPathComponent(dirName, isDirectory: true)
-}
-
-/// Load the board from disk
-func loadBoard(debug: Bool) throws -> CLIBoard {
-    let dataDir = getDataDirectoryPath(debug: debug)
-    let boardURL = dataDir.appendingPathComponent("board.json")
-
-    guard FileManager.default.fileExists(atPath: boardURL.path) else {
-        throw CLIError.boardNotFound(path: boardURL.path)
-    }
-
-    let data = try Data(contentsOf: boardURL)
-    return try JSONDecoder().decode(CLIBoard.self, from: data)
-}
-
-/// Convert a card to output format
-func cardToOutput(_ card: CLICard, columnName: String) -> TerminalOutput {
-    var tagsDict: [String: String] = [:]
-    for tag in card.tags {
-        tagsDict[tag.key] = tag.value
-    }
-
-    let badges =
-        card.badge.isEmpty
-        ? []
-        : card.badge.split(separator: ",").map {
-            $0.trimmingCharacters(in: .whitespaces)
-        }
-
-    return TerminalOutput(
-        id: card.id.uuidString,
-        name: card.title,
-        description: card.description,
-        column: columnName,
-        columnId: card.columnId.uuidString,
-        tags: tagsDict,
-        path: card.workingDirectory,
-        badges: badges,
-        isFavourite: card.isFavourite,
-        llmPrompt: card.llmPrompt,
-        llmNextAction: card.llmNextAction,
-        allowAutorun: card.allowAutorun ?? false
-    )
-}
-
-/// Print JSON output
-func printJSON<T: Encodable>(_ value: T) {
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-    if let data = try? encoder.encode(value),
-        let string = String(data: data, encoding: .utf8)
-    {
-        print(string)
-    }
-}
-
-/// Print error as JSON
-func printErrorJSON(_ message: String, code: Int = 1) {
-    printJSON(ErrorOutput(error: message, code: code))
-}
+// MARK: - CLI-specific Errors
 
 enum CLIError: Error, LocalizedError {
     case boardNotFound(path: String)
@@ -168,6 +21,22 @@ enum CLIError: Error, LocalizedError {
         }
     }
 }
+
+// MARK: - CLI-specific Output Types (for Pending command)
+
+/// Pending terminal output format (CLI-specific, includes slightly different fields)
+struct PendingTerminal: Encodable {
+    let id: String
+    let name: String
+    let column: String
+    let path: String
+    let llmNextAction: String
+    let llmPrompt: String
+    let staleness: String
+    let tags: [String: String]
+}
+
+// MARK: - Main CLI
 
 @main
 struct TermQCLI: ParsableCommand {
@@ -199,48 +68,10 @@ struct Open: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: debug)
 
-            // Build column lookup
-            var columnLookup: [UUID: String] = [:]
-            for col in board.columns {
-                columnLookup[col.id] = col.name
-            }
-
-            var targetCard: CLICard?
-
-            // Try as UUID first
-            if let uuid = UUID(uuidString: terminal) {
-                targetCard = board.activeCards.first { $0.id == uuid }
-            }
-
-            // Try as exact name (case-insensitive)
-            if targetCard == nil {
-                let terminalLower = terminal.lowercased()
-                targetCard = board.activeCards.first { $0.title.lowercased() == terminalLower }
-            }
-
-            // Try as path (exact match or ends with)
-            if targetCard == nil {
-                let normalizedPath =
-                    terminal.hasSuffix("/")
-                    ? String(terminal.dropLast())
-                    : terminal
-                targetCard = board.activeCards.first { card in
-                    card.workingDirectory == normalizedPath
-                        || card.workingDirectory == terminal
-                        || card.workingDirectory.hasSuffix("/\(normalizedPath)")
-                }
-            }
-
-            // Try as partial name match
-            if targetCard == nil {
-                let terminalLower = terminal.lowercased()
-                targetCard = board.activeCards.first { $0.title.lowercased().contains(terminalLower) }
-            }
-
-            guard let card = targetCard else {
-                printErrorJSON("Terminal not found: \(terminal)")
+            guard let card = board.findTerminal(identifier: terminal) else {
+                JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
                 throw ExitCode.failure
             }
 
@@ -253,7 +84,7 @@ struct Open: ParsableCommand {
             ]
 
             guard let url = components.url else {
-                printErrorJSON("Failed to construct URL")
+                JSONHelper.printErrorJSON("Failed to construct URL")
                 throw ExitCode.failure
             }
 
@@ -265,7 +96,7 @@ struct Open: ParsableCommand {
             if runningApps.isEmpty {
                 // Launch TermQ first
                 if !launchTermQ() {
-                    printErrorJSON("Could not find or launch TermQ.app")
+                    JSONHelper.printErrorJSON("Could not find or launch TermQ.app")
                     throw ExitCode.failure
                 }
             }
@@ -274,20 +105,21 @@ struct Open: ParsableCommand {
 
             if success {
                 // Output terminal details as JSON
-                let output = cardToOutput(card, columnName: columnLookup[card.columnId] ?? "Unknown")
-                printJSON(output)
+                let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+                JSONHelper.printJSON(output)
             } else {
-                printErrorJSON("Failed to communicate with TermQ. Is it running?")
+                JSONHelper.printErrorJSON("Failed to communicate with TermQ. Is it running?")
                 throw ExitCode.failure
             }
 
-        } catch let error as CLIError {
-            printErrorJSON(error.localizedDescription)
+        } catch BoardLoader.LoadError.boardNotFound(let path) {
+            JSONHelper.printErrorJSON(
+                "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
             throw ExitCode.failure
         } catch let error as ExitCode {
             throw error
         } catch {
-            printErrorJSON("Unexpected error: \(error.localizedDescription)")
+            JSONHelper.printErrorJSON("Unexpected error: \(error.localizedDescription)")
             throw ExitCode.failure
         }
     }
@@ -472,31 +304,15 @@ struct List: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try loadBoard(debug: debug)
-
-            // Build column lookup
-            var columnLookup: [UUID: String] = [:]
-            for col in board.columns {
-                columnLookup[col.id] = col.name
-            }
+            let board = try BoardLoader.loadBoard(debug: debug)
 
             // If --columns flag, output column info
             if columns {
-                struct ColumnOutput: Encodable {
-                    let id: String
-                    let name: String
-                    let description: String
-                    let color: String
+                let columnOutput = board.sortedColumns().map { col in
+                    let count = board.activeCards.filter { $0.columnId == col.id }.count
+                    return ColumnOutput(from: col, terminalCount: count)
                 }
-                let columnOutput = board.columns.sorted { $0.orderIndex < $1.orderIndex }.map { col in
-                    ColumnOutput(
-                        id: col.id.uuidString,
-                        name: col.name,
-                        description: col.description ?? "",
-                        color: col.color
-                    )
-                }
-                printJSON(columnOutput)
+                JSONHelper.printJSON(columnOutput)
                 return
             }
 
@@ -523,13 +339,13 @@ struct List: ParsableCommand {
 
             // Convert to output format
             let output = cards.map { card in
-                cardToOutput(card, columnName: columnLookup[card.columnId] ?? "Unknown")
+                TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
             }
 
-            printJSON(output)
+            JSONHelper.printJSON(output)
 
         } catch {
-            printErrorJSON(error.localizedDescription)
+            JSONHelper.printErrorJSON(error.localizedDescription)
             throw ExitCode.failure
         }
     }
@@ -566,13 +382,7 @@ struct Find: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try loadBoard(debug: debug)
-
-            // Build column lookup
-            var columnLookup: [UUID: String] = [:]
-            for col in board.columns {
-                columnLookup[col.id] = col.name
-            }
+            let board = try BoardLoader.loadBoard(debug: debug)
 
             var cards = board.activeCards
 
@@ -582,7 +392,7 @@ struct Find: ParsableCommand {
                     cards = cards.filter { $0.id == uuid }
                 } else {
                     // Invalid UUID format
-                    printJSON([TerminalOutput]())
+                    JSONHelper.printJSON([TerminalOutput]())
                     return
                 }
             }
@@ -638,13 +448,13 @@ struct Find: ParsableCommand {
 
             // Convert to output format
             let output = cards.map { card in
-                cardToOutput(card, columnName: columnLookup[card.columnId] ?? "Unknown")
+                TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
             }
 
-            printJSON(output)
+            JSONHelper.printJSON(output)
 
         } catch {
-            printErrorJSON(error.localizedDescription)
+            JSONHelper.printErrorJSON(error.localizedDescription)
             throw ExitCode.failure
         }
     }
@@ -694,23 +504,10 @@ struct Set: ParsableCommand {
     func run() throws {
         // First, resolve the terminal identifier to a UUID
         do {
-            let board = try loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: debug)
 
-            var targetCard: CLICard?
-
-            // Try as UUID first
-            if let uuid = UUID(uuidString: terminal) {
-                targetCard = board.activeCards.first { $0.id == uuid }
-            }
-
-            // Try as name (case-insensitive)
-            if targetCard == nil {
-                let terminalLower = terminal.lowercased()
-                targetCard = board.activeCards.first { $0.title.lowercased() == terminalLower }
-            }
-
-            guard let card = targetCard else {
-                printErrorJSON("Terminal not found: \(terminal)")
+            guard let card = board.findTerminal(identifier: terminal) else {
+                JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
                 throw ExitCode.failure
             }
 
@@ -762,7 +559,7 @@ struct Set: ParsableCommand {
             components.queryItems = queryItems
 
             guard let url = components.url else {
-                printErrorJSON("Failed to construct URL")
+                JSONHelper.printErrorJSON("Failed to construct URL")
                 throw ExitCode.failure
             }
 
@@ -771,19 +568,20 @@ struct Set: ParsableCommand {
             let success = workspace.open(url)
 
             if success {
-                printJSON(SetResponse(success: true, id: card.id.uuidString))
+                JSONHelper.printJSON(SetResponse(success: true, id: card.id.uuidString))
             } else {
-                printErrorJSON("Failed to send update to TermQ. Is it running?")
+                JSONHelper.printErrorJSON("Failed to send update to TermQ. Is it running?")
                 throw ExitCode.failure
             }
 
-        } catch let error as CLIError {
-            printErrorJSON(error.localizedDescription)
+        } catch BoardLoader.LoadError.boardNotFound(let path) {
+            JSONHelper.printErrorJSON(
+                "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
             throw ExitCode.failure
         } catch let error as ExitCode {
             throw error
         } catch {
-            printErrorJSON("Unexpected error: \(error.localizedDescription)")
+            JSONHelper.printErrorJSON("Unexpected error: \(error.localizedDescription)")
             throw ExitCode.failure
         }
     }
@@ -807,23 +605,10 @@ struct Move: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: debug)
 
-            var targetCard: CLICard?
-
-            // Try as UUID first
-            if let uuid = UUID(uuidString: terminal) {
-                targetCard = board.activeCards.first { $0.id == uuid }
-            }
-
-            // Try as name (case-insensitive)
-            if targetCard == nil {
-                let terminalLower = terminal.lowercased()
-                targetCard = board.activeCards.first { $0.title.lowercased() == terminalLower }
-            }
-
-            guard let card = targetCard else {
-                printErrorJSON("Terminal not found: \(terminal)")
+            guard let card = board.findTerminal(identifier: terminal) else {
+                JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
                 throw ExitCode.failure
             }
 
@@ -838,7 +623,7 @@ struct Move: ParsableCommand {
             ]
 
             guard let url = components.url else {
-                printErrorJSON("Failed to construct URL")
+                JSONHelper.printErrorJSON("Failed to construct URL")
                 throw ExitCode.failure
             }
 
@@ -847,48 +632,26 @@ struct Move: ParsableCommand {
             let success = workspace.open(url)
 
             if success {
-                printJSON(MoveResponse(success: true, id: card.id.uuidString, column: toColumn))
+                JSONHelper.printJSON(MoveResponse(success: true, id: card.id.uuidString, column: toColumn))
             } else {
-                printErrorJSON("Failed to send move command to TermQ. Is it running?")
+                JSONHelper.printErrorJSON("Failed to send move command to TermQ. Is it running?")
                 throw ExitCode.failure
             }
 
-        } catch let error as CLIError {
-            printErrorJSON(error.localizedDescription)
+        } catch BoardLoader.LoadError.boardNotFound(let path) {
+            JSONHelper.printErrorJSON(
+                "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
             throw ExitCode.failure
         } catch let error as ExitCode {
             throw error
         } catch {
-            printErrorJSON("Unexpected error: \(error.localizedDescription)")
+            JSONHelper.printErrorJSON("Unexpected error: \(error.localizedDescription)")
             throw ExitCode.failure
         }
     }
 }
 
 // MARK: - Pending Command (LLM Session Start)
-
-struct PendingOutput: Encodable {
-    let terminals: [PendingTerminal]
-    let summary: PendingSummary
-}
-
-struct PendingTerminal: Encodable {
-    let id: String
-    let name: String
-    let column: String
-    let path: String
-    let llmNextAction: String
-    let llmPrompt: String
-    let staleness: String
-    let tags: [String: String]
-}
-
-struct PendingSummary: Encodable {
-    let total: Int
-    let withNextAction: Int
-    let stale: Int
-    let fresh: Int
-}
 
 struct Pending: ParsableCommand {
     static let configuration = CommandConfiguration(
@@ -910,10 +673,9 @@ struct Pending: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try loadBoard(debug: debug)
-            let columnLookup = buildColumnLookup(from: board)
+            let board = try BoardLoader.loadBoard(debug: debug)
             let cards = getFilteredAndSortedCards(from: board)
-            let output = buildPendingOutput(cards: cards, columnLookup: columnLookup)
+            let output = buildPendingOutput(cards: cards, board: board)
 
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -922,20 +684,12 @@ struct Pending: ParsableCommand {
                 print(json)
             }
         } catch {
-            printErrorJSON("Failed to load board: \(error.localizedDescription)")
+            JSONHelper.printErrorJSON("Failed to load board: \(error.localizedDescription)")
             throw ExitCode.failure
         }
     }
 
-    private func buildColumnLookup(from board: CLIBoard) -> [UUID: String] {
-        var lookup: [UUID: String] = [:]
-        for col in board.columns {
-            lookup[col.id] = col.name
-        }
-        return lookup
-    }
-
-    private func getFilteredAndSortedCards(from board: CLIBoard) -> [CLICard] {
+    private func getFilteredAndSortedCards(from board: Board) -> [Card] {
         var cards = board.activeCards
 
         if actionsOnly {
@@ -947,8 +701,8 @@ struct Pending: ParsableCommand {
             let has2 = !card2.llmNextAction.isEmpty
             if has1 != has2 { return has1 }
 
-            let staleness1 = getStalenessRank(card1)
-            let staleness2 = getStalenessRank(card2)
+            let staleness1 = card1.stalenessRank
+            let staleness2 = card2.stalenessRank
             if staleness1 != staleness2 { return staleness1 > staleness2 }
 
             return card1.title < card2.title
@@ -956,14 +710,14 @@ struct Pending: ParsableCommand {
         return cards
     }
 
-    private func buildPendingOutput(cards: [CLICard], columnLookup: [UUID: String]) -> PendingOutput {
-        var pendingTerminals: [PendingTerminal] = []
+    private func buildPendingOutput(cards: [Card], board: Board) -> PendingOutput {
+        var pendingTerminals: [PendingTerminalOutput] = []
         var withNextAction = 0
         var staleCount = 0
         var freshCount = 0
 
         for card in cards {
-            let staleness = getStalenessTags(card)
+            let staleness = card.staleness
             if !card.llmNextAction.isEmpty { withNextAction += 1 }
             switch staleness {
             case "stale", "old": staleCount += 1
@@ -971,52 +725,24 @@ struct Pending: ParsableCommand {
             default: break
             }
 
-            pendingTerminals.append(buildPendingTerminal(card, columnLookup, staleness))
+            pendingTerminals.append(
+                PendingTerminalOutput(
+                    from: card,
+                    columnName: board.columnName(for: card.columnId),
+                    staleness: staleness
+                )
+            )
         }
 
         return PendingOutput(
             terminals: pendingTerminals,
             summary: PendingSummary(
-                total: pendingTerminals.count, withNextAction: withNextAction, stale: staleCount, fresh: freshCount)
+                total: pendingTerminals.count,
+                withNextAction: withNextAction,
+                stale: staleCount,
+                fresh: freshCount
+            )
         )
-    }
-
-    private func buildPendingTerminal(_ card: CLICard, _ cols: [UUID: String], _ stale: String) -> PendingTerminal {
-        var tagDict: [String: String] = [:]
-        for tag in card.tags { tagDict[tag.key] = tag.value }
-
-        return PendingTerminal(
-            id: card.id.uuidString,
-            name: card.title,
-            column: cols[card.columnId] ?? "Unknown",
-            path: card.workingDirectory,
-            llmNextAction: card.llmNextAction,
-            llmPrompt: card.llmPrompt,
-            staleness: stale,
-            tags: tagDict
-        )
-    }
-
-    private func getStalenessRank(_ card: CLICard) -> Int {
-        let staleness = getStalenessTags(card)
-        switch staleness {
-        case "stale", "old":
-            return 3
-        case "ageing":
-            return 2
-        case "fresh":
-            return 1
-        default:
-            return 0
-        }
-    }
-
-    private func getStalenessTags(_ card: CLICard) -> String {
-        // Check for staleness tag
-        if let stalenessTag = card.tags.first(where: { $0.key.lowercased() == "staleness" }) {
-            return stalenessTag.value.lowercased()
-        }
-        return "unknown"
     }
 }
 

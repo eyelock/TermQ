@@ -1,5 +1,6 @@
 import Foundation
 import MCP
+import TermQShared
 
 // MARK: - Tool Handler Implementations
 
@@ -285,7 +286,7 @@ extension TermQMCPServer {
     }
 
     /// Calculate relevance score for a card based on query words
-    private func calculateRelevanceScore(card: MCPCard, queryWords: Set<String>) -> Int {
+    private func calculateRelevanceScore(card: Card, queryWords: Set<String>) -> Int {
         var score = 0
 
         // Get searchable words from card fields
@@ -451,7 +452,7 @@ extension TermQMCPServer {
         }
 
         do {
-            let card: MCPCard
+            let card: Card
             if updates.isEmpty {
                 // No field updates, just return current state
                 let board = try loadBoard()
