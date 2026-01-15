@@ -108,9 +108,9 @@ class TerminalSessionManager: ObservableObject {
 
         // Get current environment
         var env = ProcessInfo.processInfo.environment
-        env["TERM"] = "xterm-256color"
-        env["COLORTERM"] = "truecolor"
-        env["LANG"] = env["LANG"] ?? "en_US.UTF-8"
+        env["TERM"] = Constants.Terminal.termType
+        env["COLORTERM"] = Constants.Terminal.colorTerm
+        env["LANG"] = env["LANG"] ?? Constants.Terminal.defaultLang
 
         // Add TermQ-specific environment variables
         env["TERMQ_TERMINAL_ID"] = card.id.uuidString
@@ -125,12 +125,12 @@ class TerminalSessionManager: ObservableObject {
 
         // Start shell in the correct working directory using exec
         // This avoids the visible "cd" command flash by:
-        // 1. Starting /bin/sh (non-interactive)
+        // 1. Starting command shell (non-interactive)
         // 2. cd to the working directory
         // 3. exec the user's shell as a login shell (replaces the process)
         let startCommand = "cd \(escapeShellArg(card.workingDirectory)) && exec \(escapeShellArg(card.shellPath)) -l"
         terminal.startProcess(
-            executable: "/bin/sh",
+            executable: Constants.Shell.commandShell,
             args: ["-c", startCommand],
             environment: Array(env.map { "\($0.key)=\($0.value)" }),
             execName: nil
@@ -224,13 +224,13 @@ class TerminalSessionManager: ObservableObject {
 
     /// Check if a session has had recent activity (is "processing")
     /// Returns true if activity within the last `threshold` seconds
-    func isProcessing(cardId: UUID, threshold: TimeInterval = 2.0) -> Bool {
+    func isProcessing(cardId: UUID, threshold: TimeInterval = Constants.Activity.processingThreshold) -> Bool {
         guard let session = sessions[cardId], session.isRunning else { return false }
         return Date().timeIntervalSince(session.lastActivityTime) < threshold
     }
 
     /// Get all card IDs that are currently processing
-    func processingCardIds(threshold: TimeInterval = 2.0) -> Set<UUID> {
+    func processingCardIds(threshold: TimeInterval = Constants.Activity.processingThreshold) -> Set<UUID> {
         let now = Date()
         return Set(
             sessions.filter { _, session in

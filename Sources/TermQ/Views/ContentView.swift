@@ -491,7 +491,7 @@ struct ContentView: View {
             targetColumn = found
         } else {
             // Default to first column
-            targetColumn = viewModel.board.columns.first ?? Column(name: "To Do", orderIndex: 0)
+            targetColumn = viewModel.board.columns.first ?? Column(name: Constants.Columns.fallbackName, orderIndex: 0)
         }
 
         // Create the card
