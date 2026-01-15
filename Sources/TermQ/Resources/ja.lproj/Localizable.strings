@@ -36,9 +36,13 @@
 "card.pin" = "ターミナルをピン留め";
 "card.unpin" = "ターミナルのピン留めを解除";
 "card.running" = "ターミナル実行中";
-"card.open" = "開く";
-"card.edit" = "詳細を編集...";
-"card.delete" = "削除";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "接続済み";
 "card.wired.help" = "MCPエージェントに接続中";
 "card.needs.attention" = "要確認";

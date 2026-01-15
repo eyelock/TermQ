@@ -7,6 +7,7 @@ struct ExpandedTerminalView: View {
     let onEditTab: (TerminalCard) -> Void
     let onCloseTab: (TerminalCard) -> Void
     let onDeleteTab: (TerminalCard) -> Void
+    let onDuplicateTab: (TerminalCard) -> Void
     let onCloseSession: (TerminalCard) -> Void
     let onRestartSession: (TerminalCard) -> Void
     let onMoveTab: (UUID, Int) -> Void
@@ -243,6 +244,9 @@ struct ExpandedTerminalView: View {
                         onDelete: {
                             onDeleteTab(tabCard)
                         },
+                        onDuplicate: {
+                            onDuplicateTab(tabCard)
+                        },
                         onCloseSession: {
                             onCloseSession(tabCard)
                         },
@@ -297,6 +301,7 @@ private struct TabItemView: View {
     let onEdit: () -> Void
     let onClose: () -> Void
     let onDelete: () -> Void
+    let onDuplicate: () -> Void
     let onCloseSession: () -> Void
     let onRestartSession: () -> Void
 
@@ -393,6 +398,9 @@ private struct TabItemView: View {
         .contextMenu {
             Button(Strings.Card.edit) {
                 onEdit()
+            }
+            Button(Strings.Card.duplicate) {
+                onDuplicate()
             }
             if hasActiveSession {
                 Divider()

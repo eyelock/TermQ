@@ -36,9 +36,13 @@
 "card.pin" = "Fixar terminal";
 "card.unpin" = "Desfer fixar terminal";
 "card.running" = "Terminal en execució";
-"card.open" = "Obert";
-"card.edit" = "Editar detalls...";
-"card.delete" = "Eliminar";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Connectat";
 "card.wired.help" = "Connectat a l'agent MCP";
 "card.needs.attention" = "Requereix atenció";

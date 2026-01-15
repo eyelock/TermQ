@@ -36,9 +36,13 @@
 "card.pin" = "Kiinnitä terminaali";
 "card.unpin" = "Irrota terminaali";
 "card.running" = "Terminaali käynnissä";
-"card.open" = "Auki";
-"card.edit" = "Muokkaa tietoja...";
-"card.delete" = "Poista";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Yhdistetty";
 "card.wired.help" = "Yhdistetty MCP-agenttiin";
 "card.needs.attention" = "Vaatii huomiota";

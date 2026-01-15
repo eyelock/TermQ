@@ -11,6 +11,7 @@ struct TerminalCardView: View {
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
+    let onDuplicate: () -> Void
     let onToggleFavourite: () -> Void
     let onCloseSession: () -> Void
     let onRestartSession: () -> Void
@@ -196,6 +197,9 @@ struct TerminalCardView: View {
             }
             Button(Strings.Card.edit) {
                 onEdit()
+            }
+            Button(Strings.Card.duplicate) {
+                onDuplicate()
             }
             Divider()
             Button(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin) {

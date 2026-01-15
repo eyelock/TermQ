@@ -36,9 +36,13 @@
 "card.pin" = "Закрепить терминал";
 "card.unpin" = "Открепить терминал";
 "card.running" = "Терминал работает";
-"card.open" = "Открыто";
-"card.edit" = "Изменить детали...";
-"card.delete" = "Удалить";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Подключён";
 "card.wired.help" = "Подключён к агенту MCP";
 "card.needs.attention" = "Требует внимания";

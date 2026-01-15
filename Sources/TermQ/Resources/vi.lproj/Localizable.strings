@@ -36,9 +36,13 @@
 "card.pin" = "Ghim terminal";
 "card.unpin" = "Bỏ ghim terminal";
 "card.running" = "Terminal đang chạy";
-"card.open" = "Mở";
-"card.edit" = "Sửa chi tiết...";
-"card.delete" = "Xóa";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Đã kết nối";
 "card.wired.help" = "Đã kết nối với tác nhân MCP";
 "card.needs.attention" = "Cần chú ý";

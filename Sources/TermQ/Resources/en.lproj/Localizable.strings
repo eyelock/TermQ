@@ -39,6 +39,7 @@
 "card.open" = "Open";
 "card.edit" = "Edit Details...";
 "card.delete" = "Delete";
+"card.duplicate" = "Duplicate";
 "card.wired" = "Wired";
 "card.wired.help" = "Connected to MCP agent";
 "card.needs.attention" = "Needs attention";

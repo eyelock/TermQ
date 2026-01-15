@@ -36,9 +36,13 @@
 "card.pin" = "ปักหมุดเทอร์มินัล";
 "card.unpin" = "เลิกปักหมุดเทอร์มินัล";
 "card.running" = "เทอร์มินัลกำลังทำงาน";
-"card.open" = "เปิด";
-"card.edit" = "แก้ไขรายละเอียด...";
-"card.delete" = "ลบ";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "เชื่อมต่อแล้ว";
 "card.wired.help" = "เชื่อมต่อกับตัวแทน MCP";
 "card.needs.attention" = "ต้องการความสนใจ";

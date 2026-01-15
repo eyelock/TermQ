@@ -36,9 +36,13 @@
 "card.pin" = "Terminali sabitle";
 "card.unpin" = "Terminal sabitlemesini kaldır";
 "card.running" = "Terminal çalışıyor";
-"card.open" = "Açık";
-"card.edit" = "Ayrıntıları Düzenle...";
-"card.delete" = "Sil";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Bağlı";
 "card.wired.help" = "MCP aracısına bağlı";
 "card.needs.attention" = "Dikkat gerekiyor";

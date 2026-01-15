@@ -36,9 +36,13 @@
 "card.pin" = "釘選終端機";
 "card.unpin" = "取消釘選終端機";
 "card.running" = "終端機運行中";
-"card.open" = "開啟";
-"card.edit" = "編輯詳情...";
-"card.delete" = "刪除";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "已連線";
 "card.wired.help" = "已連線至 MCP 代理";
 "card.needs.attention" = "需要注意";

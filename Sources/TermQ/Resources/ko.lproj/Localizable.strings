@@ -36,9 +36,13 @@
 "card.pin" = "터미널 고정";
 "card.unpin" = "터미널 고정 해제";
 "card.running" = "터미널 실행 중";
-"card.open" = "열림";
-"card.edit" = "세부 정보 편집...";
-"card.delete" = "삭제";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "연결됨";
 "card.wired.help" = "MCP 에이전트에 연결됨";
 "card.needs.attention" = "주의 필요";

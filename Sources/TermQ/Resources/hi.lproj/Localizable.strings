@@ -36,9 +36,13 @@
 "card.pin" = "टर्मिनल पिन करें";
 "card.unpin" = "टर्मिनल अनपिन करें";
 "card.running" = "टर्मिनल चल रहा है";
-"card.open" = "खुला";
-"card.edit" = "विवरण संपादित करें...";
-"card.delete" = "हटाएं";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "जुड़ा हुआ";
 "card.wired.help" = "MCP एजेंट से जुड़ा";
 "card.needs.attention" = "ध्यान आवश्यक";

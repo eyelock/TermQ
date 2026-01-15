@@ -36,9 +36,13 @@
 "card.pin" = "Fäst terminal";
 "card.unpin" = "Lossa terminal";
 "card.running" = "Terminalen körs";
-"card.open" = "Öppen";
-"card.edit" = "Redigera detaljer...";
-"card.delete" = "Radera";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Ansluten";
 "card.wired.help" = "Ansluten till MCP-agent";
 "card.needs.attention" = "Kräver uppmärksamhet";

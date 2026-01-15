@@ -90,6 +90,7 @@ enum Strings {
         static var open: String { localized("card.open") }
         static var edit: String { localized("card.edit") }
         static var delete: String { localized("card.delete") }
+        static var duplicate: String { localized("card.duplicate") }
         static var wired: String { localized("card.wired") }
         static var wiredHelp: String { localized("card.wired.help") }
         static var needsAttention: String { localized("card.needs.attention") }

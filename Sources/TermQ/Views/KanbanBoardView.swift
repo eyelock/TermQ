@@ -41,6 +41,9 @@ struct KanbanBoardView: View {
                             onDeleteCard: { card in
                                 viewModel.deleteCard(card)
                             },
+                            onDuplicateCard: { card in
+                                viewModel.duplicateTerminal(card)
+                            },
                             onToggleFavourite: { card in
                                 viewModel.toggleFavourite(card)
                             },

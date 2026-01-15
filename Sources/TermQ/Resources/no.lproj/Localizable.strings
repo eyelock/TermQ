@@ -36,9 +36,13 @@
 "card.pin" = "Fest terminal";
 "card.unpin" = "Løsne terminal";
 "card.running" = "Terminal kjører";
-"card.open" = "Åpen";
-"card.edit" = "Rediger detaljer...";
-"card.delete" = "Slett";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Tilkoblet";
 "card.wired.help" = "Tilkoblet MCP-agent";
 "card.needs.attention" = "Krever oppmerksomhet";

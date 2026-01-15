@@ -12,6 +12,7 @@ struct ColumnView: View {
     let onSelectCard: (TerminalCard) -> Void
     let onEditCard: (TerminalCard) -> Void
     let onDeleteCard: (TerminalCard) -> Void
+    let onDuplicateCard: (TerminalCard) -> Void
     let onToggleFavourite: (TerminalCard) -> Void
     let onCloseSession: (TerminalCard) -> Void
     let onRestartSession: (TerminalCard) -> Void
@@ -92,6 +93,7 @@ struct ColumnView: View {
                             onSelect: { onSelectCard(card) },
                             onEdit: { onEditCard(card) },
                             onDelete: { onDeleteCard(card) },
+                            onDuplicate: { onDuplicateCard(card) },
                             onToggleFavourite: { onToggleFavourite(card) },
                             onCloseSession: { onCloseSession(card) },
                             onRestartSession: { onRestartSession(card) },

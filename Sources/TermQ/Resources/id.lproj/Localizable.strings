@@ -36,9 +36,13 @@
 "card.pin" = "Sematkan terminal";
 "card.unpin" = "Lepas sematan terminal";
 "card.running" = "Terminal sedang berjalan";
-"card.open" = "Terbuka";
-"card.edit" = "Edit Detail...";
-"card.delete" = "Hapus";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Terhubung";
 "card.wired.help" = "Terhubung ke agen MCP";
 "card.needs.attention" = "Perlu perhatian";

@@ -115,6 +115,43 @@ class BoardViewModel: ObservableObject {
         isEditingCard = card
     }
 
+    func duplicateTerminal(_ source: TerminalCard) {
+        // Find the target column
+        guard let column = board.columns.first(where: { $0.id == source.columnId }) else {
+            return
+        }
+
+        // Create a new card with copied properties
+        let maxIndex = board.cards(for: column).map(\.orderIndex).max() ?? -1
+        let newCard = TerminalCard(
+            title: "",  // Will be set by user in editor
+            description: source.description,
+            tags: source.tags,
+            columnId: source.columnId,
+            orderIndex: maxIndex + 1,
+            shellPath: source.shellPath,
+            workingDirectory: source.workingDirectory,
+            isFavourite: false,  // Start unfavourited
+            initCommand: source.initCommand,
+            llmPrompt: source.llmPrompt,
+            llmNextAction: "",  // Don't copy one-time action
+            badge: source.badge,
+            fontName: source.fontName,
+            fontSize: source.fontSize,
+            safePasteEnabled: source.safePasteEnabled,
+            themeId: source.themeId,
+            allowAutorun: source.allowAutorun
+        )
+
+        board.cards.append(newCard)
+        objectWillChange.send()
+        save()
+
+        // Open the editor for the new card
+        isEditingNewCard = true
+        isEditingCard = newCard
+    }
+
     func deleteCard(_ card: TerminalCard) {
         tabManager.removeTab(card.id)
 
