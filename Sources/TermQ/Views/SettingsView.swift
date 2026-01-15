@@ -396,10 +396,10 @@ struct ToolsTabContent: View {
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
 
-    private var isCLIInstalled: Bool { CLIInstaller.currentInstallLocation != nil }
-    private var isMCPInstalled: Bool { MCPServerInstaller.currentInstallLocation != nil }
+    var isCLIInstalled: Bool { CLIInstaller.currentInstallLocation != nil }
+    var isMCPInstalled: Bool { MCPServerInstaller.currentInstallLocation != nil }
 
-    private var activeTmuxSessionCount: Int {
+    var activeTmuxSessionCount: Int {
         boardViewModel.activeSessionCards.filter { cardId in
             guard boardViewModel.card(for: cardId) != nil else { return false }
             return TerminalSessionManager.shared.getBackend(for: cardId) == .tmux
@@ -412,11 +412,13 @@ struct ToolsTabContent: View {
         cliSection
         tmuxSection
     }
+}
 
-    // MARK: - Status Section
+// MARK: - ToolsTabContent Status Section
 
+extension ToolsTabContent {
     @ViewBuilder
-    private var statusSection: some View {
+    var statusSection: some View {
         Section {
             VStack(alignment: .leading, spacing: 8) {
                 toolStatusRow(
@@ -445,394 +447,8 @@ struct ToolsTabContent: View {
         }
     }
 
-    // MARK: - MCP Section
-
     @ViewBuilder
-    private var mcpSection: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "server.rack")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(Strings.Settings.mcpTitle)
-                            .font(.headline)
-                        Text(Strings.Settings.mcpDescription)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-
-                    if installedMCPLocation != nil {
-                        installedBadge
-                    }
-                }
-
-                Divider()
-
-                if let location = installedMCPLocation {
-                    mcpInstalledContent(location: location)
-                } else {
-                    mcpInstallContent
-                }
-            }
-            .padding(.vertical, 4)
-        } header: {
-            Text(Strings.Settings.sectionMcp)
-        }
-    }
-
-    @ViewBuilder
-    private func mcpInstalledContent(location: MCPInstallLocation) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(Strings.Settings.mcpLocation)
-                    .foregroundColor(.secondary)
-                Text(location.fullPath)
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-            }
-            .font(.caption)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Strings.Settings.mcpClaudeConfig)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                HStack(alignment: .top) {
-                    Text(MCPServerInstaller.generateClaudeCodeConfig())
-                        .font(.system(.caption2, design: .monospaced))
-                        .foregroundColor(.secondary)
-                        .textSelection(.enabled)
-                        .padding(6)
-                        .background(Color.secondary.opacity(0.1))
-                        .cornerRadius(4)
-
-                    Button {
-                        copyMCPConfig()
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: configCopied ? "checkmark" : "doc.on.doc")
-                            Text(configCopied ? Strings.Settings.configCopied : Strings.Settings.copyConfig)
-                        }
-                        .font(.caption)
-                    }
-                    .buttonStyle(.bordered)
-                }
-            }
-
-            HStack {
-                Button(Strings.Common.reinstall) {
-                    installMCPServer()
-                }
-                .disabled(isInstallingMCP)
-
-                Button(Strings.Common.uninstall, role: .destructive) {
-                    uninstallMCPServer()
-                }
-                .disabled(isInstallingMCP)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var mcpInstallContent: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(Strings.Settings.mcpInstallDescription)
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            HStack(spacing: 4) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundColor(.orange)
-                Text(Strings.Settings.mcpLocalOnly)
-                    .font(.caption2)
-                    .foregroundColor(.orange)
-            }
-
-            Picker(Strings.Settings.cliPath, selection: $selectedMCPLocation) {
-                ForEach(MCPInstallLocation.allCases) { location in
-                    Text(location.displayName).tag(location)
-                }
-            }
-            .pickerStyle(.radioGroup)
-
-            Text(selectedMCPLocation.pathNote)
-                .font(.caption2)
-                .foregroundColor(.secondary)
-
-            Button {
-                installMCPServer()
-            } label: {
-                HStack {
-                    if isInstallingMCP {
-                        ProgressView()
-                            .controlSize(.small)
-                    }
-                    Text(Strings.Settings.cliInstall)
-                }
-            }
-            .disabled(isInstallingMCP)
-        }
-    }
-
-    // MARK: - CLI Section
-
-    @ViewBuilder
-    private var cliSection: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "terminal")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(Strings.Settings.cliTitle)
-                            .font(.headline)
-                        Text(Strings.Settings.cliDescription)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-
-                    if installedLocation != nil {
-                        installedBadge
-                    }
-                }
-
-                Divider()
-
-                Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
-                    .help(Strings.Settings.enableTerminalAutorunHelp)
-
-                Divider()
-
-                if let location = installedLocation {
-                    cliInstalledContent(location: location)
-                } else {
-                    cliInstallContent
-                }
-            }
-            .padding(.vertical, 4)
-        } header: {
-            Text(Strings.Settings.sectionCli)
-        }
-    }
-
-    @ViewBuilder
-    private func cliInstalledContent(location: InstallLocation) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(Strings.Settings.cliLocation)
-                    .foregroundColor(.secondary)
-                Text(location.fullPath)
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-            }
-            .font(.caption)
-
-            Text(Strings.Settings.cliUsage)
-                .font(.system(.caption, design: .monospaced))
-                .foregroundColor(.secondary)
-                .textSelection(.enabled)
-
-            HStack {
-                Button(Strings.Common.reinstall) {
-                    installCLI()
-                }
-                .disabled(isInstalling)
-
-                Button(Strings.Common.uninstall, role: .destructive) {
-                    uninstallCLI()
-                }
-                .disabled(isInstalling)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var cliInstallContent: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(Strings.Settings.cliDescription)
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
-                ForEach(InstallLocation.allCases) { location in
-                    Text(location.displayName).tag(location)
-                }
-            }
-            .pickerStyle(.radioGroup)
-
-            Text(selectedLocation.pathNote)
-                .font(.caption2)
-                .foregroundColor(.secondary)
-
-            Button {
-                installCLI()
-            } label: {
-                HStack {
-                    if isInstalling {
-                        ProgressView()
-                            .controlSize(.small)
-                    }
-                    Text(Strings.Settings.cliInstall)
-                }
-            }
-            .disabled(isInstalling)
-        }
-    }
-
-    // MARK: - tmux Section
-
-    @ViewBuilder
-    private var tmuxSection: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "rectangle.split.3x3")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("tmux")
-                            .font(.headline)
-                        Text(Strings.Settings.tmuxDescription)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-
-                    if tmuxManager.isAvailable {
-                        installedBadge
-                    } else {
-                        notInstalledBadge
-                    }
-                }
-
-                Divider()
-
-                if tmuxManager.isAvailable {
-                    tmuxAvailableContent
-                } else {
-                    tmuxNotAvailableContent
-                }
-            }
-            .padding(.vertical, 4)
-        } header: {
-            Text(Strings.Settings.sectionTmux)
-        }
-    }
-
-    @ViewBuilder
-    private var tmuxAvailableContent: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Toggle(Strings.Settings.tmuxEnabled, isOn: $tmuxEnabled)
-                .help(Strings.Settings.tmuxEnabledHelp)
-
-            Toggle(Strings.Settings.tmuxAutoReattach, isOn: $tmuxAutoReattach)
-                .help(Strings.Settings.tmuxAutoReattachHelp)
-                .disabled(!tmuxEnabled)
-
-            Divider()
-
-            HStack {
-                Text(Strings.Settings.tmuxVersion)
-                    .foregroundColor(.secondary)
-                Text(tmuxManager.version ?? "Unknown")
-                    .font(.system(.body, design: .monospaced))
-            }
-            .font(.caption)
-
-            if let path = tmuxManager.tmuxPath {
-                HStack {
-                    Text(Strings.Settings.tmuxPath)
-                        .foregroundColor(.secondary)
-                    Text(path)
-                        .font(.system(.body, design: .monospaced))
-                        .textSelection(.enabled)
-                }
-                .font(.caption)
-            }
-
-            HStack {
-                Image(systemName: "info.circle")
-                    .foregroundColor(.blue)
-                Text(Strings.Settings.tmuxInfo)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var tmuxNotAvailableContent: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(Strings.Settings.tmuxNotInstalledDescription)
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            Text(Strings.Settings.tmuxInstallHint)
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            HStack {
-                Text("brew install tmux")
-                    .font(.system(.body, design: .monospaced))
-                    .padding(6)
-                    .background(Color.secondary.opacity(0.1))
-                    .cornerRadius(4)
-
-                Button {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString("brew install tmux", forType: .string)
-                } label: {
-                    Image(systemName: "doc.on.doc")
-                        .font(.caption)
-                }
-                .buttonStyle(.bordered)
-                .help(Strings.Settings.copyToClipboard)
-            }
-
-            Button(Strings.Settings.tmuxCheckAgain) {
-                Task {
-                    await tmuxManager.detectTmux()
-                }
-            }
-            .font(.caption)
-        }
-    }
-
-    // MARK: - Helper Views
-
-    private var installedBadge: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(.green)
-            Text(Strings.Common.installed)
-                .foregroundColor(.green)
-        }
-        .font(.caption)
-    }
-
-    private var notInstalledBadge: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "xmark.circle")
-                .foregroundColor(.secondary)
-            Text(Strings.Settings.notInstalled)
-                .foregroundColor(.secondary)
-        }
-        .font(.caption)
-    }
-
-    @ViewBuilder
-    private func toolStatusRow(
+    func toolStatusRow(
         icon: String,
         name: String,
         isInstalled: Bool,
@@ -888,5 +504,399 @@ struct ToolsTabContent: View {
                 .font(.caption)
             }
         }
+    }
+}
+
+// MARK: - ToolsTabContent MCP Section
+
+extension ToolsTabContent {
+    @ViewBuilder
+    var mcpSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "server.rack")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Settings.mcpTitle)
+                            .font(.headline)
+                        Text(Strings.Settings.mcpDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if installedMCPLocation != nil {
+                        installedBadge
+                    }
+                }
+
+                Divider()
+
+                if let location = installedMCPLocation {
+                    mcpInstalledContent(location: location)
+                } else {
+                    mcpInstallContent
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Settings.sectionMcp)
+        }
+    }
+
+    @ViewBuilder
+    func mcpInstalledContent(location: MCPInstallLocation) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(Strings.Settings.mcpLocation)
+                    .foregroundColor(.secondary)
+                Text(location.fullPath)
+                    .font(.system(.body, design: .monospaced))
+                    .textSelection(.enabled)
+            }
+            .font(.caption)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(Strings.Settings.mcpClaudeConfig)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                HStack(alignment: .top) {
+                    Text(MCPServerInstaller.generateClaudeCodeConfig())
+                        .font(.system(.caption2, design: .monospaced))
+                        .foregroundColor(.secondary)
+                        .textSelection(.enabled)
+                        .padding(6)
+                        .background(Color.secondary.opacity(0.1))
+                        .cornerRadius(4)
+
+                    Button {
+                        copyMCPConfig()
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: configCopied ? "checkmark" : "doc.on.doc")
+                            Text(configCopied ? Strings.Settings.configCopied : Strings.Settings.copyConfig)
+                        }
+                        .font(.caption)
+                    }
+                    .buttonStyle(.bordered)
+                }
+            }
+
+            HStack {
+                Button(Strings.Common.reinstall) {
+                    installMCPServer()
+                }
+                .disabled(isInstallingMCP)
+
+                Button(Strings.Common.uninstall, role: .destructive) {
+                    uninstallMCPServer()
+                }
+                .disabled(isInstallingMCP)
+            }
+        }
+    }
+
+    @ViewBuilder
+    var mcpInstallContent: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(Strings.Settings.mcpInstallDescription)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            HStack(spacing: 4) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundColor(.orange)
+                Text(Strings.Settings.mcpLocalOnly)
+                    .font(.caption2)
+                    .foregroundColor(.orange)
+            }
+
+            Picker(Strings.Settings.cliPath, selection: $selectedMCPLocation) {
+                ForEach(MCPInstallLocation.allCases) { location in
+                    Text(location.displayName).tag(location)
+                }
+            }
+            .pickerStyle(.radioGroup)
+
+            Text(selectedMCPLocation.pathNote)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+
+            Button {
+                installMCPServer()
+            } label: {
+                HStack {
+                    if isInstallingMCP {
+                        ProgressView()
+                            .controlSize(.small)
+                    }
+                    Text(Strings.Settings.cliInstall)
+                }
+            }
+            .disabled(isInstallingMCP)
+        }
+    }
+}
+
+// MARK: - ToolsTabContent CLI Section
+
+extension ToolsTabContent {
+    @ViewBuilder
+    var cliSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "terminal")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Settings.cliTitle)
+                            .font(.headline)
+                        Text(Strings.Settings.cliDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if installedLocation != nil {
+                        installedBadge
+                    }
+                }
+
+                Divider()
+
+                Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
+                    .help(Strings.Settings.enableTerminalAutorunHelp)
+
+                Divider()
+
+                if let location = installedLocation {
+                    cliInstalledContent(location: location)
+                } else {
+                    cliInstallContent
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Settings.sectionCli)
+        }
+    }
+
+    @ViewBuilder
+    func cliInstalledContent(location: InstallLocation) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(Strings.Settings.cliLocation)
+                    .foregroundColor(.secondary)
+                Text(location.fullPath)
+                    .font(.system(.body, design: .monospaced))
+                    .textSelection(.enabled)
+            }
+            .font(.caption)
+
+            Text(Strings.Settings.cliUsage)
+                .font(.system(.caption, design: .monospaced))
+                .foregroundColor(.secondary)
+                .textSelection(.enabled)
+
+            HStack {
+                Button(Strings.Common.reinstall) {
+                    installCLI()
+                }
+                .disabled(isInstalling)
+
+                Button(Strings.Common.uninstall, role: .destructive) {
+                    uninstallCLI()
+                }
+                .disabled(isInstalling)
+            }
+        }
+    }
+
+    @ViewBuilder
+    var cliInstallContent: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(Strings.Settings.cliDescription)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
+                ForEach(InstallLocation.allCases) { location in
+                    Text(location.displayName).tag(location)
+                }
+            }
+            .pickerStyle(.radioGroup)
+
+            Text(selectedLocation.pathNote)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+
+            Button {
+                installCLI()
+            } label: {
+                HStack {
+                    if isInstalling {
+                        ProgressView()
+                            .controlSize(.small)
+                    }
+                    Text(Strings.Settings.cliInstall)
+                }
+            }
+            .disabled(isInstalling)
+        }
+    }
+}
+
+// MARK: - ToolsTabContent tmux Section
+
+extension ToolsTabContent {
+    @ViewBuilder
+    var tmuxSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "rectangle.split.3x3")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("tmux")
+                            .font(.headline)
+                        Text(Strings.Settings.tmuxDescription)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if tmuxManager.isAvailable {
+                        installedBadge
+                    } else {
+                        notInstalledBadge
+                    }
+                }
+
+                Divider()
+
+                if tmuxManager.isAvailable {
+                    tmuxAvailableContent
+                } else {
+                    tmuxNotAvailableContent
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Settings.sectionTmux)
+        }
+    }
+
+    @ViewBuilder
+    var tmuxAvailableContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Toggle(Strings.Settings.tmuxEnabled, isOn: $tmuxEnabled)
+                .help(Strings.Settings.tmuxEnabledHelp)
+
+            Toggle(Strings.Settings.tmuxAutoReattach, isOn: $tmuxAutoReattach)
+                .help(Strings.Settings.tmuxAutoReattachHelp)
+                .disabled(!tmuxEnabled)
+
+            Divider()
+
+            HStack {
+                Text(Strings.Settings.tmuxVersion)
+                    .foregroundColor(.secondary)
+                Text(tmuxManager.version ?? "Unknown")
+                    .font(.system(.body, design: .monospaced))
+            }
+            .font(.caption)
+
+            if let path = tmuxManager.tmuxPath {
+                HStack {
+                    Text(Strings.Settings.tmuxPath)
+                        .foregroundColor(.secondary)
+                    Text(path)
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                }
+                .font(.caption)
+            }
+
+            HStack {
+                Image(systemName: "info.circle")
+                    .foregroundColor(.blue)
+                Text(Strings.Settings.tmuxInfo)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+
+    @ViewBuilder
+    var tmuxNotAvailableContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(Strings.Settings.tmuxNotInstalledDescription)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Text(Strings.Settings.tmuxInstallHint)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            HStack {
+                Text("brew install tmux")
+                    .font(.system(.body, design: .monospaced))
+                    .padding(6)
+                    .background(Color.secondary.opacity(0.1))
+                    .cornerRadius(4)
+
+                Button {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString("brew install tmux", forType: .string)
+                } label: {
+                    Image(systemName: "doc.on.doc")
+                        .font(.caption)
+                }
+                .buttonStyle(.bordered)
+                .help(Strings.Settings.copyToClipboard)
+            }
+
+            Button(Strings.Settings.tmuxCheckAgain) {
+                Task {
+                    await tmuxManager.detectTmux()
+                }
+            }
+            .font(.caption)
+        }
+    }
+}
+
+// MARK: - ToolsTabContent Helper Views
+
+extension ToolsTabContent {
+    var installedBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+            Text(Strings.Common.installed)
+                .foregroundColor(.green)
+        }
+        .font(.caption)
+    }
+
+    var notInstalledBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "xmark.circle")
+                .foregroundColor(.secondary)
+            Text(Strings.Settings.notInstalled)
+                .foregroundColor(.secondary)
+        }
+        .font(.caption)
     }
 }
