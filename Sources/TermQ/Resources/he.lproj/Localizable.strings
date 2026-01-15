@@ -36,9 +36,13 @@
 "card.pin" = "הצמדת מסוף";
 "card.unpin" = "ביטול הצמדת מסוף";
 "card.running" = "המסוף פועל";
-"card.open" = "פתוח";
-"card.edit" = "עריכת פרטים...";
-"card.delete" = "מחיקה";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "מחובר";
 "card.wired.help" = "מחובר לסוכן MCP";
 "card.needs.attention" = "דורש תשומת לב";

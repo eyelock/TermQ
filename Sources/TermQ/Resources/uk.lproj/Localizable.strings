@@ -36,9 +36,13 @@
 "card.pin" = "Закріпити термінал";
 "card.unpin" = "Відкріпити термінал";
 "card.running" = "Термінал працює";
-"card.open" = "Відкрито";
-"card.edit" = "Редагувати деталі...";
-"card.delete" = "Видалити";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Підключено";
 "card.wired.help" = "Підключено до агента MCP";
 "card.needs.attention" = "Потребує уваги";

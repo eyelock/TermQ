@@ -36,9 +36,13 @@
 "card.pin" = "Fissa terminale";
 "card.unpin" = "Rimuovi fissaggio";
 "card.running" = "Terminale in esecuzione";
-"card.open" = "Aperto";
-"card.edit" = "Modifica dettagli...";
-"card.delete" = "Elimina";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Connesso";
 "card.wired.help" = "Connesso all'agente MCP";
 "card.needs.attention" = "Richiede attenzione";

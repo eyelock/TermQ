@@ -36,9 +36,13 @@
 "card.pin" = "Fastgør terminal";
 "card.unpin" = "Frigør terminal";
 "card.running" = "Terminal kører";
-"card.open" = "Åben";
-"card.edit" = "Rediger detaljer...";
-"card.delete" = "Slet";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Forbundet";
 "card.wired.help" = "Forbundet til MCP-agent";
 "card.needs.attention" = "Kræver opmærksomhed";

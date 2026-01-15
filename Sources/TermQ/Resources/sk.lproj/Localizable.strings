@@ -36,9 +36,13 @@
 "card.pin" = "Pripnúť terminál";
 "card.unpin" = "Odopnúť terminál";
 "card.running" = "Terminál beží";
-"card.open" = "Otvorené";
-"card.edit" = "Upraviť podrobnosti...";
-"card.delete" = "Zmazať";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Pripojené";
 "card.wired.help" = "Pripojené k agentovi MCP";
 "card.needs.attention" = "Vyžaduje pozornosť";

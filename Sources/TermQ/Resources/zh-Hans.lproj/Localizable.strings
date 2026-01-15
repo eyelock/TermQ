@@ -36,9 +36,13 @@
 "card.pin" = "固定终端";
 "card.unpin" = "取消固定终端";
 "card.running" = "终端运行中";
-"card.open" = "打开";
-"card.edit" = "编辑详情...";
-"card.delete" = "删除";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "已连接";
 "card.wired.help" = "已连接到 MCP 代理";
 "card.needs.attention" = "需要关注";

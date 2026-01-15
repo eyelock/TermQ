@@ -37,8 +37,12 @@
 "card.unpin" = "Maak terminal los";
 "card.running" = "Terminal is actief";
 "card.open" = "Open";
-"card.edit" = "Wijzig details...";
-"card.delete" = "Verwijder";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Verbonden";
 "card.wired.help" = "Verbonden met MCP-agent";
 "card.needs.attention" = "Heeft aandacht nodig";

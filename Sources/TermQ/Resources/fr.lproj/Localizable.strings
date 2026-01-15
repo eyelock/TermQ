@@ -36,9 +36,13 @@
 "card.pin" = "Épingler le terminal";
 "card.unpin" = "Désépingler le terminal";
 "card.running" = "Terminal en cours d'exécution";
-"card.open" = "Ouvert";
-"card.edit" = "Modifier les détails...";
-"card.delete" = "Supprimer";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Connecté";
 "card.wired.help" = "Connecté à l'agent MCP";
 "card.needs.attention" = "Nécessite une attention";

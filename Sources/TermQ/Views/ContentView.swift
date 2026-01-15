@@ -30,6 +30,9 @@ struct ContentView: View {
                     onDeleteTab: { card in
                         viewModel.deleteTabCard(card)
                     },
+                    onDuplicateTab: { card in
+                        viewModel.duplicateTerminal(card)
+                    },
                     onCloseSession: { card in
                         viewModel.closeSession(for: card)
                     },

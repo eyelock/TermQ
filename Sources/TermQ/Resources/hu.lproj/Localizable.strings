@@ -36,9 +36,13 @@
 "card.pin" = "Terminál rögzítése";
 "card.unpin" = "Terminál feloldása";
 "card.running" = "Terminál fut";
-"card.open" = "Nyitva";
-"card.edit" = "Részletek szerkesztése...";
-"card.delete" = "Törlés";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "Csatlakoztatva";
 "card.wired.help" = "Csatlakoztatva MCP agenthez";
 "card.needs.attention" = "Figyelmet igényel";

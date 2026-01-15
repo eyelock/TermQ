@@ -36,9 +36,13 @@
 "card.pin" = "تثبيت الطرفية";
 "card.unpin" = "إلغاء تثبيت الطرفية";
 "card.running" = "الطرفية تعمل";
-"card.open" = "مفتوح";
-"card.edit" = "تعديل التفاصيل...";
-"card.delete" = "حذف";
+"card.open" = "Open";
+
+"card.edit" = "Edit Details...";
+
+"card.delete" = "Delete";
+
+"card.duplicate" = "Duplicate";
 "card.wired" = "متصل";
 "card.wired.help" = "متصل بوكيل MCP";
 "card.needs.attention" = "يحتاج انتباه";
