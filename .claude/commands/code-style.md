@@ -405,6 +405,104 @@ Some errors should NEVER be silently ignored:
 - Permission changes (file permissions, admin operations)
 - Configuration file parsing
 
+## Memory Management Patterns
+
+### Closure Capture Rules
+
+Different types have different capture semantics:
+
+```swift
+// ✅ GOOD: Class with closure callback - use [weak self]
+class TerminalSessionManager {
+    func setupCallback() {
+        themeManager.onThemeChanged = { [weak self] in
+            self?.applyTheme()
+        }
+    }
+}
+
+// ✅ GOOD: SwiftUI View (struct) with event monitor - [self] is fine
+struct CommandPaletteView: View {
+    @State private var selectedIndex = 0
+
+    func setupKeyMonitor() {
+        // Struct captures by value, @State is managed externally
+        keyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [self] event in
+            // Access @State properties
+            selectedIndex -= 1
+            return nil
+        }
+    }
+}
+
+// ❌ BAD: Strong self in class causes retain cycle
+class ViewModel {
+    func badSetup() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            self.update()  // Creates retain cycle!
+        }
+    }
+}
+```
+
+### Event Monitor Cleanup
+
+Event monitors must be removed when views disappear:
+
+```swift
+struct MyView: View {
+    @State private var monitor: Any?
+
+    var body: some View {
+        content
+            .onAppear { setupMonitor() }
+            .onDisappear { removeMonitor() }  // Critical!
+    }
+
+    private func removeMonitor() {
+        if let monitor = monitor {
+            NSEvent.removeMonitor(monitor)
+            self.monitor = nil
+        }
+    }
+}
+```
+
+### Timer and Dispatch Source Cleanup
+
+Use deinit for class-based cleanup:
+
+```swift
+final class FileMonitor {
+    private var source: DispatchSourceFileSystemObject?
+
+    deinit {
+        source?.cancel()  // Always cancel dispatch sources
+        source = nil
+    }
+}
+```
+
+### Callback-Based Coordination
+
+When using callbacks to avoid circular dependencies, ensure they're set up after init:
+
+```swift
+// Parent owns child, child has weak callback
+class BoardViewModel {
+    let tabManager: TabManager
+
+    init() {
+        tabManager = TabManager()
+        // Configure after all properties initialized
+        tabManager.configure(
+            board: { [weak self] in self?.board ?? Board() },
+            onSave: { [weak self] in self?.save() }
+        )
+    }
+}
+```
+
 ## Refactoring Checklist
 
 When upgrading code to these patterns:
@@ -443,3 +541,10 @@ When upgrading code to these patterns:
    - [ ] ViewModels: Log error, update UI state
    - [ ] File ops: `try?` only for optional operations
    - [ ] Never silently ignore data persistence errors
+
+7. **Memory Management**
+   - [ ] Use `[weak self]` in class closures and callbacks
+   - [ ] `[self]` is OK for struct-based SwiftUI views (value capture)
+   - [ ] Event monitors must have cleanup in onDisappear
+   - [ ] Timers and dispatch sources need cleanup in deinit
+   - [ ] Avoid retain cycles with callback-based coordination
