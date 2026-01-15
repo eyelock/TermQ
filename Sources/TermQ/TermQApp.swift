@@ -170,8 +170,53 @@ class URLHandler: ObservableObject {
     }
 }
 
+/// App delegate to handle quit confirmation for running direct sessions
+class TermQAppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        // Check for running direct (non-tmux) sessions
+        let sessionManager = TerminalSessionManager.shared
+        let activeCards = sessionManager.activeSessionCardIds()
+
+        // Count direct and tmux sessions separately
+        let directSessionCount = activeCards.filter { cardId in
+            sessionManager.getBackend(for: cardId) == .direct
+        }.count
+
+        let tmuxSessionCount = activeCards.filter { cardId in
+            sessionManager.getBackend(for: cardId) == .tmux
+        }.count
+
+        if directSessionCount > 0 {
+            // Show confirmation alert
+            let alert = NSAlert()
+            alert.messageText = Strings.Alert.quitWithDirectSessions
+
+            // Only mention tmux persistence if there are tmux sessions
+            if tmuxSessionCount > 0 {
+                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
+            } else {
+                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
+            }
+
+            alert.addButton(withTitle: Strings.Common.quit)
+            alert.addButton(withTitle: Strings.Common.cancel)
+            alert.alertStyle = .warning
+
+            let response = alert.runModal()
+            if response == .alertSecondButtonReturn {
+                return .terminateCancel
+            }
+        }
+
+        // Clean up all sessions before quitting
+        sessionManager.removeAllSessions()
+        return .terminateNow
+    }
+}
+
 @main
 struct TermQApp: App {
+    @NSApplicationDelegateAdaptor(TermQAppDelegate.self) var appDelegate
     @StateObject private var urlHandler = URLHandler.shared
     @FocusedValue(\.terminalActions) private var terminalActions
     @Environment(\.openWindow) private var openWindow

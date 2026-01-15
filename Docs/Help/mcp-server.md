@@ -19,7 +19,7 @@ The `termqmcp` binary is a standalone MCP server that:
 The MCP server is installed alongside the TermQ CLI:
 
 1. Open TermQ Settings (Cmd+,)
-2. Go to the CLI tab
+2. Go to the Tools tab
 3. Click "Install" to install both `termqcli` and `termqmcp`
 
 Or install manually:

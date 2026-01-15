@@ -1,5 +1,30 @@
 import Foundation
 
+/// Backend mode for terminal session management
+public enum TerminalBackend: String, Codable, CaseIterable, Sendable {
+    /// Direct shell process (legacy mode) - session dies with app
+    case direct
+
+    /// tmux-backed session - persists across app restarts
+    case tmux
+
+    public var displayName: String {
+        switch self {
+        case .direct: return "Direct"
+        case .tmux: return "TMUX (Persistent)"
+        }
+    }
+
+    public var description: String {
+        switch self {
+        case .direct:
+            return "Shell runs directly. Session ends when TermQ closes."
+        case .tmux:
+            return "Shell runs via tmux. Session persists across app restarts."
+        }
+    }
+}
+
 /// Represents a terminal instance with metadata
 public class TerminalCard: Identifiable, ObservableObject, Codable {
     public let id: UUID
@@ -45,6 +70,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// When an LLM last called termq_get for this terminal (nil = never, set = LLM is aware of TermQ)
     @Published public var lastLLMGet: Date?
 
+    /// Backend mode for session management (.direct = legacy, .tmux = persistent)
+    @Published public var backend: TerminalBackend
+
     // Runtime state (not persisted)
     public var isRunning: Bool = false
     public var isTransient: Bool = false
@@ -52,7 +80,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
-        case allowAutorun, deletedAt, lastLLMGet
+        case allowAutorun, deletedAt, lastLLMGet, backend
     }
 
     public init(
@@ -75,7 +103,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         themeId: String = "",
         allowAutorun: Bool = false,
         deletedAt: Date? = nil,
-        lastLLMGet: Date? = nil
+        lastLLMGet: Date? = nil,
+        backend: TerminalBackend = .direct
     ) {
         self.id = id
         self.title = title
@@ -97,6 +126,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.allowAutorun = allowAutorun
         self.deletedAt = deletedAt
         self.lastLLMGet = lastLLMGet
+        self.backend = backend
     }
 
     public required init(from decoder: Decoder) throws {
@@ -121,6 +151,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
+        // Default to direct for cards without backend field (pre-tmux cards were direct mode)
+        backend = try container.decodeIfPresent(TerminalBackend.self, forKey: .backend) ?? .direct
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -145,6 +177,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(allowAutorun, forKey: .allowAutorun)
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
         try container.encodeIfPresent(lastLLMGet, forKey: .lastLLMGet)
+        try container.encode(backend, forKey: .backend)
     }
 
     /// Whether this card is in the bin (soft-deleted)
@@ -166,6 +199,11 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
+    }
+
+    /// tmux session name for this terminal (used when backend == .tmux)
+    public var tmuxSessionName: String {
+        "termq-\(id.uuidString.prefix(8).lowercased())"
     }
 }
 

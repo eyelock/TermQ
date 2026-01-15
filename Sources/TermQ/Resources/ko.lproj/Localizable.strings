@@ -169,7 +169,7 @@
 "editor.tags.help" = "구성을 위한 키-값 쌍";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "에이전트 구성";
+"editor.section.agent" = "Agent";
 "editor.field.terminal.allows.autorun" = "터미널이 명령 허용";
 "editor.field.persistent.context" = "지속 컨텍스트";
 "editor.field.persistent.context.help" = "세션 간 컨텍스트 유지";
@@ -269,6 +269,26 @@
 // Settings - Agents section
 "settings.section.agents" = "에이전트";
 
+// Settings - Status section
+"settings.section.status" = "Status";
+"settings.status.ready" = "Ready";
+"settings.status.enabled" = "Enabled";
+"settings.status.disabled" = "Disabled";
+"settings.not.installed" = "Not Installed";
+
+// Settings - tmux section
+"settings.section.tmux" = "Session Backend";
+"settings.tmux.description" = "Terminal multiplexer for persistent sessions and pane splitting";
+"settings.tmux.enabled" = "Enable tmux Backend";
+"settings.tmux.enabled.help" = "Use tmux for persistent terminal sessions that survive app restarts";
+"settings.tmux.version" = "Version:";
+"settings.tmux.path" = "Path:";
+"settings.tmux.info" = "When enabled, terminal sessions persist when TermQ closes. Sessions can be recovered on restart.";
+"settings.tmux.not.installed.description" = "tmux enables persistent terminal sessions that survive app restarts, and split panes within a single terminal.";
+"settings.tmux.install.hint" = "Install using Homebrew:";
+"settings.tmux.check.again" = "Check Again";
+"settings.copy.to.clipboard" = "Copy to clipboard";
+
 // MARK: - Command Palette
 "palette.placeholder" = "명령 검색...";
 "palette.no.results" = "결과를 찾을 수 없음";
@@ -338,3 +358,20 @@
 "uninstall.removed.mcp" = "Removed MCP server";
 "uninstall.removed.data" = "Removed application data";
 "uninstall.error.data %@" = "Failed to remove app data: %@";
+
+// MARK: - tmux Session Recovery (added)
+"settings.section.tmux.status" = "tmux Status";
+"settings.tmux.status.ready" = "Ready - Sessions will persist";
+"settings.tmux.status.disabled" = "Disabled globally";
+"settings.tmux.active.sessions %lld" = "%lld active session(s)";
+"settings.tmux.enable.hint" = "Enable tmux to get persistent terminal sessions that survive app restarts.";
+"settings.tmux.enable.button" = "Enable tmux";
+"settings.tmux.auto.reattach" = "Auto-reattach Sessions";
+"settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+"editor.section.backend" = "Session Backend";
+"editor.field.backend" = "Backend";
+"editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
+"alert.quit.direct.sessions" = "Running Terminal Sessions";
+"alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
+"alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"common.quit" = "Quit";

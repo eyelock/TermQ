@@ -1,6 +1,7 @@
 - [Getting Started](getting-started.md)
 - [Keyboard Shortcuts](keyboard-shortcuts.md)
 - [Working with Terminals](working-with-terminals.md)
+- [tmux Sessions](tmux-sessions.md)
 - [Bin & Recovery](bin-recovery.md)
 - [Pinned Terminals & Tabs](pinned-terminals.md)
 - [Columns & Organization](columns-organization.md)

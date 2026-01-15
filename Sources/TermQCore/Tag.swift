@@ -1,7 +1,7 @@
 import Foundation
 
 /// Metadata tag for a terminal card
-public struct Tag: Identifiable, Codable, Hashable {
+public struct Tag: Identifiable, Codable, Hashable, Sendable {
     public let id: UUID
     public var key: String
     public var value: String

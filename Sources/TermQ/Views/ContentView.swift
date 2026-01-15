@@ -136,6 +136,9 @@ struct ContentView: View {
         .sheet(isPresented: $showBin) {
             BinView(viewModel: viewModel)
         }
+        .sheet(isPresented: $viewModel.showSessionRecovery) {
+            SessionRecoveryView(viewModel: viewModel)
+        }
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 if viewModel.selectedCard != nil {

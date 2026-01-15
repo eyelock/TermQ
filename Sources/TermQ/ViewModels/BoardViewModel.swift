@@ -25,6 +25,12 @@ class BoardViewModel: ObservableObject {
     /// Terminals with active background sessions
     @Published private(set) var activeSessionCards: Set<UUID> = []
 
+    /// Recovered tmux sessions that can be reattached
+    @Published internal(set) var recoverableSessions: [TmuxSessionInfo] = []
+
+    /// Whether to show the session recovery sheet
+    @Published var showSessionRecovery: Bool = false
+
     /// Timer for updating processing status
     private var processingTimer: Timer?
 
@@ -69,6 +75,11 @@ class BoardViewModel: ObservableObject {
         // Start monitoring file for external changes
         persistence.startFileMonitoring { [weak self] in
             self?.handleFileChange()
+        }
+
+        // Check for recoverable tmux sessions (async)
+        Task {
+            await checkForRecoverableSessions()
         }
     }
 
@@ -289,6 +300,10 @@ class BoardViewModel: ObservableObject {
         if card.isTransient {
             promoteTransientCard(card)
         }
+
+        // Sync metadata to tmux session if using tmux backend
+        TerminalSessionManager.shared.syncMetadataToTmuxSession(card: card)
+
         objectWillChange.send()
         save()
     }

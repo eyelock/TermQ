@@ -33,6 +33,9 @@ struct CardEditorView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
     @State private var interactiveMode: Bool = true
+    @State private var backend: TerminalBackend = .direct
+    @ObservedObject private var tmuxManager = TmuxManager.shared
+    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
 
     private enum EditorTab: CaseIterable {
         case general
@@ -191,6 +194,22 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var terminalContent: some View {
+        // Session Backend at top - only show if tmux is available and enabled globally
+        if tmuxManager.isAvailable && tmuxEnabled {
+            Section(Strings.Editor.sectionBackend) {
+                Picker(Strings.Editor.fieldBackend, selection: $backend) {
+                    ForEach(TerminalBackend.allCases, id: \.self) { backend in
+                        Text(backend.displayName).tag(backend)
+                    }
+                }
+                .pickerStyle(.radioGroup)
+
+                Text(backend.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+
         Section(Strings.Editor.sectionTerminal) {
             HStack {
                 TextField(Strings.Editor.fieldDirectory, text: $workingDirectory)
@@ -409,6 +428,7 @@ struct CardEditorView: View {
         safePasteEnabled = card.safePasteEnabled
         themeId = card.themeId
         allowAutorun = card.allowAutorun
+        backend = card.backend
     }
 
     private func saveChanges() {
@@ -428,6 +448,7 @@ struct CardEditorView: View {
         card.safePasteEnabled = safePasteEnabled
         card.themeId = themeId
         card.allowAutorun = allowAutorun
+        card.backend = backend
     }
 
     private func addTag() {

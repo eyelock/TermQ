@@ -69,6 +69,7 @@ enum Strings {
         static var browse: String { localized("common.browse") }
         static var apply: String { localized("common.apply") }
         static var preview: String { localized("common.preview") }
+        static var quit: String { localized("common.quit") }
     }
 
     // MARK: - Board View
@@ -255,6 +256,11 @@ enum Strings {
         static var cancel: String { localized("editor.cancel") }
         static var save: String { localized("editor.save") }
         static var saveOpen: String { localized("editor.save.open") }
+
+        // Backend section
+        static var sectionBackend: String { localized("editor.section.backend") }
+        static var fieldBackend: String { localized("editor.field.backend") }
+        static var tmuxPersistNote: String { localized("editor.tmux.persist.note") }
     }
 
     // MARK: - Column Editor
@@ -352,6 +358,38 @@ enum Strings {
 
         // Tools - Agents section
         static var sectionAgents: String { localized("settings.section.agents") }
+
+        // Tools - Status section
+        static var sectionStatus: String { localized("settings.section.status") }
+        static var statusReady: String { localized("settings.status.ready") }
+        static var statusEnabled: String { localized("settings.status.enabled") }
+        static var statusDisabled: String { localized("settings.status.disabled") }
+        static var notInstalled: String { localized("settings.not.installed") }
+
+        // Tools - tmux section
+        static var sectionTmux: String { localized("settings.section.tmux") }
+        static var tmuxDescription: String { localized("settings.tmux.description") }
+        static var tmuxEnabled: String { localized("settings.tmux.enabled") }
+        static var tmuxEnabledHelp: String { localized("settings.tmux.enabled.help") }
+        static var tmuxVersion: String { localized("settings.tmux.version") }
+        static var tmuxPath: String { localized("settings.tmux.path") }
+        static var tmuxInfo: String { localized("settings.tmux.info") }
+        static var tmuxNotInstalledDescription: String { localized("settings.tmux.not.installed.description") }
+        static var tmuxInstallHint: String { localized("settings.tmux.install.hint") }
+        static var tmuxCheckAgain: String { localized("settings.tmux.check.again") }
+        static var copyToClipboard: String { localized("settings.copy.to.clipboard") }
+
+        // tmux Status section
+        static var sectionTmuxStatus: String { localized("settings.section.tmux.status") }
+        static var tmuxStatusReady: String { localized("settings.tmux.status.ready") }
+        static var tmuxStatusDisabled: String { localized("settings.tmux.status.disabled") }
+        static func tmuxActiveSessions(_ count: Int) -> String {
+            localized("settings.tmux.active.sessions %lld", count)
+        }
+        static var tmuxEnableHint: String { localized("settings.tmux.enable.hint") }
+        static var tmuxEnableButton: String { localized("settings.tmux.enable.button") }
+        static var tmuxAutoReattach: String { localized("settings.tmux.auto.reattach") }
+        static var tmuxAutoReattachHelp: String { localized("settings.tmux.auto.reattach.help") }
     }
 
     // MARK: - Command Palette
@@ -370,6 +408,13 @@ enum Strings {
     enum Alert {
         static var error: String { localized("alert.error") }
         static var success: String { localized("alert.success") }
+        static var quitWithDirectSessions: String { localized("alert.quit.direct.sessions") }
+        static func quitWithDirectSessionsMessage(_ count: Int) -> String {
+            localized("alert.quit.direct.sessions.message.simple %lld", count)
+        }
+        static func quitWithDirectSessionsMessageWithTmux(_ count: Int) -> String {
+            localized("alert.quit.direct.sessions.message %lld", count)
+        }
     }
 
     // MARK: - Backup
