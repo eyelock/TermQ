@@ -30,6 +30,12 @@ struct ContentView: View {
                     onDeleteTab: { card in
                         viewModel.deleteTabCard(card)
                     },
+                    onCloseSession: { card in
+                        viewModel.closeSession(for: card)
+                    },
+                    onRestartSession: { card in
+                        viewModel.restartSession(for: card)
+                    },
                     onMoveTab: { cardId, toIndex in
                         viewModel.moveTab(cardId, toIndex: toIndex)
                     },
@@ -40,6 +46,7 @@ struct ContentView: View {
                     columns: viewModel.board.columns,
                     needsAttention: viewModel.needsAttention,
                     processingCards: viewModel.processingCards,
+                    activeSessionCards: viewModel.activeSessionCards,
                     isZoomed: $isZoomed,
                     isSearching: $isSearching
                 )

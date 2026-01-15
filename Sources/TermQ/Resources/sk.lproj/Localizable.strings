@@ -43,6 +43,10 @@
 "card.wired.help" = "Pripojené k agentovi MCP";
 "card.needs.attention" = "Vyžaduje pozornosť";
 "card.processing" = "Spracúvanie...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Relácia terminálu ukončená";

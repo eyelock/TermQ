@@ -7,12 +7,15 @@ struct ExpandedTerminalView: View {
     let onEditTab: (TerminalCard) -> Void
     let onCloseTab: (TerminalCard) -> Void
     let onDeleteTab: (TerminalCard) -> Void
+    let onCloseSession: (TerminalCard) -> Void
+    let onRestartSession: (TerminalCard) -> Void
     let onMoveTab: (UUID, Int) -> Void
     let onBell: (UUID) -> Void
     let tabCards: [TerminalCard]
     let columns: [Column]
     let needsAttention: Set<UUID>
     let processingCards: Set<UUID>
+    let activeSessionCards: Set<UUID>
 
     @State private var terminalExited = false
     @Binding var isZoomed: Bool
@@ -224,6 +227,7 @@ struct ExpandedTerminalView: View {
                         isSelected: tabCard.id == card.id,
                         needsAttention: needsAttention.contains(tabCard.id),
                         isProcessing: processingCards.contains(tabCard.id),
+                        hasActiveSession: activeSessionCards.contains(tabCard.id),
                         onSelect: {
                             if tabCard.id != card.id {
                                 onSelectTab(tabCard)
@@ -237,6 +241,12 @@ struct ExpandedTerminalView: View {
                         },
                         onDelete: {
                             onDeleteTab(tabCard)
+                        },
+                        onCloseSession: {
+                            onCloseSession(tabCard)
+                        },
+                        onRestartSession: {
+                            onRestartSession(tabCard)
                         }
                     )
                     .draggable(tabCard.id.uuidString)
@@ -267,10 +277,13 @@ private struct TabItemView: View {
     let isSelected: Bool
     let needsAttention: Bool
     let isProcessing: Bool
+    let hasActiveSession: Bool
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onClose: () -> Void
     let onDelete: () -> Void
+    let onCloseSession: () -> Void
+    let onRestartSession: () -> Void
 
     @State private var isHovering = false
     @State private var showDeleteConfirmation = false
@@ -365,6 +378,15 @@ private struct TabItemView: View {
         .contextMenu {
             Button(Strings.Card.edit) {
                 onEdit()
+            }
+            if hasActiveSession {
+                Divider()
+                Button(Strings.Card.closeSession) {
+                    onCloseSession()
+                }
+                Button(Strings.Card.restartSession) {
+                    onRestartSession()
+                }
             }
             Divider()
             Button(Strings.Common.close) {

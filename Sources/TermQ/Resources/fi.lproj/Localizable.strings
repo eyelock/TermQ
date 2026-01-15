@@ -43,6 +43,10 @@
 "card.wired.help" = "Yhdistetty MCP-agenttiin";
 "card.needs.attention" = "Vaatii huomiota";
 "card.processing" = "Käsitellään...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Terminaali-istunto päättyi";

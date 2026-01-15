@@ -43,6 +43,10 @@
 "card.wired.help" = "MCP 에이전트에 연결됨";
 "card.needs.attention" = "주의 필요";
 "card.processing" = "처리 중...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "터미널 세션이 종료됨";

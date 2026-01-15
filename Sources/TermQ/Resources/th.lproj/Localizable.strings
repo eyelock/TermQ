@@ -43,6 +43,10 @@
 "card.wired.help" = "เชื่อมต่อกับตัวแทน MCP";
 "card.needs.attention" = "ต้องการความสนใจ";
 "card.processing" = "กำลังประมวลผล...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "เซสชันเทอร์มินัลสิ้นสุดแล้ว";

@@ -6,12 +6,15 @@ struct ColumnView: View {
     let cards: [TerminalCard]
     let needsAttention: Set<UUID>
     let processingCards: Set<UUID>
+    let activeSessionCards: Set<UUID>
     let openTabs: Set<UUID>
     let onAddCard: () -> Void
     let onSelectCard: (TerminalCard) -> Void
     let onEditCard: (TerminalCard) -> Void
     let onDeleteCard: (TerminalCard) -> Void
     let onToggleFavourite: (TerminalCard) -> Void
+    let onCloseSession: (TerminalCard) -> Void
+    let onRestartSession: (TerminalCard) -> Void
     let onEditColumn: () -> Void
     let onDeleteColumn: () -> Void
     let onDropCardId: (String) -> Void  // Takes card ID string (for end of column)
@@ -84,10 +87,13 @@ struct ColumnView: View {
                             needsAttention: needsAttention.contains(card.id),
                             isProcessing: processingCards.contains(card.id),
                             isOpenAsTab: openTabs.contains(card.id),
+                            hasActiveSession: activeSessionCards.contains(card.id),
                             onSelect: { onSelectCard(card) },
                             onEdit: { onEditCard(card) },
                             onDelete: { onDeleteCard(card) },
-                            onToggleFavourite: { onToggleFavourite(card) }
+                            onToggleFavourite: { onToggleFavourite(card) },
+                            onCloseSession: { onCloseSession(card) },
+                            onRestartSession: { onRestartSession(card) }
                         )
                         .overlay(alignment: .top) {
                             // Drop indicator line above this card

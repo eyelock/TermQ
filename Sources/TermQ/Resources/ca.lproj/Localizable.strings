@@ -43,6 +43,10 @@
 "card.wired.help" = "Connectat a l'agent MCP";
 "card.needs.attention" = "Requereix atenció";
 "card.processing" = "Processant...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "La sessió del terminal ha finalitzat";

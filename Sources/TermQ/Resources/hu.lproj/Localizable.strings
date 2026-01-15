@@ -43,6 +43,10 @@
 "card.wired.help" = "Csatlakoztatva MCP agenthez";
 "card.needs.attention" = "Figyelmet igényel";
 "card.processing" = "Feldolgozás...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Terminál munkamenet befejeződött";

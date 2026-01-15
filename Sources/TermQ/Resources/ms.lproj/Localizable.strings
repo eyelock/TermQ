@@ -43,6 +43,10 @@
 "card.wired.help" = "Bersambung ke ejen MCP";
 "card.needs.attention" = "Perlu perhatian";
 "card.processing" = "Memproses...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Sesi terminal tamat";

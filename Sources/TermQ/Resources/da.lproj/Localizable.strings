@@ -43,6 +43,10 @@
 "card.wired.help" = "Forbundet til MCP-agent";
 "card.needs.attention" = "Kræver opmærksomhed";
 "card.processing" = "Behandler...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Terminalsession afsluttet";

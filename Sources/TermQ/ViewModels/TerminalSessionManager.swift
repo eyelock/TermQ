@@ -239,6 +239,27 @@ class TerminalSessionManager: ObservableObject {
         )
     }
 
+    /// Get all card IDs that have active (running) sessions
+    func activeSessionCardIds() -> Set<UUID> {
+        return Set(
+            sessions.filter { _, session in
+                session.isRunning
+            }.keys
+        )
+    }
+
+    /// Close a terminal session (terminate the process)
+    func closeSession(for cardId: UUID) {
+        guard let session = sessions[cardId], session.isRunning else { return }
+        session.terminal.send(txt: "exit\n")
+    }
+
+    /// Restart a terminal session (terminate and remove, will be recreated on next access)
+    func restartSession(for cardId: UUID) {
+        guard sessions[cardId] != nil else { return }
+        removeSession(for: cardId)
+    }
+
     /// Remove a session (when card is deleted)
     /// Important: We remove from dictionary FIRST, then terminate.
     /// This ensures processTerminated callback won't fire onExit for a deleted tab.

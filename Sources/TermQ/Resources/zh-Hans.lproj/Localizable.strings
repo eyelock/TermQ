@@ -43,6 +43,10 @@
 "card.wired.help" = "已连接到 MCP 代理";
 "card.needs.attention" = "需要关注";
 "card.processing" = "处理中...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "终端会话已结束";
