@@ -23,6 +23,12 @@ class TerminalSessionManager: ObservableObject {
         themeManager.currentTheme
     }
 
+    // MARK: - Bell Handling
+
+    /// Centralized bell handler - called when ANY terminal receives a bell
+    /// This ensures bells work even when terminals are running in background
+    var onBellForCard: ((UUID) -> Void)?
+
     // MARK: - Session Storage
 
     /// Active terminal sessions keyed by card ID
@@ -50,14 +56,16 @@ class TerminalSessionManager: ObservableObject {
         onBell: @escaping () -> Void,
         onActivity: @escaping () -> Void
     ) -> TerminalContainerView {
+        let cardId = card.id
+
         // Return existing session if available
-        if let session = sessions[card.id], session.isRunning {
-            // Update callbacks (views may be recreated, especially in release builds)
-            session.terminal.onBell = onBell
+        if let session = sessions[cardId], session.isRunning {
+            // Update activity callback (views may be recreated)
             session.terminal.onActivity = { [weak self] in
-                self?.updateActivityTime(cardId: card.id)
+                self?.updateActivityTime(cardId: cardId)
                 onActivity()
             }
+            // Bell uses centralized handler - no need to update
             // Re-focus the terminal
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 session.container.window?.makeFirstResponder(session.terminal)
@@ -67,16 +75,20 @@ class TerminalSessionManager: ObservableObject {
 
         // Create new terminal (using our subclass that fixes copy/paste)
         let terminal = TermQTerminalView(frame: .zero)
-        terminal.cardId = card.id
+        terminal.cardId = cardId
         terminal.terminalTitle = card.title
         terminal.safePasteEnabled = card.safePasteEnabled
         terminal.onDisableSafePaste = {
             // Persist the change to the card model
             card.safePasteEnabled = false
         }
-        terminal.onBell = onBell
+        // Use centralized bell handler to ensure bells work even for background terminals
+        terminal.onBell = { [weak self] in
+            self?.onBellForCard?(cardId)
+            onBell()  // Also call view-specific callback for immediate visual feedback
+        }
         terminal.onActivity = { [weak self] in
-            self?.updateActivityTime(cardId: card.id)
+            self?.updateActivityTime(cardId: cardId)
             onActivity()
         }
 

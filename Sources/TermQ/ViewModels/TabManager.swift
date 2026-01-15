@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import TermQCore
 
@@ -163,12 +164,24 @@ public final class TabManager: ObservableObject {
         #endif
         if currentSelection != cardId {
             needsAttention.insert(cardId)
+            updateDockBadge()
         }
     }
 
     /// Clear attention indicator for a card
     func clearAttention(_ cardId: UUID) {
         needsAttention.remove(cardId)
+        updateDockBadge()
+    }
+
+    /// Update Dock badge to show count of terminals needing attention
+    private func updateDockBadge() {
+        let count = needsAttention.count
+        if count > 0 {
+            NSApp.dockTile.badgeLabel = "\(count)"
+        } else {
+            NSApp.dockTile.badgeLabel = nil
+        }
     }
 
     // MARK: - Transient Cards
