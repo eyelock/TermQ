@@ -43,6 +43,10 @@
 "card.wired.help" = "Conectat la agentul MCP";
 "card.needs.attention" = "Necesită atenție";
 "card.processing" = "Se procesează...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Sesiunea terminalului s-a încheiat";

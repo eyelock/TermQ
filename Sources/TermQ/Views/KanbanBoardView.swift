@@ -27,6 +27,7 @@ struct KanbanBoardView: View {
                             cards: viewModel.board.cards(for: column),
                             needsAttention: viewModel.needsAttention,
                             processingCards: viewModel.processingCards,
+                            activeSessionCards: viewModel.activeSessionCards,
                             openTabs: Set(viewModel.sessionTabs),
                             onAddCard: {
                                 viewModel.addTerminal(to: column)
@@ -42,6 +43,12 @@ struct KanbanBoardView: View {
                             },
                             onToggleFavourite: { card in
                                 viewModel.toggleFavourite(card)
+                            },
+                            onCloseSession: { card in
+                                viewModel.closeSession(for: card)
+                            },
+                            onRestartSession: { card in
+                                viewModel.restartSession(for: card)
                             },
                             onEditColumn: {
                                 viewModel.isEditingColumn = column

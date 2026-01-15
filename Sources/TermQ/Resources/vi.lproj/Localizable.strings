@@ -43,6 +43,10 @@
 "card.wired.help" = "Đã kết nối với tác nhân MCP";
 "card.needs.attention" = "Cần chú ý";
 "card.processing" = "Đang xử lý...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Phiên terminal đã kết thúc";

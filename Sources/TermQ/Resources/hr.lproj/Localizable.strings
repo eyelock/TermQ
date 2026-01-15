@@ -43,6 +43,10 @@
 "card.wired.help" = "Povezano s MCP agentom";
 "card.needs.attention" = "Zahtijeva pažnju";
 "card.processing" = "Obrada...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Sesija terminala završena";

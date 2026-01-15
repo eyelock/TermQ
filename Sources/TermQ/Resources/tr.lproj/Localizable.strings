@@ -43,6 +43,10 @@
 "card.wired.help" = "MCP aracısına bağlı";
 "card.needs.attention" = "Dikkat gerekiyor";
 "card.processing" = "İşleniyor...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Terminal oturumu sona erdi";

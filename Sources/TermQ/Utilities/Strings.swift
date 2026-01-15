@@ -94,6 +94,10 @@ enum Strings {
         static var wiredHelp: String { localized("card.wired.help") }
         static var needsAttention: String { localized("card.needs.attention") }
         static var processing: String { localized("card.processing") }
+        static var live: String { localized("card.live") }
+        static var liveHelp: String { localized("card.live.help") }
+        static var closeSession: String { localized("card.close.session") }
+        static var restartSession: String { localized("card.restart.session") }
     }
 
     // MARK: - Expanded Terminal View

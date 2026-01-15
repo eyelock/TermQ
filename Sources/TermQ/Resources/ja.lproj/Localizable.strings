@@ -43,6 +43,10 @@
 "card.wired.help" = "MCPエージェントに接続中";
 "card.needs.attention" = "要確認";
 "card.processing" = "処理中...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "ターミナルセッションが終了しました";

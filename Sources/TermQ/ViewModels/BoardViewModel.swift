@@ -22,6 +22,9 @@ class BoardViewModel: ObservableObject {
     /// Terminals currently processing (have recent output activity)
     @Published private(set) var processingCards: Set<UUID> = []
 
+    /// Terminals with active background sessions
+    @Published private(set) var activeSessionCards: Set<UUID> = []
+
     /// Timer for updating processing status
     private var processingTimer: Timer?
 
@@ -78,6 +81,11 @@ class BoardViewModel: ObservableObject {
         let newProcessing = TerminalSessionManager.shared.processingCardIds()
         if newProcessing != processingCards {
             processingCards = newProcessing
+        }
+
+        let newActiveSessions = TerminalSessionManager.shared.activeSessionCardIds()
+        if newActiveSessions != activeSessionCards {
+            activeSessionCards = newActiveSessions
         }
     }
 
@@ -382,6 +390,20 @@ class BoardViewModel: ObservableObject {
         {
             selectedCard = prev
         }
+    }
+
+    // MARK: - Session Management
+
+    /// Close an active terminal session
+    func closeSession(for card: TerminalCard) {
+        TerminalSessionManager.shared.closeSession(for: card.id)
+        objectWillChange.send()
+    }
+
+    /// Restart a terminal session (close and reopen)
+    func restartSession(for card: TerminalCard) {
+        TerminalSessionManager.shared.restartSession(for: card.id)
+        objectWillChange.send()
     }
 
     // MARK: - Bin (Soft Delete)

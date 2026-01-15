@@ -7,10 +7,13 @@ struct TerminalCardView: View {
     var needsAttention: Bool = false
     var isProcessing: Bool = false
     var isOpenAsTab: Bool = false
+    var hasActiveSession: Bool = false
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
     let onToggleFavourite: () -> Void
+    let onCloseSession: () -> Void
+    let onRestartSession: () -> Void
 
     @State private var isHovering = false
     @State private var showDeleteConfirmation = false
@@ -69,6 +72,21 @@ struct TerminalCardView: View {
                         )
                         .foregroundColor(.green)
                         .help(Strings.Card.wiredHelp)
+                }
+
+                // LIVE indicator - shows when terminal has an active background session
+                if hasActiveSession && !isOpenAsTab {
+                    Text(Strings.Card.live)
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(Color.red.opacity(0.3))
+                        )
+                        .foregroundColor(.red)
+                        .help(Strings.Card.liveHelp)
                 }
 
                 Spacer()
@@ -181,6 +199,15 @@ struct TerminalCardView: View {
             Divider()
             Button(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin) {
                 onToggleFavourite()
+            }
+            if hasActiveSession {
+                Divider()
+                Button(Strings.Card.closeSession) {
+                    onCloseSession()
+                }
+                Button(Strings.Card.restartSession) {
+                    onRestartSession()
+                }
             }
             Divider()
             Button(Strings.Card.delete, role: .destructive) {

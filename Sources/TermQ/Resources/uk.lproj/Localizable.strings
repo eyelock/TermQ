@@ -43,6 +43,10 @@
 "card.wired.help" = "Підключено до агента MCP";
 "card.needs.attention" = "Потребує уваги";
 "card.processing" = "Обробка...";
+"card.restart.session" = "Restart Session";
+"card.close.session" = "Close Session";
+"card.live.help" = "Terminal has an active background session";
+"card.live" = "LIVE";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Сеанс терміналу завершено";
