@@ -20,6 +20,8 @@ struct ExpandedTerminalView: View {
     let activeSessionCards: Set<UUID>
 
     @State private var terminalExited = false
+    @State private var restartCounter = 0
+    @State private var isRestarting = false
     @Binding var isZoomed: Bool
     @Binding var isSearching: Bool
     @State private var searchText = ""
@@ -88,6 +90,16 @@ struct ExpandedTerminalView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.black)
+            } else if isRestarting {
+                // Brief intermediate state to force SwiftUI to tear down and recreate the terminal view
+                Color.black
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onAppear {
+                        // Complete the restart after brief delay to ensure old view is torn down
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                            isRestarting = false
+                        }
+                    }
             } else {
                 TerminalHostView(
                     card: card,
@@ -97,13 +109,15 @@ struct ExpandedTerminalView: View {
                     onBell: {
                         onBell(card.id)
                     },
-                    isSearching: isSearching
+                    isSearching: isSearching,
+                    restartToken: restartCounter
                 )
-                .id(card.id)  // Force view recreation when switching terminals
+                .id("\(card.id)-\(restartCounter)")  // Force view recreation when switching or restarting
             }
         }
         .onChange(of: card.id) { _, _ in
-            // Reset exit state when switching to a different terminal
+            // Reset state when switching to a different terminal
+            restartCounter = 0
             // Only show exit overlay if a session exists AND has terminated
             // If no session exists yet, let TerminalHostView create one
             if TerminalSessionManager.shared.sessionExists(for: card.id) {
@@ -387,10 +401,20 @@ struct ExpandedTerminalView: View {
                                 onDuplicateTab(tabCard)
                             },
                             onCloseSession: {
+                                // Close session and close the tab
                                 onCloseSession(tabCard)
+                                onCloseTab(tabCard)
                             },
                             onRestartSession: {
+                                // Mark session for restart
                                 onRestartSession(tabCard)
+                                // If this is the current tab, force view recreation
+                                if tabCard.id == card.id {
+                                    // Show brief "restarting" state to tear down old terminal view
+                                    isRestarting = true
+                                    restartCounter += 1
+                                    terminalExited = false
+                                }
                             }
                         )
                         .draggable(tabCard.id.uuidString)

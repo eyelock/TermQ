@@ -44,6 +44,7 @@ class TerminalSessionManager: ObservableObject {
         var isRunning: Bool = true
         var currentDirectory: String?
         var lastActivityTime: Date = Date()
+        var pendingRestart: Bool = false
     }
 
     private init() {
@@ -72,6 +73,28 @@ class TerminalSessionManager: ObservableObject {
         onActivity: @escaping () -> Void
     ) -> TerminalContainerView {
         let cardId = card.id
+
+        // Check for pending restart - clean up old session before creating new
+        if let session = sessions[cardId], session.pendingRestart {
+            // Clean up event monitors
+            session.terminal.cleanupAutoScrollDuringSelection()
+            session.terminal.cleanupCopyOnSelect()
+            session.terminal.cleanupKeyInputMonitor()
+            // Terminate the old process
+            if session.isRunning {
+                switch session.backend {
+                case .direct:
+                    session.terminal.send(txt: "exit\n")
+                case .tmux:
+                    let sessionName = tmuxManager.sessionName(for: cardId)
+                    Task {
+                        try? await tmuxManager.killSession(name: sessionName)
+                    }
+                }
+            }
+            // Remove from dictionary so new session can be created
+            sessions.removeValue(forKey: cardId)
+        }
 
         // Return existing session if available
         if let session = sessions[cardId], session.isRunning {
@@ -361,6 +384,11 @@ class TerminalSessionManager: ObservableObject {
         return sessions[cardId] != nil
     }
 
+    /// Check if a session has a pending restart
+    func hasPendingRestart(for cardId: UUID) -> Bool {
+        return sessions[cardId]?.pendingRestart ?? false
+    }
+
     /// Mark a session as terminated
     func markSessionTerminated(cardId: UUID) {
         sessions[cardId]?.isRunning = false
@@ -428,7 +456,10 @@ class TerminalSessionManager: ObservableObject {
     /// Restart a terminal session (terminate and remove, will be recreated on next access)
     func restartSession(for cardId: UUID) {
         guard sessions[cardId] != nil else { return }
-        removeSession(for: cardId, killTmuxSession: true)
+        // Mark session for restart - actual cleanup happens in getOrCreateSession
+        // when the view is recreated. This avoids race conditions between
+        // session removal and SwiftUI view lifecycle.
+        sessions[cardId]?.pendingRestart = true
     }
 
     /// Remove a session (when card is deleted or tab closed)
@@ -437,6 +468,12 @@ class TerminalSessionManager: ObservableObject {
     /// Set killTmuxSession=true to fully terminate tmux sessions
     func removeSession(for cardId: UUID, killTmuxSession: Bool = false) {
         guard let session = sessions.removeValue(forKey: cardId) else { return }
+
+        // Clean up event monitors before destroying terminal to prevent EV_VANISHED errors
+        // This must happen before the session is fully removed to avoid race conditions
+        session.terminal.cleanupAutoScrollDuringSelection()
+        session.terminal.cleanupCopyOnSelect()
+        session.terminal.cleanupKeyInputMonitor()
 
         if session.isRunning {
             switch session.backend {
@@ -463,6 +500,11 @@ class TerminalSessionManager: ObservableObject {
     /// Use this for stuck/unresponsive terminals that won't respond to graceful exit
     func killSession(for cardId: UUID) {
         guard let session = sessions.removeValue(forKey: cardId) else { return }
+
+        // Clean up event monitors before destroying terminal to prevent EV_VANISHED errors
+        session.terminal.cleanupAutoScrollDuringSelection()
+        session.terminal.cleanupCopyOnSelect()
+        session.terminal.cleanupKeyInputMonitor()
 
         if session.isRunning {
             switch session.backend {

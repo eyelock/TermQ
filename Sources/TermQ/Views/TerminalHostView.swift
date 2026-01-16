@@ -487,7 +487,7 @@ class TermQTerminalView: LocalProcessTerminalView {
 
 /// Container view that adds padding around the terminal and handles alternate scroll mode
 class TerminalContainerView: NSView {
-    let terminal: TermQTerminalView
+    private(set) var terminal: TermQTerminalView
     let padding: CGFloat = 12
     private var scrollEventMonitor: Any?
 
@@ -604,6 +604,31 @@ class TerminalContainerView: NSView {
             self.window?.makeFirstResponder(self.terminal)
         }
     }
+
+    /// Replace the current terminal with a new one (for restart scenarios)
+    func replaceTerminal(with newTerminal: TermQTerminalView) {
+        // Remove old terminal
+        terminal.removeFromSuperview()
+
+        // Update property
+        terminal = newTerminal
+
+        // Add new terminal with same constraints
+        addSubview(newTerminal)
+        newTerminal.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            newTerminal.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            newTerminal.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            newTerminal.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            newTerminal.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
+        ])
+
+        // Focus the new terminal
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.window?.makeFirstResponder(newTerminal)
+        }
+    }
 }
 
 /// Wraps SwiftTerm's LocalProcessTerminalView for SwiftUI
@@ -614,9 +639,12 @@ struct TerminalHostView: NSViewRepresentable {
     var onBell: (() -> Void)?
     var onActivity: (() -> Void)?
     var isSearching: Bool = false
+    /// Token that changes when session should be restarted - forces view recreation
+    var restartToken: Int = 0
 
     func makeNSView(context: Context) -> TerminalContainerView {
         // Get or create session from the manager
+        // The restartToken ensures this is called fresh after a restart
         let container = TerminalSessionManager.shared.getOrCreateSession(
             for: card,
             onExit: onExit,
