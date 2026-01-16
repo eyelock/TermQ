@@ -675,4 +675,176 @@ final class BoardLoaderTests: XCTestCase {
         let (_, data) = try BoardWriter.loadRawBoard(dataDirectory: tempDirectory, debug: true)
         XCTAssertNotNil(data["columns"])
     }
+
+    // MARK: - DecodingError Tests
+
+    func testLoadBoardDecodingErrorMissingRequiredField() throws {
+        // Write valid JSON but with missing required fields - this should trigger DecodingError
+        let json = """
+            {
+                "columns": [{"name": "Test"}]
+            }
+            """
+        try writeRawJSON(json)
+
+        XCTAssertThrowsError(try BoardLoader.loadBoard(dataDirectory: tempDirectory)) { error in
+            guard let loadError = error as? BoardLoader.LoadError else {
+                XCTFail("Expected LoadError, got \(type(of: error)): \(error)")
+                return
+            }
+            if case .decodingFailed(let message) = loadError {
+                // Should contain info about the decoding failure
+                XCTAssertFalse(message.isEmpty)
+            } else {
+                XCTFail("Expected decodingFailed error")
+            }
+        }
+    }
+
+    func testLoadBoardDecodingErrorWrongType() throws {
+        // Write valid JSON but with wrong types - triggers DecodingError
+        let json = """
+            {
+                "columns": [{"id": 123, "name": "Test", "orderIndex": 0}],
+                "cards": []
+            }
+            """
+        try writeRawJSON(json)
+
+        XCTAssertThrowsError(try BoardLoader.loadBoard(dataDirectory: tempDirectory)) { error in
+            guard let loadError = error as? BoardLoader.LoadError else {
+                XCTFail("Expected LoadError, got \(type(of: error)): \(error)")
+                return
+            }
+            if case .decodingFailed = loadError {
+                // Expected - wrong type for id (Int instead of UUID string)
+            } else {
+                XCTFail("Expected decodingFailed error")
+            }
+        }
+    }
+
+    // MARK: - Column ID Edge Cases
+
+    func testCreateCardColumnIdNotString() throws {
+        // Write board with column that has non-string id
+        let json = """
+            {
+                "columns": [{"id": 12345, "name": "Test", "orderIndex": 0}],
+                "cards": []
+            }
+            """
+        try writeRawJSON(json)
+
+        XCTAssertThrowsError(
+            try BoardWriter.createCard(
+                name: "New Card",
+                columnName: "Test",
+                workingDirectory: "/test",
+                dataDirectory: tempDirectory
+            )
+        ) { error in
+            guard let writeError = error as? BoardWriter.WriteError else {
+                XCTFail("Expected WriteError")
+                return
+            }
+            if case .columnNotFound = writeError {
+                // Expected - column id is not a string so it can't be found properly
+            } else {
+                XCTFail("Expected columnNotFound error")
+            }
+        }
+    }
+
+    func testMoveCardToColumnWithInvalidId() throws {
+        // Write board with column that has non-string id
+        let json = """
+            {
+                "columns": [{"id": 12345, "name": "Target", "orderIndex": 0}],
+                "cards": [{"id": "\(UUID().uuidString)", "title": "Test", "columnId": "some-id", "orderIndex": 0}]
+            }
+            """
+        try writeRawJSON(json)
+
+        XCTAssertThrowsError(
+            try BoardWriter.moveCard(
+                identifier: "Test",
+                toColumn: "Target",
+                dataDirectory: tempDirectory
+            )
+        ) { error in
+            guard let writeError = error as? BoardWriter.WriteError else {
+                XCTFail("Expected WriteError")
+                return
+            }
+            if case .columnNotFound = writeError {
+                // Expected - column id is not a string
+            } else {
+                XCTFail("Expected columnNotFound error")
+            }
+        }
+    }
+
+    // MARK: - MoveCard Invalid Columns Format
+
+    func testMoveCardInvalidColumnsFormat() throws {
+        // Write board with invalid columns format (not an array)
+        let json = """
+            {
+                "columns": "not an array",
+                "cards": []
+            }
+            """
+        try writeRawJSON(json)
+
+        XCTAssertThrowsError(
+            try BoardWriter.moveCard(
+                identifier: "test",
+                toColumn: "Done",
+                dataDirectory: tempDirectory
+            )
+        ) { error in
+            guard let writeError = error as? BoardWriter.WriteError else {
+                XCTFail("Expected WriteError")
+                return
+            }
+            if case .encodingFailed = writeError {
+                // Expected - columns is not an array
+            } else {
+                XCTFail("Expected encodingFailed error")
+            }
+        }
+    }
+
+    // MARK: - CreateCard Invalid Columns Format
+
+    func testCreateCardInvalidColumnsFormat() throws {
+        // Write board with invalid columns format
+        let json = """
+            {
+                "columns": "not an array",
+                "cards": []
+            }
+            """
+        try writeRawJSON(json)
+
+        XCTAssertThrowsError(
+            try BoardWriter.createCard(
+                name: "New",
+                columnName: nil,
+                workingDirectory: "/test",
+                dataDirectory: tempDirectory
+            )
+        ) { error in
+            guard let writeError = error as? BoardWriter.WriteError else {
+                XCTFail("Expected WriteError")
+                return
+            }
+            if case .encodingFailed = writeError {
+                // Expected - columns is not an array
+            } else {
+                XCTFail("Expected encodingFailed error")
+            }
+        }
+    }
 }
