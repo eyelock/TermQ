@@ -353,6 +353,7 @@ enum Strings {
         static var sectionBackend: String { localized("editor.section.backend") }
         static var fieldBackend: String { localized("editor.field.backend") }
         static var tmuxPersistNote: String { localized("editor.tmux.persist.note") }
+        static var backendRestartHint: String { localized("editor.backend.restart.hint") }
     }
 
     // MARK: - Column Editor

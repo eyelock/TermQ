@@ -608,13 +608,13 @@ private struct TabItemView: View {
                 Button(Strings.Card.closeSession) {
                     onCloseSession()
                 }
+                Button(Strings.Card.restartSession) {
+                    onRestartSession()
+                }
                 if isTmuxSession {
                     Button(Strings.Card.killSession) {
                         onKillSession()
                     }
-                }
-                Button(Strings.Card.restartSession) {
-                    onRestartSession()
                 }
             }
             Divider()

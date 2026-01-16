@@ -189,6 +189,7 @@
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
+"editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 
 // MARK: - Column Editor
 "column.editor.title.new" = "New Column";
