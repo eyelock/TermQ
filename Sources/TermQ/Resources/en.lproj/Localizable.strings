@@ -52,6 +52,8 @@
 "card.restart.session" = "Restart Session";
 "card.kill.terminal" = "Kill Terminal";
 "card.kill.terminal.help" = "Forcefully terminate the terminal process";
+"card.tmux" = "TMUX";
+"card.tmux.help" = "This terminal uses tmux for persistent sessions";
 
 // MARK: - Expanded Terminal View
 "terminal.ended" = "Terminal session ended";

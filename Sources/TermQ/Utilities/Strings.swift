@@ -194,6 +194,8 @@ enum Strings {
         static var restartSession: String { localized("card.restart.session") }
         static var killTerminal: String { localized("card.kill.terminal") }
         static var killTerminalHelp: String { localized("card.kill.terminal.help") }
+        static var tmux: String { localized("card.tmux") }
+        static var tmuxHelp: String { localized("card.tmux.help") }
     }
 
     // MARK: - Expanded Terminal View

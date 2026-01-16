@@ -53,6 +53,8 @@
 "card.live.help" = "Terminal has an active background session";
 "card.live" = "LIVE";
 "card.kill.terminal.help" = "Forcefully terminate the terminal process";
+"card.tmux" = "TMUX";
+"card.tmux.help" = "Acest terminal folosește tmux pentru sesiuni persistente";
 "card.kill.terminal" = "Kill Terminal";
 
 // MARK: - Expanded Terminal View

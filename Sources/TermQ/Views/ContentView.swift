@@ -163,7 +163,20 @@ struct ContentView: View {
                         Text(selectedCard.title)
                             .font(.headline)
 
-                        // Display badges
+                        // TMUX system badge (if using tmux backend)
+                        if selectedCard.backend == .tmux {
+                            Text(Strings.Card.tmux)
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color.purple.opacity(0.3))
+                                .foregroundColor(.purple)
+                                .clipShape(Capsule())
+                                .help(Strings.Card.tmuxHelp)
+                        }
+
+                        // Display user badges
                         ForEach(selectedCard.badges, id: \.self) { badge in
                             Text(badge)
                                 .font(.caption)
