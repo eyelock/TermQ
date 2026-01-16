@@ -204,7 +204,7 @@ struct CardEditorView: View {
                 }
                 .pickerStyle(.radioGroup)
 
-                Text(backend.description)
+                Text("\(backend.description) \(Strings.Editor.backendRestartHint)")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
