@@ -31,13 +31,22 @@ struct HelpIndex: Codable {
 
 enum HelpContentLoader {
     /// The bundle containing help resources
-    private static var resourceBundle: Bundle {
+    /// Checks Contents/Resources first (for signed/installed app), then falls back to Bundle.module
+    fileprivate static let resourceBundle: Bundle = {
+        // First, try the explicit path where the resource bundle is copied during release
+        if let resourcesPath = Bundle.main.resourceURL?
+            .appendingPathComponent("TermQ_TermQ.bundle").path,
+            let bundle = Bundle(path: resourcesPath)
+        {
+            return bundle
+        }
+        // Fall back to Bundle.module for development/SPM builds
         #if SWIFT_PACKAGE
             return Bundle.module
         #else
             return Bundle.main
         #endif
-    }
+    }()
 
     /// Load the help index from bundle
     static func loadIndex() -> [HelpTopicMetadata] {
@@ -350,16 +359,8 @@ private struct MarkdownContentView: View {
         let imageName = (path as NSString).deletingPathExtension
         let imageExt = (path as NSString).pathExtension
 
-        // Use resource bundle for SPM
-        let resourceBundle: Bundle = {
-            #if SWIFT_PACKAGE
-                return Bundle.module
-            #else
-                return Bundle.main
-            #endif
-        }()
-
-        if let url = resourceBundle.url(
+        // Use HelpContentLoader's resource bundle
+        if let url = HelpContentLoader.resourceBundle.url(
             forResource: imageName, withExtension: imageExt, subdirectory: "Help/Images"),
             let nsImage = NSImage(contentsOf: url)
         {
