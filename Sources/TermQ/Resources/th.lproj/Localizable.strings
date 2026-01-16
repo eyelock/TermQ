@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "คำขอแก้ไขจากภายนอก";
+"security.external.modification.message" = "กระบวนการภายนอกกำลังพยายามแก้ไขบริบท LLM สำหรับเทอร์มินัล '%@':
+
+%@
+
+สิ่งนี้อาจส่งผลต่อวิธีที่ผู้ช่วย AI โต้ตอบกับเทอร์มินัลนี้";
+"security.allow" = "อนุญาต";
+"security.deny" = "ปฏิเสธ";
+"security.allow.disable.prompt" = "อนุญาตและไม่ต้องถามอีก";
+"security.osc.clipboard.enabled" = "เปิดใช้งานการเข้าถึงคลิปบอร์ด OSC 52";
+"security.osc.clipboard.disabled" = "ปิดใช้งานการเข้าถึงคลิปบอร์ด OSC 52";

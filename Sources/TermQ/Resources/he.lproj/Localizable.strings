@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "בקשה לשינוי חיצוני";
+"security.external.modification.message" = "תהליך חיצוני מנסה לשנות את הקשר LLM עבור הטרמינל '%@':
+
+%@
+
+זה עשוי להשפיע על האופן שבו עוזרי AI מתקשרים עם טרמינל זה.";
+"security.allow" = "אפשר";
+"security.deny" = "דחה";
+"security.allow.disable.prompt" = "אפשר ואל תשאל שוב";
+"security.osc.clipboard.enabled" = "גישה ללוח OSC 52 מופעלת";
+"security.osc.clipboard.disabled" = "גישה ללוח OSC 52 מושבתת";

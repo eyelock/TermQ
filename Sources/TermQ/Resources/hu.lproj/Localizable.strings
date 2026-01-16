@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Külső módosítási kérelem";
+"security.external.modification.message" = "Egy külső folyamat megpróbálja módosítani a '%@' terminál LLM kontextusát:
+
+%@
+
+Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.";
+"security.allow" = "Engedélyezés";
+"security.deny" = "Elutasítás";
+"security.allow.disable.prompt" = "Engedélyezés és ne kérdezze újra";
+"security.osc.clipboard.enabled" = "OSC 52 vágólap-hozzáférés engedélyezve";
+"security.osc.clipboard.disabled" = "OSC 52 vágólap-hozzáférés letiltva";

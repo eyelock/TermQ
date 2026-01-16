@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "외부 수정 요청";
+"security.external.modification.message" = "외부 프로세스가 터미널 '%@'의 LLM 컨텍스트를 수정하려고 합니다:
+
+%@
+
+이는 AI 어시스턴트가 이 터미널과 상호 작용하는 방식에 영향을 줄 수 있습니다.";
+"security.allow" = "허용";
+"security.deny" = "거부";
+"security.allow.disable.prompt" = "허용하고 다시 묻지 않기";
+"security.osc.clipboard.enabled" = "OSC 52 클립보드 액세스 활성화됨";
+"security.osc.clipboard.disabled" = "OSC 52 클립보드 액세스 비활성화됨";

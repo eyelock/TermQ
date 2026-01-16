@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "外部修改请求";
+"security.external.modification.message" = "外部进程正在尝试修改终端 '%@' 的 LLM 上下文:
+
+%@
+
+这可能会影响 AI 助手与此终端的交互方式。";
+"security.allow" = "允许";
+"security.deny" = "拒绝";
+"security.allow.disable.prompt" = "允许并不再询问";
+"security.osc.clipboard.enabled" = "OSC 52 剪贴板访问已启用";
+"security.osc.clipboard.disabled" = "OSC 52 剪贴板访问已禁用";

@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Solicitare de modificare externă";
+"security.external.modification.message" = "Un proces extern încearcă să modifice contextul LLM pentru terminalul '%@':
+
+%@
+
+Acest lucru ar putea afecta modul în care asistenții AI interacționează cu acest terminal.";
+"security.allow" = "Permite";
+"security.deny" = "Refuză";
+"security.allow.disable.prompt" = "Permite și nu mai întreba";
+"security.osc.clipboard.enabled" = "Acces clipboard OSC 52 activat";
+"security.osc.clipboard.disabled" = "Acces clipboard OSC 52 dezactivat";

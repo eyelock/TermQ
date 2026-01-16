@@ -433,3 +433,12 @@
 "uninstall.removed.mcp" = "Removed MCP server";
 "uninstall.removed.data" = "Removed application data";
 "uninstall.error.data %@" = "Failed to remove app data: %@";
+
+// MARK: - Security
+"security.external.modification.title" = "External Modification Request";
+"security.external.modification.message" = "An external process is trying to modify LLM context for terminal '%@':\n\n%@\n\nThis could affect how AI assistants interact with this terminal.";
+"security.allow" = "Allow";
+"security.deny" = "Deny";
+"security.allow.disable.prompt" = "Allow & Don't Ask Again";
+"security.osc.clipboard.enabled" = "OSC 52 clipboard access enabled";
+"security.osc.clipboard.disabled" = "OSC 52 clipboard access disabled";

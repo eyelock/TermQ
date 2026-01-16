@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Ulkoinen muutospyyntö";
+"security.external.modification.message" = "Ulkoinen prosessi yrittää muokata LLM-kontekstia terminaalille '%@':
+
+%@
+
+Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tämän terminaalin kanssa.";
+"security.allow" = "Salli";
+"security.deny" = "Estä";
+"security.allow.disable.prompt" = "Salli äläkä kysy uudelleen";
+"security.osc.clipboard.enabled" = "OSC 52 leikepöydän käyttö käytössä";
+"security.osc.clipboard.disabled" = "OSC 52 leikepöydän käyttö pois käytöstä";

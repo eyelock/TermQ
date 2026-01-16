@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Αίτημα εξωτερικής τροποποίησης";
+"security.external.modification.message" = "Μια εξωτερική διεργασία προσπαθεί να τροποποιήσει το πλαίσιο LLM για το τερματικό '%@':
+
+%@
+
+Αυτό μπορεί να επηρεάσει τον τρόπο αλληλεπίδρασης των βοηθών AI με αυτό το τερματικό.";
+"security.allow" = "Επιτρέπεται";
+"security.deny" = "Απόρριψη";
+"security.allow.disable.prompt" = "Επιτρέπεται χωρίς επανερώτηση";
+"security.osc.clipboard.enabled" = "Πρόσβαση στο πρόχειρο OSC 52 ενεργοποιημένη";
+"security.osc.clipboard.disabled" = "Πρόσβαση στο πρόχειρο OSC 52 απενεργοποιημένη";

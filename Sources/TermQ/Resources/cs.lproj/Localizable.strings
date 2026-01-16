@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Požadavek na externí úpravu";
+"security.external.modification.message" = "Externí proces se pokouší upravit kontext LLM pro terminál '%@':
+
+%@
+
+To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
+"security.allow" = "Povolit";
+"security.deny" = "Zamítnout";
+"security.allow.disable.prompt" = "Povolit a znovu se neptat";
+"security.osc.clipboard.enabled" = "Přístup ke schránce OSC 52 povolen";
+"security.osc.clipboard.disabled" = "Přístup ke schránce OSC 52 zakázán";

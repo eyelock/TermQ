@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "बाहरी संशोधन अनुरोध";
+"security.external.modification.message" = "एक बाहरी प्रक्रिया टर्मिनल '%@' के लिए LLM संदर्भ को संशोधित करने का प्रयास कर रही है:
+
+%@
+
+इससे AI सहायक इस टर्मिनल के साथ कैसे इंटरैक्ट करते हैं, यह प्रभावित हो सकता है।";
+"security.allow" = "अनुमति दें";
+"security.deny" = "अस्वीकार करें";
+"security.allow.disable.prompt" = "अनुमति दें और दोबारा न पूछें";
+"security.osc.clipboard.enabled" = "OSC 52 क्लिपबोर्ड एक्सेस सक्षम";
+"security.osc.clipboard.disabled" = "OSC 52 क्लिपबोर्ड एक्सेस अक्षम";

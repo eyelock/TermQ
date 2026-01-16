@@ -373,6 +373,17 @@ enum Strings {
         }
     }
 
+    // MARK: - Security
+    enum Security {
+        static var externalModificationTitle: String { localized("security.external.modification.title") }
+        static var externalModificationMessage: String { localized("security.external.modification.message") }
+        static var allow: String { localized("security.allow") }
+        static var deny: String { localized("security.deny") }
+        static var allowAndDisablePrompt: String { localized("security.allow.disable.prompt") }
+        static var oscClipboardEnabled: String { localized("security.osc.clipboard.enabled") }
+        static var oscClipboardDisabled: String { localized("security.osc.clipboard.disabled") }
+    }
+
     // MARK: - Column Editor
     enum ColumnEditor {
         static var titleNew: String { localized("column.editor.title.new") }

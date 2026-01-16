@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Запит на зовнішню зміну";
+"security.external.modification.message" = "Зовнішній процес намагається змінити контекст LLM для терміналу '%@':
+
+%@
+
+Це може вплинути на те, як асистенти ШІ взаємодіють із цим терміналом.";
+"security.allow" = "Дозволити";
+"security.deny" = "Відхилити";
+"security.allow.disable.prompt" = "Дозволити і більше не питати";
+"security.osc.clipboard.enabled" = "Доступ до буфера обміну OSC 52 увімкнено";
+"security.osc.clipboard.disabled" = "Доступ до буфера обміну OSC 52 вимкнено";

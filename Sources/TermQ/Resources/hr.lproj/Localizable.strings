@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Zahtjev za vanjsku izmjenu";
+"security.external.modification.message" = "Vanjski proces pokušava izmijeniti LLM kontekst za terminal '%@':
+
+%@
+
+Ovo može utjecati na to kako AI pomoćnici komuniciraju s ovim terminalom.";
+"security.allow" = "Dopusti";
+"security.deny" = "Odbij";
+"security.allow.disable.prompt" = "Dopusti i ne pitaj ponovno";
+"security.osc.clipboard.enabled" = "OSC 52 pristup međuspremniku omogućen";
+"security.osc.clipboard.disabled" = "OSC 52 pristup međuspremniku onemogućen";

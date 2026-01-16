@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Yêu cầu sửa đổi bên ngoài";
+"security.external.modification.message" = "Một tiến trình bên ngoài đang cố gắng sửa đổi ngữ cảnh LLM cho terminal '%@':
+
+%@
+
+Điều này có thể ảnh hưởng đến cách các trợ lý AI tương tác với terminal này.";
+"security.allow" = "Cho phép";
+"security.deny" = "Từ chối";
+"security.allow.disable.prompt" = "Cho phép và không hỏi lại";
+"security.osc.clipboard.enabled" = "Đã bật quyền truy cập clipboard OSC 52";
+"security.osc.clipboard.disabled" = "Đã tắt quyền truy cập clipboard OSC 52";

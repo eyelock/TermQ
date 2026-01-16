@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "طلب تعديل خارجي";
+"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':
+
+%@
+
+قد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
+"security.allow" = "سماح";
+"security.deny" = "رفض";
+"security.allow.disable.prompt" = "السماح وعدم السؤال مجدداً";
+"security.osc.clipboard.enabled" = "تم تمكين الوصول إلى الحافظة OSC 52";
+"security.osc.clipboard.disabled" = "تم تعطيل الوصول إلى الحافظة OSC 52";

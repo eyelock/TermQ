@@ -9,6 +9,23 @@ class URLHandler: ObservableObject {
 
     @Published var pendingTerminal: PendingTerminal?
 
+    /// User preference key for requiring confirmation on external LLM context modifications
+    private static let confirmExternalLLMModificationsKey = "confirmExternalLLMModifications"
+
+    /// Whether to require user confirmation when external processes modify LLM context
+    var confirmExternalLLMModifications: Bool {
+        get {
+            // Default to true for security
+            if UserDefaults.standard.object(forKey: Self.confirmExternalLLMModificationsKey) == nil {
+                return true
+            }
+            return UserDefaults.standard.bool(forKey: Self.confirmExternalLLMModificationsKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Self.confirmExternalLLMModificationsKey)
+        }
+    }
+
     struct PendingTerminal: Identifiable {
         let id = UUID()
         let path: String
@@ -35,6 +52,50 @@ class URLHandler: ObservableObject {
             handleFocus(queryItems: queryItems)
         default:
             break
+        }
+    }
+
+    /// Show confirmation dialog for external LLM context modifications
+    /// Returns true if user approves the modification
+    private func confirmLLMModification(
+        terminalName: String,
+        llmPromptChange: String?,
+        llmNextActionChange: String?
+    ) -> Bool {
+        let alert = NSAlert()
+        alert.messageText = Strings.Security.externalModificationTitle
+        alert.alertStyle = .warning
+
+        var changes: [String] = []
+        if let prompt = llmPromptChange {
+            let preview = String(prompt.prefix(100))
+            changes.append("• LLM Prompt: \(preview)\(prompt.count > 100 ? "..." : "")")
+        }
+        if let action = llmNextActionChange {
+            let preview = String(action.prefix(100))
+            changes.append("• LLM Next Action: \(preview)\(action.count > 100 ? "..." : "")")
+        }
+
+        alert.informativeText = String(
+            format: Strings.Security.externalModificationMessage,
+            terminalName,
+            changes.joined(separator: "\n")
+        )
+
+        alert.addButton(withTitle: Strings.Security.allow)
+        alert.addButton(withTitle: Strings.Security.deny)
+        alert.addButton(withTitle: Strings.Security.allowAndDisablePrompt)
+
+        let response = alert.runModal()
+        switch response {
+        case .alertFirstButtonReturn:
+            return true
+        case .alertThirdButtonReturn:
+            // Allow and disable future prompts
+            confirmExternalLLMModifications = false
+            return true
+        default:
+            return false
         }
     }
 
@@ -75,6 +136,22 @@ class URLHandler: ObservableObject {
 
         guard let card = viewModel.card(for: cardId) else { return }
 
+        // Check for sensitive LLM context modifications that require user confirmation
+        let llmPromptChange = queryItems.first(where: { $0.name == "llmPrompt" })?.value
+        let llmNextActionChange = queryItems.first(where: { $0.name == "llmNextAction" })?.value
+
+        // If LLM fields are being modified and confirmation is enabled, ask user
+        if confirmExternalLLMModifications && (llmPromptChange != nil || llmNextActionChange != nil) {
+            let approved = confirmLLMModification(
+                terminalName: card.title,
+                llmPromptChange: llmPromptChange,
+                llmNextActionChange: llmNextActionChange
+            )
+            if !approved {
+                return  // User denied the modification
+            }
+        }
+
         // Update name
         if let name = queryItems.first(where: { $0.name == "name" })?.value {
             card.title = name
@@ -90,13 +167,13 @@ class URLHandler: ObservableObject {
             card.badge = badge
         }
 
-        // Update LLM prompt
-        if let llmPrompt = queryItems.first(where: { $0.name == "llmPrompt" })?.value {
+        // Update LLM prompt (already confirmed if needed)
+        if let llmPrompt = llmPromptChange {
             card.llmPrompt = llmPrompt
         }
 
-        // Update LLM next action
-        if let llmNextAction = queryItems.first(where: { $0.name == "llmNextAction" })?.value {
+        // Update LLM next action (already confirmed if needed)
+        if let llmNextAction = llmNextActionChange {
             card.llmNextAction = llmNextAction
         }
 

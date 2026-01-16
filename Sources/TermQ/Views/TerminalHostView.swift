@@ -101,17 +101,34 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
+    /// User preference key for allowing OSC 52 clipboard access
+    private static let allowOscClipboardKey = "allowOscClipboard"
+
+    /// Whether OSC 52 clipboard access is allowed (default: true for compatibility)
+    static var allowOscClipboard: Bool {
+        get {
+            // Default to true for backwards compatibility
+            if UserDefaults.standard.object(forKey: allowOscClipboardKey) == nil {
+                return true
+            }
+            return UserDefaults.standard.bool(forKey: allowOscClipboardKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: allowOscClipboardKey)
+        }
+    }
+
     /// Set up custom OSC handlers after the terminal is initialized
     func setupOscHandlers() {
         let terminal = getTerminal()
 
         // OSC 52 - Clipboard: ESC ] 52 ; c ; <base64> BEL
-        // SwiftTerm already parses this, but we need to handle it via the terminal delegate
-        // Since we can't override the delegate method, we'll register our own handler
-        // Note: SwiftTerm's built-in OSC 52 handler calls clipboardCopy delegate,
-        // but the delegate method isn't exposed for override. We register a replacement.
-        terminal.registerOscHandler(code: 52) { [weak self] data in
-            self?.handleClipboardOsc(data)
+        // Only register if user has allowed OSC 52 clipboard access
+        // This is a security feature to prevent terminal programs from silently copying to clipboard
+        if Self.allowOscClipboard {
+            terminal.registerOscHandler(code: 52) { [weak self] data in
+                self?.handleClipboardOsc(data)
+            }
         }
 
         // OSC 777 - Notification: ESC ] 777 ; notify ; <title> ; <body> BEL

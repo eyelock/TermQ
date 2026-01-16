@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Запрос на внешнее изменение";
+"security.external.modification.message" = "Внешний процесс пытается изменить контекст LLM для терминала '%@':
+
+%@
+
+Это может повлиять на то, как ИИ-ассистенты взаимодействуют с этим терминалом.";
+"security.allow" = "Разрешить";
+"security.deny" = "Запретить";
+"security.allow.disable.prompt" = "Разрешить и больше не спрашивать";
+"security.osc.clipboard.enabled" = "Доступ к буферу обмена OSC 52 включён";
+"security.osc.clipboard.disabled" = "Доступ к буферу обмена OSC 52 отключён";

@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Permintaan Pengubahsuaian Luaran";
+"security.external.modification.message" = "Proses luaran cuba mengubah suai konteks LLM untuk terminal '%@':
+
+%@
+
+Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
+"security.allow" = "Benarkan";
+"security.deny" = "Tolak";
+"security.allow.disable.prompt" = "Benarkan & Jangan Tanya Lagi";
+"security.osc.clipboard.enabled" = "Akses papan keratan OSC 52 didayakan";
+"security.osc.clipboard.disabled" = "Akses papan keratan OSC 52 dilumpuhkan";

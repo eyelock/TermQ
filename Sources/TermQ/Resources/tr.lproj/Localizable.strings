@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Harici Değişiklik İsteği";
+"security.external.modification.message" = "Harici bir işlem, '%@' terminali için LLM bağlamını değiştirmeye çalışıyor:
+
+%@
+
+Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkileyebilir.";
+"security.allow" = "İzin Ver";
+"security.deny" = "Reddet";
+"security.allow.disable.prompt" = "İzin Ver ve Bir Daha Sorma";
+"security.osc.clipboard.enabled" = "OSC 52 pano erişimi etkin";
+"security.osc.clipboard.disabled" = "OSC 52 pano erişimi devre dışı";

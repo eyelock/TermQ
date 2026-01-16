@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "外部変更リクエスト";
+"security.external.modification.message" = "外部プロセスがターミナル '%@' のLLMコンテキストを変更しようとしています:
+
+%@
+
+これにより、AIアシスタントがこのターミナルとどのように対話するかに影響を与える可能性があります。";
+"security.allow" = "許可";
+"security.deny" = "拒否";
+"security.allow.disable.prompt" = "許可して次回から確認しない";
+"security.osc.clipboard.enabled" = "OSC 52クリップボードアクセスが有効";
+"security.osc.clipboard.disabled" = "OSC 52クリップボードアクセスが無効";

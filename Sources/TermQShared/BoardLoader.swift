@@ -3,10 +3,12 @@ import Foundation
 // MARK: - Board Loader
 
 /// Loads board data from disk (shared across CLI and MCP)
+/// Uses NSFileCoordinator for safe concurrent access across processes
 public enum BoardLoader {
     public enum LoadError: Error, LocalizedError, Sendable {
         case boardNotFound(path: String)
         case decodingFailed(String)
+        case coordinationFailed(String)
 
         public var errorDescription: String? {
             switch self {
@@ -14,6 +16,8 @@ public enum BoardLoader {
                 return "Board file not found at: \(path). Is TermQ installed and has been run at least once?"
             case .decodingFailed(let message):
                 return "Failed to decode board: \(message)"
+            case .coordinationFailed(let message):
+                return "File coordination failed: \(message)"
             }
         }
     }
@@ -28,7 +32,7 @@ public enum BoardLoader {
         return appSupport.appendingPathComponent(dirName, isDirectory: true)
     }
 
-    /// Load the board from disk
+    /// Load the board from disk with file coordination for safe concurrent access
     public static func loadBoard(dataDirectory: URL? = nil, debug: Bool = false) throws -> Board {
         let dataDir = getDataDirectoryPath(customDirectory: dataDirectory, debug: debug)
         let boardURL = dataDir.appendingPathComponent("board.json")
@@ -37,18 +41,38 @@ public enum BoardLoader {
             throw LoadError.boardNotFound(path: boardURL.path)
         }
 
-        do {
-            let data = try Data(contentsOf: boardURL)
-            return try JSONDecoder().decode(Board.self, from: data)
-        } catch let error as DecodingError {
-            throw LoadError.decodingFailed(error.localizedDescription)
+        var coordinationError: NSError?
+        var loadResult: Result<Board, Error>?
+
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+        coordinator.coordinate(readingItemAt: boardURL, options: [], error: &coordinationError) { url in
+            do {
+                let data = try Data(contentsOf: url)
+                let board = try JSONDecoder().decode(Board.self, from: data)
+                loadResult = .success(board)
+            } catch let error as DecodingError {
+                loadResult = .failure(LoadError.decodingFailed(error.localizedDescription))
+            } catch {
+                loadResult = .failure(error)
+            }
         }
+
+        if let error = coordinationError {
+            throw LoadError.coordinationFailed(error.localizedDescription)
+        }
+
+        guard let result = loadResult else {
+            throw LoadError.coordinationFailed("File coordination completed without result")
+        }
+
+        return try result.get()
     }
 }
 
 // MARK: - Board Writer
 
 /// Handles board modifications using raw JSON to preserve unknown fields (shared across CLI and MCP)
+/// Uses NSFileCoordinator for safe concurrent access across processes
 public enum BoardWriter {
     public enum WriteError: Error, LocalizedError, Sendable {
         case boardNotFound(path: String)
@@ -56,6 +80,7 @@ public enum BoardWriter {
         case columnNotFound(name: String)
         case encodingFailed(String)
         case writeFailed(String)
+        case coordinationFailed(String)
 
         public var errorDescription: String? {
             switch self {
@@ -69,11 +94,14 @@ public enum BoardWriter {
                 return "Failed to encode board: \(message)"
             case .writeFailed(let message):
                 return "Failed to write board: \(message)"
+            case .coordinationFailed(let message):
+                return "File coordination failed: \(message)"
             }
         }
     }
 
     /// Load board as raw JSON dictionary (preserves all fields)
+    /// Uses file coordination for safe concurrent access
     public static func loadRawBoard(
         dataDirectory: URL? = nil, debug: Bool = false
     ) throws -> (url: URL, data: [String: Any]) {
@@ -84,18 +112,57 @@ public enum BoardWriter {
             throw WriteError.boardNotFound(path: boardURL.path)
         }
 
-        let jsonData = try Data(contentsOf: boardURL)
-        guard let board = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
-            throw WriteError.encodingFailed("Invalid board format")
+        var coordinationError: NSError?
+        var loadResult: Result<[String: Any], Error>?
+
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+        coordinator.coordinate(readingItemAt: boardURL, options: [], error: &coordinationError) { url in
+            do {
+                let jsonData = try Data(contentsOf: url)
+                guard let board = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any] else {
+                    loadResult = .failure(WriteError.encodingFailed("Invalid board format"))
+                    return
+                }
+                loadResult = .success(board)
+            } catch {
+                loadResult = .failure(error)
+            }
         }
 
-        return (boardURL, board)
+        if let error = coordinationError {
+            throw WriteError.coordinationFailed(error.localizedDescription)
+        }
+
+        guard let result = loadResult else {
+            throw WriteError.coordinationFailed("File coordination completed without result")
+        }
+
+        return (boardURL, try result.get())
     }
 
-    /// Save raw board JSON to disk
+    /// Save raw board JSON to disk with file coordination for safe concurrent access
     public static func saveRawBoard(_ board: [String: Any], to url: URL) throws {
         let jsonData = try JSONSerialization.data(withJSONObject: board, options: [.prettyPrinted, .sortedKeys])
-        try jsonData.write(to: url, options: .atomic)
+
+        var coordinationError: NSError?
+        var writeError: Error?
+
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+        coordinator.coordinate(writingItemAt: url, options: [], error: &coordinationError) { writeURL in
+            do {
+                try jsonData.write(to: writeURL, options: .atomic)
+            } catch {
+                writeError = error
+            }
+        }
+
+        if let error = coordinationError {
+            throw WriteError.coordinationFailed(error.localizedDescription)
+        }
+
+        if let error = writeError {
+            throw WriteError.writeFailed(error.localizedDescription)
+        }
     }
 
     /// Update a card's fields

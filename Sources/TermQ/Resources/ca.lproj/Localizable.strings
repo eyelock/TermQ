@@ -428,3 +428,15 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+// MARK: - Security
+"security.external.modification.title" = "Sol·licitud de modificació externa";
+"security.external.modification.message" = "Un procés extern està intentant modificar el context LLM per al terminal '%@':
+
+%@
+
+Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
+"security.allow" = "Permetre";
+"security.deny" = "Denegar";
+"security.allow.disable.prompt" = "Permetre i no tornar a preguntar";
+"security.osc.clipboard.enabled" = "Accés al porta-retalls OSC 52 activat";
+"security.osc.clipboard.disabled" = "Accés al porta-retalls OSC 52 desactivat";
