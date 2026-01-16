@@ -54,6 +54,8 @@
 "card.live.help" = "Terminal has an active background session";
 "card.live" = "LIVE";
 "card.kill.terminal.help" = "Forcefully terminate the terminal process";
+"card.tmux" = "TMUX";
+"card.tmux.help" = "यह टर्मिनल स्थायी सत्रों के लिए tmux का उपयोग करता है";
 "card.kill.terminal" = "Kill Terminal";
 
 // MARK: - Expanded Terminal View

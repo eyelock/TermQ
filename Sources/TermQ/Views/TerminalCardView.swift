@@ -91,6 +91,21 @@ struct TerminalCardView: View {
                         .help(Strings.Card.liveHelp)
                 }
 
+                // TMUX badge - shows when terminal uses tmux backend (persistent sessions)
+                if card.backend == .tmux {
+                    Text(Strings.Card.tmux)
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(Color.purple.opacity(0.3))
+                        )
+                        .foregroundColor(.purple)
+                        .help(Strings.Card.tmuxHelp)
+                }
+
                 Spacer()
 
                 // Status indicators
@@ -132,7 +147,7 @@ struct TerminalCardView: View {
                 }
             }
 
-            // Badges (right after header)
+            // User badges (right after header)
             if !badges.isEmpty {
                 FlowLayout(spacing: 4) {
                     ForEach(badges, id: \.self) { badge in
