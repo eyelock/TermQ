@@ -43,6 +43,18 @@
       "keywords": ["cli", "command", "line", "terminal", "shell", "install", "termq"]
     },
     {
+      "id": "mcp-server",
+      "title": "MCP Server",
+      "icon": "server.rack",
+      "keywords": ["mcp", "model", "context", "protocol", "server", "ai", "claude", "llm", "integration"]
+    },
+    {
+      "id": "tmux-sessions",
+      "title": "Tmux Sessions",
+      "icon": "rectangle.split.2x2",
+      "keywords": ["tmux", "session", "persist", "restore", "recovery", "backend", "multiplexer"]
+    },
+    {
       "id": "command-palette",
       "title": "Command Palette",
       "icon": "magnifyingglass",
