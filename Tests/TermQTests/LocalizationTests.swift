@@ -104,7 +104,8 @@ final class LocalizationTests: XCTestCase {
         for _ in 0..<10 {
             let packageSwift = searchPath.appendingPathComponent("Package.swift")
             if FileManager.default.fileExists(atPath: packageSwift.path) {
-                let resourcePath = searchPath
+                let resourcePath =
+                    searchPath
                     .appendingPathComponent("Sources/TermQ/Resources/\(languageCode).lproj/Localizable.strings")
                 if FileManager.default.fileExists(atPath: resourcePath.path) {
                     return resourcePath
@@ -188,7 +189,8 @@ final class LocalizationTests: XCTestCase {
         XCTAssertEqual(dict["settings.tab.general"], "Generelt", "Danish translation for settings.tab.general")
         XCTAssertEqual(dict["settings.tab.tools"], "Værktøjer", "Danish translation for settings.tab.tools")
         XCTAssertEqual(dict["settings.tab.data"], "Data", "Danish translation for settings.tab.data")
-        XCTAssertEqual(dict["board.column.add.terminal"], "Tilføj terminal", "Danish translation for board.column.add.terminal")
+        XCTAssertEqual(
+            dict["board.column.add.terminal"], "Tilføj terminal", "Danish translation for board.column.add.terminal")
     }
 
     func testDanishTranslationsDifferFromEnglish() {

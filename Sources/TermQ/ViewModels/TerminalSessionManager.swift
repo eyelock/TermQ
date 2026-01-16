@@ -32,6 +32,12 @@ class TerminalSessionManager: ObservableObject {
     /// This ensures bells work even when terminals are running in background
     var onBellForCard: ((UUID) -> Void)?
 
+    // MARK: - Selection Protection
+
+    /// Flag to prevent focus stealing during mouse drag/selection operations
+    /// Set by terminal views during drag, checked before any focus changes
+    var isMouseDragInProgress: Bool = false
+
     // MARK: - Session Storage
 
     /// Active terminal sessions keyed by card ID
@@ -104,8 +110,9 @@ class TerminalSessionManager: ObservableObject {
                 onActivity()
             }
             // Bell uses centralized handler - no need to update
-            // Re-focus the terminal
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // Re-focus the terminal (but not during mouse drag to protect selection)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                guard self?.isMouseDragInProgress != true else { return }
                 session.container.window?.makeFirstResponder(session.terminal)
             }
             return session.container

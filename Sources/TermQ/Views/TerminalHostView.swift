@@ -174,6 +174,8 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
         stopAutoScrollTimer()
         dragStartedInTerminal = false
+        // Clear global drag flag in case terminal is destroyed during selection
+        TerminalSessionManager.shared.isMouseDragInProgress = false
     }
 
     /// Handle mouse down to track if drag starts in terminal
@@ -188,6 +190,11 @@ class TermQTerminalView: LocalProcessTerminalView {
 
         let localPoint = convert(event.locationInWindow, from: nil)
         dragStartedInTerminal = bounds.contains(localPoint)
+
+        // Set global drag flag to prevent focus stealing during selection
+        if dragStartedInTerminal {
+            TerminalSessionManager.shared.isMouseDragInProgress = true
+        }
     }
 
     /// Handle mouse events for auto-scroll during selection
@@ -201,6 +208,8 @@ class TermQTerminalView: LocalProcessTerminalView {
             stopAutoScrollTimer()
             lastDragPosition = nil
             dragStartedInTerminal = false
+            // Clear global drag flag to allow focus management again
+            TerminalSessionManager.shared.isMouseDragInProgress = false
             return
         }
 
@@ -658,7 +667,8 @@ struct TerminalHostView: NSViewRepresentable {
         // Only focus terminal when:
         // 1. Not in search mode
         // 2. Terminal doesn't already have focus (avoid interrupting text selection)
-        if !isSearching {
+        // 3. No mouse drag in progress (protect selection operations)
+        if !isSearching && !TerminalSessionManager.shared.isMouseDragInProgress {
             let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
             if !alreadyFocused {
                 nsView.focusTerminal()
