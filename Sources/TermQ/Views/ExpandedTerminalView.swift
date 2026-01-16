@@ -9,6 +9,7 @@ struct ExpandedTerminalView: View {
     let onDeleteTab: (TerminalCard) -> Void
     let onDuplicateTab: (TerminalCard) -> Void
     let onCloseSession: (TerminalCard) -> Void
+    let onKillSession: (TerminalCard) -> Void
     let onRestartSession: (TerminalCard) -> Void
     let onMoveTab: (UUID, Int) -> Void
     let onNewTab: () -> Void
@@ -375,6 +376,7 @@ struct ExpandedTerminalView: View {
                 HStack(spacing: 4) {
                     ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
                         let info = columnInfo(for: tabCard)
+                        let isTmux = sessionManager.getBackend(for: tabCard.id) == .tmux
                         TabItemView(
                             tabCard: tabCard,
                             columnColor: info.color,
@@ -383,6 +385,7 @@ struct ExpandedTerminalView: View {
                             needsAttention: needsAttention.contains(tabCard.id),
                             isProcessing: processingCards.contains(tabCard.id),
                             hasActiveSession: activeSessionCards.contains(tabCard.id),
+                            isTmuxSession: isTmux,
                             onSelect: {
                                 if tabCard.id != card.id {
                                     onSelectTab(tabCard)
@@ -403,6 +406,11 @@ struct ExpandedTerminalView: View {
                             onCloseSession: {
                                 // Close session and close the tab
                                 onCloseSession(tabCard)
+                                onCloseTab(tabCard)
+                            },
+                            onKillSession: {
+                                // Kill session (terminate tmux) and close the tab
+                                onKillSession(tabCard)
                                 onCloseTab(tabCard)
                             },
                             onRestartSession: {
@@ -483,12 +491,14 @@ private struct TabItemView: View {
     let needsAttention: Bool
     let isProcessing: Bool
     let hasActiveSession: Bool
+    let isTmuxSession: Bool
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onClose: () -> Void
     let onDelete: () -> Void
     let onDuplicate: () -> Void
     let onCloseSession: () -> Void
+    let onKillSession: () -> Void
     let onRestartSession: () -> Void
 
     @State private var isHovering = false
@@ -597,6 +607,11 @@ private struct TabItemView: View {
                 Divider()
                 Button(Strings.Card.closeSession) {
                     onCloseSession()
+                }
+                if isTmuxSession {
+                    Button(Strings.Card.killSession) {
+                        onKillSession()
+                    }
                 }
                 Button(Strings.Card.restartSession) {
                     onRestartSession()

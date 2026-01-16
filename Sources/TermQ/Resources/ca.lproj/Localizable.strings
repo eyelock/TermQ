@@ -49,6 +49,7 @@
 "card.processing" = "Processant...";
 "card.restart.session" = "Restart Session";
 "card.close.session" = "Close Session";
+"card.kill.session" = "Kill Session";
 "card.live.help" = "Terminal has an active background session";
 "card.live" = "LIVE";
 "card.kill.terminal.help" = "Forcefully terminate the terminal process";
