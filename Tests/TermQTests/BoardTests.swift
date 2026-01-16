@@ -239,4 +239,238 @@ final class BoardTests: XCTestCase {
         XCTAssertEqual(decoded.cards.count, 1)
         XCTAssertEqual(decoded.cards[0].title, "Test Card")
     }
+
+    // MARK: - Active Cards Tests
+
+    func testActiveCardsExcludesDeleted() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        let activeCard = TerminalCard(title: "Active", columnId: column.id, orderIndex: 0)
+        let deletedCard = TerminalCard(title: "Deleted", columnId: column.id, orderIndex: 1)
+        deletedCard.deletedAt = Date()
+
+        let board = Board(columns: [column], cards: [activeCard, deletedCard])
+
+        XCTAssertEqual(board.cards.count, 2)
+        XCTAssertEqual(board.activeCards.count, 1)
+        XCTAssertEqual(board.activeCards[0].title, "Active")
+    }
+
+    // MARK: - Deleted Cards Tests
+
+    func testDeletedCardsReturnsOnlyDeleted() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        let activeCard = TerminalCard(title: "Active", columnId: column.id, orderIndex: 0)
+        let deletedCard = TerminalCard(title: "Deleted", columnId: column.id, orderIndex: 1)
+        deletedCard.deletedAt = Date()
+
+        let board = Board(columns: [column], cards: [activeCard, deletedCard])
+
+        XCTAssertEqual(board.deletedCards.count, 1)
+        XCTAssertEqual(board.deletedCards[0].title, "Deleted")
+    }
+
+    func testDeletedCardsSortedByDeletedAtDescending() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        let card1 = TerminalCard(title: "Older", columnId: column.id, orderIndex: 0)
+        card1.deletedAt = Date(timeIntervalSinceNow: -3600)  // 1 hour ago
+
+        let card2 = TerminalCard(title: "Newer", columnId: column.id, orderIndex: 1)
+        card2.deletedAt = Date()  // Now
+
+        let card3 = TerminalCard(title: "Middle", columnId: column.id, orderIndex: 2)
+        card3.deletedAt = Date(timeIntervalSinceNow: -1800)  // 30 min ago
+
+        let board = Board(columns: [column], cards: [card1, card2, card3])
+
+        let deleted = board.deletedCards
+        XCTAssertEqual(deleted.count, 3)
+        XCTAssertEqual(deleted[0].title, "Newer")  // Most recent first
+        XCTAssertEqual(deleted[1].title, "Middle")
+        XCTAssertEqual(deleted[2].title, "Older")
+    }
+
+    func testDeletedCardsWithNilDeletedAt() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        // Simulate a card marked as deleted but deletedAt is nil (edge case)
+        let card = TerminalCard(title: "Test", columnId: column.id, orderIndex: 0)
+        card.deletedAt = nil
+
+        let board = Board(columns: [column], cards: [card])
+
+        // Card with nil deletedAt is not deleted
+        XCTAssertEqual(board.deletedCards.count, 0)
+        XCTAssertEqual(board.activeCards.count, 1)
+    }
+
+    // MARK: - Cards For Column Excludes Deleted
+
+    func testCardsForColumnExcludesDeleted() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        let activeCard = TerminalCard(title: "Active", columnId: column.id, orderIndex: 0)
+        let deletedCard = TerminalCard(title: "Deleted", columnId: column.id, orderIndex: 1)
+        deletedCard.deletedAt = Date()
+
+        let board = Board(columns: [column], cards: [activeCard, deletedCard])
+
+        let columnCards = board.cards(for: column)
+        XCTAssertEqual(columnCards.count, 1)
+        XCTAssertEqual(columnCards[0].title, "Active")
+    }
+
+    // MARK: - Favourite Order Tests
+
+    func testFavouriteOrderInitialization() {
+        let board = Board()
+        XCTAssertTrue(board.favouriteOrder.isEmpty)
+    }
+
+    func testFavouriteOrderCustomInitialization() {
+        let id1 = UUID()
+        let id2 = UUID()
+        let board = Board(columns: [], cards: [], favouriteOrder: [id1, id2])
+
+        XCTAssertEqual(board.favouriteOrder.count, 2)
+        XCTAssertEqual(board.favouriteOrder[0], id1)
+        XCTAssertEqual(board.favouriteOrder[1], id2)
+    }
+
+    func testFavouriteOrderCodableRoundTrip() throws {
+        let id1 = UUID()
+        let id2 = UUID()
+        let original = Board(columns: [], cards: [], favouriteOrder: [id1, id2])
+
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(Board.self, from: data)
+
+        XCTAssertEqual(decoded.favouriteOrder.count, 2)
+        XCTAssertEqual(decoded.favouriteOrder[0], id1)
+        XCTAssertEqual(decoded.favouriteOrder[1], id2)
+    }
+
+    func testFavouriteOrderDecodesAsEmptyWhenMissing() throws {
+        let json = """
+            {
+                "columns": [],
+                "cards": []
+            }
+            """
+
+        let decoded = try JSONDecoder().decode(Board.self, from: json.data(using: .utf8)!)
+        XCTAssertTrue(decoded.favouriteOrder.isEmpty)
+    }
+
+    // MARK: - Move Column Tests
+
+    func testMoveColumnToNewPosition() {
+        let col1 = Column(name: "A", orderIndex: 0)
+        let col2 = Column(name: "B", orderIndex: 1)
+        let col3 = Column(name: "C", orderIndex: 2)
+
+        let board = Board(columns: [col1, col2, col3], cards: [])
+
+        // Move A to position 2 (after C)
+        board.moveColumn(col1, to: 2)
+
+        XCTAssertEqual(board.columns[0].name, "B")
+        XCTAssertEqual(board.columns[1].name, "C")
+        XCTAssertEqual(board.columns[2].name, "A")
+
+        // Verify order indices are updated
+        XCTAssertEqual(board.columns[0].orderIndex, 0)
+        XCTAssertEqual(board.columns[1].orderIndex, 1)
+        XCTAssertEqual(board.columns[2].orderIndex, 2)
+    }
+
+    func testMoveColumnBackward() {
+        let col1 = Column(name: "A", orderIndex: 0)
+        let col2 = Column(name: "B", orderIndex: 1)
+        let col3 = Column(name: "C", orderIndex: 2)
+
+        let board = Board(columns: [col1, col2, col3], cards: [])
+
+        // Move C to position 0 (before A)
+        board.moveColumn(col3, to: 0)
+
+        XCTAssertEqual(board.columns[0].name, "C")
+        XCTAssertEqual(board.columns[1].name, "A")
+        XCTAssertEqual(board.columns[2].name, "B")
+    }
+
+    func testMoveColumnToSamePosition() {
+        let col1 = Column(name: "A", orderIndex: 0)
+        let col2 = Column(name: "B", orderIndex: 1)
+
+        let board = Board(columns: [col1, col2], cards: [])
+
+        // Move A to position 0 (same position)
+        board.moveColumn(col1, to: 0)
+
+        XCTAssertEqual(board.columns[0].name, "A")
+        XCTAssertEqual(board.columns[1].name, "B")
+    }
+
+    func testMoveColumnNotFound() {
+        let col1 = Column(name: "A", orderIndex: 0)
+        let col2 = Column(name: "B", orderIndex: 1)
+        let notInBoard = Column(name: "X", orderIndex: 99)
+
+        let board = Board(columns: [col1, col2], cards: [])
+
+        // Try to move a column not in the board
+        board.moveColumn(notInBoard, to: 0)
+
+        // Should be unchanged
+        XCTAssertEqual(board.columns[0].name, "A")
+        XCTAssertEqual(board.columns[1].name, "B")
+    }
+
+    func testMoveColumnToIndexBeyondEnd() {
+        let col1 = Column(name: "A", orderIndex: 0)
+        let col2 = Column(name: "B", orderIndex: 1)
+
+        let board = Board(columns: [col1, col2], cards: [])
+
+        // Move A to index 100 (beyond end)
+        board.moveColumn(col1, to: 100)
+
+        // Should be placed at end
+        XCTAssertEqual(board.columns[0].name, "B")
+        XCTAssertEqual(board.columns[1].name, "A")
+    }
+
+    // MARK: - Add Card Default Title
+
+    func testAddCardWithDefaultTitle() {
+        let column = Column(name: "Test", orderIndex: 0)
+        let board = Board(columns: [column], cards: [])
+
+        let card = board.addCard(to: column)
+
+        XCTAssertEqual(card.title, "New Terminal")
+    }
+
+    // MARK: - Move Card to End of Column
+
+    func testMoveCardToEndOfColumn() {
+        let column1 = Column(name: "Source", orderIndex: 0)
+        let column2 = Column(name: "Target", orderIndex: 1)
+
+        let existingCard1 = TerminalCard(title: "Existing1", columnId: column2.id, orderIndex: 0)
+        let existingCard2 = TerminalCard(title: "Existing2", columnId: column2.id, orderIndex: 1)
+        let movingCard = TerminalCard(title: "Moving", columnId: column1.id, orderIndex: 0)
+
+        let board = Board(columns: [column1, column2], cards: [existingCard1, existingCard2, movingCard])
+
+        // Move to index beyond current count
+        board.moveCard(movingCard, to: column2, at: 10)
+
+        let targetCards = board.cards(for: column2)
+        XCTAssertEqual(targetCards.count, 3)
+        XCTAssertEqual(targetCards[2].title, "Moving")  // Should be at end
+    }
 }
