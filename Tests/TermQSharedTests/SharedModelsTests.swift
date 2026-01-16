@@ -257,6 +257,102 @@ final class SharedModelsTests: XCTestCase {
         XCTAssertEqual(board.columnName(for: UUID()), "Unknown")
     }
 
+    func testBoardSortedColumns() throws {
+        let col1 = UUID()
+        let col2 = UUID()
+        let col3 = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(col2.uuidString)", "name": "Second", "orderIndex": 1},
+                    {"id": "\(col3.uuidString)", "name": "Third", "orderIndex": 2},
+                    {"id": "\(col1.uuidString)", "name": "First", "orderIndex": 0}
+                ],
+                "cards": []
+            }
+            """
+
+        let board = try JSONDecoder().decode(Board.self, from: json.data(using: .utf8)!)
+        let sorted = board.sortedColumns()
+
+        XCTAssertEqual(sorted.count, 3)
+        XCTAssertEqual(sorted[0].name, "First")
+        XCTAssertEqual(sorted[1].name, "Second")
+        XCTAssertEqual(sorted[2].name, "Third")
+    }
+
+    func testBoardFindTerminalByPath() throws {
+        let columnId = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(columnId.uuidString)", "name": "Test", "orderIndex": 0}
+                ],
+                "cards": [
+                    {"id": "\(UUID().uuidString)", "title": "Project", "columnId": "\(columnId.uuidString)", "workingDirectory": "/Users/test/project"}
+                ]
+            }
+            """
+
+        let board = try JSONDecoder().decode(Board.self, from: json.data(using: .utf8)!)
+
+        // Exact path match
+        XCTAssertNotNil(board.findTerminal(identifier: "/Users/test/project"))
+
+        // Path with trailing slash (should be normalized)
+        XCTAssertNotNil(board.findTerminal(identifier: "/Users/test/project/"))
+
+        // Path suffix match
+        XCTAssertNotNil(board.findTerminal(identifier: "project"))
+    }
+
+    func testBoardFindTerminalNotFound() throws {
+        let columnId = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(columnId.uuidString)", "name": "Test", "orderIndex": 0}
+                ],
+                "cards": [
+                    {"id": "\(UUID().uuidString)", "title": "Existing", "columnId": "\(columnId.uuidString)"}
+                ]
+            }
+            """
+
+        let board = try JSONDecoder().decode(Board.self, from: json.data(using: .utf8)!)
+
+        // Non-existent UUID
+        XCTAssertNil(board.findTerminal(identifier: UUID().uuidString))
+
+        // Non-matching name
+        XCTAssertNil(board.findTerminal(identifier: "nonexistent"))
+    }
+
+    func testBoardFindTerminalExcludesDeleted() throws {
+        let columnId = UUID()
+        let deletedId = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(columnId.uuidString)", "name": "Test", "orderIndex": 0}
+                ],
+                "cards": [
+                    {"id": "\(deletedId.uuidString)", "title": "Deleted Card", "columnId": "\(columnId.uuidString)", "deletedAt": "2025-01-01T00:00:00Z"}
+                ]
+            }
+            """
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let board = try decoder.decode(Board.self, from: json.data(using: .utf8)!)
+
+        // Should not find deleted card by UUID
+        XCTAssertNil(board.findTerminal(identifier: deletedId.uuidString))
+
+        // Should not find deleted card by name
+        XCTAssertNil(board.findTerminal(identifier: "Deleted Card"))
+    }
+
     // MARK: - Output Types Tests
 
     func testTerminalOutputFromCard() throws {
@@ -847,5 +943,48 @@ final class SharedModelsTests: XCTestCase {
         XCTAssertTrue(json.contains("terminals"))
         XCTAssertTrue(json.contains("summary"))
         XCTAssertTrue(json.contains("total"))
+    }
+
+    // MARK: - JSONHelper Print Functions (Coverage Tests)
+
+    func testJSONHelperPrintJSONDoesNotCrash() {
+        // This test exercises printJSON to ensure it doesn't crash
+        // The output goes to stdout which we don't capture, but we verify execution
+        let error = ErrorOutput(error: "test", code: 1)
+        JSONHelper.printJSON(error)
+        // If we reach here, the function worked
+    }
+
+    func testJSONHelperPrintJSONWithComplexType() {
+        let card = Card(title: "Test", columnId: UUID())
+        let terminal = PendingTerminalOutput(from: card, columnName: "Col", staleness: "fresh")
+        let summary = PendingSummary(total: 1, withNextAction: 0, stale: 0, fresh: 1)
+        let output = PendingOutput(terminals: [terminal], summary: summary)
+
+        JSONHelper.printJSON(output)
+        // Function should complete without crash
+    }
+
+    func testJSONHelperPrintErrorJSONDoesNotCrash() {
+        // This test exercises printErrorJSON to ensure it doesn't crash
+        JSONHelper.printErrorJSON("Test error message")
+        // If we reach here, the function worked
+    }
+
+    func testJSONHelperPrintErrorJSONWithCustomCode() {
+        JSONHelper.printErrorJSON("Not found", code: 404)
+        // Function should complete without crash
+    }
+
+    func testJSONHelperPrintJSONWithSetResponse() {
+        let response = SetResponse(success: true, id: "test-123")
+        JSONHelper.printJSON(response)
+        // Should not crash
+    }
+
+    func testJSONHelperPrintJSONWithMoveResponse() {
+        let response = MoveResponse(success: false, id: "test-456", column: "Done")
+        JSONHelper.printJSON(response)
+        // Should not crash
     }
 }
