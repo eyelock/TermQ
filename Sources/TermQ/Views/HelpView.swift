@@ -23,8 +23,27 @@ struct HelpTopicMetadata: Codable, Identifiable, Hashable {
     }
 }
 
-struct HelpIndex: Codable {
+struct HelpSection: Codable, Identifiable {
+    let title: String
     let topics: [HelpTopicMetadata]
+
+    var id: String { title }
+
+    func filteredTopics(_ query: String) -> [HelpTopicMetadata] {
+        if query.isEmpty {
+            return topics
+        }
+        return topics.filter { $0.matches(query) }
+    }
+}
+
+struct HelpIndex: Codable {
+    let sections: [HelpSection]
+
+    /// Flat list of all topics for backward compatibility
+    var allTopics: [HelpTopicMetadata] {
+        sections.flatMap { $0.topics }
+    }
 }
 
 // MARK: - Help Content Loader
@@ -49,7 +68,7 @@ enum HelpContentLoader {
     }()
 
     /// Load the help index from bundle
-    static func loadIndex() -> [HelpTopicMetadata] {
+    static func loadIndex() -> [HelpSection] {
         guard let url = resourceBundle.url(forResource: "index", withExtension: "json", subdirectory: "Help"),
             let data = try? Data(contentsOf: url),
             let index = try? JSONDecoder().decode(HelpIndex.self, from: data)
@@ -57,7 +76,7 @@ enum HelpContentLoader {
             print("Failed to load help index from bundle")
             return []
         }
-        return index.topics
+        return index.sections
     }
 
     /// Load markdown content for a topic
@@ -87,20 +106,33 @@ enum HelpContentLoader {
 struct HelpView: View {
     @State private var searchText = ""
     @State private var selectedTopic: HelpTopicMetadata?
-    @State private var topics: [HelpTopicMetadata] = []
+    @State private var sections: [HelpSection] = []
 
-    private var filteredTopics: [HelpTopicMetadata] {
+    /// Sections filtered by search, excluding empty sections
+    private var filteredSections: [HelpSection] {
         if searchText.isEmpty {
-            return topics
+            return sections
         }
-        return topics.filter { $0.matches(searchText) }
+        return sections.compactMap { section in
+            let filtered = section.filteredTopics(searchText)
+            if filtered.isEmpty {
+                return nil
+            }
+            return HelpSection(title: section.title, topics: filtered)
+        }
     }
 
     var body: some View {
         NavigationSplitView {
-            List(filteredTopics, selection: $selectedTopic) { topic in
-                HelpTopicRow(topic: topic)
-                    .tag(topic)
+            List(selection: $selectedTopic) {
+                ForEach(filteredSections) { section in
+                    Section(header: Text(section.title)) {
+                        ForEach(section.topics) { topic in
+                            HelpTopicRow(topic: topic)
+                                .tag(topic)
+                        }
+                    }
+                }
             }
             .listStyle(.sidebar)
             .searchable(text: $searchText, prompt: Strings.Help.searchPlaceholder)
@@ -127,9 +159,9 @@ struct HelpView: View {
         }
         .frame(minWidth: 700, minHeight: 500)
         .onAppear {
-            topics = HelpContentLoader.loadIndex()
+            sections = HelpContentLoader.loadIndex()
             if selectedTopic == nil {
-                selectedTopic = topics.first
+                selectedTopic = sections.first?.topics.first
             }
         }
     }
