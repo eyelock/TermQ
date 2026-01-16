@@ -502,28 +502,33 @@ private struct TabItemView: View {
             // Main tab button
             Button(action: onSelect) {
                 HStack(spacing: 4) {
-                    // Processing indicator (recent output activity)
-                    if isProcessing {
-                        ProgressView()
-                            .scaleEffect(0.4)
-                            .frame(width: 10, height: 10)
-                    }
-                    // Attention indicator (bell was received)
-                    if needsAttention && !isProcessing {
-                        Circle()
-                            .fill(Color.orange)
-                            .frame(width: 6, height: 6)
-                    }
                     // Show star for favourites
                     if tabCard.isFavourite {
                         Image(systemName: "star.fill")
                             .font(.caption2)
                             .foregroundColor(.yellow)
                     }
-                    // Terminal icon colored by column
-                    Image(systemName: "terminal")
-                        .font(.caption2)
-                        .foregroundColor(columnColor)
+                    // Fixed-width icon area: terminal icon, spinner, or attention indicator
+                    // This prevents layout shifts when state changes
+                    // Priority: attention > processing > default
+                    Group {
+                        if needsAttention {
+                            // Attention indicator (highest priority - requires user action)
+                            Image(systemName: "bell.fill")
+                                .font(.caption2)
+                                .foregroundColor(.orange)
+                        } else if isProcessing {
+                            // Spinner when processing
+                            ProgressView()
+                                .scaleEffect(0.5)
+                        } else {
+                            // Terminal icon colored by column
+                            Image(systemName: "terminal")
+                                .font(.caption2)
+                                .foregroundColor(columnColor)
+                        }
+                    }
+                    .frame(width: 14, height: 14)
                     Text(tabCard.title)
                         .font(.subheadline)
                         .lineLimit(1)
