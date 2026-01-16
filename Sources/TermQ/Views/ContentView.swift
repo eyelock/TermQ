@@ -36,6 +36,9 @@ struct ContentView: View {
                     onCloseSession: { card in
                         viewModel.closeSession(for: card)
                     },
+                    onKillSession: { card in
+                        viewModel.killSession(for: card)
+                    },
                     onRestartSession: { card in
                         viewModel.restartSession(for: card)
                     },

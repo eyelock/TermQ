@@ -190,6 +190,7 @@ enum Strings {
         static var live: String { localized("card.live") }
         static var liveHelp: String { localized("card.live.help") }
         static var closeSession: String { localized("card.close.session") }
+        static var killSession: String { localized("card.kill.session") }
         static var restartSession: String { localized("card.restart.session") }
         static var killTerminal: String { localized("card.kill.terminal") }
         static var killTerminalHelp: String { localized("card.kill.terminal.help") }

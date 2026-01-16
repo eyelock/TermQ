@@ -193,7 +193,8 @@ class BoardViewModel: ObservableObject {
         if selectedCard?.id == card.id {
             selectedCard = nil
         }
-        TerminalSessionManager.shared.removeSession(for: card.id)
+        // Kill tmux sessions when deleting - user is getting rid of the card
+        TerminalSessionManager.shared.removeSession(for: card.id, killTmuxSession: true)
 
         card.deletedAt = Date()
 
@@ -205,7 +206,8 @@ class BoardViewModel: ObservableObject {
         let nextCardId = tabManager.adjacentTabId(to: card.id)
 
         tabManager.removeTab(card.id)
-        TerminalSessionManager.shared.removeSession(for: card.id)
+        // Kill tmux sessions when deleting - user is getting rid of the card
+        TerminalSessionManager.shared.removeSession(for: card.id, killTmuxSession: true)
 
         if card.isTransient {
             tabManager.removeTransientCard(card.id)
@@ -482,9 +484,15 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Session Management
 
-    /// Close an active terminal session
+    /// Close an active terminal session (detaches tmux sessions)
     func closeSession(for card: TerminalCard) {
         TerminalSessionManager.shared.closeSession(for: card.id)
+        objectWillChange.send()
+    }
+
+    /// Kill a terminal session (fully terminates tmux sessions)
+    func killSession(for card: TerminalCard) {
+        TerminalSessionManager.shared.killSession(for: card.id)
         objectWillChange.send()
     }
 
