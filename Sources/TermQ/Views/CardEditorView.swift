@@ -34,12 +34,14 @@ struct CardEditorView: View {
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
     @State private var interactiveMode: Bool = true
     @State private var backend: TerminalBackend = .direct
+    @State private var environmentVariables: [EnvironmentVariable] = []
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @AppStorage("tmuxEnabled") private var tmuxEnabled = true
 
     private enum EditorTab: CaseIterable {
         case general
         case terminal
+        case environment
         case metadata
         case agents
 
@@ -47,6 +49,7 @@ struct CardEditorView: View {
             switch self {
             case .general: return Strings.Editor.tabGeneral
             case .terminal: return Strings.Editor.sectionTerminal
+            case .environment: return Strings.Settings.tabEnvironment
             case .metadata: return Strings.Editor.sectionTags
             case .agents: return Strings.Editor.sectionAgent
             }
@@ -114,6 +117,11 @@ struct CardEditorView: View {
                     generalContent
                 case .terminal:
                     terminalContent
+                case .environment:
+                    CardEditorEnvironmentTab(
+                        environmentVariables: $environmentVariables,
+                        cardId: card.id
+                    )
                 case .metadata:
                     metadataContent
                 case .agents:
@@ -429,6 +437,7 @@ struct CardEditorView: View {
         themeId = card.themeId
         allowAutorun = card.allowAutorun
         backend = card.backend
+        environmentVariables = card.environmentVariables
     }
 
     private func saveChanges() {
@@ -449,6 +458,7 @@ struct CardEditorView: View {
         card.themeId = themeId
         card.allowAutorun = allowAutorun
         card.backend = backend
+        card.environmentVariables = environmentVariables
     }
 
     private func addTag() {

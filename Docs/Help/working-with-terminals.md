@@ -41,6 +41,8 @@ Click the Terminal button in the toolbar to open macOS Terminal.app at the curre
 
 TermQ automatically sets environment variables in each terminal session, enabling scripts and tools to identify which terminal they're running in.
 
+> **Tip**: You can also define your own environment variables and secrets. See [Environment Variables & Secrets](environment-variables.md) for details on user-defined variables.
+
 ### Available Variables
 
 | Variable | Description | Example |

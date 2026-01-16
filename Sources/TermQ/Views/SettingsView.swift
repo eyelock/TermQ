@@ -2,6 +2,9 @@ import AppKit
 import SwiftUI
 
 struct SettingsView: View {
+    // Initial tab selection (for deep linking)
+    var initialTab: SettingsTab?
+
     // CLI Tool installation state
     @State private var selectedLocation: InstallLocation = .usrLocalBin
     @State private var installedLocation: InstallLocation?
@@ -32,14 +35,19 @@ struct SettingsView: View {
     // Language preferences
     @State private var selectedLanguage: SupportedLanguage = LanguageManager.currentLanguage
 
-    private enum SettingsTab: CaseIterable {
+    // Data directory
+    @State private var dataDirectory: String = DataDirectoryManager.displayPath
+
+    enum SettingsTab: CaseIterable {
         case general
+        case environment
         case tools
         case data
 
         var title: String {
             switch self {
             case .general: return Strings.Settings.tabGeneral
+            case .environment: return Strings.Settings.tabEnvironment
             case .tools: return Strings.Settings.tabTools
             case .data: return Strings.Settings.tabData
             }
@@ -64,6 +72,8 @@ struct SettingsView: View {
                 switch selectedTab {
                 case .general:
                     generalContent
+                case .environment:
+                    SettingsEnvironmentView()
                 case .tools:
                     toolsContent
                 case .data:
@@ -82,9 +92,16 @@ struct SettingsView: View {
             Text(alertMessage ?? "")
         }
         .onAppear {
+            if let initialTab = initialTab {
+                selectedTab = initialTab
+            }
             refreshInstallStatus()
             refreshMCPInstallStatus()
         }
+    }
+
+    init(initialTab: SettingsTab? = nil) {
+        self.initialTab = initialTab
     }
 
     // MARK: - General Tab Content
@@ -147,6 +164,26 @@ struct SettingsView: View {
             )
         } header: {
             Text(Strings.Settings.sectionAbout)
+        }
+
+        Section {
+            HStack {
+                Text(dataDirectory)
+                    .font(.system(.body, design: .monospaced))
+                    .foregroundColor(.secondary)
+
+                Spacer()
+
+                Button(Strings.Common.browse) {
+                    browseForDataDirectory()
+                }
+            }
+
+            Text(Strings.Settings.dataDirectoryHelp)
+                .font(.caption)
+                .foregroundColor(.secondary)
+        } header: {
+            Text(Strings.Settings.sectionDataDirectory)
         }
 
         Section {
@@ -337,6 +374,23 @@ struct SettingsView: View {
         // Reset the "Copied!" state after 2 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             configCopied = false
+        }
+    }
+
+    // MARK: - Data Directory
+
+    private func browseForDataDirectory() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = Strings.Common.select
+        panel.message = Strings.Settings.dataDirectory
+
+        if panel.runModal() == .OK, let url = panel.url {
+            DataDirectoryManager.dataDirectory = url.path
+            dataDirectory = DataDirectoryManager.displayPath
         }
     }
 }

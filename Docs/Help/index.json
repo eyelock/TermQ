@@ -81,6 +81,12 @@
           "keywords": ["tmux", "session", "persist", "restore", "recovery", "backend", "multiplexer"]
         },
         {
+          "id": "environment-variables",
+          "title": "Environment Variables & Secrets",
+          "icon": "key",
+          "keywords": ["environment", "variable", "secret", "keychain", "api", "token", "password", "encryption", "global", "terminal"]
+        },
+        {
           "id": "configuration",
           "title": "Configuration & Data",
           "icon": "gearshape",

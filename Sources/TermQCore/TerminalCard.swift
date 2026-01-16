@@ -73,6 +73,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Backend mode for session management (.direct = legacy, .tmux = persistent)
     @Published public var backend: TerminalBackend
 
+    /// Terminal-specific environment variables (injected on launch, overrides global)
+    @Published public var environmentVariables: [EnvironmentVariable] = []
+
     // Runtime state (not persisted)
     public var isRunning: Bool = false
     public var isTransient: Bool = false
@@ -80,7 +83,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
-        case allowAutorun, deletedAt, lastLLMGet, backend
+        case allowAutorun, deletedAt, lastLLMGet, backend, environmentVariables
     }
 
     public init(
@@ -104,7 +107,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         allowAutorun: Bool = false,
         deletedAt: Date? = nil,
         lastLLMGet: Date? = nil,
-        backend: TerminalBackend = .direct
+        backend: TerminalBackend = .direct,
+        environmentVariables: [EnvironmentVariable] = []
     ) {
         self.id = id
         self.title = title
@@ -127,6 +131,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.deletedAt = deletedAt
         self.lastLLMGet = lastLLMGet
         self.backend = backend
+        self.environmentVariables = environmentVariables
     }
 
     public required init(from decoder: Decoder) throws {
@@ -153,6 +158,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
         // Default to direct for cards without backend field (pre-tmux cards were direct mode)
         backend = try container.decodeIfPresent(TerminalBackend.self, forKey: .backend) ?? .direct
+        environmentVariables =
+            try container.decodeIfPresent([EnvironmentVariable].self, forKey: .environmentVariables)
+            ?? []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -178,6 +186,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
         try container.encodeIfPresent(lastLLMGet, forKey: .lastLLMGet)
         try container.encode(backend, forKey: .backend)
+        try container.encode(environmentVariables, forKey: .environmentVariables)
     }
 
     /// Whether this card is in the bin (soft-deleted)

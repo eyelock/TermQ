@@ -26,7 +26,7 @@ class BoardViewModel: ObservableObject {
     @Published private(set) var activeSessionCards: Set<UUID> = []
 
     /// Recovered tmux sessions that can be reattached
-    @Published internal(set) var recoverableSessions: [TmuxSessionInfo] = []
+    @Published var recoverableSessions: [TmuxSessionInfo] = []
 
     /// Whether to show the session recovery sheet
     @Published var showSessionRecovery: Bool = false

@@ -20,6 +20,7 @@
 "common.uninstall" = "Odinstaluj";
 "common.installed" = "Zainstalowano";
 "common.browse" = "Przeglądaj...";
+"common.select" = "Select";
 "common.apply" = "Zastosuj";
 "common.preview" = "Podgląd";
 
@@ -233,6 +234,9 @@
 "settings.section.about" = "O aplikacji";
 "settings.field.version" = "Wersja";
 "settings.field.build" = "Kompilacja";
+"settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
+"settings.data.directory" = "TermQ Data Folder";
+"settings.section.data.directory" = "Data Storage";
 
 // Settings - Language section
 "settings.section.language" = "Język";
@@ -377,3 +381,48 @@
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
 "common.quit" = "Quit";
+
+// Environment settings (auto-added)
+"editor.environment.description" = "Environment variables are injected when the terminal launches. Terminal variables override global variables with the same name.";
+"editor.environment.section.terminal" = "Terminal Environment Variables";
+"editor.environment.no.variables" = "No environment variables defined for this terminal";
+"editor.environment.section.inherited" = "Inherited from Global";
+"editor.environment.no.global.variables" = "No global environment variables defined";
+"editor.environment.edit.global" = "Edit Global Settings";
+"editor.environment.overrides" = "overrides";
+"editor.environment.overridden" = "overridden";
+"editor.environment.global" = "global";
+"editor.environment.secret.warning" = "Secrets are encrypted at rest. Do not rely on this as your only copy—if the encryption key is lost, secrets cannot be recovered.";
+"settings.tab.environment" = "Environment";
+"settings.environment.section.configuration" = "Configuration";
+"settings.environment.config.directory" = "Config Directory";
+"settings.environment.config.directory.help" = "Secrets and encrypted data are stored in this directory";
+"settings.environment.reset.default" = "Reset";
+"settings.environment.browse.message" = "Select a directory to store TermQ secrets";
+"settings.environment.section.variables" = "Global Environment Variables";
+"settings.environment.no.variables" = "No environment variables defined";
+"settings.environment.key.placeholder" = "KEY";
+"settings.environment.value.placeholder" = "Value";
+"settings.environment.secret.placeholder" = "Secret value";
+"settings.environment.secret" = "Secret";
+"settings.environment.toggle.visibility" = "Show/hide secret value";
+"settings.environment.secret.indicator" = "This value is encrypted";
+"settings.environment.invalid.key.error" = "Invalid variable name. Use letters, numbers, and underscores only. Must start with a letter or underscore.";
+"settings.environment.duplicate.key.error" = "A variable with this key already exists";
+"settings.environment.reserved.key.warning" = "Warning: This is a reserved system variable name";
+"settings.environment.section.security" = "Security";
+"settings.environment.encryption.status" = "Encryption Key Status";
+"settings.environment.encryption.active" = "Active";
+"settings.environment.encryption.inactive" = "Not Created";
+"settings.environment.reset.encryption.key" = "Reset Encryption Key";
+"settings.environment.reset.encryption.key.warning" = "This will delete all stored secrets. Use only if you have lost access to your secrets.";
+"settings.environment.reset.confirm.title" = "Reset Encryption Key?";
+"settings.environment.reset.confirm.message" = "This will permanently delete all stored secrets. This action cannot be undone.";
+"settings.environment.reset.confirm.button" = "Reset Key";
+"settings.environment.troubleshooting" = "Troubleshooting";
+"settings.environment.troubleshooting.intro" = "If secrets are inaccessible after reinstall:";
+"settings.environment.troubleshooting.step1" = "Open Keychain Access.app";
+"settings.environment.troubleshooting.step2" = "Search for \"com.termq.secrets\"";
+"settings.environment.troubleshooting.step3" = "Delete the entry if present";
+"settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
+"settings.environment.troubleshooting.step5" = "Re-enter your secrets";

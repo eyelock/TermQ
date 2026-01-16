@@ -20,6 +20,7 @@
 "common.uninstall" = "Uninstall";
 "common.installed" = "Installed";
 "common.browse" = "Browse...";
+"common.select" = "Select";
 "common.apply" = "Apply";
 "common.preview" = "Preview";
 "common.quit" = "Quit";
@@ -191,6 +192,18 @@
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 
+// Editor - Environment section
+"editor.environment.description" = "Environment variables are injected when the terminal launches. Terminal variables override global variables with the same name.";
+"editor.environment.section.terminal" = "Terminal Environment Variables";
+"editor.environment.no.variables" = "No environment variables defined for this terminal";
+"editor.environment.section.inherited" = "Inherited from Global";
+"editor.environment.no.global.variables" = "No global environment variables defined";
+"editor.environment.edit.global" = "Edit Global Settings";
+"editor.environment.overrides" = "overrides";
+"editor.environment.overridden" = "overridden";
+"editor.environment.global" = "global";
+"editor.environment.secret.warning" = "Secrets are encrypted at rest. Do not rely on this as your only copy—if the encryption key is lost, secrets cannot be recovered.";
+
 // MARK: - Column Editor
 "column.editor.title.new" = "New Column";
 "column.editor.title.edit" = "Edit Column";
@@ -237,6 +250,11 @@
 "settings.section.about" = "About";
 "settings.field.version" = "Version";
 "settings.field.build" = "Build";
+
+// Settings - Data Directory section
+"settings.section.data.directory" = "Data Storage";
+"settings.data.directory" = "TermQ Data Folder";
+"settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 
 // Settings - Language section
 "settings.section.language" = "Language";
@@ -303,6 +321,46 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+
+// Settings - Environment tab
+"settings.tab.environment" = "Environment";
+
+// Settings - Environment section
+"settings.environment.section.configuration" = "Configuration";
+"settings.environment.config.directory" = "Config Directory";
+"settings.environment.config.directory.help" = "Secrets and encrypted data are stored in this directory";
+"settings.environment.reset.default" = "Reset";
+"settings.environment.browse.message" = "Select a directory to store TermQ secrets";
+
+"settings.environment.section.variables" = "Global Environment Variables";
+"settings.environment.no.variables" = "No environment variables defined";
+"settings.environment.key.placeholder" = "KEY";
+"settings.environment.value.placeholder" = "Value";
+"settings.environment.secret.placeholder" = "Secret value";
+"settings.environment.secret" = "Secret";
+"settings.environment.toggle.visibility" = "Show/hide secret value";
+"settings.environment.secret.indicator" = "This value is encrypted";
+"settings.environment.invalid.key.error" = "Invalid variable name. Use letters, numbers, and underscores only. Must start with a letter or underscore.";
+"settings.environment.duplicate.key.error" = "A variable with this key already exists";
+"settings.environment.reserved.key.warning" = "Warning: This is a reserved system variable name";
+
+"settings.environment.section.security" = "Security";
+"settings.environment.encryption.status" = "Encryption Key Status";
+"settings.environment.encryption.active" = "Active";
+"settings.environment.encryption.inactive" = "Not Created";
+"settings.environment.reset.encryption.key" = "Reset Encryption Key";
+"settings.environment.reset.encryption.key.warning" = "This will delete all stored secrets. Use only if you have lost access to your secrets.";
+"settings.environment.reset.confirm.title" = "Reset Encryption Key?";
+"settings.environment.reset.confirm.message" = "This will permanently delete all stored secrets. This action cannot be undone.";
+"settings.environment.reset.confirm.button" = "Reset Key";
+
+"settings.environment.troubleshooting" = "Troubleshooting";
+"settings.environment.troubleshooting.intro" = "If secrets are inaccessible after reinstall:";
+"settings.environment.troubleshooting.step1" = "Open Keychain Access.app";
+"settings.environment.troubleshooting.step2" = "Search for \"com.termq.secrets\"";
+"settings.environment.troubleshooting.step3" = "Delete the entry if present";
+"settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
+"settings.environment.troubleshooting.step5" = "Re-enter your secrets";
 
 // MARK: - Command Palette
 "palette.placeholder" = "Search commands...";

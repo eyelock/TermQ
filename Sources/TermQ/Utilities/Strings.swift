@@ -158,6 +158,7 @@ enum Strings {
         static var uninstall: String { localized("common.uninstall") }
         static var installed: String { localized("common.installed") }
         static var browse: String { localized("common.browse") }
+        static var select: String { localized("common.select") }
         static var apply: String { localized("common.apply") }
         static var preview: String { localized("common.preview") }
         static var quit: String { localized("common.quit") }
@@ -354,6 +355,20 @@ enum Strings {
         static var fieldBackend: String { localized("editor.field.backend") }
         static var tmuxPersistNote: String { localized("editor.tmux.persist.note") }
         static var backendRestartHint: String { localized("editor.backend.restart.hint") }
+
+        // Environment section
+        enum Environment {
+            static var description: String { localized("editor.environment.description") }
+            static var sectionTerminal: String { localized("editor.environment.section.terminal") }
+            static var noVariables: String { localized("editor.environment.no.variables") }
+            static var sectionInherited: String { localized("editor.environment.section.inherited") }
+            static var noGlobalVariables: String { localized("editor.environment.no.global.variables") }
+            static var editGlobal: String { localized("editor.environment.edit.global") }
+            static var overrides: String { localized("editor.environment.overrides") }
+            static var overridden: String { localized("editor.environment.overridden") }
+            static var global: String { localized("editor.environment.global") }
+            static var secretWarning: String { localized("editor.environment.secret.warning") }
+        }
     }
 
     // MARK: - Column Editor
@@ -415,6 +430,11 @@ enum Strings {
         static var sectionAbout: String { localized("settings.section.about") }
         static var fieldVersion: String { localized("settings.field.version") }
         static var fieldBuild: String { localized("settings.field.build") }
+
+        // General - Data Directory section
+        static var sectionDataDirectory: String { localized("settings.section.data.directory") }
+        static var dataDirectory: String { localized("settings.data.directory") }
+        static var dataDirectoryHelp: String { localized("settings.data.directory.help") }
 
         // General - Language section
         static var sectionLanguage: String { localized("settings.section.language") }
@@ -483,6 +503,50 @@ enum Strings {
         static var tmuxEnableButton: String { localized("settings.tmux.enable.button") }
         static var tmuxAutoReattach: String { localized("settings.tmux.auto.reattach") }
         static var tmuxAutoReattachHelp: String { localized("settings.tmux.auto.reattach.help") }
+
+        // Environment tab
+        static var tabEnvironment: String { localized("settings.tab.environment") }
+
+        // Environment section
+        enum Environment {
+            static var sectionConfiguration: String { localized("settings.environment.section.configuration") }
+            static var configDirectory: String { localized("settings.environment.config.directory") }
+            static var configDirectoryHelp: String { localized("settings.environment.config.directory.help") }
+            static var resetDefault: String { localized("settings.environment.reset.default") }
+            static var browseMessage: String { localized("settings.environment.browse.message") }
+
+            static var sectionVariables: String { localized("settings.environment.section.variables") }
+            static var noVariables: String { localized("settings.environment.no.variables") }
+            static var keyPlaceholder: String { localized("settings.environment.key.placeholder") }
+            static var valuePlaceholder: String { localized("settings.environment.value.placeholder") }
+            static var secretPlaceholder: String { localized("settings.environment.secret.placeholder") }
+            static var secret: String { localized("settings.environment.secret") }
+            static var toggleVisibility: String { localized("settings.environment.toggle.visibility") }
+            static var secretIndicator: String { localized("settings.environment.secret.indicator") }
+            static var invalidKeyError: String { localized("settings.environment.invalid.key.error") }
+            static var duplicateKeyError: String { localized("settings.environment.duplicate.key.error") }
+            static var reservedKeyWarning: String { localized("settings.environment.reserved.key.warning") }
+
+            static var sectionSecurity: String { localized("settings.environment.section.security") }
+            static var encryptionStatus: String { localized("settings.environment.encryption.status") }
+            static var encryptionActive: String { localized("settings.environment.encryption.active") }
+            static var encryptionInactive: String { localized("settings.environment.encryption.inactive") }
+            static var resetEncryptionKey: String { localized("settings.environment.reset.encryption.key") }
+            static var resetEncryptionKeyWarning: String {
+                localized("settings.environment.reset.encryption.key.warning")
+            }
+            static var resetConfirmTitle: String { localized("settings.environment.reset.confirm.title") }
+            static var resetConfirmMessage: String { localized("settings.environment.reset.confirm.message") }
+            static var resetConfirmButton: String { localized("settings.environment.reset.confirm.button") }
+
+            static var troubleshooting: String { localized("settings.environment.troubleshooting") }
+            static var troubleshootingIntro: String { localized("settings.environment.troubleshooting.intro") }
+            static var troubleshootingStep1: String { localized("settings.environment.troubleshooting.step1") }
+            static var troubleshootingStep2: String { localized("settings.environment.troubleshooting.step2") }
+            static var troubleshootingStep3: String { localized("settings.environment.troubleshooting.step3") }
+            static var troubleshootingStep4: String { localized("settings.environment.troubleshooting.step4") }
+            static var troubleshootingStep5: String { localized("settings.environment.troubleshooting.step5") }
+        }
     }
 
     // MARK: - Command Palette
