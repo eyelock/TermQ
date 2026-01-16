@@ -3,11 +3,9 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct BackupSettingsView: View {
-    @State private var backupLocation: String = BackupManager.backupLocation
     @State private var frequency: BackupFrequency = BackupManager.frequency
     @State private var isBackingUp = false
     @State private var isRestoring = false
-    @State private var showLocationPicker = false
 
     // Alert state
     @State private var alertMessage: String?
@@ -42,32 +40,6 @@ struct BackupSettingsView: View {
                         }
                         .font(.caption)
                     }
-                }
-
-                Divider()
-
-                // Backup location
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Backup Location")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                    HStack {
-                        TextField("~/.termq", text: $backupLocation)
-                            .textFieldStyle(.roundedBorder)
-                            .font(.system(.body, design: .monospaced))
-                            .onChange(of: backupLocation) { _, newValue in
-                                BackupManager.backupLocation = newValue
-                            }
-
-                        Button("Browse...") {
-                            browseForLocation()
-                        }
-                    }
-
-                    Text("This location survives app uninstall (unlike ~/Library/Application Support)")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
                 }
 
                 Divider()
@@ -154,21 +126,6 @@ struct BackupSettingsView: View {
     }
 
     // MARK: - Actions
-
-    private func browseForLocation() {
-        let panel = NSOpenPanel()
-        panel.canChooseFiles = false
-        panel.canChooseDirectories = true
-        panel.canCreateDirectories = true
-        panel.allowsMultipleSelection = false
-        panel.prompt = "Select"
-        panel.message = "Choose a backup location"
-
-        if panel.runModal() == .OK, let url = panel.url {
-            backupLocation = url.path
-            BackupManager.backupLocation = url.path
-        }
-    }
 
     private func browseForRestoreFile() {
         let panel = NSOpenPanel()

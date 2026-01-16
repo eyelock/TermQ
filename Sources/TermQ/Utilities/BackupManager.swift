@@ -41,13 +41,12 @@ enum BackupFrequency: String, CaseIterable, Identifiable {
 enum BackupManager {
     // MARK: - Constants
 
-    static let defaultBackupPath = "~/.termq"
     static let backupFileName = "board-backup.json"
+    static let secretsBackupFileName = "secrets-backup.enc"
 
     // MARK: - UserDefaults Keys
 
     private enum Keys {
-        static let backupLocation = "backupLocation"
         static let backupFrequency = "backupFrequency"
         static let backupRetentionCount = "backupRetentionCount"
         static let lastBackupDate = "lastBackupDate"
@@ -55,14 +54,9 @@ enum BackupManager {
 
     // MARK: - Settings
 
-    /// The backup location (default: ~/.termq)
+    /// The backup location (uses central DataDirectoryManager)
     static var backupLocation: String {
-        get {
-            UserDefaults.standard.string(forKey: Keys.backupLocation) ?? defaultBackupPath
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: Keys.backupLocation)
-        }
+        DataDirectoryManager.dataDirectory
     }
 
     /// The backup frequency (default: daily)
@@ -123,6 +117,16 @@ enum BackupManager {
         URL(fileURLWithPath: backupFilePath)
     }
 
+    /// Full path to the secrets backup file
+    static var secretsBackupFilePath: String {
+        "\(expandedBackupPath)/\(secretsBackupFileName)"
+    }
+
+    /// URL to the secrets backup file
+    static var secretsBackupFileURL: URL {
+        URL(fileURLWithPath: secretsBackupFilePath)
+    }
+
     /// Path to the primary board.json file
     static var primaryBoardPath: URL {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -155,7 +159,7 @@ enum BackupManager {
         return (true, date, size)
     }
 
-    /// Perform a backup of the board data
+    /// Perform a backup of the board data and secrets
     static func backup() -> Result<String, BackupError> {
         let fm = FileManager.default
         let sourcePath = primaryBoardPath.path
@@ -177,6 +181,9 @@ enum BackupManager {
             // Copy the board file
             try fm.copyItem(atPath: sourcePath, toPath: backupFilePath)
 
+            // Backup secrets file if it exists
+            backupSecrets()
+
             // Update last backup date
             lastBackupDate = Date()
 
@@ -190,7 +197,42 @@ enum BackupManager {
         }
     }
 
-    /// Restore board data from backup
+    /// Backup secrets file from SecureStorage config directory
+    private static func backupSecrets() {
+        Task {
+            let fm = FileManager.default
+            let configDir = await SecureStorage.shared.getConfigDirectory()
+            let secretsSourcePath = configDir.appendingPathComponent("secrets.enc").path
+
+            // Only backup if secrets file exists
+            guard fm.fileExists(atPath: secretsSourcePath) else {
+                #if DEBUG
+                    print("[BackupManager] No secrets file to backup")
+                #endif
+                return
+            }
+
+            do {
+                // Remove existing secrets backup if present
+                if fm.fileExists(atPath: secretsBackupFilePath) {
+                    try fm.removeItem(atPath: secretsBackupFilePath)
+                }
+
+                // Copy the secrets file
+                try fm.copyItem(atPath: secretsSourcePath, toPath: secretsBackupFilePath)
+
+                #if DEBUG
+                    print("[BackupManager] Secrets backup created at: \(secretsBackupFilePath)")
+                #endif
+            } catch {
+                #if DEBUG
+                    print("[BackupManager] Failed to backup secrets: \(error.localizedDescription)")
+                #endif
+            }
+        }
+    }
+
+    /// Restore board data and secrets from backup
     static func restore() -> Result<String, BackupError> {
         let fm = FileManager.default
 
@@ -219,6 +261,9 @@ enum BackupManager {
             // Copy backup to primary location
             try fm.copyItem(atPath: backupFilePath, toPath: primaryBoardPath.path)
 
+            // Restore secrets if backup exists
+            restoreSecrets()
+
             #if DEBUG
                 print("[BackupManager] Restored from backup: \(backupFilePath)")
             #endif
@@ -226,6 +271,48 @@ enum BackupManager {
             return .success("Board restored successfully from backup")
         } catch {
             return .failure(.restoreFailed(error.localizedDescription))
+        }
+    }
+
+    /// Restore secrets file to SecureStorage config directory
+    private static func restoreSecrets() {
+        let fm = FileManager.default
+
+        // Only restore if secrets backup exists
+        guard fm.fileExists(atPath: secretsBackupFilePath) else {
+            #if DEBUG
+                print("[BackupManager] No secrets backup to restore")
+            #endif
+            return
+        }
+
+        Task {
+            let configDir = await SecureStorage.shared.getConfigDirectory()
+            let secretsDestPath = configDir.appendingPathComponent("secrets.enc").path
+
+            do {
+                // Ensure config directory exists
+                try fm.createDirectory(at: configDir, withIntermediateDirectories: true)
+
+                // Remove existing secrets if present
+                if fm.fileExists(atPath: secretsDestPath) {
+                    try fm.removeItem(atPath: secretsDestPath)
+                }
+
+                // Copy the secrets backup
+                try fm.copyItem(atPath: secretsBackupFilePath, toPath: secretsDestPath)
+
+                // Clear SecureStorage cache so it reloads
+                await SecureStorage.shared.clearCache()
+
+                #if DEBUG
+                    print("[BackupManager] Secrets restored to: \(secretsDestPath)")
+                #endif
+            } catch {
+                #if DEBUG
+                    print("[BackupManager] Failed to restore secrets: \(error.localizedDescription)")
+                #endif
+            }
         }
     }
 

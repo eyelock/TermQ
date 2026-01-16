@@ -166,12 +166,14 @@ final class ResourceHandlersTests: XCTestCase {
             ],
         ]
 
-        let columnJSON: [[String: Any]] = [[
-            "id": columnId.uuidString,
-            "name": "To Do",
-            "orderIndex": 0,
-            "color": "#6B7280",
-        ]]
+        let columnJSON: [[String: Any]] = [
+            [
+                "id": columnId.uuidString,
+                "name": "To Do",
+                "orderIndex": 0,
+                "color": "#6B7280",
+            ]
+        ]
 
         let boardDict: [String: Any] = ["columns": columnJSON, "cards": cardJSON]
         let data = try JSONSerialization.data(withJSONObject: boardDict)
@@ -228,12 +230,14 @@ final class ResourceHandlersTests: XCTestCase {
             ],
         ]
 
-        let columnJSON: [[String: Any]] = [[
-            "id": columnId.uuidString,
-            "name": "To Do",
-            "orderIndex": 0,
-            "color": "#6B7280",
-        ]]
+        let columnJSON: [[String: Any]] = [
+            [
+                "id": columnId.uuidString,
+                "name": "To Do",
+                "orderIndex": 0,
+                "color": "#6B7280",
+            ]
+        ]
 
         let boardDict: [String: Any] = ["columns": columnJSON, "cards": cardJSON]
         let data = try JSONSerialization.data(withJSONObject: boardDict)

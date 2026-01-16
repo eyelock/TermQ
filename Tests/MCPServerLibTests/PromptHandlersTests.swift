@@ -24,7 +24,9 @@ final class PromptHandlersTests: XCTestCase {
 
     // MARK: - Helper
 
-    private func createTestBoard(columns: [(UUID, String, Int)] = [], cards: [(String, UUID, String, String)] = [])
+    private func createTestBoard(
+        columns: [(UUID, String, Int)] = [], cards: [(String, UUID, String, String)] = []
+    )
         throws
     {
         var columnJSON: [[String: Any]] = []
@@ -219,12 +221,14 @@ final class PromptHandlersTests: XCTestCase {
             "tags": [] as [[String: Any]],
         ]
 
-        let columnJSON: [[String: Any]] = [[
-            "id": columnId.uuidString,
-            "name": "To Do",
-            "orderIndex": 0,
-            "color": "#6B7280",
-        ]]
+        let columnJSON: [[String: Any]] = [
+            [
+                "id": columnId.uuidString,
+                "name": "To Do",
+                "orderIndex": 0,
+                "color": "#6B7280",
+            ]
+        ]
 
         let boardDict: [String: Any] = ["columns": columnJSON, "cards": [cardJSON]]
         let data = try JSONSerialization.data(withJSONObject: boardDict)
@@ -261,12 +265,14 @@ final class PromptHandlersTests: XCTestCase {
             ],
         ]
 
-        let columnJSON: [[String: Any]] = [[
-            "id": columnId.uuidString,
-            "name": "To Do",
-            "orderIndex": 0,
-            "color": "#6B7280",
-        ]]
+        let columnJSON: [[String: Any]] = [
+            [
+                "id": columnId.uuidString,
+                "name": "To Do",
+                "orderIndex": 0,
+                "color": "#6B7280",
+            ]
+        ]
 
         let boardDict: [String: Any] = ["columns": columnJSON, "cards": [cardJSON]]
         let data = try JSONSerialization.data(withJSONObject: boardDict)

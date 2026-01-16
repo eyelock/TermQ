@@ -184,6 +184,12 @@ class TerminalSessionManager: ObservableObject {
             }
         }
 
+        // Add user-defined environment variables (global + terminal, no prefix)
+        let userEnvVars = buildUserEnvironmentVariables(card)
+        for (key, value) in userEnvVars {
+            env[key] = value
+        }
+
         // Start the terminal process based on backend
         switch backend {
         case .direct:
