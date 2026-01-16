@@ -210,6 +210,197 @@ final class InputValidatorTests: XCTestCase {
         XCTAssertNil(result)
     }
 
+    func testValidatePathIsFile() throws {
+        // Create a temporary file (not a directory)
+        let tempFile = FileManager.default.temporaryDirectory
+            .appendingPathComponent("TermQ-TestFile-\(UUID().uuidString).txt")
+        try "test".write(to: tempFile, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: tempFile) }
+
+        XCTAssertThrowsError(
+            try InputValidator.validatePath("path", value: tempFile.path, mustExist: true)
+        ) { error in
+            guard case InputValidator.ValidationError.invalidPath(_, _, let reason) = error else {
+                XCTFail("Expected invalidPath error")
+                return
+            }
+            XCTAssertTrue(reason.contains("not a directory"))
+        }
+    }
+
+    func testOptionalPathDoesNotExist() {
+        let args: [String: Value] = ["path": .string("/nonexistent/path/12345")]
+
+        XCTAssertThrowsError(try InputValidator.optionalPath("path", from: args, mustExist: true)) { error in
+            guard case InputValidator.ValidationError.invalidPath(_, _, let reason) = error else {
+                XCTFail("Expected invalidPath error")
+                return
+            }
+            XCTAssertTrue(reason.contains("does not exist"))
+        }
+    }
+
+    func testOptionalPathWithoutExistCheck() throws {
+        let args: [String: Value] = ["path": .string("/nonexistent/path/12345")]
+        let result = try InputValidator.optionalPath("path", from: args, mustExist: false)
+        XCTAssertEqual(result, "/nonexistent/path/12345")
+    }
+
+    // MARK: - Boolean Edge Cases
+
+    func testOptionalBoolFalseValue() {
+        let args: [String: Value] = ["flag": .bool(false)]
+        let result = InputValidator.optionalBool("flag", from: args)
+        XCTAssertFalse(result)
+    }
+
+    func testOptionalBoolNilArguments() {
+        let result = InputValidator.optionalBool("flag", from: nil)
+        XCTAssertFalse(result)
+    }
+
+    func testOptionalBoolNilArgumentsWithDefault() {
+        let result = InputValidator.optionalBool("flag", from: nil, default: true)
+        XCTAssertTrue(result)
+    }
+
+    // MARK: - Type Validation Edge Cases
+
+    func testRequireStringWithNullValue() {
+        let args: [String: Value] = ["name": .null]
+
+        XCTAssertThrowsError(try InputValidator.requireString("name", from: args, tool: "test_tool")) { error in
+            guard let validationError = error as? InputValidator.ValidationError else {
+                XCTFail("Expected ValidationError")
+                return
+            }
+            if case .invalidType(let param, let expected, let got) = validationError {
+                XCTAssertEqual(param, "name")
+                XCTAssertEqual(expected, "string")
+                XCTAssertEqual(got, "null")
+            } else {
+                XCTFail("Expected invalidType error")
+            }
+        }
+    }
+
+    func testRequireStringWithBoolValue() {
+        let args: [String: Value] = ["name": .bool(true)]
+
+        XCTAssertThrowsError(try InputValidator.requireString("name", from: args, tool: "test_tool")) { error in
+            guard let validationError = error as? InputValidator.ValidationError else {
+                XCTFail("Expected ValidationError")
+                return
+            }
+            if case .invalidType(let param, let expected, let got) = validationError {
+                XCTAssertEqual(param, "name")
+                XCTAssertEqual(expected, "string")
+                XCTAssertEqual(got, "boolean")
+            } else {
+                XCTFail("Expected invalidType error")
+            }
+        }
+    }
+
+    func testRequireStringWithDoubleValue() {
+        let args: [String: Value] = ["name": .double(3.14)]
+
+        XCTAssertThrowsError(try InputValidator.requireString("name", from: args, tool: "test_tool")) { error in
+            guard let validationError = error as? InputValidator.ValidationError else {
+                XCTFail("Expected ValidationError")
+                return
+            }
+            if case .invalidType(let param, let expected, let got) = validationError {
+                XCTAssertEqual(param, "name")
+                XCTAssertEqual(expected, "string")
+                XCTAssertEqual(got, "number")
+            } else {
+                XCTFail("Expected invalidType error")
+            }
+        }
+    }
+
+    func testRequireStringWithArrayValue() {
+        let args: [String: Value] = ["name": .array([.string("a"), .string("b")])]
+
+        XCTAssertThrowsError(try InputValidator.requireString("name", from: args, tool: "test_tool")) { error in
+            guard let validationError = error as? InputValidator.ValidationError else {
+                XCTFail("Expected ValidationError")
+                return
+            }
+            if case .invalidType(let param, let expected, let got) = validationError {
+                XCTAssertEqual(param, "name")
+                XCTAssertEqual(expected, "string")
+                XCTAssertEqual(got, "array")
+            } else {
+                XCTFail("Expected invalidType error")
+            }
+        }
+    }
+
+    func testRequireStringWithObjectValue() {
+        let args: [String: Value] = ["name": .object(["key": .string("value")])]
+
+        XCTAssertThrowsError(try InputValidator.requireString("name", from: args, tool: "test_tool")) { error in
+            guard let validationError = error as? InputValidator.ValidationError else {
+                XCTFail("Expected ValidationError")
+                return
+            }
+            if case .invalidType(let param, let expected, let got) = validationError {
+                XCTAssertEqual(param, "name")
+                XCTAssertEqual(expected, "string")
+                XCTAssertEqual(got, "object")
+            } else {
+                XCTFail("Expected invalidType error")
+            }
+        }
+    }
+
+    func testRequireStringWithDataValue() {
+        let args: [String: Value] = ["name": .data(Data([0x01, 0x02, 0x03]))]
+
+        XCTAssertThrowsError(try InputValidator.requireString("name", from: args, tool: "test_tool")) { error in
+            guard let validationError = error as? InputValidator.ValidationError else {
+                XCTFail("Expected ValidationError")
+                return
+            }
+            if case .invalidType(let param, let expected, let got) = validationError {
+                XCTAssertEqual(param, "name")
+                XCTAssertEqual(expected, "string")
+                XCTAssertEqual(got, "data")
+            } else {
+                XCTFail("Expected invalidType error")
+            }
+        }
+    }
+
+    // MARK: - Nil Arguments Tests
+
+    func testRequireStringFromNilArguments() {
+        XCTAssertThrowsError(try InputValidator.requireString("name", from: nil, tool: "test_tool")) { error in
+            guard let validationError = error as? InputValidator.ValidationError else {
+                XCTFail("Expected ValidationError")
+                return
+            }
+            if case .missingRequired(let param, let tool) = validationError {
+                XCTAssertEqual(param, "name")
+                XCTAssertEqual(tool, "test_tool")
+            } else {
+                XCTFail("Expected missingRequired error")
+            }
+        }
+    }
+
+    func testOptionalUUIDFromNilArguments() throws {
+        let result = try InputValidator.optionalUUID("id", from: nil)
+        XCTAssertNil(result)
+    }
+
+    func testOptionalPathFromNilArguments() throws {
+        let result = try InputValidator.optionalPath("path", from: nil)
+        XCTAssertNil(result)
+    }
+
     // MARK: - Error Description Tests
 
     func testValidationErrorDescriptions() {
