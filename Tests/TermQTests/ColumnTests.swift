@@ -80,4 +80,68 @@ final class ColumnTests: XCTestCase {
         XCTAssertEqual(column.orderIndex, 10)
         XCTAssertEqual(column.color, "#ABCDEF")
     }
+
+    // MARK: - Backwards Compatibility Tests
+
+    func testDecodeWithoutDescriptionField() throws {
+        // JSON without description field - should default to empty string
+        let id = UUID()
+        let json = """
+            {
+                "id": "\(id.uuidString)",
+                "name": "Test Column",
+                "orderIndex": 2,
+                "color": "#FF0000"
+            }
+            """
+
+        let decoded = try JSONDecoder().decode(Column.self, from: json.data(using: .utf8)!)
+
+        XCTAssertEqual(decoded.id, id)
+        XCTAssertEqual(decoded.name, "Test Column")
+        XCTAssertEqual(decoded.description, "")  // Should default to empty
+        XCTAssertEqual(decoded.orderIndex, 2)
+        XCTAssertEqual(decoded.color, "#FF0000")
+    }
+
+    func testDecodeWithDescriptionField() throws {
+        // JSON with description field
+        let id = UUID()
+        let json = """
+            {
+                "id": "\(id.uuidString)",
+                "name": "Test Column",
+                "description": "A test description",
+                "orderIndex": 1,
+                "color": "#00FF00"
+            }
+            """
+
+        let decoded = try JSONDecoder().decode(Column.self, from: json.data(using: .utf8)!)
+
+        XCTAssertEqual(decoded.id, id)
+        XCTAssertEqual(decoded.name, "Test Column")
+        XCTAssertEqual(decoded.description, "A test description")
+        XCTAssertEqual(decoded.orderIndex, 1)
+        XCTAssertEqual(decoded.color, "#00FF00")
+    }
+
+    func testInitializationWithDescription() {
+        let column = Column(
+            name: "Test",
+            description: "My description",
+            orderIndex: 0
+        )
+
+        XCTAssertEqual(column.description, "My description")
+    }
+
+    func testDescriptionPublishedProperty() {
+        let column = Column(name: "Test", orderIndex: 0)
+
+        XCTAssertEqual(column.description, "")
+
+        column.description = "Updated description"
+        XCTAssertEqual(column.description, "Updated description")
+    }
 }

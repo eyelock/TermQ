@@ -340,4 +340,142 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertEqual(card.llmPrompt, "Node.js backend")  // Prompt unchanged
         XCTAssertEqual(card.llmNextAction, "")
     }
+
+    // MARK: - Encode Tests for Optional Date Fields
+
+    func testEncodeWithDeletedAt() throws {
+        let columnId = UUID()
+        let deletedDate = Date()
+        let card = TerminalCard(columnId: columnId, deletedAt: deletedDate)
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let data = try encoder.encode(card)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertNotNil(decoded.deletedAt)
+        XCTAssertEqual(
+            decoded.deletedAt?.timeIntervalSinceReferenceDate ?? 0,
+            deletedDate.timeIntervalSinceReferenceDate,
+            accuracy: 1.0
+        )
+    }
+
+    func testEncodeWithLastLLMGet() throws {
+        let columnId = UUID()
+        let lastGetDate = Date()
+        let card = TerminalCard(columnId: columnId, lastLLMGet: lastGetDate)
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let data = try encoder.encode(card)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertNotNil(decoded.lastLLMGet)
+        XCTAssertEqual(
+            decoded.lastLLMGet?.timeIntervalSinceReferenceDate ?? 0,
+            lastGetDate.timeIntervalSinceReferenceDate,
+            accuracy: 1.0
+        )
+    }
+
+    func testEncodeWithBothDatesNil() throws {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId)
+
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(card)
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertNil(decoded.deletedAt)
+        XCTAssertNil(decoded.lastLLMGet)
+    }
+
+    func testEncodeWithBothDatesSet() throws {
+        let columnId = UUID()
+        let card = TerminalCard(
+            columnId: columnId,
+            deletedAt: Date(timeIntervalSinceNow: -3600),
+            lastLLMGet: Date()
+        )
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let data = try encoder.encode(card)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertNotNil(decoded.deletedAt)
+        XCTAssertNotNil(decoded.lastLLMGet)
+    }
+
+    // MARK: - All Properties Round Trip
+
+    func testFullCodableRoundTripAllProperties() throws {
+        let columnId = UUID()
+        let tag = Tag(key: "env", value: "prod")
+
+        let original = TerminalCard(
+            title: "Full Test",
+            description: "Complete test card",
+            tags: [tag],
+            columnId: columnId,
+            orderIndex: 5,
+            shellPath: "/usr/bin/fish",
+            workingDirectory: "/tmp/test",
+            isFavourite: true,
+            initCommand: "echo 'Hello'",
+            llmPrompt: "Python project",
+            llmNextAction: "Fix bug #123",
+            badge: "dev,main",
+            fontName: "Monaco",
+            fontSize: 14,
+            safePasteEnabled: false,
+            themeId: "dracula",
+            allowAutorun: true,
+            deletedAt: Date(timeIntervalSinceNow: -86400),
+            lastLLMGet: Date(),
+            backend: .tmux
+        )
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let data = try encoder.encode(original)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let decoded = try decoder.decode(TerminalCard.self, from: data)
+
+        XCTAssertEqual(decoded.id, original.id)
+        XCTAssertEqual(decoded.title, "Full Test")
+        XCTAssertEqual(decoded.description, "Complete test card")
+        XCTAssertEqual(decoded.tags.count, 1)
+        XCTAssertEqual(decoded.columnId, columnId)
+        XCTAssertEqual(decoded.orderIndex, 5)
+        XCTAssertEqual(decoded.shellPath, "/usr/bin/fish")
+        XCTAssertEqual(decoded.workingDirectory, "/tmp/test")
+        XCTAssertTrue(decoded.isFavourite)
+        XCTAssertEqual(decoded.initCommand, "echo 'Hello'")
+        XCTAssertEqual(decoded.llmPrompt, "Python project")
+        XCTAssertEqual(decoded.llmNextAction, "Fix bug #123")
+        XCTAssertEqual(decoded.badge, "dev,main")
+        XCTAssertEqual(decoded.fontName, "Monaco")
+        XCTAssertEqual(decoded.fontSize, 14)
+        XCTAssertFalse(decoded.safePasteEnabled)
+        XCTAssertEqual(decoded.themeId, "dracula")
+        XCTAssertTrue(decoded.allowAutorun)
+        XCTAssertNotNil(decoded.deletedAt)
+        XCTAssertNotNil(decoded.lastLLMGet)
+        XCTAssertEqual(decoded.backend, .tmux)
+    }
 }

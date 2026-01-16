@@ -257,6 +257,102 @@ final class SharedModelsTests: XCTestCase {
         XCTAssertEqual(board.columnName(for: UUID()), "Unknown")
     }
 
+    func testBoardSortedColumns() throws {
+        let col1 = UUID()
+        let col2 = UUID()
+        let col3 = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(col2.uuidString)", "name": "Second", "orderIndex": 1},
+                    {"id": "\(col3.uuidString)", "name": "Third", "orderIndex": 2},
+                    {"id": "\(col1.uuidString)", "name": "First", "orderIndex": 0}
+                ],
+                "cards": []
+            }
+            """
+
+        let board = try JSONDecoder().decode(Board.self, from: json.data(using: .utf8)!)
+        let sorted = board.sortedColumns()
+
+        XCTAssertEqual(sorted.count, 3)
+        XCTAssertEqual(sorted[0].name, "First")
+        XCTAssertEqual(sorted[1].name, "Second")
+        XCTAssertEqual(sorted[2].name, "Third")
+    }
+
+    func testBoardFindTerminalByPath() throws {
+        let columnId = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(columnId.uuidString)", "name": "Test", "orderIndex": 0}
+                ],
+                "cards": [
+                    {"id": "\(UUID().uuidString)", "title": "Project", "columnId": "\(columnId.uuidString)", "workingDirectory": "/Users/test/project"}
+                ]
+            }
+            """
+
+        let board = try JSONDecoder().decode(Board.self, from: json.data(using: .utf8)!)
+
+        // Exact path match
+        XCTAssertNotNil(board.findTerminal(identifier: "/Users/test/project"))
+
+        // Path with trailing slash (should be normalized)
+        XCTAssertNotNil(board.findTerminal(identifier: "/Users/test/project/"))
+
+        // Path suffix match
+        XCTAssertNotNil(board.findTerminal(identifier: "project"))
+    }
+
+    func testBoardFindTerminalNotFound() throws {
+        let columnId = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(columnId.uuidString)", "name": "Test", "orderIndex": 0}
+                ],
+                "cards": [
+                    {"id": "\(UUID().uuidString)", "title": "Existing", "columnId": "\(columnId.uuidString)"}
+                ]
+            }
+            """
+
+        let board = try JSONDecoder().decode(Board.self, from: json.data(using: .utf8)!)
+
+        // Non-existent UUID
+        XCTAssertNil(board.findTerminal(identifier: UUID().uuidString))
+
+        // Non-matching name
+        XCTAssertNil(board.findTerminal(identifier: "nonexistent"))
+    }
+
+    func testBoardFindTerminalExcludesDeleted() throws {
+        let columnId = UUID()
+        let deletedId = UUID()
+        let json = """
+            {
+                "columns": [
+                    {"id": "\(columnId.uuidString)", "name": "Test", "orderIndex": 0}
+                ],
+                "cards": [
+                    {"id": "\(deletedId.uuidString)", "title": "Deleted Card", "columnId": "\(columnId.uuidString)", "deletedAt": "2025-01-01T00:00:00Z"}
+                ]
+            }
+            """
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let board = try decoder.decode(Board.self, from: json.data(using: .utf8)!)
+
+        // Should not find deleted card by UUID
+        XCTAssertNil(board.findTerminal(identifier: deletedId.uuidString))
+
+        // Should not find deleted card by name
+        XCTAssertNil(board.findTerminal(identifier: "Deleted Card"))
+    }
+
     // MARK: - Output Types Tests
 
     func testTerminalOutputFromCard() throws {
@@ -412,5 +508,483 @@ final class SharedModelsTests: XCTestCase {
         XCTAssertTrue(json.contains("false"))
         XCTAssertTrue(json.contains("xyz-789"))
         XCTAssertTrue(json.contains("In Progress"))
+    }
+
+    // MARK: - Additional Card Tests
+
+    func testCardMemberwiseInitializer() {
+        let id = UUID()
+        let columnId = UUID()
+        let tag = Tag(key: "env", value: "prod")
+        let deletedAt = Date()
+
+        let card = Card(
+            id: id,
+            title: "Test Card",
+            description: "Test description",
+            tags: [tag],
+            columnId: columnId,
+            orderIndex: 5,
+            workingDirectory: "/Users/test",
+            isFavourite: true,
+            badge: "urgent",
+            llmPrompt: "Some prompt",
+            llmNextAction: "Next action",
+            allowAutorun: true,
+            deletedAt: deletedAt
+        )
+
+        XCTAssertEqual(card.id, id)
+        XCTAssertEqual(card.title, "Test Card")
+        XCTAssertEqual(card.description, "Test description")
+        XCTAssertEqual(card.tags.count, 1)
+        XCTAssertEqual(card.columnId, columnId)
+        XCTAssertEqual(card.orderIndex, 5)
+        XCTAssertEqual(card.workingDirectory, "/Users/test")
+        XCTAssertTrue(card.isFavourite)
+        XCTAssertEqual(card.badge, "urgent")
+        XCTAssertEqual(card.llmPrompt, "Some prompt")
+        XCTAssertEqual(card.llmNextAction, "Next action")
+        XCTAssertTrue(card.allowAutorun)
+        XCTAssertEqual(card.deletedAt, deletedAt)
+    }
+
+    func testCardBadgesEmpty() {
+        let card = Card(
+            title: "Test",
+            columnId: UUID(),
+            badge: ""
+        )
+
+        XCTAssertTrue(card.badges.isEmpty)
+    }
+
+    func testCardBadgesSingleItem() {
+        let card = Card(
+            title: "Test",
+            columnId: UUID(),
+            badge: "urgent"
+        )
+
+        XCTAssertEqual(card.badges.count, 1)
+        XCTAssertEqual(card.badges[0], "urgent")
+    }
+
+    func testCardBadgesWithWhitespace() {
+        let card = Card(
+            title: "Test",
+            columnId: UUID(),
+            badge: "  urgent  ,  important  ,  "
+        )
+
+        XCTAssertEqual(card.badges.count, 2)
+        XCTAssertEqual(card.badges[0], "urgent")
+        XCTAssertEqual(card.badges[1], "important")
+    }
+
+    func testCardStalenessUnknown() {
+        let card = Card(
+            title: "Test",
+            tags: [],
+            columnId: UUID()
+        )
+
+        XCTAssertEqual(card.staleness, "unknown")
+        XCTAssertEqual(card.stalenessRank, 0)
+    }
+
+    func testCardStalenessFresh() {
+        let card = Card(
+            title: "Test",
+            tags: [Tag(key: "staleness", value: "Fresh")],
+            columnId: UUID()
+        )
+
+        XCTAssertEqual(card.staleness, "fresh")
+        XCTAssertEqual(card.stalenessRank, 1)
+    }
+
+    func testCardStalenessAgeing() {
+        let card = Card(
+            title: "Test",
+            tags: [Tag(key: "staleness", value: "AGEING")],
+            columnId: UUID()
+        )
+
+        XCTAssertEqual(card.staleness, "ageing")
+        XCTAssertEqual(card.stalenessRank, 2)
+    }
+
+    func testCardStalenessStale() {
+        let card = Card(
+            title: "Test",
+            tags: [Tag(key: "staleness", value: "stale")],
+            columnId: UUID()
+        )
+
+        XCTAssertEqual(card.staleness, "stale")
+        XCTAssertEqual(card.stalenessRank, 3)
+    }
+
+    func testCardStalenessOld() {
+        let card = Card(
+            title: "Test",
+            tags: [Tag(key: "staleness", value: "old")],
+            columnId: UUID()
+        )
+
+        XCTAssertEqual(card.staleness, "old")
+        XCTAssertEqual(card.stalenessRank, 3)
+    }
+
+    func testCardStalenessKeyCaseInsensitive() {
+        let card = Card(
+            title: "Test",
+            tags: [Tag(key: "STALENESS", value: "fresh")],
+            columnId: UUID()
+        )
+
+        XCTAssertEqual(card.staleness, "fresh")
+    }
+
+    func testCardIsDeletedTrue() {
+        let card = Card(
+            title: "Test",
+            columnId: UUID(),
+            deletedAt: Date()
+        )
+
+        XCTAssertTrue(card.isDeleted)
+    }
+
+    func testCardIsDeletedFalse() {
+        let card = Card(
+            title: "Test",
+            columnId: UUID(),
+            deletedAt: nil
+        )
+
+        XCTAssertFalse(card.isDeleted)
+    }
+
+    func testCardTagsDictionaryEmpty() {
+        let card = Card(
+            title: "Test",
+            tags: [],
+            columnId: UUID()
+        )
+
+        XCTAssertTrue(card.tagsDictionary.isEmpty)
+    }
+
+    func testCardTagsDictionaryMultiple() {
+        let card = Card(
+            title: "Test",
+            tags: [
+                Tag(key: "env", value: "prod"),
+                Tag(key: "team", value: "platform"),
+                Tag(key: "priority", value: "high"),
+            ],
+            columnId: UUID()
+        )
+
+        XCTAssertEqual(card.tagsDictionary.count, 3)
+        XCTAssertEqual(card.tagsDictionary["env"], "prod")
+        XCTAssertEqual(card.tagsDictionary["team"], "platform")
+        XCTAssertEqual(card.tagsDictionary["priority"], "high")
+    }
+
+    func testCardAllowAutorunDecoding() throws {
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test",
+                "columnId": "\(columnId.uuidString)",
+                "allowAutorun": true
+            }
+            """
+
+        let decoded = try JSONDecoder().decode(Card.self, from: json.data(using: .utf8)!)
+        XCTAssertTrue(decoded.allowAutorun)
+    }
+
+    func testCardAllowAutorunDefaultsFalse() throws {
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test",
+                "columnId": "\(columnId.uuidString)"
+            }
+            """
+
+        let decoded = try JSONDecoder().decode(Card.self, from: json.data(using: .utf8)!)
+        XCTAssertFalse(decoded.allowAutorun)
+    }
+
+    func testCardCodableRoundTrip() throws {
+        let original = Card(
+            title: "Test Card",
+            description: "Description",
+            tags: [Tag(key: "env", value: "test")],
+            columnId: UUID(),
+            orderIndex: 3,
+            workingDirectory: "/tmp",
+            isFavourite: true,
+            badge: "urgent,important",
+            llmPrompt: "Prompt",
+            llmNextAction: "Action",
+            allowAutorun: true
+        )
+
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(Card.self, from: data)
+
+        XCTAssertEqual(decoded.title, original.title)
+        XCTAssertEqual(decoded.description, original.description)
+        XCTAssertEqual(decoded.tags.count, 1)
+        XCTAssertEqual(decoded.orderIndex, original.orderIndex)
+        XCTAssertEqual(decoded.workingDirectory, original.workingDirectory)
+        XCTAssertEqual(decoded.isFavourite, original.isFavourite)
+        XCTAssertEqual(decoded.badge, original.badge)
+        XCTAssertEqual(decoded.llmPrompt, original.llmPrompt)
+        XCTAssertEqual(decoded.llmNextAction, original.llmNextAction)
+        XCTAssertEqual(decoded.allowAutorun, original.allowAutorun)
+    }
+
+    // MARK: - Additional OutputTypes Tests
+
+    func testTerminalOutputAllFields() throws {
+        let columnId = UUID()
+        let card = Card(
+            title: "Test Terminal",
+            description: "A test terminal",
+            tags: [Tag(key: "env", value: "prod")],
+            columnId: columnId,
+            orderIndex: 0,
+            workingDirectory: "/Users/test",
+            isFavourite: true,
+            badge: "urgent,important",
+            llmPrompt: "Node.js project",
+            llmNextAction: "Fix bug",
+            allowAutorun: true
+        )
+
+        let output = TerminalOutput(from: card, columnName: "In Progress")
+
+        XCTAssertEqual(output.id, card.id.uuidString)
+        XCTAssertEqual(output.name, "Test Terminal")
+        XCTAssertEqual(output.description, "A test terminal")
+        XCTAssertEqual(output.column, "In Progress")
+        XCTAssertEqual(output.columnId, columnId.uuidString)
+        XCTAssertEqual(output.tags["env"], "prod")
+        XCTAssertEqual(output.path, "/Users/test")
+        XCTAssertEqual(Set(output.badges), Set(["urgent", "important"]))
+        XCTAssertTrue(output.isFavourite)
+        XCTAssertEqual(output.llmPrompt, "Node.js project")
+        XCTAssertEqual(output.llmNextAction, "Fix bug")
+        XCTAssertTrue(output.allowAutorun)
+    }
+
+    func testTerminalOutputCodable() throws {
+        let card = Card(title: "Test", columnId: UUID())
+        let output = TerminalOutput(from: card, columnName: "Test Column")
+
+        let data = try JSONEncoder().encode(output)
+        let decoded = try JSONDecoder().decode(TerminalOutput.self, from: data)
+
+        XCTAssertEqual(decoded.name, output.name)
+        XCTAssertEqual(decoded.column, output.column)
+    }
+
+    func testColumnOutputAllFields() {
+        let column = Column(
+            id: UUID(),
+            name: "In Progress",
+            description: "Active work",
+            orderIndex: 1,
+            color: "#3B82F6"
+        )
+        let output = ColumnOutput(from: column, terminalCount: 5)
+
+        XCTAssertEqual(output.id, column.id.uuidString)
+        XCTAssertEqual(output.name, "In Progress")
+        XCTAssertEqual(output.description, "Active work")
+        XCTAssertEqual(output.color, "#3B82F6")
+        XCTAssertEqual(output.terminalCount, 5)
+    }
+
+    func testColumnOutputCodable() throws {
+        let column = Column(name: "Test", orderIndex: 0)
+        let output = ColumnOutput(from: column, terminalCount: 3)
+
+        let data = try JSONEncoder().encode(output)
+        let decoded = try JSONDecoder().decode(ColumnOutput.self, from: data)
+
+        XCTAssertEqual(decoded.name, output.name)
+        XCTAssertEqual(decoded.terminalCount, 3)
+    }
+
+    func testPendingTerminalOutputAllFields() {
+        let card = Card(
+            title: "Pending Terminal",
+            tags: [Tag(key: "project", value: "test")],
+            columnId: UUID(),
+            workingDirectory: "/tmp/project",
+            llmPrompt: "Python project",
+            llmNextAction: "Complete tests",
+            allowAutorun: true
+        )
+
+        let output = PendingTerminalOutput(from: card, columnName: "To Do", staleness: "fresh")
+
+        XCTAssertEqual(output.id, card.id.uuidString)
+        XCTAssertEqual(output.name, "Pending Terminal")
+        XCTAssertEqual(output.column, "To Do")
+        XCTAssertEqual(output.path, "/tmp/project")
+        XCTAssertEqual(output.llmNextAction, "Complete tests")
+        XCTAssertEqual(output.llmPrompt, "Python project")
+        XCTAssertTrue(output.allowAutorun)
+        XCTAssertEqual(output.staleness, "fresh")
+        XCTAssertEqual(output.tags["project"], "test")
+    }
+
+    func testPendingTerminalOutputCodable() throws {
+        let card = Card(title: "Test", columnId: UUID())
+        let output = PendingTerminalOutput(from: card, columnName: "Test", staleness: "stale")
+
+        let data = try JSONEncoder().encode(output)
+        let decoded = try JSONDecoder().decode(PendingTerminalOutput.self, from: data)
+
+        XCTAssertEqual(decoded.name, "Test")
+        XCTAssertEqual(decoded.staleness, "stale")
+    }
+
+    func testPendingSummaryCodable() throws {
+        let summary = PendingSummary(total: 10, withNextAction: 5, stale: 2, fresh: 3)
+
+        let data = try JSONEncoder().encode(summary)
+        let decoded = try JSONDecoder().decode(PendingSummary.self, from: data)
+
+        XCTAssertEqual(decoded.total, 10)
+        XCTAssertEqual(decoded.withNextAction, 5)
+        XCTAssertEqual(decoded.stale, 2)
+        XCTAssertEqual(decoded.fresh, 3)
+    }
+
+    func testPendingOutputCodable() throws {
+        let card = Card(title: "Test", columnId: UUID())
+        let terminal = PendingTerminalOutput(from: card, columnName: "Test", staleness: "fresh")
+        let summary = PendingSummary(total: 1, withNextAction: 0, stale: 0, fresh: 1)
+        let output = PendingOutput(terminals: [terminal], summary: summary)
+
+        let data = try JSONEncoder().encode(output)
+        let decoded = try JSONDecoder().decode(PendingOutput.self, from: data)
+
+        XCTAssertEqual(decoded.terminals.count, 1)
+        XCTAssertEqual(decoded.summary.total, 1)
+    }
+
+    func testErrorOutputInitialization() {
+        let error = ErrorOutput(error: "Something went wrong", code: 42)
+
+        XCTAssertEqual(error.error, "Something went wrong")
+        XCTAssertEqual(error.code, 42)
+    }
+
+    func testErrorOutputCodable() throws {
+        let error = ErrorOutput(error: "Test error", code: 1)
+
+        let data = try JSONEncoder().encode(error)
+        let decoded = try JSONDecoder().decode(ErrorOutput.self, from: data)
+
+        XCTAssertEqual(decoded.error, "Test error")
+        XCTAssertEqual(decoded.code, 1)
+    }
+
+    func testSetResponseCodable() throws {
+        let response = SetResponse(success: true, id: "test-123")
+
+        let data = try JSONEncoder().encode(response)
+        let decoded = try JSONDecoder().decode(SetResponse.self, from: data)
+
+        XCTAssertTrue(decoded.success)
+        XCTAssertEqual(decoded.id, "test-123")
+    }
+
+    func testMoveResponseCodable() throws {
+        let response = MoveResponse(success: true, id: "test-456", column: "Done")
+
+        let data = try JSONEncoder().encode(response)
+        let decoded = try JSONDecoder().decode(MoveResponse.self, from: data)
+
+        XCTAssertTrue(decoded.success)
+        XCTAssertEqual(decoded.id, "test-456")
+        XCTAssertEqual(decoded.column, "Done")
+    }
+
+    func testJSONHelperEncodeEmpty() throws {
+        let empty = ErrorOutput(error: "", code: 0)
+        let json = try JSONHelper.encode(empty)
+
+        XCTAssertTrue(json.contains("error"))
+        XCTAssertTrue(json.contains("code"))
+    }
+
+    func testJSONHelperEncodeNested() throws {
+        let card = Card(title: "Test", columnId: UUID())
+        let terminal = PendingTerminalOutput(from: card, columnName: "Test", staleness: "fresh")
+        let summary = PendingSummary(total: 1, withNextAction: 0, stale: 0, fresh: 1)
+        let output = PendingOutput(terminals: [terminal], summary: summary)
+
+        let json = try JSONHelper.encode(output)
+
+        XCTAssertTrue(json.contains("terminals"))
+        XCTAssertTrue(json.contains("summary"))
+        XCTAssertTrue(json.contains("total"))
+    }
+
+    // MARK: - JSONHelper Print Functions (Coverage Tests)
+
+    func testJSONHelperPrintJSONDoesNotCrash() {
+        // This test exercises printJSON to ensure it doesn't crash
+        // The output goes to stdout which we don't capture, but we verify execution
+        let error = ErrorOutput(error: "test", code: 1)
+        JSONHelper.printJSON(error)
+        // If we reach here, the function worked
+    }
+
+    func testJSONHelperPrintJSONWithComplexType() {
+        let card = Card(title: "Test", columnId: UUID())
+        let terminal = PendingTerminalOutput(from: card, columnName: "Col", staleness: "fresh")
+        let summary = PendingSummary(total: 1, withNextAction: 0, stale: 0, fresh: 1)
+        let output = PendingOutput(terminals: [terminal], summary: summary)
+
+        JSONHelper.printJSON(output)
+        // Function should complete without crash
+    }
+
+    func testJSONHelperPrintErrorJSONDoesNotCrash() {
+        // This test exercises printErrorJSON to ensure it doesn't crash
+        JSONHelper.printErrorJSON("Test error message")
+        // If we reach here, the function worked
+    }
+
+    func testJSONHelperPrintErrorJSONWithCustomCode() {
+        JSONHelper.printErrorJSON("Not found", code: 404)
+        // Function should complete without crash
+    }
+
+    func testJSONHelperPrintJSONWithSetResponse() {
+        let response = SetResponse(success: true, id: "test-123")
+        JSONHelper.printJSON(response)
+        // Should not crash
+    }
+
+    func testJSONHelperPrintJSONWithMoveResponse() {
+        let response = MoveResponse(success: false, id: "test-456", column: "Done")
+        JSONHelper.printJSON(response)
+        // Should not crash
     }
 }
