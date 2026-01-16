@@ -10,8 +10,9 @@ SHELL := /bin/bash
 .PHONY: version release release-major release-minor release-patch tag-release publish-release
 .PHONY: copy-help docs.help
 
-# Version from VERSION file
-VERSION := $(shell cat VERSION 2>/dev/null || echo "0.0.0")
+# Version from git tags (single source of truth)
+# Gets the most recent tag, strips 'v' prefix
+VERSION := $(shell git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.0")
 MAJOR := $(shell echo $(VERSION) | cut -d. -f1)
 MINOR := $(shell echo $(VERSION) | cut -d. -f2)
 PATCH := $(shell echo $(VERSION) | cut -d. -f3)
@@ -316,6 +317,7 @@ release-patch:
 	$(MAKE) tag-release NEW_VERSION=$$NEW_VERSION
 
 # Internal target to create and push a release tag
+# Version is derived entirely from git tags - no VERSION file needed
 tag-release:
 ifndef NEW_VERSION
 	$(error NEW_VERSION is not set)
@@ -342,31 +344,24 @@ endif
 			exit 1; \
 		fi; \
 	fi
-	@# Update VERSION file
-	@echo "$(NEW_VERSION)" > VERSION
-	@echo "Updated VERSION file to $(NEW_VERSION)"
-	@# Commit the version bump
-	@git add VERSION
-	@git commit -m "Bump version to $(NEW_VERSION)"
-	@echo "Committed version bump"
-	@# Create and push the tag
+	@# Create the tag (this IS the version - single source of truth)
 	@git tag -a "v$(NEW_VERSION)" -m "Release v$(NEW_VERSION)"
 	@echo "Created tag v$(NEW_VERSION)"
 	@echo ""
 	@echo "Ready to push. This will trigger the release workflow."
-	@read -p "Push to origin? [y/N]: " confirm; \
+	@read -p "Push tag to origin? [y/N]: " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
-		git push origin HEAD && git push origin "v$(NEW_VERSION)"; \
+		git push origin "v$(NEW_VERSION)"; \
 		echo ""; \
-		echo "=========================================="
+		echo "=========================================="; \
 		echo "Release v$(NEW_VERSION) pushed!"; \
 		echo "GitHub Actions will now build and publish the release."; \
-		echo "==========================================" ; \
+		echo "=========================================="; \
 	else \
 		echo ""; \
 		echo "Tag created locally but not pushed."; \
 		echo "To push later, run:"; \
-		echo "  git push origin HEAD && git push origin v$(NEW_VERSION)"; \
+		echo "  git push origin v$(NEW_VERSION)"; \
 	fi
 
 # Publish a release to GitHub (manual release when CI is unavailable)
