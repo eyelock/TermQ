@@ -1,50 +1,141 @@
 import Foundation
 import SwiftUI
 
-/// Bundle for localized resources
-private let localizedBundle: Bundle = {
-    // Get the resource bundle - check Contents/Resources first (for signed app), then Bundle.module
-    let resourceBundle: Bundle = {
-        if let resourcesPath = Bundle.main.resourceURL?.appendingPathComponent("TermQ_TermQ.bundle").path,
-            let bundle = Bundle(path: resourcesPath)
-        {
-            return bundle
-        }
-        return Bundle.module
-    }()
+/// Resource bundle containing all localizations
+private let resourceBundle: Bundle = {
+    // Check Contents/Resources first (for signed app), then Bundle.module
+    if let resourcesPath = Bundle.main.resourceURL?.appendingPathComponent("TermQ_TermQ.bundle").path,
+        let bundle = Bundle(path: resourcesPath)
+    {
+        return bundle
+    }
+    return Bundle.module
+}()
 
-    // Get the user's preferred language
-    let preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? ""
-
-    // If no preference or empty, use the resource bundle (system language)
-    guard !preferredLanguage.isEmpty else {
-        return resourceBundle
+/// Parse a .strings file into a dictionary, handling comments
+private func parseStringsFile(at url: URL) -> [String: String]? {
+    guard let content = try? String(contentsOf: url, encoding: .utf8) else {
+        return nil
     }
 
-    // Find the .lproj folder for the selected language
+    var result: [String: String] = [:]
+
+    // Remove block comments
+    var cleanContent = content
+    while let startRange = cleanContent.range(of: "/*"),
+        let endRange = cleanContent.range(of: "*/", range: startRange.upperBound..<cleanContent.endIndex)
+    {
+        cleanContent.removeSubrange(startRange.lowerBound...endRange.upperBound)
+    }
+
+    for line in cleanContent.components(separatedBy: .newlines) {
+        var line = line
+
+        // Remove line comments
+        if let commentRange = line.range(of: "//") {
+            line = String(line[..<commentRange.lowerBound])
+        }
+
+        line = line.trimmingCharacters(in: .whitespaces)
+
+        // Skip empty lines
+        guard !line.isEmpty, line.hasPrefix("\"") else { continue }
+
+        // Parse "key" = "value"; using regex-like approach
+        // Find first quoted string (key)
+        guard let keyStart = line.firstIndex(of: "\"") else { continue }
+        let afterKeyStart = line.index(after: keyStart)
+        guard afterKeyStart < line.endIndex,
+            let keyEnd = line[afterKeyStart...].firstIndex(of: "\"")
+        else { continue }
+
+        let key = String(line[afterKeyStart..<keyEnd])
+
+        // Find "=" and value
+        let afterKey = line.index(after: keyEnd)
+        guard afterKey < line.endIndex,
+            let equalsRange = line[afterKey...].range(of: "="),
+            let valueStart = line[equalsRange.upperBound...].firstIndex(of: "\"")
+        else { continue }
+
+        // Find end of value (handle escaped quotes)
+        let afterValueStart = line.index(after: valueStart)
+        guard afterValueStart < line.endIndex else { continue }
+
+        var valueEnd: String.Index?
+        var idx = afterValueStart
+        while idx < line.endIndex {
+            if line[idx] == "\"" {
+                // Check if escaped
+                let prevIdx = line.index(before: idx)
+                if prevIdx >= afterValueStart && line[prevIdx] == "\\" {
+                    idx = line.index(after: idx)
+                    continue
+                }
+                valueEnd = idx
+                break
+            }
+            idx = line.index(after: idx)
+        }
+
+        guard let valueEnd = valueEnd else { continue }
+        var value = String(line[afterValueStart..<valueEnd])
+
+        // Unescape common sequences
+        value = value.replacingOccurrences(of: "\\\"", with: "\"")
+        value = value.replacingOccurrences(of: "\\n", with: "\n")
+        value = value.replacingOccurrences(of: "\\\\", with: "\\")
+
+        result[key] = value
+    }
+
+    return result.isEmpty ? nil : result
+}
+
+/// Manually loaded strings dictionary for user's preferred language
+/// We parse .strings files directly because Bundle(path:) on .lproj folders
+/// doesn't work with localizedString() - it needs a proper bundle structure
+private let userStringsCache: [String: String]? = {
+    let preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? ""
+
+    // If no preference, return nil to use bundle's system language support
+    guard !preferredLanguage.isEmpty else {
+        return nil
+    }
+
     // Try exact match first, then base language code
     let languageCodes = [preferredLanguage, preferredLanguage.components(separatedBy: "-").first ?? preferredLanguage]
 
     for code in languageCodes {
-        if let path = resourceBundle.path(forResource: code, ofType: "lproj"),
-            let bundle = Bundle(path: path)
-        {
-            return bundle
+        if let lprojPath = resourceBundle.path(forResource: code, ofType: "lproj") {
+            let stringsURL = URL(fileURLWithPath: lprojPath).appendingPathComponent("Localizable.strings")
+            if let dict = parseStringsFile(at: stringsURL) {
+                return dict
+            }
         }
     }
 
-    // Fall back to resource bundle
-    return resourceBundle
+    return nil
 }()
 
-/// Helper to get localized string from the user's preferred language bundle
+/// Helper to get localized string
 private func localized(_ key: String) -> String {
-    localizedBundle.localizedString(forKey: key, value: nil, table: "Localizable")
+    // Use manually loaded strings if user has a preferred language
+    if let cache = userStringsCache, let value = cache[key] {
+        return value
+    }
+    // Fall back to bundle's localization (uses system language)
+    return resourceBundle.localizedString(forKey: key, value: nil, table: "Localizable")
 }
 
 /// Helper for strings with arguments
 private func localized(_ key: String, _ args: CVarArg...) -> String {
-    let format = localizedBundle.localizedString(forKey: key, value: nil, table: "Localizable")
+    let format: String
+    if let cache = userStringsCache, let value = cache[key] {
+        format = value
+    } else {
+        format = resourceBundle.localizedString(forKey: key, value: nil, table: "Localizable")
+    }
     return String(format: format, arguments: args)
 }
 
