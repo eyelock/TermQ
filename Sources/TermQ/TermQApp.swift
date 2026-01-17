@@ -528,3 +528,4 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
         NSWorkspace.shared.open(productionFolder)
     }
 #endif
+// Hotfix v0.6.4
