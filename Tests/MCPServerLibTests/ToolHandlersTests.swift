@@ -728,6 +728,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleSetNoUpdates() async throws {
+        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "To Do", orderIndex: 0)],
