@@ -50,6 +50,12 @@
           "title": "Themes & Appearance",
           "icon": "paintpalette",
           "keywords": ["theme", "color", "appearance", "font", "dark", "light", "dracula", "nord", "solarized"]
+        },
+        {
+          "id": "updates",
+          "title": "Automatic Updates",
+          "icon": "arrow.triangle.2.circlepath",
+          "keywords": ["update", "automatic", "sparkle", "version", "upgrade", "download", "release"]
         }
       ]
     },

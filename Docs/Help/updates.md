@@ -11,7 +11,7 @@ When updates are available:
 3. Click **Install Update** to download and install automatically
 4. TermQ will relaunch with the new version
 
-The entire process is seamless - your terminal sessions are preserved across updates.
+The entire process is seamless - your terminal sessions are preserved across updates (if using TMUX sessions).
 
 ## Checking for Updates Manually
 

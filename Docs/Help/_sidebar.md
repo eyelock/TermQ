@@ -7,6 +7,7 @@
   - [Zoom Mode & Search](zoom-search.md)
   - [Bin & Recovery](bin-recovery.md)
   - [Themes & Appearance](themes-appearance.md)
+  - [Automatic Updates](updates.md)
 
 - **Advanced Topics**
   - [Keyboard Shortcuts](keyboard-shortcuts.md)
@@ -18,6 +19,5 @@
   - [Configuration & Data](configuration.md)
 
 - **Further Info**
-  - [Automatic Updates](updates.md)
   - [Tips & Tricks](tips-tricks.md)
   - [About TermQ](about.md)
