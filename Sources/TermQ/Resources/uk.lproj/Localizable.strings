@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "Типова тема для нових терміналів";
 "settings.field.copy.on.select" = "Копіювати при виділенні";
 "settings.field.copy.on.select.help" = "Автоматично копіювати виділений текст";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "Кошик";

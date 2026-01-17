@@ -473,4 +473,59 @@ final class BoardTests: XCTestCase {
         XCTAssertEqual(targetCards.count, 3)
         XCTAssertEqual(targetCards[2].title, "Moving")  // Should be at end
     }
+
+    // MARK: - Add Card With Custom Defaults Tests
+
+    func testAddCardWithCustomWorkingDirectory() {
+        let column = Column(name: "Test", orderIndex: 0)
+        let board = Board(columns: [column], cards: [])
+        let customPath = "/custom/path"
+
+        let card = board.addCard(to: column, title: "Custom Path", workingDirectory: customPath)
+
+        XCTAssertEqual(card.workingDirectory, customPath)
+    }
+
+    func testAddCardWithCustomBackend() {
+        let column = Column(name: "Test", orderIndex: 0)
+        let board = Board(columns: [column], cards: [])
+
+        let card = board.addCard(to: column, title: "TMUX Card", backend: .tmux)
+
+        XCTAssertEqual(card.backend, .tmux)
+    }
+
+    func testAddCardWithDefaultWorkingDirectory() {
+        let column = Column(name: "Test", orderIndex: 0)
+        let board = Board(columns: [column], cards: [])
+
+        let card = board.addCard(to: column, title: "Default Path")
+
+        XCTAssertEqual(card.workingDirectory, NSHomeDirectory())
+    }
+
+    func testAddCardWithDefaultBackend() {
+        let column = Column(name: "Test", orderIndex: 0)
+        let board = Board(columns: [column], cards: [])
+
+        let card = board.addCard(to: column, title: "Default Backend")
+
+        XCTAssertEqual(card.backend, .direct)
+    }
+
+    func testAddCardWithCustomWorkingDirectoryAndBackend() {
+        let column = Column(name: "Test", orderIndex: 0)
+        let board = Board(columns: [column], cards: [])
+        let customPath = "/projects/myproject"
+
+        let card = board.addCard(
+            to: column,
+            title: "Full Custom",
+            workingDirectory: customPath,
+            backend: .tmux
+        )
+
+        XCTAssertEqual(card.workingDirectory, customPath)
+        XCTAssertEqual(card.backend, .tmux)
+    }
 }

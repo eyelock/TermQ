@@ -436,6 +436,12 @@ enum Strings {
         static var fieldThemeHelp: String { localized("settings.field.theme.help") }
         static var fieldCopyOnSelect: String { localized("settings.field.copy.on.select") }
         static var fieldCopyOnSelectHelp: String { localized("settings.field.copy.on.select.help") }
+        static var fieldDefaultWorkingDirectory: String { localized("settings.field.default.working.directory") }
+        static var fieldDefaultWorkingDirectoryHelp: String {
+            localized("settings.field.default.working.directory.help")
+        }
+        static var fieldDefaultBackend: String { localized("settings.field.default.backend") }
+        static var fieldDefaultBackendHelp: String { localized("settings.field.default.backend.help") }
 
         // General - Bin section
         static var sectionBin: String { localized("settings.section.bin") }

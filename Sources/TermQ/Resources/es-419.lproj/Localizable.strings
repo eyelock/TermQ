@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "Tema predeterminado para nuevas terminales";
 "settings.field.copy.on.select" = "Copiar al seleccionar";
 "settings.field.copy.on.select.help" = "Copiar automáticamente el texto seleccionado";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "Papelera";

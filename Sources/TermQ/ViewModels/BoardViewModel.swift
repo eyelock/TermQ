@@ -142,7 +142,17 @@ class BoardViewModel: ObservableObject {
     // MARK: - Card Operations
 
     func addTerminal(to column: Column) {
-        let card = board.addCard(to: column)
+        // Read defaults from UserDefaults
+        let defaultWorkingDirectory =
+            UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
+        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
+        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+
+        let card = board.addCard(
+            to: column,
+            workingDirectory: defaultWorkingDirectory,
+            backend: defaultBackend
+        )
         objectWillChange.send()
         save()
 
