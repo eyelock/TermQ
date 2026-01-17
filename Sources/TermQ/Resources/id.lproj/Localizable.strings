@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autorun dinonaktifkan secara global";
 "editor.field.autorun.enable.hint" = "Aktifkan di Pengaturan > Alat";
 
+"editor.allow.osc.clipboard" = "Izinkan akses clipboard OSC 52";
+"editor.allow.osc.clipboard.help" = "Izinkan terminal ini mengakses clipboard sistem melalui urutan escape OSC 52";
+"editor.confirm.external.modifications" = "Memerlukan konfirmasi untuk modifikasi LLM eksternal";
+"editor.confirm.external.modifications.help" = "Tampilkan konfirmasi ketika proses eksternal memodifikasi konteks LLM terminal ini";
+"editor.disabled.globally" = "Dinonaktifkan secara global";
+
+// Editor - Security section
+"editor.section.security" = "Keamanan";
+
 // Editor - Tags section
 "editor.section.tags" = "Tag";
 "editor.field.tags" = "Tag";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Terapkan ke Perintah Awal";
 "editor.field.apply.to.init.command.help" = "Gunakan perintah yang dihasilkan sebagai perintah awal";
 "editor.no.llm.prompt.warning" = "Tidak ada prompt LLM yang dikonfigurasi";
-"editor.non.interactive.note" = "Catatan: Perintah berjalan secara non-interaktif";
+"editor.interactive.mode.toggle" = "Mode Interaktif";
+"editor.interactive.mode.help" = "Saat nonaktif, menambahkan flag -p untuk eksekusi non-interaktif (berguna untuk tugas otomatis)";
+"editor.non.interactive.mode.note" = "Mode non-interaktif menjalankan tugas dan keluar tanpa prompt pengguna";
 
 "editor.cancel" = "Batal";
 "editor.save" = "Simpan";
@@ -309,7 +320,7 @@
 "alert.success" = "Berhasil";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Data & Keamanan";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Keamanan";
+"settings.allow.osc.clipboard" = "Izinkan akses clipboard OSC 52";
+"settings.allow.osc.clipboard.help" = "Izinkan program terminal untuk membaca dan menulis clipboard sistem menggunakan urutan escape OSC 52";
+"settings.confirm.external.modifications" = "Memerlukan konfirmasi untuk modifikasi LLM eksternal";
+"settings.confirm.external.modifications.help" = "Tampilkan dialog konfirmasi ketika proses eksternal mencoba memodifikasi konteks LLM terminal melalui URL termq://";
+// MARK: - Security
+"security.external.modification.title" = "Permintaan Modifikasi Eksternal";
+"security.external.modification.message" = "Proses eksternal mencoba memodifikasi konteks LLM untuk terminal '%@':
+
+%@
+
+Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
+"security.allow" = "Izinkan";
+"security.deny" = "Tolak";
+"security.allow.disable.prompt" = "Izinkan & Jangan Tanya Lagi";
+"security.osc.clipboard.enabled" = "Akses clipboard OSC 52 diaktifkan";
+"security.osc.clipboard.disabled" = "Akses clipboard OSC 52 dinonaktifkan";

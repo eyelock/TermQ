@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autokörning inaktiverad globalt";
 "editor.field.autorun.enable.hint" = "Aktivera i Inställningar > Verktyg";
 
+"editor.allow.osc.clipboard" = "Tillåt OSC 52 urklippsåtkomst";
+"editor.allow.osc.clipboard.help" = "Tillåt denna terminal att komma åt systemets urklipp via OSC 52-escape-sekvenser";
+"editor.confirm.external.modifications" = "Kräv bekräftelse för externa LLM-ändringar";
+"editor.confirm.external.modifications.help" = "Visa bekräftelse när externa processer ändrar denna terminals LLM-kontext";
+"editor.disabled.globally" = "Inaktiverad globalt";
+
+// Editor - Security section
+"editor.section.security" = "Säkerhet";
+
 // Editor - Tags section
 "editor.section.tags" = "Taggar";
 "editor.field.tags" = "Taggar";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Tillämpa på startkommando";
 "editor.field.apply.to.init.command.help" = "Använd genererat kommando som startkommando";
 "editor.no.llm.prompt.warning" = "Ingen LLM-prompt konfigurerad";
-"editor.non.interactive.note" = "Obs: Kommandon körs icke-interaktivt";
+"editor.interactive.mode.toggle" = "Interaktivt läge";
+"editor.interactive.mode.help" = "När av, lägger till -p-flagga för icke-interaktiv körning (användbart för automatiserade uppgifter)";
+"editor.non.interactive.mode.note" = "Icke-interaktivt läge kör uppgiften och avslutar utan användarpromptar";
 
 "editor.cancel" = "Avbryt";
 "editor.save" = "Spara";
@@ -309,7 +320,7 @@
 "alert.success" = "Lyckades";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Data och säkerhet";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Säkerhet";
+"settings.allow.osc.clipboard" = "Tillåt OSC 52 urklippsåtkomst";
+"settings.allow.osc.clipboard.help" = "Tillåt terminalprogram att läsa och skriva till systemets urklipp med hjälp av OSC 52-escape-sekvenser";
+"settings.confirm.external.modifications" = "Kräv bekräftelse för externa LLM-ändringar";
+"settings.confirm.external.modifications.help" = "Visa en bekräftelsedialog när externa processer försöker ändra terminalens LLM-kontext via termq://-URL:er";
+// MARK: - Security
+"security.external.modification.title" = "Begäran om extern ändring";
+"security.external.modification.message" = "En extern process försöker ändra LLM-kontexten för terminalen '%@':
+
+%@
+
+Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
+"security.allow" = "Tillåt";
+"security.deny" = "Neka";
+"security.allow.disable.prompt" = "Tillåt och fråga inte igen";
+"security.osc.clipboard.enabled" = "OSC 52 urklippsåtkomst aktiverad";
+"security.osc.clipboard.disabled" = "OSC 52 urklippsåtkomst inaktiverad";

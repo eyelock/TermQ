@@ -148,6 +148,13 @@ final class BoardLoaderTests: XCTestCase {
         XCTAssertTrue(error.errorDescription!.contains("decode"))
     }
 
+    func testLoadErrorCoordinationFailedDescription() {
+        let error = BoardLoader.LoadError.coordinationFailed("Lock acquisition failed")
+        XCTAssertNotNil(error.errorDescription)
+        XCTAssertTrue(error.errorDescription!.contains("Lock acquisition failed"))
+        XCTAssertTrue(error.errorDescription!.contains("coordination"))
+    }
+
     // MARK: - BoardWriter.loadRawBoard Tests
 
     func testLoadRawBoardSuccess() throws {
@@ -580,6 +587,13 @@ final class BoardLoaderTests: XCTestCase {
         let error = BoardWriter.WriteError.writeFailed("Permission denied")
         XCTAssertNotNil(error.errorDescription)
         XCTAssertTrue(error.errorDescription!.contains("Permission denied"))
+    }
+
+    func testWriteErrorCoordinationFailedDescription() {
+        let error = BoardWriter.WriteError.coordinationFailed("Unable to acquire lock")
+        XCTAssertNotNil(error.errorDescription)
+        XCTAssertTrue(error.errorDescription!.contains("Unable to acquire lock"))
+        XCTAssertTrue(error.errorDescription!.contains("coordination"))
     }
 
     // MARK: - findCardIndex Edge Cases

@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autorun wyłączony globalnie";
 "editor.field.autorun.enable.hint" = "Włącz w Ustawienia > Narzędzia";
 
+"editor.allow.osc.clipboard" = "Zezwól na dostęp do schowka OSC 52";
+"editor.allow.osc.clipboard.help" = "Zezwól temu terminalowi na dostęp do schowka systemowego za pomocą sekwencji ucieczki OSC 52";
+"editor.confirm.external.modifications" = "Wymagaj potwierdzenia zewnętrznych modyfikacji LLM";
+"editor.confirm.external.modifications.help" = "Wyświetl potwierdzenie, gdy zewnętrzne procesy modyfikują kontekst LLM tego terminala";
+"editor.disabled.globally" = "Wyłączone globalnie";
+
+// Editor - Security section
+"editor.section.security" = "Bezpieczeństwo";
+
 // Editor - Tags section
 "editor.section.tags" = "Tagi";
 "editor.field.tags" = "Tagi";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Zastosuj do polecenia początkowego";
 "editor.field.apply.to.init.command.help" = "Użyj wygenerowanego polecenia jako początkowego";
 "editor.no.llm.prompt.warning" = "Nie skonfigurowano promptu LLM";
-"editor.non.interactive.note" = "Uwaga: Polecenia są uruchamiane nieinteraktywnie";
+"editor.interactive.mode.toggle" = "Tryb interaktywny";
+"editor.interactive.mode.help" = "Po wyłączeniu dodaje flagę -p dla nieinteraktywnego wykonania (przydatne do zautomatyzowanych zadań)";
+"editor.non.interactive.mode.note" = "Tryb nieinteraktywny uruchamia zadanie i kończy bez pytań do użytkownika";
 
 "editor.cancel" = "Anuluj";
 "editor.save" = "Zapisz";
@@ -309,7 +320,7 @@
 "alert.success" = "Sukces";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Dane i bezpieczeństwo";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Bezpieczeństwo";
+"settings.allow.osc.clipboard" = "Zezwól na dostęp do schowka OSC 52";
+"settings.allow.osc.clipboard.help" = "Zezwól programom terminalowym na odczyt i zapis schowka systemowego za pomocą sekwencji ucieczki OSC 52";
+"settings.confirm.external.modifications" = "Wymagaj potwierdzenia zewnętrznych modyfikacji LLM";
+"settings.confirm.external.modifications.help" = "Wyświetl okno potwierdzenia, gdy zewnętrzne procesy próbują zmodyfikować kontekst LLM terminala przez adresy URL termq://";
+// MARK: - Security
+"security.external.modification.title" = "Żądanie zewnętrznej modyfikacji";
+"security.external.modification.message" = "Zewnętrzny proces próbuje zmodyfikować kontekst LLM dla terminala '%@':
+
+%@
+
+To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym terminalem.";
+"security.allow" = "Zezwól";
+"security.deny" = "Odmów";
+"security.allow.disable.prompt" = "Zezwól i nie pytaj ponownie";
+"security.osc.clipboard.enabled" = "Dostęp do schowka OSC 52 włączony";
+"security.osc.clipboard.disabled" = "Dostęp do schowka OSC 52 wyłączony";

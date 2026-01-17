@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "自動実行はグローバルで無効です";
 "editor.field.autorun.enable.hint" = "設定 > ツールで有効化";
 
+"editor.allow.osc.clipboard" = "OSC 52クリップボードアクセスを許可";
+"editor.allow.osc.clipboard.help" = "このターミナルがOSC 52エスケープシーケンスを介してシステムクリップボードにアクセスすることを許可します";
+"editor.confirm.external.modifications" = "外部LLM変更には確認が必要";
+"editor.confirm.external.modifications.help" = "外部プロセスがこのターミナルのLLMコンテキストを変更したときに確認を表示します";
+"editor.disabled.globally" = "グローバルに無効";
+
+// Editor - Security section
+"editor.section.security" = "セキュリティ";
+
 // Editor - Tags section
 "editor.section.tags" = "タグ";
 "editor.field.tags" = "タグ";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "初期化コマンドに適用";
 "editor.field.apply.to.init.command.help" = "生成したコマンドを初期化コマンドとして使用";
 "editor.no.llm.prompt.warning" = "LLMプロンプトが設定されていません";
-"editor.non.interactive.note" = "注意：コマンドは非対話モードで実行されます";
+"editor.interactive.mode.toggle" = "インタラクティブモード";
+"editor.interactive.mode.help" = "オフの場合、非対話型実行用に-pフラグを追加します（自動化タスクに便利）";
+"editor.non.interactive.mode.note" = "非対話モードはタスクを実行し、ユーザープロンプトなしで終了します";
 
 "editor.cancel" = "キャンセル";
 "editor.save" = "保存";
@@ -309,7 +320,7 @@
 "alert.success" = "成功";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "データとセキュリティ";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "セキュリティ";
+"settings.allow.osc.clipboard" = "OSC 52クリップボードアクセスを許可";
+"settings.allow.osc.clipboard.help" = "ターミナルプログラムがOSC 52エスケープシーケンスを使用してシステムクリップボードを読み書きすることを許可します";
+"settings.confirm.external.modifications" = "外部LLM変更には確認が必要";
+"settings.confirm.external.modifications.help" = "外部プロセスがtermq:// URLを介してターミナルLLMコンテキストを変更しようとしたときに確認ダイアログを表示します";
+// MARK: - Security
+"security.external.modification.title" = "外部変更リクエスト";
+"security.external.modification.message" = "外部プロセスがターミナル '%@' のLLMコンテキストを変更しようとしています:
+
+%@
+
+これにより、AIアシスタントがこのターミナルとどのように対話するかに影響を与える可能性があります。";
+"security.allow" = "許可";
+"security.deny" = "拒否";
+"security.allow.disable.prompt" = "許可して次回から確認しない";
+"security.osc.clipboard.enabled" = "OSC 52クリップボードアクセスが有効";
+"security.osc.clipboard.disabled" = "OSC 52クリップボードアクセスが無効";

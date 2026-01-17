@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "التشغيل التلقائي معطل عالميًا";
 "editor.field.autorun.enable.hint" = "تفعيل في الإعدادات > الأدوات";
 
+"editor.allow.osc.clipboard" = "السماح بالوصول إلى الحافظة عبر OSC 52";
+"editor.allow.osc.clipboard.help" = "السماح لهذه الطرفية بالوصول إلى حافظة النظام عبر تسلسلات OSC 52";
+"editor.confirm.external.modifications" = "طلب تأكيد للتعديلات الخارجية على LLM";
+"editor.confirm.external.modifications.help" = "إظهار تأكيد عندما تحاول العمليات الخارجية تعديل سياق LLM لهذه الطرفية";
+"editor.disabled.globally" = "معطل عالميًا";
+
+// Editor - Security section
+"editor.section.security" = "الأمان";
+
 // Editor - Tags section
 "editor.section.tags" = "الوسوم";
 "editor.field.tags" = "الوسوم";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "تطبيق كأمر بدء";
 "editor.field.apply.to.init.command.help" = "استخدام الأمر المُنشأ كأمر بدء";
 "editor.no.llm.prompt.warning" = "لم يتم تكوين موجه LLM";
-"editor.non.interactive.note" = "ملاحظة: الأوامر تعمل بشكل غير تفاعلي";
+"editor.interactive.mode.toggle" = "الوضع التفاعلي";
+"editor.interactive.mode.help" = "عند الإيقاف، يضيف علامة -p للتنفيذ غير التفاعلي (مفيد للمهام الآلية)";
+"editor.non.interactive.mode.note" = "الوضع غير التفاعلي ينفذ المهمة ويخرج بدون طلبات من المستخدم";
 
 "editor.cancel" = "إلغاء";
 "editor.save" = "حفظ";
@@ -309,7 +320,7 @@
 "alert.success" = "نجاح";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "البيانات والأمان";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "الأمان";
+"settings.allow.osc.clipboard" = "السماح بالوصول إلى الحافظة عبر OSC 52";
+"settings.allow.osc.clipboard.help" = "السماح لبرامج الطرفية بالقراءة والكتابة إلى حافظة النظام باستخدام تسلسلات OSC 52";
+"settings.confirm.external.modifications" = "طلب تأكيد للتعديلات الخارجية على LLM";
+"settings.confirm.external.modifications.help" = "إظهار مربع حوار تأكيد عندما تحاول العمليات الخارجية تعديل سياق LLM للطرفية عبر عناوين URL termq://";
+// MARK: - Security
+"security.external.modification.title" = "طلب تعديل خارجي";
+"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':
+
+%@
+
+قد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
+"security.allow" = "سماح";
+"security.deny" = "رفض";
+"security.allow.disable.prompt" = "السماح وعدم السؤال مجدداً";
+"security.osc.clipboard.enabled" = "تم تمكين الوصول إلى الحافظة OSC 52";
+"security.osc.clipboard.disabled" = "تم تعطيل الوصول إلى الحافظة OSC 52";

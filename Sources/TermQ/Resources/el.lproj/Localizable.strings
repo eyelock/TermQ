@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Η αυτόματη εκτέλεση είναι απενεργοποιημένη καθολικά";
 "editor.field.autorun.enable.hint" = "Ενεργοποίηση στις Ρυθμίσεις > Εργαλεία";
 
+"editor.allow.osc.clipboard" = "Επιτρέψτε πρόσβαση στο πρόχειρο OSC 52";
+"editor.allow.osc.clipboard.help" = "Επιτρέψτε σε αυτό το τερματικό να έχει πρόσβαση στο πρόχειρο του συστήματος μέσω ακολουθιών διαφυγής OSC 52";
+"editor.confirm.external.modifications" = "Απαιτείται επιβεβαίωση για εξωτερικές τροποποιήσεις LLM";
+"editor.confirm.external.modifications.help" = "Εμφάνιση επιβεβαίωσης όταν εξωτερικές διεργασίες τροποποιούν το πλαίσιο LLM αυτού του τερματικού";
+"editor.disabled.globally" = "Απενεργοποιημένο καθολικά";
+
+// Editor - Security section
+"editor.section.security" = "Ασφάλεια";
+
 // Editor - Tags section
 "editor.section.tags" = "Ετικέτες";
 "editor.field.tags" = "Ετικέτες";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Εφαρμογή ως αρχική εντολή";
 "editor.field.apply.to.init.command.help" = "Χρήση της παραγόμενης εντολής ως αρχική";
 "editor.no.llm.prompt.warning" = "Δεν έχει διαμορφωθεί προτροπή LLM";
-"editor.non.interactive.note" = "Σημείωση: Οι εντολές εκτελούνται μη διαδραστικά";
+"editor.interactive.mode.toggle" = "Διαδραστική λειτουργία";
+"editor.interactive.mode.help" = "Όταν είναι απενεργοποιημένο, προσθέτει τη σημαία -p για μη διαδραστική εκτέλεση (χρήσιμο για αυτοματοποιημένες εργασίες)";
+"editor.non.interactive.mode.note" = "Η μη διαδραστική λειτουργία εκτελεί την εργασία και τερματίζει χωρίς προτροπές χρήστη";
 
 "editor.cancel" = "Ακύρωση";
 "editor.save" = "Αποθήκευση";
@@ -309,7 +320,7 @@
 "alert.success" = "Επιτυχία";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Δεδομένα & Ασφάλεια";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Ασφάλεια";
+"settings.allow.osc.clipboard" = "Επιτρέψτε πρόσβαση στο πρόχειρο OSC 52";
+"settings.allow.osc.clipboard.help" = "Επιτρέψτε στα προγράμματα τερματικού να διαβάζουν και να γράφουν στο πρόχειρο του συστήματος χρησιμοποιώντας ακολουθίες διαφυγής OSC 52";
+"settings.confirm.external.modifications" = "Απαιτείται επιβεβαίωση για εξωτερικές τροποποιήσεις LLM";
+"settings.confirm.external.modifications.help" = "Εμφάνιση διαλόγου επιβεβαίωσης όταν εξωτερικές διεργασίες προσπαθούν να τροποποιήσουν το πλαίσιο LLM του τερματικού μέσω URL termq://";
+// MARK: - Security
+"security.external.modification.title" = "Αίτημα εξωτερικής τροποποίησης";
+"security.external.modification.message" = "Μια εξωτερική διεργασία προσπαθεί να τροποποιήσει το πλαίσιο LLM για το τερματικό '%@':
+
+%@
+
+Αυτό μπορεί να επηρεάσει τον τρόπο αλληλεπίδρασης των βοηθών AI με αυτό το τερματικό.";
+"security.allow" = "Επιτρέπεται";
+"security.deny" = "Απόρριψη";
+"security.allow.disable.prompt" = "Επιτρέπεται χωρίς επανερώτηση";
+"security.osc.clipboard.enabled" = "Πρόσβαση στο πρόχειρο OSC 52 ενεργοποιημένη";
+"security.osc.clipboard.disabled" = "Πρόσβαση στο πρόχειρο OSC 52 απενεργοποιημένη";

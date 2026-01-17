@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Execução automática desabilitada globalmente";
 "editor.field.autorun.enable.hint" = "Habilitar em Configurações > Ferramentas";
 
+"editor.allow.osc.clipboard" = "Permitir acesso à área de transferência OSC 52";
+"editor.allow.osc.clipboard.help" = "Permitir que este terminal acesse a área de transferência do sistema via sequências de escape OSC 52";
+"editor.confirm.external.modifications" = "Exigir confirmação para modificações LLM externas";
+"editor.confirm.external.modifications.help" = "Mostrar confirmação quando processos externos modificarem o contexto LLM deste terminal";
+"editor.disabled.globally" = "Desativado globalmente";
+
+// Editor - Security section
+"editor.section.security" = "Segurança";
+
 // Editor - Tags section
 "editor.section.tags" = "Tags";
 "editor.field.tags" = "Tags";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Aplicar ao comando inicial";
 "editor.field.apply.to.init.command.help" = "Usar comando gerado como comando inicial";
 "editor.no.llm.prompt.warning" = "Nenhum prompt LLM configurado";
-"editor.non.interactive.note" = "Nota: Comandos são executados de forma não interativa";
+"editor.interactive.mode.toggle" = "Modo interativo";
+"editor.interactive.mode.help" = "Quando desativado, adiciona a flag -p para execução não interativa (útil para tarefas automatizadas)";
+"editor.non.interactive.mode.note" = "O modo não interativo executa a tarefa e sai sem prompts do usuário";
 
 "editor.cancel" = "Cancelar";
 "editor.save" = "Salvar";
@@ -309,7 +320,7 @@
 "alert.success" = "Sucesso";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Dados e segurança";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Segurança";
+"settings.allow.osc.clipboard" = "Permitir acesso à área de transferência OSC 52";
+"settings.allow.osc.clipboard.help" = "Permitir que programas de terminal leiam e escrevam na área de transferência do sistema usando sequências de escape OSC 52";
+"settings.confirm.external.modifications" = "Exigir confirmação para modificações LLM externas";
+"settings.confirm.external.modifications.help" = "Mostrar diálogo de confirmação quando processos externos tentarem modificar o contexto LLM do terminal via URLs termq://";
+// MARK: - Security
+"security.external.modification.title" = "Solicitação de modificação externa";
+"security.external.modification.message" = "Um processo externo está tentando modificar o contexto LLM para o terminal '%@':
+
+%@
+
+Isso pode afetar como os assistentes de IA interagem com este terminal.";
+"security.allow" = "Permitir";
+"security.deny" = "Negar";
+"security.allow.disable.prompt" = "Permitir e não perguntar novamente";
+"security.osc.clipboard.enabled" = "Acesso à área de transferência OSC 52 ativado";
+"security.osc.clipboard.disabled" = "Acesso à área de transferência OSC 52 desativado";

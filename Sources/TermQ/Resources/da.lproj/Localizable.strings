@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autokørsel deaktiveret globalt";
 "editor.field.autorun.enable.hint" = "Aktiver i Indstillinger > Værktøjer";
 
+"editor.allow.osc.clipboard" = "Tillad OSC 52 udklipsholder-adgang";
+"editor.allow.osc.clipboard.help" = "Tillad denne terminal at tilgå systemudklipsholderen via OSC 52 escape-sekvenser";
+"editor.confirm.external.modifications" = "Kræv bekræftelse for eksterne LLM-ændringer";
+"editor.confirm.external.modifications.help" = "Vis bekræftelse, når eksterne processer ændrer denne terminals LLM-kontekst";
+"editor.disabled.globally" = "Deaktiveret globalt";
+
+// Editor - Security section
+"editor.section.security" = "Sikkerhed";
+
 // Editor - Tags section
 "editor.section.tags" = "Tags";
 "editor.field.tags" = "Tags";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Anvend på startkommando";
 "editor.field.apply.to.init.command.help" = "Brug genereret kommando som startkommando";
 "editor.no.llm.prompt.warning" = "Ingen LLM-prompt konfigureret";
-"editor.non.interactive.note" = "Bemærk: Kommandoer køres ikke-interaktivt";
+"editor.interactive.mode.toggle" = "Interaktiv tilstand";
+"editor.interactive.mode.help" = "Når slået fra, tilføjer -p flag for ikke-interaktiv kørsel (nyttigt til automatiserede opgaver)";
+"editor.non.interactive.mode.note" = "Ikke-interaktiv tilstand kører opgaven og afslutter uden brugerprompter";
 
 "editor.cancel" = "Annuller";
 "editor.save" = "Gem";
@@ -309,7 +320,7 @@
 "alert.success" = "Succes";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Data og sikkerhed";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Sikkerhed";
+"settings.allow.osc.clipboard" = "Tillad OSC 52 udklipsholder-adgang";
+"settings.allow.osc.clipboard.help" = "Tillad terminalprogrammer at læse og skrive til systemudklipsholderen ved hjælp af OSC 52 escape-sekvenser";
+"settings.confirm.external.modifications" = "Kræv bekræftelse for eksterne LLM-ændringer";
+"settings.confirm.external.modifications.help" = "Vis en bekræftelsesdialog, når eksterne processer forsøger at ændre terminal LLM-kontekst via termq:// URL'er";
+// MARK: - Security
+"security.external.modification.title" = "Anmodning om ekstern ændring";
+"security.external.modification.message" = "En ekstern proces forsøger at ændre LLM-kontekst for terminalen '%@':
+
+%@
+
+Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
+"security.allow" = "Tillad";
+"security.deny" = "Afvis";
+"security.allow.disable.prompt" = "Tillad og spørg ikke igen";
+"security.osc.clipboard.enabled" = "OSC 52 udklipsholder-adgang aktiveret";
+"security.osc.clipboard.disabled" = "OSC 52 udklipsholder-adgang deaktiveret";

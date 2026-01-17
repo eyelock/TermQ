@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
 "editor.field.autorun.enable.hint" = "Enable in Settings > Tools";
 
+"editor.allow.osc.clipboard" = "Allow OSC 52 clipboard access";
+"editor.allow.osc.clipboard.help" = "Allow this terminal to access the system clipboard via OSC 52 escape sequences";
+"editor.confirm.external.modifications" = "Require confirmation for external LLM modifications";
+"editor.confirm.external.modifications.help" = "Show confirmation when external processes modify this terminal's LLM context";
+"editor.disabled.globally" = "Disabled globally";
+
+// Editor - Security section
+"editor.section.security" = "Security";
+
 // Editor - Tags section
 "editor.section.tags" = "Tags";
 "editor.field.tags" = "Tags";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Apply to Init Command";
 "editor.field.apply.to.init.command.help" = "Use generated command as init command";
 "editor.no.llm.prompt.warning" = "No LLM prompt configured";
-"editor.non.interactive.note" = "Note: Commands run non-interactively";
+"editor.interactive.mode.toggle" = "Interactive Mode";
+"editor.interactive.mode.help" = "When off, adds -p flag for non-interactive/headless execution (useful for automated tasks)";
+"editor.non.interactive.mode.note" = "Non-interactive mode runs the task and exits without user prompts";
 
 "editor.cancel" = "Cancel";
 "editor.save" = "Save";
@@ -309,7 +320,7 @@
 "alert.success" = "Success";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Data & Security";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Security";
+"settings.allow.osc.clipboard" = "Allow OSC 52 clipboard access";
+"settings.allow.osc.clipboard.help" = "Allow terminal programmes to read and write the system clipboard using OSC 52 escape sequences";
+"settings.confirm.external.modifications" = "Require confirmation for external LLM modifications";
+"settings.confirm.external.modifications.help" = "Show a confirmation dialogue when external processes try to modify terminal LLM context via termq:// URLs";
+// MARK: - Security
+"security.external.modification.title" = "External Modification Request";
+"security.external.modification.message" = "An external process is trying to modify LLM context for terminal '%@':
+
+%@
+
+This could affect how AI assistants interact with this terminal.";
+"security.allow" = "Allow";
+"security.deny" = "Deny";
+"security.allow.disable.prompt" = "Allow & Don't Ask Again";
+"security.osc.clipboard.enabled" = "OSC 52 clipboard access enabled";
+"security.osc.clipboard.disabled" = "OSC 52 clipboard access disabled";

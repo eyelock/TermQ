@@ -318,12 +318,19 @@ enum Strings {
         static var sectionAutomation: String { localized("editor.section.automation") }
         static var fieldInitCommand: String { localized("editor.field.init.command") }
         static var fieldInitCommandHelp: String { localized("editor.field.init.command.help") }
+        // Security section
+        static var sectionSecurity: String { localized("editor.section.security") }
         static var fieldSafePaste: String { localized("editor.field.safe.paste") }
         static var fieldSafePasteHelp: String { localized("editor.field.safe.paste.help") }
         static var fieldAllowAutorun: String { localized("editor.field.allow.autorun") }
         static var fieldAllowAutorunHelp: String { localized("editor.field.allow.autorun.help") }
         static var fieldAutorunDisabledGlobally: String { localized("editor.field.autorun.disabled.globally") }
         static var fieldAutorunEnableHint: String { localized("editor.field.autorun.enable.hint") }
+        static var allowOscClipboard: String { localized("editor.allow.osc.clipboard") }
+        static var allowOscClipboardHelp: String { localized("editor.allow.osc.clipboard.help") }
+        static var confirmExternalModifications: String { localized("editor.confirm.external.modifications") }
+        static var confirmExternalModificationsHelp: String { localized("editor.confirm.external.modifications.help") }
+        static var disabledGlobally: String { localized("editor.disabled.globally") }
 
         // Tags section
         static var sectionTags: String { localized("editor.section.tags") }
@@ -346,7 +353,9 @@ enum Strings {
         static var fieldApplyToInitCommand: String { localized("editor.field.apply.to.init.command") }
         static var fieldApplyToInitCommandHelp: String { localized("editor.field.apply.to.init.command.help") }
         static var noLlmPromptWarning: String { localized("editor.no.llm.prompt.warning") }
-        static var nonInteractiveNote: String { localized("editor.non.interactive.note") }
+        static var interactiveModeToggle: String { localized("editor.interactive.mode.toggle") }
+        static var interactiveModeHelp: String { localized("editor.interactive.mode.help") }
+        static var nonInteractiveModeNote: String { localized("editor.non.interactive.mode.note") }
 
         static var cancel: String { localized("editor.cancel") }
         static var save: String { localized("editor.save") }
@@ -371,6 +380,17 @@ enum Strings {
             static var global: String { localized("editor.environment.global") }
             static var secretWarning: String { localized("editor.environment.secret.warning") }
         }
+    }
+
+    // MARK: - Security
+    enum Security {
+        static var externalModificationTitle: String { localized("security.external.modification.title") }
+        static var externalModificationMessage: String { localized("security.external.modification.message") }
+        static var allow: String { localized("security.allow") }
+        static var deny: String { localized("security.deny") }
+        static var allowAndDisablePrompt: String { localized("security.allow.disable.prompt") }
+        static var oscClipboardEnabled: String { localized("security.osc.clipboard.enabled") }
+        static var oscClipboardDisabled: String { localized("security.osc.clipboard.disabled") }
     }
 
     // MARK: - Column Editor
@@ -407,7 +427,7 @@ enum Strings {
         static var title: String { localized("settings.title") }
         static var tabGeneral: String { localized("settings.tab.general") }
         static var tabTools: String { localized("settings.tab.tools") }
-        static var tabData: String { localized("settings.tab.data") }
+        static var tabDataAndSecurity: String { localized("settings.tab.data.and.security") }
 
         // General - Terminal section
         static var sectionTerminal: String { localized("settings.section.terminal") }
@@ -549,6 +569,13 @@ enum Strings {
             static var troubleshootingStep4: String { localized("settings.environment.troubleshooting.step4") }
             static var troubleshootingStep5: String { localized("settings.environment.troubleshooting.step5") }
         }
+
+        // Security section
+        static var sectionSecurity: String { localized("settings.section.security") }
+        static var allowOscClipboard: String { localized("settings.allow.osc.clipboard") }
+        static var allowOscClipboardHelp: String { localized("settings.allow.osc.clipboard.help") }
+        static var confirmExternalModifications: String { localized("settings.confirm.external.modifications") }
+        static var confirmExternalModificationsHelp: String { localized("settings.confirm.external.modifications.help") }
     }
 
     // MARK: - Command Palette

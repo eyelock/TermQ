@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autoejecución deshabilitada globalmente";
 "editor.field.autorun.enable.hint" = "Habilitar en Ajustes > Herramientas";
 
+"editor.allow.osc.clipboard" = "Permitir acceso al portapapeles OSC 52";
+"editor.allow.osc.clipboard.help" = "Permitir a este terminal acceder al portapapeles del sistema mediante secuencias de escape OSC 52";
+"editor.confirm.external.modifications" = "Requerir confirmación para modificaciones LLM externas";
+"editor.confirm.external.modifications.help" = "Mostrar confirmación cuando procesos externos modifiquen el contexto LLM de este terminal";
+"editor.disabled.globally" = "Desactivado globalmente";
+
+// Editor - Security section
+"editor.section.security" = "Seguridad";
+
 // Editor - Tags section
 "editor.section.tags" = "Etiquetas";
 "editor.field.tags" = "Etiquetas";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Aplicar al comando inicial";
 "editor.field.apply.to.init.command.help" = "Usar comando generado como comando inicial";
 "editor.no.llm.prompt.warning" = "No hay prompt LLM configurado";
-"editor.non.interactive.note" = "Nota: Los comandos se ejecutan de forma no interactiva";
+"editor.interactive.mode.toggle" = "Modo interactivo";
+"editor.interactive.mode.help" = "Cuando está desactivado, añade el indicador -p para ejecución no interactiva (útil para tareas automatizadas)";
+"editor.non.interactive.mode.note" = "El modo no interactivo ejecuta la tarea y sale sin solicitudes del usuario";
 
 "editor.cancel" = "Cancelar";
 "editor.save" = "Guardar";
@@ -309,7 +320,7 @@
 "alert.success" = "Éxito";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Datos y seguridad";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Seguridad";
+"settings.allow.osc.clipboard" = "Permitir acceso al portapapeles OSC 52";
+"settings.allow.osc.clipboard.help" = "Permitir que los programas de terminal lean y escriban en el portapapeles del sistema usando secuencias de escape OSC 52";
+"settings.confirm.external.modifications" = "Requerir confirmación para modificaciones LLM externas";
+"settings.confirm.external.modifications.help" = "Mostrar un diálogo de confirmación cuando procesos externos intenten modificar el contexto LLM del terminal mediante URLs termq://";
+// MARK: - Security
+"security.external.modification.title" = "Solicitud de modificación externa";
+"security.external.modification.message" = "Un proceso externo está intentando modificar el contexto LLM para el terminal '%@':
+
+%@
+
+Esto podría afectar cómo los asistentes de IA interactúan con este terminal.";
+"security.allow" = "Permitir";
+"security.deny" = "Denegar";
+"security.allow.disable.prompt" = "Permitir y no volver a preguntar";
+"security.osc.clipboard.enabled" = "Acceso al portapapeles OSC 52 activado";
+"security.osc.clipboard.disabled" = "Acceso al portapapeles OSC 52 desactivado";

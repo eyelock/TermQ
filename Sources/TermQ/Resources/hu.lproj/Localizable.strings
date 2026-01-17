@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Automatikus futtatás globálisan letiltva";
 "editor.field.autorun.enable.hint" = "Engedélyezés: Beállítások > Eszközök";
 
+"editor.allow.osc.clipboard" = "OSC 52 vágólap hozzáférés engedélyezése";
+"editor.allow.osc.clipboard.help" = "Engedélyezze ennek a terminálnak a rendszer vágólapjának elérését OSC 52 escape szekvenciákon keresztül";
+"editor.confirm.external.modifications" = "Megerősítés szükséges külső LLM módosításokhoz";
+"editor.confirm.external.modifications.help" = "Megerősítés megjelenítése, amikor külső folyamatok módosítják ennek a terminálnak az LLM kontextusát";
+"editor.disabled.globally" = "Globálisan letiltva";
+
+// Editor - Security section
+"editor.section.security" = "Biztonság";
+
 // Editor - Tags section
 "editor.section.tags" = "Címkék";
 "editor.field.tags" = "Címkék";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Alkalmazás kezdő parancsként";
 "editor.field.apply.to.init.command.help" = "Generált parancs használata kezdő parancsként";
 "editor.no.llm.prompt.warning" = "Nincs LLM prompt konfigurálva";
-"editor.non.interactive.note" = "Megjegyzés: A parancsok nem interaktívan futnak";
+"editor.interactive.mode.toggle" = "Interaktív mód";
+"editor.interactive.mode.help" = "Kikapcsolva hozzáadja a -p jelzőt a nem interaktív végrehajtáshoz (hasznos automatizált feladatokhoz)";
+"editor.non.interactive.mode.note" = "A nem interaktív mód futtatja a feladatot és kilép felhasználói kérések nélkül";
 
 "editor.cancel" = "Mégse";
 "editor.save" = "Mentés";
@@ -309,7 +320,7 @@
 "alert.success" = "Sikeres";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Adatok és biztonság";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Biztonság";
+"settings.allow.osc.clipboard" = "OSC 52 vágólap hozzáférés engedélyezése";
+"settings.allow.osc.clipboard.help" = "Terminálprogramok számára engedélyezi a rendszer vágólapjának olvasását és írását OSC 52 escape szekvenciák használatával";
+"settings.confirm.external.modifications" = "Megerősítés szükséges külső LLM módosításokhoz";
+"settings.confirm.external.modifications.help" = "Megerősítési párbeszédablak megjelenítése, amikor külső folyamatok megpróbálják módosítani a terminál LLM kontextusát termq:// URL-eken keresztül";
+// MARK: - Security
+"security.external.modification.title" = "Külső módosítási kérelem";
+"security.external.modification.message" = "Egy külső folyamat megpróbálja módosítani a '%@' terminál LLM kontextusát:
+
+%@
+
+Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.";
+"security.allow" = "Engedélyezés";
+"security.deny" = "Elutasítás";
+"security.allow.disable.prompt" = "Engedélyezés és ne kérdezze újra";
+"security.osc.clipboard.enabled" = "OSC 52 vágólap-hozzáférés engedélyezve";
+"security.osc.clipboard.disabled" = "OSC 52 vágólap-hozzáférés letiltva";

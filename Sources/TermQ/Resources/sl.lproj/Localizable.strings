@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Samodejni zagon je globalno onemogočen";
 "editor.field.autorun.enable.hint" = "Omogoči v Nastavitve > Orodja";
 
+"editor.allow.osc.clipboard" = "Dovoli dostop do odložišča OSC 52";
+"editor.allow.osc.clipboard.help" = "Dovoli temu terminalu dostop do sistemskega odložišča prek ubežnih sekvenc OSC 52";
+"editor.confirm.external.modifications" = "Zahtevaj potrditev za zunanje spremembe LLM";
+"editor.confirm.external.modifications.help" = "Prikaži potrditev, ko zunanji procesi spremenijo kontekst LLM tega terminala";
+"editor.disabled.globally" = "Onemogočeno globalno";
+
+// Editor - Security section
+"editor.section.security" = "Varnost";
+
 // Editor - Tags section
 "editor.section.tags" = "Oznake";
 "editor.field.tags" = "Oznake";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Uporabi za začetni ukaz";
 "editor.field.apply.to.init.command.help" = "Uporabi generirani ukaz kot začetni";
 "editor.no.llm.prompt.warning" = "Poziv LLM ni konfiguriran";
-"editor.non.interactive.note" = "Opomba: Ukazi se izvajajo neinteraktivno";
+"editor.interactive.mode.toggle" = "Interaktivni način";
+"editor.interactive.mode.help" = "Ko je izklopljeno, doda zastavico -p za neinteraktivno izvajanje (uporabno za avtomatizirane naloge)";
+"editor.non.interactive.mode.note" = "Neinteraktivni način izvede nalogo in se zaključi brez uporabniških pozivov";
 
 "editor.cancel" = "Prekliči";
 "editor.save" = "Shrani";
@@ -309,7 +320,7 @@
 "alert.success" = "Uspeh";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Podatki in varnost";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Varnost";
+"settings.allow.osc.clipboard" = "Dovoli dostop do odložišča OSC 52";
+"settings.allow.osc.clipboard.help" = "Dovoli terminalskim programom branje in pisanje v sistemsko odložišče z uporabo ubežnih sekvenc OSC 52";
+"settings.confirm.external.modifications" = "Zahtevaj potrditev za zunanje spremembe LLM";
+"settings.confirm.external.modifications.help" = "Prikaži potrditveno pogovorno okno, ko zunanji procesi poskušajo spremeniti kontekst LLM terminala prek URL-jev termq://";
+// MARK: - Security
+"security.external.modification.title" = "Zahteva za zunanjo spremembo";
+"security.external.modification.message" = "Zunanji proces poskuša spremeniti kontekst LLM za terminal '%@':
+
+%@
+
+To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
+"security.allow" = "Dovoli";
+"security.deny" = "Zavrni";
+"security.allow.disable.prompt" = "Dovoli in ne sprašuj več";
+"security.osc.clipboard.enabled" = "Dostop do odložišča OSC 52 omogočen";
+"security.osc.clipboard.disabled" = "Dostop do odložišča OSC 52 onemogočen";

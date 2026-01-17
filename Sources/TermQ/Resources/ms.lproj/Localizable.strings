@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autorun dinyahdayakan secara global";
 "editor.field.autorun.enable.hint" = "Dayakan dalam Tetapan > Alat";
 
+"editor.allow.osc.clipboard" = "Benarkan akses papan klip OSC 52";
+"editor.allow.osc.clipboard.help" = "Benarkan terminal ini mengakses papan klip sistem melalui urutan pelarian OSC 52";
+"editor.confirm.external.modifications" = "Memerlukan pengesahan untuk pengubahsuaian LLM luaran";
+"editor.confirm.external.modifications.help" = "Tunjukkan pengesahan apabila proses luaran mengubah suai konteks LLM terminal ini";
+"editor.disabled.globally" = "Dilumpuhkan secara global";
+
+// Editor - Security section
+"editor.section.security" = "Keselamatan";
+
 // Editor - Tags section
 "editor.section.tags" = "Tag";
 "editor.field.tags" = "Tag";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Gunakan pada Perintah Permulaan";
 "editor.field.apply.to.init.command.help" = "Gunakan perintah yang dijana sebagai perintah permulaan";
 "editor.no.llm.prompt.warning" = "Tiada prompt LLM dikonfigurasi";
-"editor.non.interactive.note" = "Nota: Perintah berjalan secara tidak interaktif";
+"editor.interactive.mode.toggle" = "Mod Interaktif";
+"editor.interactive.mode.help" = "Apabila dimatikan, menambah bendera -p untuk pelaksanaan bukan interaktif (berguna untuk tugas automatik)";
+"editor.non.interactive.mode.note" = "Mod bukan interaktif menjalankan tugas dan keluar tanpa gesaan pengguna";
 
 "editor.cancel" = "Batal";
 "editor.save" = "Simpan";
@@ -309,7 +320,7 @@
 "alert.success" = "Berjaya";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Data & Keselamatan";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Keselamatan";
+"settings.allow.osc.clipboard" = "Benarkan akses papan klip OSC 52";
+"settings.allow.osc.clipboard.help" = "Benarkan program terminal membaca dan menulis papan klip sistem menggunakan urutan pelarian OSC 52";
+"settings.confirm.external.modifications" = "Memerlukan pengesahan untuk pengubahsuaian LLM luaran";
+"settings.confirm.external.modifications.help" = "Tunjukkan dialog pengesahan apabila proses luaran cuba mengubah suai konteks LLM terminal melalui URL termq://";
+// MARK: - Security
+"security.external.modification.title" = "Permintaan Pengubahsuaian Luaran";
+"security.external.modification.message" = "Proses luaran cuba mengubah suai konteks LLM untuk terminal '%@':
+
+%@
+
+Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
+"security.allow" = "Benarkan";
+"security.deny" = "Tolak";
+"security.allow.disable.prompt" = "Benarkan & Jangan Tanya Lagi";
+"security.osc.clipboard.enabled" = "Akses papan keratan OSC 52 didayakan";
+"security.osc.clipboard.disabled" = "Akses papan keratan OSC 52 dilumpuhkan";

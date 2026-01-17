@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Rulare automată dezactivată global";
 "editor.field.autorun.enable.hint" = "Activare în Setări > Instrumente";
 
+"editor.allow.osc.clipboard" = "Permite accesul la clipboard OSC 52";
+"editor.allow.osc.clipboard.help" = "Permite acestui terminal să acceseze clipboard-ul sistemului prin secvențe de escape OSC 52";
+"editor.confirm.external.modifications" = "Necesită confirmare pentru modificările LLM externe";
+"editor.confirm.external.modifications.help" = "Afișează confirmare când procesele externe modifică contextul LLM al acestui terminal";
+"editor.disabled.globally" = "Dezactivat global";
+
+// Editor - Security section
+"editor.section.security" = "Securitate";
+
 // Editor - Tags section
 "editor.section.tags" = "Etichete";
 "editor.field.tags" = "Etichete";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Aplicare ca comandă inițială";
 "editor.field.apply.to.init.command.help" = "Utilizare comandă generată ca inițială";
 "editor.no.llm.prompt.warning" = "Prompt LLM neconfigurat";
-"editor.non.interactive.note" = "Notă: Comenzile rulează non-interactiv";
+"editor.interactive.mode.toggle" = "Mod interactiv";
+"editor.interactive.mode.help" = "Când este dezactivat, adaugă flag-ul -p pentru execuție non-interactivă (util pentru sarcini automatizate)";
+"editor.non.interactive.mode.note" = "Modul non-interactiv rulează sarcina și iese fără solicitări utilizator";
 
 "editor.cancel" = "Anulare";
 "editor.save" = "Salvare";
@@ -309,7 +320,7 @@
 "alert.success" = "Succes";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Date și securitate";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,3 +439,22 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Securitate";
+"settings.allow.osc.clipboard" = "Permite accesul la clipboard OSC 52";
+"settings.allow.osc.clipboard.help" = "Permite programelor de terminal să citească și să scrie în clipboard-ul sistemului folosind secvențe de escape OSC 52";
+"settings.confirm.external.modifications" = "Necesită confirmare pentru modificările LLM externe";
+"settings.confirm.external.modifications.help" = "Afișează un dialog de confirmare când procesele externe încearcă să modifice contextul LLM al terminalului prin URL-uri termq://";
+// MARK: - Security
+"security.external.modification.title" = "Solicitare de modificare externă";
+"security.external.modification.message" = "Un proces extern încearcă să modifice contextul LLM pentru terminalul '%@':
+
+%@
+
+Acest lucru ar putea afecta modul în care asistenții AI interacționează cu acest terminal.";
+"security.allow" = "Permite";
+"security.deny" = "Refuză";
+"security.allow.disable.prompt" = "Permite și nu mai întreba";
+"security.osc.clipboard.enabled" = "Acces clipboard OSC 52 activat";
+"security.osc.clipboard.disabled" = "Acces clipboard OSC 52 dezactivat";
