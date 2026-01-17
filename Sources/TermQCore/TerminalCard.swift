@@ -166,7 +166,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         themeId = try container.decodeIfPresent(String.self, forKey: .themeId) ?? ""
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         allowOscClipboard = try container.decodeIfPresent(Bool.self, forKey: .allowOscClipboard) ?? true
-        confirmExternalModifications = try container.decodeIfPresent(Bool.self, forKey: .confirmExternalModifications) ?? true
+        confirmExternalModifications =
+            try container.decodeIfPresent(Bool.self, forKey: .confirmExternalModifications) ?? true
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
         // Default to direct for cards without backend field (pre-tmux cards were direct mode)

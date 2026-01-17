@@ -101,6 +101,7 @@
 "menu.toggle.pin" = "Přepnout připnutí";
 "menu.next.pinned" = "Další připnutý terminál";
 "menu.previous.pinned" = "Předchozí připnutý terminál";
+"menu.check.for.updates" = "Check for Updates...";
 
 
 // MARK: - Command Palette
@@ -458,3 +459,11 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "security.allow.disable.prompt" = "Povolit a znovu se neptat";
 "security.osc.clipboard.enabled" = "Přístup ke schránce OSC 52 povolen";
 "security.osc.clipboard.disabled" = "Přístup ke schránce OSC 52 zakázán";
+
+// NEEDS TRANSLATION - Added from English
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.section.updates" = "Updates";

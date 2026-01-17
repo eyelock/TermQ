@@ -101,6 +101,7 @@
 "menu.toggle.pin" = "Togol Semat";
 "menu.next.pinned" = "Terminal Tersemat Seterusnya";
 "menu.previous.pinned" = "Terminal Tersemat Sebelumnya";
+"menu.check.for.updates" = "Check for Updates...";
 
 
 // MARK: - Command Palette
@@ -458,3 +459,11 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "security.allow.disable.prompt" = "Benarkan & Jangan Tanya Lagi";
 "security.osc.clipboard.enabled" = "Akses papan keratan OSC 52 didayakan";
 "security.osc.clipboard.disabled" = "Akses papan keratan OSC 52 dilumpuhkan";
+
+// NEEDS TRANSLATION - Added from English
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.section.updates" = "Updates";

@@ -101,6 +101,7 @@
 "menu.toggle.pin" = "Basculer l'épingle";
 "menu.next.pinned" = "Terminal épinglé suivant";
 "menu.previous.pinned" = "Terminal épinglé précédent";
+"menu.check.for.updates" = "Check for Updates...";
 
 
 // MARK: - Command Palette
@@ -458,3 +459,11 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "security.allow.disable.prompt" = "Autoriser et ne plus demander";
 "security.osc.clipboard.enabled" = "Accès au presse-papiers OSC 52 activé";
 "security.osc.clipboard.disabled" = "Accès au presse-papiers OSC 52 désactivé";
+
+// NEEDS TRANSLATION - Added from English
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.section.updates" = "Updates";

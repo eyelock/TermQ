@@ -101,6 +101,7 @@
 "menu.toggle.pin" = "Bật/tắt ghim";
 "menu.next.pinned" = "Terminal ghim tiếp theo";
 "menu.previous.pinned" = "Terminal ghim trước đó";
+"menu.check.for.updates" = "Check for Updates...";
 
 
 // MARK: - Command Palette
@@ -458,3 +459,11 @@
 "security.allow.disable.prompt" = "Cho phép và không hỏi lại";
 "security.osc.clipboard.enabled" = "Đã bật quyền truy cập clipboard OSC 52";
 "security.osc.clipboard.disabled" = "Đã tắt quyền truy cập clipboard OSC 52";
+
+// NEEDS TRANSLATION - Added from English
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.section.updates" = "Updates";

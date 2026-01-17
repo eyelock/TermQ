@@ -7,6 +7,7 @@
   - [Zoom Mode & Search](zoom-search.md)
   - [Bin & Recovery](bin-recovery.md)
   - [Themes & Appearance](themes-appearance.md)
+  - [Automatic Updates](updates.md)
 
 - **Advanced Topics**
   - [Keyboard Shortcuts](keyboard-shortcuts.md)

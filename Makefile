@@ -127,10 +127,18 @@ check: build lint format-check test
 app: build
 	@mkdir -p TermQDebug.app/Contents/MacOS
 	@mkdir -p TermQDebug.app/Contents/Resources
+	@mkdir -p TermQDebug.app/Contents/Frameworks
 	cp .build/debug/TermQ TermQDebug.app/Contents/MacOS/TermQ
 	cp .build/debug/termqcli TermQDebug.app/Contents/Resources/termqcli
 	cp .build/debug/termqmcp TermQDebug.app/Contents/Resources/termqmcp
 	cp TermQ.app/Contents/Info-Debug.plist TermQDebug.app/Contents/Info.plist
+	@# Add rpath for embedded frameworks (Sparkle)
+	@install_name_tool -add_rpath @executable_path/../Frameworks TermQDebug.app/Contents/MacOS/TermQ 2>/dev/null || true
+	@# Copy Sparkle framework (required for auto-updates)
+	@if [ -d ".build/debug/Sparkle.framework" ]; then \
+		rm -rf TermQDebug.app/Contents/Frameworks/Sparkle.framework; \
+		cp -R .build/debug/Sparkle.framework TermQDebug.app/Contents/Frameworks/; \
+	fi
 	@# Copy localization resources bundle
 	@if [ -d ".build/debug/TermQ_TermQ.bundle" ]; then \
 		cp -R .build/debug/TermQ_TermQ.bundle TermQDebug.app/Contents/Resources/; \
@@ -172,6 +180,7 @@ run: release-app
 release-app: build-release
 	@mkdir -p TermQ.app/Contents/MacOS
 	@mkdir -p TermQ.app/Contents/Resources
+	@mkdir -p TermQ.app/Contents/Frameworks
 	@# Verify GUI binary is correct (should be >4MB, CLI is only ~2MB)
 	@SIZE=$$(stat -f%z .build/release/TermQ); \
 	if [ $$SIZE -lt 4000000 ]; then \
@@ -182,6 +191,13 @@ release-app: build-release
 	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
 	cp .build/release/termqcli TermQ.app/Contents/Resources/termqcli
 	cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
+	@# Add rpath for embedded frameworks (Sparkle)
+	@install_name_tool -add_rpath @executable_path/../Frameworks TermQ.app/Contents/MacOS/TermQ 2>/dev/null || true
+	@# Copy Sparkle framework (required for auto-updates)
+	@if [ -d ".build/release/Sparkle.framework" ]; then \
+		rm -rf TermQ.app/Contents/Frameworks/Sparkle.framework; \
+		cp -R .build/release/Sparkle.framework TermQ.app/Contents/Frameworks/; \
+	fi
 	@# Copy localization resources bundle
 	@if [ -d ".build/release/TermQ_TermQ.bundle" ]; then \
 		cp -R .build/release/TermQ_TermQ.bundle TermQ.app/Contents/Resources/; \

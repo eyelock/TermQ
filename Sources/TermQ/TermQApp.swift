@@ -1,4 +1,5 @@
 import AppKit
+import Sparkle
 import SwiftUI
 import TermQCore
 
@@ -247,8 +248,35 @@ class URLHandler: ObservableObject {
     }
 }
 
-/// App delegate to handle quit confirmation for running direct sessions
+/// Sparkle updater delegate to provide dynamic feed URL based on user preferences
+final class SparkleUpdaterDelegate: NSObject, SPUUpdaterDelegate {
+    /// Returns the appcast feed URL based on whether beta releases are enabled
+    func feedURLString(for updater: SPUUpdater) -> String? {
+        let includeBeta = UserDefaults.standard.bool(forKey: "SUIncludeBetaReleases")
+        let feedFile = includeBeta ? "appcast-beta.xml" : "appcast.xml"
+        return "https://eyelock.github.io/TermQ/\(feedFile)"
+    }
+}
+
+/// App delegate to handle quit confirmation for running direct sessions and auto-updates
 class TermQAppDelegate: NSObject, NSApplicationDelegate {
+    /// Sparkle updater delegate for dynamic feed URL
+    private let sparkleDelegate = SparkleUpdaterDelegate()
+
+    /// Sparkle updater controller for automatic updates
+    let updaterController: SPUStandardUpdaterController
+
+    override init() {
+        // Initialize Sparkle updater with delegate for dynamic feed URL
+        // SUPublicEDKey is read from Info.plist
+        updaterController = SPUStandardUpdaterController(
+            startingUpdater: true,
+            updaterDelegate: sparkleDelegate,
+            userDriverDelegate: nil
+        )
+        super.init()
+    }
+
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         // Check for running direct (non-tmux) sessions
         let sessionManager = TerminalSessionManager.shared
@@ -320,6 +348,13 @@ struct TermQApp: App {
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)
         .commands {
+            // Check for Updates in App menu (after About)
+            CommandGroup(after: .appInfo) {
+                Button(Strings.Menu.checkForUpdates) {
+                    appDelegate.updaterController.checkForUpdates(nil)
+                }
+            }
+
             // Help menu
             CommandGroup(replacing: .help) {
                 Button(Strings.Menu.help) {
@@ -473,6 +508,68 @@ struct TermQApp: App {
 struct IdentifiableURL: Identifiable {
     let id = UUID()
     let url: URL
+}
+
+// MARK: - Sparkle Updater Access
+
+import Combine
+
+/// Observable wrapper for Sparkle's updater to use in SwiftUI
+@MainActor
+final class UpdaterViewModel: ObservableObject {
+    /// Shared instance - initialized lazily when first accessed
+    static var shared: UpdaterViewModel? {
+        guard let appDelegate = NSApp.delegate as? TermQAppDelegate else {
+            return nil
+        }
+        return UpdaterViewModel(updater: appDelegate.updaterController.updater)
+    }
+
+    private let updater: SPUUpdater
+    private var cancellables = Set<AnyCancellable>()
+
+    /// Whether automatic update checks are enabled (defaults to true)
+    @Published var automaticallyChecksForUpdates: Bool {
+        didSet {
+            updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
+        }
+    }
+
+    /// Whether the user can check for updates (e.g., not currently checking)
+    @Published var canCheckForUpdates: Bool = false
+
+    /// Whether to include beta releases in update checks
+    /// The actual feed URL is determined by SparkleUpdaterDelegate based on this preference
+    @Published var includeBetaReleases: Bool {
+        didSet {
+            UserDefaults.standard.set(includeBetaReleases, forKey: "SUIncludeBetaReleases")
+        }
+    }
+
+    init(updater: SPUUpdater) {
+        self.updater = updater
+        // Default to true for automatic checks if not previously set
+        let hasExistingPreference = UserDefaults.standard.object(forKey: "SUAutomaticallyChecksForUpdates") != nil
+        if !hasExistingPreference {
+            updater.automaticallyChecksForUpdates = true
+        }
+        self.automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
+        self.includeBetaReleases = UserDefaults.standard.bool(forKey: "SUIncludeBetaReleases")
+        self.canCheckForUpdates = updater.canCheckForUpdates
+
+        // Observe changes to canCheckForUpdates
+        updater.publisher(for: \.canCheckForUpdates)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] canCheck in
+                self?.canCheckForUpdates = canCheck
+            }
+            .store(in: &cancellables)
+    }
+
+    /// Manually check for updates
+    func checkForUpdates() {
+        updater.checkForUpdates()
+    }
 }
 
 /// Handles Apple Events for URL schemes
