@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "新終端機嘅預設主題";
 "settings.field.copy.on.select" = "選取時複製";
 "settings.field.copy.on.select.help" = "自動複製選取嘅文字";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "垃圾桶";

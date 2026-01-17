@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "새 터미널의 기본 테마";
 "settings.field.copy.on.select" = "선택 시 복사";
 "settings.field.copy.on.select.help" = "선택한 텍스트 자동 복사";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "휴지통";

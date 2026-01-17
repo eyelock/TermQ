@@ -19,10 +19,11 @@ Each terminal card can use one of two backends:
 | **Direct** | Traditional shell, ends when app closes | Quick one-off commands |
 | **tmux (Persistent)** | Session runs via tmux, persists across restarts | Long-running tasks, development work |
 
-New terminals default to **Direct** backend. To use tmux persistence, you must:
+By default, new terminals use the **Direct** backend. You can change the default in **Settings > General > Terminal > Default Backend**. To use tmux persistence, you must:
 1. Have tmux installed (see Troubleshooting section)
 2. Enable tmux globally in Settings > Tools
-3. Set the terminal's backend to "TMUX (Persistent)" in the card editor
+3. (Optional) Set the global default to "TMUX (Persistent)" in Settings > General > Terminal
+4. Individual terminals can override the default in the card editor
 
 **Note:** The backend picker only appears in the card editor when tmux is installed and enabled globally.
 

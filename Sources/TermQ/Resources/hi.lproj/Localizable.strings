@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "नए टर्मिनल के लिए डिफ़ॉल्ट थीम";
 "settings.field.copy.on.select" = "चयन पर कॉपी करें";
 "settings.field.copy.on.select.help" = "चयनित टेक्स्ट स्वचालित रूप से कॉपी करें";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "ट्रैश";
