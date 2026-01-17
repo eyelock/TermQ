@@ -57,6 +57,31 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
+    // MARK: - Size Change Fix
+
+    /// Override to fix PTY size synchronization with Auto Layout.
+    ///
+    /// SwiftTerm's MacTerminalView handles PTY resizing in its `frame` property setter
+    /// (which calls `processSizeChange`), but NOT in `setFrameSize`. When Auto Layout
+    /// resolves constraints, it calls `setFrameSize` directly, bypassing the resize logic.
+    ///
+    /// This fix triggers the frame setter after size changes, ensuring the PTY gets
+    /// the correct dimensions even when using Auto Layout constraints.
+    override func setFrameSize(_ newSize: NSSize) {
+        let oldSize = frame.size
+
+        // Call parent implementation first
+        super.setFrameSize(newSize)
+
+        // If size actually changed, trigger the frame property setter which
+        // contains the resize logic (processSizeChange) that setFrameSize lacks.
+        // The guard prevents infinite recursion: the frame setter will call
+        // setFrameSize again, but then oldSize == newSize so we won't re-trigger.
+        if oldSize != newSize {
+            self.frame = NSRect(origin: frame.origin, size: newSize)
+        }
+    }
+
     /// Set up event monitor to track key input (to distinguish user typing from process output)
     func setupKeyInputMonitor() {
         cleanupKeyInputMonitor()
