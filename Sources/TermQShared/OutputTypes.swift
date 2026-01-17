@@ -136,6 +136,32 @@ public struct MoveResponse: Codable, Sendable {
     }
 }
 
+/// Response for pending terminal creation (when GUI hasn't processed yet)
+public struct PendingCreateResponse: Codable, Sendable {
+    public let id: String
+    public let status: String
+    public let message: String
+
+    public init(id: String, status: String = "pending", message: String) {
+        self.id = id
+        self.status = status
+        self.message = message
+    }
+}
+
+/// Response for delete command
+public struct DeleteResponse: Codable, Sendable {
+    public let id: String
+    public let deleted: Bool
+    public let permanent: Bool
+
+    public init(id: String, deleted: Bool = true, permanent: Bool) {
+        self.id = id
+        self.deleted = deleted
+        self.permanent = permanent
+    }
+}
+
 // MARK: - JSON Encoding Helper
 
 public enum JSONHelper {

@@ -72,22 +72,26 @@ extension TermQMCPServer {
                 name: "termq_create",
                 description: """
                     Create a new terminal in TermQ. Optionally specify name, description, column,
-                    path, tags, and LLM context. Returns the created terminal's details.
+                    path, tags, LLM context, and initialization command.
+                    Returns the created terminal's details including its UUID.
                     """,
                 inputSchema: S.objectSchema([
                     S.string("name", "Terminal name"),
                     S.string("description", "Terminal description"),
                     S.string("column", "Column name (e.g., 'In Progress')"),
                     S.string("path", "Working directory path"),
+                    S.stringArray("tags", "Tags in key=value format (e.g., ['project=myapp', 'type=dev'])"),
                     S.string("llmPrompt", "Persistent LLM context"),
                     S.string("llmNextAction", "One-time action for next session"),
+                    S.string("initCommand", "Command to run when terminal opens"),
                 ])
             ),
             Tool(
                 name: "termq_set",
                 description: """
                     Update terminal properties. Identify terminal by name or UUID.
-                    Can set name, description, column, badges, LLM fields, tags, and favourite status.
+                    Can set name, description, column, badges, LLM fields, tags, init command, and favourite status.
+                    Tags are additive by default - use replaceTags=true to replace all existing tags.
                     """,
                 inputSchema: S.objectSchema([
                     S.string("identifier", "Terminal name or UUID", required: true),
@@ -97,8 +101,11 @@ extension TermQMCPServer {
                     S.string(
                         "badge",
                         "Badge text (comma-separated for multiple, e.g. 'WIP,urgent'). Replaces existing badges."),
+                    S.stringArray("tags", "Tags in key=value format (e.g., ['status=reviewed'])"),
+                    S.bool("replaceTags", "If true, replaces all tags; if false (default), adds to existing"),
                     S.string("llmPrompt", "Set persistent LLM context"),
                     S.string("llmNextAction", "Set one-time action"),
+                    S.string("initCommand", "Command to run when terminal opens"),
                     S.bool("favourite", "Set favourite status"),
                 ])
             ),
@@ -119,6 +126,17 @@ extension TermQMCPServer {
                     """,
                 inputSchema: S.objectSchema([
                     S.string("id", "Terminal UUID (use $TERMQ_TERMINAL_ID from your environment)", required: true)
+                ])
+            ),
+            Tool(
+                name: "termq_delete",
+                description: """
+                    Delete a terminal. By default, moves to bin (soft delete).
+                    Use permanent=true to permanently delete without bin recovery option.
+                    """,
+                inputSchema: S.objectSchema([
+                    S.string("identifier", "Terminal name or UUID", required: true),
+                    S.bool("permanent", "Permanently delete (skip bin, cannot be recovered)"),
                 ])
             ),
         ]

@@ -26,6 +26,8 @@ extension TermQMCPServer {
             return try await handleMove(params.arguments)
         case "termq_get":
             return try await handleGet(params.arguments)
+        case "termq_delete":
+            return try await handleDelete(params.arguments)
         default:
             throw MCPError.invalidRequest("Unknown tool: \(params.name)")
         }
@@ -390,9 +392,25 @@ extension TermQMCPServer {
     }
 
     func handleCreate(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let name = InputValidator.optionalString("name", from: arguments) ?? "New Terminal"
+        let name = InputValidator.optionalString("name", from: arguments)
         let column = InputValidator.optionalString("column", from: arguments)
-        let description = InputValidator.optionalString("description", from: arguments) ?? ""
+        let description = InputValidator.optionalString("description", from: arguments)
+        let llmPrompt = InputValidator.optionalString("llmPrompt", from: arguments)
+        let llmNextAction = InputValidator.optionalString("llmNextAction", from: arguments)
+        let initCommand = InputValidator.optionalString("initCommand", from: arguments)
+
+        // Parse tags if provided (array of "key=value" strings)
+        var tags: [(key: String, value: String)]?
+        if let tagValues = arguments?["tags"]?.arrayValue {
+            tags = tagValues.compactMap { tagValue -> (key: String, value: String)? in
+                guard let tagStr = tagValue.stringValue,
+                    let eqIndex = tagStr.firstIndex(of: "=")
+                else { return nil }
+                let key = String(tagStr[..<eqIndex])
+                let value = String(tagStr[tagStr.index(after: eqIndex)...])
+                return (key: key, value: value)
+            }
+        }
 
         // Validate path if provided (don't require existence - user can create terminals pointing anywhere)
         let path: String
@@ -406,20 +424,51 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
-        do {
-            let card = try BoardWriter.createCard(
+        // Generate card ID upfront so we can return it
+        let cardId = UUID()
+
+        // Build and open the URL to create the terminal via GUI
+        let urlString = URLOpener.buildOpenURL(
+            params: URLOpener.OpenURLParams(
+                cardId: cardId,
+                path: path,
                 name: name,
-                columnName: column,
-                workingDirectory: path,
                 description: description,
-                dataDirectory: dataDirectory
+                column: column,
+                tags: tags,
+                llmPrompt: llmPrompt,
+                llmNextAction: llmNextAction,
+                initCommand: initCommand
             )
+        )
 
-            let board = try loadBoard()
-            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
-            let json = try JSONHelper.encode(output)
+        do {
+            try await URLOpener.open(urlString)
+
+            // Wait for GUI to process with retry and exponential backoff
+            let dataDir = dataDirectory
+            let found = await URLOpener.waitForCondition {
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                return board.findTerminal(identifier: cardId.uuidString) != nil
+            }
+
+            if found {
+                let board = try loadBoard()
+                if let card = board.findTerminal(identifier: cardId.uuidString) {
+                    let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+                    let json = try JSONHelper.encode(output)
+                    return CallTool.Result(content: [.text(json)])
+                }
+            }
+
+            // Card not found after retries - GUI might still be processing or not running
+            // Return the ID anyway so the LLM can use it
+            let pendingOutput = PendingCreateResponse(
+                id: cardId.uuidString,
+                message: "Terminal creation requested. The terminal may take a moment to appear in TermQ."
+            )
+            let json = try JSONHelper.encode(pendingOutput)
             return CallTool.Result(content: [.text(json)])
-
         } catch {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
@@ -433,57 +482,66 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
-        // Build updates dictionary
-        var updates: [String: Any] = [:]
-
-        if let name = arguments?["name"]?.stringValue {
-            updates["title"] = name
-        }
-        if let description = arguments?["description"]?.stringValue {
-            updates["description"] = description
-        }
-        if let badge = arguments?["badge"]?.stringValue {
-            updates["badge"] = badge
-        }
-        if let llmPrompt = arguments?["llmPrompt"]?.stringValue {
-            updates["llmPrompt"] = llmPrompt
-        }
-        if let llmNextAction = arguments?["llmNextAction"]?.stringValue {
-            updates["llmNextAction"] = llmNextAction
-        }
-        if let favourite = arguments?["favourite"]?.boolValue {
-            updates["isFavourite"] = favourite
+        // First, find the card to get its UUID
+        let board = try loadBoard()
+        guard let card = board.findTerminal(identifier: identifier) else {
+            return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
         }
 
-        // Handle column change separately (uses move logic)
-        if let column = arguments?["column"]?.stringValue {
-            do {
-                _ = try BoardWriter.moveCard(identifier: identifier, toColumn: column, dataDirectory: dataDirectory)
-            } catch {
-                return CallTool.Result(
-                    content: [.text("Error moving to column: \(error.localizedDescription)")], isError: true)
+        // Parse tags if provided
+        var tags: [(key: String, value: String)]?
+        if let tagValues = arguments?["tags"]?.arrayValue {
+            tags = tagValues.compactMap { tagValue -> (key: String, value: String)? in
+                guard let tagStr = tagValue.stringValue,
+                    let eqIndex = tagStr.firstIndex(of: "=")
+                else { return nil }
+                let key = String(tagStr[..<eqIndex])
+                let value = String(tagStr[tagStr.index(after: eqIndex)...])
+                return (key: key, value: value)
             }
         }
+
+        let replaceTags = InputValidator.optionalBool("replaceTags", from: arguments)
+
+        // Build and open the URL to update the terminal via GUI
+        let urlString = URLOpener.buildUpdateURL(
+            params: URLOpener.UpdateURLParams(
+                cardId: card.id,
+                name: arguments?["name"]?.stringValue,
+                description: arguments?["description"]?.stringValue,
+                badge: arguments?["badge"]?.stringValue,
+                column: arguments?["column"]?.stringValue,
+                llmPrompt: arguments?["llmPrompt"]?.stringValue,
+                llmNextAction: arguments?["llmNextAction"]?.stringValue,
+                initCommand: arguments?["initCommand"]?.stringValue,
+                favourite: arguments?["favourite"]?.boolValue,
+                tags: tags,
+                replaceTags: replaceTags
+            )
+        )
 
         do {
-            let card: Card
-            if updates.isEmpty {
-                // No field updates, just return current state
-                let board = try loadBoard()
-                guard let found = board.findTerminal(identifier: identifier) else {
-                    return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
-                }
-                card = found
-            } else {
-                card = try BoardWriter.updateCard(
-                    identifier: identifier, updates: updates, dataDirectory: dataDirectory)
+            try await URLOpener.open(urlString)
+
+            // Wait for GUI to process with retry and exponential backoff
+            let dataDir = dataDirectory
+            let cardIdStr = card.id.uuidString
+            _ = await URLOpener.waitForCondition {
+                // Just verify the card still exists - we trust the GUI applied the update
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                return board.findTerminal(identifier: cardIdStr) != nil
             }
 
-            let board = try loadBoard()
-            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
-
+            // Reload to get updated state
+            let updatedBoard = try loadBoard()
+            if let updatedCard = updatedBoard.findTerminal(identifier: card.id.uuidString) {
+                let output = TerminalOutput(
+                    from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
+                let json = try JSONHelper.encode(output)
+                return CallTool.Result(content: [.text(json)])
+            } else {
+                return CallTool.Result(content: [.text("Error: Terminal not found after update")], isError: true)
+            }
         } catch {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
@@ -499,14 +557,82 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
+        // First, find the card to get its UUID
+        let board = try loadBoard()
+        guard let card = board.findTerminal(identifier: identifier) else {
+            return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
+        }
+
+        // Build and open the URL to move the terminal via GUI
+        let urlString = URLOpener.buildMoveURL(cardId: card.id, column: column)
+
         do {
-            let card = try BoardWriter.moveCard(identifier: identifier, toColumn: column, dataDirectory: dataDirectory)
+            try await URLOpener.open(urlString)
 
-            let board = try loadBoard()
-            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
-            let json = try JSONHelper.encode(output)
+            // Wait for GUI to process with retry and exponential backoff
+            let dataDir = dataDirectory
+            let cardIdStr = card.id.uuidString
+            let targetColumn = column.lowercased()
+            _ = await URLOpener.waitForCondition {
+                // Verify the card moved to the target column
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                guard let movedCard = board.findTerminal(identifier: cardIdStr) else { return false }
+                let columnName = board.columnName(for: movedCard.columnId).lowercased()
+                return columnName == targetColumn
+            }
+
+            // Reload to get updated state
+            let updatedBoard = try loadBoard()
+            if let updatedCard = updatedBoard.findTerminal(identifier: card.id.uuidString) {
+                let output = TerminalOutput(
+                    from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
+                let json = try JSONHelper.encode(output)
+                return CallTool.Result(content: [.text(json)])
+            } else {
+                return CallTool.Result(content: [.text("Error: Terminal not found after move")], isError: true)
+            }
+        } catch {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
+    }
+
+    func handleDelete(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let identifier: String
+        do {
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_delete")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
+
+        let permanent = InputValidator.optionalBool("permanent", from: arguments)
+
+        // First, find the card to get its UUID
+        let board = try loadBoard()
+        guard let card = board.findTerminal(identifier: identifier) else {
+            return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
+        }
+
+        // Build and open the URL to delete the terminal via GUI
+        let urlString = URLOpener.buildDeleteURL(cardId: card.id, permanent: permanent)
+
+        do {
+            try await URLOpener.open(urlString)
+
+            // Wait for GUI to process with retry and exponential backoff
+            let dataDir = dataDirectory
+            let cardIdStr = card.id.uuidString
+            _ = await URLOpener.waitForCondition {
+                // Verify the card is no longer in active cards (deleted or in bin)
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                return board.findTerminal(identifier: cardIdStr) == nil
+            }
+
+            let result = DeleteResponse(
+                id: card.id.uuidString,
+                permanent: permanent
+            )
+            let json = try JSONHelper.encode(result)
             return CallTool.Result(content: [.text(json)])
-
         } catch {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }

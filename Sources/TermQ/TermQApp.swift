@@ -29,12 +29,18 @@ class URLHandler: ObservableObject {
     }
 
     struct PendingTerminal: Identifiable {
+        /// Internal ID for SwiftUI identity (not the card ID)
         let id = UUID()
+        /// Optional pre-generated card ID (from CLI/MCP)
+        let cardId: UUID?
         let path: String
         let name: String?
         let description: String?
         let column: String?
         let tags: [Tag]
+        let llmPrompt: String?
+        let llmNextAction: String?
+        let initCommand: String?
     }
 
     func handleURL(_ url: URL) {
@@ -52,6 +58,8 @@ class URLHandler: ObservableObject {
             handleMove(queryItems: queryItems)
         case "focus":
             handleFocus(queryItems: queryItems)
+        case "delete":
+            handleDelete(queryItems: queryItems)
         default:
             break
         }
@@ -106,6 +114,17 @@ class URLHandler: ObservableObject {
         let name = queryItems.first { $0.name == "name" }?.value
         let description = queryItems.first { $0.name == "description" }?.value
         let column = queryItems.first { $0.name == "column" }?.value
+        let llmPrompt = queryItems.first { $0.name == "llmPrompt" }?.value
+        let llmNextAction = queryItems.first { $0.name == "llmNextAction" }?.value
+        let initCommand = queryItems.first { $0.name == "initCommand" }?.value
+
+        // Parse optional card ID (for MCP/CLI to track created terminals)
+        let cardId: UUID?
+        if let idString = queryItems.first(where: { $0.name == "id" })?.value {
+            cardId = UUID(uuidString: idString)
+        } else {
+            cardId = nil
+        }
 
         // Parse tags
         let tags: [Tag] =
@@ -121,11 +140,15 @@ class URLHandler: ObservableObject {
             }
 
         pendingTerminal = PendingTerminal(
+            cardId: cardId,
             path: path,
             name: name,
             description: description,
             column: column,
-            tags: tags
+            tags: tags,
+            llmPrompt: llmPrompt,
+            llmNextAction: llmNextAction,
+            initCommand: initCommand
         )
     }
 
@@ -179,6 +202,11 @@ class URLHandler: ObservableObject {
             card.llmNextAction = llmNextAction
         }
 
+        // Update init command
+        if let initCommand = queryItems.first(where: { $0.name == "initCommand" })?.value {
+            card.initCommand = initCommand
+        }
+
         // Update favourite status
         if let favouriteStr = queryItems.first(where: { $0.name == "favourite" })?.value {
             let shouldBeFavourite = favouriteStr.lowercased() == "true"
@@ -187,7 +215,11 @@ class URLHandler: ObservableObject {
             }
         }
 
-        // Parse and add tags
+        // Check if we should replace tags or add to existing
+        let shouldReplaceTags =
+            queryItems.first(where: { $0.name == "replaceTags" })?.value?.lowercased() == "true"
+
+        // Parse tags
         let newTags: [Tag] =
             queryItems
             .filter { $0.name == "tag" }
@@ -200,7 +232,14 @@ class URLHandler: ObservableObject {
                 return Tag(key: key, value: val)
             }
         if !newTags.isEmpty {
-            card.tags.append(contentsOf: newTags)
+            if shouldReplaceTags {
+                card.tags = newTags
+            } else {
+                card.tags.append(contentsOf: newTags)
+            }
+        } else if shouldReplaceTags {
+            // replaceTags with no tags means clear all tags
+            card.tags = []
         }
 
         // Update column if specified
@@ -246,6 +285,26 @@ class URLHandler: ObservableObject {
         guard let card = viewModel.card(for: cardId) else { return }
 
         viewModel.selectCard(card)
+    }
+
+    private func handleDelete(queryItems: [URLQueryItem]) {
+        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
+            let cardId = UUID(uuidString: idString)
+        else { return }
+
+        let viewModel = BoardViewModel.shared
+
+        guard let card = viewModel.card(for: cardId) else { return }
+
+        // Check for permanent deletion flag
+        let permanent =
+            queryItems.first(where: { $0.name == "permanent" })?.value?.lowercased() == "true"
+
+        if permanent {
+            viewModel.permanentlyDeleteCard(card)
+        } else {
+            viewModel.deleteCard(card)
+        }
     }
 }
 

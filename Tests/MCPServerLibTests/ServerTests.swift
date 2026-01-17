@@ -248,7 +248,7 @@ final class ServerTests: XCTestCase {
 
     func testAvailableToolsCount() {
         let tools = TermQMCPServer.availableTools
-        XCTAssertEqual(tools.count, 9)
+        XCTAssertEqual(tools.count, 10)
     }
 
     func testAvailableToolsNames() {
@@ -264,6 +264,7 @@ final class ServerTests: XCTestCase {
         XCTAssertTrue(names.contains("termq_set"))
         XCTAssertTrue(names.contains("termq_move"))
         XCTAssertTrue(names.contains("termq_get"))
+        XCTAssertTrue(names.contains("termq_delete"))
     }
 
     // MARK: - Context Documentation Tests

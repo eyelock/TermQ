@@ -49,10 +49,93 @@ struct TermQCLI: ParsableCommand {
             """,
         version: "1.0.0",
         subcommands: [
-            Open.self, Create.self, Launch.self, List.self, Find.self, Set.self, Move.self, Pending.self, Context.self,
+            New.self, Open.self, Create.self, Launch.self, List.self, Find.self, Set.self, Move.self, Pending.self,
+            Context.self, Delete.self,
         ]
     )
 }
+
+// MARK: - New Command (Quick Terminal Creation)
+
+struct New: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        abstract: "Quick-create a new terminal at current directory",
+        discussion: """
+            Creates a new terminal in TermQ using the current working directory.
+            Name defaults to the directory name. This is the fastest way to create
+            a new terminal from any shell.
+
+            Example: cd ~/projects/myapp && termqcli new
+            """
+    )
+
+    @Option(name: [.short, .long], help: "Custom name (defaults to directory name)")
+    var name: String?
+
+    @Option(name: [.short, .long], help: "Column to place terminal in")
+    var column: String?
+
+    func run() throws {
+        let cwd = FileManager.default.currentDirectoryPath
+        let defaultName = URL(fileURLWithPath: cwd).lastPathComponent
+
+        // Build URL with parameters
+        var components = URLComponents()
+        components.scheme = "termq"
+        components.host = "open"
+
+        // Generate a card ID upfront so we can track it
+        let cardId = UUID()
+
+        var queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "id", value: cardId.uuidString),
+            URLQueryItem(name: "path", value: cwd),
+            URLQueryItem(name: "name", value: name ?? defaultName),
+        ]
+
+        if let column = column {
+            queryItems.append(URLQueryItem(name: "column", value: column))
+        }
+
+        components.queryItems = queryItems
+
+        guard let url = components.url else {
+            print("Error: Failed to construct URL")
+            throw ExitCode.failure
+        }
+
+        // Ensure TermQ is running
+        let workspace = NSWorkspace.shared
+        let bundleId = "com.termq.app"
+        let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
+
+        if runningApps.isEmpty {
+            if !launchTermQ() {
+                print("Error: Could not find or launch TermQ.app")
+                print("Please ensure TermQ.app is in /Applications or current directory")
+                throw ExitCode.failure
+            }
+        }
+
+        // Open the URL
+        let success = workspace.open(url)
+
+        if success {
+            // Output JSON for easy parsing
+            let output = PendingCreateResponse(
+                id: cardId.uuidString,
+                status: "created",
+                message: "Terminal created at: \(cwd)"
+            )
+            JSONHelper.printJSON(output)
+        } else {
+            print("Error: Failed to communicate with TermQ")
+            throw ExitCode.failure
+        }
+    }
+}
+
+// MARK: - Open Command
 
 struct Open: ParsableCommand {
     static let configuration = CommandConfiguration(
@@ -356,11 +439,17 @@ struct List: ParsableCommand {
 struct Find: ParsableCommand {
     static let configuration = CommandConfiguration(
         abstract: "Find terminals by various criteria",
-        discussion: "Search for terminals by name, column, tag, or ID. Returns matching terminals as JSON."
+        discussion: """
+            Search for terminals by name, column, tag, or ID. Returns matching terminals as JSON.
+            Use --query for smart multi-word search across all fields.
+            """
     )
 
     @Flag(name: .long, help: "Use debug data directory (TermQ-Debug)")
     var debug: Bool = false
+
+    @Option(name: [.short, .long], help: "Smart search: matches words across name, description, path, tags")
+    var query: String?
 
     @Option(name: .long, help: "Search by name (case-insensitive partial match)")
     var name: String?
@@ -385,6 +474,25 @@ struct Find: ParsableCommand {
             let board = try BoardLoader.loadBoard(debug: debug)
 
             var cards = board.activeCards
+            var relevanceScores: [UUID: Int] = [:]
+
+            // Smart query search (multi-word, multi-field)
+            if let queryStr = query, !queryStr.isEmpty {
+                let queryWords = normalizeToWords(queryStr)
+                guard !queryWords.isEmpty else {
+                    JSONHelper.printJSON([TerminalOutput]())
+                    return
+                }
+
+                cards = cards.filter { card in
+                    let score = calculateRelevanceScore(card: card, queryWords: queryWords)
+                    if score > 0 {
+                        relevanceScores[card.id] = score
+                        return true
+                    }
+                    return false
+                }
+            }
 
             // Filter by ID (exact match)
             if let idFilter = id {
@@ -446,6 +554,15 @@ struct Find: ParsableCommand {
                 cards = cards.filter { $0.isFavourite }
             }
 
+            // Sort by relevance if query was used
+            if !relevanceScores.isEmpty {
+                cards.sort { card1, card2 in
+                    let score1 = relevanceScores[card1.id] ?? 0
+                    let score2 = relevanceScores[card2.id] ?? 0
+                    return score1 > score2
+                }
+            }
+
             // Convert to output format
             let output = cards.map { card in
                 TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
@@ -457,6 +574,62 @@ struct Find: ParsableCommand {
             JSONHelper.printErrorJSON(error.localizedDescription)
             throw ExitCode.failure
         }
+    }
+
+    // MARK: - Smart Search Helpers
+
+    /// Normalize text to searchable words (lowercase, remove punctuation, split on separators)
+    private func normalizeToWords(_ text: String) -> Swift.Set<String> {
+        // Replace common separators with spaces
+        let normalized =
+            text
+            .lowercased()
+            .replacingOccurrences(of: "-", with: " ")
+            .replacingOccurrences(of: "_", with: " ")
+            .replacingOccurrences(of: ":", with: " ")
+            .replacingOccurrences(of: "/", with: " ")
+            .replacingOccurrences(of: ".", with: " ")
+
+        // Split into words and filter out empty/short words
+        let words =
+            normalized
+            .components(separatedBy: .whitespacesAndNewlines)
+            .map { $0.trimmingCharacters(in: .punctuationCharacters) }
+            .filter { $0.count >= 2 }
+
+        return Swift.Set(words)
+    }
+
+    /// Calculate relevance score for a card based on query words
+    private func calculateRelevanceScore(card: Card, queryWords: Swift.Set<String>) -> Int {
+        var score = 0
+
+        // Get searchable words from card fields
+        let titleWords = normalizeToWords(card.title)
+        let descriptionWords = normalizeToWords(card.description)
+        let pathWords = normalizeToWords(card.workingDirectory)
+        var tagWords = Swift.Set<String>()
+        for tag in card.tags {
+            tagWords.formUnion(normalizeToWords(tag.key))
+            tagWords.formUnion(normalizeToWords(tag.value))
+        }
+
+        // Score each query word
+        for queryWord in queryWords {
+            // Exact word matches (higher score)
+            if titleWords.contains(queryWord) { score += 10 }
+            if descriptionWords.contains(queryWord) { score += 5 }
+            if pathWords.contains(queryWord) { score += 3 }
+            if tagWords.contains(queryWord) { score += 7 }
+
+            // Prefix matches (lower score but still useful)
+            if titleWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 4 }
+            if descriptionWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 2 }
+            if pathWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 1 }
+            if tagWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 3 }
+        }
+
+        return score
     }
 }
 
@@ -494,6 +667,12 @@ struct Set: ParsableCommand {
 
     @Option(name: .long, parsing: .upToNextOption, help: "Add tags in key=value format")
     var tag: [String] = []
+
+    @Flag(name: .long, help: "Replace all tags instead of adding (use with --tag)")
+    var replaceTags: Bool = false
+
+    @Option(name: .long, help: "Set command to run when terminal opens")
+    var initCommand: String?
 
     @Flag(name: .long, help: "Mark as favourite")
     var favourite: Bool = false
@@ -546,6 +725,14 @@ struct Set: ParsableCommand {
 
             for tagStr in tag {
                 queryItems.append(URLQueryItem(name: "tag", value: tagStr))
+            }
+
+            if replaceTags {
+                queryItems.append(URLQueryItem(name: "replaceTags", value: "true"))
+            }
+
+            if let initCommand = initCommand {
+                queryItems.append(URLQueryItem(name: "initCommand", value: initCommand))
             }
 
             if favourite {
@@ -877,5 +1064,70 @@ struct Context: ParsableCommand {
             - Move terminals through columns as work progresses
             """
         print(context)
+    }
+}
+
+// MARK: - Delete Command
+
+struct Delete: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        abstract: "Delete a terminal",
+        discussion: "Moves terminal to bin (soft delete). Use --permanent to skip bin."
+    )
+
+    @Argument(help: "Terminal identifier (UUID or name)")
+    var terminal: String
+
+    @Flag(name: .long, help: "Use debug data directory (TermQ-Debug)")
+    var debug: Bool = false
+
+    @Flag(name: .long, help: "Permanently delete (skip bin, cannot be recovered)")
+    var permanent: Bool = false
+
+    func run() throws {
+        do {
+            let board = try BoardLoader.loadBoard(debug: debug)
+
+            guard let card = board.findTerminal(identifier: terminal) else {
+                JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
+                throw ExitCode.failure
+            }
+
+            // Build URL for delete
+            var components = URLComponents()
+            components.scheme = "termq"
+            components.host = "delete"
+
+            components.queryItems = [
+                URLQueryItem(name: "id", value: card.id.uuidString),
+                URLQueryItem(name: "permanent", value: permanent ? "true" : "false"),
+            ]
+
+            guard let url = components.url else {
+                JSONHelper.printErrorJSON("Failed to construct URL")
+                throw ExitCode.failure
+            }
+
+            // Open the URL scheme
+            let workspace = NSWorkspace.shared
+            let success = workspace.open(url)
+
+            if success {
+                JSONHelper.printJSON(DeleteResponse(id: card.id.uuidString, permanent: permanent))
+            } else {
+                JSONHelper.printErrorJSON("Failed to send delete command to TermQ. Is it running?")
+                throw ExitCode.failure
+            }
+
+        } catch BoardLoader.LoadError.boardNotFound(let path) {
+            JSONHelper.printErrorJSON(
+                "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
+            throw ExitCode.failure
+        } catch let error as ExitCode {
+            throw error
+        } catch {
+            JSONHelper.printErrorJSON("Unexpected error: \(error.localizedDescription)")
+            throw ExitCode.failure
+        }
     }
 }

@@ -157,6 +157,9 @@ termqcli list --columns
 Search for terminals by various criteria.
 
 ```bash
+# Smart search across all fields (name, description, path, tags)
+termqcli find --query "api server prod"
+
 # Find by name (partial, case-insensitive)
 termqcli find --name "api"
 
@@ -178,6 +181,16 @@ termqcli find --favourites
 # Combine filters
 termqcli find --column "In Progress" --tag env=prod
 ```
+
+#### Smart Search (`--query`)
+
+The `--query` option provides intelligent multi-word search:
+
+- **Word normalization**: Separators like `-`, `_`, `:`, `/`, `.` are treated as word boundaries
+- **Multi-field**: Searches across name, description, path, and tags simultaneously
+- **Relevance scoring**: Results sorted by match quality (name matches score highest)
+
+**Example**: `termqcli find --query "mcp toolkit migrate"` will find a terminal named `"mcp-toolkit: migrate workflows"` because each word matches.
 
 ### Modify Terminals
 
@@ -202,8 +215,14 @@ termqcli set "Terminal Name" --llm-prompt "Node.js API server, uses PostgreSQL"
 # Set one-time LLM action (runs on next open, then clears)
 termqcli set "Terminal Name" --llm-next-action "Fix the auth bug discussed in issue #42"
 
-# Add tags
+# Set init command (runs when terminal opens)
+termqcli set "Terminal Name" --init-command "npm run dev"
+
+# Add tags (additive by default)
 termqcli set "Terminal Name" --tag env=prod --tag version=2.0
+
+# Replace all tags instead of adding
+termqcli set "Terminal Name" --tag env=staging --replace-tags
 
 # Mark as favourite
 termqcli set "Terminal Name" --favourite
