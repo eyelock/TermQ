@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import Sparkle
 import SwiftUI
 import TermQCore
@@ -545,8 +546,6 @@ struct IdentifiableURL: Identifiable {
 }
 
 // MARK: - Sparkle Updater Access
-
-import Combine
 
 /// Observable wrapper for Sparkle's updater to use in SwiftUI
 @MainActor

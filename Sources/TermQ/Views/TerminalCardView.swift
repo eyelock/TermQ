@@ -19,6 +19,7 @@ struct TerminalCardView: View {
 
     @State private var isHovering = false
     @State private var showDeleteConfirmation = false
+    @ObservedObject private var tmuxManager = TmuxManager.shared
 
     /// Background color - tinted with column color when open as tab
     private var cardBackground: Color {
@@ -91,8 +92,9 @@ struct TerminalCardView: View {
                         .help(Strings.Card.liveHelp)
                 }
 
-                // TMUX badge - shows when terminal uses tmux backend (persistent sessions)
-                if card.backend == .tmux {
+                // TMUX badge - shows when terminal uses tmux backend AND tmux is available
+                // (cards with tmux backend fall back to direct if tmux is unavailable)
+                if card.backend == .tmux && tmuxManager.isAvailable {
                     Text(Strings.Card.tmux)
                         .font(.caption2)
                         .fontWeight(.bold)
