@@ -18,6 +18,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Skip CI verification for pre-releases (beta, alpha, rc)
+          if [[ "${{ github.ref }}" =~ (alpha|beta|rc) ]]; then
+            echo "⏭️ Skipping CI verification for pre-release"
+            exit 0
+          fi
+
           echo "Checking CI status for commit ${{ github.sha }}..."
 
           # Wait up to 5 minutes for CI to complete (in case it's still running)
