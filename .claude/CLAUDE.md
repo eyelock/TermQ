@@ -57,50 +57,15 @@ make check         # Runs build, lint, format-check, and test
 
 **If local checks pass but CI fails**: This is a BUG. Local and CI environments use identical make targets. Investigate the discrepancy and file an issue.
 
-## RELEASE PROCESS
+## COMMAND REFERENCE
 
-Releases are automated via GitHub Actions when a version tag is pushed.
+Detailed procedures and guidelines are documented in the `.claude/commands/` directory:
 
-1. Ensure all changes are committed and pushed to main
-2. Run `make release` - interactive prompt for major/minor/patch
-3. Or use specific targets: `make release-patch`, `make release-minor`, `make release-major`
-4. The release workflow will:
-   - Verify CI passed for the commit
-   - Build the release app bundle
-   - Create DMG and zip artifacts
-   - Publish to GitHub Releases with checksums
-
-## LOCALIZATION REQUIREMENTS (MANDATORY)
-
-**NEVER use hardcoded user-facing strings in SwiftUI views or UI code.**
-
-All user-visible text MUST use the centralized `Strings` enum:
-
-```swift
-// ❌ WRONG - hardcoded string
-Text("New Terminal")
-Button("Cancel") { ... }
-.help("Close window")
-
-// ✅ CORRECT - localized string
-Text(Strings.Editor.titleNew)
-Button(Strings.Editor.cancel) { ... }
-.help(Strings.Common.close)
-```
-
-**Before any PR involving UI changes:**
-1. Search for hardcoded strings: `grep -r "Text(\"" Sources/TermQ/Views/`
-2. Verify all new strings are added to `Strings.swift`
-3. Run `./scripts/localization/validate-strings.sh` to ensure all 40 language files are in sync
-
-**Key files:**
-- `Sources/TermQ/Strings.swift` - Centralized string enum using `localizedBundle`
-- `Sources/TermQ/Resources/*.lproj/Localizable.strings` - Translation files (40 languages)
-
-**Adding new strings:**
-1. Add the key to `Strings.swift` with appropriate category
-2. Add the English string to `Sources/TermQ/Resources/en.lproj/Localizable.strings`
-3. Run the localization script to propagate to all language files
+- **[commands/release.md](commands/release.md)** - Standard release procedure from main branch
+- **[commands/release-beta.md](commands/release-beta.md)** - Beta release procedure with Sparkle integration
+- **[commands/release-hotfix.md](commands/release-hotfix.md)** - Hotfix release procedure for critical patches
+- **[commands/localization.md](commands/localization.md)** - Localization management and string handling
+- **[commands/code-style.md](commands/code-style.md)** - Code style, patterns, and Swift 6 concurrency guidelines
 
 ## CODE HYGIENE
 
