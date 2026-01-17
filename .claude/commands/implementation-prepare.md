@@ -14,6 +14,7 @@
 - [ ] Verify you're in the correct worktree/branch
 - [ ] Run `git status` - ensure clean working directory (or expected changes only)
 - [ ] Run `make check` - verify baseline passes before you start
+      **If baseline fails:** Fix the failures OR report to user before starting new work. Don't proceed with a broken baseline.
 - [ ] Check branch is up-to-date with main if needed (`git fetch origin main`)
 
 ### Worktree Decision
