@@ -25,7 +25,7 @@ The Makefile handles DEVELOPER_DIR, warning filters, CI detection, and tool inst
 - [ ] Review your `git diff` for:
   - [ ] No debug code (print statements, test data, etc.)
   - [ ] No commented-out code
-  - [ ] No TODO comments (convert to ACME tasks)
+  - [ ] No TODO comments (create GitHub issues instead)
   - [ ] No accidentally committed personal configs
 - [ ] Check for compiler warnings you may have introduced
 - [ ] Verify you're following patterns from [code-style.md](code-style.md)
@@ -41,11 +41,16 @@ The Makefile handles DEVELOPER_DIR, warning filters, CI detection, and tool inst
 
 ## 4. Domain-Specific Checks
 
-### If you modified UI:
+### If you modified UI strings or Swift files with UI:
+**REQUIRED:** Run localization validation
+
 - [ ] Run `./scripts/localization/validate-strings.sh`
-- [ ] Verify all 40 language files updated
+      (Ensures all 40 language files have matching keys)
+- [ ] Verify all language files updated correctly
 - [ ] Check [localization.md](localization.md) for string guidelines
 - [ ] Test UI in different languages if possible
+
+**Skip if:** Only modified non-UI code (models, services, tests, etc.)
 
 ### If you modified APIs:
 - [ ] Document breaking changes
@@ -61,7 +66,7 @@ The Makefile handles DEVELOPER_DIR, warning filters, CI detection, and tool inst
 - [ ] Update relevant comments/docstrings
 - [ ] Update README if user-facing changes
 - [ ] Update command docs if workflow changes
-- [ ] Log implementation notes in ACME
+- [ ] Create session handover notes in `.claude/sessions/` if needed
 
 ## 6. Final Verification
 

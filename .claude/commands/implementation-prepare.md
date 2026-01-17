@@ -5,7 +5,7 @@
 ## 1. Context Gathering
 
 - [ ] Read the task/plan/issue description thoroughly
-- [ ] Check ACME for related notes, reviews, or previous attempts
+- [ ] Review session notes in `.claude/sessions/` for related work
 - [ ] Review recent commits related to this area (`git log --oneline <files>`)
 - [ ] Identify the files that will need changes
 
@@ -34,8 +34,23 @@
 
 ## 5. Implementation Planning
 
+### When to Create a Plan
+
+Create a written plan in `.claude/plans/` if:
+- **Multi-file changes** - 3+ files will be modified
+- **Architectural decisions** - Need to choose between approaches
+- **User requests planning** - Explicitly asked or using EnterPlanMode
+- **Unclear path** - Multiple ways to implement, need to compare
+
+**Plan format:** `YYYY-MM-DD-feature-name.md`
+
+**Example:** `.claude/plans/2026-01-17-persistent-claude-settings.md`
+
+### Planning Checklist
+
 - [ ] Use TodoWrite to create implementation checklist
 - [ ] Break down changes into logical steps
+- [ ] Create written plan in `.claude/plans/` if complexity warrants it
 - [ ] Identify testing strategy (unit, integration, manual)
 - [ ] Note any concerns or questions for user
 

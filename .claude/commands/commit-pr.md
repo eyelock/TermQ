@@ -254,5 +254,5 @@ gh pr merge --squash  # or --merge or --rebase based on project preference
 ## Post-Merge
 
 - [ ] Delete feature branch (local and remote)
-- [ ] Update ACME with completion notes
+- [ ] Create session notes in `.claude/sessions/` if significant work
 - [ ] Close related tasks/issues

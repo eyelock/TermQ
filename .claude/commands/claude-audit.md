@@ -32,11 +32,11 @@ This document captures the design decisions, principles, and best practices for 
    - GitHub CLI (pr, issue, release operations)
    - WebSearch/WebFetch for documentation
    - **NO** direct tool access (swift, swiftlint, swift-format)
-   - **NO** experimental features (ACME, beta MCP tools)
+   - **NO** experimental features (beta MCP tools, personal productivity tools)
    - **NO** personal scripts or machine-specific paths
 
 2. **Personal settings.local.json (gitignored):**
-   - ACME tools (not ready for team use)
+   - Personal productivity tools (not ready for team use)
    - TermQ MCP tools (changing rapidly in dev)
    - GitHub MCP tools (don't work well, but keep for testing)
    - Direct tool access (swift, xcodebuild) for debugging
@@ -125,7 +125,7 @@ diff .claude/settings.json .claude/settings.local.json
 ```
 
 **Fix:** Remove duplicates from `settings.local.json` - it should only contain:
-- Experimental features (ACME, beta MCP)
+- Experimental features (beta MCP, personal tools)
 - Debugging tools (direct swift/xcodebuild)
 - Personal scripts/paths
 - Extended commands not needed by everyone
@@ -171,7 +171,7 @@ grep -E "swift build|swiftlint|swift-format" .claude/settings.json
 - No PR review check (miss reviewer comments)
 - No localization validation for UI changes
 - No manual testing reminder
-- No ACME logging
+- No session handover notes
 
 **Fix:** Add checklist items to appropriate workflow docs
 
@@ -217,7 +217,7 @@ When performing a configuration audit:
 4. **Check worktree behavior** - Does settings.json work in worktrees?
 5. **Test tool preferences** - Does Claude try to use banned tools?
 6. **Review workflows** - Are docs clear and complete?
-7. **Document findings** - Add issues to ACME or GitHub
+7. **Document findings** - File GitHub issues or create session notes
 
 ## Questions to Ask
 
@@ -243,8 +243,8 @@ When performing a configuration audit:
 ## Contact & Feedback
 
 When you find issues or have suggestions:
-1. Create an ACME observation
-2. File a GitHub issue
+1. File a GitHub issue
+2. Create session notes in `.claude/sessions/`
 3. Update this document with what you learned
 4. Share with the team
 

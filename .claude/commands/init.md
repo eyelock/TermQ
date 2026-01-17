@@ -4,12 +4,7 @@
 
 ## Session Start Checklist
 
-1. **Initialize ACME** (if available)
-   - Check for pending items, reviews, and tasks
-   - Review any session handover notes from `.claude/sessions/`
-   - Log effort throughout the session
-
-2. **Check git status**
+1. **Check git status**
    - Verify current branch
    - Check for uncommitted changes
    - Review recent commits
@@ -61,7 +56,7 @@ When exploring the codebase:
 ## Context Loading Strategy
 
 - **First time in a worktree:** Read `CLAUDE.md` and relevant command docs
-- **Continuing work:** Check ACME for context, review recent commits
+- **Continuing work:** Review recent commits and session notes
 - **Large codebase exploration:** Use Task/Explore agent to avoid context bloat
 - **Specific questions:** Use targeted Grep/Glob, then Read specific files
 

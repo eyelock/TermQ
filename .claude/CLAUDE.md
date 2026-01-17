@@ -14,7 +14,7 @@ This gives you:
 **Follow this workflow for features, fixes, and refactoring:**
 
 ### 1. Session Init
-→ **[commands/init.md](commands/init.md)** - Check ACME, git status, verify worktree
+→ **[commands/init.md](commands/init.md)** - Session startup, git status, verify worktree
 
 ### 2. Prepare
 → **[commands/implementation-prepare.md](commands/implementation-prepare.md)** - Gather context, verify environment, plan implementation
@@ -24,6 +24,8 @@ This gives you:
 
 ### 4. Check
 → **[commands/implementation-checks.md](commands/implementation-checks.md)** - Build, lint, test, review changes
+
+**Note:** Steps 3-4 may iterate - failures in step 4 return to step 3.
 
 ### 5. Commit & PR
 → **[commands/commit-pr.md](commands/commit-pr.md)** - Create commits and pull requests
@@ -79,7 +81,6 @@ When I say "let me give you feedback" or similar:
 ### Planning & Documentation
 - ALWAYS put plans in `.claude/plans/`
 - ALWAYS put session handovers in `.claude/sessions/`
-- Log work in ACME throughout the session
 
 ### Responsible CI/CD Usage
 
@@ -115,19 +116,11 @@ make test          # All tests must pass
 
 **If local checks pass but CI fails**: This is a BUG. Investigate and file an issue.
 
-### Code Hygiene Checklist
+### Code Hygiene
 
-Run at the end of significant development work:
+For the complete pre-commit checklist, see **[commands/implementation-checks.md](commands/implementation-checks.md)**.
 
-- [ ] Clean software, including dependencies
-- [ ] Install dependencies, check for warnings
-- [ ] Build with zero error tolerance, minimize warnings
-- [ ] Format all code
-- [ ] Lint with zero error tolerance, minimize warnings
-- [ ] Validate localization: `./scripts/localization/validate-strings.sh`
-- [ ] Run unit tests with coverage
-- [ ] Run integration tests (if applicable)
-- [ ] Use ACME to log work and findings
+This includes build verification, code quality review, testing, and domain-specific checks (localization, APIs, build/CI).
 
 ---
 
@@ -137,7 +130,9 @@ Run at the end of significant development work:
 .claude/
 ├── CLAUDE.md              # This file - your guide
 ├── settings.json          # Project-wide permissions (checked in, follows to worktrees)
+│                          # Example: Make targets, git commands, gh CLI
 ├── settings.local.json    # Personal overrides (gitignored, per-worktree)
+│                          # Example: Debugging tools, personal productivity tools
 ├── commands/              # Workflow documentation
 │   ├── init.md                      # Session initialization
 │   ├── implementation-prepare.md    # Pre-coding checklist
@@ -173,6 +168,15 @@ Run at the end of significant development work:
 
 **Writing new Swift code?**
 → Reference [commands/code-style.md](commands/code-style.md) during step 3 (Implement)
+
+**Doc-only changes?**
+→ Follow steps 1-2-3-5 (skip heavy build/test in step 4)
+
+**Investigating an issue?**
+→ Steps 1-2 only (prepare context, no implementation)
+
+**Addressing PR feedback?**
+→ Start at step 2 (prepare), then 3-4-5
 
 ---
 
