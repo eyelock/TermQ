@@ -4,21 +4,23 @@
 
 ## Branch Naming Conventions
 
-Use conventional naming:
+Use conventional naming with hyphens (not slashes):
 
 ```
-feat/<short-description>      # New features
-fix/<short-description>        # Bug fixes
-refactor/<short-description>   # Code refactoring
-docs/<short-description>       # Documentation only
-ci/<short-description>         # CI/CD changes
-test/<short-description>       # Test additions/changes
+feat-<short-description>      # New features
+fix-<short-description>        # Bug fixes
+refactor-<short-description>   # Code refactoring
+docs-<short-description>       # Documentation only
+ci-<short-description>         # CI/CD changes
+test-<short-description>       # Test additions/changes
 ```
+
+**Why hyphens?** Keeps worktree directories flat in `../TermQ-worktrees/` for easy visibility.
 
 Examples:
-- `feat/terminal-quick-actions`
-- `fix/terminal-selection-focus`
-- `ci/persistent-claude-permissions`
+- `feat-terminal-quick-actions`
+- `fix-terminal-selection-focus`
+- `ci-persistent-claude-permissions`
 
 ## Commit Messages
 
@@ -256,3 +258,67 @@ gh pr merge --squash  # or --merge or --rebase based on project preference
 - [ ] Delete feature branch (local and remote)
 - [ ] Create session notes in `.claude/sessions/` if significant work
 - [ ] Close related tasks/issues
+- [ ] Clean up worktree (if used) - see below
+
+## Worktree Cleanup (if used)
+
+**CRITICAL: Only remove worktrees after PR is merged!**
+
+### Before Removing Worktree
+
+**Check if branch is merged:**
+
+```bash
+# Verify the branch is actually merged
+git branch -r --merged origin/main | grep <branch-name>
+
+# If nothing shows, the branch is NOT merged - DO NOT PROCEED
+```
+
+**If branch is NOT merged:**
+
+1. **Summarize the worktree work** to help decide:
+   ```bash
+   # Show commits in this worktree
+   git log origin/main..<branch-name> --oneline
+
+   # Show files changed
+   git diff origin/main..<branch-name> --stat
+   ```
+
+2. **Present summary to user:** "This worktree has X commits with changes to Y files. The commits are: [list]. Do you REALLY want to remove this worktree and lose this unmerged work?"
+
+3. **Wait for explicit confirmation** before proceeding
+
+### Cleanup Steps (after merge confirmed)
+
+**If branch IS merged (or user confirms deletion), proceed:**
+
+```bash
+# 1. Return to main repo
+cd /Users/david/Storage/Workspace/eyelock/TermQ
+
+# 2. Remove the worktree (removes directory + git metadata)
+git worktree remove ../TermQ-worktrees/<branch-name>
+
+# 3. Delete local branch
+git branch -d <branch-name>
+
+# 4. Delete remote branch (keeps remote in sync)
+git push origin --delete <branch-name>
+```
+
+**Example:**
+```bash
+cd /Users/david/Storage/Workspace/eyelock/TermQ
+git worktree remove ../TermQ-worktrees/feat-terminal-quick-actions
+git branch -d feat-terminal-quick-actions
+git push origin --delete feat-terminal-quick-actions
+```
+
+### Common Mistakes to Avoid
+
+- ❌ Don't manually `rm -rf` the worktree directory (use `git worktree remove`)
+- ❌ Don't remove worktree before PR is merged
+- ❌ Don't use `git branch -D` (force delete) unless you know why
+- ❌ Don't forget to clean up the remote branch

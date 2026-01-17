@@ -16,6 +16,37 @@
 - [ ] Run `make check` - verify baseline passes before you start
 - [ ] Check branch is up-to-date with main if needed (`git fetch origin main`)
 
+### Worktree Decision
+
+**If you're in the main repository (not already in a worktree):**
+
+🤔 **Should we create a worktree for this work?**
+
+**Create a worktree when:**
+- Multi-file feature or fix (will take multiple commits)
+- Want to keep main clean for other investigations
+- Work might span multiple sessions
+- Multiple ideas/fixes flowing simultaneously
+
+**Work on main when:**
+- Quick documentation-only changes
+- Single-file fixes (this session only)
+- Need to investigate something ad-hoc
+- Emergency hotfix (though consider hotfix workflow)
+
+**Create worktree:**
+```bash
+# Use conventional commit prefixes with hyphens: feat-, fix-, docs-, test-, refactor-, ci-
+git worktree add ../TermQ-worktrees/<branch-name> -b <branch-name>
+cd ../TermQ-worktrees/<branch-name>
+```
+
+**Example:**
+```bash
+git worktree add ../TermQ-worktrees/feat-terminal-quick-actions -b feat-terminal-quick-actions
+cd ../TermQ-worktrees/feat-terminal-quick-actions
+```
+
 ## 3. Code Review
 
 - [ ] Read all files you'll be modifying (use Read tool)
