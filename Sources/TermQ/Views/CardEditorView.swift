@@ -30,7 +30,11 @@ struct CardEditorView: View {
     @State private var selectedTab: EditorTab = .general
     @State private var mcpInstalled: Bool = false
     @State private var allowAutorun: Bool = false
+    @State private var allowOscClipboard: Bool = true
+    @State private var confirmExternalModifications: Bool = true
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
+    @AppStorage("allowOscClipboard") private var globalAllowOscClipboard = true
+    @AppStorage("confirmExternalLLMModifications") private var globalConfirmExternalModifications = true
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
     @State private var interactiveMode: Bool = true
     @State private var backend: TerminalBackend = .direct
@@ -244,7 +248,7 @@ struct CardEditorView: View {
             }
         }
 
-        Section(Strings.Editor.fieldSafePaste) {
+        Section(Strings.Editor.sectionSecurity) {
             Toggle(Strings.Editor.fieldSafePaste, isOn: $safePasteEnabled)
                 .help(Strings.Editor.fieldSafePasteHelp)
 
@@ -261,6 +265,36 @@ struct CardEditorView: View {
                         .foregroundColor(.secondary)
                 }
                 .help(Strings.Editor.fieldAutorunEnableHint)
+            }
+
+            if globalAllowOscClipboard {
+                Toggle(Strings.Editor.allowOscClipboard, isOn: $allowOscClipboard)
+                    .help(Strings.Editor.allowOscClipboardHelp)
+            } else {
+                HStack {
+                    Text(Strings.Editor.allowOscClipboard)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text(Strings.Editor.disabledGlobally)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .help(Strings.Editor.allowOscClipboardHelp)
+            }
+
+            if globalConfirmExternalModifications {
+                Toggle(Strings.Editor.confirmExternalModifications, isOn: $confirmExternalModifications)
+                    .help(Strings.Editor.confirmExternalModificationsHelp)
+            } else {
+                HStack {
+                    Text(Strings.Editor.confirmExternalModifications)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text(Strings.Editor.disabledGlobally)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .help(Strings.Editor.confirmExternalModificationsHelp)
             }
         }
     }
@@ -379,8 +413,8 @@ struct CardEditorView: View {
             .pickerStyle(.menu)
 
             if selectedLLMVendor.supportsInteractiveToggle {
-                Toggle(Strings.Editor.nonInteractiveNote, isOn: $interactiveMode)
-                    .help(Strings.Editor.nonInteractiveNote)
+                Toggle(Strings.Editor.interactiveModeToggle, isOn: $interactiveMode)
+                    .help(Strings.Editor.interactiveModeHelp)
             }
 
             VStack(alignment: .leading, spacing: 4) {
@@ -403,7 +437,7 @@ struct CardEditorView: View {
             }
 
             if !interactiveMode && selectedLLMVendor.supportsInteractiveToggle {
-                Text(Strings.Editor.nonInteractiveNote)
+                Text(Strings.Editor.nonInteractiveModeNote)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -436,6 +470,8 @@ struct CardEditorView: View {
         safePasteEnabled = card.safePasteEnabled
         themeId = card.themeId
         allowAutorun = card.allowAutorun
+        allowOscClipboard = card.allowOscClipboard
+        confirmExternalModifications = card.confirmExternalModifications
         backend = card.backend
         environmentVariables = card.environmentVariables
     }
@@ -457,6 +493,8 @@ struct CardEditorView: View {
         card.safePasteEnabled = safePasteEnabled
         card.themeId = themeId
         card.allowAutorun = allowAutorun
+        card.allowOscClipboard = allowOscClipboard
+        card.confirmExternalModifications = confirmExternalModifications
         card.backend = backend
         card.environmentVariables = environmentVariables
     }

@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "ऑटोरन वैश्विक रूप से अक्षम है";
 "editor.field.autorun.enable.hint" = "सेटिंग्स > उपकरण में सक्षम करें";
 
+"editor.allow.osc.clipboard" = "OSC 52 क्लिपबोर्ड एक्सेस की अनुमति दें";
+"editor.allow.osc.clipboard.help" = "इस टर्मिनल को OSC 52 एस्केप सीक्वेंस के माध्यम से सिस्टम क्लिपबोर्ड तक पहुंचने की अनुमति दें";
+"editor.confirm.external.modifications" = "बाहरी LLM संशोधनों के लिए पुष्टि आवश्यक";
+"editor.confirm.external.modifications.help" = "जब बाहरी प्रक्रियाएं इस टर्मिनल के LLM संदर्भ को संशोधित करें तो पुष्टि दिखाएं";
+"editor.disabled.globally" = "वैश्विक रूप से अक्षम";
+
+// Editor - Security section
+"editor.section.security" = "सुरक्षा";
+
 // Editor - Tags section
 "editor.section.tags" = "टैग";
 "editor.field.tags" = "टैग";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "इनिट कमांड पर लागू करें";
 "editor.field.apply.to.init.command.help" = "जेनरेट किए गए कमांड को इनिट कमांड के रूप में उपयोग करें";
 "editor.no.llm.prompt.warning" = "कोई LLM प्रॉम्प्ट कॉन्फ़िगर नहीं किया गया";
-"editor.non.interactive.note" = "नोट: कमांड गैर-इंटरैक्टिव रूप से चलते हैं";
+"editor.interactive.mode.toggle" = "इंटरैक्टिव मोड";
+"editor.interactive.mode.help" = "बंद होने पर, गैर-इंटरैक्टिव निष्पादन के लिए -p फ्लैग जोड़ता है (स्वचालित कार्यों के लिए उपयोगी)";
+"editor.non.interactive.mode.note" = "गैर-इंटरैक्टिव मोड कार्य चलाता है और उपयोगकर्ता प्रॉम्प्ट के बिना बाहर निकलता है";
 
 "editor.cancel" = "रद्द करें";
 "editor.save" = "सहेजें";
@@ -309,7 +320,7 @@
 "alert.success" = "सफल";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "डेटा और सुरक्षा";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "सुरक्षा";
+"settings.allow.osc.clipboard" = "OSC 52 क्लिपबोर्ड एक्सेस की अनुमति दें";
+"settings.allow.osc.clipboard.help" = "टर्मिनल प्रोग्राम को OSC 52 एस्केप सीक्वेंस का उपयोग करके सिस्टम क्लिपबोर्ड पढ़ने और लिखने की अनुमति दें";
+"settings.confirm.external.modifications" = "बाहरी LLM संशोधनों के लिए पुष्टि आवश्यक";
+"settings.confirm.external.modifications.help" = "जब बाहरी प्रक्रियाएं termq:// URL के माध्यम से टर्मिनल LLM संदर्भ को संशोधित करने का प्रयास करें तो पुष्टि संवाद दिखाएं";
 // MARK: - Security
 "security.external.modification.title" = "बाहरी संशोधन अनुरोध";
 "security.external.modification.message" = "एक बाहरी प्रक्रिया टर्मिनल '%@' के लिए LLM संदर्भ को संशोधित करने का प्रयास कर रही है:

@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "הרצה אוטומטית מושבתת גלובלית";
 "editor.field.autorun.enable.hint" = "הפעל בהגדרות > כלים";
 
+"editor.allow.osc.clipboard" = "אפשר גישה ללוח OSC 52";
+"editor.allow.osc.clipboard.help" = "אפשר למסוף זה גישה ללוח המערכת באמצעות רצפי בריחה OSC 52";
+"editor.confirm.external.modifications" = "דרוש אישור לשינויי LLM חיצוניים";
+"editor.confirm.external.modifications.help" = "הצג אישור כאשר תהליכים חיצוניים משנים את הקשר ה-LLM של מסוף זה";
+"editor.disabled.globally" = "מושבת ברמה גלובלית";
+
+// Editor - Security section
+"editor.section.security" = "אבטחה";
+
 // Editor - Tags section
 "editor.section.tags" = "תוויות";
 "editor.field.tags" = "תוויות";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "החל כפקודת אתחול";
 "editor.field.apply.to.init.command.help" = "השתמש בפקודה המיוצרת כפקודת אתחול";
 "editor.no.llm.prompt.warning" = "לא הוגדרה הנחיית LLM";
-"editor.non.interactive.note" = "הערה: פקודות רצות באופן לא אינטראקטיבי";
+"editor.interactive.mode.toggle" = "מצב אינטראקטיבי";
+"editor.interactive.mode.help" = "כאשר כבוי, מוסיף דגל -p להרצה לא אינטראקטיבית (שימושי למשימות אוטומטיות)";
+"editor.non.interactive.mode.note" = "מצב לא אינטראקטיבי מריץ את המשימה ויוצא ללא הנחיות למשתמש";
 
 "editor.cancel" = "ביטול";
 "editor.save" = "שמירה";
@@ -309,7 +320,7 @@
 "alert.success" = "הצלחה";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "נתונים ואבטחה";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "אבטחה";
+"settings.allow.osc.clipboard" = "אפשר גישה ללוח OSC 52";
+"settings.allow.osc.clipboard.help" = "אפשר לתוכניות מסוף לקרוא ולכתוב ללוח המערכת באמצעות רצפי בריחה OSC 52";
+"settings.confirm.external.modifications" = "דרוש אישור לשינויי LLM חיצוניים";
+"settings.confirm.external.modifications.help" = "הצג תיבת דו-שיח לאישור כאשר תהליכים חיצוניים מנסים לשנות את הקשר ה-LLM של המסוף דרך כתובות termq://";
 // MARK: - Security
 "security.external.modification.title" = "בקשה לשינוי חיצוני";
 "security.external.modification.message" = "תהליך חיצוני מנסה לשנות את הקשר LLM עבור הטרמינל '%@':

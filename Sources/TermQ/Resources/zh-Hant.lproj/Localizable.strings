@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "自動執行已全域停用";
 "editor.field.autorun.enable.hint" = "在設定 > 工具中啟用";
 
+"editor.allow.osc.clipboard" = "允許 OSC 52 剪貼簿存取";
+"editor.allow.osc.clipboard.help" = "允許此終端通過 OSC 52 跳脫序列存取系統剪貼簿";
+"editor.confirm.external.modifications" = "外部 LLM 修改需要確認";
+"editor.confirm.external.modifications.help" = "當外部程序修改此終端的 LLM 上下文時顯示確認";
+"editor.disabled.globally" = "全域停用";
+
+// Editor - Security section
+"editor.section.security" = "安全";
+
 // Editor - Tags section
 "editor.section.tags" = "標籤";
 "editor.field.tags" = "標籤";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "套用為初始化指令";
 "editor.field.apply.to.init.command.help" = "將產生的指令用作初始化指令";
 "editor.no.llm.prompt.warning" = "未設定 LLM 提示";
-"editor.non.interactive.note" = "注意：指令以非互動方式執行";
+"editor.interactive.mode.toggle" = "互動模式";
+"editor.interactive.mode.help" = "關閉時，添加 -p 標誌用於非互動式執行（適用於自動化任務）";
+"editor.non.interactive.mode.note" = "非互動模式執行任務並退出，不顯示使用者提示";
 
 "editor.cancel" = "取消";
 "editor.save" = "儲存";
@@ -309,7 +320,7 @@
 "alert.success" = "成功";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "資料與安全";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "安全";
+"settings.allow.osc.clipboard" = "允許 OSC 52 剪貼簿存取";
+"settings.allow.osc.clipboard.help" = "允許終端程式使用 OSC 52 跳脫序列讀寫系統剪貼簿";
+"settings.confirm.external.modifications" = "外部 LLM 修改需要確認";
+"settings.confirm.external.modifications.help" = "當外部程序嘗試透過 termq:// URL 修改終端 LLM 上下文時顯示確認對話框";
 // MARK: - Security
 "security.external.modification.title" = "外部修改請求";
 "security.external.modification.message" = "外部程序正在嘗試修改終端機 '%@' 的 LLM 上下文:

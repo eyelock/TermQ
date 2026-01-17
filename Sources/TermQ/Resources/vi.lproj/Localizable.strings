@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Tự động chạy bị tắt toàn cục";
 "editor.field.autorun.enable.hint" = "Bật trong Cài đặt > Công cụ";
 
+"editor.allow.osc.clipboard" = "Cho phép truy cập clipboard OSC 52";
+"editor.allow.osc.clipboard.help" = "Cho phép terminal này truy cập clipboard hệ thống qua chuỗi thoát OSC 52";
+"editor.confirm.external.modifications" = "Yêu cầu xác nhận cho các sửa đổi LLM bên ngoài";
+"editor.confirm.external.modifications.help" = "Hiển thị xác nhận khi các tiến trình bên ngoài sửa đổi ngữ cảnh LLM của terminal này";
+"editor.disabled.globally" = "Đã tắt toàn cục";
+
+// Editor - Security section
+"editor.section.security" = "Bảo mật";
+
 // Editor - Tags section
 "editor.section.tags" = "Thẻ";
 "editor.field.tags" = "Thẻ";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Áp dụng làm lệnh khởi tạo";
 "editor.field.apply.to.init.command.help" = "Sử dụng lệnh được tạo làm lệnh khởi tạo";
 "editor.no.llm.prompt.warning" = "Chưa cấu hình lời nhắc LLM";
-"editor.non.interactive.note" = "Lưu ý: Lệnh chạy không tương tác";
+"editor.interactive.mode.toggle" = "Chế độ tương tác";
+"editor.interactive.mode.help" = "Khi tắt, thêm cờ -p để thực thi không tương tác (hữu ích cho các tác vụ tự động)";
+"editor.non.interactive.mode.note" = "Chế độ không tương tác chạy tác vụ và thoát mà không có lời nhắc người dùng";
 
 "editor.cancel" = "Hủy";
 "editor.save" = "Lưu";
@@ -309,7 +320,7 @@
 "alert.success" = "Thành công";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Dữ liệu & Bảo mật";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Bảo mật";
+"settings.allow.osc.clipboard" = "Cho phép truy cập clipboard OSC 52";
+"settings.allow.osc.clipboard.help" = "Cho phép các chương trình terminal đọc và ghi vào clipboard hệ thống bằng chuỗi thoát OSC 52";
+"settings.confirm.external.modifications" = "Yêu cầu xác nhận cho các sửa đổi LLM bên ngoài";
+"settings.confirm.external.modifications.help" = "Hiển thị hộp thoại xác nhận khi các tiến trình bên ngoài cố gắng sửa đổi ngữ cảnh LLM của terminal qua URL termq://";
 // MARK: - Security
 "security.external.modification.title" = "Yêu cầu sửa đổi bên ngoài";
 "security.external.modification.message" = "Một tiến trình bên ngoài đang cố gắng sửa đổi ngữ cảnh LLM cho terminal '%@':

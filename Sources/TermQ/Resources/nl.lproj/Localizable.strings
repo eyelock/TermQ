@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autorun globaal uitgeschakeld";
 "editor.field.autorun.enable.hint" = "Inschakelen in Instellingen > Hulpmiddelen";
 
+"editor.allow.osc.clipboard" = "OSC 52 klembordtoegang toestaan";
+"editor.allow.osc.clipboard.help" = "Deze terminal toegang geven tot het systeemklembord via OSC 52 escape-sequenties";
+"editor.confirm.external.modifications" = "Bevestiging vereist voor externe LLM-wijzigingen";
+"editor.confirm.external.modifications.help" = "Bevestiging tonen wanneer externe processen de LLM-context van deze terminal wijzigen";
+"editor.disabled.globally" = "Globaal uitgeschakeld";
+
+// Editor - Security section
+"editor.section.security" = "Beveiliging";
+
 // Editor - Tags section
 "editor.section.tags" = "Tags";
 "editor.field.tags" = "Tags";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Toepassen op startcommando";
 "editor.field.apply.to.init.command.help" = "Gegenereerd commando als startcommando gebruiken";
 "editor.no.llm.prompt.warning" = "Geen LLM-prompt geconfigureerd";
-"editor.non.interactive.note" = "Let op: Commando's worden niet-interactief uitgevoerd";
+"editor.interactive.mode.toggle" = "Interactieve modus";
+"editor.interactive.mode.help" = "Indien uit, voegt -p vlag toe voor niet-interactieve uitvoering (handig voor geautomatiseerde taken)";
+"editor.non.interactive.mode.note" = "Niet-interactieve modus voert de taak uit en sluit af zonder gebruikersprompts";
 
 "editor.cancel" = "Annuleer";
 "editor.save" = "Bewaar";
@@ -309,7 +320,7 @@
 "alert.success" = "Gelukt";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Data & beveiliging";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Beveiliging";
+"settings.allow.osc.clipboard" = "OSC 52 klembordtoegang toestaan";
+"settings.allow.osc.clipboard.help" = "Terminalprogramma's toestaan het systeemklembord te lezen en schrijven met behulp van OSC 52 escape-sequenties";
+"settings.confirm.external.modifications" = "Bevestiging vereist voor externe LLM-wijzigingen";
+"settings.confirm.external.modifications.help" = "Toon een bevestigingsvenster wanneer externe processen proberen de terminal LLM-context te wijzigen via termq://-URL's";
 // MARK: - Security
 "security.external.modification.title" = "Verzoek voor externe wijziging";
 "security.external.modification.message" = "Een extern proces probeert de LLM-context voor terminal '%@' te wijzigen:

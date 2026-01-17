@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Automatické spustenie globálne vypnuté";
 "editor.field.autorun.enable.hint" = "Povoliť v Nastavenia > Nástroje";
 
+"editor.allow.osc.clipboard" = "Povoliť prístup k schránke OSC 52";
+"editor.allow.osc.clipboard.help" = "Povoliť tomuto terminálu prístup k systémovej schránke cez escape sekvencie OSC 52";
+"editor.confirm.external.modifications" = "Vyžadovať potvrdenie pre externé úpravy LLM";
+"editor.confirm.external.modifications.help" = "Zobraziť potvrdenie, keď externé procesy upravujú kontext LLM tohto terminálu";
+"editor.disabled.globally" = "Globálne zakázané";
+
+// Editor - Security section
+"editor.section.security" = "Zabezpečenie";
+
 // Editor - Tags section
 "editor.section.tags" = "Štítky";
 "editor.field.tags" = "Štítky";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Použiť na počiatočný príkaz";
 "editor.field.apply.to.init.command.help" = "Použiť vygenerovaný príkaz ako počiatočný";
 "editor.no.llm.prompt.warning" = "Prompt LLM nie je nakonfigurovaný";
-"editor.non.interactive.note" = "Poznámka: Príkazy sa spúšťajú neinteraktívne";
+"editor.interactive.mode.toggle" = "Interaktívny režim";
+"editor.interactive.mode.help" = "Keď je vypnuté, pridáva príznak -p pre neinteraktívne spustenie (užitočné pre automatizované úlohy)";
+"editor.non.interactive.mode.note" = "Neinteraktívny režim spustí úlohu a ukončí sa bez výziev používateľovi";
 
 "editor.cancel" = "Zrušiť";
 "editor.save" = "Uložiť";
@@ -309,7 +320,7 @@
 "alert.success" = "Úspech";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Dáta a zabezpečenie";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Zabezpečenie";
+"settings.allow.osc.clipboard" = "Povoliť prístup k schránke OSC 52";
+"settings.allow.osc.clipboard.help" = "Povoliť terminálových programom čítať a zapisovať do systémovej schránky pomocou escape sekvencií OSC 52";
+"settings.confirm.external.modifications" = "Vyžadovať potvrdenie pre externé úpravy LLM";
+"settings.confirm.external.modifications.help" = "Zobraziť potvrdzovací dialóg, keď sa externé procesy pokúsia upraviť kontext LLM terminálu cez URL termq://";
 // MARK: - Security
 "security.external.modification.title" = "Požiadavka na externú úpravu";
 "security.external.modification.message" = "Externý proces sa pokúša upraviť kontext LLM pre terminál '%@':

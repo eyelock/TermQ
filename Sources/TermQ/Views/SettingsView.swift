@@ -27,6 +27,10 @@ struct SettingsView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @AppStorage("tmuxEnabled") private var tmuxEnabled = true
     @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
+
+    // Security preferences
+    @AppStorage("allowOscClipboard") private var allowOscClipboard = true
+    @AppStorage("confirmExternalLLMModifications") private var confirmExternalLLMModifications = true
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
@@ -42,14 +46,14 @@ struct SettingsView: View {
         case general
         case environment
         case tools
-        case data
+        case dataAndSecurity
 
         var title: String {
             switch self {
             case .general: return Strings.Settings.tabGeneral
             case .environment: return Strings.Settings.tabEnvironment
             case .tools: return Strings.Settings.tabTools
-            case .data: return Strings.Settings.tabData
+            case .dataAndSecurity: return Strings.Settings.tabDataAndSecurity
             }
         }
     }
@@ -76,8 +80,8 @@ struct SettingsView: View {
                     SettingsEnvironmentView()
                 case .tools:
                     toolsContent
-                case .data:
-                    dataContent
+                case .dataAndSecurity:
+                    dataAndSecurityContent
                 }
             }
             .formStyle(.grouped)
@@ -216,11 +220,21 @@ struct SettingsView: View {
         )
     }
 
-    // MARK: - Data Tab Content
+    // MARK: - Data & Security Tab Content
 
     @ViewBuilder
-    private var dataContent: some View {
+    private var dataAndSecurityContent: some View {
         BackupSettingsView()
+
+        Section {
+            Toggle(Strings.Settings.confirmExternalModifications, isOn: $confirmExternalLLMModifications)
+                .help(Strings.Settings.confirmExternalModificationsHelp)
+
+            Toggle(Strings.Settings.allowOscClipboard, isOn: $allowOscClipboard)
+                .help(Strings.Settings.allowOscClipboardHelp)
+        } header: {
+            Text(Strings.Settings.sectionSecurity)
+        }
 
         Section {
             VStack(alignment: .leading, spacing: 12) {

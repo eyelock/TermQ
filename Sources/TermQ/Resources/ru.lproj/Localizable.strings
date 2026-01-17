@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Автозапуск отключён глобально";
 "editor.field.autorun.enable.hint" = "Включите в Настройки > Инструменты";
 
+"editor.allow.osc.clipboard" = "Разрешить доступ к буферу обмена OSC 52";
+"editor.allow.osc.clipboard.help" = "Разрешить этому терминалу доступ к системному буферу обмена через escape-последовательности OSC 52";
+"editor.confirm.external.modifications" = "Требовать подтверждение для внешних изменений LLM";
+"editor.confirm.external.modifications.help" = "Показывать подтверждение, когда внешние процессы изменяют контекст LLM этого терминала";
+"editor.disabled.globally" = "Отключено глобально";
+
+// Editor - Security section
+"editor.section.security" = "Безопасность";
+
 // Editor - Tags section
 "editor.section.tags" = "Теги";
 "editor.field.tags" = "Теги";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Применить к начальной команде";
 "editor.field.apply.to.init.command.help" = "Использовать сгенерированную команду как начальную";
 "editor.no.llm.prompt.warning" = "Промпт LLM не настроен";
-"editor.non.interactive.note" = "Примечание: Команды выполняются неинтерактивно";
+"editor.interactive.mode.toggle" = "Интерактивный режим";
+"editor.interactive.mode.help" = "При отключении добавляет флаг -p для неинтерактивного выполнения (полезно для автоматизированных задач)";
+"editor.non.interactive.mode.note" = "Неинтерактивный режим выполняет задачу и завершается без запросов к пользователю";
 
 "editor.cancel" = "Отмена";
 "editor.save" = "Сохранить";
@@ -309,7 +320,7 @@
 "alert.success" = "Успешно";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Данные и безопасность";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Безопасность";
+"settings.allow.osc.clipboard" = "Разрешить доступ к буферу обмена OSC 52";
+"settings.allow.osc.clipboard.help" = "Разрешить терминальным программам чтение и запись в системный буфер обмена с использованием escape-последовательностей OSC 52";
+"settings.confirm.external.modifications" = "Требовать подтверждение для внешних изменений LLM";
+"settings.confirm.external.modifications.help" = "Показывать диалог подтверждения, когда внешние процессы пытаются изменить контекст LLM терминала через URL termq://";
 // MARK: - Security
 "security.external.modification.title" = "Запрос на внешнее изменение";
 "security.external.modification.message" = "Внешний процесс пытается изменить контекст LLM для терминала '%@':

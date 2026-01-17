@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Exécution auto désactivée globalement";
 "editor.field.autorun.enable.hint" = "Activer dans Réglages > Outils";
 
+"editor.allow.osc.clipboard" = "Autoriser l'accès au presse-papiers OSC 52";
+"editor.allow.osc.clipboard.help" = "Autoriser ce terminal à accéder au presse-papiers système via les séquences d'échappement OSC 52";
+"editor.confirm.external.modifications" = "Exiger une confirmation pour les modifications LLM externes";
+"editor.confirm.external.modifications.help" = "Afficher une confirmation lorsque des processus externes modifient le contexte LLM de ce terminal";
+"editor.disabled.globally" = "Désactivé globalement";
+
+// Editor - Security section
+"editor.section.security" = "Sécurité";
+
 // Editor - Tags section
 "editor.section.tags" = "Étiquettes";
 "editor.field.tags" = "Étiquettes";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Appliquer à la commande initiale";
 "editor.field.apply.to.init.command.help" = "Utiliser la commande générée comme commande initiale";
 "editor.no.llm.prompt.warning" = "Aucun prompt LLM configuré";
-"editor.non.interactive.note" = "Note : Les commandes s'exécutent de manière non interactive";
+"editor.interactive.mode.toggle" = "Mode interactif";
+"editor.interactive.mode.help" = "Lorsque désactivé, ajoute le drapeau -p pour l'exécution non interactive (utile pour les tâches automatisées)";
+"editor.non.interactive.mode.note" = "Le mode non interactif exécute la tâche et quitte sans demandes utilisateur";
 
 "editor.cancel" = "Annuler";
 "editor.save" = "Enregistrer";
@@ -309,7 +320,7 @@
 "alert.success" = "Succès";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Données et sécurité";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Sécurité";
+"settings.allow.osc.clipboard" = "Autoriser l'accès au presse-papiers OSC 52";
+"settings.allow.osc.clipboard.help" = "Autoriser les programmes de terminal à lire et écrire dans le presse-papiers système à l'aide des séquences d'échappement OSC 52";
+"settings.confirm.external.modifications" = "Exiger une confirmation pour les modifications LLM externes";
+"settings.confirm.external.modifications.help" = "Afficher une boîte de dialogue de confirmation lorsque des processus externes tentent de modifier le contexte LLM du terminal via les URL termq://";
 // MARK: - Security
 "security.external.modification.title" = "Demande de modification externe";
 "security.external.modification.message" = "Un processus externe tente de modifier le contexte LLM pour le terminal '%@' :

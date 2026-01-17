@@ -87,6 +87,12 @@
           "keywords": ["environment", "variable", "secret", "keychain", "api", "token", "password", "encryption", "global", "terminal"]
         },
         {
+          "id": "security",
+          "title": "Security",
+          "icon": "lock.shield",
+          "keywords": ["security", "safe", "paste", "clipboard", "osc", "autorun", "protection", "validation", "entitlements", "sandbox"]
+        },
+        {
           "id": "configuration",
           "title": "Configuration & Data",
           "icon": "gearshape",

@@ -64,6 +64,12 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Whether this terminal allows agent autorun commands (requires global enableTerminalAutorun)
     @Published public var allowAutorun: Bool
 
+    /// Whether this terminal allows OSC 52 clipboard access (requires global allowOscClipboard)
+    @Published public var allowOscClipboard: Bool
+
+    /// Whether this terminal requires confirmation for external LLM modifications (requires global confirmExternalLLMModifications)
+    @Published public var confirmExternalModifications: Bool
+
     /// When the card was soft-deleted (nil = active, set = in bin)
     @Published public var deletedAt: Date?
 
@@ -83,7 +89,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
-        case allowAutorun, deletedAt, lastLLMGet, backend, environmentVariables
+        case allowAutorun, allowOscClipboard, confirmExternalModifications
+        case deletedAt, lastLLMGet, backend, environmentVariables
     }
 
     public init(
@@ -105,6 +112,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         safePasteEnabled: Bool = true,
         themeId: String = "",
         allowAutorun: Bool = false,
+        allowOscClipboard: Bool = true,
+        confirmExternalModifications: Bool = true,
         deletedAt: Date? = nil,
         lastLLMGet: Date? = nil,
         backend: TerminalBackend = .direct,
@@ -128,6 +137,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.safePasteEnabled = safePasteEnabled
         self.themeId = themeId
         self.allowAutorun = allowAutorun
+        self.allowOscClipboard = allowOscClipboard
+        self.confirmExternalModifications = confirmExternalModifications
         self.deletedAt = deletedAt
         self.lastLLMGet = lastLLMGet
         self.backend = backend
@@ -154,6 +165,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         safePasteEnabled = try container.decodeIfPresent(Bool.self, forKey: .safePasteEnabled) ?? true
         themeId = try container.decodeIfPresent(String.self, forKey: .themeId) ?? ""
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
+        allowOscClipboard = try container.decodeIfPresent(Bool.self, forKey: .allowOscClipboard) ?? true
+        confirmExternalModifications = try container.decodeIfPresent(Bool.self, forKey: .confirmExternalModifications) ?? true
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
         // Default to direct for cards without backend field (pre-tmux cards were direct mode)
@@ -183,6 +196,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(safePasteEnabled, forKey: .safePasteEnabled)
         try container.encode(themeId, forKey: .themeId)
         try container.encode(allowAutorun, forKey: .allowAutorun)
+        try container.encode(allowOscClipboard, forKey: .allowOscClipboard)
+        try container.encode(confirmExternalModifications, forKey: .confirmExternalModifications)
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
         try container.encodeIfPresent(lastLLMGet, forKey: .lastLLMGet)
         try container.encode(backend, forKey: .backend)

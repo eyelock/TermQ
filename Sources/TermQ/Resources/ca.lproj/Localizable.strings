@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "L'execució automàtica està desactivada globalment";
 "editor.field.autorun.enable.hint" = "Activeu a Configuració > Eines";
 
+"editor.allow.osc.clipboard" = "Permetre l'accés al portapapers OSC 52";
+"editor.allow.osc.clipboard.help" = "Permetre a aquest terminal accedir al portapapers del sistema mitjançant seqüències d'escapament OSC 52";
+"editor.confirm.external.modifications" = "Requerir confirmació per a modificacions LLM externes";
+"editor.confirm.external.modifications.help" = "Mostrar confirmació quan processos externs modifiquin el context LLM d'aquest terminal";
+"editor.disabled.globally" = "Desactivat globalment";
+
+// Editor - Security section
+"editor.section.security" = "Seguretat";
+
 // Editor - Tags section
 "editor.section.tags" = "Etiquetes";
 "editor.field.tags" = "Etiquetes";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Aplicar a comanda inicial";
 "editor.field.apply.to.init.command.help" = "Utilitzar la comanda generada com a comanda inicial";
 "editor.no.llm.prompt.warning" = "No hi ha prompt LLM configurat";
-"editor.non.interactive.note" = "Nota: Les comandes s'executen de manera no interactiva";
+"editor.interactive.mode.toggle" = "Mode interactiu";
+"editor.interactive.mode.help" = "Quan està desactivat, afegeix el flag -p per a l'execució no interactiva (útil per a tasques automatitzades)";
+"editor.non.interactive.mode.note" = "El mode no interactiu executa la tasca i surt sense sol·licituds d'usuari";
 
 "editor.cancel" = "Cancel·lar";
 "editor.save" = "Desar";
@@ -309,7 +320,7 @@
 "alert.success" = "Èxit";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Dades i seguretat";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Seguretat";
+"settings.allow.osc.clipboard" = "Permetre l'accés al portapapers OSC 52";
+"settings.allow.osc.clipboard.help" = "Permetre als programes de terminal llegir i escriure al portapapers del sistema mitjançant seqüències d'escapament OSC 52";
+"settings.confirm.external.modifications" = "Requerir confirmació per a modificacions LLM externes";
+"settings.confirm.external.modifications.help" = "Mostrar un diàleg de confirmació quan processos externs intentin modificar el context LLM del terminal mitjançant URLs termq://";
 // MARK: - Security
 "security.external.modification.title" = "Sol·licitud de modificació externa";
 "security.external.modification.message" = "Un procés extern està intentant modificar el context LLM per al terminal '%@':

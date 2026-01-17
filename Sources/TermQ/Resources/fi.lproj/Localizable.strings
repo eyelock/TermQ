@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Automaattiajo poistettu käytöstä";
 "editor.field.autorun.enable.hint" = "Ota käyttöön kohdassa Asetukset > Työkalut";
 
+"editor.allow.osc.clipboard" = "Salli OSC 52 -leikepöytäkäyttö";
+"editor.allow.osc.clipboard.help" = "Salli tämän päätteen käyttää järjestelmän leikepöytää OSC 52 -pakosarjojen kautta";
+"editor.confirm.external.modifications" = "Vaadi vahvistus ulkoisille LLM-muutoksille";
+"editor.confirm.external.modifications.help" = "Näytä vahvistus, kun ulkoiset prosessit muokkaavat tämän päätteen LLM-kontekstia";
+"editor.disabled.globally" = "Poistettu käytöstä globaalisti";
+
+// Editor - Security section
+"editor.section.security" = "Turvallisuus";
+
 // Editor - Tags section
 "editor.section.tags" = "Tunnisteet";
 "editor.field.tags" = "Tunnisteet";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Käytä aloituskomentona";
 "editor.field.apply.to.init.command.help" = "Käytä generoitua komentoa aloituskomentona";
 "editor.no.llm.prompt.warning" = "LLM-kehotetta ei määritetty";
-"editor.non.interactive.note" = "Huom: Komennot suoritetaan ei-interaktiivisesti";
+"editor.interactive.mode.toggle" = "Vuorovaikutteinen tila";
+"editor.interactive.mode.help" = "Kun pois päältä, lisää -p-lipun ei-interaktiiviseen suoritukseen (hyödyllinen automatisoiduissa tehtävissä)";
+"editor.non.interactive.mode.note" = "Ei-interaktiivinen tila suorittaa tehtävän ja poistuu ilman käyttäjäkehotteita";
 
 "editor.cancel" = "Kumoa";
 "editor.save" = "Tallenna";
@@ -309,7 +320,7 @@
 "alert.success" = "Onnistui";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Data ja turvallisuus";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Turvallisuus";
+"settings.allow.osc.clipboard" = "Salli OSC 52 -leikepöytäkäyttö";
+"settings.allow.osc.clipboard.help" = "Salli pääteohjelmien lukea ja kirjoittaa järjestelmän leikepöydälle OSC 52 -pakosarjoja käyttäen";
+"settings.confirm.external.modifications" = "Vaadi vahvistus ulkoisille LLM-muutoksille";
+"settings.confirm.external.modifications.help" = "Näytä vahvistusikkuna, kun ulkoiset prosessit yrittävät muokata päätteen LLM-kontekstia termq://-URL-osoitteiden kautta";
 // MARK: - Security
 "security.external.modification.title" = "Ulkoinen muutospyyntö";
 "security.external.modification.message" = "Ulkoinen prosessi yrittää muokata LLM-kontekstia terminaalille '%@':

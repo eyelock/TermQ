@@ -14,6 +14,7 @@
   - [MCP Server](mcp-server.md)
   - [Tmux Sessions](tmux-sessions.md)
   - [Environment Variables & Secrets](environment-variables.md)
+  - [Security](security.md)
   - [Configuration & Data](configuration.md)
 
 - **Further Info**

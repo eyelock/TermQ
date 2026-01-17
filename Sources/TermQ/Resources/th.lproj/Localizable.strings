@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "การรันอัตโนมัติถูกปิดใช้งานทั้งระบบ";
 "editor.field.autorun.enable.hint" = "เปิดใช้งานใน การตั้งค่า > เครื่องมือ";
 
+"editor.allow.osc.clipboard" = "อนุญาตการเข้าถึงคลิปบอร์ด OSC 52";
+"editor.allow.osc.clipboard.help" = "อนุญาตให้เทอร์มินัลนี้เข้าถึงคลิปบอร์ดระบบผ่านลำดับ escape OSC 52";
+"editor.confirm.external.modifications" = "ต้องการการยืนยันสำหรับการแก้ไข LLM ภายนอก";
+"editor.confirm.external.modifications.help" = "แสดงการยืนยันเมื่อกระบวนการภายนอกแก้ไขบริบท LLM ของเทอร์มินัลนี้";
+"editor.disabled.globally" = "ปิดใช้งานทั่วโลก";
+
+// Editor - Security section
+"editor.section.security" = "ความปลอดภัย";
+
 // Editor - Tags section
 "editor.section.tags" = "แท็ก";
 "editor.field.tags" = "แท็ก";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "ใช้เป็นคำสั่งเริ่มต้น";
 "editor.field.apply.to.init.command.help" = "ใช้คำสั่งที่สร้างเป็นคำสั่งเริ่มต้น";
 "editor.no.llm.prompt.warning" = "ไม่ได้กำหนดค่าพรอมต์ LLM";
-"editor.non.interactive.note" = "หมายเหตุ: คำสั่งรันแบบไม่โต้ตอบ";
+"editor.interactive.mode.toggle" = "โหมดโต้ตอบ";
+"editor.interactive.mode.help" = "เมื่อปิด จะเพิ่มแฟล็ก -p สำหรับการดำเนินการแบบไม่โต้ตอบ (มีประโยชน์สำหรับงานอัตโนมัติ)";
+"editor.non.interactive.mode.note" = "โหมดไม่โต้ตอบรันงานและออกโดยไม่มีการแจ้งเตือนผู้ใช้";
 
 "editor.cancel" = "ยกเลิก";
 "editor.save" = "บันทึก";
@@ -309,7 +320,7 @@
 "alert.success" = "สำเร็จ";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "ข้อมูลและความปลอดภัย";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "ความปลอดภัย";
+"settings.allow.osc.clipboard" = "อนุญาตการเข้าถึงคลิปบอร์ด OSC 52";
+"settings.allow.osc.clipboard.help" = "อนุญาตให้โปรแกรมเทอร์มินัลอ่านและเขียนคลิปบอร์ดระบบโดยใช้ลำดับ escape OSC 52";
+"settings.confirm.external.modifications" = "ต้องการการยืนยันสำหรับการแก้ไข LLM ภายนอก";
+"settings.confirm.external.modifications.help" = "แสดงกล่องโต้ตอบยืนยันเมื่อกระบวนการภายนอกพยายามแก้ไขบริบท LLM ของเทอร์มินัลผ่าน URL termq://";
 // MARK: - Security
 "security.external.modification.title" = "คำขอแก้ไขจากภายนอก";
 "security.external.modification.message" = "กระบวนการภายนอกกำลังพยายามแก้ไขบริบท LLM สำหรับเทอร์มินัล '%@':

@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Esecuzione auto disabilitata globalmente";
 "editor.field.autorun.enable.hint" = "Abilita in Impostazioni > Strumenti";
 
+"editor.allow.osc.clipboard" = "Consenti accesso agli appunti OSC 52";
+"editor.allow.osc.clipboard.help" = "Consenti a questo terminale di accedere agli appunti di sistema tramite sequenze di escape OSC 52";
+"editor.confirm.external.modifications" = "Richiedi conferma per modifiche LLM esterne";
+"editor.confirm.external.modifications.help" = "Mostra conferma quando processi esterni modificano il contesto LLM di questo terminale";
+"editor.disabled.globally" = "Disabilitato globalmente";
+
+// Editor - Security section
+"editor.section.security" = "Sicurezza";
+
 // Editor - Tags section
 "editor.section.tags" = "Tag";
 "editor.field.tags" = "Tag";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Applica al comando iniziale";
 "editor.field.apply.to.init.command.help" = "Usa comando generato come comando iniziale";
 "editor.no.llm.prompt.warning" = "Nessun prompt LLM configurato";
-"editor.non.interactive.note" = "Nota: I comandi vengono eseguiti in modo non interattivo";
+"editor.interactive.mode.toggle" = "Modalità interattiva";
+"editor.interactive.mode.help" = "Se disattivato, aggiunge il flag -p per l'esecuzione non interattiva (utile per attività automatizzate)";
+"editor.non.interactive.mode.note" = "La modalità non interattiva esegue l'attività ed esce senza richieste all'utente";
 
 "editor.cancel" = "Annulla";
 "editor.save" = "Salva";
@@ -309,7 +320,7 @@
 "alert.success" = "Successo";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Dati e sicurezza";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Sicurezza";
+"settings.allow.osc.clipboard" = "Consenti accesso agli appunti OSC 52";
+"settings.allow.osc.clipboard.help" = "Consenti ai programmi del terminale di leggere e scrivere negli appunti di sistema utilizzando le sequenze di escape OSC 52";
+"settings.confirm.external.modifications" = "Richiedi conferma per modifiche LLM esterne";
+"settings.confirm.external.modifications.help" = "Mostra una finestra di conferma quando processi esterni tentano di modificare il contesto LLM del terminale tramite URL termq://";
 // MARK: - Security
 "security.external.modification.title" = "Richiesta di modifica esterna";
 "security.external.modification.message" = "Un processo esterno sta tentando di modificare il contesto LLM per il terminale '%@':

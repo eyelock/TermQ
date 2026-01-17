@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "自动运行已全局禁用";
 "editor.field.autorun.enable.hint" = "在设置 > 工具中启用";
 
+"editor.allow.osc.clipboard" = "允许 OSC 52 剪贴板访问";
+"editor.allow.osc.clipboard.help" = "允许此终端通过 OSC 52 转义序列访问系统剪贴板";
+"editor.confirm.external.modifications" = "外部 LLM 修改需要确认";
+"editor.confirm.external.modifications.help" = "当外部进程修改此终端的 LLM 上下文时显示确认";
+"editor.disabled.globally" = "全局禁用";
+
+// Editor - Security section
+"editor.section.security" = "安全";
+
 // Editor - Tags section
 "editor.section.tags" = "标签";
 "editor.field.tags" = "标签";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "应用为初始化命令";
 "editor.field.apply.to.init.command.help" = "将生成的命令用作初始化命令";
 "editor.no.llm.prompt.warning" = "未配置 LLM 提示";
-"editor.non.interactive.note" = "注意：命令以非交互方式运行";
+"editor.interactive.mode.toggle" = "交互模式";
+"editor.interactive.mode.help" = "关闭时，添加 -p 标志用于非交互式执行（适用于自动化任务）";
+"editor.non.interactive.mode.note" = "非交互模式运行任务并退出，不显示用户提示";
 
 "editor.cancel" = "取消";
 "editor.save" = "保存";
@@ -309,7 +320,7 @@
 "alert.success" = "成功";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "数据与安全";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "安全";
+"settings.allow.osc.clipboard" = "允许 OSC 52 剪贴板访问";
+"settings.allow.osc.clipboard.help" = "允许终端程序使用 OSC 52 转义序列读写系统剪贴板";
+"settings.confirm.external.modifications" = "外部 LLM 修改需要确认";
+"settings.confirm.external.modifications.help" = "当外部进程尝试通过 termq:// URL 修改终端 LLM 上下文时显示确认对话框";
 // MARK: - Security
 "security.external.modification.title" = "外部修改请求";
 "security.external.modification.message" = "外部进程正在尝试修改终端 '%@' 的 LLM 上下文:

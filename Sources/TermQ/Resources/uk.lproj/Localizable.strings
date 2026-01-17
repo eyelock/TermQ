@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Автозапуск вимкнено глобально";
 "editor.field.autorun.enable.hint" = "Увімкніть у Налаштування > Інструменти";
 
+"editor.allow.osc.clipboard" = "Дозволити доступ до буфера обміну OSC 52";
+"editor.allow.osc.clipboard.help" = "Дозволити цьому терміналу доступ до системного буфера обміну через escape-послідовності OSC 52";
+"editor.confirm.external.modifications" = "Вимагати підтвердження для зовнішніх змін LLM";
+"editor.confirm.external.modifications.help" = "Показувати підтвердження, коли зовнішні процеси змінюють контекст LLM цього терміналу";
+"editor.disabled.globally" = "Вимкнено глобально";
+
+// Editor - Security section
+"editor.section.security" = "Безпека";
+
 // Editor - Tags section
 "editor.section.tags" = "Теги";
 "editor.field.tags" = "Теги";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Застосувати до початкової команди";
 "editor.field.apply.to.init.command.help" = "Використовувати згенеровану команду як початкову";
 "editor.no.llm.prompt.warning" = "Промпт LLM не налаштовано";
-"editor.non.interactive.note" = "Примітка: Команди виконуються неінтерактивно";
+"editor.interactive.mode.toggle" = "Інтерактивний режим";
+"editor.interactive.mode.help" = "При вимкненні додає прапорець -p для неінтерактивного виконання (корисно для автоматизованих завдань)";
+"editor.non.interactive.mode.note" = "Неінтерактивний режим виконує завдання та завершується без запитів користувача";
 
 "editor.cancel" = "Скасувати";
 "editor.save" = "Зберегти";
@@ -309,7 +320,7 @@
 "alert.success" = "Успішно";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Дані та безпека";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Безпека";
+"settings.allow.osc.clipboard" = "Дозволити доступ до буфера обміну OSC 52";
+"settings.allow.osc.clipboard.help" = "Дозволити термінальним програмам читати та записувати в системний буфер обміну за допомогою escape-послідовностей OSC 52";
+"settings.confirm.external.modifications" = "Вимагати підтвердження для зовнішніх змін LLM";
+"settings.confirm.external.modifications.help" = "Показувати діалог підтвердження, коли зовнішні процеси намагаються змінити контекст LLM терміналу через URL termq://";
 // MARK: - Security
 "security.external.modification.title" = "Запит на зовнішню зміну";
 "security.external.modification.message" = "Зовнішній процес намагається змінити контекст LLM для терміналу '%@':

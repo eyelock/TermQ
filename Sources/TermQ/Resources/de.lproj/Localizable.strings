@@ -164,6 +164,15 @@
 "editor.field.autorun.disabled.globally" = "Autostart global deaktiviert";
 "editor.field.autorun.enable.hint" = "In Einstellungen > Werkzeuge aktivieren";
 
+"editor.allow.osc.clipboard" = "OSC 52 Zwischenablage-Zugriff erlauben";
+"editor.allow.osc.clipboard.help" = "Diesem Terminal erlauben, über OSC 52-Escape-Sequenzen auf die Systemzwischenablage zuzugreifen";
+"editor.confirm.external.modifications" = "Bestätigung für externe LLM-Änderungen erforderlich";
+"editor.confirm.external.modifications.help" = "Bestätigung anzeigen, wenn externe Prozesse den LLM-Kontext dieses Terminals ändern";
+"editor.disabled.globally" = "Global deaktiviert";
+
+// Editor - Security section
+"editor.section.security" = "Sicherheit";
+
 // Editor - Tags section
 "editor.section.tags" = "Tags";
 "editor.field.tags" = "Tags";
@@ -185,7 +194,9 @@
 "editor.field.apply.to.init.command" = "Auf Startbefehl anwenden";
 "editor.field.apply.to.init.command.help" = "Generierten Befehl als Startbefehl verwenden";
 "editor.no.llm.prompt.warning" = "Kein LLM-Prompt konfiguriert";
-"editor.non.interactive.note" = "Hinweis: Befehle werden nicht interaktiv ausgeführt";
+"editor.interactive.mode.toggle" = "Interaktiver Modus";
+"editor.interactive.mode.help" = "Bei Deaktivierung wird das -p-Flag für nicht-interaktive Ausführung hinzugefügt (nützlich für automatisierte Aufgaben)";
+"editor.non.interactive.mode.note" = "Der nicht-interaktive Modus führt die Aufgabe aus und beendet ohne Benutzeraufforderungen";
 
 "editor.cancel" = "Abbrechen";
 "editor.save" = "Sichern";
@@ -309,7 +320,7 @@
 "alert.success" = "Erfolg";
 
 // MARK: - Settings Data Tab
-"settings.tab.data" = "Data";
+"settings.tab.data.and.security" = "Daten & Sicherheit";
 
 // MARK: - Backup
 "backup.title" = "Data Backup";
@@ -428,6 +439,13 @@
 "settings.environment.troubleshooting.step3" = "Delete the entry if present";
 "settings.environment.troubleshooting.step4" = "Click \"Reset Encryption Key\" above";
 "settings.environment.troubleshooting.step5" = "Re-enter your secrets";
+
+// Settings - Security section
+"settings.section.security" = "Sicherheit";
+"settings.allow.osc.clipboard" = "OSC 52 Zwischenablage-Zugriff erlauben";
+"settings.allow.osc.clipboard.help" = "Terminalprogrammen erlauben, über OSC 52-Escape-Sequenzen auf die Systemzwischenablage zuzugreifen";
+"settings.confirm.external.modifications" = "Bestätigung für externe LLM-Änderungen erforderlich";
+"settings.confirm.external.modifications.help" = "Bestätigungsdialog anzeigen, wenn externe Prozesse versuchen, den Terminal-LLM-Kontext über termq://-URLs zu ändern";
 // MARK: - Security
 "security.external.modification.title" = "Anfrage zur externen Änderung";
 "security.external.modification.message" = "Ein externer Prozess versucht, den LLM-Kontext für Terminal '%@' zu ändern:
