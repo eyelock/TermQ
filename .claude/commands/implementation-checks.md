@@ -27,6 +27,10 @@ The Makefile handles DEVELOPER_DIR, warning filters, CI detection, and tool inst
   - [ ] No commented-out code
   - [ ] No TODO comments (create GitHub issues instead)
   - [ ] No accidentally committed personal configs
+  - [ ] No ad-hoc `.claude/` files (only CLAUDE.md, settings.json, commands/ should be committed)
+    - Plans go in `.claude/plans/` (gitignored)
+    - Session notes go in `.claude/sessions/` (gitignored)
+    - Ad-hoc files like audits, analyses belong in plans or sessions
 - [ ] Check for compiler warnings you may have introduced
 - [ ] Verify you're following patterns from [code-style.md](code-style.md)
 - [ ] Check that error handling is appropriate

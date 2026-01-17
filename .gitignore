@@ -55,7 +55,16 @@ ehthumbs.db
 # Logs
 *.log
 
+# Claude Code - Personal and temporary files
 .claude/settings.local.json
 .claude/plans
 .claude/sessions
+
+# Claude Code - Block all other ad-hoc files (except explicitly allowed)
+.claude/*
+!.claude/CLAUDE.md
+!.claude/settings.json
+!.claude/commands/
+
+# Testing files
 TESTING-TMUX-RECOVERY.md

@@ -108,9 +108,27 @@ EOF
 
 ### Before Creating PR
 
-- [ ] Branch is pushed to origin
 - [ ] All commits follow message format
-- [ ] Branch is up-to-date with main (if needed)
+- [ ] **Ensure branch is up-to-date with main** (MANDATORY)
+
+**Check for conflicts and merge main:**
+
+```bash
+# 1. Fetch latest main
+git fetch origin main
+
+# 2. Check if behind main
+git log HEAD..origin/main --oneline
+
+# 3. If commits shown, merge main into your branch
+git merge origin/main
+
+# 4. Resolve any conflicts if they occur
+# 5. Push updated branch
+git push
+```
+
+- [ ] Branch is pushed to origin with latest changes
 
 ### PR Title
 
@@ -173,9 +191,35 @@ Or use the GitHub web interface.
 ## After PR Creation
 
 - [ ] Monitor CI/CD status
+- [ ] **Check for merge conflicts** (see below)
 - [ ] Respond to review comments
 - [ ] Update PR based on feedback
 - [ ] Ensure all conversations resolved before merge
+
+### Handling Merge Conflicts (After PR Created)
+
+**If GitHub reports merge conflicts:**
+
+```bash
+# 1. Fetch latest main
+git fetch origin main
+
+# 2. Merge main into your branch
+git merge origin/main
+
+# 3. If conflicts occur, resolve them:
+#    - Edit conflicted files
+#    - Mark as resolved: git add <file>
+#    - Complete merge: git commit
+
+# 4. Push updated branch (updates PR automatically)
+git push
+```
+
+**Check PR status:**
+```bash
+gh pr view <pr-number>  # Verify conflicts resolved
+```
 
 ## Before Merging: Review Comments Check
 
