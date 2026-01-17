@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "新终端的默认主题";
 "settings.field.copy.on.select" = "选中时复制";
 "settings.field.copy.on.select.help" = "自动复制选中的文本";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "回收站";

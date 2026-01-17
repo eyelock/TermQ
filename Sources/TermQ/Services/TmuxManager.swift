@@ -133,13 +133,17 @@ public class TmuxManager: ObservableObject {
             let isAttached = parts[2] == "1"
             let currentPath = String(parts[3])
 
+            // Fetch terminal name from metadata
+            let terminalName = await getSessionMetadata(name: name, key: MetadataKey.title.rawValue)
+
             sessions.append(
                 TmuxSessionInfo(
                     name: name,
                     cardIdPrefix: String(name.dropFirst(Self.sessionPrefix.count)),
                     createdAt: Date(timeIntervalSince1970: createdTimestamp),
                     isAttached: isAttached,
-                    currentPath: currentPath.isEmpty ? nil : currentPath
+                    currentPath: currentPath.isEmpty ? nil : currentPath,
+                    terminalName: terminalName
                 ))
         }
 
@@ -435,6 +439,7 @@ public struct TmuxSessionInfo: Identifiable, Sendable {
     public let createdAt: Date
     public let isAttached: Bool
     public let currentPath: String?
+    public let terminalName: String?
 }
 
 /// Errors from tmux operations

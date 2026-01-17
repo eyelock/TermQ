@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "Thème par défaut pour les nouveaux terminaux";
 "settings.field.copy.on.select" = "Copier à la sélection";
 "settings.field.copy.on.select.help" = "Copier automatiquement le texte sélectionné";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "Corbeille";

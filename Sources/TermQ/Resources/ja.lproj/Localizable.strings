@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "新規ターミナルのデフォルトテーマ";
 "settings.field.copy.on.select" = "選択時にコピー";
 "settings.field.copy.on.select.help" = "選択したテキストを自動的にコピー";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "ゴミ箱";

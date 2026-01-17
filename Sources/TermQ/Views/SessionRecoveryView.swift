@@ -115,7 +115,7 @@ private struct SessionRow: View {
                     Text(card.title)
                         .font(.headline)
                 } else {
-                    Text(session.name)
+                    Text(session.terminalName ?? session.name)
                         .font(.headline)
                     Text("No matching terminal found")
                         .font(.caption)
@@ -139,13 +139,14 @@ private struct SessionRow: View {
 
             // Actions
             HStack(spacing: 8) {
-                if matchingCard != nil {
-                    Button("Reattach") {
-                        onRecover()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .help("Open this terminal and reattach to the tmux session")
+                // Always show recovery button - will restore deleted card or create new one
+                Button(matchingCard != nil ? "Reattach" : "Recover") {
+                    onRecover()
                 }
+                .buttonStyle(.borderedProminent)
+                .help(matchingCard != nil
+                    ? "Open this terminal and reattach to the tmux session"
+                    : "Restore the deleted card or create a new one for this session")
 
                 Button("Dismiss") {
                     onDismiss()

@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "Výchozí motiv pro nové terminály";
 "settings.field.copy.on.select" = "Kopírovat při výběru";
 "settings.field.copy.on.select.help" = "Automaticky kopírovat vybraný text";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "Koš";

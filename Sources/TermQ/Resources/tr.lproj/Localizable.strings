@@ -235,6 +235,10 @@
 "settings.field.theme.help" = "Yeni terminaller için varsayılan tema";
 "settings.field.copy.on.select" = "Seçimde Kopyala";
 "settings.field.copy.on.select.help" = "Seçilen metni otomatik kopyala";
+"settings.field.default.working.directory" = "Default Working Directory";
+"settings.field.default.working.directory.help" = "Default working directory for new terminals";
+"settings.field.default.backend" = "Default Backend";
+"settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
 
 // Settings - Bin section
 "settings.section.bin" = "Çöp Kutusu";

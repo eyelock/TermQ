@@ -22,6 +22,8 @@ Available settings:
 
 - **Theme** - Choose from 8 color schemes
 - **Copy on Select** - Automatically copy selected text
+- **Default Working Directory** - Default working directory for new terminals
+- **Default Backend** - Choose between Direct or TMUX for new terminals
 - **Bin Retention** - Days before auto-deleting binned terminals
 - **CLI Installation** - Install/manage the termqcli command
 

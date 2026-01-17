@@ -1,6 +1,7 @@
 import AppKit
 import Sparkle
 import SwiftUI
+import TermQCore
 
 struct SettingsView: View {
     // Initial tab selection (for deep linking)
@@ -28,6 +29,14 @@ struct SettingsView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @AppStorage("tmuxEnabled") private var tmuxEnabled = true
     @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
+    @AppStorage("defaultWorkingDirectory") private var defaultWorkingDirectory = NSHomeDirectory()
+    @AppStorage("defaultBackend") private var defaultBackendRawValue: String = "direct"
+
+    // Computed property to convert between String and TerminalBackend
+    private var defaultBackend: TerminalBackend {
+        get { TerminalBackend(rawValue: defaultBackendRawValue) ?? .direct }
+        set { defaultBackendRawValue = newValue.rawValue }
+    }
 
     // Security preferences
     @AppStorage("allowOscClipboard") private var allowOscClipboard = true
@@ -138,6 +147,33 @@ struct SettingsView: View {
 
             Toggle(Strings.Settings.fieldCopyOnSelect, isOn: $copyOnSelect)
                 .help(Strings.Settings.fieldCopyOnSelectHelp)
+
+            HStack {
+                Text(Strings.Settings.fieldDefaultWorkingDirectory)
+                    .frame(width: 160, alignment: .trailing)
+
+                TextField("", text: $defaultWorkingDirectory)
+                    .font(.system(.body, design: .monospaced))
+                    .textFieldStyle(.roundedBorder)
+
+                Button(Strings.Common.browse) {
+                    browseForDefaultWorkingDirectory()
+                }
+            }
+            .help(Strings.Settings.fieldDefaultWorkingDirectoryHelp)
+
+            Picker(
+                Strings.Settings.fieldDefaultBackend,
+                selection: Binding(
+                    get: { defaultBackend },
+                    set: { (newValue: TerminalBackend) in defaultBackendRawValue = newValue.rawValue }
+                )
+            ) {
+                ForEach(TerminalBackend.allCases, id: \.self) { backend in
+                    Text(backend.displayName).tag(backend)
+                }
+            }
+            .help(Strings.Settings.fieldDefaultBackendHelp)
         } header: {
             Text(Strings.Settings.sectionTerminal)
         }
@@ -435,6 +471,21 @@ struct SettingsView: View {
         if panel.runModal() == .OK, let url = panel.url {
             DataDirectoryManager.dataDirectory = url.path
             dataDirectory = DataDirectoryManager.displayPath
+        }
+    }
+
+    private func browseForDefaultWorkingDirectory() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.canCreateDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.prompt = Strings.Common.select
+        panel.message = Strings.Settings.fieldDefaultWorkingDirectory
+        panel.directoryURL = URL(fileURLWithPath: defaultWorkingDirectory)
+
+        if panel.runModal() == .OK, let url = panel.url {
+            defaultWorkingDirectory = url.path
         }
     }
 }

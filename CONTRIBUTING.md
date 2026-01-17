@@ -471,3 +471,54 @@ Key Sparkle settings in `Info.plist.template`:
 - [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) - Terminal emulation
 - [swift-argument-parser](https://github.com/apple/swift-argument-parser) - CLI argument parsing
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - Automatic updates framework
+
+## TMUX vs Direct Session Behavior Reference
+
+Understanding how TermQ operations affect terminal sessions is critical for development. The table below documents the complete behavior matrix for all operations.
+
+| Operation | Direct Session | TMUX Session | Card State | Notes |
+|-----------|----------------|--------------|------------|-------|
+| **Open Terminal** | Creates new shell process | Creates/attaches to tmux session | Active | Terminal opens in tab |
+| **Close Tab** | Terminates shell (sends "exit\n") | Detaches (sends Ctrl+B d) | Active | Session preserved for TMUX |
+| **Delete Card** *(soft delete)* | Terminates shell (sends "exit\n") | Detaches (sends Ctrl+B d) | `deletedAt` set | Card moved to bin, TMUX session becomes orphaned |
+| **Delete Tab Card** *(close+delete)* | Terminates shell | Detaches | `deletedAt` set | Same as Delete Card |
+| **Permanently Delete Card** *(from bin)* | No action | No action | Card removed | Session remains orphaned if still running |
+| **Restore Card** *(from bin)* | - | - | `deletedAt` cleared | Restores card metadata only |
+| **Kill Session** | SIGKILL process | Runs `tmux kill-session` | Active | Forcefully terminates everything |
+| **Kill Terminal** *(for stuck sessions)* | SIGKILL process | Runs `tmux kill-session` | Active | Same as Kill Session |
+| **Restart Session** | Marks for restart, recreates | Marks for restart, recreates | Active | Fresh session created |
+| **Close Unfavourited Tabs** | Terminates shell | Detaches | Active | Batch close operation |
+| **Recover Orphaned Session** | N/A | Reattaches to existing session | Creates new card | Only for TMUX |
+| **Dismiss Recoverable Session** | N/A | No action | - | Hides from recovery list |
+| **Kill Recoverable Session** | N/A | Runs `tmux kill-session` | - | Terminates orphaned session |
+
+### Key Insights
+
+- **TMUX sessions persist independently** - Closing tabs or deleting cards detaches but preserves the session
+- **Direct sessions are ephemeral** - They terminate when tabs close or cards are deleted
+- **Soft delete creates orphaned sessions** - Deleted cards with TMUX sessions show up in the recovery dialog
+- **Kill operations are destructive** - Use only for stuck/unresponsive terminals or intentional cleanup
+- **Recovery is TMUX-only** - Direct sessions cannot be recovered once terminated
+
+### Implementation Notes
+
+See `Sources/TermQ/ViewModels/TerminalSessionManager.swift:482-507` for the core session removal logic:
+
+```swift
+func removeSession(for cardId: UUID, killTmuxSession: Bool = false) {
+    // ...
+    switch session.backend {
+    case .direct:
+        // Direct mode: terminate the shell
+        session.terminal.send(txt: "exit\n")
+    case .tmux:
+        if killTmuxSession {
+            // Explicitly kill the tmux session
+            try? await tmuxManager.killSession(name: sessionName)
+        } else {
+            // Just detach - session keeps running
+            session.terminal.send(txt: "\u{02}d")  // Ctrl+B, d
+        }
+    }
+}
+```

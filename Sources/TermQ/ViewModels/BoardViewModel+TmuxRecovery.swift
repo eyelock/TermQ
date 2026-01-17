@@ -46,9 +46,12 @@ extension BoardViewModel {
 
             for session in candidates {
                 let prefix = session.cardIdPrefix.lowercased()
+                // Only match active (non-deleted) cards
                 if let matchingCard = board.cards.first(where: {
-                    $0.tmuxSessionName == session.name
-                        || $0.id.uuidString.prefix(8).lowercased() == prefix
+                    !$0.isDeleted && (
+                        $0.tmuxSessionName == session.name
+                            || $0.id.uuidString.prefix(8).lowercased() == prefix
+                    )
                 }) {
                     // Auto-reattach: add to tabs silently
                     tabManager.addTab(matchingCard.id)
@@ -72,14 +75,34 @@ extension BoardViewModel {
     }
 
     /// Recover a tmux session by finding or creating a card for it
-    /// Also attempts to restore metadata from the tmux session if available
+    /// Priority order: 1) Restore deleted card, 2) Use active card, 3) Create new card
     func recoverSession(_ session: TmuxSessionInfo) {
-        // Try to find an existing card that matches this session
-        if let existingCard = board.cards.first(where: { $0.tmuxSessionName == session.name }) {
-            // Card exists - just open it as a tab
-            tabManager.addTab(existingCard.id)
-            selectedCard = existingCard
-        } else {
+        let prefix = session.cardIdPrefix.lowercased()
+
+        // First, check if there's a deleted card that matches - restore it
+        if let deletedCard = board.cards.first(where: {
+            $0.isDeleted && (
+                $0.tmuxSessionName == session.name
+                    || $0.id.uuidString.prefix(8).lowercased() == prefix
+            )
+        }) {
+            // Restore the deleted card to the board without opening it
+            deletedCard.deletedAt = nil
+            objectWillChange.send()
+            save()
+        }
+        // Second, check if there's an active card that matches
+        else if board.cards.contains(where: {
+            !$0.isDeleted && (
+                $0.tmuxSessionName == session.name
+                    || $0.id.uuidString.prefix(8).lowercased() == prefix
+            )
+        }) {
+            // Card already active - nothing to do
+            // Session is already linked to the card
+        }
+        // Finally, create a new card if no match found
+        else {
             // No matching card - create a placeholder card
             // First, try to recover metadata from the tmux session
             Task {
@@ -152,19 +175,15 @@ extension BoardViewModel {
             backend: .tmux
         )
 
-        // Add to board
+        // Add to board without opening it
         board.cards.append(card)
-        save()
-
-        // Open as tab
-        tabManager.addTab(card.id)
-        selectedCard = card
 
         // If marked as favourite, add to favourite order
         if isFavourite {
             board.favouriteOrder.append(card.id)
         }
 
+        save()
         objectWillChange.send()
 
         // Remove from recoverable list

@@ -49,12 +49,19 @@ public class Board: ObservableObject, Codable {
     }
 
     @discardableResult
-    public func addCard(to column: Column, title: String = "New Terminal") -> TerminalCard {
+    public func addCard(
+        to column: Column,
+        title: String = "New Terminal",
+        workingDirectory: String? = nil,
+        backend: TerminalBackend? = nil
+    ) -> TerminalCard {
         let maxIndex = cards(for: column).map(\.orderIndex).max() ?? -1
         let card = TerminalCard(
             title: title,
             columnId: column.id,
-            orderIndex: maxIndex + 1
+            orderIndex: maxIndex + 1,
+            workingDirectory: workingDirectory ?? NSHomeDirectory(),
+            backend: backend ?? .direct
         )
         cards.append(card)
         return card
