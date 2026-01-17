@@ -175,7 +175,11 @@ class BoardViewModel: ObservableObject {
             fontSize: source.fontSize,
             safePasteEnabled: source.safePasteEnabled,
             themeId: source.themeId,
-            allowAutorun: source.allowAutorun
+            allowAutorun: source.allowAutorun,
+            allowOscClipboard: source.allowOscClipboard,
+            confirmExternalModifications: source.confirmExternalModifications,
+            backend: source.backend,
+            environmentVariables: source.environmentVariables
         )
 
         board.cards.append(newCard)
@@ -439,10 +443,16 @@ class BoardViewModel: ObservableObject {
             title = "Terminal \(counter)"
         }
 
+        // Determine backend for transient card - use tmux if available and enabled
+        let tmuxEnabled = UserDefaults.standard.object(forKey: "tmuxEnabled") as? Bool ?? true
+        let tmuxManager = TmuxManager.shared
+        let defaultBackend: TerminalBackend = (tmuxManager.isAvailable && tmuxEnabled) ? .tmux : .direct
+
         let card = TerminalCard(
             title: title,
             columnId: column.id,
-            workingDirectory: workingDirectory
+            workingDirectory: workingDirectory,
+            backend: defaultBackend
         )
         card.isTransient = true
         tabManager.addTransientCard(card)
