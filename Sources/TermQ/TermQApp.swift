@@ -177,44 +177,30 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate {
     private var mainWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Store reference to the main window and set up monitoring
-        if let window = NSApplication.shared.windows.first(where: {
-            $0.title.contains("TermQ") || $0.contentView != nil
-        }) {
-            mainWindow = window
-        }
+        // Store reference to the main window
+        mainWindow = NSApplication.shared.mainWindow
 
-        // Monitor for new windows being created
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(windowDidBecomeKey(_:)),
-            name: NSWindow.didBecomeKeyNotification,
-            object: nil
-        )
+        // If no main window yet, wait for it
+        if mainWindow == nil {
+            DispatchQueue.main.async { [weak self] in
+                self?.mainWindow = NSApplication.shared.mainWindow
+            }
+        }
     }
 
-    /// Close duplicate main windows - only allow one main TermQ window
-    @objc private func windowDidBecomeKey(_ notification: Notification) {
-        guard let newWindow = notification.object as? NSWindow else { return }
-
-        // Skip non-main windows (Settings, Help, sheets, etc.)
-        // Main window has ContentView, others have specific identifiers or are panels
-        guard !newWindow.isSheet,
-            !(newWindow is NSPanel),
-            newWindow.styleMask.contains(.titled),
-            newWindow.title != "TermQ Help",
-            !newWindow.title.isEmpty || newWindow.contentView != nil
-        else { return }
-
-        // If this looks like a main window and we already have one, close the duplicate
-        if let main = mainWindow, main != newWindow, main.isVisible {
-            // This is a duplicate main window - close it and focus the original
-            newWindow.close()
-            main.makeKeyAndOrderFront(nil)
-        } else if mainWindow == nil || !mainWindow!.isVisible {
-            // First main window or previous one was closed
-            mainWindow = newWindow
+    /// Prevent creating new windows when user tries to open the app again
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if flag {
+            // Bring existing window to front
+            mainWindow?.makeKeyAndOrderFront(nil)
+            return false
         }
+        return true
+    }
+
+    /// Keep app running even if last window closes (user can reopen from Dock)
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return false
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
