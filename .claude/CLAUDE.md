@@ -19,13 +19,18 @@ This gives you:
 ### 2. Prepare
 → **[commands/implementation-prepare.md](commands/implementation-prepare.md)** - Gather context, verify environment, plan implementation
 
-### 3. Implement
-*(You write the code following [code-style.md](commands/code-style.md))*
+### 3. Implement → 4. Check (Iterative Loop) 🔄
 
-### 4. Check
+**These steps form a cycle - repeat until all checks pass:**
+
+**3. Implement**
+→ Write code following [code-style.md](commands/code-style.md)
+
+**4. Check**
 → **[commands/implementation-checks.md](commands/implementation-checks.md)** - Build, lint, test, review changes
 
-**Note:** Steps 3-4 may iterate - failures in step 4 return to step 3.
+**If checks fail:** Return to step 3, fix issues, repeat
+**If checks pass:** Proceed to step 5
 
 ### 5. Commit & PR
 → **[commands/commit-pr.md](commands/commit-pr.md)** - Create commits and pull requests

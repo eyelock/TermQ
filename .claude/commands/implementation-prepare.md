@@ -35,7 +35,11 @@
 - Emergency hotfix (though consider hotfix workflow)
 
 **Create worktree:**
+
 ```bash
+# First-time setup: Create worktree directory (only needed once)
+mkdir -p ../TermQ-worktrees
+
 # Use conventional commit prefixes with hyphens: feat-, fix-, docs-, test-, refactor-, ci-
 git worktree add ../TermQ-worktrees/<branch-name> -b <branch-name>
 cd ../TermQ-worktrees/<branch-name>

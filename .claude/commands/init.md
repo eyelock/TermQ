@@ -15,20 +15,23 @@
 
 ## Tool Preferences
 
-### GitHub Operations - Use `gh` CLI, NOT GitHub MCP Tools
+### GitHub Operations - Prefer `gh` CLI
 
-**IMPORTANT:** GitHub MCP tools (`mcp__github__*`) do not work well for our workflow. Always use the `gh` CLI instead:
+**Prefer `gh` CLI for most operations:**
 
-- ❌ DON'T use: `mcp__github__get_pull_request`
-- ✅ DO use: `gh pr view`
+- **For writes** (creating, updating): Always use `gh` CLI
+  - ✅ `gh pr create`, `gh issue create`, `gh pr merge`
+  - ❌ Don't use MCP write operations
 
-- ❌ DON'T use: `mcp__github__search_issues`
-- ✅ DO use: `gh issue list` or `gh search`
+- **For reads** (viewing, listing): `gh` CLI preferred, MCP acceptable
+  - ✅ Prefer: `gh pr view`, `gh issue list`
+  - 🟡 Acceptable: `mcp__github__get_pull_request` (reads work fine)
 
-- ❌ DON'T use: `mcp__github__get_pull_request_files`
-- ✅ DO use: `gh pr diff` or `gh pr view --json files`
-
-**Why:** The MCP tools have poor error handling and don't align with our git worktree workflow.
+**Why prefer gh CLI:**
+- Better error handling
+- Aligns with git worktree workflow
+- More reliable for write operations
+- Consistent experience across all GitHub operations
 
 ### Build & Test Operations - Use Make Targets
 
@@ -68,3 +71,15 @@ Project documentation locations:
 - Release procedures: `.claude/commands/release*.md`
 - Code style guide: `.claude/commands/code-style.md`
 - Localization guide: `.claude/commands/localization.md`
+
+---
+
+## ✅ Ready to Code
+
+You're now oriented. Next steps:
+
+- **Starting new work?** → [implementation-prepare.md](implementation-prepare.md) (step 2 of workflow)
+- **Continuing previous work?** → Check `.claude/sessions/` for handover notes, run `git status`, resume at appropriate workflow step
+- **Investigating/exploring only?** → Use `Task` tool with `subagent_type=Explore` or targeted `Grep`/`Glob` queries
+
+**Need the full workflow?** → Read [CLAUDE.md](../CLAUDE.md) for complete navigation guide
