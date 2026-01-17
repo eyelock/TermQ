@@ -17,18 +17,22 @@ jobs:
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
-    runs-on: ubuntu-latest
+    runs-on: macos-15
     permissions:
-      contents: read
-      pull-requests: read
-      issues: read
+      contents: write      # Required for Claude to push changes
+      pull-requests: write # Required for Claude to create PRs and comments
+      issues: write        # Required for Claude to comment on issues
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
+      actions: read        # Required for Claude to read CI results on PRs
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0  # Full history for proper git operations
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
 
       - name: Run Claude Code
         id: claude
@@ -36,15 +40,12 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 
-          # This is an optional setting that allows Claude to read CI results on PRs
+          # Allow Claude to read CI results
           additional_permissions: |
             actions: read
 
-          # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
-          # prompt: 'Update the pull request description to include a summary of changes.'
-
-          # Optional: Add claude_args to customize behavior and configuration
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
-          # claude_args: '--allowed-tools Bash(gh pr:*)'
-
+          # Allow specific tools for this Swift/macOS project
+          # Make targets: build, test, lint, format, check (all CI operations)
+          # gh CLI: PR operations, issue management
+          claude_args: |
+            --allowedTools "Bash(make build),Bash(make build-release),Bash(make test),Bash(make lint),Bash(make lint-fix),Bash(make format),Bash(make format-check),Bash(make check),Bash(make clean),Bash(swift build*),Bash(swift test*),Bash(gh pr *),Bash(gh issue *),Bash(git *)"
