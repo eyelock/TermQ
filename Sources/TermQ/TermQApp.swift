@@ -512,6 +512,8 @@ struct IdentifiableURL: Identifiable {
 
 // MARK: - Sparkle Updater Access
 
+import Combine
+
 /// Observable wrapper for Sparkle's updater to use in SwiftUI
 @MainActor
 final class UpdaterViewModel: ObservableObject {
@@ -524,8 +526,9 @@ final class UpdaterViewModel: ObservableObject {
     }
 
     private let updater: SPUUpdater
+    private var cancellables = Set<AnyCancellable>()
 
-    /// Whether automatic update checks are enabled
+    /// Whether automatic update checks are enabled (defaults to true)
     @Published var automaticallyChecksForUpdates: Bool {
         didSet {
             updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
@@ -533,9 +536,7 @@ final class UpdaterViewModel: ObservableObject {
     }
 
     /// Whether the user can check for updates (e.g., not currently checking)
-    var canCheckForUpdates: Bool {
-        updater.canCheckForUpdates
-    }
+    @Published var canCheckForUpdates: Bool = false
 
     /// Whether to include beta releases in update checks
     /// The actual feed URL is determined by SparkleUpdaterDelegate based on this preference
@@ -547,8 +548,22 @@ final class UpdaterViewModel: ObservableObject {
 
     init(updater: SPUUpdater) {
         self.updater = updater
+        // Default to true for automatic checks if not previously set
+        let hasExistingPreference = UserDefaults.standard.object(forKey: "SUAutomaticallyChecksForUpdates") != nil
+        if !hasExistingPreference {
+            updater.automaticallyChecksForUpdates = true
+        }
         self.automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
         self.includeBetaReleases = UserDefaults.standard.bool(forKey: "SUIncludeBetaReleases")
+        self.canCheckForUpdates = updater.canCheckForUpdates
+
+        // Observe changes to canCheckForUpdates
+        updater.publisher(for: \.canCheckForUpdates)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] canCheck in
+                self?.canCheckForUpdates = canCheck
+            }
+            .store(in: &cancellables)
     }
 
     /// Manually check for updates

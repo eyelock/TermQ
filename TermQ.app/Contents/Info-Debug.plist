@@ -35,5 +35,17 @@
             </array>
         </dict>
     </array>
+
+    <!-- Sparkle Auto-Update Configuration -->
+    <key>SUFeedURL</key>
+    <string>https://eyelock.github.io/TermQ/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>jLDrl09c9CmiMDQUMmlwy6tcZjAZ1PsZUJMmWhLyW0w=</string>
+    <key>SUEnableAutomaticChecks</key>
+    <true/>
+    <key>SUAllowsAutomaticUpdates</key>
+    <true/>
+    <key>SUScheduledCheckInterval</key>
+    <integer>86400</integer>
 </dict>
 </plist>
