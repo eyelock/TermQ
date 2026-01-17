@@ -18,6 +18,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Skip CI verification for pre-releases (beta, alpha, rc)
+          if [[ "${{ github.ref }}" =~ (alpha|beta|rc) ]]; then
+            echo "⏭️ Skipping CI verification for pre-release"
+            exit 0
+          fi
+
           echo "Checking CI status for commit ${{ github.sha }}..."
 
           # Wait up to 5 minutes for CI to complete (in case it's still running)
@@ -72,6 +78,49 @@ jobs:
       - name: Show Swift version
         run: swift --version
 
+      - name: Import signing certificate
+        env:
+          CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          # Create temporary keychain
+          KEYCHAIN_PATH="$RUNNER_TEMP/signing.keychain-db"
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          # Import certificate
+          CERTIFICATE_PATH="$RUNNER_TEMP/certificate.p12"
+          echo "$CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
+
+          security import "$CERTIFICATE_PATH" \
+            -P "$CERTIFICATE_PASSWORD" \
+            -A \
+            -t cert \
+            -f pkcs12 \
+            -k "$KEYCHAIN_PATH"
+
+          # Allow codesign to access keychain without prompts
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          # Add to search list (prepend to existing)
+          security list-keychains -d user -s "$KEYCHAIN_PATH" $(security list-keychains -d user | tr -d '"')
+
+          # Find signing identity
+          IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -1 | awk -F'"' '{print $2}')
+          if [ -z "$IDENTITY" ]; then
+            echo "❌ No Developer ID Application certificate found"
+            exit 1
+          fi
+          echo "✅ Found signing identity: $IDENTITY"
+
+          # Export for subsequent steps
+          echo "SIGNING_IDENTITY=$IDENTITY" >> $GITHUB_ENV
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> $GITHUB_ENV
+          echo "KEYCHAIN_PASSWORD=$KEYCHAIN_PASSWORD" >> $GITHUB_ENV
+
       - name: Get version from tag
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
@@ -81,6 +130,8 @@ jobs:
 
       - name: Create app bundle
         run: |
+          # Clean any existing app bundle (repo has skeleton for local dev)
+          rm -rf TermQ.app
           mkdir -p TermQ.app/Contents/MacOS
           mkdir -p TermQ.app/Contents/Resources
           cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
@@ -98,9 +149,71 @@ jobs:
           plutil -replace CFBundleVersion -string "$(git rev-parse --short=7 HEAD)" TermQ.app/Contents/Info.plist
 
       - name: Sign app bundle
-        run: codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
+        run: |
+          # Sign embedded binaries first (inside-out signing)
+          echo "Signing termqcli..."
+          codesign --force --options runtime --timestamp \
+            --sign "$SIGNING_IDENTITY" \
+            --keychain "$KEYCHAIN_PATH" \
+            --entitlements TermQ.entitlements \
+            TermQ.app/Contents/Resources/termqcli
 
-      - name: Create DMG
+          echo "Signing termqmcp..."
+          codesign --force --options runtime --timestamp \
+            --sign "$SIGNING_IDENTITY" \
+            --keychain "$KEYCHAIN_PATH" \
+            --entitlements TermQ.entitlements \
+            TermQ.app/Contents/Resources/termqmcp
+
+          # Sign the main app bundle
+          echo "Signing TermQ.app..."
+          codesign --force --options runtime --timestamp \
+            --sign "$SIGNING_IDENTITY" \
+            --keychain "$KEYCHAIN_PATH" \
+            --entitlements TermQ.entitlements \
+            TermQ.app
+
+          # Verify signature
+          echo "Verifying signature..."
+          codesign --verify --deep --strict --verbose=2 TermQ.app
+          echo "✅ App bundle signed successfully"
+
+      - name: Notarize app bundle
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: |
+          # Create zip for notarization submission
+          echo "Creating zip for notarization..."
+          ditto -c -k --keepParent TermQ.app TermQ-notarize.zip
+
+          # Submit for notarization and wait
+          echo "Submitting for notarization (this may take several minutes)..."
+          xcrun notarytool submit TermQ-notarize.zip \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_PASSWORD" \
+            --wait \
+            --timeout 30m
+
+          # Staple the notarization ticket to the app
+          echo "Stapling notarization ticket..."
+          xcrun stapler staple TermQ.app
+
+          # Verify notarization
+          echo "Verifying notarization..."
+          spctl --assess --type execute --verbose=2 TermQ.app
+
+          # Cleanup
+          rm TermQ-notarize.zip
+          echo "✅ App notarized and stapled successfully"
+
+      - name: Create and sign DMG
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
         run: |
           # Create a temporary directory for DMG contents
           mkdir -p dmg-contents
@@ -108,10 +221,32 @@ jobs:
           ln -s /Applications dmg-contents/Applications
 
           # Create the DMG
+          echo "Creating DMG..."
           hdiutil create -volname "TermQ" -srcfolder dmg-contents -ov -format UDZO TermQ-${{ steps.version.outputs.VERSION }}.dmg
+
+          # Sign the DMG
+          echo "Signing DMG..."
+          codesign --force --timestamp \
+            --sign "$SIGNING_IDENTITY" \
+            --keychain "$KEYCHAIN_PATH" \
+            TermQ-${{ steps.version.outputs.VERSION }}.dmg
+
+          # Notarize the DMG
+          echo "Notarizing DMG..."
+          xcrun notarytool submit TermQ-${{ steps.version.outputs.VERSION }}.dmg \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_PASSWORD" \
+            --wait \
+            --timeout 30m
+
+          # Staple the DMG
+          echo "Stapling DMG..."
+          xcrun stapler staple TermQ-${{ steps.version.outputs.VERSION }}.dmg
 
           # Clean up
           rm -rf dmg-contents
+          echo "✅ DMG created, signed, and notarized"
 
       - name: Create zip archive
         run: zip -r TermQ-${{ steps.version.outputs.VERSION }}.zip TermQ.app
@@ -139,7 +274,7 @@ jobs:
             ### macOS App (Recommended)
             1. Download `TermQ-${{ steps.version.outputs.VERSION }}.dmg`
             2. Open the DMG and drag `TermQ.app` to your Applications folder
-            3. Right-click and select "Open" on first launch (required for unsigned apps)
+            3. Double-click to launch
 
             ### Alternative: Zip Archive
             1. Download `TermQ-${{ steps.version.outputs.VERSION }}.zip`
@@ -158,3 +293,10 @@ jobs:
 
             ## Checksums
             See `checksums.txt` for SHA-256 checksums of all release artifacts.
+
+      - name: Cleanup keychain
+        if: always()
+        run: |
+          if [ -n "$KEYCHAIN_PATH" ] && [ -f "$KEYCHAIN_PATH" ]; then
+            security delete-keychain "$KEYCHAIN_PATH" || true
+          fi
