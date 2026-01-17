@@ -40,7 +40,7 @@
     <key>SUFeedURL</key>
     <string>https://eyelock.github.io/TermQ/appcast.xml</string>
     <key>SUPublicEDKey</key>
-    <string>SPARKLE_PUBLIC_KEY_PLACEHOLDER</string>
+    <string>jLDrl09c9CmiMDQUMmlwy6tcZjAZ1PsZUJMmWhLyW0w=</string>
     <key>SUEnableAutomaticChecks</key>
     <true/>
     <key>SUAllowsAutomaticUpdates</key>
