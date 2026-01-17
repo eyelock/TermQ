@@ -258,13 +258,17 @@ final class SparkleUpdaterDelegate: NSObject, SPUUpdaterDelegate {
     }
 }
 
-/// App delegate to handle quit confirmation for running direct sessions and auto-updates
+/// App delegate to handle quit confirmation, auto-updates, and enforce single window
+@MainActor
 class TermQAppDelegate: NSObject, NSApplicationDelegate {
     /// Sparkle updater delegate for dynamic feed URL
     private let sparkleDelegate = SparkleUpdaterDelegate()
 
     /// Sparkle updater controller for automatic updates
     let updaterController: SPUStandardUpdaterController
+
+    /// Reference to the main window (first window created)
+    private var mainWindow: NSWindow?
 
     override init() {
         // Initialize Sparkle updater with delegate for dynamic feed URL
@@ -275,6 +279,47 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate {
             userDriverDelegate: nil
         )
         super.init()
+    }
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Store reference to the main window and set up monitoring
+        if let window = NSApplication.shared.windows.first(where: {
+            $0.title.contains("TermQ") || $0.contentView != nil
+        }) {
+            mainWindow = window
+        }
+
+        // Monitor for new windows being created
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowDidBecomeKey(_:)),
+            name: NSWindow.didBecomeKeyNotification,
+            object: nil
+        )
+    }
+
+    /// Close duplicate main windows - only allow one main TermQ window
+    @objc private func windowDidBecomeKey(_ notification: Notification) {
+        guard let newWindow = notification.object as? NSWindow else { return }
+
+        // Skip non-main windows (Settings, Help, sheets, etc.)
+        // Main window has ContentView, others have specific identifiers or are panels
+        guard !newWindow.isSheet,
+            !(newWindow is NSPanel),
+            newWindow.styleMask.contains(.titled),
+            newWindow.title != "TermQ Help",
+            !newWindow.title.isEmpty || newWindow.contentView != nil
+        else { return }
+
+        // If this looks like a main window and we already have one, close the duplicate
+        if let main = mainWindow, main != newWindow, main.isVisible {
+            // This is a duplicate main window - close it and focus the original
+            newWindow.close()
+            main.makeKeyAndOrderFront(nil)
+        } else if mainWindow == nil || !mainWindow!.isVisible {
+            // First main window or previous one was closed
+            mainWindow = newWindow
+        }
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
@@ -363,7 +408,10 @@ struct TermQApp: App {
                 .keyboardShortcut("?", modifiers: .command)
             }
 
-            CommandGroup(after: .newItem) {
+            // Replace entire "New" section to remove default "New Window" command
+            // TermQ only supports single window - multiple windows cause issues
+            // because terminal NSViews can only have one parent
+            CommandGroup(replacing: .newItem) {
                 Button(Strings.Menu.newTerminalQuick) {
                     terminalActions?.quickNewTerminal()
                 }
