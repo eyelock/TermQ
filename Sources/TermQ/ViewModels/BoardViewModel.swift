@@ -197,8 +197,8 @@ class BoardViewModel: ObservableObject {
         if selectedCard?.id == card.id {
             selectedCard = nil
         }
-        // Kill tmux sessions when deleting - user is getting rid of the card
-        TerminalSessionManager.shared.removeSession(for: card.id, killTmuxSession: true)
+        // Preserve tmux sessions on soft delete - they become recoverable orphaned sessions
+        TerminalSessionManager.shared.removeSession(for: card.id, killTmuxSession: false)
 
         card.deletedAt = Date()
 
@@ -210,8 +210,8 @@ class BoardViewModel: ObservableObject {
         let nextCardId = tabManager.adjacentTabId(to: card.id)
 
         tabManager.removeTab(card.id)
-        // Kill tmux sessions when deleting - user is getting rid of the card
-        TerminalSessionManager.shared.removeSession(for: card.id, killTmuxSession: true)
+        // Preserve tmux sessions on soft delete - they become recoverable orphaned sessions
+        TerminalSessionManager.shared.removeSession(for: card.id, killTmuxSession: false)
 
         if card.isTransient {
             tabManager.removeTransientCard(card.id)
