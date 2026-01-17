@@ -101,6 +101,7 @@
 "menu.toggle.pin" = "Переключить закрепление";
 "menu.next.pinned" = "Следующий закреплённый терминал";
 "menu.previous.pinned" = "Предыдущий закреплённый терминал";
+"menu.check.for.updates" = "Check for Updates...";
 
 
 // MARK: - Command Palette
@@ -458,3 +459,11 @@
 "security.allow.disable.prompt" = "Разрешить и больше не спрашивать";
 "security.osc.clipboard.enabled" = "Доступ к буферу обмена OSC 52 включён";
 "security.osc.clipboard.disabled" = "Доступ к буферу обмена OSC 52 отключён";
+
+// NEEDS TRANSLATION - Added from English
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.section.updates" = "Updates";

@@ -16,6 +16,7 @@ Thank you for your interest in contributing to TermQ! This guide will help you g
 - [CI/CD](#cicd)
 - [Makefile Reference](#makefile-reference)
 - [Localization](#localization)
+- [Auto-Update System (Sparkle)](#auto-update-system-sparkle)
 - [Dependencies](#dependencies)
 
 ## Quick Start
@@ -360,7 +361,113 @@ Keys follow the pattern: `domain.description.qualifier`
 
 The app supports all macOS languages including: English, Spanish, French, German, Italian, Portuguese, Dutch, Swedish, Danish, Finnish, Norwegian, Polish, Russian, Ukrainian, Czech, Slovak, Hungarian, Romanian, Croatian, Slovenian, Greek, Turkish, Hebrew, Arabic, Thai, Vietnamese, Indonesian, Malay, Chinese (Simplified, Traditional, Hong Kong), Japanese, Korean, Hindi, and Catalan.
 
+## Auto-Update System (Sparkle)
+
+TermQ uses [Sparkle 2.x](https://sparkle-project.org) for automatic updates.
+
+### Architecture
+
+```
+┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│   TermQ App     │────▶│  appcast.xml     │────▶│ GitHub Releases │
+│  (Sparkle 2.x)  │     │  (GitHub Pages)  │     │   (DMG/ZIP)     │
+└─────────────────┘     └──────────────────┘     └─────────────────┘
+```
+
+1. App checks `appcast.xml` hosted on GitHub Pages for new versions
+2. Appcast points to GitHub Release artifacts (DMG/ZIP)
+3. Sparkle downloads, verifies EdDSA signature, installs, and relaunches
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `Sources/TermQ/TermQApp.swift` | `SparkleUpdaterDelegate` and `UpdaterViewModel` |
+| `Sources/TermQ/Views/SettingsView.swift` | Update settings UI |
+| `Info.plist.template` | Sparkle configuration keys |
+| `scripts/generate-appcast.sh` | Generates appcast from GitHub Releases |
+| `.github/workflows/update-appcast.yml` | Auto-updates appcast on release |
+| `Docs/appcast.xml` | Stable channel appcast |
+| `Docs/appcast-beta.xml` | Beta channel appcast (includes pre-releases) |
+
+### Appcast Generation
+
+The appcast is automatically regenerated when a new release is published:
+
+```bash
+# Manual generation (usually not needed)
+./scripts/generate-appcast.sh
+```
+
+This script:
+1. Fetches releases from GitHub API
+2. Extracts version, download URL, file size, and release notes
+3. Generates `Docs/appcast.xml` (stable) and `Docs/appcast-beta.xml` (includes prereleases)
+
+### EdDSA Signing
+
+Sparkle 2.x uses EdDSA signatures for update verification:
+
+1. **Generate key pair** (one-time setup):
+   ```bash
+   # From Sparkle tools
+   ./bin/generate_keys
+   ```
+
+2. **Store private key** as GitHub Secret: `SPARKLE_PRIVATE_KEY`
+
+3. **Add public key** to `Info.plist.template`:
+   ```xml
+   <key>SUPublicEDKey</key>
+   <string>[your-public-key]</string>
+   ```
+
+### Release Channels
+
+| Channel | Appcast | Description |
+|---------|---------|-------------|
+| Stable | `appcast.xml` | Production releases only |
+| Beta | `appcast-beta.xml` | Includes pre-releases (alpha, beta, rc) |
+
+Users select their channel in Settings > Updates > "Include beta releases".
+
+### Testing Updates Locally
+
+1. Run a local HTTP server:
+   ```bash
+   cd Docs
+   python3 -m http.server 8080
+   ```
+
+2. Temporarily modify `SparkleUpdaterDelegate.feedURLString(for:)` to use `http://localhost:8080/appcast.xml`
+
+3. Build and run the app to test update detection
+
+### Info.plist Configuration
+
+Key Sparkle settings in `Info.plist.template`:
+
+```xml
+<key>SUFeedURL</key>
+<string>https://eyelock.github.io/TermQ/appcast.xml</string>
+<key>SUPublicEDKey</key>
+<string>[EdDSA public key]</string>
+<key>SUEnableAutomaticChecks</key>
+<true/>
+<key>SUAllowsAutomaticUpdates</key>
+<true/>
+<key>SUScheduledCheckInterval</key>
+<integer>86400</integer>  <!-- 24 hours -->
+```
+
+### Troubleshooting
+
+- **Build errors with Sparkle**: Ensure Xcode is installed (not just Command Line Tools)
+- **Updates not detected**: Check appcast URL accessibility and XML validity
+- **Signature verification failed**: Ensure `SUPublicEDKey` matches the private key used for signing
+
 ## Dependencies
 
 - [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) - Terminal emulation
 - [swift-argument-parser](https://github.com/apple/swift-argument-parser) - CLI argument parsing
+- [Sparkle](https://github.com/sparkle-project/Sparkle) - Automatic updates framework

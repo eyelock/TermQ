@@ -101,6 +101,7 @@
 "menu.toggle.pin" = "Przełącz przypięcie";
 "menu.next.pinned" = "Następny przypięty terminal";
 "menu.previous.pinned" = "Poprzedni przypięty terminal";
+"menu.check.for.updates" = "Check for Updates...";
 
 
 // MARK: - Command Palette
@@ -458,3 +459,11 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "security.allow.disable.prompt" = "Zezwól i nie pytaj ponownie";
 "security.osc.clipboard.enabled" = "Dostęp do schowka OSC 52 włączony";
 "security.osc.clipboard.disabled" = "Dostęp do schowka OSC 52 wyłączony";
+
+// NEEDS TRANSLATION - Added from English
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.section.updates" = "Updates";

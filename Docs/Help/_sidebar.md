@@ -18,5 +18,6 @@
   - [Configuration & Data](configuration.md)
 
 - **Further Info**
+  - [Automatic Updates](updates.md)
   - [Tips & Tricks](tips-tricks.md)
   - [About TermQ](about.md)

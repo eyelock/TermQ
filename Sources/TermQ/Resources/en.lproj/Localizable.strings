@@ -99,6 +99,7 @@
 "menu.toggle.pin" = "Toggle Pin";
 "menu.next.pinned" = "Next Pinned Terminal";
 "menu.previous.pinned" = "Previous Pinned Terminal";
+"menu.check.for.updates" = "Check for Updates...";
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";
@@ -262,6 +263,14 @@
 "settings.section.about" = "About";
 "settings.field.version" = "Version";
 "settings.field.build" = "Build";
+
+// Settings - Updates section
+"settings.section.updates" = "Updates";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 
 // Settings - Data Directory section
 "settings.section.data.directory" = "Data Storage";

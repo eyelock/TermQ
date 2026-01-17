@@ -101,6 +101,7 @@
 "menu.toggle.pin" = "Uključi/isključi prikvačivanje";
 "menu.next.pinned" = "Sljedeći prikvačeni terminal";
 "menu.previous.pinned" = "Prethodni prikvačeni terminal";
+"menu.check.for.updates" = "Check for Updates...";
 
 
 // MARK: - Command Palette
@@ -458,3 +459,11 @@ Ovo može utjecati na to kako AI pomoćnici komuniciraju s ovim terminalom.";
 "security.allow.disable.prompt" = "Dopusti i ne pitaj ponovno";
 "security.osc.clipboard.enabled" = "OSC 52 pristup međuspremniku omogućen";
 "security.osc.clipboard.disabled" = "OSC 52 pristup međuspremniku onemogućen";
+
+// NEEDS TRANSLATION - Added from English
+"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
+"settings.check.for.updates" = "Check for Updates...";
+"settings.include.beta.releases" = "Include beta releases";
+"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.section.updates" = "Updates";

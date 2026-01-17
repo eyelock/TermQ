@@ -1,4 +1,5 @@
 import AppKit
+import Sparkle
 import SwiftUI
 
 struct SettingsView: View {
@@ -41,6 +42,17 @@ struct SettingsView: View {
 
     // Data directory
     @State private var dataDirectory: String = DataDirectoryManager.displayPath
+
+    // Updater (Sparkle)
+    @StateObject private var updaterViewModel =
+        UpdaterViewModel.shared
+        ?? UpdaterViewModel(
+            updater: SPUStandardUpdaterController(
+                startingUpdater: false,
+                updaterDelegate: nil,
+                userDriverDelegate: nil
+            ).updater
+        )
 
     enum SettingsTab: CaseIterable {
         case general
@@ -168,6 +180,24 @@ struct SettingsView: View {
             )
         } header: {
             Text(Strings.Settings.sectionAbout)
+        }
+
+        Section {
+            Toggle(Strings.Settings.autoCheckUpdates, isOn: $updaterViewModel.automaticallyChecksForUpdates)
+                .help(Strings.Settings.autoCheckUpdatesHelp)
+
+            Toggle(Strings.Settings.includeBetaReleases, isOn: $updaterViewModel.includeBetaReleases)
+                .help(Strings.Settings.includeBetaReleasesHelp)
+
+            HStack {
+                Spacer()
+                Button(Strings.Settings.checkForUpdates) {
+                    updaterViewModel.checkForUpdates()
+                }
+                .disabled(!updaterViewModel.canCheckForUpdates)
+            }
+        } header: {
+            Text(Strings.Settings.sectionUpdates)
         }
 
         Section {

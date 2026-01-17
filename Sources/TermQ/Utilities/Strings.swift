@@ -253,6 +253,7 @@ enum Strings {
         static var togglePin: String { localized("menu.toggle.pin") }
         static var nextPinned: String { localized("menu.next.pinned") }
         static var previousPinned: String { localized("menu.previous.pinned") }
+        static var checkForUpdates: String { localized("menu.check.for.updates") }
     }
 
     // MARK: - Command Palette
@@ -453,6 +454,14 @@ enum Strings {
         static var fieldVersion: String { localized("settings.field.version") }
         static var fieldBuild: String { localized("settings.field.build") }
 
+        // General - Updates section
+        static var sectionUpdates: String { localized("settings.section.updates") }
+        static var checkForUpdates: String { localized("settings.check.for.updates") }
+        static var autoCheckUpdates: String { localized("settings.auto.check.updates") }
+        static var autoCheckUpdatesHelp: String { localized("settings.auto.check.updates.help") }
+        static var includeBetaReleases: String { localized("settings.include.beta.releases") }
+        static var includeBetaReleasesHelp: String { localized("settings.include.beta.releases.help") }
+
         // General - Data Directory section
         static var sectionDataDirectory: String { localized("settings.section.data.directory") }
         static var dataDirectory: String { localized("settings.data.directory") }
@@ -575,7 +584,9 @@ enum Strings {
         static var allowOscClipboard: String { localized("settings.allow.osc.clipboard") }
         static var allowOscClipboardHelp: String { localized("settings.allow.osc.clipboard.help") }
         static var confirmExternalModifications: String { localized("settings.confirm.external.modifications") }
-        static var confirmExternalModificationsHelp: String { localized("settings.confirm.external.modifications.help") }
+        static var confirmExternalModificationsHelp: String {
+            localized("settings.confirm.external.modifications.help")
+        }
     }
 
     // MARK: - Command Palette
