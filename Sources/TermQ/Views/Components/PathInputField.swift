@@ -1,5 +1,5 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 /// Two-line path/directory input with browse button
 ///
@@ -114,7 +114,8 @@ struct PathInputField: View {
 
         let url = URL(fileURLWithPath: path)
         var isDirectory: ObjCBool = false
-        pathExists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+        pathExists =
+            FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
             && isDirectory.boolValue
     }
 }

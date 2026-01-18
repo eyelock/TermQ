@@ -81,8 +81,7 @@ struct StatusIndicator: View {
             // Label + message
             Text("\(label):")
                 .foregroundColor(.primary)
-            +
-            Text(" \(message)")
+                + Text(" \(message)")
                 .foregroundColor(.secondary)
 
             Spacer()
