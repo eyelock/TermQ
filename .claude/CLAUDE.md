@@ -1,23 +1,34 @@
 # Claude - TermQ
 
-## 🚀 Quick Start
+## 🛑 READ THIS BEFORE WRITING ANY CODE
 
-**Every session starts here:** Read **[commands/init.md](commands/init.md)**
+**MANDATORY: If you're about to write, edit, or implement ANY code:**
 
-This gives you:
-- Session startup checklist
-- Tool preferences (GitHub, file operations)
-- Context loading strategy
+1. **FIRST** → Read **[commands/implementation-prepare.md](commands/implementation-prepare.md)**
+   - Gather context, verify environment, create plan
+   - Running Edit or Write tools without reading this leads to incomplete implementations
+
+2. **THEN** → Write your code following [code-style.md](commands/code-style.md)
+
+3. **AFTER** → Read **[commands/implementation-checks.md](commands/implementation-checks.md)**
+   - Build, lint, test, review before committing
+   - Every check must pass - zero tolerance for errors
+
+**This is not optional. Following this workflow prevents broken builds, wasted CI runs, and incomplete implementations.**
+
+---
 
 ## 📋 Core Development Workflow
 
-**Follow this workflow for features, fixes, and refactoring:**
+**YOU MUST follow this 5-step workflow for ALL features, fixes, and refactoring:**
 
 ### 1. Session Init
 → **[commands/init.md](commands/init.md)** - Session startup, git status, verify worktree
 
 ### 2. Prepare
 → **[commands/implementation-prepare.md](commands/implementation-prepare.md)** - Gather context, verify environment, plan implementation
+
+**🚨 DO NOT skip step 2 - you MUST read this file before using Edit or Write tools**
 
 ### 3. Implement → 4. Check (Iterative Loop) 🔄
 
@@ -34,6 +45,17 @@ This gives you:
 
 ### 5. Commit & PR
 → **[commands/commit-pr.md](commands/commit-pr.md)** - Create commits and pull requests
+
+---
+
+## 🚀 Quick Start
+
+**Starting a new session?** Read **[commands/init.md](commands/init.md)** first.
+
+This gives you:
+- Session startup checklist
+- Tool preferences (GitHub, file operations)
+- Context loading strategy
 
 ---
 

@@ -1,6 +1,10 @@
 # Implementation Preparation
 
+**🛑 This is step 2 of the Core Development Workflow. This is MANDATORY.**
+
 **Run this checklist BEFORE writing any code for features, fixes, or refactoring.**
+
+**DO NOT use Edit or Write tools until you've completed this checklist.**
 
 ## 1. Context Gathering
 

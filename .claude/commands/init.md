@@ -1,6 +1,8 @@
 # Session Initialization
 
-**Read this file at the start of every Claude session.**
+**🛑 YOU MUST read this file at the start of EVERY Claude session.**
+
+**This is step 1 of the Core Development Workflow. Do not skip it.**
 
 ## Session Start Checklist
 
@@ -9,7 +11,7 @@
    - Check for uncommitted changes
    - Review recent commits
 
-3. **Verify worktree context**
+2. **Verify worktree context**
    - Confirm you're in the correct worktree
    - Check if this is main repo or a feature worktree
 
@@ -74,12 +76,23 @@ Project documentation locations:
 
 ---
 
-## ✅ Ready to Code
+## ✅ Session Initialized - What's Next?
 
-You're now oriented. Next steps:
+You've completed step 1. Choose your path:
 
-- **Starting new work?** → [implementation-prepare.md](implementation-prepare.md) (step 2 of workflow)
-- **Continuing previous work?** → Check `.claude/sessions/` for handover notes, run `git status`, resume at appropriate workflow step
-- **Investigating/exploring only?** → Use `Task` tool with `subagent_type=Explore` or targeted `Grep`/`Glob` queries
+### If implementing code:
+**→ NEXT: Read [implementation-prepare.md](implementation-prepare.md) (step 2 of workflow)**
 
-**Need the full workflow?** → Read [CLAUDE.md](../CLAUDE.md) for complete navigation guide
+**🚨 DO NOT use Edit or Write tools until you've read implementation-prepare.md**
+
+### If continuing previous work:
+1. Check `.claude/sessions/` for handover notes
+2. Run `git status` to see current state
+3. Resume at appropriate workflow step (likely step 2 or 3)
+
+### If only investigating/exploring:
+- Use `Task` tool with `subagent_type=Explore` for broad exploration
+- Use targeted `Grep`/`Glob` queries for specific searches
+- No need to follow full workflow for investigation-only tasks
+
+**Need the full workflow reference?** → [CLAUDE.md](../CLAUDE.md)
