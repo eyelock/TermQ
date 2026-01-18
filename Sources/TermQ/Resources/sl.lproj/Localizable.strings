@@ -471,3 +471,4 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "settings.include.beta.releases" = "Include beta releases";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
+"editor.section.add.tag" = "Dodaj oznako";

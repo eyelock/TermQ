@@ -7,6 +7,9 @@ struct SettingsView: View {
     // Initial tab selection (for deep linking)
     var initialTab: SettingsTab?
 
+    // Settings navigation coordinator
+    @ObservedObject private var coordinator = SettingsCoordinator.shared
+
     // CLI Tool installation state
     @State private var selectedLocation: InstallLocation = .usrLocalBin
     @State private var installedLocation: InstallLocation?
@@ -118,7 +121,12 @@ struct SettingsView: View {
             Text(alertMessage ?? "")
         }
         .onAppear {
-            if let initialTab = initialTab {
+            // Check coordinator first (for navigation from other views)
+            if let requestedTab = coordinator.requestedTab {
+                selectedTab = requestedTab
+                coordinator.clearRequest()
+            } else if let initialTab = initialTab {
+                // Fall back to initialTab (for deep linking)
                 selectedTab = initialTab
             }
             refreshInstallStatus()

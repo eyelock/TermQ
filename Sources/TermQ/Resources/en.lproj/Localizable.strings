@@ -172,6 +172,7 @@
 
 // Editor - Tags section
 "editor.section.tags" = "Tags";
+"editor.section.add.tag" = "Add Tag";
 "editor.field.tags" = "Tags";
 "editor.tag.add" = "Add Tag";
 "editor.tag.key.placeholder" = "key";
