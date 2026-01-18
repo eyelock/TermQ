@@ -144,9 +144,10 @@ private struct SessionRow: View {
                     onRecover()
                 }
                 .buttonStyle(.borderedProminent)
-                .help(matchingCard != nil
-                    ? "Open this terminal and reattach to the tmux session"
-                    : "Restore the deleted card or create a new one for this session")
+                .help(
+                    matchingCard != nil
+                        ? "Open this terminal and reattach to the tmux session"
+                        : "Restore the deleted card or create a new one for this session")
 
                 Button("Dismiss") {
                     onDismiss()
