@@ -372,6 +372,7 @@ enum Strings {
         enum Environment {
             static var description: String { localized("editor.environment.description") }
             static var sectionTerminal: String { localized("editor.environment.section.terminal") }
+            static var sectionAddVariable: String { localized("editor.environment.section.add.variable") }
             static var noVariables: String { localized("editor.environment.no.variables") }
             static var sectionInherited: String { localized("editor.environment.section.inherited") }
             static var noGlobalVariables: String { localized("editor.environment.no.global.variables") }
@@ -553,6 +554,7 @@ enum Strings {
             static var browseMessage: String { localized("settings.environment.browse.message") }
 
             static var sectionVariables: String { localized("settings.environment.section.variables") }
+            static var sectionAddVariable: String { localized("settings.environment.section.add.variable") }
             static var noVariables: String { localized("settings.environment.no.variables") }
             static var keyPlaceholder: String { localized("settings.environment.key.placeholder") }
             static var valuePlaceholder: String { localized("settings.environment.value.placeholder") }

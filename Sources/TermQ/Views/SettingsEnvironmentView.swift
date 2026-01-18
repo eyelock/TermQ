@@ -4,25 +4,33 @@ import TermQCore
 /// Environment settings tab - global environment variables and secret management
 struct SettingsEnvironmentView: View {
     @ObservedObject private var envManager = GlobalEnvironmentManager.shared
-    @State private var newKey: String = ""
-    @State private var newValue: String = ""
-    @State private var newIsSecret: Bool = false
-    @State private var editingVariable: EnvironmentVariable?
     @State private var showResetKeyConfirmation = false
     @State private var hasEncryptionKey = false
-    @State private var validationError: String?
-    @State private var showSecretValue: Set<UUID> = []
+    @State private var items: [KeyValueItem] = []
+    @State private var showErrorAlert = false
+    @State private var errorMessage: String?
+
+    // Existing keys for duplicate checking
+    private var existingKeys: Set<String> {
+        Set(envManager.variables.map { $0.key })
+    }
 
     var body: some View {
-        VStack(spacing: 0) {
-            Form {
-                variablesSection
-                securitySection
-            }
-            .formStyle(.grouped)
+        Group {
+            variablesSection
+            securitySection
         }
         .onAppear {
             checkEncryptionKey()
+            syncItems()
+        }
+        .onChange(of: envManager.variables) { _, _ in
+            syncItems()
+        }
+        .alert(Strings.Alert.error, isPresented: $showErrorAlert) {
+            Button(Strings.Common.ok) {}
+        } message: {
+            Text(errorMessage ?? "An unknown error occurred")
         }
     }
 
@@ -30,128 +38,31 @@ struct SettingsEnvironmentView: View {
 
     @ViewBuilder
     private var variablesSection: some View {
+        // Existing variables list
         Section {
-            if envManager.variables.isEmpty {
-                Text(Strings.Settings.Environment.noVariables)
-                    .foregroundColor(.secondary)
-                    .italic()
-            } else {
-                ForEach(envManager.variables) { variable in
-                    variableRow(variable)
+            KeyValueList(
+                items: $items,
+                onDelete: { id in
+                    deleteVariable(id: id)
                 }
-            }
-
-            // Add new variable - stacked layout for wider inputs
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(Strings.Settings.Environment.keyPlaceholder)
-                        .frame(width: 50, alignment: .leading)
-                    TextField("", text: $newKey)
-                        .textFieldStyle(.roundedBorder)
-                        .font(.system(.body, design: .monospaced))
-                        .onChange(of: newKey) { _, newValue in
-                            validateNewKey(newValue)
-                        }
-                }
-
-                HStack {
-                    Text(Strings.Settings.Environment.valuePlaceholder)
-                        .frame(width: 50, alignment: .leading)
-                    TextField(
-                        newIsSecret ? Strings.Settings.Environment.secretPlaceholder : "",
-                        text: $newValue
-                    )
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(.body, design: .monospaced))
-                }
-
-                HStack {
-                    Toggle(Strings.Settings.Environment.secret, isOn: $newIsSecret)
-                        .toggleStyle(.checkbox)
-
-                    Spacer()
-
-                    Button(Strings.Common.add) {
-                        addVariable()
-                    }
-                    .disabled(newKey.isEmpty || newValue.isEmpty || validationError != nil)
-                }
-
-                if let error = validationError {
-                    Text(error)
-                        .font(.caption)
-                        .foregroundColor(.red)
-                }
-
-                if newIsSecret || envManager.variables.contains(where: { $0.isSecret }) {
-                    Text(Strings.Editor.Environment.secretWarning)
-                        .font(.caption)
-                        .foregroundColor(.orange)
-                }
-            }
-            .padding(.top, 8)
+            )
         } header: {
             Text(Strings.Settings.Environment.sectionVariables)
         }
-    }
 
-    @ViewBuilder
-    private func variableRow(_ variable: EnvironmentVariable) -> some View {
-        HStack {
-            // Key (monospaced)
-            Text(variable.key)
-                .font(.system(.body, design: .monospaced))
-                .frame(width: 120, alignment: .leading)
-
-            Text("=")
-                .foregroundColor(.secondary)
-
-            // Value (masked if secret)
-            if variable.isSecret {
-                if showSecretValue.contains(variable.id) {
-                    Text(variable.value)
-                        .font(.system(.body, design: .monospaced))
-                        .foregroundColor(.secondary)
-                } else {
-                    Text(String(repeating: "•", count: min(variable.value.count, 20)))
-                        .font(.system(.body, design: .monospaced))
-                        .foregroundColor(.secondary)
+        // Add new variable form
+        Section {
+            KeyValueAddForm(
+                config: .environmentVariables,
+                existingKeys: existingKeys,
+                items: items,
+                onAdd: { key, value, isSecret in
+                    addVariable(key: key, value: value, isSecret: isSecret)
                 }
-
-                Button {
-                    toggleSecretVisibility(variable.id)
-                } label: {
-                    Image(
-                        systemName: showSecretValue.contains(variable.id)
-                            ? "eye.slash" : "eye")
-                }
-                .buttonStyle(.borderless)
-                .help(Strings.Settings.Environment.toggleVisibility)
-
-                Image(systemName: "lock.fill")
-                    .foregroundColor(.orange)
-                    .help(Strings.Settings.Environment.secretIndicator)
-            } else {
-                Text(variable.value)
-                    .font(.system(.body, design: .monospaced))
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-            }
-
-            Spacer()
-
-            // Delete button
-            Button(role: .destructive) {
-                deleteVariable(variable)
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(.red.opacity(0.7))
-            }
-            .buttonStyle(.borderless)
-            .help(Strings.Common.delete)
+            )
+        } header: {
+            Text(Strings.Settings.Environment.sectionAddVariable)
         }
-        .padding(.vertical, 2)
     }
 
     // MARK: - Security Section
@@ -230,61 +141,35 @@ struct SettingsEnvironmentView: View {
         }
     }
 
-    private func validateNewKey(_ key: String) {
-        if key.isEmpty {
-            validationError = nil
-            return
-        }
-
-        let testVar = EnvironmentVariable(key: key, value: "", isSecret: false)
-        if !testVar.isValidKey {
-            validationError = Strings.Settings.Environment.invalidKeyError
-        } else if envManager.keyExists(key) {
-            validationError = Strings.Settings.Environment.duplicateKeyError
-        } else if testVar.isReservedKey {
-            validationError = Strings.Settings.Environment.reservedKeyWarning
-        } else {
-            validationError = nil
-        }
-    }
-
-    private func addVariable() {
-        guard !newKey.isEmpty, !newValue.isEmpty else { return }
-
+    private func addVariable(key: String, value: String, isSecret: Bool) {
         let variable = EnvironmentVariable(
-            key: newKey,
-            value: newValue,
-            isSecret: newIsSecret
+            key: key,
+            value: value,
+            isSecret: isSecret
         )
 
         Task {
             do {
                 try await envManager.addVariable(variable)
-                await MainActor.run {
-                    newKey = ""
-                    newValue = ""
-                    newIsSecret = false
-                    validationError = nil
+                // Update key status if secret was added (key gets created on first secret)
+                if isSecret {
+                    let hasKey = await SecureStorage.shared.hasEncryptionKey()
+                    await MainActor.run {
+                        hasEncryptionKey = hasKey
+                    }
                 }
             } catch {
                 await MainActor.run {
-                    validationError = error.localizedDescription
+                    errorMessage = error.localizedDescription
+                    showErrorAlert = true
                 }
             }
         }
     }
 
-    private func deleteVariable(_ variable: EnvironmentVariable) {
+    private func deleteVariable(id: UUID) {
         Task {
-            try? await envManager.deleteVariable(id: variable.id)
-        }
-    }
-
-    private func toggleSecretVisibility(_ id: UUID) {
-        if showSecretValue.contains(id) {
-            showSecretValue.remove(id)
-        } else {
-            showSecretValue.insert(id)
+            try? await envManager.deleteVariable(id: id)
         }
     }
 
@@ -293,13 +178,27 @@ struct SettingsEnvironmentView: View {
             do {
                 try await SecureStorage.shared.resetEncryptionKey()
                 await envManager.load()
+                // Immediately update status after reset
                 await MainActor.run {
                     hasEncryptionKey = false
-                    checkEncryptionKey()
                 }
             } catch {
-                // Handle error
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    showErrorAlert = true
+                }
             }
+        }
+    }
+
+    private func syncItems() {
+        items = envManager.variables.map { variable in
+            KeyValueItem(
+                id: variable.id,
+                key: variable.key,
+                value: variable.value,
+                isSecret: variable.isSecret
+            )
         }
     }
 }

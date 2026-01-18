@@ -208,6 +208,7 @@
 // Editor - Environment section
 "editor.environment.description" = "Environment variables are injected when the terminal launches. Terminal variables override global variables with the same name.";
 "editor.environment.section.terminal" = "Terminal Environment Variables";
+"editor.environment.section.add.variable" = "Add Environment Variable";
 "editor.environment.no.variables" = "No environment variables defined for this terminal";
 "editor.environment.section.inherited" = "Inherited from Global";
 "editor.environment.no.global.variables" = "No global environment variables defined";
@@ -358,6 +359,7 @@
 "settings.environment.browse.message" = "Select a directory to store TermQ secrets";
 
 "settings.environment.section.variables" = "Global Environment Variables";
+"settings.environment.section.add.variable" = "Add Environment Variable";
 "settings.environment.no.variables" = "No environment variables defined";
 "settings.environment.key.placeholder" = "KEY";
 "settings.environment.value.placeholder" = "Value";

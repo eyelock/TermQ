@@ -7,170 +7,85 @@ struct CardEditorEnvironmentTab: View {
     let cardId: UUID
 
     @ObservedObject private var globalEnvManager = GlobalEnvironmentManager.shared
-    @State private var newKey: String = ""
-    @State private var newValue: String = ""
-    @State private var newIsSecret: Bool = false
-    @State private var validationError: String?
-    @State private var showSecretValue: Set<UUID> = []
+    @State private var items: [KeyValueItem] = []
     @State private var showSettings = false
+    @State private var showErrorAlert = false
+    @State private var errorMessage: String?
+    @State private var showGlobalSecretValue: Set<UUID> = []
+
+    // Existing keys for duplicate checking
+    private var existingKeys: Set<String> {
+        Set(environmentVariables.map { $0.key })
+    }
 
     var body: some View {
-        Section {
-            Text(Strings.Editor.Environment.description)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-
-        Section(Strings.Editor.Environment.sectionTerminal) {
-            if environmentVariables.isEmpty {
-                Text(Strings.Editor.Environment.noVariables)
+        Group {
+            Section {
+                Text(Strings.Editor.Environment.description)
+                    .font(.caption)
                     .foregroundColor(.secondary)
-                    .italic()
-            } else {
-                ForEach(environmentVariables) { variable in
-                    terminalVariableRow(variable)
-                }
             }
 
-            // Add new variable - stacked layout for wider inputs
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(Strings.Settings.Environment.keyPlaceholder)
-                        .frame(width: 50, alignment: .leading)
-                    TextField("", text: $newKey)
-                        .textFieldStyle(.roundedBorder)
-                        .font(.system(.body, design: .monospaced))
-                        .onChange(of: newKey) { _, newValue in
-                            validateNewKey(newValue)
-                        }
-                }
-
-                HStack {
-                    Text(Strings.Settings.Environment.valuePlaceholder)
-                        .frame(width: 50, alignment: .leading)
-                    TextField(
-                        newIsSecret ? Strings.Settings.Environment.secretPlaceholder : "",
-                        text: $newValue
-                    )
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(.body, design: .monospaced))
-                }
-
-                HStack {
-                    Toggle(Strings.Settings.Environment.secret, isOn: $newIsSecret)
-                        .toggleStyle(.checkbox)
-
-                    Spacer()
-
-                    Button(Strings.Common.add) {
-                        addVariable()
+            // Existing variables list
+            Section(Strings.Editor.Environment.sectionTerminal) {
+                KeyValueList(
+                    items: $items,
+                    onDelete: { id in
+                        deleteVariable(id: id)
                     }
-                    .disabled(newKey.isEmpty || newValue.isEmpty || validationError != nil)
+                )
+            }
+
+            // Add new variable form
+            Section {
+                KeyValueAddForm(
+                    config: .environmentVariables,
+                    existingKeys: existingKeys,
+                    items: items,
+                    onAdd: { key, value, isSecret in
+                        addVariable(key: key, value: value, isSecret: isSecret)
+                    }
+                )
+            } header: {
+                Text(Strings.Editor.Environment.sectionAddVariable)
+            }
+
+            Section(Strings.Editor.Environment.sectionInherited) {
+                if globalEnvManager.variables.isEmpty {
+                    Text(Strings.Editor.Environment.noGlobalVariables)
+                        .foregroundColor(.secondary)
+                        .italic()
+                } else {
+                    ForEach(globalEnvManager.variables) { variable in
+                        globalVariableRow(variable)
+                    }
                 }
 
-                if let error = validationError {
-                    Text(error)
-                        .font(.caption)
-                        .foregroundColor(.red)
-                }
-
-                if newIsSecret || environmentVariables.contains(where: { $0.isSecret }) {
-                    Text(Strings.Editor.Environment.secretWarning)
-                        .font(.caption)
-                        .foregroundColor(.orange)
+                HStack {
+                    Spacer()
+                    Button(Strings.Editor.Environment.editGlobal) {
+                        showSettings = true
+                    }
+                    .sheet(isPresented: $showSettings) {
+                        SettingsView(initialTab: .environment)
+                    }
                 }
             }
-            .padding(.top, 8)
         }
-
-        Section(Strings.Editor.Environment.sectionInherited) {
-            if globalEnvManager.variables.isEmpty {
-                Text(Strings.Editor.Environment.noGlobalVariables)
-                    .foregroundColor(.secondary)
-                    .italic()
-            } else {
-                ForEach(globalEnvManager.variables) { variable in
-                    globalVariableRow(variable)
-                }
-            }
-
-            HStack {
-                Spacer()
-                Button(Strings.Editor.Environment.editGlobal) {
-                    showSettings = true
-                }
-                .sheet(isPresented: $showSettings) {
-                    SettingsView(initialTab: .environment)
-                }
-            }
+        .onAppear {
+            syncItems()
+        }
+        .onChange(of: environmentVariables) { _, _ in
+            syncItems()
+        }
+        .alert(Strings.Alert.error, isPresented: $showErrorAlert) {
+            Button(Strings.Common.ok) {}
+        } message: {
+            Text(errorMessage ?? "An unknown error occurred")
         }
     }
 
     // MARK: - Variable Rows
-
-    @ViewBuilder
-    private func terminalVariableRow(_ variable: EnvironmentVariable) -> some View {
-        HStack {
-            Text(variable.key)
-                .font(.system(.body, design: .monospaced))
-                .frame(width: 120, alignment: .leading)
-
-            Text("=")
-                .foregroundColor(.secondary)
-
-            if variable.isSecret {
-                if showSecretValue.contains(variable.id) {
-                    Text(variable.value)
-                        .font(.system(.body, design: .monospaced))
-                        .foregroundColor(.secondary)
-                } else {
-                    Text(String(repeating: "•", count: min(variable.value.count, 20)))
-                        .font(.system(.body, design: .monospaced))
-                        .foregroundColor(.secondary)
-                }
-
-                Button {
-                    toggleSecretVisibility(variable.id)
-                } label: {
-                    Image(
-                        systemName: showSecretValue.contains(variable.id)
-                            ? "eye.slash" : "eye")
-                }
-                .buttonStyle(.borderless)
-
-                Image(systemName: "lock.fill")
-                    .foregroundColor(.orange)
-            } else {
-                Text(variable.value)
-                    .font(.system(.body, design: .monospaced))
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-            }
-
-            // Override indicator
-            if globalEnvManager.keyExists(variable.key) {
-                Text(Strings.Editor.Environment.overrides)
-                    .font(.caption2)
-                    .foregroundColor(.orange)
-                    .padding(.horizontal, 4)
-                    .padding(.vertical, 2)
-                    .background(Color.orange.opacity(0.1))
-                    .cornerRadius(4)
-            }
-
-            Spacer()
-
-            Button(role: .destructive) {
-                deleteVariable(variable)
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(.red.opacity(0.7))
-            }
-            .buttonStyle(.borderless)
-        }
-        .padding(.vertical, 2)
-    }
 
     @ViewBuilder
     private func globalVariableRow(_ variable: EnvironmentVariable) -> some View {
@@ -183,13 +98,29 @@ struct CardEditorEnvironmentTab: View {
                 .foregroundColor(.secondary)
 
             if variable.isSecret {
-                Text(String(repeating: "•", count: 8))
-                    .font(.system(.body, design: .monospaced))
-                    .foregroundColor(.secondary)
+                if showGlobalSecretValue.contains(variable.id) {
+                    Text(variable.value)
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundColor(.secondary)
+                } else {
+                    Text(String(repeating: "•", count: min(variable.value.count, 20)))
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundColor(.secondary)
+                }
+
+                Button {
+                    toggleGlobalSecretVisibility(variable.id)
+                } label: {
+                    Image(
+                        systemName: showGlobalSecretValue.contains(variable.id)
+                            ? "eye.slash" : "eye")
+                }
+                .buttonStyle(.borderless)
+                .help(Strings.Settings.Environment.toggleVisibility)
 
                 Image(systemName: "lock.fill")
                     .foregroundColor(.orange)
-                    .font(.caption)
+                    .help(Strings.Settings.Environment.secretIndicator)
             } else {
                 Text(variable.value)
                     .font(.system(.body, design: .monospaced))
@@ -227,104 +158,72 @@ struct CardEditorEnvironmentTab: View {
 
     // MARK: - Actions
 
-    private func validateNewKey(_ key: String) {
-        if key.isEmpty {
-            validationError = nil
-            return
-        }
-
-        let testVar = EnvironmentVariable(key: key, value: "", isSecret: false)
-        if !testVar.isValidKey {
-            validationError = Strings.Settings.Environment.invalidKeyError
-        } else if environmentVariables.contains(where: { $0.key.uppercased() == key.uppercased() }) {
-            validationError = Strings.Settings.Environment.duplicateKeyError
-        } else {
-            validationError = nil
-        }
-    }
-
-    private func addVariable() {
-        guard !newKey.isEmpty, !newValue.isEmpty else { return }
-
+    private func addVariable(key: String, value: String, isSecret: Bool) {
         let variable = EnvironmentVariable(
-            key: newKey,
-            value: newValue,
-            isSecret: newIsSecret
+            key: key,
+            value: value,
+            isSecret: isSecret
         )
 
         // If secret, store in SecureStorage
-        if newIsSecret {
+        if isSecret {
             Task {
                 do {
                     try await SecureStorage.shared.storeSecret(
                         id: "terminal-\(cardId.uuidString)-\(variable.id.uuidString)",
-                        value: newValue
+                        value: value
                     )
                     await MainActor.run {
                         // Store with empty value (secret stored separately)
-                        var storedVar = variable
-                        storedVar = EnvironmentVariable(
+                        let storedVar = EnvironmentVariable(
                             id: variable.id,
                             key: variable.key,
-                            value: "",  // Don't store secret in card
+                            value: value,  // Store actual value in memory for display
                             isSecret: true
                         )
                         environmentVariables.append(storedVar)
-                        clearInputs()
                     }
                 } catch {
                     await MainActor.run {
-                        validationError = error.localizedDescription
+                        errorMessage = error.localizedDescription
+                        showErrorAlert = true
                     }
                 }
             }
         } else {
             environmentVariables.append(variable)
-            clearInputs()
         }
     }
 
-    private func deleteVariable(_ variable: EnvironmentVariable) {
-        if variable.isSecret {
-            Task {
-                try? await SecureStorage.shared.deleteSecret(
-                    id: "terminal-\(cardId.uuidString)-\(variable.id.uuidString)"
-                )
-            }
-        }
-        environmentVariables.removeAll { $0.id == variable.id }
-    }
-
-    private func toggleSecretVisibility(_ id: UUID) {
-        if showSecretValue.contains(id) {
-            showSecretValue.remove(id)
-        } else {
-            // Fetch secret value for display
-            Task {
-                if let value = try? await SecureStorage.shared.retrieveSecret(
-                    id: "terminal-\(cardId.uuidString)-\(id.uuidString)")
-                {
-                    await MainActor.run {
-                        // Temporarily update the variable value for display
-                        if let index = environmentVariables.firstIndex(where: { $0.id == id }) {
-                            environmentVariables[index] = EnvironmentVariable(
-                                id: id,
-                                key: environmentVariables[index].key,
-                                value: value,
-                                isSecret: true
-                            )
-                        }
-                        showSecretValue.insert(id)
-                    }
+    private func deleteVariable(id: UUID) {
+        if let variable = environmentVariables.first(where: { $0.id == id }) {
+            if variable.isSecret {
+                Task {
+                    try? await SecureStorage.shared.deleteSecret(
+                        id: "terminal-\(cardId.uuidString)-\(id.uuidString)"
+                    )
                 }
             }
+            environmentVariables.removeAll { $0.id == id }
         }
     }
 
-    private func clearInputs() {
-        newKey = ""
-        newValue = ""
-        newIsSecret = false
-        validationError = nil
+    private func syncItems() {
+        items = environmentVariables.map { variable in
+            KeyValueItem(
+                id: variable.id,
+                key: variable.key,
+                value: variable.value,
+                isSecret: variable.isSecret
+            )
+        }
+    }
+
+    private func toggleGlobalSecretVisibility(_ id: UUID) {
+        if showGlobalSecretValue.contains(id) {
+            showGlobalSecretValue.remove(id)
+        } else {
+            showGlobalSecretValue.insert(id)
+        }
     }
 }

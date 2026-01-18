@@ -150,19 +150,12 @@ struct SettingsView: View {
             Toggle(Strings.Settings.fieldCopyOnSelect, isOn: $copyOnSelect)
                 .help(Strings.Settings.fieldCopyOnSelectHelp)
 
-            HStack {
-                Text(Strings.Settings.fieldDefaultWorkingDirectory)
-                    .frame(width: 160, alignment: .trailing)
-
-                TextField("", text: $defaultWorkingDirectory)
-                    .font(.system(.body, design: .monospaced))
-                    .textFieldStyle(.roundedBorder)
-
-                Button(Strings.Common.browse) {
-                    browseForDefaultWorkingDirectory()
-                }
-            }
-            .help(Strings.Settings.fieldDefaultWorkingDirectoryHelp)
+            PathInputField(
+                label: Strings.Settings.fieldDefaultWorkingDirectory,
+                path: $defaultWorkingDirectory,
+                helpText: Strings.Settings.fieldDefaultWorkingDirectoryHelp,
+                validatePath: true
+            )
 
             Picker(
                 Strings.Settings.fieldDefaultBackend,
@@ -492,20 +485,6 @@ struct SettingsView: View {
         }
     }
 
-    private func browseForDefaultWorkingDirectory() {
-        let panel = NSOpenPanel()
-        panel.canChooseFiles = false
-        panel.canChooseDirectories = true
-        panel.canCreateDirectories = false
-        panel.allowsMultipleSelection = false
-        panel.prompt = Strings.Common.select
-        panel.message = Strings.Settings.fieldDefaultWorkingDirectory
-        panel.directoryURL = URL(fileURLWithPath: defaultWorkingDirectory)
-
-        if panel.runModal() == .OK, let url = panel.url {
-            defaultWorkingDirectory = url.path
-        }
-    }
 }
 
 // MARK: - Theme Preview Swatch
