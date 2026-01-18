@@ -472,3 +472,8 @@ Ovo može utjecati na to kako AI pomoćnici komuniciraju s ovim terminalom.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Dodaj oznaku";
+"editor.allow.agent.prompts" = "Dopusti upute agenta";
+"editor.allow.agent.prompts.help" = "Dopusti ovom terminalu da izvršava upute agenta";
+"editor.allow.agent.prompts.disabled.globally" = "Onemogućeno globalno - omogući u Postavke > Podaci i sigurnost";
+"editor.allow.osc.clipboard.disabled.globally" = "Onemogućeno globalno - omogući u Postavke > Podaci i sigurnost";
+"editor.confirm.external.modifications.disabled.globally" = "Onemogućeno globalno - omogući u Postavke > Podaci i sigurnost";

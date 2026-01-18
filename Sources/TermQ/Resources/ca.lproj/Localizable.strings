@@ -472,3 +472,8 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Afegir etiqueta";
+"editor.allow.agent.prompts" = "Permetre indicacions d'agent";
+"editor.allow.agent.prompts.help" = "Permetre que aquest terminal executi indicacions d'agent";
+"editor.allow.agent.prompts.disabled.globally" = "Desactivat globalment - activeu a Configuració > Dades i seguretat";
+"editor.allow.osc.clipboard.disabled.globally" = "Desactivat globalment - activeu a Configuració > Dades i seguretat";
+"editor.confirm.external.modifications.disabled.globally" = "Desactivat globalment - activeu a Configuració > Dades i seguretat";

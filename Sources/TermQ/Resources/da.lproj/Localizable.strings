@@ -472,3 +472,8 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tilføj mærke";
+"editor.allow.agent.prompts" = "Tillad agentprompts";
+"editor.allow.agent.prompts.help" = "Tillad denne terminal at køre agentprompts";
+"editor.allow.agent.prompts.disabled.globally" = "Deaktiveret globalt - aktivér i Indstillinger > Data og sikkerhed";
+"editor.allow.osc.clipboard.disabled.globally" = "Deaktiveret globalt - aktivér i Indstillinger > Data og sikkerhed";
+"editor.confirm.external.modifications.disabled.globally" = "Deaktiveret globalt - aktivér i Indstillinger > Data og sikkerhed";

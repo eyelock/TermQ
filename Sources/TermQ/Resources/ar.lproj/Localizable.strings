@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "إضافة علامة";
+"editor.allow.agent.prompts" = "السماح بموجهات الوكيل";
+"editor.allow.agent.prompts.help" = "السماح لهذا الطرفية بتشغيل موجهات الوكيل";
+"editor.allow.agent.prompts.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";
+"editor.allow.osc.clipboard.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";
+"editor.confirm.external.modifications.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";

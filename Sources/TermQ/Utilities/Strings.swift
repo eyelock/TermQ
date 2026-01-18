@@ -327,10 +327,21 @@ enum Strings {
         static var fieldAllowAutorunHelp: String { localized("editor.field.allow.autorun.help") }
         static var fieldAutorunDisabledGlobally: String { localized("editor.field.autorun.disabled.globally") }
         static var fieldAutorunEnableHint: String { localized("editor.field.autorun.enable.hint") }
+        static var allowAgentPrompts: String { localized("editor.allow.agent.prompts") }
+        static var allowAgentPromptsHelp: String { localized("editor.allow.agent.prompts.help") }
+        static var allowAgentPromptsDisabledGlobally: String {
+            localized("editor.allow.agent.prompts.disabled.globally")
+        }
         static var allowOscClipboard: String { localized("editor.allow.osc.clipboard") }
         static var allowOscClipboardHelp: String { localized("editor.allow.osc.clipboard.help") }
+        static var allowOscClipboardDisabledGlobally: String {
+            localized("editor.allow.osc.clipboard.disabled.globally")
+        }
         static var confirmExternalModifications: String { localized("editor.confirm.external.modifications") }
         static var confirmExternalModificationsHelp: String { localized("editor.confirm.external.modifications.help") }
+        static var confirmExternalModificationsDisabledGlobally: String {
+            localized("editor.confirm.external.modifications.disabled.globally")
+        }
         static var disabledGlobally: String { localized("editor.disabled.globally") }
 
         // Tags section

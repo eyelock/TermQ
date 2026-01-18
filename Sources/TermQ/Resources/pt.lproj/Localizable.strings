@@ -472,3 +472,8 @@ Isso pode afetar como os assistentes de IA interagem com este terminal.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Adicionar tag";
+"editor.allow.agent.prompts" = "Permitir prompts de agente";
+"editor.allow.agent.prompts.help" = "Permitir que este terminal execute prompts de agente";
+"editor.allow.agent.prompts.disabled.globally" = "Desabilitado globalmente - habilitar em Configurações > Dados e segurança";
+"editor.allow.osc.clipboard.disabled.globally" = "Desabilitado globalmente - habilitar em Configurações > Dados e segurança";
+"editor.confirm.external.modifications.disabled.globally" = "Desabilitado globalmente - habilitar em Configurações > Dados e segurança";

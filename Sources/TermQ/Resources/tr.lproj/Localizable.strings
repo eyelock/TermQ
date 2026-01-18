@@ -472,3 +472,8 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Etiket ekle";
+"editor.allow.agent.prompts" = "Ajan İstemlerine İzin Ver";
+"editor.allow.agent.prompts.help" = "Bu terminalin ajan istemlerini çalıştırmasına izin ver";
+"editor.allow.agent.prompts.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
+"editor.allow.osc.clipboard.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
+"editor.confirm.external.modifications.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";

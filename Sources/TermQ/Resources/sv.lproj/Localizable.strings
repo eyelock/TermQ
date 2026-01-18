@@ -472,3 +472,8 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Lägg till tagg";
+"editor.allow.agent.prompts" = "Tillåt agentprompter";
+"editor.allow.agent.prompts.help" = "Tillåt denna terminal att köra agentprompter";
+"editor.allow.agent.prompts.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";
+"editor.allow.osc.clipboard.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";
+"editor.confirm.external.modifications.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";

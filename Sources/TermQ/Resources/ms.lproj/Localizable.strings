@@ -472,3 +472,8 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tambah Tag";
+"editor.allow.agent.prompts" = "Benarkan Gesaan Ejen";
+"editor.allow.agent.prompts.help" = "Benarkan terminal ini menjalankan gesaan ejen";
+"editor.allow.agent.prompts.disabled.globally" = "Dilumpuhkan secara global - dayakan dalam Tetapan > Data & Keselamatan";
+"editor.allow.osc.clipboard.disabled.globally" = "Dilumpuhkan secara global - dayakan dalam Tetapan > Data & Keselamatan";
+"editor.confirm.external.modifications.disabled.globally" = "Dilumpuhkan secara global - dayakan dalam Tetapan > Data & Keselamatan";

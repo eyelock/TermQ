@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "タグを追加";
+"editor.allow.agent.prompts" = "エージェントプロンプトを許可";
+"editor.allow.agent.prompts.help" = "このターミナルがエージェントプロンプトを実行することを許可";
+"editor.allow.agent.prompts.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";
+"editor.allow.osc.clipboard.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";
+"editor.confirm.external.modifications.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";

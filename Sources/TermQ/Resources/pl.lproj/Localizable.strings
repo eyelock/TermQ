@@ -472,3 +472,8 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Dodaj tag";
+"editor.allow.agent.prompts" = "Zezwalaj na monity agenta";
+"editor.allow.agent.prompts.help" = "Zezwalaj temu terminalowi na uruchamianie monitów agenta";
+"editor.allow.agent.prompts.disabled.globally" = "Wyłączone globalnie - włącz w Ustawienia > Dane i bezpieczeństwo";
+"editor.allow.osc.clipboard.disabled.globally" = "Wyłączone globalnie - włącz w Ustawienia > Dane i bezpieczeństwo";
+"editor.confirm.external.modifications.disabled.globally" = "Wyłączone globalnie - włącz w Ustawienia > Dane i bezpieczeństwo";

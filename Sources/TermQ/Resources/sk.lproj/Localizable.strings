@@ -472,3 +472,8 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Pridať štítok";
+"editor.allow.agent.prompts" = "Povoliť výzvy agenta";
+"editor.allow.agent.prompts.help" = "Povoliť tomuto terminálu spúšťať výzvy agenta";
+"editor.allow.agent.prompts.disabled.globally" = "Zakázané globálne - povoľte v Nastavenia > Údaje a zabezpečenie";
+"editor.allow.osc.clipboard.disabled.globally" = "Zakázané globálne - povoľte v Nastavenia > Údaje a zabezpečenie";
+"editor.confirm.external.modifications.disabled.globally" = "Zakázané globálne - povoľte v Nastavenia > Údaje a zabezpečenie";

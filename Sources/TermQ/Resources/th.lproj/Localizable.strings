@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "เพิ่มแท็ก";
+"editor.allow.agent.prompts" = "อนุญาตพรอมต์ตัวแทน";
+"editor.allow.agent.prompts.help" = "อนุญาตให้เทอร์มินัลนี้เรียกใช้พรอมต์ตัวแทน";
+"editor.allow.agent.prompts.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
+"editor.allow.osc.clipboard.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
+"editor.confirm.external.modifications.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";

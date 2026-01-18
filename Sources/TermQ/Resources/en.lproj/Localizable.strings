@@ -475,3 +475,8 @@
 "security.allow.disable.prompt" = "Allow & Don't Ask Again";
 "security.osc.clipboard.enabled" = "OSC 52 clipboard access enabled";
 "security.osc.clipboard.disabled" = "OSC 52 clipboard access disabled";
+"editor.allow.agent.prompts" = "Allow Agent Prompts";
+"editor.allow.agent.prompts.help" = "Allow this terminal to run agent prompts";
+"editor.allow.agent.prompts.disabled.globally" = "Disabled globally - enable in Settings > Data & Security";
+"editor.allow.osc.clipboard.disabled.globally" = "Disabled globally - enable in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Disabled globally - enable in Settings > Data & Security";
