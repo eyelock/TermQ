@@ -1,6 +1,10 @@
 # Implementation Checks
 
+**🛑 This is step 4 of the Core Development Workflow. This is MANDATORY.**
+
 **Run this checklist AFTER completing code changes, BEFORE committing.**
+
+**You MUST complete ALL checks before proceeding to step 5 (Commit & PR).**
 
 ## 1. Build Verification
 
