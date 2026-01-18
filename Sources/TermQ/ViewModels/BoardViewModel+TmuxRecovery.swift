@@ -48,10 +48,9 @@ extension BoardViewModel {
                 let prefix = session.cardIdPrefix.lowercased()
                 // Only match active (non-deleted) cards
                 if let matchingCard = board.cards.first(where: {
-                    !$0.isDeleted && (
-                        $0.tmuxSessionName == session.name
-                            || $0.id.uuidString.prefix(8).lowercased() == prefix
-                    )
+                    !$0.isDeleted
+                        && ($0.tmuxSessionName == session.name
+                            || $0.id.uuidString.prefix(8).lowercased() == prefix)
                 }) {
                     // Auto-reattach: add to tabs silently
                     tabManager.addTab(matchingCard.id)
@@ -81,10 +80,9 @@ extension BoardViewModel {
 
         // First, check if there's a deleted card that matches - restore it
         if let deletedCard = board.cards.first(where: {
-            $0.isDeleted && (
-                $0.tmuxSessionName == session.name
-                    || $0.id.uuidString.prefix(8).lowercased() == prefix
-            )
+            $0.isDeleted
+                && ($0.tmuxSessionName == session.name
+                    || $0.id.uuidString.prefix(8).lowercased() == prefix)
         }) {
             // Restore the deleted card to the board without opening it
             deletedCard.deletedAt = nil
@@ -93,10 +91,9 @@ extension BoardViewModel {
         }
         // Second, check if there's an active card that matches
         else if board.cards.contains(where: {
-            !$0.isDeleted && (
-                $0.tmuxSessionName == session.name
-                    || $0.id.uuidString.prefix(8).lowercased() == prefix
-            )
+            !$0.isDeleted
+                && ($0.tmuxSessionName == session.name
+                    || $0.id.uuidString.prefix(8).lowercased() == prefix)
         }) {
             // Card already active - nothing to do
             // Session is already linked to the card
