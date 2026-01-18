@@ -15,8 +15,7 @@ struct CardEditorView: View {
     @State private var shellPath: String = ""
     @State private var selectedColumnId: UUID = UUID()
     @State private var tags: [Tag] = []
-    @State private var newTagKey: String = ""
-    @State private var newTagValue: String = ""
+    @State private var tagItems: [KeyValueItem] = []
     @State private var switchToTerminal: Bool = true
     @State private var isFavourite: Bool = false
     @State private var initCommand: String = ""
@@ -303,48 +302,44 @@ struct CardEditorView: View {
 
     @ViewBuilder
     private var metadataContent: some View {
-        Section(Strings.Editor.sectionTags) {
-            ForEach(tags) { tag in
-                HStack {
-                    Text(tag.key)
-                        .fontWeight(.medium)
-                    Text("=")
-                    Text(tag.value)
-                    Spacer()
-                    Button {
-                        tags.removeAll { $0.id == tag.id }
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.secondary)
+        Group {
+            // Existing tags list
+            Section(Strings.Editor.sectionTags) {
+                KeyValueList(
+                    items: $tagItems,
+                    onDelete: { id in
+                        deleteTag(id: id)
                     }
-                    .buttonStyle(.plain)
-                }
+                )
             }
 
-            HStack(spacing: 8) {
-                TextField(Strings.Editor.tagKeyPlaceholder, text: $newTagKey)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 120)
-                Text("=")
-                    .foregroundColor(.secondary)
-                TextField(Strings.Editor.tagValuePlaceholder, text: $newTagValue)
-                    .textFieldStyle(.roundedBorder)
-                Button(Strings.Editor.tagAdd) {
-                    addTag()
-                }
-                .disabled(
-                    newTagKey.trimmingCharacters(in: .whitespaces).isEmpty
-                        || newTagValue.trimmingCharacters(in: .whitespaces).isEmpty)
-            }
-            .onSubmit {
-                addTag()
+            // Add new tag form
+            Section {
+                KeyValueAddForm(
+                    config: .tags,
+                    existingKeys: Set(tags.map { $0.key }),
+                    items: tagItems,
+                    onAdd: { key, value, _ in
+                        addTag(key: key, value: value)
+                    }
+                )
+            } header: {
+                Text(Strings.Editor.sectionAddTag)
             }
 
             if tags.isEmpty {
-                Text(Strings.Editor.tagsHelp)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                Section {
+                    Text(Strings.Editor.tagsHelp)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
+        }
+        .onAppear {
+            syncTagItems()
+        }
+        .onChange(of: tags) { _, _ in
+            syncTagItems()
         }
     }
 
@@ -499,13 +494,23 @@ struct CardEditorView: View {
         card.environmentVariables = environmentVariables
     }
 
-    private func addTag() {
-        let key = newTagKey.trimmingCharacters(in: .whitespaces)
-        let value = newTagValue.trimmingCharacters(in: .whitespaces)
-        if !key.isEmpty && !value.isEmpty {
-            tags.append(Tag(key: key, value: value))
-            newTagKey = ""
-            newTagValue = ""
+    private func addTag(key: String, value: String) {
+        let tag = Tag(key: key, value: value)
+        tags.append(tag)
+    }
+
+    private func deleteTag(id: UUID) {
+        tags.removeAll { $0.id == id }
+    }
+
+    private func syncTagItems() {
+        tagItems = tags.map { tag in
+            KeyValueItem(
+                id: tag.id,
+                key: tag.key,
+                value: tag.value,
+                isSecret: false
+            )
         }
     }
 

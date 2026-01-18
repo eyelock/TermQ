@@ -335,6 +335,7 @@ enum Strings {
 
         // Tags section
         static var sectionTags: String { localized("editor.section.tags") }
+        static var sectionAddTag: String { localized("editor.section.add.tag") }
         static var fieldTags: String { localized("editor.field.tags") }
         static var tagAdd: String { localized("editor.tag.add") }
         static var tagKeyPlaceholder: String { localized("editor.tag.key.placeholder") }

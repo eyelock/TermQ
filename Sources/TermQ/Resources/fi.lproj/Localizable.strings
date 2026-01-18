@@ -471,3 +471,4 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "settings.include.beta.releases" = "Include beta releases";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
+"editor.section.add.tag" = "Lisää tunniste";

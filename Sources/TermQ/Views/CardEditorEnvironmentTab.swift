@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQCore
 
@@ -7,8 +8,8 @@ struct CardEditorEnvironmentTab: View {
     let cardId: UUID
 
     @ObservedObject private var globalEnvManager = GlobalEnvironmentManager.shared
+    @ObservedObject private var settingsCoordinator = SettingsCoordinator.shared
     @State private var items: [KeyValueItem] = []
-    @State private var showSettings = false
     @State private var showErrorAlert = false
     @State private var errorMessage: String?
     @State private var showGlobalSecretValue: Set<UUID> = []
@@ -63,12 +64,14 @@ struct CardEditorEnvironmentTab: View {
 
                 HStack {
                     Spacer()
-                    Button(Strings.Editor.Environment.editGlobal) {
-                        showSettings = true
+                    SettingsLink {
+                        Text(Strings.Editor.Environment.editGlobal)
                     }
-                    .sheet(isPresented: $showSettings) {
-                        SettingsView(initialTab: .environment)
-                    }
+                    .simultaneousGesture(
+                        TapGesture().onEnded {
+                            settingsCoordinator.openSettings(tab: .environment)
+                        }
+                    )
                 }
             }
         }
