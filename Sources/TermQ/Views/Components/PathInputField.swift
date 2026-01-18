@@ -45,9 +45,6 @@ struct PathInputField: View {
                 Text(label)
                     .foregroundColor(.primary)
 
-                Text("...")
-                    .foregroundColor(.secondary)
-
                 Spacer()
 
                 Button(Strings.Common.browse) {
@@ -60,6 +57,7 @@ struct PathInputField: View {
                 TextField("", text: $path)
                     .textFieldStyle(.roundedBorder)
                     .font(.system(.body, design: .monospaced))
+                    .frame(maxWidth: .infinity)
                     .onChange(of: path) { _, newValue in
                         if validatePath {
                             checkPathExists(newValue)

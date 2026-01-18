@@ -102,7 +102,7 @@ struct KeyValueEditor: View {
     }
 
     var body: some View {
-        Group {
+        VStack(alignment: .leading, spacing: 12) {
             // Display existing items
             if !items.isEmpty {
                 ForEach(items) { item in
@@ -110,62 +110,68 @@ struct KeyValueEditor: View {
                 }
             }
 
-            // Add new item form
-            VStack(alignment: .leading, spacing: 8) {
-                // Key input
+            // Key input - wrapped together to prevent Form pairing
+            VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text(config.keyLabel)
-                        .frame(width: 50, alignment: .leading)
-                    TextField("", text: $newKey)
-                        .textFieldStyle(.roundedBorder)
-                        .font(.system(.body, design: .monospaced))
-                        .onChange(of: newKey) { _, newValue in
-                            validateNewKey(newValue)
-                        }
-                }
-
-                // Value input
-                HStack {
-                    Text(config.valueLabel)
-                        .frame(width: 50, alignment: .leading)
-                    TextField(
-                        newIsSecret ? Strings.Settings.Environment.secretPlaceholder : "",
-                        text: $newValue
-                    )
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(.body, design: .monospaced))
-                }
-
-                // Secret toggle (if enabled) + Add button
-                HStack {
-                    if config.showSecretToggle {
-                        Toggle(Strings.Settings.Environment.secret, isOn: $newIsSecret)
-                            .toggleStyle(.checkbox)
-                    }
+                        .foregroundColor(.primary)
 
                     Spacer()
+                }
 
-                    Button(config.addButtonText) {
-                        addItem()
+                TextField("", text: $newKey)
+                    .textFieldStyle(.roundedBorder)
+                    .font(.system(.body, design: .monospaced))
+                    .onChange(of: newKey) { _, newValue in
+                        validateNewKey(newValue)
                     }
-                    .disabled(newKey.isEmpty || newValue.isEmpty || validationError != nil)
-                }
-
-                // Validation error
-                if let error = validationError {
-                    Text(error)
-                        .font(.caption)
-                        .foregroundColor(.red)
-                }
-
-                // Secret warning (if showing secrets)
-                if config.showSecretToggle && (newIsSecret || items.contains(where: { $0.isSecret })) {
-                    Text(Strings.Editor.Environment.secretWarning)
-                        .font(.caption)
-                        .foregroundColor(.orange)
-                }
             }
-            .padding(.top, 8)
+
+            // Value input - wrapped together to prevent Form pairing
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text(config.valueLabel)
+                        .foregroundColor(.primary)
+
+                    Spacer()
+                }
+
+                TextField(
+                    newIsSecret ? Strings.Settings.Environment.secretPlaceholder : "",
+                    text: $newValue
+                )
+                .textFieldStyle(.roundedBorder)
+                .font(.system(.body, design: .monospaced))
+            }
+
+            // Secret toggle (if enabled) + Add button
+            HStack {
+                if config.showSecretToggle {
+                    Toggle(Strings.Settings.Environment.secret, isOn: $newIsSecret)
+                        .toggleStyle(.checkbox)
+                }
+
+                Spacer()
+
+                Button(config.addButtonText) {
+                    addItem()
+                }
+                .disabled(newKey.isEmpty || newValue.isEmpty || validationError != nil)
+            }
+
+            // Validation error
+            if let error = validationError {
+                Text(error)
+                    .font(.caption)
+                    .foregroundColor(.red)
+            }
+
+            // Secret warning (if showing secrets)
+            if config.showSecretToggle && (newIsSecret || items.contains(where: { $0.isSecret })) {
+                Text(Strings.Editor.Environment.secretWarning)
+                    .font(.caption)
+                    .foregroundColor(.orange)
+            }
         }
     }
 
