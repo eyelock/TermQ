@@ -39,8 +39,9 @@ struct SettingsView: View {
     }
 
     // Security preferences
-    @AppStorage("allowOscClipboard") private var allowOscClipboard = true
-    @AppStorage("confirmExternalLLMModifications") private var confirmExternalLLMModifications = true
+    @AppStorage("allowTerminalsToRunAgentPrompts") private var allowTerminalsToRunAgentPrompts = false
+    @AppStorage("allowExternalLLMModifications") private var allowExternalLLMModifications = false
+    @AppStorage("allowOscClipboard") private var allowOscClipboard = false
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
@@ -133,6 +134,7 @@ struct SettingsView: View {
 
     @ViewBuilder
     private var generalContent: some View {
+        // Terminal section
         Section {
             Picker(Strings.Settings.fieldTheme, selection: $sessionManager.themeId) {
                 ForEach(TerminalTheme.allThemes) { theme in
@@ -178,6 +180,7 @@ struct SettingsView: View {
             Text(Strings.Settings.sectionTerminal)
         }
 
+        // Bin section
         Section {
             Stepper(
                 Strings.Settings.autoEmpty(binRetentionDays),
@@ -205,19 +208,7 @@ struct SettingsView: View {
             Text(Strings.Settings.sectionBin)
         }
 
-        Section {
-            LabeledContent(
-                Strings.Settings.fieldVersion,
-                value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-            )
-            LabeledContent(
-                Strings.Settings.fieldBuild,
-                value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-            )
-        } header: {
-            Text(Strings.Settings.sectionAbout)
-        }
-
+        // Updates section
         Section {
             Toggle(Strings.Settings.autoCheckUpdates, isOn: $updaterViewModel.automaticallyChecksForUpdates)
                 .help(Strings.Settings.autoCheckUpdatesHelp)
@@ -236,72 +227,14 @@ struct SettingsView: View {
             Text(Strings.Settings.sectionUpdates)
         }
 
-        Section {
-            HStack {
-                Text(dataDirectory)
-                    .font(.system(.body, design: .monospaced))
-                    .foregroundColor(.secondary)
-
-                Spacer()
-
-                Button(Strings.Common.browse) {
-                    browseForDataDirectory()
-                }
-            }
-
-            Text(Strings.Settings.dataDirectoryHelp)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        } header: {
-            Text(Strings.Settings.sectionDataDirectory)
-        }
-
+        // Language section
         Section {
             LanguagePickerView(selectedLanguage: $selectedLanguage)
         } header: {
             Text(Strings.Settings.sectionLanguage)
         }
-    }
 
-    // MARK: - Tools Tab Content
-
-    @ViewBuilder
-    private var toolsContent: some View {
-        ToolsTabContent(
-            selectedMCPLocation: $selectedMCPLocation,
-            installedMCPLocation: $installedMCPLocation,
-            isInstallingMCP: $isInstallingMCP,
-            configCopied: $configCopied,
-            selectedLocation: $selectedLocation,
-            installedLocation: $installedLocation,
-            isInstalling: $isInstalling,
-            enableTerminalAutorun: $enableTerminalAutorun,
-            tmuxEnabled: $tmuxEnabled,
-            tmuxAutoReattach: $tmuxAutoReattach,
-            installMCPServer: installMCPServer,
-            uninstallMCPServer: uninstallMCPServer,
-            copyMCPConfig: copyMCPConfig,
-            installCLI: installCLI,
-            uninstallCLI: uninstallCLI
-        )
-    }
-
-    // MARK: - Data & Security Tab Content
-
-    @ViewBuilder
-    private var dataAndSecurityContent: some View {
-        BackupSettingsView()
-
-        Section {
-            Toggle(Strings.Settings.confirmExternalModifications, isOn: $confirmExternalLLMModifications)
-                .help(Strings.Settings.confirmExternalModificationsHelp)
-
-            Toggle(Strings.Settings.allowOscClipboard, isOn: $allowOscClipboard)
-                .help(Strings.Settings.allowOscClipboardHelp)
-        } header: {
-            Text(Strings.Settings.sectionSecurity)
-        }
-
+        // Uninstall section (moved from Data & Security)
         Section {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
@@ -334,6 +267,85 @@ struct SettingsView: View {
         } header: {
             Text(Strings.Uninstall.sectionHeader)
         }
+
+        // About section (moved to end)
+        Section {
+            LabeledContent(
+                Strings.Settings.fieldVersion,
+                value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+            )
+            LabeledContent(
+                Strings.Settings.fieldBuild,
+                value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+            )
+        } header: {
+            Text(Strings.Settings.sectionAbout)
+        }
+    }
+
+    // MARK: - Tools Tab Content
+
+    @ViewBuilder
+    private var toolsContent: some View {
+        ToolsTabContent(
+            selectedMCPLocation: $selectedMCPLocation,
+            installedMCPLocation: $installedMCPLocation,
+            isInstallingMCP: $isInstallingMCP,
+            configCopied: $configCopied,
+            selectedLocation: $selectedLocation,
+            installedLocation: $installedLocation,
+            isInstalling: $isInstalling,
+            enableTerminalAutorun: $enableTerminalAutorun,
+            tmuxEnabled: $tmuxEnabled,
+            tmuxAutoReattach: $tmuxAutoReattach,
+            installMCPServer: installMCPServer,
+            uninstallMCPServer: uninstallMCPServer,
+            copyMCPConfig: copyMCPConfig,
+            installCLI: installCLI,
+            uninstallCLI: uninstallCLI
+        )
+    }
+
+    // MARK: - Data & Security Tab Content
+
+    @ViewBuilder
+    private var dataAndSecurityContent: some View {
+        // Security section (moved to top)
+        Section {
+            Toggle("Allow Terminals to run Agent Prompts", isOn: $allowTerminalsToRunAgentPrompts)
+                .help("Allow terminals to execute prompts from agent context (global setting)")
+
+            Toggle(Strings.Settings.confirmExternalModifications, isOn: $allowExternalLLMModifications)
+                .help(Strings.Settings.confirmExternalModificationsHelp)
+
+            Toggle(Strings.Settings.allowOscClipboard, isOn: $allowOscClipboard)
+                .help(Strings.Settings.allowOscClipboardHelp)
+        } header: {
+            Text(Strings.Settings.sectionSecurity)
+        }
+
+        // Data Storage section
+        Section {
+            HStack {
+                Text(Strings.Settings.dataDirectory)
+                    .frame(width: 160, alignment: .trailing)
+
+                TextField("", text: $dataDirectory)
+                    .font(.system(.body, design: .monospaced))
+                    .textFieldStyle(.roundedBorder)
+                    .disabled(true)
+
+                Button(Strings.Common.browse) {
+                    browseForDataDirectory()
+                }
+            }
+            .help(Strings.Settings.dataDirectoryHelp)
+        } header: {
+            Text(Strings.Settings.sectionDataDirectory)
+        }
+
+        // Data Protection section
+        BackupSettingsView()
     }
 
     private func refreshInstallStatus() {
