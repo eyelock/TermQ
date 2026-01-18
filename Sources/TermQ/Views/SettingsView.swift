@@ -326,18 +326,24 @@ struct SettingsView: View {
 
         // Data Storage section
         Section {
-            HStack {
-                Text(Strings.Settings.dataDirectory)
-                    .frame(width: 160, alignment: .trailing)
+            VStack(alignment: .leading, spacing: 4) {
+                // Line 1: Label with Browse button
+                HStack {
+                    Text(Strings.Settings.dataDirectory)
+                        .foregroundColor(.primary)
 
-                TextField("", text: $dataDirectory)
-                    .font(.system(.body, design: .monospaced))
-                    .textFieldStyle(.roundedBorder)
-                    .disabled(true)
+                    Spacer()
 
-                Button(Strings.Common.browse) {
-                    browseForDataDirectory()
+                    Button(Strings.Common.browse) {
+                        browseForDataDirectory()
+                    }
                 }
+
+                // Line 2: Full-width path display (read-only)
+                TextField("", text: $dataDirectory)
+                    .textFieldStyle(.roundedBorder)
+                    .font(.system(.body, design: .monospaced))
+                    .disabled(true)
             }
             .help(Strings.Settings.dataDirectoryHelp)
         } header: {
