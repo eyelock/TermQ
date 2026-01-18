@@ -9,6 +9,9 @@ struct CardEditorEnvironmentTab: View {
     @ObservedObject private var globalEnvManager = GlobalEnvironmentManager.shared
     @State private var items: [KeyValueItem] = []
     @State private var showSettings = false
+    @State private var showErrorAlert = false
+    @State private var errorMessage: String?
+    @State private var showGlobalSecretValue: Set<UUID> = []
 
     // Existing keys for duplicate checking
     private var existingKeys: Set<String> {
@@ -23,18 +26,28 @@ struct CardEditorEnvironmentTab: View {
                     .foregroundColor(.secondary)
             }
 
+            // Existing variables list
             Section(Strings.Editor.Environment.sectionTerminal) {
-                KeyValueEditor(
+                KeyValueList(
                     items: $items,
-                    config: .environmentVariables,
-                    existingKeys: existingKeys,
-                    onAdd: { key, value, isSecret in
-                        addVariable(key: key, value: value, isSecret: isSecret)
-                    },
                     onDelete: { id in
                         deleteVariable(id: id)
                     }
                 )
+            }
+
+            // Add new variable form
+            Section {
+                KeyValueAddForm(
+                    config: .environmentVariables,
+                    existingKeys: existingKeys,
+                    items: items,
+                    onAdd: { key, value, isSecret in
+                        addVariable(key: key, value: value, isSecret: isSecret)
+                    }
+                )
+            } header: {
+                Text(Strings.Editor.Environment.sectionAddVariable)
             }
 
             Section(Strings.Editor.Environment.sectionInherited) {
@@ -65,6 +78,11 @@ struct CardEditorEnvironmentTab: View {
         .onChange(of: environmentVariables) { _, _ in
             syncItems()
         }
+        .alert(Strings.Alert.error, isPresented: $showErrorAlert) {
+            Button(Strings.Common.ok) {}
+        } message: {
+            Text(errorMessage ?? "An unknown error occurred")
+        }
     }
 
     // MARK: - Variable Rows
@@ -80,13 +98,29 @@ struct CardEditorEnvironmentTab: View {
                 .foregroundColor(.secondary)
 
             if variable.isSecret {
-                Text(String(repeating: "•", count: 8))
-                    .font(.system(.body, design: .monospaced))
-                    .foregroundColor(.secondary)
+                if showGlobalSecretValue.contains(variable.id) {
+                    Text(variable.value)
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundColor(.secondary)
+                } else {
+                    Text(String(repeating: "•", count: min(variable.value.count, 20)))
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundColor(.secondary)
+                }
+
+                Button {
+                    toggleGlobalSecretVisibility(variable.id)
+                } label: {
+                    Image(
+                        systemName: showGlobalSecretValue.contains(variable.id)
+                            ? "eye.slash" : "eye")
+                }
+                .buttonStyle(.borderless)
+                .help(Strings.Settings.Environment.toggleVisibility)
 
                 Image(systemName: "lock.fill")
                     .foregroundColor(.orange)
-                    .font(.caption)
+                    .help(Strings.Settings.Environment.secretIndicator)
             } else {
                 Text(variable.value)
                     .font(.system(.body, design: .monospaced))
@@ -144,13 +178,16 @@ struct CardEditorEnvironmentTab: View {
                         let storedVar = EnvironmentVariable(
                             id: variable.id,
                             key: variable.key,
-                            value: "",  // Don't store secret in card
+                            value: value,  // Store actual value in memory for display
                             isSecret: true
                         )
                         environmentVariables.append(storedVar)
                     }
                 } catch {
-                    // Handle error
+                    await MainActor.run {
+                        errorMessage = error.localizedDescription
+                        showErrorAlert = true
+                    }
                 }
             }
         } else {
@@ -179,6 +216,14 @@ struct CardEditorEnvironmentTab: View {
                 value: variable.value,
                 isSecret: variable.isSecret
             )
+        }
+    }
+
+    private func toggleGlobalSecretVisibility(_ id: UUID) {
+        if showGlobalSecretValue.contains(id) {
+            showGlobalSecretValue.remove(id)
+        } else {
+            showGlobalSecretValue.insert(id)
         }
     }
 }

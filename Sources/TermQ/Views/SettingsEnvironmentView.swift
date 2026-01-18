@@ -7,6 +7,8 @@ struct SettingsEnvironmentView: View {
     @State private var showResetKeyConfirmation = false
     @State private var hasEncryptionKey = false
     @State private var items: [KeyValueItem] = []
+    @State private var showErrorAlert = false
+    @State private var errorMessage: String?
 
     // Existing keys for duplicate checking
     private var existingKeys: Set<String> {
@@ -14,12 +16,9 @@ struct SettingsEnvironmentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            Form {
-                variablesSection
-                securitySection
-            }
-            .formStyle(.grouped)
+        Group {
+            variablesSection
+            securitySection
         }
         .onAppear {
             checkEncryptionKey()
@@ -28,26 +27,41 @@ struct SettingsEnvironmentView: View {
         .onChange(of: envManager.variables) { _, _ in
             syncItems()
         }
+        .alert(Strings.Alert.error, isPresented: $showErrorAlert) {
+            Button(Strings.Common.ok) {}
+        } message: {
+            Text(errorMessage ?? "An unknown error occurred")
+        }
     }
 
     // MARK: - Variables Section
 
     @ViewBuilder
     private var variablesSection: some View {
+        // Existing variables list
         Section {
-            KeyValueEditor(
+            KeyValueList(
                 items: $items,
-                config: .environmentVariables,
-                existingKeys: existingKeys,
-                onAdd: { key, value, isSecret in
-                    addVariable(key: key, value: value, isSecret: isSecret)
-                },
                 onDelete: { id in
                     deleteVariable(id: id)
                 }
             )
         } header: {
             Text(Strings.Settings.Environment.sectionVariables)
+        }
+
+        // Add new variable form
+        Section {
+            KeyValueAddForm(
+                config: .environmentVariables,
+                existingKeys: existingKeys,
+                items: items,
+                onAdd: { key, value, isSecret in
+                    addVariable(key: key, value: value, isSecret: isSecret)
+                }
+            )
+        } header: {
+            Text(Strings.Settings.Environment.sectionAddVariable)
         }
     }
 
@@ -135,7 +149,21 @@ struct SettingsEnvironmentView: View {
         )
 
         Task {
-            try? await envManager.addVariable(variable)
+            do {
+                try await envManager.addVariable(variable)
+                // Update key status if secret was added (key gets created on first secret)
+                if isSecret {
+                    let hasKey = await SecureStorage.shared.hasEncryptionKey()
+                    await MainActor.run {
+                        hasEncryptionKey = hasKey
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    showErrorAlert = true
+                }
+            }
         }
     }
 
@@ -150,12 +178,15 @@ struct SettingsEnvironmentView: View {
             do {
                 try await SecureStorage.shared.resetEncryptionKey()
                 await envManager.load()
+                // Immediately update status after reset
                 await MainActor.run {
                     hasEncryptionKey = false
-                    checkEncryptionKey()
                 }
             } catch {
-                // Handle error
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    showErrorAlert = true
+                }
             }
         }
     }
