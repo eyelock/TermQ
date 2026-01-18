@@ -472,3 +472,8 @@ Dit kan invloed hebben op hoe AI-assistenten met deze terminal communiceren.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tag toevoegen";
+"editor.allow.agent.prompts" = "Agentprompts toestaan";
+"editor.allow.agent.prompts.help" = "Sta deze terminal toe om agentprompts uit te voeren";
+"editor.allow.agent.prompts.disabled.globally" = "Globaal uitgeschakeld - inschakelen in Instellingen > Gegevens & Beveiliging";
+"editor.allow.osc.clipboard.disabled.globally" = "Globaal uitgeschakeld - inschakelen in Instellingen > Gegevens & Beveiliging";
+"editor.confirm.external.modifications.disabled.globally" = "Globaal uitgeschakeld - inschakelen in Instellingen > Gegevens & Beveiliging";

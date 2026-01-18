@@ -472,3 +472,8 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Címke hozzáadása";
+"editor.allow.agent.prompts" = "Ügynökutasítások engedélyezése";
+"editor.allow.agent.prompts.help" = "Engedélyezze ennek a terminálnak az ügynökutasítások futtatását";
+"editor.allow.agent.prompts.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
+"editor.allow.osc.clipboard.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
+"editor.confirm.external.modifications.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";

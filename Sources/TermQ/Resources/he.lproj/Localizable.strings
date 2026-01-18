@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "הוסף תג";
+"editor.allow.agent.prompts" = "אפשר הנחיות סוכן";
+"editor.allow.agent.prompts.help" = "אפשר למסוף זה להפעיל הנחיות סוכן";
+"editor.allow.agent.prompts.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
+"editor.allow.osc.clipboard.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
+"editor.confirm.external.modifications.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";

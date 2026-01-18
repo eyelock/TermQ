@@ -472,3 +472,8 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tag hinzufügen";
+"editor.allow.agent.prompts" = "Agent-Eingabeaufforderungen zulassen";
+"editor.allow.agent.prompts.help" = "Diesem Terminal erlauben, Agent-Eingabeaufforderungen auszuführen";
+"editor.allow.agent.prompts.disabled.globally" = "Global deaktiviert - in Einstellungen > Daten & Sicherheit aktivieren";
+"editor.allow.osc.clipboard.disabled.globally" = "Global deaktiviert - in Einstellungen > Daten & Sicherheit aktivieren";
+"editor.confirm.external.modifications.disabled.globally" = "Global deaktiviert - in Einstellungen > Daten & Sicherheit aktivieren";

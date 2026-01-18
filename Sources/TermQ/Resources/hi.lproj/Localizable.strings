@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "टैग जोड़ें";
+"editor.allow.agent.prompts" = "एजेंट प्रॉम्प्ट की अनुमति दें";
+"editor.allow.agent.prompts.help" = "इस टर्मिनल को एजेंट प्रॉम्प्ट चलाने की अनुमति दें";
+"editor.allow.agent.prompts.disabled.globally" = "वैश्विक रूप से अक्षम - सेटिंग्स > डेटा और सुरक्षा में सक्षम करें";
+"editor.allow.osc.clipboard.disabled.globally" = "वैश्विक रूप से अक्षम - सेटिंग्स > डेटा और सुरक्षा में सक्षम करें";
+"editor.confirm.external.modifications.disabled.globally" = "वैश्विक रूप से अक्षम - सेटिंग्स > डेटा और सुरक्षा में सक्षम करें";

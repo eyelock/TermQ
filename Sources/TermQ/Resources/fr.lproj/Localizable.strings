@@ -472,3 +472,8 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Ajouter une étiquette";
+"editor.allow.agent.prompts" = "Autoriser les invites d'agent";
+"editor.allow.agent.prompts.help" = "Autoriser ce terminal à exécuter des invites d'agent";
+"editor.allow.agent.prompts.disabled.globally" = "Désactivé globalement - activer dans Réglages > Données et sécurité";
+"editor.allow.osc.clipboard.disabled.globally" = "Désactivé globalement - activer dans Réglages > Données et sécurité";
+"editor.confirm.external.modifications.disabled.globally" = "Désactivé globalement - activer dans Réglages > Données et sécurité";

@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Додати тег";
+"editor.allow.agent.prompts" = "Дозволити запити агента";
+"editor.allow.agent.prompts.help" = "Дозволити цьому терміналу виконувати запити агента";
+"editor.allow.agent.prompts.disabled.globally" = "Вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
+"editor.allow.osc.clipboard.disabled.globally" = "Вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
+"editor.confirm.external.modifications.disabled.globally" = "Вимкнено глобально - увімкніть у Налаштування > Дані та безпека";

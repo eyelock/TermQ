@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Thêm thẻ";
+"editor.allow.agent.prompts" = "Cho phép lời nhắc đại diện";
+"editor.allow.agent.prompts.help" = "Cho phép thiết bị đầu cuối này chạy lời nhắc đại diện";
+"editor.allow.agent.prompts.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";
+"editor.allow.osc.clipboard.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";
+"editor.confirm.external.modifications.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";

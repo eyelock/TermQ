@@ -31,9 +31,9 @@ struct CardEditorView: View {
     @State private var allowAutorun: Bool = false
     @State private var allowOscClipboard: Bool = true
     @State private var confirmExternalModifications: Bool = true
-    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
-    @AppStorage("allowOscClipboard") private var globalAllowOscClipboard = true
-    @AppStorage("confirmExternalLLMModifications") private var globalConfirmExternalModifications = true
+    @AppStorage("allowTerminalsToRunAgentPrompts") private var globalAllowAgentPrompts = false
+    @AppStorage("allowOscClipboard") private var globalAllowOscClipboard = false
+    @AppStorage("allowExternalLLMModifications") private var globalAllowExternalModifications = false
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
     @State private var interactiveMode: Bool = true
     @State private var backend: TerminalBackend = .direct
@@ -222,14 +222,12 @@ struct CardEditorView: View {
         }
 
         Section(Strings.Editor.sectionTerminal) {
-            HStack {
-                TextField(Strings.Editor.fieldDirectory, text: $workingDirectory)
-                    .font(.system(.body, design: .monospaced))
-                    .help(Strings.Editor.fieldDirectoryHelp)
-                Button(Strings.Common.browse) {
-                    browseDirectory()
-                }
-            }
+            PathInputField(
+                label: Strings.Editor.fieldDirectory,
+                path: $workingDirectory,
+                helpText: Strings.Editor.fieldDirectoryHelp,
+                validatePath: true
+            )
 
             TextField(Strings.Editor.fieldShell, text: $shellPath)
                 .font(.system(.body, design: .monospaced))
@@ -251,50 +249,29 @@ struct CardEditorView: View {
             Toggle(Strings.Editor.fieldSafePaste, isOn: $safePasteEnabled)
                 .help(Strings.Editor.fieldSafePasteHelp)
 
-            if enableTerminalAutorun {
-                Toggle(Strings.Editor.fieldAllowAutorun, isOn: $allowAutorun)
-                    .help(Strings.Editor.fieldAllowAutorunHelp)
-            } else {
-                HStack {
-                    Text(Strings.Editor.fieldAllowAutorun)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text(Strings.Editor.fieldAutorunDisabledGlobally)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .help(Strings.Editor.fieldAutorunEnableHint)
-            }
+            SharedToggle(
+                label: Strings.Editor.allowAgentPrompts,
+                isOn: $allowAutorun,
+                isGloballyEnabled: globalAllowAgentPrompts,
+                disabledMessage: Strings.Editor.allowAgentPromptsDisabledGlobally,
+                helpText: Strings.Editor.allowAgentPromptsHelp
+            )
 
-            if globalAllowOscClipboard {
-                Toggle(Strings.Editor.allowOscClipboard, isOn: $allowOscClipboard)
-                    .help(Strings.Editor.allowOscClipboardHelp)
-            } else {
-                HStack {
-                    Text(Strings.Editor.allowOscClipboard)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text(Strings.Editor.disabledGlobally)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .help(Strings.Editor.allowOscClipboardHelp)
-            }
+            SharedToggle(
+                label: Strings.Editor.confirmExternalModifications,
+                isOn: $confirmExternalModifications,
+                isGloballyEnabled: globalAllowExternalModifications,
+                disabledMessage: Strings.Editor.confirmExternalModificationsDisabledGlobally,
+                helpText: Strings.Editor.confirmExternalModificationsHelp
+            )
 
-            if globalConfirmExternalModifications {
-                Toggle(Strings.Editor.confirmExternalModifications, isOn: $confirmExternalModifications)
-                    .help(Strings.Editor.confirmExternalModificationsHelp)
-            } else {
-                HStack {
-                    Text(Strings.Editor.confirmExternalModifications)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text(Strings.Editor.disabledGlobally)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .help(Strings.Editor.confirmExternalModificationsHelp)
-            }
+            SharedToggle(
+                label: Strings.Editor.allowOscClipboard,
+                isOn: $allowOscClipboard,
+                isGloballyEnabled: globalAllowOscClipboard,
+                disabledMessage: Strings.Editor.allowOscClipboardDisabledGlobally,
+                helpText: Strings.Editor.allowOscClipboardHelp
+            )
         }
     }
 
@@ -360,7 +337,7 @@ struct CardEditorView: View {
             HStack {
                 Text(Strings.Editor.fieldTerminalAllowsAutorun)
                 Spacer()
-                if enableTerminalAutorun {
+                if globalAllowAgentPrompts {
                     Image(systemName: allowAutorun ? "checkmark.circle.fill" : "xmark.circle")
                         .foregroundColor(allowAutorun ? .green : .secondary)
                     Text(allowAutorun ? Strings.Common.installed : Strings.Editor.fieldAutorunDisabledGlobally)
@@ -373,7 +350,7 @@ struct CardEditorView: View {
                 }
             }
             .help(
-                enableTerminalAutorun
+                globalAllowAgentPrompts
                     ? Strings.Editor.fieldAllowAutorunHelp
                     : Strings.Editor.fieldAutorunEnableHint
             )
@@ -514,15 +491,4 @@ struct CardEditorView: View {
         }
     }
 
-    private func browseDirectory() {
-        let panel = NSOpenPanel()
-        panel.canChooseFiles = false
-        panel.canChooseDirectories = true
-        panel.allowsMultipleSelection = false
-        panel.directoryURL = URL(fileURLWithPath: workingDirectory)
-
-        if panel.runModal() == .OK, let url = panel.url {
-            workingDirectory = url.path
-        }
-    }
 }

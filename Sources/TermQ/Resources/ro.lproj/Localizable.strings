@@ -472,3 +472,8 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Adaugă etichetă";
+"editor.allow.agent.prompts" = "Permite solicitări agent";
+"editor.allow.agent.prompts.help" = "Permite acestui terminal să ruleze solicitări agent";
+"editor.allow.agent.prompts.disabled.globally" = "Dezactivat global - activează în Setări > Date și securitate";
+"editor.allow.osc.clipboard.disabled.globally" = "Dezactivat global - activează în Setări > Date și securitate";
+"editor.confirm.external.modifications.disabled.globally" = "Dezactivat global - activează în Setări > Date și securitate";

@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "태그 추가";
+"editor.allow.agent.prompts" = "에이전트 프롬프트 허용";
+"editor.allow.agent.prompts.help" = "이 터미널이 에이전트 프롬프트를 실행하도록 허용";
+"editor.allow.agent.prompts.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";
+"editor.allow.osc.clipboard.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";
+"editor.confirm.external.modifications.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";

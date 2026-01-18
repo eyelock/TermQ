@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "新增標籤";
+"editor.allow.agent.prompts" = "允許代理提示";
+"editor.allow.agent.prompts.help" = "允許此終端機執行代理提示";
+"editor.allow.agent.prompts.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
+"editor.allow.osc.clipboard.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
+"editor.confirm.external.modifications.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";

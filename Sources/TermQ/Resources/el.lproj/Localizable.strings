@@ -472,3 +472,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Προσθήκη ετικέτας";
+"editor.allow.agent.prompts" = "Να επιτρέπονται οι προτροπές παράγοντα";
+"editor.allow.agent.prompts.help" = "Να επιτρέπεται σε αυτό το τερματικό να εκτελεί προτροπές παράγοντα";
+"editor.allow.agent.prompts.disabled.globally" = "Απενεργοποιημένο καθολικά - ενεργοποιήστε στις Ρυθμίσεις > Δεδομένα & Ασφάλεια";
+"editor.allow.osc.clipboard.disabled.globally" = "Απενεργοποιημένο καθολικά - ενεργοποιήστε στις Ρυθμίσεις > Δεδομένα & Ασφάλεια";
+"editor.confirm.external.modifications.disabled.globally" = "Απενεργοποιημένο καθολικά - ενεργοποιήστε στις Ρυθμίσεις > Δεδομένα & Ασφάλεια";

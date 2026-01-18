@@ -472,3 +472,8 @@ Questo potrebbe influenzare il modo in cui gli assistenti AI interagiscono con q
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Aggiungi tag";
+"editor.allow.agent.prompts" = "Consenti prompt agente";
+"editor.allow.agent.prompts.help" = "Consenti a questo terminale di eseguire prompt agente";
+"editor.allow.agent.prompts.disabled.globally" = "Disabilitato globalmente - abilita in Impostazioni > Dati e sicurezza";
+"editor.allow.osc.clipboard.disabled.globally" = "Disabilitato globalmente - abilita in Impostazioni > Dati e sicurezza";
+"editor.confirm.external.modifications.disabled.globally" = "Disabilitato globalmente - abilita in Impostazioni > Dati e sicurezza";
