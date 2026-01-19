@@ -40,7 +40,7 @@ struct TerminalCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // Header with title and status
-            HStack {
+            HStack(spacing: 8) {
                 Image(systemName: "terminal")
                     .foregroundColor(columnColor)
 
@@ -48,67 +48,77 @@ struct TerminalCardView: View {
                     .font(.headline)
                     .lineLimit(1)
 
-                // Open as tab indicator
-                if isOpenAsTab {
-                    Text(Strings.Card.open)
-                        .font(.caption2)
-                        .fontWeight(.medium)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(
-                            Capsule()
-                                .fill(columnColor.opacity(0.3))
-                        )
-                        .foregroundColor(columnColor)
-                }
+                // Special badges - stay on single line, truncate with ellipsis if needed
+                HStack(spacing: 4) {
+                    // Open as tab indicator
+                    if isOpenAsTab {
+                        Text(Strings.Card.open)
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(columnColor.opacity(0.3))
+                            )
+                            .foregroundColor(columnColor)
+                            .fixedSize()
+                    }
 
-                // Wired indicator - shows when LLM has called termq_get for this terminal
-                if card.isWired {
-                    Text(Strings.Card.wired)
-                        .font(.caption2)
-                        .fontWeight(.medium)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(
-                            Capsule()
-                                .fill(Color.green.opacity(0.3))
-                        )
-                        .foregroundColor(.green)
-                        .help(Strings.Card.wiredHelp)
-                }
+                    // Wired indicator - shows when LLM has called termq_get for this terminal
+                    if card.isWired {
+                        Text(Strings.Card.wired)
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(Color.green.opacity(0.3))
+                            )
+                            .foregroundColor(.green)
+                            .help(Strings.Card.wiredHelp)
+                            .fixedSize()
+                    }
 
-                // LIVE indicator - shows when terminal has an active background session
-                if hasActiveSession && !isOpenAsTab {
-                    Text(Strings.Card.live)
-                        .font(.caption2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(
-                            Capsule()
-                                .fill(Color.red.opacity(0.3))
-                        )
-                        .foregroundColor(.red)
-                        .help(Strings.Card.liveHelp)
-                }
+                    // LIVE indicator - shows when terminal has an active background session
+                    if hasActiveSession && !isOpenAsTab {
+                        Text(Strings.Card.live)
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(Color.red.opacity(0.3))
+                            )
+                            .foregroundColor(.red)
+                            .help(Strings.Card.liveHelp)
+                            .fixedSize()
+                    }
 
-                // TMUX badge - shows when terminal uses tmux backend AND tmux is available
-                // (cards with tmux backend fall back to direct if tmux is unavailable)
-                if card.backend == .tmux && tmuxManager.isAvailable {
-                    Text(Strings.Card.tmux)
-                        .font(.caption2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(
-                            Capsule()
-                                .fill(Color.purple.opacity(0.3))
-                        )
-                        .foregroundColor(.purple)
-                        .help(Strings.Card.tmuxHelp)
+                    // TMUX badge - shows when terminal uses tmux backend AND tmux is available
+                    // (cards with tmux backend fall back to direct if tmux is unavailable)
+                    if card.backend == .tmux && tmuxManager.isAvailable {
+                        Text(Strings.Card.tmux)
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(Color.purple.opacity(0.3))
+                            )
+                            .foregroundColor(.purple)
+                            .help(Strings.Card.tmuxHelp)
+                            .fixedSize()
+                    }
                 }
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .layoutPriority(1)
 
-                Spacer()
+                Spacer(minLength: 8)
 
                 // Status indicators
                 HStack(spacing: 6) {
@@ -147,7 +157,9 @@ struct TerminalCardView: View {
                             .help(Strings.Card.running)
                     }
                 }
+                .layoutPriority(2)
             }
+            .frame(maxHeight: 22)
 
             // User badges (right after header)
             if !badges.isEmpty {
@@ -163,6 +175,7 @@ struct TerminalCardView: View {
                                     .fill(columnColor.opacity(0.2))
                             )
                             .foregroundColor(columnColor)
+                            .fixedSize()
                     }
                 }
             }
@@ -275,6 +288,7 @@ struct TagView: View {
             Capsule()
                 .fill(Color.accentColor.opacity(0.2))
         )
+        .fixedSize()
     }
 }
 
@@ -290,17 +304,14 @@ struct FlowLayout: Layout {
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
         let result = arrangeSubviews(proposal: proposal, subviews: subviews)
 
-        for (index, subview) in subviews.enumerated() {
-            if index < result.positions.count {
-                let position = result.positions[index]
-                subview.place(
-                    at: CGPoint(x: bounds.minX + position.x, y: bounds.minY + position.y), proposal: .unspecified)
-            }
+        for (index, subview) in subviews.enumerated() where index < result.positions.count {
+            let position = result.positions[index]
+            subview.place(
+                at: CGPoint(x: bounds.minX + position.x, y: bounds.minY + position.y), proposal: .unspecified)
         }
     }
 
-    private func arrangeSubviews(proposal: ProposedViewSize, subviews: Subviews) -> (size: CGSize, positions: [CGPoint])
-    {
+    private func arrangeSubviews(proposal: ProposedViewSize, subviews: Subviews) -> (size: CGSize, positions: [CGPoint]) {
         let maxWidth = proposal.width ?? .infinity
         var positions: [CGPoint] = []
         var currentX: CGFloat = 0
