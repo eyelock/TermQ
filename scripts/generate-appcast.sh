@@ -144,6 +144,12 @@ generate_appcast() {
     local items=""
     local count=0
 
+    # Use temp file to avoid process substitution issues with pipes in CI
+    # Process substitution can cause "Broken pipe" errors when the while loop exits early
+    local releases_file
+    releases_file=$(mktemp)
+    echo "$releases" | jq -c '.[]' > "$releases_file"
+
     # Process each release
     while IFS= read -r release; do
         local tag
@@ -195,7 +201,10 @@ generate_appcast() {
         items+=$'\n'
 
         ((count++))
-    done < <(echo "$releases" | jq -c '.[]')
+    done < "$releases_file"
+
+    # Cleanup temp file
+    rm -f "$releases_file"
 
     # Generate the full appcast XML
     cat > "${OUTPUT_DIR}/${output_file}" << EOF
