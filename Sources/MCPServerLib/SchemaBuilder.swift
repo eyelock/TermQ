@@ -81,4 +81,9 @@ enum SchemaBuilder {
     static func int(_ name: String, _ description: String, required: Bool = false) -> Property {
         Property(name, .integer, description: description, required: required)
     }
+
+    /// Create an array property (of strings)
+    static func stringArray(_ name: String, _ description: String, required: Bool = false) -> Property {
+        Property(name, .array, description: description, required: required)
+    }
 }

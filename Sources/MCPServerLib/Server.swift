@@ -2,6 +2,25 @@ import Foundation
 import MCP
 import TermQShared
 
+// MARK: - SetLoggingLevel Method (MCP spec: logging/setLevel)
+
+/// MCP method for setting the server's log level
+/// Required when server declares logging capability
+public enum SetLoggingLevel: MCP.Method {
+    public static let name = "logging/setLevel"
+
+    public struct Parameters: Hashable, Codable, Sendable {
+        /// The log level to set
+        public let level: String
+
+        public init(level: String) {
+            self.level = level
+        }
+    }
+
+    public typealias Result = Empty
+}
+
 /// TermQ MCP Server implementation
 ///
 /// Provides Model Context Protocol interface for LLM assistants to interact
@@ -92,6 +111,13 @@ public final class TermQMCPServer: @unchecked Sendable {
                 throw MCPError.internalError("Server deallocated")
             }
             return try await self.dispatchPromptGet(params)
+        }
+
+        // Register logging handler (required when declaring logging capability)
+        _ = await server.withMethodHandler(SetLoggingLevel.self) { _ in
+            // Accept the log level - we don't need to do anything special
+            // as the MCP SDK handles basic logging
+            return Empty()
         }
     }
 

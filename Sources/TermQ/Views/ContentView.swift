@@ -526,13 +526,28 @@ struct ContentView: View {
             targetColumn = viewModel.board.columns.first ?? Column(name: Constants.Columns.fallbackName, orderIndex: 0)
         }
 
-        // Create the card
-        let card = viewModel.board.addCard(to: targetColumn, title: pending.name ?? "Terminal")
+        // Create the card with optional pre-generated ID (from CLI/MCP)
+        let card = viewModel.board.addCard(
+            to: targetColumn,
+            title: pending.name ?? "Terminal",
+            id: pending.cardId
+        )
         card.workingDirectory = pending.path
         if let desc = pending.description {
             card.description = desc
         }
         card.tags = pending.tags
+
+        // Set LLM fields
+        if let llmPrompt = pending.llmPrompt {
+            card.llmPrompt = llmPrompt
+        }
+        if let llmNextAction = pending.llmNextAction {
+            card.llmNextAction = llmNextAction
+        }
+        if let initCommand = pending.initCommand {
+            card.initCommand = initCommand
+        }
 
         viewModel.objectWillChange.send()
         viewModel.save()

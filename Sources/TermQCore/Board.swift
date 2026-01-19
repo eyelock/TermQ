@@ -52,11 +52,13 @@ public class Board: ObservableObject, Codable {
     public func addCard(
         to column: Column,
         title: String = "New Terminal",
+        id: UUID? = nil,
         workingDirectory: String? = nil,
         backend: TerminalBackend? = nil
     ) -> TerminalCard {
         let maxIndex = cards(for: column).map(\.orderIndex).max() ?? -1
         let card = TerminalCard(
+            id: id ?? UUID(),
             title: title,
             columnId: column.id,
             orderIndex: maxIndex + 1,

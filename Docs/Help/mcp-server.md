@@ -154,12 +154,14 @@ Create a new terminal in TermQ.
 | `description` | string | Terminal description |
 | `column` | string | Column name (e.g., 'In Progress') |
 | `path` | string | Working directory path |
+| `tags` | string[] | Tags in `key=value` format |
 | `llmPrompt` | string | Persistent LLM context |
 | `llmNextAction` | string | One-time action for next session |
+| `initCommand` | string | Command to run when terminal opens |
 
 ### termq_set
 
-Update terminal properties.
+Update terminal properties. Tags are additive by default - use `replaceTags=true` to replace all existing tags.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -168,8 +170,11 @@ Update terminal properties.
 | `description` | string | New description |
 | `column` | string | Move to column |
 | `badge` | string | Comma-separated badges |
+| `tags` | string[] | Tags in `key=value` format |
+| `replaceTags` | boolean | If true, replace all tags; if false (default), add to existing |
 | `llmPrompt` | string | Set persistent LLM context |
 | `llmNextAction` | string | Set one-time action |
+| `initCommand` | string | Command to run when terminal opens |
 | `favourite` | boolean | Set favourite status |
 
 ### termq_get
@@ -188,6 +193,24 @@ termq_get id="$TERMQ_TERMINAL_ID"
 ```
 
 This is useful for LLM agents that need to check their current terminal's persistent context (`llmPrompt`), pending actions (`llmNextAction`), tags, and metadata.
+
+### termq_delete
+
+Delete a terminal. By default, moves to bin (soft delete). Use `permanent=true` to permanently delete without recovery option.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `identifier` | string | Terminal name or UUID (required) |
+| `permanent` | boolean | If true, permanently delete (cannot be recovered); if false (default), move to bin |
+
+**Example:**
+```bash
+# Soft delete (can be recovered from bin)
+termq_delete identifier="My Terminal"
+
+# Permanent delete
+termq_delete identifier="My Terminal" permanent=true
+```
 
 ## Available Resources
 
