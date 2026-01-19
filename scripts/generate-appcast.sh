@@ -202,7 +202,7 @@ generate_appcast() {
         items+=$(generate_item "$tag" "$title" "$pub_date" "$body" "$download_url" "$file_size" "$signature")
         items+=$'\n'
 
-        ((count++))
+        count=$((count + 1))
     done < "$releases_file"
 
     # Cleanup temp file
