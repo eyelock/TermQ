@@ -100,13 +100,31 @@ struct SettingsView: View {
             Form {
                 switch selectedTab {
                 case .general:
-                    generalContent
+                    SettingsGeneralView(
+                        sessionManager: sessionManager,
+                        copyOnSelect: $copyOnSelect,
+                        defaultWorkingDirectory: $defaultWorkingDirectory,
+                        defaultBackend: Binding(
+                            get: { defaultBackend },
+                            set: { newValue in defaultBackendRawValue = newValue.rawValue }
+                        ),
+                        binRetentionDays: $binRetentionDays,
+                        boardViewModel: boardViewModel,
+                        updaterViewModel: updaterViewModel,
+                        selectedLanguage: $selectedLanguage,
+                        showUninstallSheet: $showUninstallSheet
+                    )
                 case .environment:
                     SettingsEnvironmentView()
                 case .tools:
                     toolsContent
                 case .dataAndSecurity:
-                    dataAndSecurityContent
+                    SettingsDataSecurityView(
+                        allowTerminalsToRunAgentPrompts: $allowTerminalsToRunAgentPrompts,
+                        allowExternalLLMModifications: $allowExternalLLMModifications,
+                        allowOscClipboard: $allowOscClipboard,
+                        dataDirectory: $dataDirectory
+                    )
                 }
             }
             .formStyle(.grouped)
@@ -138,152 +156,6 @@ struct SettingsView: View {
         self.initialTab = initialTab
     }
 
-    // MARK: - General Tab Content
-
-    @ViewBuilder
-    private var generalContent: some View {
-        // Terminal section
-        Section {
-            Picker(Strings.Settings.fieldTheme, selection: $sessionManager.themeId) {
-                ForEach(TerminalTheme.allThemes) { theme in
-                    HStack {
-                        ThemePreviewSwatch(theme: theme)
-                        Text(theme.name)
-                    }
-                    .tag(theme.id)
-                }
-            }
-            .help(Strings.Settings.fieldThemeHelp)
-
-            Toggle(Strings.Settings.fieldCopyOnSelect, isOn: $copyOnSelect)
-                .help(Strings.Settings.fieldCopyOnSelectHelp)
-
-            PathInputField(
-                label: Strings.Settings.fieldDefaultWorkingDirectory,
-                path: $defaultWorkingDirectory,
-                helpText: Strings.Settings.fieldDefaultWorkingDirectoryHelp,
-                validatePath: true
-            )
-
-            Picker(
-                Strings.Settings.fieldDefaultBackend,
-                selection: Binding(
-                    get: { defaultBackend },
-                    set: { (newValue: TerminalBackend) in defaultBackendRawValue = newValue.rawValue }
-                )
-            ) {
-                ForEach(TerminalBackend.allCases, id: \.self) { backend in
-                    Text(backend.displayName).tag(backend)
-                }
-            }
-            .help(Strings.Settings.fieldDefaultBackendHelp)
-        } header: {
-            Text(Strings.Settings.sectionTerminal)
-        }
-
-        // Bin section
-        Section {
-            Stepper(
-                Strings.Settings.autoEmpty(binRetentionDays),
-                value: $binRetentionDays,
-                in: 1...90
-            )
-            .help(Strings.Settings.autoEmptyHelp)
-
-            HStack {
-                let binCount = boardViewModel.binCards.count
-                Text(
-                    binCount == 0
-                        ? Strings.Settings.binEmpty : Strings.Settings.binItems(binCount)
-                )
-                .foregroundColor(.secondary)
-
-                Spacer()
-
-                Button(Strings.Settings.emptyBinNow, role: .destructive) {
-                    boardViewModel.emptyBin()
-                }
-                .disabled(boardViewModel.binCards.isEmpty)
-            }
-        } header: {
-            Text(Strings.Settings.sectionBin)
-        }
-
-        // Updates section
-        Section {
-            Toggle(Strings.Settings.autoCheckUpdates, isOn: $updaterViewModel.automaticallyChecksForUpdates)
-                .help(Strings.Settings.autoCheckUpdatesHelp)
-
-            Toggle(Strings.Settings.includeBetaReleases, isOn: $updaterViewModel.includeBetaReleases)
-                .help(Strings.Settings.includeBetaReleasesHelp)
-
-            HStack {
-                Spacer()
-                Button(Strings.Settings.checkForUpdates) {
-                    updaterViewModel.checkForUpdates()
-                }
-                .disabled(!updaterViewModel.canCheckForUpdates)
-            }
-        } header: {
-            Text(Strings.Settings.sectionUpdates)
-        }
-
-        // Language section
-        Section {
-            LanguagePickerView(selectedLanguage: $selectedLanguage)
-        } header: {
-            Text(Strings.Settings.sectionLanguage)
-        }
-
-        // Uninstall section (moved from Data & Security)
-        Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "trash")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(Strings.Uninstall.title)
-                            .font(.headline)
-                        Text(Strings.Uninstall.description)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-                }
-
-                Divider()
-
-                Text(Strings.Uninstall.description)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                Button(Strings.Uninstall.buttonTitle, role: .destructive) {
-                    showUninstallSheet = true
-                }
-            }
-            .padding(.vertical, 4)
-        } header: {
-            Text(Strings.Uninstall.sectionHeader)
-        }
-
-        // About section (moved to end)
-        Section {
-            LabeledContent(
-                Strings.Settings.fieldVersion,
-                value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-            )
-            LabeledContent(
-                Strings.Settings.fieldBuild,
-                value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-            )
-        } header: {
-            Text(Strings.Settings.sectionAbout)
-        }
-    }
-
     // MARK: - Tools Tab Content
 
     @ViewBuilder
@@ -305,54 +177,6 @@ struct SettingsView: View {
             installCLI: installCLI,
             uninstallCLI: uninstallCLI
         )
-    }
-
-    // MARK: - Data & Security Tab Content
-
-    @ViewBuilder
-    private var dataAndSecurityContent: some View {
-        // Security section (moved to top)
-        Section {
-            Toggle("Allow Terminals to run Agent Prompts", isOn: $allowTerminalsToRunAgentPrompts)
-                .help("Allow terminals to execute prompts from agent context (global setting)")
-
-            Toggle(Strings.Settings.confirmExternalModifications, isOn: $allowExternalLLMModifications)
-                .help(Strings.Settings.confirmExternalModificationsHelp)
-
-            Toggle(Strings.Settings.allowOscClipboard, isOn: $allowOscClipboard)
-                .help(Strings.Settings.allowOscClipboardHelp)
-        } header: {
-            Text(Strings.Settings.sectionSecurity)
-        }
-
-        // Data Storage section
-        Section {
-            VStack(alignment: .leading, spacing: 4) {
-                // Line 1: Label with Browse button
-                HStack {
-                    Text(Strings.Settings.dataDirectory)
-                        .foregroundColor(.primary)
-
-                    Spacer()
-
-                    Button(Strings.Common.browse) {
-                        browseForDataDirectory()
-                    }
-                }
-
-                // Line 2: Full-width path display (read-only)
-                TextField("", text: $dataDirectory)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(.body, design: .monospaced))
-                    .disabled(true)
-            }
-            .help(Strings.Settings.dataDirectoryHelp)
-        } header: {
-            Text(Strings.Settings.sectionDataDirectory)
-        }
-
-        // Data Protection section
-        BackupSettingsView()
     }
 
     private func refreshInstallStatus() {
@@ -473,23 +297,6 @@ struct SettingsView: View {
         // Reset the "Copied!" state after 2 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             configCopied = false
-        }
-    }
-
-    // MARK: - Data Directory
-
-    private func browseForDataDirectory() {
-        let panel = NSOpenPanel()
-        panel.canChooseFiles = false
-        panel.canChooseDirectories = true
-        panel.canCreateDirectories = true
-        panel.allowsMultipleSelection = false
-        panel.prompt = Strings.Common.select
-        panel.message = Strings.Settings.dataDirectory
-
-        if panel.runModal() == .OK, let url = panel.url {
-            DataDirectoryManager.dataDirectory = url.path
-            dataDirectory = DataDirectoryManager.displayPath
         }
     }
 

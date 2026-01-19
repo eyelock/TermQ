@@ -48,89 +48,36 @@ extension ToolsTabContent {
     @ViewBuilder
     var statusSection: some View {
         Section {
-            VStack(alignment: .leading, spacing: 8) {
-                toolStatusRow(
-                    icon: "server.rack",
-                    name: Strings.Settings.mcpTitle,
-                    isInstalled: isMCPInstalled
-                )
-                toolStatusRow(
-                    icon: "terminal",
-                    name: Strings.Settings.cliTitle,
-                    isInstalled: isCLIInstalled
-                )
-                toolStatusRow(
-                    icon: "rectangle.split.3x3",
-                    name: "tmux",
-                    isInstalled: tmuxManager.isAvailable,
-                    isEnabled: tmuxManager.isAvailable ? tmuxEnabled : nil,
-                    detail: tmuxManager.isAvailable && tmuxEnabled
-                        ? "\(tmuxManager.version ?? "") · \(activeTmuxSessionCount) active"
-                        : tmuxManager.version
-                )
-            }
-            .padding(.vertical, 4)
+            StatusIndicator(
+                icon: "server.rack",
+                label: Strings.Settings.mcpTitle,
+                status: isMCPInstalled ? .installed : .inactive,
+                message: isMCPInstalled ? Strings.Settings.cliInstalled : Strings.Settings.notInstalled
+            )
+
+            StatusIndicator(
+                icon: "terminal",
+                label: Strings.Settings.cliTitle,
+                status: isCLIInstalled ? .installed : .inactive,
+                message: isCLIInstalled ? Strings.Settings.cliInstalled : Strings.Settings.notInstalled
+            )
+
+            StatusIndicator(
+                icon: "rectangle.split.3x3",
+                label: "tmux",
+                status: tmuxManager.isAvailable ? (tmuxEnabled ? .ready : .disabled) : .inactive,
+                message: {
+                    if !tmuxManager.isAvailable {
+                        return Strings.Settings.notInstalled
+                    }
+                    if tmuxEnabled {
+                        return "\(tmuxManager.version ?? "") · \(activeTmuxSessionCount) active"
+                    }
+                    return Strings.Settings.statusDisabled
+                }()
+            )
         } header: {
             Text(Strings.Settings.sectionStatus)
-        }
-    }
-
-    @ViewBuilder
-    func toolStatusRow(
-        icon: String,
-        name: String,
-        isInstalled: Bool,
-        isEnabled: Bool? = nil,
-        detail: String? = nil
-    ) -> some View {
-        HStack {
-            Image(systemName: icon)
-                .font(.body)
-                .foregroundColor(.secondary)
-                .frame(width: 24)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(name)
-                    .font(.body)
-                if let detail = detail {
-                    Text(detail)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-
-            Spacer()
-
-            if isInstalled {
-                if let enabled = isEnabled {
-                    HStack(spacing: 4) {
-                        Circle()
-                            .fill(enabled ? Color.green : Color.orange)
-                            .frame(width: 8, height: 8)
-                        Text(enabled ? Strings.Settings.statusEnabled : Strings.Settings.statusDisabled)
-                            .foregroundColor(enabled ? .green : .orange)
-                    }
-                    .font(.caption)
-                } else {
-                    HStack(spacing: 4) {
-                        Circle()
-                            .fill(Color.green)
-                            .frame(width: 8, height: 8)
-                        Text(Strings.Settings.statusReady)
-                            .foregroundColor(.green)
-                    }
-                    .font(.caption)
-                }
-            } else {
-                HStack(spacing: 4) {
-                    Circle()
-                        .fill(Color.secondary)
-                        .frame(width: 8, height: 8)
-                    Text(Strings.Settings.notInstalled)
-                        .foregroundColor(.secondary)
-                }
-                .font(.caption)
-            }
         }
     }
 }

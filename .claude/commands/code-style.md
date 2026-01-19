@@ -503,6 +503,129 @@ class BoardViewModel {
 }
 ```
 
+## Reusable UI Components
+
+TermQ provides a set of reusable SwiftUI components for common UI patterns. Use these instead of duplicating code.
+
+### PathInputField
+
+Use for directory/file path inputs with validation and file picker.
+
+**When to use:**
+- Working directory inputs
+- File path configuration
+- Any path that needs validation
+
+**Example:**
+```swift
+PathInputField(
+    label: Strings.Editor.fieldDirectory,
+    path: $workingDirectory,
+    helpText: Strings.Editor.fieldDirectoryHelp,
+    validatePath: true
+)
+```
+
+**Location:** `Sources/TermQ/Views/Components/PathInputField.swift`
+
+### SharedToggle
+
+Use for settings that have both global and local (per-terminal) control.
+
+**When to use:**
+- Two-tier permission systems
+- Features that can be enabled globally and per-terminal
+- Security-related toggles
+
+**Example:**
+```swift
+SharedToggle(
+    label: Strings.Editor.allowAgentPrompts,
+    isOn: $allowAutorun,
+    isGloballyEnabled: globalAllowAgentPrompts,
+    disabledMessage: Strings.Editor.allowAgentPromptsDisabledGlobally,
+    helpText: Strings.Editor.allowAgentPromptsHelp
+)
+```
+
+**Location:** `Sources/TermQ/Views/Components/SharedToggle.swift`
+
+### StatusIndicator
+
+Use for displaying feature/service status with visual indicators.
+
+**When to use:**
+- Installation status (MCP Server, CLI Tool)
+- Feature enablement status (Agent Prompts, OSC Clipboard)
+- Service availability (tmux, external tools)
+
+**Status States:**
+- `.installed` / `.ready` - Green (active/available)
+- `.active` - Green (currently enabled)
+- `.disabled` / `.inactive` - Gray (not available/disabled)
+- `.error` - Red (error state)
+
+**Example:**
+```swift
+StatusIndicator(
+    icon: "server.rack",
+    label: Strings.Settings.mcpTitle,
+    status: isMCPInstalled ? .installed : .inactive,
+    message: isMCPInstalled ? Strings.Settings.cliInstalled : Strings.Settings.notInstalled
+)
+```
+
+**Location:** `Sources/TermQ/Views/Components/StatusIndicator.swift`
+
+### LargeTextInput
+
+Use for multi-line text input with fixed height (prevents jumping).
+
+**When to use:**
+- Prompt inputs (LLM context, next action)
+- Multi-line configuration text
+- Any text area that needs stable layout
+
+**Example:**
+```swift
+LargeTextInput(
+    label: Strings.Editor.fieldPersistentContext,
+    text: $llmPrompt,
+    placeholder: Strings.Editor.fieldPersistentContextHelp,
+    helpText: Strings.Editor.fieldPersistentContextHelp,
+    minLines: 3,
+    maxLines: 8
+)
+```
+
+**Technical Note:** Uses `TextEditor` with fixed height instead of `TextField` with axis `.vertical` to prevent layout jumping during typing.
+
+**Location:** `Sources/TermQ/Views/Components/LargeTextInput.swift`
+
+### KeyValueEditor
+
+Use for managing key-value pairs (environment variables, tags).
+
+**When to use:**
+- Environment variable management
+- Tag editing
+- Any key-value configuration
+
+**Example:**
+```swift
+KeyValueEditor(
+    items: $environmentVariables,
+    config: .environmentVariables,
+    onSave: { saveEnvironmentVariables() }
+)
+```
+
+**Configuration Types:**
+- `.environmentVariables` - Environment variable editor
+- `.tags` - Tag editor with key-only mode support
+
+**Location:** `Sources/TermQ/Views/Components/KeyValueEditor.swift`
+
 ## Refactoring Checklist
 
 When upgrading code to these patterns:
