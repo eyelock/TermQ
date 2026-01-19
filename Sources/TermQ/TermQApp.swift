@@ -357,6 +357,11 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 self?.setupMainWindowDelegate()
             }
         }
+
+        // Handle cards created headless that need tmux sessions
+        Task {
+            await BoardViewModel.shared.handleHeadlessCards()
+        }
     }
 
     /// Prevent creating new windows when user tries to open the app again

@@ -33,6 +33,22 @@ extension TermQMCPServer {
         }
     }
 
+    // MARK: - Helper Types
+
+    /// Parameters for updating a terminal card
+    private struct SetParameters {
+        let name: String?
+        let description: String?
+        let badge: String?
+        let column: String?
+        let llmPrompt: String?
+        let llmNextAction: String?
+        let initCommand: String?
+        let favourite: Bool?
+        let tags: [(key: String, value: String)]?
+        let replaceTags: Bool
+    }
+
     // MARK: - Tool Implementations
 
     func handlePending(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -392,6 +408,7 @@ extension TermQMCPServer {
     }
 
     func handleCreate(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        // Parse all arguments upfront
         let name = InputValidator.optionalString("name", from: arguments)
         let column = InputValidator.optionalString("column", from: arguments)
         let description = InputValidator.optionalString("description", from: arguments)
@@ -412,7 +429,7 @@ extension TermQMCPServer {
             }
         }
 
-        // Validate path if provided (don't require existence - user can create terminals pointing anywhere)
+        // Validate path if provided
         let path: String
         do {
             if let providedPath = try InputValidator.optionalPath("path", from: arguments, mustExist: false) {
@@ -424,6 +441,50 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
         }
 
+        // Check if GUI is available
+        let guiAvailable: Bool
+        if GUIDetector.isGUIRunning() {
+            guiAvailable = true
+        } else {
+            guiAvailable = await GUIDetector.waitForGUI()
+        }
+
+        if guiAvailable {
+            // GUI path - use URL scheme
+            return try await handleCreateViaGUI(
+                name: name,
+                column: column,
+                description: description,
+                llmPrompt: llmPrompt,
+                llmNextAction: llmNextAction,
+                initCommand: initCommand,
+                path: path,
+                tags: tags
+            )
+        } else {
+            // Headless path - use BoardWriter directly
+            return try await handleCreateHeadless(
+                name: name,
+                column: column,
+                description: description,
+                llmPrompt: llmPrompt,
+                llmNextAction: llmNextAction,
+                path: path,
+                tags: tags
+            )
+        }
+    }
+
+    private func handleCreateViaGUI(
+        name: String?,
+        column: String?,
+        description: String?,
+        llmPrompt: String?,
+        llmNextAction: String?,
+        initCommand: String?,
+        path: String,
+        tags: [(key: String, value: String)]?
+    ) async throws -> CallTool.Result {
         // Generate card ID upfront so we can return it
         let cardId = UUID()
 
@@ -461,8 +522,7 @@ extension TermQMCPServer {
                 }
             }
 
-            // Card not found after retries - GUI might still be processing or not running
-            // Return the ID anyway so the LLM can use it
+            // Card not found after retries - GUI might still be processing
             let pendingOutput = PendingCreateResponse(
                 id: cardId.uuidString,
                 message: "Terminal creation requested. The terminal may take a moment to appear in TermQ."
@@ -471,6 +531,43 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text(json)])
         } catch {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
+    }
+
+    private func handleCreateHeadless(
+        name: String?,
+        column: String?,
+        description: String?,
+        llmPrompt: String?,
+        llmNextAction: String?,
+        path: String,
+        tags: [(key: String, value: String)]?
+    ) async throws -> CallTool.Result {
+        do {
+            let card = try HeadlessWriter.createCard(
+                name: name ?? "Terminal",
+                columnName: column,
+                workingDirectory: path,
+                description: description,
+                llmPrompt: llmPrompt,
+                llmNextAction: llmNextAction,
+                tags: tags,
+                dataDirectory: dataDirectory
+            )
+
+            let board = try loadBoard()
+            let output = TerminalOutput(
+                from: card,
+                columnName: board.columnName(for: card.columnId)
+            )
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(json)])
+
+        } catch let error as BoardWriter.WriteError {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
         }
     }
 
@@ -503,20 +600,52 @@ extension TermQMCPServer {
 
         let replaceTags = InputValidator.optionalBool("replaceTags", from: arguments)
 
+        // Create parameters struct
+        let params = SetParameters(
+            name: arguments?["name"]?.stringValue,
+            description: arguments?["description"]?.stringValue,
+            badge: arguments?["badge"]?.stringValue,
+            column: arguments?["column"]?.stringValue,
+            llmPrompt: arguments?["llmPrompt"]?.stringValue,
+            llmNextAction: arguments?["llmNextAction"]?.stringValue,
+            initCommand: arguments?["initCommand"]?.stringValue,
+            favourite: arguments?["favourite"]?.boolValue,
+            tags: tags,
+            replaceTags: replaceTags
+        )
+
+        // Check if GUI is available
+        let guiAvailable: Bool
+        if GUIDetector.isGUIRunning() {
+            guiAvailable = true
+        } else {
+            guiAvailable = await GUIDetector.waitForGUI()
+        }
+
+        if guiAvailable {
+            // GUI path - use URL scheme
+            return try await handleSetViaGUI(card: card, params: params)
+        } else {
+            // Headless path - use BoardWriter directly
+            return try await handleSetHeadless(identifier: identifier, params: params)
+        }
+    }
+
+    private func handleSetViaGUI(card: Card, params: SetParameters) async throws -> CallTool.Result {
         // Build and open the URL to update the terminal via GUI
         let urlString = URLOpener.buildUpdateURL(
             params: URLOpener.UpdateURLParams(
                 cardId: card.id,
-                name: arguments?["name"]?.stringValue,
-                description: arguments?["description"]?.stringValue,
-                badge: arguments?["badge"]?.stringValue,
-                column: arguments?["column"]?.stringValue,
-                llmPrompt: arguments?["llmPrompt"]?.stringValue,
-                llmNextAction: arguments?["llmNextAction"]?.stringValue,
-                initCommand: arguments?["initCommand"]?.stringValue,
-                favourite: arguments?["favourite"]?.boolValue,
-                tags: tags,
-                replaceTags: replaceTags
+                name: params.name,
+                description: params.description,
+                badge: params.badge,
+                column: params.column,
+                llmPrompt: params.llmPrompt,
+                llmNextAction: params.llmNextAction,
+                initCommand: params.initCommand,
+                favourite: params.favourite,
+                tags: params.tags,
+                replaceTags: params.replaceTags
             )
         )
 
@@ -547,6 +676,41 @@ extension TermQMCPServer {
         }
     }
 
+    private func handleSetHeadless(identifier: String, params: SetParameters) async throws -> CallTool.Result {
+        do {
+            let updateParams = HeadlessWriter.UpdateParameters(
+                name: params.name,
+                description: params.description,
+                badge: params.badge,
+                llmPrompt: params.llmPrompt,
+                llmNextAction: params.llmNextAction,
+                favourite: params.favourite,
+                tags: params.tags,
+                replaceTags: params.replaceTags
+            )
+
+            let card = try HeadlessWriter.updateCard(
+                identifier: identifier,
+                params: updateParams,
+                dataDirectory: dataDirectory
+            )
+
+            let board = try loadBoard()
+            let output = TerminalOutput(
+                from: card,
+                columnName: board.columnName(for: card.columnId)
+            )
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(json)])
+
+        } catch let error as BoardWriter.WriteError {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
+        }
+    }
+
     func handleMove(_ arguments: [String: Value]?) async throws -> CallTool.Result {
         let identifier: String
         let column: String
@@ -563,6 +727,24 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
         }
 
+        // Check if GUI is available
+        let guiAvailable: Bool
+        if GUIDetector.isGUIRunning() {
+            guiAvailable = true
+        } else {
+            guiAvailable = await GUIDetector.waitForGUI()
+        }
+
+        if guiAvailable {
+            // GUI path - use URL scheme
+            return try await handleMoveViaGUI(card: card, column: column)
+        } else {
+            // Headless path - use BoardWriter directly
+            return try await handleMoveHeadless(identifier: identifier, column: column)
+        }
+    }
+
+    private func handleMoveViaGUI(card: Card, column: String) async throws -> CallTool.Result {
         // Build and open the URL to move the terminal via GUI
         let urlString = URLOpener.buildMoveURL(cardId: card.id, column: column)
 
@@ -596,6 +778,30 @@ extension TermQMCPServer {
         }
     }
 
+    private func handleMoveHeadless(identifier: String, column: String) async throws -> CallTool.Result {
+        do {
+            let card = try HeadlessWriter.moveCard(
+                identifier: identifier,
+                toColumn: column,
+                dataDirectory: dataDirectory
+            )
+
+            let board = try loadBoard()
+            let output = TerminalOutput(
+                from: card,
+                columnName: board.columnName(for: card.columnId)
+            )
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(json)])
+
+        } catch let error as BoardWriter.WriteError {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
+        }
+    }
+
     func handleDelete(_ arguments: [String: Value]?) async throws -> CallTool.Result {
         let identifier: String
         do {
@@ -612,6 +818,24 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
         }
 
+        // Check if GUI is available
+        let guiAvailable: Bool
+        if GUIDetector.isGUIRunning() {
+            guiAvailable = true
+        } else {
+            guiAvailable = await GUIDetector.waitForGUI()
+        }
+
+        if guiAvailable {
+            // GUI path - use URL scheme
+            return try await handleDeleteViaGUI(card: card, permanent: permanent)
+        } else {
+            // Headless path - use BoardWriter directly
+            return try await handleDeleteHeadless(identifier: identifier, permanent: permanent)
+        }
+    }
+
+    private func handleDeleteViaGUI(card: Card, permanent: Bool) async throws -> CallTool.Result {
         // Build and open the URL to delete the terminal via GUI
         let urlString = URLOpener.buildDeleteURL(cardId: card.id, permanent: permanent)
 
@@ -635,6 +859,38 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text(json)])
         } catch {
             return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+        }
+    }
+
+    private func handleDeleteHeadless(identifier: String, permanent: Bool) async throws -> CallTool.Result {
+        do {
+            // Get card ID before deletion for response
+            let board = try loadBoard()
+            guard let card = board.findTerminal(identifier: identifier) else {
+                return CallTool.Result(
+                    content: [.text("Error: Terminal not found: \(identifier)")],
+                    isError: true
+                )
+            }
+
+            try HeadlessWriter.deleteCard(
+                identifier: identifier,
+                permanent: permanent,
+                dataDirectory: dataDirectory
+            )
+
+            let result = DeleteResponse(
+                id: card.id.uuidString,
+                permanent: permanent
+            )
+            let json = try JSONHelper.encode(result)
+            return CallTool.Result(content: [.text(json)])
+
+        } catch let error as BoardWriter.WriteError {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
         }
     }
 }
