@@ -280,11 +280,123 @@ gh pr comment --body "Fixed in latest commit"
 gh pr view --comments
 ```
 
+## Branch Protection: GitHub Rulesets
+
+TermQ uses **GitHub Rulesets** for intelligent, path-based branch protection on `main`. Different file types have different requirements.
+
+### The 5 Rulesets
+
+#### 1. Code Protection (Strict)
+**Applies to:** `Sources/`, `Tests/`, `Package.swift`, `Makefile`, `.swiftlint.yml`, `.swift-format`, `.github/workflows/ci.yml`
+
+**Requirements:**
+- ✅ All 4 CI checks must pass (Build, Test, Lint, Format Check)
+- ✅ Pull request required
+- ✅ 1 human approval required
+- ✅ Branch must be up-to-date with main
+
+**Why:** Code changes require full validation and human oversight.
+
+#### 2. Documentation Protection (Relaxed)
+**Applies to:** `Docs/`, `README.md`
+
+**Requirements:**
+- ❌ No CI checks required
+- ❌ No pull request required
+- ✅ Direct pushes allowed (enables automation)
+
+**Why:** Allows appcast workflow and other automation to update docs directly without creating PRs.
+
+#### 2a. Claude Documentation Protection (Quality Controlled)
+**Applies to:** `.claude/**/*.md`
+
+**Requirements:**
+- ✅ `claude-review` check must pass
+- ❌ No pull request required
+- ✅ Direct pushes allowed if check passes
+
+**Why:** Ensures quality of project documentation while still allowing automation.
+
+#### 3. Scripts & Workflows Protection (Moderate)
+**Applies to:** `scripts/`, `.github/workflows/**` (except ci.yml)
+
+**Requirements:**
+- ✅ Script validation checks must pass
+- ✅ Pull request required
+- ✅ 1 human approval required
+
+**Why:** Scripts and workflows need validation but different checks than code.
+
+#### 4. Fallback Protection (Default)
+**Applies to:** Everything else not covered above
+
+**Requirements:**
+- ✅ All 4 CI checks must pass
+- ✅ Pull request required
+- ✅ 1 human approval required
+
+**Why:** Conservative default - anything not explicitly relaxed gets full protection.
+
+### How Rulesets Work
+
+**Multiple rulesets can apply** to a single PR:
+- If you change `Sources/App.swift` + `README.md`, both Ruleset 1 (Code) and Ruleset 2 (Docs) apply
+- **The strictest requirements win** - you'd need all 4 CI checks + 1 approval
+- Path-based: Only rulesets matching your changed files apply
+
+**Direct push vs Pull Request:**
+- **Direct push** (automation): Rulesets evaluate status checks + push restrictions only
+- **Pull request** (developers): Rulesets evaluate status checks + PR approval requirements
+
+### Practical Examples
+
+**Scenario 1: Code change**
+```bash
+# Changed: Sources/Terminal.swift
+# Ruleset: Code Protection (Ruleset 1)
+# Result: PR required, all 4 CI checks + 1 approval needed
+```
+
+**Scenario 2: Documentation change**
+```bash
+# Changed: Docs/appcast.xml
+# Ruleset: Documentation Protection (Ruleset 2)
+# Result: Direct push allowed, no requirements
+```
+
+**Scenario 3: Claude documentation change**
+```bash
+# Changed: .claude/commands/new-feature.md
+# Ruleset: Claude Documentation Protection (Ruleset 2a)
+# Result: Direct push allowed IF claude-review check passes
+```
+
+**Scenario 4: Mixed change**
+```bash
+# Changed: Sources/App.swift + README.md
+# Rulesets: Code Protection (1) + Documentation (2)
+# Result: Strictest wins - PR required, all CI + 1 approval
+```
+
+### Why Rulesets Instead of Branch Protection?
+
+**Old system (legacy branch protection):**
+- ❌ Applied blanket rules to entire branch
+- ❌ Required all 4 CI checks even for doc-only changes
+- ❌ Blocked automation (appcast workflow couldn't push)
+- ❌ No intelligence about file types
+
+**New system (GitHub Rulesets):**
+- ✅ Path-based - different rules for different file types
+- ✅ Allows automation where appropriate (docs)
+- ✅ Maintains strict protection where critical (code)
+- ✅ More granular and maintainable
+
 ## Merging
 
 **Only merge when:**
-- ✅ All CI checks pass
-- ✅ All reviews approved
+- ✅ All CI checks pass (if required by matching rulesets)
+- ✅ All reviews approved (if required by matching rulesets)
 - ✅ **All review comments addressed and conversations resolved**
 - ✅ Branch is up-to-date with base
 
@@ -293,9 +405,28 @@ gh pr view --comments
 gh pr checks  # Verify all checks pass
 gh pr view --comments  # Verify no unresolved comments
 
-# Merge using gh CLI
+# Merge using gh CLI (after human approval or user instruction)
 gh pr merge --squash  # or --merge or --rebase based on project preference
 ```
+
+**🚨 NEVER USE THE `--admin` FLAG 🚨**
+
+**CATASTROPHIC FAILURE: Using `gh pr merge --admin` to bypass CI checks is strictly forbidden.**
+
+- ❌ **NEVER** use `--admin` to bypass failed checks
+- ❌ **NEVER** merge without waiting for CI to complete
+- ❌ **NEVER** assume checks will pass - wait for confirmation
+
+**Why this is catastrophic:**
+- Bypasses code quality checks that prevent broken builds
+- Can introduce bugs, security issues, or breaking changes to main
+- Wastes everyone's time debugging issues that checks would have caught
+- Violates the entire purpose of having CI/CD
+
+**If checks are failing:**
+1. **FIX THE ISSUE** - Don't bypass it
+2. Push the fix and wait for CI again
+3. Only merge when ALL checks pass legitimately
 
 ## Post-Merge
 
