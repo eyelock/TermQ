@@ -288,13 +288,35 @@ gh pr view --comments
 - ✅ **All review comments addressed and conversations resolved**
 - ✅ Branch is up-to-date with base
 
+**🚨 NEVER USE THE `--admin` FLAG 🚨**
+
+**CATASTROPHIC FAILURE: Using `gh pr merge --admin` to bypass CI checks is strictly forbidden.**
+
+- ❌ **NEVER** use `--admin` to bypass failed checks
+- ❌ **NEVER** merge without waiting for CI to complete
+- ❌ **NEVER** assume checks will pass - wait for confirmation
+
+**Why this is catastrophic:**
+- Bypasses code quality checks that prevent broken builds
+- Can introduce bugs, security issues, or breaking changes to main
+- Wastes everyone's time debugging issues that checks would have caught
+- Violates the entire purpose of having CI/CD
+
+**If checks are failing:**
+1. **FIX THE ISSUE** - Don't bypass it
+2. Push the fix and wait for CI again
+3. Only merge when ALL checks pass legitimately
+
 ```bash
 # Final check before merge
 gh pr checks  # Verify all checks pass
 gh pr view --comments  # Verify no unresolved comments
 
-# Merge using gh CLI
+# CORRECT: Merge only after checks pass
 gh pr merge --squash  # or --merge or --rebase based on project preference
+
+# WRONG: NEVER DO THIS
+gh pr merge --admin  # 🚨 FORBIDDEN - CATASTROPHIC FAILURE
 ```
 
 ## Post-Merge

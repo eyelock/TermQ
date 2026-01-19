@@ -67,12 +67,14 @@ fetch_releases() {
 # Convert GitHub release date to RFC 2822 format
 format_date() {
     local iso_date="$1"
-    # macOS date command
-    if date -j -f "%Y-%m-%dT%H:%M:%SZ" "$iso_date" "+%a, %d %b %Y %H:%M:%S +0000" 2>/dev/null; then
-        return
+    # Detect OS and use appropriate date command
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS date command
+        date -j -f "%Y-%m-%dT%H:%M:%SZ" "$iso_date" "+%a, %d %b %Y %H:%M:%S +0000" 2>/dev/null || echo "$iso_date"
+    else
+        # Linux date command
+        date -d "$iso_date" "+%a, %d %b %Y %H:%M:%S +0000" 2>/dev/null || echo "$iso_date"
     fi
-    # Linux date command fallback
-    date -d "$iso_date" "+%a, %d %b %Y %H:%M:%S +0000" 2>/dev/null || echo "$iso_date"
 }
 
 # Extract version from tag (removes 'v' prefix)
@@ -200,7 +202,7 @@ generate_appcast() {
         items+=$(generate_item "$tag" "$title" "$pub_date" "$body" "$download_url" "$file_size" "$signature")
         items+=$'\n'
 
-        ((count++))
+        count=$((count + 1))
     done < "$releases_file"
 
     # Cleanup temp file
