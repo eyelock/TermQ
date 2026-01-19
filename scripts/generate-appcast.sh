@@ -194,7 +194,7 @@ generate_appcast() {
         items+=$(generate_item "$tag" "$title" "$pub_date" "$body" "$download_url" "$file_size" "$signature")
         items+=$'\n'
 
-        ((count++))
+        count=$((count + 1))
     done < <(echo "$releases" | jq -c '.[]')
 
     # Generate the full appcast XML
