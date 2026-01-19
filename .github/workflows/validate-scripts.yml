@@ -1,0 +1,108 @@
+name: Validate Scripts
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/validate-scripts.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/validate-scripts.yml'
+
+jobs:
+  test-appcast-generation:
+    name: Test Appcast Generation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq jq curl
+
+      - name: Create output directories
+        run: mkdir -p Docs/signatures
+
+      - name: Test appcast generation script
+        env:
+          REPO_OWNER: eyelock
+          REPO_NAME: TermQ
+          OUTPUT_DIR: Docs
+        run: |
+          echo "=== Testing appcast generation in Ubuntu ==="
+          chmod +x scripts/generate-appcast.sh
+
+          # Run the script
+          scripts/generate-appcast.sh
+          EXIT_CODE=$?
+
+          echo ""
+          echo "Exit code: $EXIT_CODE"
+
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "❌ Script failed with exit code $EXIT_CODE"
+            exit 1
+          fi
+
+      - name: Verify generated files
+        run: |
+          echo "=== Verifying generated appcast files ==="
+
+          # Check files exist
+          if [ ! -f Docs/appcast.xml ]; then
+            echo "❌ ERROR: Docs/appcast.xml not generated"
+            exit 1
+          fi
+
+          if [ ! -f Docs/appcast-beta.xml ]; then
+            echo "❌ ERROR: Docs/appcast-beta.xml not generated"
+            exit 1
+          fi
+
+          echo "✅ Both appcast files exist"
+
+          # Verify stable appcast has content
+          STABLE_COUNT=$(grep -c "<item>" Docs/appcast.xml || echo 0)
+          if [ "$STABLE_COUNT" -eq 0 ]; then
+            echo "❌ ERROR: appcast.xml contains no releases"
+            exit 1
+          fi
+          echo "✅ Stable appcast contains $STABLE_COUNT releases"
+
+          # Verify beta appcast has content
+          BETA_COUNT=$(grep -c "<item>" Docs/appcast-beta.xml || echo 0)
+          if [ "$BETA_COUNT" -eq 0 ]; then
+            echo "❌ ERROR: appcast-beta.xml contains no releases"
+            exit 1
+          fi
+          echo "✅ Beta appcast contains $BETA_COUNT releases"
+
+          # Verify beta has more or equal releases (includes prereleases)
+          if [ "$BETA_COUNT" -lt "$STABLE_COUNT" ]; then
+            echo "❌ ERROR: Beta appcast should have >= stable releases"
+            exit 1
+          fi
+          echo "✅ Beta appcast correctly includes prereleases"
+
+          # Verify XML structure
+          if ! grep -q '<?xml version="1.0"' Docs/appcast.xml; then
+            echo "❌ ERROR: Invalid XML structure in appcast.xml"
+            exit 1
+          fi
+          echo "✅ XML structure valid"
+
+          echo ""
+          echo "🎉 All validations passed!"
+
+      - name: Upload generated appcast files
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-appcast-files
+          path: Docs/*.xml
+          retention-days: 7
