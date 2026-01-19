@@ -19,6 +19,8 @@
 "common.reinstall" = "Reinstall";
 "common.uninstall" = "Uninstall";
 "common.installed" = "Installed";
+"common.enabled" = "Enabled";
+"common.disabled" = "Disabled";
 "common.browse" = "Browse...";
 "common.select" = "Select";
 "common.apply" = "Apply";
@@ -181,6 +183,7 @@
 
 // Editor - Agent Configuration section
 "editor.section.agent" = "Agent";
+"editor.section.prompts" = "Prompts";
 "editor.field.terminal.allows.autorun" = "Terminal allows commands";
 "editor.field.persistent.context" = "Persistent Context";
 "editor.field.persistent.context.help" = "Context maintained across sessions";

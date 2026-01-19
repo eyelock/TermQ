@@ -18,7 +18,10 @@
 "common.add" = "Přidat";
 "common.reinstall" = "Přeinstalovat";
 "common.uninstall" = "Odinstalovat";
-"common.installed" = "Nainstalováno";
+"common.installed"
+"common.enabled" = "Povoleno";
+"common.disabled" = "Zakázáno";
+// TEMP_MARKER = "Nainstalováno";
 "common.browse" = "Procházet...";
 "common.select" = "Select";
 "common.apply" = "Použít";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "Páry klíč-hodnota pro organizaci";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "Výzvy";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminál povoluje příkazy";
 "editor.field.persistent.context" = "Trvalý kontext";
 "editor.field.persistent.context.help" = "Kontext zachován mezi relacemi";

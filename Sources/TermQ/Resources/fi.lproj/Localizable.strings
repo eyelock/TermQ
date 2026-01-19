@@ -18,7 +18,10 @@
 "common.add" = "Lisää";
 "common.reinstall" = "Asenna uudelleen";
 "common.uninstall" = "Poista asennus";
-"common.installed" = "Asennettu";
+"common.installed"
+"common.enabled" = "Käytössä";
+"common.disabled" = "Ei käytössä";
+// TEMP_MARKER = "Asennettu";
 "common.browse" = "Selaa...";
 "common.select" = "Select";
 "common.apply" = "Käytä";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "Avain-arvo-parit järjestelyyn";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "Kehotukset";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminaali sallii komennot";
 "editor.field.persistent.context" = "Pysyvä konteksti";
 "editor.field.persistent.context.help" = "Konteksti säilyy istuntojen välillä";

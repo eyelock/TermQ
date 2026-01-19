@@ -18,7 +18,10 @@
 "common.add" = "追加";
 "common.reinstall" = "再インストール";
 "common.uninstall" = "アンインストール";
-"common.installed" = "インストール済み";
+"common.installed"
+"common.enabled" = "有効";
+"common.disabled" = "無効";
+// TEMP_MARKER = "インストール済み";
 "common.browse" = "参照...";
 "common.select" = "Select";
 "common.apply" = "適用";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "整理用のキーと値のペア";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "プロンプト";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "ターミナルがコマンドを許可";
 "editor.field.persistent.context" = "永続コンテキスト";
 "editor.field.persistent.context.help" = "セッション間でコンテキストを維持";

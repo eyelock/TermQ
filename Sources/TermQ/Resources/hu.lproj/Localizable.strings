@@ -18,7 +18,10 @@
 "common.add" = "Hozzáadás";
 "common.reinstall" = "Újratelepítés";
 "common.uninstall" = "Eltávolítás";
-"common.installed" = "Telepítve";
+"common.installed"
+"common.enabled" = "Engedélyezve";
+"common.disabled" = "Letiltva";
+// TEMP_MARKER = "Telepítve";
 "common.browse" = "Tallózás...";
 "common.select" = "Select";
 "common.apply" = "Alkalmazás";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "Kulcs-érték párok szervezéshez";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "Promptok";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminál engedélyezi a parancsokat";
 "editor.field.persistent.context" = "Állandó kontextus";
 "editor.field.persistent.context.help" = "Kontextus megőrzése munkamenetek között";

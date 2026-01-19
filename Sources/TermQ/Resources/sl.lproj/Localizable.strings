@@ -18,7 +18,10 @@
 "common.add" = "Dodaj";
 "common.reinstall" = "Ponovno namesti";
 "common.uninstall" = "Odstrani";
-"common.installed" = "Nameščeno";
+"common.installed"
+"common.enabled" = "Omogočeno";
+"common.disabled" = "Onemogočeno";
+// TEMP_MARKER = "Nameščeno";
 "common.browse" = "Prebrskaj...";
 "common.select" = "Select";
 "common.apply" = "Uporabi";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "Pari ključ-vrednost za organizacijo";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "Pozivi";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminal dovoljuje ukaze";
 "editor.field.persistent.context" = "Trajni kontekst";
 "editor.field.persistent.context.help" = "Kontekst se ohranja med sejami";
