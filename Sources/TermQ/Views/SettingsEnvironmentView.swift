@@ -9,6 +9,7 @@ struct SettingsEnvironmentView: View {
     @State private var items: [KeyValueItem] = []
     @State private var showErrorAlert = false
     @State private var errorMessage: String?
+    @State private var secretsCount: (global: Int, terminal: Int) = (0, 0)
 
     // Existing keys for duplicate checking
     private var existingKeys: Set<String> {
@@ -89,7 +90,7 @@ struct SettingsEnvironmentView: View {
             }
 
             Button(Strings.Settings.Environment.resetEncryptionKey, role: .destructive) {
-                showResetKeyConfirmation = true
+                checkSecretsAndShowConfirmation()
             }
 
             Text(Strings.Settings.Environment.resetEncryptionKeyWarning)
@@ -122,11 +123,11 @@ struct SettingsEnvironmentView: View {
             titleVisibility: .visible
         ) {
             Button(Strings.Settings.Environment.resetConfirmButton, role: .destructive) {
-                resetEncryptionKey()
+                resetEncryptionKeyAndCleanupSecrets()
             }
             Button(Strings.Common.cancel, role: .cancel) {}
         } message: {
-            Text(Strings.Settings.Environment.resetConfirmMessage)
+            Text(resetConfirmationMessage())
         }
     }
 
@@ -181,6 +182,79 @@ struct SettingsEnvironmentView: View {
                 // Immediately update status after reset
                 await MainActor.run {
                     hasEncryptionKey = false
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    showErrorAlert = true
+                }
+            }
+        }
+    }
+
+    private func checkSecretsAndShowConfirmation() {
+        // Count secrets in global environment
+        let globalSecrets = envManager.variables.filter { $0.isSecret }.count
+
+        // Count secrets in all terminal cards
+        let terminalSecrets = BoardViewModel.shared.board.cards
+            .flatMap { $0.environmentVariables }
+            .filter { $0.isSecret }
+            .count
+
+        secretsCount = (global: globalSecrets, terminal: terminalSecrets)
+        showResetKeyConfirmation = true
+    }
+
+    private func resetConfirmationMessage() -> String {
+        let totalSecrets = secretsCount.global + secretsCount.terminal
+
+        if totalSecrets == 0 {
+            return Strings.Settings.Environment.resetConfirmMessage
+        } else {
+            return Strings.Settings.Environment.resetConfirmMessageWithSecrets(
+                global: secretsCount.global,
+                terminal: secretsCount.terminal
+            )
+        }
+    }
+
+    private func resetEncryptionKeyAndCleanupSecrets() {
+        Task {
+            do {
+                // Remove all secret environment variables from Global
+                let globalSecretIds = envManager.variables
+                    .filter { $0.isSecret }
+                    .map { $0.id }
+
+                for id in globalSecretIds {
+                    try? await envManager.deleteVariable(id: id)
+                }
+
+                // Remove all secret environment variables from all Terminal cards
+                for card in BoardViewModel.shared.board.cards {
+                    let secretVarIds = card.environmentVariables
+                        .filter { $0.isSecret }
+                        .map { $0.id }
+
+                    if !secretVarIds.isEmpty {
+                        card.environmentVariables.removeAll { variable in
+                            secretVarIds.contains(variable.id)
+                        }
+                    }
+                }
+
+                // Save the board to persist terminal changes
+                BoardViewModel.shared.save()
+
+                // Now reset the encryption key
+                try await SecureStorage.shared.resetEncryptionKey()
+                await envManager.load()
+
+                // Immediately update status after reset
+                await MainActor.run {
+                    hasEncryptionKey = false
+                    secretsCount = (0, 0)
                 }
             } catch {
                 await MainActor.run {
