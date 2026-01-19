@@ -3,11 +3,12 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
-    # Only run on Swift source file changes
+    # Run on Swift source file changes and Claude documentation
     paths:
       - "Sources/**/*.swift"
       - "Tests/**/*.swift"
       - "Package.swift"
+      - ".claude/**/*.md"
 
 jobs:
   claude-review:
