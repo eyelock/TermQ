@@ -18,7 +18,10 @@
 "common.add" = "Adăugare";
 "common.reinstall" = "Reinstalare";
 "common.uninstall" = "Dezinstalare";
-"common.installed" = "Instalat";
+"common.installed"
+"common.enabled" = "Activat";
+"common.disabled" = "Dezactivat";
+// TEMP_MARKER = "Instalat";
 "common.browse" = "Răsfoire...";
 "common.select" = "Select";
 "common.apply" = "Aplicare";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "Perechi cheie-valoare pentru organizare";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "Solicitări";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminalul permite comenzi";
 "editor.field.persistent.context" = "Context persistent";
 "editor.field.persistent.context.help" = "Contextul este păstrat între sesiuni";

@@ -46,7 +46,7 @@ struct CardEditorView: View {
         case terminal
         case environment
         case metadata
-        case agents
+        case prompts
 
         var title: String {
             switch self {
@@ -54,7 +54,7 @@ struct CardEditorView: View {
             case .terminal: return Strings.Editor.sectionTerminal
             case .environment: return Strings.Settings.tabEnvironment
             case .metadata: return Strings.Editor.sectionTags
-            case .agents: return Strings.Editor.sectionAgent
+            case .prompts: return Strings.Editor.sectionPrompts
             }
         }
     }
@@ -127,8 +127,8 @@ struct CardEditorView: View {
                     )
                 case .metadata:
                     metadataContent
-                case .agents:
-                    agentsContent
+                case .prompts:
+                    promptsContent
                 }
             }
             .formStyle(.grouped)
@@ -234,17 +234,6 @@ struct CardEditorView: View {
                 .help(Strings.Editor.fieldShellHelp)
         }
 
-        Section(Strings.Editor.sectionAutomation) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Strings.Editor.fieldInitCommand)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextField(Strings.Editor.fieldInitCommandHelp, text: $initCommand, axis: .vertical)
-                    .lineLimit(3...8)
-                    .help(Strings.Editor.fieldInitCommandHelp)
-            }
-        }
-
         Section(Strings.Editor.sectionSecurity) {
             Toggle(Strings.Editor.fieldSafePaste, isOn: $safePasteEnabled)
                 .help(Strings.Editor.fieldSafePasteHelp)
@@ -272,6 +261,65 @@ struct CardEditorView: View {
                 disabledMessage: Strings.Editor.allowOscClipboardDisabledGlobally,
                 helpText: Strings.Editor.allowOscClipboardHelp
             )
+        }
+
+        Section(Strings.Editor.sectionAutomation) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(Strings.Editor.fieldInitCommand)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                TextField(Strings.Editor.fieldInitCommandHelp, text: $initCommand, axis: .vertical)
+                    .lineLimit(3...8)
+                    .help(Strings.Editor.fieldInitCommandHelp)
+            }
+
+            // Command Generator - only show when agent prompts are allowed
+            if globalAllowAgentPrompts && allowAutorun {
+                Picker(Strings.Editor.sectionCommandGenerator, selection: $selectedLLMVendor) {
+                    ForEach(LLMVendor.allCases, id: \.self) { vendor in
+                        Text(vendor.rawValue).tag(vendor)
+                    }
+                }
+                .pickerStyle(.menu)
+
+                if selectedLLMVendor.supportsInteractiveToggle {
+                    Toggle(Strings.Editor.interactiveModeToggle, isOn: $interactiveMode)
+                        .help(Strings.Editor.interactiveModeHelp)
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(Strings.Common.preview)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Text(selectedLLMVendor.commandTemplate(interactive: interactiveMode))
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(8)
+                        .background(Color(NSColor.textBackgroundColor))
+                        .cornerRadius(4)
+                }
+
+                if !selectedLLMVendor.includesPrompt {
+                    Text(Strings.Editor.noLlmPromptWarning)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+
+                if !interactiveMode && selectedLLMVendor.supportsInteractiveToggle {
+                    Text(Strings.Editor.nonInteractiveModeNote)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+
+                HStack {
+                    Spacer()
+                    Button(Strings.Editor.fieldApplyToInitCommand) {
+                        initCommand = selectedLLMVendor.commandTemplate(interactive: interactiveMode)
+                    }
+                    .help(Strings.Editor.fieldApplyToInitCommandHelp)
+                }
+            }
         }
     }
 
@@ -320,108 +368,73 @@ struct CardEditorView: View {
         }
     }
 
-    // MARK: - Agents Tab Content
+    // MARK: - Prompts Tab Content
 
     @ViewBuilder
-    private var agentsContent: some View {
-        Section(Strings.Settings.sectionMcp) {
-            HStack {
-                Text(Strings.Settings.mcpTitle)
-                Spacer()
-                Image(systemName: mcpInstalled ? "checkmark.circle.fill" : "xmark.circle")
-                    .foregroundColor(mcpInstalled ? .green : .secondary)
-                Text(mcpInstalled ? Strings.Settings.cliInstalled : Strings.Settings.cliNotInstalled)
-                    .foregroundColor(mcpInstalled ? .primary : .secondary)
-            }
+    private var promptsContent: some View {
+        // Status Indicators Section
+        Section {
+            StatusIndicator(
+                icon: "cpu",
+                label: Strings.Settings.mcpTitle,
+                status: mcpInstalled ? .installed : .inactive,
+                message: mcpInstalled ? Strings.Settings.cliInstalled : Strings.Settings.cliNotInstalled
+            )
 
-            HStack {
-                Text(Strings.Editor.fieldTerminalAllowsAutorun)
-                Spacer()
-                if globalAllowAgentPrompts {
-                    Image(systemName: allowAutorun ? "checkmark.circle.fill" : "xmark.circle")
-                        .foregroundColor(allowAutorun ? .green : .secondary)
-                    Text(allowAutorun ? Strings.Common.installed : Strings.Editor.fieldAutorunDisabledGlobally)
-                        .foregroundColor(allowAutorun ? .primary : .secondary)
-                } else {
-                    Image(systemName: "xmark.circle")
-                        .foregroundColor(.secondary)
-                    Text(Strings.Editor.fieldAutorunDisabledGlobally)
-                        .foregroundColor(.secondary)
-                }
-            }
+            StatusIndicator(
+                icon: "bolt.fill",
+                label: Strings.Editor.allowAgentPrompts,
+                status: (globalAllowAgentPrompts && allowAutorun) ? .active : .disabled,
+                message: {
+                    if !globalAllowAgentPrompts {
+                        return Strings.Editor.allowAgentPromptsDisabledGlobally
+                    }
+                    return allowAutorun ? Strings.Common.enabled : Strings.Common.disabled
+                }()
+            )
             .help(
                 globalAllowAgentPrompts
-                    ? Strings.Editor.fieldAllowAutorunHelp
+                    ? Strings.Editor.allowAgentPromptsHelp
                     : Strings.Editor.fieldAutorunEnableHint
+            )
+
+            StatusIndicator(
+                icon: "checkmark.shield.fill",
+                label: Strings.Editor.confirmExternalModifications,
+                status: (globalAllowExternalModifications && confirmExternalModifications) ? .active : .disabled,
+                message: {
+                    if !globalAllowExternalModifications {
+                        return Strings.Editor.confirmExternalModificationsDisabledGlobally
+                    }
+                    return confirmExternalModifications ? Strings.Common.enabled : Strings.Common.disabled
+                }()
+            )
+            .help(
+                globalAllowExternalModifications
+                    ? Strings.Editor.confirmExternalModificationsHelp
+                    : Strings.Editor.confirmExternalModificationsDisabledGlobally
             )
         }
 
-        Section(Strings.Editor.sectionAgent) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Strings.Editor.fieldPersistentContext)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextField(Strings.Editor.fieldPersistentContextHelp, text: $llmPrompt, axis: .vertical)
-                    .lineLimit(3...8)
-                    .help(Strings.Editor.fieldPersistentContextHelp)
-            }
+        // Prompts Section
+        Section(Strings.Editor.sectionPrompts) {
+            LargeTextInput(
+                label: Strings.Editor.fieldPersistentContext,
+                text: $llmPrompt,
+                placeholder: Strings.Editor.fieldPersistentContextHelp,
+                helpText: Strings.Editor.fieldPersistentContextHelp,
+                minLines: 3,
+                maxLines: 8
+            )
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Strings.Editor.fieldNextAction)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextField(Strings.Editor.fieldNextActionHelp, text: $llmNextAction, axis: .vertical)
-                    .lineLimit(3...8)
-                    .help(Strings.Editor.fieldNextActionHelp)
-            }
-        }
-
-        Section(Strings.Editor.sectionCommandGenerator) {
-            Picker(Strings.Editor.sectionCommandGenerator, selection: $selectedLLMVendor) {
-                ForEach(LLMVendor.allCases, id: \.self) { vendor in
-                    Text(vendor.rawValue).tag(vendor)
-                }
-            }
-            .pickerStyle(.menu)
-
-            if selectedLLMVendor.supportsInteractiveToggle {
-                Toggle(Strings.Editor.interactiveModeToggle, isOn: $interactiveMode)
-                    .help(Strings.Editor.interactiveModeHelp)
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Strings.Common.preview)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Text(selectedLLMVendor.commandTemplate(interactive: interactiveMode))
-                    .font(.system(.body, design: .monospaced))
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(8)
-                    .background(Color(NSColor.textBackgroundColor))
-                    .cornerRadius(4)
-            }
-
-            if !selectedLLMVendor.includesPrompt {
-                Text(Strings.Editor.noLlmPromptWarning)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-
-            if !interactiveMode && selectedLLMVendor.supportsInteractiveToggle {
-                Text(Strings.Editor.nonInteractiveModeNote)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-
-            HStack {
-                Spacer()
-                Button(Strings.Editor.fieldApplyToInitCommand) {
-                    initCommand = selectedLLMVendor.commandTemplate(interactive: interactiveMode)
-                    selectedTab = .terminal
-                }
-                .help(Strings.Editor.fieldApplyToInitCommandHelp)
-            }
+            LargeTextInput(
+                label: Strings.Editor.fieldNextAction,
+                text: $llmNextAction,
+                placeholder: Strings.Editor.fieldNextActionHelp,
+                helpText: Strings.Editor.fieldNextActionHelp,
+                minLines: 3,
+                maxLines: 8
+            )
         }
     }
 

@@ -18,7 +18,10 @@
 "common.add" = "Legg til";
 "common.reinstall" = "Installer på nytt";
 "common.uninstall" = "Avinstaller";
-"common.installed" = "Installert";
+"common.installed"
+"common.enabled" = "Aktivert";
+"common.disabled" = "Deaktivert";
+// TEMP_MARKER = "Installert";
 "common.browse" = "Bla gjennom...";
 "common.select" = "Select";
 "common.apply" = "Bruk";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "Nøkkel-verdi-par for organisering";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "Forespørsler";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminal tillater kommandoer";
 "editor.field.persistent.context" = "Vedvarende kontekst";
 "editor.field.persistent.context.help" = "Kontekst beholdes mellom økter";

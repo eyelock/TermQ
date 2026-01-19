@@ -72,7 +72,7 @@ struct StatusIndicator: View {
     }
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 8) {
             // Leading icon
             Image(systemName: icon)
                 .foregroundColor(status.color)
@@ -92,7 +92,7 @@ struct StatusIndicator: View {
                 .imageScale(.small)
         }
         .font(.caption)
-        .padding(.vertical, 4)
+        .padding(.vertical, 8)
         .padding(.horizontal, 8)
         .background(
             RoundedRectangle(cornerRadius: 6)

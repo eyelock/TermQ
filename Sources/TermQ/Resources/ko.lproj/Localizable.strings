@@ -18,7 +18,10 @@
 "common.add" = "추가";
 "common.reinstall" = "재설치";
 "common.uninstall" = "제거";
-"common.installed" = "설치됨";
+"common.installed"
+"common.enabled" = "활성화됨";
+"common.disabled" = "비활성화됨";
+// TEMP_MARKER = "설치됨";
 "common.browse" = "찾아보기...";
 "common.select" = "Select";
 "common.apply" = "적용";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "구성을 위한 키-값 쌍";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "프롬프트";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "터미널이 명령 허용";
 "editor.field.persistent.context" = "지속 컨텍스트";
 "editor.field.persistent.context.help" = "세션 간 컨텍스트 유지";

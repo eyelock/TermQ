@@ -18,7 +18,10 @@
 "common.add" = "添加";
 "common.reinstall" = "重新安装";
 "common.uninstall" = "卸载";
-"common.installed" = "已安装";
+"common.installed"
+"common.enabled" = "已启用";
+"common.disabled" = "已禁用";
+// TEMP_MARKER = "已安装";
 "common.browse" = "浏览...";
 "common.select" = "Select";
 "common.apply" = "应用";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "用于组织的键值对";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "提示";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "终端允许命令";
 "editor.field.persistent.context" = "持久上下文";
 "editor.field.persistent.context.help" = "上下文在会话间保持";

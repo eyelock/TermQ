@@ -18,7 +18,10 @@
 "common.add" = "Tambah";
 "common.reinstall" = "Instal Ulang";
 "common.uninstall" = "Copot";
-"common.installed" = "Terinstal";
+"common.installed"
+"common.enabled" = "Diaktifkan";
+"common.disabled" = "Dinonaktifkan";
+// TEMP_MARKER = "Terinstal";
 "common.browse" = "Jelajahi...";
 "common.select" = "Select";
 "common.apply" = "Terapkan";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "Pasangan kunci-nilai untuk pengorganisasian";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "Prompt";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminal mengizinkan perintah";
 "editor.field.persistent.context" = "Konteks Persisten";
 "editor.field.persistent.context.help" = "Konteks dipertahankan antar sesi";

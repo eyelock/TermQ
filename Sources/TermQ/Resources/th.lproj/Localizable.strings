@@ -18,7 +18,10 @@
 "common.add" = "เพิ่ม";
 "common.reinstall" = "ติดตั้งใหม่";
 "common.uninstall" = "ถอนการติดตั้ง";
-"common.installed" = "ติดตั้งแล้ว";
+"common.installed"
+"common.enabled" = "เปิดใช้งาน";
+"common.disabled" = "ปิดใช้งาน";
+// TEMP_MARKER = "ติดตั้งแล้ว";
 "common.browse" = "เรียกดู...";
 "common.select" = "Select";
 "common.apply" = "นำไปใช้";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "คู่คีย์-ค่าสำหรับการจัดระเบียบ";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "พร้อมท์";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "เทอร์มินัลอนุญาตคำสั่ง";
 "editor.field.persistent.context" = "บริบทถาวร";
 "editor.field.persistent.context.help" = "บริบทถูกเก็บรักษาข้ามเซสชัน";

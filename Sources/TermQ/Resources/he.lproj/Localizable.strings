@@ -18,7 +18,10 @@
 "common.add" = "הוספה";
 "common.reinstall" = "התקנה מחדש";
 "common.uninstall" = "הסרה";
-"common.installed" = "מותקן";
+"common.installed"
+"common.enabled" = "מופעל";
+"common.disabled" = "מושבת";
+// TEMP_MARKER = "מותקן";
 "common.browse" = "עיון...";
 "common.select" = "Select";
 "common.apply" = "החלה";
@@ -183,7 +186,9 @@
 "editor.tags.help" = "זוגות מפתח-ערך לארגון";
 
 // Editor - Agent Configuration section
-"editor.section.agent" = "Agent";
+"editor.section.agent"
+"editor.section.prompts" = "הנחיות";
+// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "המסוף מאפשר פקודות";
 "editor.field.persistent.context" = "הקשר קבוע";
 "editor.field.persistent.context.help" = "ההקשר נשמר בין הפעלות";

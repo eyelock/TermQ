@@ -157,6 +157,8 @@ enum Strings {
         static var reinstall: String { localized("common.reinstall") }
         static var uninstall: String { localized("common.uninstall") }
         static var installed: String { localized("common.installed") }
+        static var enabled: String { localized("common.enabled") }
+        static var disabled: String { localized("common.disabled") }
         static var browse: String { localized("common.browse") }
         static var select: String { localized("common.select") }
         static var apply: String { localized("common.apply") }
@@ -355,6 +357,7 @@ enum Strings {
 
         // Agent Configuration section
         static var sectionAgent: String { localized("editor.section.agent") }
+        static var sectionPrompts: String { localized("editor.section.prompts") }
         static var fieldTerminalAllowsAutorun: String { localized("editor.field.terminal.allows.autorun") }
         static var fieldPersistentContext: String { localized("editor.field.persistent.context") }
         static var fieldPersistentContextHelp: String { localized("editor.field.persistent.context.help") }
