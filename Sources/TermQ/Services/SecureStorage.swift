@@ -39,7 +39,7 @@ public actor SecureStorage {
 
     // MARK: - Constants
 
-    private let keychainService = "com.termq.secrets"
+    private let keychainService = "net.eyelock.termq.secrets"
     private let keychainAccount = "encryption-key"
     private let secretsFileName = "secrets.enc"
 

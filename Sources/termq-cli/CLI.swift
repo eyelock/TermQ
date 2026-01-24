@@ -106,7 +106,7 @@ struct New: ParsableCommand {
 
         // Ensure TermQ is running
         let workspace = NSWorkspace.shared
-        let bundleId = "com.termq.app"
+        let bundleId = "net.eyelock.termq.app"
         let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
 
         if runningApps.isEmpty {
@@ -173,7 +173,7 @@ struct Open: ParsableCommand {
 
             // Ensure TermQ is running and focus the terminal
             let workspace = NSWorkspace.shared
-            let bundleId = "com.termq.app"
+            let bundleId = "net.eyelock.termq.app"
             let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
 
             if runningApps.isEmpty {
@@ -266,7 +266,7 @@ struct Create: ParsableCommand {
 
         // Ensure TermQ is running
         let workspace = NSWorkspace.shared
-        let bundleId = "com.termq.app"
+        let bundleId = "net.eyelock.termq.app"
         let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
 
         if runningApps.isEmpty {

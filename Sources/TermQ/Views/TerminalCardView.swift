@@ -47,6 +47,9 @@ struct TerminalCardView: View {
                 Text(card.title)
                     .font(.headline)
                     .lineLimit(1)
+                    .layoutPriority(1)
+
+                Spacer(minLength: 0)
 
                 // Special badges - stay on single line, truncate with ellipsis if needed
                 HStack(spacing: 4) {
@@ -114,9 +117,7 @@ struct TerminalCardView: View {
                             .fixedSize()
                     }
                 }
-                .lineLimit(1)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .layoutPriority(1)
+                .fixedSize(horizontal: true, vertical: false)
 
                 Spacer(minLength: 8)
 

@@ -7,7 +7,7 @@
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
     <key>CFBundleIdentifier</key>
-    <string>com.termq.app</string>
+    <string>net.eyelock.termq.app</string>
     <key>CFBundleName</key>
     <string>TermQ</string>
     <key>CFBundleDisplayName</key>
