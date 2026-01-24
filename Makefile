@@ -90,7 +90,7 @@ copy-help:
 	@echo "Help documentation copied to Resources"
 
 # Compile Swift binaries (incremental - only rebuilds if sources or dependencies changed)
-$(DEBUG_BUILD_DIR)/$(APP_NAME): $(SWIFT_SOURCES) Package.swift Package.resolved copy-help
+$(DEBUG_BUILD_DIR)/$(APP_NAME): $(SWIFT_SOURCES) Package.swift copy-help
 	set +o pipefail; swift build -Xswiftc -DDEBUG 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 compile: $(DEBUG_BUILD_DIR)/$(APP_NAME)
@@ -109,11 +109,11 @@ clean:
 	rm -rf Sources/$(APP_NAME)/Resources/Help
 
 # Run tests (requires Xcode for XCTest - uses Xcode's developer directory)
-test: $(SWIFT_SOURCES) $(TEST_SOURCES) Package.swift Package.resolved copy-help
+test: $(SWIFT_SOURCES) $(TEST_SOURCES) Package.swift copy-help
 	DEVELOPER_DIR=$(XCODE_DEVELOPER_DIR) swift test
 
 # Run tests with coverage report
-test.coverage: $(SWIFT_SOURCES) $(TEST_SOURCES) Package.swift Package.resolved copy-help
+test.coverage: $(SWIFT_SOURCES) $(TEST_SOURCES) Package.swift copy-help
 	@echo "Running tests with code coverage..."
 	@DEVELOPER_DIR=$(XCODE_DEVELOPER_DIR) swift test --enable-code-coverage
 	@echo ""
