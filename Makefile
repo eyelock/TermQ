@@ -5,10 +5,32 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -o pipefail -c
 
-.PHONY: all build build-release clean test test.coverage lint format check install uninstall app sign run debug help
+.PHONY: all build-release clean test test.coverage lint format check install uninstall run debug help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release publish-release
 .PHONY: copy-help docs.help
+
+# Project-specific configuration (change these for other projects)
+APP_NAME := TermQ
+CLI_BINARY := termqcli
+MCP_BINARY := termqmcp
+DEBUG_APP := $(APP_NAME)Debug.app
+DEBUG_APP_NAME := $(APP_NAME)Debug
+SOURCE_APP := $(APP_NAME).app
+ENTITLEMENTS := $(APP_NAME).entitlements
+INFO_PLIST := $(SOURCE_APP)/Contents/Info-Debug.plist
+RESOURCES_BUNDLE := $(APP_NAME)_$(APP_NAME).bundle
+TEST_BUNDLE := $(APP_NAME)PackageTests
+
+# Build directories (Swift Package Manager conventions)
+BUILD_DIR := .build
+DEBUG_BUILD_DIR := $(BUILD_DIR)/debug
+RELEASE_BUILD_DIR := $(BUILD_DIR)/release
+
+# Installation paths (customize for different systems)
+INSTALL_APP_DIR := /Applications
+INSTALL_CLI_DIR := /usr/local/bin
+XCODE_DEVELOPER_DIR := /Applications/Xcode.app/Contents/Developer
 
 # Version from git tags (single source of truth)
 # Gets the most recent tag, strips 'v' prefix
@@ -18,6 +40,10 @@ MINOR := $(shell echo $(VERSION) | cut -d. -f2)
 PATCH := $(shell echo $(VERSION) | cut -d. -f3)
 # Git commit SHA (7 chars)
 GIT_SHA := $(shell git rev-parse --short=7 HEAD 2>/dev/null || echo "unknown")
+
+# Track all Swift sources for incremental builds
+SWIFT_SOURCES := $(shell find Sources -name "*.swift" 2>/dev/null)
+TEST_SOURCES := $(shell find Tests -name "*.swift" 2>/dev/null)
 
 # CI environment detection - enables GitHub-specific features when running in CI
 # GitHub Actions sets CI=true automatically
@@ -59,40 +85,43 @@ all: build
 
 # Copy help documentation to Resources (must run before swift build)
 copy-help:
-	@mkdir -p Sources/TermQ/Resources/Help
-	@rsync -a --delete Docs/Help/ Sources/TermQ/Resources/Help/
+	@mkdir -p Sources/$(APP_NAME)/Resources/Help
+	@rsync -a --delete Docs/Help/ Sources/$(APP_NAME)/Resources/Help/
 	@echo "Help documentation copied to Resources"
 
-# Build debug version (with DEBUG flag for conditional compilation)
-build: copy-help
+# Compile Swift binaries (incremental - only rebuilds if sources or dependencies changed)
+$(DEBUG_BUILD_DIR)/$(APP_NAME): $(SWIFT_SOURCES) Package.swift Package.resolved copy-help
 	set +o pipefail; swift build -Xswiftc -DDEBUG 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+
+compile: $(DEBUG_BUILD_DIR)/$(APP_NAME)
 
 # Build release version (builds each product explicitly to avoid incremental build issues)
 build-release: copy-help
-	set +o pipefail; swift build -c release --product termqcli 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
-	set +o pipefail; swift build -c release --product termqmcp 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
-	set +o pipefail; swift build -c release --product TermQ 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -c release --product $(CLI_BINARY) 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -c release --product $(MCP_BINARY) 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -c release --product $(APP_NAME) 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 # Clean build artifacts
 clean:
 	swift package clean
-	rm -rf .build
-	rm -rf Sources/TermQ/Resources/Help
+	rm -rf $(BUILD_DIR)
+	rm -rf $(DEBUG_APP)
+	rm -rf Sources/$(APP_NAME)/Resources/Help
 
 # Run tests (requires Xcode for XCTest - uses Xcode's developer directory)
-test: copy-help
-	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test
+test: $(SWIFT_SOURCES) $(TEST_SOURCES) Package.swift Package.resolved copy-help
+	DEVELOPER_DIR=$(XCODE_DEVELOPER_DIR) swift test
 
 # Run tests with coverage report
-test.coverage: copy-help
+test.coverage: $(SWIFT_SOURCES) $(TEST_SOURCES) Package.swift Package.resolved copy-help
 	@echo "Running tests with code coverage..."
-	@DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --enable-code-coverage
+	@DEVELOPER_DIR=$(XCODE_DEVELOPER_DIR) swift test --enable-code-coverage
 	@echo ""
 	@echo "Coverage Report:"
 	@echo "================"
 	@xcrun llvm-cov report \
-		.build/debug/TermQPackageTests.xctest/Contents/MacOS/TermQPackageTests \
-		--instr-profile=.build/debug/codecov/default.profdata \
+		$(DEBUG_BUILD_DIR)/$(TEST_BUNDLE).xctest/Contents/MacOS/$(TEST_BUNDLE) \
+		--instr-profile=$(DEBUG_BUILD_DIR)/codecov/default.profdata \
 		--sources Sources/
 
 # Install SwiftLint if not present (using Homebrew)
@@ -106,11 +135,11 @@ install-swift-format:
 # Run SwiftLint (auto-detects CI for GitHub annotations)
 # Requires Xcode for SourceKit - uses Xcode's developer directory
 lint: install-swiftlint
-	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swiftlint lint --config .swiftlint.yml $(SWIFTLINT_REPORTER)
+	DEVELOPER_DIR=$(XCODE_DEVELOPER_DIR) swiftlint lint --config .swiftlint.yml $(SWIFTLINT_REPORTER)
 
 # Run SwiftLint with auto-fix
 lint-fix: install-swiftlint
-	DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swiftlint lint --config .swiftlint.yml --fix
+	DEVELOPER_DIR=$(XCODE_DEVELOPER_DIR) swiftlint lint --config .swiftlint.yml --fix
 
 # Format code with swift-format
 format: install-swift-format
@@ -120,120 +149,120 @@ format: install-swift-format
 format-check: install-swift-format
 	swift-format lint --configuration .swift-format --recursive Sources/ Tests/
 
-# Run all checks (build, lint, format-check, test)
-check: build lint format-check test
+# Run all checks (compile, lint, format-check, test)
+check: compile lint format-check test
 
-# Build the macOS debug app bundle (separate from release)
-app: build
-	@mkdir -p TermQDebug.app/Contents/MacOS
-	@mkdir -p TermQDebug.app/Contents/Resources
-	@mkdir -p TermQDebug.app/Contents/Frameworks
-	cp .build/debug/TermQ TermQDebug.app/Contents/MacOS/TermQ
-	cp .build/debug/termqcli TermQDebug.app/Contents/Resources/termqcli
-	cp .build/debug/termqmcp TermQDebug.app/Contents/Resources/termqmcp
-	cp TermQ.app/Contents/Info-Debug.plist TermQDebug.app/Contents/Info.plist
+# Build the macOS debug app bundle (incremental - only rebuilds if binary or metadata changed)
+$(DEBUG_APP): $(DEBUG_BUILD_DIR)/$(APP_NAME) $(INFO_PLIST) $(ENTITLEMENTS)
+	@mkdir -p $(DEBUG_APP)/Contents/MacOS
+	@mkdir -p $(DEBUG_APP)/Contents/Resources
+	@mkdir -p $(DEBUG_APP)/Contents/Frameworks
+	cp $(DEBUG_BUILD_DIR)/$(APP_NAME) $(DEBUG_APP)/Contents/MacOS/$(APP_NAME)
+	cp $(DEBUG_BUILD_DIR)/$(CLI_BINARY) $(DEBUG_APP)/Contents/Resources/$(CLI_BINARY)
+	cp $(DEBUG_BUILD_DIR)/$(MCP_BINARY) $(DEBUG_APP)/Contents/Resources/$(MCP_BINARY)
+	cp $(INFO_PLIST) $(DEBUG_APP)/Contents/Info.plist
 	@# Add rpath for embedded frameworks (Sparkle)
-	@install_name_tool -add_rpath @executable_path/../Frameworks TermQDebug.app/Contents/MacOS/TermQ 2>/dev/null || true
+	@install_name_tool -add_rpath @executable_path/../Frameworks $(DEBUG_APP)/Contents/MacOS/$(APP_NAME) 2>/dev/null || true
 	@# Copy Sparkle framework (required for auto-updates)
-	@if [ -d ".build/debug/Sparkle.framework" ]; then \
-		rm -rf TermQDebug.app/Contents/Frameworks/Sparkle.framework; \
-		cp -R .build/debug/Sparkle.framework TermQDebug.app/Contents/Frameworks/; \
+	@if [ -d "$(DEBUG_BUILD_DIR)/Sparkle.framework" ]; then \
+		rm -rf $(DEBUG_APP)/Contents/Frameworks/Sparkle.framework; \
+		cp -R $(DEBUG_BUILD_DIR)/Sparkle.framework $(DEBUG_APP)/Contents/Frameworks/; \
 	fi
 	@# Copy localization resources bundle
-	@if [ -d ".build/debug/TermQ_TermQ.bundle" ]; then \
-		cp -R .build/debug/TermQ_TermQ.bundle TermQDebug.app/Contents/Resources/; \
+	@if [ -d "$(DEBUG_BUILD_DIR)/$(RESOURCES_BUNDLE)" ]; then \
+		cp -R $(DEBUG_BUILD_DIR)/$(RESOURCES_BUNDLE) $(DEBUG_APP)/Contents/Resources/; \
 	fi
 	@# Update version info in Info.plist
-	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQDebug.app/Contents/Info.plist
-	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" TermQDebug.app/Contents/Info.plist
-	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQDebug.app/Contents/Resources/AppIcon.icns; fi
-	@echo "Debug app bundle updated at TermQDebug.app ($(VERSION) build $(GIT_SHA))"
+	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" $(DEBUG_APP)/Contents/Info.plist
+	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" $(DEBUG_APP)/Contents/Info.plist
+	@if [ -f AppIcon.icns ]; then cp AppIcon.icns $(DEBUG_APP)/Contents/Resources/AppIcon.icns; fi
+	@# Ad-hoc sign for local execution
+	@codesign --force --deep --sign - --entitlements $(ENTITLEMENTS) $(DEBUG_APP) 2>/dev/null || \
+		codesign --force --deep --sign - $(DEBUG_APP)
+	@echo "Debug app bundle ready at $(DEBUG_APP) ($(VERSION) build $(GIT_SHA))"
 
-# Sign the debug app bundle with entitlements
-sign: app
-	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQDebug.app
-	@echo "Debug app signed successfully"
+build: $(DEBUG_APP)
 
 # Build, sign, and run the debug app (auto-quits existing instance)
 debug: sign
-	@if pgrep -f "TermQDebug.app/Contents/MacOS" >/dev/null 2>&1; then \
-		echo "Quitting running TermQ Debug..."; \
-		osascript -e 'tell application "TermQDebug" to quit' 2>/dev/null || true; \
+	@if pgrep -f "$(DEBUG_APP)/Contents/MacOS" >/dev/null 2>&1; then \
+		echo "Quitting running $(APP_NAME) Debug..."; \
+		osascript -e 'tell application "$(DEBUG_APP_NAME)" to quit' 2>/dev/null || true; \
 		sleep 1; \
 	fi
-	@echo "Launching TermQ Debug..."
-	@open TermQDebug.app
+	@echo "Launching $(APP_NAME) Debug..."
+	@open $(DEBUG_APP)
 
 # Build and run the release app (errors if production app is running)
 run: release-app
-	@if pgrep -f "TermQ.app/Contents/MacOS" >/dev/null 2>&1; then \
+	@if pgrep -f "$(SOURCE_APP)/Contents/MacOS" >/dev/null 2>&1; then \
 		echo ""; \
-		echo "Error: TermQ (Production) is already running."; \
+		echo "Error: $(APP_NAME) (Production) is already running."; \
 		echo "Please quit it manually before running 'make run'."; \
 		echo ""; \
 		exit 1; \
 	fi
-	@echo "Launching TermQ (Release)..."
-	@open TermQ.app
+	@echo "Launching $(APP_NAME) (Release)..."
+	@open $(SOURCE_APP)
 
 # Build release app bundle
 release-app: build-release
-	@mkdir -p TermQ.app/Contents/MacOS
-	@mkdir -p TermQ.app/Contents/Resources
-	@mkdir -p TermQ.app/Contents/Frameworks
+	@mkdir -p $(SOURCE_APP)/Contents/MacOS
+	@mkdir -p $(SOURCE_APP)/Contents/Resources
+	@mkdir -p $(SOURCE_APP)/Contents/Frameworks
 	@# Verify GUI binary is correct (should be >4MB, CLI is only ~2MB)
-	@SIZE=$$(stat -f%z .build/release/TermQ); \
+	@SIZE=$$(stat -f%z $(RELEASE_BUILD_DIR)/$(APP_NAME)); \
 	if [ $$SIZE -lt 4000000 ]; then \
-		echo "ERROR: TermQ binary is too small ($$SIZE bytes) - likely CLI instead of GUI"; \
-		echo "Try: rm -rf .build/release && make build-release"; \
+		echo "ERROR: $(APP_NAME) binary is too small ($$SIZE bytes) - likely CLI instead of GUI"; \
+		echo "Try: rm -rf $(RELEASE_BUILD_DIR) && make build-release"; \
 		exit 1; \
 	fi
-	cp .build/release/TermQ TermQ.app/Contents/MacOS/TermQ
-	cp .build/release/termqcli TermQ.app/Contents/Resources/termqcli
-	cp .build/release/termqmcp TermQ.app/Contents/Resources/termqmcp
+	cp $(RELEASE_BUILD_DIR)/$(APP_NAME) $(SOURCE_APP)/Contents/MacOS/$(APP_NAME)
+	cp $(RELEASE_BUILD_DIR)/$(CLI_BINARY) $(SOURCE_APP)/Contents/Resources/$(CLI_BINARY)
+	cp $(RELEASE_BUILD_DIR)/$(MCP_BINARY) $(SOURCE_APP)/Contents/Resources/$(MCP_BINARY)
 	@# Add rpath for embedded frameworks (Sparkle)
-	@install_name_tool -add_rpath @executable_path/../Frameworks TermQ.app/Contents/MacOS/TermQ 2>/dev/null || true
+	@install_name_tool -add_rpath @executable_path/../Frameworks $(SOURCE_APP)/Contents/MacOS/$(APP_NAME) 2>/dev/null || true
 	@# Copy Sparkle framework (required for auto-updates)
-	@if [ -d ".build/release/Sparkle.framework" ]; then \
-		rm -rf TermQ.app/Contents/Frameworks/Sparkle.framework; \
-		cp -R .build/release/Sparkle.framework TermQ.app/Contents/Frameworks/; \
+	@if [ -d "$(RELEASE_BUILD_DIR)/Sparkle.framework" ]; then \
+		rm -rf $(SOURCE_APP)/Contents/Frameworks/Sparkle.framework; \
+		cp -R $(RELEASE_BUILD_DIR)/Sparkle.framework $(SOURCE_APP)/Contents/Frameworks/; \
 	fi
 	@# Copy localization resources bundle
-	@if [ -d ".build/release/TermQ_TermQ.bundle" ]; then \
-		cp -R .build/release/TermQ_TermQ.bundle TermQ.app/Contents/Resources/; \
+	@if [ -d "$(RELEASE_BUILD_DIR)/$(RESOURCES_BUNDLE)" ]; then \
+		cp -R $(RELEASE_BUILD_DIR)/$(RESOURCES_BUNDLE) $(SOURCE_APP)/Contents/Resources/; \
 	fi
 	@# Copy template and update version info in Info.plist
-	cp Info.plist.template TermQ.app/Contents/Info.plist
-	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" TermQ.app/Contents/Info.plist
-	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" TermQ.app/Contents/Info.plist
-	@if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
-	codesign --force --deep --sign - --entitlements TermQ.entitlements TermQ.app
+	cp Info.plist.template $(SOURCE_APP)/Contents/Info.plist
+	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" $(SOURCE_APP)/Contents/Info.plist
+	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" $(SOURCE_APP)/Contents/Info.plist
+	@if [ -f AppIcon.icns ]; then cp AppIcon.icns $(SOURCE_APP)/Contents/Resources/AppIcon.icns; fi
+	codesign --force --deep --sign - --entitlements $(ENTITLEMENTS) $(SOURCE_APP)
 	@echo "Release app bundle created and signed ($(VERSION) build $(GIT_SHA))"
 
-# Install app to /Applications
+# Install app
 install: release-app
-	@echo "Installing TermQ.app to /Applications..."
-	@rm -rf /Applications/TermQ.app
-	cp -R TermQ.app /Applications/
-	@echo "TermQ.app installed to /Applications"
+	@echo "Installing $(SOURCE_APP) to $(INSTALL_APP_DIR)..."
+	@rm -rf $(INSTALL_APP_DIR)/$(SOURCE_APP)
+	cp -R $(SOURCE_APP) $(INSTALL_APP_DIR)/
+	@echo "$(SOURCE_APP) installed to $(INSTALL_APP_DIR)"
 	@echo "You may need to restart any running instance"
 
-# Uninstall app from /Applications
+# Uninstall app
 uninstall:
-	@echo "Removing TermQ.app from /Applications..."
-	rm -rf /Applications/TermQ.app
-	@echo "TermQ.app removed"
+	@echo "Removing $(SOURCE_APP) from $(INSTALL_APP_DIR)..."
+	rm -rf $(INSTALL_APP_DIR)/$(SOURCE_APP)
+	@echo "$(SOURCE_APP) removed"
 
-# Install CLI tool to /usr/local/bin
+# Install CLI tool
 install-cli: build-release
-	@mkdir -p /usr/local/bin
-	cp .build/release/termqcli /usr/local/bin/termqcli
-	@echo "CLI tool 'termqcli' installed to /usr/local/bin"
+	@mkdir -p $(INSTALL_CLI_DIR)
+	cp $(RELEASE_BUILD_DIR)/$(CLI_BINARY) $(INSTALL_CLI_DIR)/$(CLI_BINARY)
+	@echo "CLI tool '$(CLI_BINARY)' installed to $(INSTALL_CLI_DIR)"
 
 # Uninstall CLI tool
 uninstall-cli:
-	rm -f /usr/local/bin/termqcli
-	@echo "CLI tool 'termqcli' removed"
+	rm -f $(INSTALL_CLI_DIR)/$(CLI_BINARY)
+	@echo "CLI tool '$(CLI_BINARY)' removed"
 
 # Install both app and CLI
 install-all: install install-cli
@@ -246,17 +275,17 @@ uninstall-all: uninstall uninstall-cli
 # Create a distributable DMG (requires create-dmg tool)
 dmg: release-app
 	@which create-dmg > /dev/null || (echo "Install create-dmg: brew install create-dmg" && exit 1)
-	rm -f TermQ.dmg
+	rm -f $(APP_NAME).dmg
 	create-dmg \
-		--volname "TermQ" \
+		--volname "$(APP_NAME)" \
 		--window-pos 200 120 \
 		--window-size 600 400 \
 		--icon-size 100 \
-		--icon "TermQ.app" 150 185 \
-		--hide-extension "TermQ.app" \
+		--icon "$(SOURCE_APP)" 150 185 \
+		--hide-extension "$(SOURCE_APP)" \
 		--app-drop-link 450 185 \
-		"TermQ.dmg" \
-		"TermQ.app"
+		"$(APP_NAME).dmg" \
+		"$(SOURCE_APP)"
 	@echo "DMG created: TermQ.dmg"
 
 # Create a zip archive for distribution
@@ -399,7 +428,7 @@ publish-release: release-app
 	@# Create DMG
 	@mkdir -p dmg-contents
 	@cp -R TermQ.app dmg-contents/
-	@ln -s /Applications dmg-contents/Applications
+	@ln -s $(INSTALL_APP_DIR) dmg-contents/Applications
 	@hdiutil create -volname "TermQ" -srcfolder dmg-contents -ov -format UDZO TermQ-$(VERSION).dmg
 	@rm -rf dmg-contents
 	@echo "Created: TermQ-$(VERSION).dmg"
@@ -526,10 +555,10 @@ help:
 	@echo "  run           - Build release and launch TermQ.app"
 	@echo "  debug         - Build debug and launch TermQDebug.app"
 	@echo "  release-app   - Build and sign release app bundle"
-	@echo "  install       - Build release and install app to /Applications"
-	@echo "  uninstall     - Remove app from /Applications"
-	@echo "  install-cli   - Install CLI tool to /usr/local/bin"
-	@echo "  uninstall-cli - Remove CLI tool from /usr/local/bin"
+	@echo "  install       - Build release and install app to $(INSTALL_APP_DIR)"
+	@echo "  uninstall     - Remove app from $(INSTALL_APP_DIR)"
+	@echo "  install-cli   - Install CLI tool to $(INSTALL_CLI_DIR)"
+	@echo "  uninstall-cli - Remove CLI tool from $(INSTALL_CLI_DIR)"
 	@echo "  install-all   - Install both app and CLI"
 	@echo "  uninstall-all - Remove both app and CLI"
 	@echo "  dmg           - Create distributable DMG"

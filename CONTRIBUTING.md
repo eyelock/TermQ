@@ -25,8 +25,8 @@ Thank you for your interest in contributing to TermQ! This guide will help you g
 # Clone and build
 git clone https://github.com/eyelock/termq.git
 cd termq
-make sign
-open TermQ.app
+make build
+open TermQDebug.app
 ```
 
 ## Requirements
@@ -96,19 +96,20 @@ termq/
 ## Building
 
 ```bash
-make build          # Debug build
-make build-release  # Release build
-make sign           # Build and sign debug app bundle
-make release-app    # Build and sign release app bundle
-make install        # Install CLI to /usr/local/bin
+make build          # Build debug app bundle (TermQDebug.app, signed)
+make build-release  # Build release binaries
+make release-app    # Build and sign release app bundle (TermQ.app)
+make compile        # Compile Swift binaries only (no app bundle)
+make install        # Install app to /Applications
+make install-cli    # Install CLI to /usr/local/bin
 ```
 
-Run the app:
+Run the debug app:
 
 ```bash
-open TermQ.app
-# Or directly from build output
-.build/debug/TermQ
+open TermQDebug.app
+# Or use the convenience target
+make debug
 ```
 
 ## Testing
@@ -279,12 +280,16 @@ Run `make help` for all available targets:
 
 | Target | Description |
 |--------|-------------|
-| `build` | Build debug version |
-| `build-release` | Build release version |
+| `build` | Build signed debug app bundle (TermQDebug.app) |
+| `compile` | Compile Swift binaries only (no app bundle) |
+| `build-release` | Build release binaries |
+| `release-app` | Build signed release app bundle (TermQ.app) |
 | `clean` | Clean build artifacts |
 | `test` | Run tests (requires Xcode) |
 | `lint` | Run SwiftLint |
 | `lint-fix` | Run SwiftLint with auto-fix |
+| `debug` | Build and launch debug app |
+| `run` | Build and launch release app |
 | `format` | Format code with swift-format |
 | `format-check` | Check formatting (CI mode) |
 | `check` | Run all checks |
