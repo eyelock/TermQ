@@ -27,9 +27,6 @@ struct SettingsView: View {
     // Terminal preferences
     @AppStorage("copyOnSelect") private var copyOnSelect = false
     @AppStorage("binRetentionDays") private var binRetentionDays = 14
-    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
-    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
-    @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
     @AppStorage("defaultWorkingDirectory") private var defaultWorkingDirectory = NSHomeDirectory()
     @AppStorage("defaultBackend") private var defaultBackendRawValue: String = "direct"
 
@@ -40,8 +37,8 @@ struct SettingsView: View {
     }
 
     // Security preferences
-    @AppStorage("allowTerminalsToRunAgentPrompts") private var allowTerminalsToRunAgentPrompts = false
-    @AppStorage("allowExternalLLMModifications") private var allowExternalLLMModifications = false
+    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
+    @AppStorage("confirmExternalLLMModifications") private var confirmExternalLLMModifications = true
     @AppStorage("allowOscClipboard") private var allowOscClipboard = false
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
@@ -118,8 +115,8 @@ struct SettingsView: View {
                     toolsContent
                 case .dataAndSecurity:
                     SettingsDataSecurityView(
-                        allowTerminalsToRunAgentPrompts: $allowTerminalsToRunAgentPrompts,
-                        allowExternalLLMModifications: $allowExternalLLMModifications,
+                        enableTerminalAutorun: $enableTerminalAutorun,
+                        confirmExternalLLMModifications: $confirmExternalLLMModifications,
                         allowOscClipboard: $allowOscClipboard,
                         dataDirectory: $dataDirectory
                     )
@@ -164,9 +161,6 @@ struct SettingsView: View {
             mcpInstallPath: $mcpInstallPath,
             isInstalling: $isInstalling,
             cliInstallPath: $cliInstallPath,
-            enableTerminalAutorun: $enableTerminalAutorun,
-            tmuxEnabled: $tmuxEnabled,
-            tmuxAutoReattach: $tmuxAutoReattach,
             installMCPServer: installMCPServer,
             uninstallMCPServer: uninstallMCPServer,
             copyMCPConfig: copyMCPConfig,

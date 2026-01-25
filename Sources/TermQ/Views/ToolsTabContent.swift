@@ -9,9 +9,10 @@ struct ToolsTabContent: View {
     @Binding var mcpInstallPath: String
     @Binding var isInstalling: Bool
     @Binding var cliInstallPath: String
-    @Binding var enableTerminalAutorun: Bool
-    @Binding var tmuxEnabled: Bool
-    @Binding var tmuxAutoReattach: Bool
+
+    // Use @AppStorage directly instead of @Binding to ensure persistence
+    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
+    @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
 
     let installMCPServer: () -> Void
     let uninstallMCPServer: () -> Void
@@ -240,11 +241,6 @@ extension ToolsTabContent {
                         installedBadge
                     }
                 }
-
-                Divider()
-
-                Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
-                    .help(Strings.Settings.enableTerminalAutorunHelp)
 
                 Divider()
 

@@ -55,13 +55,20 @@ struct KeyValueItem: Identifiable, Equatable, Sendable {
 struct KeyValueList: View {
     @Binding var items: [KeyValueItem]
     let onDelete: (UUID) -> Void
+    let emptyMessage: String?
 
     @State private var showSecretValue: Set<UUID> = []
+
+    init(items: Binding<[KeyValueItem]>, onDelete: @escaping (UUID) -> Void, emptyMessage: String? = nil) {
+        self._items = items
+        self.onDelete = onDelete
+        self.emptyMessage = emptyMessage
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             if items.isEmpty {
-                Text(Strings.Settings.Environment.noVariables)
+                Text(emptyMessage ?? Strings.Settings.Environment.noVariables)
                     .foregroundColor(.secondary)
                     .font(.callout)
             } else {

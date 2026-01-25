@@ -4,8 +4,8 @@ import SwiftUI
 /// Data & Security settings tab content extracted from SettingsView
 struct SettingsDataSecurityView: View {
     // Security preferences
-    @Binding var allowTerminalsToRunAgentPrompts: Bool
-    @Binding var allowExternalLLMModifications: Bool
+    @Binding var enableTerminalAutorun: Bool
+    @Binding var confirmExternalLLMModifications: Bool
     @Binding var allowOscClipboard: Bool
 
     // Data directory
@@ -14,10 +14,10 @@ struct SettingsDataSecurityView: View {
     var body: some View {
         // Security section (moved to top)
         Section {
-            Toggle("Allow Terminals to run Agent Prompts", isOn: $allowTerminalsToRunAgentPrompts)
-                .help("Allow terminals to execute prompts from agent context (global setting)")
+            Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
+                .help(Strings.Settings.enableTerminalAutorunHelp)
 
-            Toggle(Strings.Settings.confirmExternalModifications, isOn: $allowExternalLLMModifications)
+            Toggle(Strings.Settings.confirmExternalModifications, isOn: $confirmExternalLLMModifications)
                 .help(Strings.Settings.confirmExternalModificationsHelp)
 
             Toggle(Strings.Settings.allowOscClipboard, isOn: $allowOscClipboard)

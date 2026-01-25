@@ -31,9 +31,9 @@ struct CardEditorView: View {
     @State private var allowAutorun: Bool = false
     @State private var allowOscClipboard: Bool = true
     @State private var confirmExternalModifications: Bool = true
-    @AppStorage("allowTerminalsToRunAgentPrompts") private var globalAllowAgentPrompts = false
+    @AppStorage("enableTerminalAutorun") private var globalAllowAgentPrompts = false
     @AppStorage("allowOscClipboard") private var globalAllowOscClipboard = false
-    @AppStorage("allowExternalLLMModifications") private var globalAllowExternalModifications = false
+    @AppStorage("confirmExternalLLMModifications") private var globalConfirmExternalModifications = true
     @State private var selectedLLMVendor: LLMVendor = .claudeCode
     @State private var interactiveMode: Bool = true
     @State private var backend: TerminalBackend = .direct
@@ -249,7 +249,7 @@ struct CardEditorView: View {
             SharedToggle(
                 label: Strings.Editor.confirmExternalModifications,
                 isOn: $confirmExternalModifications,
-                isGloballyEnabled: globalAllowExternalModifications,
+                isGloballyEnabled: globalConfirmExternalModifications,
                 disabledMessage: Strings.Editor.confirmExternalModificationsDisabledGlobally,
                 helpText: Strings.Editor.confirmExternalModificationsHelp
             )
@@ -334,7 +334,8 @@ struct CardEditorView: View {
                     items: $tagItems,
                     onDelete: { id in
                         deleteTag(id: id)
-                    }
+                    },
+                    emptyMessage: Strings.Editor.noTags
                 )
             }
 
@@ -401,16 +402,16 @@ struct CardEditorView: View {
             StatusIndicator(
                 icon: "checkmark.shield.fill",
                 label: Strings.Editor.confirmExternalModifications,
-                status: (globalAllowExternalModifications && confirmExternalModifications) ? .active : .disabled,
+                status: (globalConfirmExternalModifications && confirmExternalModifications) ? .active : .disabled,
                 message: {
-                    if !globalAllowExternalModifications {
+                    if !globalConfirmExternalModifications {
                         return Strings.Editor.confirmExternalModificationsDisabledGlobally
                     }
                     return confirmExternalModifications ? Strings.Common.enabled : Strings.Common.disabled
                 }()
             )
             .help(
-                globalAllowExternalModifications
+                globalConfirmExternalModifications
                     ? Strings.Editor.confirmExternalModificationsHelp
                     : Strings.Editor.confirmExternalModificationsDisabledGlobally
             )
@@ -435,6 +436,16 @@ struct CardEditorView: View {
                 minLines: 3,
                 maxLines: 8
             )
+
+            if !globalAllowAgentPrompts {
+                HStack(spacing: 4) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.orange)
+                    Text("Next Action requires \"Enable LLM Prompt Auto-injection\" in Settings → Tools")
+                        .font(.caption2)
+                        .foregroundColor(.orange)
+                }
+            }
         }
     }
 

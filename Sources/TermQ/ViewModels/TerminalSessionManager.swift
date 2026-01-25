@@ -362,13 +362,18 @@ class TerminalSessionManager: ObservableObject {
         let globalAutorunEnabled = UserDefaults.standard.bool(forKey: "enableTerminalAutorun")
         let autorunAllowed = globalAutorunEnabled && card.allowAutorun
 
-        // Perform token replacement
+        // Perform token replacement based on autorun settings
         var initCmd = card.initCommand
-        initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: card.llmPrompt)
 
-        // Only inject LLM_NEXT_ACTION if autorun is enabled
         if autorunAllowed {
-            initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: card.llmNextAction)
+            // Inject LLM values with escaping for double-quote context
+            // Note: Values are escaped to prevent shell injection while allowing variable expansion
+            // Templates should include quotes: claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+            let escapedPrompt = escapeForDoubleQuotes(card.llmPrompt)
+            let escapedNextAction = escapeForDoubleQuotes(card.llmNextAction)
+
+            initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: escapedPrompt)
+            initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: escapedNextAction)
 
             // Clear llmNextAction after use (if token was present and had a value)
             if hasNextActionToken && hadNextAction {
@@ -376,7 +381,8 @@ class TerminalSessionManager: ObservableObject {
                 BoardViewModel.shared.updateCard(card)
             }
         } else {
-            // Replace token with empty string (don't consume the action)
+            // Replace both tokens with empty string (don't inject anything)
+            initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: "")
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
         }
 
@@ -684,8 +690,20 @@ class TerminalSessionManager: ObservableObject {
 
     // MARK: - Private Helpers
 
+    /// Escape string for use as a shell argument (single-quote style)
+    /// Used for paths, shell names, and other non-LLM values
     private func escapeShellArg(_ arg: String) -> String {
         return "'" + arg.replacingOccurrences(of: "'", with: "'\"'\"'") + "'"
+    }
+
+    /// Escape string for use inside double quotes (for LLM values)
+    /// Escapes: " $ ` \ (prevents injection while templates contain the quotes)
+    private func escapeForDoubleQuotes(_ str: String) -> String {
+        return str
+            .replacingOccurrences(of: "\\", with: "\\\\")  // Backslash first
+            .replacingOccurrences(of: "\"", with: "\\\"")  // Double quotes
+            .replacingOccurrences(of: "$", with: "\\$")    // Dollar signs (prevents variable expansion)
+            .replacingOccurrences(of: "`", with: "\\`")    // Backticks (prevents command substitution)
     }
 
     /// Sanitize a string to be a valid environment variable name suffix
