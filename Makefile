@@ -184,7 +184,7 @@ $(DEBUG_APP): $(DEBUG_BUILD_DIR)/$(APP_NAME) $(INFO_PLIST) $(ENTITLEMENTS)
 build: $(DEBUG_APP)
 
 # Build, sign, and run the debug app (auto-quits existing instance)
-debug: sign
+debug: build
 	@if pgrep -f "$(DEBUG_APP)/Contents/MacOS" >/dev/null 2>&1; then \
 		echo "Quitting running $(APP_NAME) Debug..."; \
 		osascript -e 'tell application "$(DEBUG_APP_NAME)" to quit' 2>/dev/null || true; \
