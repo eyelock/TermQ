@@ -179,6 +179,29 @@ Test CLI integration:
 open "termq://open?name=Test&path=/tmp"
 ```
 
+### Debug Binaries
+
+The project includes separate debug CLI and MCP binaries (`termqclid` and `termqmcpd`) that are built with `TERMQ_DEBUG_BUILD` flag and default to using:
+- Debug bundle ID: `net.eyelock.termq.app.debug`
+- Debug data directory: `~/Library/Application Support/TermQ-Debug`
+
+These binaries are automatically built and installed to `TermQDebug.app/Contents/Resources/` for testing the debug app without needing `--debug` flags.
+
+**Usage:**
+```bash
+# Debug CLI (works with TermQDebug.app)
+./TermQDebug.app/Contents/Resources/termqclid list
+./TermQDebug.app/Contents/Resources/termqclid delete <terminal-name>
+
+# Debug MCP server
+./TermQDebug.app/Contents/Resources/termqmcpd
+
+# Regular CLI (works with production TermQ.app)
+./TermQ.app/Contents/Resources/termqcli list --debug
+```
+
+**Note:** The regular `termqcli` and `termqmcp` binaries target the production bundle ID by default but can use the debug data directory with the `--debug` flag.
+
 ## Releasing
 
 The project uses [semantic versioning](https://semver.org/). The current version is stored in the `VERSION` file.
