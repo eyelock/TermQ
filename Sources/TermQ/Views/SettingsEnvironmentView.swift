@@ -177,6 +177,13 @@ struct SettingsEnvironmentView: View {
         Task {
             do {
                 try await SecureStorage.shared.resetEncryptionKey()
+                // Delete all secret variables from memory since they can't be decrypted without the key
+                await envManager.deleteAllSecrets()
+                await MainActor.run {
+                    // Also clear terminal-specific secrets from all terminals
+                    BoardViewModel.shared.deleteAllTerminalSecrets()
+                }
+                // Reload to refresh UI (no secrets will be found in storage)
                 await envManager.load()
                 // Immediately update status after reset
                 await MainActor.run {

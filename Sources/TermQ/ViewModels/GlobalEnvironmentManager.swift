@@ -183,6 +183,14 @@ public class GlobalEnvironmentManager: ObservableObject {
         return result
     }
 
+    /// Deletes all secret variables (called after encryption key reset)
+    public func deleteAllSecrets() async {
+        // Remove all secret variables from the array
+        variables.removeAll { $0.isSecret }
+        // Save the updated list (without secrets)
+        saveStoredVariables()
+    }
+
     // MARK: - Private Helpers
 
     private func loadStoredVariables() -> [StoredEnvironmentVariable] {
