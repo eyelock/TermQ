@@ -320,7 +320,7 @@ final class SparkleUpdaterDelegate: NSObject, SPUUpdaterDelegate {
 
 /// App delegate to handle quit confirmation, auto-updates, and enforce single window
 @MainActor
-class TermQAppDelegate: NSObject, NSApplicationDelegate {
+class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// Sparkle updater delegate for dynamic feed URL
     private let sparkleDelegate = SparkleUpdaterDelegate()
 
@@ -342,13 +342,19 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Store reference to the main window
-        mainWindow = NSApplication.shared.mainWindow
+        // Store reference to the main window and set delegate
+        // In SwiftUI apps, the window might not be created yet, so we poll for it
+        setupMainWindowDelegate()
+    }
 
-        // If no main window yet, wait for it
-        if mainWindow == nil {
-            DispatchQueue.main.async { [weak self] in
-                self?.mainWindow = NSApplication.shared.mainWindow
+    private func setupMainWindowDelegate() {
+        if let window = NSApplication.shared.windows.first(where: { $0.isVisible }) {
+            mainWindow = window
+            window.delegate = self
+        } else {
+            // Window not ready yet, try again
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.setupMainWindowDelegate()
             }
         }
     }
@@ -366,6 +372,48 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate {
     /// Keep app running even if last window closes (user can reopen from Dock)
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return false
+    }
+
+    /// Handle window close button - show confirmation if terminals are running
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        // Check for running direct (non-tmux) sessions
+        let sessionManager = TerminalSessionManager.shared
+        let activeCards = sessionManager.activeSessionCardIds()
+
+        // Count direct and tmux sessions separately
+        let directSessionCount = activeCards.filter { cardId in
+            sessionManager.getBackend(for: cardId) == .direct
+        }.count
+
+        let tmuxSessionCount = activeCards.filter { cardId in
+            sessionManager.getBackend(for: cardId) == .tmux
+        }.count
+
+        if directSessionCount > 0 {
+            // Show confirmation alert (same as quit)
+            let alert = NSAlert()
+            alert.messageText = Strings.Alert.quitWithDirectSessions
+
+            // Only mention tmux persistence if there are tmux sessions
+            if tmuxSessionCount > 0 {
+                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
+            } else {
+                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
+            }
+
+            alert.addButton(withTitle: "Close Window")
+            alert.addButton(withTitle: Strings.Common.cancel)
+            alert.alertStyle = .warning
+
+            let response = alert.runModal()
+            if response == .alertSecondButtonReturn {
+                return false  // Don't close
+            }
+        }
+
+        // Close the window (not minimize - window will disappear, app stays running)
+        sender.orderOut(nil)
+        return false  // We handled the close ourselves
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
@@ -446,6 +494,15 @@ struct TermQApp: App {
                 }
             }
 
+            // Window commands - enable Cmd+W to close window (hides it, preserving session)
+            CommandGroup(after: .windowArrangement) {
+                Button("Close Window") {
+                    // Close the current window (won't quit app due to applicationShouldTerminateAfterLastWindowClosed)
+                    NSApp.keyWindow?.close()
+                }
+                .keyboardShortcut("w", modifiers: .command)
+            }
+
             // Help menu
             CommandGroup(replacing: .help) {
                 Button(Strings.Menu.help) {
@@ -507,7 +564,8 @@ struct TermQApp: App {
                 Button("Close Tab") {
                     terminalActions?.closeTab()
                 }
-                .keyboardShortcut("w", modifiers: .command)
+                .keyboardShortcut("w", modifiers: [.command, .shift])
+                .disabled(terminalActions == nil)
 
                 Button("Delete Terminal") {
                     terminalActions?.deleteTerminal()
@@ -519,7 +577,7 @@ struct TermQApp: App {
                 Button("Toggle Zoom Mode") {
                     terminalActions?.toggleZoom()
                 }
-                .keyboardShortcut("z", modifiers: [.command, .shift])
+                .keyboardShortcut("z", modifiers: [.command, .option])
 
                 Button("Find...") {
                     terminalActions?.toggleSearch()
