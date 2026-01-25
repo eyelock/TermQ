@@ -8,9 +8,13 @@ struct ToolsTabContent: View {
     @Binding var installedMCPLocation: MCPInstallLocation?
     @Binding var isInstallingMCP: Bool
     @Binding var configCopied: Bool
+    @Binding var useCustomMCPPath: Bool
+    @Binding var customMCPPath: String
     @Binding var selectedLocation: InstallLocation
     @Binding var installedLocation: InstallLocation?
     @Binding var isInstalling: Bool
+    @Binding var useCustomCLIPath: Bool
+    @Binding var customCLIPath: String
     @Binding var enableTerminalAutorun: Bool
     @Binding var tmuxEnabled: Bool
     @Binding var tmuxAutoReattach: Bool
@@ -191,16 +195,28 @@ extension ToolsTabContent {
                     .foregroundColor(.orange)
             }
 
-            Picker(Strings.Settings.cliPath, selection: $selectedMCPLocation) {
-                ForEach(MCPInstallLocation.allCases) { location in
-                    Text(location.displayName).tag(location)
-                }
-            }
-            .pickerStyle(.radioGroup)
+            Toggle("Use custom path", isOn: $useCustomMCPPath)
+                .font(.caption)
 
-            Text(selectedMCPLocation.pathNote)
-                .font(.caption2)
-                .foregroundColor(.secondary)
+            if useCustomMCPPath {
+                PathInputField(
+                    label: "Install Path",
+                    path: $customMCPPath,
+                    helpText: "Custom directory path for MCP server installation (e.g., ~/.local/bin)",
+                    validatePath: true
+                )
+            } else {
+                Picker(Strings.Settings.cliPath, selection: $selectedMCPLocation) {
+                    ForEach(MCPInstallLocation.allCases) { location in
+                        Text(location.displayName).tag(location)
+                    }
+                }
+                .pickerStyle(.radioGroup)
+
+                Text(selectedMCPLocation.pathNote)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
 
             Button {
                 installMCPServer()
@@ -213,7 +229,7 @@ extension ToolsTabContent {
                     Text(Strings.Settings.cliInstall)
                 }
             }
-            .disabled(isInstallingMCP)
+            .disabled(isInstallingMCP || (useCustomMCPPath && customMCPPath.isEmpty))
         }
     }
 }
@@ -302,16 +318,28 @@ extension ToolsTabContent {
                 .font(.caption)
                 .foregroundColor(.secondary)
 
-            Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
-                ForEach(InstallLocation.allCases) { location in
-                    Text(location.displayName).tag(location)
-                }
-            }
-            .pickerStyle(.radioGroup)
+            Toggle("Use custom path", isOn: $useCustomCLIPath)
+                .font(.caption)
 
-            Text(selectedLocation.pathNote)
-                .font(.caption2)
-                .foregroundColor(.secondary)
+            if useCustomCLIPath {
+                PathInputField(
+                    label: "Install Path",
+                    path: $customCLIPath,
+                    helpText: "Custom directory path for CLI installation (e.g., ~/.local/bin)",
+                    validatePath: true
+                )
+            } else {
+                Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
+                    ForEach(InstallLocation.allCases) { location in
+                        Text(location.displayName).tag(location)
+                    }
+                }
+                .pickerStyle(.radioGroup)
+
+                Text(selectedLocation.pathNote)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
 
             Button {
                 installCLI()
@@ -324,7 +352,7 @@ extension ToolsTabContent {
                     Text(Strings.Settings.cliInstall)
                 }
             }
-            .disabled(isInstalling)
+            .disabled(isInstalling || (useCustomCLIPath && customCLIPath.isEmpty))
         }
     }
 }

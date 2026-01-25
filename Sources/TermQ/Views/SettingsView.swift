@@ -14,12 +14,16 @@ struct SettingsView: View {
     @State private var selectedLocation: InstallLocation = .usrLocalBin
     @State private var installedLocation: InstallLocation?
     @State private var isInstalling = false
+    @State private var useCustomCLIPath = false
+    @State private var customCLIPath = ""
 
     // MCP Server installation state
     @State private var selectedMCPLocation: MCPInstallLocation = .usrLocalBin
     @State private var installedMCPLocation: MCPInstallLocation?
     @State private var isInstallingMCP = false
     @State private var configCopied = false
+    @State private var useCustomMCPPath = false
+    @State private var customMCPPath = ""
 
     // Alert state
     @State private var alertMessage: String?
@@ -165,9 +169,13 @@ struct SettingsView: View {
             installedMCPLocation: $installedMCPLocation,
             isInstallingMCP: $isInstallingMCP,
             configCopied: $configCopied,
+            useCustomMCPPath: $useCustomMCPPath,
+            customMCPPath: $customMCPPath,
             selectedLocation: $selectedLocation,
             installedLocation: $installedLocation,
             isInstalling: $isInstalling,
+            useCustomCLIPath: $useCustomCLIPath,
+            customCLIPath: $customCLIPath,
             enableTerminalAutorun: $enableTerminalAutorun,
             tmuxEnabled: $tmuxEnabled,
             tmuxAutoReattach: $tmuxAutoReattach,
@@ -185,9 +193,18 @@ struct SettingsView: View {
 
     private func installCLI() {
         isInstalling = true
-        let location = installedLocation ?? selectedLocation
         Task {
-            let result = await CLIInstaller.install(to: location)
+            let result: Result<String, CLIInstallerError>
+
+            if useCustomCLIPath {
+                // Install to custom path
+                result = await CLIInstaller.install(toPath: customCLIPath, requiresAdmin: nil)
+            } else {
+                // Install to predefined location
+                let location = installedLocation ?? selectedLocation
+                result = await CLIInstaller.install(to: location)
+            }
+
             await MainActor.run {
                 isInstalling = false
                 switch result {
@@ -241,9 +258,18 @@ struct SettingsView: View {
 
     private func installMCPServer() {
         isInstallingMCP = true
-        let location = installedMCPLocation ?? selectedMCPLocation
         Task {
-            let result = await MCPServerInstaller.install(to: location)
+            let result: Result<String, MCPServerInstallerError>
+
+            if useCustomMCPPath {
+                // Install to custom path
+                result = await MCPServerInstaller.install(toPath: customMCPPath, requiresAdmin: nil)
+            } else {
+                // Install to predefined location
+                let location = installedMCPLocation ?? selectedMCPLocation
+                result = await MCPServerInstaller.install(to: location)
+            }
+
             await MainActor.run {
                 isInstallingMCP = false
                 switch result {
