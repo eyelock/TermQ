@@ -3,6 +3,27 @@ import ArgumentParser
 import Foundation
 import TermQShared
 
+// MARK: - Bundle Configuration
+
+/// Returns the appropriate TermQ bundle identifier based on build configuration
+private func termqBundleIdentifier() -> String {
+    #if TERMQ_DEBUG_BUILD
+        return "net.eyelock.termq.app.debug"
+    #else
+        return "net.eyelock.termq.app"
+    #endif
+}
+
+/// Returns whether to use debug mode based on build configuration and explicit flag
+/// In debug builds, always use debug mode unless explicitly overridden
+private func shouldUseDebugMode(_ explicitDebug: Bool) -> Bool {
+    #if TERMQ_DEBUG_BUILD
+        return true
+    #else
+        return explicitDebug
+    #endif
+}
+
 // MARK: - CLI-specific Errors
 
 enum CLIError: Error, LocalizedError {
@@ -106,7 +127,7 @@ struct New: ParsableCommand {
 
         // Ensure TermQ is running
         let workspace = NSWorkspace.shared
-        let bundleId = "net.eyelock.termq.app"
+        let bundleId = termqBundleIdentifier()
         let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
 
         if runningApps.isEmpty {
@@ -151,7 +172,7 @@ struct Open: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -173,7 +194,7 @@ struct Open: ParsableCommand {
 
             // Ensure TermQ is running and focus the terminal
             let workspace = NSWorkspace.shared
-            let bundleId = "net.eyelock.termq.app"
+            let bundleId = termqBundleIdentifier()
             let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
 
             if runningApps.isEmpty {
@@ -266,7 +287,7 @@ struct Create: ParsableCommand {
 
         // Ensure TermQ is running
         let workspace = NSWorkspace.shared
-        let bundleId = "net.eyelock.termq.app"
+        let bundleId = termqBundleIdentifier()
         let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
 
         if runningApps.isEmpty {
@@ -387,7 +408,7 @@ struct List: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
 
             // If --columns flag, output column info
             if columns {
@@ -471,7 +492,7 @@ struct Find: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
 
             var cards = board.activeCards
             var relevanceScores: [UUID: Int] = [:]
@@ -683,7 +704,7 @@ struct Set: ParsableCommand {
     func run() throws {
         // First, resolve the terminal identifier to a UUID
         do {
-            let board = try BoardLoader.loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -792,7 +813,7 @@ struct Move: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -860,7 +881,7 @@ struct Pending: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
             let cards = getFilteredAndSortedCards(from: board)
             let output = buildPendingOutput(cards: cards, board: board)
 
@@ -1086,7 +1107,7 @@ struct Delete: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: debug)
+            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
