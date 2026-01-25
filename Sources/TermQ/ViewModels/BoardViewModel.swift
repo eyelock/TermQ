@@ -574,4 +574,23 @@ class BoardViewModel: ObservableObject {
             save()
         }
     }
+
+    // MARK: - Environment Variables
+
+    /// Deletes all secret environment variables from all terminals (called after encryption key reset)
+    func deleteAllTerminalSecrets() {
+        var changed = false
+        for card in board.cards {
+            let hadSecrets = card.environmentVariables.contains { $0.isSecret }
+            card.environmentVariables.removeAll { $0.isSecret }
+            if hadSecrets {
+                changed = true
+            }
+        }
+
+        if changed {
+            objectWillChange.send()
+            save()
+        }
+    }
 }
