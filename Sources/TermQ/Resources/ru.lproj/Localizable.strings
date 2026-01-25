@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Разрешить доступ к буферу обмена OSC 52";
 "editor.allow.osc.clipboard.help" = "Разрешить этому терминалу доступ к системному буферу обмена через escape-последовательности OSC 52";
-"editor.confirm.external.modifications" = "Требовать подтверждение для внешних изменений LLM";
-"editor.confirm.external.modifications.help" = "Показывать подтверждение, когда внешние процессы изменяют контекст LLM этого терминала";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Отключено глобально";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Не установлено";
 "settings.cli.usage" = "Использование:";
 "settings.cli.location" = "Расположение";
-"settings.enable.terminal.autorun" = "Включить автозапуск терминала";
-"settings.enable.terminal.autorun.help" = "Разрешить CLI выполнять команды в терминалах";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Сервер MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Безопасность";
 "settings.allow.osc.clipboard" = "Разрешить доступ к буферу обмена OSC 52";
 "settings.allow.osc.clipboard.help" = "Разрешить терминальным программам чтение и запись в системный буфер обмена с использованием escape-последовательностей OSC 52";
-"settings.confirm.external.modifications" = "Требовать подтверждение для внешних изменений LLM";
-"settings.confirm.external.modifications.help" = "Показывать диалог подтверждения, когда внешние процессы пытаются изменить контекст LLM терминала через URL termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Запрос на внешнее изменение";
 "security.external.modification.message" = "Внешний процесс пытается изменить контекст LLM для терминала '%@':
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Добавить тег";
-"editor.allow.agent.prompts" = "Разрешить запросы агента";
-"editor.allow.agent.prompts.help" = "Разрешить этому терминалу выполнять запросы агента";
-"editor.allow.agent.prompts.disabled.globally" = "Отключено глобально - включите в Настройки > Данные и безопасность";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Отключено глобально - включите в Настройки > Данные и безопасность";
-"editor.confirm.external.modifications.disabled.globally" = "Отключено глобально - включите в Настройки > Данные и безопасность";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

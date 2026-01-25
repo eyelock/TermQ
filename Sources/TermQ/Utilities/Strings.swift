@@ -354,6 +354,7 @@ enum Strings {
         static var tagKeyPlaceholder: String { localized("editor.tag.key.placeholder") }
         static var tagValuePlaceholder: String { localized("editor.tag.value.placeholder") }
         static var tagsHelp: String { localized("editor.tags.help") }
+        static var noTags: String { localized("editor.no.tags") }
 
         // Agent Configuration section
         static var sectionAgent: String { localized("editor.section.agent") }

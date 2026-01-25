@@ -11,15 +11,13 @@ struct SettingsView: View {
     @ObservedObject private var coordinator = SettingsCoordinator.shared
 
     // CLI Tool installation state
-    @State private var selectedLocation: InstallLocation = .usrLocalBin
-    @State private var installedLocation: InstallLocation?
     @State private var isInstalling = false
+    @State private var cliInstallPath = "/usr/local/bin"
 
     // MCP Server installation state
-    @State private var selectedMCPLocation: MCPInstallLocation = .usrLocalBin
-    @State private var installedMCPLocation: MCPInstallLocation?
     @State private var isInstallingMCP = false
     @State private var configCopied = false
+    @State private var mcpInstallPath = "/usr/local/bin"
 
     // Alert state
     @State private var alertMessage: String?
@@ -29,9 +27,6 @@ struct SettingsView: View {
     // Terminal preferences
     @AppStorage("copyOnSelect") private var copyOnSelect = false
     @AppStorage("binRetentionDays") private var binRetentionDays = 14
-    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
-    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
-    @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
     @AppStorage("defaultWorkingDirectory") private var defaultWorkingDirectory = NSHomeDirectory()
     @AppStorage("defaultBackend") private var defaultBackendRawValue: String = "direct"
 
@@ -42,8 +37,8 @@ struct SettingsView: View {
     }
 
     // Security preferences
-    @AppStorage("allowTerminalsToRunAgentPrompts") private var allowTerminalsToRunAgentPrompts = false
-    @AppStorage("allowExternalLLMModifications") private var allowExternalLLMModifications = false
+    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
+    @AppStorage("confirmExternalLLMModifications") private var confirmExternalLLMModifications = true
     @AppStorage("allowOscClipboard") private var allowOscClipboard = false
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
@@ -120,8 +115,8 @@ struct SettingsView: View {
                     toolsContent
                 case .dataAndSecurity:
                     SettingsDataSecurityView(
-                        allowTerminalsToRunAgentPrompts: $allowTerminalsToRunAgentPrompts,
-                        allowExternalLLMModifications: $allowExternalLLMModifications,
+                        enableTerminalAutorun: $enableTerminalAutorun,
+                        confirmExternalLLMModifications: $confirmExternalLLMModifications,
                         allowOscClipboard: $allowOscClipboard,
                         dataDirectory: $dataDirectory
                     )
@@ -161,16 +156,11 @@ struct SettingsView: View {
     @ViewBuilder
     private var toolsContent: some View {
         ToolsTabContent(
-            selectedMCPLocation: $selectedMCPLocation,
-            installedMCPLocation: $installedMCPLocation,
             isInstallingMCP: $isInstallingMCP,
             configCopied: $configCopied,
-            selectedLocation: $selectedLocation,
-            installedLocation: $installedLocation,
+            mcpInstallPath: $mcpInstallPath,
             isInstalling: $isInstalling,
-            enableTerminalAutorun: $enableTerminalAutorun,
-            tmuxEnabled: $tmuxEnabled,
-            tmuxAutoReattach: $tmuxAutoReattach,
+            cliInstallPath: $cliInstallPath,
             installMCPServer: installMCPServer,
             uninstallMCPServer: uninstallMCPServer,
             copyMCPConfig: copyMCPConfig,
@@ -180,14 +170,19 @@ struct SettingsView: View {
     }
 
     private func refreshInstallStatus() {
-        installedLocation = CLIInstaller.currentInstallLocation
+        if let location = CLIInstaller.currentInstallLocation {
+            cliInstallPath = location.path
+        } else {
+            cliInstallPath = "/usr/local/bin"
+        }
     }
 
     private func installCLI() {
         isInstalling = true
-        let location = installedLocation ?? selectedLocation
         Task {
-            let result = await CLIInstaller.install(to: location)
+            // Always install to the path specified in cliInstallPath
+            let result = await CLIInstaller.install(toPath: cliInstallPath, requiresAdmin: nil)
+
             await MainActor.run {
                 isInstalling = false
                 switch result {
@@ -209,7 +204,7 @@ struct SettingsView: View {
     }
 
     private func uninstallCLI() {
-        guard let location = installedLocation else { return }
+        guard let location = CLIInstaller.currentInstallLocation else { return }
         isInstalling = true
         Task {
             let result = await CLIInstaller.uninstall(from: location)
@@ -236,14 +231,19 @@ struct SettingsView: View {
     // MARK: - MCP Server Methods
 
     private func refreshMCPInstallStatus() {
-        installedMCPLocation = MCPServerInstaller.currentInstallLocation
+        if let location = MCPServerInstaller.currentInstallLocation {
+            mcpInstallPath = location.path
+        } else {
+            mcpInstallPath = "/usr/local/bin"
+        }
     }
 
     private func installMCPServer() {
         isInstallingMCP = true
-        let location = installedMCPLocation ?? selectedMCPLocation
         Task {
-            let result = await MCPServerInstaller.install(to: location)
+            // Always install to the path specified in mcpInstallPath
+            let result = await MCPServerInstaller.install(toPath: mcpInstallPath, requiresAdmin: nil)
+
             await MainActor.run {
                 isInstallingMCP = false
                 switch result {
@@ -265,7 +265,7 @@ struct SettingsView: View {
     }
 
     private func uninstallMCPServer() {
-        guard let location = installedMCPLocation else { return }
+        guard let location = MCPServerInstaller.currentInstallLocation else { return }
         isInstallingMCP = true
         Task {
             let result = await MCPServerInstaller.uninstall(from: location)

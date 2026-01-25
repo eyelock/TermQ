@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Permite accesul la clipboard OSC 52";
 "editor.allow.osc.clipboard.help" = "Permite acestui terminal să acceseze clipboard-ul sistemului prin secvențe de escape OSC 52";
-"editor.confirm.external.modifications" = "Necesită confirmare pentru modificările LLM externe";
-"editor.confirm.external.modifications.help" = "Afișează confirmare când procesele externe modifică contextul LLM al acestui terminal";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Dezactivat global";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Neinstalat";
 "settings.cli.usage" = "Utilizare:";
 "settings.cli.location" = "Locație";
-"settings.enable.terminal.autorun" = "Activare rulare automată terminal";
-"settings.enable.terminal.autorun.help" = "Permitere CLI să ruleze comenzi în terminale";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Server MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Securitate";
 "settings.allow.osc.clipboard" = "Permite accesul la clipboard OSC 52";
 "settings.allow.osc.clipboard.help" = "Permite programelor de terminal să citească și să scrie în clipboard-ul sistemului folosind secvențe de escape OSC 52";
-"settings.confirm.external.modifications" = "Necesită confirmare pentru modificările LLM externe";
-"settings.confirm.external.modifications.help" = "Afișează un dialog de confirmare când procesele externe încearcă să modifice contextul LLM al terminalului prin URL-uri termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Solicitare de modificare externă";
 "security.external.modification.message" = "Un proces extern încearcă să modifice contextul LLM pentru terminalul '%@':
@@ -477,8 +477,8 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Adaugă etichetă";
-"editor.allow.agent.prompts" = "Permite solicitări agent";
-"editor.allow.agent.prompts.help" = "Permite acestui terminal să ruleze solicitări agent";
-"editor.allow.agent.prompts.disabled.globally" = "Dezactivat global - activează în Setări > Date și securitate";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Dezactivat global - activează în Setări > Date și securitate";
-"editor.confirm.external.modifications.disabled.globally" = "Dezactivat global - activează în Setări > Date și securitate";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

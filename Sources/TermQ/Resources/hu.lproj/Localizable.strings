@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "OSC 52 vágólap hozzáférés engedélyezése";
 "editor.allow.osc.clipboard.help" = "Engedélyezze ennek a terminálnak a rendszer vágólapjának elérését OSC 52 escape szekvenciákon keresztül";
-"editor.confirm.external.modifications" = "Megerősítés szükséges külső LLM módosításokhoz";
-"editor.confirm.external.modifications.help" = "Megerősítés megjelenítése, amikor külső folyamatok módosítják ennek a terminálnak az LLM kontextusát";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Globálisan letiltva";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Nincs telepítve";
 "settings.cli.usage" = "Használat:";
 "settings.cli.location" = "Hely";
-"settings.enable.terminal.autorun" = "Terminál automatikus futtatás engedélyezése";
-"settings.enable.terminal.autorun.help" = "CLI parancsfuttatásának engedélyezése terminálokban";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP szerver";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Biztonság";
 "settings.allow.osc.clipboard" = "OSC 52 vágólap hozzáférés engedélyezése";
 "settings.allow.osc.clipboard.help" = "Terminálprogramok számára engedélyezi a rendszer vágólapjának olvasását és írását OSC 52 escape szekvenciák használatával";
-"settings.confirm.external.modifications" = "Megerősítés szükséges külső LLM módosításokhoz";
-"settings.confirm.external.modifications.help" = "Megerősítési párbeszédablak megjelenítése, amikor külső folyamatok megpróbálják módosítani a terminál LLM kontextusát termq:// URL-eken keresztül";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Külső módosítási kérelem";
 "security.external.modification.message" = "Egy külső folyamat megpróbálja módosítani a '%@' terminál LLM kontextusát:
@@ -477,8 +477,8 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Címke hozzáadása";
-"editor.allow.agent.prompts" = "Ügynökutasítások engedélyezése";
-"editor.allow.agent.prompts.help" = "Engedélyezze ennek a terminálnak az ügynökutasítások futtatását";
-"editor.allow.agent.prompts.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
-"editor.confirm.external.modifications.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

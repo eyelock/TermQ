@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Izinkan akses clipboard OSC 52";
 "editor.allow.osc.clipboard.help" = "Izinkan terminal ini mengakses clipboard sistem melalui urutan escape OSC 52";
-"editor.confirm.external.modifications" = "Memerlukan konfirmasi untuk modifikasi LLM eksternal";
-"editor.confirm.external.modifications.help" = "Tampilkan konfirmasi ketika proses eksternal memodifikasi konteks LLM terminal ini";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Dinonaktifkan secara global";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Belum terinstal";
 "settings.cli.usage" = "Penggunaan:";
 "settings.cli.location" = "Lokasi";
-"settings.enable.terminal.autorun" = "Aktifkan Autorun Terminal";
-"settings.enable.terminal.autorun.help" = "Izinkan CLI menjalankan perintah di terminal";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Server MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Keamanan";
 "settings.allow.osc.clipboard" = "Izinkan akses clipboard OSC 52";
 "settings.allow.osc.clipboard.help" = "Izinkan program terminal untuk membaca dan menulis clipboard sistem menggunakan urutan escape OSC 52";
-"settings.confirm.external.modifications" = "Memerlukan konfirmasi untuk modifikasi LLM eksternal";
-"settings.confirm.external.modifications.help" = "Tampilkan dialog konfirmasi ketika proses eksternal mencoba memodifikasi konteks LLM terminal melalui URL termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Permintaan Modifikasi Eksternal";
 "security.external.modification.message" = "Proses eksternal mencoba memodifikasi konteks LLM untuk terminal '%@':
@@ -477,8 +477,8 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tambah Tag";
-"editor.allow.agent.prompts" = "Izinkan Prompt Agen";
-"editor.allow.agent.prompts.help" = "Izinkan terminal ini menjalankan prompt agen";
-"editor.allow.agent.prompts.disabled.globally" = "Dinonaktifkan secara global - aktifkan di Pengaturan > Data & Keamanan";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Dinonaktifkan secara global - aktifkan di Pengaturan > Data & Keamanan";
-"editor.confirm.external.modifications.disabled.globally" = "Dinonaktifkan secara global - aktifkan di Pengaturan > Data & Keamanan";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

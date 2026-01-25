@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Επιτρέψτε πρόσβαση στο πρόχειρο OSC 52";
 "editor.allow.osc.clipboard.help" = "Επιτρέψτε σε αυτό το τερματικό να έχει πρόσβαση στο πρόχειρο του συστήματος μέσω ακολουθιών διαφυγής OSC 52";
-"editor.confirm.external.modifications" = "Απαιτείται επιβεβαίωση για εξωτερικές τροποποιήσεις LLM";
-"editor.confirm.external.modifications.help" = "Εμφάνιση επιβεβαίωσης όταν εξωτερικές διεργασίες τροποποιούν το πλαίσιο LLM αυτού του τερματικού";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Απενεργοποιημένο καθολικά";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Δεν έχει εγκατασταθεί";
 "settings.cli.usage" = "Χρήση:";
 "settings.cli.location" = "Θέση";
-"settings.enable.terminal.autorun" = "Ενεργοποίηση αυτόματης εκτέλεσης τερματικού";
-"settings.enable.terminal.autorun.help" = "Επιτροπή στο CLI να εκτελεί εντολές σε τερματικά";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Διακομιστής MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Ασφάλεια";
 "settings.allow.osc.clipboard" = "Επιτρέψτε πρόσβαση στο πρόχειρο OSC 52";
 "settings.allow.osc.clipboard.help" = "Επιτρέψτε στα προγράμματα τερματικού να διαβάζουν και να γράφουν στο πρόχειρο του συστήματος χρησιμοποιώντας ακολουθίες διαφυγής OSC 52";
-"settings.confirm.external.modifications" = "Απαιτείται επιβεβαίωση για εξωτερικές τροποποιήσεις LLM";
-"settings.confirm.external.modifications.help" = "Εμφάνιση διαλόγου επιβεβαίωσης όταν εξωτερικές διεργασίες προσπαθούν να τροποποιήσουν το πλαίσιο LLM του τερματικού μέσω URL termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Αίτημα εξωτερικής τροποποίησης";
 "security.external.modification.message" = "Μια εξωτερική διεργασία προσπαθεί να τροποποιήσει το πλαίσιο LLM για το τερματικό '%@':
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Προσθήκη ετικέτας";
-"editor.allow.agent.prompts" = "Να επιτρέπονται οι προτροπές παράγοντα";
-"editor.allow.agent.prompts.help" = "Να επιτρέπεται σε αυτό το τερματικό να εκτελεί προτροπές παράγοντα";
-"editor.allow.agent.prompts.disabled.globally" = "Απενεργοποιημένο καθολικά - ενεργοποιήστε στις Ρυθμίσεις > Δεδομένα & Ασφάλεια";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Απενεργοποιημένο καθολικά - ενεργοποιήστε στις Ρυθμίσεις > Δεδομένα & Ασφάλεια";
-"editor.confirm.external.modifications.disabled.globally" = "Απενεργοποιημένο καθολικά - ενεργοποιήστε στις Ρυθμίσεις > Δεδομένα & Ασφάλεια";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

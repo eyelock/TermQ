@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Tillat OSC 52 utklippstavletilgang";
 "editor.allow.osc.clipboard.help" = "Tillat denne terminalen å få tilgang til systemets utklippstavle via OSC 52 escape-sekvenser";
-"editor.confirm.external.modifications" = "Krev bekreftelse for eksterne LLM-endringer";
-"editor.confirm.external.modifications.help" = "Vis bekreftelse når eksterne prosesser endrer denne terminalens LLM-kontekst";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Deaktivert globalt";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Ikke installert";
 "settings.cli.usage" = "Bruk:";
 "settings.cli.location" = "Plassering";
-"settings.enable.terminal.autorun" = "Aktiver terminalautokjøring";
-"settings.enable.terminal.autorun.help" = "Tillat CLI å kjøre kommandoer i terminaler";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP-server";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Sikkerhet";
 "settings.allow.osc.clipboard" = "Tillat OSC 52 utklippstavletilgang";
 "settings.allow.osc.clipboard.help" = "Tillat terminalprogrammer å lese og skrive til systemets utklippstavle ved hjelp av OSC 52 escape-sekvenser";
-"settings.confirm.external.modifications" = "Krev bekreftelse for eksterne LLM-endringer";
-"settings.confirm.external.modifications.help" = "Vis en bekreftelsesdialog når eksterne prosesser prøver å endre terminal LLM-kontekst via termq://-URL-er";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Forespørsel om ekstern endring";
 "security.external.modification.message" = "En ekstern prosess prøver å endre LLM-kontekst for terminalen '%@':
@@ -477,8 +477,8 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Legg til etikett";
-"editor.allow.agent.prompts" = "Tillat agentforespørsler";
-"editor.allow.agent.prompts.help" = "Tillat denne terminalen å kjøre agentforespørsler";
-"editor.allow.agent.prompts.disabled.globally" = "Deaktivert globalt - aktiver i Innstillinger > Data og sikkerhet";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Deaktivert globalt - aktiver i Innstillinger > Data og sikkerhet";
-"editor.confirm.external.modifications.disabled.globally" = "Deaktivert globalt - aktiver i Innstillinger > Data og sikkerhet";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

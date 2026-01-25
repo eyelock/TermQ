@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "OSC 52 클립보드 액세스 허용";
 "editor.allow.osc.clipboard.help" = "이 터미널이 OSC 52 이스케이프 시퀀스를 통해 시스템 클립보드에 액세스할 수 있도록 허용";
-"editor.confirm.external.modifications" = "외부 LLM 수정에 대한 확인 필요";
-"editor.confirm.external.modifications.help" = "외부 프로세스가 이 터미널의 LLM 컨텍스트를 수정할 때 확인 표시";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "전역적으로 비활성화됨";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "설치되지 않음";
 "settings.cli.usage" = "사용법:";
 "settings.cli.location" = "위치";
-"settings.enable.terminal.autorun" = "터미널 자동 실행 활성화";
-"settings.enable.terminal.autorun.help" = "CLI의 터미널 명령 실행 허용";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP 서버";
@@ -454,8 +454,8 @@
 "settings.section.security" = "보안";
 "settings.allow.osc.clipboard" = "OSC 52 클립보드 액세스 허용";
 "settings.allow.osc.clipboard.help" = "터미널 프로그램이 OSC 52 이스케이프 시퀀스를 사용하여 시스템 클립보드를 읽고 쓸 수 있도록 허용";
-"settings.confirm.external.modifications" = "외부 LLM 수정에 대한 확인 필요";
-"settings.confirm.external.modifications.help" = "외부 프로세스가 termq:// URL을 통해 터미널 LLM 컨텍스트를 수정하려고 할 때 확인 대화 상자 표시";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "외부 수정 요청";
 "security.external.modification.message" = "외부 프로세스가 터미널 '%@'의 LLM 컨텍스트를 수정하려고 합니다:
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "태그 추가";
-"editor.allow.agent.prompts" = "에이전트 프롬프트 허용";
-"editor.allow.agent.prompts.help" = "이 터미널이 에이전트 프롬프트를 실행하도록 허용";
-"editor.allow.agent.prompts.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";
-"editor.confirm.external.modifications.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

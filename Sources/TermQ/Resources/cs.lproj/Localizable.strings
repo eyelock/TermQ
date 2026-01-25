@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Povolit přístup ke schránce OSC 52";
 "editor.allow.osc.clipboard.help" = "Povolit tomuto terminálu přístup ke schránce systému pomocí escape sekvencí OSC 52";
-"editor.confirm.external.modifications" = "Vyžadovat potvrzení pro externí úpravy LLM";
-"editor.confirm.external.modifications.help" = "Zobrazit potvrzení, když externí procesy upravují kontext LLM tohoto terminálu";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Globálně zakázáno";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Nenainstalováno";
 "settings.cli.usage" = "Použití:";
 "settings.cli.location" = "Umístění";
-"settings.enable.terminal.autorun" = "Povolit automatické spuštění terminálu";
-"settings.enable.terminal.autorun.help" = "Povolit CLI spouštět příkazy v terminálech";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Server MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Zabezpečení";
 "settings.allow.osc.clipboard" = "Povolit přístup ke schránce OSC 52";
 "settings.allow.osc.clipboard.help" = "Povolit terminálových programům číst a zapisovat do systémové schránky pomocí escape sekvencí OSC 52";
-"settings.confirm.external.modifications" = "Vyžadovat potvrzení pro externí úpravy LLM";
-"settings.confirm.external.modifications.help" = "Zobrazit potvrzovací dialog, když se externí procesy pokusí upravit kontext LLM terminálu přes URL termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Požadavek na externí úpravu";
 "security.external.modification.message" = "Externí proces se pokouší upravit kontext LLM pro terminál '%@':
@@ -477,8 +477,8 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Přidat štítek";
-"editor.allow.agent.prompts" = "Povolit výzvy agenta";
-"editor.allow.agent.prompts.help" = "Povolit tomuto terminálu spouštět výzvy agenta";
-"editor.allow.agent.prompts.disabled.globally" = "Zakázáno globálně - povolit v Nastavení > Data a zabezpečení";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Zakázáno globálně - povolit v Nastavení > Data a zabezpečení";
-"editor.confirm.external.modifications.disabled.globally" = "Zakázáno globálně - povolit v Nastavení > Data a zabezpečení";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Dovoli dostop do odložišča OSC 52";
 "editor.allow.osc.clipboard.help" = "Dovoli temu terminalu dostop do sistemskega odložišča prek ubežnih sekvenc OSC 52";
-"editor.confirm.external.modifications" = "Zahtevaj potrditev za zunanje spremembe LLM";
-"editor.confirm.external.modifications.help" = "Prikaži potrditev, ko zunanji procesi spremenijo kontekst LLM tega terminala";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Onemogočeno globalno";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Ni nameščeno";
 "settings.cli.usage" = "Uporaba:";
 "settings.cli.location" = "Mesto";
-"settings.enable.terminal.autorun" = "Omogoči samodejni zagon terminala";
-"settings.enable.terminal.autorun.help" = "Dovoli CLI izvajanje ukazov v terminalih";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Strežnik MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Varnost";
 "settings.allow.osc.clipboard" = "Dovoli dostop do odložišča OSC 52";
 "settings.allow.osc.clipboard.help" = "Dovoli terminalskim programom branje in pisanje v sistemsko odložišče z uporabo ubežnih sekvenc OSC 52";
-"settings.confirm.external.modifications" = "Zahtevaj potrditev za zunanje spremembe LLM";
-"settings.confirm.external.modifications.help" = "Prikaži potrditveno pogovorno okno, ko zunanji procesi poskušajo spremeniti kontekst LLM terminala prek URL-jev termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Zahteva za zunanjo spremembo";
 "security.external.modification.message" = "Zunanji proces poskuša spremeniti kontekst LLM za terminal '%@':
@@ -477,8 +477,8 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Dodaj oznako";
-"editor.allow.agent.prompts" = "Dovoli pozive agenta";
-"editor.allow.agent.prompts.help" = "Dovoli temu terminalu izvajati pozive agenta";
-"editor.allow.agent.prompts.disabled.globally" = "Onemogočeno globalno - omogoči v Nastavitve > Podatki in varnost";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Onemogočeno globalno - omogoči v Nastavitve > Podatki in varnost";
-"editor.confirm.external.modifications.disabled.globally" = "Onemogočeno globalno - omogoči v Nastavitve > Podatki in varnost";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

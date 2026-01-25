@@ -686,7 +686,7 @@ final class UpdaterViewModel: ObservableObject {
     }
 
     /// Whether the user can check for updates (e.g., not currently checking)
-    @Published var canCheckForUpdates: Bool = false
+    @Published var canCheckForUpdates: Bool = true
 
     /// Whether to include beta releases in update checks
     /// The actual feed URL is determined by SparkleUpdaterDelegate based on this preference

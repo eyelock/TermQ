@@ -9,6 +9,8 @@ enum LLMVendor: String, CaseIterable {
     case custom = "Custom"
 
     /// Generate command template based on interactive mode
+    /// Note: Tokens are placed inside double quotes to show users the expected structure
+    /// Values are escaped for double-quote context during injection
     func commandTemplate(interactive: Bool) -> String {
         switch self {
         case .claudeCode:
@@ -29,7 +31,7 @@ enum LLMVendor: String, CaseIterable {
         case .copilot:
             return "gh copilot suggest \"{{LLM_NEXT_ACTION}}\""
         case .custom:
-            return "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+            return "\"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
         }
     }
 

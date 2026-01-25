@@ -4,16 +4,15 @@ import SwiftUI
 // MARK: - Tools Tab Content
 
 struct ToolsTabContent: View {
-    @Binding var selectedMCPLocation: MCPInstallLocation
-    @Binding var installedMCPLocation: MCPInstallLocation?
     @Binding var isInstallingMCP: Bool
     @Binding var configCopied: Bool
-    @Binding var selectedLocation: InstallLocation
-    @Binding var installedLocation: InstallLocation?
+    @Binding var mcpInstallPath: String
     @Binding var isInstalling: Bool
-    @Binding var enableTerminalAutorun: Bool
-    @Binding var tmuxEnabled: Bool
-    @Binding var tmuxAutoReattach: Bool
+    @Binding var cliInstallPath: String
+
+    // Use @AppStorage directly instead of @Binding to ensure persistence
+    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
+    @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
 
     let installMCPServer: () -> Void
     let uninstallMCPServer: () -> Void
@@ -26,6 +25,8 @@ struct ToolsTabContent: View {
 
     var isCLIInstalled: Bool { CLIInstaller.currentInstallLocation != nil }
     var isMCPInstalled: Bool { MCPServerInstaller.currentInstallLocation != nil }
+    var installedLocation: InstallLocation? { CLIInstaller.currentInstallLocation }
+    var installedMCPLocation: MCPInstallLocation? { MCPServerInstaller.currentInstallLocation }
 
     var activeTmuxSessionCount: Int {
         boardViewModel.activeSessionCards.filter { cardId in
@@ -126,15 +127,6 @@ extension ToolsTabContent {
     @ViewBuilder
     func mcpInstalledContent(location: MCPInstallLocation) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(Strings.Settings.mcpLocation)
-                    .foregroundColor(.secondary)
-                Text(location.fullPath)
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-            }
-            .font(.caption)
-
             VStack(alignment: .leading, spacing: 4) {
                 Text(Strings.Settings.mcpClaudeConfig)
                     .font(.caption)
@@ -162,11 +154,20 @@ extension ToolsTabContent {
                 }
             }
 
+            Divider()
+
+            PathInputField(
+                label: "Install Path",
+                path: $mcpInstallPath,
+                helpText: "Directory path for MCP server installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
+
             HStack {
                 Button(Strings.Common.reinstall) {
                     installMCPServer()
                 }
-                .disabled(isInstallingMCP)
+                .disabled(isInstallingMCP || mcpInstallPath.isEmpty)
 
                 Button(Strings.Common.uninstall, role: .destructive) {
                     uninstallMCPServer()
@@ -191,16 +192,12 @@ extension ToolsTabContent {
                     .foregroundColor(.orange)
             }
 
-            Picker(Strings.Settings.cliPath, selection: $selectedMCPLocation) {
-                ForEach(MCPInstallLocation.allCases) { location in
-                    Text(location.displayName).tag(location)
-                }
-            }
-            .pickerStyle(.radioGroup)
-
-            Text(selectedMCPLocation.pathNote)
-                .font(.caption2)
-                .foregroundColor(.secondary)
+            PathInputField(
+                label: "Install Path",
+                path: $mcpInstallPath,
+                helpText: "Directory path for MCP server installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
 
             Button {
                 installMCPServer()
@@ -213,7 +210,7 @@ extension ToolsTabContent {
                     Text(Strings.Settings.cliInstall)
                 }
             }
-            .disabled(isInstallingMCP)
+            .disabled(isInstallingMCP || mcpInstallPath.isEmpty)
         }
     }
 }
@@ -247,11 +244,6 @@ extension ToolsTabContent {
 
                 Divider()
 
-                Toggle(Strings.Settings.enableTerminalAutorun, isOn: $enableTerminalAutorun)
-                    .help(Strings.Settings.enableTerminalAutorunHelp)
-
-                Divider()
-
                 if let location = installedLocation {
                     cliInstalledContent(location: location)
                 } else {
@@ -267,25 +259,25 @@ extension ToolsTabContent {
     @ViewBuilder
     func cliInstalledContent(location: InstallLocation) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(Strings.Settings.cliLocation)
-                    .foregroundColor(.secondary)
-                Text(location.fullPath)
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-            }
-            .font(.caption)
-
             Text(Strings.Settings.cliUsage)
                 .font(.system(.caption, design: .monospaced))
                 .foregroundColor(.secondary)
                 .textSelection(.enabled)
 
+            Divider()
+
+            PathInputField(
+                label: "Install Path",
+                path: $cliInstallPath,
+                helpText: "Directory path for CLI installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
+
             HStack {
                 Button(Strings.Common.reinstall) {
                     installCLI()
                 }
-                .disabled(isInstalling)
+                .disabled(isInstalling || cliInstallPath.isEmpty)
 
                 Button(Strings.Common.uninstall, role: .destructive) {
                     uninstallCLI()
@@ -302,16 +294,12 @@ extension ToolsTabContent {
                 .font(.caption)
                 .foregroundColor(.secondary)
 
-            Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
-                ForEach(InstallLocation.allCases) { location in
-                    Text(location.displayName).tag(location)
-                }
-            }
-            .pickerStyle(.radioGroup)
-
-            Text(selectedLocation.pathNote)
-                .font(.caption2)
-                .foregroundColor(.secondary)
+            PathInputField(
+                label: "Install Path",
+                path: $cliInstallPath,
+                helpText: "Directory path for CLI installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
 
             Button {
                 installCLI()
@@ -324,7 +312,7 @@ extension ToolsTabContent {
                     Text(Strings.Settings.cliInstall)
                 }
             }
-            .disabled(isInstalling)
+            .disabled(isInstalling || cliInstallPath.isEmpty)
         }
     }
 }
