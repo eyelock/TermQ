@@ -11,19 +11,13 @@ struct SettingsView: View {
     @ObservedObject private var coordinator = SettingsCoordinator.shared
 
     // CLI Tool installation state
-    @State private var selectedLocation: InstallLocation = .usrLocalBin
-    @State private var installedLocation: InstallLocation?
     @State private var isInstalling = false
-    @State private var useCustomCLIPath = false
-    @State private var customCLIPath = ""
+    @State private var cliInstallPath = "/usr/local/bin"
 
     // MCP Server installation state
-    @State private var selectedMCPLocation: MCPInstallLocation = .usrLocalBin
-    @State private var installedMCPLocation: MCPInstallLocation?
     @State private var isInstallingMCP = false
     @State private var configCopied = false
-    @State private var useCustomMCPPath = false
-    @State private var customMCPPath = ""
+    @State private var mcpInstallPath = "/usr/local/bin"
 
     // Alert state
     @State private var alertMessage: String?
@@ -165,17 +159,11 @@ struct SettingsView: View {
     @ViewBuilder
     private var toolsContent: some View {
         ToolsTabContent(
-            selectedMCPLocation: $selectedMCPLocation,
-            installedMCPLocation: $installedMCPLocation,
             isInstallingMCP: $isInstallingMCP,
             configCopied: $configCopied,
-            useCustomMCPPath: $useCustomMCPPath,
-            customMCPPath: $customMCPPath,
-            selectedLocation: $selectedLocation,
-            installedLocation: $installedLocation,
+            mcpInstallPath: $mcpInstallPath,
             isInstalling: $isInstalling,
-            useCustomCLIPath: $useCustomCLIPath,
-            customCLIPath: $customCLIPath,
+            cliInstallPath: $cliInstallPath,
             enableTerminalAutorun: $enableTerminalAutorun,
             tmuxEnabled: $tmuxEnabled,
             tmuxAutoReattach: $tmuxAutoReattach,
@@ -188,22 +176,18 @@ struct SettingsView: View {
     }
 
     private func refreshInstallStatus() {
-        installedLocation = CLIInstaller.currentInstallLocation
+        if let location = CLIInstaller.currentInstallLocation {
+            cliInstallPath = location.path
+        } else {
+            cliInstallPath = "/usr/local/bin"
+        }
     }
 
     private func installCLI() {
         isInstalling = true
         Task {
-            let result: Result<String, CLIInstallerError>
-
-            if useCustomCLIPath {
-                // Install to custom path
-                result = await CLIInstaller.install(toPath: customCLIPath, requiresAdmin: nil)
-            } else {
-                // Install to predefined location
-                let location = installedLocation ?? selectedLocation
-                result = await CLIInstaller.install(to: location)
-            }
+            // Always install to the path specified in cliInstallPath
+            let result = await CLIInstaller.install(toPath: cliInstallPath, requiresAdmin: nil)
 
             await MainActor.run {
                 isInstalling = false
@@ -226,7 +210,7 @@ struct SettingsView: View {
     }
 
     private func uninstallCLI() {
-        guard let location = installedLocation else { return }
+        guard let location = CLIInstaller.currentInstallLocation else { return }
         isInstalling = true
         Task {
             let result = await CLIInstaller.uninstall(from: location)
@@ -253,22 +237,18 @@ struct SettingsView: View {
     // MARK: - MCP Server Methods
 
     private func refreshMCPInstallStatus() {
-        installedMCPLocation = MCPServerInstaller.currentInstallLocation
+        if let location = MCPServerInstaller.currentInstallLocation {
+            mcpInstallPath = location.path
+        } else {
+            mcpInstallPath = "/usr/local/bin"
+        }
     }
 
     private func installMCPServer() {
         isInstallingMCP = true
         Task {
-            let result: Result<String, MCPServerInstallerError>
-
-            if useCustomMCPPath {
-                // Install to custom path
-                result = await MCPServerInstaller.install(toPath: customMCPPath, requiresAdmin: nil)
-            } else {
-                // Install to predefined location
-                let location = installedMCPLocation ?? selectedMCPLocation
-                result = await MCPServerInstaller.install(to: location)
-            }
+            // Always install to the path specified in mcpInstallPath
+            let result = await MCPServerInstaller.install(toPath: mcpInstallPath, requiresAdmin: nil)
 
             await MainActor.run {
                 isInstallingMCP = false
@@ -291,7 +271,7 @@ struct SettingsView: View {
     }
 
     private func uninstallMCPServer() {
-        guard let location = installedMCPLocation else { return }
+        guard let location = MCPServerInstaller.currentInstallLocation else { return }
         isInstallingMCP = true
         Task {
             let result = await MCPServerInstaller.uninstall(from: location)

@@ -4,17 +4,11 @@ import SwiftUI
 // MARK: - Tools Tab Content
 
 struct ToolsTabContent: View {
-    @Binding var selectedMCPLocation: MCPInstallLocation
-    @Binding var installedMCPLocation: MCPInstallLocation?
     @Binding var isInstallingMCP: Bool
     @Binding var configCopied: Bool
-    @Binding var useCustomMCPPath: Bool
-    @Binding var customMCPPath: String
-    @Binding var selectedLocation: InstallLocation
-    @Binding var installedLocation: InstallLocation?
+    @Binding var mcpInstallPath: String
     @Binding var isInstalling: Bool
-    @Binding var useCustomCLIPath: Bool
-    @Binding var customCLIPath: String
+    @Binding var cliInstallPath: String
     @Binding var enableTerminalAutorun: Bool
     @Binding var tmuxEnabled: Bool
     @Binding var tmuxAutoReattach: Bool
@@ -30,6 +24,8 @@ struct ToolsTabContent: View {
 
     var isCLIInstalled: Bool { CLIInstaller.currentInstallLocation != nil }
     var isMCPInstalled: Bool { MCPServerInstaller.currentInstallLocation != nil }
+    var installedLocation: InstallLocation? { CLIInstaller.currentInstallLocation }
+    var installedMCPLocation: MCPInstallLocation? { MCPServerInstaller.currentInstallLocation }
 
     var activeTmuxSessionCount: Int {
         boardViewModel.activeSessionCards.filter { cardId in
@@ -130,15 +126,6 @@ extension ToolsTabContent {
     @ViewBuilder
     func mcpInstalledContent(location: MCPInstallLocation) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(Strings.Settings.mcpLocation)
-                    .foregroundColor(.secondary)
-                Text(location.fullPath)
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-            }
-            .font(.caption)
-
             VStack(alignment: .leading, spacing: 4) {
                 Text(Strings.Settings.mcpClaudeConfig)
                     .font(.caption)
@@ -166,11 +153,20 @@ extension ToolsTabContent {
                 }
             }
 
+            Divider()
+
+            PathInputField(
+                label: "Install Path",
+                path: $mcpInstallPath,
+                helpText: "Directory path for MCP server installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
+
             HStack {
                 Button(Strings.Common.reinstall) {
                     installMCPServer()
                 }
-                .disabled(isInstallingMCP)
+                .disabled(isInstallingMCP || mcpInstallPath.isEmpty)
 
                 Button(Strings.Common.uninstall, role: .destructive) {
                     uninstallMCPServer()
@@ -195,28 +191,12 @@ extension ToolsTabContent {
                     .foregroundColor(.orange)
             }
 
-            Toggle("Use custom path", isOn: $useCustomMCPPath)
-                .font(.caption)
-
-            if useCustomMCPPath {
-                PathInputField(
-                    label: "Install Path",
-                    path: $customMCPPath,
-                    helpText: "Custom directory path for MCP server installation (e.g., ~/.local/bin)",
-                    validatePath: true
-                )
-            } else {
-                Picker(Strings.Settings.cliPath, selection: $selectedMCPLocation) {
-                    ForEach(MCPInstallLocation.allCases) { location in
-                        Text(location.displayName).tag(location)
-                    }
-                }
-                .pickerStyle(.radioGroup)
-
-                Text(selectedMCPLocation.pathNote)
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-            }
+            PathInputField(
+                label: "Install Path",
+                path: $mcpInstallPath,
+                helpText: "Directory path for MCP server installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
 
             Button {
                 installMCPServer()
@@ -229,7 +209,7 @@ extension ToolsTabContent {
                     Text(Strings.Settings.cliInstall)
                 }
             }
-            .disabled(isInstallingMCP || (useCustomMCPPath && customMCPPath.isEmpty))
+            .disabled(isInstallingMCP || mcpInstallPath.isEmpty)
         }
     }
 }
@@ -283,25 +263,25 @@ extension ToolsTabContent {
     @ViewBuilder
     func cliInstalledContent(location: InstallLocation) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(Strings.Settings.cliLocation)
-                    .foregroundColor(.secondary)
-                Text(location.fullPath)
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-            }
-            .font(.caption)
-
             Text(Strings.Settings.cliUsage)
                 .font(.system(.caption, design: .monospaced))
                 .foregroundColor(.secondary)
                 .textSelection(.enabled)
 
+            Divider()
+
+            PathInputField(
+                label: "Install Path",
+                path: $cliInstallPath,
+                helpText: "Directory path for CLI installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
+
             HStack {
                 Button(Strings.Common.reinstall) {
                     installCLI()
                 }
-                .disabled(isInstalling)
+                .disabled(isInstalling || cliInstallPath.isEmpty)
 
                 Button(Strings.Common.uninstall, role: .destructive) {
                     uninstallCLI()
@@ -318,28 +298,12 @@ extension ToolsTabContent {
                 .font(.caption)
                 .foregroundColor(.secondary)
 
-            Toggle("Use custom path", isOn: $useCustomCLIPath)
-                .font(.caption)
-
-            if useCustomCLIPath {
-                PathInputField(
-                    label: "Install Path",
-                    path: $customCLIPath,
-                    helpText: "Custom directory path for CLI installation (e.g., ~/.local/bin)",
-                    validatePath: true
-                )
-            } else {
-                Picker(Strings.Settings.cliPath, selection: $selectedLocation) {
-                    ForEach(InstallLocation.allCases) { location in
-                        Text(location.displayName).tag(location)
-                    }
-                }
-                .pickerStyle(.radioGroup)
-
-                Text(selectedLocation.pathNote)
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-            }
+            PathInputField(
+                label: "Install Path",
+                path: $cliInstallPath,
+                helpText: "Directory path for CLI installation (e.g., /usr/local/bin)",
+                validatePath: true
+            )
 
             Button {
                 installCLI()
@@ -352,7 +316,7 @@ extension ToolsTabContent {
                     Text(Strings.Settings.cliInstall)
                 }
             }
-            .disabled(isInstalling || (useCustomCLIPath && customCLIPath.isEmpty))
+            .disabled(isInstalling || cliInstallPath.isEmpty)
         }
     }
 }
