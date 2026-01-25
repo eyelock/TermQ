@@ -31,7 +31,7 @@
             <string>TermQ Debug URL</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>termq-debug</string>
+                <string>termqd</string>
             </array>
         </dict>
     </array>

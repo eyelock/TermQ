@@ -4,6 +4,26 @@ import Foundation
     import AppKit
 #endif
 
+// MARK: - Bundle Configuration
+
+/// Returns the appropriate TermQ bundle identifier based on build configuration
+private func termqBundleIdentifier() -> String {
+    #if TERMQ_DEBUG_BUILD
+        return "net.eyelock.termq.app.debug"
+    #else
+        return "net.eyelock.termq.app"
+    #endif
+}
+
+/// Returns the appropriate URL scheme based on build configuration
+private func termqURLScheme() -> String {
+    #if TERMQ_DEBUG_BUILD
+        return "termqd"
+    #else
+        return "termq"
+    #endif
+}
+
 /// Opens URL schemes to communicate with the TermQ GUI application
 ///
 /// This is used by the MCP server to delegate mutations to the GUI app,
@@ -60,12 +80,37 @@ enum URLOpener {
         }
 
         #if os(macOS)
-            let opened = NSWorkspace.shared.open(url)
-            if !opened {
-                throw OpenError.failedToOpen(urlString)
+            let workspace = NSWorkspace.shared
+            let bundleId = termqBundleIdentifier()
+
+            // Get the app URL for the bundle ID
+            guard let appURL = workspace.urlForApplication(withBundleIdentifier: bundleId) else {
+                throw OpenError.failedToOpen("Could not find TermQ app with bundle ID: \(bundleId)")
             }
-            // Brief delay to allow GUI to begin processing the URL
-            try await Task.sleep(nanoseconds: 50_000_000)  // 50ms
+
+            // Check if correct app is running
+            let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
+
+            // If not running, try to launch it
+            if runningApps.isEmpty {
+                let config = NSWorkspace.OpenConfiguration()
+                do {
+                    _ = try await workspace.openApplication(at: appURL, configuration: config)
+                    // Wait for app to start
+                    try await Task.sleep(nanoseconds: 1_000_000_000)  // 1 second
+                } catch {
+                    throw OpenError.failedToOpen("Failed to launch TermQ: \(error.localizedDescription)")
+                }
+            }
+
+            // Open the URL with the specific app
+            do {
+                try await workspace.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+                // Brief delay to allow GUI to begin processing the URL
+                try await Task.sleep(nanoseconds: 50_000_000)  // 50ms
+            } catch {
+                throw OpenError.failedToOpen("Failed to send URL to TermQ: \(error.localizedDescription)")
+            }
         #else
             throw OpenError.failedToOpen("URL schemes only supported on macOS")
         #endif
@@ -106,7 +151,7 @@ enum URLOpener {
     /// Build a termq://open URL for creating a terminal
     static func buildOpenURL(params: OpenURLParams) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = termqURLScheme()
         components.host = "open"
 
         var queryItems: [URLQueryItem] = [
@@ -145,7 +190,7 @@ enum URLOpener {
     /// Build a termq://update URL for updating a terminal
     static func buildUpdateURL(params: UpdateURLParams) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = termqURLScheme()
         components.host = "update"
 
         var queryItems: [URLQueryItem] = [
@@ -192,7 +237,7 @@ enum URLOpener {
     /// Build a termq://move URL for moving a terminal
     static func buildMoveURL(cardId: UUID, column: String) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = termqURLScheme()
         components.host = "move"
         components.queryItems = [
             URLQueryItem(name: "id", value: cardId.uuidString),
@@ -204,7 +249,7 @@ enum URLOpener {
     /// Build a termq://focus URL for focusing a terminal
     static func buildFocusURL(cardId: UUID) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = termqURLScheme()
         components.host = "focus"
         components.queryItems = [
             URLQueryItem(name: "id", value: cardId.uuidString)
@@ -215,7 +260,7 @@ enum URLOpener {
     /// Build a termq://delete URL for deleting a terminal
     static func buildDeleteURL(cardId: UUID, permanent: Bool = false) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = termqURLScheme()
         components.host = "delete"
         components.queryItems = [
             URLQueryItem(name: "id", value: cardId.uuidString),

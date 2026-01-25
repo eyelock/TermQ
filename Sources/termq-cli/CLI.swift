@@ -24,6 +24,93 @@ private func shouldUseDebugMode(_ explicitDebug: Bool) -> Bool {
     #endif
 }
 
+/// Returns the appropriate URL scheme based on build configuration
+private func termqURLScheme() -> String {
+    #if TERMQ_DEBUG_BUILD
+        return "termqd"
+    #else
+        return "termq"
+    #endif
+}
+
+/// Open a URL with the specific TermQ app (by bundle ID)
+/// This ensures the URL goes to the correct app instance (production vs debug)
+private func openURLWithTermQ(_ url: URL) throws -> Bool {
+    let workspace = NSWorkspace.shared
+    let bundleId = termqBundleIdentifier()
+
+    fputs("[CLI] Opening URL: \(url.absoluteString)\n", stderr)
+    fputs("[CLI] Target bundle ID: \(bundleId)\n", stderr)
+
+    #if TERMQ_DEBUG_BUILD
+    // In debug builds, close production app if it's running to avoid conflicts
+    let productionBundleId = "net.eyelock.termq.app"
+    let productionApps = workspace.runningApplications.filter { $0.bundleIdentifier == productionBundleId }
+    for app in productionApps {
+        app.terminate()
+        Thread.sleep(forTimeInterval: 0.5)
+    }
+    #endif
+
+    // Check if correct app is already running
+    let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
+    let isRunning = !runningApps.isEmpty
+
+    // Get the app URL for the bundle ID
+    guard let appURL = workspace.urlForApplication(withBundleIdentifier: bundleId) else {
+        fputs("[CLI] App not found for bundle ID, attempting launch...\n", stderr)
+        // App not found, try to launch
+        if !launchTermQ() {
+            fputs("[CLI] Failed to launch app\n", stderr)
+            return false
+        }
+        // Try again after launch attempt
+        guard let appURL = workspace.urlForApplication(withBundleIdentifier: bundleId) else {
+            fputs("[CLI] Still can't find app after launch\n", stderr)
+            return false
+        }
+        // Open with the specific app
+        fputs("[CLI] Opening URL with app at: \(appURL.path)\n", stderr)
+        do {
+            try workspace.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+            fputs("[CLI] URL opened successfully\n", stderr)
+            return true
+        } catch {
+            fputs("[CLI] Failed to open URL: \(error)\n", stderr)
+            return false
+        }
+    }
+
+    fputs("[CLI] Found app at: \(appURL.path)\n", stderr)
+
+    // If not running, launch it first and wait for initialization
+    if !isRunning {
+        fputs("[CLI] App not running, launching...\n", stderr)
+        if !launchTermQ() {
+            fputs("[CLI] Failed to launch app\n", stderr)
+            return false
+        }
+        // Wait longer for app to fully initialize and register URL handler
+        fputs("[CLI] Waiting 2s for app to initialize...\n", stderr)
+        Thread.sleep(forTimeInterval: 2.0)
+    } else {
+        fputs("[CLI] App is already running\n", stderr)
+    }
+
+    // Open the URL with the specific app
+    fputs("[CLI] Opening URL with app at: \(appURL.path)\n", stderr)
+    do {
+        try workspace.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+        fputs("[CLI] URL opened successfully\n", stderr)
+        // Brief delay to ensure URL is processed
+        Thread.sleep(forTimeInterval: 0.5)
+        return true
+    } catch {
+        fputs("[CLI] Failed to open URL: \(error)\n", stderr)
+        return false
+    }
+}
+
 // MARK: - CLI-specific Errors
 
 enum CLIError: Error, LocalizedError {
@@ -102,7 +189,7 @@ struct New: ParsableCommand {
 
         // Build URL with parameters
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = termqURLScheme()
         components.host = "open"
 
         // Generate a card ID upfront so we can track it
@@ -138,8 +225,8 @@ struct New: ParsableCommand {
             }
         }
 
-        // Open the URL
-        let success = workspace.open(url)
+        // Open the URL with the correct TermQ app
+        let success = try openURLWithTermQ(url)
 
         if success {
             // Output JSON for easy parsing
@@ -181,7 +268,7 @@ struct Open: ParsableCommand {
 
             // Build URL to focus the terminal
             var components = URLComponents()
-            components.scheme = "termq"
+            components.scheme = termqURLScheme()
             components.host = "focus"
             components.queryItems = [
                 URLQueryItem(name: "id", value: card.id.uuidString)
@@ -205,7 +292,7 @@ struct Open: ParsableCommand {
                 }
             }
 
-            let success = workspace.open(url)
+            let success = try openURLWithTermQ(url)
 
             if success {
                 // Output terminal details as JSON
@@ -255,7 +342,7 @@ struct Create: ParsableCommand {
 
         // Build URL with parameters
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = termqURLScheme()
         components.host = "open"
 
         var queryItems: [URLQueryItem] = [
@@ -299,8 +386,8 @@ struct Create: ParsableCommand {
             }
         }
 
-        // Open the URL
-        let success = workspace.open(url)
+        // Open the URL with the correct TermQ app
+        let success = try openURLWithTermQ(url)
 
         if success {
             print("Creating terminal in TermQ: \(cwd)")
@@ -321,32 +408,53 @@ struct Create: ParsableCommand {
     }
 }
 
-/// Helper to launch TermQ app
+/// Helper to launch TermQ app by bundle ID
 func launchTermQ() -> Bool {
-    let possiblePaths = [
-        "/Applications/TermQ.app",
-        "\(NSHomeDirectory())/Applications/TermQ.app",
-        "\(FileManager.default.currentDirectoryPath)/TermQ.app",
-    ]
+    let workspace = NSWorkspace.shared
+    let bundleId = termqBundleIdentifier()
 
-    for appPath in possiblePaths {
-        if FileManager.default.fileExists(atPath: appPath) {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
-            process.arguments = ["-a", appPath, "--wait-apps"]
-            process.standardOutput = FileHandle.nullDevice
-            process.standardError = FileHandle.nullDevice
+    // Try to get the app URL for this bundle ID
+    guard let appURL = workspace.urlForApplication(withBundleIdentifier: bundleId) else {
+        // Bundle ID not found, try hardcoded paths as fallback
+        #if TERMQ_DEBUG_BUILD
+        let possiblePaths = [
+            "\(FileManager.default.currentDirectoryPath)/TermQDebug.app",
+            "/Applications/TermQDebug.app",
+            "\(NSHomeDirectory())/Applications/TermQDebug.app",
+        ]
+        #else
+        let possiblePaths = [
+            "/Applications/TermQ.app",
+            "\(NSHomeDirectory())/Applications/TermQ.app",
+            "\(FileManager.default.currentDirectoryPath)/TermQ.app",
+        ]
+        #endif
 
-            do {
-                try process.run()
-                Thread.sleep(forTimeInterval: 1.0)
-                return true
-            } catch {
-                continue
+        for appPath in possiblePaths {
+            if FileManager.default.fileExists(atPath: appPath) {
+                let process = Process()
+                process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
+                process.arguments = ["-a", appPath]
+                process.standardOutput = FileHandle.nullDevice
+                process.standardError = FileHandle.nullDevice
+
+                do {
+                    try process.run()
+                    Thread.sleep(forTimeInterval: 1.0)
+                    return true
+                } catch {
+                    continue
+                }
             }
         }
+        return false
     }
-    return false
+
+    // Launch using bundle ID
+    let config = NSWorkspace.OpenConfiguration()
+    let app = workspace.openApplication(at: appURL, configuration: config)
+    Thread.sleep(forTimeInterval: 1.0)
+    return app != nil
 }
 
 struct Launch: ParsableCommand {
@@ -713,7 +821,7 @@ struct Set: ParsableCommand {
 
             // Build URL for update
             var components = URLComponents()
-            components.scheme = "termq"
+            components.scheme = termqURLScheme()
             components.host = "update"
 
             var queryItems: [URLQueryItem] = [
@@ -772,8 +880,7 @@ struct Set: ParsableCommand {
             }
 
             // Open the URL scheme
-            let workspace = NSWorkspace.shared
-            let success = workspace.open(url)
+            let success = try openURLWithTermQ(url)
 
             if success {
                 JSONHelper.printJSON(SetResponse(success: true, id: card.id.uuidString))
@@ -822,7 +929,7 @@ struct Move: ParsableCommand {
 
             // Build URL for move
             var components = URLComponents()
-            components.scheme = "termq"
+            components.scheme = termqURLScheme()
             components.host = "move"
 
             components.queryItems = [
@@ -836,8 +943,7 @@ struct Move: ParsableCommand {
             }
 
             // Open the URL scheme
-            let workspace = NSWorkspace.shared
-            let success = workspace.open(url)
+            let success = try openURLWithTermQ(url)
 
             if success {
                 JSONHelper.printJSON(MoveResponse(success: true, id: card.id.uuidString, column: toColumn))
@@ -1116,7 +1222,7 @@ struct Delete: ParsableCommand {
 
             // Build URL for delete
             var components = URLComponents()
-            components.scheme = "termq"
+            components.scheme = termqURLScheme()
             components.host = "delete"
 
             components.queryItems = [
@@ -1129,9 +1235,8 @@ struct Delete: ParsableCommand {
                 throw ExitCode.failure
             }
 
-            // Open the URL scheme
-            let workspace = NSWorkspace.shared
-            let success = workspace.open(url)
+            // Open the URL scheme with the correct TermQ app
+            let success = try openURLWithTermQ(url)
 
             if success {
                 JSONHelper.printJSON(DeleteResponse(id: card.id.uuidString, permanent: permanent))

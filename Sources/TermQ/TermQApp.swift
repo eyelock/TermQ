@@ -44,7 +44,11 @@ class URLHandler: ObservableObject {
     }
 
     func handleURL(_ url: URL) {
-        guard url.scheme == "termq" else { return }
+        NSLog("[TermQ] URLHandler: Processing URL: \(url.absoluteString)")
+        guard url.scheme == "termq" || url.scheme == "termqd" else {
+            NSLog("[TermQ] URLHandler: Invalid scheme: \(url.scheme ?? "nil")")
+            return
+        }
 
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let queryItems = components?.queryItems ?? []
@@ -288,23 +292,33 @@ class URLHandler: ObservableObject {
     }
 
     private func handleDelete(queryItems: [URLQueryItem]) {
+        NSLog("[TermQ] handleDelete: Called with query items: \(queryItems)")
         guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
             let cardId = UUID(uuidString: idString)
-        else { return }
+        else {
+            NSLog("[TermQ] handleDelete: Failed to extract card ID")
+            return
+        }
 
+        NSLog("[TermQ] handleDelete: Card ID: \(cardId)")
         let viewModel = BoardViewModel.shared
 
-        guard let card = viewModel.card(for: cardId) else { return }
+        guard let card = viewModel.card(for: cardId) else {
+            NSLog("[TermQ] handleDelete: Card not found for ID: \(cardId)")
+            return
+        }
 
         // Check for permanent deletion flag
         let permanent =
             queryItems.first(where: { $0.name == "permanent" })?.value?.lowercased() == "true"
 
+        NSLog("[TermQ] handleDelete: Deleting card '\(card.title)' (permanent: \(permanent))")
         if permanent {
             viewModel.permanentlyDeleteCard(card)
         } else {
             viewModel.deleteCard(card)
         }
+        NSLog("[TermQ] handleDelete: Delete completed")
     }
 }
 
@@ -339,12 +353,36 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             userDriverDelegate: nil
         )
         super.init()
+
+        let logPath = NSHomeDirectory() + "/tmp/termq-debug.log"
+        let data = "\(Date()): AppDelegate.init() called\n".data(using: .utf8)!
+        try? data.write(to: URL(fileURLWithPath: logPath))
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Store reference to the main window and set delegate
         // In SwiftUI apps, the window might not be created yet, so we poll for it
         setupMainWindowDelegate()
+    }
+
+    func application(_ application: NSApplication, open urls: [URL]) {
+        let logPath = NSHomeDirectory() + "/tmp/termq-debug.log"
+        func log(_ msg: String) {
+            let data = "\(Date()): \(msg)\n".data(using: .utf8)!
+            if let handle = try? FileHandle(forWritingTo: URL(fileURLWithPath: logPath)) {
+                handle.seekToEndOfFile()
+                handle.write(data)
+                try? handle.close()
+            } else {
+                try? data.write(to: URL(fileURLWithPath: logPath))
+            }
+        }
+
+        log("NSApplicationDelegate: application(_:open:) called with \(urls.count) URL(s)")
+        for url in urls {
+            log("NSApplicationDelegate: Processing URL: \(url.absoluteString)")
+            URLHandler.shared.handleURL(url)
+        }
     }
 
     private func setupMainWindowDelegate() {
@@ -482,6 +520,21 @@ struct TermQApp: App {
                         onRestore: { backupToRestore = nil },
                         onSkip: { backupToRestore = nil }
                     )
+                }
+                .onOpenURL { url in
+                    let logPath = NSHomeDirectory() + "/tmp/termq-debug.log"
+                    func log(_ msg: String) {
+                        let data = "\(Date()): \(msg)\n".data(using: .utf8)!
+                        if let handle = try? FileHandle(forWritingTo: URL(fileURLWithPath: logPath)) {
+                            handle.seekToEndOfFile()
+                            handle.write(data)
+                            try? handle.close()
+                        } else {
+                            try? data.write(to: URL(fileURLWithPath: logPath))
+                        }
+                    }
+                    log("onOpenURL: Received URL: \(url.absoluteString)")
+                    urlHandler.handleURL(url)
                 }
         }
         .windowStyle(.titleBar)
@@ -639,13 +692,16 @@ struct TermQApp: App {
     }
 
     init() {
-        // Register URL handler
+        // URL handling is done via .onOpenURL() modifier on WindowGroup
+        // Old NSAppleEventManager approach doesn't work reliably with SwiftUI lifecycle
+        /*
         NSAppleEventManager.shared().setEventHandler(
             URLEventHandler.shared,
             andSelector: #selector(URLEventHandler.handleURL(_:replyEvent:)),
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+        */
     }
 
     /// Check if we should offer to restore from backup on startup
@@ -728,10 +784,27 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
     static let shared = URLEventHandler()
 
     @objc func handleURL(_ event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
+        let logPath = NSHomeDirectory() + "/tmp/termq-debug.log"
+        func log(_ msg: String) {
+            let data = "\(Date()): \(msg)\n".data(using: .utf8)!
+            if let handle = try? FileHandle(forWritingTo: URL(fileURLWithPath: logPath)) {
+                handle.seekToEndOfFile()
+                handle.write(data)
+                try? handle.close()
+            } else {
+                try? data.write(to: URL(fileURLWithPath: logPath))
+            }
+        }
+
+        log("URLEventHandler: handleURL called")
         guard let urlString = event.paramDescriptor(forKeyword: keyDirectObject)?.stringValue,
             let url = URL(string: urlString)
-        else { return }
+        else {
+            log("URLEventHandler: Failed to extract URL from event")
+            return
+        }
 
+        log("URLEventHandler: Received URL: \(urlString)")
         Task { @MainActor in
             URLHandler.shared.handleURL(url)
         }
