@@ -162,6 +162,21 @@ public struct DeleteResponse: Codable, Sendable {
     }
 }
 
+/// Response for create command
+public struct CreateResponse: Codable, Sendable {
+    public let id: String
+    public let name: String
+    public let path: String
+    public let column: String?
+
+    public init(id: String, name: String, path: String, column: String?) {
+        self.id = id
+        self.name = name
+        self.path = path
+        self.column = column
+    }
+}
+
 // MARK: - JSON Encoding Helper
 
 public enum JSONHelper {

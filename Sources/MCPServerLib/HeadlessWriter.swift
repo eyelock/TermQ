@@ -3,22 +3,42 @@ import TermQShared
 
 /// Wraps BoardWriter with MCP-specific logic for headless operations
 /// Sets needsTmuxSession flag and handles tag merging
-enum HeadlessWriter {
+public enum HeadlessWriter {
     /// Parameters for updating a card
-    struct UpdateParameters {
-        let name: String?
-        let description: String?
-        let badge: String?
-        let llmPrompt: String?
-        let llmNextAction: String?
-        let favourite: Bool?
-        let tags: [(key: String, value: String)]?
-        let replaceTags: Bool
+    public struct UpdateParameters {
+        public let name: String?
+        public let description: String?
+        public let badge: String?
+        public let llmPrompt: String?
+        public let llmNextAction: String?
+        public let favourite: Bool?
+        public let tags: [(key: String, value: String)]?
+        public let replaceTags: Bool
+
+        public init(
+            name: String? = nil,
+            description: String? = nil,
+            badge: String? = nil,
+            llmPrompt: String? = nil,
+            llmNextAction: String? = nil,
+            favourite: Bool? = nil,
+            tags: [(key: String, value: String)]? = nil,
+            replaceTags: Bool = false
+        ) {
+            self.name = name
+            self.description = description
+            self.badge = badge
+            self.llmPrompt = llmPrompt
+            self.llmNextAction = llmNextAction
+            self.favourite = favourite
+            self.tags = tags
+            self.replaceTags = replaceTags
+        }
     }
 
     /// Create a new card via BoardWriter with MCP-specific fields
     /// Marks card with needsTmuxSession=true for GUI to create sessions later
-    static func createCard(
+    public static func createCard(
         name: String,
         columnName: String?,
         workingDirectory: String,
@@ -73,7 +93,7 @@ enum HeadlessWriter {
     }
 
     /// Update a card's fields via BoardWriter
-    static func updateCard(
+    public static func updateCard(
         identifier: String,
         params: UpdateParameters,
         dataDirectory: URL? = nil,
@@ -146,7 +166,7 @@ enum HeadlessWriter {
     }
 
     /// Move a card to a different column via BoardWriter
-    static func moveCard(
+    public static func moveCard(
         identifier: String,
         toColumn columnName: String,
         dataDirectory: URL? = nil,
@@ -161,7 +181,7 @@ enum HeadlessWriter {
     }
 
     /// Soft-delete a card (sets deletedAt timestamp)
-    static func deleteCard(
+    public static func deleteCard(
         identifier: String,
         permanent: Bool,
         dataDirectory: URL? = nil,

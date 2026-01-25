@@ -96,6 +96,7 @@ let package = Package(
             name: "termq-cli",
             dependencies: [
                 "TermQShared",
+                "MCPServerLib",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
             path: "Sources/termq-cli"
