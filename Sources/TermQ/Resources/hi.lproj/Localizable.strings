@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "OSC 52 क्लिपबोर्ड एक्सेस की अनुमति दें";
 "editor.allow.osc.clipboard.help" = "इस टर्मिनल को OSC 52 एस्केप सीक्वेंस के माध्यम से सिस्टम क्लिपबोर्ड तक पहुंचने की अनुमति दें";
-"editor.confirm.external.modifications" = "बाहरी LLM संशोधनों के लिए पुष्टि आवश्यक";
-"editor.confirm.external.modifications.help" = "जब बाहरी प्रक्रियाएं इस टर्मिनल के LLM संदर्भ को संशोधित करें तो पुष्टि दिखाएं";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "वैश्विक रूप से अक्षम";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "इंस्टॉल नहीं है";
 "settings.cli.usage" = "उपयोग:";
 "settings.cli.location" = "स्थान";
-"settings.enable.terminal.autorun" = "टर्मिनल ऑटोरन सक्षम करें";
-"settings.enable.terminal.autorun.help" = "CLI को टर्मिनल में कमांड चलाने की अनुमति दें";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP सर्वर";
@@ -454,8 +454,8 @@
 "settings.section.security" = "सुरक्षा";
 "settings.allow.osc.clipboard" = "OSC 52 क्लिपबोर्ड एक्सेस की अनुमति दें";
 "settings.allow.osc.clipboard.help" = "टर्मिनल प्रोग्राम को OSC 52 एस्केप सीक्वेंस का उपयोग करके सिस्टम क्लिपबोर्ड पढ़ने और लिखने की अनुमति दें";
-"settings.confirm.external.modifications" = "बाहरी LLM संशोधनों के लिए पुष्टि आवश्यक";
-"settings.confirm.external.modifications.help" = "जब बाहरी प्रक्रियाएं termq:// URL के माध्यम से टर्मिनल LLM संदर्भ को संशोधित करने का प्रयास करें तो पुष्टि संवाद दिखाएं";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "बाहरी संशोधन अनुरोध";
 "security.external.modification.message" = "एक बाहरी प्रक्रिया टर्मिनल '%@' के लिए LLM संदर्भ को संशोधित करने का प्रयास कर रही है:
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "टैग जोड़ें";
-"editor.allow.agent.prompts" = "एजेंट प्रॉम्प्ट की अनुमति दें";
-"editor.allow.agent.prompts.help" = "इस टर्मिनल को एजेंट प्रॉम्प्ट चलाने की अनुमति दें";
-"editor.allow.agent.prompts.disabled.globally" = "वैश्विक रूप से अक्षम - सेटिंग्स > डेटा और सुरक्षा में सक्षम करें";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "वैश्विक रूप से अक्षम - सेटिंग्स > डेटा और सुरक्षा में सक्षम करें";
-"editor.confirm.external.modifications.disabled.globally" = "वैश्विक रूप से अक्षम - सेटिंग्स > डेटा और सुरक्षा में सक्षम करें";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

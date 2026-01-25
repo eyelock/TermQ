@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "允许 OSC 52 剪贴板访问";
 "editor.allow.osc.clipboard.help" = "允许此终端通过 OSC 52 转义序列访问系统剪贴板";
-"editor.confirm.external.modifications" = "外部 LLM 修改需要确认";
-"editor.confirm.external.modifications.help" = "当外部进程修改此终端的 LLM 上下文时显示确认";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "全局禁用";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "未安装";
 "settings.cli.usage" = "用法：";
 "settings.cli.location" = "位置";
-"settings.enable.terminal.autorun" = "启用终端自动运行";
-"settings.enable.terminal.autorun.help" = "允许 CLI 在终端中运行命令";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP 服务器";
@@ -454,8 +454,8 @@
 "settings.section.security" = "安全";
 "settings.allow.osc.clipboard" = "允许 OSC 52 剪贴板访问";
 "settings.allow.osc.clipboard.help" = "允许终端程序使用 OSC 52 转义序列读写系统剪贴板";
-"settings.confirm.external.modifications" = "外部 LLM 修改需要确认";
-"settings.confirm.external.modifications.help" = "当外部进程尝试通过 termq:// URL 修改终端 LLM 上下文时显示确认对话框";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部修改请求";
 "security.external.modification.message" = "外部进程正在尝试修改终端 '%@' 的 LLM 上下文:
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "添加标签";
-"editor.allow.agent.prompts" = "允许代理提示";
-"editor.allow.agent.prompts.help" = "允许此终端运行代理提示";
-"editor.allow.agent.prompts.disabled.globally" = "全局禁用 - 在设置 > 数据与安全中启用";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "全局禁用 - 在设置 > 数据与安全中启用";
-"editor.confirm.external.modifications.disabled.globally" = "全局禁用 - 在设置 > 数据与安全中启用";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

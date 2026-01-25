@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "אפשר גישה ללוח OSC 52";
 "editor.allow.osc.clipboard.help" = "אפשר למסוף זה גישה ללוח המערכת באמצעות רצפי בריחה OSC 52";
-"editor.confirm.external.modifications" = "דרוש אישור לשינויי LLM חיצוניים";
-"editor.confirm.external.modifications.help" = "הצג אישור כאשר תהליכים חיצוניים משנים את הקשר ה-LLM של מסוף זה";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "מושבת ברמה גלובלית";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "לא מותקן";
 "settings.cli.usage" = "שימוש:";
 "settings.cli.location" = "מיקום";
-"settings.enable.terminal.autorun" = "הפעל הרצה אוטומטית של מסוף";
-"settings.enable.terminal.autorun.help" = "אפשר ל-CLI להריץ פקודות במסופים";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "שרת MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "אבטחה";
 "settings.allow.osc.clipboard" = "אפשר גישה ללוח OSC 52";
 "settings.allow.osc.clipboard.help" = "אפשר לתוכניות מסוף לקרוא ולכתוב ללוח המערכת באמצעות רצפי בריחה OSC 52";
-"settings.confirm.external.modifications" = "דרוש אישור לשינויי LLM חיצוניים";
-"settings.confirm.external.modifications.help" = "הצג תיבת דו-שיח לאישור כאשר תהליכים חיצוניים מנסים לשנות את הקשר ה-LLM של המסוף דרך כתובות termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "בקשה לשינוי חיצוני";
 "security.external.modification.message" = "תהליך חיצוני מנסה לשנות את הקשר LLM עבור הטרמינל '%@':
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "הוסף תג";
-"editor.allow.agent.prompts" = "אפשר הנחיות סוכן";
-"editor.allow.agent.prompts.help" = "אפשר למסוף זה להפעיל הנחיות סוכן";
-"editor.allow.agent.prompts.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
-"editor.confirm.external.modifications.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

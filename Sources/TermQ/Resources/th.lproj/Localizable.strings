@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "อนุญาตการเข้าถึงคลิปบอร์ด OSC 52";
 "editor.allow.osc.clipboard.help" = "อนุญาตให้เทอร์มินัลนี้เข้าถึงคลิปบอร์ดระบบผ่านลำดับ escape OSC 52";
-"editor.confirm.external.modifications" = "ต้องการการยืนยันสำหรับการแก้ไข LLM ภายนอก";
-"editor.confirm.external.modifications.help" = "แสดงการยืนยันเมื่อกระบวนการภายนอกแก้ไขบริบท LLM ของเทอร์มินัลนี้";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "ปิดใช้งานทั่วโลก";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "ยังไม่ได้ติดตั้ง";
 "settings.cli.usage" = "การใช้งาน:";
 "settings.cli.location" = "ตำแหน่ง";
-"settings.enable.terminal.autorun" = "เปิดใช้งานการรันเทอร์มินัลอัตโนมัติ";
-"settings.enable.terminal.autorun.help" = "อนุญาตให้ CLI รันคำสั่งในเทอร์มินัล";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "เซิร์ฟเวอร์ MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "ความปลอดภัย";
 "settings.allow.osc.clipboard" = "อนุญาตการเข้าถึงคลิปบอร์ด OSC 52";
 "settings.allow.osc.clipboard.help" = "อนุญาตให้โปรแกรมเทอร์มินัลอ่านและเขียนคลิปบอร์ดระบบโดยใช้ลำดับ escape OSC 52";
-"settings.confirm.external.modifications" = "ต้องการการยืนยันสำหรับการแก้ไข LLM ภายนอก";
-"settings.confirm.external.modifications.help" = "แสดงกล่องโต้ตอบยืนยันเมื่อกระบวนการภายนอกพยายามแก้ไขบริบท LLM ของเทอร์มินัลผ่าน URL termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "คำขอแก้ไขจากภายนอก";
 "security.external.modification.message" = "กระบวนการภายนอกกำลังพยายามแก้ไขบริบท LLM สำหรับเทอร์มินัล '%@':
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "เพิ่มแท็ก";
-"editor.allow.agent.prompts" = "อนุญาตพรอมต์ตัวแทน";
-"editor.allow.agent.prompts.help" = "อนุญาตให้เทอร์มินัลนี้เรียกใช้พรอมต์ตัวแทน";
-"editor.allow.agent.prompts.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
-"editor.confirm.external.modifications.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

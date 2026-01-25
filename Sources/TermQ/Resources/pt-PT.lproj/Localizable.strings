@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Permitir acesso à área de transferência OSC 52";
 "editor.allow.osc.clipboard.help" = "Permitir que este terminal aceda à área de transferência do sistema via sequências de escape OSC 52";
-"editor.confirm.external.modifications" = "Exigir confirmação para modificações LLM externas";
-"editor.confirm.external.modifications.help" = "Mostrar confirmação quando processos externos modificarem o contexto LLM deste terminal";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Desativado globalmente";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Não instalado";
 "settings.cli.usage" = "Utilização:";
 "settings.cli.location" = "Localização";
-"settings.enable.terminal.autorun" = "Activar Execução Auto do Terminal";
-"settings.enable.terminal.autorun.help" = "Permitir que o CLI execute comandos nos terminais";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Servidor MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Segurança";
 "settings.allow.osc.clipboard" = "Permitir acesso à área de transferência OSC 52";
 "settings.allow.osc.clipboard.help" = "Permitir que programas de terminal leiam e escrevam na área de transferência do sistema usando sequências de escape OSC 52";
-"settings.confirm.external.modifications" = "Exigir confirmação para modificações LLM externas";
-"settings.confirm.external.modifications.help" = "Mostrar diálogo de confirmação quando processos externos tentarem modificar o contexto LLM do terminal via URLs termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Pedido de modificação externa";
 "security.external.modification.message" = "Um processo externo está a tentar modificar o contexto LLM para o terminal '%@':
@@ -477,8 +477,8 @@ Isto pode afetar a forma como os assistentes de IA interagem com este terminal."
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Adicionar etiqueta";
-"editor.allow.agent.prompts" = "Permitir pedidos de agente";
-"editor.allow.agent.prompts.help" = "Permitir que este terminal execute pedidos de agente";
-"editor.allow.agent.prompts.disabled.globally" = "Desativado globalmente - ativar em Definições > Dados e segurança";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Desativado globalmente - ativar em Definições > Dados e segurança";
-"editor.confirm.external.modifications.disabled.globally" = "Desativado globalmente - ativar em Definições > Dados e segurança";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

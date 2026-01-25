@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Tillåt OSC 52 urklippsåtkomst";
 "editor.allow.osc.clipboard.help" = "Tillåt denna terminal att komma åt systemets urklipp via OSC 52-escape-sekvenser";
-"editor.confirm.external.modifications" = "Kräv bekräftelse för externa LLM-ändringar";
-"editor.confirm.external.modifications.help" = "Visa bekräftelse när externa processer ändrar denna terminals LLM-kontext";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Inaktiverad globalt";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Ej installerad";
 "settings.cli.usage" = "Användning:";
 "settings.cli.location" = "Plats";
-"settings.enable.terminal.autorun" = "Aktivera terminalautokörning";
-"settings.enable.terminal.autorun.help" = "Tillåt CLI att köra kommandon i terminaler";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP-server";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Säkerhet";
 "settings.allow.osc.clipboard" = "Tillåt OSC 52 urklippsåtkomst";
 "settings.allow.osc.clipboard.help" = "Tillåt terminalprogram att läsa och skriva till systemets urklipp med hjälp av OSC 52-escape-sekvenser";
-"settings.confirm.external.modifications" = "Kräv bekräftelse för externa LLM-ändringar";
-"settings.confirm.external.modifications.help" = "Visa en bekräftelsedialog när externa processer försöker ändra terminalens LLM-kontext via termq://-URL:er";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Begäran om extern ändring";
 "security.external.modification.message" = "En extern process försöker ändra LLM-kontexten för terminalen '%@':
@@ -477,8 +477,8 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Lägg till tagg";
-"editor.allow.agent.prompts" = "Tillåt agentprompter";
-"editor.allow.agent.prompts.help" = "Tillåt denna terminal att köra agentprompter";
-"editor.allow.agent.prompts.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";
-"editor.confirm.external.modifications.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

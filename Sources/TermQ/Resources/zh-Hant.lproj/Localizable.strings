@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "允許 OSC 52 剪貼簿存取";
 "editor.allow.osc.clipboard.help" = "允許此終端通過 OSC 52 跳脫序列存取系統剪貼簿";
-"editor.confirm.external.modifications" = "外部 LLM 修改需要確認";
-"editor.confirm.external.modifications.help" = "當外部程序修改此終端的 LLM 上下文時顯示確認";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "全域停用";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "未安裝";
 "settings.cli.usage" = "用法：";
 "settings.cli.location" = "位置";
-"settings.enable.terminal.autorun" = "啟用終端機自動執行";
-"settings.enable.terminal.autorun.help" = "允許 CLI 在終端機中執行指令";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP 伺服器";
@@ -454,8 +454,8 @@
 "settings.section.security" = "安全";
 "settings.allow.osc.clipboard" = "允許 OSC 52 剪貼簿存取";
 "settings.allow.osc.clipboard.help" = "允許終端程式使用 OSC 52 跳脫序列讀寫系統剪貼簿";
-"settings.confirm.external.modifications" = "外部 LLM 修改需要確認";
-"settings.confirm.external.modifications.help" = "當外部程序嘗試透過 termq:// URL 修改終端 LLM 上下文時顯示確認對話框";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部修改請求";
 "security.external.modification.message" = "外部程序正在嘗試修改終端機 '%@' 的 LLM 上下文:
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "新增標籤";
-"editor.allow.agent.prompts" = "允許代理提示";
-"editor.allow.agent.prompts.help" = "允許此終端機執行代理提示";
-"editor.allow.agent.prompts.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
-"editor.confirm.external.modifications.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

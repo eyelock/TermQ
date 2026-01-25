@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "OSC 52 klembordtoegang toestaan";
 "editor.allow.osc.clipboard.help" = "Deze terminal toegang geven tot het systeemklembord via OSC 52 escape-sequenties";
-"editor.confirm.external.modifications" = "Bevestiging vereist voor externe LLM-wijzigingen";
-"editor.confirm.external.modifications.help" = "Bevestiging tonen wanneer externe processen de LLM-context van deze terminal wijzigen";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Globaal uitgeschakeld";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Niet geïnstalleerd";
 "settings.cli.usage" = "Gebruik:";
 "settings.cli.location" = "Locatie";
-"settings.enable.terminal.autorun" = "Terminal autorun inschakelen";
-"settings.enable.terminal.autorun.help" = "CLI commando's laten uitvoeren in terminals";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP-server";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Beveiliging";
 "settings.allow.osc.clipboard" = "OSC 52 klembordtoegang toestaan";
 "settings.allow.osc.clipboard.help" = "Terminalprogramma's toestaan het systeemklembord te lezen en schrijven met behulp van OSC 52 escape-sequenties";
-"settings.confirm.external.modifications" = "Bevestiging vereist voor externe LLM-wijzigingen";
-"settings.confirm.external.modifications.help" = "Toon een bevestigingsvenster wanneer externe processen proberen de terminal LLM-context te wijzigen via termq://-URL's";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Verzoek voor externe wijziging";
 "security.external.modification.message" = "Een extern proces probeert de LLM-context voor terminal '%@' te wijzigen:
@@ -477,8 +477,8 @@ Dit kan invloed hebben op hoe AI-assistenten met deze terminal communiceren.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tag toevoegen";
-"editor.allow.agent.prompts" = "Agentprompts toestaan";
-"editor.allow.agent.prompts.help" = "Sta deze terminal toe om agentprompts uit te voeren";
-"editor.allow.agent.prompts.disabled.globally" = "Globaal uitgeschakeld - inschakelen in Instellingen > Gegevens & Beveiliging";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Globaal uitgeschakeld - inschakelen in Instellingen > Gegevens & Beveiliging";
-"editor.confirm.external.modifications.disabled.globally" = "Globaal uitgeschakeld - inschakelen in Instellingen > Gegevens & Beveiliging";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

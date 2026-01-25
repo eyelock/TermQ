@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "السماح بالوصول إلى الحافظة عبر OSC 52";
 "editor.allow.osc.clipboard.help" = "السماح لهذه الطرفية بالوصول إلى حافظة النظام عبر تسلسلات OSC 52";
-"editor.confirm.external.modifications" = "طلب تأكيد للتعديلات الخارجية على LLM";
-"editor.confirm.external.modifications.help" = "إظهار تأكيد عندما تحاول العمليات الخارجية تعديل سياق LLM لهذه الطرفية";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "معطل عالميًا";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "غير مثبّت";
 "settings.cli.usage" = "الاستخدام:";
 "settings.cli.location" = "الموقع";
-"settings.enable.terminal.autorun" = "تفعيل التشغيل التلقائي للطرفية";
-"settings.enable.terminal.autorun.help" = "السماح لـ CLI بتشغيل الأوامر في الطرفيات";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "خادم MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "الأمان";
 "settings.allow.osc.clipboard" = "السماح بالوصول إلى الحافظة عبر OSC 52";
 "settings.allow.osc.clipboard.help" = "السماح لبرامج الطرفية بالقراءة والكتابة إلى حافظة النظام باستخدام تسلسلات OSC 52";
-"settings.confirm.external.modifications" = "طلب تأكيد للتعديلات الخارجية على LLM";
-"settings.confirm.external.modifications.help" = "إظهار مربع حوار تأكيد عندما تحاول العمليات الخارجية تعديل سياق LLM للطرفية عبر عناوين URL termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "طلب تعديل خارجي";
 "security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "إضافة علامة";
-"editor.allow.agent.prompts" = "السماح بموجهات الوكيل";
-"editor.allow.agent.prompts.help" = "السماح لهذا الطرفية بتشغيل موجهات الوكيل";
-"editor.allow.agent.prompts.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";
-"editor.confirm.external.modifications.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

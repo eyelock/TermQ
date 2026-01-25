@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "Cho phép truy cập clipboard OSC 52";
 "editor.allow.osc.clipboard.help" = "Cho phép terminal này truy cập clipboard hệ thống qua chuỗi thoát OSC 52";
-"editor.confirm.external.modifications" = "Yêu cầu xác nhận cho các sửa đổi LLM bên ngoài";
-"editor.confirm.external.modifications.help" = "Hiển thị xác nhận khi các tiến trình bên ngoài sửa đổi ngữ cảnh LLM của terminal này";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Đã tắt toàn cục";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Chưa cài đặt";
 "settings.cli.usage" = "Cách dùng:";
 "settings.cli.location" = "Vị trí";
-"settings.enable.terminal.autorun" = "Bật tự động chạy Terminal";
-"settings.enable.terminal.autorun.help" = "Cho phép CLI chạy lệnh trong terminal";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Máy chủ MCP";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Bảo mật";
 "settings.allow.osc.clipboard" = "Cho phép truy cập clipboard OSC 52";
 "settings.allow.osc.clipboard.help" = "Cho phép các chương trình terminal đọc và ghi vào clipboard hệ thống bằng chuỗi thoát OSC 52";
-"settings.confirm.external.modifications" = "Yêu cầu xác nhận cho các sửa đổi LLM bên ngoài";
-"settings.confirm.external.modifications.help" = "Hiển thị hộp thoại xác nhận khi các tiến trình bên ngoài cố gắng sửa đổi ngữ cảnh LLM của terminal qua URL termq://";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Yêu cầu sửa đổi bên ngoài";
 "security.external.modification.message" = "Một tiến trình bên ngoài đang cố gắng sửa đổi ngữ cảnh LLM cho terminal '%@':
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Thêm thẻ";
-"editor.allow.agent.prompts" = "Cho phép lời nhắc đại diện";
-"editor.allow.agent.prompts.help" = "Cho phép thiết bị đầu cuối này chạy lời nhắc đại diện";
-"editor.allow.agent.prompts.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";
-"editor.confirm.external.modifications.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

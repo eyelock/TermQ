@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "OSC 52クリップボードアクセスを許可";
 "editor.allow.osc.clipboard.help" = "このターミナルがOSC 52エスケープシーケンスを介してシステムクリップボードにアクセスすることを許可します";
-"editor.confirm.external.modifications" = "外部LLM変更には確認が必要";
-"editor.confirm.external.modifications.help" = "外部プロセスがこのターミナルのLLMコンテキストを変更したときに確認を表示します";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "グローバルに無効";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "未インストール";
 "settings.cli.usage" = "使用方法：";
 "settings.cli.location" = "場所";
-"settings.enable.terminal.autorun" = "ターミナル自動実行を有効化";
-"settings.enable.terminal.autorun.help" = "CLIによるターミナルでのコマンド実行を許可";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCPサーバー";
@@ -454,8 +454,8 @@
 "settings.section.security" = "セキュリティ";
 "settings.allow.osc.clipboard" = "OSC 52クリップボードアクセスを許可";
 "settings.allow.osc.clipboard.help" = "ターミナルプログラムがOSC 52エスケープシーケンスを使用してシステムクリップボードを読み書きすることを許可します";
-"settings.confirm.external.modifications" = "外部LLM変更には確認が必要";
-"settings.confirm.external.modifications.help" = "外部プロセスがtermq:// URLを介してターミナルLLMコンテキストを変更しようとしたときに確認ダイアログを表示します";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部変更リクエスト";
 "security.external.modification.message" = "外部プロセスがターミナル '%@' のLLMコンテキストを変更しようとしています:
@@ -477,8 +477,8 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "タグを追加";
-"editor.allow.agent.prompts" = "エージェントプロンプトを許可";
-"editor.allow.agent.prompts.help" = "このターミナルがエージェントプロンプトを実行することを許可";
-"editor.allow.agent.prompts.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";
-"editor.confirm.external.modifications.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

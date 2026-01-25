@@ -170,8 +170,8 @@
 
 "editor.allow.osc.clipboard" = "OSC 52 pano erişimine izin ver";
 "editor.allow.osc.clipboard.help" = "Bu terminalin OSC 52 kaçış dizileri aracılığıyla sistem panosuna erişmesine izin ver";
-"editor.confirm.external.modifications" = "Harici LLM değişiklikleri için onay gerekli";
-"editor.confirm.external.modifications.help" = "Harici işlemler bu terminalin LLM bağlamını değiştirdiğinde onay göster";
+"editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
 "editor.disabled.globally" = "Genel olarak devre dışı";
 
 // Editor - Security section
@@ -280,8 +280,8 @@
 "settings.cli.not.installed" = "Yüklü değil";
 "settings.cli.usage" = "Kullanım:";
 "settings.cli.location" = "Konum";
-"settings.enable.terminal.autorun" = "Terminal Otomatik Çalıştırmayı Etkinleştir";
-"settings.enable.terminal.autorun.help" = "CLI'nin terminallerde komut çalıştırmasına izin ver";
+"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
+"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP Sunucusu";
@@ -454,8 +454,8 @@
 "settings.section.security" = "Güvenlik";
 "settings.allow.osc.clipboard" = "OSC 52 pano erişimine izin ver";
 "settings.allow.osc.clipboard.help" = "Terminal programlarının OSC 52 kaçış dizileri kullanarak sistem panosunu okumasına ve yazmasına izin ver";
-"settings.confirm.external.modifications" = "Harici LLM değişiklikleri için onay gerekli";
-"settings.confirm.external.modifications.help" = "Harici işlemler termq:// URL'leri aracılığıyla terminal LLM bağlamını değiştirmeye çalıştığında onay iletişim kutusu göster";
+"settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
+"settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Harici Değişiklik İsteği";
 "security.external.modification.message" = "Harici bir işlem, '%@' terminali için LLM bağlamını değiştirmeye çalışıyor:
@@ -477,8 +477,8 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Etiket ekle";
-"editor.allow.agent.prompts" = "Ajan İstemlerine İzin Ver";
-"editor.allow.agent.prompts.help" = "Bu terminalin ajan istemlerini çalıştırmasına izin ver";
-"editor.allow.agent.prompts.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
+"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
+"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
-"editor.confirm.external.modifications.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
