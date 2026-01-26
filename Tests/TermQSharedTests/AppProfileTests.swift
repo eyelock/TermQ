@@ -21,7 +21,7 @@ final class AppProfileTests: XCTestCase {
         XCTAssertEqual(AppProfile.Debug.mcpBinaryName, "termqmcpd")
         XCTAssertEqual(AppProfile.Debug.appBundleName, "TermQDebug.app")
         XCTAssertEqual(AppProfile.Debug.dataDirectoryName, "TermQ-Debug")
-        XCTAssertEqual(AppProfile.Debug.urlScheme, "termq-debug")
+        XCTAssertEqual(AppProfile.Debug.urlScheme, "termqd")
         XCTAssertEqual(AppProfile.Debug.displayName, "TermQ Debug")
     }
 
@@ -31,12 +31,11 @@ final class AppProfileTests: XCTestCase {
         XCTAssertEqual(Set(ids).count, ids.count, "Duplicate bundle IDs found in allBundleIdentifiers")
     }
 
-    /// Verify allBundleIdentifiers contains production, debug, and legacy IDs
+    /// Verify allBundleIdentifiers contains production and debug IDs
     func testAllBundleIdentifiersComplete() {
         let ids = AppProfile.allBundleIdentifiers
         XCTAssertTrue(ids.contains(AppProfile.Production.bundleIdentifier))
         XCTAssertTrue(ids.contains(AppProfile.Debug.bundleIdentifier))
-        XCTAssertTrue(ids.contains(AppProfile.Legacy.oldBundleIdentifier))
     }
 
     /// Verify Current enum resolves to production or debug based on build flags
@@ -55,10 +54,5 @@ final class AppProfileTests: XCTestCase {
     /// Verify Services constants are set correctly
     func testServicesConstants() {
         XCTAssertEqual(AppProfile.Services.keychainService, "net.eyelock.termq.secrets")
-    }
-
-    /// Verify Legacy constants are set correctly
-    func testLegacyConstants() {
-        XCTAssertEqual(AppProfile.Legacy.oldBundleIdentifier, "com.eyelock.TermQ")
     }
 }

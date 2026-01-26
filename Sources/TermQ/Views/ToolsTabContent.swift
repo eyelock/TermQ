@@ -7,8 +7,10 @@ struct ToolsTabContent: View {
     @Binding var isInstallingMCP: Bool
     @Binding var configCopied: Bool
     @Binding var mcpInstallPath: String
+    @Binding var mcpInstalled: Bool
     @Binding var isInstalling: Bool
     @Binding var cliInstallPath: String
+    @Binding var cliInstalled: Bool
 
     // Use @AppStorage directly instead of @Binding to ensure persistence
     @AppStorage("tmuxEnabled") private var tmuxEnabled = true
@@ -23,8 +25,8 @@ struct ToolsTabContent: View {
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
 
-    var isCLIInstalled: Bool { CLIInstaller.currentInstallLocation != nil }
-    var isMCPInstalled: Bool { MCPServerInstaller.currentInstallLocation != nil }
+    var isCLIInstalled: Bool { cliInstalled }
+    var isMCPInstalled: Bool { mcpInstalled }
     var installedLocation: InstallLocation? { CLIInstaller.currentInstallLocation }
     var installedMCPLocation: MCPInstallLocation? { MCPServerInstaller.currentInstallLocation }
 
@@ -207,7 +209,7 @@ extension ToolsTabContent {
                         ProgressView()
                             .controlSize(.small)
                     }
-                    Text(Strings.Settings.cliInstall)
+                    Text(Strings.Settings.mcpInstall)
                 }
             }
             .disabled(isInstallingMCP || mcpInstallPath.isEmpty)

@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 import TermQShared
 
 /// Common installation locations for the MCP Server
@@ -27,7 +28,7 @@ enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProt
     }
 
     var fullPath: String {
-        "\(path)/\(AppProfile.Production.mcpBinaryName)"
+        "\(path)/\(AppProfile.Current.mcpBinaryName)"
     }
 
     var requiresAdmin: Bool {
@@ -51,12 +52,21 @@ enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProt
 
 /// Handles installation of the termqmcp MCP Server
 enum MCPServerInstaller {
-    private static let config = ComponentInstaller<MCPInstallLocation>.Config(
-        bundledResourceName: AppProfile.Production.mcpBinaryName,
-        componentDisplayName: "MCP Server"
-    )
+    private static let log = OSLog(subsystem: "net.eyelock.termq", category: "MCPServerInstaller")
 
-    static let bundledMCPServerName = AppProfile.Production.mcpBinaryName
+    private static let config: ComponentInstaller<MCPInstallLocation>.Config = {
+        let cfg = ComponentInstaller<MCPInstallLocation>.Config(
+            bundledResourceName: AppProfile.Current.mcpBinaryName,
+            componentDisplayName: "MCP Server"
+        )
+        os_log("🔧 Config created:", log: log, type: .info)
+        os_log("   - bundledResourceName: %{public}@", log: log, type: .info, cfg.bundledResourceName)
+        os_log("   - componentDisplayName: %{public}@", log: log, type: .info, cfg.componentDisplayName)
+        os_log("   - AppProfile.Current.mcpBinaryName: %{public}@", log: log, type: .info, AppProfile.Current.mcpBinaryName)
+        return cfg
+    }()
+
+    static let bundledMCPServerName = AppProfile.Current.mcpBinaryName
 
     /// Get the path to the bundled MCP server within the app bundle
     static var bundledMCPServerPath: URL? {
@@ -114,7 +124,7 @@ enum MCPServerInstaller {
             {
               "mcpServers": {
                 "termq": {
-                  "command": "\(AppProfile.Production.mcpBinaryName)"
+                  "command": "\(AppProfile.Current.mcpBinaryName)"
                 }
               }
             }

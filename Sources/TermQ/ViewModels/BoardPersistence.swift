@@ -111,13 +111,9 @@ public final class BoardPersistence {
     // MARK: - Saving
 
     /// Save board to disk
-    func save(_ board: Board) {
-        do {
-            let data = try JSONEncoder().encode(board)
-            try data.write(to: saveURL)
-        } catch {
-            print("Failed to save board: \(error)")
-        }
+    func save(_ board: Board) throws {
+        let data = try JSONEncoder().encode(board)
+        try data.write(to: saveURL)
     }
 
     // MARK: - File Monitoring

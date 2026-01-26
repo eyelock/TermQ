@@ -2,7 +2,7 @@ import Foundation
 
 /// Backend mode for terminal session management
 public enum TerminalBackend: String, Codable, CaseIterable, Sendable {
-    /// Direct shell process (legacy mode) - session dies with app
+    /// Direct shell process - session dies with app
     case direct
 
     /// tmux-backed session - persists across app restarts
@@ -76,7 +76,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// When an LLM last called termq_get for this terminal (nil = never, set = LLM is aware of TermQ)
     @Published public var lastLLMGet: Date?
 
-    /// Backend mode for session management (.direct = legacy, .tmux = persistent)
+    /// Backend mode for session management (.direct = ephemeral, .tmux = persistent)
     @Published public var backend: TerminalBackend
 
     /// Cards created via headless MCP need tmux sessions when GUI starts

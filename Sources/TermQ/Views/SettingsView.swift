@@ -1,9 +1,12 @@
 import AppKit
+import os.log
 import Sparkle
 import SwiftUI
 import TermQCore
 
 struct SettingsView: View {
+    private let log = OSLog(subsystem: "net.eyelock.termq", category: "SettingsView")
+
     // Initial tab selection (for deep linking)
     var initialTab: SettingsTab?
 
@@ -13,11 +16,13 @@ struct SettingsView: View {
     // CLI Tool installation state
     @State private var isInstalling = false
     @State private var cliInstallPath = "/usr/local/bin"
+    @State private var cliInstalled = false
 
     // MCP Server installation state
     @State private var isInstallingMCP = false
     @State private var configCopied = false
     @State private var mcpInstallPath = "/usr/local/bin"
+    @State private var mcpInstalled = false
 
     // Alert state
     @State private var alertMessage: String?
@@ -159,8 +164,10 @@ struct SettingsView: View {
             isInstallingMCP: $isInstallingMCP,
             configCopied: $configCopied,
             mcpInstallPath: $mcpInstallPath,
+            mcpInstalled: $mcpInstalled,
             isInstalling: $isInstalling,
             cliInstallPath: $cliInstallPath,
+            cliInstalled: $cliInstalled,
             installMCPServer: installMCPServer,
             uninstallMCPServer: uninstallMCPServer,
             copyMCPConfig: copyMCPConfig,
@@ -170,10 +177,18 @@ struct SettingsView: View {
     }
 
     private func refreshInstallStatus() {
+        os_log("🔄 refreshInstallStatus() called", log: log, type: .info)
+
         if let location = CLIInstaller.currentInstallLocation {
+            os_log("✅ CLI detected at: %{public}@", log: log, type: .info, location.path)
             cliInstallPath = location.path
+            cliInstalled = true
+            os_log("📝 Set cliInstalled = true, cliInstallPath = %{public}@", log: log, type: .info, location.path)
         } else {
+            os_log("❌ CLI not detected", log: log, type: .info)
             cliInstallPath = "/usr/local/bin"
+            cliInstalled = false
+            os_log("📝 Set cliInstalled = false, cliInstallPath = /usr/local/bin", log: log, type: .info)
         }
     }
 
@@ -233,8 +248,10 @@ struct SettingsView: View {
     private func refreshMCPInstallStatus() {
         if let location = MCPServerInstaller.currentInstallLocation {
             mcpInstallPath = location.path
+            mcpInstalled = true
         } else {
             mcpInstallPath = "/usr/local/bin"
+            mcpInstalled = false
         }
     }
 

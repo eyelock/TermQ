@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 import TermQShared
 
 /// Common installation locations for the CLI tool
@@ -27,12 +28,7 @@ enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtoco
     }
 
     var fullPath: String {
-        "\(path)/\(AppProfile.Production.cliBinaryName)"
-    }
-
-    /// Legacy path for backwards compatibility (older versions installed as "termq")
-    var legacyFullPath: String {
-        "\(path)/termq"
+        "\(path)/\(AppProfile.Current.cliBinaryName)"
     }
 
     var requiresAdmin: Bool {
@@ -56,12 +52,14 @@ enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtoco
 
 /// Handles installation of the termqcli CLI tool
 enum CLIInstaller {
+    private static let log = OSLog(subsystem: "net.eyelock.termq", category: "CLIInstaller")
+
     private static let config = ComponentInstaller<InstallLocation>.Config(
-        bundledResourceName: AppProfile.Production.cliBinaryName,
+        bundledResourceName: AppProfile.Current.cliBinaryName,
         componentDisplayName: "CLI tool"
     )
 
-    static let bundledCLIName = AppProfile.Production.cliBinaryName
+    static let bundledCLIName = AppProfile.Current.cliBinaryName
 
     /// Get the path to the bundled CLI tool within the app bundle
     static var bundledCLIPath: URL? {
@@ -69,10 +67,8 @@ enum CLIInstaller {
     }
 
     /// Check if the CLI tool is installed at a specific location
-    /// Also checks for legacy name "termq" for backwards compatibility
     static func isInstalled(at location: InstallLocation) -> Bool {
         ComponentInstaller<InstallLocation>.isInstalled(at: location, config: config)
-            || FileManager.default.fileExists(atPath: location.legacyFullPath)
     }
 
     /// Check if the CLI tool is installed at a custom path
@@ -81,9 +77,23 @@ enum CLIInstaller {
     }
 
     /// Find where the CLI is currently installed (if anywhere)
-    /// Checks for both current name "termqcli" and legacy name "termq"
     static var currentInstallLocation: InstallLocation? {
-        InstallLocation.allCases.first { isInstalled(at: $0) }
+        os_log("🔍 Checking CLI installation status", log: log, type: .info)
+        os_log("🔍 Looking for binary name: %{public}@", log: log, type: .info, AppProfile.Current.cliBinaryName)
+
+        for location in InstallLocation.allCases {
+            let installed = isInstalled(at: location)
+            os_log("🔍 Checking %{public}@: %{public}@", log: log, type: .info,
+                   location.path, installed ? "FOUND" : "not found")
+
+            if installed {
+                os_log("✅ CLI found at: %{public}@", log: log, type: .info, location.path)
+                return location
+            }
+        }
+
+        os_log("❌ CLI not found in any location", log: log, type: .info)
+        return nil
     }
 
     /// Install the CLI tool to a standard location

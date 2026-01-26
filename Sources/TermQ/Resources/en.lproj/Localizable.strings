@@ -317,6 +317,7 @@
 "settings.mcp.claude.config" = "Claude Desktop Config";
 "settings.mcp.local.only" = "Local connections only";
 "settings.mcp.install.description" = "Add to your Claude Desktop configuration:";
+"settings.mcp.install" = "Install MCP Server";
 "settings.config.copied" = "Configuration copied!";
 "settings.copy.config" = "Copy Configuration";
 

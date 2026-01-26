@@ -520,6 +520,7 @@ enum Strings {
         static var mcpClaudeConfig: String { localized("settings.mcp.claude.config") }
         static var mcpLocalOnly: String { localized("settings.mcp.local.only") }
         static var mcpInstallDescription: String { localized("settings.mcp.install.description") }
+        static var mcpInstall: String { localized("settings.mcp.install") }
         static var configCopied: String { localized("settings.config.copied") }
         static var copyConfig: String { localized("settings.copy.config") }
 
