@@ -27,9 +27,9 @@ enum LLMVendor: String, CaseIterable {
             }
         case .aider:
             // Aider is inherently non-interactive with --message
-            return "aider --message \"{{LLM_NEXT_ACTION}}\""
+            return "aider --message \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
         case .copilot:
-            return "gh copilot suggest \"{{LLM_NEXT_ACTION}}\""
+            return "gh copilot suggest \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
         case .custom:
             return "\"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
         }
@@ -38,10 +38,8 @@ enum LLMVendor: String, CaseIterable {
     /// Whether this tool's template includes persistent context
     var includesPrompt: Bool {
         switch self {
-        case .claudeCode, .cursor, .custom:
+        case .claudeCode, .cursor, .custom, .aider, .copilot:
             return true
-        case .aider, .copilot:
-            return false
         }
     }
 

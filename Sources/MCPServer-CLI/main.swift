@@ -3,6 +3,18 @@ import Foundation
 import MCP
 import MCPServerLib
 
+// MARK: - Build Configuration
+
+/// Returns whether to use debug mode based on build configuration and explicit flag
+/// In debug builds, always use debug mode unless explicitly overridden
+private func shouldUseDebugMode(_ explicitDebug: Bool) -> Bool {
+    #if TERMQ_DEBUG_BUILD
+        return true
+    #else
+        return explicitDebug
+    #endif
+}
+
 @main
 struct TermQMCPCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -54,8 +66,9 @@ struct TermQMCPCommand: AsyncParsableCommand {
 
     func run() async throws {
         // Determine data directory
+        let useDebug = shouldUseDebugMode(debug)
         let dataDirectory: URL?
-        if debug {
+        if useDebug {
             dataDirectory = FileManager.default
                 .urls(for: .applicationSupportDirectory, in: .userDomainMask)
                 .first?

@@ -14,6 +14,8 @@ SHELL := /bin/bash
 APP_NAME := TermQ
 CLI_BINARY := termqcli
 MCP_BINARY := termqmcp
+CLI_DEBUG_BINARY := termqclid
+MCP_DEBUG_BINARY := termqmcpd
 DEBUG_APP := $(APP_NAME)Debug.app
 DEBUG_APP_NAME := $(APP_NAME)Debug
 SOURCE_APP := $(APP_NAME).app
@@ -93,6 +95,20 @@ copy-help:
 $(DEBUG_BUILD_DIR)/$(APP_NAME): $(SWIFT_SOURCES) Package.swift copy-help
 	set +o pipefail; swift build -Xswiftc -DDEBUG 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
+# Build debug CLI binary with TERMQ_DEBUG_BUILD flag
+# Note: Built to separate output directory to avoid contaminating regular build
+$(DEBUG_BUILD_DIR)/$(CLI_DEBUG_BINARY): $(SWIFT_SOURCES) Package.swift
+	@mkdir -p .build/debug-binaries
+	set +o pipefail; swift build --product $(CLI_BINARY) --build-path .build/debug-binaries -Xswiftc -DTERMQ_DEBUG_BUILD 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	cp .build/debug-binaries/debug/$(CLI_BINARY) $(DEBUG_BUILD_DIR)/$(CLI_DEBUG_BINARY)
+
+# Build debug MCP binary with TERMQ_DEBUG_BUILD flag
+# Note: Built to separate output directory to avoid contaminating regular build
+$(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY): $(SWIFT_SOURCES) Package.swift
+	@mkdir -p .build/debug-binaries
+	set +o pipefail; swift build --product $(MCP_BINARY) --build-path .build/debug-binaries -Xswiftc -DTERMQ_DEBUG_BUILD 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	cp .build/debug-binaries/debug/$(MCP_BINARY) $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY)
+
 compile: $(DEBUG_BUILD_DIR)/$(APP_NAME)
 
 # Build release version (builds each product explicitly to avoid incremental build issues)
@@ -105,6 +121,7 @@ build-release: copy-help
 clean:
 	swift package clean
 	rm -rf $(BUILD_DIR)
+	rm -rf .build/debug-binaries
 	rm -rf $(DEBUG_APP)
 	rm -rf Sources/$(APP_NAME)/Resources/Help
 
@@ -153,13 +170,13 @@ format-check: install-swift-format
 check: compile lint format-check test
 
 # Build the macOS debug app bundle (incremental - only rebuilds if binary or metadata changed)
-$(DEBUG_APP): $(DEBUG_BUILD_DIR)/$(APP_NAME) $(INFO_PLIST) $(ENTITLEMENTS)
+$(DEBUG_APP): $(DEBUG_BUILD_DIR)/$(APP_NAME) $(DEBUG_BUILD_DIR)/$(CLI_DEBUG_BINARY) $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY) $(INFO_PLIST) $(ENTITLEMENTS)
 	@mkdir -p $(DEBUG_APP)/Contents/MacOS
 	@mkdir -p $(DEBUG_APP)/Contents/Resources
 	@mkdir -p $(DEBUG_APP)/Contents/Frameworks
 	cp $(DEBUG_BUILD_DIR)/$(APP_NAME) $(DEBUG_APP)/Contents/MacOS/$(APP_NAME)
-	cp $(DEBUG_BUILD_DIR)/$(CLI_BINARY) $(DEBUG_APP)/Contents/Resources/$(CLI_BINARY)
-	cp $(DEBUG_BUILD_DIR)/$(MCP_BINARY) $(DEBUG_APP)/Contents/Resources/$(MCP_BINARY)
+	cp $(DEBUG_BUILD_DIR)/$(CLI_DEBUG_BINARY) $(DEBUG_APP)/Contents/Resources/$(CLI_DEBUG_BINARY)
+	cp $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY) $(DEBUG_APP)/Contents/Resources/$(MCP_DEBUG_BINARY)
 	cp $(INFO_PLIST) $(DEBUG_APP)/Contents/Info.plist
 	@# Add rpath for embedded frameworks (Sparkle)
 	@install_name_tool -add_rpath @executable_path/../Frameworks $(DEBUG_APP)/Contents/MacOS/$(APP_NAME) 2>/dev/null || true
