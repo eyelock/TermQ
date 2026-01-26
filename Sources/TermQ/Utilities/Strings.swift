@@ -593,6 +593,17 @@ enum Strings {
             static var resetConfirmTitle: String { localized("settings.environment.reset.confirm.title") }
             static var resetConfirmMessage: String { localized("settings.environment.reset.confirm.message") }
             static var resetConfirmButton: String { localized("settings.environment.reset.confirm.button") }
+            static func resetConfirmMessageWithSecrets(global: Int, terminal: Int) -> String {
+                let total = global + terminal
+                let globalPart = global > 0 ? "\(global) global secret\(global == 1 ? "" : "s")" : nil
+                let terminalPart = terminal > 0 ? "\(terminal) terminal secret\(terminal == 1 ? "" : "s")" : nil
+
+                let parts = [globalPart, terminalPart].compactMap { $0 }
+                let secretsList = parts.joined(separator: " and ")
+
+                return
+                    "This will permanently delete \(secretsList) (\(total) total). These secrets will be unrecoverable after the encryption key is reset.\n\n\(resetConfirmMessage)"
+            }
 
             static var troubleshooting: String { localized("settings.environment.troubleshooting") }
             static var troubleshootingIntro: String { localized("settings.environment.troubleshooting.intro") }

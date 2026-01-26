@@ -9,6 +9,7 @@ struct SettingsEnvironmentView: View {
     @State private var items: [KeyValueItem] = []
     @State private var showErrorAlert = false
     @State private var errorMessage: String?
+    @State private var secretsCount: (global: Int, terminal: Int) = (0, 0)
 
     // Existing keys for duplicate checking
     private var existingKeys: Set<String> {
@@ -89,7 +90,7 @@ struct SettingsEnvironmentView: View {
             }
 
             Button(Strings.Settings.Environment.resetEncryptionKey, role: .destructive) {
-                showResetKeyConfirmation = true
+                checkSecretsAndShowConfirmation()
             }
 
             Text(Strings.Settings.Environment.resetEncryptionKeyWarning)
@@ -126,7 +127,7 @@ struct SettingsEnvironmentView: View {
             }
             Button(Strings.Common.cancel, role: .cancel) {}
         } message: {
-            Text(Strings.Settings.Environment.resetConfirmMessage)
+            Text(resetConfirmationMessage())
         }
     }
 
@@ -188,6 +189,7 @@ struct SettingsEnvironmentView: View {
                 // Immediately update status after reset
                 await MainActor.run {
                     hasEncryptionKey = false
+                    secretsCount = (0, 0)
                 }
             } catch {
                 await MainActor.run {
@@ -195,6 +197,33 @@ struct SettingsEnvironmentView: View {
                     showErrorAlert = true
                 }
             }
+        }
+    }
+
+    private func checkSecretsAndShowConfirmation() {
+        // Count secrets in global environment
+        let globalSecrets = envManager.variables.filter { $0.isSecret }.count
+
+        // Count secrets in all terminal cards
+        let terminalSecrets = BoardViewModel.shared.board.cards
+            .flatMap { $0.environmentVariables }
+            .filter { $0.isSecret }
+            .count
+
+        secretsCount = (global: globalSecrets, terminal: terminalSecrets)
+        showResetKeyConfirmation = true
+    }
+
+    private func resetConfirmationMessage() -> String {
+        let totalSecrets = secretsCount.global + secretsCount.terminal
+
+        if totalSecrets == 0 {
+            return Strings.Settings.Environment.resetConfirmMessage
+        } else {
+            return Strings.Settings.Environment.resetConfirmMessageWithSecrets(
+                global: secretsCount.global,
+                terminal: secretsCount.terminal
+            )
         }
     }
 
