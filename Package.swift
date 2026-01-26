@@ -42,6 +42,7 @@ let package = Package(
             name: "TermQ",
             dependencies: [
                 "TermQCore",
+                "TermQShared",
                 .product(name: "SwiftTerm", package: "SwiftTerm"),
                 .product(name: "Sparkle", package: "Sparkle")
             ],

@@ -699,11 +699,12 @@ class TerminalSessionManager: ObservableObject {
     /// Escape string for use inside double quotes (for LLM values)
     /// Escapes: " $ ` \ (prevents injection while templates contain the quotes)
     private func escapeForDoubleQuotes(_ str: String) -> String {
-        return str
+        return
+            str
             .replacingOccurrences(of: "\\", with: "\\\\")  // Backslash first
             .replacingOccurrences(of: "\"", with: "\\\"")  // Double quotes
-            .replacingOccurrences(of: "$", with: "\\$")    // Dollar signs (prevents variable expansion)
-            .replacingOccurrences(of: "`", with: "\\`")    // Backticks (prevents command substitution)
+            .replacingOccurrences(of: "$", with: "\\$")  // Dollar signs (prevents variable expansion)
+            .replacingOccurrences(of: "`", with: "\\`")  // Backticks (prevents command substitution)
     }
 
     /// Sanitize a string to be a valid environment variable name suffix

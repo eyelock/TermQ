@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 
 /// Common installation locations for the CLI tool
 enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtocol {
@@ -26,7 +27,7 @@ enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtoco
     }
 
     var fullPath: String {
-        "\(path)/termqcli"
+        "\(path)/\(AppProfile.Production.cliBinaryName)"
     }
 
     /// Legacy path for backwards compatibility (older versions installed as "termq")
@@ -56,11 +57,11 @@ enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtoco
 /// Handles installation of the termqcli CLI tool
 enum CLIInstaller {
     private static let config = ComponentInstaller<InstallLocation>.Config(
-        bundledResourceName: "termqcli",
+        bundledResourceName: AppProfile.Production.cliBinaryName,
         componentDisplayName: "CLI tool"
     )
 
-    static let bundledCLIName = "termqcli"
+    static let bundledCLIName = AppProfile.Production.cliBinaryName
 
     /// Get the path to the bundled CLI tool within the app bundle
     static var bundledCLIPath: URL? {

@@ -8,11 +8,7 @@ import TermQShared
 
 /// Returns the appropriate TermQ bundle identifier based on build configuration
 private func termqBundleIdentifier() -> String {
-    #if TERMQ_DEBUG_BUILD
-        return "net.eyelock.termq.app.debug"
-    #else
-        return "net.eyelock.termq.app"
-    #endif
+    return AppProfile.Current.bundleIdentifier
 }
 
 /// Returns whether to use debug mode based on build configuration and explicit flag
@@ -168,8 +164,9 @@ struct Open: ParsableCommand {
         // Check if GUI is running, or try to launch it
         if !GUIDetector.isGUIRunning() {
             if !launchTermQ() {
+                let appName = AppProfile.Current.appBundleName
                 JSONHelper.printErrorJSON(
-                    "The 'open' command requires TermQ GUI to be running. Could not launch TermQ.app. Please ensure TermQ.app is in /Applications or current directory"
+                    "The 'open' command requires TermQ GUI to be running. Could not launch \(appName). Please ensure \(appName) is in /Applications or current directory"
                 )
                 throw ExitCode.failure
             }
@@ -187,7 +184,7 @@ struct Open: ParsableCommand {
 
             // Build URL to focus the terminal
             var components = URLComponents()
-            components.scheme = "termq"
+            components.scheme = AppProfile.Current.urlScheme
             components.host = "focus"
             components.queryItems = [
                 URLQueryItem(name: "id", value: card.id.uuidString)
@@ -297,10 +294,11 @@ struct Create: ParsableCommand {
 
 /// Helper to launch TermQ app
 func launchTermQ() -> Bool {
+    let appName = AppProfile.Current.appBundleName
     let possiblePaths = [
-        "/Applications/TermQ.app",
-        "\(NSHomeDirectory())/Applications/TermQ.app",
-        "\(FileManager.default.currentDirectoryPath)/TermQ.app",
+        "/Applications/\(appName)",
+        "\(NSHomeDirectory())/Applications/\(appName)",
+        "\(FileManager.default.currentDirectoryPath)/\(appName)",
     ]
 
     for appPath in possiblePaths {
@@ -329,10 +327,11 @@ struct Launch: ParsableCommand {
     )
 
     func run() throws {
+        let appName = AppProfile.Current.appBundleName
         let possiblePaths = [
-            "/Applications/TermQ.app",
-            "\(NSHomeDirectory())/Applications/TermQ.app",
-            "\(FileManager.default.currentDirectoryPath)/TermQ.app",
+            "/Applications/\(appName)",
+            "\(NSHomeDirectory())/Applications/\(appName)",
+            "\(FileManager.default.currentDirectoryPath)/\(appName)",
         ]
 
         for appPath in possiblePaths {
@@ -357,8 +356,8 @@ struct Launch: ParsableCommand {
             }
         }
 
-        print("Error: Could not find TermQ.app")
-        print("Please ensure TermQ.app is in /Applications or current directory")
+        print("Error: Could not find \(appName)")
+        print("Please ensure \(appName) is in /Applications or current directory")
         throw ExitCode.failure
     }
 }
@@ -801,11 +800,12 @@ struct Move: ParsableCommand {
                     debug: debugMode
                 )
 
-                JSONHelper.printJSON(MoveResponse(
-                    success: true,
-                    id: card.id.uuidString,
-                    column: toColumn
-                ))
+                JSONHelper.printJSON(
+                    MoveResponse(
+                        success: true,
+                        id: card.id.uuidString,
+                        column: toColumn
+                    ))
             }
 
         } catch BoardLoader.LoadError.boardNotFound(let path) {
@@ -1095,10 +1095,11 @@ struct Delete: ParsableCommand {
                     debug: debugMode
                 )
 
-                JSONHelper.printJSON(DeleteResponse(
-                    id: card.id.uuidString,
-                    permanent: permanent
-                ))
+                JSONHelper.printJSON(
+                    DeleteResponse(
+                        id: card.id.uuidString,
+                        permanent: permanent
+                    ))
             }
 
         } catch BoardLoader.LoadError.boardNotFound(let path) {
@@ -1122,7 +1123,7 @@ struct Delete: ParsableCommand {
 /// Delete terminal via GUI URL scheme
 private func deleteViaGUI(cardId: UUID, permanent: Bool) throws {
     var components = URLComponents()
-    components.scheme = "termq"
+    components.scheme = AppProfile.Current.urlScheme
     components.host = "delete"
 
     components.queryItems = [
@@ -1149,7 +1150,7 @@ private func deleteViaGUI(cardId: UUID, permanent: Bool) throws {
 /// Move terminal via GUI URL scheme
 private func moveViaGUI(cardId: UUID, toColumn: String) throws {
     var components = URLComponents()
-    components.scheme = "termq"
+    components.scheme = AppProfile.Current.urlScheme
     components.host = "move"
 
     components.queryItems = [
@@ -1189,7 +1190,7 @@ private func setViaGUI(
     unfavourite: Bool
 ) throws {
     var components = URLComponents()
-    components.scheme = "termq"
+    components.scheme = AppProfile.Current.urlScheme
     components.host = "update"
 
     var queryItems: [URLQueryItem] = [
@@ -1267,7 +1268,7 @@ private func createViaGUI(
     workingDirectory: String
 ) throws {
     var components = URLComponents()
-    components.scheme = "termq"
+    components.scheme = AppProfile.Current.urlScheme
     components.host = "open"
 
     var queryItems: [URLQueryItem] = [
@@ -1305,7 +1306,10 @@ private func createViaGUI(
     if runningApps.isEmpty {
         print("TermQ is not running. Launching...")
         if !launchTermQ() {
-            JSONHelper.printErrorJSON("Could not find or launch TermQ.app. Please ensure TermQ.app is in /Applications or current directory")
+            let appName = AppProfile.Current.appBundleName
+            JSONHelper.printErrorJSON(
+                "Could not find or launch \(appName). Please ensure \(appName) is in /Applications or current directory"
+            )
             throw ExitCode.failure
         }
     }
@@ -1333,7 +1337,7 @@ private func createViaGUI(
 /// Quick-create terminal via GUI URL scheme
 private func newViaGUI(name: String, column: String?, workingDirectory: String) throws {
     var components = URLComponents()
-    components.scheme = "termq"
+    components.scheme = AppProfile.Current.urlScheme
     components.host = "open"
 
     // Generate a card ID upfront so we can track it
@@ -1363,7 +1367,10 @@ private func newViaGUI(name: String, column: String?, workingDirectory: String) 
 
     if runningApps.isEmpty {
         if !launchTermQ() {
-            JSONHelper.printErrorJSON("Could not find or launch TermQ.app. Please ensure TermQ.app is in /Applications or current directory")
+            let appName = AppProfile.Current.appBundleName
+            JSONHelper.printErrorJSON(
+                "Could not find or launch \(appName). Please ensure \(appName) is in /Applications or current directory"
+            )
             throw ExitCode.failure
         }
     }

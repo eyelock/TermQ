@@ -1,21 +1,15 @@
 import AppKit
 import Foundation
+import TermQShared
 
 /// Detects if TermQ.app GUI is running
 public enum GUIDetector {
     /// Check if TermQ.app is currently running
     /// Uses NSWorkspace to query running applications by bundle identifier
     public static func isGUIRunning() -> Bool {
-        let bundleIds = [
-            "com.termq.app",                // Current bundle ID
-            "com.termq.app.debug",          // Debug variant
-            "net.eyelock.termq.app",        // Legacy production
-            "net.eyelock.termq.app.debug",  // Legacy debug
-            "com.eyelock.TermQ"             // Old bundle ID
-        ]
         return NSWorkspace.shared.runningApplications.contains {
             guard let bundleId = $0.bundleIdentifier else { return false }
-            return bundleIds.contains(bundleId)
+            return AppProfile.allBundleIdentifiers.contains(bundleId)
         }
     }
 

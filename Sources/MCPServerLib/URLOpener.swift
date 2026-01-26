@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 
 #if os(macOS)
     import AppKit
@@ -106,7 +107,7 @@ enum URLOpener {
     /// Build a termq://open URL for creating a terminal
     static func buildOpenURL(params: OpenURLParams) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = AppProfile.Current.urlScheme
         components.host = "open"
 
         var queryItems: [URLQueryItem] = [
@@ -145,7 +146,7 @@ enum URLOpener {
     /// Build a termq://update URL for updating a terminal
     static func buildUpdateURL(params: UpdateURLParams) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = AppProfile.Current.urlScheme
         components.host = "update"
 
         var queryItems: [URLQueryItem] = [
@@ -192,7 +193,7 @@ enum URLOpener {
     /// Build a termq://move URL for moving a terminal
     static func buildMoveURL(cardId: UUID, column: String) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = AppProfile.Current.urlScheme
         components.host = "move"
         components.queryItems = [
             URLQueryItem(name: "id", value: cardId.uuidString),
@@ -204,7 +205,7 @@ enum URLOpener {
     /// Build a termq://focus URL for focusing a terminal
     static func buildFocusURL(cardId: UUID) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = AppProfile.Current.urlScheme
         components.host = "focus"
         components.queryItems = [
             URLQueryItem(name: "id", value: cardId.uuidString)
@@ -215,7 +216,7 @@ enum URLOpener {
     /// Build a termq://delete URL for deleting a terminal
     static func buildDeleteURL(cardId: UUID, permanent: Bool = false) -> String {
         var components = URLComponents()
-        components.scheme = "termq"
+        components.scheme = AppProfile.Current.urlScheme
         components.host = "delete"
         components.queryItems = [
             URLQueryItem(name: "id", value: cardId.uuidString),

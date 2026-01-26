@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 
 /// Common installation locations for the MCP Server
 enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProtocol {
@@ -26,7 +27,7 @@ enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProt
     }
 
     var fullPath: String {
-        "\(path)/termqmcp"
+        "\(path)/\(AppProfile.Production.mcpBinaryName)"
     }
 
     var requiresAdmin: Bool {
@@ -51,11 +52,11 @@ enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProt
 /// Handles installation of the termqmcp MCP Server
 enum MCPServerInstaller {
     private static let config = ComponentInstaller<MCPInstallLocation>.Config(
-        bundledResourceName: "termqmcp",
+        bundledResourceName: AppProfile.Production.mcpBinaryName,
         componentDisplayName: "MCP Server"
     )
 
-    static let bundledMCPServerName = "termqmcp"
+    static let bundledMCPServerName = AppProfile.Production.mcpBinaryName
 
     /// Get the path to the bundled MCP server within the app bundle
     static var bundledMCPServerPath: URL? {
@@ -113,7 +114,7 @@ enum MCPServerInstaller {
             {
               "mcpServers": {
                 "termq": {
-                  "command": "termqmcp"
+                  "command": "\(AppProfile.Production.mcpBinaryName)"
                 }
               }
             }

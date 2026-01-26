@@ -28,7 +28,7 @@ public enum BoardLoader {
             return custom
         }
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let dirName = debug ? "TermQ-Debug" : "TermQ"
+        let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
         return appSupport.appendingPathComponent(dirName, isDirectory: true)
     }
 

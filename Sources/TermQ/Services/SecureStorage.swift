@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import Security
+import TermQShared
 
 /// Errors that can occur during secure storage operations
 public enum SecureStorageError: LocalizedError {
@@ -39,7 +40,7 @@ public actor SecureStorage {
 
     // MARK: - Constants
 
-    private let keychainService = "net.eyelock.termq.secrets"
+    private let keychainService = AppProfile.Services.keychainService
     private let keychainAccount = "encryption-key"
     private let secretsFileName = "secrets.enc"
 
