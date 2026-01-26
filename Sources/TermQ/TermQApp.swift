@@ -3,6 +3,7 @@ import Combine
 import Sparkle
 import SwiftUI
 import TermQCore
+import TermQShared
 
 /// Shared state for handling URL-based terminal creation and modification
 @MainActor
@@ -37,7 +38,7 @@ class URLHandler: ObservableObject {
         let name: String?
         let description: String?
         let column: String?
-        let tags: [Tag]
+        let tags: [TermQCore.Tag]
         let llmPrompt: String?
         let llmNextAction: String?
         let initCommand: String?
@@ -127,10 +128,10 @@ class URLHandler: ObservableObject {
         }
 
         // Parse tags
-        let tags: [Tag] =
+        let tags: [TermQCore.Tag] =
             queryItems
             .filter { $0.name == "tag" }
-            .compactMap { item -> Tag? in
+            .compactMap { item -> TermQCore.Tag? in
                 guard let value = item.value,
                     let eqIndex = value.firstIndex(of: "=")
                 else { return nil }
@@ -220,10 +221,10 @@ class URLHandler: ObservableObject {
             queryItems.first(where: { $0.name == "replaceTags" })?.value?.lowercased() == "true"
 
         // Parse tags
-        let newTags: [Tag] =
+        let newTags: [TermQCore.Tag] =
             queryItems
             .filter { $0.name == "tag" }
-            .compactMap { item -> Tag? in
+            .compactMap { item -> TermQCore.Tag? in
                 guard let value = item.value,
                     let eqIndex = value.firstIndex(of: "=")
                 else { return nil }
@@ -479,6 +480,8 @@ struct TermQApp: App {
                 .frame(minWidth: 800, minHeight: 600)
                 .environmentObject(urlHandler)
                 .onAppear {
+                    // Validate AppProfile matches actual bundle (debug builds only)
+                    AppProfileValidator.validateAtStartup()
                     checkForOrphanedBackup()
                 }
                 .sheet(item: $backupToRestore) { item in
