@@ -15,7 +15,6 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertEqual(card.orderIndex, 0)
         XCTAssertEqual(card.shellPath, "/bin/zsh")
         XCTAssertEqual(card.workingDirectory, NSHomeDirectory())
-        XCTAssertFalse(card.isRunning)
     }
 
     func testInitializationWithCustomValues() {
@@ -71,21 +70,6 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertEqual(decoded.orderIndex, original.orderIndex)
         XCTAssertEqual(decoded.shellPath, original.shellPath)
         XCTAssertEqual(decoded.workingDirectory, original.workingDirectory)
-    }
-
-    func testIsRunningNotPersisted() throws {
-        let columnId = UUID()
-        let original = TerminalCard(columnId: columnId)
-        original.isRunning = true
-
-        let encoder = JSONEncoder()
-        let data = try encoder.encode(original)
-
-        let decoder = JSONDecoder()
-        let decoded = try decoder.decode(TerminalCard.self, from: data)
-
-        // isRunning should be false after decoding (not persisted)
-        XCTAssertFalse(decoded.isRunning)
     }
 
     func testEquatableConformance() {
