@@ -686,7 +686,7 @@ struct Set: ParsableCommand {
 
             if GUIDetector.isGUIRunning() {
                 // GUI path - use URL scheme
-                try setViaGUI(
+                try setViaGUI(SetOptions(
                     cardId: card.id,
                     name: name,
                     description: setDescription,
@@ -699,7 +699,7 @@ struct Set: ParsableCommand {
                     initCommand: initCommand,
                     favourite: favourite,
                     unfavourite: unfavourite
-                )
+                ))
             } else {
                 // Headless path - use BoardWriter directly
                 let parsedTags = parseTags(tag)
@@ -1175,20 +1175,34 @@ private func moveViaGUI(cardId: UUID, toColumn: String) throws {
 }
 
 /// Update terminal properties via GUI URL scheme
-private func setViaGUI(
-    cardId: UUID,
-    name: String?,
-    description: String?,
-    column: String?,
-    badge: String?,
-    llmPrompt: String?,
-    llmNextAction: String?,
-    tags: [String],
-    replaceTags: Bool,
-    initCommand: String?,
-    favourite: Bool,
-    unfavourite: Bool
-) throws {
+private struct SetOptions {
+    let cardId: UUID
+    let name: String?
+    let description: String?
+    let column: String?
+    let badge: String?
+    let llmPrompt: String?
+    let llmNextAction: String?
+    let tags: [String]
+    let replaceTags: Bool
+    let initCommand: String?
+    let favourite: Bool
+    let unfavourite: Bool
+}
+
+private func setViaGUI(_ options: SetOptions) throws {
+    let cardId = options.cardId
+    let name = options.name
+    let description = options.description
+    let column = options.column
+    let badge = options.badge
+    let llmPrompt = options.llmPrompt
+    let llmNextAction = options.llmNextAction
+    let tags = options.tags
+    let replaceTags = options.replaceTags
+    let initCommand = options.initCommand
+    let favourite = options.favourite
+    let unfavourite = options.unfavourite
     var components = URLComponents()
     components.scheme = AppProfile.Current.urlScheme
     components.host = "update"
