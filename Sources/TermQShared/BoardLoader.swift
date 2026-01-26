@@ -179,8 +179,8 @@ public enum BoardWriter {
             throw WriteError.encodingFailed("Invalid cards format")
         }
 
-        // Find the card to update
-        let cardIndex = try findCardIndex(identifier: identifier, in: cards)
+        // Find the card to update (include deleted cards so we can update after soft-delete)
+        let cardIndex = try findCardIndex(identifier: identifier, in: cards, includeDeleted: true)
 
         // Apply updates
         for (key, value) in updates {
@@ -342,11 +342,17 @@ public enum BoardWriter {
     }
 
     /// Find card index by identifier
-    private static func findCardIndex(identifier: String, in cards: [[String: Any]]) throws -> Int {
+    private static func findCardIndex(
+        identifier: String,
+        in cards: [[String: Any]],
+        includeDeleted: Bool = false
+    ) throws -> Int {
         // Try as UUID
         if let _ = UUID(uuidString: identifier) {
             if let index = cards.firstIndex(where: {
-                ($0["id"] as? String) == identifier && $0["deletedAt"] == nil
+                let matchesId = ($0["id"] as? String) == identifier
+                let isNotDeleted = $0["deletedAt"] == nil
+                return includeDeleted ? matchesId : (matchesId && isNotDeleted)
             }) {
                 return index
             }
@@ -355,14 +361,18 @@ public enum BoardWriter {
         // Try as exact name (case-insensitive)
         let identifierLower = identifier.lowercased()
         if let index = cards.firstIndex(where: {
-            ($0["title"] as? String)?.lowercased() == identifierLower && $0["deletedAt"] == nil
+            let matchesName = ($0["title"] as? String)?.lowercased() == identifierLower
+            let isNotDeleted = $0["deletedAt"] == nil
+            return includeDeleted ? matchesName : (matchesName && isNotDeleted)
         }) {
             return index
         }
 
         // Try as partial name match
         if let index = cards.firstIndex(where: {
-            ($0["title"] as? String)?.lowercased().contains(identifierLower) == true && $0["deletedAt"] == nil
+            let matchesPartialName = ($0["title"] as? String)?.lowercased().contains(identifierLower) == true
+            let isNotDeleted = $0["deletedAt"] == nil
+            return includeDeleted ? matchesPartialName : (matchesPartialName && isNotDeleted)
         }) {
             return index
         }

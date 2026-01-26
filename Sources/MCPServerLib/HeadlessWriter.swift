@@ -75,7 +75,11 @@ public enum HeadlessWriter {
 
         // Convert tags to dictionary format for storage
         if let tags = tags, !tags.isEmpty {
-            let tagDicts = tags.map { ["key": $0.key, "value": $0.value] }
+            let tagDicts = tags.map { [
+                "id": UUID().uuidString,
+                "key": $0.key,
+                "value": $0.value
+            ] }
             updates["tags"] = tagDicts
         }
 
@@ -129,7 +133,11 @@ public enum HeadlessWriter {
         if let tags = params.tags {
             if params.replaceTags {
                 // Replace all tags
-                let tagDicts = tags.map { ["key": $0.key, "value": $0.value] }
+                let tagDicts = tags.map { [
+                    "id": UUID().uuidString,
+                    "key": $0.key,
+                    "value": $0.value
+                ] }
                 updates["tags"] = tagDicts
             } else {
                 // Merge with existing tags
@@ -149,7 +157,11 @@ public enum HeadlessWriter {
                     }
                 }
 
-                let tagDicts = mergedTags.map { ["key": $0.key, "value": $0.value] }
+                let tagDicts = mergedTags.map { [
+                    "id": $0.id.uuidString,
+                    "key": $0.key,
+                    "value": $0.value
+                ] }
                 updates["tags"] = tagDicts
             }
         } else if params.replaceTags {
