@@ -568,6 +568,11 @@ extension TermQMCPServer {
                 content: [.text("Error: \(error.localizedDescription)")],
                 isError: true
             )
+        } catch {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
         }
     }
 
@@ -708,6 +713,11 @@ extension TermQMCPServer {
                 content: [.text("Error: \(error.localizedDescription)")],
                 isError: true
             )
+        } catch {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
         }
     }
 
@@ -795,6 +805,11 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text(json)])
 
         } catch let error as BoardWriter.WriteError {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
+        } catch {
             return CallTool.Result(
                 content: [.text("Error: \(error.localizedDescription)")],
                 isError: true
@@ -887,6 +902,11 @@ extension TermQMCPServer {
             return CallTool.Result(content: [.text(json)])
 
         } catch let error as BoardWriter.WriteError {
+            return CallTool.Result(
+                content: [.text("Error: \(error.localizedDescription)")],
+                isError: true
+            )
+        } catch {
             return CallTool.Result(
                 content: [.text("Error: \(error.localizedDescription)")],
                 isError: true

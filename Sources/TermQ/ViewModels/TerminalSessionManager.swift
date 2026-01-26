@@ -224,7 +224,7 @@ class TerminalSessionManager: ObservableObject {
 
     // MARK: - Process Startup Methods
 
-    /// Start a direct shell process (legacy mode)
+    /// Start a direct shell process
     private func startDirectProcess(
         terminal: TermQTerminalView,
         card: TerminalCard,

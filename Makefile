@@ -93,7 +93,7 @@ copy-help:
 
 # Compile Swift binaries (incremental - only rebuilds if sources or dependencies changed)
 $(DEBUG_BUILD_DIR)/$(APP_NAME): $(SWIFT_SOURCES) Package.swift copy-help
-	set +o pipefail; swift build -Xswiftc -DDEBUG 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+	set +o pipefail; swift build -Xswiftc -DDEBUG -Xswiftc -DTERMQ_DEBUG_BUILD 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 # Build debug CLI binary with TERMQ_DEBUG_BUILD flag
 # Note: Built to separate output directory to avoid contaminating regular build

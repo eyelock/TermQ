@@ -112,10 +112,13 @@ class BoardViewModel: ObservableObject {
     }
 
     func save() {
-        persistence.save(board)
-
-        // Trigger automatic backup if configured
-        BackupManager.backupIfNeeded()
+        do {
+            try persistence.save(board)
+            // Trigger automatic backup if configured
+            BackupManager.backupIfNeeded()
+        } catch {
+            print("BoardViewModel: Failed to save board: \(error)")
+        }
     }
 
     /// Reload board from disk (used after restore)

@@ -63,20 +63,10 @@ public enum AppProfile {
         public static let dataDirectoryName = "TermQ-Debug"
 
         /// URL scheme
-        public static let urlScheme = "termq-debug"
+        public static let urlScheme = "termqd"
 
         /// Display name
         public static let displayName = "TermQ Debug"
-    }
-
-    /// Legacy/historical bundle identifiers that might exist in the wild
-    /// Only use these for detection/migration purposes, NEVER for new functionality
-    public enum Legacy {
-        /// Old bundle identifier - may still be running on some systems
-        public static let oldBundleIdentifier = "com.eyelock.TermQ"
-
-        // Note: com.termq.app and com.termq.app.debug were WRONG and never actually used
-        // They appeared in GUIDetector but never in actual Info.plist files
     }
 
     /// Other identifiers not tied to production/debug
@@ -103,10 +93,9 @@ public enum AppProfile {
         public static var displayName: String { Profile.displayName }
     }
 
-    /// All possible bundle identifiers (current and legacy) for detection purposes
+    /// All possible bundle identifiers for detection purposes
     public static let allBundleIdentifiers: [String] = [
         Production.bundleIdentifier,
         Debug.bundleIdentifier,
-        Legacy.oldBundleIdentifier,
     ]
 }

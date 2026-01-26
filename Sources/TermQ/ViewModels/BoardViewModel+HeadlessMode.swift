@@ -87,7 +87,7 @@ extension BoardViewModel {
         // Simply clear the flag and save - no need to use BoardWriter
         // The card is already in the board model
         card.needsTmuxSession = false
-        save()
+        save()  // save() now logs errors internally
     }
 
     /// Sanitize environment variable name (alphanumeric + underscore only)
