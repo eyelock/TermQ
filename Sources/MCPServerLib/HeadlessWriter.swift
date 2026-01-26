@@ -204,14 +204,13 @@ public enum HeadlessWriter {
             board["cards"] = cards
             try BoardWriter.saveRawBoard(board, to: boardURL)
         } else {
-            // Soft delete - set deletedAt timestamp
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            let nowString = formatter.string(from: Date())
+            // Soft delete - set deletedAt timestamp as TimeInterval (seconds since reference date)
+            // This matches the format used by the GUI app for consistency
+            let now = Date().timeIntervalSinceReferenceDate
 
             _ = try BoardWriter.updateCard(
                 identifier: identifier,
-                updates: ["deletedAt": nowString],
+                updates: ["deletedAt": now],
                 dataDirectory: dataDirectory,
                 debug: debug
             )

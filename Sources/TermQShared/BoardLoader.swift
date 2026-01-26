@@ -191,12 +191,26 @@ public enum BoardWriter {
         board["cards"] = cards
         try saveRawBoard(board, to: boardURL)
 
-        // Return the updated board's card
+        // Return the updated card (search in ALL cards, not just active ones)
+        // This is important for operations like soft-delete that set deletedAt
         let updatedBoard = try BoardLoader.loadBoard(dataDirectory: dataDirectory, debug: debug)
-        guard let updatedCard = updatedBoard.findTerminal(identifier: identifier) else {
-            throw WriteError.cardNotFound(identifier: identifier)
+
+        // Search in all cards, including deleted ones
+        if let uuid = UUID(uuidString: identifier),
+           let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid }) {
+            return updatedCard
         }
-        return updatedCard
+
+        // Fallback to name search in all cards
+        let identifierLower = identifier.lowercased()
+        if let updatedCard = updatedBoard.cards.first(where: {
+            $0.title.lowercased() == identifierLower ||
+            $0.title.lowercased().contains(identifierLower)
+        }) {
+            return updatedCard
+        }
+
+        throw WriteError.cardNotFound(identifier: identifier)
     }
 
     /// Move a card to a different column
