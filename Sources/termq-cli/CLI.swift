@@ -1,17 +1,14 @@
 import AppKit
 import ArgumentParser
 import Foundation
+import MCPServerLib
 import TermQShared
 
 // MARK: - Bundle Configuration
 
 /// Returns the appropriate TermQ bundle identifier based on build configuration
 private func termqBundleIdentifier() -> String {
-    #if TERMQ_DEBUG_BUILD
-        return "net.eyelock.termq.app.debug"
-    #else
-        return "net.eyelock.termq.app"
-    #endif
+    return AppProfile.Current.bundleIdentifier
 }
 
 /// Returns whether to use debug mode based on build configuration and explicit flag
@@ -22,6 +19,17 @@ private func shouldUseDebugMode(_ explicitDebug: Bool) -> Bool {
     #else
         return explicitDebug
     #endif
+}
+
+// MARK: - Shared Helpers
+
+/// Parse tag strings in "key=value" format
+private func parseTags(_ tagStrings: [String]) -> [(key: String, value: String)] {
+    tagStrings.compactMap { tagStr in
+        let parts = tagStr.split(separator: "=", maxSplits: 1)
+        guard parts.count == 2 else { return nil }
+        return (String(parts[0]), String(parts[1]))
+    }
 }
 
 // MARK: - CLI-specific Errors
@@ -99,59 +107,40 @@ struct New: ParsableCommand {
     func run() throws {
         let cwd = FileManager.default.currentDirectoryPath
         let defaultName = URL(fileURLWithPath: cwd).lastPathComponent
+        let cardName = name ?? defaultName
 
-        // Build URL with parameters
-        var components = URLComponents()
-        components.scheme = "termq"
-        components.host = "open"
+        if GUIDetector.isGUIRunning() {
+            // GUI path - use URL scheme with pre-generated ID
+            try newViaGUI(name: cardName, column: column, workingDirectory: cwd)
+        } else {
+            // Headless path - use BoardWriter directly
+            do {
+                let card = try HeadlessWriter.createCard(
+                    name: cardName,
+                    columnName: column,
+                    workingDirectory: cwd,
+                    description: nil,
+                    llmPrompt: nil,
+                    llmNextAction: nil,
+                    tags: nil,
+                    dataDirectory: nil,
+                    debug: false
+                )
 
-        // Generate a card ID upfront so we can track it
-        let cardId = UUID()
-
-        var queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "id", value: cardId.uuidString),
-            URLQueryItem(name: "path", value: cwd),
-            URLQueryItem(name: "name", value: name ?? defaultName),
-        ]
-
-        if let column = column {
-            queryItems.append(URLQueryItem(name: "column", value: column))
-        }
-
-        components.queryItems = queryItems
-
-        guard let url = components.url else {
-            print("Error: Failed to construct URL")
-            throw ExitCode.failure
-        }
-
-        // Ensure TermQ is running
-        let workspace = NSWorkspace.shared
-        let bundleId = termqBundleIdentifier()
-        let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
-
-        if runningApps.isEmpty {
-            if !launchTermQ() {
-                print("Error: Could not find or launch TermQ.app")
-                print("Please ensure TermQ.app is in /Applications or current directory")
+                JSONHelper.printJSON(
+                    CreateResponse(
+                        id: card.id.uuidString,
+                        name: card.title,
+                        path: cwd,
+                        column: column
+                    ))
+            } catch BoardWriter.WriteError.columnNotFound(let columnName) {
+                JSONHelper.printErrorJSON("Column not found: \(columnName)")
+                throw ExitCode.failure
+            } catch {
+                JSONHelper.printErrorJSON("Failed to create terminal: \(error.localizedDescription)")
                 throw ExitCode.failure
             }
-        }
-
-        // Open the URL
-        let success = workspace.open(url)
-
-        if success {
-            // Output JSON for easy parsing
-            let output = PendingCreateResponse(
-                id: cardId.uuidString,
-                status: "created",
-                message: "Terminal created at: \(cwd)"
-            )
-            JSONHelper.printJSON(output)
-        } else {
-            print("Error: Failed to communicate with TermQ")
-            throw ExitCode.failure
         }
     }
 }
@@ -171,6 +160,20 @@ struct Open: ParsableCommand {
     var debug: Bool = false
 
     func run() throws {
+        // Open command requires the GUI to focus terminals
+        // Check if GUI is running, or try to launch it
+        if !GUIDetector.isGUIRunning() {
+            if !launchTermQ() {
+                let appName = AppProfile.Current.appBundleName
+                JSONHelper.printErrorJSON(
+                    "The 'open' command requires TermQ GUI to be running. Could not launch \(appName). Please ensure \(appName) is in /Applications or current directory"
+                )
+                throw ExitCode.failure
+            }
+            // Give GUI time to start up
+            Thread.sleep(forTimeInterval: 1.0)
+        }
+
         do {
             let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
 
@@ -181,7 +184,7 @@ struct Open: ParsableCommand {
 
             // Build URL to focus the terminal
             var components = URLComponents()
-            components.scheme = "termq"
+            components.scheme = AppProfile.Current.urlScheme
             components.host = "focus"
             components.queryItems = [
                 URLQueryItem(name: "id", value: card.id.uuidString)
@@ -192,19 +195,8 @@ struct Open: ParsableCommand {
                 throw ExitCode.failure
             }
 
-            // Ensure TermQ is running and focus the terminal
+            // Focus the terminal via URL scheme
             let workspace = NSWorkspace.shared
-            let bundleId = termqBundleIdentifier()
-            let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
-
-            if runningApps.isEmpty {
-                // Launch TermQ first
-                if !launchTermQ() {
-                    JSONHelper.printErrorJSON("Could not find or launch TermQ.app")
-                    throw ExitCode.failure
-                }
-            }
-
             let success = workspace.open(url)
 
             if success {
@@ -218,7 +210,8 @@ struct Open: ParsableCommand {
 
         } catch BoardLoader.LoadError.boardNotFound(let path) {
             JSONHelper.printErrorJSON(
-                "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
+                "Board file not found at: \(path). Is TermQ installed and has been run at least once?"
+            )
             throw ExitCode.failure
         } catch let error as ExitCode {
             throw error
@@ -252,81 +245,60 @@ struct Create: ParsableCommand {
 
     func run() throws {
         let cwd = path ?? FileManager.default.currentDirectoryPath
+        let guiRunning = GUIDetector.isGUIRunning()
 
-        // Build URL with parameters
-        var components = URLComponents()
-        components.scheme = "termq"
-        components.host = "open"
+        if guiRunning {
+            // GUI is running - use URL scheme to communicate with it
+            try createViaGUI(
+                name: name,
+                description: description,
+                column: column,
+                tags: tag,
+                workingDirectory: cwd
+            )
+        } else {
+            // Headless mode - write directly to board.json via HeadlessWriter
+            let parsedTags = parseTags(tag)
+            let cardName = name ?? URL(fileURLWithPath: cwd).lastPathComponent
 
-        var queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "path", value: cwd)
-        ]
+            do {
+                let card = try HeadlessWriter.createCard(
+                    name: cardName,
+                    columnName: column,
+                    workingDirectory: cwd,
+                    description: description,
+                    llmPrompt: nil,
+                    llmNextAction: nil,
+                    tags: parsedTags.isEmpty ? nil : parsedTags,
+                    dataDirectory: nil,
+                    debug: shouldUseDebugMode(false)
+                )
 
-        if let name = name {
-            queryItems.append(URLQueryItem(name: "name", value: name))
-        }
-
-        if let description = description {
-            queryItems.append(URLQueryItem(name: "description", value: description))
-        }
-
-        if let column = column {
-            queryItems.append(URLQueryItem(name: "column", value: column))
-        }
-
-        for tagStr in tag {
-            queryItems.append(URLQueryItem(name: "tag", value: tagStr))
-        }
-
-        components.queryItems = queryItems
-
-        guard let url = components.url else {
-            print("Error: Failed to construct URL")
-            throw ExitCode.failure
-        }
-
-        // Ensure TermQ is running
-        let workspace = NSWorkspace.shared
-        let bundleId = termqBundleIdentifier()
-        let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
-
-        if runningApps.isEmpty {
-            print("TermQ is not running. Launching...")
-            if !launchTermQ() {
-                print("Error: Could not find or launch TermQ.app")
-                print("Please ensure TermQ.app is in /Applications or current directory")
+                JSONHelper.printJSON(
+                    CreateResponse(
+                        id: card.id.uuidString,
+                        name: card.title,
+                        path: cwd,
+                        column: column
+                    ))
+            } catch BoardWriter.WriteError.columnNotFound(let columnName) {
+                JSONHelper.printErrorJSON("Column not found: \(columnName)")
+                throw ExitCode.failure
+            } catch {
+                JSONHelper.printErrorJSON("Failed to create terminal: \(error.localizedDescription)")
                 throw ExitCode.failure
             }
-        }
-
-        // Open the URL
-        let success = workspace.open(url)
-
-        if success {
-            print("Creating terminal in TermQ: \(cwd)")
-            if let name = name {
-                print("  Name: \(name)")
-            }
-            if let description = description {
-                print("  Description: \(description)")
-            }
-            if let column = column {
-                print("  Column: \(column)")
-            }
-        } else {
-            print("Error: Failed to communicate with TermQ")
-            print("Make sure TermQ is running")
-            throw ExitCode.failure
         }
     }
 }
 
 /// Helper to launch TermQ app
 func launchTermQ() -> Bool {
+    let appName = AppProfile.Current.appBundleName
     let possiblePaths = [
-        "/Applications/TermQ.app",
-        "\(NSHomeDirectory())/Applications/TermQ.app",
-        "\(FileManager.default.currentDirectoryPath)/TermQ.app",
+        "/Applications/\(appName)",
+        "\(NSHomeDirectory())/Applications/\(appName)",
+        "\(FileManager.default.currentDirectoryPath)/\(appName)",
     ]
 
     for appPath in possiblePaths {
@@ -355,10 +327,11 @@ struct Launch: ParsableCommand {
     )
 
     func run() throws {
+        let appName = AppProfile.Current.appBundleName
         let possiblePaths = [
-            "/Applications/TermQ.app",
-            "\(NSHomeDirectory())/Applications/TermQ.app",
-            "\(FileManager.default.currentDirectoryPath)/TermQ.app",
+            "/Applications/\(appName)",
+            "\(NSHomeDirectory())/Applications/\(appName)",
+            "\(FileManager.default.currentDirectoryPath)/\(appName)",
         ]
 
         for appPath in possiblePaths {
@@ -383,8 +356,8 @@ struct Launch: ParsableCommand {
             }
         }
 
-        print("Error: Could not find TermQ.app")
-        print("Please ensure TermQ.app is in /Applications or current directory")
+        print("Error: Could not find \(appName)")
+        print("Please ensure \(appName) is in /Applications or current directory")
         throw ExitCode.failure
     }
 }
@@ -702,89 +675,83 @@ struct Set: ParsableCommand {
     var unfavourite: Bool = false
 
     func run() throws {
-        // First, resolve the terminal identifier to a UUID
         do {
-            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
+            let debugMode = shouldUseDebugMode(debug)
+            let board = try BoardLoader.loadBoard(debug: debugMode)
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
                 throw ExitCode.failure
             }
 
-            // Build URL for update
-            var components = URLComponents()
-            components.scheme = "termq"
-            components.host = "update"
-
-            var queryItems: [URLQueryItem] = [
-                URLQueryItem(name: "id", value: card.id.uuidString)
-            ]
-
-            if let name = name {
-                queryItems.append(URLQueryItem(name: "name", value: name))
-            }
-
-            if let desc = setDescription {
-                queryItems.append(URLQueryItem(name: "description", value: desc))
-            }
-
-            if let column = column {
-                queryItems.append(URLQueryItem(name: "column", value: column))
-            }
-
-            if let badge = badge {
-                queryItems.append(URLQueryItem(name: "badge", value: badge))
-            }
-
-            if let llmPrompt = llmPrompt {
-                queryItems.append(URLQueryItem(name: "llmPrompt", value: llmPrompt))
-            }
-
-            if let llmNextAction = llmNextAction {
-                queryItems.append(URLQueryItem(name: "llmNextAction", value: llmNextAction))
-            }
-
-            for tagStr in tag {
-                queryItems.append(URLQueryItem(name: "tag", value: tagStr))
-            }
-
-            if replaceTags {
-                queryItems.append(URLQueryItem(name: "replaceTags", value: "true"))
-            }
-
-            if let initCommand = initCommand {
-                queryItems.append(URLQueryItem(name: "initCommand", value: initCommand))
-            }
-
-            if favourite {
-                queryItems.append(URLQueryItem(name: "favourite", value: "true"))
-            }
-
-            if unfavourite {
-                queryItems.append(URLQueryItem(name: "favourite", value: "false"))
-            }
-
-            components.queryItems = queryItems
-
-            guard let url = components.url else {
-                JSONHelper.printErrorJSON("Failed to construct URL")
-                throw ExitCode.failure
-            }
-
-            // Open the URL scheme
-            let workspace = NSWorkspace.shared
-            let success = workspace.open(url)
-
-            if success {
-                JSONHelper.printJSON(SetResponse(success: true, id: card.id.uuidString))
+            if GUIDetector.isGUIRunning() {
+                // GUI path - use URL scheme
+                try setViaGUI(SetOptions(
+                    cardId: card.id,
+                    name: name,
+                    description: setDescription,
+                    column: column,
+                    badge: badge,
+                    llmPrompt: llmPrompt,
+                    llmNextAction: llmNextAction,
+                    tags: tag,
+                    replaceTags: replaceTags,
+                    initCommand: initCommand,
+                    favourite: favourite,
+                    unfavourite: unfavourite
+                ))
             } else {
-                JSONHelper.printErrorJSON("Failed to send update to TermQ. Is it running?")
-                throw ExitCode.failure
-            }
+                // Headless path - use BoardWriter directly
+                let parsedTags = parseTags(tag)
+                let favouriteValue: Bool? = favourite ? true : (unfavourite ? false : nil)
 
+                let params = HeadlessWriter.UpdateParameters(
+                    name: name,
+                    description: setDescription,
+                    badge: badge,
+                    llmPrompt: llmPrompt,
+                    llmNextAction: llmNextAction,
+                    favourite: favouriteValue,
+                    tags: parsedTags.isEmpty ? nil : parsedTags,
+                    replaceTags: replaceTags
+                )
+
+                // Handle column move separately if provided
+                if let columnName = column {
+                    _ = try HeadlessWriter.moveCard(
+                        identifier: card.id.uuidString,
+                        toColumn: columnName,
+                        dataDirectory: nil,
+                        debug: debugMode
+                    )
+                }
+
+                _ = try HeadlessWriter.updateCard(
+                    identifier: card.id.uuidString,
+                    params: params,
+                    dataDirectory: nil,
+                    debug: debugMode
+                )
+
+                // Note: initCommand is not supported in headless mode yet
+                if initCommand != nil {
+                    JSONHelper.printErrorJSON(
+                        "Warning: initCommand is only supported when TermQ GUI is running. Value ignored in headless mode."
+                    )
+                }
+
+                JSONHelper.printJSON(SetResponse(success: true, id: card.id.uuidString))
+            }
         } catch BoardLoader.LoadError.boardNotFound(let path) {
             JSONHelper.printErrorJSON(
-                "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
+                "Board file not found at: \(path). Is TermQ installed and has been run at least once?"
+            )
+            throw ExitCode.failure
+        } catch BoardWriter.WriteError.cardNotFound(let identifier) {
+            JSONHelper.printErrorJSON("Terminal not found: \(identifier)")
+            throw ExitCode.failure
+        } catch BoardWriter.WriteError.columnNotFound(let name) {
+            JSONHelper.printErrorJSON("Column not found: \(name)")
             throw ExitCode.failure
         } catch let error as ExitCode {
             throw error
@@ -813,42 +780,43 @@ struct Move: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
+            let debugMode = shouldUseDebugMode(debug)
+            let board = try BoardLoader.loadBoard(debug: debugMode)
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
                 throw ExitCode.failure
             }
 
-            // Build URL for move
-            var components = URLComponents()
-            components.scheme = "termq"
-            components.host = "move"
-
-            components.queryItems = [
-                URLQueryItem(name: "id", value: card.id.uuidString),
-                URLQueryItem(name: "column", value: toColumn),
-            ]
-
-            guard let url = components.url else {
-                JSONHelper.printErrorJSON("Failed to construct URL")
-                throw ExitCode.failure
-            }
-
-            // Open the URL scheme
-            let workspace = NSWorkspace.shared
-            let success = workspace.open(url)
-
-            if success {
-                JSONHelper.printJSON(MoveResponse(success: true, id: card.id.uuidString, column: toColumn))
+            if GUIDetector.isGUIRunning() {
+                // GUI path - use URL scheme
+                try moveViaGUI(cardId: card.id, toColumn: toColumn)
             } else {
-                JSONHelper.printErrorJSON("Failed to send move command to TermQ. Is it running?")
-                throw ExitCode.failure
+                // Headless path - use BoardWriter directly
+                _ = try HeadlessWriter.moveCard(
+                    identifier: card.id.uuidString,
+                    toColumn: toColumn,
+                    dataDirectory: nil,
+                    debug: debugMode
+                )
+
+                JSONHelper.printJSON(
+                    MoveResponse(
+                        success: true,
+                        id: card.id.uuidString,
+                        column: toColumn
+                    ))
             }
 
         } catch BoardLoader.LoadError.boardNotFound(let path) {
             JSONHelper.printErrorJSON(
                 "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
+            throw ExitCode.failure
+        } catch BoardWriter.WriteError.cardNotFound(let identifier) {
+            JSONHelper.printErrorJSON("Terminal not found: \(identifier)")
+            throw ExitCode.failure
+        } catch BoardWriter.WriteError.columnNotFound(let name) {
+            JSONHelper.printErrorJSON("Column not found: \(name)")
             throw ExitCode.failure
         } catch let error as ExitCode {
             throw error
@@ -1107,42 +1075,39 @@ struct Delete: ParsableCommand {
 
     func run() throws {
         do {
-            let board = try BoardLoader.loadBoard(debug: shouldUseDebugMode(debug))
+            let debugMode = shouldUseDebugMode(debug)
+            let board = try BoardLoader.loadBoard(debug: debugMode)
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
                 throw ExitCode.failure
             }
 
-            // Build URL for delete
-            var components = URLComponents()
-            components.scheme = "termq"
-            components.host = "delete"
-
-            components.queryItems = [
-                URLQueryItem(name: "id", value: card.id.uuidString),
-                URLQueryItem(name: "permanent", value: permanent ? "true" : "false"),
-            ]
-
-            guard let url = components.url else {
-                JSONHelper.printErrorJSON("Failed to construct URL")
-                throw ExitCode.failure
-            }
-
-            // Open the URL scheme
-            let workspace = NSWorkspace.shared
-            let success = workspace.open(url)
-
-            if success {
-                JSONHelper.printJSON(DeleteResponse(id: card.id.uuidString, permanent: permanent))
+            if GUIDetector.isGUIRunning() {
+                // GUI path - use URL scheme
+                try deleteViaGUI(cardId: card.id, permanent: permanent)
             } else {
-                JSONHelper.printErrorJSON("Failed to send delete command to TermQ. Is it running?")
-                throw ExitCode.failure
+                // Headless path - use BoardWriter directly
+                try HeadlessWriter.deleteCard(
+                    identifier: card.id.uuidString,
+                    permanent: permanent,
+                    dataDirectory: nil,
+                    debug: debugMode
+                )
+
+                JSONHelper.printJSON(
+                    DeleteResponse(
+                        id: card.id.uuidString,
+                        permanent: permanent
+                    ))
             }
 
         } catch BoardLoader.LoadError.boardNotFound(let path) {
             JSONHelper.printErrorJSON(
                 "Board file not found at: \(path). Is TermQ installed and has been run at least once?")
+            throw ExitCode.failure
+        } catch BoardWriter.WriteError.cardNotFound(let identifier) {
+            JSONHelper.printErrorJSON("Terminal not found: \(identifier)")
             throw ExitCode.failure
         } catch let error as ExitCode {
             throw error
@@ -1150,5 +1115,292 @@ struct Delete: ParsableCommand {
             JSONHelper.printErrorJSON("Unexpected error: \(error.localizedDescription)")
             throw ExitCode.failure
         }
+    }
+}
+
+// MARK: - GUI Communication Helpers (URL Schemes)
+
+/// Delete terminal via GUI URL scheme
+private func deleteViaGUI(cardId: UUID, permanent: Bool) throws {
+    var components = URLComponents()
+    components.scheme = AppProfile.Current.urlScheme
+    components.host = "delete"
+
+    components.queryItems = [
+        URLQueryItem(name: "id", value: cardId.uuidString),
+        URLQueryItem(name: "permanent", value: permanent ? "true" : "false"),
+    ]
+
+    guard let url = components.url else {
+        JSONHelper.printErrorJSON("Failed to construct URL")
+        throw ExitCode.failure
+    }
+
+    let workspace = NSWorkspace.shared
+    let success = workspace.open(url)
+
+    if success {
+        JSONHelper.printJSON(DeleteResponse(id: cardId.uuidString, permanent: permanent))
+    } else {
+        JSONHelper.printErrorJSON("Failed to send delete command to TermQ. Is it running?")
+        throw ExitCode.failure
+    }
+}
+
+/// Move terminal via GUI URL scheme
+private func moveViaGUI(cardId: UUID, toColumn: String) throws {
+    var components = URLComponents()
+    components.scheme = AppProfile.Current.urlScheme
+    components.host = "move"
+
+    components.queryItems = [
+        URLQueryItem(name: "id", value: cardId.uuidString),
+        URLQueryItem(name: "column", value: toColumn),
+    ]
+
+    guard let url = components.url else {
+        JSONHelper.printErrorJSON("Failed to construct URL")
+        throw ExitCode.failure
+    }
+
+    let workspace = NSWorkspace.shared
+    let success = workspace.open(url)
+
+    if success {
+        JSONHelper.printJSON(MoveResponse(success: true, id: cardId.uuidString, column: toColumn))
+    } else {
+        JSONHelper.printErrorJSON("Failed to send move command to TermQ. Is it running?")
+        throw ExitCode.failure
+    }
+}
+
+/// Update terminal properties via GUI URL scheme
+private struct SetOptions {
+    let cardId: UUID
+    let name: String?
+    let description: String?
+    let column: String?
+    let badge: String?
+    let llmPrompt: String?
+    let llmNextAction: String?
+    let tags: [String]
+    let replaceTags: Bool
+    let initCommand: String?
+    let favourite: Bool
+    let unfavourite: Bool
+}
+
+private func setViaGUI(_ options: SetOptions) throws {
+    let cardId = options.cardId
+    let name = options.name
+    let description = options.description
+    let column = options.column
+    let badge = options.badge
+    let llmPrompt = options.llmPrompt
+    let llmNextAction = options.llmNextAction
+    let tags = options.tags
+    let replaceTags = options.replaceTags
+    let initCommand = options.initCommand
+    let favourite = options.favourite
+    let unfavourite = options.unfavourite
+    var components = URLComponents()
+    components.scheme = AppProfile.Current.urlScheme
+    components.host = "update"
+
+    var queryItems: [URLQueryItem] = [
+        URLQueryItem(name: "id", value: cardId.uuidString)
+    ]
+
+    if let name = name {
+        queryItems.append(URLQueryItem(name: "name", value: name))
+    }
+
+    if let description = description {
+        queryItems.append(URLQueryItem(name: "description", value: description))
+    }
+
+    if let column = column {
+        queryItems.append(URLQueryItem(name: "column", value: column))
+    }
+
+    if let badge = badge {
+        queryItems.append(URLQueryItem(name: "badge", value: badge))
+    }
+
+    if let llmPrompt = llmPrompt {
+        queryItems.append(URLQueryItem(name: "llmPrompt", value: llmPrompt))
+    }
+
+    if let llmNextAction = llmNextAction {
+        queryItems.append(URLQueryItem(name: "llmNextAction", value: llmNextAction))
+    }
+
+    for tagStr in tags {
+        queryItems.append(URLQueryItem(name: "tag", value: tagStr))
+    }
+
+    if replaceTags {
+        queryItems.append(URLQueryItem(name: "replaceTags", value: "true"))
+    }
+
+    if let initCommand = initCommand {
+        queryItems.append(URLQueryItem(name: "initCommand", value: initCommand))
+    }
+
+    if favourite {
+        queryItems.append(URLQueryItem(name: "favourite", value: "true"))
+    }
+
+    if unfavourite {
+        queryItems.append(URLQueryItem(name: "favourite", value: "false"))
+    }
+
+    components.queryItems = queryItems
+
+    guard let url = components.url else {
+        JSONHelper.printErrorJSON("Failed to construct URL")
+        throw ExitCode.failure
+    }
+
+    let workspace = NSWorkspace.shared
+    let success = workspace.open(url)
+
+    if success {
+        JSONHelper.printJSON(SetResponse(success: true, id: cardId.uuidString))
+    } else {
+        JSONHelper.printErrorJSON("Failed to send update to TermQ. Is it running?")
+        throw ExitCode.failure
+    }
+}
+
+/// Create terminal via GUI URL scheme
+private func createViaGUI(
+    name: String?,
+    description: String?,
+    column: String?,
+    tags: [String],
+    workingDirectory: String
+) throws {
+    var components = URLComponents()
+    components.scheme = AppProfile.Current.urlScheme
+    components.host = "open"
+
+    var queryItems: [URLQueryItem] = [
+        URLQueryItem(name: "path", value: workingDirectory)
+    ]
+
+    if let name = name {
+        queryItems.append(URLQueryItem(name: "name", value: name))
+    }
+
+    if let description = description {
+        queryItems.append(URLQueryItem(name: "description", value: description))
+    }
+
+    if let column = column {
+        queryItems.append(URLQueryItem(name: "column", value: column))
+    }
+
+    for tagStr in tags {
+        queryItems.append(URLQueryItem(name: "tag", value: tagStr))
+    }
+
+    components.queryItems = queryItems
+
+    guard let url = components.url else {
+        JSONHelper.printErrorJSON("Failed to construct URL")
+        throw ExitCode.failure
+    }
+
+    // Ensure TermQ is running
+    let workspace = NSWorkspace.shared
+    let bundleId = termqBundleIdentifier()
+    let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
+
+    if runningApps.isEmpty {
+        print("TermQ is not running. Launching...")
+        if !launchTermQ() {
+            let appName = AppProfile.Current.appBundleName
+            JSONHelper.printErrorJSON(
+                "Could not find or launch \(appName). Please ensure \(appName) is in /Applications or current directory"
+            )
+            throw ExitCode.failure
+        }
+    }
+
+    // Open the URL
+    let success = workspace.open(url)
+
+    if success {
+        print("Creating terminal in TermQ: \(workingDirectory)")
+        if let name = name {
+            print("  Name: \(name)")
+        }
+        if let description = description {
+            print("  Description: \(description)")
+        }
+        if let column = column {
+            print("  Column: \(column)")
+        }
+    } else {
+        JSONHelper.printErrorJSON("Failed to communicate with TermQ. Make sure TermQ is running")
+        throw ExitCode.failure
+    }
+}
+
+/// Quick-create terminal via GUI URL scheme
+private func newViaGUI(name: String, column: String?, workingDirectory: String) throws {
+    var components = URLComponents()
+    components.scheme = AppProfile.Current.urlScheme
+    components.host = "open"
+
+    // Generate a card ID upfront so we can track it
+    let cardId = UUID()
+
+    var queryItems: [URLQueryItem] = [
+        URLQueryItem(name: "id", value: cardId.uuidString),
+        URLQueryItem(name: "path", value: workingDirectory),
+        URLQueryItem(name: "name", value: name),
+    ]
+
+    if let column = column {
+        queryItems.append(URLQueryItem(name: "column", value: column))
+    }
+
+    components.queryItems = queryItems
+
+    guard let url = components.url else {
+        JSONHelper.printErrorJSON("Failed to construct URL")
+        throw ExitCode.failure
+    }
+
+    // Ensure TermQ is running
+    let workspace = NSWorkspace.shared
+    let bundleId = termqBundleIdentifier()
+    let runningApps = workspace.runningApplications.filter { $0.bundleIdentifier == bundleId }
+
+    if runningApps.isEmpty {
+        if !launchTermQ() {
+            let appName = AppProfile.Current.appBundleName
+            JSONHelper.printErrorJSON(
+                "Could not find or launch \(appName). Please ensure \(appName) is in /Applications or current directory"
+            )
+            throw ExitCode.failure
+        }
+    }
+
+    // Open the URL
+    let success = workspace.open(url)
+
+    if success {
+        let output = PendingCreateResponse(
+            id: cardId.uuidString,
+            status: "created",
+            message: "Terminal created at: \(workingDirectory)"
+        )
+        JSONHelper.printJSON(output)
+    } else {
+        JSONHelper.printErrorJSON("Failed to communicate with TermQ")
+        throw ExitCode.failure
     }
 }

@@ -79,6 +79,10 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Backend mode for session management (.direct = legacy, .tmux = persistent)
     @Published public var backend: TerminalBackend
 
+    /// Cards created via headless MCP need tmux sessions when GUI starts
+    /// GUI will detect this flag and create sessions automatically
+    @Published public var needsTmuxSession: Bool
+
     /// Terminal-specific environment variables (injected on launch, overrides global)
     @Published public var environmentVariables: [EnvironmentVariable] = []
 
@@ -90,7 +94,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
         case allowAutorun, allowOscClipboard, confirmExternalModifications
-        case deletedAt, lastLLMGet, backend, environmentVariables
+        case deletedAt, lastLLMGet, backend, needsTmuxSession, environmentVariables
     }
 
     public init(
@@ -117,6 +121,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         deletedAt: Date? = nil,
         lastLLMGet: Date? = nil,
         backend: TerminalBackend = .direct,
+        needsTmuxSession: Bool = false,
         environmentVariables: [EnvironmentVariable] = []
     ) {
         self.id = id
@@ -142,6 +147,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.deletedAt = deletedAt
         self.lastLLMGet = lastLLMGet
         self.backend = backend
+        self.needsTmuxSession = needsTmuxSession
         self.environmentVariables = environmentVariables
     }
 
@@ -172,6 +178,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
         // Default to direct for cards without backend field (pre-tmux cards were direct mode)
         backend = try container.decodeIfPresent(TerminalBackend.self, forKey: .backend) ?? .direct
+        needsTmuxSession = try container.decodeIfPresent(Bool.self, forKey: .needsTmuxSession) ?? false
         environmentVariables =
             try container.decodeIfPresent([EnvironmentVariable].self, forKey: .environmentVariables)
             ?? []
@@ -202,6 +209,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
         try container.encodeIfPresent(lastLLMGet, forKey: .lastLLMGet)
         try container.encode(backend, forKey: .backend)
+        try container.encode(needsTmuxSession, forKey: .needsTmuxSession)
         try container.encode(environmentVariables, forKey: .environmentVariables)
     }
 

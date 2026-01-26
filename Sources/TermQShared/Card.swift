@@ -15,6 +15,9 @@ public struct Card: Codable, Sendable, Identifiable {
     public let llmNextAction: String
     public let allowAutorun: Bool
     public let deletedAt: Date?
+    /// Cards created via headless MCP need tmux sessions when GUI starts
+    /// GUI will detect this flag and create sessions automatically
+    public let needsTmuxSession: Bool
 
     // Custom decoding to handle missing fields for backwards compatibility
     public init(from decoder: Decoder) throws {
@@ -32,11 +35,13 @@ public struct Card: Codable, Sendable, Identifiable {
         llmNextAction = try container.decodeIfPresent(String.self, forKey: .llmNextAction) ?? ""
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
+        needsTmuxSession = try container.decodeIfPresent(Bool.self, forKey: .needsTmuxSession) ?? false
     }
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex
         case workingDirectory, isFavourite, badge, llmPrompt, llmNextAction, allowAutorun, deletedAt
+        case needsTmuxSession
     }
 
     /// Memberwise initializer for programmatic creation and tests
@@ -53,7 +58,8 @@ public struct Card: Codable, Sendable, Identifiable {
         llmPrompt: String = "",
         llmNextAction: String = "",
         allowAutorun: Bool = false,
-        deletedAt: Date? = nil
+        deletedAt: Date? = nil,
+        needsTmuxSession: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -68,6 +74,7 @@ public struct Card: Codable, Sendable, Identifiable {
         self.llmNextAction = llmNextAction
         self.allowAutorun = allowAutorun
         self.deletedAt = deletedAt
+        self.needsTmuxSession = needsTmuxSession
     }
 
     /// Whether this card is in the bin (soft-deleted)

@@ -42,6 +42,7 @@ let package = Package(
             name: "TermQ",
             dependencies: [
                 "TermQCore",
+                "TermQShared",
                 .product(name: "SwiftTerm", package: "SwiftTerm"),
                 .product(name: "Sparkle", package: "Sparkle")
             ],
@@ -96,6 +97,7 @@ let package = Package(
             name: "termq-cli",
             dependencies: [
                 "TermQShared",
+                "MCPServerLib",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
             path: "Sources/termq-cli"

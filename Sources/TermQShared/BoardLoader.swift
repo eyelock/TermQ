@@ -28,7 +28,7 @@ public enum BoardLoader {
             return custom
         }
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let dirName = debug ? "TermQ-Debug" : "TermQ"
+        let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
         return appSupport.appendingPathComponent(dirName, isDirectory: true)
     }
 
@@ -179,8 +179,8 @@ public enum BoardWriter {
             throw WriteError.encodingFailed("Invalid cards format")
         }
 
-        // Find the card to update
-        let cardIndex = try findCardIndex(identifier: identifier, in: cards)
+        // Find the card to update (include deleted cards so we can update after soft-delete)
+        let cardIndex = try findCardIndex(identifier: identifier, in: cards, includeDeleted: true)
 
         // Apply updates
         for (key, value) in updates {
@@ -191,12 +191,26 @@ public enum BoardWriter {
         board["cards"] = cards
         try saveRawBoard(board, to: boardURL)
 
-        // Return the updated board's card
+        // Return the updated card (search in ALL cards, not just active ones)
+        // This is important for operations like soft-delete that set deletedAt
         let updatedBoard = try BoardLoader.loadBoard(dataDirectory: dataDirectory, debug: debug)
-        guard let updatedCard = updatedBoard.findTerminal(identifier: identifier) else {
-            throw WriteError.cardNotFound(identifier: identifier)
+
+        // Search in all cards, including deleted ones
+        if let uuid = UUID(uuidString: identifier),
+           let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid }) {
+            return updatedCard
         }
-        return updatedCard
+
+        // Fallback to name search in all cards
+        let identifierLower = identifier.lowercased()
+        if let updatedCard = updatedBoard.cards.first(where: {
+            $0.title.lowercased() == identifierLower ||
+            $0.title.lowercased().contains(identifierLower)
+        }) {
+            return updatedCard
+        }
+
+        throw WriteError.cardNotFound(identifier: identifier)
     }
 
     /// Move a card to a different column
@@ -328,11 +342,17 @@ public enum BoardWriter {
     }
 
     /// Find card index by identifier
-    private static func findCardIndex(identifier: String, in cards: [[String: Any]]) throws -> Int {
+    private static func findCardIndex(
+        identifier: String,
+        in cards: [[String: Any]],
+        includeDeleted: Bool = false
+    ) throws -> Int {
         // Try as UUID
         if let _ = UUID(uuidString: identifier) {
             if let index = cards.firstIndex(where: {
-                ($0["id"] as? String) == identifier && $0["deletedAt"] == nil
+                let matchesId = ($0["id"] as? String) == identifier
+                let isNotDeleted = $0["deletedAt"] == nil
+                return includeDeleted ? matchesId : (matchesId && isNotDeleted)
             }) {
                 return index
             }
@@ -341,14 +361,18 @@ public enum BoardWriter {
         // Try as exact name (case-insensitive)
         let identifierLower = identifier.lowercased()
         if let index = cards.firstIndex(where: {
-            ($0["title"] as? String)?.lowercased() == identifierLower && $0["deletedAt"] == nil
+            let matchesName = ($0["title"] as? String)?.lowercased() == identifierLower
+            let isNotDeleted = $0["deletedAt"] == nil
+            return includeDeleted ? matchesName : (matchesName && isNotDeleted)
         }) {
             return index
         }
 
         // Try as partial name match
         if let index = cards.firstIndex(where: {
-            ($0["title"] as? String)?.lowercased().contains(identifierLower) == true && $0["deletedAt"] == nil
+            let matchesPartialName = ($0["title"] as? String)?.lowercased().contains(identifierLower) == true
+            let isNotDeleted = $0["deletedAt"] == nil
+            return includeDeleted ? matchesPartialName : (matchesPartialName && isNotDeleted)
         }) {
             return index
         }
