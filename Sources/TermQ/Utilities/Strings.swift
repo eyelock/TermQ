@@ -485,6 +485,8 @@ enum Strings {
         static var autoCheckUpdatesHelp: String { localized("settings.auto.check.updates.help") }
         static var includeBetaReleases: String { localized("settings.include.beta.releases") }
         static var includeBetaReleasesHelp: String { localized("settings.include.beta.releases.help") }
+        static var debugUpdateWarningTitle: String { localized("settings.debug.update.warning.title") }
+        static var debugUpdateWarningMessage: String { localized("settings.debug.update.warning.message") }
 
         // General - Data Directory section
         static var sectionDataDirectory: String { localized("settings.section.data.directory") }

@@ -99,10 +99,10 @@ struct SettingsGeneralView: View {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundColor(.orange)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Debug Build Warning")
+                    Text(Strings.Settings.debugUpdateWarningTitle)
                         .font(.caption)
                         .fontWeight(.semibold)
-                    Text("Proceeding with updates will install the Production version of TermQ.")
+                    Text(Strings.Settings.debugUpdateWarningMessage)
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }

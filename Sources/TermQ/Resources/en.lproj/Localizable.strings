@@ -283,6 +283,8 @@
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.include.beta.releases" = "Include beta releases";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 // Settings - Data Directory section
 "settings.section.data.directory" = "Data Storage";

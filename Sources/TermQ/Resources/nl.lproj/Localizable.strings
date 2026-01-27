@@ -482,3 +482,7 @@ Dit kan invloed hebben op hoe AI-assistenten met deze terminal communiceren.";
 "editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Globaal uitgeschakeld - inschakelen in Instellingen > Gegevens & Beveiliging";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+
+/* NEEDS TRANSLATION */
+"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
