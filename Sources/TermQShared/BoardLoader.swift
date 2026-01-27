@@ -353,7 +353,7 @@ public enum BoardWriter {
         includeDeleted: Bool = false
     ) throws -> Int {
         // Try as UUID
-        if let _ = UUID(uuidString: identifier) {
+        if UUID(uuidString: identifier) != nil {
             if let index = cards.firstIndex(where: {
                 let matchesId = ($0["id"] as? String) == identifier
                 let isNotDeleted = $0["deletedAt"] == nil
