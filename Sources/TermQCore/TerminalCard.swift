@@ -87,7 +87,6 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     @Published public var environmentVariables: [EnvironmentVariable] = []
 
     // Runtime state (not persisted)
-    public var isRunning: Bool = false
     public var isTransient: Bool = false
 
     enum CodingKeys: String, CodingKey {

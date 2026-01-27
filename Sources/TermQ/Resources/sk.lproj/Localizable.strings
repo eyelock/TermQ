@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "Kontext zachovaný medzi reláciami";
 "editor.field.next.action" = "Ďalšia akcia";
 "editor.field.next.action.help" = "Akcia na vykonanie nabudúce";
+"editor.next.action.requires.injection" = "Ďalšia akcia vyžaduje \"Povoliť automatické vkladanie LLM výzvy\" v Nastavenia → Nástroje";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generátor príkazov";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Backend nie je možné zmeniť, keď je relácia aktívna. Reštartujte reláciu na zmenu backendu.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

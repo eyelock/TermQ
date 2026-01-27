@@ -364,6 +364,7 @@ enum Strings {
         static var fieldPersistentContextHelp: String { localized("editor.field.persistent.context.help") }
         static var fieldNextAction: String { localized("editor.field.next.action") }
         static var fieldNextActionHelp: String { localized("editor.field.next.action.help") }
+        static var nextActionRequiresInjection: String { localized("editor.next.action.requires.injection") }
 
         // Command Generator section
         static var sectionCommandGenerator: String { localized("editor.section.command.generator") }
@@ -383,6 +384,7 @@ enum Strings {
         static var fieldBackend: String { localized("editor.field.backend") }
         static var tmuxPersistNote: String { localized("editor.tmux.persist.note") }
         static var backendRestartHint: String { localized("editor.backend.restart.hint") }
+        static var backendLockedWarning: String { localized("editor.backend.locked.warning") }
 
         // Environment section
         enum Environment {

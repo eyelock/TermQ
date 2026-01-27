@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "Contextul este păstrat între sesiuni";
 "editor.field.next.action" = "Următoarea acțiune";
 "editor.field.next.action.help" = "Acțiune de efectuat data viitoare";
+"editor.next.action.requires.injection" = "Următoarea acțiune necesită \"Activează injectarea automată a promptului LLM\" în Setări → Instrumente";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generator de comenzi";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Backend-ul nu poate fi modificat în timp ce sesiunea este activă. Reporniți sesiunea pentru a schimba backend-urile.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

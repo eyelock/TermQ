@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "Kontekst beholdes mellom økter";
 "editor.field.next.action" = "Neste handling";
 "editor.field.next.action.help" = "Handling å utføre neste gang";
+"editor.next.action.requires.injection" = "Neste handling krever \"Aktiver LLM Prompt Auto-injeksjon\" i Innstillinger → Verktøy";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Kommandogenerator";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Backend kan ikke endres mens økten er aktiv. Start økten på nytt for å endre backends.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

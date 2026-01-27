@@ -39,6 +39,7 @@ struct CardEditorView: View {
     @State private var backend: TerminalBackend = .direct
     @State private var environmentVariables: [EnvironmentVariable] = []
     @ObservedObject private var tmuxManager = TmuxManager.shared
+    @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @AppStorage("tmuxEnabled") private var tmuxEnabled = true
 
     private enum EditorTab: CaseIterable {
@@ -207,6 +208,8 @@ struct CardEditorView: View {
     private var terminalContent: some View {
         // Session Backend at top - only show if tmux is available and enabled globally
         if tmuxManager.isAvailable && tmuxEnabled {
+            let hasActiveSession = sessionManager.hasActiveSession(for: card.id)
+
             Section(Strings.Editor.sectionBackend) {
                 Picker(Strings.Editor.fieldBackend, selection: $backend) {
                     ForEach(TerminalBackend.allCases, id: \.self) { backend in
@@ -214,10 +217,17 @@ struct CardEditorView: View {
                     }
                 }
                 .pickerStyle(.radioGroup)
+                .disabled(hasActiveSession)
 
-                Text("\(backend.description) \(Strings.Editor.backendRestartHint)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                if hasActiveSession {
+                    Text(Strings.Editor.backendLockedWarning)
+                        .font(.caption)
+                        .foregroundColor(.orange)
+                } else {
+                    Text("\(backend.description) \(Strings.Editor.backendRestartHint)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
         }
 
@@ -441,7 +451,7 @@ struct CardEditorView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
-                    Text("Next Action requires \"Enable LLM Prompt Auto-injection\" in Settings → Tools")
+                    Text(Strings.Editor.nextActionRequiresInjection)
                         .font(.caption2)
                         .foregroundColor(.orange)
                 }

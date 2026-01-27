@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "ההקשר נשמר בין הפעלות";
 "editor.field.next.action" = "פעולה הבאה";
 "editor.field.next.action.help" = "פעולה לביצוע בפעם הבאה";
+"editor.next.action.requires.injection" = "הפעולה הבאה דורשת \"הפעל הזרקה אוטומטית של Prompt LLM\" בהגדרות ← כלים";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "מחולל פקודות";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "לא ניתן לשנות את ה-backend כאשר ההפעלה פעילה. הפעל מחדש את ההפעלה כדי לשנות backends.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

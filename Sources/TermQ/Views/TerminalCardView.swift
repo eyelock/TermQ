@@ -151,7 +151,7 @@ struct TerminalCardView: View {
                     .help(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin)
 
                     // Running status
-                    if card.isRunning && !isProcessing {
+                    if hasActiveSession && !isProcessing {
                         Circle()
                             .fill(.green)
                             .frame(width: 8, height: 8)
