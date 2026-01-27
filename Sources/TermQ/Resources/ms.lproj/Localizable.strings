@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "Konteks dikekalkan merentas sesi";
 "editor.field.next.action" = "Tindakan Seterusnya";
 "editor.field.next.action.help" = "Tindakan untuk dilakukan seterusnya";
+"editor.next.action.requires.injection" = "Tindakan seterusnya memerlukan \"Dayakan Suntikan Auto Prompt LLM\" dalam Tetapan → Alatan";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Penjana Perintah";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Backend tidak boleh diubah semasa sesi aktif. Mulakan semula sesi untuk menukar backend.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

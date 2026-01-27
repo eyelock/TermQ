@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "يُحفظ السياق عبر الجلسات";
 "editor.field.next.action" = "الإجراء التالي";
 "editor.field.next.action.help" = "إجراء للتنفيذ في المرة القادمة";
+"editor.next.action.requires.injection" = "يتطلب الإجراء التالي \"تفعيل الحقن التلقائي لموجه LLM\" في الإعدادات ← الأدوات";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "مولّد الأوامر";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "لا يمكن تغيير الواجهة الخلفية أثناء نشاط الجلسة. أعد تشغيل الجلسة لتغيير الواجهات الخلفية.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

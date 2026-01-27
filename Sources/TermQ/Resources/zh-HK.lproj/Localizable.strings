@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "內容喺工作階段之間保持";
 "editor.field.next.action" = "下一步動作";
 "editor.field.next.action.help" = "下次執行嘅動作";
+"editor.next.action.requires.injection" = "下一個動作需要在設定 → 工具中「啟用 LLM 提示自動注入」";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "指令產生器";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "工作階段處於活動狀態時無法變更後端。重新啟動工作階段以變更後端。";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

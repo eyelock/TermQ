@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "บริบทถูกเก็บรักษาข้ามเซสชัน";
 "editor.field.next.action" = "การดำเนินการถัดไป";
 "editor.field.next.action.help" = "การดำเนินการที่จะทำต่อไป";
+"editor.next.action.requires.injection" = "การดำเนินการถัดไปต้องการ \"เปิดใช้งานการแทรก LLM Prompt อัตโนมัติ\" ในการตั้งค่า → เครื่องมือ";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "ตัวสร้างคำสั่ง";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "ไม่สามารถเปลี่ยน Backend ได้ขณะเซสชันทำงานอยู่ เริ่มเซสชันใหม่เพื่อเปลี่ยน Backend";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

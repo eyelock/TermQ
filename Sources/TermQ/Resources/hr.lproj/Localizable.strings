@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "Kontekst se čuva između sesija";
 "editor.field.next.action" = "Sljedeća radnja";
 "editor.field.next.action.help" = "Radnja za izvršavanje sljedeći put";
+"editor.next.action.requires.injection" = "Sljedeća radnja zahtijeva \"Omogući automatsko ubrizgavanje LLM upita\" u Postavke → Alati";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generator naredbi";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Backend se ne može promijeniti dok je sesija aktivna. Ponovno pokrenite sesiju za promjenu backenda.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "Kontekst zachowany między sesjami";
 "editor.field.next.action" = "Następna akcja";
 "editor.field.next.action.help" = "Akcja do wykonania następnym razem";
+"editor.next.action.requires.injection" = "Następna akcja wymaga \"Włącz automatyczne wstrzykiwanie promptu LLM\" w Ustawienia → Narzędzia";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generator poleceń";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Backend nie może być zmieniony, gdy sesja jest aktywna. Uruchom ponownie sesję, aby zmienić backend.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

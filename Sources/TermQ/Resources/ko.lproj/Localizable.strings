@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "세션 간 컨텍스트 유지";
 "editor.field.next.action" = "다음 동작";
 "editor.field.next.action.help" = "다음에 수행할 동작";
+"editor.next.action.requires.injection" = "다음 작업에는 설정 → 도구에서 \"LLM 프롬프트 자동 삽입 활성화\"가 필요합니다";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "명령 생성기";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "세션이 활성화되어 있는 동안에는 백엔드를 변경할 수 없습니다. 백엔드를 변경하려면 세션을 다시 시작하세요.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

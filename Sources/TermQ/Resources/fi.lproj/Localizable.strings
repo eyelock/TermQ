@@ -194,6 +194,7 @@
 "editor.field.persistent.context.help" = "Konteksti säilyy istuntojen välillä";
 "editor.field.next.action" = "Seuraava toiminto";
 "editor.field.next.action.help" = "Seuraavaksi suoritettava toiminto";
+"editor.next.action.requires.injection" = "Seuraava toiminto vaatii \"Ota LLM-kehotteen automaattinen injektio käyttöön\" Asetukset → Työkalut";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Komentogeneraattori";
@@ -400,6 +401,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Taustajärjestelmää ei voi vaihtaa istunnon ollessa aktiivinen. Käynnistä istunto uudelleen vaihtaaksesi taustajärjestelmiä.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
