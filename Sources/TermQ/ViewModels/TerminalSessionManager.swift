@@ -43,6 +43,9 @@ class TerminalSessionManager: ObservableObject {
     /// Active terminal sessions keyed by card ID
     private var sessions: [UUID: TerminalSession] = [:]
 
+    /// Per-pane terminal emulators for tmux sessions (cardId -> paneId -> TermQTerminalView)
+    private var paneTerminals: [UUID: [String: TermQTerminalView]] = [:]
+
     struct TerminalSession {
         let terminal: TermQTerminalView
         let container: TerminalContainerView
@@ -51,6 +54,8 @@ class TerminalSessionManager: ObservableObject {
         var currentDirectory: String?
         var lastActivityTime: Date = Date()
         var pendingRestart: Bool = false
+        var controlModeSession: TmuxControlModeSession?  // Control mode for tmux panes
+        var activePaneId: String?  // Currently active pane ID for input routing
     }
 
     private init() {
@@ -82,6 +87,12 @@ class TerminalSessionManager: ObservableObject {
 
         // Check for pending restart - clean up old session before creating new
         if let session = sessions[cardId], session.pendingRestart {
+            // Disconnect control mode if exists
+            if let controlSession = session.controlModeSession {
+                controlSession.disconnect()
+            }
+            // Clean up pane terminals
+            paneTerminals.removeValue(forKey: cardId)
             // Clean up event monitors
             session.terminal.cleanupAutoScrollDuringSelection()
             session.terminal.cleanupCopyOnSelect()
@@ -300,9 +311,29 @@ class TerminalSessionManager: ObservableObject {
             execName: nil
         )
 
-        // Sync full metadata to tmux session after a brief delay (allow session creation)
+        // Start control mode session for pane management
+        let controlSession = TmuxControlModeSession(sessionName: sessionName)
+        setupControlModeCallbacks(for: card.id, session: controlSession)
+
+        // Connect control mode session asynchronously
         Task {
+            // Wait for tmux session to be ready
             try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
+
+            // Connect to control mode
+            try? await controlSession.connect()
+
+            // Store control mode session in the terminal session
+            await MainActor.run {
+                sessions[card.id]?.controlModeSession = controlSession
+                // Set active pane ID from parser
+                if let activePane = controlSession.parser.panes.first(where: { $0.isActive }) {
+                    sessions[card.id]?.activePaneId = activePane.id
+                }
+                objectWillChange.send()
+            }
+
+            // Sync full metadata to tmux session
             let metadata = TerminalCardMetadata.from(card)
             await tmuxManager.syncMetadataToSession(sessionName: sessionName, card: metadata)
         }
@@ -488,6 +519,14 @@ class TerminalSessionManager: ObservableObject {
     func removeSession(for cardId: UUID, killTmuxSession: Bool = false) {
         guard let session = sessions.removeValue(forKey: cardId) else { return }
 
+        // Disconnect control mode first if it exists
+        if let controlSession = session.controlModeSession {
+            controlSession.disconnect()
+        }
+
+        // Clean up pane terminals
+        paneTerminals.removeValue(forKey: cardId)
+
         // Clean up event monitors before destroying terminal to prevent EV_VANISHED errors
         // This must happen before the session is fully removed to avoid race conditions
         session.terminal.cleanupAutoScrollDuringSelection()
@@ -520,6 +559,14 @@ class TerminalSessionManager: ObservableObject {
     func killSession(for cardId: UUID) {
         guard let session = sessions.removeValue(forKey: cardId) else { return }
 
+        // Disconnect control mode first if it exists
+        if let controlSession = session.controlModeSession {
+            controlSession.disconnect()
+        }
+
+        // Clean up pane terminals
+        paneTerminals.removeValue(forKey: cardId)
+
         // Clean up event monitors before destroying terminal to prevent EV_VANISHED errors
         session.terminal.cleanupAutoScrollDuringSelection()
         session.terminal.cleanupCopyOnSelect()
@@ -549,13 +596,23 @@ class TerminalSessionManager: ObservableObject {
         let allSessions = sessions
         sessions.removeAll()
 
-        for (_, session) in allSessions where session.isRunning {
-            switch session.backend {
-            case .direct:
-                session.terminal.send(txt: "exit\n")
-            case .tmux:
-                // Just detach - tmux sessions persist across app restarts
-                session.terminal.send(txt: "\u{02}d")
+        // Clean up all pane terminals
+        paneTerminals.removeAll()
+
+        for (_, session) in allSessions {
+            // Disconnect control mode if exists
+            if let controlSession = session.controlModeSession {
+                controlSession.disconnect()
+            }
+
+            if session.isRunning {
+                switch session.backend {
+                case .direct:
+                    session.terminal.send(txt: "exit\n")
+                case .tmux:
+                    // Just detach - tmux sessions persist across app restarts
+                    session.terminal.send(txt: "\u{02}d")
+                }
             }
         }
     }
@@ -597,38 +654,50 @@ class TerminalSessionManager: ObservableObject {
     func splitPaneHorizontally(cardId: UUID) {
         guard let session = sessions[cardId],
             session.backend == .tmux,
-            let tmuxPath = tmuxManager.tmuxPath
+            let controlSession = session.controlModeSession
         else { return }
 
-        let sessionName = tmuxManager.sessionName(for: cardId)
-        Task {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: tmuxPath)
-            process.arguments = ["split-window", "-v", "-t", sessionName]
-            try? process.run()
-            process.waitUntilExit()
-        }
+        // Use control mode to split pane
+        // This will automatically trigger %layout-change event which updates UI
+        controlSession.splitHorizontal()
+
+        // Trigger immediate UI update
+        objectWillChange.send()
     }
 
     /// Split the current pane vertically (left/right)
     func splitPaneVertically(cardId: UUID) {
         guard let session = sessions[cardId],
             session.backend == .tmux,
-            let tmuxPath = tmuxManager.tmuxPath
+            let controlSession = session.controlModeSession
         else { return }
 
-        let sessionName = tmuxManager.sessionName(for: cardId)
-        Task {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: tmuxPath)
-            process.arguments = ["split-window", "-h", "-t", sessionName]
-            try? process.run()
-            process.waitUntilExit()
-        }
+        // Use control mode to split pane
+        // This will automatically trigger %layout-change event which updates UI
+        controlSession.splitVertical()
+
+        // Trigger immediate UI update
+        objectWillChange.send()
     }
 
     /// Navigate to adjacent pane
     func selectPane(direction: PaneDirection, cardId: UUID) {
+        guard let session = sessions[cardId],
+            session.backend == .tmux,
+            let controlSession = session.controlModeSession
+        else { return }
+
+        // Use control mode to select pane
+        // This will automatically trigger pane mode change events
+        controlSession.selectPane(direction: direction)
+
+        // Trigger immediate UI update
+        objectWillChange.send()
+    }
+
+    /// Legacy method - kept for compatibility but now uses control mode
+    @available(*, deprecated, message: "Use setActivePane instead")
+    func selectPaneOld(direction: PaneDirection, cardId: UUID) {
         guard let session = sessions[cardId],
             session.backend == .tmux,
             let tmuxPath = tmuxManager.tmuxPath
@@ -656,33 +725,120 @@ class TerminalSessionManager: ObservableObject {
     func closeCurrentPane(cardId: UUID) {
         guard let session = sessions[cardId],
             session.backend == .tmux,
-            let tmuxPath = tmuxManager.tmuxPath
+            let controlSession = session.controlModeSession
         else { return }
 
-        let sessionName = tmuxManager.sessionName(for: cardId)
-        Task {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: tmuxPath)
-            process.arguments = ["kill-pane", "-t", sessionName]
-            try? process.run()
-            process.waitUntilExit()
-        }
+        // Use control mode to close pane
+        // This will automatically trigger %layout-change event which updates UI
+        controlSession.closePane()
+
+        // Trigger immediate UI update
+        objectWillChange.send()
     }
 
     /// Zoom/unzoom the current pane (fullscreen toggle)
     func togglePaneZoom(cardId: UUID) {
         guard let session = sessions[cardId],
             session.backend == .tmux,
-            let tmuxPath = tmuxManager.tmuxPath
+            let controlSession = session.controlModeSession
         else { return }
 
-        let sessionName = tmuxManager.sessionName(for: cardId)
-        Task {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: tmuxPath)
-            process.arguments = ["resize-pane", "-Z", "-t", sessionName]
-            try? process.run()
-            process.waitUntilExit()
+        // Use control mode to zoom/unzoom pane
+        // This will automatically trigger %layout-change event which updates UI
+        controlSession.toggleZoom()
+
+        // Trigger immediate UI update
+        objectWillChange.send()
+    }
+
+    // MARK: - Tmux Control Mode Integration
+
+    /// Set the active pane for input routing
+    func setActivePane(cardId: UUID, paneId: String) {
+        sessions[cardId]?.activePaneId = paneId
+
+        // Select the pane in tmux
+        if let controlSession = sessions[cardId]?.controlModeSession {
+            controlSession.selectPane(id: paneId)
+        }
+    }
+
+    /// Get the control mode session for a card (if it exists)
+    func getControlModeSession(for cardId: UUID) -> TmuxControlModeSession? {
+        return sessions[cardId]?.controlModeSession
+    }
+
+    /// Get terminal view for a specific pane (creates if doesn't exist)
+    func getTerminalView(for cardId: UUID, paneId: String) -> TermQTerminalView? {
+        // Ensure pane terminals dictionary exists for this card
+        if paneTerminals[cardId] == nil {
+            paneTerminals[cardId] = [:]
+        }
+
+        // Return existing terminal view if available
+        if let existingView = paneTerminals[cardId]?[paneId] {
+            return existingView
+        }
+
+        // Create new terminal view for this pane
+        let terminalView = TermQTerminalView(frame: .zero)
+
+        // Configure terminal with same settings as main terminal
+        if let session = sessions[cardId] {
+            terminalView.font = session.terminal.font
+            // Apply theme
+            let theme = themeManager.theme(for: "")  // Use default theme for panes
+            themeManager.applyTheme(to: terminalView, theme: theme)
+        }
+
+        paneTerminals[cardId]?[paneId] = terminalView
+        return terminalView
+    }
+
+    /// Handle pane output from control mode
+    private func handlePaneOutput(cardId: UUID, paneId: String, data: Data) {
+        // Get or create terminal view for this pane
+        guard let terminalView = getTerminalView(for: cardId, paneId: paneId) else {
+            return
+        }
+
+        // Send data to the pane's terminal emulator
+        // SwiftTerm processes terminal escape sequences and updates display
+        let bytes = [UInt8](data)
+        terminalView.feed(byteArray: bytes[...])
+    }
+
+    /// Set up control mode callbacks for a tmux session
+    private func setupControlModeCallbacks(for cardId: UUID, session: TmuxControlModeSession) {
+        // Route pane output to correct terminal emulator
+        session.onPaneOutput = { [weak self] paneId, data in
+            self?.handlePaneOutput(cardId: cardId, paneId: paneId, data: data)
+        }
+
+        // Trigger UI refresh on layout changes
+        session.parser.onLayoutChange = { [weak self] _, _ in
+            self?.objectWillChange.send()
+        }
+
+        // Trigger UI refresh on window add/close
+        session.parser.onWindowAdd = { [weak self] _ in
+            self?.objectWillChange.send()
+        }
+
+        session.parser.onWindowClose = { [weak self] _ in
+            self?.objectWillChange.send()
+        }
+
+        // Track active pane changes
+        session.parser.onPaneModeChanged = { [weak self] paneId in
+            self?.sessions[cardId]?.activePaneId = paneId
+            self?.objectWillChange.send()
+        }
+
+        // Handle session exit
+        session.parser.onExit = { [weak self] _ in
+            self?.sessions[cardId]?.isRunning = false
+            self?.objectWillChange.send()
         }
     }
 
