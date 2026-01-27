@@ -220,7 +220,7 @@ struct CardEditorView: View {
                 .disabled(hasActiveSession)
 
                 if hasActiveSession {
-                    Text("Backend cannot be changed while session is active. Restart the session to change backends.")
+                    Text(Strings.Editor.backendLockedWarning)
                         .font(.caption)
                         .foregroundColor(.orange)
                 } else {
@@ -451,7 +451,7 @@ struct CardEditorView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
-                    Text("Next Action requires \"Enable LLM Prompt Auto-injection\" in Settings → Tools")
+                    Text(Strings.Editor.nextActionRequiresInjection)
                         .font(.caption2)
                         .foregroundColor(.orange)
                 }

@@ -190,6 +190,7 @@
 "editor.field.persistent.context.help" = "Context maintained across sessions";
 "editor.field.next.action" = "Next Action";
 "editor.field.next.action.help" = "Action to perform next";
+"editor.next.action.requires.injection" = "Next Action requires \"Enable LLM Prompt Auto-injection\" in Settings → Tools";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Command Generator";
@@ -209,6 +210,7 @@
 "editor.field.backend" = "Backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
+"editor.backend.locked.warning" = "Backend cannot be changed while session is active. Restart the session to change backends.";
 
 // Editor - Environment section
 "editor.environment.description" = "Environment variables are injected when the terminal launches. Terminal variables override global variables with the same name.";
