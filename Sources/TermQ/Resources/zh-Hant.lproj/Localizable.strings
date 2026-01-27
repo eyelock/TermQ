@@ -18,10 +18,9 @@
 "common.add" = "新增";
 "common.reinstall" = "重新安裝";
 "common.uninstall" = "解除安裝";
-"common.installed"
+"common.installed" = "已安裝";
 "common.enabled" = "已啟用";
 "common.disabled" = "已停用";
-// TEMP_MARKER = "已安裝";
 "common.browse" = "瀏覽...";
 "common.select" = "Select";
 "common.apply" = "套用";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "用於組織的鍵值對";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "提示";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "終端機允許指令";
 "editor.field.persistent.context" = "持續性內容";
 "editor.field.persistent.context.help" = "內容在工作階段間保持";

@@ -18,10 +18,9 @@
 "common.add" = "Thêm";
 "common.reinstall" = "Cài đặt lại";
 "common.uninstall" = "Gỡ cài đặt";
-"common.installed"
+"common.installed" = "Đã cài đặt";
 "common.enabled" = "Đã bật";
 "common.disabled" = "Đã tắt";
-// TEMP_MARKER = "Đã cài đặt";
 "common.browse" = "Duyệt...";
 "common.select" = "Select";
 "common.apply" = "Áp dụng";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Cặp khóa-giá trị để tổ chức";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Lời nhắc";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminal cho phép lệnh";
 "editor.field.persistent.context" = "Ngữ cảnh lâu dài";
 "editor.field.persistent.context.help" = "Ngữ cảnh được duy trì qua các phiên";

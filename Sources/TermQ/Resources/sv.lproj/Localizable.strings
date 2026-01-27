@@ -18,10 +18,9 @@
 "common.add" = "Lägg till";
 "common.reinstall" = "Installera om";
 "common.uninstall" = "Avinstallera";
-"common.installed"
+"common.installed" = "Installerad";
 "common.enabled" = "Aktiverad";
 "common.disabled" = "Inaktiverad";
-// TEMP_MARKER = "Installerad";
 "common.browse" = "Bläddra...";
 "common.select" = "Select";
 "common.apply" = "Använd";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Nyckel-värdepar för organisation";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Prompter";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminalen tillåter kommandon";
 "editor.field.persistent.context" = "Beständig kontext";
 "editor.field.persistent.context.help" = "Kontext bevarad mellan sessioner";

@@ -18,10 +18,9 @@
 "common.add" = "إضافة";
 "common.reinstall" = "إعادة التثبيت";
 "common.uninstall" = "إلغاء التثبيت";
-"common.installed"
+"common.installed" = "مثبّت";
 "common.enabled" = "ممكّن";
 "common.disabled" = "معطّل";
-// TEMP_MARKER = "مثبّت";
 "common.browse" = "استعراض...";
 "common.select" = "Select";
 "common.apply" = "تطبيق";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "أزواج مفتاح-قيمة للتنظيم";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "المطالبات";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "الطرفية تسمح بالأوامر";
 "editor.field.persistent.context" = "سياق دائم";
 "editor.field.persistent.context.help" = "يُحفظ السياق عبر الجلسات";

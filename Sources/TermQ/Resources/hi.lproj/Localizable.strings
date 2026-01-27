@@ -18,10 +18,9 @@
 "common.add" = "जोड़ें";
 "common.reinstall" = "पुनः इंस्टॉल करें";
 "common.uninstall" = "अनइंस्टॉल करें";
-"common.installed"
+"common.installed" = "इंस्टॉल हो गया";
 "common.enabled" = "सक्षम";
 "common.disabled" = "अक्षम";
-// TEMP_MARKER = "इंस्टॉल हो गया";
 "common.browse" = "ब्राउज़ करें...";
 "common.select" = "Select";
 "common.apply" = "लागू करें";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "संगठन के लिए कुंजी-मान जोड़े";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "संकेत";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "टर्मिनल कमांड की अनुमति देता है";
 "editor.field.persistent.context" = "स्थायी संदर्भ";
 "editor.field.persistent.context.help" = "संदर्भ सत्रों में बनाए रखा जाता है";

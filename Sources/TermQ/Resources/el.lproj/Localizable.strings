@@ -18,10 +18,9 @@
 "common.add" = "Προσθήκη";
 "common.reinstall" = "Επανεγκατάσταση";
 "common.uninstall" = "Απεγκατάσταση";
-"common.installed"
+"common.installed" = "Εγκατεστημένο";
 "common.enabled" = "Ενεργοποιημένο";
 "common.disabled" = "Απενεργοποιημένο";
-// TEMP_MARKER = "Εγκατεστημένο";
 "common.browse" = "Περιήγηση...";
 "common.select" = "Select";
 "common.apply" = "Εφαρμογή";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Ζεύγη κλειδιού-τιμής για οργάνωση";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Προτροπές";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Το τερματικό επιτρέπει εντολές";
 "editor.field.persistent.context" = "Μόνιμο πλαίσιο";
 "editor.field.persistent.context.help" = "Το πλαίσιο διατηρείται μεταξύ συνεδριών";
