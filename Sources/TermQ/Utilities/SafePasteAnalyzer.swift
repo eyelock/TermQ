@@ -30,12 +30,8 @@ enum SafePasteAnalyzer {
             "rm -rf", "rm -fr", "mkfs", "dd if=", "> /dev/",
             ":(){:|:&};:", "chmod -R 777", "chmod 777",
         ]
-        // swiftlint:disable:next for_where
-        for pattern in destructivePatterns {
-            if text.contains(pattern) {
-                warnings.append(Warning(message: "Contains potentially destructive command: \(pattern)"))
-                break
-            }
+        if let pattern = destructivePatterns.first(where: { text.contains($0) }) {
+            warnings.append(Warning(message: "Contains potentially destructive command: \(pattern)"))
         }
 
         // Check for curl/wget piped to shell (common attack vector)
