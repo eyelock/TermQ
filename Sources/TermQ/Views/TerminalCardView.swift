@@ -47,12 +47,53 @@ struct TerminalCardView: View {
                 Text(card.title)
                     .font(.headline)
                     .lineLimit(1)
-                    .layoutPriority(1)
 
                 Spacer(minLength: 0)
 
-                // Special badges - stay on single line, truncate with ellipsis if needed
-                HStack(spacing: 4) {
+                // Status indicators
+                HStack(spacing: 6) {
+                    // Needs attention indicator (bell received)
+                    if needsAttention {
+                        Circle()
+                            .fill(Color.orange)
+                            .frame(width: 8, height: 8)
+                            .help(Strings.Card.needsAttention)
+                    }
+
+                    // Processing indicator (recent output activity)
+                    if isProcessing {
+                        ProgressView()
+                            .scaleEffect(0.5)
+                            .frame(width: 12, height: 12)
+                            .help(Strings.Card.processing)
+                    }
+
+                    Button {
+                        onToggleFavourite()
+                    } label: {
+                        Image(systemName: card.isFavourite ? "star.fill" : "star")
+                            .foregroundColor(card.isFavourite ? .yellow : .secondary.opacity(0.5))
+                            .font(.caption)
+                    }
+                    .buttonStyle(.plain)
+                    .opacity(isHovering || card.isFavourite ? 1 : 0)
+                    .help(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin)
+
+                    // Running status
+                    if hasActiveSession && !isProcessing {
+                        Circle()
+                            .fill(.green)
+                            .frame(width: 8, height: 8)
+                            .help(Strings.Card.running)
+                    }
+                }
+                .layoutPriority(2)
+            }
+            .frame(maxHeight: 22)
+
+            // Special badges + User badges (special badges appear first)
+            if isOpenAsTab || card.isWired || (hasActiveSession && !isOpenAsTab) || (card.backend == .tmux && tmuxManager.isAvailable) || !badges.isEmpty {
+                FlowLayout(spacing: 4) {
                     // Open as tab indicator
                     if isOpenAsTab {
                         Text(Strings.Card.open)
@@ -116,55 +157,8 @@ struct TerminalCardView: View {
                             .help(Strings.Card.tmuxHelp)
                             .fixedSize()
                     }
-                }
-                .fixedSize(horizontal: true, vertical: false)
 
-                Spacer(minLength: 8)
-
-                // Status indicators
-                HStack(spacing: 6) {
-                    // Needs attention indicator (bell received)
-                    if needsAttention {
-                        Circle()
-                            .fill(Color.orange)
-                            .frame(width: 8, height: 8)
-                            .help(Strings.Card.needsAttention)
-                    }
-
-                    // Processing indicator (recent output activity)
-                    if isProcessing {
-                        ProgressView()
-                            .scaleEffect(0.5)
-                            .frame(width: 12, height: 12)
-                            .help(Strings.Card.processing)
-                    }
-
-                    Button {
-                        onToggleFavourite()
-                    } label: {
-                        Image(systemName: card.isFavourite ? "star.fill" : "star")
-                            .foregroundColor(card.isFavourite ? .yellow : .secondary.opacity(0.5))
-                            .font(.caption)
-                    }
-                    .buttonStyle(.plain)
-                    .opacity(isHovering || card.isFavourite ? 1 : 0)
-                    .help(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin)
-
-                    // Running status
-                    if hasActiveSession && !isProcessing {
-                        Circle()
-                            .fill(.green)
-                            .frame(width: 8, height: 8)
-                            .help(Strings.Card.running)
-                    }
-                }
-                .layoutPriority(2)
-            }
-            .frame(maxHeight: 22)
-
-            // User badges (right after header)
-            if !badges.isEmpty {
-                FlowLayout(spacing: 4) {
+                    // User badges (after special badges)
                     ForEach(badges, id: \.self) { badge in
                         Text(badge)
                             .font(.caption2)
