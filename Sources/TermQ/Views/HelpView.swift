@@ -55,8 +55,7 @@ enum HelpContentLoader {
         // First, try the explicit path where the resource bundle is copied during release
         if let resourcesPath = Bundle.main.resourceURL?
             .appendingPathComponent("TermQ_TermQ.bundle").path,
-            let bundle = Bundle(path: resourcesPath)
-        {
+            let bundle = Bundle(path: resourcesPath) {
             return bundle
         }
         // Fall back to Bundle.module for development/SPM builds
@@ -93,8 +92,7 @@ enum HelpContentLoader {
     static func loadImage(named name: String) -> NSImage? {
         // Try Help/Images first
         if let url = resourceBundle.url(
-            forResource: name, withExtension: nil, subdirectory: "Help/Images")
-        {
+            forResource: name, withExtension: nil, subdirectory: "Help/Images") {
             return NSImage(contentsOf: url)
         }
         return nil
@@ -394,8 +392,7 @@ private struct MarkdownContentView: View {
         // Use HelpContentLoader's resource bundle
         if let url = HelpContentLoader.resourceBundle.url(
             forResource: imageName, withExtension: imageExt, subdirectory: "Help/Images"),
-            let nsImage = NSImage(contentsOf: url)
-        {
+            let nsImage = NSImage(contentsOf: url) {
             return AnyView(
                 VStack(alignment: .leading, spacing: 4) {
                     Image(nsImage: nsImage)

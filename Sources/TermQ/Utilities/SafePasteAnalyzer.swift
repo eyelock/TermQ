@@ -40,8 +40,7 @@ enum SafePasteAnalyzer {
         // Check for curl/wget piped to shell (common attack vector)
         if (text.contains("curl ") || text.contains("wget "))
             && (text.contains("| bash") || text.contains("| sh") || text.contains("|bash")
-                || text.contains("|sh"))
-        {
+                || text.contains("|sh")) {
             warnings.append(Warning(message: "Downloads and executes remote script - verify source first"))
         }
 

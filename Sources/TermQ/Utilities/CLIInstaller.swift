@@ -115,8 +115,7 @@ enum CLIInstaller {
     }
 
     /// Uninstall the CLI tool from a custom path
-    static func uninstall(fromPath path: String, requiresAdmin: Bool? = nil) async -> Result<String, CLIInstallerError>
-    {
+    static func uninstall(fromPath path: String, requiresAdmin: Bool? = nil) async -> Result<String, CLIInstallerError> {
         await ComponentInstaller<InstallLocation>.uninstall(
             fromPath: path, requiresAdmin: requiresAdmin, config: config
         )

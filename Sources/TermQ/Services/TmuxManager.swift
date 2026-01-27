@@ -52,8 +52,7 @@ public class TmuxManager: ObservableObject {
         // Also check PATH via `which`
         if tmuxPath == nil {
             if let whichResult = try? await runCommand("/usr/bin/which", args: ["tmux"]),
-                !whichResult.isEmpty
-            {
+                !whichResult.isEmpty {
                 let path = whichResult.trimmingCharacters(in: .whitespacesAndNewlines)
                 if FileManager.default.isExecutableFile(atPath: path) {
                     tmuxPath = path

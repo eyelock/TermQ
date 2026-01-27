@@ -96,8 +96,7 @@ public final class BoardPersistence {
     /// Load board from disk, or return a new empty board
     func loadBoard() -> Board {
         if let data = try? Data(contentsOf: saveURL),
-            let loaded = try? JSONDecoder().decode(Board.self, from: data)
-        {
+            let loaded = try? JSONDecoder().decode(Board.self, from: data) {
             #if DEBUG
                 print("[BoardPersistence] Loaded board from: \(saveURL.path)")
             #endif

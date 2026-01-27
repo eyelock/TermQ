@@ -398,8 +398,7 @@ enum BackupManager {
         let primaryHasContent: Bool
         if primaryExists {
             if let data = try? Data(contentsOf: primaryBoardPath),
-                let board = try? JSONDecoder().decode(Board.self, from: data)
-            {
+                let board = try? JSONDecoder().decode(Board.self, from: data) {
                 // Consider empty if no cards
                 primaryHasContent = !board.cards.isEmpty
             } else {

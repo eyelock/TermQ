@@ -6,8 +6,7 @@ import SwiftUI
 private let resourceBundle: Bundle = {
     // Check Contents/Resources first (for signed app), then Bundle.module
     if let resourcesPath = Bundle.main.resourceURL?.appendingPathComponent("TermQ_TermQ.bundle").path,
-        let bundle = Bundle(path: resourcesPath)
-    {
+        let bundle = Bundle(path: resourcesPath) {
         return bundle
     }
     return Bundle.module
@@ -24,8 +23,7 @@ private func parseStringsFile(at url: URL) -> [String: String]? {
     // Remove block comments
     var cleanContent = content
     while let startRange = cleanContent.range(of: "/*"),
-        let endRange = cleanContent.range(of: "*/", range: startRange.upperBound..<cleanContent.endIndex)
-    {
+        let endRange = cleanContent.range(of: "*/", range: startRange.upperBound..<cleanContent.endIndex) {
         cleanContent.removeSubrange(startRange.lowerBound...endRange.upperBound)
     }
 

@@ -91,8 +91,7 @@ class TermQTerminalView: LocalProcessTerminalView {
             if let self = self,
                 let window = event.window,
                 window == self.window,
-                window.firstResponder === self
-            {
+                window.firstResponder === self {
                 self.lastUserInputTime = Date()
             }
             return event
