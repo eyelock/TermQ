@@ -2,7 +2,7 @@ import Foundation
 import MCP
 
 // Type alias for cleaner schema building
-private typealias S = SchemaBuilder
+private typealias Schema = SchemaBuilder
 
 // MARK: - Tool Definitions
 
@@ -16,8 +16,8 @@ extension TermQMCPServer {
                     Returns terminals with pending actions (llmNextAction) and staleness indicators.
                     Terminals are sorted: pending actions first, then by staleness (stale → ageing → fresh).
                     """,
-                inputSchema: S.objectSchema([
-                    S.bool("actionsOnly", "Only show terminals with llmNextAction set")
+                inputSchema: Schema.objectSchema([
+                    Schema.bool("actionsOnly", "Only show terminals with llmNextAction set")
                 ])
             ),
             Tool(
@@ -27,14 +27,14 @@ extension TermQMCPServer {
                     Includes session start/end checklists, tag schema, command reference,
                     and workflow examples for cross-session continuity.
                     """,
-                inputSchema: S.emptySchema()
+                inputSchema: Schema.emptySchema()
             ),
             Tool(
                 name: "termq_list",
                 description: "List all terminals or filter by column. Supports listing columns only.",
-                inputSchema: S.objectSchema([
-                    S.string("column", "Filter by column name"),
-                    S.bool("columnsOnly", "Return only column names"),
+                inputSchema: Schema.objectSchema([
+                    Schema.string("column", "Filter by column name"),
+                    Schema.bool("columnsOnly", "Return only column names"),
                 ])
             ),
             Tool(
@@ -44,17 +44,17 @@ extension TermQMCPServer {
                     across name, description, path, and tags. All filters are AND-combined.
                     Returns matching terminals as JSON array sorted by relevance.
                     """,
-                inputSchema: S.objectSchema([
-                    S.string(
+                inputSchema: Schema.objectSchema([
+                    Schema.string(
                         "query",
                         "Smart search: matches ANY word across name, description, path, tags. Best for natural language queries."
                     ),
-                    S.string("name", "Filter by name (word-based matching)"),
-                    S.string("column", "Filter by column name"),
-                    S.string("tag", "Filter by tag (format: key or key=value)"),
-                    S.string("id", "Filter by UUID"),
-                    S.string("badge", "Filter by badge"),
-                    S.bool("favourites", "Only show favourites"),
+                    Schema.string("name", "Filter by name (word-based matching)"),
+                    Schema.string("column", "Filter by column name"),
+                    Schema.string("tag", "Filter by tag (format: key or key=value)"),
+                    Schema.string("id", "Filter by UUID"),
+                    Schema.string("badge", "Filter by badge"),
+                    Schema.bool("favourites", "Only show favourites"),
                 ])
             ),
             Tool(
@@ -64,8 +64,8 @@ extension TermQMCPServer {
                     including llmPrompt (persistent context) and llmNextAction (one-time task).
                     Use partial name matching for convenience.
                     """,
-                inputSchema: S.objectSchema([
-                    S.string("identifier", "Terminal name, UUID, or path (partial match supported)", required: true)
+                inputSchema: Schema.objectSchema([
+                    Schema.string("identifier", "Terminal name, UUID, or path (partial match supported)", required: true)
                 ])
             ),
             Tool(
@@ -75,15 +75,15 @@ extension TermQMCPServer {
                     path, tags, LLM context, and initialization command.
                     Returns the created terminal's details including its UUID.
                     """,
-                inputSchema: S.objectSchema([
-                    S.string("name", "Terminal name"),
-                    S.string("description", "Terminal description"),
-                    S.string("column", "Column name (e.g., 'In Progress')"),
-                    S.string("path", "Working directory path"),
-                    S.stringArray("tags", "Tags in key=value format (e.g., ['project=myapp', 'type=dev'])"),
-                    S.string("llmPrompt", "Persistent LLM context"),
-                    S.string("llmNextAction", "One-time action for next session"),
-                    S.string("initCommand", "Command to run when terminal opens"),
+                inputSchema: Schema.objectSchema([
+                    Schema.string("name", "Terminal name"),
+                    Schema.string("description", "Terminal description"),
+                    Schema.string("column", "Column name (e.g., 'In Progress')"),
+                    Schema.string("path", "Working directory path"),
+                    Schema.stringArray("tags", "Tags in key=value format (e.g., ['project=myapp', 'type=dev'])"),
+                    Schema.string("llmPrompt", "Persistent LLM context"),
+                    Schema.string("llmNextAction", "One-time action for next session"),
+                    Schema.string("initCommand", "Command to run when terminal opens"),
                 ])
             ),
             Tool(
@@ -93,28 +93,28 @@ extension TermQMCPServer {
                     Can set name, description, column, badges, LLM fields, tags, init command, and favourite status.
                     Tags are additive by default - use replaceTags=true to replace all existing tags.
                     """,
-                inputSchema: S.objectSchema([
-                    S.string("identifier", "Terminal name or UUID", required: true),
-                    S.string("name", "New name"),
-                    S.string("description", "New description"),
-                    S.string("column", "Move to column"),
-                    S.string(
+                inputSchema: Schema.objectSchema([
+                    Schema.string("identifier", "Terminal name or UUID", required: true),
+                    Schema.string("name", "New name"),
+                    Schema.string("description", "New description"),
+                    Schema.string("column", "Move to column"),
+                    Schema.string(
                         "badge",
                         "Badge text (comma-separated for multiple, e.g. 'WIP,urgent'). Replaces existing badges."),
-                    S.stringArray("tags", "Tags in key=value format (e.g., ['status=reviewed'])"),
-                    S.bool("replaceTags", "If true, replaces all tags; if false (default), adds to existing"),
-                    S.string("llmPrompt", "Set persistent LLM context"),
-                    S.string("llmNextAction", "Set one-time action"),
-                    S.string("initCommand", "Command to run when terminal opens"),
-                    S.bool("favourite", "Set favourite status"),
+                    Schema.stringArray("tags", "Tags in key=value format (e.g., ['status=reviewed'])"),
+                    Schema.bool("replaceTags", "If true, replaces all tags; if false (default), adds to existing"),
+                    Schema.string("llmPrompt", "Set persistent LLM context"),
+                    Schema.string("llmNextAction", "Set one-time action"),
+                    Schema.string("initCommand", "Command to run when terminal opens"),
+                    Schema.bool("favourite", "Set favourite status"),
                 ])
             ),
             Tool(
                 name: "termq_move",
                 description: "Move a terminal to a different column (workflow stage).",
-                inputSchema: S.objectSchema([
-                    S.string("identifier", "Terminal name or UUID", required: true),
-                    S.string("column", "Target column name", required: true),
+                inputSchema: Schema.objectSchema([
+                    Schema.string("identifier", "Terminal name or UUID", required: true),
+                    Schema.string("column", "Target column name", required: true),
                 ])
             ),
             Tool(
@@ -124,8 +124,8 @@ extension TermQMCPServer {
                     to get context for the terminal you're currently running in.
                     Returns full terminal details including tags, llmPrompt, and llmNextAction.
                     """,
-                inputSchema: S.objectSchema([
-                    S.string("id", "Terminal UUID (use $TERMQ_TERMINAL_ID from your environment)", required: true)
+                inputSchema: Schema.objectSchema([
+                    Schema.string("id", "Terminal UUID (use $TERMQ_TERMINAL_ID from your environment)", required: true)
                 ])
             ),
             Tool(
@@ -134,9 +134,9 @@ extension TermQMCPServer {
                     Delete a terminal. By default, moves to bin (soft delete).
                     Use permanent=true to permanently delete without bin recovery option.
                     """,
-                inputSchema: S.objectSchema([
-                    S.string("identifier", "Terminal name or UUID", required: true),
-                    S.bool("permanent", "Permanently delete (skip bin, cannot be recovered)"),
+                inputSchema: Schema.objectSchema([
+                    Schema.string("identifier", "Terminal name or UUID", required: true),
+                    Schema.bool("permanent", "Permanently delete (skip bin, cannot be recovered)"),
                 ])
             ),
         ]
