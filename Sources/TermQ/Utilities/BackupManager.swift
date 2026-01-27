@@ -3,10 +3,10 @@ import TermQCore
 
 /// Backup frequency options
 enum BackupFrequency: String, CaseIterable, Identifiable {
-    case manual = "manual"
-    case onSave = "onSave"
-    case daily = "daily"
-    case weekly = "weekly"
+    case manual
+    case onSave
+    case daily
+    case weekly
 
     var id: String { rawValue }
 
@@ -147,18 +147,25 @@ enum BackupManager {
         FileManager.default.fileExists(atPath: backupFilePath)
     }
 
+    /// Information about a backup file
+    struct BackupInfo {
+        let exists: Bool
+        let date: Date?
+        let size: Int64
+    }
+
     /// Get backup file info
-    static var backupInfo: (exists: Bool, date: Date?, size: Int64) {
+    static var backupInfo: BackupInfo {
         let fm = FileManager.default
         guard fm.fileExists(atPath: backupFilePath),
             let attrs = try? fm.attributesOfItem(atPath: backupFilePath)
         else {
-            return (false, nil, 0)
+            return BackupInfo(exists: false, date: nil, size: 0)
         }
 
         let date = attrs[.modificationDate] as? Date
         let size = (attrs[.size] as? Int64) ?? 0
-        return (true, date, size)
+        return BackupInfo(exists: true, date: date, size: size)
     }
 
     /// Perform a backup of the board data and secrets
