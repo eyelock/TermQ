@@ -20,8 +20,7 @@ public struct EnvironmentVariable: Identifiable, Codable, Sendable {
     /// - Must start with a letter or underscore
     /// - Can only contain letters, digits, and underscores
     public var isValidKey: Bool {
-        guard !key.isEmpty else { return false }
-        let first = key.first!
+        guard let first = key.first else { return false }
         guard first.isLetter || first == "_" else { return false }
         return key.allSatisfy { $0.isLetter || $0.isNumber || $0 == "_" }
     }

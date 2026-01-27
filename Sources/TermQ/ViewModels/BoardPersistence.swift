@@ -74,7 +74,9 @@ public final class BoardPersistence {
     private var onExternalChange: (() -> Void)?
 
     init() {
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            fatalError("Unable to access Application Support directory")
+        }
         #if DEBUG
             let termqDir = appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
         #else
