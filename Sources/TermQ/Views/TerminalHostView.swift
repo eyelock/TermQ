@@ -190,15 +190,13 @@ class TermQTerminalView: LocalProcessTerminalView {
         cleanupAutoScrollDuringSelection()
 
         // Monitor for mouse down to track where drag starts
-        mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {
-            [weak self] event in
+        mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
             self?.handleMouseDownForAutoScroll(event)
             return event
         }
 
         // Monitor for mouse dragged events
-        dragEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDragged, .leftMouseUp]) {
-            [weak self] event in
+        dragEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDragged, .leftMouseUp]) { [weak self] event in
             self?.handleMouseEventForAutoScroll(event)
             return event
         }
@@ -352,8 +350,7 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
 
         // Add local event monitor for mouse up
-        copyOnSelectMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseUp) {
-            [weak self] event in
+        copyOnSelectMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseUp) { [weak self] event in
             self?.handleMouseUpForCopyOnSelect(event)
             return event
         }
