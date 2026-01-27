@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 /// Resource bundle containing all localizations
+/// This file provides centralized string localization for TermQ's 40 supported languages.
 private let resourceBundle: Bundle = {
     // Check Contents/Resources first (for signed app), then Bundle.module
     if let resourcesPath = Bundle.main.resourceURL?.appendingPathComponent("TermQ_TermQ.bundle").path,
