@@ -752,7 +752,11 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
     /// Copy production config to debug data folder
     @MainActor private func copyProductionConfig() {
         let fileManager = FileManager.default
-        let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        guard let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+
+            fatalError("Unable to access Application Support directory")
+
+        }
 
         let productionFolder = appSupport.appendingPathComponent("TermQ")
         let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
@@ -808,7 +812,11 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
     /// Open the debug data folder in Finder
     @MainActor private func openDebugDataFolder() {
         let fileManager = FileManager.default
-        let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        guard let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+
+            fatalError("Unable to access Application Support directory")
+
+        }
         let debugFolder = appSupport.appendingPathComponent("TermQ-Debug")
 
         // Ensure folder exists
@@ -820,7 +828,11 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
     /// Open the production data folder in Finder
     @MainActor private func openProductionDataFolder() {
         let fileManager = FileManager.default
-        let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        guard let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+
+            fatalError("Unable to access Application Support directory")
+
+        }
         let productionFolder = appSupport.appendingPathComponent("TermQ")
 
         // Ensure folder exists

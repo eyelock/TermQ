@@ -141,8 +141,7 @@ struct CommandPaletteView: View {
                         // Terminals section
                         if !filteredTerminals.isEmpty {
                             sectionHeader("Terminals")
-                            ForEach(Array(filteredTerminals.enumerated()), id: \.element.id) {
-                                index, terminal in
+                            ForEach(Array(filteredTerminals.enumerated()), id: \.element.id) { index, terminal in
                                 terminalRow(terminal, isSelected: selectedIndex == index)
                                     .id("terminal-\(index)")
                             }
@@ -151,8 +150,7 @@ struct CommandPaletteView: View {
                         // Actions section
                         if !filteredActions.isEmpty {
                             sectionHeader("Actions")
-                            ForEach(Array(filteredActions.enumerated()), id: \.element.id) {
-                                index, action in
+                            ForEach(Array(filteredActions.enumerated()), id: \.element.id) { index, action in
                                 let actualIndex = filteredTerminals.count + index
                                 actionRow(action, isSelected: selectedIndex == actualIndex)
                                     .id("action-\(index)")

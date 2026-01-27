@@ -42,18 +42,14 @@ public class TmuxManager: ObservableObject {
             "/opt/local/bin/tmux",  // MacPorts
         ]
 
-        for path in paths {
-            if FileManager.default.isExecutableFile(atPath: path) {
-                tmuxPath = path
-                break
-            }
+        if let path = paths.first(where: { FileManager.default.isExecutableFile(atPath: $0) }) {
+            tmuxPath = path
         }
 
         // Also check PATH via `which`
         if tmuxPath == nil {
             if let whichResult = try? await runCommand("/usr/bin/which", args: ["tmux"]),
-                !whichResult.isEmpty
-            {
+                !whichResult.isEmpty {
                 let path = whichResult.trimmingCharacters(in: .whitespacesAndNewlines)
                 if FileManager.default.isExecutableFile(atPath: path) {
                     tmuxPath = path

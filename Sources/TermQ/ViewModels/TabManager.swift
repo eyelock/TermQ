@@ -132,8 +132,7 @@ public final class TabManager: ObservableObject {
         guard !tabs.isEmpty else { return nil }
 
         if let current = currentId,
-            let currentIndex = tabs.firstIndex(where: { $0.id == current })
-        {
+            let currentIndex = tabs.firstIndex(where: { $0.id == current }) {
             let nextIndex = (currentIndex + 1) % tabs.count
             return tabs[nextIndex].id
         }
@@ -146,8 +145,7 @@ public final class TabManager: ObservableObject {
         guard !tabs.isEmpty else { return nil }
 
         if let current = currentId,
-            let currentIndex = tabs.firstIndex(where: { $0.id == current })
-        {
+            let currentIndex = tabs.firstIndex(where: { $0.id == current }) {
             let prevIndex = currentIndex == 0 ? tabs.count - 1 : currentIndex - 1
             return tabs[prevIndex].id
         }

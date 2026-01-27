@@ -27,7 +27,12 @@ public enum BoardLoader {
         if let custom = customDirectory {
             return custom
         }
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            // Fallback to home directory if Application Support not available
+            let homeDir = FileManager.default.homeDirectoryForCurrentUser
+            let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
+            return homeDir.appendingPathComponent(".termq", isDirectory: true).appendingPathComponent(dirName, isDirectory: true)
+        }
         let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
         return appSupport.appendingPathComponent(dirName, isDirectory: true)
     }
@@ -348,7 +353,7 @@ public enum BoardWriter {
         includeDeleted: Bool = false
     ) throws -> Int {
         // Try as UUID
-        if let _ = UUID(uuidString: identifier) {
+        if UUID(uuidString: identifier) != nil {
             if let index = cards.firstIndex(where: {
                 let matchesId = ($0["id"] as? String) == identifier
                 let isNotDeleted = $0["deletedAt"] == nil

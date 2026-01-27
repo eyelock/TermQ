@@ -401,10 +401,8 @@ class BoardViewModel: ObservableObject {
 
     var allTerminals: [TerminalCard] {
         var terminals = board.activeCards
-        for (_, card) in tabManager.transientCards {
-            if !terminals.contains(where: { $0.id == card.id }) {
-                terminals.append(card)
-            }
+        for (_, card) in tabManager.transientCards where !terminals.contains(where: { $0.id == card.id }) {
+            terminals.append(card)
         }
         return terminals.sorted { lhs, rhs in
             if lhs.isFavourite != rhs.isFavourite {
@@ -435,8 +433,7 @@ class BoardViewModel: ObservableObject {
         let workingDirectory: String
 
         if let current = selectedCard,
-            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
-        {
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId }) {
             column = currentColumn
             workingDirectory =
                 TerminalSessionManager.shared.getCurrentDirectory(for: current.id)
@@ -491,16 +488,14 @@ class BoardViewModel: ObservableObject {
 
     func nextTab() {
         if let nextId = tabManager.nextTabId(from: selectedCard?.id),
-            let next = tabManager.card(for: nextId)
-        {
+            let next = tabManager.card(for: nextId) {
             selectedCard = next
         }
     }
 
     func previousTab() {
         if let prevId = tabManager.previousTabId(from: selectedCard?.id),
-            let prev = tabManager.card(for: prevId)
-        {
+            let prev = tabManager.card(for: prevId) {
             selectedCard = prev
         }
     }

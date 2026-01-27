@@ -269,37 +269,37 @@ public struct TmuxControlModeView: View {
 
             // Toolbar
             HStack {
-                Button(action: { session.splitHorizontal() }) {
+                Button(action: { session.splitHorizontal() }, label: {
                     Image(systemName: "rectangle.split.1x2")
-                }
+                })
                 .help("Split Horizontal")
 
-                Button(action: { session.splitVertical() }) {
+                Button(action: { session.splitVertical() }, label: {
                     Image(systemName: "rectangle.split.2x1")
-                }
+                })
                 .help("Split Vertical")
 
                 Divider()
                     .frame(height: 16)
 
-                Button(action: { session.selectPane(direction: .up) }) {
+                Button(action: { session.selectPane(direction: .up) }, label: {
                     Image(systemName: "arrow.up")
-                }
+                })
                 .help("Select Pane Above")
 
-                Button(action: { session.selectPane(direction: .down) }) {
+                Button(action: { session.selectPane(direction: .down) }, label: {
                     Image(systemName: "arrow.down")
-                }
+                })
                 .help("Select Pane Below")
 
-                Button(action: { session.selectPane(direction: .left) }) {
+                Button(action: { session.selectPane(direction: .left) }, label: {
                     Image(systemName: "arrow.left")
-                }
+                })
                 .help("Select Pane Left")
 
-                Button(action: { session.selectPane(direction: .right) }) {
+                Button(action: { session.selectPane(direction: .right) }, label: {
                     Image(systemName: "arrow.right")
-                }
+                })
                 .help("Select Pane Right")
 
                 Spacer()

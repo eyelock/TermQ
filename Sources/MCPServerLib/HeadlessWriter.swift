@@ -235,7 +235,7 @@ extension BoardWriter {
     /// Find card index by identifier (exposed for HeadlessWriter)
     static func findCardIndex(identifier: String, in cards: [[String: Any]]) throws -> Int {
         // Try as UUID
-        if let _ = UUID(uuidString: identifier) {
+        if UUID(uuidString: identifier) != nil {
             if let index = cards.firstIndex(where: {
                 ($0["id"] as? String) == identifier
             }) {

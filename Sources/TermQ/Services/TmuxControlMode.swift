@@ -658,25 +658,25 @@ public class TmuxControlModeSession: ObservableObject {
             self?.onPaneOutput?(paneId, data)
         }
 
-        parser.onLayoutChange = { [weak self] windowId, layout in
+        parser.onLayoutChange = { [weak self] _, _ in
             Task { @MainActor [weak self] in
                 self?.panes = self?.parser.panes ?? []
             }
         }
 
-        parser.onWindowAdd = { [weak self] windowId in
+        parser.onWindowAdd = { [weak self] _ in
             Task { @MainActor [weak self] in
                 self?.windows = self?.parser.windows ?? []
             }
         }
 
-        parser.onWindowClose = { [weak self] windowId in
+        parser.onWindowClose = { [weak self] _ in
             Task { @MainActor [weak self] in
                 self?.windows = self?.parser.windows ?? []
             }
         }
 
-        parser.onSessionChange = { [weak self] sessionId, name in
+        parser.onSessionChange = { [weak self] _, _ in
             Task { @MainActor [weak self] in
                 self?.isConnected = true
             }

@@ -549,15 +549,13 @@ class TerminalSessionManager: ObservableObject {
         let allSessions = sessions
         sessions.removeAll()
 
-        for (_, session) in allSessions {
-            if session.isRunning {
-                switch session.backend {
-                case .direct:
-                    session.terminal.send(txt: "exit\n")
-                case .tmux:
-                    // Just detach - tmux sessions persist across app restarts
-                    session.terminal.send(txt: "\u{02}d")
-                }
+        for (_, session) in allSessions where session.isRunning {
+            switch session.backend {
+            case .direct:
+                session.terminal.send(txt: "exit\n")
+            case .tmux:
+                // Just detach - tmux sessions persist across app restarts
+                session.terminal.send(txt: "\u{02}d")
             }
         }
     }

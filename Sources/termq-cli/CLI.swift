@@ -301,21 +301,19 @@ func launchTermQ() -> Bool {
         "\(FileManager.default.currentDirectoryPath)/\(appName)",
     ]
 
-    for appPath in possiblePaths {
-        if FileManager.default.fileExists(atPath: appPath) {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
-            process.arguments = ["-a", appPath, "--wait-apps"]
-            process.standardOutput = FileHandle.nullDevice
-            process.standardError = FileHandle.nullDevice
+    for appPath in possiblePaths where FileManager.default.fileExists(atPath: appPath) {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
+        process.arguments = ["-a", appPath, "--wait-apps"]
+        process.standardOutput = FileHandle.nullDevice
+        process.standardError = FileHandle.nullDevice
 
-            do {
-                try process.run()
-                Thread.sleep(forTimeInterval: 1.0)
-                return true
-            } catch {
-                continue
-            }
+        do {
+            try process.run()
+            Thread.sleep(forTimeInterval: 1.0)
+            return true
+        } catch {
+            continue
         }
     }
     return false
@@ -334,25 +332,23 @@ struct Launch: ParsableCommand {
             "\(FileManager.default.currentDirectoryPath)/\(appName)",
         ]
 
-        for appPath in possiblePaths {
-            if FileManager.default.fileExists(atPath: appPath) {
-                let process = Process()
-                process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
-                process.arguments = ["-a", appPath]
-                process.standardOutput = FileHandle.nullDevice
-                process.standardError = FileHandle.nullDevice
+        for appPath in possiblePaths where FileManager.default.fileExists(atPath: appPath) {
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/usr/bin/open")
+            process.arguments = ["-a", appPath]
+            process.standardOutput = FileHandle.nullDevice
+            process.standardError = FileHandle.nullDevice
 
-                do {
-                    try process.run()
-                    process.waitUntilExit()
+            do {
+                try process.run()
+                process.waitUntilExit()
 
-                    if process.terminationStatus == 0 {
-                        print("Launched TermQ from: \(appPath)")
-                        return
-                    }
-                } catch {
-                    continue
+                if process.terminationStatus == 0 {
+                    print("Launched TermQ from: \(appPath)")
+                    return
                 }
+            } catch {
+                continue
             }
         }
 
