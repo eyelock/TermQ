@@ -482,3 +482,7 @@
 "editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+
+/* NEEDS TRANSLATION */
+"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";

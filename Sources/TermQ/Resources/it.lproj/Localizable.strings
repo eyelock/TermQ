@@ -482,3 +482,7 @@ Questo potrebbe influenzare il modo in cui gli assistenti AI interagiscono con q
 "editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Disabilitato globalmente - abilita in Impostazioni > Dati e sicurezza";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+
+/* NEEDS TRANSLATION */
+"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
