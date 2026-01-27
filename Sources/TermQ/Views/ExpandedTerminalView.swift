@@ -102,18 +102,35 @@ struct ExpandedTerminalView: View {
                         }
                     }
             } else {
-                TerminalHostView(
-                    card: card,
-                    onExit: {
-                        terminalExited = true
-                    },
-                    onBell: {
-                        onBell(card.id)
-                    },
-                    isSearching: isSearching,
-                    restartToken: restartCounter
-                )
-                .id("\(card.id)-\(restartCounter)")  // Force view recreation when switching or restarting
+                // Show multi-pane view if control mode has multiple panes
+                if let controlSession = sessionManager.getControlModeSession(for: card.id),
+                    controlSession.parser.panes.count > 1
+                {
+                    TmuxMultiPaneView(
+                        card: card,
+                        onExit: {
+                            terminalExited = true
+                        },
+                        onBell: {
+                            onBell(card.id)
+                        }
+                    )
+                    .id("\(card.id)-\(restartCounter)-multipane")
+                } else {
+                    // Regular single terminal view
+                    TerminalHostView(
+                        card: card,
+                        onExit: {
+                            terminalExited = true
+                        },
+                        onBell: {
+                            onBell(card.id)
+                        },
+                        isSearching: isSearching,
+                        restartToken: restartCounter
+                    )
+                    .id("\(card.id)-\(restartCounter)")  // Force view recreation when switching or restarting
+                }
             }
         }
         .onChange(of: card.id) { _, _ in
