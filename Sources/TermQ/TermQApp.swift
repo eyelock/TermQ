@@ -315,7 +315,9 @@ final class SparkleUpdaterDelegate: NSObject, SPUUpdaterDelegate {
     func feedURLString(for updater: SPUUpdater) -> String? {
         let includeBeta = UserDefaults.standard.bool(forKey: "SUIncludeBetaReleases")
         let feedFile = includeBeta ? "appcast-beta.xml" : "appcast.xml"
-        return "https://eyelock.github.io/TermQ/\(feedFile)"
+        let feedURL = "https://eyelock.github.io/TermQ/\(feedFile)"
+        print("🔄 [Sparkle] Feed URL requested: \(feedURL) (includeBeta: \(includeBeta))")
+        return feedURL
     }
 }
 
@@ -332,6 +334,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var mainWindow: NSWindow?
 
     override init() {
+        print("🚀 [Sparkle] Initializing updater controller...")
         // Initialize Sparkle updater with delegate for dynamic feed URL
         // SUPublicEDKey is read from Info.plist
         updaterController = SPUStandardUpdaterController(
@@ -340,6 +343,9 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             userDriverDelegate: nil
         )
         super.init()
+        print("✅ [Sparkle] Updater controller initialized")
+        print("   canCheckForUpdates: \(updaterController.updater.canCheckForUpdates)")
+        print("   automaticallyChecksForUpdates: \(updaterController.updater.automaticallyChecksForUpdates)")
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -498,6 +504,7 @@ struct TermQApp: App {
             // Check for Updates in App menu (after About)
             CommandGroup(after: .appInfo) {
                 Button(Strings.Menu.checkForUpdates) {
+                    print("📋 [Sparkle] Menu: Check for Updates clicked")
                     appDelegate.updaterController.checkForUpdates(nil)
                 }
             }
@@ -705,6 +712,7 @@ final class UpdaterViewModel: ObservableObject {
     }
 
     init(updater: SPUUpdater) {
+        print("🔧 [Sparkle] Initializing UpdaterViewModel...")
         self.updater = updater
         // Default to true for automatic checks if not previously set
         let hasExistingPreference = UserDefaults.standard.object(forKey: "SUAutomaticallyChecksForUpdates") != nil
@@ -715,18 +723,29 @@ final class UpdaterViewModel: ObservableObject {
         self.includeBetaReleases = UserDefaults.standard.bool(forKey: "SUIncludeBetaReleases")
         self.canCheckForUpdates = updater.canCheckForUpdates
 
+        print("   automaticallyChecksForUpdates: \(automaticallyChecksForUpdates)")
+        print("   includeBetaReleases: \(includeBetaReleases)")
+        print("   canCheckForUpdates: \(canCheckForUpdates)")
+
         // Observe changes to canCheckForUpdates
         updater.publisher(for: \.canCheckForUpdates)
             .receive(on: RunLoop.main)
             .sink { [weak self] canCheck in
+                print("🔔 [Sparkle] canCheckForUpdates changed: \(canCheck)")
                 self?.canCheckForUpdates = canCheck
             }
             .store(in: &cancellables)
+
+        print("✅ [Sparkle] UpdaterViewModel initialized")
     }
 
     /// Manually check for updates
     func checkForUpdates() {
+        print("🔍 [Sparkle] Manual update check initiated")
+        print("   canCheckForUpdates: \(updater.canCheckForUpdates)")
+        print("   automaticallyChecksForUpdates: \(updater.automaticallyChecksForUpdates)")
         updater.checkForUpdates()
+        print("   checkForUpdates() called")
     }
 }
 

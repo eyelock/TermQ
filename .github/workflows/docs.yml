@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'Docs/Help/**'
+      - 'Docs/appcast*.xml'
       - '.github/workflows/docs.yml'
   workflow_dispatch:
 
@@ -32,10 +33,20 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare Pages content
+        run: |
+          # Copy Help content to staging directory
+          mkdir -p _site
+          cp -r Docs/Help/* _site/
+
+          # Copy appcast files to root of site
+          cp Docs/appcast.xml _site/appcast.xml
+          cp Docs/appcast-beta.xml _site/appcast-beta.xml
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'Docs/Help'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment

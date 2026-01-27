@@ -93,6 +93,23 @@ struct SettingsGeneralView: View {
 
         // Updates section
         Section {
+            #if DEBUG
+            // Warning for debug builds
+            HStack(spacing: 8) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundColor(.orange)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Debug Build Warning")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                    Text("Proceeding with updates will install the Production version of TermQ.")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
+            }
+            .padding(.vertical, 4)
+            #endif
+
             Toggle(Strings.Settings.autoCheckUpdates, isOn: $updaterViewModel.automaticallyChecksForUpdates)
                 .help(Strings.Settings.autoCheckUpdatesHelp)
 
