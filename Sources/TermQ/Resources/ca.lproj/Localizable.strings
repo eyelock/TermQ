@@ -18,10 +18,9 @@
 "common.add" = "Afegir";
 "common.reinstall" = "Reinstal·lar";
 "common.uninstall" = "Desinstal·lar";
-"common.installed"
+"common.installed" = "Instal·lat";
 "common.enabled" = "Activat";
 "common.disabled" = "Desactivat";
-// TEMP_MARKER = "Instal·lat";
 "common.browse" = "Explorar...";
 "common.select" = "Select";
 "common.apply" = "Aplicar";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Parells clau-valor per a l'organització";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Indicacions";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "El terminal permet comandes";
 "editor.field.persistent.context" = "Context persistent";
 "editor.field.persistent.context.help" = "El context es manté entre sessions";

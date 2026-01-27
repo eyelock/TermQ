@@ -18,10 +18,9 @@
 "common.add" = "Add";
 "common.reinstall" = "Reinstall";
 "common.uninstall" = "Uninstall";
-"common.installed"
+"common.installed" = "Installed";
 "common.enabled" = "Enabled";
 "common.disabled" = "Disabled";
-// TEMP_MARKER = "Installed";
 "common.browse" = "Browse...";
 "common.select" = "Select";
 "common.apply" = "Apply";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Key-value pairs for organisation";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Prompts";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminal allows commands";
 "editor.field.persistent.context" = "Persistent Context";
 "editor.field.persistent.context.help" = "Context maintained across sessions";

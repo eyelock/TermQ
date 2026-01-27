@@ -18,10 +18,9 @@
 "common.add" = "Voeg toe";
 "common.reinstall" = "Herinstalleer";
 "common.uninstall" = "Verwijder";
-"common.installed"
+"common.installed" = "Geïnstalleerd";
 "common.enabled" = "Ingeschakeld";
 "common.disabled" = "Uitgeschakeld";
-// TEMP_MARKER = "Geïnstalleerd";
 "common.browse" = "Blader...";
 "common.select" = "Select";
 "common.apply" = "Pas toe";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Sleutel-waardeparen voor organisatie";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Prompts";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminal staat commando's toe";
 "editor.field.persistent.context" = "Persistente context";
 "editor.field.persistent.context.help" = "Context behouden tussen sessies";

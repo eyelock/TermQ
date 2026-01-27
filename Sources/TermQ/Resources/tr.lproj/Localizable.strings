@@ -18,10 +18,9 @@
 "common.add" = "Ekle";
 "common.reinstall" = "Yeniden Yükle";
 "common.uninstall" = "Kaldır";
-"common.installed"
+"common.installed" = "Yüklü";
 "common.enabled" = "Etkin";
 "common.disabled" = "Devre Dışı";
-// TEMP_MARKER = "Yüklü";
 "common.browse" = "Gözat...";
 "common.select" = "Select";
 "common.apply" = "Uygula";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Düzenleme için anahtar-değer çiftleri";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "İstekler";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Terminal komutlara izin veriyor";
 "editor.field.persistent.context" = "Kalıcı Bağlam";
 "editor.field.persistent.context.help" = "Bağlam oturumlar arasında korunur";

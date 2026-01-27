@@ -18,10 +18,9 @@
 "common.add" = "Додати";
 "common.reinstall" = "Перевстановити";
 "common.uninstall" = "Видалити";
-"common.installed"
+"common.installed" = "Встановлено";
 "common.enabled" = "Увімкнено";
 "common.disabled" = "Вимкнено";
-// TEMP_MARKER = "Встановлено";
 "common.browse" = "Огляд...";
 "common.select" = "Select";
 "common.apply" = "Застосувати";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Пари ключ-значення для організації";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Підказки";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Термінал дозволяє команди";
 "editor.field.persistent.context" = "Постійний контекст";
 "editor.field.persistent.context.help" = "Контекст зберігається між сеансами";

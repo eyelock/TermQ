@@ -18,10 +18,9 @@
 "common.add" = "Добавить";
 "common.reinstall" = "Переустановить";
 "common.uninstall" = "Удалить";
-"common.installed"
+"common.installed" = "Установлено";
 "common.enabled" = "Включено";
 "common.disabled" = "Отключено";
-// TEMP_MARKER = "Установлено";
 "common.browse" = "Обзор...";
 "common.select" = "Select";
 "common.apply" = "Применить";
@@ -186,9 +185,8 @@
 "editor.tags.help" = "Пары ключ-значение для организации";
 
 // Editor - Agent Configuration section
-"editor.section.agent"
+"editor.section.agent" = "Agent";
 "editor.section.prompts" = "Подсказки";
-// TEMP_MARKER2 = "Agent";
 "editor.field.terminal.allows.autorun" = "Терминал разрешает команды";
 "editor.field.persistent.context" = "Постоянный контекст";
 "editor.field.persistent.context.help" = "Контекст сохраняется между сеансами";
