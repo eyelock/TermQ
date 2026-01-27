@@ -191,8 +191,7 @@ public enum JSONHelper {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         if let data = try? encoder.encode(value),
-            let string = String(data: data, encoding: .utf8)
-        {
+            let string = String(data: data, encoding: .utf8) {
             print(string)
         }
     }
