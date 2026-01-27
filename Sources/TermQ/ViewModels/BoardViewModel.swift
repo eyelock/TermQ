@@ -401,10 +401,8 @@ class BoardViewModel: ObservableObject {
 
     var allTerminals: [TerminalCard] {
         var terminals = board.activeCards
-        for (_, card) in tabManager.transientCards {
-            if !terminals.contains(where: { $0.id == card.id }) {
-                terminals.append(card)
-            }
+        for (_, card) in tabManager.transientCards where !terminals.contains(where: { $0.id == card.id }) {
+            terminals.append(card)
         }
         return terminals.sorted { lhs, rhs in
             if lhs.isFavourite != rhs.isFavourite {

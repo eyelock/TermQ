@@ -301,6 +301,7 @@ func launchTermQ() -> Bool {
         "\(FileManager.default.currentDirectoryPath)/\(appName)",
     ]
 
+    // swiftlint:disable:next for_where
     for appPath in possiblePaths {
         if FileManager.default.fileExists(atPath: appPath) {
             let process = Process()
@@ -334,6 +335,7 @@ struct Launch: ParsableCommand {
             "\(FileManager.default.currentDirectoryPath)/\(appName)",
         ]
 
+        // swiftlint:disable:next for_where
         for appPath in possiblePaths {
             if FileManager.default.fileExists(atPath: appPath) {
                 let process = Process()
