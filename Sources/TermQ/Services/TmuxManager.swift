@@ -42,12 +42,8 @@ public class TmuxManager: ObservableObject {
             "/opt/local/bin/tmux",  // MacPorts
         ]
 
-        // swiftlint:disable:next for_where
-        for path in paths {
-            if FileManager.default.isExecutableFile(atPath: path) {
-                tmuxPath = path
-                break
-            }
+        if let path = paths.first(where: { FileManager.default.isExecutableFile(atPath: $0) }) {
+            tmuxPath = path
         }
 
         // Also check PATH via `which`
