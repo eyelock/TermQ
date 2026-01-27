@@ -40,12 +40,12 @@ public enum ComponentInstallerError: LocalizedError, Equatable {
 
     public static func == (lhs: ComponentInstallerError, rhs: ComponentInstallerError) -> Bool {
         switch (lhs, rhs) {
-        case (.bundledComponentNotFound(let a), .bundledComponentNotFound(let b)):
-            return a == b
-        case (.installFailed(let a), .installFailed(let b)):
-            return a == b
-        case (.uninstallFailed(let a), .uninstallFailed(let b)):
-            return a == b
+        case (.bundledComponentNotFound(let lhsName), .bundledComponentNotFound(let rhsName)):
+            return lhsName == rhsName
+        case (.installFailed(let lhsMessage), .installFailed(let rhsMessage)):
+            return lhsMessage == rhsMessage
+        case (.uninstallFailed(let lhsMessage), .uninstallFailed(let rhsMessage)):
+            return lhsMessage == rhsMessage
         case (.notInstalled, .notInstalled):
             return true
         case (.userCancelled, .userCancelled):
