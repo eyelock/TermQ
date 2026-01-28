@@ -36,6 +36,12 @@ check_dependencies() {
         log_info "Install with: brew install ${missing[*]}"
         exit 1
     fi
+
+    # Check for pandoc (optional, for Markdown to HTML conversion)
+    if ! command -v pandoc &> /dev/null; then
+        log_warn "pandoc not found - release notes will display as plain Markdown"
+        log_info "For better formatting, install with: brew install pandoc"
+    fi
 }
 
 # Fetch releases from GitHub API
@@ -101,6 +107,22 @@ is_prerelease() {
     echo "false"
 }
 
+# Convert Markdown to HTML if pandoc is available
+markdown_to_html() {
+    local markdown="$1"
+
+    if command -v pandoc &> /dev/null; then
+        # Use pandoc to convert Markdown to HTML
+        # --from=gfm: GitHub-flavored Markdown
+        # --to=html: Convert to HTML
+        # --wrap=none: Don't wrap lines
+        echo "$markdown" | pandoc --from=gfm --to=html --wrap=none 2>/dev/null || echo "$markdown"
+    else
+        # Fallback: escape HTML entities for plain text display
+        echo "$markdown" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'
+    fi
+}
+
 # Generate XML for a single release item
 generate_item() {
     local tag="$1"
@@ -114,9 +136,9 @@ generate_item() {
     local version
     version=$(extract_version "$tag")
 
-    # Escape HTML entities in body for CDATA
+    # Convert Markdown to HTML (or escape for plain text if pandoc unavailable)
     local description
-    description=$(echo "$body" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g')
+    description=$(markdown_to_html "$body")
 
     cat << EOF
         <item>

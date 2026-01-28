@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq jq curl
+          sudo apt-get install -y -qq jq curl pandoc
 
       - name: Create output directories
         run: mkdir -p Docs/signatures

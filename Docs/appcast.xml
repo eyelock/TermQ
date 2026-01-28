@@ -10,36 +10,36 @@
             <sparkle:version>0.6.4</sparkle:version>
             <sparkle:shortVersionString>0.6.4</sparkle:shortVersionString>
             <pubDate>Sat, 17 Jan 2026 17:25:05 +0000</pubDate>
-            <description><![CDATA[&gt; [!WARNING]
-&gt; The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how _easy_ it is to ship features with Claude.  Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet.
-
-## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.6.4.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Double-click to launch
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.6.4.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termqcli` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.6.3...v0.6.4]]></description>
+            <description><![CDATA[<div class="warning">
+<div class="title">
+<p>Warning</p>
+</div>
+<p>The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how <em>easy</em> it is to ship features with Claude. Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet.</p>
+</div>
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.4.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.4.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.6.3...v0.6.4">https://github.com/eyelock/TermQ/compare/v0.6.3...v0.6.4</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.6.4/TermQ-0.6.4.zip"
                 
@@ -52,33 +52,30 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.6.3</sparkle:version>
             <sparkle:shortVersionString>0.6.3</sparkle:shortVersionString>
             <pubDate>Sat, 17 Jan 2026 16:01:40 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.6.3.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Double-click to launch
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.6.3.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termqcli` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.6.2...v0.6.3]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.3.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.3.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.6.2...v0.6.3">https://github.com/eyelock/TermQ/compare/v0.6.2...v0.6.3</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.6.3/TermQ-0.6.3.zip"
                 
@@ -91,33 +88,30 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.6.2</sparkle:version>
             <sparkle:shortVersionString>0.6.2</sparkle:shortVersionString>
             <pubDate>Sat, 17 Jan 2026 08:59:59 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.6.2.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Double-click to launch
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.6.2.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termqcli` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.6.1...v0.6.2]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.2.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.2.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.6.1...v0.6.2">https://github.com/eyelock/TermQ/compare/v0.6.1...v0.6.2</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.6.2/TermQ-0.6.2.zip"
                 
@@ -130,44 +124,41 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.6.1</sparkle:version>
             <sparkle:shortVersionString>0.6.1</sparkle:shortVersionString>
             <pubDate>Fri, 16 Jan 2026 14:16:26 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.6.1.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.6.1.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termqcli` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* perf(help): Optimize Help images with pngquant compression by @eyelock in https://github.com/eyelock/TermQ/pull/41
-* fix(help): Fix Bundle.module crash when opening Help in installed app by @eyelock in https://github.com/eyelock/TermQ/pull/42
-* fix(terminal): Fix Restart/Close Session behavior in tab view by @eyelock in https://github.com/eyelock/TermQ/pull/43
-* fix(tabs): Prevent tab header layout shift from spinner by @eyelock in https://github.com/eyelock/TermQ/pull/44
-* fix: Guard focus management during mouse drag to protect text selection by @eyelock in https://github.com/eyelock/TermQ/pull/45
-* fix(help): Reorganize Help topics into sections with headings by @eyelock in https://github.com/eyelock/TermQ/pull/46
-* fix(tmux): Kill tmux sessions when deleting cards and add Kill Session option by @eyelock in https://github.com/eyelock/TermQ/pull/47
-* fix(ux): Add backend restart hint and reorder session menu items by @eyelock in https://github.com/eyelock/TermQ/pull/48
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.6.0...v0.6.1]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.1.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.1.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>perf(help): Optimize Help images with pngquant compression by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/41">https://github.com/eyelock/TermQ/pull/41</a></li>
+<li>fix(help): Fix Bundle.module crash when opening Help in installed app by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/42">https://github.com/eyelock/TermQ/pull/42</a></li>
+<li>fix(terminal): Fix Restart/Close Session behavior in tab view by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/43">https://github.com/eyelock/TermQ/pull/43</a></li>
+<li>fix(tabs): Prevent tab header layout shift from spinner by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/44">https://github.com/eyelock/TermQ/pull/44</a></li>
+<li>fix: Guard focus management during mouse drag to protect text selection by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/45">https://github.com/eyelock/TermQ/pull/45</a></li>
+<li>fix(help): Reorganize Help topics into sections with headings by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/46">https://github.com/eyelock/TermQ/pull/46</a></li>
+<li>fix(tmux): Kill tmux sessions when deleting cards and add Kill Session option by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/47">https://github.com/eyelock/TermQ/pull/47</a></li>
+<li>fix(ux): Add backend restart hint and reorder session menu items by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/48">https://github.com/eyelock/TermQ/pull/48</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.6.0...v0.6.1">https://github.com/eyelock/TermQ/compare/v0.6.0...v0.6.1</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.6.1/TermQ-0.6.1.zip"
                 
@@ -180,48 +171,45 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.6.0</sparkle:version>
             <sparkle:shortVersionString>0.6.0</sparkle:shortVersionString>
             <pubDate>Fri, 16 Jan 2026 09:18:53 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.6.0.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.6.0.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termqcli` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* feat(i18n): Add full localization support with 40 languages by @eyelock in https://github.com/eyelock/TermQ/pull/27
-* chore(ci): Consolidate CI/Makefile for local-CI parity by @eyelock in https://github.com/eyelock/TermQ/pull/30
-* refactor: Tech debt cleanup and code quality improvements by @eyelock in https://github.com/eyelock/TermQ/pull/31
-* feat: Add LIVE badge for background terminal sessions by @eyelock in https://github.com/eyelock/TermQ/pull/32
-* feat: Add Kill Terminal option for stuck/unresponsive terminals by @eyelock in https://github.com/eyelock/TermQ/pull/33
-* fix: Improve bell notification reliability and add Dock badge by @eyelock in https://github.com/eyelock/TermQ/pull/34
-* fix(board): Correct same-column card reordering index calculation by @eyelock in https://github.com/eyelock/TermQ/pull/35
-* feat(tabs): Add + button to tab bar for creating new terminals by @eyelock in https://github.com/eyelock/TermQ/pull/36
-* feat: Add duplicate terminal context menu option by @eyelock in https://github.com/eyelock/TermQ/pull/37
-* feat(data): Add backup, restore, and uninstall features by @eyelock in https://github.com/eyelock/TermQ/pull/38
-* feat(tmux): Add tmux backend with control mode, pane rendering, and metadata sync by @eyelock in https://github.com/eyelock/TermQ/pull/39
-* fix(i18n): Fix localization for user-selected languages by @eyelock in https://github.com/eyelock/TermQ/pull/40
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.5.2...v0.6.0]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.6.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>feat(i18n): Add full localization support with 40 languages by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/27">https://github.com/eyelock/TermQ/pull/27</a></li>
+<li>chore(ci): Consolidate CI/Makefile for local-CI parity by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/30">https://github.com/eyelock/TermQ/pull/30</a></li>
+<li>refactor: Tech debt cleanup and code quality improvements by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/31">https://github.com/eyelock/TermQ/pull/31</a></li>
+<li>feat: Add LIVE badge for background terminal sessions by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/32">https://github.com/eyelock/TermQ/pull/32</a></li>
+<li>feat: Add Kill Terminal option for stuck/unresponsive terminals by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/33">https://github.com/eyelock/TermQ/pull/33</a></li>
+<li>fix: Improve bell notification reliability and add Dock badge by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/34">https://github.com/eyelock/TermQ/pull/34</a></li>
+<li>fix(board): Correct same-column card reordering index calculation by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/35">https://github.com/eyelock/TermQ/pull/35</a></li>
+<li>feat(tabs): Add + button to tab bar for creating new terminals by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/36">https://github.com/eyelock/TermQ/pull/36</a></li>
+<li>feat: Add duplicate terminal context menu option by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/37">https://github.com/eyelock/TermQ/pull/37</a></li>
+<li>feat(data): Add backup, restore, and uninstall features by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/38">https://github.com/eyelock/TermQ/pull/38</a></li>
+<li>feat(tmux): Add tmux backend with control mode, pane rendering, and metadata sync by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/39">https://github.com/eyelock/TermQ/pull/39</a></li>
+<li>fix(i18n): Fix localization for user-selected languages by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/40">https://github.com/eyelock/TermQ/pull/40</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.5.2...v0.6.0">https://github.com/eyelock/TermQ/compare/v0.5.2...v0.6.0</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.6.0/TermQ-0.6.0.zip"
                 
@@ -234,37 +222,34 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.5.2</sparkle:version>
             <sparkle:shortVersionString>0.5.2</sparkle:shortVersionString>
             <pubDate>Wed, 14 Jan 2026 16:08:13 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.5.2.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.5.2.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* fix(concurrency): Resolve Swift 6 crash in file monitoring by @eyelock in https://github.com/eyelock/TermQ/pull/29
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.5.1...v0.5.2]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.5.2.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.5.2.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>fix(concurrency): Resolve Swift 6 crash in file monitoring by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/29">https://github.com/eyelock/TermQ/pull/29</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.5.1...v0.5.2">https://github.com/eyelock/TermQ/compare/v0.5.1...v0.5.2</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.5.2/TermQ-0.5.2.zip"
                 
@@ -277,37 +262,34 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.5.1</sparkle:version>
             <sparkle:shortVersionString>0.5.1</sparkle:shortVersionString>
             <pubDate>Wed, 14 Jan 2026 15:19:45 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.5.1.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.5.1.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* fix(release): Add missing Info.plist creation to release workflow by @eyelock in https://github.com/eyelock/TermQ/pull/28
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.5.0...v0.5.1]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.5.1.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.5.1.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>fix(release): Add missing Info.plist creation to release workflow by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/28">https://github.com/eyelock/TermQ/pull/28</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.5.0...v0.5.1">https://github.com/eyelock/TermQ/compare/v0.5.0...v0.5.1</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.5.1/TermQ-0.5.1.zip"
                 
@@ -320,43 +302,40 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.5.0</sparkle:version>
             <sparkle:shortVersionString>0.5.0</sparkle:shortVersionString>
             <pubDate>Wed, 14 Jan 2026 07:50:45 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.5.0.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.5.0.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* feat: reorganize Settings into General/Tools tabs by @eyelock in https://github.com/eyelock/TermQ/pull/23
-* feat: reorganize Terminal Editor into General/Advanced tabs by @eyelock in https://github.com/eyelock/TermQ/pull/22
-* feat: add description field to columns by @eyelock in https://github.com/eyelock/TermQ/pull/21
-* feat(mcp): Add MCP Server for LLM Integration by @eyelock in https://github.com/eyelock/TermQ/pull/17
-* feat(env): Add terminal environment variables and termq_get MCP tool by @eyelock in https://github.com/eyelock/TermQ/pull/24
-* feat(ui): add Generate Init Command section to Agents tab by @eyelock in https://github.com/eyelock/TermQ/pull/25
-* fix(mcp): Add file monitoring and MCP status indicator by @eyelock in https://github.com/eyelock/TermQ/pull/26
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.4.4...v0.5.0]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.5.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.5.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>feat: reorganize Settings into General/Tools tabs by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/23">https://github.com/eyelock/TermQ/pull/23</a></li>
+<li>feat: reorganize Terminal Editor into General/Advanced tabs by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/22">https://github.com/eyelock/TermQ/pull/22</a></li>
+<li>feat: add description field to columns by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/21">https://github.com/eyelock/TermQ/pull/21</a></li>
+<li>feat(mcp): Add MCP Server for LLM Integration by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/17">https://github.com/eyelock/TermQ/pull/17</a></li>
+<li>feat(env): Add terminal environment variables and termq_get MCP tool by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/24">https://github.com/eyelock/TermQ/pull/24</a></li>
+<li>feat(ui): add Generate Init Command section to Agents tab by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/25">https://github.com/eyelock/TermQ/pull/25</a></li>
+<li>fix(mcp): Add file monitoring and MCP status indicator by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/26">https://github.com/eyelock/TermQ/pull/26</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.4.4...v0.5.0">https://github.com/eyelock/TermQ/compare/v0.4.4...v0.5.0</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.5.0/TermQ-0.5.0.zip"
                 
@@ -369,37 +348,34 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.4.4</sparkle:version>
             <sparkle:shortVersionString>0.4.4</sparkle:shortVersionString>
             <pubDate>Tue, 13 Jan 2026 20:45:53 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.4.4.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.4.4.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* fix(ui): restore column drag-to-reorder functionality by @eyelock in https://github.com/eyelock/TermQ/pull/19
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.4.3...v0.4.4]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.4.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.4.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>fix(ui): restore column drag-to-reorder functionality by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/19">https://github.com/eyelock/TermQ/pull/19</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.4.3...v0.4.4">https://github.com/eyelock/TermQ/compare/v0.4.3...v0.4.4</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.4.4/TermQ-0.4.4.zip"
                 
@@ -412,40 +388,37 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.4.3</sparkle:version>
             <sparkle:shortVersionString>0.4.3</sparkle:shortVersionString>
             <pubDate>Tue, 13 Jan 2026 16:18:17 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.4.3.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.4.3.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* chore: Makefile improvements and debug menu by @eyelock in https://github.com/eyelock/TermQ/pull/15
-* chore: add Claude AI assistant configuration by @eyelock in https://github.com/eyelock/TermQ/pull/16
-* feat(cli): add LLM-friendly commands for terminal automation by @eyelock in https://github.com/eyelock/TermQ/pull/12
-* fix(terminal): prevent focus stealing during text selection by @eyelock in https://github.com/eyelock/TermQ/pull/18
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.4.2...v0.4.3]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.3.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.3.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>chore: Makefile improvements and debug menu by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/15">https://github.com/eyelock/TermQ/pull/15</a></li>
+<li>chore: add Claude AI assistant configuration by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/16">https://github.com/eyelock/TermQ/pull/16</a></li>
+<li>feat(cli): add LLM-friendly commands for terminal automation by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/12">https://github.com/eyelock/TermQ/pull/12</a></li>
+<li>fix(terminal): prevent focus stealing during text selection by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/18">https://github.com/eyelock/TermQ/pull/18</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.4.2...v0.4.3">https://github.com/eyelock/TermQ/compare/v0.4.2...v0.4.3</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.4.3/TermQ-0.4.3.zip"
                 
@@ -458,37 +431,34 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.4.2</sparkle:version>
             <sparkle:shortVersionString>0.4.2</sparkle:shortVersionString>
             <pubDate>Mon, 12 Jan 2026 20:33:57 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.4.2.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.4.2.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* fix(cli): resolve deadlock when launching TermQ app by @eyelock in https://github.com/eyelock/TermQ/pull/14
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.4.1...v0.4.2]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.2.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.2.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>fix(cli): resolve deadlock when launching TermQ app by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/14">https://github.com/eyelock/TermQ/pull/14</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.4.1...v0.4.2">https://github.com/eyelock/TermQ/compare/v0.4.1...v0.4.2</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.4.2/TermQ-0.4.2.zip"
                 
@@ -501,37 +471,34 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.4.1</sparkle:version>
             <sparkle:shortVersionString>0.4.1</sparkle:shortVersionString>
             <pubDate>Mon, 12 Jan 2026 20:17:38 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.4.1.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.4.1.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* fix: CI workflow for generated Help resources by @eyelock in https://github.com/eyelock/TermQ/pull/13
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.4.0...v0.4.1]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.1.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.4.1.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>fix: CI workflow for generated Help resources by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/13">https://github.com/eyelock/TermQ/pull/13</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.4.0...v0.4.1">https://github.com/eyelock/TermQ/compare/v0.4.0...v0.4.1</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.4.1/TermQ-0.4.1.zip"
                 
@@ -544,7 +511,7 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.4.0</sparkle:version>
             <sparkle:shortVersionString>0.4.0</sparkle:shortVersionString>
             <pubDate>Sun, 11 Jan 2026 22:00:56 +0000</pubDate>
-            <description><![CDATA[**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.3.1...v0.4.0]]></description>
+            <description><![CDATA[<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.3.1...v0.4.0">https://github.com/eyelock/TermQ/compare/v0.3.1...v0.4.0</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.4.0/TermQ-0.4.0.zip"
                 
@@ -557,37 +524,34 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.3.0</sparkle:version>
             <sparkle:shortVersionString>0.3.0</sparkle:shortVersionString>
             <pubDate>Fri, 09 Jan 2026 14:01:41 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.3.0.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.3.0.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* feat: v0.3.0 improvements by @eyelock in https://github.com/eyelock/TermQ/pull/8
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.2.1...v0.3.0]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.3.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.3.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>feat: v0.3.0 improvements by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/8">https://github.com/eyelock/TermQ/pull/8</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.2.1...v0.3.0">https://github.com/eyelock/TermQ/compare/v0.2.1...v0.3.0</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.3.0/TermQ-0.3.0.zip"
                 
@@ -600,37 +564,34 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.2.1</sparkle:version>
             <sparkle:shortVersionString>0.2.1</sparkle:shortVersionString>
             <pubDate>Fri, 09 Jan 2026 11:23:00 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.2.1.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.2.1.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* fix: add pin toggle to board view and fix terminal CWD switching by @eyelock in https://github.com/eyelock/TermQ/pull/7
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.2.0...v0.2.1]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.2.1.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.2.1.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>fix: add pin toggle to board view and fix terminal CWD switching by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/7">https://github.com/eyelock/TermQ/pull/7</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.2.0...v0.2.1">https://github.com/eyelock/TermQ/compare/v0.2.0...v0.2.1</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.2.1/TermQ-0.2.1.zip"
                 
@@ -643,41 +604,38 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.2.0</sparkle:version>
             <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
             <pubDate>Fri, 09 Jan 2026 11:09:52 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.2.0.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.2.0.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* feat: add pinned terminals with quick-switch tabs by @eyelock in https://github.com/eyelock/TermQ/pull/2
-* fix: switch to new terminal after creation by @eyelock in https://github.com/eyelock/TermQ/pull/3
-* feat: add keyboard shortcuts for terminal management by @eyelock in https://github.com/eyelock/TermQ/pull/4
-* docs: add keyboard shortcuts and pinned terminals to README by @eyelock in https://github.com/eyelock/TermQ/pull/5
-* feat: add quick new terminal button to focused terminal toolbar by @eyelock in https://github.com/eyelock/TermQ/pull/6
-
-
-**Full Changelog**: https://github.com/eyelock/TermQ/compare/v0.1.0...v0.2.0]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.2.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.2.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>feat: add pinned terminals with quick-switch tabs by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/2">https://github.com/eyelock/TermQ/pull/2</a></li>
+<li>fix: switch to new terminal after creation by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/3">https://github.com/eyelock/TermQ/pull/3</a></li>
+<li>feat: add keyboard shortcuts for terminal management by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/4">https://github.com/eyelock/TermQ/pull/4</a></li>
+<li>docs: add keyboard shortcuts and pinned terminals to README by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/5">https://github.com/eyelock/TermQ/pull/5</a></li>
+<li>feat: add quick new terminal button to focused terminal toolbar by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/6">https://github.com/eyelock/TermQ/pull/6</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.1.0...v0.2.0">https://github.com/eyelock/TermQ/compare/v0.1.0...v0.2.0</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.2.0/TermQ-0.2.0.zip"
                 
@@ -690,39 +648,38 @@ See `checksums.txt` for SHA-256 checksums of all release artifacts.
             <sparkle:version>0.1.0</sparkle:version>
             <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
             <pubDate>Fri, 09 Jan 2026 09:40:05 +0000</pubDate>
-            <description><![CDATA[## Installation
-
-### macOS App (Recommended)
-1. Download `TermQ-0.1.0.dmg`
-2. Open the DMG and drag `TermQ.app` to your Applications folder
-3. Right-click and select "Open" on first launch (required for unsigned apps)
-
-### Alternative: Zip Archive
-1. Download `TermQ-0.1.0.zip`
-2. Unzip and move `TermQ.app` to your Applications folder
-
-### CLI Tool
-The `termq` CLI is bundled inside the app. To install it:
-1. Open TermQ.app
-2. Go to **TermQ → Settings** (or press ⌘,)
-3. Click **Install Command Line Tool**
-
-Or manually:
-```bash
-sudo cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/
-```
-
-## Checksums
-See `checksums.txt` for SHA-256 checksums of all release artifacts.
-
-
-## What's Changed
-* feat: add settings for CLI installation by @eyelock in https://github.com/eyelock/TermQ/pull/1
-
-## New Contributors
-* @eyelock made their first contribution in https://github.com/eyelock/TermQ/pull/1
-
-**Full Changelog**: https://github.com/eyelock/TermQ/commits/v0.1.0]]></description>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.1.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.1.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>feat: add settings for CLI installation by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/1">https://github.com/eyelock/TermQ/pull/1</a></li>
+</ul>
+<h2 id="new-contributors">New Contributors</h2>
+<ul>
+<li>@eyelock made their first contribution in <a href="https://github.com/eyelock/TermQ/pull/1">https://github.com/eyelock/TermQ/pull/1</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/commits/v0.1.0">https://github.com/eyelock/TermQ/commits/v0.1.0</a></p>]]></description>
             <enclosure
                 url="https://github.com/eyelock/TermQ/releases/download/v0.1.0/TermQ-0.1.0.zip"
                 

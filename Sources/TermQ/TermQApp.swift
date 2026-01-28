@@ -328,6 +328,9 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// Sparkle updater controller for automatic updates
     let updaterController: SPUStandardUpdaterController
 
+    /// Updater view model for SwiftUI
+    let updaterViewModel: UpdaterViewModel
+
     /// Reference to the main window (first window created)
     private var mainWindow: NSWindow?
 
@@ -338,6 +341,10 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             startingUpdater: true,
             updaterDelegate: sparkleDelegate,
             userDriverDelegate: nil
+        )
+        updaterViewModel = UpdaterViewModel(
+            updater: updaterController.updater,
+            controller: updaterController
         )
         super.init()
     }
@@ -636,6 +643,7 @@ struct TermQApp: App {
 
         Settings {
             SettingsView()
+                .environmentObject(appDelegate.updaterViewModel)
         }
 
         Window("TermQ Help", id: "help") {
@@ -675,15 +683,16 @@ struct IdentifiableURL: Identifiable {
 /// Observable wrapper for Sparkle's updater to use in SwiftUI
 @MainActor
 final class UpdaterViewModel: ObservableObject {
-    /// Shared instance - initialized lazily when first accessed
+    /// Shared instance - accessed from app delegate
     static var shared: UpdaterViewModel? {
         guard let appDelegate = NSApp.delegate as? TermQAppDelegate else {
             return nil
         }
-        return UpdaterViewModel(updater: appDelegate.updaterController.updater)
+        return appDelegate.updaterViewModel
     }
 
     private let updater: SPUUpdater
+    private let controller: SPUStandardUpdaterController?
     private var cancellables = Set<AnyCancellable>()
 
     /// Whether automatic update checks are enabled (defaults to true)
@@ -704,8 +713,9 @@ final class UpdaterViewModel: ObservableObject {
         }
     }
 
-    init(updater: SPUUpdater) {
+    init(updater: SPUUpdater, controller: SPUStandardUpdaterController? = nil) {
         self.updater = updater
+        self.controller = controller
         // Default to true for automatic checks if not previously set
         let hasExistingPreference = UserDefaults.standard.object(forKey: "SUAutomaticallyChecksForUpdates") != nil
         if !hasExistingPreference {
@@ -726,7 +736,12 @@ final class UpdaterViewModel: ObservableObject {
 
     /// Manually check for updates
     func checkForUpdates() {
-        updater.checkForUpdates()
+        // Use the controller's action method if available (same path as Menu Bar)
+        if let controller = controller {
+            controller.checkForUpdates(nil)
+        } else {
+            updater.checkForUpdates()
+        }
     }
 }
 
