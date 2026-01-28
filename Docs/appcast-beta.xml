@@ -6,6 +6,59 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.7.0-beta.4</title>
+            <sparkle:version>0.7.0-beta.4</sparkle:version>
+            <sparkle:shortVersionString>0.7.0-beta.4</sparkle:shortVersionString>
+            <pubDate>Wed, 28 Jan 2026 00:56:38 +0000</pubDate>
+            <description><![CDATA[<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.7.0-beta.4.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.7.0-beta.4.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
+<h2 id="whats-changed">What's Changed</h2>
+<ul>
+<li>feat(ci): Implement aggregate job pattern for path-based CI checks by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/82">https://github.com/eyelock/TermQ/pull/82</a></li>
+<li>fix: v0.7.0 stabilization - Phase 0 (Build &amp; Launch) by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/83">https://github.com/eyelock/TermQ/pull/83</a></li>
+<li>fix: Improve keyboard shortcuts and window management by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/84">https://github.com/eyelock/TermQ/pull/84</a></li>
+<li>fix(settings): Path inputs and LLM prompt injection UX improvements by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/85">https://github.com/eyelock/TermQ/pull/85</a></li>
+<li>fix(security): Clear secrets from UI when encryption key is reset by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/86">https://github.com/eyelock/TermQ/pull/86</a></li>
+<li>feat: Show secret counts in encryption key reset warning by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/87">https://github.com/eyelock/TermQ/pull/87</a></li>
+<li>feat: Headless mode support for CLI and MCP by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/88">https://github.com/eyelock/TermQ/pull/88</a></li>
+<li>fix: Phase 4 stabilization - CLI/MCP installation and error handling by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/89">https://github.com/eyelock/TermQ/pull/89</a></li>
+<li>fix: Phase 5 - TMUX features backend selector UX by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/90">https://github.com/eyelock/TermQ/pull/90</a></li>
+<li>docs: Document branch protection and Claude Code review workflow by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/91">https://github.com/eyelock/TermQ/pull/91</a></li>
+<li>fix: Repair broken localization in all 40 language files by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/92">https://github.com/eyelock/TermQ/pull/92</a></li>
+<li>Fix SwiftLint style warnings (228 violations) by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/93">https://github.com/eyelock/TermQ/pull/93</a></li>
+<li>fix(ci): Deploy appcast files to GitHub Pages for Sparkle updates by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/94">https://github.com/eyelock/TermQ/pull/94</a></li>
+<li>fix(sparkle): Fix Settings update button and improve release notes formatting by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/95">https://github.com/eyelock/TermQ/pull/95</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.7.0-beta.3...v0.7.0-beta.4">https://github.com/eyelock/TermQ/compare/v0.7.0-beta.3...v0.7.0-beta.4</a></p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.7.0-beta.4/TermQ-0.7.0-beta.4.zip"
+                
+                length="14932922"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.7.0-beta.3</title>
             <sparkle:version>0.7.0-beta.3</sparkle:version>
             <sparkle:shortVersionString>0.7.0-beta.3</sparkle:shortVersionString>
@@ -155,12 +208,9 @@
             <sparkle:version>0.6.4</sparkle:version>
             <sparkle:shortVersionString>0.6.4</sparkle:shortVersionString>
             <pubDate>Sat, 17 Jan 2026 17:25:05 +0000</pubDate>
-            <description><![CDATA[<div class="warning">
-<div class="title">
-<p>Warning</p>
-</div>
-<p>The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how <em>easy</em> it is to ship features with Claude. Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet.</p>
-</div>
+            <description><![CDATA[<blockquote>
+<p>[!WARNING] The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how <em>easy</em> it is to ship features with Claude. Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet.</p>
+</blockquote>
 <h2 id="installation">Installation</h2>
 <h3 id="macos-app-recommended">macOS App (Recommended)</h3>
 <ol type="1">

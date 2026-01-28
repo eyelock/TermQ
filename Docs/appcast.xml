@@ -10,12 +10,9 @@
             <sparkle:version>0.6.4</sparkle:version>
             <sparkle:shortVersionString>0.6.4</sparkle:shortVersionString>
             <pubDate>Sat, 17 Jan 2026 17:25:05 +0000</pubDate>
-            <description><![CDATA[<div class="warning">
-<div class="title">
-<p>Warning</p>
-</div>
-<p>The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how <em>easy</em> it is to ship features with Claude. Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet.</p>
-</div>
+            <description><![CDATA[<blockquote>
+<p>[!WARNING] The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how <em>easy</em> it is to ship features with Claude. Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet.</p>
+</blockquote>
 <h2 id="installation">Installation</h2>
 <h3 id="macos-app-recommended">macOS App (Recommended)</h3>
 <ol type="1">
