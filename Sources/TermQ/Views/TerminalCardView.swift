@@ -92,7 +92,7 @@ struct TerminalCardView: View {
             .frame(maxHeight: 22)
 
             // Special badges + User badges (special badges appear first)
-            if isOpenAsTab || card.isWired || (hasActiveSession && !isOpenAsTab) || (card.backend == .tmux && tmuxManager.isAvailable) || !badges.isEmpty {
+            if isOpenAsTab || card.isWired || (hasActiveSession && !isOpenAsTab) || (card.backend.usesTmux && tmuxManager.isAvailable) || !badges.isEmpty {
                 FlowLayout(spacing: 4) {
                     // Open as tab indicator
                     if isOpenAsTab {
