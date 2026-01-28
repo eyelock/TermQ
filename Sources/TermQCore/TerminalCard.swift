@@ -5,22 +5,41 @@ public enum TerminalBackend: String, Codable, CaseIterable, Sendable {
     /// Direct shell process - session dies with app
     case direct
 
-    /// tmux-backed session - persists across app restarts
-    case tmux
+    /// tmux-backed session with regular attach - persists across app restarts
+    case tmuxAttach
+
+    /// tmux with control mode - full pane management support
+    case tmuxControl
 
     public var displayName: String {
         switch self {
-        case .direct: return "Direct"
-        case .tmux: return "TMUX (Persistent)"
+        case .direct:
+            return NSLocalizedString("backend.direct", bundle: .main, comment: "Direct backend name")
+        case .tmuxAttach:
+            return NSLocalizedString("backend.tmux.attach", bundle: .main, comment: "TMUX Attach backend name")
+        case .tmuxControl:
+            return NSLocalizedString("backend.tmux.control", bundle: .main, comment: "TMUX Control backend name")
         }
     }
 
     public var description: String {
         switch self {
         case .direct:
-            return "Shell runs directly. Session ends when TermQ closes."
-        case .tmux:
-            return "Shell runs via tmux. Session persists across app restarts."
+            return NSLocalizedString("backend.direct.description", bundle: .main, comment: "Direct backend description")
+        case .tmuxAttach:
+            return NSLocalizedString("backend.tmux.attach.description", bundle: .main, comment: "TMUX Attach backend description")
+        case .tmuxControl:
+            return NSLocalizedString("backend.tmux.control.description", bundle: .main, comment: "TMUX Control backend description")
+        }
+    }
+
+    /// Returns true if this backend uses tmux (either regular or control mode)
+    public var usesTmux: Bool {
+        switch self {
+        case .direct:
+            return false
+        case .tmuxAttach, .tmuxControl:
+            return true
         }
     }
 }
@@ -76,7 +95,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// When an LLM last called termq_get for this terminal (nil = never, set = LLM is aware of TermQ)
     @Published public var lastLLMGet: Date?
 
-    /// Backend mode for session management (.direct = ephemeral, .tmux = persistent)
+    /// Backend mode for session management (.direct, .tmuxAttach, .tmuxControl)
     @Published public var backend: TerminalBackend
 
     /// Cards created via headless MCP need tmux sessions when GUI starts
@@ -233,7 +252,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
             .filter { !$0.isEmpty }
     }
 
-    /// tmux session name for this terminal (used when backend == .tmux)
+    /// tmux session name for this terminal (used when backend uses tmux)
     public var tmuxSessionName: String {
         "termq-\(id.uuidString.prefix(8).lowercased())"
     }

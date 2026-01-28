@@ -168,7 +168,7 @@ extension BoardViewModel {
             llmPrompt: llmPrompt,
             llmNextAction: llmNextAction,
             badge: badge,
-            backend: .tmux
+            backend: .tmuxAttach  // Default to attach mode for recovered sessions
         )
 
         // Add to board without opening it

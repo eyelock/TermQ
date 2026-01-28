@@ -385,6 +385,14 @@ enum Strings {
         static var backendRestartHint: String { localized("editor.backend.restart.hint") }
         static var backendLockedWarning: String { localized("editor.backend.locked.warning") }
 
+        // Backend types
+        static var backendDirect: String { localized("backend.direct") }
+        static var backendDirectDescription: String { localized("backend.direct.description") }
+        static var backendTmuxAttach: String { localized("backend.tmux.attach") }
+        static var backendTmuxAttachDescription: String { localized("backend.tmux.attach.description") }
+        static var backendTmuxControl: String { localized("backend.tmux.control") }
+        static var backendTmuxControlDescription: String { localized("backend.tmux.control.description") }
+
         // Environment section
         enum Environment {
             static var description: String { localized("editor.environment.description") }

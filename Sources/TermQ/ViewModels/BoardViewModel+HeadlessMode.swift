@@ -46,7 +46,7 @@ extension BoardViewModel {
 
                     // Add TermQ-specific environment variables
                     env["TERMQ_TERMINAL_ID"] = card.id.uuidString
-                    env["TERMQ_BACKEND"] = TerminalBackend.tmux.rawValue
+                    env["TERMQ_BACKEND"] = TerminalBackend.tmuxAttach.rawValue
 
                     // Add tag environment variables
                     for tag in card.tags {

@@ -212,6 +212,14 @@
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend cannot be changed while session is active. Restart the session to change backends.";
 
+// MARK: - Backend Types
+"backend.direct" = "Direct";
+"backend.direct.description" = "Shell runs directly. Session ends when TermQ closes.";
+"backend.tmux.attach" = "TMUX (Attach)";
+"backend.tmux.attach.description" = "Shell runs via tmux. Session persists across app restarts.";
+"backend.tmux.control" = "TMUX (Control)";
+"backend.tmux.control.description" = "Shell runs via tmux control mode. Persistent sessions with pane management support.";
+
 // Editor - Environment section
 "editor.environment.description" = "Environment variables are injected when the terminal launches. Terminal variables override global variables with the same name.";
 "editor.environment.section.terminal" = "Terminal Environment Variables";
