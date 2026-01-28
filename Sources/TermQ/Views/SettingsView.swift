@@ -56,16 +56,8 @@ struct SettingsView: View {
     // Data directory
     @State private var dataDirectory: String = DataDirectoryManager.displayPath
 
-    // Updater (Sparkle)
-    @StateObject private var updaterViewModel =
-        UpdaterViewModel.shared
-        ?? UpdaterViewModel(
-            updater: SPUStandardUpdaterController(
-                startingUpdater: false,
-                updaterDelegate: nil,
-                userDriverDelegate: nil
-            ).updater
-        )
+    // Updater (Sparkle) - injected from app level
+    @EnvironmentObject var updaterViewModel: UpdaterViewModel
 
     enum SettingsTab: CaseIterable {
         case general

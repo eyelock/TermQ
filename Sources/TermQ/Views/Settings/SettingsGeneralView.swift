@@ -121,7 +121,6 @@ struct SettingsGeneralView: View {
                 Button(Strings.Settings.checkForUpdates) {
                     updaterViewModel.checkForUpdates()
                 }
-                .disabled(!updaterViewModel.canCheckForUpdates)
             }
         } header: {
             Text(Strings.Settings.sectionUpdates)
