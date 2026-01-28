@@ -500,9 +500,18 @@ public class TmuxControlModeSession: ObservableObject {
         try proc.run()
         self.process = proc
 
-        // Wait for connection confirmation
-        try await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
+        // Wait for connection confirmation and initial layout sync
+        try await Task.sleep(nanoseconds: 1_000_000_000)  // 1 second
         isConnected = parser.isConnected
+
+        // Capture initial pane content for all panes
+        // Control mode only sends NEW output via %output, so we need to
+        // explicitly capture existing pane content when first attaching
+        await MainActor.run {
+            for pane in parser.panes {
+                sendCommand("capture-pane -p -t %\(pane.id)")
+            }
+        }
     }
 
     /// Disconnect from the tmux session

@@ -34,7 +34,7 @@ struct ExpandedTerminalView: View {
 
     /// Whether the current terminal is using tmux backend
     private var isTmuxSession: Bool {
-        sessionManager.getBackend(for: card.id) == .tmux
+        sessionManager.getBackend(for: card.id)?.usesTmux ?? false
     }
 
     var body: some View {
@@ -102,9 +102,10 @@ struct ExpandedTerminalView: View {
                         }
                     }
             } else {
-                // Show multi-pane view if control mode has multiple panes
-                if let controlSession = sessionManager.getControlModeSession(for: card.id),
-                    controlSession.parser.panes.count > 1
+                // Show multi-pane view only for tmux control mode backend
+                if card.backend == .tmuxControl,
+                    let controlSession = sessionManager.getControlModeSession(for: card.id),
+                    !controlSession.parser.panes.isEmpty
                 {
                     TmuxMultiPaneView(
                         card: card,
@@ -117,7 +118,7 @@ struct ExpandedTerminalView: View {
                     )
                     .id("\(card.id)-\(restartCounter)-multipane")
                 } else {
-                    // Regular single terminal view
+                    // Regular terminal view for direct and tmux backends
                     TerminalHostView(
                         card: card,
                         onExit: {
@@ -393,7 +394,7 @@ struct ExpandedTerminalView: View {
                 HStack(spacing: 4) {
                     ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
                         let info = columnInfo(for: tabCard)
-                        let isTmux = sessionManager.getBackend(for: tabCard.id) == .tmux
+                        let isTmux = sessionManager.getBackend(for: tabCard.id)?.usesTmux ?? false
                         TabItemView(
                             tabCard: tabCard,
                             columnColor: info.color,

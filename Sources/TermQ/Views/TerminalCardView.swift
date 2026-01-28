@@ -143,7 +143,7 @@ struct TerminalCardView: View {
 
                     // TMUX badge - shows when terminal uses tmux backend AND tmux is available
                     // (cards with tmux backend fall back to direct if tmux is unavailable)
-                    if card.backend == .tmux && tmuxManager.isAvailable {
+                    if card.backend.usesTmux && tmuxManager.isAvailable {
                         Text(Strings.Card.tmux)
                             .font(.caption2)
                             .fontWeight(.bold)

@@ -33,7 +33,7 @@ struct ToolsTabContent: View {
     var activeTmuxSessionCount: Int {
         boardViewModel.activeSessionCards.filter { cardId in
             guard boardViewModel.card(for: cardId) != nil else { return false }
-            return TerminalSessionManager.shared.getBackend(for: cardId) == .tmux
+            return TerminalSessionManager.shared.getBackend(for: cardId)?.usesTmux ?? false
         }.count
     }
 

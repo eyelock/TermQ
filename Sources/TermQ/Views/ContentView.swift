@@ -164,7 +164,7 @@ struct ContentView: View {
                             .font(.headline)
 
                         // TMUX system badge (if using tmux backend)
-                        if selectedCard.backend == .tmux {
+                        if selectedCard.backend.usesTmux {
                             Text(Strings.Card.tmux)
                                 .font(.caption)
                                 .fontWeight(.bold)

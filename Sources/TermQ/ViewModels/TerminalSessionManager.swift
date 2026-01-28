@@ -70,9 +70,9 @@ class TerminalSessionManager: ObservableObject {
         switch card.backend {
         case .direct:
             return .direct
-        case .tmux:
+        case .tmuxAttach, .tmuxControl:
             // Fall back to direct if tmux is not available
-            return tmuxManager.isAvailable ? .tmux : .direct
+            return tmuxManager.isAvailable ? card.backend : .direct
         }
     }
 
@@ -102,7 +102,7 @@ class TerminalSessionManager: ObservableObject {
                 switch session.backend {
                 case .direct:
                     session.terminal.send(txt: "exit\n")
-                case .tmux:
+                case .tmuxAttach, .tmuxControl:
                     let sessionName = tmuxManager.sessionName(for: cardId)
                     Task {
                         try? await tmuxManager.killSession(name: sessionName)
@@ -206,8 +206,11 @@ class TerminalSessionManager: ObservableObject {
         case .direct:
             startDirectProcess(terminal: terminal, card: card, environment: env)
 
-        case .tmux:
-            startTmuxProcess(terminal: terminal, card: card, environment: env)
+        case .tmuxAttach:
+            startTmuxAttachProcess(terminal: terminal, card: card, environment: env)
+
+        case .tmuxControl:
+            startTmuxControlProcess(terminal: terminal, card: card, environment: env)
         }
 
         // Create container with padding
@@ -255,8 +258,8 @@ class TerminalSessionManager: ObservableObject {
         )
     }
 
-    /// Start a tmux-backed session (persistent mode)
-    private func startTmuxProcess(
+    /// Start a tmux-backed session with regular attach (persistent mode without pane features)
+    private func startTmuxAttachProcess(
         terminal: TermQTerminalView,
         card: TerminalCard,
         environment env: [String: String]
@@ -272,33 +275,23 @@ class TerminalSessionManager: ObservableObject {
             tmuxEnvArgs.append("\(key)=\(value)")
         }
 
-        // Create a script that:
-        // 1. Creates the tmux session if it doesn't exist
-        // 2. Configures it for TermQ
-        // 3. Attaches to it
         guard let tmuxPath = tmuxManager.tmuxPath else {
             // Fallback to direct if somehow tmux disappeared
             startDirectProcess(terminal: terminal, card: card, environment: env)
             return
         }
 
-        // Check if session exists, create if not, then attach
-        // Using shell script for atomicity
-        // NOTE: Configuration options are applied on EVERY attach (not just new sessions)
-        // to ensure existing sessions get updated settings and to prevent escape sequence leaks
+        // Create and attach to tmux session (traditional mode)
         let script = """
             # Create session if it doesn't exist
             if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
                 \(escapeShellArg(tmuxPath)) new-session -d -s \(escapeShellArg(sessionName)) -c \(escapeShellArg(card.workingDirectory)) \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \(escapeShellArg(card.shellPath)) -l
             fi
-            # Configure session for TermQ (applied on every attach to ensure consistency)
+            # Configure session for TermQ
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse on 2>/dev/null || true
-            # Set terminal type to match SwiftTerm capabilities
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) default-terminal 'xterm-256color' 2>/dev/null || true
-            # Reduce escape time for better responsiveness
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) escape-time 10 2>/dev/null || true
-            # Disable escape sequence passthrough that can cause display artifacts
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) allow-passthrough off 2>/dev/null || true
             # Attach to the session
             exec \(escapeShellArg(tmuxPath)) attach-session -t \(escapeShellArg(sessionName))
@@ -311,30 +304,86 @@ class TerminalSessionManager: ObservableObject {
             execName: nil
         )
 
-        // Start control mode session for pane management
-        let controlSession = TmuxControlModeSession(sessionName: sessionName)
-        setupControlModeCallbacks(for: card.id, session: controlSession)
-
-        // Connect control mode session asynchronously
+        // Sync metadata to tmux session
         Task {
-            // Wait for tmux session to be ready
-            try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
+            let metadata = TerminalCardMetadata.from(card)
+            await tmuxManager.syncMetadataToSession(sessionName: sessionName, card: metadata)
+        }
+    }
+
+    /// Start a tmux-backed session with control mode (full pane management)
+    private func startTmuxControlProcess(
+        terminal: TermQTerminalView,
+        card: TerminalCard,
+        environment env: [String: String]
+    ) {
+        let sessionName = card.tmuxSessionName
+
+        // Build tmux environment args for the new session
+        var tmuxEnvArgs: [String] = []
+        for (key, value) in env {
+            // Skip some vars that tmux handles itself
+            if key == "TERM" || key == "COLORTERM" { continue }
+            tmuxEnvArgs.append("-e")
+            tmuxEnvArgs.append("\(key)=\(value)")
+        }
+
+        guard let tmuxPath = tmuxManager.tmuxPath else {
+            // Fallback to direct if somehow tmux disappeared
+            startDirectProcess(terminal: terminal, card: card, environment: env)
+            return
+        }
+
+        // Capture values to avoid data race warnings
+        let cardId = card.id
+        let workingDirectory = card.workingDirectory
+        let shellPath = card.shellPath
+        let metadata = TerminalCardMetadata.from(card)
+
+        // Create and configure the tmux session if it doesn't exist
+        // This is a one-shot setup - we don't attach here, control mode will handle all I/O
+        Task {
+            let script = """
+                # Create session if it doesn't exist
+                if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
+                    \(escapeShellArg(tmuxPath)) new-session -d -s \(escapeShellArg(sessionName)) -c \(escapeShellArg(workingDirectory)) \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \(escapeShellArg(shellPath)) -l
+                fi
+                # Configure session for TermQ
+                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
+                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse on 2>/dev/null || true
+                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) default-terminal 'xterm-256color' 2>/dev/null || true
+                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) escape-time 10 2>/dev/null || true
+                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) allow-passthrough off 2>/dev/null || true
+                """
+
+            // Run setup script
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/bin/sh")
+            process.arguments = ["-c", script]
+            try? process.run()
+            process.waitUntilExit()
+
+            // Now start control mode session for ALL interaction
+            let controlSession = TmuxControlModeSession(sessionName: sessionName)
+
+            await MainActor.run {
+                setupControlModeCallbacks(for: cardId, session: controlSession)
+            }
 
             // Connect to control mode
             try? await controlSession.connect()
 
             // Store control mode session in the terminal session
             await MainActor.run {
-                sessions[card.id]?.controlModeSession = controlSession
+                sessions[cardId]?.controlModeSession = controlSession
                 // Set active pane ID from parser
                 if let activePane = controlSession.parser.panes.first(where: { $0.isActive }) {
-                    sessions[card.id]?.activePaneId = activePane.id
+                    sessions[cardId]?.activePaneId = activePane.id
                 }
                 objectWillChange.send()
             }
 
             // Sync full metadata to tmux session
-            let metadata = TerminalCardMetadata.from(card)
             await tmuxManager.syncMetadataToSession(sessionName: sessionName, card: metadata)
         }
     }
@@ -343,7 +392,7 @@ class TerminalSessionManager: ObservableObject {
 
     /// Sync card metadata to its tmux session (call when card is updated)
     func syncMetadataToTmuxSession(card: TerminalCard) {
-        guard effectiveBackend(for: card) == .tmux else { return }
+        guard effectiveBackend(for: card) == .tmuxAttach else { return }
 
         let sessionName = card.tmuxSessionName
         Task {
@@ -364,7 +413,7 @@ class TerminalSessionManager: ObservableObject {
         columnId: UUID? = nil,
         isFavourite: Bool? = nil
     ) {
-        guard let session = sessions[cardId], session.backend == .tmux else { return }
+        guard let session = sessions[cardId], session.backend == .tmuxAttach else { return }
 
         let sessionName = tmuxManager.sessionName(for: cardId)
         Task {
@@ -418,7 +467,7 @@ class TerminalSessionManager: ObservableObject {
         }
 
         // Slightly longer delay for tmux sessions (they take a moment to attach)
-        let delay = effectiveBackend(for: card) == .tmux ? 0.8 : 0.5
+        let delay = effectiveBackend(for: card) == .tmuxAttach ? 0.8 : 0.5
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             terminal.send(txt: initCmd + "\n")
         }
@@ -498,8 +547,11 @@ class TerminalSessionManager: ObservableObject {
         switch session.backend {
         case .direct:
             session.terminal.send(txt: "exit\n")
-        case .tmux:
+        case .tmuxAttach:
             session.terminal.send(txt: "\u{02}d")  // Ctrl+B, d to detach
+        case .tmuxControl:
+            // Control mode sessions don't need detach command
+            break
         }
     }
 
@@ -539,7 +591,7 @@ class TerminalSessionManager: ObservableObject {
                 // Direct mode: terminate the shell
                 session.terminal.send(txt: "exit\n")
 
-            case .tmux:
+            case .tmuxAttach:
                 if killTmuxSession {
                     // User explicitly wants to kill the tmux session
                     let sessionName = tmuxManager.sessionName(for: cardId)
@@ -550,6 +602,16 @@ class TerminalSessionManager: ObservableObject {
                 // Otherwise just detach - the tmux session keeps running
                 // When user closes the tab, they're just detaching, not killing
                 session.terminal.send(txt: "\u{02}d")  // Ctrl+B, d to detach
+
+            case .tmuxControl:
+                if killTmuxSession {
+                    // User explicitly wants to kill the tmux session
+                    let sessionName = tmuxManager.sessionName(for: cardId)
+                    Task {
+                        try? await tmuxManager.killSession(name: sessionName)
+                    }
+                }
+                // No detach command needed for control mode
             }
         }
     }
@@ -580,7 +642,7 @@ class TerminalSessionManager: ObservableObject {
                 if pid != 0 {
                     kill(pid, SIGKILL)
                 }
-            case .tmux:
+            case .tmuxAttach, .tmuxControl:
                 // For tmux: kill the tmux session entirely
                 let sessionName = tmuxManager.sessionName(for: cardId)
                 Task {
@@ -609,9 +671,12 @@ class TerminalSessionManager: ObservableObject {
                 switch session.backend {
                 case .direct:
                     session.terminal.send(txt: "exit\n")
-                case .tmux:
+                case .tmuxAttach:
                     // Just detach - tmux sessions persist across app restarts
                     session.terminal.send(txt: "\u{02}d")
+                case .tmuxControl:
+                    // Control mode sessions persist automatically, no detach command needed
+                    break
                 }
             }
         }
@@ -632,7 +697,7 @@ class TerminalSessionManager: ObservableObject {
     /// Send a tmux command to the session (for pane operations, etc.)
     func sendTmuxCommand(_ command: String, to cardId: UUID) {
         guard let session = sessions[cardId],
-            session.backend == .tmux,
+            session.backend == .tmuxAttach,
             session.isRunning
         else { return }
 
@@ -653,7 +718,7 @@ class TerminalSessionManager: ObservableObject {
     /// Split the current pane horizontally (top/bottom)
     func splitPaneHorizontally(cardId: UUID) {
         guard let session = sessions[cardId],
-            session.backend == .tmux,
+            session.backend == .tmuxControl,
             let controlSession = session.controlModeSession
         else { return }
 
@@ -668,7 +733,7 @@ class TerminalSessionManager: ObservableObject {
     /// Split the current pane vertically (left/right)
     func splitPaneVertically(cardId: UUID) {
         guard let session = sessions[cardId],
-            session.backend == .tmux,
+            session.backend == .tmuxControl,
             let controlSession = session.controlModeSession
         else { return }
 
@@ -683,7 +748,7 @@ class TerminalSessionManager: ObservableObject {
     /// Navigate to adjacent pane
     func selectPane(direction: PaneDirection, cardId: UUID) {
         guard let session = sessions[cardId],
-            session.backend == .tmux,
+            session.backend == .tmuxControl,
             let controlSession = session.controlModeSession
         else { return }
 
@@ -699,7 +764,7 @@ class TerminalSessionManager: ObservableObject {
     @available(*, deprecated, message: "Use setActivePane instead")
     func selectPaneOld(direction: PaneDirection, cardId: UUID) {
         guard let session = sessions[cardId],
-            session.backend == .tmux,
+            session.backend == .tmuxAttach,
             let tmuxPath = tmuxManager.tmuxPath
         else { return }
 
@@ -724,7 +789,7 @@ class TerminalSessionManager: ObservableObject {
     /// Close the current pane (if multiple panes exist)
     func closeCurrentPane(cardId: UUID) {
         guard let session = sessions[cardId],
-            session.backend == .tmux,
+            session.backend == .tmuxControl,
             let controlSession = session.controlModeSession
         else { return }
 
@@ -739,7 +804,7 @@ class TerminalSessionManager: ObservableObject {
     /// Zoom/unzoom the current pane (fullscreen toggle)
     func togglePaneZoom(cardId: UUID) {
         guard let session = sessions[cardId],
-            session.backend == .tmux,
+            session.backend == .tmuxControl,
             let controlSession = session.controlModeSession
         else { return }
 
@@ -796,16 +861,16 @@ class TerminalSessionManager: ObservableObject {
     }
 
     /// Handle pane output from control mode
+    /// Routes output to per-pane terminal views used by TmuxMultiPaneView
     private func handlePaneOutput(cardId: UUID, paneId: String, data: Data) {
         // Get or create terminal view for this pane
-        guard let terminalView = getTerminalView(for: cardId, paneId: paneId) else {
+        guard let paneTerminal = getTerminalView(for: cardId, paneId: paneId) else {
             return
         }
 
-        // Send data to the pane's terminal emulator
-        // SwiftTerm processes terminal escape sequences and updates display
+        // Feed data to the pane's terminal emulator
         let bytes = [UInt8](data)
-        terminalView.feed(byteArray: bytes[...])
+        paneTerminal.feed(byteArray: bytes[...])
     }
 
     /// Set up control mode callbacks for a tmux session

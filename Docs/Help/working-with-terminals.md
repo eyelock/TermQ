@@ -13,9 +13,9 @@
 You can set defaults for new terminals in **Settings > General > Terminal**:
 
 - **Default Working Directory** - Set the default working directory for new terminals (defaults to your home directory)
-- **Default Backend** - Choose between Direct or TMUX as the default backend for new terminals
+- **Default Backend** - Choose between Direct, TMUX (Attach), or TMUX (Control) as the default backend for new terminals
 
-These defaults apply when creating new terminals via the **+** button or quick terminal (⌘T). Individual terminals can still override these settings in the terminal editor.
+These defaults apply when creating new terminals via the **+** button or quick terminal (⌘T). Individual terminals can still override these settings in the terminal editor. See [tmux Sessions](tmux-sessions.md) for details on each backend type.
 
 ## Terminal Cards
 
