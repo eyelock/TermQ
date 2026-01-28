@@ -26,7 +26,7 @@ final class TmuxMetadataTests: XCTestCase {
 
     func testBackendCodableRoundTrip() throws {
         let columnId = UUID()
-        let original = TerminalCard(columnId: columnId, backend: .tmux)
+        let original = TerminalCard(columnId: columnId, backend: .tmuxAttach)
 
         let encoder = JSONEncoder()
         let data = try encoder.encode(original)
@@ -35,7 +35,7 @@ final class TmuxMetadataTests: XCTestCase {
         let decoded = try decoder.decode(TerminalCard.self, from: data)
 
         XCTAssertEqual(decoded.backend, original.backend)
-        XCTAssertEqual(decoded.backend, .tmux)
+        XCTAssertEqual(decoded.backend, .tmuxAttach)
     }
 
     func testDirectBackendCodableRoundTrip() throws {
@@ -118,13 +118,18 @@ final class TmuxMetadataTests: XCTestCase {
     // MARK: - Backend Display Names
 
     func testBackendDisplayNames() {
-        XCTAssertEqual(TerminalBackend.direct.displayName, "Direct")
-        XCTAssertEqual(TerminalBackend.tmux.displayName, "TMUX (Persistent)")
+        // In test environment, NSLocalizedString returns keys, not translated values
+        // We verify the keys are correct localization strings
+        XCTAssertTrue(TerminalBackend.direct.displayName.contains("backend.direct"))
+        XCTAssertTrue(TerminalBackend.tmuxAttach.displayName.contains("backend.tmux.attach"))
+        XCTAssertTrue(TerminalBackend.tmuxControl.displayName.contains("backend.tmux.control"))
     }
 
     func testBackendDescriptions() {
-        XCTAssertTrue(TerminalBackend.direct.description.contains("ends when TermQ closes"))
-        XCTAssertTrue(TerminalBackend.tmux.description.contains("persists"))
+        // In test environment, NSLocalizedString returns keys, not translated values
+        XCTAssertTrue(TerminalBackend.direct.description.contains("backend.direct.description"))
+        XCTAssertTrue(TerminalBackend.tmuxAttach.description.contains("backend.tmux.attach.description"))
+        XCTAssertTrue(TerminalBackend.tmuxControl.description.contains("backend.tmux.control.description"))
     }
 
     // MARK: - Backend Observable
@@ -135,8 +140,11 @@ final class TmuxMetadataTests: XCTestCase {
 
         XCTAssertEqual(card.backend, .direct)
 
-        card.backend = .tmux
-        XCTAssertEqual(card.backend, .tmux)
+        card.backend = .tmuxAttach
+        XCTAssertEqual(card.backend, .tmuxAttach)
+
+        card.backend = .tmuxControl
+        XCTAssertEqual(card.backend, .tmuxControl)
 
         card.backend = .direct
         XCTAssertEqual(card.backend, .direct)
@@ -296,7 +304,7 @@ final class TmuxMetadataTests: XCTestCase {
             safePasteEnabled: false,
             themeId: "dracula",
             allowAutorun: true,
-            backend: .tmux
+            backend: .tmuxAttach
         )
 
         XCTAssertEqual(card.id, id)
@@ -316,7 +324,7 @@ final class TmuxMetadataTests: XCTestCase {
         XCTAssertEqual(card.fontSize, 14)
         XCTAssertFalse(card.safePasteEnabled)
         XCTAssertEqual(card.themeId, "dracula")
-        XCTAssertEqual(card.backend, .tmux)
+        XCTAssertEqual(card.backend, .tmuxAttach)
         XCTAssertTrue(card.allowAutorun)
     }
 
@@ -324,20 +332,29 @@ final class TmuxMetadataTests: XCTestCase {
 
     func testBackendAllCases() {
         let allCases = TerminalBackend.allCases
-        XCTAssertEqual(allCases.count, 2)
+        XCTAssertEqual(allCases.count, 3)
         XCTAssertTrue(allCases.contains(.direct))
-        XCTAssertTrue(allCases.contains(.tmux))
+        XCTAssertTrue(allCases.contains(.tmuxAttach))
+        XCTAssertTrue(allCases.contains(.tmuxControl))
     }
 
     func testBackendRawValues() {
         XCTAssertEqual(TerminalBackend.direct.rawValue, "direct")
-        XCTAssertEqual(TerminalBackend.tmux.rawValue, "tmux")
+        XCTAssertEqual(TerminalBackend.tmuxAttach.rawValue, "tmuxAttach")
+        XCTAssertEqual(TerminalBackend.tmuxControl.rawValue, "tmuxControl")
     }
 
     func testBackendFromRawValue() {
         XCTAssertEqual(TerminalBackend(rawValue: "direct"), .direct)
-        XCTAssertEqual(TerminalBackend(rawValue: "tmux"), .tmux)
+        XCTAssertEqual(TerminalBackend(rawValue: "tmuxAttach"), .tmuxAttach)
+        XCTAssertEqual(TerminalBackend(rawValue: "tmuxControl"), .tmuxControl)
         XCTAssertNil(TerminalBackend(rawValue: "invalid"))
+    }
+
+    func testBackendUsesTmuxHelper() {
+        XCTAssertFalse(TerminalBackend.direct.usesTmux)
+        XCTAssertTrue(TerminalBackend.tmuxAttach.usesTmux)
+        XCTAssertTrue(TerminalBackend.tmuxControl.usesTmux)
     }
 
     // MARK: - Tag Tests

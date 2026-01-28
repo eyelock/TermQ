@@ -50,6 +50,9 @@ public class TmuxControlModeParser: ObservableObject {
     /// Called when a window is closed (window_id)
     public var onWindowClose: ((String) -> Void)?
 
+    /// Called when pane mode changes (pane_id) - indicates active pane switch
+    public var onPaneModeChanged: ((String) -> Void)?
+
     /// Called when session changes
     public var onSessionChange: ((String, String) -> Void)?
 
@@ -295,6 +298,9 @@ public class TmuxControlModeParser: ObservableObject {
         if let index = panes.firstIndex(where: { $0.id == paneId }) {
             panes[index].inCopyMode.toggle()
         }
+
+        // Notify callback
+        onPaneModeChanged?(paneId)
     }
 
     private func handleExit(_ parts: [String.SubSequence]) {
@@ -494,9 +500,18 @@ public class TmuxControlModeSession: ObservableObject {
         try proc.run()
         self.process = proc
 
-        // Wait for connection confirmation
-        try await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
+        // Wait for connection confirmation and initial layout sync
+        try await Task.sleep(nanoseconds: 1_000_000_000)  // 1 second
         isConnected = parser.isConnected
+
+        // Capture initial pane content for all panes
+        // Control mode only sends NEW output via %output, so we need to
+        // explicitly capture existing pane content when first attaching
+        await MainActor.run {
+            for pane in parser.panes {
+                sendCommand("capture-pane -p -t %\(pane.id)")
+            }
+        }
     }
 
     /// Disconnect from the tmux session
@@ -527,6 +542,13 @@ public class TmuxControlModeSession: ObservableObject {
             return response.output
         }
         return nil
+    }
+
+    /// Send raw input data to tmux (goes to the active pane)
+    /// Used for routing keyboard input when panes are managed separately
+    public func sendInput(_ data: Data) {
+        guard let inputPipe = inputPipe else { return }
+        inputPipe.fileHandleForWriting.write(data)
     }
 
     // MARK: - Pane Operations
