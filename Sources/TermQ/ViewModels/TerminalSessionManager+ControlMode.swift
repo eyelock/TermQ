@@ -1,5 +1,72 @@
+import AppKit
 import Foundation
+import SwiftTerm
 import TermQCore
+
+// MARK: - Control Mode Terminal View
+
+/// Simple terminal view for control mode panes (no local process)
+class ControlModeTerminalView: TerminalView {
+    init() {
+        super.init(frame: .zero)
+        self.terminalDelegate = nil  // Will be set by SessionManager
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) not implemented")
+    }
+}
+
+// MARK: - Control Mode Pane Delegate
+
+/// Terminal delegate that routes input to tmux control mode instead of local PTY
+class ControlModePaneDelegate: TerminalViewDelegate {
+    let cardId: UUID
+    let paneId: String
+
+    init(cardId: UUID, paneId: String) {
+        self.cardId = cardId
+        self.paneId = paneId
+    }
+
+    func send(source: TerminalView, data: ArraySlice<UInt8>) {
+        let capturedCardId = self.cardId
+        let capturedPaneId = self.paneId
+        let inputData = Data(data)
+
+        Task { @MainActor in
+            guard
+                let controlSession = TerminalSessionManager.shared
+                    .getControlModeSession(for: capturedCardId)
+            else { return }
+            controlSession.sendInputToPane(inputData, paneId: capturedPaneId)
+        }
+    }
+
+    func scrolled(source: TerminalView, position: Double) {}
+
+    func setTerminalTitle(source: TerminalView, title: String) {}
+
+    func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {
+        let capturedCardId = self.cardId
+        Task { @MainActor in
+            guard
+                let controlSession = TerminalSessionManager.shared
+                    .getControlModeSession(for: capturedCardId)
+            else { return }
+            controlSession.sendCommand("refresh-client -C \(newCols),\(newRows)")
+        }
+    }
+
+    func setTerminalIconTitle(source: TerminalView, title: String) {}
+
+    // MARK: - Unimplemented/Optional delegate methods
+
+    func clipboardCopy(source: TerminalView, content: Data) {}
+    func rangeChanged(source: TerminalView, startY: Int, endY: Int) {}
+    func bell(source: TerminalView) {}
+    func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {}
+}
 
 // MARK: - Control Mode Integration
 
@@ -15,71 +82,48 @@ extension TerminalSessionManager {
     ) {
         let sessionName = card.tmuxSessionName
 
-        // Build tmux environment args for the new session
         var tmuxEnvArgs: [String] = []
         for (key, value) in env {
-            // Skip some vars that tmux handles itself
             if key == "TERM" || key == "COLORTERM" { continue }
             tmuxEnvArgs.append("-e")
             tmuxEnvArgs.append("\(key)=\(value)")
         }
 
-        guard let tmuxPath = tmuxManager.tmuxPath else {
-            // Fallback to direct if somehow tmux disappeared
+        guard tmuxManager.tmuxPath != nil else {
             startDirectProcess(terminal: terminal, card: card, environment: env)
             return
         }
 
-        // Capture values to avoid data race warnings
         let cardId = card.id
         let workingDirectory = card.workingDirectory
         let shellPath = card.shellPath
         let metadata = TerminalCardMetadata.from(card)
 
-        // Create and configure the tmux session if it doesn't exist
-        // This is a one-shot setup - we don't attach here, control mode will handle all I/O
         Task {
-            let script = """
-                # Create session if it doesn't exist
-                if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
-                    \(escapeShellArg(tmuxPath)) new-session -d -s \(escapeShellArg(sessionName)) -c \(escapeShellArg(workingDirectory)) \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \(escapeShellArg(shellPath)) -l
-                fi
-                # Configure session for TermQ
-                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
-                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse on 2>/dev/null || true
-                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) default-terminal 'xterm-256color' 2>/dev/null || true
-                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) escape-time 10 2>/dev/null || true
-                \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) allow-passthrough off 2>/dev/null || true
-                """
-
-            // Run setup script
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: "/bin/sh")
-            process.arguments = ["-c", script]
-            try? process.run()
-            process.waitUntilExit()
-
-            // Now start control mode session for ALL interaction
             let controlSession = TmuxControlModeSession(sessionName: sessionName)
 
             await MainActor.run {
                 setupControlModeCallbacks(for: cardId, session: controlSession)
             }
 
-            // Connect to control mode
-            try? await controlSession.connect()
+            do {
+                try await controlSession.connect(
+                    workingDirectory: workingDirectory,
+                    shell: shellPath,
+                    environment: env
+                )
+            } catch {
+                return
+            }
 
-            // Store control mode session in the terminal session
             await MainActor.run {
                 sessions[cardId]?.controlModeSession = controlSession
-                // Set active pane ID from parser
                 if let activePane = controlSession.parser.panes.first(where: { $0.isActive }) {
                     sessions[cardId]?.activePaneId = activePane.id
                 }
                 objectWillChange.send()
             }
 
-            // Sync full metadata to tmux session
             await tmuxManager.syncMetadataToSession(sessionName: sessionName, card: metadata)
         }
     }
@@ -119,11 +163,7 @@ extension TerminalSessionManager {
             let controlSession = session.controlModeSession
         else { return }
 
-        // Use control mode to close pane
-        // This will automatically trigger %layout-change event which updates UI
         controlSession.closePane()
-
-        // Trigger immediate UI update
         objectWillChange.send()
     }
 
@@ -134,11 +174,7 @@ extension TerminalSessionManager {
             let controlSession = session.controlModeSession
         else { return }
 
-        // Use control mode to zoom/unzoom pane
-        // This will automatically trigger %layout-change event which updates UI
         controlSession.toggleZoom()
-
-        // Trigger immediate UI update
         objectWillChange.send()
     }
 
@@ -146,7 +182,6 @@ extension TerminalSessionManager {
     func setActivePane(cardId: UUID, paneId: String) {
         sessions[cardId]?.activePaneId = paneId
 
-        // Select the pane in tmux
         if let controlSession = sessions[cardId]?.controlModeSession {
             controlSession.selectPane(id: paneId)
         }
@@ -160,60 +195,71 @@ extension TerminalSessionManager {
     }
 
     /// Get terminal view for a specific pane (creates if doesn't exist)
-    func getTerminalView(for cardId: UUID, paneId: String) -> TermQTerminalView? {
-        // Ensure pane terminals dictionary exists for this card
+    func getTerminalView(for cardId: UUID, paneId: String) -> TerminalView? {
         if paneTerminals[cardId] == nil {
             paneTerminals[cardId] = [:]
         }
 
-        // Return existing terminal view if available
         if let existingView = paneTerminals[cardId]?[paneId] {
             return existingView
         }
 
-        // Create new terminal view for this pane
-        let terminalView = TermQTerminalView(frame: .zero)
+        let terminalView = ControlModeTerminalView()
 
-        // Configure terminal with same settings as main terminal
         if let session = sessions[cardId] {
             terminalView.font = session.terminal.font
-            // Apply theme
-            let theme = themeManager.theme(for: "")  // Use default theme for panes
-            themeManager.applyTheme(to: terminalView, theme: theme)
+            let theme = themeManager.theme(for: "")
+            terminalView.nativeForegroundColor = theme.foreground
+            terminalView.nativeBackgroundColor = theme.background
+            terminalView.caretColor = theme.cursor
+            terminalView.installColors(theme.swiftTermColors)
         }
+
+        let delegate = ControlModePaneDelegate(cardId: cardId, paneId: paneId)
+        terminalView.terminalDelegate = delegate
+        Self.terminalDelegates[cardId, default: [:]][paneId] = delegate
 
         paneTerminals[cardId]?[paneId] = terminalView
         return terminalView
     }
 
+    /// Store delegates to keep them alive
+    private static var terminalDelegates: [UUID: [String: ControlModePaneDelegate]] = [:]
+
+    /// Clean up terminal views and delegates for panes that no longer exist
+    private func cleanupStalePaneTerminals(cardId: UUID, currentPanes: [TmuxPane]) {
+        let currentPaneIds = Set(currentPanes.map(\.id))
+
+        if let paneViews = paneTerminals[cardId] {
+            for paneId in paneViews.keys where !currentPaneIds.contains(paneId) {
+                paneTerminals[cardId]?.removeValue(forKey: paneId)
+                Self.terminalDelegates[cardId]?.removeValue(forKey: paneId)
+            }
+        }
+    }
+
     // MARK: - Output Handling
 
     /// Handle pane output from control mode
-    /// Routes output to per-pane terminal views used by TmuxMultiPaneView
     private func handlePaneOutput(cardId: UUID, paneId: String, data: Data) {
-        // Get or create terminal view for this pane
-        guard let paneTerminal = getTerminalView(for: cardId, paneId: paneId) else {
-            return
-        }
-
-        // Feed data to the pane's terminal emulator
         let bytes = [UInt8](data)
-        paneTerminal.feed(byteArray: bytes[...])
+
+        if let paneTerminal = getTerminalView(for: cardId, paneId: paneId) {
+            paneTerminal.feed(byteArray: bytes[...])
+        }
     }
 
     /// Set up control mode callbacks for a tmux session
     private func setupControlModeCallbacks(for cardId: UUID, session: TmuxControlModeSession) {
-        // Route pane output to correct terminal emulator
         session.onPaneOutput = { [weak self] paneId, data in
             self?.handlePaneOutput(cardId: cardId, paneId: paneId, data: data)
         }
 
-        // Trigger UI refresh on layout changes
         session.parser.onLayoutChange = { [weak self] _, _ in
+            self?.cleanupStalePaneTerminals(cardId: cardId, currentPanes: session.parser.panes)
             self?.objectWillChange.send()
         }
 
-        // Trigger UI refresh on window add/close
         session.parser.onWindowAdd = { [weak self] _ in
             self?.objectWillChange.send()
         }
@@ -222,13 +268,10 @@ extension TerminalSessionManager {
             self?.objectWillChange.send()
         }
 
-        // Track active pane changes
-        session.parser.onPaneModeChanged = { [weak self] paneId in
-            self?.sessions[cardId]?.activePaneId = paneId
+        session.parser.onPaneModeChanged = { [weak self] _ in
             self?.objectWillChange.send()
         }
 
-        // Handle session exit
         session.parser.onExit = { [weak self] _ in
             self?.sessions[cardId]?.isRunning = false
             self?.objectWillChange.send()

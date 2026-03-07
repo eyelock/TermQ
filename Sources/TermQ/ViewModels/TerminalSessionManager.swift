@@ -43,8 +43,8 @@ class TerminalSessionManager: ObservableObject {
     /// Active terminal sessions keyed by card ID
     internal var sessions: [UUID: TerminalSession] = [:]
 
-    /// Per-pane terminal emulators for tmux sessions (cardId -> paneId -> TermQTerminalView)
-    internal var paneTerminals: [UUID: [String: TermQTerminalView]] = [:]
+    /// Per-pane terminal emulators for tmux sessions (cardId -> paneId -> TerminalView)
+    internal var paneTerminals: [UUID: [String: TerminalView]] = [:]
 
     struct TerminalSession {
         let terminal: TermQTerminalView
@@ -534,7 +534,7 @@ class TerminalSessionManager: ObservableObject {
                         try? await tmuxManager.killSession(name: sessionName)
                     }
                 }
-                // No detach command needed for control mode
+            // No detach command needed for control mode
             }
         }
     }
@@ -645,11 +645,7 @@ class TerminalSessionManager: ObservableObject {
             let controlSession = session.controlModeSession
         else { return }
 
-        // Use control mode to split pane
-        // This will automatically trigger %layout-change event which updates UI
         controlSession.splitHorizontal()
-
-        // Trigger immediate UI update
         objectWillChange.send()
     }
 

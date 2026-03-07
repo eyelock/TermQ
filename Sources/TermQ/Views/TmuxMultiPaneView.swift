@@ -24,20 +24,27 @@ struct TmuxMultiPaneView: View {
         controlSession?.parser.panes ?? []
     }
 
+    /// Total columns across all panes
+    private var totalColumns: Int {
+        panes.map { $0.x + $0.width }.max() ?? 80
+    }
+
+    /// Total rows across all panes
+    private var totalRows: Int {
+        panes.map { $0.y + $0.height }.max() ?? 24
+    }
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .topLeading) {
-                // Black background
                 Color.black
 
-                // Render each pane
                 ForEach(panes) { pane in
                     PaneTerminalView(
                         cardId: card.id,
                         paneId: pane.id,
                         isActive: pane.isActive,
                         onFocus: {
-                            // Focus this pane
                             sessionManager.setActivePane(cardId: card.id, paneId: pane.id)
                         }
                     )
@@ -56,31 +63,29 @@ struct TmuxMultiPaneView: View {
 
     // MARK: - Pane Layout Calculations
 
-    /// Calculate pane width based on pane geometry and parent width
     private func paneWidth(pane: TmuxPane, totalWidth: CGFloat) -> CGFloat {
-        let charWidth = totalWidth / 80.0  // Assume 80 columns default
-        return CGFloat(pane.width) * charWidth
+        let scale = totalWidth / CGFloat(totalColumns)
+        return CGFloat(pane.width) * scale
     }
 
-    /// Calculate pane height based on pane geometry and parent height
     private func paneHeight(pane: TmuxPane, totalHeight: CGFloat) -> CGFloat {
-        let charHeight = totalHeight / 24.0  // Assume 24 rows default
-        return CGFloat(pane.height) * charHeight
+        let scale = totalHeight / CGFloat(totalRows)
+        return CGFloat(pane.height) * scale
     }
 
-    /// Calculate pane X position (center of pane)
+    /// Calculate pane X position (center of pane for .position() modifier)
     private func paneX(pane: TmuxPane, totalWidth: CGFloat) -> CGFloat {
-        let charWidth = totalWidth / 80.0
-        let leftEdge = CGFloat(pane.x) * charWidth
-        let width = CGFloat(pane.width) * charWidth
+        let scale = totalWidth / CGFloat(totalColumns)
+        let leftEdge = CGFloat(pane.x) * scale
+        let width = CGFloat(pane.width) * scale
         return leftEdge + (width / 2.0)
     }
 
-    /// Calculate pane Y position (center of pane)
+    /// Calculate pane Y position (center of pane for .position() modifier)
     private func paneY(pane: TmuxPane, totalHeight: CGFloat) -> CGFloat {
-        let charHeight = totalHeight / 24.0
-        let topEdge = CGFloat(pane.y) * charHeight
-        let height = CGFloat(pane.height) * charHeight
+        let scale = totalHeight / CGFloat(totalRows)
+        let topEdge = CGFloat(pane.y) * scale
+        let height = CGFloat(pane.height) * scale
         return topEdge + (height / 2.0)
     }
 }
