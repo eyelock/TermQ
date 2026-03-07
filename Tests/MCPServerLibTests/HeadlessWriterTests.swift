@@ -243,8 +243,9 @@ final class HeadlessWriterTests: XCTestCase {
         }
 
         // Verify it's a number (Double/TimeInterval)
-        XCTAssertTrue(deletedAt is Double || deletedAt is NSNumber,
-                      "deletedAt must be TimeInterval (number), not ISO8601 string")
+        XCTAssertTrue(
+            deletedAt is Double || deletedAt is NSNumber,
+            "deletedAt must be TimeInterval (number), not ISO8601 string")
 
         // Verify it's a reasonable timestamp (between 2001 and 2050)
         if let timestamp = deletedAt as? Double {
@@ -266,8 +267,9 @@ final class HeadlessWriterTests: XCTestCase {
         )
 
         // CRITICAL: Board should still be decodable after soft delete
-        XCTAssertNoThrow(try BoardLoader.loadBoard(dataDirectory: tempDirectory),
-                         "Board must be decodable after soft delete operation")
+        XCTAssertNoThrow(
+            try BoardLoader.loadBoard(dataDirectory: tempDirectory),
+            "Board must be decodable after soft delete operation")
 
         // Verify card is present but marked as deleted
         let reloaded = try BoardLoader.loadBoard(dataDirectory: tempDirectory)
@@ -278,8 +280,9 @@ final class HeadlessWriterTests: XCTestCase {
         XCTAssertNotNil(deletedCard!.deletedAt, "deletedAt timestamp should be set")
 
         // Verify card is NOT in activeCards
-        XCTAssertFalse(reloaded.activeCards.contains { $0.id.uuidString == cardId },
-                       "Deleted card should not appear in activeCards")
+        XCTAssertFalse(
+            reloaded.activeCards.contains { $0.id.uuidString == cardId },
+            "Deleted card should not appear in activeCards")
     }
 
     func testDeleteCardAllowsUpdateAfterDelete() throws {
@@ -364,7 +367,7 @@ final class HeadlessWriterTests: XCTestCase {
 
         let created = try HeadlessWriter.createCard(
             name: "Default Column Card",
-            columnName: nil, // Should use first column
+            columnName: nil,  // Should use first column
             workingDirectory: "/tmp",
             description: nil,
             llmPrompt: nil,
@@ -391,8 +394,8 @@ final class HeadlessWriterTests: XCTestCase {
         )
 
         XCTAssertEqual(updated.badge, "new-badge")
-        XCTAssertEqual(updated.title, originalCard.title) // Unchanged
-        XCTAssertEqual(updated.workingDirectory, originalCard.workingDirectory) // Unchanged
+        XCTAssertEqual(updated.title, originalCard.title)  // Unchanged
+        XCTAssertEqual(updated.workingDirectory, originalCard.workingDirectory)  // Unchanged
     }
 
     func testDeleteCardByName() throws {

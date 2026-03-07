@@ -1,8 +1,8 @@
 import AppKit
-import os.log
 import Sparkle
 import SwiftUI
 import TermQCore
+import os.log
 
 struct SettingsView: View {
     private let log = OSLog(subsystem: "net.eyelock.termq", category: "SettingsView")

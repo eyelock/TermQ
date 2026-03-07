@@ -92,7 +92,9 @@ struct TerminalCardView: View {
             .frame(maxHeight: 22)
 
             // Special badges + User badges (special badges appear first)
-            if isOpenAsTab || card.isWired || (hasActiveSession && !isOpenAsTab) || (card.backend.usesTmux && tmuxManager.isAvailable) || !badges.isEmpty {
+            if isOpenAsTab || card.isWired || (hasActiveSession && !isOpenAsTab)
+                || (card.backend.usesTmux && tmuxManager.isAvailable) || !badges.isEmpty
+            {
                 FlowLayout(spacing: 4) {
                     // Open as tab indicator
                     if isOpenAsTab {
@@ -306,7 +308,8 @@ struct FlowLayout: Layout {
         }
     }
 
-    private func arrangeSubviews(proposal: ProposedViewSize, subviews: Subviews) -> (size: CGSize, positions: [CGPoint]) {
+    private func arrangeSubviews(proposal: ProposedViewSize, subviews: Subviews) -> (size: CGSize, positions: [CGPoint])
+    {
         let maxWidth = proposal.width ?? .infinity
         var positions: [CGPoint] = []
         var currentX: CGFloat = 0

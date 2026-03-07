@@ -19,7 +19,7 @@ final class LocalizationValidationTests: XCTestCase {
         "id", "it", "ja", "ko", "ms",
         "nl", "no", "pl", "pt-PT", "pt", "ro", "ru",
         "sk", "sl", "sv", "th", "tr", "uk", "vi",
-        "zh-Hans", "zh-Hant", "zh-HK"
+        "zh-Hans", "zh-Hant", "zh-HK",
     ]
 
     // MARK: - Validation Tests
@@ -66,11 +66,12 @@ final class LocalizationValidationTests: XCTestCase {
             do {
                 let data = try Data(contentsOf: url)
                 // Try to parse as property list (what macOS does internally)
-                _ = try PropertyListSerialization.propertyList(
-                    from: data,
-                    options: [],
-                    format: nil
-                ) as? [String: String]
+                _ =
+                    try PropertyListSerialization.propertyList(
+                        from: data,
+                        options: [],
+                        format: nil
+                    ) as? [String: String]
             } catch {
                 failedFiles[languageCode] = error.localizedDescription
             }
@@ -109,7 +110,7 @@ final class LocalizationValidationTests: XCTestCase {
             "app.name",
             "board.column.add.terminal",
             "common.ok",
-            "common.cancel"
+            "common.cancel",
         ]
 
         for key in criticalKeys {
@@ -129,7 +130,8 @@ final class LocalizationValidationTests: XCTestCase {
         }
 
         guard let url = localizableStringsURL(for: languageCode),
-              let content = try? String(contentsOf: url, encoding: .utf8) else {
+            let content = try? String(contentsOf: url, encoding: .utf8)
+        else {
             return []
         }
 
@@ -146,7 +148,8 @@ final class LocalizationValidationTests: XCTestCase {
 
             // Extract key from "key" = "value";
             if let firstQuote = trimmed.firstIndex(of: "\""),
-               let secondQuote = trimmed[trimmed.index(after: firstQuote)...].firstIndex(of: "\"") {
+                let secondQuote = trimmed[trimmed.index(after: firstQuote)...].firstIndex(of: "\"")
+            {
                 let key = String(trimmed[trimmed.index(after: firstQuote)..<secondQuote])
                 keyCounts[key, default: 0] += 1
             }
@@ -163,11 +166,12 @@ final class LocalizationValidationTests: XCTestCase {
         }
 
         guard let data = try? Data(contentsOf: url),
-              let dict = try? PropertyListSerialization.propertyList(
+            let dict = try? PropertyListSerialization.propertyList(
                 from: data,
                 options: [],
                 format: nil
-              ) as? [String: String] else {
+            ) as? [String: String]
+        else {
             return nil
         }
 
@@ -181,8 +185,10 @@ final class LocalizationValidationTests: XCTestCase {
 
         // First try the resource bundle (TermQ_TermQ.bundle)
         if let resourceBundleURL = bundle.resourceURL?.appendingPathComponent("TermQ_TermQ.bundle"),
-           let resourceBundle = Bundle(url: resourceBundleURL),
-           let url = resourceBundle.url(forResource: "Localizable", withExtension: "strings", subdirectory: "\(languageCode).lproj") {
+            let resourceBundle = Bundle(url: resourceBundleURL),
+            let url = resourceBundle.url(
+                forResource: "Localizable", withExtension: "strings", subdirectory: "\(languageCode).lproj")
+        {
             return url
         }
 
@@ -193,7 +199,8 @@ final class LocalizationValidationTests: XCTestCase {
         // Try going up from .build/debug to find Sources
         var searchURL = currentDirectoryURL
         for _ in 0..<5 {
-            let sourcesURL = searchURL
+            let sourcesURL =
+                searchURL
                 .appendingPathComponent("Sources")
                 .appendingPathComponent("TermQ")
                 .appendingPathComponent("Resources")

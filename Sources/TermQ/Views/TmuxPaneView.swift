@@ -269,37 +269,55 @@ public struct TmuxControlModeView: View {
 
             // Toolbar
             HStack {
-                Button(action: { session.splitHorizontal() }, label: {
-                    Image(systemName: "rectangle.split.1x2")
-                })
+                Button(
+                    action: { session.splitHorizontal() },
+                    label: {
+                        Image(systemName: "rectangle.split.1x2")
+                    }
+                )
                 .help("Split Horizontal")
 
-                Button(action: { session.splitVertical() }, label: {
-                    Image(systemName: "rectangle.split.2x1")
-                })
+                Button(
+                    action: { session.splitVertical() },
+                    label: {
+                        Image(systemName: "rectangle.split.2x1")
+                    }
+                )
                 .help("Split Vertical")
 
                 Divider()
                     .frame(height: 16)
 
-                Button(action: { session.selectPane(direction: .up) }, label: {
-                    Image(systemName: "arrow.up")
-                })
+                Button(
+                    action: { session.selectPane(direction: .up) },
+                    label: {
+                        Image(systemName: "arrow.up")
+                    }
+                )
                 .help("Select Pane Above")
 
-                Button(action: { session.selectPane(direction: .down) }, label: {
-                    Image(systemName: "arrow.down")
-                })
+                Button(
+                    action: { session.selectPane(direction: .down) },
+                    label: {
+                        Image(systemName: "arrow.down")
+                    }
+                )
                 .help("Select Pane Below")
 
-                Button(action: { session.selectPane(direction: .left) }, label: {
-                    Image(systemName: "arrow.left")
-                })
+                Button(
+                    action: { session.selectPane(direction: .left) },
+                    label: {
+                        Image(systemName: "arrow.left")
+                    }
+                )
                 .help("Select Pane Left")
 
-                Button(action: { session.selectPane(direction: .right) }, label: {
-                    Image(systemName: "arrow.right")
-                })
+                Button(
+                    action: { session.selectPane(direction: .right) },
+                    label: {
+                        Image(systemName: "arrow.right")
+                    }
+                )
                 .help("Select Pane Right")
 
                 Spacer()
@@ -328,7 +346,16 @@ public struct TmuxControlModeView: View {
     private func connect() {
         Task {
             do {
-                try await session.connect()
+                // This is a debug/test view - use defaults
+                let workingDir = FileManager.default.homeDirectoryForCurrentUser.path
+                let shell = ProcessInfo.processInfo.environment["SHELL"] ?? "/bin/zsh"
+                let env = ProcessInfo.processInfo.environment
+
+                try await session.connect(
+                    workingDirectory: workingDir,
+                    shell: shell,
+                    environment: env
+                )
                 isConnected = true
                 errorMessage = nil
             } catch {

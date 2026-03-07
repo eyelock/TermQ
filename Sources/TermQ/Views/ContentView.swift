@@ -518,7 +518,8 @@ struct ContentView: View {
         if let columnName = pending.column,
             let found = viewModel.board.columns.first(where: {
                 $0.name.lowercased() == columnName.lowercased()
-            }) {
+            })
+        {
             targetColumn = found
         } else {
             // Default to first column

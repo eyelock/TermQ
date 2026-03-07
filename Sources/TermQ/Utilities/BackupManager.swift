@@ -129,7 +129,8 @@ enum BackupManager {
 
     /// Path to the primary board.json file
     static var primaryBoardPath: URL {
-        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        else {
             fatalError("Unable to access Application Support directory")
         }
         #if DEBUG
@@ -405,7 +406,8 @@ enum BackupManager {
         let primaryHasContent: Bool
         if primaryExists {
             if let data = try? Data(contentsOf: primaryBoardPath),
-                let board = try? JSONDecoder().decode(Board.self, from: data) {
+                let board = try? JSONDecoder().decode(Board.self, from: data)
+            {
                 // Consider empty if no cards
                 primaryHasContent = !board.cards.isEmpty
             } else {

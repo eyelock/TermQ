@@ -103,7 +103,11 @@ struct ExpandedTerminalView: View {
                     }
             } else {
                 // Show multi-pane view only for tmux control mode backend
-                if card.backend == .tmuxControl,
+                let backend = card.backend
+                let hasControlSession = sessionManager.getControlModeSession(for: card.id) != nil
+                let paneCount = sessionManager.getControlModeSession(for: card.id)?.parser.panes.count ?? 0
+
+                if backend == .tmuxControl,
                     let controlSession = sessionManager.getControlModeSession(for: card.id),
                     !controlSession.parser.panes.isEmpty
                 {
@@ -117,6 +121,9 @@ struct ExpandedTerminalView: View {
                         }
                     )
                     .id("\(card.id)-\(restartCounter)-multipane")
+                    .onAppear {
+                        NSLog("[ExpandedTerminal] TmuxMultiPaneView appeared with %ld panes", paneCount)
+                    }
                 } else {
                     // Regular terminal view for direct and tmux backends
                     TerminalHostView(
@@ -130,7 +137,14 @@ struct ExpandedTerminalView: View {
                         isSearching: isSearching,
                         restartToken: restartCounter
                     )
-                    .id("\(card.id)-\(restartCounter)")  // Force view recreation when switching or restarting
+                    .id("\(card.id)-\(restartCounter)")
+                    .onAppear {
+                        NSLog(
+                            "[ExpandedTerminal] TerminalHostView appeared: backend=%@, hasControlSession=%@, paneCount=%ld",
+                            String(describing: backend) as NSString,
+                            hasControlSession ? "YES" : "NO",
+                            paneCount)
+                    }
                 }
             }
         }
