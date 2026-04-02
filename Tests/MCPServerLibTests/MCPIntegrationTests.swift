@@ -182,7 +182,7 @@ final class MCPIntegrationTests: XCTestCase {
         XCTAssertFalse(result.isError ?? false)
         XCTAssertEqual(result.content.count, 1)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -203,7 +203,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -221,7 +221,7 @@ final class MCPIntegrationTests: XCTestCase {
         XCTAssertFalse(result.isError ?? false)
         XCTAssertEqual(result.content.count, 1)
 
-        guard case .text(let content) = result.content[0] else {
+        guard case .text(let content, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -235,7 +235,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -252,7 +252,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -269,7 +269,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -288,7 +288,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -310,7 +310,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -328,7 +328,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -346,7 +346,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -364,7 +364,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -387,7 +387,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -406,7 +406,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -424,7 +424,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -445,7 +445,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -464,7 +464,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -482,7 +482,7 @@ final class MCPIntegrationTests: XCTestCase {
 
         XCTAssertTrue(result.isError ?? false)
 
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -652,7 +652,7 @@ final class MCPIntegrationTests: XCTestCase {
     func testPromptTerminalSummary() async throws {
         let params = GetPrompt.Parameters(
             name: "terminal_summary",
-            arguments: ["terminal": .string("Test Terminal 1")]
+            arguments: ["terminal": "Test Terminal 1"]
         )
         let result = try await server.dispatchPromptGet(params)
 
@@ -665,7 +665,7 @@ final class MCPIntegrationTests: XCTestCase {
     func testPromptTerminalSummaryNotFound() async throws {
         let params = GetPrompt.Parameters(
             name: "terminal_summary",
-            arguments: ["terminal": .string("NonExistent")]
+            arguments: ["terminal": "NonExistent"]
         )
         let result = try await server.dispatchPromptGet(params)
 

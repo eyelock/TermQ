@@ -175,7 +175,7 @@ final class PromptHandlersTests: XCTestCase {
 
         let params = GetPrompt.Parameters(
             name: "terminal_summary",
-            arguments: ["terminal": .string("My Terminal")]
+            arguments: ["terminal": "My Terminal"]
         )
         let result = try await server.dispatchPromptGet(params)
 
@@ -197,7 +197,7 @@ final class PromptHandlersTests: XCTestCase {
 
         let params = GetPrompt.Parameters(
             name: "terminal_summary",
-            arguments: ["terminal": .string("NonExistent")]
+            arguments: ["terminal": "NonExistent"]
         )
         let result = try await server.dispatchPromptGet(params)
 
@@ -238,7 +238,7 @@ final class PromptHandlersTests: XCTestCase {
 
         let params = GetPrompt.Parameters(
             name: "terminal_summary",
-            arguments: ["terminal": .string("Described Card")]
+            arguments: ["terminal": "Described Card"]
         )
         let result = try await server.dispatchPromptGet(params)
 
@@ -282,7 +282,7 @@ final class PromptHandlersTests: XCTestCase {
 
         let params = GetPrompt.Parameters(
             name: "terminal_summary",
-            arguments: ["terminal": .string("Tagged Card")]
+            arguments: ["terminal": "Tagged Card"]
         )
         let result = try await server.dispatchPromptGet(params)
 
@@ -297,7 +297,7 @@ final class PromptHandlersTests: XCTestCase {
 
         let params = GetPrompt.Parameters(
             name: "terminal_summary",
-            arguments: ["terminal": .string("Test")]
+            arguments: ["terminal": "Test"]
         )
         let result = try await server.dispatchPromptGet(params)
 
