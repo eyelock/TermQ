@@ -682,20 +682,21 @@ struct Set: ParsableCommand {
 
             if GUIDetector.isGUIRunning() {
                 // GUI path - use URL scheme
-                try setViaGUI(SetOptions(
-                    cardId: card.id,
-                    name: name,
-                    description: setDescription,
-                    column: column,
-                    badge: badge,
-                    llmPrompt: llmPrompt,
-                    llmNextAction: llmNextAction,
-                    tags: tag,
-                    replaceTags: replaceTags,
-                    initCommand: initCommand,
-                    favourite: favourite,
-                    unfavourite: unfavourite
-                ))
+                try setViaGUI(
+                    SetOptions(
+                        cardId: card.id,
+                        name: name,
+                        description: setDescription,
+                        column: column,
+                        badge: badge,
+                        llmPrompt: llmPrompt,
+                        llmNextAction: llmNextAction,
+                        tags: tag,
+                        replaceTags: replaceTags,
+                        initCommand: initCommand,
+                        favourite: favourite,
+                        unfavourite: unfavourite
+                    ))
             } else {
                 // Headless path - use BoardWriter directly
                 let parsedTags = parseTags(tag)

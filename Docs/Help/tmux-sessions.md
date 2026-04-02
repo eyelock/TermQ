@@ -8,21 +8,22 @@ tmux is a terminal multiplexer that runs your shell sessions in the background. 
 
 - **Sessions persist** - Your terminal sessions keep running even when TermQ closes
 - **Automatic recovery** - Reconnect to running sessions when you reopen TermQ
-- **Pane splitting** - Split your terminal into multiple panes within a single card
+- **Pane splitting** - Split your terminal into multiple panes within a single card (Control mode only)
 
 ## Session Backends
 
-Each terminal card can use one of two backends:
+Each terminal card can use one of three backends:
 
 | Backend | Description | Use Case |
 |---------|-------------|----------|
-| **Direct** | Traditional shell, ends when app closes | Quick one-off commands |
-| **tmux (Persistent)** | Session runs via tmux, persists across restarts | Long-running tasks, development work |
+| **Direct** | Traditional shell, ends when app closes | Quick one-off commands, temporary work |
+| **TMUX (Attach)** | Session runs via tmux, persists across restarts | Long-running tasks, development servers |
+| **TMUX (Control)** | Session runs via tmux control mode, persists with pane management | Advanced workflows, multi-pane layouts |
 
 By default, new terminals use the **Direct** backend. You can change the default in **Settings > General > Terminal > Default Backend**. To use tmux persistence, you must:
 1. Have tmux installed (see Troubleshooting section)
 2. Enable tmux globally in Settings > Tools
-3. (Optional) Set the global default to "TMUX (Persistent)" in Settings > General > Terminal
+3. (Optional) Set the global default to "TMUX (Attach)" or "TMUX (Control)" in Settings > General > Terminal
 4. Individual terminals can override the default in the card editor
 
 **Note:** The backend picker only appears in the card editor when tmux is installed and enabled globally.
@@ -30,12 +31,15 @@ By default, new terminals use the **Direct** backend. You can change the default
 ## Configuring Backend Mode
 
 1. Open the terminal card editor (click the pencil icon or use the context menu)
-2. Scroll to the **Session** section
+2. Scroll to the **Session Backend** section
 3. Select your preferred backend:
-   - **TMUX (Persistent)** - Recommended for most use cases
-   - **Direct** - For temporary sessions
+   - **Direct** - For temporary sessions that end when TermQ closes
+   - **TMUX (Attach)** - For persistent sessions (recommended for most use cases)
+   - **TMUX (Control)** - For persistent sessions with advanced pane management
 
 ![Backend Selection](Images/tmux-backend-selection.png)
+
+**Important:** The backend cannot be changed while a session is active. You must restart the session to switch backends.
 
 ## Session Recovery
 
@@ -72,13 +76,15 @@ tmux sessions are named using the pattern `termq-<cardId>` where `cardId` is the
 
 ## Pane Management
 
-tmux backend enables pane splitting within a terminal card.
+The **TMUX (Control)** backend enables advanced pane splitting and management within a terminal card. This feature is only available when using the Control backend.
 
 ### Accessing Pane Controls
 
-1. Open a terminal with tmux backend
-2. Click the **Panes** button in the tab bar
+1. Open a terminal with **TMUX (Control)** backend
+2. Click the **Panes** button in the tab bar (only appears for Control mode)
 3. Use the pane control toolbar that appears
+
+**Note:** The **TMUX (Attach)** backend does not support pane management through TermQ's UI. Use **TMUX (Control)** if you need multi-pane layouts.
 
 ### Available Actions
 
@@ -129,7 +135,7 @@ To enable tmux backend support:
 
 ### Quit Warning
 
-When you quit TermQ with running **Direct** (non-tmux) sessions, you'll see a warning that those sessions will be terminated. tmux sessions persist automatically and don't trigger this warning.
+When you quit TermQ with running **Direct** (non-tmux) sessions, you'll see a warning that those sessions will be terminated. tmux sessions (both Attach and Control modes) persist automatically and don't trigger this warning.
 
 ## Troubleshooting
 
@@ -150,7 +156,7 @@ sudo port install tmux
 ### Sessions Not Persisting
 
 1. Verify tmux is installed: `which tmux`
-2. Check the terminal is using tmux backend (not Direct)
+2. Check the terminal is using a tmux backend (not Direct)
 3. Look for errors in the terminal output
 
 ### Recovery Not Working
@@ -163,23 +169,35 @@ If sessions aren't being recovered:
 
 ### Pane Controls Not Showing
 
-The Panes button only appears for terminals using tmux backend. Check:
+The Panes button only appears for terminals using the **TMUX (Control)** backend. Check:
 
-1. Terminal backend is set to **TMUX (Persistent)**
+1. Terminal backend is set to **TMUX (Control)** (not Direct or TMUX (Attach))
 2. The session has been started (open the terminal at least once)
+3. tmux is installed and enabled in Settings > Tools
 
-## Control Mode (Advanced)
+## TMUX (Control) Backend
 
-TermQ uses tmux's control mode (`-CC` flag) for advanced pane rendering and window management. This provides a structured interface for managing tmux sessions programmatically.
+The **TMUX (Control)** backend uses tmux's control mode (`-CC` flag) for advanced pane rendering and window management. This provides a structured interface for managing tmux sessions programmatically.
 
 ### What is Control Mode?
 
-Control mode is a special tmux interface that outputs structured messages instead of raw terminal data. This allows TermQ to:
+Control mode is a special tmux interface that outputs structured messages instead of raw terminal data. When you select the **TMUX (Control)** backend, TermQ can:
 
 - **Track pane layout** - Know exactly where each pane is positioned
 - **Monitor window changes** - React to window creation/deletion in real-time
 - **Capture output** - Receive pane output as structured data
 - **Synchronize state** - Keep TermQ's UI in sync with tmux state
+
+### When to Use Control Mode vs Attach Mode
+
+| Scenario | Recommended Backend |
+|----------|---------------------|
+| Need multi-pane layouts | **TMUX (Control)** |
+| Want visual pane management | **TMUX (Control)** |
+| Just need session persistence | **TMUX (Attach)** |
+| Attaching from external terminal | **TMUX (Attach)** |
+
+**TMUX (Attach)** is simpler and works well when you don't need pane features. **TMUX (Control)** is ideal when you want to manage multiple panes visually within TermQ.
 
 ### Control Mode Features
 

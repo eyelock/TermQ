@@ -164,7 +164,7 @@ struct ContentView: View {
                             .font(.headline)
 
                         // TMUX system badge (if using tmux backend)
-                        if selectedCard.backend == .tmux {
+                        if selectedCard.backend.usesTmux {
                             Text(Strings.Card.tmux)
                                 .font(.caption)
                                 .fontWeight(.bold)
@@ -518,7 +518,8 @@ struct ContentView: View {
         if let columnName = pending.column,
             let found = viewModel.board.columns.first(where: {
                 $0.name.lowercased() == columnName.lowercased()
-            }) {
+            })
+        {
             targetColumn = found
         } else {
             // Default to first column

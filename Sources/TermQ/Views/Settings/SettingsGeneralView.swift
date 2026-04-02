@@ -55,7 +55,7 @@ struct SettingsGeneralView: View {
                 selection: $defaultBackend
             ) {
                 ForEach(TerminalBackend.allCases, id: \.self) { backend in
-                    Text(backend.displayName).tag(backend)
+                    Text(localizedName(for: backend)).tag(backend)
                 }
             }
             .help(Strings.Settings.fieldDefaultBackendHelp)
@@ -94,20 +94,20 @@ struct SettingsGeneralView: View {
         // Updates section
         Section {
             #if DEBUG
-            // Warning for debug builds
-            HStack(spacing: 8) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundColor(.orange)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(Strings.Settings.debugUpdateWarningTitle)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                    Text(Strings.Settings.debugUpdateWarningMessage)
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
+                // Warning for debug builds
+                HStack(spacing: 8) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.orange)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(Strings.Settings.debugUpdateWarningTitle)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                        Text(Strings.Settings.debugUpdateWarningMessage)
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
                 }
-            }
-            .padding(.vertical, 4)
+                .padding(.vertical, 4)
             #endif
 
             Toggle(Strings.Settings.autoCheckUpdates, isOn: $updaterViewModel.automaticallyChecksForUpdates)
@@ -179,6 +179,19 @@ struct SettingsGeneralView: View {
             )
         } header: {
             Text(Strings.Settings.sectionAbout)
+        }
+    }
+
+    // MARK: - Backend Localization Helper
+
+    private func localizedName(for backend: TerminalBackend) -> String {
+        switch backend {
+        case .direct:
+            return Strings.Editor.backendDirect
+        case .tmuxAttach:
+            return Strings.Editor.backendTmuxAttach
+        case .tmuxControl:
+            return Strings.Editor.backendTmuxControl
         }
     }
 }

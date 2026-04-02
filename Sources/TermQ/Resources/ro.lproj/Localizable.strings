@@ -400,6 +400,14 @@
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend-ul nu poate fi modificat în timp ce sesiunea este activă. Reporniți sesiunea pentru a schimba backend-urile.";
+
+// MARK: - Backend Types
+"backend.direct" = "Direct";
+"backend.direct.description" = "Shell runs directly. Session ends when TermQ closes.";
+"backend.tmux.attach" = "TMUX (Attach)";
+"backend.tmux.attach.description" = "Shell runs via tmux. Session persists across app restarts.";
+"backend.tmux.control" = "TMUX (Control)";
+"backend.tmux.control.description" = "Shell runs via tmux control mode. Persistent sessions with pane management support.";
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";

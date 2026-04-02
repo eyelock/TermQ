@@ -74,7 +74,8 @@ public final class BoardPersistence {
     private var onExternalChange: (() -> Void)?
 
     init() {
-        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        else {
             fatalError("Unable to access Application Support directory")
         }
         #if DEBUG
@@ -96,7 +97,8 @@ public final class BoardPersistence {
     /// Load board from disk, or return a new empty board
     func loadBoard() -> Board {
         if let data = try? Data(contentsOf: saveURL),
-            let loaded = try? JSONDecoder().decode(Board.self, from: data) {
+            let loaded = try? JSONDecoder().decode(Board.self, from: data)
+        {
             #if DEBUG
                 print("[BoardPersistence] Loaded board from: \(saveURL.path)")
             #endif

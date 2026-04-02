@@ -123,7 +123,8 @@ extension BoardViewModel {
         // Get a default column (or use recovered one if valid)
         var column = board.columns.first ?? createDefaultColumn()
         if let recoveredColumnId = metadata?.columnId,
-            let matchedColumn = board.columns.first(where: { $0.id == recoveredColumnId }) {
+            let matchedColumn = board.columns.first(where: { $0.id == recoveredColumnId })
+        {
             column = matchedColumn
         }
 
@@ -168,7 +169,7 @@ extension BoardViewModel {
             llmPrompt: llmPrompt,
             llmNextAction: llmNextAction,
             badge: badge,
-            backend: .tmux
+            backend: .tmuxAttach  // Default to attach mode for recovered sessions
         )
 
         // Add to board without opening it

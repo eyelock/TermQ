@@ -6,7 +6,8 @@ import SwiftUI
 private let resourceBundle: Bundle = {
     // Check Contents/Resources first (for signed app), then Bundle.module
     if let resourcesPath = Bundle.main.resourceURL?.appendingPathComponent("TermQ_TermQ.bundle").path,
-        let bundle = Bundle(path: resourcesPath) {
+        let bundle = Bundle(path: resourcesPath)
+    {
         return bundle
     }
     return Bundle.module
@@ -23,7 +24,8 @@ private func parseStringsFile(at url: URL) -> [String: String]? {
     // Remove block comments
     var cleanContent = content
     while let startRange = cleanContent.range(of: "/*"),
-        let endRange = cleanContent.range(of: "*/", range: startRange.upperBound..<cleanContent.endIndex) {
+        let endRange = cleanContent.range(of: "*/", range: startRange.upperBound..<cleanContent.endIndex)
+    {
         cleanContent.removeSubrange(startRange.lowerBound...endRange.upperBound)
     }
 
@@ -384,6 +386,14 @@ enum Strings {
         static var tmuxPersistNote: String { localized("editor.tmux.persist.note") }
         static var backendRestartHint: String { localized("editor.backend.restart.hint") }
         static var backendLockedWarning: String { localized("editor.backend.locked.warning") }
+
+        // Backend types
+        static var backendDirect: String { localized("backend.direct") }
+        static var backendDirectDescription: String { localized("backend.direct.description") }
+        static var backendTmuxAttach: String { localized("backend.tmux.attach") }
+        static var backendTmuxAttachDescription: String { localized("backend.tmux.attach.description") }
+        static var backendTmuxControl: String { localized("backend.tmux.control") }
+        static var backendTmuxControlDescription: String { localized("backend.tmux.control.description") }
 
         // Environment section
         enum Environment {
