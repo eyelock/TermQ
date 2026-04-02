@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         // Pinned to specific commit for build stability
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "5e9b2e31fc893021c7d081c4b52bf383fc654a80"),
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "75d0fd92e0374c054ff1cea349fc88f9fdee03a5"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.9.0"),
