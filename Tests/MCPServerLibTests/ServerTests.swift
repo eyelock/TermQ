@@ -112,7 +112,7 @@ final class ServerTests: XCTestCase {
         let result = try await server.dispatchToolCall(params)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let content) = result.content[0] else {
+        guard case .text(let content, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }

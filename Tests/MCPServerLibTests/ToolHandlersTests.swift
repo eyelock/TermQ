@@ -145,7 +145,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handlePending(nil)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -168,7 +168,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handlePending(nil)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -194,7 +194,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handlePending(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -232,7 +232,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handlePending(nil)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -251,7 +251,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handlePending(nil)
 
         XCTAssertTrue(result.isError ?? false)
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -266,7 +266,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleContext()
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let content) = result.content[0] else {
+        guard case .text(let content, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -295,7 +295,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleList(nil)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -322,7 +322,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleList(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -353,7 +353,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleList(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -381,7 +381,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleList(nil)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -418,7 +418,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -442,7 +442,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -466,7 +466,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -495,7 +495,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -515,7 +515,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -536,7 +536,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -557,7 +557,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertTrue(result.isError ?? false)
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -579,7 +579,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleFind(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -602,7 +602,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleOpen(args)
 
         XCTAssertTrue(result.isError ?? false)
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -633,7 +633,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleOpen(args)
 
         XCTAssertTrue(result.isError ?? false)
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -651,7 +651,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleOpen(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -675,7 +675,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleCreate(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -701,7 +701,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleCreate(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -757,7 +757,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleSet(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -782,7 +782,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleSet(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -806,7 +806,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleSet(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -831,7 +831,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleSet(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -859,7 +859,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleSet(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -915,7 +915,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleMove(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -950,7 +950,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleGet(args)
 
         XCTAssertTrue(result.isError ?? false)
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -968,7 +968,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleGet(args)
 
         XCTAssertTrue(result.isError ?? false)
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -987,7 +987,7 @@ final class ToolHandlersTests: XCTestCase {
         let result = try await server.handleGet(args)
 
         XCTAssertFalse(result.isError ?? false)
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
