@@ -11,6 +11,34 @@ public enum TerminalBackend: String, Codable, CaseIterable, Sendable {
     /// tmux with control mode - full pane management support
     case tmuxControl
 
+    /// Localized display name for the backend
+    public var displayName: String {
+        switch self {
+        case .direct:
+            return NSLocalizedString("backend.direct", comment: "Direct backend name")
+        case .tmuxAttach:
+            return NSLocalizedString("backend.tmux.attach", comment: "TMUX Attach backend name")
+        case .tmuxControl:
+            return NSLocalizedString(
+                "backend.tmux.control", comment: "TMUX Control backend name")
+        }
+    }
+
+    /// Localized description for the backend
+    public var description: String {
+        switch self {
+        case .direct:
+            return NSLocalizedString(
+                "backend.direct.description", comment: "Direct backend description")
+        case .tmuxAttach:
+            return NSLocalizedString(
+                "backend.tmux.attach.description", comment: "TMUX Attach backend description")
+        case .tmuxControl:
+            return NSLocalizedString(
+                "backend.tmux.control.description", comment: "TMUX Control backend description")
+        }
+    }
+
     /// Returns true if this backend uses tmux (either regular or control mode)
     public var usesTmux: Bool {
         switch self {
