@@ -20,7 +20,7 @@ DEBUG_APP := $(APP_NAME)Debug.app
 DEBUG_APP_NAME := $(APP_NAME)Debug
 SOURCE_APP := $(APP_NAME).app
 ENTITLEMENTS := $(APP_NAME).entitlements
-INFO_PLIST := $(SOURCE_APP)/Contents/Info-Debug.plist
+INFO_PLIST := Config/Info-Debug.plist
 RESOURCES_BUNDLE := $(APP_NAME)_$(APP_NAME).bundle
 TEST_BUNDLE := $(APP_NAME)PackageTests
 
