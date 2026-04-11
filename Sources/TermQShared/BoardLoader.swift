@@ -27,11 +27,13 @@ public enum BoardLoader {
         if let custom = customDirectory {
             return custom
         }
-        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        else {
             // Fallback to home directory if Application Support not available
             let homeDir = FileManager.default.homeDirectoryForCurrentUser
             let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
-            return homeDir.appendingPathComponent(".termq", isDirectory: true).appendingPathComponent(dirName, isDirectory: true)
+            return homeDir.appendingPathComponent(".termq", isDirectory: true).appendingPathComponent(
+                dirName, isDirectory: true)
         }
         let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
         return appSupport.appendingPathComponent(dirName, isDirectory: true)
@@ -202,15 +204,15 @@ public enum BoardWriter {
 
         // Search in all cards, including deleted ones
         if let uuid = UUID(uuidString: identifier),
-           let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid }) {
+            let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid })
+        {
             return updatedCard
         }
 
         // Fallback to name search in all cards
         let identifierLower = identifier.lowercased()
         if let updatedCard = updatedBoard.cards.first(where: {
-            $0.title.lowercased() == identifierLower ||
-            $0.title.lowercased().contains(identifierLower)
+            $0.title.lowercased() == identifierLower || $0.title.lowercased().contains(identifierLower)
         }) {
             return updatedCard
         }

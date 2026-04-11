@@ -91,7 +91,8 @@ class TermQTerminalView: LocalProcessTerminalView {
             if let self = self,
                 let window = event.window,
                 window == self.window,
-                window.firstResponder === self {
+                window.firstResponder === self
+            {
                 self.lastUserInputTime = Date()
             }
             return event
@@ -195,7 +196,8 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
 
         // Monitor for mouse dragged events
-        dragEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDragged, .leftMouseUp]) { [weak self] event in
+        dragEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDragged, .leftMouseUp]) {
+            [weak self] event in
             self?.handleMouseEventForAutoScroll(event)
             return event
         }

@@ -153,7 +153,8 @@ public class GlobalEnvironmentManager: ObservableObject {
         for variable in variables {
             if variable.isSecret {
                 if let secretValue = try await SecureStorage.shared.retrieveSecret(
-                    id: "global-\(variable.id.uuidString)") {
+                    id: "global-\(variable.id.uuidString)")
+                {
                     result[variable.key] = secretValue
                 }
             } else {

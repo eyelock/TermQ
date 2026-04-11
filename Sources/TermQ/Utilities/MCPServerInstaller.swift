@@ -1,6 +1,6 @@
 import Foundation
-import os.log
 import TermQShared
+import os.log
 
 /// Common installation locations for the MCP Server
 enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProtocol {
@@ -62,7 +62,9 @@ enum MCPServerInstaller {
         os_log("🔧 Config created:", log: log, type: .info)
         os_log("   - bundledResourceName: %{public}@", log: log, type: .info, cfg.bundledResourceName)
         os_log("   - componentDisplayName: %{public}@", log: log, type: .info, cfg.componentDisplayName)
-        os_log("   - AppProfile.Current.mcpBinaryName: %{public}@", log: log, type: .info, AppProfile.Current.mcpBinaryName)
+        os_log(
+            "   - AppProfile.Current.mcpBinaryName: %{public}@", log: log, type: .info, AppProfile.Current.mcpBinaryName
+        )
         return cfg
     }()
 

@@ -1,6 +1,6 @@
 import Foundation
-import os.log
 import TermQShared
+import os.log
 
 /// Common installation locations for the CLI tool
 enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtocol {
@@ -83,8 +83,9 @@ enum CLIInstaller {
 
         for location in InstallLocation.allCases {
             let installed = isInstalled(at: location)
-            os_log("🔍 Checking %{public}@: %{public}@", log: log, type: .info,
-                   location.path, installed ? "FOUND" : "not found")
+            os_log(
+                "🔍 Checking %{public}@: %{public}@", log: log, type: .info,
+                location.path, installed ? "FOUND" : "not found")
 
             if installed {
                 os_log("✅ CLI found at: %{public}@", log: log, type: .info, location.path)
@@ -115,7 +116,8 @@ enum CLIInstaller {
     }
 
     /// Uninstall the CLI tool from a custom path
-    static func uninstall(fromPath path: String, requiresAdmin: Bool? = nil) async -> Result<String, CLIInstallerError> {
+    static func uninstall(fromPath path: String, requiresAdmin: Bool? = nil) async -> Result<String, CLIInstallerError>
+    {
         await ComponentInstaller<InstallLocation>.uninstall(
             fromPath: path, requiresAdmin: requiresAdmin, config: config
         )

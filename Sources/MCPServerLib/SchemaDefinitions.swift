@@ -65,7 +65,8 @@ extension TermQMCPServer {
                     Use partial name matching for convenience.
                     """,
                 inputSchema: Schema.objectSchema([
-                    Schema.string("identifier", "Terminal name, UUID, or path (partial match supported)", required: true)
+                    Schema.string(
+                        "identifier", "Terminal name, UUID, or path (partial match supported)", required: true)
                 ])
             ),
             Tool(
