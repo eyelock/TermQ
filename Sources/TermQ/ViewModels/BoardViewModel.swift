@@ -433,7 +433,8 @@ class BoardViewModel: ObservableObject {
         let workingDirectory: String
 
         if let current = selectedCard,
-            let currentColumn = board.columns.first(where: { $0.id == current.columnId }) {
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
             column = currentColumn
             workingDirectory =
                 TerminalSessionManager.shared.getCurrentDirectory(for: current.id)
@@ -456,7 +457,7 @@ class BoardViewModel: ObservableObject {
         // Determine backend for transient card - use tmux if available and enabled
         let tmuxEnabled = UserDefaults.standard.object(forKey: "tmuxEnabled") as? Bool ?? true
         let tmuxManager = TmuxManager.shared
-        let defaultBackend: TerminalBackend = (tmuxManager.isAvailable && tmuxEnabled) ? .tmux : .direct
+        let defaultBackend: TerminalBackend = (tmuxManager.isAvailable && tmuxEnabled) ? .tmuxAttach : .direct
 
         let card = TerminalCard(
             title: title,
@@ -488,14 +489,16 @@ class BoardViewModel: ObservableObject {
 
     func nextTab() {
         if let nextId = tabManager.nextTabId(from: selectedCard?.id),
-            let next = tabManager.card(for: nextId) {
+            let next = tabManager.card(for: nextId)
+        {
             selectedCard = next
         }
     }
 
     func previousTab() {
         if let prevId = tabManager.previousTabId(from: selectedCard?.id),
-            let prev = tabManager.card(for: prevId) {
+            let prev = tabManager.card(for: prevId)
+        {
             selectedCard = prev
         }
     }

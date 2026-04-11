@@ -14,7 +14,8 @@ enum DataDirectoryManager {
     static var dataDirectory: String {
         get {
             if let customPath = UserDefaults.standard.string(forKey: userDefaultsKey),
-                !customPath.isEmpty {
+                !customPath.isEmpty
+            {
                 return customPath
             }
             return expandedDefaultPath
