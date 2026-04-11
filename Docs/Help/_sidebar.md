@@ -1,23 +1,30 @@
-- **How to Use**
-  - [Getting Started](getting-started.md)
-  - [Columns & Organization](columns-organization.md)
-  - [Working with Terminals](working-with-terminals.md)
-  - [Pinned Terminals & Tabs](pinned-terminals.md)
-  - [Command Palette](command-palette.md)
-  - [Zoom Mode & Search](zoom-search.md)
-  - [Bin & Recovery](bin-recovery.md)
-  - [Themes & Appearance](themes-appearance.md)
-  - [Automatic Updates](updates.md)
+- [Overview](README.md)
+- [Why TermQ](why.md)
 
-- **Advanced Topics**
-  - [Keyboard Shortcuts](keyboard-shortcuts.md)
-  - [CLI Tool](cli-tool.md)
-  - [MCP Server](mcp-server.md)
-  - [Tmux Sessions](tmux-sessions.md)
-  - [Environment Variables & Secrets](environment-variables.md)
-  - [Security](security.md)
-  - [Configuration & Data](configuration.md)
+- **Tutorials: The Board**
+  - [1. Your First Board](tutorials/01-first-board.md)
+  - [2. Richer Cards](tutorials/02-richer-cards.md)
+  - [3. Find Anything Fast](tutorials/03-find-anything-fast.md)
+  - [4. Organise Your Space](tutorials/04-organise-your-space.md)
+
+- **Tutorials: Power Workflows**
+  - [5. Persistent Sessions](tutorials/05-persistent-sessions.md)
+  - [6. Terminal Context](tutorials/06-terminal-context.md)
+  - [7. Lifecycle](tutorials/07-lifecycle.md)
+
+- **Tutorials: Automation & AI**
+  - [8. CLI Automation](tutorials/08-cli.md)
+  - [9. Persistent AI Context](tutorials/09-ai-context.md)
+  - [10. MCP Integration](tutorials/10-mcp.md)
+  - [11. Autorun](tutorials/11-autorun.md)
+
+- **Reference**
+  - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)
+  - [CLI Reference](reference/cli.md)
+  - [MCP Reference](reference/mcp.md)
+  - [Configuration & Data](reference/configuration.md)
+  - [Security](reference/security.md)
 
 - **Further Info**
-  - [Tips & Tricks](tips-tricks.md)
-  - [About TermQ](about.md)
+  - [Updates & Releases](updates.md)
+  - [About](about.md)

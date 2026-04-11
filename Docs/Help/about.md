@@ -1,31 +1,11 @@
 # About TermQ
 
-**TermQ** - Kanban-style Terminal Queue Manager
-
-A macOS application for organizing multiple terminal sessions in a visual board layout.
+**TermQ** — Kanban-style terminal manager for macOS.
 
 ## Credits
 
-- The heavy lifting for terminal emulation is done by [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) - a fantastic library by Miguel de Icaza. 
-- This project was built with significant assistance from [Claude Code](https://claude.ai/code), Anthropic's AI coding assistant.
-
-## Features
-
-- Kanban board layout with customizable columns
-- Persistent terminal sessions
-- Pinned terminals with tab navigation
-- Command palette for quick navigation
-- 8 built-in color themes
-- Zoom mode and terminal search
-- Session export to text files
-- Smart paste with safety warnings
-- Per-terminal fonts and init commands
-- Native Terminal.app integration
-- Rich metadata (titles, descriptions, badges, tags)
-- Drag & drop for terminals and columns
-- CLI tool for shell integration
-- Comprehensive keyboard shortcuts
-- Bin with soft-delete and recovery
+- Terminal emulation powered by [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) by Miguel de Icaza
+- Built with significant assistance from [Claude Code](https://claude.ai/code), Anthropic's AI coding assistant
 
 ## Requirements
 
@@ -33,17 +13,15 @@ A macOS application for organizing multiple terminal sessions in a visual board 
 
 ## Known Limitations
 
-- **macOS only** - Built specifically for macOS using SwiftUI and AppKit
-- **Unsigned app** - Requires right-click "Open" on first launch (no Apple Developer certificate)
-- **No cloud sync** - Board data is stored locally only
-- **Single window** - One board per application instance
-- **No terminal multiplexing** - Each card is a single terminal session (no splits/panes)
-
-These limitations may be addressed in future versions based on community interest.
+- **macOS only** — Built with SwiftUI and AppKit
+- **Unsigned app** — Requires right-click "Open" on first launch (no Apple Developer certificate)
+- **No cloud sync** — Board data is stored locally; sync via cloud storage by pointing to a shared `board.json`
+- **Single window** — One board per application instance
+- **No terminal splits in Direct mode** — Pane splitting requires the tmux backend
 
 ## License
 
-MIT License
+MIT — See the [LICENSE](https://github.com/eyelock/TermQ/blob/main/LICENSE) file.
 
 ## Source Code
 
