@@ -350,6 +350,8 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Prevent macOS from auto-tabbing windows (e.g. when "Prefer tabs" is set in System Settings)
+        NSWindow.allowsAutomaticWindowTabbing = false
         // Store reference to the main window and set delegate
         // In SwiftUI apps, the window might not be created yet, so we poll for it
         setupMainWindowDelegate()
@@ -359,6 +361,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if let window = NSApplication.shared.windows.first(where: { $0.isVisible }) {
             mainWindow = window
             window.delegate = self
+            window.tabbingMode = .disallowed
         } else {
             // Window not ready yet, try again
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
