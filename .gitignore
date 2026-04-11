@@ -19,17 +19,8 @@ Package.resolved
 # Generated resources (copied from Docs/Help at build time)
 Sources/TermQ/Resources/Help/
 
-# App bundles (keep the structure but not the binaries)
-TermQ.app/Contents/MacOS/TermQ
-TermQ.app/Contents/MacOS/tq
-TermQ.app/Contents/Resources/termq
-TermQ.app/Contents/Resources/termqcli
-TermQ.app/Contents/Resources/termqmcp
-TermQ.app/Contents/Resources/TermQ_TermQ.bundle/
-TermQ.app/Contents/_CodeSignature/
-TermQ.app/Contents/Info.plist
-
-# Debug app bundle (entirely generated)
+# App bundles (entirely generated during build)
+TermQ.app/
 TermQDebug.app/
 
 # Distribution files

@@ -16,11 +16,12 @@ let package = Package(
         .library(name: "MCPServerLib", targets: ["MCPServerLib"])
     ],
     dependencies: [
-        // Pinned to specific commit for build stability
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "75d0fd92e0374c054ff1cea349fc88f9fdee03a5"),
+        // Pinned post-v1.13.0: includes cursor ghosting (DECTCEM), EV_VANISHED crash,
+        // PTY resize/Auto Layout, and SGR mouse encoding fixes. Fork eyelock/SwiftTerm archived.
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "b6ce28a4b222b06d76a3fd44e904e00a95044d53"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
-        .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.9.0"),
+        .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.0"),
         // Sparkle for auto-updates
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0")
     ],

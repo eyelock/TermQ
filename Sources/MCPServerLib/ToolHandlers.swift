@@ -110,16 +110,16 @@ extension TermQMCPServer {
             )
 
             let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
     func handleContext() async throws -> CallTool.Result {
         let context = Self.contextDocumentation
-        return CallTool.Result(content: [.text(context)])
+        return CallTool.Result(content: [.text(text:context, annotations: nil, _meta: nil)])
     }
 
     func handleList(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -138,7 +138,7 @@ extension TermQMCPServer {
                     )
                 }
                 let json = try JSONHelper.encode(columns)
-                return CallTool.Result(content: [.text(json)])
+                return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
             }
 
             // Get cards, optionally filtered by column
@@ -164,10 +164,10 @@ extension TermQMCPServer {
 
             let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
             let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -184,7 +184,7 @@ extension TermQMCPServer {
         do {
             idFilter = try InputValidator.optionalUUID("id", from: arguments)
         } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
 
         do {
@@ -197,7 +197,7 @@ extension TermQMCPServer {
                 let queryWords = normalizeToWords(query)
                 guard !queryWords.isEmpty else {
                     let json = try JSONHelper.encode([TerminalOutput]())
-                    return CallTool.Result(content: [.text(json)])
+                    return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
                 }
 
                 cards = cards.filter { card in
@@ -273,10 +273,10 @@ extension TermQMCPServer {
 
             let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
             let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -341,7 +341,7 @@ extension TermQMCPServer {
         do {
             identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_open")
         } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
 
         do {
@@ -349,7 +349,7 @@ extension TermQMCPServer {
 
             guard let card = board.findTerminal(identifier: identifier) else {
                 return CallTool.Result(
-                    content: [.text("Error: Terminal not found: \(identifier)")],
+                    content: [.text(text:"Error: Terminal not found: \(identifier)", annotations: nil, _meta: nil)],
                     isError: true
                 )
             }
@@ -360,10 +360,10 @@ extension TermQMCPServer {
             // Note: MCP server is read-only, it cannot open terminals in the GUI
             // The CLI uses URL schemes to communicate with the app
             // For MCP, we just return the terminal data
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -373,7 +373,7 @@ extension TermQMCPServer {
             let uuid = try InputValidator.requireUUID("id", from: arguments, tool: "termq_get")
             id = uuid.uuidString
         } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
 
         do {
@@ -393,17 +393,17 @@ extension TermQMCPServer {
 
             guard let card = board.findTerminal(identifier: id) else {
                 return CallTool.Result(
-                    content: [.text("Error: Terminal not found with ID: \(id)")],
+                    content: [.text(text:"Error: Terminal not found with ID: \(id)", annotations: nil, _meta: nil)],
                     isError: true
                 )
             }
 
             let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
             let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -438,7 +438,7 @@ extension TermQMCPServer {
                 path = FileManager.default.currentDirectoryPath
             }
         } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
 
         // Check if GUI is available
@@ -518,7 +518,7 @@ extension TermQMCPServer {
                 if let card = board.findTerminal(identifier: cardId.uuidString) {
                     let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
                     let json = try JSONHelper.encode(output)
-                    return CallTool.Result(content: [.text(json)])
+                    return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
                 }
             }
 
@@ -528,9 +528,9 @@ extension TermQMCPServer {
                 message: "Terminal creation requested. The terminal may take a moment to appear in TermQ."
             )
             let json = try JSONHelper.encode(pendingOutput)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -561,16 +561,16 @@ extension TermQMCPServer {
                 columnName: board.columnName(for: card.columnId)
             )
             let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         } catch {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         }
@@ -581,13 +581,13 @@ extension TermQMCPServer {
         do {
             identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_set")
         } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
 
         // First, find the card to get its UUID
         let board = try loadBoard()
         guard let card = board.findTerminal(identifier: identifier) else {
-            return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: Terminal not found: \(identifier)", annotations: nil, _meta: nil)], isError: true)
         }
 
         // Parse tags if provided
@@ -672,12 +672,12 @@ extension TermQMCPServer {
                 let output = TerminalOutput(
                     from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
                 let json = try JSONHelper.encode(output)
-                return CallTool.Result(content: [.text(json)])
+                return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
             } else {
-                return CallTool.Result(content: [.text("Error: Terminal not found after update")], isError: true)
+                return CallTool.Result(content: [.text(text:"Error: Terminal not found after update", annotations: nil, _meta: nil)], isError: true)
             }
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -706,16 +706,16 @@ extension TermQMCPServer {
                 columnName: board.columnName(for: card.columnId)
             )
             let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         } catch {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         }
@@ -728,13 +728,13 @@ extension TermQMCPServer {
             identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_move")
             column = try InputValidator.requireNonEmptyString("column", from: arguments, tool: "termq_move")
         } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
 
         // First, find the card to get its UUID
         let board = try loadBoard()
         guard let card = board.findTerminal(identifier: identifier) else {
-            return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: Terminal not found: \(identifier)", annotations: nil, _meta: nil)], isError: true)
         }
 
         // Check if GUI is available
@@ -779,12 +779,12 @@ extension TermQMCPServer {
                 let output = TerminalOutput(
                     from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
                 let json = try JSONHelper.encode(output)
-                return CallTool.Result(content: [.text(json)])
+                return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
             } else {
-                return CallTool.Result(content: [.text("Error: Terminal not found after move")], isError: true)
+                return CallTool.Result(content: [.text(text:"Error: Terminal not found after move", annotations: nil, _meta: nil)], isError: true)
             }
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -802,16 +802,16 @@ extension TermQMCPServer {
                 columnName: board.columnName(for: card.columnId)
             )
             let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         } catch {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         }
@@ -822,7 +822,7 @@ extension TermQMCPServer {
         do {
             identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_delete")
         } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
 
         let permanent = InputValidator.optionalBool("permanent", from: arguments)
@@ -830,7 +830,7 @@ extension TermQMCPServer {
         // First, find the card to get its UUID
         let board = try loadBoard()
         guard let card = board.findTerminal(identifier: identifier) else {
-            return CallTool.Result(content: [.text("Error: Terminal not found: \(identifier)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: Terminal not found: \(identifier)", annotations: nil, _meta: nil)], isError: true)
         }
 
         // Check if GUI is available
@@ -871,9 +871,9 @@ extension TermQMCPServer {
                 permanent: permanent
             )
             let json = try JSONHelper.encode(result)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
         } catch {
-            return CallTool.Result(content: [.text("Error: \(error.localizedDescription)")], isError: true)
+            return CallTool.Result(content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)], isError: true)
         }
     }
 
@@ -883,7 +883,7 @@ extension TermQMCPServer {
             let board = try loadBoard()
             guard let card = board.findTerminal(identifier: identifier) else {
                 return CallTool.Result(
-                    content: [.text("Error: Terminal not found: \(identifier)")],
+                    content: [.text(text:"Error: Terminal not found: \(identifier)", annotations: nil, _meta: nil)],
                     isError: true
                 )
             }
@@ -899,16 +899,16 @@ extension TermQMCPServer {
                 permanent: permanent
             )
             let json = try JSONHelper.encode(result)
-            return CallTool.Result(content: [.text(json)])
+            return CallTool.Result(content: [.text(text:json, annotations: nil, _meta: nil)])
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         } catch {
             return CallTool.Result(
-                content: [.text("Error: \(error.localizedDescription)")],
+                content: [.text(text:"Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
         }
