@@ -1,210 +1,140 @@
-# Claude - TermQ
+# Claude — TermQ
 
-## 🛑 READ THIS BEFORE WRITING ANY CODE
+## Architecture
 
-**MANDATORY: If you're about to write, edit, or implement ANY code:**
+Three tiers. Each has a distinct role:
 
-1. **FIRST** → Read **[commands/implementation-prepare.md](commands/implementation-prepare.md)**
-   - Gather context, verify environment, create plan
-   - Running Edit or Write tools without reading this leads to incomplete implementations
-
-2. **THEN** → Write your code following [code-style.md](commands/code-style.md)
-
-3. **AFTER** → Read **[commands/implementation-checks.md](commands/implementation-checks.md)**
-   - Build, lint, test, review before committing
-   - Every check must pass - zero tolerance for errors
-
-**This is not optional. Following this workflow prevents broken builds, wasted CI runs, and incomplete implementations.**
-
----
-
-## 📋 Core Development Workflow
-
-**YOU MUST follow this 5-step workflow for ALL features, fixes, and refactoring:**
-
-### 1. Session Init
-→ **[commands/init.md](commands/init.md)** - Session startup, git status, verify worktree
-
-### 2. Prepare
-→ **[commands/implementation-prepare.md](commands/implementation-prepare.md)** - Gather context, verify environment, plan implementation
-
-**🚨 DO NOT skip step 2 - you MUST read this file before using Edit or Write tools**
-
-### 3. Implement → 4. Check (Iterative Loop) 🔄
-
-**These steps form a cycle - repeat until all checks pass:**
-
-**3. Implement**
-→ Write code following [code-style.md](commands/code-style.md)
-
-**4. Check**
-→ **[commands/implementation-checks.md](commands/implementation-checks.md)** - Build, lint, test, review changes
-
-**If checks fail:** Return to step 3, fix issues, repeat
-**If checks pass:** Proceed to step 5
-
-### 5. Commit & PR
-→ **[commands/commit-pr.md](commands/commit-pr.md)** - Create commits and pull requests
-
----
-
-## 🚀 Quick Start
-
-**Starting a new session?** Read **[commands/init.md](commands/init.md)** first.
-
-This gives you:
-- Session startup checklist
-- Tool preferences (GitHub, file operations)
-- Context loading strategy
-
----
-
-## 🔄 Specialized Workflows
-
-**These extend the core workflow for specific scenarios:**
-
-- **[commands/release.md](commands/release.md)** - Standard release from main branch
-  - Follow core workflow (1-5) + versioning + changelog + tagging
-
-- **[commands/release-beta.md](commands/release-beta.md)** - Beta releases with Sparkle
-  - Follow core workflow (1-5) + beta versioning + Sparkle integration
-
-- **[commands/release-hotfix.md](commands/release-hotfix.md)** - Critical patches
-  - Follow core workflow (1-5) + hotfix branching + cherry-picking
-
----
-
-## 📚 Domain Guides
-
-**Reference these when working in specific areas:**
-
-- **[commands/code-style.md](commands/code-style.md)** - Swift patterns, concurrency, project conventions
-- **[commands/localization.md](commands/localization.md)** - String management, translation workflow
-
----
-
-## 🎯 Communication Preferences
-
-### Complex Topics
-When working with complex technical topics (architecture, schema design, multi-step planning):
-- Take a guided, conversational approach
-- Present context and explain the problem first
-- Ask clarifying questions ONE AT A TIME
-- Wait for response before moving to next question
-- Don't dump large analysis documents all at once
-- Frame it as a discussion, not a report
-
-### Feedback Sessions
-When I say "let me give you feedback" or similar:
-- Wait for ALL feedback before making code changes
-- I will explicitly say "done", "finished", "that's all" when ready for you to act
-- Acknowledge each point briefly but don't implement mid-session
-- Summarize what you understood before proceeding
-
----
-
-## 🛡️ Project Standards
-
-### Planning & Documentation
-- ALWAYS put plans in `.claude/plans/`
-- ALWAYS put session handovers in `.claude/sessions/`
-
-### Responsible CI/CD Usage
-
-**Every CI run consumes energy. Be responsible.**
-
-Before pushing ANY code:
-1. Run `make check` locally - this runs the same checks as CI
-2. Fix ALL errors before pushing
-3. Never push "to see if CI catches something"
-
-This project uses path filtering - CI only runs when code-relevant files change.
-
-### Pre-Push Requirements (MANDATORY)
-
-**NEVER push code or create a PR without running locally:**
-
-```bash
-make check  # Runs: build, lint, format-check, test
+```
+/command        User invokes → thin orchestration script
+    ↓
+Agent           Specialist worker, own context window, skills preloaded
+    ↓
+Skill           Domain knowledge library, portable, self-contained
 ```
 
-Individual checks:
-```bash
-make build         # Must complete with zero errors
-make format        # Format all code
-make lint          # Must have zero errors (warnings acceptable but minimize)
-make test          # All tests must pass
-```
-
-**Note:** The Makefile automatically handles:
-- DEVELOPER_DIR for Xcode toolchain
-- CI detection for GitHub-specific SwiftLint output
-- Tool installation (SwiftLint, swift-format) if missing
-
-**If local checks pass but CI fails**: This is a BUG. Investigate and file an issue.
-
-### Code Hygiene
-
-For the complete pre-commit checklist, see **[commands/implementation-checks.md](commands/implementation-checks.md)**.
-
-This includes build verification, code quality review, testing, and domain-specific checks (localization, APIs, build/CI).
+**At session start:** Load the `termq-dev` skill. Run `git status`. Check `.claude/sessions/` for handover notes.
 
 ---
 
-## 🗂️ Directory Structure
+## Core Development Workflow
+
+For all features, fixes, and refactoring:
+
+**Before coding:** Follow the implementation prep steps in the `termq-dev` skill (session-start reference). Do not use Edit or Write tools until context is gathered, files are read, and baseline passes.
+
+### 1. Implement ↔ 2. Verify (loop until clean)
+
+**Implement** — write code following the `code-style` skill
+
+**Verify** → `/verify` — reviewer runs the quality gate + code analysis; localizer validates if UI files changed
+
+Findings from /verify must be resolved before moving on.
+
+### 3. Commit
+→ `/commit` — local commit using `commit-conventions` skill for format
+
+### 4. Push
+→ `/push` — logging-auditor runs, then push branch, open PR, monitor CI, ask before merging
+
+---
+
+## Release Workflows
+
+| Command | What it does |
+|---|---|
+| `/release` | Stable release from main |
+| `/release-beta` | Beta pre-release from main |
+| `/release-hotfix` | Critical patch from a tagged base |
+
+All three invoke the `releaser` agent, which uses the `release` skill.
+
+---
+
+## Agents
+
+| Agent | Auto-triggered when | Also invoked by |
+|---|---|---|
+| `termq-explorer` | Preparing for implementation | — |
+| `reviewer` | Code changes are made | `/verify` |
+| `logging-auditor` | Files touching logging change | `/push` |
+| `localizer` | Localization work needed | `/localization` |
+| `releaser` | Release requested | `/release*` |
+
+---
+
+## Skills
+
+| Skill | Contains |
+|---|---|
+| `termq-dev` | Project structure, module map, toolchain rules, worktrees, settings architecture |
+| `quality-gate` | The four checks that must pass before committing (build, lint, format, tests) |
+| `code-style` | Swift 6 concurrency, error handling, memory management, UI components, testing |
+| `logging-rules` | Logging privacy boundaries — app-wide, treat terminal output as user data |
+| `localization-procedures` | Translation workflows, language codes, file paths, scripts |
+| `commit-conventions` | Branch naming, commit format, PR template, merge rules |
+| `release` | Stable, beta, and hotfix release procedures |
+
+Skills are self-contained and portable. They do not reference project files, other skills, or commands. CLAUDE.md and commands reference skills — not the other way around.
+
+---
+
+## Standards
+
+Every CI run consumes energy. The `quality-gate` skill defines what must pass locally before any push. If local checks pass but CI fails, that is a bug — investigate and file an issue.
+
+---
+
+## Directory Structure
 
 ```
 .claude/
-├── CLAUDE.md              # This file - your guide
-├── settings.json          # Project-wide permissions (checked in, follows to worktrees)
-│                          # Example: Make targets, git commands, gh CLI
-├── settings.local.json    # Personal overrides (gitignored, per-worktree)
-│                          # Example: Debugging tools, personal productivity tools
-├── commands/              # Workflow documentation
-│   ├── init.md                      # Session initialization
-│   ├── implementation-prepare.md    # Pre-coding checklist
-│   ├── implementation-checks.md     # Post-coding verification
-│   ├── commit-pr.md                 # Commit and PR guide
-│   ├── release.md                   # Standard releases
-│   ├── release-beta.md              # Beta releases
-│   ├── release-hotfix.md            # Hotfix releases
-│   ├── code-style.md                # Swift patterns
-│   └── localization.md              # String management
-├── plans/                 # Implementation plans (gitignored)
-└── sessions/              # Session handovers (gitignored)
+├── CLAUDE.md                  ← this file — navigation hub
+├── settings.json              ← project permissions (committed, follows worktrees)
+├── settings.local.json        ← personal overrides (gitignored)
+├── commands/                  ← user-invocable LLM scripts (thin orchestrators)
+│   ├── verify.md
+│   ├── commit.md
+│   ├── push.md
+│   ├── localization.md
+│   ├── release.md
+│   ├── release-beta.md
+│   └── release-hotfix.md
+├── agents/                    ← sub-agent definitions
+│   ├── termq-explorer.md
+│   ├── reviewer.md
+│   ├── logging-auditor.md
+│   ├── localizer.md
+│   └── releaser.md
+├── skills/                    ← domain knowledge (agentskills.io format)
+│   ├── termq-dev/
+│   ├── quality-gate/
+│   ├── code-style/
+│   ├── logging-rules/
+│   ├── localization-procedures/
+│   ├── commit-conventions/
+│   └── release/
+├── plans/                     ← implementation plans (gitignored)
+└── sessions/                  ← session handovers (gitignored)
 ```
 
 ---
 
-## 🎮 Choose Your Adventure
+## Choose Your Adventure
 
 **Starting a session?**
-→ [commands/init.md](commands/init.md)
+→ Load `termq-dev` skill, `git status`, check `.claude/sessions/`
 
 **Working on a feature or fix?**
-→ Follow the [Core Development Workflow](#-core-development-workflow) (steps 1-5)
+→ implement → `/verify` → `/commit` → `/push`
+
+**Localization work?**
+→ `/localization <action> [language]`
 
 **Creating a release?**
-→ Follow Core Workflow + [commands/release.md](commands/release.md)
+→ `/release`, `/release-beta`, or `/release-hotfix`
 
-**Need to ship a hotfix?**
-→ Follow Core Workflow + [commands/release-hotfix.md](commands/release-hotfix.md)
-
-**Modifying UI strings?**
-→ Reference [commands/localization.md](commands/localization.md) during step 4 (Check)
-
-**Writing new Swift code?**
-→ Reference [commands/code-style.md](commands/code-style.md) during step 3 (Implement)
+**Investigating only (no planned changes)?**
+→ Use `termq-explorer` directly — no need for the full workflow
 
 **Doc-only changes?**
-→ Follow steps 1-2-3-5 (skip heavy build/test in step 4)
-
-**Investigating an issue?**
-→ Steps 1-2 only (prepare context, no implementation)
-
-**Addressing PR feedback?**
-→ Start at step 2 (prepare), then 3-4-5
-
----
-
-*"You're building a choose-your-own-adventure workflow guide!"* 🎲
+→ Skip `/verify`, just `/commit` → `/push`
