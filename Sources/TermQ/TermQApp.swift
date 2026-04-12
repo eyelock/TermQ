@@ -443,9 +443,11 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
 
-        // Close the window (not minimize - window will disappear, app stays running)
-        sender.orderOut(nil)
-        return false  // We handled the close ourselves
+        // Hide the app instead of removing the window — orderOut(nil) creates a
+        // zombie window that confuses SwiftUI's WindowGroup into spawning new scenes.
+        // Hiding preserves all state; clicking the Dock icon unhides everything.
+        NSApp.hide(nil)
+        return false
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
