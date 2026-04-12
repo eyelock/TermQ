@@ -495,14 +495,10 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "settings.debug.update.warning.title" = "Debug Build Warning";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
-/* NEEDS TRANSLATION */
-"editor.no.tags" = "No tags defined";
+"editor.no.tags" = "Ni definiranih oznak";
 
-/* NEEDS TRANSLATION */
-"editor.environment.section.add.variable" = "Add Environment Variable";
+"editor.environment.section.add.variable" = "Dodaj spremenljivko okolja";
 
-/* NEEDS TRANSLATION */
-"settings.environment.section.add.variable" = "Add Environment Variable";
+"settings.environment.section.add.variable" = "Dodaj spremenljivko okolja";
 
-/* NEEDS TRANSLATION */
-"settings.mcp.install" = "Install MCP Server";
+"settings.mcp.install" = "Namesti strežnik MCP";

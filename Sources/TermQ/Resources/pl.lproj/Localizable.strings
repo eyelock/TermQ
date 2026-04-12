@@ -495,14 +495,10 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "settings.debug.update.warning.title" = "Debug Build Warning";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
-/* NEEDS TRANSLATION */
-"editor.no.tags" = "No tags defined";
+"editor.no.tags" = "Brak zdefiniowanych tagów";
 
-/* NEEDS TRANSLATION */
-"editor.environment.section.add.variable" = "Add Environment Variable";
+"editor.environment.section.add.variable" = "Dodaj zmienną środowiskową";
 
-/* NEEDS TRANSLATION */
-"settings.environment.section.add.variable" = "Add Environment Variable";
+"settings.environment.section.add.variable" = "Dodaj zmienną środowiskową";
 
-/* NEEDS TRANSLATION */
-"settings.mcp.install" = "Install MCP Server";
+"settings.mcp.install" = "Zainstaluj serwer MCP";

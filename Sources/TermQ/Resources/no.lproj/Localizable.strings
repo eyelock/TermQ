@@ -495,14 +495,10 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "settings.debug.update.warning.title" = "Debug Build Warning";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
-/* NEEDS TRANSLATION */
-"editor.no.tags" = "No tags defined";
+"editor.no.tags" = "Ingen koder definert";
 
-/* NEEDS TRANSLATION */
-"editor.environment.section.add.variable" = "Add Environment Variable";
+"editor.environment.section.add.variable" = "Legg til miljøvariabel";
 
-/* NEEDS TRANSLATION */
-"settings.environment.section.add.variable" = "Add Environment Variable";
+"settings.environment.section.add.variable" = "Legg til miljøvariabel";
 
-/* NEEDS TRANSLATION */
-"settings.mcp.install" = "Install MCP Server";
+"settings.mcp.install" = "Installer MCP-server";
