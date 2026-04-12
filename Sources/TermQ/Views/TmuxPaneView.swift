@@ -346,7 +346,16 @@ public struct TmuxControlModeView: View {
     private func connect() {
         Task {
             do {
-                try await session.connect()
+                // This is a debug/test view - use defaults
+                let workingDir = FileManager.default.homeDirectoryForCurrentUser.path
+                let shell = ProcessInfo.processInfo.environment["SHELL"] ?? "/bin/zsh"
+                let env = ProcessInfo.processInfo.environment
+
+                try await session.connect(
+                    workingDirectory: workingDir,
+                    shell: shell,
+                    environment: env
+                )
                 isConnected = true
                 errorMessage = nil
             } catch {

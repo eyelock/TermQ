@@ -1,6 +1,5 @@
 import Foundation
 import TermQShared
-import os.log
 
 /// Common installation locations for the CLI tool
 enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtocol {
@@ -52,7 +51,6 @@ enum InstallLocation: String, CaseIterable, Identifiable, InstallLocationProtoco
 
 /// Handles installation of the termqcli CLI tool
 enum CLIInstaller {
-    private static let log = OSLog(subsystem: "net.eyelock.termq", category: "CLIInstaller")
 
     private static let config = ComponentInstaller<InstallLocation>.Config(
         bundledResourceName: AppProfile.Current.cliBinaryName,
@@ -78,22 +76,19 @@ enum CLIInstaller {
 
     /// Find where the CLI is currently installed (if anywhere)
     static var currentInstallLocation: InstallLocation? {
-        os_log("🔍 Checking CLI installation status", log: log, type: .info)
-        os_log("🔍 Looking for binary name: %{public}@", log: log, type: .info, AppProfile.Current.cliBinaryName)
+        TermQLogger.ui.debug("CLIInstaller checking binary=\(AppProfile.Current.cliBinaryName)")
 
         for location in InstallLocation.allCases {
             let installed = isInstalled(at: location)
-            os_log(
-                "🔍 Checking %{public}@: %{public}@", log: log, type: .info,
-                location.path, installed ? "FOUND" : "not found")
+            TermQLogger.ui.debug("CLIInstaller \(location.path): \(installed ? "FOUND" : "not found")")
 
             if installed {
-                os_log("✅ CLI found at: %{public}@", log: log, type: .info, location.path)
+                TermQLogger.ui.info("CLIInstaller found path=\(location.path)")
                 return location
             }
         }
 
-        os_log("❌ CLI not found in any location", log: log, type: .info)
+        TermQLogger.ui.info("CLIInstaller not found in any location")
         return nil
     }
 

@@ -275,7 +275,7 @@ public class TmuxManager: ObservableObject {
             try await setSessionMetadata(
                 name: sessionName, key: MetadataKey.isFavourite.rawValue, value: card.isFavourite ? "1" : "0")
         } catch {
-            print("TmuxManager: Failed to sync metadata for \(sessionName): \(error)")
+            TermQLogger.session.error("syncMetadata failed session=\(sessionName) error=\(error)")
         }
     }
 
@@ -357,7 +357,7 @@ public class TmuxManager: ObservableObject {
                     name: sessionName, key: MetadataKey.isFavourite.rawValue, value: isFavourite ? "1" : "0")
             }
         } catch {
-            print("TmuxManager: Failed to update metadata for \(sessionName): \(error)")
+            TermQLogger.session.error("updateMetadata failed session=\(sessionName) error=\(error)")
         }
     }
 

@@ -73,7 +73,7 @@ enum HelpContentLoader {
             let data = try? Data(contentsOf: url),
             let index = try? JSONDecoder().decode(HelpIndex.self, from: data)
         else {
-            print("Failed to load help index from bundle")
+            TermQLogger.ui.error("Failed to load help index from bundle")
             return []
         }
         return index.sections

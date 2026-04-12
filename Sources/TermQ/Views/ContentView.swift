@@ -164,7 +164,7 @@ struct ContentView: View {
                             .font(.headline)
 
                         // TMUX system badge (if using tmux backend)
-                        if selectedCard.backend == .tmux {
+                        if selectedCard.backend.usesTmux {
                             Text(Strings.Card.tmux)
                                 .font(.caption)
                                 .fontWeight(.bold)
@@ -194,10 +194,6 @@ struct ContentView: View {
                         Text(Strings.appName)
                             .font(.headline)
                     }
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color.secondary.opacity(0.15))
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
             }
 
@@ -477,7 +473,7 @@ struct ContentView: View {
             var error: NSDictionary?
             appleScript.executeAndReturnError(&error)
             if let error = error {
-                print("AppleScript error: \(error)")
+                TermQLogger.session.error("AppleScript error: \(error)")
             }
         }
     }
@@ -505,7 +501,7 @@ struct ContentView: View {
             do {
                 try content.write(to: url, atomically: true, encoding: .utf8)
             } catch {
-                print("Failed to export session: \(error)")
+                TermQLogger.session.error("exportSession failed: \(error)")
             }
         }
     }

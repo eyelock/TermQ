@@ -1,5 +1,4 @@
 import Foundation
-import os.log
 
 // MARK: - Protocols
 
@@ -78,44 +77,40 @@ public enum ComponentInstaller<Location: InstallLocationProtocol> {
 
     /// Get the path to the bundled component within the app bundle
     public static func bundledPath(config: Config) -> URL? {
-        let log = OSLog(subsystem: "net.eyelock.termq", category: "ComponentInstaller")
-        os_log("🔍 Looking for bundled resource: %{public}@", log: log, type: .debug, config.bundledResourceName)
-        os_log("🔍 Component display name: %{public}@", log: log, type: .debug, config.componentDisplayName)
+        TermQLogger.ui.debug(
+            "bundledPath resource=\(config.bundledResourceName) component=\(config.componentDisplayName)")
 
         // Try standard resource lookup first
         if let url = Bundle.main.url(forResource: config.bundledResourceName, withExtension: nil) {
-            os_log("✅ Found via Bundle.main.url: %{public}@", log: log, type: .info, url.path)
+            TermQLogger.ui.info("bundledPath found path=\(url.path)")
             return url
         }
-        os_log("⚠️ Standard Bundle.main.url lookup failed", log: log, type: .info)
+        TermQLogger.ui.warning("bundledPath Bundle.main.url lookup failed")
 
         // For executable binaries not registered in Info.plist, check Resources directory directly
         guard let resourceURL = Bundle.main.resourceURL else {
-            os_log("❌ Bundle.main.resourceURL is nil", log: log, type: .error)
+            TermQLogger.ui.error("bundledPath Bundle.main.resourceURL is nil")
             return nil
         }
-        os_log("🔍 resourceURL: %{public}@", log: log, type: .debug, resourceURL.path)
+        TermQLogger.ui.debug("bundledPath resourceURL=\(resourceURL.path)")
 
         let binaryURL = resourceURL.appendingPathComponent(config.bundledResourceName)
-        os_log("🔍 Checking direct path: %{public}@", log: log, type: .debug, binaryURL.path)
+        TermQLogger.ui.debug("bundledPath checking=\(binaryURL.path)")
 
         // Verify the file exists
         if FileManager.default.fileExists(atPath: binaryURL.path) {
-            os_log("✅ Found via direct path: %{public}@", log: log, type: .info, binaryURL.path)
+            TermQLogger.ui.info("bundledPath found via direct path=\(binaryURL.path)")
             return binaryURL
         }
 
-        os_log("❌ File does not exist at: %{public}@", log: log, type: .error, binaryURL.path)
+        TermQLogger.ui.error("bundledPath not found path=\(binaryURL.path)")
 
         // List what's actually in the Resources directory
         do {
             let contents = try FileManager.default.contentsOfDirectory(atPath: resourceURL.path)
-            os_log("📁 Resources directory contents:", log: log, type: .info)
-            for item in contents.sorted() {
-                os_log("   - %{public}@", log: log, type: .info, item)
-            }
+            TermQLogger.ui.info("bundledPath Resources contents: \(contents.sorted().joined(separator: ", "))")
         } catch {
-            os_log("❌ Error listing directory: %{public}@", log: log, type: .error, error.localizedDescription)
+            TermQLogger.ui.error("bundledPath directory listing failed error=\(error.localizedDescription)")
         }
 
         return nil
@@ -155,27 +150,23 @@ public enum ComponentInstaller<Location: InstallLocationProtocol> {
     public static func install(
         toPath path: String, requiresAdmin: Bool? = nil, config: Config
     ) async -> Result<String, ComponentInstallerError> {
-        let log = OSLog(subsystem: "net.eyelock.termq", category: "ComponentInstaller")
-        os_log("🚀 Starting installation", log: log, type: .info)
-        os_log("🚀 Target path: %{public}@", log: log, type: .info, path)
-        os_log("🚀 Component: %{public}@", log: log, type: .info, config.bundledResourceName)
+        TermQLogger.ui.info("install starting component=\(config.bundledResourceName) target=\(path)")
 
         guard let sourcePath = bundledPath(config: config) else {
-            os_log("❌ bundledPath returned nil - component not found", log: log, type: .error)
+            TermQLogger.ui.error("install bundledPath nil component=\(config.componentDisplayName)")
             return .failure(.bundledComponentNotFound(componentName: config.componentDisplayName))
         }
 
-        os_log("✅ Source path: %{public}@", log: log, type: .info, sourcePath.path)
+        TermQLogger.ui.info("install source=\(sourcePath.path)")
 
         let expandedPath = NSString(string: path).expandingTildeInPath
         let fullPath = "\(expandedPath)/\(config.bundledResourceName)"
 
-        os_log("🔍 Expanded path: %{public}@", log: log, type: .debug, expandedPath)
-        os_log("🔍 Full destination: %{public}@", log: log, type: .debug, fullPath)
+        TermQLogger.ui.debug("install expandedPath=\(expandedPath) destination=\(fullPath)")
 
         // Determine if admin is needed (if not explicitly specified, check if path is writable)
         let needsAdmin = requiresAdmin ?? !FileManager.default.isWritableFile(atPath: expandedPath)
-        os_log("🔍 Needs admin: %{public}d", log: log, type: .debug, needsAdmin)
+        TermQLogger.ui.debug("install needsAdmin=\(needsAdmin)")
 
         if needsAdmin {
             return await installWithAdmin(

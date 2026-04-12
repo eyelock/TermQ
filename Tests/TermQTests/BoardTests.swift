@@ -490,9 +490,9 @@ final class BoardTests: XCTestCase {
         let column = Column(name: "Test", orderIndex: 0)
         let board = Board(columns: [column], cards: [])
 
-        let card = board.addCard(to: column, title: "TMUX Card", backend: .tmux)
+        let card = board.addCard(to: column, title: "TMUX Card", backend: .tmuxAttach)
 
-        XCTAssertEqual(card.backend, .tmux)
+        XCTAssertEqual(card.backend, .tmuxAttach)
     }
 
     func testAddCardWithDefaultWorkingDirectory() {
@@ -522,10 +522,10 @@ final class BoardTests: XCTestCase {
             to: column,
             title: "Full Custom",
             workingDirectory: customPath,
-            backend: .tmux
+            backend: .tmuxAttach
         )
 
         XCTAssertEqual(card.workingDirectory, customPath)
-        XCTAssertEqual(card.backend, .tmux)
+        XCTAssertEqual(card.backend, .tmuxAttach)
     }
 }

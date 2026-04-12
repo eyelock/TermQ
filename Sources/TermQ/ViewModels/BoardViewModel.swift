@@ -454,10 +454,9 @@ class BoardViewModel: ObservableObject {
             title = "Terminal \(counter)"
         }
 
-        // Determine backend for transient card - use tmux if available and enabled
-        let tmuxEnabled = UserDefaults.standard.object(forKey: "tmuxEnabled") as? Bool ?? true
-        let tmuxManager = TmuxManager.shared
-        let defaultBackend: TerminalBackend = (tmuxManager.isAvailable && tmuxEnabled) ? .tmux : .direct
+        // Use the user's chosen default backend, falling back to direct if unavailable
+        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
+        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
 
         let card = TerminalCard(
             title: title,

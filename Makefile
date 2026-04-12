@@ -201,14 +201,16 @@ $(DEBUG_APP): $(DEBUG_BUILD_DIR)/$(APP_NAME) $(DEBUG_BUILD_DIR)/$(CLI_DEBUG_BINA
 build: $(DEBUG_APP)
 
 # Build, sign, and run the debug app (auto-quits existing instance)
+# TERMQ_DEBUG=1 enables file logging to /tmp/termq-debug.log
 debug: build
 	@if pgrep -f "$(DEBUG_APP)/Contents/MacOS" >/dev/null 2>&1; then \
 		echo "Quitting running $(APP_NAME) Debug..."; \
 		osascript -e 'tell application "$(DEBUG_APP_NAME)" to quit' 2>/dev/null || true; \
 		sleep 1; \
 	fi
-	@echo "Launching $(APP_NAME) Debug..."
-	@open $(DEBUG_APP)
+	@echo "Launching $(APP_NAME) Debug (TERMQ_DEBUG=1)..."
+	@echo "  Logs: tail -f /tmp/termq-debug.log"
+	@TERMQ_DEBUG=1 $(DEBUG_APP)/Contents/MacOS/$(APP_NAME) &
 
 # Build and run the release app (errors if production app is running)
 run: release-app

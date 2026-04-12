@@ -50,6 +50,9 @@ public class TmuxControlModeParser: ObservableObject {
     /// Called when a window is closed (window_id)
     public var onWindowClose: ((String) -> Void)?
 
+    /// Called when pane mode changes (pane_id) - e.g. copy mode enter/exit
+    public var onPaneModeChanged: ((String) -> Void)?
+
     /// Called when session changes
     public var onSessionChange: ((String, String) -> Void)?
 
@@ -60,6 +63,9 @@ public class TmuxControlModeParser: ObservableObject {
 
     /// Buffer for accumulating partial lines
     private var lineBuffer: String = ""
+
+    /// Buffer for accumulating partial UTF-8 sequences split across pipe reads
+    private var rawBuffer: Data = Data()
 
     /// Pending command responses (by command ID)
     private var pendingCommands: [Int: CommandResponse] = [:]
@@ -79,23 +85,33 @@ public class TmuxControlModeParser: ObservableObject {
     /// Parse incoming data from tmux control mode
     /// Call this method with raw output from the tmux -CC process
     public func parse(_ data: Data) {
-        guard let text = String(data: data, encoding: .utf8) else {
-            lastError = "Failed to decode control mode data as UTF-8"
-            return
-        }
+        // Accumulate with any previously partial UTF-8 data
+        rawBuffer.append(contentsOf: data)
 
-        parse(text)
+        // Decode as much as possible — walk back from the end to find a valid UTF-8 boundary
+        var end = rawBuffer.count
+        while end > 0 {
+            let slice = rawBuffer[rawBuffer.startIndex..<rawBuffer.index(rawBuffer.startIndex, offsetBy: end)]
+            if let text = String(data: slice, encoding: .utf8) {
+                rawBuffer =
+                    end < rawBuffer.count
+                    ? Data(rawBuffer[rawBuffer.index(rawBuffer.startIndex, offsetBy: end)...])
+                    : Data()
+                parse(text)
+                return
+            }
+            end -= 1
+        }
+        // rawBuffer holds an incomplete sequence; wait for more data
     }
 
     /// Parse incoming text from tmux control mode
     public func parse(_ text: String) {
-        // Append to buffer and process complete lines
         lineBuffer += text
 
         while let newlineIndex = lineBuffer.firstIndex(of: "\n") {
             let line = String(lineBuffer[..<newlineIndex])
             lineBuffer = String(lineBuffer[lineBuffer.index(after: newlineIndex)...])
-
             parseLine(line)
         }
     }
@@ -103,6 +119,7 @@ public class TmuxControlModeParser: ObservableObject {
     /// Reset parser state
     public func reset() {
         lineBuffer = ""
+        rawBuffer = Data()
         pendingCommands.removeAll()
         currentResponse = nil
         panes = []
@@ -140,12 +157,26 @@ public class TmuxControlModeParser: ObservableObject {
     // MARK: - Private Parsing
 
     private func parseLine(_ line: String) {
-        // Control mode lines start with %
-        if line.hasPrefix("%") {
+        // When inside a command response block (%begin...%end), most lines are command
+        // output (e.g. "%0 80 24 0 0 1" from list-panes). However, tmux can interleave
+        // pane output notifications (%output) within a command response — this happens
+        // because every send-keys command generates a %begin/%end pair while the shell
+        // simultaneously echoes the key via %output. We must pass %output through
+        // immediately; other notifications that could trigger new commands (e.g.
+        // %layout-change → list-panes) are deferred until the block closes to avoid
+        // nested %begin/%end which our single-response tracker cannot handle.
+        if currentResponse != nil {
+            if line.hasPrefix("%begin") || line.hasPrefix("%end") {
+                parseControlLine(line)
+            } else if line.hasPrefix("%output ") {
+                // Pane output interleaved with a command response — process immediately
+                parseControlLine(line)
+            } else {
+                currentResponse?.output.append(line + "\n")
+                parseListPanesLine(line)
+            }
+        } else if line.hasPrefix("%") {
             parseControlLine(line)
-        } else if currentResponse != nil {
-            // We're inside a command response - accumulate output
-            currentResponse?.output.append(line + "\n")
         }
     }
 
@@ -184,31 +215,26 @@ public class TmuxControlModeParser: ObservableObject {
             handleExit(parts)
 
         default:
-            // Unknown control message - log for debugging
-            print("TmuxControlMode: Unknown control message: \(command)")
+            break
         }
     }
 
     // MARK: - Control Message Handlers
 
     private func handleBegin(_ parts: [String.SubSequence]) {
-        // %begin <timestamp> <number> <flags>
-        guard parts.count >= 3,
-            let commandId = Int(parts[2])
-        else {
-            return
-        }
+        guard parts.count >= 3 else { return }
+
+        let numberPart = parts[2].split(separator: " ").first ?? parts[2]
+        guard let commandId = Int(numberPart) else { return }
 
         currentResponse = CommandResponse(id: commandId)
     }
 
     private func handleEnd(_ parts: [String.SubSequence]) {
-        // %end <timestamp> <number> <flags>
-        guard parts.count >= 3,
-            let commandId = Int(parts[2])
-        else {
-            return
-        }
+        guard parts.count >= 3 else { return }
+
+        let numberPart = parts[2].split(separator: " ").first ?? parts[2]
+        guard let commandId = Int(numberPart) else { return }
 
         if var response = currentResponse, response.id == commandId {
             response.isComplete = true
@@ -218,21 +244,58 @@ public class TmuxControlModeParser: ObservableObject {
     }
 
     private func handleOutput(_ parts: [String.SubSequence]) {
-        // %output %<pane-id> <escaped-data>
         guard parts.count >= 2 else { return }
 
         let paneIdPart = String(parts[1])
         let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
 
-        // Data is URL-encoded (percent-escaped)
         let escapedData = parts.count > 2 ? String(parts[2]) : ""
-        if let data = decodePercentEscaped(escapedData) {
-            onPaneOutput?(paneId, data)
+        if let data = decodeTmuxOutput(escapedData) {
+            onPaneOutput?(paneId, filterForSwiftTerm(data))
         }
     }
 
+    /// Filter tmux-specific escape sequences that SwiftTerm does not support.
+    ///
+    /// The tmux/screen window-title sequence `ESC k <name> ESC \` is forwarded
+    /// verbatim in `%output` notifications. SwiftTerm treats `ESC k` as an
+    /// unknown 2-character escape — consuming only those two bytes — so the title
+    /// text ("echo", "mkdir", etc.) is rendered as literal characters. This makes
+    /// every command's output appear prepended with the command name, e.g.
+    /// `echo hello` → `echohello` instead of `hello`.
+    ///
+    /// This function strips `ESC k ... ESC \` (and the BEL-terminated variant)
+    /// before the bytes reach SwiftTerm.
+    private func filterForSwiftTerm(_ data: Data) -> Data {
+        let bytes = [UInt8](data)
+        var result = [UInt8]()
+        result.reserveCapacity(bytes.count)
+        var i = 0
+        while i < bytes.count {
+            // ESC k — tmux/screen window-title sequence (not a standard xterm sequence)
+            if bytes[i] == 0x1B, i + 1 < bytes.count, bytes[i + 1] == 0x6B {
+                i += 2  // skip ESC k
+                // Consume title text until String Terminator (ESC \) or BEL
+                while i < bytes.count {
+                    if bytes[i] == 0x07 {
+                        i += 1
+                        break  // BEL terminates
+                    }
+                    if bytes[i] == 0x1B, i + 1 < bytes.count, bytes[i + 1] == 0x5C {
+                        i += 2
+                        break  // ESC \ terminates
+                    }
+                    i += 1
+                }
+            } else {
+                result.append(bytes[i])
+                i += 1
+            }
+        }
+        return Data(result)
+    }
+
     private func handleLayoutChange(_ parts: [String.SubSequence]) {
-        // %layout-change @<window-id> <layout>
         guard parts.count >= 3 else { return }
 
         let windowIdPart = String(parts[1])
@@ -240,12 +303,10 @@ public class TmuxControlModeParser: ObservableObject {
         let layout = String(parts[2])
 
         currentLayout = layout
-        parseLayoutString(layout)
         onLayoutChange?(windowId, layout)
     }
 
     private func handleWindowAdd(_ parts: [String.SubSequence]) {
-        // %window-add @<window-id>
         guard parts.count >= 2 else { return }
 
         let windowIdPart = String(parts[1])
@@ -259,21 +320,18 @@ public class TmuxControlModeParser: ObservableObject {
     }
 
     private func handleWindowClose(_ parts: [String.SubSequence]) {
-        // %window-close @<window-id>
         guard parts.count >= 2 else { return }
 
         let windowIdPart = String(parts[1])
         let windowId = windowIdPart.hasPrefix("@") ? String(windowIdPart.dropFirst()) : windowIdPart
 
         windows.removeAll { $0.id == windowId }
-        // Also remove panes belonging to this window
         panes.removeAll { $0.windowId == windowId }
 
         onWindowClose?(windowId)
     }
 
     private func handleSessionChanged(_ parts: [String.SubSequence]) {
-        // %session-changed $<session-id> <name>
         guard parts.count >= 3 else { return }
 
         let sessionIdPart = String(parts[1])
@@ -285,20 +343,19 @@ public class TmuxControlModeParser: ObservableObject {
     }
 
     private func handlePaneModeChanged(_ parts: [String.SubSequence]) {
-        // %pane-mode-changed %<pane-id>
         guard parts.count >= 2 else { return }
 
         let paneIdPart = String(parts[1])
         let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
 
-        // Update pane mode if we're tracking it
         if let index = panes.firstIndex(where: { $0.id == paneId }) {
             panes[index].inCopyMode.toggle()
         }
+
+        onPaneModeChanged?(paneId)
     }
 
     private func handleExit(_ parts: [String.SubSequence]) {
-        // %exit [reason]
         let reason = parts.count > 1 ? String(parts[1]) : nil
         isConnected = false
         onExit?(reason)
@@ -306,68 +363,98 @@ public class TmuxControlModeParser: ObservableObject {
 
     // MARK: - Layout Parsing
 
-    /// Parse a tmux layout string into pane structures
-    /// Format: WIDTHxHEIGHT,X,Y[{children}]
-    /// Example: "177x42,0,0{88x42,0,0,0,88x42,89,0,1}"
-    private func parseLayoutString(_ layout: String) {
-        // This is a simplified parser - full layout parsing is complex
-        // For now, we extract basic pane information
-
-        var newPanes: [TmuxPane] = []
-
-        // Find all pane IDs in the layout (comma-separated numbers at leaf nodes)
-        let panePattern = /,(\d+)(?:,|$|\})/
-        let matches = layout.matches(of: panePattern)
-
-        for match in matches {
-            let paneId = String(match.output.1)
-            if !newPanes.contains(where: { $0.id == paneId }) {
-                newPanes.append(
-                    TmuxPane(
-                        id: paneId,
-                        windowId: "",  // Would need more context to set
-                        width: 0,
-                        height: 0,
-                        x: 0,
-                        y: 0
-                    ))
-            }
+    /// Parse list-panes -F output line
+    /// Format from: list-panes -F '#{pane_id} #{pane_width} #{pane_height} #{pane_left} #{pane_top} #{pane_active}'
+    /// Example: "%0 80 24 0 0 1" (active) or "%1 80 24 0 0 " (inactive)
+    private func parseListPanesLine(_ line: String) {
+        let parts = line.split(separator: " ", omittingEmptySubsequences: false)
+        guard parts.count >= 5,
+            let first = parts.first, first.hasPrefix("%")
+        else {
+            return
         }
 
-        // Only update if we found panes
-        if !newPanes.isEmpty {
-            panes = newPanes
+        let paneId = String(first.dropFirst())
+        let width = Int(parts[1]) ?? 0
+        let height = Int(parts[2]) ?? 0
+        let x = Int(parts[3]) ?? 0
+        let y = Int(parts[4]) ?? 0
+        let isActive = parts.count > 5 && parts[5] == "1"
+
+        if let index = panes.firstIndex(where: { $0.id == paneId }) {
+            panes[index].width = width
+            panes[index].height = height
+            panes[index].x = x
+            panes[index].y = y
+            panes[index].isActive = isActive
+        } else {
+            var pane = TmuxPane(
+                id: paneId,
+                windowId: "0",
+                width: width,
+                height: height,
+                x: x,
+                y: y
+            )
+            pane.isActive = isActive
+            panes.append(pane)
         }
     }
 
     // MARK: - Helpers
 
-    /// Decode percent-escaped data from control mode output
-    private func decodePercentEscaped(_ string: String) -> Data? {
+    /// Decode tmux control mode output escaping from %output notifications.
+    ///
+    /// tmux encodes pane output as follows (control.c `control_write_data`):
+    /// - Backslash → `\\`
+    /// - Non-printable bytes (< 0x20 or 0x7f) → `\NNN` (3-digit zero-padded octal)
+    /// - All other bytes → passed through as-is (including UTF-8 multi-byte sequences)
+    ///
+    /// ESC (0x1b = 033 octal) arrives as the four characters `\033`, not as `%1b`.
+    private func decodeTmuxOutput(_ string: String) -> Data? {
         var result = Data()
         var index = string.startIndex
 
         while index < string.endIndex {
             let char = string[index]
 
-            if char == "%" {
-                // Percent-encoded byte
-                let nextIndex = string.index(index, offsetBy: 2, limitedBy: string.endIndex)
-                guard let next = nextIndex else { break }
-
-                let hexString = String(string[string.index(after: index)..<next])
-                if let byte = UInt8(hexString, radix: 16) {
-                    result.append(byte)
-                    index = next
-                    continue
+            if char == "\\" {
+                let afterBackslash = string.index(after: index)
+                guard afterBackslash < string.endIndex else {
+                    result.append(0x5c)  // trailing lone backslash
+                    break
                 }
-            }
-
-            // Regular character
-            if let data = String(char).data(using: .utf8) {
+                let nextChar = string[afterBackslash]
+                if nextChar == "\\" {
+                    // Escaped backslash → single backslash byte
+                    result.append(0x5c)
+                    index = string.index(after: afterBackslash)
+                } else if nextChar >= "0" && nextChar <= "7" {
+                    // Octal escape \NNN — tmux always writes exactly 3 digits
+                    var octalStr = ""
+                    var octalIndex = afterBackslash
+                    for _ in 0..<3 {
+                        guard octalIndex < string.endIndex else { break }
+                        let c = string[octalIndex]
+                        guard c >= "0" && c <= "7" else { break }
+                        octalStr.append(c)
+                        octalIndex = string.index(after: octalIndex)
+                    }
+                    if let value = UInt8(octalStr, radix: 8) {
+                        result.append(value)
+                    }
+                    index = octalIndex
+                } else {
+                    // Unknown escape — pass backslash through and continue
+                    result.append(0x5c)
+                    index = afterBackslash
+                }
+            } else if let data = String(char).data(using: .utf8) {
                 result.append(data)
+                index = string.index(after: index)
+            } else {
+                index = string.index(after: index)
             }
-            index = string.index(after: index)
         }
 
         return result
@@ -462,7 +549,8 @@ public class TmuxControlModeSession: ObservableObject {
     // MARK: - Connection
 
     /// Connect to the tmux session in control mode
-    public func connect() async throws {
+    /// Creates a new session directly - do NOT pre-create the session
+    public func connect(workingDirectory: String, shell: String, environment: [String: String]) async throws {
         guard let tmuxPath = TmuxManager.shared.tmuxPath else {
             throw TmuxError.notAvailable
         }
@@ -473,30 +561,76 @@ public class TmuxControlModeSession: ObservableObject {
         self.outputPipe = output
         self.inputPipe = input
 
-        // Set up process
+        // Set up process - direct tmux control mode with new-session.
+        // Use -C (not -CC) because -CC requires TTY for termios modifications.
+        // See: https://github.com/tmux/tmux/issues/3085
+        //
+        // -A: attach to an existing session if one exists, else create new.
+        //     Without -A, new-session fails if the session already exists
+        //     (e.g., on TermQ relaunch with persistent tmux sessions).
+        // -c: starting directory for new sessions (ignored when attaching).
+        // shell -l: login shell command for new sessions (ignored when attaching).
         let proc = Process()
         proc.executableURL = URL(fileURLWithPath: tmuxPath)
-        proc.arguments = ["-CC", "attach-session", "-t", sessionName]
+        proc.arguments = ["-C", "new-session", "-A", "-s", sessionName, "-c", workingDirectory, shell, "-l"]
         proc.standardOutput = output
         proc.standardInput = input
+        proc.standardError = Pipe()  // Suppress stderr
 
         // Handle output asynchronously
         output.fileHandleForReading.readabilityHandler = { [weak self] handle in
             let data = handle.availableData
-            guard !data.isEmpty else { return }
+
+            guard !data.isEmpty else {
+                handle.readabilityHandler = nil
+                return
+            }
 
             Task { @MainActor [weak self] in
                 self?.parser.parse(data)
             }
         }
 
-        // Start the process
+        proc.terminationHandler = { _ in }
+
         try proc.run()
         self.process = proc
 
-        // Wait for connection confirmation
-        try await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
+        // Wait for connection
+        for _ in 1...10 {
+            try await Task.sleep(nanoseconds: 100_000_000)  // 100ms
+
+            if parser.isConnected {
+                break
+            }
+
+            if !proc.isRunning {
+                throw TmuxError.notAvailable
+            }
+        }
+
         isConnected = parser.isConnected
+
+        // Configure session options via control mode
+        if parser.isConnected {
+            sendCommand("set-option -t \(sessionName) status off")
+            sendCommand("set-option -t \(sessionName) mouse on")
+            sendCommand("set-option -t \(sessionName) default-terminal 'xterm-256color'")
+            sendCommand("set-option -t \(sessionName) escape-time 10")
+            sendCommand("set-option -t \(sessionName) allow-passthrough off")
+
+            // Request initial pane information
+            sendCommand(
+                "list-panes -F '#{pane_id} #{pane_width} #{pane_height} #{pane_left} #{pane_top} #{pane_active}'")
+
+            // Wait for panes response
+            try await Task.sleep(nanoseconds: 200_000_000)  // 200ms
+
+            await MainActor.run {
+                self.panes = parser.panes
+            }
+        }
+
     }
 
     /// Disconnect from the tmux session
@@ -504,6 +638,26 @@ public class TmuxControlModeSession: ObservableObject {
         outputPipe?.fileHandleForReading.readabilityHandler = nil
         process?.terminate()
         process = nil
+    }
+
+    // MARK: - Client Resize (deduplicated)
+
+    /// Last client size successfully sent — avoids sending duplicate refresh-client commands.
+    private var lastClientCols: Int = 0
+    private var lastClientRows: Int = 0
+
+    /// Resize the tmux client window, ignoring no-op calls with the same dimensions.
+    ///
+    /// Each `ControlModePaneDelegate.sizeChanged` fires when any individual pane is
+    /// laid out, so several delegates call this per render pass. Deduplication here
+    /// ensures we send at most one `refresh-client` per unique window size, preventing
+    /// the %layout-change → sizeChanged → refresh-client → %layout-change loop.
+    public func sendClientResize(cols: Int, rows: Int) {
+        guard cols > 0, rows > 0 else { return }
+        guard cols != lastClientCols || rows != lastClientRows else { return }
+        lastClientCols = cols
+        lastClientRows = rows
+        sendCommand("refresh-client -C \(cols)x\(rows)")
     }
 
     // MARK: - Commands
@@ -527,6 +681,14 @@ public class TmuxControlModeSession: ObservableObject {
             return response.output
         }
         return nil
+    }
+
+    /// Send input data to a specific pane via send-keys -H (hex encoding)
+    /// This is the correct way to send keystrokes in control mode - raw bytes
+    /// on stdin are interpreted as tmux commands, not shell input.
+    public func sendInputToPane(_ data: Data, paneId: String) {
+        let hexString = data.map { String(format: "%02x", $0) }.joined(separator: " ")
+        sendCommand("send-keys -H -t %\(paneId) \(hexString)")
     }
 
     // MARK: - Pane Operations
@@ -659,7 +821,11 @@ public class TmuxControlModeSession: ObservableObject {
         }
 
         parser.onLayoutChange = { [weak self] _, _ in
+            self?.sendCommand(
+                "list-panes -F '#{pane_id} #{pane_width} #{pane_height} #{pane_left} #{pane_top} #{pane_active}'")
+
             Task { @MainActor [weak self] in
+                try? await Task.sleep(nanoseconds: 100_000_000)  // 100ms
                 self?.panes = self?.parser.panes ?? []
             }
         }

@@ -143,13 +143,72 @@ make check
 
 ## Debugging
 
-### Console Output
+### Logging with TermQLogger
 
-Run the app from terminal to see logs:
+TermQ uses a structured logging system in `Sources/TermQ/Services/TermQLogger.swift`.
+**Do not use `print()` or `NSLog()` for diagnostics** — use `TermQLogger` instead.
+
+#### Adding log points
+
+```swift
+TermQLogger.tmux.debug("sizeChanged pane=\(id) \(cols)x\(rows)")
+TermQLogger.session.info("Connected to session=\(name) existing=\(wasExisting)")
+TermQLogger.focus.warning("makeFirstResponder called on nil window")
+TermQLogger.session.error("connect() threw: \(error)")
+```
+
+| Level | When to use |
+|-------|-------------|
+| `debug` | High-frequency events: sizeChanged, output bytes, layout passes |
+| `info` | Noteworthy state changes: session connected, pane added, focus granted |
+| `warning` | Unexpected but recoverable: missing pane, skipped resize |
+| `error` | Failures that affect functionality: connect threw, process died |
+
+| Category | Covers |
+|----------|--------|
+| `tmux` | Control mode protocol, resize, layout changes, pane output, commands |
+| `pane` | Pane lifecycle: creation, layout, border updates, cleanup |
+| `session` | Terminal session lifecycle: connect, disconnect, backend switching |
+| `focus` | Keyboard focus: first responder, tab switching, click-to-focus |
+| `io` | Input/output routing: key events, raw pane output bytes |
+| `ui` | SwiftUI/AppKit view lifecycle: appear, disappear, layout passes |
+
+#### Unified Logging (always active)
+
+Every log message goes to Apple's Unified Logging system. Stream live in a second terminal:
 
 ```bash
-.build/debug/TermQ
+# All TermQ messages
+log stream --predicate 'subsystem == "net.eyelock.termq"'
+
+# Filter by category
+log stream --predicate 'subsystem == "net.eyelock.termq" AND category == "tmux"'
+
+# Show past session (last 10 minutes)
+log show --predicate 'subsystem == "net.eyelock.termq"' --last 10m
 ```
+
+Or browse in **Console.app** — search by subsystem `net.eyelock.termq`.
+
+#### File logging mode (TERMQ_DEBUG=1)
+
+For active debugging, set `TERMQ_DEBUG=1` to also write messages to `/tmp/termq-debug.log`.
+The file is truncated at each launch, so each run starts clean.
+
+```bash
+# Launch debug app with file logging
+TERMQ_DEBUG=1 open TermQDebug.app
+
+# Tail live output in another terminal
+tail -f /tmp/termq-debug.log
+
+# Filter to a specific category
+tail -f /tmp/termq-debug.log | grep '\[tmux\]'
+tail -f /tmp/termq-debug.log | grep '\[focus\]'
+```
+
+> **Note:** The `io` category (raw output bytes) is verbose — only enable it when
+> specifically debugging input/output routing, and filter aggressively with `grep`.
 
 ### Xcode Debugging
 
@@ -167,9 +226,11 @@ Then use Xcode's debugger, breakpoints, and Instruments.
 | Issue | File to Check |
 |-------|---------------|
 | Terminal sessions | `TerminalSessionManager.swift` |
+| tmux control mode | `TerminalSessionManager+ControlMode.swift`, `TmuxControlMode.swift` |
 | Board persistence | `BoardViewModel.swift` |
 | URL scheme handling | `TermQApp.swift` |
 | Drag & drop | `ColumnView.swift` |
+| Multi-pane layout | `TmuxMultiPaneView.swift`, `PaneTerminalView.swift` |
 
 ### URL Scheme Testing
 

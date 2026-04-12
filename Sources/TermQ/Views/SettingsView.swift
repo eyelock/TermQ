@@ -2,10 +2,8 @@ import AppKit
 import Sparkle
 import SwiftUI
 import TermQCore
-import os.log
 
 struct SettingsView: View {
-    private let log = OSLog(subsystem: "net.eyelock.termq", category: "SettingsView")
 
     // Initial tab selection (for deep linking)
     var initialTab: SettingsTab?
@@ -169,18 +167,14 @@ struct SettingsView: View {
     }
 
     private func refreshInstallStatus() {
-        os_log("🔄 refreshInstallStatus() called", log: log, type: .info)
-
         if let location = CLIInstaller.currentInstallLocation {
-            os_log("✅ CLI detected at: %{public}@", log: log, type: .info, location.path)
+            TermQLogger.ui.info("refreshInstallStatus CLI found path=\(location.path)")
             cliInstallPath = location.path
             cliInstalled = true
-            os_log("📝 Set cliInstalled = true, cliInstallPath = %{public}@", log: log, type: .info, location.path)
         } else {
-            os_log("❌ CLI not detected", log: log, type: .info)
+            TermQLogger.ui.info("refreshInstallStatus CLI not detected")
             cliInstallPath = "/usr/local/bin"
             cliInstalled = false
-            os_log("📝 Set cliInstalled = false, cliInstallPath = /usr/local/bin", log: log, type: .info)
         }
     }
 
