@@ -40,8 +40,11 @@ VERSION := $(shell git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || 
 MAJOR := $(shell echo $(VERSION) | cut -d. -f1)
 MINOR := $(shell echo $(VERSION) | cut -d. -f2)
 PATCH := $(shell echo $(VERSION) | cut -d. -f3)
-# Git commit SHA (7 chars)
+# Git commit SHA (7 chars) — stored in TermQBuildSHA plist key for display only
 GIT_SHA := $(shell git rev-parse --short=7 HEAD 2>/dev/null || echo "unknown")
+# Sparkle-safe version: converts dash pre-release notation to dot notation
+# 0.7.0-beta.9 → 0.7.0.b9 | 0.7.0-alpha.3 → 0.7.0.a3 | 0.7.0-rc.2 → 0.7.0.rc2
+SPARKLE_VERSION := $(shell echo "$(VERSION)" | sed 's/-beta\./.b/;s/-alpha\./.a/;s/-rc\./.rc/')
 
 # Track all Swift sources for incremental builds
 SWIFT_SOURCES := $(shell find Sources -name "*.swift" 2>/dev/null)
@@ -190,13 +193,14 @@ $(DEBUG_APP): $(DEBUG_BUILD_DIR)/$(APP_NAME) $(DEBUG_BUILD_DIR)/$(CLI_DEBUG_BINA
 		cp -R $(DEBUG_BUILD_DIR)/$(RESOURCES_BUNDLE) $(DEBUG_APP)/Contents/Resources/; \
 	fi
 	@# Update version info in Info.plist
-	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" $(DEBUG_APP)/Contents/Info.plist
-	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" $(DEBUG_APP)/Contents/Info.plist
+	@plutil -replace CFBundleShortVersionString -string "$(SPARKLE_VERSION)" $(DEBUG_APP)/Contents/Info.plist
+	@plutil -replace CFBundleVersion -string "$(SPARKLE_VERSION)" $(DEBUG_APP)/Contents/Info.plist
+	@plutil -replace TermQBuildSHA -string "$(GIT_SHA)" $(DEBUG_APP)/Contents/Info.plist
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns $(DEBUG_APP)/Contents/Resources/AppIcon.icns; fi
 	@# Ad-hoc sign for local execution
 	@codesign --force --deep --sign - --entitlements $(ENTITLEMENTS) $(DEBUG_APP) 2>/dev/null || \
 		codesign --force --deep --sign - $(DEBUG_APP)
-	@echo "Debug app bundle ready at $(DEBUG_APP) ($(VERSION) build $(GIT_SHA))"
+	@echo "Debug app bundle ready at $(DEBUG_APP) ($(SPARKLE_VERSION) build $(GIT_SHA))"
 
 build: $(DEBUG_APP)
 
@@ -252,11 +256,12 @@ release-app: build-release
 	fi
 	@# Copy template and update version info in Info.plist
 	cp Info.plist.template $(SOURCE_APP)/Contents/Info.plist
-	@plutil -replace CFBundleShortVersionString -string "$(VERSION)" $(SOURCE_APP)/Contents/Info.plist
-	@plutil -replace CFBundleVersion -string "$(GIT_SHA)" $(SOURCE_APP)/Contents/Info.plist
+	@plutil -replace CFBundleShortVersionString -string "$(SPARKLE_VERSION)" $(SOURCE_APP)/Contents/Info.plist
+	@plutil -replace CFBundleVersion -string "$(SPARKLE_VERSION)" $(SOURCE_APP)/Contents/Info.plist
+	@plutil -replace TermQBuildSHA -string "$(GIT_SHA)" $(SOURCE_APP)/Contents/Info.plist
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns $(SOURCE_APP)/Contents/Resources/AppIcon.icns; fi
 	codesign --force --deep --sign - --entitlements $(ENTITLEMENTS) $(SOURCE_APP)
-	@echo "Release app bundle created and signed ($(VERSION) build $(GIT_SHA))"
+	@echo "Release app bundle created and signed ($(SPARKLE_VERSION) build $(GIT_SHA))"
 
 # Install app
 install: release-app

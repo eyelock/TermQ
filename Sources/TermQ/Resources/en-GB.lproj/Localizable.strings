@@ -477,7 +477,6 @@ This could affect how AI assistants interact with this terminal.";
 "security.osc.clipboard.enabled" = "OSC 52 clipboard access enabled";
 "security.osc.clipboard.disabled" = "OSC 52 clipboard access disabled";
 
-// NEEDS TRANSLATION - Added from English
 "settings.auto.check.updates" = "Automatically check for updates";
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.check.for.updates" = "Check for Updates...";
@@ -491,7 +490,6 @@ This could affect how AI assistants interact with this terminal.";
 "editor.allow.osc.clipboard.disabled.globally" = "Disabled globally - enable in Settings > Data & Security";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-/* NEEDS TRANSLATION */
 "settings.debug.update.warning.title" = "Debug Build Warning";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 

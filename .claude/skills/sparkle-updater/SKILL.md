@@ -80,6 +80,28 @@ echo "$SPARKLE_PRIVATE_KEY" | "$SIGN_UPDATE" --ed-key-file - -p "$ZIP"
 - The `.sig` file must be uploaded as a GitHub Release asset
 - The appcast generator fetches it and embeds it in the XML
 
+### 5. `CFBundleVersion` and `sparkle:version` MUST use the same dot-notation format
+
+Sparkle's `SUStandardVersionComparator` **truncates version strings at the first dash** (`SUStandardVersionComparator.m:114-115`). This means `0.7.0-beta.8` and `0.7.0-beta.9` both truncate to `0.7.0` and compare as equal — no update is ever offered between consecutive beta releases.
+
+**The single canonical format everywhere:**
+
+| Release | Git tag (GitHub) | App version (everywhere else) |
+|---|---|---|
+| beta | `v0.7.0-beta.9` | `0.7.0.b9` |
+| alpha | `v0.7.0-alpha.3` | `0.7.0.a3` |
+| rc | `v0.7.0-rc.2` | `0.7.0.rc2` |
+| stable | `v0.7.0` | `0.7.0` |
+
+The conversion is applied in three places (all must stay in sync):
+- `Makefile`: `SPARKLE_VERSION := $(shell echo "$(VERSION)" | sed 's/-beta\./.b/;s/-alpha\./.a/;s/-rc\./.rc/')`
+- `scripts/generate-appcast.sh`: `sparkle_version()` function
+- `.github/workflows/release.yml`: inline `sed` in the "Create app bundle" step
+
+Both `CFBundleVersion` and `CFBundleShortVersionString` use this dot-notation format. The git SHA is stored in the **custom key `TermQBuildSHA`** (display only — Sparkle never reads custom keys).
+
+**If `CFBundleVersion` contains a git SHA** (like `8be83a1`), Sparkle's comparator interprets the leading hex digit numerically — `8... > 0.7.0` — so the installed app always appears newer than any appcast entry. No update is ever offered.
+
 ### 4. GitHub release asset URLs require redirect following
 
 ```bash
@@ -141,18 +163,23 @@ Failure at step 4 = bad/missing signature. Failure at step 6 = broken archive (s
 
 Before declaring a release workflow change complete, verify ALL of these:
 
-1. **Build artifact:** `codesign --verify --deep --strict --verbose=2 TermQ.app` passes
-2. **ZIP archive:** Extract the ZIP, then run `codesign --verify --deep --strict` on the extracted app
-3. **Framework symlinks:** `ls -la TermQ.app/Contents/Frameworks/Sparkle.framework/` shows symlinks (`l` prefix)
-4. **EdDSA signature:** `.zip.sig` file exists, contains 88-char base64 string
-5. **Appcast entries:** `sparkle:edSignature` attribute present and non-empty
-6. **Download URL:** `curl -I -L <url>` returns 200 with correct content-length
-7. **Signature verification:** `sign_update --verify <zip> <signature>` passes (requires private key)
+1. **Version format:** `plutil -p TermQ.app/Contents/Info.plist | grep -E "CFBundleVersion|CFBundleShort|TermQBuildSHA"` — `CFBundleVersion` and `CFBundleShortVersionString` must be dot-notation (e.g. `0.7.0.b9`), NOT a git SHA; `TermQBuildSHA` must be the 7-char git SHA
+2. **Appcast format:** `grep "sparkle:version" Docs/appcast-beta.xml | head -3` — must show dot-notation versions, NOT dash-notation
+3. **Version detection:** Install the app, run another release — Sparkle must detect and offer the update (end-to-end test required after any version format change)
+4. **Build artifact:** `codesign --verify --deep --strict --verbose=2 TermQ.app` passes
+5. **ZIP archive:** Extract the ZIP, then run `codesign --verify --deep --strict` on the extracted app
+6. **Framework symlinks:** `ls -la TermQ.app/Contents/Frameworks/Sparkle.framework/` shows symlinks (`l` prefix)
+7. **EdDSA signature:** `.zip.sig` file exists, contains 88-char base64 string
+8. **Appcast entries:** `sparkle:edSignature` attribute present and non-empty
+9. **Download URL:** `curl -I -L <url>` returns 200 with correct content-length
+10. **Signature verification:** `sign_update --verify <zip> <signature>` passes (requires private key)
 
 ## Known Pitfalls
 
 | Pitfall | Consequence | Prevention |
 |---|---|---|
+| `CFBundleVersion` set to git SHA | SHA's leading hex digit compares as numerically huge; installed app is always "newer" than appcast — no update ever offered | Use `SPARKLE_VERSION` (dot-notation) for `CFBundleVersion` |
+| Dash in `CFBundleVersion` or `sparkle:version` | `SUStandardVersionComparator` truncates at first dash; `0.7.0-beta.8` == `0.7.0-beta.9` — consecutive betas never update | Use dot-notation: `0.7.0.b9`, not `0.7.0-beta.9` |
 | Using `zip -r` instead of `ditto` | Framework symlinks destroyed, codesign fails | Always use `ditto -c -k --keepParent` |
 | Using `--deep` with codesign | XPC trust chain broken, install fails | Sign components individually, inside-out |
 | curl without `-L` for GitHub assets | Gets empty body from 302 redirect | Always use `curl -sSL` |

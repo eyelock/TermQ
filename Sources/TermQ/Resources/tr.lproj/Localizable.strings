@@ -477,8 +477,7 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "security.osc.clipboard.enabled" = "OSC 52 pano erişimi etkin";
 "security.osc.clipboard.disabled" = "OSC 52 pano erişimi devre dışı";
 
-// NEEDS TRANSLATION - Added from English
-"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates" = "Güncellemeleri otomatik olarak kontrol et";
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.check.for.updates" = "Check for Updates...";
 "settings.include.beta.releases" = "Include beta releases";
@@ -491,8 +490,7 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "editor.allow.osc.clipboard.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-/* NEEDS TRANSLATION */
-"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.title" = "Hata Ayıklama Sürümü Uyarısı";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Etiket tanımlanmamış";

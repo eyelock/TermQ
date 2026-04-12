@@ -477,8 +477,7 @@
 "security.osc.clipboard.enabled" = "Доступ до буфера обміну OSC 52 увімкнено";
 "security.osc.clipboard.disabled" = "Доступ до буфера обміну OSC 52 вимкнено";
 
-// NEEDS TRANSLATION - Added from English
-"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates" = "Автоматично перевіряти оновлення";
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.check.for.updates" = "Check for Updates...";
 "settings.include.beta.releases" = "Include beta releases";
@@ -491,8 +490,7 @@
 "editor.allow.osc.clipboard.disabled.globally" = "Вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-/* NEEDS TRANSLATION */
-"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.title" = "Попередження про збірку для налагодження";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Теги не визначено";
