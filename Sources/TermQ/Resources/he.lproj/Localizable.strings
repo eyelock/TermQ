@@ -477,8 +477,7 @@
 "security.osc.clipboard.enabled" = "גישה ללוח OSC 52 מופעלת";
 "security.osc.clipboard.disabled" = "גישה ללוח OSC 52 מושבתת";
 
-// NEEDS TRANSLATION - Added from English
-"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates" = "חפש עדכונים אוטומטית";
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.check.for.updates" = "Check for Updates...";
 "settings.include.beta.releases" = "Include beta releases";
@@ -491,8 +490,7 @@
 "editor.allow.osc.clipboard.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-/* NEEDS TRANSLATION */
-"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.title" = "אזהרת גרסת ניפוי שגיאות";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "אין תגיות מוגדרות";

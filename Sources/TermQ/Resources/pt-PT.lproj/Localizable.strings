@@ -477,8 +477,7 @@ Isto pode afetar a forma como os assistentes de IA interagem com este terminal."
 "security.osc.clipboard.enabled" = "Acesso à área de transferência OSC 52 ativado";
 "security.osc.clipboard.disabled" = "Acesso à área de transferência OSC 52 desativado";
 
-// NEEDS TRANSLATION - Added from English
-"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates" = "Verificar atualizações automaticamente";
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.check.for.updates" = "Check for Updates...";
 "settings.include.beta.releases" = "Include beta releases";
@@ -491,8 +490,7 @@ Isto pode afetar a forma como os assistentes de IA interagem com este terminal."
 "editor.allow.osc.clipboard.disabled.globally" = "Desativado globalmente - ativar em Definições > Dados e segurança";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-/* NEEDS TRANSLATION */
-"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.title" = "Aviso de versão de depuração";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Sem etiquetas definidas";

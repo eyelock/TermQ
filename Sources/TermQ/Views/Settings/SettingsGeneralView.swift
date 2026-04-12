@@ -175,7 +175,7 @@ struct SettingsGeneralView: View {
             )
             LabeledContent(
                 Strings.Settings.fieldBuild,
-                value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+                value: Bundle.main.infoDictionary?["TermQBuildSHA"] as? String ?? "Unknown"
             )
         } header: {
             Text(Strings.Settings.sectionAbout)

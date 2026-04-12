@@ -477,8 +477,7 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "security.osc.clipboard.enabled" = "Prístup k schránke OSC 52 povolený";
 "security.osc.clipboard.disabled" = "Prístup k schránke OSC 52 zakázaný";
 
-// NEEDS TRANSLATION - Added from English
-"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates" = "Automaticky kontrolovať aktualizácie";
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.check.for.updates" = "Check for Updates...";
 "settings.include.beta.releases" = "Include beta releases";
@@ -491,8 +490,7 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "editor.allow.osc.clipboard.disabled.globally" = "Zakázané globálne - povoľte v Nastavenia > Údaje a zabezpečenie";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-/* NEEDS TRANSLATION */
-"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.title" = "Upozornenie na ladenie";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Žiadne štítky";

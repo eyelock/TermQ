@@ -12,6 +12,19 @@ v0.7.0-beta.1    v0.7.0-beta.2    v1.0.0-alpha.1    v1.0.0-rc.1
 
 Suffixes: `-beta`, `-alpha`, `-rc`, `-dev`
 
+## Version Format (git tag → app)
+
+The git tag uses dash notation (required for GitHub to detect pre-releases). The app's plist and appcast use **dot notation** — converted automatically at build time:
+
+| Git tag | App version (`CFBundleVersion`, `sparkle:version`) |
+|---|---|
+| `v0.7.0-beta.9` | `0.7.0.b9` |
+| `v0.7.0-alpha.3` | `0.7.0.a3` |
+| `v0.7.0-rc.2` | `0.7.0.rc2` |
+
+The git SHA is stored in the custom key `TermQBuildSHA` (for display in Settings → About).
+**Never use dashes in `CFBundleVersion` or `sparkle:version`** — `SUStandardVersionComparator` truncates at the first dash, making all betas of the same MAJOR.MINOR.PATCH compare as equal.
+
 ## Steps
 
 ### 1. Ensure Changes Are on Main

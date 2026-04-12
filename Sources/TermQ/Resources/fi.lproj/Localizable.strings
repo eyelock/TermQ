@@ -477,8 +477,7 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "security.osc.clipboard.enabled" = "OSC 52 leikepöydän käyttö käytössä";
 "security.osc.clipboard.disabled" = "OSC 52 leikepöydän käyttö pois käytöstä";
 
-// NEEDS TRANSLATION - Added from English
-"settings.auto.check.updates" = "Automatically check for updates";
+"settings.auto.check.updates" = "Tarkista päivitykset automaattisesti";
 "settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
 "settings.check.for.updates" = "Check for Updates...";
 "settings.include.beta.releases" = "Include beta releases";
@@ -491,8 +490,7 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "editor.allow.osc.clipboard.disabled.globally" = "Poistettu käytöstä yleisesti - ota käyttöön Asetukset > Tiedot ja turvallisuus";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-/* NEEDS TRANSLATION */
-"settings.debug.update.warning.title" = "Debug Build Warning";
+"settings.debug.update.warning.title" = "Debug-version varoitus";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Ei tageja määritetty";

@@ -265,7 +265,7 @@ These binaries are automatically built and installed to `TermQDebug.app/Contents
 
 ## Releasing
 
-The project uses [semantic versioning](https://semver.org/). The current version is stored in the `VERSION` file.
+The project uses [semantic versioning](https://semver.org/). The version is derived from git tags — there is no `VERSION` file.
 
 ### Pre-Release Checklist
 
@@ -479,6 +479,21 @@ TermQ uses [Sparkle 2.x](https://sparkle-project.org) for automatic updates.
 | `Docs/appcast.xml` | Stable channel appcast |
 | `Docs/appcast-beta.xml` | Beta channel appcast (includes pre-releases) |
 
+### Version Format
+
+Sparkle's `SUStandardVersionComparator` truncates version strings at the first dash character. This means `0.7.0-beta.8` and `0.7.0-beta.9` both reduce to `0.7.0` and compare as equal — no update is ever offered between consecutive betas.
+
+To avoid this, the app uses **dot-notation** for all version fields. The git tag uses dashes (required for GitHub to detect pre-releases); a conversion is applied at build time:
+
+| Git tag | App version (`CFBundleVersion`, `sparkle:version`) |
+|---|---|
+| `v0.7.0-beta.9` | `0.7.0.b9` |
+| `v0.7.0-alpha.3` | `0.7.0.a3` |
+| `v0.7.0-rc.2` | `0.7.0.rc2` |
+| `v0.7.0` | `0.7.0` |
+
+Both `CFBundleVersion` and `CFBundleShortVersionString` use the dot-notation format. The git SHA is stored separately in the custom plist key `TermQBuildSHA` and displayed in Settings → About.
+
 ### Appcast Generation
 
 The appcast is automatically regenerated when a new release is published:
@@ -491,7 +506,8 @@ The appcast is automatically regenerated when a new release is published:
 This script:
 1. Fetches releases from GitHub API
 2. Extracts version, download URL, file size, and release notes
-3. Generates `Docs/appcast.xml` (stable) and `Docs/appcast-beta.xml` (includes prereleases)
+3. Converts dash-notation tags to dot-notation (`sparkle_version()` function)
+4. Generates `Docs/appcast.xml` (stable) and `Docs/appcast-beta.xml` (includes prereleases)
 
 ### EdDSA Signing
 
@@ -552,8 +568,9 @@ Key Sparkle settings in `Info.plist.template`:
 ### Troubleshooting
 
 - **Build errors with Sparkle**: Ensure Xcode is installed (not just Command Line Tools)
-- **Updates not detected**: Check appcast URL accessibility and XML validity
+- **Updates not detected**: Check appcast URL accessibility and XML validity. Also verify that `CFBundleVersion` in the installed app is dot-notation (e.g. `0.7.0.b9`), not a git SHA — run `plutil -p TermQ.app/Contents/Info.plist | grep CFBundleVersion`
 - **Signature verification failed**: Ensure `SUPublicEDKey` matches the private key used for signing
+- **All betas compare equal**: Confirms dash notation is still in use. Check that `sparkle:version` in the appcast and `CFBundleVersion` in the app both use dot-notation (`0.7.0.b9`, not `0.7.0-beta.9`)
 
 ## Dependencies
 

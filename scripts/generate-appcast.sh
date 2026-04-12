@@ -89,6 +89,19 @@ extract_version() {
     echo "${tag#v}"
 }
 
+# Convert tag version to Sparkle-safe format.
+# SUStandardVersionComparator truncates at the first dash, so "0.7.0-beta.8"
+# and "0.7.0-beta.9" both reduce to "0.7.0" and compare as equal.
+# The dot-notation form is correctly ordered by Sparkle's comparator.
+#   0.7.0-beta.9  → 0.7.0.b9
+#   0.7.0-alpha.3 → 0.7.0.a3
+#   0.7.0-rc.2    → 0.7.0.rc2
+#   0.7.0         → 0.7.0 (no change for stable)
+sparkle_version() {
+    local version="$1"
+    echo "$version" | sed 's/-beta\./.b/;s/-alpha\./.a/;s/-rc\./.rc/'
+}
+
 # Check if release is a pre-release (beta, alpha, rc)
 is_prerelease() {
     local tag="$1"
@@ -135,6 +148,8 @@ generate_item() {
 
     local version
     version=$(extract_version "$tag")
+    local sparkle_ver
+    sparkle_ver=$(sparkle_version "$version")
 
     # Convert Markdown to HTML (or escape for plain text if pandoc unavailable)
     local description
@@ -142,9 +157,9 @@ generate_item() {
 
     cat << EOF
         <item>
-            <title>Version ${version}</title>
-            <sparkle:version>${version}</sparkle:version>
-            <sparkle:shortVersionString>${version}</sparkle:shortVersionString>
+            <title>Version ${sparkle_ver}</title>
+            <sparkle:version>${sparkle_ver}</sparkle:version>
+            <sparkle:shortVersionString>${sparkle_ver}</sparkle:shortVersionString>
             <pubDate>${pub_date}</pubDate>
             <description><![CDATA[${description}]]></description>
             <enclosure

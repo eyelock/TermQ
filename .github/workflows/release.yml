@@ -190,9 +190,14 @@ jobs:
           if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
 
           # Create Info.plist with version info
+          # SPARKLE_VERSION converts dash pre-release notation to dot notation so
+          # SUStandardVersionComparator can compare consecutive betas correctly:
+          #   0.7.0-beta.9 → 0.7.0.b9 | 0.7.0-alpha.3 → 0.7.0.a3 | 0.7.0-rc.2 → 0.7.0.rc2
+          SPARKLE_VERSION=$(echo "${{ steps.version.outputs.VERSION }}" | sed 's/-beta\./.b/;s/-alpha\./.a/;s/-rc\./.rc/')
           cp Info.plist.template TermQ.app/Contents/Info.plist
-          plutil -replace CFBundleShortVersionString -string "${{ steps.version.outputs.VERSION }}" TermQ.app/Contents/Info.plist
-          plutil -replace CFBundleVersion -string "$(git rev-parse --short=7 HEAD)" TermQ.app/Contents/Info.plist
+          plutil -replace CFBundleShortVersionString -string "$SPARKLE_VERSION" TermQ.app/Contents/Info.plist
+          plutil -replace CFBundleVersion -string "$SPARKLE_VERSION" TermQ.app/Contents/Info.plist
+          plutil -replace TermQBuildSHA -string "$(git rev-parse --short=7 HEAD)" TermQ.app/Contents/Info.plist
 
       - name: Sign app bundle
         run: |

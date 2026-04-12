@@ -124,7 +124,10 @@ let package = Package(
         // Tests
         .testTarget(
             name: "TermQTests",
-            dependencies: ["TermQCore"],
+            dependencies: [
+                "TermQCore",
+                .product(name: "Sparkle", package: "Sparkle")
+            ],
             path: "Tests/TermQTests"
         ),
         .testTarget(
