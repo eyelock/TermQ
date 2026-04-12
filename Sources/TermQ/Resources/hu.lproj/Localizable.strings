@@ -495,14 +495,10 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "settings.debug.update.warning.title" = "Debug Build Warning";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
-/* NEEDS TRANSLATION */
-"editor.no.tags" = "No tags defined";
+"editor.no.tags" = "Nincsenek meghatározott címkék";
 
-/* NEEDS TRANSLATION */
-"editor.environment.section.add.variable" = "Add Environment Variable";
+"editor.environment.section.add.variable" = "Környezeti változó hozzáadása";
 
-/* NEEDS TRANSLATION */
-"settings.environment.section.add.variable" = "Add Environment Variable";
+"settings.environment.section.add.variable" = "Környezeti változó hozzáadása";
 
-/* NEEDS TRANSLATION */
-"settings.mcp.install" = "Install MCP Server";
+"settings.mcp.install" = "MCP-szerver telepítése";
