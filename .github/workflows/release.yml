@@ -334,7 +334,7 @@ jobs:
           echo "✅ DMG created, signed, and notarized"
 
       - name: Create zip archive
-        run: zip -r TermQ-${{ steps.version.outputs.VERSION }}.zip TermQ.app
+        run: ditto -c -k --keepParent TermQ.app TermQ-${{ steps.version.outputs.VERSION }}.zip
 
       - name: Sign zip for Sparkle
         env:
