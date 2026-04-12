@@ -494,3 +494,15 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 /* NEEDS TRANSLATION */
 "settings.debug.update.warning.title" = "Debug Build Warning";
 "settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+
+/* NEEDS TRANSLATION */
+"editor.no.tags" = "No tags defined";
+
+/* NEEDS TRANSLATION */
+"editor.environment.section.add.variable" = "Add Environment Variable";
+
+/* NEEDS TRANSLATION */
+"settings.environment.section.add.variable" = "Add Environment Variable";
+
+/* NEEDS TRANSLATION */
+"settings.mcp.install" = "Install MCP Server";
