@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Zastosuj";
 "common.preview" = "Podgląd";
+"common.close.window" = "Zamknij okno";
 
 // MARK: - Board View
 "board.column.options" = "Opcje kolumny";
@@ -40,11 +41,11 @@
 "card.unpin" = "Odepnij terminal";
 "card.running" = "Terminal działa";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Połączony";
 "card.wired.help" = "Połączony z agentem MCP";
@@ -478,20 +479,19 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "security.osc.clipboard.disabled" = "Dostęp do schowka OSC 52 wyłączony";
 
 "settings.auto.check.updates" = "Automatycznie sprawdzaj aktualizacje";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Po włączeniu TermQ będzie okresowo sprawdzać nowe wersje";
+"settings.check.for.updates" = "Sprawdź aktualizacje...";
+"settings.include.beta.releases" = "Uwzględnij wersje beta";
+"settings.include.beta.releases.help" = "Zapisz się, aby otrzymywać wersje przedpremierowe z nowymi funkcjami";
+"settings.section.updates" = "Aktualizacje";
+"settings.debug.update.warning.title" = "Ostrzeżenie o kompilacji debug";
+"settings.debug.update.warning.message" = "Kontynuowanie aktualizacji spowoduje zainstalowanie wersji produkcyjnej TermQ.";
 "editor.section.add.tag" = "Dodaj tag";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
 "editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Wyłączone globalnie - włącz w Ustawienia > Dane i bezpieczeństwo";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
-
-"settings.debug.update.warning.title" = "Ostrzeżenie wersji debugowania";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Brak zdefiniowanych tagów";
 
@@ -500,3 +500,62 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "settings.environment.section.add.variable" = "Dodaj zmienną środowiskową";
 
 "settings.mcp.install" = "Zainstaluj serwer MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repozytoria";
+"sidebar.add.button.help" = "Dodaj repozytorium";
+"sidebar.empty.message" = "Nie dodano żadnych repozytoriów.\nKliknij +, aby dodać repozytorium git.";
+"sidebar.worktrees.placeholder" = "Drzewa robocze pojawią się tutaj";
+"sidebar.remove.repository" = "Usuń repozytorium";
+"sidebar.toggle.help" = "Przełącz panel boczny repozytoriów (⌘⇧L)";
+"sidebar.add.title" = "Dodaj repozytorium";
+"sidebar.add.path.label" = "Ścieżka";
+"sidebar.add.name.label" = "Nazwa wyświetlana";
+"sidebar.add.name.placeholder" = "Automatycznie wykryte z git";
+"sidebar.add.cancel" = "Anuluj";
+"sidebar.add.add" = "Dodaj";
+"sidebar.add.advanced" = "Zaawansowane";
+"sidebar.edit.title" = "Edytuj repozytorium";
+"sidebar.edit.repository" = "Edytuj repozytorium";
+"sidebar.worktree.base.path.label" = "Ścieżka bazowa worktree";
+"sidebar.worktree.base.path.help" = "Nowe worktrees są tworzone tutaj. Domyślnie jest to folder nadrzędny katalogu repozytorium.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" nie jest repozytorium git.";
+"menu.toggle.sidebar" = "Przełącz panel boczny";
+"sidebar.worktrees.empty" = "Nie znaleziono drzew roboczych.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Odśwież drzewa robocze";
+"sidebar.worktree.new" = "Nowe drzewo robocze";
+"sidebar.worktree.new.terminal" = "Nowy terminal";
+"sidebar.worktree.terminals.badge.help" = "Kliknij, aby uzyskać szybkie łącza do otwierania terminali";
+"sidebar.worktree.open.in.terminal" = "Otwórz w Terminalu";
+"sidebar.worktree.reveal.in.finder" = "Pokaż w Finderze";
+"sidebar.worktree.open.remote.branch" = "Otwórz gałąź na Remote";
+"sidebar.worktree.open.remote.commit" = "Otwórz commit na Remote";
+"sidebar.worktree.lock" = "Zablokuj drzewo robocze";
+"sidebar.worktree.unlock" = "Odblokuj drzewo robocze";
+"sidebar.remove.worktree" = "Usuń drzewo robocze";
+"sidebar.remove.worktree.title" = "Usunąć drzewo robocze?";
+"sidebar.remove.worktree.confirm" = "Usuń";
+"sidebar.remove.main.worktree.error" = "Głównego drzewa roboczego nie można usunąć.";
+"sidebar.remove.worktree.message %@" = "Spowoduje to trwałe usunięcie drzewa roboczego pod \"%@\". Gałąź nie zostanie usunięta.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Usuń Worktree...";
+"sidebar.worktree.delete.title" = "Usuń Worktree";
+"sidebar.worktree.delete.confirm" = "Usuń";
+"sidebar.worktree.delete.message %@" = "Drzewo robocze w \"%@\" oraz wszelkie niezatwierdzone zmiany zostaną trwale usunięte. Tej operacji nie można cofnąć.";
+"sidebar.new.worktree.title" = "Nowe drzewo robocze";
+"sidebar.new.worktree.branch.label" = "Nazwa nowej gałęzi";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Wprowadź nazwę gałęzi, aby kontynuować.";
+"sidebar.new.worktree.base.label" = "Gałąź bazowa";
+"sidebar.new.worktree.base.placeholder" = "Filtruj gałęzie...";
+"sidebar.new.worktree.path.label" = "Ścieżka drzewa roboczego";
+"sidebar.new.worktree.path.required" = "Wprowadź ścieżkę drzewa roboczego, aby kontynuować.";
+"sidebar.new.worktree.create" = "Utwórz";
+"sidebar.new.worktree.loading.branches" = "Ładowanie gałęzi...";

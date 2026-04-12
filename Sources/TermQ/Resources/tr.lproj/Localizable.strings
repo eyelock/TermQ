@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Uygula";
 "common.preview" = "Önizleme";
+"common.close.window" = "Pencereyi Kapat";
 
 // MARK: - Board View
 "board.column.options" = "Sütun seçenekleri";
@@ -40,11 +41,11 @@
 "card.unpin" = "Terminal sabitlemesini kaldır";
 "card.running" = "Terminal çalışıyor";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Bağlı";
 "card.wired.help" = "MCP aracısına bağlı";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Sonraki Sabitlenmiş Terminal";
 "menu.previous.pinned" = "Önceki Sabitlenmiş Terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Kenar Çubuğunu Aç/Kapat";
 
 
 // MARK: - Command Palette
@@ -477,21 +479,22 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "security.osc.clipboard.enabled" = "OSC 52 pano erişimi etkin";
 "security.osc.clipboard.disabled" = "OSC 52 pano erişimi devre dışı";
 
-"settings.auto.check.updates" = "Güncellemeleri otomatik olarak kontrol et";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Güncellemeleri otomatik kontrol et";
+"settings.auto.check.updates.help" = "Etkinleştirildiğinde TermQ yeni sürümleri periyodik olarak kontrol eder";
+"settings.check.for.updates" = "Güncellemeleri Kontrol Et...";
+"settings.include.beta.releases" = "Beta sürümleri dahil et";
+"settings.include.beta.releases.help" = "Yeni özellikler içeren ön sürümleri almayı seçin";
+"settings.section.updates" = "Güncellemeler";
 "editor.section.add.tag" = "Etiket ekle";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Sıraya Alınan İşlemlere İzin Ver";
+"editor.allow.agent.prompts.help" = "{{PROMPT}} ve {{NEXT_ACTION}} öğelerinin bu terminalin başlangıç komutuna eklenmesine izin ver";
+"editor.allow.agent.prompts.disabled.globally" = "Sıraya Alınan İşlemler genel olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
 "editor.allow.osc.clipboard.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Onay genel olarak devre dışı - Ayarlar > Veri ve Güvenlik'te değiştirin";
 
-"settings.debug.update.warning.title" = "Hata Ayıklama Sürümü Uyarısı";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Debug Sürüm Uyarısı";
+"settings.debug.update.warning.message" = "Güncellemeler ile devam etmek TermQ'nun Üretim sürümünü yükleyecek.";
 
 "editor.no.tags" = "Etiket tanımlanmamış";
 
@@ -500,3 +503,61 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "settings.environment.section.add.variable" = "Ortam Değişkeni Ekle";
 
 "settings.mcp.install" = "MCP Sunucusunu Yükle";
+
+// MARK: - Sidebar
+"sidebar.title" = "Depolar";
+"sidebar.add.button.help" = "Depo ekle";
+"sidebar.empty.message" = "Henüz depo eklenmedi.\nGit deposu eklemek için + düğmesine tıklayın.";
+"sidebar.worktrees.placeholder" = "Çalışma ağaçları burada görünecek";
+"sidebar.remove.repository" = "Depoyu Kaldır";
+"sidebar.toggle.help" = "Depolar kenar çubuğunu aç/kapat (⌘⇧L)";
+"sidebar.add.title" = "Depo Ekle";
+"sidebar.add.path.label" = "Yol";
+"sidebar.add.name.label" = "Görünen Ad";
+"sidebar.add.name.placeholder" = "Git'ten otomatik algılanır";
+"sidebar.add.cancel" = "İptal";
+"sidebar.add.add" = "Ekle";
+"sidebar.add.advanced" = "Gelişmiş";
+"sidebar.edit.title" = "Depoyu Düzenle";
+"sidebar.edit.repository" = "Depoyu Düzenle";
+"sidebar.worktree.base.path.label" = "Worktree Temel Yolu";
+"sidebar.worktree.base.path.help" = "Yeni worktrees burada oluşturulur. Varsayılan olarak repo dizininin üst klasörüdür.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" bir git deposu değil.";
+"sidebar.worktrees.empty" = "Çalışma ağacı bulunamadı.";
+"sidebar.worktree.detached.head" = "Ayrık HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Çalışma ağaçlarını yenile";
+"sidebar.worktree.new" = "Yeni Çalışma Ağacı";
+"sidebar.worktree.new.terminal" = "Yeni Terminal";
+"sidebar.worktree.terminals.badge.help" = "Terminal açmak için hızlı bağlantılar için tıklayın";
+"sidebar.worktree.open.in.terminal" = "Terminal'de Aç";
+"sidebar.worktree.reveal.in.finder" = "Finder'da Göster";
+"sidebar.worktree.open.remote.branch" = "Dalı Remote'ta aç";
+"sidebar.worktree.open.remote.commit" = "Commit'i Remote'ta aç";
+"sidebar.worktree.lock" = "Çalışma Ağacını Kilitle";
+"sidebar.worktree.unlock" = "Çalışma Ağacının Kilidini Aç";
+"sidebar.remove.worktree" = "Çalışma Ağacını Kaldır";
+"sidebar.remove.worktree.title" = "Çalışma Ağacı Kaldırılsın mı?";
+"sidebar.remove.worktree.confirm" = "Kaldır";
+"sidebar.remove.main.worktree.error" = "Ana çalışma ağacı kaldırılamaz.";
+"sidebar.remove.worktree.message %@" = "\"%@\" konumundaki çalışma ağacı kalıcı olarak kaldırılacak. Dal silinmeyecek.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree'yi Sil...";
+"sidebar.worktree.delete.title" = "Worktree'yi Sil";
+"sidebar.worktree.delete.confirm" = "Sil";
+"sidebar.worktree.delete.message %@" = "\"%@\" konumundaki worktree ve tüm kaydedilmemiş değişiklikler kalıcı olarak silinecek. Bu işlem geri alınamaz.";
+"sidebar.new.worktree.title" = "Yeni Çalışma Ağacı";
+"sidebar.new.worktree.branch.label" = "Yeni Dal Adı";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Devam etmek için bir dal adı girin.";
+"sidebar.new.worktree.base.label" = "Temel Dal";
+"sidebar.new.worktree.base.placeholder" = "Dalları filtrele...";
+"sidebar.new.worktree.path.label" = "Çalışma Ağacı Yolu";
+"sidebar.new.worktree.path.required" = "Devam etmek için bir worktree yolu girin.";
+"sidebar.new.worktree.create" = "Oluştur";
+"sidebar.new.worktree.loading.branches" = "Dallar yükleniyor...";

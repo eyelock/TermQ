@@ -15,6 +15,7 @@
 "common.delete" = "Διαγραφή";
 "common.edit" = "Επεξεργασία";
 "common.close" = "Κλείσιμο";
+"common.close.window" = "Κλείσιμο παραθύρου";
 "common.add" = "Προσθήκη";
 "common.reinstall" = "Επανεγκατάσταση";
 "common.uninstall" = "Απεγκατάσταση";
@@ -478,11 +479,11 @@
 "security.osc.clipboard.disabled" = "Πρόσβαση στο πρόχειρο OSC 52 απενεργοποιημένη";
 
 "settings.auto.check.updates" = "Αυτόματος έλεγχος για ενημερώσεις";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Όταν είναι ενεργοποιημένο, το TermQ θα ελέγχει περιοδικά για νέες εκδόσεις";
+"settings.check.for.updates" = "Έλεγχος για ενημερώσεις...";
+"settings.include.beta.releases" = "Συμπερίληψη beta εκδόσεων";
+"settings.include.beta.releases.help" = "Εγγραφείτε για να λαμβάνετε προκαταρκτικές εκδόσεις με νέες δυνατότητες";
+"settings.section.updates" = "Ενημερώσεις";
 "editor.section.add.tag" = "Προσθήκη ετικέτας";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -491,7 +492,7 @@
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
 "settings.debug.update.warning.title" = "Προειδοποίηση έκδοσης εντοπισμού σφαλμάτων";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.message" = "Η συνέχεια με τις ενημερώσεις θα εγκαταστήσει την έκδοση παραγωγής του TermQ.";
 
 "editor.no.tags" = "Δεν έχουν οριστεί ετικέτες";
 
@@ -500,3 +501,72 @@
 "settings.environment.section.add.variable" = "Προσθήκη μεταβλητής περιβάλλοντος";
 
 "settings.mcp.install" = "Εγκατάσταση διακομιστή MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Αποθετήρια";
+"sidebar.add.button.help" = "Προσθήκη αποθετηρίου";
+"sidebar.empty.message" = "Δεν έχουν προστεθεί αποθετήρια.\nΚάντε κλικ στο + για να προσθέσετε ένα αποθετήριο git.";
+"sidebar.worktrees.placeholder" = "Τα worktree θα εμφανιστούν εδώ";
+"sidebar.remove.repository" = "Αφαίρεση αποθετηρίου";
+"sidebar.toggle.help" = "Εμφάνιση/απόκρυψη πλευρικής μπάρας αποθετηρίων (⌘⇧L)";
+"sidebar.add.title" = "Προσθήκη αποθετηρίου";
+"sidebar.add.path.label" = "Διαδρομή";
+"sidebar.add.name.label" = "Εμφανιζόμενο όνομα";
+"sidebar.add.name.placeholder" = "Αυτόματη ανίχνευση από το git";
+"sidebar.add.cancel" = "Ακύρωση";
+"sidebar.add.add" = "Προσθήκη";
+"sidebar.add.advanced" = "Σύνθετα";
+"sidebar.edit.title" = "Επεξεργασία αποθετηρίου";
+"sidebar.edit.repository" = "Επεξεργασία αποθετηρίου";
+"sidebar.worktree.base.path.label" = "Βασική διαδρομή worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "Το \"%@\" δεν είναι αποθετήριο git.";
+"menu.toggle.sidebar" = "Εμφάνιση/απόκρυψη πλευρικής μπάρας";
+"sidebar.worktrees.empty" = "Δεν βρέθηκαν worktree.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Ανανέωση worktree";
+"sidebar.worktree.new" = "Νέο worktree";
+"sidebar.worktree.new.terminal" = "Γρήγορο Terminal";
+"sidebar.worktree.create.terminal" = "Δημιουργία Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Κάντε κλικ για γρήγορους συνδέσμους για άνοιγμα τερματικών";
+"sidebar.worktree.open.in.terminal" = "Εμφάνιση στο Terminal";
+"sidebar.worktree.reveal.in.finder" = "Εμφάνιση στο Finder";
+"sidebar.worktree.copy.pathname" = "Αντιγραφή ως διαδρομή";
+"sidebar.worktree.open.remote.branch" = "Άνοιγμα κλάδου στο Remote";
+"sidebar.worktree.open.remote.commit" = "Άνοιγμα commit στο Remote";
+"sidebar.worktree.lock" = "Κλείδωμα worktree";
+"sidebar.worktree.unlock" = "Ξεκλείδωμα worktree";
+"sidebar.remove.worktree" = "Διαγραφή worktree";
+"sidebar.remove.worktree.title" = "Διαγραφή worktree;";
+"sidebar.remove.worktree.confirm" = "Διαγραφή";
+"sidebar.remove.main.worktree.error" = "Το κύριο worktree δεν μπορεί να αφαιρεθεί.";
+"sidebar.remove.worktree.message %@" = "Αυτό θα διαγράψει μόνιμα το worktree στο "%@". Ο κλάδος δεν θα διαγραφεί.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Καταστροφή Worktree...";
+"sidebar.worktree.delete.title" = "Καταστροφή Worktree";
+"sidebar.worktree.delete.confirm" = "Καταστροφή";
+"sidebar.worktree.delete.message %@" = "Το worktree στο "%@" και τυχόν μη αποθηκευμένες αλλαγές θα καταστραφούν οριστικά. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Εκκαθάριση Worktrees…";
+"sidebar.prune.worktrees.title" = "Εκκαθάριση Worktrees";
+"sidebar.prune.worktrees.confirm" = "Εκκαθάριση";
+"sidebar.prune.worktrees.nothing.title" = "Τίποτα για εκκαθάριση";
+"sidebar.prune.worktrees.nothing.message" = "Όλα τα worktrees είναι καταγεγραμμένα. Δεν βρέθηκαν παρωχημένες εγγραφές.";
+"sidebar.prune.worktrees.explanation" = "Αυτές οι διαχειριστικές εγγραφές δείχνουν σε καταλόγους που δεν υπάρχουν πλέον. Η εκκαθάριση τις αφαιρεί — τα κλαδιά σας δεν επηρεάζονται.";
+"sidebar.new.worktree.title" = "Νέο worktree";
+"sidebar.new.worktree.branch.label" = "Όνομα νέου κλάδου";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Εισαγάγετε ένα όνομα κλάδου για να συνεχίσετε.";
+"sidebar.new.worktree.base.label" = "Βασικός κλάδος";
+"sidebar.new.worktree.base.placeholder" = "Φιλτράρισμα κλάδων...";
+"sidebar.new.worktree.path.label" = "Διαδρομή worktree";
+"sidebar.new.worktree.path.required" = "Εισαγάγετε μια διαδρομή worktree για να συνεχίσετε.";
+"sidebar.new.worktree.create" = "Δημιουργία";
+"sidebar.new.worktree.loading.branches" = "Φόρτωση κλάδων...";

@@ -144,6 +144,35 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Card Operations
 
+    /// Open the new-terminal editor with `workingDirectory` pre-filled.
+    /// Uses the same column-selection logic as `newTerminal(at:)`.
+    func addTerminal(workingDirectory: String) {
+        let column: Column
+        if let current = selectedCard,
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+
+        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
+        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+
+        let card = board.addCard(
+            to: column,
+            workingDirectory: workingDirectory,
+            backend: defaultBackend
+        )
+        objectWillChange.send()
+        save()
+
+        isEditingNewCard = true
+        isEditingCard = card
+    }
+
     func addTerminal(to column: Column) {
         // Read defaults from UserDefaults
         let defaultWorkingDirectory =
@@ -427,6 +456,51 @@ class BoardViewModel: ObservableObject {
     }
 
     // MARK: - Quick Actions
+
+    /// Create a new transient terminal at a specific directory and select it.
+    /// Matches the board column and backend defaults of `quickNewTerminal`.
+    func newTerminal(at path: String) {
+        let column: Column
+        if let current = selectedCard,
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+
+        let existingTitles = Set(
+            board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
+        var counter = 1
+        var title = "Terminal \(counter)"
+        while existingTitles.contains(title) {
+            counter += 1
+            title = "Terminal \(counter)"
+        }
+
+        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
+        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+
+        let card = TerminalCard(
+            title: title,
+            columnId: column.id,
+            workingDirectory: path,
+            backend: defaultBackend
+        )
+        card.isTransient = true
+        tabManager.addTransientCard(card)
+
+        if let current = selectedCard {
+            tabManager.insertTab(card.id, after: current.id)
+        } else {
+            tabManager.addTab(card.id)
+        }
+
+        objectWillChange.send()
+        selectedCard = card
+    }
 
     func quickNewTerminal() {
         let column: Column

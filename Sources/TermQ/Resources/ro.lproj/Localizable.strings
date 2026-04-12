@@ -477,21 +477,21 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "security.osc.clipboard.enabled" = "Acces clipboard OSC 52 activat";
 "security.osc.clipboard.disabled" = "Acces clipboard OSC 52 dezactivat";
 
-"settings.auto.check.updates" = "Verifică actualizările automat";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "Verificare automată a actualizărilor";
+"settings.auto.check.updates.help" = "Când este activat, TermQ va verifica periodic versiunile noi";
+"settings.check.for.updates" = "Verifică actualizări...";
+"settings.include.beta.releases" = "Include versiuni beta";
+"settings.include.beta.releases.help" = "Optează pentru a primi versiuni pre-lansare cu funcții noi";
+"settings.section.updates" = "Actualizări";
 "editor.section.add.tag" = "Adaugă etichetă";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Permite acțiuni în coadă";
+"editor.allow.agent.prompts.help" = "Permite inserarea {{PROMPT}} și {{NEXT_ACTION}} în comanda de inițializare a acestui terminal";
+"editor.allow.agent.prompts.disabled.globally" = "Acțiunile în coadă sunt dezactivate global - activează în Setări > Date și securitate";
 "editor.allow.osc.clipboard.disabled.globally" = "Dezactivat global - activează în Setări > Date și securitate";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Confirmarea este dezactivată global - modifică în Setări > Date și securitate";
 
-"settings.debug.update.warning.title" = "Avertisment versiune de depanare";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Avertisment build de depanare";
+"settings.debug.update.warning.message" = "Continuarea actualizărilor va instala versiunea de producție a TermQ.";
 
 "editor.no.tags" = "Nicio etichetă definită";
 
@@ -500,3 +500,73 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "settings.environment.section.add.variable" = "Adăugați variabilă de mediu";
 
 "settings.mcp.install" = "Instalați serverul MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Depozite";
+"sidebar.add.button.help" = "Adaugă depozit";
+"sidebar.empty.message" = "Nu au fost adăugate depozite.\nFă clic pe + pentru a adăuga un depozit git.";
+"sidebar.worktrees.placeholder" = "Arborii de lucru vor apărea aici";
+"sidebar.remove.repository" = "Elimină depozit";
+"sidebar.toggle.help" = "Comută bara laterală Depozite (⌘⇧L)";
+"sidebar.add.title" = "Adaugă depozit";
+"sidebar.add.path.label" = "Cale";
+"sidebar.add.name.label" = "Nume afișat";
+"sidebar.add.name.placeholder" = "Detectat automat din git";
+"sidebar.add.cancel" = "Anulează";
+"sidebar.add.add" = "Adaugă";
+"sidebar.add.advanced" = "Avansat";
+"sidebar.edit.title" = "Editați depozitul";
+"sidebar.edit.repository" = "Editați depozitul";
+"sidebar.worktree.base.path.label" = "Calea de bază a worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" nu este un depozit git.";
+"sidebar.worktrees.empty" = "Nu au fost găsiți arbori de lucru.";
+"sidebar.worktree.detached.head" = "HEAD detașat";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Reîmprospătează arborii de lucru";
+"sidebar.worktree.new" = "Arbore de lucru nou";
+"sidebar.worktree.new.terminal" = "Terminal rapid";
+"sidebar.worktree.create.terminal" = "Creează Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Faceți clic pentru linkuri rapide pentru a deschide terminale";
+"sidebar.worktree.open.in.terminal" = "Afișează în Terminal";
+"sidebar.worktree.reveal.in.finder" = "Dezvăluie în Finder";
+"sidebar.worktree.copy.pathname" = "Copiați ca cale";
+"sidebar.worktree.open.remote.branch" = "Deschide ramura pe Remote";
+"sidebar.worktree.open.remote.commit" = "Deschide commit-ul pe Remote";
+"sidebar.worktree.lock" = "Blochează worktree";
+"sidebar.worktree.unlock" = "Deblochează worktree";
+"sidebar.remove.worktree" = "Șterge arborele de lucru";
+"sidebar.remove.worktree.title" = "Ștergeți arborele de lucru?";
+"sidebar.remove.worktree.confirm" = "Șterge";
+"sidebar.remove.main.worktree.error" = "Arborele de lucru principal nu poate fi eliminat.";
+"sidebar.remove.worktree.message %@" = "Aceasta va șterge permanent arborele de lucru din "%@". Branch-ul nu va fi șters.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Distruge Worktree...";
+"sidebar.worktree.delete.title" = "Distruge Worktree";
+"sidebar.worktree.delete.confirm" = "Distruge";
+"sidebar.worktree.delete.message %@" = "Worktree-ul de la "%@" și orice modificări nesalvate vor fi distruse permanent. Această acțiune nu poate fi anulată.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Curăță Worktrees…";
+"sidebar.prune.worktrees.title" = "Curăță Worktrees";
+"sidebar.prune.worktrees.confirm" = "Curăță";
+"sidebar.prune.worktrees.nothing.title" = "Nimic de curățat";
+"sidebar.prune.worktrees.nothing.message" = "Toate arborele de lucru sunt înregistrate. Nu s-au găsit înregistrări învechite.";
+"sidebar.prune.worktrees.explanation" = "Aceste înregistrări administrative indică directoare care nu mai există. Curățarea le elimină — ramurile tale nu sunt afectate.";
+"sidebar.new.worktree.title" = "Arbore de lucru nou";
+"sidebar.new.worktree.branch.label" = "Numele noului branch";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Introduceți un nume de ramură pentru a continua.";
+"sidebar.new.worktree.base.label" = "Branch de bază";
+"sidebar.new.worktree.base.placeholder" = "Filtrați ramurile...";
+"sidebar.new.worktree.path.label" = "Calea arborelui de lucru";
+"sidebar.new.worktree.path.required" = "Introduceți o cale de worktree pentru a continua.";
+"sidebar.new.worktree.create" = "Creează";
+"sidebar.new.worktree.loading.branches" = "Se încarcă branch-urile...";
+"common.close.window" = "Închide fereastra";
+"menu.toggle.sidebar" = "Comută bara laterală";

@@ -15,6 +15,7 @@
 "common.delete" = "Poista";
 "common.edit" = "Muokkaa";
 "common.close" = "Sulje";
+"common.close.window" = "Sulje ikkuna";
 "common.add" = "Lisää";
 "common.reinstall" = "Asenna uudelleen";
 "common.uninstall" = "Poista asennus";
@@ -40,11 +41,11 @@
 "card.unpin" = "Irrota terminaali";
 "card.running" = "Terminaali käynnissä";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Yhdistetty";
 "card.wired.help" = "Yhdistetty MCP-agenttiin";
@@ -478,11 +479,11 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "security.osc.clipboard.disabled" = "OSC 52 leikepöydän käyttö pois käytöstä";
 
 "settings.auto.check.updates" = "Tarkista päivitykset automaattisesti";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Kun käytössä, TermQ tarkistaa säännöllisesti uudet versiot";
+"settings.check.for.updates" = "Tarkista päivitykset...";
+"settings.include.beta.releases" = "Sisällytä betajulkaisut";
+"settings.include.beta.releases.help" = "Tilaa ennakkojulkaisut uusilla ominaisuuksilla";
+"settings.section.updates" = "Päivitykset";
 "editor.section.add.tag" = "Lisää tunniste";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "editor.allow.osc.clipboard.disabled.globally" = "Poistettu käytöstä yleisesti - ota käyttöön Asetukset > Tiedot ja turvallisuus";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Debug-version varoitus";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Virheenkorjausversiovaroitus";
+"settings.debug.update.warning.message" = "Päivityksen jatkaminen asentaa TermQ:n tuotantoversion.";
 
 "editor.no.tags" = "Ei tageja määritetty";
 
@@ -500,3 +501,62 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "settings.environment.section.add.variable" = "Lisää ympäristömuuttuja";
 
 "settings.mcp.install" = "Asenna MCP-palvelin";
+
+// MARK: - Sidebar
+"sidebar.title" = "Tietovarastot";
+"sidebar.add.button.help" = "Lisää tietovarasto";
+"sidebar.empty.message" = "Ei tietovarastoja lisätty.\nNapsauta + lisätäksesi git-tietovaraston.";
+"sidebar.worktrees.placeholder" = "Työskentelypuut näkyvät tässä";
+"sidebar.remove.repository" = "Poista tietovarasto";
+"sidebar.toggle.help" = "Näytä/piilota Tietovarastot-sivupalkki (⌘⇧L)";
+"sidebar.add.title" = "Lisää tietovarasto";
+"sidebar.add.path.label" = "Polku";
+"sidebar.add.name.label" = "Näyttönimi";
+"sidebar.add.name.placeholder" = "Tunnistettu automaattisesti gitistä";
+"sidebar.add.cancel" = "Kumoa";
+"sidebar.add.add" = "Lisää";
+"sidebar.add.advanced" = "Lisäasetukset";
+"sidebar.edit.title" = "Muokkaa repositoriota";
+"sidebar.edit.repository" = "Muokkaa repositoriota";
+"sidebar.worktree.base.path.label" = "Worktreen perushakemisto";
+"sidebar.worktree.base.path.help" = "Uudet worktrees luodaan tänne. Oletusarvo on repositorion ylähakemisto.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ei ole git-tietovarasto.";
+"menu.toggle.sidebar" = "Näytä/piilota sivupalkki";
+"sidebar.worktrees.empty" = "Työskentelypuita ei löydy.";
+"sidebar.worktree.detached.head" = "Irrotettu HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Päivitä työskentelypuut";
+"sidebar.worktree.new" = "Uusi työskentelypuu";
+"sidebar.worktree.new.terminal" = "Uusi Terminal";
+"sidebar.worktree.terminals.badge.help" = "Napsauta pikalinkkejä terminaalien avaamiseksi";
+"sidebar.worktree.open.in.terminal" = "Avaa Terminaalissa";
+"sidebar.worktree.reveal.in.finder" = "Näytä Finderissä";
+"sidebar.worktree.open.remote.branch" = "Avaa haara Remotessa";
+"sidebar.worktree.open.remote.commit" = "Avaa commit Remotessa";
+"sidebar.worktree.lock" = "Lukitse worktree";
+"sidebar.worktree.unlock" = "Avaa worktree";
+"sidebar.remove.worktree" = "Poista työskentelypuu";
+"sidebar.remove.worktree.title" = "Poistetaanko työskentelypuu?";
+"sidebar.remove.worktree.confirm" = "Poista";
+"sidebar.remove.main.worktree.error" = "Päätyöskentelypuuta ei voi poistaa.";
+"sidebar.remove.worktree.message %@" = "Tämä poistaa pysyvästi työskentelypuun kohteessa \"%@\". Haaraa ei poisteta.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Poista Worktree...";
+"sidebar.worktree.delete.title" = "Poista Worktree";
+"sidebar.worktree.delete.confirm" = "Poista";
+"sidebar.worktree.delete.message %@" = "Worktree osoitteessa \"%@\" ja kaikki tallentamattomat muutokset poistetaan pysyvästi. Tätä ei voi kumota.";
+"sidebar.new.worktree.title" = "Uusi työskentelypuu";
+"sidebar.new.worktree.branch.label" = "Uuden haaran nimi";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Syötä haaranimi jatkaaksesi.";
+"sidebar.new.worktree.base.label" = "Pohjahaara";
+"sidebar.new.worktree.base.placeholder" = "Suodata haaroja...";
+"sidebar.new.worktree.path.label" = "Työskentelypuun polku";
+"sidebar.new.worktree.path.required" = "Syötä worktree-polku jatkaaksesi.";
+"sidebar.new.worktree.create" = "Luo";
+"sidebar.new.worktree.loading.branches" = "Ladataan haaroja...";

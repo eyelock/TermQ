@@ -478,20 +478,20 @@
 "security.osc.clipboard.disabled" = "OSC 52 剪贴板访问已禁用";
 
 "settings.auto.check.updates" = "自动检查更新";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "启用后，TermQ 将定期检查新版本";
+"settings.check.for.updates" = "检查更新…";
+"settings.include.beta.releases" = "包含测试版";
+"settings.include.beta.releases.help" = "选择接收包含新功能的预发布版本";
+"settings.section.updates" = "更新";
 "editor.section.add.tag" = "添加标签";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "允许排队操作";
+"editor.allow.agent.prompts.help" = "允许将 {{PROMPT}} 和 {{NEXT_ACTION}} 注入此终端的初始化命令";
+"editor.allow.agent.prompts.disabled.globally" = "排队操作已全局禁用 - 在设置 > 数据与安全中启用";
 "editor.allow.osc.clipboard.disabled.globally" = "全局禁用 - 在设置 > 数据与安全中启用";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "确认已全局禁用 - 在设置 > 数据与安全中更改";
 
-"settings.debug.update.warning.title" = "调试构建警告";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "调试版本警告";
+"settings.debug.update.warning.message" = "继续更新将安装 TermQ 的正式版本。";
 
 "editor.no.tags" = "未定义标签";
 
@@ -500,3 +500,73 @@
 "settings.environment.section.add.variable" = "添加环境变量";
 
 "settings.mcp.install" = "安装 MCP 服务器";
+
+// MARK: - Sidebar
+"sidebar.title" = "仓库";
+"sidebar.add.button.help" = "添加仓库";
+"sidebar.empty.message" = "未添加任何仓库。\n点击 + 添加 Git 仓库。";
+"sidebar.worktrees.placeholder" = "工作树将显示在此处";
+"sidebar.remove.repository" = "移除仓库";
+"sidebar.toggle.help" = "切换仓库侧边栏 (⌘⇧L)";
+"sidebar.add.title" = "添加仓库";
+"sidebar.add.path.label" = "路径";
+"sidebar.add.name.label" = "显示名称";
+"sidebar.add.name.placeholder" = "从 Git 自动检测";
+"sidebar.add.cancel" = "取消";
+"sidebar.add.add" = "添加";
+"sidebar.add.advanced" = "高级";
+"sidebar.edit.title" = "编辑仓库";
+"sidebar.edit.repository" = "编辑仓库";
+"sidebar.worktree.base.path.label" = "worktree 基础路径";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "“%@”不是 Git 仓库。";
+"sidebar.worktrees.empty" = "未找到工作树。";
+"sidebar.worktree.detached.head" = "分离的 HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "刷新工作树";
+"sidebar.worktree.new" = "新建工作树";
+"sidebar.worktree.new.terminal" = "快速终端";
+"sidebar.worktree.create.terminal" = "创建终端…";
+"sidebar.worktree.terminals.badge.help" = "点击获取打开终端的快速链接";
+"sidebar.worktree.open.in.terminal" = "在 Terminal 中显示";
+"sidebar.worktree.reveal.in.finder" = "在 Finder 中显示";
+"sidebar.worktree.copy.pathname" = "复制路径";
+"sidebar.worktree.open.remote.branch" = "在 Remote 上打开分支";
+"sidebar.worktree.open.remote.commit" = "在 Remote 上打开提交";
+"sidebar.worktree.lock" = "锁定工作树";
+"sidebar.worktree.unlock" = "解锁工作树";
+"sidebar.remove.worktree" = "删除工作树";
+"sidebar.remove.worktree.title" = "删除工作树？";
+"sidebar.remove.worktree.confirm" = "删除";
+"sidebar.remove.main.worktree.error" = "无法移除主工作树。";
+"sidebar.remove.worktree.message %@" = "这将永久删除“%@”处的工作树。分支不会被删除。";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "销毁 Worktree...";
+"sidebar.worktree.delete.title" = "销毁 Worktree";
+"sidebar.worktree.delete.confirm" = "销毁";
+"sidebar.worktree.delete.message %@" = "路径 “%@” 处的 Worktree 及所有未提交的更改将被永久销毁。此操作无法撤销。";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "清理 Worktree…";
+"sidebar.prune.worktrees.title" = "清理 Worktree";
+"sidebar.prune.worktrees.confirm" = "清理";
+"sidebar.prune.worktrees.nothing.title" = "无需清理";
+"sidebar.prune.worktrees.nothing.message" = "所有工作树均已记录在案，未发现过期条目。";
+"sidebar.prune.worktrees.explanation" = "这些管理条目指向已不存在的目录。清理将移除它们——您的分支不受影响。";
+"sidebar.new.worktree.title" = "新建工作树";
+"sidebar.new.worktree.branch.label" = "新分支名称";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "请输入分支名称以继续。";
+"sidebar.new.worktree.base.label" = "基础分支";
+"sidebar.new.worktree.base.placeholder" = "筛选分支...";
+"sidebar.new.worktree.path.label" = "工作树路径";
+"sidebar.new.worktree.path.required" = "请输入 Worktree 路径以继续。";
+"sidebar.new.worktree.create" = "创建";
+"sidebar.new.worktree.loading.branches" = "正在加载分支…";
+"common.close.window" = "关闭窗口";
+"menu.toggle.sidebar" = "切换侧边栏";

@@ -15,6 +15,7 @@
 "common.delete" = "מחיקה";
 "common.edit" = "עריכה";
 "common.close" = "סגירה";
+"common.close.window" = "סגור חלון";
 "common.add" = "הוספה";
 "common.reinstall" = "התקנה מחדש";
 "common.uninstall" = "הסרה";
@@ -40,11 +41,11 @@
 "card.unpin" = "ביטול הצמדת מסוף";
 "card.running" = "המסוף פועל";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "מחובר";
 "card.wired.help" = "מחובר לסוכן MCP";
@@ -477,12 +478,12 @@
 "security.osc.clipboard.enabled" = "גישה ללוח OSC 52 מופעלת";
 "security.osc.clipboard.disabled" = "גישה ללוח OSC 52 מושבתת";
 
-"settings.auto.check.updates" = "חפש עדכונים אוטומטית";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "בדוק עדכונים אוטומטית";
+"settings.auto.check.updates.help" = "כאשר מופעל, TermQ יבדוק מעת לעת גרסאות חדשות";
+"settings.check.for.updates" = "חפש עדכונים...";
+"settings.include.beta.releases" = "כלול גרסאות בטא";
+"settings.include.beta.releases.help" = "הצטרף לקבלת גרסאות טרום-שחרור עם תכונות חדשות";
+"settings.section.updates" = "עדכונים";
 "editor.section.add.tag" = "הוסף תג";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@
 "editor.allow.osc.clipboard.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "אזהרת גרסת ניפוי שגיאות";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "אזהרת גרסת דיבאג";
+"settings.debug.update.warning.message" = "המשך עדכון יתקין את גרסת הייצור של TermQ.";
 
 "editor.no.tags" = "אין תגיות מוגדרות";
 
@@ -500,3 +501,62 @@
 "settings.environment.section.add.variable" = "הוסף משתנה סביבה";
 
 "settings.mcp.install" = "התקן שרת MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "מאגרים";
+"sidebar.add.button.help" = "הוסף מאגר";
+"sidebar.empty.message" = "לא נוספו מאגרים.\nלחץ + להוספת מאגר git.";
+"sidebar.worktrees.placeholder" = "עצי העבודה יופיעו כאן";
+"sidebar.remove.repository" = "הסר מאגר";
+"sidebar.toggle.help" = "הצג/הסתר סרגל צד מאגרים (⌘⇧L)";
+"sidebar.add.title" = "הוסף מאגר";
+"sidebar.add.path.label" = "נתיב";
+"sidebar.add.name.label" = "שם תצוגה";
+"sidebar.add.name.placeholder" = "זוהה אוטומטית מ-git";
+"sidebar.add.cancel" = "ביטול";
+"sidebar.add.add" = "הוסף";
+"sidebar.add.advanced" = "מתקדם";
+"sidebar.edit.title" = "ערוך מאגר";
+"sidebar.edit.repository" = "ערוך מאגר";
+"sidebar.worktree.base.path.label" = "נתיב בסיס worktree";
+"sidebar.worktree.base.path.help" = "כאן נוצרים worktrees חדשים. ברירת המחדל היא ספריית האב של תיקיית המאגר.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" אינו מאגר git.";
+"menu.toggle.sidebar" = "הצג/הסתר סרגל צד";
+"sidebar.worktrees.empty" = "לא נמצאו עצי עבודה.";
+"sidebar.worktree.detached.head" = "HEAD מנותק";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "רענן עצי עבודה";
+"sidebar.worktree.new" = "עץ עבודה חדש";
+"sidebar.worktree.new.terminal" = "Terminal חדש";
+"sidebar.worktree.terminals.badge.help" = "לחץ לקישורים מהירים לפתיחת מסופים";
+"sidebar.worktree.open.in.terminal" = "פתח ב-Terminal";
+"sidebar.worktree.reveal.in.finder" = "חשוף ב-Finder";
+"sidebar.worktree.open.remote.branch" = "פתח ענף ב-Remote";
+"sidebar.worktree.open.remote.commit" = "פתח Commit ב-Remote";
+"sidebar.worktree.lock" = "נעל worktree";
+"sidebar.worktree.unlock" = "בטל נעילת worktree";
+"sidebar.remove.worktree" = "הסר עץ עבודה";
+"sidebar.remove.worktree.title" = "הסר עץ עבודה?";
+"sidebar.remove.worktree.confirm" = "הסר";
+"sidebar.remove.main.worktree.error" = "לא ניתן להסיר את עץ העבודה הראשי.";
+"sidebar.remove.worktree.message %@" = "פעולה זו תסיר לצמיתות את עץ העבודה ב-\"%@\". הענף לא יימחק.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "מחק Worktree...";
+"sidebar.worktree.delete.title" = "מחק Worktree";
+"sidebar.worktree.delete.confirm" = "מחק";
+"sidebar.worktree.delete.message %@" = "ה-worktree ב-\"%@\" וכל השינויים שלא נשמרו יימחקו לצמיתות. לא ניתן לבטל פעולה זו.";
+"sidebar.new.worktree.title" = "עץ עבודה חדש";
+"sidebar.new.worktree.branch.label" = "שם ענף חדש";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "הזן שם ענף כדי להמשיך.";
+"sidebar.new.worktree.base.label" = "ענף בסיס";
+"sidebar.new.worktree.base.placeholder" = "סנן ענפים...";
+"sidebar.new.worktree.path.label" = "נתיב עץ עבודה";
+"sidebar.new.worktree.path.required" = "הזן נתיב worktree כדי להמשיך.";
+"sidebar.new.worktree.create" = "צור";
+"sidebar.new.worktree.loading.branches" = "טוען ענפים...";

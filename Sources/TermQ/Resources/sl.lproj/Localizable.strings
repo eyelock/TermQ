@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Uporabi";
 "common.preview" = "Predogled";
+"common.close.window" = "Zapri okno";
 
 // MARK: - Board View
 "board.column.options" = "Možnosti stolpca";
@@ -40,11 +41,11 @@
 "card.unpin" = "Odpni terminal";
 "card.running" = "Terminal deluje";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Povezano";
 "card.wired.help" = "Povezano z agentom MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Naslednji pripeti terminal";
 "menu.previous.pinned" = "Prejšnji pripeti terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Preklopi stransko vrstico";
 
 
 // MARK: - Command Palette
@@ -477,21 +479,22 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "security.osc.clipboard.enabled" = "Dostop do odložišča OSC 52 omogočen";
 "security.osc.clipboard.disabled" = "Dostop do odložišča OSC 52 onemogočen";
 
-"settings.auto.check.updates" = "Samodejno preveri za posodobitve";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Samodejno preveri posodobitve";
+"settings.auto.check.updates.help" = "Ko je omogočeno, bo TermQ občasno preverjal nove različice";
+"settings.check.for.updates" = "Preveri posodobitve...";
+"settings.include.beta.releases" = "Vključi beta različice";
+"settings.include.beta.releases.help" = "Prijavite se za prejemanje predizhodnih različic z novimi funkcijami";
+"settings.section.updates" = "Posodobitve";
 "editor.section.add.tag" = "Dodaj oznako";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Dovoli čakalne akcije";
+"editor.allow.agent.prompts.help" = "Dovoli vstavljanje {{PROMPT}} in {{NEXT_ACTION}} v začetni ukaz tega terminala";
+"editor.allow.agent.prompts.disabled.globally" = "Čakalne akcije so globalno onemogočene - omogoči v Nastavitve > Podatki in varnost";
 "editor.allow.osc.clipboard.disabled.globally" = "Onemogočeno globalno - omogoči v Nastavitve > Podatki in varnost";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Potrditev je globalno onemogočena - spremeni v Nastavitve > Podatki in varnost";
 
-"settings.debug.update.warning.title" = "Opozorilo za razhroščevalno različico";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Opozorilo: Debug gradnja";
+"settings.debug.update.warning.message" = "Nadaljevanje s posodobitvami bo namestilo produkcijsko različico TermQ.";
 
 "editor.no.tags" = "Ni definiranih oznak";
 
@@ -500,3 +503,61 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "settings.environment.section.add.variable" = "Dodaj spremenljivko okolja";
 
 "settings.mcp.install" = "Namesti strežnik MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repozitoriji";
+"sidebar.add.button.help" = "Dodaj repozitorij";
+"sidebar.empty.message" = "Ni dodanih repozitorijev.\nKliknite + za dodajanje git repozitorija.";
+"sidebar.worktrees.placeholder" = "Delovne kopije se bodo prikazale tukaj";
+"sidebar.remove.repository" = "Odstrani repozitorij";
+"sidebar.toggle.help" = "Preklopi stransko vrstico repozitorijev (⌘⇧L)";
+"sidebar.add.title" = "Dodaj repozitorij";
+"sidebar.add.path.label" = "Pot";
+"sidebar.add.name.label" = "Prikazno ime";
+"sidebar.add.name.placeholder" = "Samodejno zaznano iz git";
+"sidebar.add.cancel" = "Prekliči";
+"sidebar.add.add" = "Dodaj";
+"sidebar.add.advanced" = "Napredno";
+"sidebar.edit.title" = "Uredi repozitorij";
+"sidebar.edit.repository" = "Uredi repozitorij";
+"sidebar.worktree.base.path.label" = "Osnovna pot worktree";
+"sidebar.worktree.base.path.help" = "Novi worktrees se ustvarijo tukaj. Privzeto je nadrejena mapa imenika repozitorija.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ni git repozitorij.";
+"sidebar.worktrees.empty" = "Ni najdenih delovnih kopij.";
+"sidebar.worktree.detached.head" = "Ločena HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Osveži delovne kopije";
+"sidebar.worktree.new" = "Nova delovna kopija";
+"sidebar.worktree.new.terminal" = "Nov Terminal";
+"sidebar.worktree.terminals.badge.help" = "Kliknite za hitre povezave za odpiranje terminalov";
+"sidebar.worktree.open.in.terminal" = "Odpri v Terminalu";
+"sidebar.worktree.reveal.in.finder" = "Pokaži v Finderju";
+"sidebar.worktree.open.remote.branch" = "Odpri vejo na Remote";
+"sidebar.worktree.open.remote.commit" = "Odpri commit na Remote";
+"sidebar.worktree.lock" = "Zakleni delovno kopijo";
+"sidebar.worktree.unlock" = "Odkleni delovno kopijo";
+"sidebar.remove.worktree" = "Odstrani delovno kopijo";
+"sidebar.remove.worktree.title" = "Odstrani delovno kopijo?";
+"sidebar.remove.worktree.confirm" = "Odstrani";
+"sidebar.remove.main.worktree.error" = "Glavne delovne kopije ni mogoče odstraniti.";
+"sidebar.remove.worktree.message %@" = "To bo trajno odstranilo delovno kopijo na \"%@\". Veja ne bo izbrisana.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Izbriši Worktree...";
+"sidebar.worktree.delete.title" = "Izbriši Worktree";
+"sidebar.worktree.delete.confirm" = "Izbriši";
+"sidebar.worktree.delete.message %@" = "Delovno drevo na poti \"%@\" in vse neshranjene spremembe bodo trajno izbrisane. Tega ni mogoče razveljaviti.";
+"sidebar.new.worktree.title" = "Nova delovna kopija";
+"sidebar.new.worktree.branch.label" = "Ime nove veje";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Vnesite ime veje za nadaljevanje.";
+"sidebar.new.worktree.base.label" = "Osnovna veja";
+"sidebar.new.worktree.base.placeholder" = "Filtriraj veje...";
+"sidebar.new.worktree.path.label" = "Pot delovne kopije";
+"sidebar.new.worktree.path.required" = "Vnesite pot do delovnega drevesa za nadaljevanje.";
+"sidebar.new.worktree.create" = "Ustvari";
+"sidebar.new.worktree.loading.branches" = "Nalaganje vej...";

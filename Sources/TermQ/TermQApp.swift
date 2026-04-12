@@ -441,7 +441,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 alert.informativeText = Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
             }
 
-            alert.addButton(withTitle: "Close Window")
+            alert.addButton(withTitle: Strings.Common.closeWindow)
             alert.addButton(withTitle: Strings.Common.cancel)
             alert.alertStyle = .warning
 
@@ -541,7 +541,7 @@ struct TermQApp: App {
 
             // Window commands - enable Cmd+W to close window (hides it, preserving session)
             CommandGroup(after: .windowArrangement) {
-                Button("Close Window") {
+                Button(Strings.Common.closeWindow) {
                     // Close the current window (won't quit app due to applicationShouldTerminateAfterLastWindowClosed)
                     NSApp.keyWindow?.close()
                 }
@@ -649,6 +649,13 @@ struct TermQApp: App {
                     terminalActions?.showBin()
                 }
                 .keyboardShortcut(.delete, modifiers: [.command, .shift])
+
+                Divider()
+
+                Button(Strings.Sidebar.menuToggle) {
+                    terminalActions?.toggleSidebar()
+                }
+                .keyboardShortcut("l", modifiers: [.command, .shift])
             }
 
             #if DEBUG

@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "적용";
 "common.preview" = "미리보기";
+"common.close.window" = "창 닫기";
 
 // MARK: - Board View
 "board.column.options" = "열 옵션";
@@ -40,11 +41,11 @@
 "card.unpin" = "터미널 고정 해제";
 "card.running" = "터미널 실행 중";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "연결됨";
 "card.wired.help" = "MCP 에이전트에 연결됨";
@@ -478,20 +479,19 @@
 "security.osc.clipboard.disabled" = "OSC 52 클립보드 액세스 비활성화됨";
 
 "settings.auto.check.updates" = "자동으로 업데이트 확인";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "활성화하면 TermQ가 주기적으로 새 버전을 확인합니다";
+"settings.check.for.updates" = "업데이트 확인...";
+"settings.include.beta.releases" = "베타 릴리스 포함";
+"settings.include.beta.releases.help" = "새 기능이 포함된 사전 출시 버전을 받으려면 선택하세요";
+"settings.section.updates" = "업데이트";
+"settings.debug.update.warning.title" = "디버그 빌드 경고";
+"settings.debug.update.warning.message" = "업데이트를 진행하면 TermQ의 프로덕션 버전이 설치됩니다.";
 "editor.section.add.tag" = "태그 추가";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
 "editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
-
-"settings.debug.update.warning.title" = "디버그 빌드 경고";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "정의된 태그 없음";
 
@@ -500,3 +500,62 @@
 "settings.environment.section.add.variable" = "환경 변수 추가";
 
 "settings.mcp.install" = "MCP 서버 설치";
+
+// MARK: - Sidebar
+"sidebar.title" = "저장소";
+"sidebar.add.button.help" = "저장소 추가";
+"sidebar.empty.message" = "추가된 저장소가 없습니다.\n+ 버튼을 눌러 git 저장소를 추가하세요.";
+"sidebar.worktrees.placeholder" = "워크트리가 여기에 표시됩니다";
+"sidebar.remove.repository" = "저장소 제거";
+"sidebar.toggle.help" = "저장소 사이드바 전환 (⌘⇧L)";
+"sidebar.add.title" = "저장소 추가";
+"sidebar.add.path.label" = "경로";
+"sidebar.add.name.label" = "표시 이름";
+"sidebar.add.name.placeholder" = "git에서 자동 감지";
+"sidebar.add.cancel" = "취소";
+"sidebar.add.add" = "추가";
+"sidebar.add.advanced" = "고급";
+"sidebar.edit.title" = "저장소 편집";
+"sidebar.edit.repository" = "저장소 편집";
+"sidebar.worktree.base.path.label" = "Worktree 기본 경로";
+"sidebar.worktree.base.path.help" = "새 worktree가 여기에 생성됩니다. 기본값은 저장소 디렉토리의 상위 폴더입니다.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\"은(는) git 저장소가 아닙니다.";
+"menu.toggle.sidebar" = "사이드바 전환";
+"sidebar.worktrees.empty" = "워크트리를 찾을 수 없습니다.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "워크트리 새로 고침";
+"sidebar.worktree.new" = "새 워크트리";
+"sidebar.worktree.new.terminal" = "새 Terminal";
+"sidebar.worktree.terminals.badge.help" = "터미널 열기 빠른 링크를 보려면 클릭하세요";
+"sidebar.worktree.open.in.terminal" = "Terminal에서 열기";
+"sidebar.worktree.reveal.in.finder" = "Finder에서 보기";
+"sidebar.worktree.open.remote.branch" = "Remote에서 브랜치 열기";
+"sidebar.worktree.open.remote.commit" = "Remote에서 커밋 열기";
+"sidebar.worktree.lock" = "워크트리 잠금";
+"sidebar.worktree.unlock" = "워크트리 잠금 해제";
+"sidebar.remove.worktree" = "워크트리 제거";
+"sidebar.remove.worktree.title" = "워크트리를 제거하시겠습니까?";
+"sidebar.remove.worktree.confirm" = "제거";
+"sidebar.remove.main.worktree.error" = "기본 워크트리는 제거할 수 없습니다.";
+"sidebar.remove.worktree.message %@" = "\"%@\"의 워크트리가 영구적으로 제거됩니다. 브랜치는 삭제되지 않습니다.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree 삭제...";
+"sidebar.worktree.delete.title" = "Worktree 삭제";
+"sidebar.worktree.delete.confirm" = "삭제";
+"sidebar.worktree.delete.message %@" = "\"%@\"의 Worktree와 커밋되지 않은 모든 변경 사항이 영구적으로 삭제됩니다. 이 작업은 취소할 수 없습니다.";
+"sidebar.new.worktree.title" = "새 워크트리";
+"sidebar.new.worktree.branch.label" = "새 브랜치 이름";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "계속하려면 브랜치 이름을 입력하세요.";
+"sidebar.new.worktree.base.label" = "기반 브랜치";
+"sidebar.new.worktree.base.placeholder" = "브랜치 필터링...";
+"sidebar.new.worktree.path.label" = "워크트리 경로";
+"sidebar.new.worktree.path.required" = "계속하려면 Worktree 경로를 입력하세요.";
+"sidebar.new.worktree.create" = "생성";
+"sidebar.new.worktree.loading.branches" = "브랜치 로딩 중...";

@@ -15,6 +15,7 @@
 "common.delete" = "Törlés";
 "common.edit" = "Szerkesztés";
 "common.close" = "Bezárás";
+"common.close.window" = "Ablak bezárása";
 "common.add" = "Hozzáadás";
 "common.reinstall" = "Újratelepítés";
 "common.uninstall" = "Eltávolítás";
@@ -40,11 +41,11 @@
 "card.unpin" = "Terminál feloldása";
 "card.running" = "Terminál fut";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Csatlakoztatva";
 "card.wired.help" = "Csatlakoztatva MCP agenthez";
@@ -477,21 +478,21 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "security.osc.clipboard.enabled" = "OSC 52 vágólap-hozzáférés engedélyezve";
 "security.osc.clipboard.disabled" = "OSC 52 vágólap-hozzáférés letiltva";
 
-"settings.auto.check.updates" = "Frissítések automatikus ellenőrzése";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Frissítések automatikus keresése";
+"settings.auto.check.updates.help" = "Ha engedélyezve van, a TermQ rendszeresen ellenőrzi az új verziókat";
+"settings.check.for.updates" = "Frissítések keresése...";
+"settings.include.beta.releases" = "Béta kiadások belefoglalása";
+"settings.include.beta.releases.help" = "Feliratkozás az új funkciókkal rendelkező előzetes kiadásokra";
+"settings.section.updates" = "Frissítések";
+"settings.debug.update.warning.title" = "Hibakeresési verzió figyelmeztetése";
+"settings.debug.update.warning.message" = "A frissítés folytatásával a TermQ produkciós verziója kerül telepítésre.";
 "editor.section.add.tag" = "Címke hozzáadása";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
 "editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
-
-"settings.debug.update.warning.title" = "Hibakeresési verzió figyelmeztetése";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Nincsenek meghatározott címkék";
 
@@ -500,3 +501,62 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "settings.environment.section.add.variable" = "Környezeti változó hozzáadása";
 
 "settings.mcp.install" = "MCP-szerver telepítése";
+
+// MARK: - Sidebar
+"sidebar.title" = "Tárolók";
+"sidebar.add.button.help" = "Tároló hozzáadása";
+"sidebar.empty.message" = "Nincs hozzáadott tároló.\nKattintson a + gombra egy git tároló hozzáadásához.";
+"sidebar.worktrees.placeholder" = "A munkakönyvtárak itt jelennek meg";
+"sidebar.remove.repository" = "Tároló eltávolítása";
+"sidebar.toggle.help" = "Tárolók oldalsáv be-/kikapcsolása (⌘⇧L)";
+"sidebar.add.title" = "Tároló hozzáadása";
+"sidebar.add.path.label" = "Elérési út";
+"sidebar.add.name.label" = "Megjelenített név";
+"sidebar.add.name.placeholder" = "Automatikusan észlel a gitből";
+"sidebar.add.cancel" = "Mégse";
+"sidebar.add.add" = "Hozzáadás";
+"sidebar.add.advanced" = "Speciális";
+"sidebar.edit.title" = "Tároló szerkesztése";
+"sidebar.edit.repository" = "Tároló szerkesztése";
+"sidebar.worktree.base.path.label" = "Worktree alap elérési útja";
+"sidebar.worktree.base.path.help" = "Az új worktrees-ek itt jönnek létre. Alapértelmezés szerint a tároló könyvtárának szülőmappája.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" nem git tároló.";
+"menu.toggle.sidebar" = "Oldalsáv be-/kikapcsolása";
+"sidebar.worktrees.empty" = "Nem található munkakönyvtár.";
+"sidebar.worktree.detached.head" = "Leválasztott HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Munkakönyvtárak frissítése";
+"sidebar.worktree.new" = "Új munkakönyvtár";
+"sidebar.worktree.new.terminal" = "Új Terminal";
+"sidebar.worktree.terminals.badge.help" = "Kattintson a terminálok megnyitásához szükséges gyorshivatkozásokért";
+"sidebar.worktree.open.in.terminal" = "Megnyitás Terminálban";
+"sidebar.worktree.reveal.in.finder" = "Megjelenítés Finderben";
+"sidebar.worktree.open.remote.branch" = "Ág megnyitása a Remote-on";
+"sidebar.worktree.open.remote.commit" = "Commit megnyitása a Remote-on";
+"sidebar.worktree.lock" = "Munkakönyvtár zárolása";
+"sidebar.worktree.unlock" = "Munkakönyvtár feloldása";
+"sidebar.remove.worktree" = "Munkakönyvtár eltávolítása";
+"sidebar.remove.worktree.title" = "Eltávolítja a munkakönyvtárat?";
+"sidebar.remove.worktree.confirm" = "Eltávolítás";
+"sidebar.remove.main.worktree.error" = "A fő munkakönyvtár nem távolítható el.";
+"sidebar.remove.worktree.message %@" = "Ez véglegesen eltávolítja a \"%@\" munkakönyvtárat. Az ág nem törlődik.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree törlése...";
+"sidebar.worktree.delete.title" = "Worktree törlése";
+"sidebar.worktree.delete.confirm" = "Törlés";
+"sidebar.worktree.delete.message %@" = "A \"%@\" elérési úton lévő munkakönyvtár és az összes nem mentett módosítás véglegesen törlődik. Ez a művelet nem vonható vissza.";
+"sidebar.new.worktree.title" = "Új munkakönyvtár";
+"sidebar.new.worktree.branch.label" = "Új ág neve";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "A folytatáshoz adjon meg egy ágnevet.";
+"sidebar.new.worktree.base.label" = "Alapág";
+"sidebar.new.worktree.base.placeholder" = "Ágak szűrése...";
+"sidebar.new.worktree.path.label" = "Munkakönyvtár elérési útja";
+"sidebar.new.worktree.path.required" = "A folytatáshoz adjon meg egy worktree elérési utat.";
+"sidebar.new.worktree.create" = "Létrehozás";
+"sidebar.new.worktree.loading.branches" = "Ágak betöltése...";

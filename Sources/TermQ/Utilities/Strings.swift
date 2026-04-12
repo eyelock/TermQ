@@ -165,6 +165,7 @@ enum Strings {
         static var apply: String { localized("common.apply") }
         static var preview: String { localized("common.preview") }
         static var quit: String { localized("common.quit") }
+        static var closeWindow: String { localized("common.close.window") }
     }
 
     // MARK: - Board View
@@ -724,5 +725,93 @@ enum Strings {
         static func errorData(_ error: String) -> String {
             localized("uninstall.error.data %@", error)
         }
+    }
+
+}
+
+// MARK: - Sidebar
+
+extension Strings {
+    enum Sidebar {
+        static var title: String { localized("sidebar.title") }
+        static var addButtonHelp: String { localized("sidebar.add.button.help") }
+        static var emptyMessage: String { localized("sidebar.empty.message") }
+        static var worktreesPlaceholder: String { localized("sidebar.worktrees.placeholder") }
+        static var removeRepository: String { localized("sidebar.remove.repository") }
+        static var toggleHelp: String { localized("sidebar.toggle.help") }
+        static var addRepositoryTitle: String { localized("sidebar.add.title") }
+        static var editRepositoryTitle: String { localized("sidebar.edit.title") }
+        static var editRepository: String { localized("sidebar.edit.repository") }
+        static var pathLabel: String { localized("sidebar.add.path.label") }
+        static var nameLabel: String { localized("sidebar.add.name.label") }
+        static var namePlaceholder: String { localized("sidebar.add.name.placeholder") }
+        static var worktreeBasePathLabel: String { localized("sidebar.worktree.base.path.label") }
+        static var worktreeBasePathHelp: String { localized("sidebar.worktree.base.path.help") }
+        static var worktreeBasePathPlaceholder: String { localized("sidebar.worktree.base.path.placeholder") }
+        static var basePathEqualsRepo: String { localized("sidebar.base.path.equals.repo") }
+        static var basePathIsParentOfRepo: String { localized("sidebar.base.path.is.parent") }
+        static func addToGitignore(_ entry: String) -> String {
+            String(format: localized("sidebar.add.gitignore %@"), entry)
+        }
+        static var cancelButton: String { localized("sidebar.add.cancel") }
+        static var addButton: String { localized("sidebar.add.add") }
+        static var addAdvanced: String { localized("sidebar.add.advanced") }
+        static var menuToggle: String { localized("menu.toggle.sidebar") }
+        static func errorNotGitRepo(_ path: String) -> String {
+            localized("sidebar.error.not.git.repo %@", path)
+        }
+
+        // Worktree list
+        static var worktreesEmpty: String { localized("sidebar.worktrees.empty") }
+        static var detachedHead: String { localized("sidebar.worktree.detached.head") }
+        static var mainBadge: String { localized("sidebar.worktree.main.badge") }
+        static var refreshWorktrees: String { localized("sidebar.worktrees.refresh") }
+        static var newWorktree: String { localized("sidebar.worktree.new") }
+        static var newTerminal: String { localized("sidebar.worktree.new.terminal") }
+        static var createTerminal: String { localized("sidebar.worktree.create.terminal") }
+        static var terminalBadgeHelp: String { localized("sidebar.worktree.terminals.badge.help") }
+        static var openInTerminal: String { localized("sidebar.worktree.open.in.terminal") }
+        static var revealInFinder: String { localized("sidebar.worktree.reveal.in.finder") }
+        static var copyPathname: String { localized("sidebar.worktree.copy.pathname") }
+        static var openRemoteBranch: String { localized("sidebar.worktree.open.remote.branch") }
+        static var openRemoteCommit: String { localized("sidebar.worktree.open.remote.commit") }
+        static var lockWorktree: String { localized("sidebar.worktree.lock") }
+        static var unlockWorktree: String { localized("sidebar.worktree.unlock") }
+
+        // Remove / delete worktree
+        static var removeWorktree: String { localized("sidebar.remove.worktree") }
+        static var removeWorktreeTitle: String { localized("sidebar.remove.worktree.title") }
+        static var removeWorktreeConfirm: String { localized("sidebar.remove.worktree.confirm") }
+        static var removeMainWorktreeError: String { localized("sidebar.remove.main.worktree.error") }
+        static func removeWorktreeMessage(_ path: String) -> String {
+            localized("sidebar.remove.worktree.message %@", path)
+        }
+
+        static var deleteWorktree: String { localized("sidebar.worktree.delete") }
+        static var deleteWorktreeTitle: String { localized("sidebar.worktree.delete.title") }
+        static var deleteWorktreeConfirm: String { localized("sidebar.worktree.delete.confirm") }
+        static func deleteWorktreeMessage(_ path: String) -> String {
+            localized("sidebar.worktree.delete.message %@", path)
+        }
+
+        // Prune worktrees
+        static var pruneWorktrees: String { localized("sidebar.prune.worktrees") }
+        static var pruneWorktreesTitle: String { localized("sidebar.prune.worktrees.title") }
+        static var pruneWorktreesConfirm: String { localized("sidebar.prune.worktrees.confirm") }
+        static var pruneWorktreesNothingTitle: String { localized("sidebar.prune.worktrees.nothing.title") }
+        static var pruneWorktreesNothingMessage: String { localized("sidebar.prune.worktrees.nothing.message") }
+        static var pruneWorktreesExplanation: String { localized("sidebar.prune.worktrees.explanation") }
+
+        // New worktree sheet
+        static var newWorktreeTitle: String { localized("sidebar.new.worktree.title") }
+        static var branchNameLabel: String { localized("sidebar.new.worktree.branch.label") }
+        static var branchNamePlaceholder: String { localized("sidebar.new.worktree.branch.placeholder") }
+        static var newWorktreeBranchRequired: String { localized("sidebar.new.worktree.branch.required") }
+        static var baseBranchLabel: String { localized("sidebar.new.worktree.base.label") }
+        static var baseBranchPlaceholder: String { localized("sidebar.new.worktree.base.placeholder") }
+        static var worktreePathLabel: String { localized("sidebar.new.worktree.path.label") }
+        static var newWorktreePathRequired: String { localized("sidebar.new.worktree.path.required") }
+        static var createButton: String { localized("sidebar.new.worktree.create") }
+        static var loadingBranches: String { localized("sidebar.new.worktree.loading.branches") }
     }
 }

@@ -15,6 +15,7 @@
 "common.delete" = "حذف";
 "common.edit" = "تعديل";
 "common.close" = "إغلاق";
+"common.close.window" = "إغلاق النافذة";
 "common.add" = "إضافة";
 "common.reinstall" = "إعادة التثبيت";
 "common.uninstall" = "إلغاء التثبيت";
@@ -477,12 +478,12 @@
 "security.osc.clipboard.enabled" = "تم تمكين الوصول إلى الحافظة OSC 52";
 "security.osc.clipboard.disabled" = "تم تعطيل الوصول إلى الحافظة OSC 52";
 
-"settings.auto.check.updates" = "التحقق من التحديثات تلقائيًا";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "البحث التلقائي عن التحديثات";
+"settings.auto.check.updates.help" = "عند التفعيل، سيتحقق TermQ دوريًا من الإصدارات الجديدة";
+"settings.check.for.updates" = "التحقق من التحديثات...";
+"settings.include.beta.releases" = "تضمين الإصدارات التجريبية";
+"settings.include.beta.releases.help" = "اشترك لتلقي الإصدارات التجريبية مع الميزات الجديدة";
+"settings.section.updates" = "التحديثات";
 "editor.section.add.tag" = "إضافة علامة";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@
 "editor.allow.osc.clipboard.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "تحذير إصدار التصحيح";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "تحذير إصدار التطوير";
+"settings.debug.update.warning.message" = "المتابعة في التحديثات ستثبت الإصدار الإنتاجي من TermQ.";
 
 "editor.no.tags" = "لا توجد علامات";
 
@@ -500,3 +501,72 @@
 "settings.environment.section.add.variable" = "إضافة متغير بيئة";
 
 "settings.mcp.install" = "تثبيت خادم MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "المستودعات";
+"sidebar.add.button.help" = "إضافة مستودع";
+"sidebar.empty.message" = "لم تتم إضافة مستودعات.\nانقر + لإضافة مستودع git.";
+"sidebar.worktrees.placeholder" = "ستظهر بيئات العمل هنا";
+"sidebar.remove.repository" = "إزالة المستودع";
+"sidebar.toggle.help" = "إظهار/إخفاء الشريط الجانبي للمستودعات (⌘⇧L)";
+"sidebar.add.title" = "إضافة مستودع";
+"sidebar.add.path.label" = "المسار";
+"sidebar.add.name.label" = "اسم العرض";
+"sidebar.add.name.placeholder" = "يُكتشف تلقائيًا من git";
+"sidebar.add.cancel" = "إلغاء";
+"sidebar.add.add" = "إضافة";
+"sidebar.add.advanced" = "متقدم";
+"sidebar.edit.title" = "تعديل المستودع";
+"sidebar.edit.repository" = "تعديل المستودع";
+"sidebar.worktree.base.path.label" = "المسار الأساسي لـ worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ليس مستودع git.";
+"menu.toggle.sidebar" = "إظهار/إخفاء الشريط الجانبي";
+"sidebar.worktrees.empty" = "لا توجد بيئات عمل.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "تحديث بيئات العمل";
+"sidebar.worktree.new" = "بيئة عمل جديدة";
+"sidebar.worktree.new.terminal" = "طرفية سريعة";
+"sidebar.worktree.create.terminal" = "إنشاء طرفية…";
+"sidebar.worktree.terminals.badge.help" = "انقر للحصول على روابط سريعة لفتح الطرفيات";
+"sidebar.worktree.open.in.terminal" = "إظهار في Terminal";
+"sidebar.worktree.reveal.in.finder" = "الكشف في Finder";
+"sidebar.worktree.copy.pathname" = "نسخ كمسار";
+"sidebar.worktree.open.remote.branch" = "فتح الفرع على Remote";
+"sidebar.worktree.open.remote.commit" = "فتح الـ Commit على Remote";
+"sidebar.worktree.lock" = "قفل worktree";
+"sidebar.worktree.unlock" = "إلغاء قفل worktree";
+"sidebar.remove.worktree" = "حذف بيئة العمل";
+"sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
+"sidebar.remove.worktree.confirm" = "حذف";
+"sidebar.remove.main.worktree.error" = "لا يمكن إزالة بيئة العمل الرئيسية.";
+"sidebar.remove.worktree.message %@" = "سيؤدي هذا إلى حذف بيئة العمل في "%@" بشكل دائم. لن يتم حذف الفرع.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "إتلاف Worktree...";
+"sidebar.worktree.delete.title" = "إتلاف Worktree";
+"sidebar.worktree.delete.confirm" = "إتلاف";
+"sidebar.worktree.delete.message %@" = "سيتم إتلاف worktree في "%@" وأي تغييرات غير محفوظة بشكل دائم. لا يمكن التراجع عن هذا الإجراء.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "تنظيف Worktrees…";
+"sidebar.prune.worktrees.title" = "تنظيف Worktrees";
+"sidebar.prune.worktrees.confirm" = "تنظيف";
+"sidebar.prune.worktrees.nothing.title" = "لا يوجد ما يُنظَّف";
+"sidebar.prune.worktrees.nothing.message" = "جميع بيئات العمل مُسجَّلة. لم يُعثر على أي سجلات قديمة.";
+"sidebar.prune.worktrees.explanation" = "تشير هذه السجلات الإدارية إلى مسارات لم تعد موجودة. يؤدي التنظيف إلى إزالتها — ولا تتأثر فروعك.";
+"sidebar.new.worktree.title" = "بيئة عمل جديدة";
+"sidebar.new.worktree.branch.label" = "اسم الفرع الجديد";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "أدخل اسم فرع للمتابعة.";
+"sidebar.new.worktree.base.label" = "الفرع الأساسي";
+"sidebar.new.worktree.base.placeholder" = "تصفية الفروع...";
+"sidebar.new.worktree.path.label" = "مسار بيئة العمل";
+"sidebar.new.worktree.path.required" = "أدخل مسار worktree للمتابعة.";
+"sidebar.new.worktree.create" = "إنشاء";
+"sidebar.new.worktree.loading.branches" = "جارٍ تحميل الفروع...";

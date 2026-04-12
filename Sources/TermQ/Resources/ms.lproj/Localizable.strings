@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Gunakan";
 "common.preview" = "Pratonton";
+"common.close.window" = "Tutup Tetingkap";
 
 // MARK: - Board View
 "board.column.options" = "Pilihan lajur";
@@ -40,11 +41,11 @@
 "card.unpin" = "Nyahsemat terminal";
 "card.running" = "Terminal sedang berjalan";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Bersambung";
 "card.wired.help" = "Bersambung ke ejen MCP";
@@ -477,21 +478,20 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "security.osc.clipboard.enabled" = "Akses papan keratan OSC 52 didayakan";
 "security.osc.clipboard.disabled" = "Akses papan keratan OSC 52 dilumpuhkan";
 
-"settings.auto.check.updates" = "Semak kemas kini secara automatik";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "Periksa kemas kini secara automatik";
+"settings.auto.check.updates.help" = "Apabila didayakan, TermQ akan memeriksa versi baru secara berkala";
+"settings.check.for.updates" = "Semak Kemas Kini...";
+"settings.include.beta.releases" = "Sertakan keluaran beta";
+"settings.include.beta.releases.help" = "Pilih untuk menerima versi pra-keluaran dengan ciri baru";
+"settings.section.updates" = "Kemas Kini";
+"settings.debug.update.warning.title" = "Amaran Binaan Debug";
+"settings.debug.update.warning.message" = "Meneruskan kemas kini akan memasang versi Pengeluaran TermQ.";
 "editor.section.add.tag" = "Tambah Tag";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
 "editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Dilumpuhkan secara global - dayakan dalam Tetapan > Data & Keselamatan";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
-
-"settings.debug.update.warning.title" = "Amaran Binaan Debug";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Tiada tag ditentukan";
 
@@ -500,3 +500,62 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "settings.environment.section.add.variable" = "Tambah Pemboleh Ubah Persekitaran";
 
 "settings.mcp.install" = "Pasang Pelayan MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositori";
+"sidebar.add.button.help" = "Tambah repositori";
+"sidebar.empty.message" = "Tiada repositori ditambah.\nKlik + untuk menambah repositori git.";
+"sidebar.worktrees.placeholder" = "Worktree akan muncul di sini";
+"sidebar.remove.repository" = "Buang Repositori";
+"sidebar.toggle.help" = "Togol bar sisi Repositori (⌘⇧L)";
+"sidebar.add.title" = "Tambah Repositori";
+"sidebar.add.path.label" = "Laluan";
+"sidebar.add.name.label" = "Nama Paparan";
+"sidebar.add.name.placeholder" = "Dikesan secara automatik dari git";
+"sidebar.add.cancel" = "Batal";
+"sidebar.add.add" = "Tambah";
+"sidebar.add.advanced" = "Lanjutan";
+"sidebar.edit.title" = "Edit Repositori";
+"sidebar.edit.repository" = "Edit Repositori";
+"sidebar.worktree.base.path.label" = "Laluan Asas Worktree";
+"sidebar.worktree.base.path.help" = "Worktrees baharu dicipta di sini. Laluan lalai ialah induk direktori repositori.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" bukan repositori git.";
+"menu.toggle.sidebar" = "Togol Bar Sisi";
+"sidebar.worktrees.empty" = "Tiada worktree ditemui.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Muat semula worktree";
+"sidebar.worktree.new" = "Worktree Baru";
+"sidebar.worktree.new.terminal" = "Terminal Baharu";
+"sidebar.worktree.terminals.badge.help" = "Klik untuk pautan pantas membuka terminal";
+"sidebar.worktree.open.in.terminal" = "Buka di Terminal";
+"sidebar.worktree.reveal.in.finder" = "Tunjukkan di Finder";
+"sidebar.worktree.open.remote.branch" = "Buka cawangan di Remote";
+"sidebar.worktree.open.remote.commit" = "Buka commit di Remote";
+"sidebar.worktree.lock" = "Kunci Worktree";
+"sidebar.worktree.unlock" = "Buka Kunci Worktree";
+"sidebar.remove.worktree" = "Buang Worktree";
+"sidebar.remove.worktree.title" = "Buang Worktree?";
+"sidebar.remove.worktree.confirm" = "Buang";
+"sidebar.remove.main.worktree.error" = "Worktree utama tidak boleh dibuang.";
+"sidebar.remove.worktree.message %@" = "Ini akan membuang worktree di \"%@\" secara kekal. Cawangan tidak akan dipadam.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Padam Worktree...";
+"sidebar.worktree.delete.title" = "Padam Worktree";
+"sidebar.worktree.delete.confirm" = "Padam";
+"sidebar.worktree.delete.message %@" = "Worktree di \"%@\" dan sebarang perubahan yang belum disimpan akan dipadam secara kekal. Tindakan ini tidak boleh dibatalkan.";
+"sidebar.new.worktree.title" = "Worktree Baru";
+"sidebar.new.worktree.branch.label" = "Nama Cawangan Baru";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Masukkan nama cawangan untuk meneruskan.";
+"sidebar.new.worktree.base.label" = "Cawangan Asas";
+"sidebar.new.worktree.base.placeholder" = "Tapis cawangan...";
+"sidebar.new.worktree.path.label" = "Laluan Worktree";
+"sidebar.new.worktree.path.required" = "Masukkan laluan worktree untuk meneruskan.";
+"sidebar.new.worktree.create" = "Cipta";
+"sidebar.new.worktree.loading.branches" = "Memuatkan cawangan...";

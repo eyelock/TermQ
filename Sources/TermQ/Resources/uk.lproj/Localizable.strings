@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Застосувати";
 "common.preview" = "Попередній перегляд";
+"common.close.window" = "Закрити вікно";
 
 // MARK: - Board View
 "board.column.options" = "Параметри колонки";
@@ -40,11 +41,11 @@
 "card.unpin" = "Відкріпити термінал";
 "card.running" = "Термінал працює";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Підключено";
 "card.wired.help" = "Підключено до агента MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Наступний закріплений термінал";
 "menu.previous.pinned" = "Попередній закріплений термінал";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Показати/сховати бічну панель";
 
 
 // MARK: - Command Palette
@@ -477,21 +479,22 @@
 "security.osc.clipboard.enabled" = "Доступ до буфера обміну OSC 52 увімкнено";
 "security.osc.clipboard.disabled" = "Доступ до буфера обміну OSC 52 вимкнено";
 
+// Settings - Updates section
 "settings.auto.check.updates" = "Автоматично перевіряти оновлення";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Коли увімкнено, TermQ буде час від часу перевіряти нові версії";
+"settings.check.for.updates" = "Перевірити оновлення...";
+"settings.include.beta.releases" = "Включати бета-версії";
+"settings.include.beta.releases.help" = "Отримуйте попередні версії з новими функціями";
+"settings.section.updates" = "Оновлення";
 "editor.section.add.tag" = "Додати тег";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Дозволити дії у черзі";
+"editor.allow.agent.prompts.help" = "Дозволити вставлення {{PROMPT}} і {{NEXT_ACTION}} у початкову команду цього терміналу";
+"editor.allow.agent.prompts.disabled.globally" = "Дії у черзі вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
 "editor.allow.osc.clipboard.disabled.globally" = "Вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Підтвердження вимкнено глобально - змініть у Налаштування > Дані та безпека";
 
-"settings.debug.update.warning.title" = "Попередження про збірку для налагодження";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Попередження: Debug збірка";
+"settings.debug.update.warning.message" = "Продовження оновлення встановить виробничу версію TermQ.";
 
 "editor.no.tags" = "Теги не визначено";
 
@@ -500,3 +503,61 @@
 "settings.environment.section.add.variable" = "Додати змінну середовища";
 
 "settings.mcp.install" = "Встановити сервер MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Репозиторії";
+"sidebar.add.button.help" = "Додати репозиторій";
+"sidebar.empty.message" = "Репозиторії не додано.\nНатисніть +, щоб додати git репозиторій.";
+"sidebar.worktrees.placeholder" = "Робочі дерева зʼявляться тут";
+"sidebar.remove.repository" = "Видалити репозиторій";
+"sidebar.toggle.help" = "Показати/сховати бічну панель репозиторіїв (⌘⇧L)";
+"sidebar.add.title" = "Додати репозиторій";
+"sidebar.add.path.label" = "Шлях";
+"sidebar.add.name.label" = "Відображувана назва";
+"sidebar.add.name.placeholder" = "Визначається автоматично з git";
+"sidebar.add.cancel" = "Скасувати";
+"sidebar.add.add" = "Додати";
+"sidebar.add.advanced" = "Додатково";
+"sidebar.edit.title" = "Редагувати репозиторій";
+"sidebar.edit.repository" = "Редагувати репозиторій";
+"sidebar.worktree.base.path.label" = "Базовий шлях worktree";
+"sidebar.worktree.base.path.help" = "Нові worktrees створюються тут. За замовчуванням — батьківська папка директорії репозиторію.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" не є git репозиторієм.";
+"sidebar.worktrees.empty" = "Робочих дерев не знайдено.";
+"sidebar.worktree.detached.head" = "Відʼєднана HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Оновити робочі дерева";
+"sidebar.worktree.new" = "Нове робоче дерево";
+"sidebar.worktree.new.terminal" = "Новий Terminal";
+"sidebar.worktree.terminals.badge.help" = "Натисніть для швидких посилань для відкриття терміналів";
+"sidebar.worktree.open.in.terminal" = "Відкрити в Terminal";
+"sidebar.worktree.reveal.in.finder" = "Показати у Finder";
+"sidebar.worktree.open.remote.branch" = "Відкрити гілку на Remote";
+"sidebar.worktree.open.remote.commit" = "Відкрити коміт на Remote";
+"sidebar.worktree.lock" = "Заблокувати робоче дерево";
+"sidebar.worktree.unlock" = "Розблокувати робоче дерево";
+"sidebar.remove.worktree" = "Видалити робоче дерево";
+"sidebar.remove.worktree.title" = "Видалити робоче дерево?";
+"sidebar.remove.worktree.confirm" = "Видалити";
+"sidebar.remove.main.worktree.error" = "Головне робоче дерево неможливо видалити.";
+"sidebar.remove.worktree.message %@" = "Це остаточно видалить робоче дерево у \"%@\". Гілку буде збережено.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Видалити Worktree...";
+"sidebar.worktree.delete.title" = "Видалити Worktree";
+"sidebar.worktree.delete.confirm" = "Видалити";
+"sidebar.worktree.delete.message %@" = "Робоче дерево за шляхом \"%@\" та всі незбережені зміни буде назавжди видалено. Цю дію неможливо скасувати.";
+"sidebar.new.worktree.title" = "Нове робоче дерево";
+"sidebar.new.worktree.branch.label" = "Назва нової гілки";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Введіть назву гілки для продовження.";
+"sidebar.new.worktree.base.label" = "Базова гілка";
+"sidebar.new.worktree.base.placeholder" = "Фільтр гілок...";
+"sidebar.new.worktree.path.label" = "Шлях до робочого дерева";
+"sidebar.new.worktree.path.required" = "Введіть шлях робочого дерева для продовження.";
+"sidebar.new.worktree.create" = "Створити";
+"sidebar.new.worktree.loading.branches" = "Завантаження гілок...";

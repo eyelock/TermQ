@@ -478,20 +478,20 @@
 "security.osc.clipboard.disabled" = "Доступ к буферу обмена OSC 52 отключён";
 
 "settings.auto.check.updates" = "Автоматически проверять обновления";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Если включено, TermQ будет периодически проверять наличие новых версий";
+"settings.check.for.updates" = "Проверить обновления...";
+"settings.include.beta.releases" = "Включать бета-версии";
+"settings.include.beta.releases.help" = "Включите, чтобы получать предварительные версии с новыми функциями";
+"settings.section.updates" = "Обновления";
 "editor.section.add.tag" = "Добавить тег";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Разрешить очередь действий";
+"editor.allow.agent.prompts.help" = "Разрешить вставку {{PROMPT}} и {{NEXT_ACTION}} в команду инициализации этого терминала";
+"editor.allow.agent.prompts.disabled.globally" = "Очередь действий отключена глобально - включите в Настройки > Данные и безопасность";
 "editor.allow.osc.clipboard.disabled.globally" = "Отключено глобально - включите в Настройки > Данные и безопасность";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Подтверждение отключено глобально - измените в Настройки > Данные и безопасность";
 
-"settings.debug.update.warning.title" = "Предупреждение об отладочной сборке";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Предупреждение отладочной сборки";
+"settings.debug.update.warning.message" = "Продолжение обновления установит производственную версию TermQ.";
 
 "editor.no.tags" = "Теги не определены";
 
@@ -500,3 +500,73 @@
 "settings.environment.section.add.variable" = "Добавить переменную среды";
 
 "settings.mcp.install" = "Установить сервер MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Репозитории";
+"sidebar.add.button.help" = "Добавить репозиторий";
+"sidebar.empty.message" = "Репозитории не добавлены.\nНажмите +, чтобы добавить git-репозиторий.";
+"sidebar.worktrees.placeholder" = "Рабочие деревья появятся здесь";
+"sidebar.remove.repository" = "Удалить репозиторий";
+"sidebar.toggle.help" = "Показать/скрыть боковую панель репозиториев (⌘⇧L)";
+"sidebar.add.title" = "Добавить репозиторий";
+"sidebar.add.path.label" = "Путь";
+"sidebar.add.name.label" = "Отображаемое имя";
+"sidebar.add.name.placeholder" = "Определяется автоматически из git";
+"sidebar.add.cancel" = "Отмена";
+"sidebar.add.add" = "Добавить";
+"sidebar.add.advanced" = "Дополнительно";
+"sidebar.edit.title" = "Редактировать репозиторий";
+"sidebar.edit.repository" = "Редактировать репозиторий";
+"sidebar.worktree.base.path.label" = "Базовый путь worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "«%@» не является git-репозиторием.";
+"sidebar.worktrees.empty" = "Рабочие деревья не найдены.";
+"sidebar.worktree.detached.head" = "Отсоединённый HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Обновить рабочие деревья";
+"sidebar.worktree.new" = "Новое рабочее дерево";
+"sidebar.worktree.new.terminal" = "Быстрый Terminal";
+"sidebar.worktree.create.terminal" = "Создать Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Нажмите для быстрого доступа к терминалам";
+"sidebar.worktree.open.in.terminal" = "Показать в Terminal";
+"sidebar.worktree.reveal.in.finder" = "Показать в Finder";
+"sidebar.worktree.copy.pathname" = "Копировать как путь";
+"sidebar.worktree.open.remote.branch" = "Открыть ветку на Remote";
+"sidebar.worktree.open.remote.commit" = "Открыть коммит на Remote";
+"sidebar.worktree.lock" = "Заблокировать рабочее дерево";
+"sidebar.worktree.unlock" = "Разблокировать рабочее дерево";
+"sidebar.remove.worktree" = "Удалить рабочее дерево";
+"sidebar.remove.worktree.title" = "Удалить рабочее дерево?";
+"sidebar.remove.worktree.confirm" = "Удалить";
+"sidebar.remove.main.worktree.error" = "Основное рабочее дерево не может быть удалено.";
+"sidebar.remove.worktree.message %@" = "Это навсегда удалит рабочее дерево по пути «%@». Ветка удалена не будет.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Уничтожить Worktree...";
+"sidebar.worktree.delete.title" = "Уничтожить Worktree";
+"sidebar.worktree.delete.confirm" = "Уничтожить";
+"sidebar.worktree.delete.message %@" = "Рабочее дерево по пути “%@” и все несохранённые изменения будут безвозвратно уничтожены. Это действие нельзя отменить.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Очистить рабочие деревья…";
+"sidebar.prune.worktrees.title" = "Очистить рабочие деревья";
+"sidebar.prune.worktrees.confirm" = "Очистить";
+"sidebar.prune.worktrees.nothing.title" = "Нечего очищать";
+"sidebar.prune.worktrees.nothing.message" = "Все рабочие деревья учтены. Устаревшие записи не найдены.";
+"sidebar.prune.worktrees.explanation" = "Эти административные записи указывают на каталоги, которые больше не существуют. Очистка удаляет их — ваши ветки не затрагиваются.";
+"sidebar.new.worktree.title" = "Новое рабочее дерево";
+"sidebar.new.worktree.branch.label" = "Имя новой ветки";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Введите имя ветки для продолжения.";
+"sidebar.new.worktree.base.label" = "Базовая ветка";
+"sidebar.new.worktree.base.placeholder" = "Фильтр веток...";
+"sidebar.new.worktree.path.label" = "Путь рабочего дерева";
+"sidebar.new.worktree.path.required" = "Введите путь рабочего дерева для продолжения.";
+"sidebar.new.worktree.create" = "Создать";
+"sidebar.new.worktree.loading.branches" = "Загрузка веток...";
+"common.close.window" = "Закрыть окно";
+"menu.toggle.sidebar" = "Показать/скрыть боковую панель";

@@ -15,6 +15,7 @@
 "common.delete" = "Smazat";
 "common.edit" = "Upravit";
 "common.close" = "Zavřít";
+"common.close.window" = "Zavřít okno";
 "common.add" = "Přidat";
 "common.reinstall" = "Přeinstalovat";
 "common.uninstall" = "Odinstalovat";
@@ -478,11 +479,11 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "security.osc.clipboard.disabled" = "Přístup ke schránce OSC 52 zakázán";
 
 "settings.auto.check.updates" = "Automaticky kontrolovat aktualizace";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Když je povoleno, TermQ bude pravidelně kontrolovat nové verze";
+"settings.check.for.updates" = "Zkontrolovat aktualizace...";
+"settings.include.beta.releases" = "Zahrnout beta verze";
+"settings.include.beta.releases.help" = "Přihlaste se k odběru předběžných verzí s novými funkcemi";
+"settings.section.updates" = "Aktualizace";
 "editor.section.add.tag" = "Přidat štítek";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "editor.allow.osc.clipboard.disabled.globally" = "Zakázáno globálně - povolit v Nastavení > Data a zabezpečení";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Upozornění na ladění";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Upozornění sestavení pro ladění";
+"settings.debug.update.warning.message" = "Pokračováním v aktualizacích se nainstaluje produkční verze TermQ.";
 
 "editor.no.tags" = "Žádné štítky";
 
@@ -500,3 +501,72 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "settings.environment.section.add.variable" = "Přidat proměnnou prostředí";
 
 "settings.mcp.install" = "Nainstalovat server MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repozitáře";
+"sidebar.add.button.help" = "Přidat repozitář";
+"sidebar.empty.message" = "Nejsou přidány žádné repozitáře.\nKlikněte na + pro přidání git repozitáře.";
+"sidebar.worktrees.placeholder" = "Pracovní stromy se zobrazí zde";
+"sidebar.remove.repository" = "Odebrat repozitář";
+"sidebar.toggle.help" = "Zobrazit/skrýt boční panel repozitářů (⌘⇧L)";
+"sidebar.add.title" = "Přidat repozitář";
+"sidebar.add.path.label" = "Cesta";
+"sidebar.add.name.label" = "Zobrazované jméno";
+"sidebar.add.name.placeholder" = "Automaticky zjištěno z git";
+"sidebar.add.cancel" = "Zrušit";
+"sidebar.add.add" = "Přidat";
+"sidebar.add.advanced" = "Pokročilé";
+"sidebar.edit.title" = "Upravit repozitář";
+"sidebar.edit.repository" = "Upravit repozitář";
+"sidebar.worktree.base.path.label" = "Základní cesta worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" není git repozitář.";
+"menu.toggle.sidebar" = "Zobrazit/skrýt boční panel";
+"sidebar.worktrees.empty" = "Nenalezeny žádné pracovní stromy.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Obnovit pracovní stromy";
+"sidebar.worktree.new" = "Nový pracovní strom";
+"sidebar.worktree.new.terminal" = "Rychlý terminál";
+"sidebar.worktree.create.terminal" = "Vytvořit terminál…";
+"sidebar.worktree.terminals.badge.help" = "Klikněte pro rychlé odkazy k otevření terminálů";
+"sidebar.worktree.open.in.terminal" = "Zobrazit v Terminálu";
+"sidebar.worktree.reveal.in.finder" = "Zobrazit ve Finderu";
+"sidebar.worktree.copy.pathname" = "Kopírovat jako cestu";
+"sidebar.worktree.open.remote.branch" = "Otevřít větev na Remote";
+"sidebar.worktree.open.remote.commit" = "Otevřít commit na Remote";
+"sidebar.worktree.lock" = "Uzamknout pracovní strom";
+"sidebar.worktree.unlock" = "Odemknout pracovní strom";
+"sidebar.remove.worktree" = "Smazat pracovní strom";
+"sidebar.remove.worktree.title" = "Smazat pracovní strom?";
+"sidebar.remove.worktree.confirm" = "Smazat";
+"sidebar.remove.main.worktree.error" = "Hlavní pracovní strom nelze odebrat.";
+"sidebar.remove.worktree.message %@" = "Tím trvale smažete pracovní strom v "%@". Větev nebude smazána.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Zničit Worktree...";
+"sidebar.worktree.delete.title" = "Zničit Worktree";
+"sidebar.worktree.delete.confirm" = "Zničit";
+"sidebar.worktree.delete.message %@" = "Pracovní strom na cestě "%@" a veškeré neuložené změny budou trvale zničeny. Tuto akci nelze vrátit zpět.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Vyčistit Worktrees…";
+"sidebar.prune.worktrees.title" = "Vyčistit Worktrees";
+"sidebar.prune.worktrees.confirm" = "Vyčistit";
+"sidebar.prune.worktrees.nothing.title" = "Nic k vyčistění";
+"sidebar.prune.worktrees.nothing.message" = "Všechny pracovní stromy jsou evidovány. Žádné zastaralé záznamy nebyly nalezeny.";
+"sidebar.prune.worktrees.explanation" = "Tyto administrativní záznamy ukazují na adresáře, které již neexistují. Vyčistění je odstraní — vaše větve nejsou ovlivněny.";
+"sidebar.new.worktree.title" = "Nový pracovní strom";
+"sidebar.new.worktree.branch.label" = "Název nové větve";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Zadejte název větve pro pokračování.";
+"sidebar.new.worktree.base.label" = "Základní větev";
+"sidebar.new.worktree.base.placeholder" = "Filtrovat větve...";
+"sidebar.new.worktree.path.label" = "Cesta pracovního stromu";
+"sidebar.new.worktree.path.required" = "Zadejte cestu pracovního stromu pro pokračování.";
+"sidebar.new.worktree.create" = "Vytvořit";
+"sidebar.new.worktree.loading.branches" = "Načítání větví...";

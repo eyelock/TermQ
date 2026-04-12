@@ -18,6 +18,9 @@
   - [10. MCP Integration](tutorials/10-mcp.md)
   - [11. Queued Actions](tutorials/11-queued-actions.md)
 
+- **Tutorials: Git Workflows**
+  - [12. Git Worktree Sidebar](tutorials/12-worktree-sidebar.md)
+
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)
   - [CLI Reference](reference/cli.md)

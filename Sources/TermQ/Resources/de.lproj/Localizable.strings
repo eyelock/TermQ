@@ -15,6 +15,7 @@
 "common.delete" = "Löschen";
 "common.edit" = "Bearbeiten";
 "common.close" = "Schließen";
+"common.close.window" = "Fenster schließen";
 "common.add" = "Hinzufügen";
 "common.reinstall" = "Neu installieren";
 "common.uninstall" = "Deinstallieren";
@@ -478,10 +479,10 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "security.osc.clipboard.disabled" = "OSC 52 Zwischenablage-Zugriff deaktiviert";
 
 "settings.auto.check.updates" = "Automatisch nach Updates suchen";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
+"settings.auto.check.updates.help" = "Wenn aktiviert, prüft TermQ regelmäßig auf neue Versionen";
+"settings.check.for.updates" = "Nach Updates suchen ...";
+"settings.include.beta.releases" = "Beta-Versionen einschließen";
+"settings.include.beta.releases.help" = "Melden Sie sich an, um Vorabversionen mit neuen Funktionen zu erhalten";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tag hinzufügen";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
@@ -490,8 +491,8 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "editor.allow.osc.clipboard.disabled.globally" = "Global deaktiviert - in Einstellungen > Daten & Sicherheit aktivieren";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Warnung: Debug-Version";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Debug-Build-Warnung";
+"settings.debug.update.warning.message" = "Das Fortfahren mit Updates installiert die Produktionsversion von TermQ.";
 
 "editor.no.tags" = "Keine Tags definiert";
 
@@ -500,3 +501,72 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "settings.environment.section.add.variable" = "Umgebungsvariable hinzufügen";
 
 "settings.mcp.install" = "MCP-Server installieren";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositories";
+"sidebar.add.button.help" = "Repository hinzufügen";
+"sidebar.empty.message" = "Keine Repositories hinzugefügt.\nAuf + klicken, um ein Git-Repository hinzuzufügen.";
+"sidebar.worktrees.placeholder" = "Worktrees werden hier angezeigt";
+"sidebar.remove.repository" = "Repository entfernen";
+"sidebar.toggle.help" = "Repository-Seitenleiste ein-/ausblenden (⌘⇧L)";
+"sidebar.add.title" = "Repository hinzufügen";
+"sidebar.add.path.label" = "Pfad";
+"sidebar.add.name.label" = "Anzeigename";
+"sidebar.add.name.placeholder" = "Automatisch aus Git erkannt";
+"sidebar.add.cancel" = "Abbrechen";
+"sidebar.add.add" = "Hinzufügen";
+"sidebar.add.advanced" = "Erweitert";
+"sidebar.edit.title" = "Repository bearbeiten";
+"sidebar.edit.repository" = "Repository bearbeiten";
+"sidebar.worktree.base.path.label" = "Worktree-Basispfad";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ist kein Git-Repository.";
+"menu.toggle.sidebar" = "Seitenleiste ein-/ausblenden";
+"sidebar.worktrees.empty" = "Keine Worktrees gefunden.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Worktrees aktualisieren";
+"sidebar.worktree.new" = "Neuer Worktree";
+"sidebar.worktree.new.terminal" = "Schnelles Terminal";
+"sidebar.worktree.create.terminal" = "Terminal erstellen…";
+"sidebar.worktree.terminals.badge.help" = "Klicken für Schnellzugriffe zum Öffnen von Terminals";
+"sidebar.worktree.open.in.terminal" = "Im Terminal zeigen";
+"sidebar.worktree.reveal.in.finder" = "Im Finder zeigen";
+"sidebar.worktree.copy.pathname" = "Als Pfad kopieren";
+"sidebar.worktree.open.remote.branch" = "Branch auf Remote öffnen";
+"sidebar.worktree.open.remote.commit" = "Commit auf Remote öffnen";
+"sidebar.worktree.lock" = "Worktree sperren";
+"sidebar.worktree.unlock" = "Worktree entsperren";
+"sidebar.remove.worktree" = "Worktree löschen";
+"sidebar.remove.worktree.title" = "Worktree löschen?";
+"sidebar.remove.worktree.confirm" = "Löschen";
+"sidebar.remove.main.worktree.error" = "Der Haupt-Worktree kann nicht entfernt werden.";
+"sidebar.remove.worktree.message %@" = "Dadurch wird der Worktree bei "%@" dauerhaft gelöscht. Der Branch wird nicht gelöscht.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree vernichten...";
+"sidebar.worktree.delete.title" = "Worktree vernichten";
+"sidebar.worktree.delete.confirm" = "Vernichten";
+"sidebar.worktree.delete.message %@" = "Der Worktree unter "%@" und alle nicht gespeicherten Änderungen werden dauerhaft vernichtet. Dies kann nicht rückgängig gemacht werden.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Worktrees bereinigen…";
+"sidebar.prune.worktrees.title" = "Worktrees bereinigen";
+"sidebar.prune.worktrees.confirm" = "Bereinigen";
+"sidebar.prune.worktrees.nothing.title" = "Nichts zu bereinigen";
+"sidebar.prune.worktrees.nothing.message" = "Alle Worktrees sind erfasst. Es wurden keine veralteten Einträge gefunden.";
+"sidebar.prune.worktrees.explanation" = "Diese Verwaltungseinträge verweisen auf Verzeichnisse, die nicht mehr existieren. Das Bereinigen entfernt sie — Ihre Branches sind nicht betroffen.";
+"sidebar.new.worktree.title" = "Neuer Worktree";
+"sidebar.new.worktree.branch.label" = "Neuer Branch-Name";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Geben Sie einen Branch-Namen ein, um fortzufahren.";
+"sidebar.new.worktree.base.label" = "Basis-Branch";
+"sidebar.new.worktree.base.placeholder" = "Branches filtern...";
+"sidebar.new.worktree.path.label" = "Worktree-Pfad";
+"sidebar.new.worktree.path.required" = "Geben Sie einen Worktree-Pfad ein, um fortzufahren.";
+"sidebar.new.worktree.create" = "Erstellen";
+"sidebar.new.worktree.loading.branches" = "Branches werden geladen ...";

@@ -479,4 +479,3 @@ public enum TmuxError: Error, LocalizedError {
         }
     }
 }
-

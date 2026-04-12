@@ -15,6 +15,7 @@
 "common.delete" = "Slet";
 "common.edit" = "Rediger";
 "common.close" = "Luk";
+"common.close.window" = "Luk vindue";
 "common.add" = "Tilføj";
 "common.reinstall" = "Geninstaller";
 "common.uninstall" = "Afinstaller";
@@ -477,12 +478,12 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "security.osc.clipboard.enabled" = "OSC 52 udklipsholder-adgang aktiveret";
 "security.osc.clipboard.disabled" = "OSC 52 udklipsholder-adgang deaktiveret";
 
-"settings.auto.check.updates" = "Tjek automatisk for opdateringer";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "Kontroller automatisk for opdateringer";
+"settings.auto.check.updates.help" = "Når aktiveret, vil TermQ regelmæssigt kontrollere for nye versioner";
+"settings.check.for.updates" = "Kontroller for opdateringer...";
+"settings.include.beta.releases" = "Inkluder betaversioner";
+"settings.include.beta.releases.help" = "Tilmeld dig for at modtage forhåndsudgivelser med nye funktioner";
+"settings.section.updates" = "Opdateringer";
 "editor.section.add.tag" = "Tilføj mærke";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "editor.allow.osc.clipboard.disabled.globally" = "Deaktiveret globalt - aktivér i Indstillinger > Data og sikkerhed";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Advarsel om debug-version";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Advarsel om debug-build";
+"settings.debug.update.warning.message" = "Hvis du fortsætter med opdateringer, installeres produktionsversionen af TermQ.";
 
 "editor.no.tags" = "Ingen mærker defineret";
 
@@ -500,3 +501,72 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "settings.environment.section.add.variable" = "Tilføj miljøvariabel";
 
 "settings.mcp.install" = "Installer MCP-server";
+
+// MARK: - Sidebar
+"sidebar.title" = "Arkiver";
+"sidebar.add.button.help" = "Tilføj arkiv";
+"sidebar.empty.message" = "Ingen arkiver tilføjet.\nKlik + for at tilføje et git-arkiv.";
+"sidebar.worktrees.placeholder" = "Worktrees vises her";
+"sidebar.remove.repository" = "Fjern arkiv";
+"sidebar.toggle.help" = "Vis/skjul arkiv-sidepanel (⌘⇧L)";
+"sidebar.add.title" = "Tilføj arkiv";
+"sidebar.add.path.label" = "Sti";
+"sidebar.add.name.label" = "Vist navn";
+"sidebar.add.name.placeholder" = "Automatisk detekteret fra git";
+"sidebar.add.cancel" = "Annuller";
+"sidebar.add.add" = "Tilføj";
+"sidebar.add.advanced" = "Avanceret";
+"sidebar.edit.title" = "Rediger repository";
+"sidebar.edit.repository" = "Rediger repository";
+"sidebar.worktree.base.path.label" = "Basis-sti for worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" er ikke et git-arkiv.";
+"menu.toggle.sidebar" = "Vis/skjul sidepanel";
+"sidebar.worktrees.empty" = "Ingen worktrees fundet.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Opdater worktrees";
+"sidebar.worktree.new" = "Ny worktree";
+"sidebar.worktree.new.terminal" = "Hurtigt Terminal";
+"sidebar.worktree.create.terminal" = "Opret Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Klik for hurtige links til at åbne terminaler";
+"sidebar.worktree.open.in.terminal" = "Vis i Terminal";
+"sidebar.worktree.reveal.in.finder" = "Vis i Finder";
+"sidebar.worktree.copy.pathname" = "Kopiér som sti";
+"sidebar.worktree.open.remote.branch" = "Åbn gren på Remote";
+"sidebar.worktree.open.remote.commit" = "Åbn commit på Remote";
+"sidebar.worktree.lock" = "Lås worktree";
+"sidebar.worktree.unlock" = "Lås worktree op";
+"sidebar.remove.worktree" = "Slet worktree";
+"sidebar.remove.worktree.title" = "Slet worktree?";
+"sidebar.remove.worktree.confirm" = "Slet";
+"sidebar.remove.main.worktree.error" = "Hoved-worktreen kan ikke fjernes.";
+"sidebar.remove.worktree.message %@" = "Dette vil permanent slette worktreen ved "%@". Grenen slettes ikke.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Destruér Worktree...";
+"sidebar.worktree.delete.title" = "Destruér Worktree";
+"sidebar.worktree.delete.confirm" = "Destruér";
+"sidebar.worktree.delete.message %@" = "Worktree på "%@" og eventuelle ikke-gemte ændringer destrueres permanent. Dette kan ikke fortrydes.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Ryd op i Worktrees…";
+"sidebar.prune.worktrees.title" = "Ryd op i Worktrees";
+"sidebar.prune.worktrees.confirm" = "Ryd op";
+"sidebar.prune.worktrees.nothing.title" = "Intet at rydde op";
+"sidebar.prune.worktrees.nothing.message" = "Alle worktrees er registreret. Der blev ikke fundet nogen forældede poster.";
+"sidebar.prune.worktrees.explanation" = "Disse administrative poster peger på mapper, der ikke længere eksisterer. Oprydning fjerner dem — dine branches påvirkes ikke.";
+"sidebar.new.worktree.title" = "Ny worktree";
+"sidebar.new.worktree.branch.label" = "Nyt grensnavn";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Angiv et grensnavn for at fortsætte.";
+"sidebar.new.worktree.base.label" = "Basisgren";
+"sidebar.new.worktree.base.placeholder" = "Filtrer grene...";
+"sidebar.new.worktree.path.label" = "Worktree-sti";
+"sidebar.new.worktree.path.required" = "Angiv en worktree-sti for at fortsætte.";
+"sidebar.new.worktree.create" = "Opret";
+"sidebar.new.worktree.loading.branches" = "Indlæser grene...";

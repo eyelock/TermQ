@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "นำไปใช้";
 "common.preview" = "แสดงตัวอย่าง";
+"common.close.window" = "ปิดหน้าต่าง";
 
 // MARK: - Board View
 "board.column.options" = "ตัวเลือกคอลัมน์";
@@ -40,11 +41,11 @@
 "card.unpin" = "เลิกปักหมุดเทอร์มินัล";
 "card.running" = "เทอร์มินัลกำลังทำงาน";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "เชื่อมต่อแล้ว";
 "card.wired.help" = "เชื่อมต่อกับตัวแทน MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "เทอร์มินัลปักหมุดถัดไป";
 "menu.previous.pinned" = "เทอร์มินัลปักหมุดก่อนหน้า";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "สลับแถบด้านข้าง";
 
 
 // MARK: - Command Palette
@@ -477,21 +479,22 @@
 "security.osc.clipboard.enabled" = "เปิดใช้งานการเข้าถึงคลิปบอร์ด OSC 52";
 "security.osc.clipboard.disabled" = "ปิดใช้งานการเข้าถึงคลิปบอร์ด OSC 52";
 
-"settings.auto.check.updates" = "ตรวจสอบการอัปเดตอัตโนมัติ";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "ตรวจสอบการอัปเดตโดยอัตโนมัติ";
+"settings.auto.check.updates.help" = "เมื่อเปิดใช้งาน TermQ จะตรวจสอบเวอร์ชันใหม่เป็นระยะ";
+"settings.check.for.updates" = "ตรวจสอบการอัปเดต...";
+"settings.include.beta.releases" = "รวมเวอร์ชันเบต้า";
+"settings.include.beta.releases.help" = "เลือกรับเวอร์ชันก่อนเผยแพร่ที่มีคุณสมบัติใหม่";
+"settings.section.updates" = "การอัปเดต";
 "editor.section.add.tag" = "เพิ่มแท็ก";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "อนุญาตการดำเนินการที่จัดคิว";
+"editor.allow.agent.prompts.help" = "อนุญาตให้ {{PROMPT}} และ {{NEXT_ACTION}} ถูกแทรกในคำสั่งเริ่มต้นของเทอร์มินัลนี้";
+"editor.allow.agent.prompts.disabled.globally" = "การดำเนินการที่จัดคิวปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
 "editor.allow.osc.clipboard.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "การยืนยันปิดใช้งานทั่วโลก - เปลี่ยนใน การตั้งค่า > ข้อมูลและความปลอดภัย";
 
-"settings.debug.update.warning.title" = "คำเตือนบิลด์ดีบัก";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "คำเตือน: เวอร์ชัน Debug";
+"settings.debug.update.warning.message" = "การดำเนินการอัปเดตต่อไปจะติดตั้งเวอร์ชันการผลิตของ TermQ";
 
 "editor.no.tags" = "ไม่มีแท็กที่กำหนด";
 
@@ -500,3 +503,61 @@
 "settings.environment.section.add.variable" = "เพิ่มตัวแปรสภาพแวดล้อม";
 
 "settings.mcp.install" = "ติดตั้งเซิร์ฟเวอร์ MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "คลังเก็บโค้ด";
+"sidebar.add.button.help" = "เพิ่มคลังเก็บโค้ด";
+"sidebar.empty.message" = "ยังไม่ได้เพิ่มคลังเก็บโค้ด\nคลิก + เพื่อเพิ่ม git repository";
+"sidebar.worktrees.placeholder" = "Worktrees จะปรากฏที่นี่";
+"sidebar.remove.repository" = "ลบคลังเก็บโค้ด";
+"sidebar.toggle.help" = "สลับแถบด้านข้างคลังเก็บโค้ด (⌘⇧L)";
+"sidebar.add.title" = "เพิ่มคลังเก็บโค้ด";
+"sidebar.add.path.label" = "เส้นทาง";
+"sidebar.add.name.label" = "ชื่อที่แสดง";
+"sidebar.add.name.placeholder" = "ตรวจพบอัตโนมัติจาก git";
+"sidebar.add.cancel" = "ยกเลิก";
+"sidebar.add.add" = "เพิ่ม";
+"sidebar.add.advanced" = "ขั้นสูง";
+"sidebar.edit.title" = "แก้ไขที่เก็บ";
+"sidebar.edit.repository" = "แก้ไขที่เก็บ";
+"sidebar.worktree.base.path.label" = "เส้นทางพื้นฐาน worktree";
+"sidebar.worktree.base.path.help" = "worktrees ใหม่จะถูกสร้างที่นี่ ค่าเริ่มต้นคือโฟลเดอร์หลักของไดเรกทอรีที่เก็บ";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ไม่ใช่ git repository";
+"sidebar.worktrees.empty" = "ไม่พบ worktrees";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "รีเฟรช worktrees";
+"sidebar.worktree.new" = "Worktree ใหม่";
+"sidebar.worktree.new.terminal" = "Terminal ใหม่";
+"sidebar.worktree.terminals.badge.help" = "คลิกเพื่อเข้าถึงลิงก์ด่วนสำหรับเปิด Terminal";
+"sidebar.worktree.open.in.terminal" = "เปิดใน Terminal";
+"sidebar.worktree.reveal.in.finder" = "แสดงใน Finder";
+"sidebar.worktree.open.remote.branch" = "เปิด Branch บน Remote";
+"sidebar.worktree.open.remote.commit" = "เปิด Commit บน Remote";
+"sidebar.worktree.lock" = "ล็อก worktree";
+"sidebar.worktree.unlock" = "ปลดล็อก worktree";
+"sidebar.remove.worktree" = "ลบ Worktree";
+"sidebar.remove.worktree.title" = "ลบ Worktree?";
+"sidebar.remove.worktree.confirm" = "ลบ";
+"sidebar.remove.main.worktree.error" = "ไม่สามารถลบ worktree หลักได้";
+"sidebar.remove.worktree.message %@" = "การดำเนินการนี้จะลบ worktree ที่ \"%@\" อย่างถาวร สาขาจะไม่ถูกลบ";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "ลบ Worktree...";
+"sidebar.worktree.delete.title" = "ลบ Worktree";
+"sidebar.worktree.delete.confirm" = "ลบ";
+"sidebar.worktree.delete.message %@" = "Worktree ที่ \"%@\" และการเปลี่ยนแปลงที่ยังไม่ได้บันทึกทั้งหมดจะถูกลบถาวร ไม่สามารถเลิกทำการดำเนินการนี้ได้";
+"sidebar.new.worktree.title" = "Worktree ใหม่";
+"sidebar.new.worktree.branch.label" = "ชื่อสาขาใหม่";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "ป้อนชื่อ Branch เพื่อดำเนินการต่อ";
+"sidebar.new.worktree.base.label" = "สาขาฐาน";
+"sidebar.new.worktree.base.placeholder" = "กรองสาขา...";
+"sidebar.new.worktree.path.label" = "เส้นทาง Worktree";
+"sidebar.new.worktree.path.required" = "ป้อนเส้นทาง Worktree เพื่อดำเนินการต่อ";
+"sidebar.new.worktree.create" = "สร้าง";
+"sidebar.new.worktree.loading.branches" = "กำลังโหลดสาขา...";

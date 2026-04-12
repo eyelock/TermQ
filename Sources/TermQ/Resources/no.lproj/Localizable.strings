@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Bruk";
 "common.preview" = "Forhåndsvisning";
+"common.close.window" = "Lukk vindu";
 
 // MARK: - Board View
 "board.column.options" = "Kolonnealternativer";
@@ -40,11 +41,11 @@
 "card.unpin" = "Løsne terminal";
 "card.running" = "Terminal kjører";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Tilkoblet";
 "card.wired.help" = "Tilkoblet MCP-agent";
@@ -478,20 +479,19 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "security.osc.clipboard.disabled" = "OSC 52 utklippstavle-tilgang deaktivert";
 
 "settings.auto.check.updates" = "Sjekk automatisk etter oppdateringer";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Når aktivert, vil TermQ periodisk sjekke etter nye versjoner";
+"settings.check.for.updates" = "Se etter oppdateringer...";
+"settings.include.beta.releases" = "Inkluder beta-utgivelser";
+"settings.include.beta.releases.help" = "Meld deg på for å motta forhåndsversjoner med nye funksjoner";
+"settings.section.updates" = "Oppdateringer";
+"settings.debug.update.warning.title" = "Advarsel om debug-bygg";
+"settings.debug.update.warning.message" = "Hvis du fortsetter med oppdateringer, installeres produksjonsversjonen av TermQ.";
 "editor.section.add.tag" = "Legg til etikett";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
 "editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Deaktivert globalt - aktiver i Innstillinger > Data og sikkerhet";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
-
-"settings.debug.update.warning.title" = "Advarsel for feilsøkingsversjon";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Ingen koder definert";
 
@@ -500,3 +500,62 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "settings.environment.section.add.variable" = "Legg til miljøvariabel";
 
 "settings.mcp.install" = "Installer MCP-server";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositories";
+"sidebar.add.button.help" = "Legg til repository";
+"sidebar.empty.message" = "Ingen repositories lagt til.\nKlikk + for å legge til et git-repository.";
+"sidebar.worktrees.placeholder" = "Worktrees vises her";
+"sidebar.remove.repository" = "Fjern repository";
+"sidebar.toggle.help" = "Veksle repositories-sidepanel (⌘⇧L)";
+"sidebar.add.title" = "Legg til repository";
+"sidebar.add.path.label" = "Sti";
+"sidebar.add.name.label" = "Visningsnavn";
+"sidebar.add.name.placeholder" = "Oppdages automatisk fra git";
+"sidebar.add.cancel" = "Avbryt";
+"sidebar.add.add" = "Legg til";
+"sidebar.add.advanced" = "Avansert";
+"sidebar.edit.title" = "Rediger repository";
+"sidebar.edit.repository" = "Rediger repository";
+"sidebar.worktree.base.path.label" = "Grunnsti for worktree";
+"sidebar.worktree.base.path.help" = "Nye worktrees opprettes her. Standard er overordnet mappe for repoet.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" er ikke et git-repository.";
+"menu.toggle.sidebar" = "Veksle sidepanel";
+"sidebar.worktrees.empty" = "Ingen worktrees funnet.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Oppdater worktrees";
+"sidebar.worktree.new" = "Ny worktree";
+"sidebar.worktree.new.terminal" = "Nytt Terminal";
+"sidebar.worktree.terminals.badge.help" = "Klikk for hurtiglenker for å åpne terminaler";
+"sidebar.worktree.open.in.terminal" = "Åpne i Terminal";
+"sidebar.worktree.reveal.in.finder" = "Vis i Finder";
+"sidebar.worktree.open.remote.branch" = "Åpne gren på Remote";
+"sidebar.worktree.open.remote.commit" = "Åpne commit på Remote";
+"sidebar.worktree.lock" = "Lås worktree";
+"sidebar.worktree.unlock" = "Lås opp worktree";
+"sidebar.remove.worktree" = "Fjern worktree";
+"sidebar.remove.worktree.title" = "Fjerne worktree?";
+"sidebar.remove.worktree.confirm" = "Fjern";
+"sidebar.remove.main.worktree.error" = "Hoved-worktreen kan ikke fjernes.";
+"sidebar.remove.worktree.message %@" = "Dette vil fjerne worktree på \"%@\" permanent. Branchen slettes ikke.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Slett Worktree...";
+"sidebar.worktree.delete.title" = "Slett Worktree";
+"sidebar.worktree.delete.confirm" = "Slett";
+"sidebar.worktree.delete.message %@" = "Worktree på \"%@\" og eventuelle ikke-lagrede endringer slettes permanent. Dette kan ikke angres.";
+"sidebar.new.worktree.title" = "Ny worktree";
+"sidebar.new.worktree.branch.label" = "Navn på ny branch";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Skriv inn et grennavn for å fortsette.";
+"sidebar.new.worktree.base.label" = "Basisbranch";
+"sidebar.new.worktree.base.placeholder" = "Filtrer branches...";
+"sidebar.new.worktree.path.label" = "Worktree-sti";
+"sidebar.new.worktree.path.required" = "Skriv inn en worktree-bane for å fortsette.";
+"sidebar.new.worktree.create" = "Opprett";
+"sidebar.new.worktree.loading.branches" = "Laster branches...";

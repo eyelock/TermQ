@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Áp dụng";
 "common.preview" = "Xem trước";
+"common.close.window" = "Đóng cửa sổ";
 
 // MARK: - Board View
 "board.column.options" = "Tùy chọn cột";
@@ -40,11 +41,11 @@
 "card.unpin" = "Bỏ ghim terminal";
 "card.running" = "Terminal đang chạy";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Đã kết nối";
 "card.wired.help" = "Đã kết nối với tác nhân MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Terminal ghim tiếp theo";
 "menu.previous.pinned" = "Terminal ghim trước đó";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Bật/tắt thanh bên";
 
 
 // MARK: - Command Palette
@@ -477,21 +479,22 @@
 "security.osc.clipboard.enabled" = "Đã bật quyền truy cập clipboard OSC 52";
 "security.osc.clipboard.disabled" = "Đã tắt quyền truy cập clipboard OSC 52";
 
+// Settings - Updates section
 "settings.auto.check.updates" = "Tự động kiểm tra cập nhật";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Khi bật, TermQ sẽ định kỳ kiểm tra các phiên bản mới";
+"settings.check.for.updates" = "Kiểm tra cập nhật...";
+"settings.include.beta.releases" = "Bao gồm bản beta";
+"settings.include.beta.releases.help" = "Nhận các phiên bản tiền phát hành với tính năng mới";
+"settings.section.updates" = "Cập nhật";
 "editor.section.add.tag" = "Thêm thẻ";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Cho phép hành động trong hàng đợi";
+"editor.allow.agent.prompts.help" = "Cho phép {{PROMPT}} và {{NEXT_ACTION}} được chèn vào lệnh khởi tạo của terminal này";
+"editor.allow.agent.prompts.disabled.globally" = "Hành động trong hàng đợi bị tắt toàn cục - bật trong Cài đặt > Dữ liệu & Bảo mật";
 "editor.allow.osc.clipboard.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Xác nhận bị tắt toàn cục - thay đổi trong Cài đặt > Dữ liệu & Bảo mật";
 
-"settings.debug.update.warning.title" = "Cảnh báo phiên bản gỡ lỗi";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Cảnh báo: Bản Debug";
+"settings.debug.update.warning.message" = "Tiếp tục cập nhật sẽ cài đặt phiên bản Sản xuất của TermQ.";
 
 "editor.no.tags" = "Không có thẻ nào được xác định";
 
@@ -500,3 +503,61 @@
 "settings.environment.section.add.variable" = "Thêm biến môi trường";
 
 "settings.mcp.install" = "Cài đặt máy chủ MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Kho lưu trữ";
+"sidebar.add.button.help" = "Thêm kho lưu trữ";
+"sidebar.empty.message" = "Chưa có kho lưu trữ nào.\nNhấn + để thêm git repository.";
+"sidebar.worktrees.placeholder" = "Worktrees sẽ xuất hiện ở đây";
+"sidebar.remove.repository" = "Xóa kho lưu trữ";
+"sidebar.toggle.help" = "Bật/tắt thanh bên kho lưu trữ (⌘⇧L)";
+"sidebar.add.title" = "Thêm kho lưu trữ";
+"sidebar.add.path.label" = "Đường dẫn";
+"sidebar.add.name.label" = "Tên hiển thị";
+"sidebar.add.name.placeholder" = "Tự động phát hiện từ git";
+"sidebar.add.cancel" = "Hủy";
+"sidebar.add.add" = "Thêm";
+"sidebar.add.advanced" = "Nâng cao";
+"sidebar.edit.title" = "Chỉnh sửa kho lưu trữ";
+"sidebar.edit.repository" = "Chỉnh sửa kho lưu trữ";
+"sidebar.worktree.base.path.label" = "Đường dẫn cơ sở worktree";
+"sidebar.worktree.base.path.help" = "Các worktrees mới được tạo tại đây. Mặc định là thư mục cha của thư mục kho lưu trữ.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" không phải là git repository.";
+"sidebar.worktrees.empty" = "Không tìm thấy worktree nào.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Làm mới worktrees";
+"sidebar.worktree.new" = "Worktree mới";
+"sidebar.worktree.new.terminal" = "Terminal mới";
+"sidebar.worktree.terminals.badge.help" = "Nhấp để truy cập liên kết nhanh mở terminal";
+"sidebar.worktree.open.in.terminal" = "Mở trong Terminal";
+"sidebar.worktree.reveal.in.finder" = "Hiện trong Finder";
+"sidebar.worktree.open.remote.branch" = "Mở nhánh trên Remote";
+"sidebar.worktree.open.remote.commit" = "Mở commit trên Remote";
+"sidebar.worktree.lock" = "Khoá worktree";
+"sidebar.worktree.unlock" = "Mở khoá worktree";
+"sidebar.remove.worktree" = "Xóa Worktree";
+"sidebar.remove.worktree.title" = "Xóa Worktree?";
+"sidebar.remove.worktree.confirm" = "Xóa";
+"sidebar.remove.main.worktree.error" = "Không thể xóa worktree chính.";
+"sidebar.remove.worktree.message %@" = "Thao tác này sẽ xóa vĩnh viễn worktree tại \"%@\". Nhánh sẽ không bị xóa.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Xóa Worktree...";
+"sidebar.worktree.delete.title" = "Xóa Worktree";
+"sidebar.worktree.delete.confirm" = "Xóa";
+"sidebar.worktree.delete.message %@" = "Worktree tại \"%@\" và mọi thay đổi chưa được lưu sẽ bị xóa vĩnh viễn. Không thể hoàn tác thao tác này.";
+"sidebar.new.worktree.title" = "Worktree mới";
+"sidebar.new.worktree.branch.label" = "Tên nhánh mới";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Nhập tên nhánh để tiếp tục.";
+"sidebar.new.worktree.base.label" = "Nhánh cơ sở";
+"sidebar.new.worktree.base.placeholder" = "Lọc nhánh...";
+"sidebar.new.worktree.path.label" = "Đường dẫn Worktree";
+"sidebar.new.worktree.path.required" = "Nhập đường dẫn worktree để tiếp tục.";
+"sidebar.new.worktree.create" = "Tạo";
+"sidebar.new.worktree.loading.branches" = "Đang tải nhánh...";
