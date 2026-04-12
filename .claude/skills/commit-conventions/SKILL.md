@@ -49,6 +49,23 @@ EOF
 )"
 ```
 
+## Commit Count Before Pushing
+
+Ask: **what is the minimum number of commits that meaningfully separates this work?**
+
+This project uses squash-merge (`gh pr merge --squash`), so branch commits are ephemeral — they become one commit on `main` regardless. Their only job is to help a reviewer understand the PR. That means:
+
+- Lean toward 1–3 commits per PR, one per logical concern
+- WIP checkpoints, format commits, and implementation-journey fixes → squash them away
+- The PR description carries the narrative; commits are just grouping for review
+
+```bash
+git log origin/main..HEAD --oneline   # read it — if you'd be embarrassed showing it, squash
+git rebase -i origin/main             # fixup/reword until only meaningful separations remain
+```
+
+A common clean split: one commit for code changes, one for documentation or tooling changes. Don't over-invest in commit granularity on a branch that will be squashed.
+
 ## Before Creating a PR
 
 Ensure the branch is up-to-date with main:
