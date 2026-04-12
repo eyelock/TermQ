@@ -15,23 +15,23 @@ enum LLMVendor: String, CaseIterable {
         switch self {
         case .claudeCode:
             if interactive {
-                return "claude \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                return "claude \"{{PROMPT}} {{NEXT_ACTION}}\""
             } else {
-                return "claude -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                return "claude -p \"{{PROMPT}} {{NEXT_ACTION}}\""
             }
         case .cursor:
             if interactive {
-                return "agent \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                return "agent \"{{PROMPT}} {{NEXT_ACTION}}\""
             } else {
-                return "agent -p \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+                return "agent -p \"{{PROMPT}} {{NEXT_ACTION}}\""
             }
         case .aider:
             // Aider is inherently non-interactive with --message
-            return "aider --message \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+            return "aider --message \"{{PROMPT}} {{NEXT_ACTION}}\""
         case .copilot:
-            return "gh copilot suggest \"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+            return "gh copilot suggest \"{{PROMPT}} {{NEXT_ACTION}}\""
         case .custom:
-            return "\"{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}\""
+            return "\"{{PROMPT}} {{NEXT_ACTION}}\""
         }
     }
 

@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "Contexto mantenido entre sesiones";
 "editor.field.next.action" = "Próxima acción";
 "editor.field.next.action.help" = "Acción a realizar a continuación";
-"editor.next.action.requires.injection" = "La siguiente acción requiere \"Habilitar la inyección automática de prompts LLM\" en Configuración → Herramientas";
+"editor.next.action.requires.injection" = "La siguiente acción requiere \"Enable Queued Actions\" en Configuración → Datos y seguridad";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generador de comandos";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "No instalado";
 "settings.cli.usage" = "Uso:";
 "settings.cli.location" = "Ubicación";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Servidor MCP";
@@ -485,9 +485,9 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Agregar etiqueta";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Deshabilitado globalmente - habilitar en Configuración > Datos y seguridad";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

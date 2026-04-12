@@ -43,7 +43,7 @@ Global environment variables injected into every terminal session. Manage variab
 | **MCP Server** | Install / uninstall `termqmcp` |
 | **Enable tmux Backend** | Allow terminals to use tmux for session persistence |
 | **Auto-reattach Sessions** | Silently reconnect tmux sessions on launch |
-| **Enable LLM Prompt Auto-injection** | Global permission for token injection in init commands |
+| **Enable Queued Actions** | Global permission for token injection in init commands |
 
 ### Updates
 

@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "內容喺工作階段之間保持";
 "editor.field.next.action" = "下一步動作";
 "editor.field.next.action.help" = "下次執行嘅動作";
-"editor.next.action.requires.injection" = "下一個動作需要在設定 → 工具中「啟用 LLM 提示自動注入」";
+"editor.next.action.requires.injection" = "下一個動作需要在設定 → 資料與安全中「Enable Queued Actions」";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "指令產生器";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "未安裝";
 "settings.cli.usage" = "用法：";
 "settings.cli.location" = "位置";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP 伺服器";
@@ -485,9 +485,9 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "新增標籤";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

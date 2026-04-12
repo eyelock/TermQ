@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "ההקשר נשמר בין הפעלות";
 "editor.field.next.action" = "פעולה הבאה";
 "editor.field.next.action.help" = "פעולה לביצוע בפעם הבאה";
-"editor.next.action.requires.injection" = "הפעולה הבאה דורשת \"הפעל הזרקה אוטומטית של Prompt LLM\" בהגדרות ← כלים";
+"editor.next.action.requires.injection" = "הפעולה הבאה דורשת \"Enable Queued Actions\" בהגדרות ← נתונים ואבטחה";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "מחולל פקודות";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "לא מותקן";
 "settings.cli.usage" = "שימוש:";
 "settings.cli.location" = "מיקום";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "שרת MCP";
@@ -485,9 +485,9 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "הוסף תג";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

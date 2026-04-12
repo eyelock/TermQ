@@ -72,14 +72,18 @@ enum Constants {
         ]
     }
 
-    // MARK: - LLM Token Patterns
+    // MARK: - Token Patterns
 
-    enum LLMTokens {
-        /// Token for persistent LLM context in init commands
-        static let prompt = "{{LLM_PROMPT}}"
+    enum Tokens {
+        /// Token for persistent context in init commands
+        static let prompt = "{{PROMPT}}"
 
-        /// Token for one-time LLM action in init commands
-        static let nextAction = "{{LLM_NEXT_ACTION}}"
+        /// Token for one-time queued action in init commands
+        static let nextAction = "{{NEXT_ACTION}}"
+
+        // Legacy token names — supported for backward compatibility
+        static let legacyPrompt = "{{LLM_PROMPT}}"
+        static let legacyNextAction = "{{LLM_NEXT_ACTION}}"
     }
 
     // MARK: - Activity Detection

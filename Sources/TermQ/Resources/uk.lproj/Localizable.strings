@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "Контекст зберігається між сеансами";
 "editor.field.next.action" = "Наступна дія";
 "editor.field.next.action.help" = "Дія для виконання наступного разу";
-"editor.next.action.requires.injection" = "Наступна дія вимагає \"Увімкнути автоматичне вставлення LLM-запиту\" у Налаштування → Інструменти";
+"editor.next.action.requires.injection" = "Наступна дія вимагає \"Enable Queued Actions\" у Налаштування → Дані та безпека";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Генератор команд";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "Не встановлено";
 "settings.cli.usage" = "Використання:";
 "settings.cli.location" = "Розташування";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Сервер MCP";
@@ -485,9 +485,9 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Додати тег";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
