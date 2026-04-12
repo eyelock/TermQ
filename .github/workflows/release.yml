@@ -37,14 +37,32 @@ jobs:
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-          # Get the SHA for this tag
-          SHA=$(gh api repos/${{ github.repository }}/git/refs/tags/$TAG --jq '.object.sha' 2>/dev/null || echo "")
-          if [ -z "$SHA" ]; then
+          # Get the SHA for this tag — dereference annotated tags to the commit.
+          # refs/tags returns { object: { type, sha } }. For annotated tags the
+          # type is "tag" and sha is the tag object; for lightweight tags the type
+          # is "commit" and sha is already the commit.
+          TAG_REF=$(gh api repos/${{ github.repository }}/git/refs/tags/$TAG 2>/dev/null || echo "")
+          if [ -z "$TAG_REF" ]; then
             echo "❌ Tag $TAG not found"
             exit 1
           fi
+          TAG_OBJ=$(echo "$TAG_REF" | jq -r '.object.sha')
+          TAG_OBJ_TYPE=$(echo "$TAG_REF" | jq -r '.object.type')
+
+          if [ "$TAG_OBJ_TYPE" = "tag" ]; then
+            # Annotated tag — dereference to commit SHA
+            SHA=$(gh api repos/${{ github.repository }}/git/tags/$TAG_OBJ --jq '.object.sha' 2>/dev/null || echo "")
+            if [ -z "$SHA" ]; then
+              echo "❌ Failed to dereference annotated tag $TAG"
+              exit 1
+            fi
+            echo "📌 Tag: $TAG (annotated), Commit SHA: $SHA"
+          else
+            # Lightweight tag — SHA is already the commit
+            SHA="$TAG_OBJ"
+            echo "📌 Tag: $TAG (lightweight), SHA: $SHA"
+          fi
           echo "sha=$SHA" >> $GITHUB_OUTPUT
-          echo "📌 Tag: $TAG, SHA: $SHA"
 
       - name: Check CI status for commit
         env:
