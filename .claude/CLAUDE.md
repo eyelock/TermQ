@@ -97,6 +97,7 @@ All three invoke the `releaser` agent, which uses the `release` skill.
 | `localization-procedures` | Translation workflows, language codes, file paths, scripts |
 | `commit-conventions` | Branch naming, commit format, PR template, merge rules |
 | `release` | Stable, beta, and hotfix release procedures |
+| `sparkle-updater` | Sparkle auto-update pipeline, signing, appcast, known pitfalls |
 
 Skills are self-contained and portable. They do not reference project files, other skills, or commands. CLAUDE.md and commands reference skills — not the other way around.
 
@@ -136,7 +137,8 @@ Every CI run consumes energy. The `quality-gate` skill defines what must pass lo
 │   ├── logging-rules/
 │   ├── localization-procedures/
 │   ├── commit-conventions/
-│   └── release/
+│   ├── release/
+│   └── sparkle-updater/
 ├── plans/                     ← implementation plans (gitignored)
 └── sessions/                  ← session handovers (gitignored)
 ```
