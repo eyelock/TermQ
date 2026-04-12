@@ -211,14 +211,43 @@ jobs:
             --entitlements TermQ.entitlements \
             TermQ.app/Contents/Resources/termqmcp
 
-          # Sign Sparkle framework (required for auto-updates)
+          # Sign Sparkle framework components individually (inside-out, never --deep)
+          # --deep overrides each component's own entitlements and breaks the XPC trust
+          # chain, causing "An error occurred while running the updater" at install time.
           if [ -d "TermQ.app/Contents/Frameworks/Sparkle.framework" ]; then
-            echo "Signing Sparkle.framework..."
+            SPARKLE="TermQ.app/Contents/Frameworks/Sparkle.framework"
+            echo "Signing Sparkle.framework components..."
+
+            # XPC services must be signed first (inside-out)
+            for xpc in "$SPARKLE/XPCServices/"*.xpc; do
+              [ -d "$xpc" ] && codesign --force --options runtime --timestamp \
+                --sign "$SIGNING_IDENTITY" \
+                --keychain "$KEYCHAIN_PATH" \
+                "$xpc"
+            done
+
+            # Updater.app helper
+            if [ -d "$SPARKLE/Updater.app" ]; then
+              codesign --force --options runtime --timestamp \
+                --sign "$SIGNING_IDENTITY" \
+                --keychain "$KEYCHAIN_PATH" \
+                "$SPARKLE/Updater.app"
+            fi
+
+            # Autoupdate helper binary
+            if [ -f "$SPARKLE/Autoupdate" ]; then
+              codesign --force --options runtime --timestamp \
+                --sign "$SIGNING_IDENTITY" \
+                --keychain "$KEYCHAIN_PATH" \
+                "$SPARKLE/Autoupdate"
+            fi
+
+            # Sign the framework bundle itself last (no --deep)
             codesign --force --options runtime --timestamp \
               --sign "$SIGNING_IDENTITY" \
               --keychain "$KEYCHAIN_PATH" \
-              --deep \
-              TermQ.app/Contents/Frameworks/Sparkle.framework
+              "$SPARKLE"
+            echo "✅ Sparkle.framework signed"
           fi
 
           # Sign the main app bundle
