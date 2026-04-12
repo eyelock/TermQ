@@ -307,6 +307,16 @@ jobs:
       - name: Create zip archive
         run: zip -r TermQ-${{ steps.version.outputs.VERSION }}.zip TermQ.app
 
+      - name: Sign zip for Sparkle
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          SIGN_UPDATE=".build/artifacts/sparkle/Sparkle/bin/sign_update"
+          ZIP="TermQ-${{ steps.version.outputs.VERSION }}.zip"
+          SIG=$(echo "$SPARKLE_PRIVATE_KEY" | "$SIGN_UPDATE" --ed-key-file - -p "$ZIP")
+          echo "$SIG" > "${ZIP}.sig"
+          echo "✅ EdDSA signature: $SIG"
+
       - name: Generate checksums
         run: |
           shasum -a 256 TermQ-${{ steps.version.outputs.VERSION }}.dmg > checksums.txt
@@ -324,6 +334,7 @@ jobs:
           files: |
             TermQ-${{ steps.version.outputs.VERSION }}.dmg
             TermQ-${{ steps.version.outputs.VERSION }}.zip
+            TermQ-${{ steps.version.outputs.VERSION }}.zip.sig
             checksums.txt
           body: |
             ## Installation

@@ -214,11 +214,18 @@ generate_appcast() {
             continue
         fi
 
-        # Signature would be read from a signatures file if available
+        # Fetch EdDSA signature from the .zip.sig release asset
         local signature=""
-        local sig_file="${OUTPUT_DIR}/signatures/${tag}.sig"
-        if [[ -f "$sig_file" ]]; then
-            signature=$(cat "$sig_file")
+        local sig_url
+        sig_url=$(echo "$release" | jq -r '[.assets[] | select(.name | endswith(".zip.sig"))][0].browser_download_url // empty')
+        if [[ -n "$sig_url" && "$sig_url" != "null" ]]; then
+            signature=$(curl -sS "$sig_url" 2>/dev/null | tr -d '[:space:]')
+            if [[ -n "$signature" ]]; then
+                log_info "Found EdDSA signature for $tag"
+            fi
+        fi
+        if [[ -z "$signature" ]]; then
+            log_warn "No EdDSA signature found for $tag — Sparkle update validation will fail"
         fi
 
         items+=$(generate_item "$tag" "$title" "$pub_date" "$body" "$download_url" "$file_size" "$signature")
