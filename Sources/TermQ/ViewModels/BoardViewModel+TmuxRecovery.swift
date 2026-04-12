@@ -80,8 +80,11 @@ extension BoardViewModel {
             recoverableSessions = candidates
         }
 
-        // Show recovery sheet only if there are orphan sessions (or all if auto-reattach disabled)
+        // Show recovery sheet only if there are orphan sessions (or all if auto-reattach disabled).
+        // Delay presentation to avoid triggering SwiftUI WindowGroup scene duplication
+        // when a sheet is presented before the main window is fully realized.
         if !recoverableSessions.isEmpty {
+            try? await Task.sleep(for: .seconds(1))
             showSessionRecovery = true
         }
     }

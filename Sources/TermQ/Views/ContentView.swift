@@ -352,7 +352,7 @@ struct ContentView: View {
         }
         .onAppear {
             let count = NSApplication.shared.windows.count
-            TermQLogger.window.info("ContentView appeared: \(count) window(s)")
+            TermQLogger.window.notice("ContentView appeared: \(count) window(s)")
         }
         .navigationTitle(viewModel.selectedCard == nil ? Strings.appName : "")
         .focusedSceneValue(\.terminalActions, terminalActions)

@@ -115,6 +115,15 @@ enum TermQLogger {
             TermQLogger.writeToFile(category: category, level: "info", message: message)
         }
 
+        /// Important lifecycle events that should appear in `log stream` without
+        /// extra flags. Maps to os_log `.notice` (the "default" level).
+        /// Use for low-volume events you always want visible: window creation,
+        /// app lifecycle transitions.
+        func notice(_ message: String) {
+            osLog.notice("\(message, privacy: .public)")
+            TermQLogger.writeToFile(category: category, level: "notice", message: message)
+        }
+
         /// Unexpected but recoverable situations: missing pane in parser, skipped
         /// resize, delegate called on nil.
         func warning(_ message: String) {
