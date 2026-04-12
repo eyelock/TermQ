@@ -35,7 +35,20 @@ extension BoardViewModel {
                 return card.tmuxSessionName
             })
 
-        let candidates = detached.filter { !openCardIds.contains($0.name) }
+        // Deleted-card sessions: user soft-deleted the card but the session was preserved.
+        // Don't show these in recovery — the deletion was intentional.
+        let deletedCardPrefixes = Set(
+            board.cards.filter { $0.isDeleted }
+                .map { String($0.id.uuidString.prefix(8).lowercased()) })
+
+        // Persistently dismissed sessions: clean up any that no longer exist in tmux.
+        let dismissedSessions = loadDismissedSessions(against: Set(sessions.map { $0.name }))
+
+        let candidates = detached.filter {
+            !openCardIds.contains($0.name)
+                && !deletedCardPrefixes.contains($0.cardIdPrefix.lowercased())
+                && !dismissedSessions.contains($0.name)
+        }
 
         // Check auto-reattach setting
         let autoReattach = UserDefaults.standard.object(forKey: "tmuxAutoReattach") as? Bool ?? true
@@ -189,9 +202,23 @@ extension BoardViewModel {
     }
 
     /// Dismiss a recoverable session (don't recover, but also don't kill)
+    /// Persists the dismissal so the session is not shown again after restart.
     func dismissRecoverableSession(_ session: TmuxSessionInfo) {
         recoverableSessions.removeAll { $0.name == session.name }
         TmuxManager.shared.markSessionRecovered(name: session.name)
+        var dismissed = UserDefaults.standard.stringArray(forKey: "dismissedTmuxSessions") ?? []
+        if !dismissed.contains(session.name) {
+            dismissed.append(session.name)
+            UserDefaults.standard.set(dismissed, forKey: "dismissedTmuxSessions")
+        }
+    }
+
+    /// Dismiss all recoverable sessions persistently.
+    func dismissAllRecoverableSessions() {
+        let sessions = recoverableSessions
+        for session in sessions {
+            dismissRecoverableSession(session)
+        }
     }
 
     /// Kill a recoverable tmux session (fully terminate)
@@ -200,6 +227,16 @@ extension BoardViewModel {
             try? await TmuxManager.shared.killSession(name: session.name)
             recoverableSessions.removeAll { $0.name == session.name }
         }
+    }
+
+    /// Load dismissed session names from UserDefaults, removing any that no longer exist in tmux.
+    private func loadDismissedSessions(against currentNames: Set<String>) -> Set<String> {
+        let stored = Set(UserDefaults.standard.stringArray(forKey: "dismissedTmuxSessions") ?? [])
+        let active = stored.intersection(currentNames)
+        if active.count != stored.count {
+            UserDefaults.standard.set(Array(active), forKey: "dismissedTmuxSessions")
+        }
+        return active
     }
 
     /// Create a default column if none exist
