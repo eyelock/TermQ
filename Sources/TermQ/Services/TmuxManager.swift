@@ -12,6 +12,15 @@ public class TmuxManager: ObservableObject {
     /// Prefix for all TermQ-managed tmux sessions
     public static let sessionPrefix = "termq-"
 
+    /// Bundle identifier for this build — used to scope sessions and avoid cross-build contamination
+    public static let buildIdentifier: String = {
+        guard let id = Bundle.main.bundleIdentifier else {
+            assertionFailure("CFBundleIdentifier missing — check Info.plist")
+            return "unknown"
+        }
+        return id
+    }()
+
     /// Whether tmux is available on the system
     @Published public private(set) var isAvailable: Bool = false
 
@@ -133,6 +142,12 @@ public class TmuxManager: ObservableObject {
             // Fetch terminal name from metadata
             let terminalName = await getSessionMetadata(name: name, key: MetadataKey.title.rawValue)
 
+            // Only include sessions created by this build; allow untagged sessions for backwards compat
+            let sessionBundleId = await getSessionMetadata(name: name, key: MetadataKey.bundleId.rawValue)
+            if let storedId = sessionBundleId, storedId != Self.buildIdentifier {
+                continue
+            }
+
             sessions.append(
                 TmuxSessionInfo(
                     name: name,
@@ -179,6 +194,13 @@ public class TmuxManager: ObservableObject {
         args.append("-l")  // Login shell
 
         _ = try await runCommand(path, args: args)
+
+        // Tag session with this build's bundle identifier so each build only recovers its own sessions
+        do {
+            try await setSessionMetadata(name: name, key: MetadataKey.bundleId.rawValue, value: Self.buildIdentifier)
+        } catch {
+            TermQLogger.session.warning("Failed to tag session with bundleId name=\(name) error=\(error)")
+        }
     }
 
     /// Kill a tmux session
@@ -250,6 +272,7 @@ public class TmuxManager: ObservableObject {
         case columnId = "COLUMN_ID"
         case isFavourite = "IS_FAVOURITE"
         case cardId = "CARD_ID"
+        case bundleId = "BUNDLE_ID"
     }
 
     /// Save all terminal card metadata to tmux session environment
@@ -457,53 +480,3 @@ public enum TmuxError: Error, LocalizedError {
     }
 }
 
-/// Lightweight metadata structure for tmux session storage/recovery
-/// Contains the essential fields that can be recovered from an orphaned session
-public struct TerminalCardMetadata: Sendable {
-    public let id: UUID
-    public let title: String
-    public let description: String
-    public let tags: [Tag]
-    public let llmPrompt: String
-    public let llmNextAction: String
-    public let badge: String
-    public let columnId: UUID?
-    public let isFavourite: Bool
-
-    public init(
-        id: UUID,
-        title: String,
-        description: String = "",
-        tags: [Tag] = [],
-        llmPrompt: String = "",
-        llmNextAction: String = "",
-        badge: String = "",
-        columnId: UUID? = nil,
-        isFavourite: Bool = false
-    ) {
-        self.id = id
-        self.title = title
-        self.description = description
-        self.tags = tags
-        self.llmPrompt = llmPrompt
-        self.llmNextAction = llmNextAction
-        self.badge = badge
-        self.columnId = columnId
-        self.isFavourite = isFavourite
-    }
-
-    /// Create metadata from a TerminalCard
-    public static func from(_ card: TerminalCard) -> TerminalCardMetadata {
-        TerminalCardMetadata(
-            id: card.id,
-            title: card.title,
-            description: card.description,
-            tags: card.tags,
-            llmPrompt: card.llmPrompt,
-            llmNextAction: card.llmNextAction,
-            badge: card.badge,
-            columnId: card.columnId,
-            isFavourite: card.isFavourite
-        )
-    }
-}

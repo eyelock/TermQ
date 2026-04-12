@@ -22,6 +22,7 @@ struct SessionRecoveryView: View {
                 }
                 Spacer()
                 Button("Dismiss All") {
+                    viewModel.dismissAllRecoverableSessions()
                     viewModel.showSessionRecovery = false
                 }
             }
