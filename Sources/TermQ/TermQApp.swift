@@ -347,11 +347,19 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             controller: updaterController
         )
         super.init()
+        TermQLogger.window.info("TermQAppDelegate.init: Sparkle updater initialized")
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Prevent macOS from auto-tabbing windows (e.g. when "Prefer tabs" is set in System Settings)
         NSWindow.allowsAutomaticWindowTabbing = false
+        // Log window state at launch to detect unexpected pre-existing windows
+        let windows = NSApplication.shared.windows
+        TermQLogger.window.info("applicationDidFinishLaunching: \(windows.count) window(s)")
+        for (i, win) in windows.enumerated() {
+            let desc = "\(type(of: win)) visible=\(win.isVisible) frame=\(win.frame)"
+            TermQLogger.window.info("  window[\(i)]: \(desc)")
+        }
         // Store reference to the main window and set delegate
         // In SwiftUI apps, the window might not be created yet, so we poll for it
         setupMainWindowDelegate()
@@ -362,7 +370,11 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             mainWindow = window
             window.delegate = self
             window.tabbingMode = .disallowed
+            let desc = "\(type(of: window)) frame=\(window.frame)"
+            TermQLogger.window.info("setupMainWindowDelegate: delegate set on \(desc)")
         } else {
+            let total = NSApplication.shared.windows.count
+            TermQLogger.window.info("setupMainWindowDelegate: no visible window yet (total=\(total)), retrying")
             // Window not ready yet, try again
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                 self?.setupMainWindowDelegate()
@@ -377,6 +389,8 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     /// Prevent creating new windows when user tries to open the app again
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        let total = NSApplication.shared.windows.count
+        TermQLogger.window.info("applicationShouldHandleReopen: hasVisibleWindows=\(flag) total=\(total)")
         if flag {
             // Bring existing window to front
             mainWindow?.makeKeyAndOrderFront(nil)
@@ -392,6 +406,8 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     /// Handle window close button - show confirmation if terminals are running
     func windowShouldClose(_ sender: NSWindow) -> Bool {
+        let desc = "\(type(of: sender)) frame=\(sender.frame)"
+        TermQLogger.window.info("windowShouldClose: \(desc)")
         // Check for running direct (non-tmux) sessions
         let sessionManager = TerminalSessionManager.shared
         let activeCards = sessionManager.activeSessionCardIds()
@@ -493,6 +509,8 @@ struct TermQApp: App {
                     // Validate AppProfile matches actual bundle (debug builds only)
                     AppProfileValidator.validateAtStartup()
                     checkForOrphanedBackup()
+                    let count = NSApplication.shared.windows.count
+                    TermQLogger.window.info("WindowGroup onAppear: \(count) window(s)")
                 }
                 .sheet(item: $backupToRestore) { item in
                     RestoreOfferView(
