@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "Kontekst se čuva između sesija";
 "editor.field.next.action" = "Sljedeća radnja";
 "editor.field.next.action.help" = "Radnja za izvršavanje sljedeći put";
-"editor.next.action.requires.injection" = "Sljedeća radnja zahtijeva \"Omogući automatsko ubrizgavanje LLM upita\" u Postavke → Alati";
+"editor.next.action.requires.injection" = "Sljedeća radnja zahtijeva \"Enable Queued Actions\" u Postavke → Podaci i sigurnost";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generator naredbi";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "Nije instalirano";
 "settings.cli.usage" = "Korištenje:";
 "settings.cli.location" = "Lokacija";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP poslužitelj";
@@ -485,9 +485,9 @@ Ovo može utjecati na to kako AI pomoćnici komuniciraju s ovim terminalom.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Dodaj oznaku";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Onemogućeno globalno - omogući u Postavke > Podaci i sigurnost";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

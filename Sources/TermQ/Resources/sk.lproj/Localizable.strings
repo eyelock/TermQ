@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "Kontext zachovaný medzi reláciami";
 "editor.field.next.action" = "Ďalšia akcia";
 "editor.field.next.action.help" = "Akcia na vykonanie nabudúce";
-"editor.next.action.requires.injection" = "Ďalšia akcia vyžaduje \"Povoliť automatické vkladanie LLM výzvy\" v Nastavenia → Nástroje";
+"editor.next.action.requires.injection" = "Ďalšia akcia vyžaduje \"Enable Queued Actions\" v Nastavenia → Dáta a zabezpečenie";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generátor príkazov";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "Nenainštalované";
 "settings.cli.usage" = "Použitie:";
 "settings.cli.location" = "Umiestnenie";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Server MCP";
@@ -485,9 +485,9 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Pridať štítok";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Zakázané globálne - povoľte v Nastavenia > Údaje a zabezpečenie";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

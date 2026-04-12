@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "Kontekst bevaret på tværs af sessioner";
 "editor.field.next.action" = "Næste handling";
 "editor.field.next.action.help" = "Handling at udføre næste gang";
-"editor.next.action.requires.injection" = "Næste handling kræver \"Aktivér LLM Prompt Auto-injektion\" i Indstillinger → Værktøjer";
+"editor.next.action.requires.injection" = "Næste handling kræver \"Enable Queued Actions\" i Indstillinger → Data og sikkerhed";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Kommandogenerator";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "Ikke installeret";
 "settings.cli.usage" = "Brug:";
 "settings.cli.location" = "Placering";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP-server";
@@ -485,9 +485,9 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Tilføj mærke";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Deaktiveret globalt - aktivér i Indstillinger > Data og sikkerhed";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

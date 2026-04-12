@@ -35,7 +35,7 @@ Run `make test` to verify changes.
 
 This prompt is there every session. There are two ways it reaches an LLM assistant:
 
-**Automatically** — via the `{{LLM_PROMPT}}` token in the terminal's init command (see [Tutorial 11](tutorials/11-autorun.md)). When the terminal opens, the token is replaced with this field's content before the command runs — e.g. `claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"` becomes a single prompt combining standing context and the queued task.
+**Automatically** — via the `{{PROMPT}}` token in the terminal's init command (see [Tutorial 11](tutorials/11-queued-actions.md)). When the terminal opens, the token is replaced with this field's content before the command runs — e.g. `claude "{{PROMPT}} {{NEXT_ACTION}}"` becomes a single prompt combining standing context and the queued task.
 
 **On demand** — when an LLM assistant calls `termq_open` or `termq_get` via the MCP server, the response includes this field. The assistant reads it and orients itself. See [Tutorial 10](tutorials/10-mcp.md).
 
@@ -54,7 +54,7 @@ If tests pass, open a PR against main.
 
 Like the LLM Prompt, there are two ways this reaches an LLM assistant:
 
-**Automatically** — via the `{{LLM_NEXT_ACTION}}` token in the init command. When the terminal opens and autorun is enabled, the token is replaced with this field's content, the command runs, and the field is cleared. It fires once and is gone. See [Tutorial 11](tutorials/11-autorun.md).
+**Automatically** — via the `{{NEXT_ACTION}}` token in the init command. When the terminal opens and queued actions are enabled, the token is replaced with this field's content, the command runs, and the field is cleared. It fires once and is gone. See [Tutorial 11](tutorials/11-queued-actions.md).
 
 **On demand** — `termqcli pending` and `termq_pending` (MCP) surface terminals that have a Next Action set. The LLM reads it and acts on it, then clears it when done.
 

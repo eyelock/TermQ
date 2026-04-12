@@ -98,7 +98,7 @@ npm run dev
 
 For tmux terminals, the init command runs each time the session is attached (not each time the underlying process restarts).
 
-> **LLM use:** The init command is also where you place the `{{LLM_NEXT_ACTION}}` token for autorun. See [Tutorial 11](tutorials/11-autorun.md).
+> **LLM use:** The init command is also where you place the `{{NEXT_ACTION}}` token for queued actions. See [Tutorial 11](tutorials/11-queued-actions.md).
 
 ---
 

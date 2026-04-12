@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "Kontextus megőrzése munkamenetek között";
 "editor.field.next.action" = "Következő művelet";
 "editor.field.next.action.help" = "Legközelebb végrehajtandó művelet";
-"editor.next.action.requires.injection" = "A következő művelethez \"LLM Prompt automatikus injektálásának engedélyezése\" szükséges a Beállítások → Eszközök menüben";
+"editor.next.action.requires.injection" = "A következő művelethez \"Enable Queued Actions\" szükséges a Beállítások → Adatok és biztonság menüben";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Parancs generátor";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "Nincs telepítve";
 "settings.cli.usage" = "Használat:";
 "settings.cli.location" = "Hely";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP szerver";
@@ -485,9 +485,9 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Címke hozzáadása";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

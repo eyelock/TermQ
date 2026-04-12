@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "세션 간 컨텍스트 유지";
 "editor.field.next.action" = "다음 동작";
 "editor.field.next.action.help" = "다음에 수행할 동작";
-"editor.next.action.requires.injection" = "다음 작업에는 설정 → 도구에서 \"LLM 프롬프트 자동 삽입 활성화\"가 필요합니다";
+"editor.next.action.requires.injection" = "다음 작업에는 설정 → 데이터 및 보안에서 \"Enable Queued Actions\"가 필요합니다";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "명령 생성기";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "설치되지 않음";
 "settings.cli.usage" = "사용법:";
 "settings.cli.location" = "위치";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP 서버";
@@ -485,9 +485,9 @@
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "태그 추가";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "전역적으로 비활성화됨 - 설정 > 데이터 및 보안에서 활성화";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

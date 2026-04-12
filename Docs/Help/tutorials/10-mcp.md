@@ -118,4 +118,4 @@ Claude uses `termq_set` to write those fields. The next session — whether it's
 
 ## Next
 
-[Tutorial 11: Autorun](tutorials/11-autorun.md) — Queue actions that execute automatically when a terminal opens.
+[Tutorial 11: Queued Actions](tutorials/11-queued-actions.md) — Queue actions that execute automatically when a terminal opens.

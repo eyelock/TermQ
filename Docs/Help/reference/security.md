@@ -22,18 +22,18 @@ TermQ supports a URL scheme (`termq://`) that allows external tools to interact 
 
 This protection is **enabled by default**. Configure in **Settings > Data & Security > Confirm External LLM Modifications**.
 
-## Autorun permission model
+## Queued Actions permission model
 
-Token injection substitutes `{{LLM_PROMPT}}` and `{{LLM_NEXT_ACTION}}` in the terminal's init command when it opens. It uses a two-level permission model — both must be enabled:
+Token injection substitutes `{{PROMPT}}` and `{{NEXT_ACTION}}` in the terminal's init command when it opens. It uses a two-level permission model — both must be enabled:
 
 | Level | Setting | Default |
 |---|---|---|
-| Global | Settings > Data & Security > Enable LLM Prompt Auto-injection | Off |
-| Per-Terminal | Terminal editor > Terminal tab > Security > Allow LLM Prompt Auto-injection | Off |
+| Global | Settings > Data & Security > Enable Queued Actions | Off |
+| Per-Terminal | Terminal editor > Terminal tab > Security > Allow Queued Actions | Off |
 
-This means you can enable injection for your AI workflow terminals while keeping sensitive terminals (production, databases) permanently protected.
+This means you can enable queued actions for your AI workflow terminals while keeping sensitive terminals (production, databases) permanently protected.
 
-See [Tutorial 11: Autorun](tutorials/11-autorun.md) for the full model.
+See [Tutorial 11: Queued Actions](tutorials/11-queued-actions.md) for the full model.
 
 ## Data storage
 
@@ -71,7 +71,7 @@ These are standard requirements for any macOS terminal emulator. TermQ runs with
 | Setting | Location | Default |
 |---|---|---|
 | Safe Paste | Terminal Editor > Security | On |
-| Allow LLM Prompt Auto-injection | Terminal editor > Terminal tab > Security | Off |
-| Enable LLM Prompt Auto-injection | Settings > Data & Security | Off |
+| Allow Queued Actions | Terminal editor > Terminal tab > Security | Off |
+| Enable Queued Actions | Settings > Data & Security | Off |
 | Allow OSC 52 Clipboard | Settings > Data & Security | On |
 | Confirm External Modifications | Settings > Data & Security | On |

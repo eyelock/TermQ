@@ -190,7 +190,7 @@
 "editor.field.persistent.context.help" = "Context maintained across sessions";
 "editor.field.next.action" = "Next Action";
 "editor.field.next.action.help" = "Action to perform next";
-"editor.next.action.requires.injection" = "Next Action requires \"Enable LLM Prompt Auto-injection\" in Settings → Tools";
+"editor.next.action.requires.injection" = "Next Action requires \"Enable Queued Actions\" in Settings → Data & Security";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Command Generator";
@@ -318,8 +318,8 @@
 "settings.cli.not.installed" = "Not installed";
 "settings.cli.usage" = "Usage:";
 "settings.cli.location" = "Location";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "MCP Server";
@@ -492,8 +492,8 @@
 "security.allow.disable.prompt" = "Allow & Don't Ask Again";
 "security.osc.clipboard.enabled" = "OSC 52 clipboard access enabled";
 "security.osc.clipboard.disabled" = "OSC 52 clipboard access disabled";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Tools";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Disabled globally - enable in Settings > Data & Security";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";

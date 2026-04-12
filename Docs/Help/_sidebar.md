@@ -16,7 +16,7 @@
   - [8. CLI Automation](tutorials/08-cli.md)
   - [9. Persistent AI Context](tutorials/09-ai-context.md)
   - [10. MCP Integration](tutorials/10-mcp.md)
-  - [11. Autorun](tutorials/11-autorun.md)
+  - [11. Queued Actions](tutorials/11-queued-actions.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)

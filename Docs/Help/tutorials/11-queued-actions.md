@@ -1,6 +1,6 @@
-# Tutorial 11: Autorun
+# Tutorial 11: Queued Actions
 
-In [Tutorial 9](tutorials/09-ai-context.md) you learned about the **Next Action** field — a queued instruction an AI assistant can set on a terminal for the next session. Autorun takes that one step further: instead of waiting for you to open the terminal and manually start an AI session, the action executes automatically the moment the terminal opens.
+In [Tutorial 9](tutorials/09-ai-context.md) you learned about the **Next Action** field — a queued instruction an AI assistant can set on a terminal for the next session. Queued Actions takes that one step further: instead of waiting for you to open the terminal and manually start an AI session, the action executes automatically the moment the terminal opens.
 
 This is an opt-in feature that requires two deliberate permissions — both off by default.
 
@@ -8,7 +8,7 @@ This is an opt-in feature that requires two deliberate permissions — both off 
 
 ## 11.1 — How init commands work
 
-Before explaining autorun, it helps to understand init commands.
+Before explaining queued actions, it helps to understand init commands.
 
 When a terminal opens, TermQ waits for the shell to start, then types the **Init Command** into it automatically — exactly as if you had typed it yourself and pressed Enter. It's a normal shell command; the shell receives it and runs it.
 
@@ -30,13 +30,13 @@ TermQ provides two tokens you can embed in an init command. When the terminal op
 
 | Token | Replaced with |
 |---|---|
-| `{{LLM_PROMPT}}` | The terminal's **LLM Prompt** field — the persistent standing context |
-| `{{LLM_NEXT_ACTION}}` | The terminal's **Next Action** field — the one-time queued task |
+| `{{PROMPT}}` | The terminal's **LLM Prompt** field — the persistent standing context |
+| `{{NEXT_ACTION}}` | The terminal's **Next Action** field — the one-time queued task |
 
 Both tokens go into a single quoted string passed to the CLI tool. For Claude Code:
 
 ```bash
-claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+claude "{{PROMPT}} {{NEXT_ACTION}}"
 ```
 
 ...which becomes something like:
@@ -50,47 +50,47 @@ That's the entire command typed into the shell. Claude Code starts with the stan
 For non-interactive use (Claude Code print mode):
 
 ```bash
-claude -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+claude -p "{{PROMPT}} {{NEXT_ACTION}}"
 ```
 
 ---
 
-## 11.3 — Autorun and the Next Action
+## 11.3 — Queued Actions and the Next Action
 
-The **LLM Prompt** token is always substituted — it's just standing context that goes in on every session.
+The **Prompt** token is always substituted — it's just standing context that goes in on every session.
 
-The **Next Action** token is different: it's a one-time queued task. Once it's injected, it's cleared from the card so it doesn't repeat next time. This is the autorun mechanism — the queued action fires once when the terminal opens, then is gone.
+The **Next Action** token is different: it's a one-time queued task. Once it's injected, it's cleared from the card so it doesn't repeat next time. This is the queued action mechanism — the queued action fires once when the terminal opens, then is gone.
 
 For either token to be substituted, two permissions must both be on:
 
 | Permission | Where |
 |---|---|
-| **Enable LLM Prompt Auto-injection** (global) | Settings > Data & Security |
-| **Allow LLM Prompt Auto-injection** (per-terminal) | Terminal editor > Terminal tab > Security |
+| **Enable Queued Actions** (global) | Settings > Data & Security |
+| **Allow Queued Actions** (per-terminal) | Terminal editor > Terminal tab > Security |
 
 If either is off, both tokens are replaced with empty strings, the Next Action field is not consumed, and the terminal opens normally.
 
 ---
 
-## 11.4 — Enable autorun
+## 11.4 — Enable queued actions
 
 **Step 1 — Global switch:**
 
-Open **Settings** (⌘,), go to the **Data & Security** tab, and enable **Enable LLM Prompt Auto-injection**.
+Open **Settings** (⌘,), go to the **Data & Security** tab, and enable **Enable Queued Actions**.
 
 ![Settings Data & Security Tab](../Images/settings-tools-tab.png)
 
 **Step 2 — Per-terminal switch:**
 
-Open the terminal card editor, go to the **Terminal** tab, scroll to the **Security** section, and enable **Allow LLM Prompt Auto-injection**.
+Open the terminal card editor, go to the **Terminal** tab, scroll to the **Security** section, and enable **Allow Queued Actions**.
 
-![Terminal Auto-injection Setting](../Images/edit-terminal-autorun.png)
+![Terminal Queued Actions Setting](../Images/edit-terminal-autorun.png)
 
 ---
 
 ## 11.5 — Set up the init command
 
-Once both autorun permissions are enabled, a **Command Generator** section appears in the terminal editor. This is the easiest way to set up the init command.
+Once both permissions are enabled, a **Command Generator** section appears in the terminal editor. This is the easiest way to set up the init command.
 
 Pick your LLM tool from the dropdown — Claude Code, Cursor, Aider, GitHub Copilot, or Custom. For Claude Code and Cursor you can also choose:
 
@@ -104,21 +104,21 @@ A preview of the generated command is shown beneath the picker. Click **Apply to
 The generated command for Claude Code (interactive) looks like:
 
 ```bash
-claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+claude "{{PROMPT}} {{NEXT_ACTION}}"
 ```
 
 And non-interactive:
 
 ```bash
-claude -p "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+claude -p "{{PROMPT}} {{NEXT_ACTION}}"
 ```
 
-When no Next Action is queued, `{{LLM_NEXT_ACTION}}` becomes an empty string and Claude Code launches with just the LLM Prompt — normal behaviour.
+When no Next Action is queued, `{{NEXT_ACTION}}` becomes an empty string and Claude Code launches with just the Prompt — normal behaviour.
 
 You can edit the generated command after applying it. For example, to source an env file first:
 
 ```bash
-source .env && claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+source .env && claude "{{PROMPT}} {{NEXT_ACTION}}"
 ```
 
 ---
@@ -137,7 +137,7 @@ Or via MCP (what Claude does at session end):
 termq_set identifier="API Server" llmNextAction="Run the test suite and check if AUTH-23 is resolved."
 ```
 
-Now the next time that terminal opens, autorun fires.
+Now the next time that terminal opens, the queued action fires.
 
 ---
 
@@ -154,11 +154,11 @@ The human's role is opening the terminal. The handoff between Claude sessions ha
 
 ---
 
-## 11.8 — What happens when injection is disabled
+## 11.8 — What happens when queued actions are disabled
 
 If either permission is off when the terminal opens:
-- Both `{{LLM_PROMPT}}` and `{{LLM_NEXT_ACTION}}` are replaced with empty strings
-- The Next Action field is **not** consumed — it's preserved for when injection is re-enabled
+- Both `{{PROMPT}}` and `{{NEXT_ACTION}}` are replaced with empty strings
+- The Next Action field is **not** consumed — it's preserved for when queued actions are re-enabled
 - The init command still runs, but with the tokens removed — so `claude ""` would be the result if nothing else is in the command
 - The terminal opens normally
 
@@ -167,9 +167,9 @@ If either permission is off when the terminal opens:
 ## What you learned
 
 - The **init command** is text typed into the terminal's shell automatically when it opens
-- `{{LLM_PROMPT}}` and `{{LLM_NEXT_ACTION}}` are tokens replaced with the terminal's card fields before the command runs
+- `{{PROMPT}}` and `{{NEXT_ACTION}}` are tokens replaced with the terminal's card fields before the command runs
 - **Next Action** is a one-shot trigger — consumed when injected, then cleared
-- **LLM Prompt** is injected every session — it's standing context, not a one-time action
+- **Prompt** is injected every session — it's standing context, not a one-time action
 - Both tokens require the same two permissions: global (**Settings > Data & Security**) and per-terminal (**Terminal tab > Security**)
 
 ---
@@ -179,4 +179,4 @@ You've reached the end of the tutorials. From here:
 - **[CLI Reference](reference/cli.md)** — Complete `termqcli` command reference
 - **[MCP Reference](reference/mcp.md)** — All MCP tools, resources, and prompts
 - **[Keyboard Shortcuts](reference/keyboard-shortcuts.md)** — Full shortcut list
-- **[Security](reference/security.md)** — Safe paste, clipboard, autorun permissions, and data security
+- **[Security](reference/security.md)** — Safe paste, clipboard, queued action permissions, and data security

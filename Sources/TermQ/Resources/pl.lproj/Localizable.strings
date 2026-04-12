@@ -192,7 +192,7 @@
 "editor.field.persistent.context.help" = "Kontekst zachowany między sesjami";
 "editor.field.next.action" = "Następna akcja";
 "editor.field.next.action.help" = "Akcja do wykonania następnym razem";
-"editor.next.action.requires.injection" = "Następna akcja wymaga \"Włącz automatyczne wstrzykiwanie promptu LLM\" w Ustawienia → Narzędzia";
+"editor.next.action.requires.injection" = "Następna akcja wymaga \"Enable Queued Actions\" w Ustawienia → Dane i bezpieczeństwo";
 
 // Editor - Command Generator section
 "editor.section.command.generator" = "Generator poleceń";
@@ -279,8 +279,8 @@
 "settings.cli.not.installed" = "Nie zainstalowano";
 "settings.cli.usage" = "Użycie:";
 "settings.cli.location" = "Lokalizacja";
-"settings.enable.terminal.autorun" = "Enable LLM Prompt Auto-injection";
-"settings.enable.terminal.autorun.help" = "Controls whether LLM_PROMPT and LLM_NEXT_ACTION tokens are replaced in terminal init commands";
+"settings.enable.terminal.autorun" = "Enable Queued Actions";
+"settings.enable.terminal.autorun.help" = "Controls whether {{PROMPT}} and {{NEXT_ACTION}} tokens are replaced in terminal init commands";
 
 // Settings - MCP section
 "settings.section.mcp" = "Serwer MCP";
@@ -485,9 +485,9 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
 "settings.section.updates" = "Updates";
 "editor.section.add.tag" = "Dodaj tag";
-"editor.allow.agent.prompts" = "Allow LLM Prompt Auto-injection";
-"editor.allow.agent.prompts.help" = "Allow LLM_PROMPT and LLM_NEXT_ACTION to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Auto-injection disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Allow Queued Actions";
+"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
+"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Wyłączone globalnie - włącz w Ustawienia > Dane i bezpieczeństwo";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 

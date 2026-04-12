@@ -358,23 +358,26 @@ class TerminalSessionManager: ObservableObject {
     private func runInitCommand(terminal: TermQTerminalView, card: TerminalCard) {
         guard !card.initCommand.isEmpty else { return }
 
-        let hasNextActionToken = card.initCommand.contains("{{LLM_NEXT_ACTION}}")
+        let hasNextActionToken = card.initCommand.contains("{{NEXT_ACTION}}") || card.initCommand.contains("{{LLM_NEXT_ACTION}}")
         let hadNextAction = !card.llmNextAction.isEmpty
 
-        // Check if autorun is enabled (global AND per-terminal)
+        // Check if queued actions are enabled (global AND per-terminal)
         let globalAutorunEnabled = UserDefaults.standard.bool(forKey: "enableTerminalAutorun")
         let autorunAllowed = globalAutorunEnabled && card.allowAutorun
 
-        // Perform token replacement based on autorun settings
+        // Perform token replacement based on queued action settings
         var initCmd = card.initCommand
 
         if autorunAllowed {
-            // Inject LLM values with escaping for double-quote context
+            // Inject values with escaping for double-quote context
             // Note: Values are escaped to prevent shell injection while allowing variable expansion
-            // Templates should include quotes: claude "{{LLM_PROMPT}} {{LLM_NEXT_ACTION}}"
+            // Templates should include quotes: claude "{{PROMPT}} {{NEXT_ACTION}}"
             let escapedPrompt = escapeForDoubleQuotes(card.llmPrompt)
             let escapedNextAction = escapeForDoubleQuotes(card.llmNextAction)
 
+            // Support both new token names and legacy names for backward compatibility
+            initCmd = initCmd.replacingOccurrences(of: "{{PROMPT}}", with: escapedPrompt)
+            initCmd = initCmd.replacingOccurrences(of: "{{NEXT_ACTION}}", with: escapedNextAction)
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: escapedPrompt)
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: escapedNextAction)
 
@@ -385,6 +388,8 @@ class TerminalSessionManager: ObservableObject {
             }
         } else {
             // Replace both tokens with empty string (don't inject anything)
+            initCmd = initCmd.replacingOccurrences(of: "{{PROMPT}}", with: "")
+            initCmd = initCmd.replacingOccurrences(of: "{{NEXT_ACTION}}", with: "")
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: "")
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
         }
