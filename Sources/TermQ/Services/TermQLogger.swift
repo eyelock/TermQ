@@ -51,6 +51,9 @@ enum TermQLogger {
     /// SwiftUI/AppKit view lifecycle: appear, disappear, layout passes
     static let ui = CategoryLogger(category: "ui")
 
+    /// Window lifecycle: creation, close, delegate assignment, count changes
+    static let window = CategoryLogger(category: "window")
+
     // MARK: - File Logging
 
     /// True when TERMQ_DEBUG is set in the environment. Evaluated once at
