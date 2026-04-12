@@ -11,7 +11,7 @@
             <sparkle:shortVersionString>0.6.4</sparkle:shortVersionString>
             <pubDate>Sat, 17 Jan 2026 17:25:05 +0000</pubDate>
             <description><![CDATA[<blockquote>
-<p>[!WARNING] The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how <em>easy</em> it is to ship features with Claude. Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet.</p>
+<p>[!WARNING] The 0.6.x builds are quite unstable, I learned a good lesson here about getting a bit too carried away on how <em>easy</em> it is to ship features with Claude. Shipping, features and fixes that on the surface were working, but when you started trying to use TermQ as your base tool showed up as not quite ready yet. Feel free to try the <a href="https://github.com/eyelock/TermQ/releases">0.7.0 beta releases</a> which are focussed on stabilising the app's current features!</p>
 </blockquote>
 <h2 id="installation">Installation</h2>
 <h3 id="macos-app-recommended">macOS App (Recommended)</h3>
