@@ -5,6 +5,18 @@ description: TermQ commit, branch, and PR conventions. Load when creating commit
 
 # Commit Conventions
 
+## ABSOLUTE RULE — NEVER COMMIT DIRECTLY TO MAIN
+
+Every change goes through a branch and PR — no exceptions, no matter how small or urgent. If the user has not yet created a branch, create one before touching any files:
+
+```bash
+git checkout -b <type>-<description>
+```
+
+Only the user can authorise a direct push to main, and only for a specific stated technical reason. Never decide this unilaterally.
+
+---
+
 ## Branch Naming
 
 Use hyphens (not slashes) — keeps worktree directories flat and scannable:

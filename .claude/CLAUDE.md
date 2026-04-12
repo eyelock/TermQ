@@ -16,11 +16,35 @@ Skill           Domain knowledge library, portable, self-contained
 
 ---
 
+## ABSOLUTE RULE — NEVER COMMIT DIRECTLY TO MAIN
+
+**Direct commits to `main` are forbidden without exception.**
+
+Every change — no matter how small, urgent, or "obvious" — goes through a branch and PR:
+
+```
+git checkout -b fix-<description>   # always start here
+... implement ...
+/verify
+/commit
+/push                               # opens PR, CI runs, user merges
+```
+
+There is no urgency, no hotfix, no one-liner that justifies bypassing this. If there is a genuine technical reason to land directly on main, the user must explicitly instruct it. Never decide this unilaterally.
+
+---
+
 ## Core Development Workflow
 
 For all features, fixes, and refactoring:
 
 **Before coding:** Follow the implementation prep steps in the `termq-dev` skill (session-start reference). Do not use Edit or Write tools until context is gathered, files are read, and baseline passes.
+
+### 0. Create a branch
+```bash
+git checkout -b <type>-<description>
+```
+This is not optional. Do it before any code changes.
 
 ### 1. Implement ↔ 2. Verify (loop until clean)
 

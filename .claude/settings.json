@@ -42,5 +42,23 @@
       "WebFetch(domain:github.com)"
     ]
   },
-  "enableAllProjectMcpServers": true
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd=$(jq -r '.tool_input.command // \"\"'); if printf '%s' \"$cmd\" | grep -q 'git commit'; then branch=$(git branch --show-current 2>/dev/null); if [ \"$branch\" = \"main\" ]; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked: direct commits to main are forbidden. Create a branch first: git checkout -b <type>-<description>\"}}\\n'; fi; fi",
+            "statusMessage": "Checking branch protection..."
+          },
+          {
+            "type": "command",
+            "command": "cmd=$(jq -r '.tool_input.command // \"\"'); if printf '%s' \"$cmd\" | grep -q '^gh' && printf '%s' \"$cmd\" | grep -q -- '--auto'; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked: gh --auto is forbidden. Auto-merge must never be set by Claude.\"}}\\n'; fi"
+          }
+        ]
+      }
+    ]
+  }
 }
