@@ -55,7 +55,7 @@ struct SettingsGeneralView: View {
                 selection: $defaultBackend
             ) {
                 ForEach(TerminalBackend.allCases, id: \.self) { backend in
-                    Text(backend.displayName).tag(backend)
+                    Text(localizedName(for: backend)).tag(backend)
                 }
             }
             .help(Strings.Settings.fieldDefaultBackendHelp)
@@ -179,6 +179,19 @@ struct SettingsGeneralView: View {
             )
         } header: {
             Text(Strings.Settings.sectionAbout)
+        }
+    }
+
+    // MARK: - Backend Localization Helper
+
+    private func localizedName(for backend: TerminalBackend) -> String {
+        switch backend {
+        case .direct:
+            return Strings.Editor.backendDirect
+        case .tmuxAttach:
+            return Strings.Editor.backendTmuxAttach
+        case .tmuxControl:
+            return Strings.Editor.backendTmuxControl
         }
     }
 }

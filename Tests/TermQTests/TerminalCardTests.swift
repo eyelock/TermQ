@@ -429,7 +429,7 @@ final class TerminalCardTests: XCTestCase {
             allowAutorun: true,
             deletedAt: Date(timeIntervalSinceNow: -86400),
             lastLLMGet: Date(),
-            backend: .tmux
+            backend: .tmuxAttach
         )
 
         let encoder = JSONEncoder()
@@ -460,6 +460,6 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertTrue(decoded.allowAutorun)
         XCTAssertNotNil(decoded.deletedAt)
         XCTAssertNotNil(decoded.lastLLMGet)
-        XCTAssertEqual(decoded.backend, .tmux)
+        XCTAssertEqual(decoded.backend, .tmuxAttach)
     }
 }

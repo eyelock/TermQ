@@ -402,7 +402,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }.count
 
         let tmuxSessionCount = activeCards.filter { cardId in
-            sessionManager.getBackend(for: cardId) == .tmux
+            sessionManager.getBackend(for: cardId)?.usesTmux ?? false
         }.count
 
         if directSessionCount > 0 {
@@ -443,7 +443,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }.count
 
         let tmuxSessionCount = activeCards.filter { cardId in
-            sessionManager.getBackend(for: cardId) == .tmux
+            sessionManager.getBackend(for: cardId)?.usesTmux ?? false
         }.count
 
         if directSessionCount > 0 {

@@ -213,7 +213,7 @@ struct CardEditorView: View {
             Section(Strings.Editor.sectionBackend) {
                 Picker(Strings.Editor.fieldBackend, selection: $backend) {
                     ForEach(TerminalBackend.allCases, id: \.self) { backend in
-                        Text(backend.displayName).tag(backend)
+                        Text(localizedName(for: backend)).tag(backend)
                     }
                 }
                 .pickerStyle(.radioGroup)
@@ -224,7 +224,7 @@ struct CardEditorView: View {
                         .font(.caption)
                         .foregroundColor(.orange)
                 } else {
-                    Text("\(backend.description) \(Strings.Editor.backendRestartHint)")
+                    Text("\(localizedDescription(for: backend)) \(Strings.Editor.backendRestartHint)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -522,6 +522,30 @@ struct CardEditorView: View {
                 value: tag.value,
                 isSecret: false
             )
+        }
+    }
+
+    // MARK: - Backend Localization Helpers
+
+    private func localizedName(for backend: TerminalBackend) -> String {
+        switch backend {
+        case .direct:
+            return Strings.Editor.backendDirect
+        case .tmuxAttach:
+            return Strings.Editor.backendTmuxAttach
+        case .tmuxControl:
+            return Strings.Editor.backendTmuxControl
+        }
+    }
+
+    private func localizedDescription(for backend: TerminalBackend) -> String {
+        switch backend {
+        case .direct:
+            return Strings.Editor.backendDirectDescription
+        case .tmuxAttach:
+            return Strings.Editor.backendTmuxAttachDescription
+        case .tmuxControl:
+            return Strings.Editor.backendTmuxControlDescription
         }
     }
 

@@ -1,6 +1,5 @@
 import Foundation
 import TermQShared
-import os.log
 
 /// Common installation locations for the MCP Server
 enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProtocol {
@@ -52,21 +51,11 @@ enum MCPInstallLocation: String, CaseIterable, Identifiable, InstallLocationProt
 
 /// Handles installation of the termqmcp MCP Server
 enum MCPServerInstaller {
-    private static let log = OSLog(subsystem: "net.eyelock.termq", category: "MCPServerInstaller")
 
-    private static let config: ComponentInstaller<MCPInstallLocation>.Config = {
-        let cfg = ComponentInstaller<MCPInstallLocation>.Config(
-            bundledResourceName: AppProfile.Current.mcpBinaryName,
-            componentDisplayName: "MCP Server"
-        )
-        os_log("🔧 Config created:", log: log, type: .info)
-        os_log("   - bundledResourceName: %{public}@", log: log, type: .info, cfg.bundledResourceName)
-        os_log("   - componentDisplayName: %{public}@", log: log, type: .info, cfg.componentDisplayName)
-        os_log(
-            "   - AppProfile.Current.mcpBinaryName: %{public}@", log: log, type: .info, AppProfile.Current.mcpBinaryName
-        )
-        return cfg
-    }()
+    private static let config = ComponentInstaller<MCPInstallLocation>.Config(
+        bundledResourceName: AppProfile.Current.mcpBinaryName,
+        componentDisplayName: "MCP Server"
+    )
 
     static let bundledMCPServerName = AppProfile.Current.mcpBinaryName
 

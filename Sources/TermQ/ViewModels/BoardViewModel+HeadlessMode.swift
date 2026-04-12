@@ -46,7 +46,7 @@ extension BoardViewModel {
 
                     // Add TermQ-specific environment variables
                     env["TERMQ_TERMINAL_ID"] = card.id.uuidString
-                    env["TERMQ_BACKEND"] = TerminalBackend.tmux.rawValue
+                    env["TERMQ_BACKEND"] = TerminalBackend.tmuxAttach.rawValue
 
                     // Add tag environment variables
                     for tag in card.tags {
@@ -72,7 +72,7 @@ extension BoardViewModel {
                     await tmuxManager.syncMetadataToSession(sessionName: sessionName, card: metadata)
 
                 } catch {
-                    print("BoardViewModel: Failed to create tmux session for \(card.title): \(error)")
+                    TermQLogger.session.error("headlessMode createTmuxSession failed card=\(card.title) error=\(error)")
                     continue
                 }
             }

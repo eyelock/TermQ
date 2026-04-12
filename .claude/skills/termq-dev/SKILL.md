@@ -1,6 +1,6 @@
 ---
 name: termq-dev
-description: TermQ development context. Load at session start and when working on TermQ. Covers project structure, module layout, toolchain rules, worktree workflow, and settings architecture.
+description: TermQ development context. Load at session start and when working on TermQ. Covers project structure, module layout, toolchain rules, worktree workflow, settings architecture, and debugging (TermQLogger categories, log streaming, TERMQ_DEBUG mode).
 compatibility: Designed for Claude Code. Requires Xcode, Swift 6, macOS 15+.
 ---
 
@@ -28,6 +28,8 @@ Always use `make` targets — never call Swift tools directly. See [toolchain.md
 Use git worktrees for feature work. See [worktrees.md](references/worktrees.md).
 
 Follow the three-tier settings architecture. See [settings.md](references/settings.md).
+
+For TermQLogger usage, log streaming, and `TERMQ_DEBUG` mode, see [debugging.md](references/debugging.md).
 
 ## Session Start
 
