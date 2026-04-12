@@ -219,9 +219,13 @@ generate_appcast() {
         local sig_url
         sig_url=$(echo "$release" | jq -r '[.assets[] | select(.name | endswith(".zip.sig"))][0].browser_download_url // empty')
         if [[ -n "$sig_url" && "$sig_url" != "null" ]]; then
-            signature=$(curl -sS "$sig_url" 2>/dev/null | tr -d '[:space:]')
+            # -L is required: GitHub release asset URLs return a 302 redirect to CDN (content-length: 0)
+            signature=$(curl -sSL "$sig_url" 2>/dev/null | tr -d '[:space:]')
             if [[ -n "$signature" ]]; then
                 log_info "Found EdDSA signature for $tag"
+            else
+                log_error "Downloaded .zip.sig for $tag but got empty content — aborting to prevent shipping unsigned update"
+                exit 1
             fi
         fi
         if [[ -z "$signature" ]]; then
