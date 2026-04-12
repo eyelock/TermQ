@@ -6,6 +6,65 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.7.0</title>
+            <sparkle:version>0.7.0</sparkle:version>
+            <sparkle:shortVersionString>0.7.0</sparkle:shortVersionString>
+            <pubDate>Sun, 12 Apr 2026 23:46:56 +0000</pubDate>
+            <description><![CDATA[<h2 id="whats-new-in-v070">What's New in v0.7.0</h2>
+<h3 id="multi-pane-terminals">Multi-Pane Terminals</h3>
+<p>Split your terminal into multiple panes within a single card. TermQ now uses tmux control mode to manage pane layout, resize, and navigation — all through native macOS UI.</p>
+<h3 id="headless-mode--mcp-server">Headless Mode &amp; MCP Server</h3>
+<p>Run TermQ without a GUI for automation workflows. The MCP server now supports smart search, card creation, tags, and deletion — enabling AI agents to manage your terminal sessions programmatically.</p>
+<h3 id="environment-variables--secrets">Environment Variables &amp; Secrets</h3>
+<p>Store environment variables and encrypted secrets per terminal card. Secrets are protected with macOS Keychain encryption and injected into sessions at launch.</p>
+<h3 id="redesigned-settings">Redesigned Settings</h3>
+<p>A complete overhaul of the settings UI with tabbed navigation, reusable components, path input fields, tag editors, and per-terminal configuration panels.</p>
+<h3 id="auto-updates-via-sparkle">Auto-Updates via Sparkle</h3>
+<p>TermQ now checks for updates automatically and installs them in the background. No more manual downloads — updates are code-signed and notarized.</p>
+<h3 id="40-languages">40 Languages</h3>
+<p>Full localization across 40 languages, covering all UI strings, settings, and dialogs.</p>
+<h3 id="security-hardening">Security Hardening</h3>
+<p>Per-terminal security controls, MCP command approval, and URL scheme validation to prevent prompt injection and unauthorized access.</p>
+<h3 id="stability--polish">Stability &amp; Polish</h3>
+<ul>
+<li>Fixed window duplication and blank terminal bugs caused by macOS window lifecycle edge cases</li>
+<li>Improved tmux session recovery with persistent dismissal and cross-build filtering</li>
+<li>Native text selection restored (tmux mouse mode disabled)</li>
+<li>PTY size synchronization with Auto Layout</li>
+<li>Single-window enforcement against macOS tab preferences</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.7.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.7.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.7.0/TermQ-0.7.0.zip"
+                sparkle:edSignature="FYY2r8BkB2BfS/kE3W1kLEK3RKjFDXOAH+dda1dadHUEfgivl3eQA/pp2nKXOzf2bV39ckZ4SSMWqQPeXOA4Ag=="
+                length="19020100"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.7.0.b9</title>
             <sparkle:version>0.7.0.b9</sparkle:version>
             <sparkle:shortVersionString>0.7.0.b9</sparkle:shortVersionString>
