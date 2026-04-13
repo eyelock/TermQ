@@ -443,9 +443,8 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
 
-        // Hide the app instead of removing the window — orderOut(nil) creates a
-        // zombie window that confuses SwiftUI's WindowGroup into spawning new scenes.
-        // Hiding preserves all state; clicking the Dock icon unhides everything.
+        // Hide the app instead of closing — NSApp.hide(nil) preserves all state
+        // cleanly. Clicking the Dock icon unhides everything.
         NSApp.hide(nil)
         return false
     }
@@ -503,7 +502,7 @@ struct TermQApp: App {
     @State private var backupToRestore: IdentifiableURL?
 
     var body: some Scene {
-        WindowGroup {
+        Window("TermQ", id: "main") {
             ContentView()
                 .frame(minWidth: 800, minHeight: 600)
                 .environmentObject(urlHandler)
