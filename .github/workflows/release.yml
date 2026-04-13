@@ -79,42 +79,35 @@ jobs:
 
           echo "Checking CI status for commit $SHA (tag $TAG)..."
 
-          # Wait up to 5 minutes for CI to complete (in case it's still running)
+          # Wait for CI run to appear (it may not exist yet if the tag push
+          # raced the merge commit's CI trigger)
           for i in {1..30}; do
-            # Get CI workflow runs for this commit
-            CI_RUN=$(gh run list \
+            RUN_ID=$(gh run list \
               --repo ${{ github.repository }} \
               --commit $SHA \
               --workflow ci.yml \
-              --json status,conclusion \
-              --jq '.[0]' 2>/dev/null || echo '{}')
+              --json databaseId \
+              --jq '.[0].databaseId' 2>/dev/null || echo "")
 
-            STATUS=$(echo "$CI_RUN" | jq -r '.status // "not_found"')
-            CONCLUSION=$(echo "$CI_RUN" | jq -r '.conclusion // "pending"')
-
-            echo "Attempt $i: status=$STATUS, conclusion=$CONCLUSION"
-
-            if [ "$STATUS" = "completed" ]; then
-              if [ "$CONCLUSION" = "success" ]; then
-                echo "✅ CI passed for commit $SHA"
-                exit 0
-              else
-                echo "❌ CI failed for commit $SHA (conclusion: $CONCLUSION)"
-                exit 1
-              fi
+            if [ -n "$RUN_ID" ] && [ "$RUN_ID" != "null" ]; then
+              echo "📌 Found CI run $RUN_ID for commit $SHA"
+              break
             fi
 
-            if [ "$STATUS" = "not_found" ]; then
-              echo "⏳ No CI run found yet, waiting..."
-            else
-              echo "⏳ CI still running ($STATUS), waiting..."
-            fi
-
+            echo "⏳ Attempt $i: No CI run found yet, waiting..."
             sleep 10
           done
 
-          echo "❌ Timeout waiting for CI to complete"
-          exit 1
+          if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
+            echo "❌ No CI run found for commit $SHA after 5 minutes"
+            exit 1
+          fi
+
+          # Wait for the run to complete (no timeout — gh run watch exits
+          # when the run finishes)
+          echo "Waiting for CI run $RUN_ID to complete..."
+          gh run watch "$RUN_ID" --repo ${{ github.repository }} --exit-status
+          echo "✅ CI passed for commit $SHA"
 
   build-and-release:
     name: Build and Release
