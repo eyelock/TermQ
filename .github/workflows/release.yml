@@ -414,6 +414,14 @@ jobs:
             ## Checksums
             See `checksums.txt` for SHA-256 checksums of all release artifacts.
 
+      - name: Trigger appcast update
+        env:
+          GH_TOKEN: ${{ secrets.APPCAST_TOKEN }}
+        run: |
+          echo "Triggering appcast update workflow..."
+          gh workflow run update-appcast.yml
+          echo "✅ Appcast update triggered"
+
       - name: Cleanup keychain
         if: always()
         run: |
