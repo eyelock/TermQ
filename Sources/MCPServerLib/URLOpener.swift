@@ -51,19 +51,31 @@ enum URLOpener {
         }
     }
 
-    /// Open a termq:// URL scheme
+    /// Open a termq:// URL scheme without activating (bringing to front) the target app.
+    ///
+    /// Uses `activates: false` so that MCP-initiated operations — which run in the
+    /// background on behalf of the AI — do not steal focus or trigger
+    /// `applicationShouldHandleReopen` on the GUI app. The GUI receives and
+    /// processes the URL event silently.
     /// - Parameter urlString: The full URL string to open
     /// - Throws: OpenError if the URL couldn't be opened
-    @MainActor
     static func open(_ urlString: String) async throws {
         guard let url = URL(string: urlString) else {
             throw OpenError.invalidURL(urlString)
         }
 
         #if os(macOS)
-            let opened = NSWorkspace.shared.open(url)
-            if !opened {
-                throw OpenError.failedToOpen(urlString)
+            let config = NSWorkspace.OpenConfiguration()
+            config.activates = false
+            try await withCheckedThrowingContinuation {
+                (continuation: CheckedContinuation<Void, Error>) in
+                NSWorkspace.shared.open(url, configuration: config) { _, error in
+                    if error != nil {
+                        continuation.resume(throwing: OpenError.failedToOpen(urlString))
+                    } else {
+                        continuation.resume()
+                    }
+                }
             }
             // Brief delay to allow GUI to begin processing the URL
             try await Task.sleep(nanoseconds: 50_000_000)  // 50ms
