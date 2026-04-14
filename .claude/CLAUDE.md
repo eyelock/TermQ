@@ -16,21 +16,28 @@ Skill           Domain knowledge library, portable, self-contained
 
 ---
 
-## ABSOLUTE RULE — NEVER COMMIT DIRECTLY TO MAIN
+## ABSOLUTE RULE — NEVER COMMIT DIRECTLY TO MAIN OR DEVELOP
 
-**Direct commits to `main` are forbidden without exception.**
+Direct commits to `main` or `develop` are forbidden without exception.
 
-Every change — no matter how small, urgent, or "obvious" — goes through a branch and PR:
+Every change goes through a branch and PR:
 
+Feature work → `develop`:
 ```
 git checkout -b fix-<description>   # always start here
 ... implement ...
 /verify
 /commit
-/push                               # opens PR, CI runs, user merges
+/push                               # PR targets develop
 ```
 
-There is no urgency, no hotfix, no one-liner that justifies bypassing this. If there is a genuine technical reason to land directly on main, the user must explicitly instruct it. Never decide this unilaterally.
+Release promotion → `main`:
+```
+# PR: develop → main (you merge this)
+# Then tag the merge commit on main for stable release
+```
+
+There is no urgency, no hotfix, no one-liner that justifies bypassing this. If there is a genuine technical reason to land directly on `main` or `develop`, the user must explicitly instruct it. Never decide this unilaterally.
 
 ---
 
@@ -66,8 +73,8 @@ Findings from /verify must be resolved before moving on.
 
 | Command | What it does |
 |---|---|
-| `/release` | Stable release from main |
-| `/release-beta` | Beta pre-release from main |
+| `/release` | Stable release from main (after develop → main PR) |
+| `/release-beta` | Beta pre-release from develop |
 | `/release-hotfix` | Critical patch from a tagged base |
 
 All three invoke the `releaser` agent, which uses the `release` skill.

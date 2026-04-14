@@ -44,19 +44,22 @@ open TermQDebug.app
 ## Development Workflow
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
+2. Create a feature branch from `develop`: `git checkout -b feature/amazing-feature develop`
 3. Make your changes
 4. Run checks: `make check`
 5. Commit: `git commit -m 'Add amazing feature'`
 6. Push: `git push origin feature/amazing-feature`
-7. Open a Pull Request
+7. Open a Pull Request **targeting `develop`**
+
+> **Note for maintainers:** Internal development uses hyphen-separated branch names
+> (e.g. `feat-amazing-feature`) for worktree-directory compatibility. External
+> contributors may use either convention — both work with GitHub.
 
 ## Project Structure
 
 ```
 termq/
 ├── Package.swift              # Swift Package Manager manifest
-├── VERSION                    # Current version (semver)
 ├── Makefile                   # Build, test, lint, release commands
 ├── TermQ.app/                 # macOS app bundle
 │   └── Contents/
@@ -90,7 +93,8 @@ termq/
 └── .github/
     └── workflows/
         ├── ci.yml             # CI workflow
-        └── release.yml        # Release workflow
+        ├── release.yml        # Release workflow
+        └── protect-main.yml   # Enforces develop/hotfix/* → main only
 ```
 
 ## Building
@@ -265,57 +269,72 @@ These binaries are automatically built and installed to `TermQDebug.app/Contents
 
 ## Releasing
 
-The project uses [semantic versioning](https://semver.org/). The version is derived from git tags — there is no `VERSION` file.
+The project uses semantic versioning. The version is derived entirely from git tags —
+there is no VERSION file.
+
+### Branch Model for Releases
+
+- **Beta releases** are tagged from `develop`
+- **Stable releases** are tagged from `main`, after promoting `develop → main` via PR
+
+### Beta Release
+
+```bash
+git checkout develop
+git pull
+git tag -a v0.8.0-beta.1 -m "Release v0.8.0-beta.1"
+git push origin v0.8.0-beta.1
+```
+
+The release workflow's `verify-ci` step is skipped for beta builds (CI still runs on
+`develop` for every push and PR — only the release workflow's own verification step is
+skipped). The workflow signs, notarizes, and publishes the GitHub release as a pre-release.
+The appcast-beta.xml feed is updated automatically.
+
+### Stable Release
+
+1. Open a PR: `develop → main`
+2. Wait for CI to pass and merge
+3. Tag the merge commit:
+
+```bash
+git checkout main
+git pull
+make release   # or: make release-patch / release-minor / release-major
+```
+
+The release workflow verifies CI passed on that commit before building.
 
 ### Pre-Release Checklist
 
-Before releasing, ensure code hygiene:
+Before tagging (beta or stable):
 
 ```bash
-# 1. Run all checks
 make check
-
-# 2. Validate localization strings
 ./scripts/localization/validate-strings.sh
-
-# 3. Run tests
 make test
 ```
 
-> **Important**: The localization validation ensures all 40 language files have matching keys. Any missing translations will cause the release to fail in CI.
+### Manual Release (if make release is unavailable)
 
-### Interactive Release
-
-```bash
-make release
-```
-
-This will:
-1. Show current version and ask for release type (major/minor/patch)
-2. Check for uncommitted changes
-3. Update the VERSION file
-4. Commit the version bump
-5. Create a git tag (e.g., `v0.1.0`)
-6. Ask to push (which triggers the release workflow)
-
-### Direct Release
+For a beta from `develop`:
 
 ```bash
-make release-patch  # Bug fixes: 0.0.1 → 0.0.2
-make release-minor  # New features: 0.0.1 → 0.1.0
-make release-major  # Breaking changes: 0.0.1 → 1.0.0
+git checkout develop && git pull
+git tag -a v0.8.0-beta.1 -m "Release v0.8.0-beta.1"
+git push origin v0.8.0-beta.1
 ```
 
-### Manual Release
+For a stable from `main` (after merging the develop → main PR):
 
 ```bash
-echo "1.0.0" > VERSION
-git add VERSION
-git commit -m "Bump version to 1.0.0"
-git tag -a v1.0.0 -m "Release v1.0.0"
-git push origin main
-git push origin v1.0.0
+git checkout main && git pull
+git tag -a v0.8.0 -m "Release v0.8.0"
+git push origin v0.8.0
 ```
+
+Pushing the tag triggers `release.yml`. Do not push the branch separately — the workflow
+is tag-driven, not branch-driven.
 
 ## CI/CD
 
@@ -338,7 +357,10 @@ Documentation-only changes (README, CONTRIBUTING, etc.) won't trigger CI, reduci
 
 ### Pull Requests & Pushes
 
-The CI workflow (`.github/workflows/ci.yml`) runs:
+The CI workflow (`.github/workflows/ci.yml`) runs on push to `main`, `develop`,
+and `hotfix/*` branches, and on pull requests targeting `main` or `develop`.
+
+Checks run:
 
 - `make build` - Build verification
 - `make test` - Unit tests

@@ -5,15 +5,21 @@ description: TermQ commit, branch, and PR conventions. Load when creating commit
 
 # Commit Conventions
 
-## ABSOLUTE RULE — NEVER COMMIT DIRECTLY TO MAIN
+## ABSOLUTE RULE — NEVER COMMIT DIRECTLY TO MAIN OR DEVELOP
 
-Every change goes through a branch and PR — no exceptions, no matter how small or urgent. If the user has not yet created a branch, create one before touching any files:
+Every change goes through a branch and PR — no exceptions, no matter how small or urgent.
+
+- **Feature/fix work:** branch from `develop`, PR back into `develop`
+- **Release promotion:** PR from `develop` → `main` (you open this at release time)
+- **Hotfix:** branch from a release tag, fix directly on hotfix branch, CI passes, tag fires release from hotfix branch — `main` never receives the commit directly; fix reaches `develop` via a forward-port PR after shipping
+
+If the user has not yet created a branch, create one before touching any files:
 
 ```bash
 git checkout -b <type>-<description>
 ```
 
-Only the user can authorise a direct push to main, and only for a specific stated technical reason. Never decide this unilaterally.
+Only the user can authorise a direct push to `main` or `develop`, and only for a specific stated technical reason. Never decide this unilaterally.
 
 ---
 
@@ -65,27 +71,29 @@ EOF
 
 Ask: **what is the minimum number of commits that meaningfully separates this work?**
 
-This project uses squash-merge (`gh pr merge --squash`), so branch commits are ephemeral — they become one commit on `main` regardless. Their only job is to help a reviewer understand the PR. That means:
+This project uses squash-merge (`gh pr merge --squash`), so branch commits are ephemeral — they become one commit on `develop` regardless. Their only job is to help a reviewer understand the PR. That means:
 
 - Lean toward 1–3 commits per PR, one per logical concern
 - WIP checkpoints, format commits, and implementation-journey fixes → squash them away
 - The PR description carries the narrative; commits are just grouping for review
 
 ```bash
-git log origin/main..HEAD --oneline   # read it — if you'd be embarrassed showing it, squash
-git rebase -i origin/main             # fixup/reword until only meaningful separations remain
+git log origin/develop..HEAD --oneline   # read it — if you'd be embarrassed showing it, squash
+git rebase -i origin/develop             # fixup/reword until only meaningful separations remain
 ```
 
 A common clean split: one commit for code changes, one for documentation or tooling changes. Don't over-invest in commit granularity on a branch that will be squashed.
 
+> Note: for the `develop → main` release promotion PR, these become `origin/main`.
+
 ## Before Creating a PR
 
-Ensure the branch is up-to-date with main:
+Ensure the branch is up-to-date with the base branch (`develop` for feature branches):
 
 ```bash
-git fetch origin main
-git log HEAD..origin/main --oneline   # if output, merge first
-git merge origin/main
+git fetch origin develop
+git log HEAD..origin/develop --oneline   # if output, merge first
+git merge origin/develop
 git push
 ```
 
@@ -132,7 +140,10 @@ gh pr merge --squash
 ## Post-Merge Cleanup
 
 ```bash
-# Verify merged
+# Verify merged into develop (for feature branches)
+git branch -r --merged origin/develop | grep <branch-name>
+
+# For release promotion PRs, verify merged into main:
 git branch -r --merged origin/main | grep <branch-name>
 
 # Clean up (from main repo, not worktree)

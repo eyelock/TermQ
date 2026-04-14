@@ -6,9 +6,9 @@ Use for critical production bugs, security vulnerabilities, or data loss issues 
 
 ## Prerequisites
 
-- The fix is already on `main` via the standard PR process
-- CI has passed on main
 - You know the base version being hotfixed (e.g., v0.6.3)
+- The bug is confirmed in production and cannot wait for `develop` to be promoted
+- A fix is ready to implement (or already written and tested locally)
 
 ## Steps
 
@@ -18,11 +18,13 @@ Use for critical production bugs, security vulnerabilities, or data loss issues 
 git checkout -b hotfix/v0.6.4 v0.6.3
 ```
 
-### 2. Cherry-Pick the Fix from Main
+### 2. Implement the Fix
+
+Apply the fix directly on the hotfix branch. Keep it minimal — only the targeted change.
 
 ```bash
-git log main --oneline | grep "fix:"     # find the fix commit
-git cherry-pick <commit-sha>
+git add <files>
+git commit -m "fix: <description>"
 git push -u origin hotfix/v0.6.4
 ```
 
@@ -53,10 +55,23 @@ gh release view v0.6.4
 ### 6. Cleanup
 
 ```bash
-gh pr close <pr-number>           # close any hotfix PRs
 git push origin --delete hotfix/v0.6.4
 git branch -d hotfix/v0.6.4
 ```
+
+### 7. Forward-Port to Develop
+
+After the hotfix tag is pushed and the release is confirmed, open a PR to bring the fix to `develop`:
+
+```bash
+git checkout -b fix-forward-port-v0.6.4 develop
+git cherry-pick <fix-commit-sha>
+git push -u origin fix-forward-port-v0.6.4
+gh pr create --base develop --title "fix: forward-port hotfix v0.6.4" \
+  --body "Cherry-picks the v0.6.4 hotfix commit onto develop."
+```
+
+Merge once CI passes. If the cherry-pick has conflicts (develop has diverged significantly), resolve them before pushing.
 
 ## What NOT to Do
 
