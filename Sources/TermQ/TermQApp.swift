@@ -389,13 +389,21 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     /// Prevent creating new windows when user tries to open the app again
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        let total = NSApplication.shared.windows.count
-        TermQLogger.window.notice("applicationShouldHandleReopen: hasVisibleWindows=\(flag) total=\(total)")
-        if flag {
-            // Bring existing window to front
-            mainWindow?.makeKeyAndOrderFront(nil)
+        let windows = NSApplication.shared.windows
+        TermQLogger.window.notice("applicationShouldHandleReopen: hasVisibleWindows=\(flag) total=\(windows.count)")
+        for (i, win) in windows.enumerated() {
+            let desc = "\(type(of: win)) visible=\(win.isVisible) frame=\(win.frame)"
+            TermQLogger.window.notice("  window[\(i)]: \(desc)")
+        }
+        if let window = mainWindow {
+            // Unhide the app (handles the NSApp.hide case from windowShouldClose where
+            // macOS sees hasVisibleWindows=false even though our window exists).
+            // Return false to prevent SwiftUI from trying to open another Window instance.
+            NSApp.unhide(nil)
+            window.makeKeyAndOrderFront(nil)
             return false
         }
+        // No main window tracked yet — allow the system to open one
         return true
     }
 
@@ -511,7 +519,7 @@ struct TermQApp: App {
                     AppProfileValidator.validateAtStartup()
                     checkForOrphanedBackup()
                     let count = NSApplication.shared.windows.count
-                    TermQLogger.window.notice("WindowGroup onAppear: \(count) window(s)")
+                    TermQLogger.window.notice("Window onAppear: \(count) window(s)")
                 }
                 .sheet(item: $backupToRestore) { item in
                     RestoreOfferView(
