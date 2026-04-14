@@ -14,7 +14,7 @@ private let resourceBundle: Bundle = {
 }()
 
 /// Parse a .strings file into a dictionary, handling comments
-private func parseStringsFile(at url: URL) -> [String: String]? {
+func parseStringsFile(at url: URL) -> [String: String]? {
     guard let content = try? String(contentsOf: url, encoding: .utf8) else {
         return nil
     }

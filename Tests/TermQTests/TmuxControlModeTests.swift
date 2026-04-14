@@ -1,6 +1,7 @@
 import Foundation
 import XCTest
 
+@testable import TermQ
 @testable import TermQCore
 
 /// Tests for tmux control mode parser
@@ -562,34 +563,5 @@ final class TmuxControlModeTests: XCTestCase {
     }
 }
 
-/// Import types from TmuxControlMode.swift for testing
-/// These would normally be imported from the TermQ module
-struct TmuxPane: Identifiable, Sendable {
-    let id: String
-    var windowId: String
-    var width: Int
-    var height: Int
-    var x: Int
-    var y: Int
-    var title: String = ""
-    var currentPath: String = ""
-    var inCopyMode: Bool = false
-    var isActive: Bool = false
-}
-
-struct TmuxWindow: Identifiable, Sendable {
-    let id: String
-    var name: String
-    var layout: String = ""
-    var isActive: Bool = false
-}
-
-struct CommandResponse: Sendable {
-    let id: Int
-    var output: String = ""
-    var isComplete: Bool = false
-}
-
-enum PaneDirection: Sendable {
-    case up, down, left, right
-}
+// TmuxPane, TmuxWindow, CommandResponse, and PaneDirection are now imported
+// from the TermQ module via @testable import TermQ above.
