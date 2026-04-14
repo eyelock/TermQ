@@ -27,10 +27,10 @@ The git SHA is stored in the custom key `TermQBuildSHA` (for display in Settings
 
 ## Steps
 
-### 1. Ensure Changes Are on Main
+### 1. Ensure Changes Are on Develop
 
 ```bash
-git checkout main
+git checkout develop
 git pull
 ```
 
@@ -50,7 +50,9 @@ gh release view v0.7.0-beta.1
 # Should be marked as pre-release
 ```
 
-Beta releases skip CI verification for faster iteration. They still sign and notarize.
+Beta releases skip `release.yml`'s own `verify-ci` step for faster iteration.
+(CI still runs on `develop` for every push and PR — the skip is only in the release
+workflow itself, not in CI.) They still sign and notarize.
 
 ### 4. Verify Feeds
 
@@ -63,9 +65,18 @@ curl -s https://eyelock.github.io/TermQ/appcast-beta.xml | grep "beta"
 
 ## Promoting Beta to Stable
 
-Once testing is complete:
+Once testing is complete, open a PR to promote `develop` → `main`:
 
 ```bash
+gh pr create --base main --head develop --title "release: v0.7.0" \
+  --body "Promotes develop to main for stable release v0.7.0"
+```
+
+Wait for CI to pass on the merge commit, then merge. After merge:
+
+```bash
+git checkout main
+git pull
 git tag -a "v0.7.0" -m "Release v0.7.0"
 git push origin v0.7.0
 ```

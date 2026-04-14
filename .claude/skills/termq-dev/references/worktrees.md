@@ -8,7 +8,7 @@
 - Work spans multiple sessions
 - Multiple ideas in flight simultaneously
 
-**Work directly on main when:**
+**Skip the separate worktree when:**
 - Documentation-only changes
 - Single-file ad-hoc fixes (this session only)
 - Quick investigations with no planned commits
@@ -41,8 +41,8 @@ Example: `git worktree add ../TermQ-worktrees/feat-quick-actions -b feat-quick-a
 **Only remove a worktree after its PR is merged.**
 
 ```bash
-# 1. Verify merged first
-git branch -r --merged origin/main | grep <branch-name>
+# 1. Verify merged into develop (feature branches)
+git branch -r --merged origin/develop | grep <branch-name>
 # If nothing shows, the branch is NOT merged — do not proceed
 
 # 2. Clean up from main repo (not from inside the worktree)
@@ -59,8 +59,8 @@ git push origin --delete <branch-name>
 Before removing a worktree that might have unmerged commits, summarise first:
 
 ```bash
-git log origin/main..<branch-name> --oneline   # commits
-git diff origin/main..<branch-name> --stat     # files changed
+git log origin/develop..<branch-name> --oneline   # commits
+git diff origin/develop..<branch-name> --stat     # files changed
 ```
 
 Present the summary and ask for explicit confirmation before proceeding.
