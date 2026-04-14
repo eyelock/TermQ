@@ -97,6 +97,10 @@ jobs:
     name: Build Release
     runs-on: macos-15
     needs: [build, test, lint, format]
+    # Skip on PRs targeting develop — release build validation is only needed
+    # when merging to main (stable release) or on direct pushes (hotfix/develop).
+    # Beta releases are handled by release.yml and always run a full build there.
+    if: "!failure() && !cancelled() && (github.event_name != 'pull_request' || github.base_ref == 'main')"
 
     steps:
       - name: Checkout
