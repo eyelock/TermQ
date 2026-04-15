@@ -194,7 +194,7 @@ $(DEBUG_APP): $(DEBUG_BUILD_DIR)/$(APP_NAME) $(DEBUG_BUILD_DIR)/$(CLI_DEBUG_BINA
 	fi
 	@# Update version info in Info.plist
 	@plutil -replace CFBundleShortVersionString -string "$(SPARKLE_VERSION)" $(DEBUG_APP)/Contents/Info.plist
-	@plutil -replace CFBundleVersion -string "$(SPARKLE_VERSION)" $(DEBUG_APP)/Contents/Info.plist
+	@plutil -replace CFBundleVersion -string "$(GIT_SHA)-debug" $(DEBUG_APP)/Contents/Info.plist
 	@plutil -replace TermQBuildSHA -string "$(GIT_SHA)" $(DEBUG_APP)/Contents/Info.plist
 	@if [ -f AppIcon.icns ]; then cp AppIcon.icns $(DEBUG_APP)/Contents/Resources/AppIcon.icns; fi
 	@# Ad-hoc sign for local execution
