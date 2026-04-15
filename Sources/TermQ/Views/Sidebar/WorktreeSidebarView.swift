@@ -10,6 +10,7 @@ struct WorktreeSidebarView: View {
     @State private var showAddRepo = false
     @State private var showNewWorktreeFor: ObservableRepository?
     @State private var showEditRepoFor: ObservableRepository?
+    @State private var checkoutBranchContext: CheckoutBranchContext?
     @State private var pendingRemoval: (ObservableRepository, GitWorktree)?
     @State private var isShowingRemoveAlert = false
     @State private var pendingForceDelete: (ObservableRepository, GitWorktree)?
@@ -36,6 +37,13 @@ struct WorktreeSidebarView: View {
         }
         .sheet(item: $showNewWorktreeFor) { repo in
             NewWorktreeSheet(repo: repo, viewModel: viewModel)
+        }
+        .sheet(item: $checkoutBranchContext) { ctx in
+            CheckoutBranchSheet(
+                repo: ctx.repo,
+                preselectedBranch: ctx.preselectedBranch,
+                viewModel: viewModel
+            )
         }
         .sheet(item: $showEditRepoFor) { repo in
             EditRepositorySheet(repo: repo, viewModel: viewModel)
@@ -166,6 +174,12 @@ struct WorktreeSidebarView: View {
                         Label(Strings.Sidebar.newWorktree, systemImage: "plus")
                     }
 
+                    Button {
+                        checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: nil)
+                    } label: {
+                        Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
+                    }
+
                     Divider()
 
                     Button {
@@ -243,6 +257,16 @@ struct WorktreeSidebarView: View {
             .buttonStyle(.plain)
             .padding(.leading, 4)
             .padding(.top, 2)
+
+            // Local branches without worktrees
+            if let branches = viewModel.availableBranches[repo.id], !branches.isEmpty {
+                BranchSectionDisclosureView(repo: repo, viewModel: viewModel) {
+                    ForEach(branches, id: \.self) { branch in
+                        branchRow(branch, repo: repo)
+                    }
+                }
+                .padding(.top, 4)
+            }
         } else {
             Text(Strings.Sidebar.worktreesPlaceholder)
                 .font(.caption)
@@ -295,6 +319,11 @@ struct WorktreeSidebarView: View {
             Spacer()
 
             Button {
+                // Resign sidebar first responder before creating the terminal so the
+                // NSTableView does not win the focus race against focusTerminal()'s
+                // 100 ms asyncAfter. Without this, the NSTableView re-renders its
+                // badge count due to the new transientCard and reclaims focus.
+                NSApp.keyWindow?.makeFirstResponder(nil)
                 boardVM.newTerminal(at: worktree.path)
             } label: {
                 Image(systemName: "terminal")
@@ -305,6 +334,32 @@ struct WorktreeSidebarView: View {
         }
         .padding(.leading, 4)
         .contextMenu { worktreeContextMenu(worktree, repo: repo) }
+    }
+
+    @ViewBuilder
+    private func branchRow(_ branch: String, repo: ObservableRepository) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: "arrow.triangle.branch")
+                .imageScale(.small)
+                .foregroundColor(.secondary)
+                .frame(width: 26)
+
+            Text(branch)
+                .font(.subheadline)
+                .lineLimit(1)
+                .foregroundColor(.primary)
+
+            Spacer()
+        }
+        .padding(.leading, 4)
+        .contentShape(Rectangle())
+        .contextMenu {
+            Button {
+                checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: branch)
+            } label: {
+                Label(Strings.Sidebar.newWorktree, systemImage: "plus")
+            }
+        }
     }
 
     @ViewBuilder
@@ -361,7 +416,18 @@ struct WorktreeSidebarView: View {
             Label(Strings.Sidebar.openRemoteCommit, systemImage: "chevron.left.forwardslash.chevron.right")
         }
 
-        // Group 4: Lock (linked worktrees only)
+        // Group 4: Worktree actions (main worktree only)
+        if worktree.isMainWorktree {
+            Divider()
+
+            Button {
+                checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: nil)
+            } label: {
+                Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
+            }
+        }
+
+        // Group 5: Lock (linked worktrees only)
         if !worktree.isMainWorktree {
             Divider()
 
@@ -393,7 +459,7 @@ struct WorktreeSidebarView: View {
 
             Divider()
 
-            // Group 5: Destructive (linked worktrees only)
+            // Group 6: Destructive (linked worktrees only)
             Button(role: .destructive) {
                 pendingRemoval = (repo, worktree)
                 isShowingRemoveAlert = true
@@ -504,6 +570,17 @@ struct WorktreeSidebarView: View {
     }
 }
 
+// MARK: - Checkout Branch Context
+
+/// Carries both the target repository and an optional pre-selected branch into
+/// `CheckoutBranchSheet`. Using a wrapper struct avoids secondary `@State` variables
+/// and lets `sheet(item:)` bind to a single optional.
+private struct CheckoutBranchContext: Identifiable {
+    let id = UUID()
+    let repo: ObservableRepository
+    let preselectedBranch: String?
+}
+
 // MARK: - Repo Disclosure Wrapper
 
 /// Owns the `@State` for a repo's expanded/collapsed state so the `DisclosureGroup`
@@ -547,6 +624,47 @@ private struct RepoDisclosureView<Content: View, Label: View>: View {
             }
         }
         .onChange(of: viewModel.expandedRepoIDs) { _, ids in
+            let should = ids.contains(repo.id)
+            if isExpanded != should { isExpanded = should }
+        }
+    }
+}
+
+// MARK: - Branch Section Disclosure Wrapper
+
+/// Owns the `@State` for a repo's "Local Branches" section expanded/collapsed state,
+/// using the same deferred-mutation pattern as `RepoDisclosureView` to avoid
+/// reentrant NSTableView calls during SwiftUI render.
+private struct BranchSectionDisclosureView<Content: View>: View {
+    let repo: ObservableRepository
+    @ObservedObject var viewModel: WorktreeSidebarViewModel
+    @ViewBuilder let content: () -> Content
+    @State private var isExpanded: Bool
+
+    init(
+        repo: ObservableRepository,
+        viewModel: WorktreeSidebarViewModel,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.repo = repo
+        self.viewModel = viewModel
+        self.content = content
+        self._isExpanded = State(initialValue: viewModel.expandedBranchSectionIDs.contains(repo.id))
+    }
+
+    var body: some View {
+        DisclosureGroup(isExpanded: $isExpanded) {
+            content()
+        } label: {
+            Text(Strings.Sidebar.localBranches)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .textCase(.uppercase)
+        }
+        .onChange(of: isExpanded) { _, newValue in
+            viewModel.setBranchSectionExpanded(repo.id, expanded: newValue)
+        }
+        .onChange(of: viewModel.expandedBranchSectionIDs) { _, ids in
             let should = ids.contains(repo.id)
             if isExpanded != should { isExpanded = should }
         }

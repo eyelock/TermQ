@@ -570,3 +570,14 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "sidebar.new.worktree.loading.branches" = "Načítavanie vetiev...";
 "common.close.window" = "Zavrieť okno";
 "menu.toggle.sidebar" = "Prepnúť bočný panel";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

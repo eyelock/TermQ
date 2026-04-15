@@ -570,3 +570,14 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "sidebar.new.worktree.path.required" = "Geben Sie einen Worktree-Pfad ein, um fortzufahren.";
 "sidebar.new.worktree.create" = "Erstellen";
 "sidebar.new.worktree.loading.branches" = "Branches werden geladen ...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

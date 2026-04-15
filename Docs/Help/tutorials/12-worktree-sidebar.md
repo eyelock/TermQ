@@ -158,7 +158,36 @@ If there is nothing to prune, TermQ says so and dismisses the sheet.
 
 ---
 
-## 12.8 — Remote links
+## 12.8 — Checkout a local branch as a worktree
+
+Every git repository accumulates local branches that live only in the main checkout. The **Local Branches** section makes these visible in the sidebar and lets you promote any of them to a full worktree with a single action — no typing required.
+
+### The Local Branches section
+
+When a repository has local branches that are not already checked out as worktrees, a **Local Branches** disclosure group appears below the worktree list. Click the arrow to expand it.
+
+![Local Branches Section](../Images/worktree-local-branches.png)
+
+Each branch row shows a branch icon and the branch name. The list is automatically filtered — a branch disappears from this section as soon as you create a worktree for it.
+
+### Create a worktree from a branch
+
+Right-click any branch row and choose **New Worktree**.
+
+The **New Worktree from Branch** sheet opens with the branch pre-filled. Only the worktree path needs confirming — TermQ infers it from the branch name and your configured base path, the same way **New Worktree** does.
+
+Click **Create Worktree**. TermQ runs `git worktree add <path> <branch>` — checking out the existing branch, not creating a new one.
+
+You can also reach this sheet from two other entry points without knowing which branch you want in advance:
+
+- **Repository row** → right-click → **New Worktree from Branch…** — opens the sheet with a branch picker, filtered to branches that don't already have a worktree.
+- **Main worktree row** → right-click → **New Worktree from Branch…** — same picker, same filter.
+
+> **Difference from New Worktree:** The standard **New Worktree** action creates a fresh branch (`git worktree add -b`). **New Worktree from Branch** checks out an existing branch without creating anything new.
+
+---
+
+## 12.9 — Remote links
 
 From any worktree row, right-click to access remote links:
 
@@ -178,6 +207,7 @@ TermQ constructs the URL from the repo's `origin` remote, converting SSH remotes
 - **Remove Worktree** is the safe default — it fails if the worktree is locked or dirty
 - **Force Delete** bypasses all safety checks and deletes the directory; use with caution
 - **Prune** cleans up stale git records for worktrees whose directories no longer exist
+- **Local Branches** shows branches that exist locally but have no worktree; right-click any row → **New Worktree** to check it out as a worktree instantly
 
 ## Next
 

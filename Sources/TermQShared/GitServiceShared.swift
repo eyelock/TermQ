@@ -146,6 +146,18 @@ public enum GitServiceShared {
         return !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    /// Check out an existing local branch as a new worktree at `worktreePath`.
+    ///
+    /// Unlike `addWorktree`, this does not create a new branch — it checks out the
+    /// existing branch directly using `git worktree add <path> <branch>`.
+    public static func checkoutBranchAsWorktree(
+        repoPath: String,
+        branch: String,
+        worktreePath: String
+    ) async throws {
+        _ = try await runGitCommand(repoPath: repoPath, args: ["worktree", "add", worktreePath, branch])
+    }
+
     /// Add a new worktree at `worktreePath` checked out to a new branch `branch`.
     /// Pass `baseBranch` to start from a specific branch instead of HEAD.
     public static func addWorktree(

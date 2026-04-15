@@ -560,3 +560,14 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "sidebar.new.worktree.path.required" = "Entrez un chemin de worktree pour continuer.";
 "sidebar.new.worktree.create" = "Créer";
 "sidebar.new.worktree.loading.branches" = "Chargement des branches...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

@@ -561,3 +561,14 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "sidebar.new.worktree.path.required" = "Devam etmek için bir worktree yolu girin.";
 "sidebar.new.worktree.create" = "Oluştur";
 "sidebar.new.worktree.loading.branches" = "Dallar yükleniyor...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

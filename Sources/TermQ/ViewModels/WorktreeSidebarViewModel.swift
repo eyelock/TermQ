@@ -41,19 +41,24 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     @Published var repositories: [ObservableRepository] = []
     @Published var worktrees: [UUID: [GitWorktree]] = [:]
+    @Published var availableBranches: [UUID: [String]] = [:]
     @Published private(set) var loadingRepos: Set<UUID> = []
     @Published var isLoading: Bool = false
     @Published var operationError: String?
     @Published var expandedRepoIDs: Set<UUID> = []
+    @Published var expandedBranchSectionIDs: Set<UUID> = []
 
     private let persistence = RepoPersistence()
     private static let expandedReposKey = "sidebar.expandedRepos"
+    private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     private var monitors: [UUID: GitRepositoryMonitor] = [:]
     private var dirtyPollTimer: Timer?
 
     private init() {
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
+        let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
+        expandedBranchSectionIDs = Set(savedBranch.compactMap { UUID(uuidString: $0) })
         loadRepositories()
         refreshExpandedWorktrees()
         startMonitorsForAllRepos()
@@ -122,6 +127,18 @@ final class WorktreeSidebarViewModel: ObservableObject {
             expandedRepoIDs.remove(id)
         }
         UserDefaults.standard.set(expandedRepoIDs.map { $0.uuidString }, forKey: Self.expandedReposKey)
+    }
+
+    func setBranchSectionExpanded(_ id: UUID, expanded: Bool) {
+        if expanded {
+            expandedBranchSectionIDs.insert(id)
+        } else {
+            expandedBranchSectionIDs.remove(id)
+        }
+        UserDefaults.standard.set(
+            expandedBranchSectionIDs.map { $0.uuidString },
+            forKey: Self.expandedBranchSectionsKey
+        )
     }
 
     // MARK: - Repository CRUD
@@ -228,6 +245,21 @@ final class WorktreeSidebarViewModel: ObservableObject {
             }
             worktrees[repo.id] = worktrees[repo.id] ?? []
         }
+        await refreshAvailableBranches(for: repo)
+    }
+
+    /// Refresh the list of local branches that do not already have a worktree checked out.
+    ///
+    /// Called automatically at the tail of every `refreshWorktrees` so the "Local Branches"
+    /// section always reflects the current worktree state.
+    func refreshAvailableBranches(for repo: ObservableRepository) async {
+        do {
+            let all = try await GitService.shared.listBranches(repoPath: repo.path)
+            let occupied = Set(worktrees[repo.id]?.compactMap(\.branch) ?? [])
+            availableBranches[repo.id] = all.filter { !occupied.contains($0) }
+        } catch {
+            availableBranches[repo.id] = availableBranches[repo.id] ?? []
+        }
     }
 
     // MARK: - Worktree CRUD
@@ -253,6 +285,17 @@ final class WorktreeSidebarViewModel: ObservableObject {
             throw WorktreeOperationError.removingMainWorktree
         }
         try await GitService.shared.removeWorktree(repo: repo.toGitRepository(), path: worktree.path)
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
+    /// Check out an existing local branch as a new worktree.
+    func checkoutBranchAsWorktree(repo: ObservableRepository, branch: String, path: String) async throws {
+        try await GitService.shared.checkoutBranchAsWorktree(
+            repo: repo.toGitRepository(),
+            branch: branch,
+            path: path
+        )
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
     }

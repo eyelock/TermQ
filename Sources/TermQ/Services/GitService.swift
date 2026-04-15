@@ -51,6 +51,15 @@ public class GitService {
         }
     }
 
+    /// Check out an existing local branch as a new worktree at `path`.
+    public func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws {
+        try await GitServiceShared.checkoutBranchAsWorktree(
+            repoPath: repo.path,
+            branch: branch,
+            worktreePath: path
+        )
+    }
+
     /// Add a new worktree at `worktreePath` checked out to a new branch `branch`.
     /// Pass `baseBranch` to start from a specific branch instead of HEAD.
     public func addWorktree(

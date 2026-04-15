@@ -568,3 +568,14 @@ This could affect how AI assistants interact with this terminal.";
 "sidebar.new.worktree.path.required" = "Enter a worktree path to continue.";
 "sidebar.new.worktree.create" = "Create";
 "sidebar.new.worktree.loading.branches" = "Loading branches...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

@@ -570,3 +570,14 @@
 "sidebar.new.worktree.loading.branches" = "Загрузка веток...";
 "common.close.window" = "Закрыть окно";
 "menu.toggle.sidebar" = "Показать/скрыть боковую панель";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

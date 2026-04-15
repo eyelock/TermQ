@@ -641,16 +641,25 @@ class TerminalContainerView: NSView {
 
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
+        TermQLogger.focus.debug("viewDidMoveToWindow hasWindow=\(self.window != nil)")
         // Give focus to terminal when view appears
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.window?.makeFirstResponder(self.terminal)
+            let fr = self.window?.firstResponder
+            let succeeded = self.window?.makeFirstResponder(self.terminal) ?? false
+            TermQLogger.focus.debug(
+                "makeFirstResponder(viewDidMoveToWindow) succeeded=\(succeeded) hasWindow=\(self.window != nil) priorFR=\(String(describing: type(of: fr)))"
+            )
         }
     }
 
     /// Re-focus the terminal
     func focusTerminal() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.window?.makeFirstResponder(self.terminal)
+            let fr = self.window?.firstResponder
+            let succeeded = self.window?.makeFirstResponder(self.terminal) ?? false
+            TermQLogger.focus.debug(
+                "makeFirstResponder(focusTerminal) succeeded=\(succeeded) hasWindow=\(self.window != nil) priorFR=\(String(describing: type(of: fr)))"
+            )
         }
     }
 
@@ -711,6 +720,10 @@ struct TerminalHostView: NSViewRepresentable {
         if !isSearching && !TerminalSessionManager.shared.isMouseDragInProgress {
             let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
             if !alreadyFocused {
+                let fr = nsView.window?.firstResponder
+                TermQLogger.focus.debug(
+                    "updateNSView requesting focus priorFR=\(String(describing: type(of: fr)))"
+                )
                 nsView.focusTerminal()
             }
         }
