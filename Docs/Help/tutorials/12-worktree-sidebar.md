@@ -1,4 +1,4 @@
-# Tutorial 12: Git Worktree Sidebar
+# Tutorial 12: Git Worktrees
 
 In this tutorial you'll connect a git repository to TermQ and use the worktree sidebar to manage branches, open terminals at the right directory, and jump between active sessions — all without leaving the app.
 

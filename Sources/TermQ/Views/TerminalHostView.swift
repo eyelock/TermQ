@@ -720,10 +720,6 @@ struct TerminalHostView: NSViewRepresentable {
         if !isSearching && !TerminalSessionManager.shared.isMouseDragInProgress {
             let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
             if !alreadyFocused {
-                let fr = nsView.window?.firstResponder
-                TermQLogger.focus.debug(
-                    "updateNSView requesting focus priorFR=\(String(describing: type(of: fr)))"
-                )
                 nsView.focusTerminal()
             }
         }

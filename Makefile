@@ -548,6 +548,36 @@ worktree.delete:
 	echo "Worktree deleted: $$WORKTREE"
 
 
+# Compress PNG images in Docs/Help/Images using pngquant (lossy, quality 65-80).
+# Safety rules — a file is skipped when:
+#   1. It is already under 300 KB (already compressed or tiny — don't degrade further)
+#   2. pngquant's output would be larger than the input (--skip-if-larger)
+compress-images:
+	@echo "Compressing PNG images in Docs/Help/Images..."
+	@PNGQUANT=$$(which pngquant 2>/dev/null || echo /opt/homebrew/bin/pngquant); \
+	if [ ! -x "$$PNGQUANT" ]; then \
+		echo "Error: pngquant not found. Install with: brew install pngquant"; \
+		exit 1; \
+	fi; \
+	find Docs/Help/Images -name "*.png" | while read img; do \
+		original=$$(wc -c < "$$img"); \
+		if [ "$$original" -lt 307200 ]; then \
+			echo "  $$img: $$original bytes, already small — skipped"; \
+			continue; \
+		fi; \
+		tmp="$${img%.png}-compressed.png"; \
+		"$$PNGQUANT" --quality=65-80 --skip-if-larger --output "$$tmp" -- "$$img" 2>/dev/null; \
+		if [ -f "$$tmp" ]; then \
+			compressed=$$(wc -c < "$$tmp"); \
+			saving=$$((100 - compressed * 100 / original)); \
+			echo "  $$img: $$original → $$compressed bytes (-$$saving%)"; \
+			mv "$$tmp" "$$img"; \
+		else \
+			echo "  $$img: already optimal, skipped"; \
+		fi; \
+	done
+	@echo "Done."
+
 # Serve help documentation with docsify (live reload)
 docs.help:
 	@echo "Starting docsify server for Help documentation..."
@@ -598,6 +628,7 @@ help:
 	@echo ""
 	@echo "  Worktree:     - worktree worktree.update worktree.delete"
 	@echo ""
+	@echo "  compress-images - Compress PNGs in Docs/Help/Images with pngquant"
 	@echo "  docs.help     - Serve Help docs with docsify (live reload)"
 	@echo "  help          - Show this help message"
 	@echo ""
