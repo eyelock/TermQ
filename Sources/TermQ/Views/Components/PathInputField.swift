@@ -99,8 +99,13 @@ struct PathInputField: View {
             }
         }
 
-        if panel.runModal() == .OK, let url = panel.url {
-            path = url.path
+        // Use begin(_:) rather than runModal() — runModal() cannot nest inside a
+        // SwiftUI sheet's modal session (macOS Sequoia blocks it). The async
+        // completion handler runs on the main thread, so updating @Binding is safe.
+        panel.begin { response in
+            if response == .OK, let url = panel.url {
+                path = url.path
+            }
         }
     }
 
