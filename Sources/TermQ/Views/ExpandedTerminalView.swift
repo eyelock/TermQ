@@ -402,87 +402,95 @@ struct ExpandedTerminalView: View {
 
     private var tabBar: some View {
         HStack(spacing: 0) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 4) {
-                    ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
-                        let info = columnInfo(for: tabCard)
-                        let isTmux = sessionManager.getBackend(for: tabCard.id)?.usesTmux ?? false
-                        TabItemView(
-                            tabCard: tabCard,
-                            columnColor: info.color,
-                            columnName: info.name,
-                            isSelected: tabCard.id == card.id,
-                            needsAttention: needsAttention.contains(tabCard.id),
-                            isProcessing: processingCards.contains(tabCard.id),
-                            hasActiveSession: activeSessionCards.contains(tabCard.id),
-                            isTmuxSession: isTmux,
-                            onSelect: {
-                                if tabCard.id != card.id {
-                                    onSelectTab(tabCard)
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 4) {
+                        ForEach(Array(tabCards.enumerated()), id: \.element.id) { index, tabCard in
+                            let info = columnInfo(for: tabCard)
+                            let isTmux = sessionManager.getBackend(for: tabCard.id)?.usesTmux ?? false
+                            TabItemView(
+                                tabCard: tabCard,
+                                columnColor: info.color,
+                                columnName: info.name,
+                                isSelected: tabCard.id == card.id,
+                                needsAttention: needsAttention.contains(tabCard.id),
+                                isProcessing: processingCards.contains(tabCard.id),
+                                hasActiveSession: activeSessionCards.contains(tabCard.id),
+                                isTmuxSession: isTmux,
+                                onSelect: {
+                                    if tabCard.id != card.id {
+                                        onSelectTab(tabCard)
+                                    }
+                                },
+                                onEdit: {
+                                    onEditTab(tabCard)
+                                },
+                                onClose: {
+                                    onCloseTab(tabCard)
+                                },
+                                onDelete: {
+                                    onDeleteTab(tabCard)
+                                },
+                                onDuplicate: {
+                                    onDuplicateTab(tabCard)
+                                },
+                                onCloseSession: {
+                                    // Close session and close the tab
+                                    onCloseSession(tabCard)
+                                    onCloseTab(tabCard)
+                                },
+                                onKillSession: {
+                                    // Kill session (terminate tmux) and close the tab
+                                    onKillSession(tabCard)
+                                    onCloseTab(tabCard)
+                                },
+                                onRestartSession: {
+                                    // Mark session for restart
+                                    onRestartSession(tabCard)
+                                    // If this is the current tab, force view recreation
+                                    if tabCard.id == card.id {
+                                        // Show brief "restarting" state to tear down old terminal view
+                                        isRestarting = true
+                                        restartCounter += 1
+                                        terminalExited = false
+                                    }
                                 }
-                            },
-                            onEdit: {
-                                onEditTab(tabCard)
-                            },
-                            onClose: {
-                                onCloseTab(tabCard)
-                            },
-                            onDelete: {
-                                onDeleteTab(tabCard)
-                            },
-                            onDuplicate: {
-                                onDuplicateTab(tabCard)
-                            },
-                            onCloseSession: {
-                                // Close session and close the tab
-                                onCloseSession(tabCard)
-                                onCloseTab(tabCard)
-                            },
-                            onKillSession: {
-                                // Kill session (terminate tmux) and close the tab
-                                onKillSession(tabCard)
-                                onCloseTab(tabCard)
-                            },
-                            onRestartSession: {
-                                // Mark session for restart
-                                onRestartSession(tabCard)
-                                // If this is the current tab, force view recreation
-                                if tabCard.id == card.id {
-                                    // Show brief "restarting" state to tear down old terminal view
-                                    isRestarting = true
-                                    restartCounter += 1
-                                    terminalExited = false
-                                }
-                            }
-                        )
-                        .draggable(tabCard.id.uuidString)
-                        .dropDestination(for: String.self) { items, _ in
-                            guard let draggedIdString = items.first,
-                                let draggedId = UUID(uuidString: draggedIdString),
-                                draggedId != tabCard.id
-                            else { return false }
-
-                            onMoveTab(draggedId, index)
-                            return true
-                        }
-                    }
-
-                    // New tab button
-                    Button(action: onNewTab) {
-                        Image(systemName: "plus")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(6)
-                            .background(
-                                RoundedRectangle(cornerRadius: 6)
-                                    .fill(Color.secondary.opacity(0.1))
                             )
+                            .id(tabCard.id)
+                            .draggable(tabCard.id.uuidString)
+                            .dropDestination(for: String.self) { items, _ in
+                                guard let draggedIdString = items.first,
+                                    let draggedId = UUID(uuidString: draggedIdString),
+                                    draggedId != tabCard.id
+                                else { return false }
+
+                                onMoveTab(draggedId, index)
+                                return true
+                            }
+                        }
+
+                        // New tab button
+                        Button(action: onNewTab) {
+                            Image(systemName: "plus")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .padding(6)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .fill(Color.secondary.opacity(0.1))
+                                )
+                        }
+                        .buttonStyle(.plain)
+                        .help(Strings.Terminal.newTabHelp)
                     }
-                    .buttonStyle(.plain)
-                    .help(Strings.Terminal.newTabHelp)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 6)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 6)
+                .onChange(of: card.id) { _, newID in
+                    withAnimation {
+                        proxy.scrollTo(newID, anchor: .center)
+                    }
+                }
             }
 
             // tmux pane controls toggle (only for tmux sessions)
