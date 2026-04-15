@@ -157,7 +157,27 @@ public actor SecureStorage {
     }
 
     private func getEncryptionKey() throws -> SymmetricKey {
-        let query: [String: Any] = [
+        // Try modern Data Protection Keychain first (bundle ID + Team ID access control,
+        // survives rebuilds without prompting).
+        let modernQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: keychainAccount,
+            kSecReturnData as String: true,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecUseDataProtectionKeychain as String: true,
+        ]
+
+        var result: AnyObject?
+        let modernStatus = SecItemCopyMatching(modernQuery as CFDictionary, &result)
+
+        if modernStatus == errSecSuccess, let keyData = result as? Data {
+            return SymmetricKey(data: keyData)
+        }
+
+        // One-time migration: look in the legacy Login Keychain (binary-hash ACL).
+        // If found there, migrate to Data Protection Keychain and remove the legacy entry.
+        let legacyQuery: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: keychainService,
             kSecAttrAccount as String: keychainAccount,
@@ -165,14 +185,17 @@ public actor SecureStorage {
             kSecMatchLimit as String: kSecMatchLimitOne,
         ]
 
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        result = nil
+        let legacyStatus = SecItemCopyMatching(legacyQuery as CFDictionary, &result)
 
-        guard status == errSecSuccess, let keyData = result as? Data else {
-            throw SecureStorageError.keychainError(status)
+        guard legacyStatus == errSecSuccess, let keyData = result as? Data else {
+            throw SecureStorageError.keychainError(modernStatus)
         }
 
-        return SymmetricKey(data: keyData)
+        let key = SymmetricKey(data: keyData)
+        try storeEncryptionKey(key)  // writes to Data Protection Keychain
+        try? deleteLegacyKeychainKey()  // best-effort cleanup of legacy entry
+        return key
     }
 
     private func storeEncryptionKey(_ key: SymmetricKey) throws {
@@ -187,6 +210,7 @@ public actor SecureStorage {
             kSecAttrAccount as String: keychainAccount,
             kSecValueData as String: keyData,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
+            kSecUseDataProtectionKeychain as String: true,
         ]
 
         let status = SecItemAdd(query as CFDictionary, nil)
@@ -200,10 +224,25 @@ public actor SecureStorage {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: keychainService,
             kSecAttrAccount as String: keychainAccount,
+            kSecUseDataProtectionKeychain as String: true,
         ]
 
         let status = SecItemDelete(query as CFDictionary)
         // Ignore "item not found" error
+        guard status == errSecSuccess || status == errSecItemNotFound else {
+            throw SecureStorageError.keychainError(status)
+        }
+    }
+
+    /// Deletes a key from the legacy Login Keychain (used once during migration).
+    private func deleteLegacyKeychainKey() throws {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: keychainAccount,
+        ]
+
+        let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else {
             throw SecureStorageError.keychainError(status)
         }
