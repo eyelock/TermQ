@@ -142,19 +142,59 @@ public actor SecureStorage {
         }
     }
 
-    // MARK: - Keychain Operations
+    // MARK: - Key Storage
+    //
+    // Two backends depending on build type:
+    //
+    // RELEASE — Data Protection Keychain (kSecUseDataProtectionKeychain: true).
+    //   Items are tied to the app's bundle ID + Team ID and survive rebuilds without
+    //   prompting. Requires a real signing identity (Development or Distribution cert).
+    //
+    // DEBUG (TERMQ_DEBUG_BUILD) — File-based key storage.
+    //   The debug app is ad-hoc signed (codesign -) and has no Team ID, so the Data
+    //   Protection Keychain cannot resolve an access group — it falls back to the legacy
+    //   Login Keychain and its binary-hash ACL, which breaks on every rebuild and triggers
+    //   the "wants to access confidential information" prompt. The file-based backend avoids
+    //   the keychain entirely. The key file is protected with 0o600 permissions and lives
+    //   alongside the encrypted secrets file — the secrets themselves remain AES-GCM encrypted.
 
     private func getOrCreateEncryptionKey() throws -> SymmetricKey {
-        // Try to get existing key
-        if let existingKey = try? getEncryptionKey() {
-            return existingKey
-        }
-
-        // Generate new key
+        if let existingKey = try? getEncryptionKey() { return existingKey }
         let newKey = SymmetricKey(size: .bits256)
         try storeEncryptionKey(newKey)
         return newKey
     }
+
+    #if TERMQ_DEBUG_BUILD
+
+    private var debugKeyURL: URL {
+        getConfigDirectory().appendingPathComponent(".enc-key")
+    }
+
+    private func getEncryptionKey() throws -> SymmetricKey {
+        guard
+            FileManager.default.fileExists(atPath: debugKeyURL.path),
+            let keyData = try? Data(contentsOf: debugKeyURL),
+            keyData.count == 32
+        else {
+            throw SecureStorageError.keychainError(errSecItemNotFound)
+        }
+        return SymmetricKey(data: keyData)
+    }
+
+    private func storeEncryptionKey(_ key: SymmetricKey) throws {
+        let keyData = key.withUnsafeBytes { Data($0) }
+        try ensureConfigDirectoryExists()
+        try keyData.write(to: debugKeyURL, options: .atomic)
+        try? FileManager.default.setAttributes(
+            [.posixPermissions: 0o600], ofItemAtPath: debugKeyURL.path)
+    }
+
+    private func deleteKeychainKey() throws {
+        try? FileManager.default.removeItem(at: debugKeyURL)
+    }
+
+    #else
 
     private func getEncryptionKey() throws -> SymmetricKey {
         // Try modern Data Protection Keychain first (bundle ID + Team ID access control,
@@ -200,8 +240,6 @@ public actor SecureStorage {
 
     private func storeEncryptionKey(_ key: SymmetricKey) throws {
         let keyData = key.withUnsafeBytes { Data($0) }
-
-        // Delete any existing key first
         try? deleteKeychainKey()
 
         let query: [String: Any] = [
@@ -228,7 +266,6 @@ public actor SecureStorage {
         ]
 
         let status = SecItemDelete(query as CFDictionary)
-        // Ignore "item not found" error
         guard status == errSecSuccess || status == errSecItemNotFound else {
             throw SecureStorageError.keychainError(status)
         }
@@ -247,6 +284,8 @@ public actor SecureStorage {
             throw SecureStorageError.keychainError(status)
         }
     }
+
+    #endif
 
     // MARK: - Encryption/Decryption
 
