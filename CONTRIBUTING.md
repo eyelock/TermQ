@@ -267,6 +267,34 @@ These binaries are automatically built and installed to `TermQDebug.app/Contents
 
 **Note:** The regular `termqcli` and `termqmcp` binaries target the production bundle ID by default but can use the debug data directory with the `--debug` flag.
 
+### Debug Build Behavior (`TERMQ_DEBUG_BUILD`)
+
+The Makefile passes `-Xswiftc -DTERMQ_DEBUG_BUILD` when building the debug app bundle. Several behaviours differ from a release build:
+
+| Behaviour | Release build | Debug build (`TERMQ_DEBUG_BUILD`) |
+|-----------|--------------|-----------------------------------|
+| **Signing** | Real Development/Distribution certificate (Team ID required) | Ad-hoc (`codesign --sign -`, no Team ID) |
+| **Keychain** | Data Protection Keychain (`kSecUseDataProtectionKeychain: true`) — survives rebuilds | Not used — see below |
+| **Encryption key storage** | Keychain: `CFBundleIdentifier + Team ID` access group | File: `~/.../TermQ-Debug/.enc-key` (0o600 permissions) |
+| **Bundle ID** | `net.eyelock.termq.app` | `net.eyelock.termq.app.debug` |
+| **Data directory** | `~/Library/Application Support/TermQ` | `~/Library/Application Support/TermQ-Debug` |
+| **About build number** | `CFBundleVersion` = version string (e.g. `0.7.2`) | `CFBundleVersion` = `<SHA>-debug` (e.g. `446ee59-debug`) |
+
+**Why file-based key storage in debug?**
+
+The Data Protection Keychain ties items to the app's Team ID via `kSecAttrAccessControl`. Ad-hoc signed binaries have no Team ID, so the keychain falls back to the legacy Login Keychain and its binary-hash ACL — which invalidates on every rebuild and triggers "TermQ Debug wants to access confidential information" on every launch.
+
+The file-based backend stores a 256-bit AES key in `~/.../TermQ-Debug/.enc-key` (0o600). The secrets file itself remains AES-GCM encrypted; only the key storage location changes. Release builds are unaffected and continue to use the proper keychain backend.
+
+**How to distinguish a debug build at runtime:**
+```bash
+# Check the About panel — the build number shows the git SHA:
+# "0.7.2 (446ee59-debug)"
+
+# Or inspect the plist directly:
+plutil -p TermQDebug.app/Contents/Info.plist | grep CFBundleVersion
+```
+
 ## Releasing
 
 The project uses semantic versioning. The version is derived entirely from git tags —
