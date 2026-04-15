@@ -358,7 +358,8 @@ class TerminalSessionManager: ObservableObject {
     private func runInitCommand(terminal: TermQTerminalView, card: TerminalCard) {
         guard !card.initCommand.isEmpty else { return }
 
-        let hasNextActionToken = card.initCommand.contains("{{NEXT_ACTION}}") || card.initCommand.contains("{{LLM_NEXT_ACTION}}")
+        let hasNextActionToken =
+            card.initCommand.contains("{{NEXT_ACTION}}") || card.initCommand.contains("{{LLM_NEXT_ACTION}}")
         let hadNextAction = !card.llmNextAction.isEmpty
 
         // Check if queued actions are enabled (global AND per-terminal)

@@ -32,6 +32,8 @@ struct TerminalActions {
     let showCommandPalette: () -> Void
     /// Show the bin (deleted terminals)
     let showBin: () -> Void
+    /// Toggle the worktree sidebar open/closed
+    let toggleSidebar: () -> Void
 }
 
 struct TerminalActionsKey: FocusedValueKey {

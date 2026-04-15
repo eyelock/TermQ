@@ -478,20 +478,20 @@
 "security.osc.clipboard.disabled" = "OSC 52クリップボードアクセスが無効";
 
 "settings.auto.check.updates" = "アップデートを自動的に確認";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "有効にすると、TermQ は定期的に新しいバージョンを確認します";
+"settings.check.for.updates" = "アップデートを確認...";
+"settings.include.beta.releases" = "ベータリリースを含める";
+"settings.include.beta.releases.help" = "新機能を含むプレリリース版を受け取るよう設定します";
+"settings.section.updates" = "アップデート";
 "editor.section.add.tag" = "タグを追加";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "キューアクションを許可";
+"editor.allow.agent.prompts.help" = "{{PROMPT}} および {{NEXT_ACTION}} をこのターミナルの初期化コマンドに挿入することを許可します";
+"editor.allow.agent.prompts.disabled.globally" = "キューアクションはグローバルに無効 - 設定 > データとセキュリティで有効にする";
 "editor.allow.osc.clipboard.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "確認はグローバルに無効 - 設定 > データとセキュリティで変更する";
 
 "settings.debug.update.warning.title" = "デバッグビルドの警告";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.message" = "アップデートを続行すると、TermQ の本番バージョンがインストールされます。";
 
 "editor.no.tags" = "タグが定義されていません";
 
@@ -500,3 +500,84 @@
 "settings.environment.section.add.variable" = "環境変数を追加";
 
 "settings.mcp.install" = "MCPサーバーをインストール";
+
+// MARK: - Sidebar
+"sidebar.title" = "リポジトリ";
+"sidebar.add.button.help" = "リポジトリを追加";
+"sidebar.empty.message" = "リポジトリが追加されていません。\n+ をクリックして Git リポジトリを追加してください。";
+"sidebar.worktrees.placeholder" = "ワークツリーがここに表示されます";
+"sidebar.remove.repository" = "リポジトリを削除";
+"sidebar.toggle.help" = "リポジトリサイドバーの切り替え (⌘⇧L)";
+"sidebar.add.title" = "リポジトリを追加";
+"sidebar.add.path.label" = "パス";
+"sidebar.add.name.label" = "表示名";
+"sidebar.add.name.placeholder" = "Git から自動検出";
+"sidebar.add.cancel" = "キャンセル";
+"sidebar.add.add" = "追加";
+"sidebar.add.advanced" = "詳細";
+"sidebar.edit.title" = "リポジトリを編集";
+"sidebar.edit.repository" = "リポジトリを編集";
+"sidebar.worktree.base.path.label" = "worktreeのベースパス";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "「%@」 は Git リポジトリではありません。";
+"sidebar.worktrees.empty" = "ワークツリーが見つかりません。";
+"sidebar.worktree.detached.head" = "デタッチド HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "ワークツリーを更新";
+"sidebar.worktree.new" = "新しいワークツリー";
+"sidebar.worktree.new.terminal" = "クイックターミナル";
+"sidebar.worktree.create.terminal" = "ターミナルを作成…";
+"sidebar.worktree.terminals.badge.help" = "クリックしてターミナルを開くクイックリンクにアクセス";
+"sidebar.worktree.open.in.terminal" = "Terminalで表示";
+"sidebar.worktree.reveal.in.finder" = "Finderで表示";
+"sidebar.worktree.copy.pathname" = "パスとしてコピー";
+"sidebar.worktree.open.remote.branch" = "リモートでブランチを開く";
+"sidebar.worktree.open.remote.commit" = "リモートでコミットを開く";
+"sidebar.worktree.lock" = "worktreeをロック";
+"sidebar.worktree.unlock" = "worktreeのロックを解除";
+"sidebar.remove.worktree" = "ワークツリーを削除";
+"sidebar.remove.worktree.title" = "ワークツリーを削除しますか？";
+"sidebar.remove.worktree.confirm" = "削除";
+"sidebar.remove.main.worktree.error" = "メインのワークツリーは削除できません。";
+"sidebar.remove.worktree.message %@" = "「%@」 のワークツリーを完全に削除します。ブランチは削除されません。";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree を破壊...";
+"sidebar.worktree.delete.title" = "Worktree を破壊";
+"sidebar.worktree.delete.confirm" = "破壊";
+"sidebar.worktree.delete.message %@" = "“%@” の Worktree とコミットされていない変更はすべて完全に破壊されます。この操作は取り消せません。";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Worktree を整理…";
+"sidebar.prune.worktrees.title" = "Worktree を整理";
+"sidebar.prune.worktrees.confirm" = "整理";
+"sidebar.prune.worktrees.nothing.title" = "整理するものがありません";
+"sidebar.prune.worktrees.nothing.message" = "すべてのワークツリーは正常に記録されています。古いレコードは見つかりませんでした。";
+"sidebar.prune.worktrees.explanation" = "これらの管理レコードは存在しないディレクトリを参照しています。整理するとそれらが削除されます — ブランチは影響を受けません。";
+"sidebar.new.worktree.title" = "新しいワークツリー";
+"sidebar.new.worktree.branch.label" = "新しいブランチ名";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "続行するにはブランチ名を入力してください。";
+"sidebar.new.worktree.base.label" = "ベースブランチ";
+"sidebar.new.worktree.base.placeholder" = "ブランチを絞り込む...";
+"sidebar.new.worktree.path.label" = "ワークツリーパス";
+"sidebar.new.worktree.path.required" = "続行するには Worktree のパスを入力してください。";
+"sidebar.new.worktree.create" = "作成";
+"sidebar.new.worktree.loading.branches" = "ブランチを読み込み中...";
+"common.close.window" = "ウィンドウを閉じる";
+"menu.toggle.sidebar" = "サイドバーの切り替え";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

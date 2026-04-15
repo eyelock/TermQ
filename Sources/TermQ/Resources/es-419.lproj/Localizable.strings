@@ -15,6 +15,7 @@
 "common.delete" = "Eliminar";
 "common.edit" = "Editar";
 "common.close" = "Cerrar";
+"common.close.window" = "Cerrar ventana";
 "common.add" = "Agregar";
 "common.reinstall" = "Reinstalar";
 "common.uninstall" = "Desinstalar";
@@ -478,11 +479,11 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "security.osc.clipboard.disabled" = "Acceso al portapapeles OSC 52 desactivado";
 
 "settings.auto.check.updates" = "Buscar actualizaciones automáticamente";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Cuando está activado, TermQ verificará periódicamente si hay nuevas versiones";
+"settings.check.for.updates" = "Buscar actualizaciones...";
+"settings.include.beta.releases" = "Incluir versiones beta";
+"settings.include.beta.releases.help" = "Suscríbete para recibir versiones preliminares con nuevas funcionalidades";
+"settings.section.updates" = "Actualizaciones";
 "editor.section.add.tag" = "Agregar etiqueta";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "editor.allow.osc.clipboard.disabled.globally" = "Deshabilitado globalmente - habilitar en Configuración > Datos y seguridad";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Advertencia de versión de depuración";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Advertencia de compilación de depuración";
+"settings.debug.update.warning.message" = "Continuar con las actualizaciones instalará la versión de producción de TermQ.";
 
 "editor.no.tags" = "Sin etiquetas definidas";
 
@@ -500,3 +501,83 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "settings.environment.section.add.variable" = "Agregar variable de entorno";
 
 "settings.mcp.install" = "Instalar servidor MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositorios";
+"sidebar.add.button.help" = "Agregar repositorio";
+"sidebar.empty.message" = "No se han agregado repositorios.\nHaz clic en + para agregar un repositorio git.";
+"sidebar.worktrees.placeholder" = "Los worktrees aparecerán aquí";
+"sidebar.remove.repository" = "Eliminar repositorio";
+"sidebar.toggle.help" = "Mostrar/ocultar la barra lateral de repositorios (⌘⇧L)";
+"sidebar.add.title" = "Agregar repositorio";
+"sidebar.add.path.label" = "Ruta";
+"sidebar.add.name.label" = "Nombre para mostrar";
+"sidebar.add.name.placeholder" = "Detección automática desde git";
+"sidebar.add.cancel" = "Cancelar";
+"sidebar.add.add" = "Agregar";
+"sidebar.add.advanced" = "Avanzado";
+"sidebar.edit.title" = "Editar repositorio";
+"sidebar.edit.repository" = "Editar repositorio";
+"sidebar.worktree.base.path.label" = "Ruta base del worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" no es un repositorio git.";
+"menu.toggle.sidebar" = "Mostrar/ocultar barra lateral";
+"sidebar.worktrees.empty" = "No se encontraron worktrees.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Actualizar worktrees";
+"sidebar.worktree.new" = "Nuevo worktree";
+"sidebar.worktree.new.terminal" = "Terminal Rápido";
+"sidebar.worktree.create.terminal" = "Crear Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Haz clic para acceder rápidamente a los terminales";
+"sidebar.worktree.open.in.terminal" = "Mostrar en Terminal";
+"sidebar.worktree.reveal.in.finder" = "Mostrar en el Finder";
+"sidebar.worktree.copy.pathname" = "Copiar como ruta";
+"sidebar.worktree.open.remote.branch" = "Abrir rama en Remote";
+"sidebar.worktree.open.remote.commit" = "Abrir commit en Remote";
+"sidebar.worktree.lock" = "Bloquear worktree";
+"sidebar.worktree.unlock" = "Desbloquear worktree";
+"sidebar.remove.worktree" = "Eliminar Worktree";
+"sidebar.remove.worktree.title" = "¿Eliminar Worktree?";
+"sidebar.remove.worktree.confirm" = "Eliminar";
+"sidebar.remove.main.worktree.error" = "El worktree principal no se puede eliminar.";
+"sidebar.remove.worktree.message %@" = "Esto eliminará permanentemente el worktree en "%@". La rama no se eliminará.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Destruir Worktree...";
+"sidebar.worktree.delete.title" = "Destruir Worktree";
+"sidebar.worktree.delete.confirm" = "Destruir";
+"sidebar.worktree.delete.message %@" = "El worktree en "%@" y cualquier cambio sin confirmar serán destruidos permanentemente. Esta acción no se puede deshacer.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Limpiar Worktrees…";
+"sidebar.prune.worktrees.title" = "Limpiar Worktrees";
+"sidebar.prune.worktrees.confirm" = "Limpiar";
+"sidebar.prune.worktrees.nothing.title" = "Nada que limpiar";
+"sidebar.prune.worktrees.nothing.message" = "Todos los worktrees están contabilizados. No se encontraron registros obsoletos.";
+"sidebar.prune.worktrees.explanation" = "Estos registros administrativos apuntan a directorios que ya no existen. Limpiarlos los elimina — tus ramas no se ven afectadas.";
+"sidebar.new.worktree.title" = "Nuevo worktree";
+"sidebar.new.worktree.branch.label" = "Nombre de la nueva rama";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Introduce un nombre de rama para continuar.";
+"sidebar.new.worktree.base.label" = "Rama base";
+"sidebar.new.worktree.base.placeholder" = "Filtrar ramas...";
+"sidebar.new.worktree.path.label" = "Ruta del worktree";
+"sidebar.new.worktree.path.required" = "Introduce una ruta de worktree para continuar.";
+"sidebar.new.worktree.create" = "Crear";
+"sidebar.new.worktree.loading.branches" = "Cargando ramas...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

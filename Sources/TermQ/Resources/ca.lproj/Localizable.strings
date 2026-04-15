@@ -15,6 +15,7 @@
 "common.delete" = "Eliminar";
 "common.edit" = "Editar";
 "common.close" = "Tancar";
+"common.close.window" = "Tancar finestra";
 "common.add" = "Afegir";
 "common.reinstall" = "Reinstal·lar";
 "common.uninstall" = "Desinstal·lar";
@@ -477,12 +478,12 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "security.osc.clipboard.enabled" = "Accés al porta-retalls OSC 52 activat";
 "security.osc.clipboard.disabled" = "Accés al porta-retalls OSC 52 desactivat";
 
-"settings.auto.check.updates" = "Comprova actualitzacions automàticament";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "Comprovació automàtica d'actualitzacions";
+"settings.auto.check.updates.help" = "Quan està activat, TermQ comprova periòdicament si hi ha noves versions";
+"settings.check.for.updates" = "Comprova si hi ha actualitzacions...";
+"settings.include.beta.releases" = "Inclou versions beta";
+"settings.include.beta.releases.help" = "Subscriu-te per rebre versions de preproducció amb noves funcionalitats";
+"settings.section.updates" = "Actualitzacions";
 "editor.section.add.tag" = "Afegir etiqueta";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "editor.allow.osc.clipboard.disabled.globally" = "Desactivat globalment - activeu a Configuració > Dades i seguretat";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Avís de versió de depuració";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Avís de compilació de depuració";
+"settings.debug.update.warning.message" = "Continuar amb les actualitzacions instal·larà la versió de producció de TermQ.";
 
 "editor.no.tags" = "Cap etiqueta definida";
 
@@ -500,3 +501,83 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "settings.environment.section.add.variable" = "Afegeix una variable d'entorn";
 
 "settings.mcp.install" = "Instal·la el servidor MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositoris";
+"sidebar.add.button.help" = "Afegir repositori";
+"sidebar.empty.message" = "No s'han afegit repositoris.\nFeu clic a + per afegir un repositori git.";
+"sidebar.worktrees.placeholder" = "Els worktrees apareixeran aquí";
+"sidebar.remove.repository" = "Eliminar repositori";
+"sidebar.toggle.help" = "Mostrar/ocultar la barra lateral de repositoris (⌘⇧L)";
+"sidebar.add.title" = "Afegir repositori";
+"sidebar.add.path.label" = "Ruta";
+"sidebar.add.name.label" = "Nom de visualització";
+"sidebar.add.name.placeholder" = "Detecció automàtica des de git";
+"sidebar.add.cancel" = "Cancel·lar";
+"sidebar.add.add" = "Afegir";
+"sidebar.add.advanced" = "Avançat";
+"sidebar.edit.title" = "Edita el repositori";
+"sidebar.edit.repository" = "Edita el repositori";
+"sidebar.worktree.base.path.label" = "Camí base del worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" no és un repositori git.";
+"menu.toggle.sidebar" = "Mostrar/ocultar barra lateral";
+"sidebar.worktrees.empty" = "No s'han trobat worktrees.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Actualitzar worktrees";
+"sidebar.worktree.new" = "Nou worktree";
+"sidebar.worktree.new.terminal" = "Terminal Ràpid";
+"sidebar.worktree.create.terminal" = "Crea Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Feu clic per als enllaços ràpids per obrir terminals";
+"sidebar.worktree.open.in.terminal" = "Mostra al Terminal";
+"sidebar.worktree.reveal.in.finder" = "Mostrar al Finder";
+"sidebar.worktree.copy.pathname" = "Copia com a camí";
+"sidebar.worktree.open.remote.branch" = "Obre la branca a Remote";
+"sidebar.worktree.open.remote.commit" = "Obre el commit a Remote";
+"sidebar.worktree.lock" = "Bloquejar worktree";
+"sidebar.worktree.unlock" = "Desbloquejar worktree";
+"sidebar.remove.worktree" = "Eliminar worktree";
+"sidebar.remove.worktree.title" = "Eliminar worktree?";
+"sidebar.remove.worktree.confirm" = "Eliminar";
+"sidebar.remove.main.worktree.error" = "El worktree principal no es pot eliminar.";
+"sidebar.remove.worktree.message %@" = "Això eliminarà permanentment el worktree a "%@". La branca no s'eliminarà.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Destruir el Worktree...";
+"sidebar.worktree.delete.title" = "Destruir el Worktree";
+"sidebar.worktree.delete.confirm" = "Destruir";
+"sidebar.worktree.delete.message %@" = "El worktree a "%@" i qualsevol canvi no desat serà destruït permanentment. Aquesta acció no es pot desfer.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Neteja Worktrees…";
+"sidebar.prune.worktrees.title" = "Neteja Worktrees";
+"sidebar.prune.worktrees.confirm" = "Neteja";
+"sidebar.prune.worktrees.nothing.title" = "Res a netejar";
+"sidebar.prune.worktrees.nothing.message" = "Tots els worktrees estan comptabilitzats. No s'han trobat registres obsolets.";
+"sidebar.prune.worktrees.explanation" = "Aquests registres administratius apunten a directoris que ja no existeixen. La neteja els elimina — les teves branques no es veuen afectades.";
+"sidebar.new.worktree.title" = "Nou worktree";
+"sidebar.new.worktree.branch.label" = "Nom de la nova branca";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Introduïu un nom de branca per continuar.";
+"sidebar.new.worktree.base.label" = "Branca base";
+"sidebar.new.worktree.base.placeholder" = "Filtra les branques...";
+"sidebar.new.worktree.path.label" = "Ruta del worktree";
+"sidebar.new.worktree.path.required" = "Introduïu un camí de worktree per continuar.";
+"sidebar.new.worktree.create" = "Crear";
+"sidebar.new.worktree.loading.branches" = "Carregant branques...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

@@ -43,6 +43,7 @@ enum BackupManager {
 
     static let backupFileName = "board-backup.json"
     static let secretsBackupFileName = "secrets-backup.enc"
+    static let reposBackupFileName = "repos-backup.json"
 
     // MARK: - UserDefaults Keys
 
@@ -127,18 +128,35 @@ enum BackupManager {
         URL(fileURLWithPath: secretsBackupFilePath)
     }
 
+    /// Full path to the repos backup file
+    static var reposBackupFilePath: String {
+        "\(expandedBackupPath)/\(reposBackupFileName)"
+    }
+
+    /// URL to the repos backup file
+    static var reposBackupFileURL: URL {
+        URL(fileURLWithPath: reposBackupFilePath)
+    }
+
+    /// App Support directory for TermQ (DEBUG-aware)
+    private static var termqAppSupportDir: URL {
+        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        else { fatalError("Unable to access Application Support directory") }
+        #if DEBUG
+            return appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
+        #else
+            return appSupport.appendingPathComponent("TermQ", isDirectory: true)
+        #endif
+    }
+
     /// Path to the primary board.json file
     static var primaryBoardPath: URL {
-        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-        else {
-            fatalError("Unable to access Application Support directory")
-        }
-        #if DEBUG
-            let termqDir = appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
-        #else
-            let termqDir = appSupport.appendingPathComponent("TermQ", isDirectory: true)
-        #endif
-        return termqDir.appendingPathComponent("board.json")
+        termqAppSupportDir.appendingPathComponent("board.json")
+    }
+
+    /// Path to the primary repos.json file
+    static var primaryReposPath: URL {
+        termqAppSupportDir.appendingPathComponent("repos.json")
     }
 
     // MARK: - Backup Operations
@@ -190,6 +208,15 @@ enum BackupManager {
 
             // Copy the board file
             try fm.copyItem(atPath: sourcePath, toPath: backupFilePath)
+
+            // Backup repos.json if it exists (best-effort, non-fatal)
+            let reposSrc = primaryReposPath.path
+            if fm.fileExists(atPath: reposSrc) {
+                if fm.fileExists(atPath: reposBackupFilePath) {
+                    try? fm.removeItem(atPath: reposBackupFilePath)
+                }
+                try? fm.copyItem(atPath: reposSrc, toPath: reposBackupFilePath)
+            }
 
             // Backup secrets file if it exists
             backupSecrets()
@@ -270,6 +297,15 @@ enum BackupManager {
 
             // Copy backup to primary location
             try fm.copyItem(atPath: backupFilePath, toPath: primaryBoardPath.path)
+
+            // Restore repos.json if backup exists (best-effort, non-fatal)
+            if fm.fileExists(atPath: reposBackupFilePath) {
+                let reposDest = primaryReposPath.path
+                let reposDir = primaryReposPath.deletingLastPathComponent()
+                try? fm.createDirectory(at: reposDir, withIntermediateDirectories: true)
+                if fm.fileExists(atPath: reposDest) { try? fm.removeItem(atPath: reposDest) }
+                try? fm.copyItem(atPath: reposBackupFilePath, toPath: reposDest)
+            }
 
             // Restore secrets if backup exists
             restoreSecrets()

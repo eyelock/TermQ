@@ -15,6 +15,7 @@
 "common.delete" = "Supprimer";
 "common.edit" = "Modifier";
 "common.close" = "Fermer";
+"common.close.window" = "Fermer la fenêtre";
 "common.add" = "Ajouter";
 "common.reinstall" = "Réinstaller";
 "common.uninstall" = "Désinstaller";
@@ -40,11 +41,11 @@
 "card.unpin" = "Désépingler le terminal";
 "card.running" = "Terminal en cours d'exécution";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Connecté";
 "card.wired.help" = "Connecté à l'agent MCP";
@@ -478,11 +479,11 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "security.osc.clipboard.disabled" = "Accès au presse-papiers OSC 52 désactivé";
 
 "settings.auto.check.updates" = "Vérifier automatiquement les mises à jour";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Lorsqu'activé, TermQ vérifie périodiquement les nouvelles versions";
+"settings.check.for.updates" = "Rechercher des mises à jour...";
+"settings.include.beta.releases" = "Inclure les versions bêta";
+"settings.include.beta.releases.help" = "S'abonner pour recevoir les versions préliminaires avec de nouvelles fonctionnalités";
+"settings.section.updates" = "Mises à jour";
 "editor.section.add.tag" = "Ajouter une étiquette";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +491,8 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "editor.allow.osc.clipboard.disabled.globally" = "Désactivé globalement - activer dans Réglages > Données et sécurité";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Avertissement de version de débogage";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Avertissement de build de débogage";
+"settings.debug.update.warning.message" = "Procéder aux mises à jour installera la version de production de TermQ.";
 
 "editor.no.tags" = "Aucune étiquette définie";
 
@@ -500,3 +501,73 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "settings.environment.section.add.variable" = "Ajouter une variable d'environnement";
 
 "settings.mcp.install" = "Installer le serveur MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Dépôts";
+"sidebar.add.button.help" = "Ajouter un dépôt";
+"sidebar.empty.message" = "Aucun dépôt ajouté.\nCliquez sur + pour ajouter un dépôt git.";
+"sidebar.worktrees.placeholder" = "Les worktrees apparaîtront ici";
+"sidebar.remove.repository" = "Supprimer le dépôt";
+"sidebar.toggle.help" = "Afficher/masquer la barre latérale Dépôts (⌘⇧L)";
+"sidebar.add.title" = "Ajouter un dépôt";
+"sidebar.add.path.label" = "Chemin";
+"sidebar.add.name.label" = "Nom d'affichage";
+"sidebar.add.name.placeholder" = "Détecté automatiquement depuis git";
+"sidebar.add.cancel" = "Annuler";
+"sidebar.add.add" = "Ajouter";
+"sidebar.add.advanced" = "Avancé";
+"sidebar.edit.title" = "Modifier le dépôt";
+"sidebar.edit.repository" = "Modifier le dépôt";
+"sidebar.worktree.base.path.label" = "Chemin de base du worktree";
+"sidebar.worktree.base.path.help" = "Les nouveaux worktrees sont créés ici. Par défaut, il s'agit du dossier parent du dépôt.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" n'est pas un dépôt git.";
+"menu.toggle.sidebar" = "Afficher/masquer la barre latérale";
+"sidebar.worktrees.empty" = "Aucun worktree trouvé.";
+"sidebar.worktree.detached.head" = "HEAD détachée";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Actualiser les worktrees";
+"sidebar.worktree.new" = "Nouveau worktree";
+"sidebar.worktree.new.terminal" = "Nouveau Terminal";
+"sidebar.worktree.terminals.badge.help" = "Cliquez pour des liens rapides pour ouvrir des terminaux";
+"sidebar.worktree.open.in.terminal" = "Ouvrir dans Terminal";
+"sidebar.worktree.reveal.in.finder" = "Afficher dans le Finder";
+"sidebar.worktree.open.remote.branch" = "Ouvrir la branche sur Remote";
+"sidebar.worktree.open.remote.commit" = "Ouvrir le commit sur Remote";
+"sidebar.worktree.lock" = "Verrouiller le worktree";
+"sidebar.worktree.unlock" = "Déverrouiller le worktree";
+"sidebar.remove.worktree" = "Supprimer le worktree";
+"sidebar.remove.worktree.title" = "Supprimer le worktree ?";
+"sidebar.remove.worktree.confirm" = "Supprimer";
+"sidebar.remove.main.worktree.error" = "Le worktree principal ne peut pas être supprimé.";
+"sidebar.remove.worktree.message %@" = "Cela supprimera définitivement le worktree situé à \"%@\". La branche ne sera pas supprimée.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Supprimer le Worktree...";
+"sidebar.worktree.delete.title" = "Supprimer le Worktree";
+"sidebar.worktree.delete.confirm" = "Supprimer";
+"sidebar.worktree.delete.message %@" = "Le worktree situé à \"%@\" et toutes les modifications non validées seront définitivement supprimés. Cette action est irréversible.";
+"sidebar.new.worktree.title" = "Nouveau worktree";
+"sidebar.new.worktree.branch.label" = "Nom de la nouvelle branche";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Entrez un nom de branche pour continuer.";
+"sidebar.new.worktree.base.label" = "Branche de base";
+"sidebar.new.worktree.base.placeholder" = "Filtrer les branches...";
+"sidebar.new.worktree.path.label" = "Chemin du worktree";
+"sidebar.new.worktree.path.required" = "Entrez un chemin de worktree pour continuer.";
+"sidebar.new.worktree.create" = "Créer";
+"sidebar.new.worktree.loading.branches" = "Chargement des branches...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

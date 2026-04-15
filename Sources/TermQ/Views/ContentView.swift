@@ -5,7 +5,9 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @StateObject private var viewModel = BoardViewModel.shared
+    @StateObject private var sidebarViewModel = WorktreeSidebarViewModel.shared
     @EnvironmentObject var urlHandler: URLHandler
+    @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
     @State private var isZoomed = false
     @State private var isSearching = false
     @State private var showCommandPalette = false
@@ -13,349 +15,367 @@ struct ContentView: View {
     @State private var showColumnPicker = false
 
     var body: some View {
-        ZStack {
-            if let selectedCard = viewModel.selectedCard {
-                // Expanded terminal view
-                ExpandedTerminalView(
-                    card: selectedCard,
-                    onSelectTab: { card in
-                        viewModel.selectCard(card)
-                    },
-                    onEditTab: { card in
-                        viewModel.isEditingCard = card
-                    },
-                    onCloseTab: { card in
-                        viewModel.closeTab(card)
-                    },
-                    onDeleteTab: { card in
-                        viewModel.deleteTabCard(card)
-                    },
-                    onDuplicateTab: { card in
-                        viewModel.duplicateTerminal(card)
-                    },
-                    onCloseSession: { card in
-                        viewModel.closeSession(for: card)
-                    },
-                    onKillSession: { card in
-                        viewModel.killSession(for: card)
-                    },
-                    onRestartSession: { card in
-                        viewModel.restartSession(for: card)
-                    },
-                    onMoveTab: { cardId, toIndex in
-                        viewModel.moveTab(cardId, toIndex: toIndex)
-                    },
-                    onNewTab: {
-                        viewModel.quickNewTerminal()
-                    },
-                    onBell: { cardId in
-                        viewModel.markNeedsAttention(cardId)
-                    },
-                    tabCards: viewModel.tabCards,
-                    columns: viewModel.board.columns,
-                    needsAttention: viewModel.needsAttention,
-                    processingCards: viewModel.processingCards,
-                    activeSessionCards: viewModel.activeSessionCards,
-                    isZoomed: $isZoomed,
-                    isSearching: $isSearching
-                )
-            } else {
-                // Kanban board view
-                KanbanBoardView(viewModel: viewModel)
+        HSplitView {
+            if !isSidebarCollapsed {
+                WorktreeSidebarView(viewModel: sidebarViewModel)
+                    .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
 
-            // Command palette overlay
-            if showCommandPalette {
-                Color.black.opacity(0.3)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        showCommandPalette = false
-                    }
-
-                CommandPaletteView(
-                    isPresented: $showCommandPalette,
-                    terminals: viewModel.allTerminals,
-                    columns: viewModel.board.columns,
-                    currentTerminalId: viewModel.selectedCard?.id,
-                    onSelectTerminal: { terminal in
-                        viewModel.selectCard(terminal)
-                    },
-                    onAction: { action in
-                        handlePaletteAction(action)
-                    }
-                )
-            }
-        }
-        .onChange(of: urlHandler.pendingTerminal?.id) { _, _ in
-            handlePendingTerminal()
-        }
-        .sheet(item: $viewModel.isEditingCard) { card in
-            CardEditorView(
-                card: card,
-                columns: viewModel.board.columns,
-                isNewCard: viewModel.isEditingNewCard,
-                onSave: { switchToTerminal in
-                    viewModel.updateCard(card)
-                    if switchToTerminal {
-                        viewModel.selectCard(card)
-                    }
-                    viewModel.isEditingNewCard = false
-                    viewModel.isEditingCard = nil
-                },
-                onCancel: {
-                    // If cancelling a new card, delete it
-                    if viewModel.isEditingNewCard {
-                        viewModel.deleteCard(card)
-                    }
-                    viewModel.isEditingNewCard = false
-                    viewModel.isEditingCard = nil
-                }
-            )
-        }
-        .sheet(item: $viewModel.isEditingColumn) { column in
-            ColumnEditorView(
-                column: column,
-                onSave: {
-                    if viewModel.isEditingNewColumn {
-                        // New column: add the draft to the board
-                        viewModel.commitDraftColumn()
-                    } else {
-                        // Existing column: just update
-                        viewModel.updateColumn(column)
-                    }
-                    viewModel.isEditingNewColumn = false
-                    viewModel.isEditingColumn = nil
-                },
-                onCancel: {
-                    if viewModel.isEditingNewColumn {
-                        // New column: discard the draft (it was never added)
-                        viewModel.discardDraftColumn()
-                    }
-                    viewModel.isEditingNewColumn = false
-                    viewModel.isEditingColumn = nil
-                }
-            )
-        }
-        .sheet(isPresented: $showBin) {
-            BinView(viewModel: viewModel)
-        }
-        .sheet(isPresented: $viewModel.showSessionRecovery) {
-            SessionRecoveryView(viewModel: viewModel)
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigation) {
-                if viewModel.selectedCard != nil {
-                    Button {
-                        viewModel.deselectCard()
-                    } label: {
-                        Image(systemName: "rectangle.grid.2x2")
-                    }
-                    .help(Strings.Toolbar.backHelp)
-                }
-            }
-
-            ToolbarItem(placement: .principal) {
+            ZStack {
                 if let selectedCard = viewModel.selectedCard {
-                    HStack(spacing: 8) {
-                        // MCP status indicator
-                        mcpStatusIndicator
-
-                        Text(selectedCard.title)
-                            .font(.headline)
-
-                        // TMUX system badge (if using tmux backend)
-                        if selectedCard.backend.usesTmux {
-                            Text(Strings.Card.tmux)
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(Color.purple.opacity(0.3))
-                                .foregroundColor(.purple)
-                                .clipShape(Capsule())
-                                .help(Strings.Card.tmuxHelp)
-                        }
-
-                        // Display user badges
-                        ForEach(selectedCard.badges, id: \.self) { badge in
-                            Text(badge)
-                                .font(.caption)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(Color.secondary.opacity(0.2))
-                                .clipShape(Capsule())
-                        }
-                    }
-                    .padding(.horizontal, 8)
+                    // Expanded terminal view
+                    ExpandedTerminalView(
+                        card: selectedCard,
+                        onSelectTab: { card in
+                            viewModel.selectCard(card)
+                        },
+                        onEditTab: { card in
+                            viewModel.isEditingCard = card
+                        },
+                        onCloseTab: { card in
+                            viewModel.closeTab(card)
+                        },
+                        onDeleteTab: { card in
+                            viewModel.deleteTabCard(card)
+                        },
+                        onDuplicateTab: { card in
+                            viewModel.duplicateTerminal(card)
+                        },
+                        onCloseSession: { card in
+                            viewModel.closeSession(for: card)
+                        },
+                        onKillSession: { card in
+                            viewModel.killSession(for: card)
+                        },
+                        onRestartSession: { card in
+                            viewModel.restartSession(for: card)
+                        },
+                        onMoveTab: { cardId, toIndex in
+                            viewModel.moveTab(cardId, toIndex: toIndex)
+                        },
+                        onNewTab: {
+                            viewModel.quickNewTerminal()
+                        },
+                        onBell: { cardId in
+                            viewModel.markNeedsAttention(cardId)
+                        },
+                        tabCards: viewModel.tabCards,
+                        columns: viewModel.board.columns,
+                        needsAttention: viewModel.needsAttention,
+                        processingCards: viewModel.processingCards,
+                        activeSessionCards: viewModel.activeSessionCards,
+                        isZoomed: $isZoomed,
+                        isSearching: $isSearching
+                    )
                 } else {
-                    // Board view - show MCP status in title area
-                    HStack(spacing: 8) {
-                        mcpStatusIndicator
-                        Text(Strings.appName)
-                            .font(.headline)
-                    }
+                    // Kanban board view
+                    KanbanBoardView(viewModel: viewModel)
+                }
+
+                // Command palette overlay
+                if showCommandPalette {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            showCommandPalette = false
+                        }
+
+                    CommandPaletteView(
+                        isPresented: $showCommandPalette,
+                        terminals: viewModel.allTerminals,
+                        columns: viewModel.board.columns,
+                        currentTerminalId: viewModel.selectedCard?.id,
+                        onSelectTerminal: { terminal in
+                            viewModel.selectCard(terminal)
+                        },
+                        onAction: { action in
+                            handlePaletteAction(action)
+                        }
+                    )
                 }
             }
-
-            // Focused view controls
-            ToolbarItemGroup(placement: .primaryAction) {
-                if let selectedCard = viewModel.selectedCard {
-                    // Move to column button with popover
-                    if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId }) {
-                        let columnColor = Color(hex: currentColumn.color) ?? .gray
-                        let textColor = columnColor.isLight ? Color.black : Color.white
-                        Button {
-                            showColumnPicker.toggle()
-                        } label: {
-                            HStack(spacing: 4) {
-                                Text(currentColumn.name)
-                                Image(systemName: "chevron.down")
-                                    .font(.system(size: 8, weight: .bold))
-                            }
-                            .font(.caption)
-                            .fontWeight(.medium)
-                            .foregroundColor(textColor)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(columnColor, in: Capsule())
+            .onChange(of: urlHandler.pendingTerminal?.id) { _, _ in
+                handlePendingTerminal()
+            }
+            .sheet(item: $viewModel.isEditingCard) { card in
+                CardEditorView(
+                    card: card,
+                    columns: viewModel.board.columns,
+                    isNewCard: viewModel.isEditingNewCard,
+                    onSave: { switchToTerminal in
+                        viewModel.updateCard(card)
+                        if switchToTerminal {
+                            viewModel.selectCard(card)
                         }
-                        .buttonStyle(.plain)
-                        .padding(.leading, 8)
-                        .help(Strings.Toolbar.moveTo)
-                        .popover(isPresented: $showColumnPicker, arrowEdge: .bottom) {
-                            VStack(alignment: .leading, spacing: 0) {
-                                ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
-                                    Button {
-                                        viewModel.moveCard(selectedCard, to: column)
-                                        showColumnPicker = false
-                                    } label: {
-                                        HStack {
-                                            if column.id == selectedCard.columnId {
-                                                Image(systemName: "checkmark")
-                                                    .frame(width: 16)
-                                            } else {
-                                                Color.clear.frame(width: 16)
+                        viewModel.isEditingNewCard = false
+                        viewModel.isEditingCard = nil
+                    },
+                    onCancel: {
+                        // If cancelling a new card, delete it
+                        if viewModel.isEditingNewCard {
+                            viewModel.deleteCard(card)
+                        }
+                        viewModel.isEditingNewCard = false
+                        viewModel.isEditingCard = nil
+                    }
+                )
+            }
+            .sheet(item: $viewModel.isEditingColumn) { column in
+                ColumnEditorView(
+                    column: column,
+                    onSave: {
+                        if viewModel.isEditingNewColumn {
+                            // New column: add the draft to the board
+                            viewModel.commitDraftColumn()
+                        } else {
+                            // Existing column: just update
+                            viewModel.updateColumn(column)
+                        }
+                        viewModel.isEditingNewColumn = false
+                        viewModel.isEditingColumn = nil
+                    },
+                    onCancel: {
+                        if viewModel.isEditingNewColumn {
+                            // New column: discard the draft (it was never added)
+                            viewModel.discardDraftColumn()
+                        }
+                        viewModel.isEditingNewColumn = false
+                        viewModel.isEditingColumn = nil
+                    }
+                )
+            }
+            .sheet(isPresented: $showBin) {
+                BinView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $viewModel.showSessionRecovery) {
+                SessionRecoveryView(viewModel: viewModel)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    Button {
+                        isSidebarCollapsed.toggle()
+                    } label: {
+                        Image(systemName: "sidebar.left")
+                    }
+                    .help(Strings.Sidebar.toggleHelp)
+                }
+
+                ToolbarItem(placement: .navigation) {
+                    if viewModel.selectedCard != nil {
+                        Button {
+                            viewModel.deselectCard()
+                        } label: {
+                            Image(systemName: "rectangle.grid.2x2")
+                        }
+                        .help(Strings.Toolbar.backHelp)
+                    }
+                }
+
+                ToolbarItem(placement: .principal) {
+                    if let selectedCard = viewModel.selectedCard {
+                        HStack(spacing: 8) {
+                            // MCP status indicator
+                            mcpStatusIndicator
+
+                            Text(selectedCard.title)
+                                .font(.headline)
+
+                            // TMUX system badge (if using tmux backend)
+                            if selectedCard.backend.usesTmux {
+                                Text(Strings.Card.tmux)
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.purple.opacity(0.3))
+                                    .foregroundColor(.purple)
+                                    .clipShape(Capsule())
+                                    .help(Strings.Card.tmuxHelp)
+                            }
+
+                            // Display user badges
+                            ForEach(selectedCard.badges, id: \.self) { badge in
+                                Text(badge)
+                                    .font(.caption)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.secondary.opacity(0.2))
+                                    .clipShape(Capsule())
+                            }
+                        }
+                        .padding(.horizontal, 8)
+                    } else {
+                        // Board view - show MCP status in title area
+                        HStack(spacing: 8) {
+                            mcpStatusIndicator
+                            Text(Strings.appName)
+                                .font(.headline)
+                        }
+                    }
+                }
+
+                // Focused view controls
+                ToolbarItemGroup(placement: .primaryAction) {
+                    if let selectedCard = viewModel.selectedCard {
+                        // Move to column button with popover
+                        if let currentColumn = viewModel.board.columns.first(where: { $0.id == selectedCard.columnId })
+                        {
+                            let columnColor = Color(hex: currentColumn.color) ?? .gray
+                            let textColor = columnColor.isLight ? Color.black : Color.white
+                            Button {
+                                showColumnPicker.toggle()
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Text(currentColumn.name)
+                                    Image(systemName: "chevron.down")
+                                        .font(.system(size: 8, weight: .bold))
+                                }
+                                .font(.caption)
+                                .fontWeight(.medium)
+                                .foregroundColor(textColor)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(columnColor, in: Capsule())
+                            }
+                            .buttonStyle(.plain)
+                            .padding(.leading, 8)
+                            .help(Strings.Toolbar.moveTo)
+                            .popover(isPresented: $showColumnPicker, arrowEdge: .bottom) {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) {
+                                        column in
+                                        Button {
+                                            viewModel.moveCard(selectedCard, to: column)
+                                            showColumnPicker = false
+                                        } label: {
+                                            HStack {
+                                                if column.id == selectedCard.columnId {
+                                                    Image(systemName: "checkmark")
+                                                        .frame(width: 16)
+                                                } else {
+                                                    Color.clear.frame(width: 16)
+                                                }
+                                                Text(column.name)
+                                                Spacer()
                                             }
-                                            Text(column.name)
-                                            Spacer()
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
+                                            .contentShape(Rectangle())
                                         }
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .contentShape(Rectangle())
+                                        .buttonStyle(.plain)
+                                        .disabled(column.id == selectedCard.columnId)
                                     }
-                                    .buttonStyle(.plain)
-                                    .disabled(column.id == selectedCard.columnId)
+                                }
+                                .padding(.vertical, 4)
+                                .padding(.leading, 4)
+                                .frame(minWidth: 150)
+                            }
+                        }
+
+                        Button {
+                            // Use tracked current directory if available, otherwise fall back to card's starting directory
+                            let currentDir =
+                                TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
+                                ?? selectedCard.workingDirectory
+                            launchNativeTerminal(at: currentDir)
+                        } label: {
+                            Image(systemName: "apple.terminal")
+                        }
+                        .help(Strings.Toolbar.openTerminalAppHelp)
+
+                        Button {
+                            viewModel.quickNewTerminal()
+                        } label: {
+                            Image(systemName: "plus.rectangle")
+                        }
+                        .help(Strings.Toolbar.newQuickHelp)
+
+                        Button {
+                            viewModel.isEditingCard = selectedCard
+                        } label: {
+                            Image(systemName: "pencil")
+                        }
+                        .help(Strings.Toolbar.editHelp)
+
+                        Button {
+                            viewModel.toggleFavourite(selectedCard)
+                        } label: {
+                            Image(systemName: selectedCard.isFavourite ? "star.fill" : "star")
+                        }
+                        .foregroundColor(selectedCard.isFavourite ? .yellow : nil)
+                        .help(selectedCard.isFavourite ? Strings.Toolbar.unpinHelp : Strings.Toolbar.pinHelp)
+
+                        Button {
+                            viewModel.showDeleteConfirmation = true
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                        .foregroundColor(.red)
+                        .help(Strings.Toolbar.deleteHelp)
+                    } else {
+                        // Board view controls
+                        Button {
+                            showBin = true
+                        } label: {
+                            ZStack(alignment: .topTrailing) {
+                                Image(systemName: "trash")
+                                if !viewModel.binCards.isEmpty {
+                                    Text("\(viewModel.binCards.count)")
+                                        .font(.system(size: 9, weight: .bold))
+                                        .foregroundColor(.white)
+                                        .padding(3)
+                                        .background(Color.red)
+                                        .clipShape(Circle())
+                                        .offset(x: 6, y: -6)
                                 }
                             }
-                            .padding(.vertical, 4)
-                            .padding(.leading, 4)
-                            .frame(minWidth: 150)
                         }
-                    }
+                        .help(Strings.Toolbar.binCount(viewModel.binCards.count))
 
-                    Button {
-                        // Use tracked current directory if available, otherwise fall back to card's starting directory
-                        let currentDir =
-                            TerminalSessionManager.shared.getCurrentDirectory(for: selectedCard.id)
-                            ?? selectedCard.workingDirectory
-                        launchNativeTerminal(at: currentDir)
-                    } label: {
-                        Image(systemName: "apple.terminal")
-                    }
-                    .help(Strings.Toolbar.openTerminalAppHelp)
+                        Button {
+                            launchNativeTerminal()
+                        } label: {
+                            Image(systemName: "apple.terminal")
+                        }
+                        .help(Strings.Toolbar.openTerminalApp)
 
-                    Button {
-                        viewModel.quickNewTerminal()
-                    } label: {
-                        Image(systemName: "plus.rectangle")
-                    }
-                    .help(Strings.Toolbar.newQuickHelp)
-
-                    Button {
-                        viewModel.isEditingCard = selectedCard
-                    } label: {
-                        Image(systemName: "pencil")
-                    }
-                    .help(Strings.Toolbar.editHelp)
-
-                    Button {
-                        viewModel.toggleFavourite(selectedCard)
-                    } label: {
-                        Image(systemName: selectedCard.isFavourite ? "star.fill" : "star")
-                    }
-                    .foregroundColor(selectedCard.isFavourite ? .yellow : nil)
-                    .help(selectedCard.isFavourite ? Strings.Toolbar.unpinHelp : Strings.Toolbar.pinHelp)
-
-                    Button {
-                        viewModel.showDeleteConfirmation = true
-                    } label: {
-                        Image(systemName: "trash")
-                    }
-                    .foregroundColor(.red)
-                    .help(Strings.Toolbar.deleteHelp)
-                } else {
-                    // Board view controls
-                    Button {
-                        showBin = true
-                    } label: {
-                        ZStack(alignment: .topTrailing) {
-                            Image(systemName: "trash")
-                            if !viewModel.binCards.isEmpty {
-                                Text("\(viewModel.binCards.count)")
-                                    .font(.system(size: 9, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .padding(3)
-                                    .background(Color.red)
-                                    .clipShape(Circle())
-                                    .offset(x: 6, y: -6)
+                        Menu {
+                            if let firstColumn = viewModel.board.columns.first {
+                                Button(Strings.Toolbar.newTerminal) {
+                                    viewModel.addTerminal(to: firstColumn)
+                                }
                             }
-                        }
-                    }
-                    .help(Strings.Toolbar.binCount(viewModel.binCards.count))
-
-                    Button {
-                        launchNativeTerminal()
-                    } label: {
-                        Image(systemName: "apple.terminal")
-                    }
-                    .help(Strings.Toolbar.openTerminalApp)
-
-                    Menu {
-                        if let firstColumn = viewModel.board.columns.first {
-                            Button(Strings.Toolbar.newTerminal) {
-                                viewModel.addTerminal(to: firstColumn)
+                            Button(Strings.Toolbar.newColumn) {
+                                viewModel.addColumn()
                             }
+                        } label: {
+                            Image(systemName: "plus")
                         }
-                        Button(Strings.Toolbar.newColumn) {
-                            viewModel.addColumn()
-                        }
-                    } label: {
-                        Image(systemName: "plus")
+                        .help(Strings.Toolbar.addHelp)
                     }
-                    .help(Strings.Toolbar.addHelp)
                 }
             }
-        }
-        .alert(Strings.Delete.title, isPresented: $viewModel.showDeleteConfirmation) {
-            Button(Strings.Delete.cancel, role: .cancel) {}
-            Button(Strings.Delete.moveToBin, role: .destructive) {
+            .alert(Strings.Delete.title, isPresented: $viewModel.showDeleteConfirmation) {
+                Button(Strings.Delete.cancel, role: .cancel) {}
+                Button(Strings.Delete.moveToBin, role: .destructive) {
+                    if let selectedCard = viewModel.selectedCard {
+                        viewModel.deleteTabCard(selectedCard)
+                    }
+                }
+            } message: {
                 if let selectedCard = viewModel.selectedCard {
-                    viewModel.deleteTabCard(selectedCard)
+                    Text(Strings.Delete.binMessage(selectedCard.title))
+                } else {
+                    Text(Strings.Delete.binMessage(""))
                 }
             }
-        } message: {
-            if let selectedCard = viewModel.selectedCard {
-                Text(Strings.Delete.binMessage(selectedCard.title))
-            } else {
-                Text(Strings.Delete.binMessage(""))
-            }
+            .navigationTitle(viewModel.selectedCard == nil ? Strings.appName : "")
+            .focusedSceneValue(\.terminalActions, terminalActions)
         }
         .onAppear {
             let count = NSApplication.shared.windows.count
             TermQLogger.window.notice("ContentView appeared: \(count) window(s)")
         }
-        .navigationTitle(viewModel.selectedCard == nil ? Strings.appName : "")
-        .focusedSceneValue(\.terminalActions, terminalActions)
     }
 
     /// MCP server status indicator
@@ -422,6 +442,9 @@ struct ContentView: View {
             },
             showBin: {
                 showBin = true
+            },
+            toggleSidebar: {
+                isSidebarCollapsed.toggle()
             }
         )
     }
@@ -463,8 +486,13 @@ struct ContentView: View {
         }
     }
 
+}
+
+// MARK: - Private Helpers
+
+extension ContentView {
     /// Launch native Terminal.app at the specified directory
-    private func launchNativeTerminal(at directory: String? = nil) {
+    fileprivate func launchNativeTerminal(at directory: String? = nil) {
         let path = directory ?? NSHomeDirectory()
         let script = """
             tell application "Terminal"
@@ -483,7 +511,7 @@ struct ContentView: View {
     }
 
     /// Export terminal session content to a file
-    private func exportTerminalSession(for card: TerminalCard) {
+    fileprivate func exportTerminalSession(for card: TerminalCard) {
         guard let terminalView = TerminalSessionManager.shared.getTerminalView(for: card.id) else {
             return
         }
@@ -510,7 +538,7 @@ struct ContentView: View {
         }
     }
 
-    private func handlePendingTerminal() {
+    fileprivate func handlePendingTerminal() {
         guard let pending = urlHandler.pendingTerminal else { return }
 
         // Find the target column

@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Använd";
 "common.preview" = "Förhandsvisa";
+"common.close.window" = "Stäng fönster";
 
 // MARK: - Board View
 "board.column.options" = "Kolumnalternativ";
@@ -40,11 +41,11 @@
 "card.unpin" = "Lossa terminal";
 "card.running" = "Terminalen körs";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Ansluten";
 "card.wired.help" = "Ansluten till MCP-agent";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Nästa fästa terminal";
 "menu.previous.pinned" = "Föregående fästa terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Växla sidofält";
 
 
 // MARK: - Command Palette
@@ -477,21 +479,22 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "security.osc.clipboard.enabled" = "OSC 52 urklippsåtkomst aktiverad";
 "security.osc.clipboard.disabled" = "OSC 52 urklippsåtkomst inaktiverad";
 
-"settings.auto.check.updates" = "Sök automatiskt efter uppdateringar";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Kontrollera uppdateringar automatiskt";
+"settings.auto.check.updates.help" = "När aktiverat kontrollerar TermQ periodiskt efter nya versioner";
+"settings.check.for.updates" = "Sök efter uppdateringar...";
+"settings.include.beta.releases" = "Inkludera betaversioner";
+"settings.include.beta.releases.help" = "Välj att ta emot förhandsversioner med nya funktioner";
+"settings.section.updates" = "Uppdateringar";
 "editor.section.add.tag" = "Lägg till tagg";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Tillåt köade åtgärder";
+"editor.allow.agent.prompts.help" = "Tillåt att {{PROMPT}} och {{NEXT_ACTION}} injiceras i denna terminals startkommando";
+"editor.allow.agent.prompts.disabled.globally" = "Köade åtgärder inaktiverade globalt – aktivera i Inställningar > Data och säkerhet";
 "editor.allow.osc.clipboard.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Bekräftelse inaktiverad globalt – ändra i Inställningar > Data och säkerhet";
 
-"settings.debug.update.warning.title" = "Varning för felsökningsversion";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Varning: Debug-version";
+"settings.debug.update.warning.message" = "Att fortsätta med uppdateringar installerar produktionsversionen av TermQ.";
 
 "editor.no.tags" = "Inga taggar definierade";
 
@@ -500,3 +503,72 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "settings.environment.section.add.variable" = "Lägg till miljövariabel";
 
 "settings.mcp.install" = "Installera MCP-server";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositorier";
+"sidebar.add.button.help" = "Lägg till repositorium";
+"sidebar.empty.message" = "Inga repositorier tillagda.\nKlicka på + för att lägga till ett git-repositorium.";
+"sidebar.worktrees.placeholder" = "Arbetsträd visas här";
+"sidebar.remove.repository" = "Ta bort repositorium";
+"sidebar.toggle.help" = "Växla sidofält för repositorier (⌘⇧L)";
+"sidebar.add.title" = "Lägg till repositorium";
+"sidebar.add.path.label" = "Sökväg";
+"sidebar.add.name.label" = "Visningsnamn";
+"sidebar.add.name.placeholder" = "Identifieras automatiskt från git";
+"sidebar.add.cancel" = "Avbryt";
+"sidebar.add.add" = "Lägg till";
+"sidebar.add.advanced" = "Avancerat";
+"sidebar.edit.title" = "Redigera repository";
+"sidebar.edit.repository" = "Redigera repository";
+"sidebar.worktree.base.path.label" = "Grundsökväg för worktree";
+"sidebar.worktree.base.path.help" = "Nya worktrees skapas här. Standard är den överordnade mappen för repokatalogen.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" är inte ett git-repositorium.";
+"sidebar.worktrees.empty" = "Inga arbetsträd hittades.";
+"sidebar.worktree.detached.head" = "Frånkopplad HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Uppdatera arbetsträd";
+"sidebar.worktree.new" = "Nytt arbetstråd";
+"sidebar.worktree.new.terminal" = "Nytt Terminal";
+"sidebar.worktree.terminals.badge.help" = "Klicka för snabblänkar för att öppna terminaler";
+"sidebar.worktree.open.in.terminal" = "Öppna i Terminal";
+"sidebar.worktree.reveal.in.finder" = "Visa i Finder";
+"sidebar.worktree.open.remote.branch" = "Öppna gren på Remote";
+"sidebar.worktree.open.remote.commit" = "Öppna commit på Remote";
+"sidebar.worktree.lock" = "Lås arbetstråd";
+"sidebar.worktree.unlock" = "Lås upp arbetstråd";
+"sidebar.remove.worktree" = "Ta bort arbetstråd";
+"sidebar.remove.worktree.title" = "Ta bort arbetstråd?";
+"sidebar.remove.worktree.confirm" = "Ta bort";
+"sidebar.remove.main.worktree.error" = "Huvudarbetstrådet kan inte tas bort.";
+"sidebar.remove.worktree.message %@" = "Detta tar permanent bort arbetstrådet på \"%@\". Grenen raderas inte.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Ta bort Worktree...";
+"sidebar.worktree.delete.title" = "Ta bort Worktree";
+"sidebar.worktree.delete.confirm" = "Ta bort";
+"sidebar.worktree.delete.message %@" = "Worktree på \"%@\" och eventuella ej sparade ändringar tas bort permanent. Det går inte att ångra detta.";
+"sidebar.new.worktree.title" = "Nytt arbetstråd";
+"sidebar.new.worktree.branch.label" = "Nytt grennamn";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Ange ett grennamn för att fortsätta.";
+"sidebar.new.worktree.base.label" = "Basgren";
+"sidebar.new.worktree.base.placeholder" = "Filtrera grenar...";
+"sidebar.new.worktree.path.label" = "Arbetstrådsökväg";
+"sidebar.new.worktree.path.required" = "Ange en worktree-sökväg för att fortsätta.";
+"sidebar.new.worktree.create" = "Skapa";
+"sidebar.new.worktree.loading.branches" = "Laddar grenar...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";

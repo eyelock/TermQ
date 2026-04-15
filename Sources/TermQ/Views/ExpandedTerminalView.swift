@@ -491,6 +491,11 @@ struct ExpandedTerminalView: View {
                         proxy.scrollTo(newID, anchor: .center)
                     }
                 }
+                .onAppear {
+                    // onChange does not fire on initial appearance (e.g. Kanban → Terminal
+                    // transition), so scroll to the selected tab explicitly on first render.
+                    proxy.scrollTo(card.id, anchor: .center)
+                }
             }
 
             // tmux pane controls toggle (only for tmux sessions)
