@@ -167,123 +167,123 @@ public actor SecureStorage {
 
     #if TERMQ_DEBUG_BUILD
 
-    private var debugKeyURL: URL {
-        getConfigDirectory().appendingPathComponent(".enc-key")
-    }
-
-    private func getEncryptionKey() throws -> SymmetricKey {
-        guard
-            FileManager.default.fileExists(atPath: debugKeyURL.path),
-            let keyData = try? Data(contentsOf: debugKeyURL),
-            keyData.count == 32
-        else {
-            throw SecureStorageError.keychainError(errSecItemNotFound)
+        private var debugKeyURL: URL {
+            getConfigDirectory().appendingPathComponent(".enc-key")
         }
-        return SymmetricKey(data: keyData)
-    }
 
-    private func storeEncryptionKey(_ key: SymmetricKey) throws {
-        let keyData = key.withUnsafeBytes { Data($0) }
-        try ensureConfigDirectoryExists()
-        try keyData.write(to: debugKeyURL, options: .atomic)
-        try? FileManager.default.setAttributes(
-            [.posixPermissions: 0o600], ofItemAtPath: debugKeyURL.path)
-    }
-
-    private func deleteKeychainKey() throws {
-        try? FileManager.default.removeItem(at: debugKeyURL)
-    }
-
-    #else
-
-    private func getEncryptionKey() throws -> SymmetricKey {
-        // Try modern Data Protection Keychain first (bundle ID + Team ID access control,
-        // survives rebuilds without prompting).
-        let modernQuery: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: keychainService,
-            kSecAttrAccount as String: keychainAccount,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecUseDataProtectionKeychain as String: true,
-        ]
-
-        var result: AnyObject?
-        let modernStatus = SecItemCopyMatching(modernQuery as CFDictionary, &result)
-
-        if modernStatus == errSecSuccess, let keyData = result as? Data {
+        private func getEncryptionKey() throws -> SymmetricKey {
+            guard
+                FileManager.default.fileExists(atPath: debugKeyURL.path),
+                let keyData = try? Data(contentsOf: debugKeyURL),
+                keyData.count == 32
+            else {
+                throw SecureStorageError.keychainError(errSecItemNotFound)
+            }
             return SymmetricKey(data: keyData)
         }
 
-        // One-time migration: look in the legacy Login Keychain (binary-hash ACL).
-        // If found there, migrate to Data Protection Keychain and remove the legacy entry.
-        let legacyQuery: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: keychainService,
-            kSecAttrAccount as String: keychainAccount,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-        ]
-
-        result = nil
-        let legacyStatus = SecItemCopyMatching(legacyQuery as CFDictionary, &result)
-
-        guard legacyStatus == errSecSuccess, let keyData = result as? Data else {
-            throw SecureStorageError.keychainError(modernStatus)
+        private func storeEncryptionKey(_ key: SymmetricKey) throws {
+            let keyData = key.withUnsafeBytes { Data($0) }
+            try ensureConfigDirectoryExists()
+            try keyData.write(to: debugKeyURL, options: .atomic)
+            try? FileManager.default.setAttributes(
+                [.posixPermissions: 0o600], ofItemAtPath: debugKeyURL.path)
         }
 
-        let key = SymmetricKey(data: keyData)
-        try storeEncryptionKey(key)  // writes to Data Protection Keychain
-        try? deleteLegacyKeychainKey()  // best-effort cleanup of legacy entry
-        return key
-    }
-
-    private func storeEncryptionKey(_ key: SymmetricKey) throws {
-        let keyData = key.withUnsafeBytes { Data($0) }
-        try? deleteKeychainKey()
-
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: keychainService,
-            kSecAttrAccount as String: keychainAccount,
-            kSecValueData as String: keyData,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
-            kSecUseDataProtectionKeychain as String: true,
-        ]
-
-        let status = SecItemAdd(query as CFDictionary, nil)
-        guard status == errSecSuccess else {
-            throw SecureStorageError.keychainError(status)
+        private func deleteKeychainKey() throws {
+            try? FileManager.default.removeItem(at: debugKeyURL)
         }
-    }
 
-    private func deleteKeychainKey() throws {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: keychainService,
-            kSecAttrAccount as String: keychainAccount,
-            kSecUseDataProtectionKeychain as String: true,
-        ]
+    #else
 
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw SecureStorageError.keychainError(status)
+        private func getEncryptionKey() throws -> SymmetricKey {
+            // Try modern Data Protection Keychain first (bundle ID + Team ID access control,
+            // survives rebuilds without prompting).
+            let modernQuery: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: keychainService,
+                kSecAttrAccount as String: keychainAccount,
+                kSecReturnData as String: true,
+                kSecMatchLimit as String: kSecMatchLimitOne,
+                kSecUseDataProtectionKeychain as String: true,
+            ]
+
+            var result: AnyObject?
+            let modernStatus = SecItemCopyMatching(modernQuery as CFDictionary, &result)
+
+            if modernStatus == errSecSuccess, let keyData = result as? Data {
+                return SymmetricKey(data: keyData)
+            }
+
+            // One-time migration: look in the legacy Login Keychain (binary-hash ACL).
+            // If found there, migrate to Data Protection Keychain and remove the legacy entry.
+            let legacyQuery: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: keychainService,
+                kSecAttrAccount as String: keychainAccount,
+                kSecReturnData as String: true,
+                kSecMatchLimit as String: kSecMatchLimitOne,
+            ]
+
+            result = nil
+            let legacyStatus = SecItemCopyMatching(legacyQuery as CFDictionary, &result)
+
+            guard legacyStatus == errSecSuccess, let keyData = result as? Data else {
+                throw SecureStorageError.keychainError(modernStatus)
+            }
+
+            let key = SymmetricKey(data: keyData)
+            try storeEncryptionKey(key)  // writes to Data Protection Keychain
+            try? deleteLegacyKeychainKey()  // best-effort cleanup of legacy entry
+            return key
         }
-    }
 
-    /// Deletes a key from the legacy Login Keychain (used once during migration).
-    private func deleteLegacyKeychainKey() throws {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: keychainService,
-            kSecAttrAccount as String: keychainAccount,
-        ]
+        private func storeEncryptionKey(_ key: SymmetricKey) throws {
+            let keyData = key.withUnsafeBytes { Data($0) }
+            try? deleteKeychainKey()
 
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw SecureStorageError.keychainError(status)
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: keychainService,
+                kSecAttrAccount as String: keychainAccount,
+                kSecValueData as String: keyData,
+                kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
+                kSecUseDataProtectionKeychain as String: true,
+            ]
+
+            let status = SecItemAdd(query as CFDictionary, nil)
+            guard status == errSecSuccess else {
+                throw SecureStorageError.keychainError(status)
+            }
         }
-    }
+
+        private func deleteKeychainKey() throws {
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: keychainService,
+                kSecAttrAccount as String: keychainAccount,
+                kSecUseDataProtectionKeychain as String: true,
+            ]
+
+            let status = SecItemDelete(query as CFDictionary)
+            guard status == errSecSuccess || status == errSecItemNotFound else {
+                throw SecureStorageError.keychainError(status)
+            }
+        }
+
+        /// Deletes a key from the legacy Login Keychain (used once during migration).
+        private func deleteLegacyKeychainKey() throws {
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: keychainService,
+                kSecAttrAccount as String: keychainAccount,
+            ]
+
+            let status = SecItemDelete(query as CFDictionary)
+            guard status == errSecSuccess || status == errSecItemNotFound else {
+                throw SecureStorageError.keychainError(status)
+            }
+        }
 
     #endif
 

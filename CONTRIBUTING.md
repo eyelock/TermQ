@@ -279,6 +279,7 @@ The Makefile passes `-Xswiftc -DTERMQ_DEBUG_BUILD` when building the debug app b
 | **Bundle ID** | `net.eyelock.termq.app` | `net.eyelock.termq.app.debug` |
 | **Data directory** | `~/Library/Application Support/TermQ` | `~/Library/Application Support/TermQ-Debug` |
 | **About build number** | `CFBundleVersion` = version string (e.g. `0.7.2`) | `CFBundleVersion` = `<SHA>-debug` (e.g. `446ee59-debug`) |
+| **Sparkle auto-updater** | Active — checks appcast and installs updates | Disabled — updater not started, "Check for Updates" menu hidden |
 
 **Why file-based key storage in debug?**
 

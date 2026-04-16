@@ -337,8 +337,15 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     override init() {
         // Initialize Sparkle updater with delegate for dynamic feed URL
         // SUPublicEDKey is read from Info.plist
+        // Debug builds must not start the updater — it hits the production appcast,
+        // finds a "newer" version, and can wake the release app via Launch Services.
+        #if TERMQ_DEBUG_BUILD
+            let startUpdater = false
+        #else
+            let startUpdater = true
+        #endif
         updaterController = SPUStandardUpdaterController(
-            startingUpdater: true,
+            startingUpdater: startUpdater,
             updaterDelegate: sparkleDelegate,
             userDriverDelegate: nil
         )
@@ -347,7 +354,11 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             controller: updaterController
         )
         super.init()
-        TermQLogger.window.notice("TermQAppDelegate.init: Sparkle updater initialized")
+        #if TERMQ_DEBUG_BUILD
+            TermQLogger.window.notice("TermQAppDelegate.init: Sparkle updater disabled (debug build)")
+        #else
+            TermQLogger.window.notice("TermQAppDelegate.init: Sparkle updater initialized")
+        #endif
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -532,12 +543,14 @@ struct TermQApp: App {
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)
         .commands {
-            // Check for Updates in App menu (after About)
-            CommandGroup(after: .appInfo) {
-                Button(Strings.Menu.checkForUpdates) {
-                    appDelegate.updaterController.checkForUpdates(nil)
+            // Check for Updates in App menu (after About) — hidden in debug builds
+            #if !TERMQ_DEBUG_BUILD
+                CommandGroup(after: .appInfo) {
+                    Button(Strings.Menu.checkForUpdates) {
+                        appDelegate.updaterController.checkForUpdates(nil)
+                    }
                 }
-            }
+            #endif
 
             // Window commands - enable Cmd+W to close window (hides it, preserving session)
             CommandGroup(after: .windowArrangement) {
