@@ -1,0 +1,67 @@
+import SwiftUI
+
+/// Top-level sidebar container with tab switching between Repositories and Harnesses.
+///
+/// When the `feature.harnessTab` flag is off (default), this renders the
+/// `WorktreeSidebarView` directly with no tab picker visible. When on and
+/// YNH detection succeeds, a segmented picker appears at the top.
+struct SidebarView: View {
+    @ObservedObject var worktreeViewModel: WorktreeSidebarViewModel
+    @ObservedObject var detector: YNHDetector
+    @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
+    @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
+
+    enum SidebarTab: String, CaseIterable {
+        case repositories
+        case harnesses
+    }
+
+    /// Whether the Harnesses tab should be visible.
+    ///
+    /// Requires the feature flag AND the ynh binary to be detected.
+    private var showHarnessesTab: Bool {
+        guard harnessTabEnabled else { return false }
+        return detector.status != .missing
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            if showHarnessesTab {
+                tabPicker
+                Divider()
+            }
+
+            switch selectedTab {
+            case .repositories:
+                WorktreeSidebarView(viewModel: worktreeViewModel)
+            case .harnesses where showHarnessesTab:
+                HarnessesSidebarTab(detector: detector)
+            default:
+                // Feature flag off but selectedTab persisted as harnesses — fall back.
+                WorktreeSidebarView(viewModel: worktreeViewModel)
+            }
+        }
+        .onAppear {
+            if harnessTabEnabled {
+                Task { await detector.detect() }
+            }
+        }
+        .onChange(of: harnessTabEnabled) { _, enabled in
+            if enabled {
+                Task { await detector.detect() }
+            } else {
+                selectedTab = .repositories
+            }
+        }
+    }
+
+    private var tabPicker: some View {
+        Picker("", selection: $selectedTab) {
+            Text(Strings.Sidebar.title).tag(SidebarTab.repositories)
+            Text(Strings.Harnesses.title).tag(SidebarTab.harnesses)
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 6)
+    }
+}

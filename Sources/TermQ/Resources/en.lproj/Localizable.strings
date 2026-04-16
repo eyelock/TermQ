@@ -27,6 +27,7 @@
 "common.preview" = "Preview";
 "common.quit" = "Quit";
 "common.close.window" = "Close Window";
+"common.clear" = "Clear";
 
 // MARK: - Board View
 "board.column.options" = "Column options";
@@ -584,3 +585,31 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Re-detect ynh toolchain";
+"harnesses.not.installed" = "ynh is not installed.";
+"harnesses.init.required" = "ynh found but not initialised.\nRun `ynh init` to set up.";
+"harnesses.init.hint" = "Open a terminal and run:\nynh init";
+"harnesses.empty.message" = "No harnesses installed yet.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness Toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI assistant harness manager";
+"settings.ynh.enable.harness.tab" = "Show Harnesses sidebar tab";
+"settings.ynh.enable.harness.tab.help" = "Adds a Harnesses tab to the sidebar for browsing and managing installed harnesses";
+"settings.ynh.home.override" = "$YNH_HOME Override";
+"settings.ynh.home.override.placeholder" = "Default (uses ynh's own resolution)";
+"settings.ynh.home.override.help" = "Override the YNH_HOME directory for the ynh subprocess. Leave blank for default.";
+"settings.ynh.resolved.paths" = "Resolved Paths";
+"settings.ynh.redetect" = "Re-detect";
+"settings.ynh.init.required" = "Not initialised";
+"settings.ynh.ready" = "Ready";
+"settings.ynh.path.label" = "Path:";
+"settings.ynh.ynd.path.label" = "ynd Path:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain detected and initialised. Enable the sidebar tab to browse harnesses.";
+"settings.ynh.advanced" = "Advanced";
+"settings.ynh.version.label" = "Version:";

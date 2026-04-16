@@ -6,6 +6,7 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     @StateObject private var viewModel = BoardViewModel.shared
     @StateObject private var sidebarViewModel = WorktreeSidebarViewModel.shared
+    @StateObject private var ynhDetector = YNHDetector.shared
     @EnvironmentObject var urlHandler: URLHandler
     @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
     @State private var isZoomed = false
@@ -17,7 +18,7 @@ struct ContentView: View {
     var body: some View {
         HSplitView {
             if !isSidebarCollapsed {
-                WorktreeSidebarView(viewModel: sidebarViewModel)
+                SidebarView(worktreeViewModel: sidebarViewModel, detector: ynhDetector)
                     .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
 

@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import TermQShared
 
 // MARK: - Tools Tab Content
 
@@ -24,6 +25,7 @@ struct ToolsTabContent: View {
 
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
+    @ObservedObject private var ynhDetector = YNHDetector.shared
 
     var isCLIInstalled: Bool { cliInstalled }
     var isMCPInstalled: Bool { mcpInstalled }
@@ -42,6 +44,7 @@ struct ToolsTabContent: View {
         mcpSection
         cliSection
         tmuxSection
+        ynhSection
     }
 }
 
@@ -78,6 +81,13 @@ extension ToolsTabContent {
                     }
                     return Strings.Settings.statusDisabled
                 }()
+            )
+
+            StatusIndicator(
+                icon: "puzzlepiece.extension",
+                label: "ynh",
+                status: ynhStatusIndicator,
+                message: ynhStatusMessage
             )
         } header: {
             Text(Strings.Settings.sectionStatus)
@@ -438,6 +448,268 @@ extension ToolsTabContent {
                 }
             }
             .font(.caption)
+        }
+    }
+}
+
+// MARK: - YNH Section
+
+extension ToolsTabContent {
+    var ynhStatusIndicator: StatusIndicatorState {
+        switch ynhDetector.status {
+        case .missing: return .inactive
+        case .binaryOnly: return .disabled
+        case .ready: return .installed
+        }
+    }
+
+    var ynhStatusMessage: String {
+        switch ynhDetector.status {
+        case .missing: return Strings.Settings.notInstalled
+        case .binaryOnly: return Strings.Settings.Ynh.initRequired
+        case .ready: return Strings.Settings.Ynh.ready
+        }
+    }
+
+    @ViewBuilder
+    var ynhSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "puzzlepiece.extension")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Settings.Ynh.title)
+                            .font(.headline)
+                        Text(Strings.Settings.Ynh.description)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if case .ready = ynhDetector.status {
+                        installedBadge
+                    } else if case .binaryOnly = ynhDetector.status {
+                        HStack(spacing: 4) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .foregroundColor(.orange)
+                            Text(Strings.Settings.Ynh.initRequired)
+                                .foregroundColor(.orange)
+                        }
+                        .font(.caption)
+                    } else {
+                        notInstalledBadge
+                    }
+                }
+
+                Divider()
+
+                ynhSettingsContent
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Settings.Ynh.sectionTitle)
+        }
+        .onAppear {
+            Task { await ynhDetector.detect() }
+        }
+    }
+
+    @ViewBuilder
+    private var ynhSettingsContent: some View {
+        // Feature flag toggle
+        Toggle(Strings.Settings.Ynh.enableHarnessTab, isOn: Binding(
+            get: { UserDefaults.standard.bool(forKey: "feature.harnessTab") },
+            set: { UserDefaults.standard.set($0, forKey: "feature.harnessTab") }
+        ))
+        .help(Strings.Settings.Ynh.enableHarnessTabHelp)
+
+        // Detected binary info (mirrors the tmux Version/Path pattern)
+        ynhBinaryInfo
+
+        // Read-only paths echo (only when ready)
+        if case .ready(_, _, let paths) = ynhDetector.status {
+            ynhPathsDisplay(paths)
+        }
+
+        // Advanced: YNH_HOME override
+        DisclosureGroup(Strings.Settings.Ynh.advanced) {
+            ynhHomeOverrideField
+                .padding(.top, 4)
+        }
+
+        // Re-detect button
+        HStack {
+            Spacer()
+            Button {
+                Task { await ynhDetector.detect() }
+            } label: {
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.clockwise")
+                    Text(Strings.Settings.Ynh.redetect)
+                }
+                .font(.caption)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var ynhBinaryInfo: some View {
+        switch ynhDetector.status {
+        case .missing:
+            EmptyView()
+
+        case .binaryOnly(let ynhPath):
+            VStack(alignment: .leading, spacing: 4) {
+                if let version = ynhDetector.version {
+                    HStack {
+                        Text(Strings.Settings.Ynh.versionLabel)
+                            .foregroundColor(.secondary)
+                        Text(version)
+                            .font(.system(.body, design: .monospaced))
+                    }
+                    .font(.caption)
+                }
+
+                HStack {
+                    Text(Strings.Settings.Ynh.pathLabel)
+                        .foregroundColor(.secondary)
+                    Text(ynhPath)
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                }
+                .font(.caption)
+
+                HStack {
+                    Text(Strings.Settings.Ynh.statusLabel)
+                        .foregroundColor(.secondary)
+                    Text(Strings.Settings.Ynh.initRequired)
+                        .foregroundColor(.orange)
+                }
+                .font(.caption)
+            }
+
+        case .ready(let ynhPath, let yndPath, _):
+            VStack(alignment: .leading, spacing: 4) {
+                if let version = ynhDetector.version {
+                    HStack {
+                        Text(Strings.Settings.Ynh.versionLabel)
+                            .foregroundColor(.secondary)
+                        Text(version)
+                            .font(.system(.body, design: .monospaced))
+                    }
+                    .font(.caption)
+                }
+
+                HStack {
+                    Text(Strings.Settings.Ynh.pathLabel)
+                        .foregroundColor(.secondary)
+                    Text(ynhPath)
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                }
+                .font(.caption)
+
+                // Only show ynd path if it differs from the ynh directory
+                if let yndPath, yndDirectory(yndPath) != yndDirectory(ynhPath) {
+                    HStack {
+                        Text(Strings.Settings.Ynh.yndPathLabel)
+                            .foregroundColor(.secondary)
+                        Text(yndPath)
+                            .font(.system(.body, design: .monospaced))
+                            .textSelection(.enabled)
+                    }
+                    .font(.caption)
+                }
+
+                HStack {
+                    Image(systemName: "info.circle")
+                        .foregroundColor(.blue)
+                    Text(Strings.Settings.Ynh.readyInfo)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+    }
+
+    /// Extract the parent directory from a binary path for comparison.
+    private func yndDirectory(_ path: String) -> String {
+        (path as NSString).deletingLastPathComponent
+    }
+
+    @ViewBuilder
+    private var ynhHomeOverrideField: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(Strings.Settings.Ynh.homeOverride)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Spacer()
+
+                if ynhDetector.ynhHomeOverride != nil {
+                    Button(Strings.Common.clear, role: .destructive) {
+                        ynhDetector.ynhHomeOverride = nil
+                        Task { await ynhDetector.detect() }
+                    }
+                    .font(.caption)
+                    .buttonStyle(.plain)
+                    .foregroundColor(.red)
+                }
+            }
+
+            TextField(
+                Strings.Settings.Ynh.homeOverridePlaceholder,
+                text: Binding(
+                    get: { ynhDetector.ynhHomeOverride ?? "" },
+                    set: { newValue in
+                        ynhDetector.ynhHomeOverride = newValue.isEmpty ? nil : newValue
+                    }
+                )
+            )
+            .font(.system(.caption, design: .monospaced))
+            .textFieldStyle(.roundedBorder)
+            .onSubmit {
+                Task { await ynhDetector.detect() }
+            }
+
+            Text(Strings.Settings.Ynh.homeOverrideHelp)
+                .font(.caption2)
+                .foregroundColor(Color(nsColor: .tertiaryLabelColor))
+        }
+    }
+
+    @ViewBuilder
+    private func ynhPathsDisplay(_ paths: YNHPaths) -> some View {
+        DisclosureGroup(Strings.Settings.Ynh.resolvedPaths) {
+            VStack(alignment: .leading, spacing: 4) {
+                pathRow(label: "home", value: paths.home)
+                pathRow(label: "config", value: paths.config)
+                pathRow(label: "harnesses", value: paths.harnesses)
+                pathRow(label: "symlinks", value: paths.symlinks)
+                pathRow(label: "cache", value: paths.cache)
+                pathRow(label: "run", value: paths.run)
+                pathRow(label: "bin", value: paths.bin)
+            }
+            .padding(.top, 4)
+        }
+    }
+
+    @ViewBuilder
+    private func pathRow(label: String, value: String) -> some View {
+        HStack(alignment: .top) {
+            Text(label)
+                .font(.system(.caption, design: .monospaced))
+                .foregroundColor(.secondary)
+                .frame(width: 70, alignment: .trailing)
+            Text(value)
+                .font(.system(.caption2, design: .monospaced))
+                .foregroundColor(.primary)
+                .textSelection(.enabled)
         }
     }
 }
