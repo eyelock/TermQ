@@ -31,7 +31,12 @@ struct ContentView: View {
 
             ZStack {
                 if let harness = harnessRepo.selectedHarness {
-                    HarnessDetailView(harness: harness) {
+                    HarnessDetailView(
+                        harness: harness,
+                        detail: harnessRepo.selectedDetail,
+                        isLoadingDetail: harnessRepo.isLoadingDetail,
+                        detailError: harnessRepo.detailError
+                    ) {
                         harnessRepo.selectedHarnessName = nil
                         if let card = cardBeforeHarness {
                             viewModel.selectCard(card)
@@ -119,9 +124,10 @@ struct ContentView: View {
                 }
             }
             .onChange(of: harnessRepo.selectedHarnessName) { _, newValue in
-                if newValue != nil {
+                if let name = newValue {
                     cardBeforeHarness = viewModel.selectedCard
                     viewModel.deselectCard()
+                    Task { await harnessRepo.fetchDetail(for: name) }
                 }
             }
             .sheet(item: $viewModel.isEditingCard) { card in

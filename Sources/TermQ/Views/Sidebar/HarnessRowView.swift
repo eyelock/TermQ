@@ -80,7 +80,7 @@ struct HarnessRowView: View {
         let label: String
         switch provenance.sourceType {
         case "git":
-            label = shortGitURL(provenance.source)
+            label = GitURLHelper.shortURL(provenance.source)
         case "local":
             label = Strings.Harnesses.sourceLocal
         case "registry":
@@ -93,12 +93,5 @@ struct HarnessRowView: View {
             .font(.system(size: 10))
             .foregroundColor(.secondary)
             .lineLimit(1)
-    }
-
-    /// Abbreviate a git URL for display: "github.com/user/repo" -> "user/repo".
-    private func shortGitURL(_ url: String) -> String {
-        guard !url.hasPrefix("/"), !url.hasPrefix(".") else { return url }
-        let parts = url.split(separator: "/", maxSplits: 1)
-        return parts.count == 2 ? String(parts[1]) : url
     }
 }

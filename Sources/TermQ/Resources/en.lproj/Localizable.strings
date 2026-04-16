@@ -617,7 +617,21 @@
 "harnesses.reveal.in.finder" = "Reveal in Finder";
 "harnesses.open.in.browser" = "Open in browser";
 "harnesses.close.detail" = "Close";
-"harnesses.detail.artifacts.from.includes" = "This harness gets its artifacts from includes. Full composition detail available in Phase 3.";
+"harnesses.detail.artifacts.from.includes" = "This harness gets its artifacts from dependency includes.";
+"harnesses.detail.from" = "from";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP Servers";
+"harnesses.detail.profiles" = "Profiles";
+"harnesses.detail.focuses" = "Focuses";
+"harnesses.detail.focus.profile %@" = "profile: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "No manifest available.";
+"harnesses.detail.resolved" = "Resolved";
+"harnesses.detail.unresolved" = "Unresolved";
+"harnesses.detail.no.hooks" = "This harness has no hooks.";
+"harnesses.detail.no.mcp.servers" = "This harness has no MCP servers.";
+"harnesses.detail.no.profiles" = "This harness has no profiles.";
+"harnesses.detail.no.focuses" = "This harness has no focuses.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";

@@ -3,7 +3,7 @@ import SwiftUI
 import TermQShared
 
 /// Changes the cursor to a pointing hand on hover.
-private struct PointingHandCursor: ViewModifier {
+struct PointingHandCursor: ViewModifier {
     func body(content: Content) -> some View {
         content.onHover { hovering in
             if hovering {
@@ -16,17 +16,20 @@ private struct PointingHandCursor: ViewModifier {
 }
 
 extension View {
-    fileprivate func pointingHandCursor() -> some View {
+    func pointingHandCursor() -> some View {
         modifier(PointingHandCursor())
     }
 }
 
-/// Minimal detail view for a selected harness (Phase 2 — header only).
+/// Full detail view for a selected harness.
 ///
-/// Shows harness identity, provenance, path, and artifact summary.
-/// Full composition detail (skills, agents, hooks, etc.) ships in Phase 3.
+/// Shows basic identity from the `Harness` list row immediately, then enriches
+/// with full composition data from `ynh info` + `ynd compose` once loaded.
 struct HarnessDetailView: View {
     let harness: Harness
+    let detail: HarnessDetail?
+    let isLoadingDetail: Bool
+    let detailError: String?
     let onDismiss: () -> Void
 
     var body: some View {
@@ -38,9 +41,22 @@ struct HarnessDetailView: View {
                 Divider()
                 artifactSection
 
-                if !harness.includes.isEmpty || !harness.delegatesTo.isEmpty {
+                if let detail {
+                    HarnessDetailCompositionView(
+                        composition: detail.composition
+                    )
+                }
+
+                let depView = HarnessDetailDependencyView(
+                    harness: harness, detail: detail)
+                if depView.hasDependencies {
                     Divider()
-                    dependencySection
+                    depView
+                }
+
+                if let detail {
+                    Divider()
+                    manifestSection(detail.info)
                 }
 
                 Spacer()
@@ -67,6 +83,12 @@ struct HarnessDetailView: View {
 
                 Spacer()
 
+                if isLoadingDetail {
+                    ProgressView()
+                        .controlSize(.small)
+                        .padding(.trailing, 8)
+                }
+
                 Button {
                     onDismiss()
                 } label: {
@@ -91,6 +113,16 @@ struct HarnessDetailView: View {
 
                 if let provenance = harness.installedFrom {
                     sourceBadge(provenance)
+                }
+            }
+
+            if let error = detailError {
+                HStack(spacing: 6) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundColor(.orange)
+                    Text(error)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
             }
         }
@@ -142,238 +174,81 @@ struct HarnessDetailView: View {
             Text(Strings.Harnesses.detailArtifacts)
                 .font(.headline)
 
-            HStack(spacing: 12) {
-                artifactCount(Strings.Harnesses.detailSkills, count: harness.artifacts.skills)
-                artifactCount(Strings.Harnesses.detailAgents, count: harness.artifacts.agents)
-                artifactCount(Strings.Harnesses.detailRules, count: harness.artifacts.rules)
-                artifactCount(Strings.Harnesses.detailCommands, count: harness.artifacts.commands)
-            }
+            if let detail {
+                let comp = detail.composition
+                artifactList(Strings.Harnesses.detailSkills, items: comp.artifacts.skills)
+                artifactList(Strings.Harnesses.detailAgents, items: comp.artifacts.agents)
+                artifactList(Strings.Harnesses.detailRules, items: comp.artifacts.rules)
+                artifactList(Strings.Harnesses.detailCommands, items: comp.artifacts.commands)
 
-            if harness.artifacts.total == 0 && !harness.includes.isEmpty {
-                Text(Strings.Harnesses.detailArtifactsFromIncludes)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-        }
-    }
-
-    // MARK: - Dependencies
-
-    private var dependencySection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(Strings.Harnesses.detailDependencies)
-                .font(.headline)
-
-            if !harness.includes.isEmpty {
-                Text(Strings.Harnesses.detailIncludes(harness.includes.count))
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-
-                ForEach(harness.includes.indices, id: \.self) { idx in
-                    includeCard(harness.includes[idx])
-                }
-            }
-
-            if !harness.delegatesTo.isEmpty {
-                Text(Strings.Harnesses.detailDelegates(harness.delegatesTo.count))
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-
-                ForEach(harness.delegatesTo.indices, id: \.self) { idx in
-                    delegateCard(harness.delegatesTo[idx])
-                }
-            }
-        }
-    }
-
-    private func includeCard(_ include: HarnessInclude) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            // Source row: icon + short name + action buttons
-            HStack(spacing: 6) {
-                Image(systemName: "link")
-                    .font(.system(size: 11))
-                    .foregroundColor(.accentColor)
-
-                gitSourceLabel(include.git)
-
-                if let ref = include.ref, !ref.isEmpty {
-                    Text("@\(ref)")
-                        .font(.system(size: 11, design: .monospaced))
+                if comp.counts.total == 0 && !comp.includes.isEmpty {
+                    Text(Strings.Harnesses.detailArtifactsFromIncludes)
+                        .font(.caption)
                         .foregroundColor(.secondary)
                 }
-
-                Spacer()
-
-                gitActionButtons(include.git, path: include.path)
-            }
-
-            // Subpath
-            if let path = include.path, !path.isEmpty {
-                HStack(spacing: 4) {
-                    Image(systemName: "folder")
-                        .font(.system(size: 10))
-                        .foregroundColor(.secondary)
-                    Text(path)
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundColor(.secondary)
-                }
-                .padding(.leading, 20)
-            }
-
-            // Picked artifacts
-            if let picks = include.pick, !picks.isEmpty {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(Strings.Harnesses.detailPicks(picks.count))
-                        .font(.system(size: 11))
-                        .foregroundColor(.secondary)
-                        .padding(.leading, 20)
-
-                    FlowLayout(spacing: 4) {
-                        ForEach(picks, id: \.self) { pick in
-                            pickPill(pick, source: include.git, ref: include.ref)
-                        }
-                    }
-                    .padding(.leading, 20)
-                }
-            }
-        }
-        .padding(10)
-        .background(Color(nsColor: .controlBackgroundColor))
-        .clipShape(RoundedRectangle(cornerRadius: 6))
-    }
-
-    private func delegateCard(_ delegate: HarnessDelegate) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 6) {
-                Image(systemName: "arrow.turn.down.right")
-                    .font(.system(size: 11))
-                    .foregroundColor(.orange)
-
-                gitSourceLabel(delegate.git)
-
-                if let ref = delegate.ref, !ref.isEmpty {
-                    Text("@\(ref)")
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundColor(.secondary)
-                }
-
-                Spacer()
-
-                gitActionButtons(delegate.git, path: delegate.path)
-            }
-
-            if let path = delegate.path, !path.isEmpty {
-                HStack(spacing: 4) {
-                    Image(systemName: "folder")
-                        .font(.system(size: 10))
-                        .foregroundColor(.secondary)
-                    Text(path)
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundColor(.secondary)
-                }
-                .padding(.leading, 20)
-            }
-        }
-        .padding(10)
-        .background(Color(nsColor: .controlBackgroundColor))
-        .clipShape(RoundedRectangle(cornerRadius: 6))
-    }
-
-    // MARK: - Git Source Helpers
-
-    /// Display label for a git source — clickable for remote URLs.
-    private func gitSourceLabel(_ source: String) -> some View {
-        Group {
-            if let url = browserURL(for: source) {
-                Link(destination: url) {
-                    Text(shortGitURL(source))
-                        .font(.system(size: 12, weight: .medium))
-                        .underline()
-                }
-                .pointingHandCursor()
             } else {
-                Text(source)
-                    .font(.system(size: 12, weight: .medium))
-                    .textSelection(.enabled)
-            }
-        }
-    }
-
-    /// Action buttons for a git source: open in browser and/or reveal in Finder.
-    private func gitActionButtons(_ source: String, path: String?) -> some View {
-        HStack(spacing: 4) {
-            if let url = browserURL(for: source, path: path) {
-                Button {
-                    NSWorkspace.shared.open(url)
-                } label: {
-                    Image(systemName: "safari")
-                        .font(.system(size: 11))
+                // Fallback to counts from ynh ls while detail loads.
+                HStack(spacing: 12) {
+                    artifactCount(Strings.Harnesses.detailSkills, count: harness.artifacts.skills)
+                    artifactCount(Strings.Harnesses.detailAgents, count: harness.artifacts.agents)
+                    artifactCount(Strings.Harnesses.detailRules, count: harness.artifacts.rules)
+                    artifactCount(Strings.Harnesses.detailCommands, count: harness.artifacts.commands)
                 }
-                .buttonStyle(.plain)
-                .foregroundColor(.secondary)
-                .pointingHandCursor()
-                .help(Strings.Harnesses.openInBrowser)
-            }
-
-            if source.hasPrefix("/") {
-                Button {
-                    let fullPath = path.map { "\(source)/\($0)" } ?? source
-                    NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: fullPath)
-                } label: {
-                    Image(systemName: "folder")
-                        .font(.system(size: 11))
-                }
-                .buttonStyle(.plain)
-                .foregroundColor(.secondary)
-                .pointingHandCursor()
-                .help(Strings.Harnesses.revealInFinder)
             }
         }
     }
 
-    /// Construct a browser URL from a git source like `github.com/user/repo`.
-    private func browserURL(for source: String, path: String? = nil) -> URL? {
-        guard !source.hasPrefix("/"), !source.hasPrefix(".") else { return nil }
-
-        var urlString = "https://\(source)"
-        if let path, !path.isEmpty {
-            urlString += "/tree/HEAD/\(path)"
-        }
-        return URL(string: urlString)
-    }
-
-    /// A pick pill — clickable link for remote sources, plain text for local.
     @ViewBuilder
-    private func pickPill(_ pick: String, source: String, ref: String?) -> some View {
-        if let url = browserURL(for: source, path: pick) {
-            Link(destination: url) {
-                pickPillLabel(pick)
+    private func artifactList(_ title: String, items: [ComposedArtifact]) -> some View {
+        if !items.isEmpty {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("\(title) (\(items.count))")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+
+                ForEach(items) { item in
+                    HStack(spacing: 8) {
+                        Text(item.name)
+                            .font(.system(size: 12, weight: .medium, design: .monospaced))
+
+                        Text(Strings.Harnesses.detailFrom)
+                            .font(.system(size: 11))
+                            .foregroundStyle(.tertiary)
+
+                        Text(item.source)
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.leading, 12)
+                }
             }
-            .pointingHandCursor()
-            .help(Strings.Harnesses.openInBrowser)
-        } else if source.hasPrefix("/") {
-            Button {
-                let fullPath = "\(source)/\(pick)"
-                NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: fullPath)
-            } label: {
-                pickPillLabel(pick)
-            }
-            .buttonStyle(.plain)
-            .pointingHandCursor()
-            .help(Strings.Harnesses.revealInFinder)
-        } else {
-            pickPillLabel(pick)
         }
     }
 
-    private func pickPillLabel(_ pick: String) -> some View {
-        Text(pick)
-            .font(.system(size: 10, weight: .medium, design: .monospaced))
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
-            .background(Color.accentColor.opacity(0.1))
-            .foregroundColor(.accentColor)
-            .clipShape(RoundedRectangle(cornerRadius: 4))
+    // MARK: - Manifest
+
+    private func manifestSection(_ info: HarnessInfo) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            DisclosureGroup {
+                if let manifest = info.manifest {
+                    ScrollView(.horizontal, showsIndicators: true) {
+                        Text(manifest.rawString)
+                            .font(.system(size: 11, design: .monospaced))
+                            .textSelection(.enabled)
+                            .padding(8)
+                    }
+                    .background(Color(nsColor: .controlBackgroundColor))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                } else {
+                    Text(Strings.Harnesses.detailNoManifest)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            } label: {
+                Text(Strings.Harnesses.detailManifest)
+                    .font(.headline)
+            }
+        }
     }
 
     // MARK: - Helpers
@@ -417,7 +292,7 @@ struct HarnessDetailView: View {
         let label: String
         switch provenance.sourceType {
         case "git":
-            label = shortGitURL(provenance.source)
+            label = GitURLHelper.shortURL(provenance.source)
         case "local":
             label = Strings.Harnesses.sourceLocal
         case "registry":
@@ -432,11 +307,5 @@ struct HarnessDetailView: View {
             .padding(.vertical, 3)
             .background(Color.secondary.opacity(0.15))
             .clipShape(Capsule())
-    }
-
-    private func shortGitURL(_ url: String) -> String {
-        guard !url.hasPrefix("/"), !url.hasPrefix(".") else { return url }
-        let parts = url.split(separator: "/", maxSplits: 1)
-        return parts.count == 2 ? String(parts[1]) : url
     }
 }

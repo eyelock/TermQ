@@ -893,5 +893,21 @@ extension Strings {
         static var openInBrowser: String { localized("harnesses.open.in.browser") }
         static var closeDetail: String { localized("harnesses.close.detail") }
         static var detailArtifactsFromIncludes: String { localized("harnesses.detail.artifacts.from.includes") }
+        static var detailFrom: String { localized("harnesses.detail.from") }
+        static var detailHooks: String { localized("harnesses.detail.hooks") }
+        static var detailMCPServers: String { localized("harnesses.detail.mcp.servers") }
+        static var detailProfiles: String { localized("harnesses.detail.profiles") }
+        static var detailFocuses: String { localized("harnesses.detail.focuses") }
+        static func detailFocusProfile(_ name: String) -> String {
+            localized("harnesses.detail.focus.profile %@", name)
+        }
+        static var detailManifest: String { localized("harnesses.detail.manifest") }
+        static var detailNoManifest: String { localized("harnesses.detail.no.manifest") }
+        static var detailResolved: String { localized("harnesses.detail.resolved") }
+        static var detailUnresolved: String { localized("harnesses.detail.unresolved") }
+        static var detailNoHooks: String { localized("harnesses.detail.no.hooks") }
+        static var detailNoMCPServers: String { localized("harnesses.detail.no.mcp.servers") }
+        static var detailNoProfiles: String { localized("harnesses.detail.no.profiles") }
+        static var detailNoFocuses: String { localized("harnesses.detail.no.focuses") }
     }
 }
