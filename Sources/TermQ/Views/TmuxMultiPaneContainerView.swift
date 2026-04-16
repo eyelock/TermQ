@@ -118,9 +118,17 @@ class TmuxMultiPaneContainerNSView: NSView {
         // Bring the active pane to the front of the pane-view stack (just below
         // the overlay). This guarantees a zoomed pane composites above its siblings
         // regardless of the order in which pane views were originally inserted.
+        //
+        // Guard: only reorder when the active pane is not already topmost.
+        // Unconditional removeFromSuperview on every render clears first-responder
+        // focus from the pane terminal, which is why new sidebar-created terminals
+        // lost focus immediately after the initial makeFirstResponder succeeded.
         if let activeId = activePaneId, let activePaneView = paneViews[activeId] {
-            activePaneView.removeFromSuperview()
-            addSubview(activePaneView, positioned: .below, relativeTo: overlay)
+            let paneSubviews = subviews.filter { $0 !== overlay }
+            if paneSubviews.last !== activePaneView {
+                activePaneView.removeFromSuperview()
+                addSubview(activePaneView, positioned: .below, relativeTo: overlay)
+            }
         }
 
         // Update active state on each pane (used by hitTest to decide when to call onFocus)
