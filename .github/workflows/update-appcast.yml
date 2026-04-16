@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   update-appcast:
@@ -42,27 +43,49 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Commit and push appcast updates
+      - name: Create PR with appcast updates
         if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.APPCAST_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          BRANCH="hotfix/appcast-update"
+          RELEASE_TAG="${{ github.event.release.tag_name || 'manual' }}"
+
+          git checkout -B "$BRANCH"
           git add Docs/appcast.xml Docs/appcast-beta.xml
-          git commit -m "chore: Update appcast for release ${{ github.event.release.tag_name || 'manual' }}
+          git commit -m "chore: Update appcast for release ${RELEASE_TAG}
 
           Auto-generated appcast files for Sparkle auto-updates.
 
           Co-Authored-By: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
 
-          git push origin main
+          git push -f origin "$BRANCH"
+
+          # Close any stale appcast PR before creating a new one
+          EXISTING=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number' 2>/dev/null || true)
+          if [ -n "$EXISTING" ]; then
+            gh pr close "$EXISTING" --delete-branch 2>/dev/null || true
+          fi
+
+          PR_URL=$(gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "chore: Update appcast for ${RELEASE_TAG}" \
+            --body "Auto-generated appcast update from release workflow. Merges automatically once CI passes.")
+
+          gh pr merge "$BRANCH" --auto --merge
+
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
 
       - name: Summary
         run: |
           echo "## Appcast Update Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ "${{ steps.changes.outputs.changed }}" == "true" ]; then
-            echo "✅ Appcast files updated and pushed to main branch" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Appcast PR created and auto-merge enabled" >> $GITHUB_STEP_SUMMARY
           else
             echo "ℹ️ No changes to appcast files" >> $GITHUB_STEP_SUMMARY
           fi
