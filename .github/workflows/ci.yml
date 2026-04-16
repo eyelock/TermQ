@@ -119,7 +119,7 @@ jobs:
   all-clear:
     name: All Clear
     runs-on: ubuntu-latest
-    needs: [changes, build, test, lint, format]
+    needs: [changes, build, test, lint, format, build-release]
     if: always()
 
     steps:
