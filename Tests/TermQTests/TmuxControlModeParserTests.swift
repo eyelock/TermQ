@@ -66,9 +66,9 @@ final class TmuxControlModeParserTests: XCTestCase {
         var receivedId: String?
         parser.onWindowAdd = { id in receivedId = id }
 
-        parser.parse("%window-add ")   // partial
+        parser.parse("%window-add ")  // partial
         XCTAssertNil(receivedId)
-        parser.parse("@7\n")           // completes the line
+        parser.parse("@7\n")  // completes the line
 
         XCTAssertEqual(receivedId, "7")
     }
