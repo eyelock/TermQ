@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 /// Top-level sidebar container with tab switching between Repositories and Harnesses.
@@ -8,6 +9,7 @@ import SwiftUI
 struct SidebarView: View {
     @ObservedObject var worktreeViewModel: WorktreeSidebarViewModel
     @ObservedObject var detector: YNHDetector
+    @ObservedObject var harnessRepository: HarnessRepository
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
 
@@ -35,7 +37,7 @@ struct SidebarView: View {
             case .repositories:
                 WorktreeSidebarView(viewModel: worktreeViewModel)
             case .harnesses where showHarnessesTab:
-                HarnessesSidebarTab(detector: detector)
+                HarnessesSidebarTab(detector: detector, repository: harnessRepository)
             default:
                 // Feature flag off but selectedTab persisted as harnesses — fall back.
                 WorktreeSidebarView(viewModel: worktreeViewModel)
@@ -51,6 +53,22 @@ struct SidebarView: View {
                 Task { await detector.detect() }
             } else {
                 selectedTab = .repositories
+            }
+        }
+        .onChange(of: selectedTab) { _, newTab in
+            if newTab != .harnesses {
+                harnessRepository.selectedHarnessName = nil
+            }
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)
+        ) { _ in
+            guard harnessTabEnabled else { return }
+            Task {
+                await detector.detect()
+                if case .ready = detector.status {
+                    await harnessRepository.refresh()
+                }
             }
         }
     }

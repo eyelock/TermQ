@@ -123,7 +123,7 @@ final class YNHDetector: ObservableObject {
     // MARK: - Subprocess
 
     /// Run a command and return its stdout. Throws on non-zero exit.
-    private static func runCommand(
+    static func runCommand(
         _ executable: String,
         args: [String],
         environment: [String: String]? = nil

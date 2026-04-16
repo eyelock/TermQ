@@ -4,14 +4,14 @@ import TermQShared
 
 /// Sidebar content for the Harnesses tab.
 ///
-/// Phase 1 placeholder — shows detection state only:
-/// - `.binaryOnly` → "Run `ynh init`" call-to-action
-/// - `.ready` → empty harness list placeholder (populated in Phase 2)
+/// Shows detection state and, when YNH is ready, the installed harness list
+/// populated from `ynh ls --format json`.
 ///
 /// The `.missing` state is handled by the parent `SidebarView` which hides
 /// the tab entirely, so this view never receives it.
 struct HarnessesSidebarTab: View {
     @ObservedObject var detector: YNHDetector
+    @ObservedObject var repository: HarnessRepository
 
     var body: some View {
         VStack(spacing: 0) {
@@ -31,7 +31,17 @@ struct HarnessesSidebarTab: View {
                 initRequiredState
 
             case .ready:
-                readyPlaceholder
+                harnessList
+            }
+        }
+        .onAppear {
+            if case .ready = detector.status, repository.harnesses.isEmpty {
+                Task { await repository.refresh() }
+            }
+        }
+        .onChange(of: detector.status) { _, newStatus in
+            if case .ready = newStatus {
+                Task { await repository.refresh() }
             }
         }
     }
@@ -46,17 +56,46 @@ struct HarnessesSidebarTab: View {
 
             Spacer()
 
+            if repository.isLoading {
+                ProgressView()
+                    .controlSize(.small)
+            }
+
             Button {
-                Task { await detector.detect() }
+                Task {
+                    await detector.detect()
+                    await repository.refresh()
+                }
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .imageScale(.medium)
             }
             .buttonStyle(.plain)
             .help(Strings.Harnesses.refreshHelp)
+            .disabled(repository.isLoading)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
+    }
+
+    // MARK: - Harness List
+
+    @ViewBuilder
+    private var harnessList: some View {
+        if repository.harnesses.isEmpty && !repository.isLoading {
+            emptyState(
+                icon: "puzzlepiece.extension",
+                message: Strings.Harnesses.emptyMessage
+            )
+        } else {
+            List(selection: $repository.selectedHarnessName) {
+                ForEach(repository.harnesses) { harness in
+                    HarnessRowView(harness: harness)
+                        .tag(harness.name)
+                }
+            }
+            .listStyle(.sidebar)
+        }
     }
 
     // MARK: - States
@@ -76,22 +115,6 @@ struct HarnessesSidebarTab: View {
             Text(Strings.Harnesses.initHint)
                 .font(.caption)
                 .foregroundColor(Color(nsColor: .tertiaryLabelColor))
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
-    }
-
-    /// ynh fully operational — Phase 2 will populate this with the harness list.
-    private var readyPlaceholder: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "puzzlepiece.extension")
-                .font(.system(size: 32))
-                .foregroundColor(.secondary)
-
-            Text(Strings.Harnesses.emptyMessage)
-                .font(.callout)
-                .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -7,6 +7,7 @@ struct ContentView: View {
     @StateObject private var viewModel = BoardViewModel.shared
     @StateObject private var sidebarViewModel = WorktreeSidebarViewModel.shared
     @StateObject private var ynhDetector = YNHDetector.shared
+    @StateObject private var harnessRepo = HarnessRepository.shared
     @EnvironmentObject var urlHandler: URLHandler
     @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
     @State private var isZoomed = false
@@ -14,16 +15,30 @@ struct ContentView: View {
     @State private var showCommandPalette = false
     @State private var showBin = false
     @State private var showColumnPicker = false
+    /// Card that was selected before navigating to a harness detail, restored on dismiss.
+    @State private var cardBeforeHarness: TerminalCard?
 
     var body: some View {
         HSplitView {
             if !isSidebarCollapsed {
-                SidebarView(worktreeViewModel: sidebarViewModel, detector: ynhDetector)
-                    .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
+                SidebarView(
+                    worktreeViewModel: sidebarViewModel,
+                    detector: ynhDetector,
+                    harnessRepository: harnessRepo
+                )
+                .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
 
             ZStack {
-                if let selectedCard = viewModel.selectedCard {
+                if let harness = harnessRepo.selectedHarness {
+                    HarnessDetailView(harness: harness) {
+                        harnessRepo.selectedHarnessName = nil
+                        if let card = cardBeforeHarness {
+                            viewModel.selectCard(card)
+                            cardBeforeHarness = nil
+                        }
+                    }
+                } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
                         card: selectedCard,
@@ -98,6 +113,17 @@ struct ContentView: View {
             .onChange(of: urlHandler.pendingTerminal?.id) { _, _ in
                 handlePendingTerminal()
             }
+            .onChange(of: viewModel.selectedCard?.id) { _, newValue in
+                if newValue != nil {
+                    harnessRepo.selectedHarnessName = nil
+                }
+            }
+            .onChange(of: harnessRepo.selectedHarnessName) { _, newValue in
+                if newValue != nil {
+                    cardBeforeHarness = viewModel.selectedCard
+                    viewModel.deselectCard()
+                }
+            }
             .sheet(item: $viewModel.isEditingCard) { card in
                 CardEditorView(
                     card: card,
@@ -162,8 +188,10 @@ struct ContentView: View {
                 }
 
                 ToolbarItem(placement: .navigation) {
-                    if viewModel.selectedCard != nil {
+                    if viewModel.selectedCard != nil || harnessRepo.selectedHarness != nil {
                         Button {
+                            cardBeforeHarness = nil
+                            harnessRepo.selectedHarnessName = nil
                             viewModel.deselectCard()
                         } label: {
                             Image(systemName: "rectangle.grid.2x2")
@@ -173,7 +201,23 @@ struct ContentView: View {
                 }
 
                 ToolbarItem(placement: .principal) {
-                    if let selectedCard = viewModel.selectedCard {
+                    if let harness = harnessRepo.selectedHarness {
+                        HStack(spacing: 8) {
+                            Image(systemName: "puzzlepiece.extension")
+                            Text(harness.name)
+                                .font(.headline)
+                            if !harness.defaultVendor.isEmpty {
+                                Text(harness.defaultVendor)
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.purple.opacity(0.3))
+                                    .foregroundColor(.purple)
+                                    .clipShape(Capsule())
+                            }
+                        }
+                    } else if let selectedCard = viewModel.selectedCard {
                         HStack(spacing: 8) {
                             // MCP status indicator
                             mcpStatusIndicator

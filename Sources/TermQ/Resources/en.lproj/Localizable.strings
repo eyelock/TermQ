@@ -594,6 +594,31 @@
 "harnesses.init.hint" = "Open a terminal and run:\nynh init";
 "harnesses.empty.message" = "No harnesses installed yet.";
 
+// Harnesses — row badges
+"harnesses.source.local" = "Local";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Information";
+"harnesses.detail.path" = "Path";
+"harnesses.detail.source" = "Source";
+"harnesses.detail.subpath" = "Subpath";
+"harnesses.detail.installed.at" = "Installed";
+"harnesses.detail.artifacts" = "Artifacts";
+"harnesses.detail.no.artifacts" = "No artifacts.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Rules";
+"harnesses.detail.commands" = "Commands";
+"harnesses.detail.dependencies" = "Dependencies";
+"harnesses.detail.includes %d" = "Includes (%d)";
+"harnesses.detail.delegates %d" = "Delegates to (%d)";
+"harnesses.detail.picks %d" = "Picks (%d):";
+"harnesses.reveal.in.finder" = "Reveal in Finder";
+"harnesses.open.in.browser" = "Open in browser";
+"harnesses.close.detail" = "Close";
+"harnesses.detail.artifacts.from.includes" = "This harness gets its artifacts from includes. Full composition detail available in Phase 3.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
 "settings.ynh.title" = "ynh";

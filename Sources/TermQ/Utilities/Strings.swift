@@ -862,5 +862,36 @@ extension Strings {
         static var initRequired: String { localized("harnesses.init.required") }
         static var initHint: String { localized("harnesses.init.hint") }
         static var emptyMessage: String { localized("harnesses.empty.message") }
+
+        // Row badges
+        static var sourceLocal: String { localized("harnesses.source.local") }
+        static var sourceRegistry: String { localized("harnesses.source.registry") }
+
+        // Detail view
+        static var detailInfo: String { localized("harnesses.detail.info") }
+        static var detailPath: String { localized("harnesses.detail.path") }
+        static var detailSource: String { localized("harnesses.detail.source") }
+        static var detailSubpath: String { localized("harnesses.detail.subpath") }
+        static var detailInstalledAt: String { localized("harnesses.detail.installed.at") }
+        static var detailArtifacts: String { localized("harnesses.detail.artifacts") }
+        static var detailNoArtifacts: String { localized("harnesses.detail.no.artifacts") }
+        static var detailSkills: String { localized("harnesses.detail.skills") }
+        static var detailAgents: String { localized("harnesses.detail.agents") }
+        static var detailRules: String { localized("harnesses.detail.rules") }
+        static var detailCommands: String { localized("harnesses.detail.commands") }
+        static var detailDependencies: String { localized("harnesses.detail.dependencies") }
+        static func detailIncludes(_ count: Int) -> String {
+            localized("harnesses.detail.includes %d", count)
+        }
+        static func detailDelegates(_ count: Int) -> String {
+            localized("harnesses.detail.delegates %d", count)
+        }
+        static func detailPicks(_ count: Int) -> String {
+            localized("harnesses.detail.picks %d", count)
+        }
+        static var revealInFinder: String { localized("harnesses.reveal.in.finder") }
+        static var openInBrowser: String { localized("harnesses.open.in.browser") }
+        static var closeDetail: String { localized("harnesses.close.detail") }
+        static var detailArtifactsFromIncludes: String { localized("harnesses.detail.artifacts.from.includes") }
     }
 }
