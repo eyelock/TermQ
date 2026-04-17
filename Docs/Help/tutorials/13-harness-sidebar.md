@@ -39,23 +39,15 @@ Switching tabs in the sidebar persists across launches — if you end a session 
 
 ---
 
-## 13.3 — YNH detection states
+## 13.3 — YNH detection
 
-TermQ auto-detects the `ynh` binary on focus and when the tab is activated. There are three possible states:
-
-**1. `ynh` binary not installed.**
+TermQ auto-detects the `ynh` binary on launch and on app focus. If it's not found, the tab shows an install prompt:
 
 ![YNH not installed](../Images/harness-ynh-not-installed.png)
 
 Install YNH via its documented method (Homebrew, release binary, `go install`), then click the refresh button in the tab header. No restart needed — TermQ rechecks on every app-focus event.
 
-**2. `ynh` binary installed, but not initialised.**
-
-![YNH init required](../Images/harness-ynh-init-required.png)
-
-YNH keeps its state in `~/.ynh/`. Run `ynh init` once in any terminal to create the directory. TermQ will detect the change the next time it polls.
-
-**3. `ynh` ready.** The harness list appears.
+When YNH is installed and ready, the harness list appears.
 
 > **Where TermQ looks:** `PATH`, then common fallbacks (`/opt/homebrew/bin`, `/usr/local/bin`, `~/go/bin`). If yours is elsewhere, set a custom path in Settings → YNH Harness Toolchain.
 
