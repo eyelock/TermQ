@@ -370,6 +370,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
         repositories = config.repositories.map { ObservableRepository(from: $0) }
     }
 
+    func refresh() {
+        reloadRepositories()
+        refreshExpandedWorktrees()
+    }
+
     private func reloadRepositories() {
         let config = persistence.loadConfig()
         // Merge: update existing, append new, keep order

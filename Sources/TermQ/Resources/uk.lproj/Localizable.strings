@@ -468,11 +468,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Запит на зовнішню зміну";
-"security.external.modification.message" = "Зовнішній процес намагається змінити контекст LLM для терміналу '%@':
-
-%@
-
-Це може вплинути на те, як асистенти ШІ взаємодіють із цим терміналом.";
+"security.external.modification.message" = "Зовнішній процес намагається змінити контекст LLM для терміналу '%@':\n\n%@\n\nЦе може вплинути на те, як асистенти ШІ взаємодіють із цим терміналом.";
 "security.allow" = "Дозволити";
 "security.deny" = "Відхилити";
 "security.allow.disable.prompt" = "Дозволити і більше не питати";
@@ -540,6 +536,11 @@
 "sidebar.worktree.open.remote.commit" = "Відкрити коміт на Remote";
 "sidebar.worktree.lock" = "Заблокувати робоче дерево";
 "sidebar.worktree.unlock" = "Розблокувати робоче дерево";
+
+"sidebar.worktree.set.harness" = "Встановити harness…";
+"sidebar.worktree.clear.harness" = "Видалити harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Запустити %@";
 "sidebar.remove.worktree" = "Видалити робоче дерево";
 "sidebar.remove.worktree.title" = "Видалити робоче дерево?";
 "sidebar.remove.worktree.confirm" = "Видалити";
@@ -572,3 +573,142 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Упряжки";
+"harnesses.refresh.help" = "Повторно визначити інструментарій ynh";
+"harnesses.not.installed" = "ynh не встановлений.";
+"harnesses.init.required" = "ynh знайдено, але не ініціалізовано.\nЗапустіть `ynh init` для налаштування.";
+"harnesses.init.hint" = "Відкрийте термінал і запустіть:\nynh init";
+"harnesses.empty.message" = "Упряжки ще не встановлені.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Локальний";
+"harnesses.source.registry" = "Реєстр";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Інформація";
+"harnesses.detail.path" = "Шлях";
+"harnesses.detail.source" = "Джерело";
+"harnesses.detail.subpath" = "Підшлях";
+"harnesses.detail.installed.at" = "Встановлено";
+"harnesses.detail.artifacts" = "Артефакти";
+"harnesses.detail.no.artifacts" = "Немає артефактів.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Агенти";
+"harnesses.detail.rules" = "Правила";
+"harnesses.detail.commands" = "Команди";
+"harnesses.detail.dependencies" = "Залежності";
+"harnesses.detail.includes %d" = "Містить (%d)";
+"harnesses.detail.delegates %d" = "Делегує (%d)";
+"harnesses.detail.picks %d" = "Вибирає (%d):";
+"harnesses.reveal.in.finder" = "Показати у Finder";
+"harnesses.open.in.browser" = "Відкрити у браузері";
+"harnesses.close.detail" = "Закрити";
+"harnesses.detail.artifacts.from.includes" = "Ця упряжка отримує артефакти з включень залежностей.";
+"harnesses.detail.from" = "з";
+"harnesses.detail.hooks" = "Хуки";
+"harnesses.detail.mcp.servers" = "MCP-сервери";
+"harnesses.detail.profiles" = "Профілі";
+"harnesses.detail.focuses" = "Фокуси";
+"harnesses.detail.focus.profile %@" = "профіль: %@";
+"harnesses.detail.manifest" = "Маніфест";
+"harnesses.detail.no.manifest" = "Маніфест недоступний.";
+"harnesses.detail.resolved" = "Вирішено";
+"harnesses.detail.unresolved" = "Не вирішено";
+"harnesses.detail.no.hooks" = "У цієї упряжки немає хуків.";
+"harnesses.detail.no.mcp.servers" = "У цієї упряжки немає MCP-серверів.";
+"harnesses.detail.no.profiles" = "У цієї упряжки немає профілів.";
+"harnesses.detail.no.focuses" = "У цієї упряжки немає фокусів.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Запустити упряжку";
+"harnesses.launch.vendor" = "Постачальник";
+"harnesses.launch.vendor.unavailable" = "(не встановлено)";
+"harnesses.launch.vendor.default" = "За замовчуванням (%@)";
+"harnesses.launch.focus" = "Фокус";
+"harnesses.launch.focus.none" = "Немає";
+"harnesses.launch.working.directory" = "Робочий каталог";
+"harnesses.launch.browse" = "Огляд…";
+"harnesses.launch.prompt" = "Запит";
+"harnesses.launch.prompt.placeholder" = "Необов'язковий запит для агента…";
+"harnesses.launch.button" = "Запустити";
+"harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
+"harnesses.launch.cancel" = "Скасувати";
+"harnesses.launch.backend" = "Бекенд";
+
+"harnesses.linked.worktrees" = "Пов’язані worktree";
+"harnesses.linked.worktrees.none" = "Немає worktree, пов’язаних з цим harness.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Інструментарій YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Менеджер упряжок для ШІ-асистентів";
+"settings.ynh.enable.harness.tab" = "Показувати вкладку упряжок на панелі";
+"settings.ynh.enable.harness.tab.help" = "Додає вкладку «Упряжки» на бічну панель для перегляду та керування встановленими упряжками";
+"settings.ynh.home.override" = "Перевизначення $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "За замовчуванням (використовує власне розрішення ynh)";
+"settings.ynh.home.override.help" = "Перевизначає каталог YNH_HOME для дочірнього процесу ynh. Залиште порожнім для значення за замовчуванням.";
+"settings.ynh.resolved.paths" = "Розрішені шляхи";
+"settings.ynh.redetect" = "Визначити повторно";
+"settings.ynh.init.required" = "Не ініціалізовано";
+"settings.ynh.ready" = "Готовий";
+"settings.ynh.path.label" = "Шлях:";
+"settings.ynh.ynd.path.label" = "Шлях ynd:";
+"settings.ynh.status.label" = "Статус:";
+"settings.ynh.ready.info" = "Інструментарій визначено та ініціалізовано. Увімкніть вкладку бічної панелі для перегляду упряжок.";
+"settings.ynh.advanced" = "Розширені";
+"settings.ynh.version.label" = "Версія:";
+
+"common.clear" = "Очистити";
+
+"sidebar.worktree.create.terminal" = "Створити Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Копіювати як шлях";
+
+"sidebar.prune.worktrees" = "Прибрати worktrees…";
+
+"sidebar.prune.worktrees.title" = "Прибрати worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Прибрати";
+
+"sidebar.prune.worktrees.nothing.title" = "Нема що прибирати";
+
+"sidebar.prune.worktrees.nothing.message" = "Всі worktrees обліковані. Застарілих записів не знайдено.";
+
+"sidebar.prune.worktrees.explanation" = "Ці адміністративні записи вказують на каталоги, яких більше не існує. Прибирання видаляє їх — ваші гілки не зачіпаються.";
+
+// Install sheet
+"harnesses.install.title" = "Встановити harness";
+"harnesses.install.toolbar.help" = "Встановити harness";
+"harnesses.install.tab.search" = "Пошук";
+"harnesses.install.tab.git" = "З Git";
+"harnesses.install.tab.sources" = "Джерела";
+"harnesses.install.search.placeholder" = "Пошук у реєстрах та джерелах…";
+"harnesses.install.search.prompt" = "Введіть текст для пошуку в реєстрах і джерелах";
+"harnesses.install.search.empty" = "Немає результатів";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Підшлях";
+"harnesses.install.git.subpath.placeholder" = "Необов'язковий підкаталог";
+"harnesses.install.command.preview" = "Попередній перегляд команди";
+"harnesses.install.confirm" = "Встановити";
+"harnesses.install.cancel" = "Скасувати";
+"harnesses.install.already.installed" = "Встановлено";
+"harnesses.install.from %@" = "з %@";
+"harnesses.install.sources.empty" = "Джерела не налаштовано. Додайте локальний каталог для перегляду його harnesses.";
+"harnesses.install.sources.add" = "Додати джерело…";
+"harnesses.install.sources.add.help" = "Додати локальний каталог як джерело harness";
+"harnesses.install.sources.remove" = "Видалити";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Оновити";
+"harnesses.update.help" = "Оновити до останньої версії";
+"harnesses.uninstall.button" = "Видалити";
+"harnesses.uninstall.help" = "Видалити цей harness";
+"harnesses.uninstall.alert.title %@" = "Видалити \"%@\"?";
+"harnesses.uninstall.alert.message" = "Це видалить harness з вашої системи.";
+"harnesses.uninstall.alert.worktrees %ld" = "Цей harness пов'язаний з %ld робочим деревом (деревами) — ці зв'язки буде очищено.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld термінал(и) зараз виконують цей harness.";
+"harnesses.uninstall.alert.confirm" = "Видалити";
+"harnesses.more.actions.help" = "Інші дії";

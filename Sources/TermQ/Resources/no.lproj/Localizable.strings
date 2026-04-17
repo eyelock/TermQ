@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Forespørsel om ekstern endring";
-"security.external.modification.message" = "En ekstern prosess prøver å endre LLM-kontekst for terminalen '%@':
-
-%@
-
-Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
+"security.external.modification.message" = "En ekstern prosess prøver å endre LLM-kontekst for terminalen '%@':\n\n%@\n\nDette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "security.allow" = "Tillat";
 "security.deny" = "Avslå";
 "security.allow.disable.prompt" = "Tillat og ikke spør igjen";
@@ -538,6 +534,11 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "sidebar.worktree.open.remote.commit" = "Åpne commit på Remote";
 "sidebar.worktree.lock" = "Lås worktree";
 "sidebar.worktree.unlock" = "Lås opp worktree";
+
+"sidebar.worktree.set.harness" = "Angi harness…";
+"sidebar.worktree.clear.harness" = "Fjern harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Start %@";
 "sidebar.remove.worktree" = "Fjern worktree";
 "sidebar.remove.worktree.title" = "Fjerne worktree?";
 "sidebar.remove.worktree.confirm" = "Fjern";
@@ -570,3 +571,142 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Gjenkjenn ynh-verktøykjeden på nytt";
+"harnesses.not.installed" = "ynh er ikke installert.";
+"harnesses.init.required" = "ynh funnet men ikke initialisert.\nKjør `ynh init` for å konfigurere.";
+"harnesses.init.hint" = "Åpne en terminal og kjør:\nynh init";
+"harnesses.empty.message" = "Ingen harnesses installert ennå.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informasjon";
+"harnesses.detail.path" = "Sti";
+"harnesses.detail.source" = "Kilde";
+"harnesses.detail.subpath" = "Understi";
+"harnesses.detail.installed.at" = "Installert";
+"harnesses.detail.artifacts" = "Artefakter";
+"harnesses.detail.no.artifacts" = "Ingen artefakter.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenter";
+"harnesses.detail.rules" = "Regler";
+"harnesses.detail.commands" = "Kommandoer";
+"harnesses.detail.dependencies" = "Avhengigheter";
+"harnesses.detail.includes %d" = "Inkluderer (%d)";
+"harnesses.detail.delegates %d" = "Delegerer til (%d)";
+"harnesses.detail.picks %d" = "Velger (%d):";
+"harnesses.reveal.in.finder" = "Vis i Finder";
+"harnesses.open.in.browser" = "Åpne i nettleser";
+"harnesses.close.detail" = "Lukk";
+"harnesses.detail.artifacts.from.includes" = "Denne harness henter sine artefakter fra avhengighets-includes.";
+"harnesses.detail.from" = "fra";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-servere";
+"harnesses.detail.profiles" = "Profiler";
+"harnesses.detail.focuses" = "Fokuser";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Ingen manifest tilgjengelig.";
+"harnesses.detail.resolved" = "Løst";
+"harnesses.detail.unresolved" = "Uløst";
+"harnesses.detail.no.hooks" = "Denne harness har ingen hooks.";
+"harnesses.detail.no.mcp.servers" = "Denne harness har ingen MCP-servere.";
+"harnesses.detail.no.profiles" = "Denne harness har ingen profiler.";
+"harnesses.detail.no.focuses" = "Denne harness har ingen fokuser.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Start harness";
+"harnesses.launch.vendor" = "Leverandør";
+"harnesses.launch.vendor.unavailable" = "(ikke installert)";
+"harnesses.launch.vendor.default" = "Standard (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Ingen";
+"harnesses.launch.working.directory" = "Arbeidsmappe";
+"harnesses.launch.browse" = "Bla gjennom…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
+"harnesses.launch.button" = "Start";
+"harnesses.launch.help" = "Start denne harness i en ny terminal";
+"harnesses.launch.cancel" = "Avbryt";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Tilknyttede worktrees";
+"harnesses.linked.worktrees.none" = "Ingen worktrees er tilknyttet dette harness.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-verktøykjede";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-behandler for AI-assistenter";
+"settings.ynh.enable.harness.tab" = "Vis harnesses-fane i sidepanelet";
+"settings.ynh.enable.harness.tab.help" = "Legger til en Harnesses-fane i sidepanelet for å bla gjennom og administrere installerte harnesses";
+"settings.ynh.home.override" = "$YNH_HOME-overstyring";
+"settings.ynh.home.override.placeholder" = "Standard (bruker ynh's egen resolusjon)";
+"settings.ynh.home.override.help" = "Overstyrer YNH_HOME-mappen for ynh-delprosessen. La stå tomt for standard.";
+"settings.ynh.resolved.paths" = "Løste stier";
+"settings.ynh.redetect" = "Gjenkjenn på nytt";
+"settings.ynh.init.required" = "Ikke initialisert";
+"settings.ynh.ready" = "Klar";
+"settings.ynh.path.label" = "Sti:";
+"settings.ynh.ynd.path.label" = "ynd-sti:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Verktøykjede gjenkjent og initialisert. Aktiver sidepanel-fanen for å bla gjennom harnesses.";
+"settings.ynh.advanced" = "Avansert";
+"settings.ynh.version.label" = "Versjon:";
+
+"common.clear" = "Tøm";
+
+"sidebar.worktree.create.terminal" = "Opprett Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopier som filsti";
+
+"sidebar.prune.worktrees" = "Beskjær worktrees…";
+
+"sidebar.prune.worktrees.title" = "Beskjær worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Beskjær";
+
+"sidebar.prune.worktrees.nothing.title" = "Ingenting å beskjære";
+
+"sidebar.prune.worktrees.nothing.message" = "Alle worktrees er registrert. Ingen utdaterte poster ble funnet.";
+
+"sidebar.prune.worktrees.explanation" = "Disse administrative postene peker til mapper som ikke lenger eksisterer. Beskjæring fjerner dem — grenene dine påvirkes ikke.";
+
+// Install sheet
+"harnesses.install.title" = "Installer harness";
+"harnesses.install.toolbar.help" = "Installer et harness";
+"harnesses.install.tab.search" = "Søk";
+"harnesses.install.tab.git" = "Fra Git";
+"harnesses.install.tab.sources" = "Kilder";
+"harnesses.install.search.placeholder" = "Søk i registre og kilder…";
+"harnesses.install.search.prompt" = "Skriv for å søke i registre og kilder";
+"harnesses.install.search.empty" = "Ingen resultater";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Understi";
+"harnesses.install.git.subpath.placeholder" = "Valgfri undermappe";
+"harnesses.install.command.preview" = "Forhåndsvisning av kommando";
+"harnesses.install.confirm" = "Installer";
+"harnesses.install.cancel" = "Avbryt";
+"harnesses.install.already.installed" = "Installert";
+"harnesses.install.from %@" = "fra %@";
+"harnesses.install.sources.empty" = "Ingen kilder konfigurert. Legg til en lokal mappe for å bla gjennom dens harnesses.";
+"harnesses.install.sources.add" = "Legg til kilde…";
+"harnesses.install.sources.add.help" = "Legg til en lokal mappe som harness-kilde";
+"harnesses.install.sources.remove" = "Fjern";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Oppdater";
+"harnesses.update.help" = "Oppdater til nyeste versjon";
+"harnesses.uninstall.button" = "Avinstaller";
+"harnesses.uninstall.help" = "Avinstaller denne harness";
+"harnesses.uninstall.alert.title %@" = "Avinstaller \"%@\"?";
+"harnesses.uninstall.alert.message" = "Dette fjerner harness fra systemet ditt.";
+"harnesses.uninstall.alert.worktrees %ld" = "Denne harness er koblet til %ld worktree(r) — disse koblingene vil bli fjernet.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kjører denne harness for øyeblikket.";
+"harnesses.uninstall.alert.confirm" = "Avinstaller";
+"harnesses.more.actions.help" = "Flere handlinger";

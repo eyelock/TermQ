@@ -468,11 +468,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Harici Değişiklik İsteği";
-"security.external.modification.message" = "Harici bir işlem, '%@' terminali için LLM bağlamını değiştirmeye çalışıyor:
-
-%@
-
-Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkileyebilir.";
+"security.external.modification.message" = "Harici bir işlem, '%@' terminali için LLM bağlamını değiştirmeye çalışıyor:\n\n%@\n\nBu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkileyebilir.";
 "security.allow" = "İzin Ver";
 "security.deny" = "Reddet";
 "security.allow.disable.prompt" = "İzin Ver ve Bir Daha Sorma";
@@ -540,6 +536,11 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "sidebar.worktree.open.remote.commit" = "Commit'i Remote'ta aç";
 "sidebar.worktree.lock" = "Çalışma Ağacını Kilitle";
 "sidebar.worktree.unlock" = "Çalışma Ağacının Kilidini Aç";
+
+"sidebar.worktree.set.harness" = "Harness ayarla…";
+"sidebar.worktree.clear.harness" = "Harness’i temizle";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Başlat %@";
 "sidebar.remove.worktree" = "Çalışma Ağacını Kaldır";
 "sidebar.remove.worktree.title" = "Çalışma Ağacı Kaldırılsın mı?";
 "sidebar.remove.worktree.confirm" = "Kaldır";
@@ -572,3 +573,142 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness'ler";
+"harnesses.refresh.help" = "ynh araç zincirini yeniden algıla";
+"harnesses.not.installed" = "ynh yüklü değil.";
+"harnesses.init.required" = "ynh bulundu ancak başlatılmadı.\nKurulum için `ynh init` komutunu çalıştırın.";
+"harnesses.init.hint" = "Bir terminal açın ve çalıştırın:\nynh init";
+"harnesses.empty.message" = "Henüz harness yüklü değil.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Yerel";
+"harnesses.source.registry" = "Kayıt Defteri";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Bilgi";
+"harnesses.detail.path" = "Yol";
+"harnesses.detail.source" = "Kaynak";
+"harnesses.detail.subpath" = "Alt yol";
+"harnesses.detail.installed.at" = "Yüklenme tarihi";
+"harnesses.detail.artifacts" = "Artefaktlar";
+"harnesses.detail.no.artifacts" = "Artefakt yok.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Ajanlar";
+"harnesses.detail.rules" = "Kurallar";
+"harnesses.detail.commands" = "Komutlar";
+"harnesses.detail.dependencies" = "Bağımlılıklar";
+"harnesses.detail.includes %d" = "İçerir (%d)";
+"harnesses.detail.delegates %d" = "Devredilen (%d)";
+"harnesses.detail.picks %d" = "Seçilen (%d):";
+"harnesses.reveal.in.finder" = "Finder'da Göster";
+"harnesses.open.in.browser" = "Tarayıcıda Aç";
+"harnesses.close.detail" = "Kapat";
+"harnesses.detail.artifacts.from.includes" = "Bu harness artefaktlarını bağımlılık eklemelerinden alır.";
+"harnesses.detail.from" = "kaynağı";
+"harnesses.detail.hooks" = "Hook'lar";
+"harnesses.detail.mcp.servers" = "MCP Sunucuları";
+"harnesses.detail.profiles" = "Profiller";
+"harnesses.detail.focuses" = "Odaklar";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Kullanılabilir manifest yok.";
+"harnesses.detail.resolved" = "Çözüldü";
+"harnesses.detail.unresolved" = "Çözülmedi";
+"harnesses.detail.no.hooks" = "Bu harness'in hook'u yok.";
+"harnesses.detail.no.mcp.servers" = "Bu harness'in MCP sunucusu yok.";
+"harnesses.detail.no.profiles" = "Bu harness'in profili yok.";
+"harnesses.detail.no.focuses" = "Bu harness'in odağı yok.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness Başlat";
+"harnesses.launch.vendor" = "Sağlayıcı";
+"harnesses.launch.vendor.unavailable" = "(yüklü değil)";
+"harnesses.launch.vendor.default" = "Varsayılan (%@)";
+"harnesses.launch.focus" = "Odak";
+"harnesses.launch.focus.none" = "Yok";
+"harnesses.launch.working.directory" = "Çalışma Dizini";
+"harnesses.launch.browse" = "Gözat…";
+"harnesses.launch.prompt" = "İstem";
+"harnesses.launch.prompt.placeholder" = "Ajana iletilecek isteğe bağlı istem…";
+"harnesses.launch.button" = "Başlat";
+"harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
+"harnesses.launch.cancel" = "İptal";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Bağlı worktree’ler";
+"harnesses.linked.worktrees.none" = "Bu harness’e bağlı worktree yok.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness Araç Zinciri";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "YZ asistanları için harness yöneticisi";
+"settings.ynh.enable.harness.tab" = "Yan çubukta Harness sekmesini göster";
+"settings.ynh.enable.harness.tab.help" = "Yüklü harness'lere göz atmak ve yönetmek için yan çubuğa bir Harness sekmesi ekler";
+"settings.ynh.home.override" = "$YNH_HOME Geçersiz Kılma";
+"settings.ynh.home.override.placeholder" = "Varsayılan (ynh'nin kendi çözümünü kullanır)";
+"settings.ynh.home.override.help" = "ynh alt işlemi için YNH_HOME dizinini geçersiz kılar. Varsayılan için boş bırakın.";
+"settings.ynh.resolved.paths" = "Çözümlenen Yollar";
+"settings.ynh.redetect" = "Yeniden Algıla";
+"settings.ynh.init.required" = "Başlatılmadı";
+"settings.ynh.ready" = "Hazır";
+"settings.ynh.path.label" = "Yol:";
+"settings.ynh.ynd.path.label" = "ynd Yolu:";
+"settings.ynh.status.label" = "Durum:";
+"settings.ynh.ready.info" = "Araç zinciri algılandı ve başlatıldı. Harness'lere göz atmak için yan çubuk sekmesini etkinleştirin.";
+"settings.ynh.advanced" = "Gelişmiş";
+"settings.ynh.version.label" = "Sürüm:";
+
+"common.clear" = "Temizle";
+
+"sidebar.worktree.create.terminal" = "Terminal Oluştur…";
+
+"sidebar.worktree.copy.pathname" = "Yol Adı Olarak Kopyala";
+
+"sidebar.prune.worktrees" = "Worktree'leri Budа…";
+
+"sidebar.prune.worktrees.title" = "Worktree'leri Buda";
+
+"sidebar.prune.worktrees.confirm" = "Buda";
+
+"sidebar.prune.worktrees.nothing.title" = "Budanacak Bir Şey Yok";
+
+"sidebar.prune.worktrees.nothing.message" = "Tüm worktree'ler kayıt altında. Eski kayıt bulunamadı.";
+
+"sidebar.prune.worktrees.explanation" = "Bu yönetim kayıtları artık var olmayan dizinlere işaret ediyor. Budama bunları kaldırır — dallarınız etkilenmez.";
+
+// Install sheet
+"harnesses.install.title" = "Harness Kur";
+"harnesses.install.toolbar.help" = "Bir harness kur";
+"harnesses.install.tab.search" = "Ara";
+"harnesses.install.tab.git" = "Git'ten";
+"harnesses.install.tab.sources" = "Kaynaklar";
+"harnesses.install.search.placeholder" = "Kayıt defterlerinde ve kaynaklarda ara…";
+"harnesses.install.search.prompt" = "Kayıt defterlerinde ve kaynaklarda aramak için yazın";
+"harnesses.install.search.empty" = "Sonuç bulunamadı";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Alt yol";
+"harnesses.install.git.subpath.placeholder" = "İsteğe bağlı alt dizin";
+"harnesses.install.command.preview" = "Komut önizlemesi";
+"harnesses.install.confirm" = "Kur";
+"harnesses.install.cancel" = "İptal";
+"harnesses.install.already.installed" = "Kurulu";
+"harnesses.install.from %@" = "%@ kaynağından";
+"harnesses.install.sources.empty" = "Hiçbir kaynak yapılandırılmamış. Harnesses'larını incelemek için yerel bir dizin ekleyin.";
+"harnesses.install.sources.add" = "Kaynak Ekle…";
+"harnesses.install.sources.add.help" = "Harness kaynağı olarak yerel dizin ekle";
+"harnesses.install.sources.remove" = "Kaldır";
+"harnesses.install.sources.count %ld" = "%ld harness";
+
+"harnesses.update.button" = "Güncelle";
+"harnesses.update.help" = "En son sürüme güncelle";
+"harnesses.uninstall.button" = "Kaldır";
+"harnesses.uninstall.help" = "Bu harness'i kaldır";
+"harnesses.uninstall.alert.title %@" = "\"%@\" kaldırılsın mı?";
+"harnesses.uninstall.alert.message" = "Bu, harness'i sisteminizden kaldıracak.";
+"harnesses.uninstall.alert.worktrees %ld" = "Bu harness %ld worktree ile bağlantılı — bu ilişkilendirmeler temizlenecek.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal şu anda bu harness'i çalıştırıyor.";
+"harnesses.uninstall.alert.confirm" = "Kaldır";
+"harnesses.more.actions.help" = "Daha fazla işlem";

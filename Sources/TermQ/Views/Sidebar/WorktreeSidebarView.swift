@@ -6,7 +6,10 @@ import TermQShared
 /// Collapsible sidebar showing registered repositories and their worktrees.
 struct WorktreeSidebarView: View {
     @ObservedObject var viewModel: WorktreeSidebarViewModel
+    var onLaunchHarness: ((String, String) -> Void)?
     @ObservedObject private var boardVM: BoardViewModel = .shared
+    @ObservedObject private var harnessRepository: HarnessRepository = .shared
+    @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @State private var showAddRepo = false
     @State private var showNewWorktreeFor: ObservableRepository?
     @State private var showEditRepoFor: ObservableRepository?
@@ -131,6 +134,15 @@ struct WorktreeSidebarView: View {
             }
             .buttonStyle(.plain)
             .help(Strings.Sidebar.addButtonHelp)
+
+            Button {
+                viewModel.refresh()
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .imageScale(.medium)
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Sidebar.refreshWorktrees)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -318,6 +330,8 @@ struct WorktreeSidebarView: View {
 
             Spacer()
 
+            harnessRowBadge(for: worktree)
+
             Button {
                 // Resign sidebar first responder before creating the terminal so the
                 // NSTableView does not win the focus race against focusTerminal()'s
@@ -375,6 +389,14 @@ struct WorktreeSidebarView: View {
             boardVM.addTerminal(workingDirectory: worktree.path)
         } label: {
             Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+        }
+
+        if let harnessName = ynhPersistence.harness(for: worktree.path) {
+            Button {
+                onLaunchHarness?(harnessName, worktree.path)
+            } label: {
+                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
+            }
         }
 
         Divider()
@@ -457,6 +479,12 @@ struct WorktreeSidebarView: View {
                 }
             }
 
+            // Group 5.5: Harness linkage (only when harnesses are available)
+            if !harnessRepository.harnesses.isEmpty {
+                Divider()
+                harnessContextItems(for: worktree)
+            }
+
             Divider()
 
             // Group 6: Destructive (linked worktrees only)
@@ -529,8 +557,12 @@ struct WorktreeSidebarView: View {
     private func revealInFinder(path: String) {
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
+}
 
-    private func openRemoteBranch(worktree: GitWorktree, repo: ObservableRepository) {
+// MARK: - Remote Navigation
+
+extension WorktreeSidebarView {
+    fileprivate func openRemoteBranch(worktree: GitWorktree, repo: ObservableRepository) {
         guard let branch = worktree.branch else { return }
         Task {
             guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
@@ -542,7 +574,7 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    private func openRemoteCommit(worktree: GitWorktree, repo: ObservableRepository) {
+    fileprivate func openRemoteCommit(worktree: GitWorktree, repo: ObservableRepository) {
         Task {
             guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
                 let base = remoteWebURL(from: raw)
@@ -552,8 +584,7 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    /// Convert a raw git remote URL (SSH or HTTPS) to a browser-navigable base URL.
-    private func remoteWebURL(from remoteURL: String) -> URL? {
+    fileprivate func remoteWebURL(from remoteURL: String) -> URL? {
         var urlString = remoteURL.trimmingCharacters(in: .whitespacesAndNewlines)
         // SSH: git@github.com:user/repo.git → https://github.com/user/repo
         if urlString.hasPrefix("git@") {
@@ -761,6 +792,49 @@ private struct WorktreeLeftIcon: View {
                     .frame(minWidth: 200)
                     .padding(.vertical, 4)
                 }
+            }
+        }
+    }
+}
+
+// MARK: - Harness Helpers
+
+extension WorktreeSidebarView {
+    @ViewBuilder
+    fileprivate func harnessRowBadge(for worktree: GitWorktree) -> some View {
+        if let harnessName = ynhPersistence.harness(for: worktree.path) {
+            Button {
+                harnessRepository.selectedHarnessName = harnessName
+            } label: {
+                Image(systemName: "puzzlepiece.extension")
+                    .imageScale(.small)
+                    .foregroundColor(.purple)
+            }
+            .buttonStyle(.plain)
+            .help(harnessName)
+        }
+    }
+
+    @ViewBuilder
+    fileprivate func harnessContextItems(for worktree: GitWorktree) -> some View {
+        let linked = ynhPersistence.harness(for: worktree.path)
+        Menu {
+            if linked != nil {
+                Button(Strings.Sidebar.clearHarness) {
+                    ynhPersistence.setHarness(nil, for: worktree.path)
+                }
+                Divider()
+            }
+            ForEach(harnessRepository.harnesses) { harness in
+                Button(harness.name) {
+                    ynhPersistence.setHarness(harness.name, for: worktree.path)
+                }
+            }
+        } label: {
+            if let linked {
+                Label(Strings.Sidebar.linkedHarness(linked), systemImage: "puzzlepiece.extension")
+            } else {
+                Label(Strings.Sidebar.setHarness, systemImage: "puzzlepiece.extension")
             }
         }
     }

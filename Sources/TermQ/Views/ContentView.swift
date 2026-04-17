@@ -6,6 +6,9 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     @StateObject private var viewModel = BoardViewModel.shared
     @StateObject private var sidebarViewModel = WorktreeSidebarViewModel.shared
+    @StateObject private var ynhDetector = YNHDetector.shared
+    @StateObject private var harnessRepo = HarnessRepository.shared
+    @StateObject private var vendorService = VendorService.shared
     @EnvironmentObject var urlHandler: URLHandler
     @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
     @State private var isZoomed = false
@@ -13,16 +16,63 @@ struct ContentView: View {
     @State private var showCommandPalette = false
     @State private var showBin = false
     @State private var showColumnPicker = false
+    @State private var showLaunchSheet = false
+    @State private var showInstallSheet = false
+    @State private var installCardIDs: Set<UUID> = []
+    @State private var uninstallCardNames: [UUID: String] = [:]
+    @State private var updateCardNames: [UUID: String] = [:]
+    @State private var launchWorkingDirectory: String?
+    /// Card that was selected before navigating to a harness detail, restored on dismiss.
+    @State private var cardBeforeHarness: TerminalCard?
 
     var body: some View {
         HSplitView {
             if !isSidebarCollapsed {
-                WorktreeSidebarView(viewModel: sidebarViewModel)
-                    .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
+                SidebarView(
+                    worktreeViewModel: sidebarViewModel,
+                    detector: ynhDetector,
+                    harnessRepository: harnessRepo,
+                    onLaunchHarness: { harness in
+                        harnessRepo.selectedHarnessName = harness.name
+                        Task { await vendorService.refresh() }
+                        showLaunchSheet = true
+                    },
+                    onLaunchHarnessInWorktree: { harnessName, path in
+                        harnessRepo.selectedHarnessName = harnessName
+                        launchWorkingDirectory = path
+                        Task { await vendorService.refresh() }
+                        showLaunchSheet = true
+                    },
+                    onInstall: { showInstallSheet = true },
+                    onUninstall: { name in uninstallHarness(name: name) },
+                    onUpdate: { name in updateHarness(name: name) }
+                )
+                .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
 
             ZStack {
-                if let selectedCard = viewModel.selectedCard {
+                if let harness = harnessRepo.selectedHarness {
+                    HarnessDetailView(
+                        harness: harness,
+                        detail: harnessRepo.selectedDetail,
+                        isLoadingDetail: harnessRepo.isLoadingDetail,
+                        detailError: harnessRepo.detailError,
+                        onDismiss: {
+                            harnessRepo.selectedHarnessName = nil
+                            if let card = cardBeforeHarness {
+                                viewModel.selectCard(card)
+                                cardBeforeHarness = nil
+                            }
+                        },
+                        onLaunch: { path in
+                            launchWorkingDirectory = path
+                            Task { await vendorService.refresh() }
+                            showLaunchSheet = true
+                        },
+                        onUpdate: { name in updateHarness(name: name) },
+                        onUninstall: { name in uninstallHarness(name: name) }
+                    )
+                } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
                         card: selectedCard,
@@ -97,6 +147,18 @@ struct ContentView: View {
             .onChange(of: urlHandler.pendingTerminal?.id) { _, _ in
                 handlePendingTerminal()
             }
+            .onChange(of: viewModel.selectedCard?.id) { _, newValue in
+                if newValue != nil {
+                    harnessRepo.selectedHarnessName = nil
+                }
+            }
+            .onChange(of: harnessRepo.selectedHarnessName) { _, newValue in
+                if let name = newValue {
+                    cardBeforeHarness = viewModel.selectedCard
+                    viewModel.deselectCard()
+                    Task { await harnessRepo.fetchDetail(for: name) }
+                }
+            }
             .sheet(item: $viewModel.isEditingCard) { card in
                 CardEditorView(
                     card: card,
@@ -147,6 +209,54 @@ struct ContentView: View {
             .sheet(isPresented: $showBin) {
                 BinView(viewModel: viewModel)
             }
+            .sheet(
+                isPresented: $showLaunchSheet,
+                onDismiss: { launchWorkingDirectory = nil },
+                content: {
+                    if let harness = harnessRepo.selectedHarness {
+                        HarnessLaunchSheet(
+                            harness: harness,
+                            detail: harnessRepo.selectedDetail,
+                            vendors: vendorService.vendors,
+                            initialWorkingDirectory: launchWorkingDirectory
+                        ) { config in
+                            launchHarness(config)
+                        }
+                    }
+                }
+            )
+            .sheet(isPresented: $showInstallSheet) {
+                HarnessInstallSheet(
+                    installedNames: Set(harnessRepo.harnesses.map(\.name))
+                ) { config in
+                    installHarness(config)
+                }
+            }
+            .onReceive(
+                NotificationCenter.default.publisher(for: .termqDirectSessionExited)
+            ) { notif in
+                guard let cardId = notif.userInfo?["cardId"] as? UUID else { return }
+                let succeeded = (notif.userInfo?["exitCode"] as? Int) == 0
+
+                if installCardIDs.remove(cardId) != nil {
+                    if case .ready = ynhDetector.status {
+                        Task { await harnessRepo.refresh() }
+                    }
+                    if succeeded { closeHarnessCard(cardId) }
+                } else if let name = uninstallCardNames.removeValue(forKey: cardId) {
+                    YNHPersistence.shared.removeAllAssociations(for: name)
+                    if case .ready = ynhDetector.status {
+                        Task { await harnessRepo.refresh() }
+                    }
+                    if succeeded { closeHarnessCard(cardId) }
+                } else if let name = updateCardNames.removeValue(forKey: cardId) {
+                    harnessRepo.invalidateDetail(for: name)
+                    if case .ready = ynhDetector.status {
+                        Task { await harnessRepo.refresh() }
+                    }
+                    if succeeded { closeHarnessCard(cardId) }
+                }
+            }
             .sheet(isPresented: $viewModel.showSessionRecovery) {
                 SessionRecoveryView(viewModel: viewModel)
             }
@@ -161,8 +271,10 @@ struct ContentView: View {
                 }
 
                 ToolbarItem(placement: .navigation) {
-                    if viewModel.selectedCard != nil {
+                    if viewModel.selectedCard != nil || harnessRepo.selectedHarness != nil {
                         Button {
+                            cardBeforeHarness = nil
+                            harnessRepo.selectedHarnessName = nil
                             viewModel.deselectCard()
                         } label: {
                             Image(systemName: "rectangle.grid.2x2")
@@ -172,7 +284,23 @@ struct ContentView: View {
                 }
 
                 ToolbarItem(placement: .principal) {
-                    if let selectedCard = viewModel.selectedCard {
+                    if let harness = harnessRepo.selectedHarness {
+                        HStack(spacing: 8) {
+                            Image(systemName: "puzzlepiece.extension")
+                            Text(harness.name)
+                                .font(.headline)
+                            if !harness.defaultVendor.isEmpty {
+                                Text(harness.defaultVendor)
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.purple.opacity(0.3))
+                                    .foregroundColor(.purple)
+                                    .clipShape(Capsule())
+                            }
+                        }
+                    } else if let selectedCard = viewModel.selectedCard {
                         HStack(spacing: 8) {
                             // MCP status indicator
                             mcpStatusIndicator
@@ -378,12 +506,17 @@ struct ContentView: View {
         }
     }
 
+}
+
+// MARK: - Private Helpers
+
+extension ContentView {
     /// MCP server status indicator
-    private var mcpStatusIndicator: some View {
+    var mcpStatusIndicator: some View {
         MCPStatusView(isWired: viewModel.selectedCard?.isWired ?? false)
     }
 
-    private var terminalActions: TerminalActions {
+    var terminalActions: TerminalActions {
         TerminalActions(
             quickNewTerminal: { viewModel.quickNewTerminal() },
             newTerminalWithDialog: {
@@ -450,7 +583,7 @@ struct ContentView: View {
     }
 
     /// Handle command palette actions
-    private func handlePaletteAction(_ action: CommandPaletteView.PaletteAction) {
+    func handlePaletteAction(_ action: CommandPaletteView.PaletteAction) {
         switch action {
         case .newTerminal:
             viewModel.quickNewTerminal()
@@ -486,13 +619,19 @@ struct ContentView: View {
         }
     }
 
-}
+    /// Wrap a string in single quotes for safe shell argument passing.
+    private func shellQuote(_ s: String) -> String {
+        "'" + s.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    }
 
-// MARK: - Private Helpers
+    /// Close a transient harness operation card once its shell has exited.
+    private func closeHarnessCard(_ cardId: UUID) {
+        guard let card = viewModel.tabManager.card(for: cardId) else { return }
+        viewModel.closeTab(card)
+    }
 
-extension ContentView {
     /// Launch native Terminal.app at the specified directory
-    fileprivate func launchNativeTerminal(at directory: String? = nil) {
+    func launchNativeTerminal(at directory: String? = nil) {
         let path = directory ?? NSHomeDirectory()
         let script = """
             tell application "Terminal"
@@ -510,8 +649,13 @@ extension ContentView {
         }
     }
 
+}
+
+// MARK: - Actions
+
+extension ContentView {
     /// Export terminal session content to a file
-    fileprivate func exportTerminalSession(for card: TerminalCard) {
+    func exportTerminalSession(for card: TerminalCard) {
         guard let terminalView = TerminalSessionManager.shared.getTerminalView(for: card.id) else {
             return
         }
@@ -538,7 +682,7 @@ extension ContentView {
         }
     }
 
-    fileprivate func handlePendingTerminal() {
+    func handlePendingTerminal() {
         guard let pending = urlHandler.pendingTerminal else { return }
 
         // Find the target column
@@ -585,5 +729,148 @@ extension ContentView {
 
         // Optionally open the terminal immediately
         viewModel.selectCard(card)
+    }
+
+    /// Install a harness by creating a transient Card running `ynh install` so the user sees output.
+    func installHarness(_ config: HarnessInstallConfig) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+        let card = TerminalCard(
+            title: "ynh install \(config.displayName)",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: config.command(ynhPath: ynhPath) + "; exit",
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        installCardIDs.insert(card.id)
+        viewModel.tabManager.addTransientCard(card)
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
+        harnessRepo.selectedHarnessName = nil
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
+    }
+
+    /// Uninstall a harness in a transient terminal; clears associations when the shell exits.
+    func uninstallHarness(name: String) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+        let card = TerminalCard(
+            title: "ynh uninstall \(name)",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: "\(ynhPath) uninstall \(shellQuote(name)); exit",
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        uninstallCardNames[card.id] = name
+        viewModel.tabManager.addTransientCard(card)
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
+        harnessRepo.selectedHarnessName = nil
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
+    }
+
+    /// Update a harness in a transient terminal; invalidates the detail cache when done.
+    func updateHarness(name: String) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+        let card = TerminalCard(
+            title: "ynh update \(name)",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: "\(ynhPath) update \(shellQuote(name)); exit",
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        updateCardNames[card.id] = name
+        viewModel.tabManager.addTransientCard(card)
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
+    }
+
+    /// Launch a harness by creating a transient Card with `ynh run` as the init command.
+    func launchHarness(_ config: HarnessLaunchConfig) {
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+
+        let card = TerminalCard(
+            title: config.harnessName,
+            tags: config.tags.map { Tag(key: $0.key, value: $0.value) },
+            columnId: column.id,
+            workingDirectory: config.workingDirectory,
+            initCommand: config.command,
+            backend: config.backend
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+
+        viewModel.tabManager.addTransientCard(card)
+
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
+
+        // Clear harness selection and switch to the new Card.
+        cardBeforeHarness = nil
+        harnessRepo.selectedHarnessName = nil
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
     }
 }

@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部変更リクエスト";
-"security.external.modification.message" = "外部プロセスがターミナル '%@' のLLMコンテキストを変更しようとしています:
-
-%@
-
-これにより、AIアシスタントがこのターミナルとどのように対話するかに影響を与える可能性があります。";
+"security.external.modification.message" = "外部プロセスがターミナル '%@' のLLMコンテキストを変更しようとしています:\n\n%@\n\nこれにより、AIアシスタントがこのターミナルとどのように対話するかに影響を与える可能性があります。";
 "security.allow" = "許可";
 "security.deny" = "拒否";
 "security.allow.disable.prompt" = "許可して次回から確認しない";
@@ -539,6 +535,11 @@
 "sidebar.worktree.open.remote.commit" = "リモートでコミットを開く";
 "sidebar.worktree.lock" = "worktreeをロック";
 "sidebar.worktree.unlock" = "worktreeのロックを解除";
+
+"sidebar.worktree.set.harness" = "Harness を設定…";
+"sidebar.worktree.clear.harness" = "Harness をクリア";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "%@ を起動";
 "sidebar.remove.worktree" = "ワークツリーを削除";
 "sidebar.remove.worktree.title" = "ワークツリーを削除しますか？";
 "sidebar.remove.worktree.confirm" = "削除";
@@ -581,3 +582,126 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "ハーネス";
+"harnesses.refresh.help" = "ynh ツールチェーンを再検出";
+"harnesses.not.installed" = "ynh がインストールされていません。";
+"harnesses.init.required" = "ynh が見つかりましたが初期化されていません。\n`ynh init` を実行してセットアップしてください。";
+"harnesses.init.hint" = "ターミナルを開いて実行してください：\nynh init";
+"harnesses.empty.message" = "ハーネスがまだインストールされていません。";
+
+// Harnesses — row badges
+"harnesses.source.local" = "ローカル";
+"harnesses.source.registry" = "レジストリ";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "情報";
+"harnesses.detail.path" = "パス";
+"harnesses.detail.source" = "ソース";
+"harnesses.detail.subpath" = "サブパス";
+"harnesses.detail.installed.at" = "インストール済み";
+"harnesses.detail.artifacts" = "アーティファクト";
+"harnesses.detail.no.artifacts" = "アーティファクトなし。";
+"harnesses.detail.skills" = "スキル";
+"harnesses.detail.agents" = "エージェント";
+"harnesses.detail.rules" = "ルール";
+"harnesses.detail.commands" = "コマンド";
+"harnesses.detail.dependencies" = "依存関係";
+"harnesses.detail.includes %d" = "含む (%d)";
+"harnesses.detail.delegates %d" = "委任先 (%d)";
+"harnesses.detail.picks %d" = "選択 (%d)：";
+"harnesses.reveal.in.finder" = "Finder で表示";
+"harnesses.open.in.browser" = "ブラウザで開く";
+"harnesses.close.detail" = "閉じる";
+"harnesses.detail.artifacts.from.includes" = "このハーネスは依存インクルードからアーティファクトを取得します。";
+"harnesses.detail.from" = "元";
+"harnesses.detail.hooks" = "フック";
+"harnesses.detail.mcp.servers" = "MCP サーバー";
+"harnesses.detail.profiles" = "プロファイル";
+"harnesses.detail.focuses" = "フォーカス";
+"harnesses.detail.focus.profile %@" = "プロファイル：%@";
+"harnesses.detail.manifest" = "マニフェスト";
+"harnesses.detail.no.manifest" = "マニフェストがありません。";
+"harnesses.detail.resolved" = "解決済み";
+"harnesses.detail.unresolved" = "未解決";
+"harnesses.detail.no.hooks" = "このハーネスにはフックがありません。";
+"harnesses.detail.no.mcp.servers" = "このハーネスには MCP サーバーがありません。";
+"harnesses.detail.no.profiles" = "このハーネスにはプロファイルがありません。";
+"harnesses.detail.no.focuses" = "このハーネスにはフォーカスがありません。";
+
+// Harnesses — launch
+"harnesses.launch.title" = "ハーネスを起動";
+"harnesses.launch.vendor" = "ベンダー";
+"harnesses.launch.vendor.unavailable" = "（未インストール）";
+"harnesses.launch.vendor.default" = "デフォルト (%@)";
+"harnesses.launch.focus" = "フォーカス";
+"harnesses.launch.focus.none" = "なし";
+"harnesses.launch.working.directory" = "作業ディレクトリ";
+"harnesses.launch.browse" = "参照…";
+"harnesses.launch.prompt" = "プロンプト";
+"harnesses.launch.prompt.placeholder" = "エージェントに渡すオプションのプロンプト…";
+"harnesses.launch.button" = "起動";
+"harnesses.launch.help" = "新しいターミナルでこのハーネスを起動";
+"harnesses.launch.cancel" = "キャンセル";
+"harnesses.launch.backend" = "バックエンド";
+
+"harnesses.linked.worktrees" = "リンク済み Worktree";
+"harnesses.linked.worktrees.none" = "この harness にリンクされた worktree はありません。";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH ハーネスツールチェーン";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI アシスタント用ハーネスマネージャー";
+"settings.ynh.enable.harness.tab" = "サイドバーにハーネスタブを表示";
+"settings.ynh.enable.harness.tab.help" = "インストール済みハーネスの閲覧・管理用にサイドバーにハーネスタブを追加します";
+"settings.ynh.home.override" = "$YNH_HOME の上書き";
+"settings.ynh.home.override.placeholder" = "デフォルト（ynh 自身の解決を使用）";
+"settings.ynh.home.override.help" = "ynh サブプロセスの YNH_HOME ディレクトリを上書きします。デフォルトの場合は空白のままにしてください。";
+"settings.ynh.resolved.paths" = "解決済みパス";
+"settings.ynh.redetect" = "再検出";
+"settings.ynh.init.required" = "未初期化";
+"settings.ynh.ready" = "準備完了";
+"settings.ynh.path.label" = "パス：";
+"settings.ynh.ynd.path.label" = "ynd パス：";
+"settings.ynh.status.label" = "ステータス：";
+"settings.ynh.ready.info" = "ツールチェーンが検出・初期化されました。サイドバータブを有効にしてハーネスを閲覧してください。";
+"settings.ynh.advanced" = "詳細";
+"settings.ynh.version.label" = "バージョン：";
+
+"common.clear" = "クリア";
+
+// Install sheet
+"harnesses.install.title" = "Harnessをインストール";
+"harnesses.install.toolbar.help" = "Harnessをインストール";
+"harnesses.install.tab.search" = "検索";
+"harnesses.install.tab.git" = "Gitから";
+"harnesses.install.tab.sources" = "ソース";
+"harnesses.install.search.placeholder" = "レジストリとソースを検索…";
+"harnesses.install.search.prompt" = "レジストリとソースを検索するには入力してください";
+"harnesses.install.search.empty" = "結果なし";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "サブパス";
+"harnesses.install.git.subpath.placeholder" = "省略可能なサブディレクトリ";
+"harnesses.install.command.preview" = "コマンドプレビュー";
+"harnesses.install.confirm" = "インストール";
+"harnesses.install.cancel" = "キャンセル";
+"harnesses.install.already.installed" = "インストール済み";
+"harnesses.install.from %@" = "%@ から";
+"harnesses.install.sources.empty" = "ソースが設定されていません。ローカルディレクトリを追加してHarnessを閲覧してください。";
+"harnesses.install.sources.add" = "ソースを追加…";
+"harnesses.install.sources.add.help" = "ローカルディレクトリをHarnessソースとして追加";
+"harnesses.install.sources.remove" = "削除";
+"harnesses.install.sources.count %ld" = "%ld 個のharness";
+
+"harnesses.update.button" = "アップデート";
+"harnesses.update.help" = "最新バージョンにアップデート";
+"harnesses.uninstall.button" = "アンインストール";
+"harnesses.uninstall.help" = "このHarnessをアンインストール";
+"harnesses.uninstall.alert.title %@" = "「%@」をアンインストールしますか？";
+"harnesses.uninstall.alert.message" = "Harnessがシステムから削除されます。";
+"harnesses.uninstall.alert.worktrees %ld" = "このHarnessは%ld個のWorktreeにリンクされています — それらの関連付けが解除されます。";
+"harnesses.uninstall.alert.terminals %ld" = "%ld個のターミナルが現在このHarnessを実行中です。";
+"harnesses.uninstall.alert.confirm" = "アンインストール";
+"harnesses.more.actions.help" = "その他の操作";

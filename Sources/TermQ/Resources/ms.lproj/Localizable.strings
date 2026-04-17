@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Permintaan Pengubahsuaian Luaran";
-"security.external.modification.message" = "Proses luaran cuba mengubah suai konteks LLM untuk terminal '%@':
-
-%@
-
-Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
+"security.external.modification.message" = "Proses luaran cuba mengubah suai konteks LLM untuk terminal '%@':\n\n%@\n\nIni boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "security.allow" = "Benarkan";
 "security.deny" = "Tolak";
 "security.allow.disable.prompt" = "Benarkan & Jangan Tanya Lagi";
@@ -538,6 +534,11 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "sidebar.worktree.open.remote.commit" = "Buka commit di Remote";
 "sidebar.worktree.lock" = "Kunci Worktree";
 "sidebar.worktree.unlock" = "Buka Kunci Worktree";
+
+"sidebar.worktree.set.harness" = "Tetapkan harness…";
+"sidebar.worktree.clear.harness" = "Padamkan harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Lancarkan %@";
 "sidebar.remove.worktree" = "Buang Worktree";
 "sidebar.remove.worktree.title" = "Buang Worktree?";
 "sidebar.remove.worktree.confirm" = "Buang";
@@ -570,3 +571,142 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Kesan semula rantaian alat ynh";
+"harnesses.not.installed" = "ynh tidak dipasang.";
+"harnesses.init.required" = "ynh ditemui tetapi belum dimulakan.\nJalankan `ynh init` untuk menyediakan.";
+"harnesses.init.hint" = "Buka terminal dan jalankan:\nynh init";
+"harnesses.empty.message" = "Tiada harness dipasang lagi.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Tempatan";
+"harnesses.source.registry" = "Pendaftaran";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Maklumat";
+"harnesses.detail.path" = "Laluan";
+"harnesses.detail.source" = "Sumber";
+"harnesses.detail.subpath" = "Sublaluan";
+"harnesses.detail.installed.at" = "Dipasang";
+"harnesses.detail.artifacts" = "Artefak";
+"harnesses.detail.no.artifacts" = "Tiada artefak.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Ejen";
+"harnesses.detail.rules" = "Peraturan";
+"harnesses.detail.commands" = "Arahan";
+"harnesses.detail.dependencies" = "Kebergantungan";
+"harnesses.detail.includes %d" = "Termasuk (%d)";
+"harnesses.detail.delegates %d" = "Mewakilkan kepada (%d)";
+"harnesses.detail.picks %d" = "Memilih (%d):";
+"harnesses.reveal.in.finder" = "Tunjuk dalam Finder";
+"harnesses.open.in.browser" = "Buka dalam pelayar";
+"harnesses.close.detail" = "Tutup";
+"harnesses.detail.artifacts.from.includes" = "Harness ini mendapat artefak daripada include kebergantungan.";
+"harnesses.detail.from" = "dari";
+"harnesses.detail.hooks" = "Hook";
+"harnesses.detail.mcp.servers" = "Pelayan MCP";
+"harnesses.detail.profiles" = "Profil";
+"harnesses.detail.focuses" = "Fokus";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Tiada manifest tersedia.";
+"harnesses.detail.resolved" = "Diselesaikan";
+"harnesses.detail.unresolved" = "Belum diselesaikan";
+"harnesses.detail.no.hooks" = "Harness ini tiada hook.";
+"harnesses.detail.no.mcp.servers" = "Harness ini tiada pelayan MCP.";
+"harnesses.detail.no.profiles" = "Harness ini tiada profil.";
+"harnesses.detail.no.focuses" = "Harness ini tiada fokus.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Lancarkan Harness";
+"harnesses.launch.vendor" = "Vendor";
+"harnesses.launch.vendor.unavailable" = "(tidak dipasang)";
+"harnesses.launch.vendor.default" = "Lalai (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Tiada";
+"harnesses.launch.working.directory" = "Direktori Kerja";
+"harnesses.launch.browse" = "Semak imbas…";
+"harnesses.launch.prompt" = "Gesaan";
+"harnesses.launch.prompt.placeholder" = "Gesaan pilihan untuk dihantar kepada ejen…";
+"harnesses.launch.button" = "Lancarkan";
+"harnesses.launch.help" = "Lancarkan harness ini dalam terminal baharu";
+"harnesses.launch.cancel" = "Batal";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree yang dipautkan";
+"harnesses.linked.worktrees.none" = "Tiada worktree yang dipautkan ke harness ini.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Rantaian Alat YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Pengurus harness untuk pembantu AI";
+"settings.ynh.enable.harness.tab" = "Papar tab Harness dalam bar sisi";
+"settings.ynh.enable.harness.tab.help" = "Menambah tab Harness pada bar sisi untuk menyemak imbas dan mengurus harness yang dipasang";
+"settings.ynh.home.override" = "Ganti $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Lalai (menggunakan resolusi ynh sendiri)";
+"settings.ynh.home.override.help" = "Mengganti direktori YNH_HOME untuk subproses ynh. Biarkan kosong untuk lalai.";
+"settings.ynh.resolved.paths" = "Laluan yang diselesaikan";
+"settings.ynh.redetect" = "Kesan semula";
+"settings.ynh.init.required" = "Belum dimulakan";
+"settings.ynh.ready" = "Sedia";
+"settings.ynh.path.label" = "Laluan:";
+"settings.ynh.ynd.path.label" = "Laluan ynd:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Rantaian alat dikesan dan dimulakan. Aktifkan tab bar sisi untuk menyemak imbas harness.";
+"settings.ynh.advanced" = "Lanjutan";
+"settings.ynh.version.label" = "Versi:";
+
+"common.clear" = "Kosongkan";
+
+"sidebar.worktree.create.terminal" = "Cipta Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Salin sebagai Laluan";
+
+"sidebar.prune.worktrees" = "Pangkas Worktrees…";
+
+"sidebar.prune.worktrees.title" = "Pangkas Worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Pangkas";
+
+"sidebar.prune.worktrees.nothing.title" = "Tiada yang Perlu Dipangkas";
+
+"sidebar.prune.worktrees.nothing.message" = "Semua worktrees diambil kira. Tiada rekod lapuk ditemui.";
+
+"sidebar.prune.worktrees.explanation" = "Rekod pentadbiran ini menunjuk ke direktori yang tidak lagi wujud. Pemangkasan menyingkirkannya — cawangan anda tidak terjejas.";
+
+// Install sheet
+"harnesses.install.title" = "Pasang Harness";
+"harnesses.install.toolbar.help" = "Pasang harness";
+"harnesses.install.tab.search" = "Cari";
+"harnesses.install.tab.git" = "Daripada Git";
+"harnesses.install.tab.sources" = "Sumber";
+"harnesses.install.search.placeholder" = "Cari dalam registry dan sumber…";
+"harnesses.install.search.prompt" = "Taip untuk mencari dalam registry dan sumber";
+"harnesses.install.search.empty" = "Tiada hasil";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sub-laluan";
+"harnesses.install.git.subpath.placeholder" = "Sub-direktori pilihan";
+"harnesses.install.command.preview" = "Pratonton perintah";
+"harnesses.install.confirm" = "Pasang";
+"harnesses.install.cancel" = "Batal";
+"harnesses.install.already.installed" = "Sudah dipasang";
+"harnesses.install.from %@" = "daripada %@";
+"harnesses.install.sources.empty" = "Tiada sumber dikonfigurasi. Tambah direktori tempatan untuk menyemak imbas harnesses-nya.";
+"harnesses.install.sources.add" = "Tambah Sumber…";
+"harnesses.install.sources.add.help" = "Tambah direktori tempatan sebagai sumber harness";
+"harnesses.install.sources.remove" = "Buang";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Kemas Kini";
+"harnesses.update.help" = "Kemas kini ke versi terbaru";
+"harnesses.uninstall.button" = "Nyahpasang";
+"harnesses.uninstall.help" = "Nyahpasang harness ini";
+"harnesses.uninstall.alert.title %@" = "Nyahpasang \"%@\"?";
+"harnesses.uninstall.alert.message" = "Ini akan membuang harness daripada sistem anda.";
+"harnesses.uninstall.alert.worktrees %ld" = "Harness ini dikaitkan dengan %ld worktree — perkaitan tersebut akan dipadamkan.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
+"harnesses.uninstall.alert.confirm" = "Nyahpasang";
+"harnesses.more.actions.help" = "Tindakan lain";

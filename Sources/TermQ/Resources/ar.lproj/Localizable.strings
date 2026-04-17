@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "طلب تعديل خارجي";
-"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':
-
-%@
-
-قد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
+"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':\n\n%@\n\nقد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
 "security.allow" = "سماح";
 "security.deny" = "رفض";
 "security.allow.disable.prompt" = "السماح وعدم السؤال مجدداً";
@@ -541,17 +537,22 @@
 "sidebar.worktree.open.remote.commit" = "فتح الـ Commit على Remote";
 "sidebar.worktree.lock" = "قفل worktree";
 "sidebar.worktree.unlock" = "إلغاء قفل worktree";
+
+"sidebar.worktree.set.harness" = "تعيين harness…";
+"sidebar.worktree.clear.harness" = "مسح harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "تشغيل %@";
 "sidebar.remove.worktree" = "حذف بيئة العمل";
 "sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
 "sidebar.remove.worktree.confirm" = "حذف";
 "sidebar.remove.main.worktree.error" = "لا يمكن إزالة بيئة العمل الرئيسية.";
-"sidebar.remove.worktree.message %@" = "سيؤدي هذا إلى حذف بيئة العمل في "%@" بشكل دائم. لن يتم حذف الفرع.";
+"sidebar.remove.worktree.message %@" = "سيؤدي هذا إلى حذف بيئة العمل في \"%@\" بشكل دائم. لن يتم حذف الفرع.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "إتلاف Worktree...";
 "sidebar.worktree.delete.title" = "إتلاف Worktree";
 "sidebar.worktree.delete.confirm" = "إتلاف";
-"sidebar.worktree.delete.message %@" = "سيتم إتلاف worktree في "%@" وأي تغييرات غير محفوظة بشكل دائم. لا يمكن التراجع عن هذا الإجراء.";
+"sidebar.worktree.delete.message %@" = "سيتم إتلاف worktree في \"%@\" وأي تغييرات غير محفوظة بشكل دائم. لا يمكن التراجع عن هذا الإجراء.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "تنظيف Worktrees…";
@@ -581,3 +582,126 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "الأطواق";
+"harnesses.refresh.help" = "إعادة اكتشاف سلسلة أدوات ynh";
+"harnesses.not.installed" = "ynh غير مثبّت.";
+"harnesses.init.required" = "تم العثور على ynh لكنه غير مُهيَّأ.\nشغّل `ynh init` للإعداد.";
+"harnesses.init.hint" = "افتح طرفية وشغّل:\nynh init";
+"harnesses.empty.message" = "لا توجد أطواق مثبّتة بعد.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "محلي";
+"harnesses.source.registry" = "السجل";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "معلومات";
+"harnesses.detail.path" = "المسار";
+"harnesses.detail.source" = "المصدر";
+"harnesses.detail.subpath" = "المسار الفرعي";
+"harnesses.detail.installed.at" = "تم التثبيت";
+"harnesses.detail.artifacts" = "المنتجات";
+"harnesses.detail.no.artifacts" = "لا توجد منتجات.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "الوكلاء";
+"harnesses.detail.rules" = "القواعد";
+"harnesses.detail.commands" = "الأوامر";
+"harnesses.detail.dependencies" = "التبعيات";
+"harnesses.detail.includes %d" = "يتضمن (%d)";
+"harnesses.detail.delegates %d" = "يفوّض إلى (%d)";
+"harnesses.detail.picks %d" = "يختار (%d):";
+"harnesses.reveal.in.finder" = "إظهار في Finder";
+"harnesses.open.in.browser" = "فتح في المتصفح";
+"harnesses.close.detail" = "إغلاق";
+"harnesses.detail.artifacts.from.includes" = "يحصل هذا الطوق على منتجاته من تضمينات التبعيات.";
+"harnesses.detail.from" = "من";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "خوادم MCP";
+"harnesses.detail.profiles" = "الملفات الشخصية";
+"harnesses.detail.focuses" = "التركيزات";
+"harnesses.detail.focus.profile %@" = "الملف الشخصي: %@";
+"harnesses.detail.manifest" = "البيان";
+"harnesses.detail.no.manifest" = "لا يوجد بيان متاح.";
+"harnesses.detail.resolved" = "تم الحل";
+"harnesses.detail.unresolved" = "غير محلول";
+"harnesses.detail.no.hooks" = "هذا الطوق لا يحتوي على hooks.";
+"harnesses.detail.no.mcp.servers" = "هذا الطوق لا يحتوي على خوادم MCP.";
+"harnesses.detail.no.profiles" = "هذا الطوق لا يحتوي على ملفات شخصية.";
+"harnesses.detail.no.focuses" = "هذا الطوق لا يحتوي على تركيزات.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "تشغيل الطوق";
+"harnesses.launch.vendor" = "المورّد";
+"harnesses.launch.vendor.unavailable" = "(غير مثبّت)";
+"harnesses.launch.vendor.default" = "الافتراضي (%@)";
+"harnesses.launch.focus" = "التركيز";
+"harnesses.launch.focus.none" = "لا شيء";
+"harnesses.launch.working.directory" = "دليل العمل";
+"harnesses.launch.browse" = "تصفّح…";
+"harnesses.launch.prompt" = "موجّه الأوامر";
+"harnesses.launch.prompt.placeholder" = "موجّه اختياري لإرساله إلى الوكيل…";
+"harnesses.launch.button" = "تشغيل";
+"harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
+"harnesses.launch.cancel" = "إلغاء";
+"harnesses.launch.backend" = "الواجهة الخلفية";
+
+"harnesses.linked.worktrees" = "Worktrees المرتبطة";
+"harnesses.linked.worktrees.none" = "لا توجد worktrees مرتبطة بهذا harness.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "سلسلة أدوات YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "مدير أطواق المساعدين الذكيين";
+"settings.ynh.enable.harness.tab" = "إظهار تبويب الأطواق في الشريط الجانبي";
+"settings.ynh.enable.harness.tab.help" = "يضيف تبويب الأطواق إلى الشريط الجانبي لتصفّح وإدارة الأطواق المثبّتة";
+"settings.ynh.home.override" = "تجاوز $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "الافتراضي (يستخدم دقة ynh الخاصة)";
+"settings.ynh.home.override.help" = "يتجاوز دليل YNH_HOME للعملية الفرعية ynh. اتركه فارغاً للقيمة الافتراضية.";
+"settings.ynh.resolved.paths" = "المسارات المحلولة";
+"settings.ynh.redetect" = "إعادة الاكتشاف";
+"settings.ynh.init.required" = "غير مُهيَّأ";
+"settings.ynh.ready" = "جاهز";
+"settings.ynh.path.label" = "المسار:";
+"settings.ynh.ynd.path.label" = "مسار ynd:";
+"settings.ynh.status.label" = "الحالة:";
+"settings.ynh.ready.info" = "تم اكتشاف سلسلة الأدوات وتهيئتها. فعّل تبويب الشريط الجانبي لتصفّح الأطواق.";
+"settings.ynh.advanced" = "متقدم";
+"settings.ynh.version.label" = "الإصدار:";
+
+"common.clear" = "مسح";
+
+// Install sheet
+"harnesses.install.title" = "تثبيت Harness";
+"harnesses.install.toolbar.help" = "تثبيت harness";
+"harnesses.install.tab.search" = "بحث";
+"harnesses.install.tab.git" = "من Git";
+"harnesses.install.tab.sources" = "المصادر";
+"harnesses.install.search.placeholder" = "البحث في السجلات والمصادر…";
+"harnesses.install.search.prompt" = "اكتب للبحث في السجلات والمصادر";
+"harnesses.install.search.empty" = "لا توجد نتائج";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "المسار الفرعي";
+"harnesses.install.git.subpath.placeholder" = "مجلد فرعي اختياري";
+"harnesses.install.command.preview" = "معاينة الأمر";
+"harnesses.install.confirm" = "تثبيت";
+"harnesses.install.cancel" = "إلغاء";
+"harnesses.install.already.installed" = "مثبت";
+"harnesses.install.from %@" = "من %@";
+"harnesses.install.sources.empty" = "لا توجد مصادر مضبوطة. أضف دليلاً محلياً لاستعراض harnesses الخاصة به.";
+"harnesses.install.sources.add" = "إضافة مصدر…";
+"harnesses.install.sources.add.help" = "إضافة دليل محلي كمصدر harness";
+"harnesses.install.sources.remove" = "إزالة";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "تحديث";
+"harnesses.update.help" = "تحديث إلى الإصدار الأحدث";
+"harnesses.uninstall.button" = "إلغاء التثبيت";
+"harnesses.uninstall.help" = "إلغاء تثبيت هذا الـ harness";
+"harnesses.uninstall.alert.title %@" = "إلغاء تثبيت \"%@\"؟";
+"harnesses.uninstall.alert.message" = "سيؤدي هذا إلى إزالة الـ harness من نظامك.";
+"harnesses.uninstall.alert.worktrees %ld" = "هذا الـ harness مرتبط بـ %ld مستودع(ات) عمل — ستُمسح تلك الارتباطات.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld محطة (محطات) طرفية تُشغّل هذا الـ harness حاليًا.";
+"harnesses.uninstall.alert.confirm" = "إلغاء التثبيت";
+"harnesses.more.actions.help" = "إجراءات أخرى";

@@ -34,6 +34,20 @@ class ControlModePaneDelegate: TerminalViewDelegate {
         let capturedPaneId = self.paneId
         let inputData = Data(data)
 
+        if TermQLogger.fileLoggingEnabled {
+            let preview = data.prefix(60).map { b -> String in
+                switch b {
+                case 0x1B: return "\\e"
+                case 0x07: return "\\a"
+                case 0x0D: return "\\r"
+                case 0x0A: return "\\n"
+                case 0x20...0x7E: return String(UnicodeScalar(b))
+                default: return String(format: "\\x%02X", b)
+                }
+            }.joined()
+            TermQLogger.io.info("swiftterm-send pane=\(capturedPaneId) len=\(data.count) «\(preview)»")
+        }
+
         Task { @MainActor in
             guard
                 let controlSession = TerminalSessionManager.shared
@@ -206,6 +220,48 @@ extension TerminalSessionManager {
         }
     }
 
+    // MARK: - Init Command (Control Mode)
+
+    /// Send an init command via tmux control mode `send-keys`.
+    ///
+    /// Polls until the control session is established, an active pane exists,
+    /// **and** SwiftUI has communicated actual terminal dimensions via
+    /// `sendClientResize`. Without the resize gate, processes that read
+    /// terminal size at startup (e.g. Claude's TUI) see tmux's default 80×24
+    /// and render incorrectly.
+    func sendInitCommandViaControlMode(cardId: UUID, command: String) {
+        Task { @MainActor in
+            // Poll up to ~6s for control session + pane + client resize.
+            for _ in 0..<30 {
+                if let session = sessions[cardId],
+                    let controlSession = session.controlModeSession,
+                    let activePane = controlSession.parser.panes.first(where: { $0.isActive }),
+                    controlSession.hasReceivedClientResize
+                {
+                    // Extra delay for the shell inside the pane to initialize
+                    // and for tmux to reflow after the resize.
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    let escaped = escapeForTmuxSendKeys(command)
+                    // -l sends literal text; without it tmux expands key names like "Enter" in the string.
+                    controlSession.sendCommand("send-keys -l -t %\(activePane.id) \(escaped)")
+                    controlSession.sendCommand("send-keys -t %\(activePane.id) Enter")
+                    return
+                }
+                try? await Task.sleep(nanoseconds: 200_000_000)
+            }
+            TermQLogger.session.warning("sendInitCommandViaControlMode: timed out cardId=\(cardId)")
+        }
+    }
+
+    /// Escape a command string for use with tmux `send-keys -l` literal text.
+    private func escapeForTmuxSendKeys(_ str: String) -> String {
+        let escaped =
+            str
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
+        return "\"\(escaped)\""
+    }
+
     // MARK: - Pane Navigation & Management
 
     /// Select pane by direction (deprecated - use setActivePane instead)
@@ -330,7 +386,7 @@ extension TerminalSessionManager {
     private func handlePaneOutput(cardId: UUID, paneId: String, data: Data) {
         let bytes = [UInt8](data)
         if TermQLogger.fileLoggingEnabled {
-            let preview = bytes.prefix(80).map { b -> String in
+            let preview = bytes.prefix(120).map { b -> String in
                 switch b {
                 case 0x1B: return "\\e"
                 case 0x07: return "\\a"

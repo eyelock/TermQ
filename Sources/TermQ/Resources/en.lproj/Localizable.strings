@@ -27,6 +27,7 @@
 "common.preview" = "Preview";
 "common.quit" = "Quit";
 "common.close.window" = "Close Window";
+"common.clear" = "Clear";
 
 // MARK: - Board View
 "board.column.options" = "Column options";
@@ -540,6 +541,10 @@
 "sidebar.worktree.open.remote.commit" = "Open Commit on Remote";
 "sidebar.worktree.lock" = "Lock Worktree";
 "sidebar.worktree.unlock" = "Unlock Worktree";
+"sidebar.worktree.set.harness" = "Set Harness…";
+"sidebar.worktree.clear.harness" = "Clear Harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Launch %@";
 
 // Remove worktree (clean)
 "sidebar.remove.worktree" = "Remove Worktree";
@@ -584,3 +589,123 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Re-detect ynh toolchain";
+"harnesses.not.installed" = "ynh is not installed.";
+"harnesses.init.required" = "ynh found but not initialised.\nRun `ynh init` to set up.";
+"harnesses.init.hint" = "Open a terminal and run:\nynh init";
+"harnesses.empty.message" = "No harnesses installed yet.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Local";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Information";
+"harnesses.detail.path" = "Path";
+"harnesses.detail.source" = "Source";
+"harnesses.detail.subpath" = "Subpath";
+"harnesses.detail.installed.at" = "Installed";
+"harnesses.detail.artifacts" = "Artifacts";
+"harnesses.detail.no.artifacts" = "No artifacts.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Rules";
+"harnesses.detail.commands" = "Commands";
+"harnesses.detail.dependencies" = "Dependencies";
+"harnesses.detail.includes %d" = "Includes (%d)";
+"harnesses.detail.delegates %d" = "Delegates to (%d)";
+"harnesses.detail.picks %d" = "Picks (%d):";
+"harnesses.reveal.in.finder" = "Reveal in Finder";
+"harnesses.open.in.browser" = "Open in browser";
+"harnesses.close.detail" = "Close";
+"harnesses.detail.artifacts.from.includes" = "This harness gets its artifacts from dependency includes.";
+"harnesses.detail.from" = "from";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP Servers";
+"harnesses.detail.profiles" = "Profiles";
+"harnesses.detail.focuses" = "Focuses";
+"harnesses.detail.focus.profile %@" = "profile: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "No manifest available.";
+"harnesses.detail.resolved" = "Resolved";
+"harnesses.detail.unresolved" = "Unresolved";
+"harnesses.detail.no.hooks" = "This harness has no hooks.";
+"harnesses.detail.no.mcp.servers" = "This harness has no MCP servers.";
+"harnesses.detail.no.profiles" = "This harness has no profiles.";
+"harnesses.detail.no.focuses" = "This harness has no focuses.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Launch Harness";
+"harnesses.launch.vendor" = "Vendor";
+"harnesses.launch.vendor.unavailable" = "(not installed)";
+"harnesses.launch.vendor.default" = "Default (%@)";
+"harnesses.launch.focus" = "Focus";
+"harnesses.launch.focus.none" = "None";
+"harnesses.launch.working.directory" = "Working Directory";
+"harnesses.launch.browse" = "Browse…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Optional prompt to pass to the agent…";
+"harnesses.launch.button" = "Launch";
+"harnesses.launch.help" = "Launch this harness in a new terminal";
+"harnesses.launch.cancel" = "Cancel";
+"harnesses.launch.backend" = "Backend";
+"harnesses.linked.worktrees" = "Linked Worktrees";
+"harnesses.linked.worktrees.none" = "No worktrees are linked to this harness.";
+
+// Install sheet
+"harnesses.install.title" = "Install Harness";
+"harnesses.install.toolbar.help" = "Install a harness";
+"harnesses.install.tab.search" = "Search";
+"harnesses.install.tab.git" = "From Git";
+"harnesses.install.tab.sources" = "Sources";
+"harnesses.install.search.placeholder" = "Search registries and sources…";
+"harnesses.install.search.prompt" = "Type to search registries and sources";
+"harnesses.install.search.empty" = "No results";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Subpath";
+"harnesses.install.git.subpath.placeholder" = "Optional sub-directory";
+"harnesses.install.command.preview" = "Command Preview";
+"harnesses.install.confirm" = "Install";
+"harnesses.install.cancel" = "Cancel";
+"harnesses.install.already.installed" = "Installed";
+"harnesses.install.from %@" = "from %@";
+"harnesses.install.sources.empty" = "No sources configured. Add a local directory to browse its harnesses.";
+"harnesses.install.sources.add" = "Add Source…";
+"harnesses.install.sources.add.help" = "Add a local directory as a harness source";
+"harnesses.install.sources.remove" = "Remove";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Update";
+"harnesses.update.help" = "Update to the latest version";
+"harnesses.uninstall.button" = "Uninstall";
+"harnesses.uninstall.help" = "Uninstall this harness";
+"harnesses.uninstall.alert.title %@" = "Uninstall \"%@\"?";
+"harnesses.uninstall.alert.message" = "This will remove the harness from your system.";
+"harnesses.uninstall.alert.worktrees %ld" = "This harness is linked to %ld worktree(s) — those associations will be cleared.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) are currently running this harness.";
+"harnesses.uninstall.alert.confirm" = "Uninstall";
+"harnesses.more.actions.help" = "More actions";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness Toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI assistant harness manager";
+"settings.ynh.enable.harness.tab" = "Show Harnesses sidebar tab";
+"settings.ynh.enable.harness.tab.help" = "Adds a Harnesses tab to the sidebar for browsing and managing installed harnesses";
+"settings.ynh.home.override" = "$YNH_HOME Override";
+"settings.ynh.home.override.placeholder" = "Default (uses ynh's own resolution)";
+"settings.ynh.home.override.help" = "Override the YNH_HOME directory for the ynh subprocess. Leave blank for default.";
+"settings.ynh.resolved.paths" = "Resolved Paths";
+"settings.ynh.redetect" = "Re-detect";
+"settings.ynh.init.required" = "Not initialised";
+"settings.ynh.ready" = "Ready";
+"settings.ynh.path.label" = "Path:";
+"settings.ynh.ynd.path.label" = "ynd Path:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain detected and initialised. Enable the sidebar tab to browse harnesses.";
+"settings.ynh.advanced" = "Advanced";
+"settings.ynh.version.label" = "Version:";

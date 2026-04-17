@@ -119,8 +119,8 @@
 // MARK: - Delete Confirmation
 "delete.title" = "删除终端";
 "delete.move.to.bin" = "移至回收站";
-"delete.message %@" = "确定要删除"%@"吗？";
-"delete.bin.message %@" = ""%@"将被移至回收站，可在 30 天内恢复。";
+"delete.message %@" = "确定要删除\"%@\"吗？";
+"delete.bin.message %@" = "\"%@\"将被移至回收站，可在 30 天内恢复。";
 "delete.cancel" = "取消";
 "delete.confirm" = "删除";
 "delete.permanent" = "永久删除";
@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部修改请求";
-"security.external.modification.message" = "外部进程正在尝试修改终端 '%@' 的 LLM 上下文:
-
-%@
-
-这可能会影响 AI 助手与此终端的交互方式。";
+"security.external.modification.message" = "外部进程正在尝试修改终端 '%@' 的 LLM 上下文:\n\n%@\n\n这可能会影响 AI 助手与此终端的交互方式。";
 "security.allow" = "允许";
 "security.deny" = "拒绝";
 "security.allow.disable.prompt" = "允许并不再询问";
@@ -539,6 +535,11 @@
 "sidebar.worktree.open.remote.commit" = "在 Remote 上打开提交";
 "sidebar.worktree.lock" = "锁定工作树";
 "sidebar.worktree.unlock" = "解锁工作树";
+
+"sidebar.worktree.set.harness" = "设置 Harness…";
+"sidebar.worktree.clear.harness" = "清除 Harness";
+"sidebar.worktree.linked.harness %@" = "Harness：%@";
+"sidebar.worktree.launch.harness %@" = "启动 %@";
 "sidebar.remove.worktree" = "删除工作树";
 "sidebar.remove.worktree.title" = "删除工作树？";
 "sidebar.remove.worktree.confirm" = "删除";
@@ -581,3 +582,126 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "重新检测 ynh 工具链";
+"harnesses.not.installed" = "ynh 未安装。";
+"harnesses.init.required" = "已找到 ynh 但未初始化。\n请运行 `ynh init` 进行设置。";
+"harnesses.init.hint" = "打开终端并运行：\nynh init";
+"harnesses.empty.message" = "尚未安装任何 harness。";
+
+// Harnesses — row badges
+"harnesses.source.local" = "本地";
+"harnesses.source.registry" = "注册表";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "信息";
+"harnesses.detail.path" = "路径";
+"harnesses.detail.source" = "来源";
+"harnesses.detail.subpath" = "子路径";
+"harnesses.detail.installed.at" = "已安装";
+"harnesses.detail.artifacts" = "产物";
+"harnesses.detail.no.artifacts" = "无产物。";
+"harnesses.detail.skills" = "技能";
+"harnesses.detail.agents" = "代理";
+"harnesses.detail.rules" = "规则";
+"harnesses.detail.commands" = "命令";
+"harnesses.detail.dependencies" = "依赖";
+"harnesses.detail.includes %d" = "包含 (%d)";
+"harnesses.detail.delegates %d" = "委托给 (%d)";
+"harnesses.detail.picks %d" = "选取 (%d)：";
+"harnesses.reveal.in.finder" = "在 Finder 中显示";
+"harnesses.open.in.browser" = "在浏览器中打开";
+"harnesses.close.detail" = "关闭";
+"harnesses.detail.artifacts.from.includes" = "此 harness 从依赖包含项获取产物。";
+"harnesses.detail.from" = "来自";
+"harnesses.detail.hooks" = "钩子";
+"harnesses.detail.mcp.servers" = "MCP 服务器";
+"harnesses.detail.profiles" = "配置文件";
+"harnesses.detail.focuses" = "专注点";
+"harnesses.detail.focus.profile %@" = "配置文件：%@";
+"harnesses.detail.manifest" = "清单";
+"harnesses.detail.no.manifest" = "无可用清单。";
+"harnesses.detail.resolved" = "已解析";
+"harnesses.detail.unresolved" = "未解析";
+"harnesses.detail.no.hooks" = "此 harness 没有钩子。";
+"harnesses.detail.no.mcp.servers" = "此 harness 没有 MCP 服务器。";
+"harnesses.detail.no.profiles" = "此 harness 没有配置文件。";
+"harnesses.detail.no.focuses" = "此 harness 没有专注点。";
+
+// Harnesses — launch
+"harnesses.launch.title" = "启动 Harness";
+"harnesses.launch.vendor" = "供应商";
+"harnesses.launch.vendor.unavailable" = "（未安装）";
+"harnesses.launch.vendor.default" = "默认 (%@)";
+"harnesses.launch.focus" = "专注点";
+"harnesses.launch.focus.none" = "无";
+"harnesses.launch.working.directory" = "工作目录";
+"harnesses.launch.browse" = "浏览…";
+"harnesses.launch.prompt" = "提示词";
+"harnesses.launch.prompt.placeholder" = "传递给代理的可选提示词…";
+"harnesses.launch.button" = "启动";
+"harnesses.launch.help" = "在新终端中启动此 harness";
+"harnesses.launch.cancel" = "取消";
+"harnesses.launch.backend" = "后端";
+
+"harnesses.linked.worktrees" = "关联的 Worktree";
+"harnesses.linked.worktrees.none" = "没有 worktree 关联到此 harness。";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness 工具链";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI 助手 harness 管理器";
+"settings.ynh.enable.harness.tab" = "在侧边栏显示 Harness 标签页";
+"settings.ynh.enable.harness.tab.help" = "在侧边栏添加 Harness 标签页，用于浏览和管理已安装的 harness";
+"settings.ynh.home.override" = "$YNH_HOME 覆盖";
+"settings.ynh.home.override.placeholder" = "默认（使用 ynh 自身的解析）";
+"settings.ynh.home.override.help" = "覆盖 ynh 子进程的 YNH_HOME 目录。留空使用默认值。";
+"settings.ynh.resolved.paths" = "已解析路径";
+"settings.ynh.redetect" = "重新检测";
+"settings.ynh.init.required" = "未初始化";
+"settings.ynh.ready" = "就绪";
+"settings.ynh.path.label" = "路径：";
+"settings.ynh.ynd.path.label" = "ynd 路径：";
+"settings.ynh.status.label" = "状态：";
+"settings.ynh.ready.info" = "工具链已检测并初始化。启用侧边栏标签页以浏览 harness。";
+"settings.ynh.advanced" = "高级";
+"settings.ynh.version.label" = "版本：";
+
+"common.clear" = "清除";
+
+// Install sheet
+"harnesses.install.title" = "安装 Harness";
+"harnesses.install.toolbar.help" = "安装一个 harness";
+"harnesses.install.tab.search" = "搜索";
+"harnesses.install.tab.git" = "从 Git";
+"harnesses.install.tab.sources" = "来源";
+"harnesses.install.search.placeholder" = "搜索注册表和来源…";
+"harnesses.install.search.prompt" = "输入以搜索注册表和来源";
+"harnesses.install.search.empty" = "无结果";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "子路径";
+"harnesses.install.git.subpath.placeholder" = "可选子目录";
+"harnesses.install.command.preview" = "命令预览";
+"harnesses.install.confirm" = "安装";
+"harnesses.install.cancel" = "取消";
+"harnesses.install.already.installed" = "已安装";
+"harnesses.install.from %@" = "来自 %@";
+"harnesses.install.sources.empty" = "未配置来源。添加本地目录以浏览其 harnesses。";
+"harnesses.install.sources.add" = "添加来源…";
+"harnesses.install.sources.add.help" = "将本地目录添加为 harness 来源";
+"harnesses.install.sources.remove" = "移除";
+"harnesses.install.sources.count %ld" = "%ld 个 harnesses";
+
+"harnesses.update.button" = "更新";
+"harnesses.update.help" = "更新到最新版本";
+"harnesses.uninstall.button" = "卸载";
+"harnesses.uninstall.help" = "卸载此 harness";
+"harnesses.uninstall.alert.title %@" = "卸载\"%@\"？";
+"harnesses.uninstall.alert.message" = "这将从您的系统中移除该 harness。";
+"harnesses.uninstall.alert.worktrees %ld" = "此 harness 已关联 %ld 个工作树——这些关联将被清除。";
+"harnesses.uninstall.alert.terminals %ld" = "当前有 %ld 个终端正在运行此 harness。";
+"harnesses.uninstall.alert.confirm" = "卸载";
+"harnesses.more.actions.help" = "更多操作";

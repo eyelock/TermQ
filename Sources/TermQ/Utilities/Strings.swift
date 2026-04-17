@@ -166,6 +166,7 @@ enum Strings {
         static var preview: String { localized("common.preview") }
         static var quit: String { localized("common.quit") }
         static var closeWindow: String { localized("common.close.window") }
+        static var clear: String { localized("common.clear") }
     }
 
     // MARK: - Board View
@@ -637,6 +638,7 @@ enum Strings {
         static var confirmExternalModificationsHelp: String {
             localized("settings.confirm.external.modifications.help")
         }
+
     }
 
     // MARK: - Command Palette
@@ -729,6 +731,31 @@ enum Strings {
 
 }
 
+// MARK: - Settings.Ynh
+
+extension Strings.Settings {
+    enum Ynh {
+        static var sectionTitle: String { localized("settings.ynh.section") }
+        static var title: String { localized("settings.ynh.title") }
+        static var description: String { localized("settings.ynh.description") }
+        static var enableHarnessTab: String { localized("settings.ynh.enable.harness.tab") }
+        static var enableHarnessTabHelp: String { localized("settings.ynh.enable.harness.tab.help") }
+        static var homeOverride: String { localized("settings.ynh.home.override") }
+        static var homeOverridePlaceholder: String { localized("settings.ynh.home.override.placeholder") }
+        static var homeOverrideHelp: String { localized("settings.ynh.home.override.help") }
+        static var resolvedPaths: String { localized("settings.ynh.resolved.paths") }
+        static var redetect: String { localized("settings.ynh.redetect") }
+        static var initRequired: String { localized("settings.ynh.init.required") }
+        static var ready: String { localized("settings.ynh.ready") }
+        static var pathLabel: String { localized("settings.ynh.path.label") }
+        static var yndPathLabel: String { localized("settings.ynh.ynd.path.label") }
+        static var statusLabel: String { localized("settings.ynh.status.label") }
+        static var readyInfo: String { localized("settings.ynh.ready.info") }
+        static var advanced: String { localized("settings.ynh.advanced") }
+        static var versionLabel: String { localized("settings.ynh.version.label") }
+    }
+}
+
 // MARK: - Sidebar
 
 extension Strings {
@@ -778,6 +805,16 @@ extension Strings {
         static var lockWorktree: String { localized("sidebar.worktree.lock") }
         static var unlockWorktree: String { localized("sidebar.worktree.unlock") }
 
+        // Harness linkage
+        static var setHarness: String { localized("sidebar.worktree.set.harness") }
+        static var clearHarness: String { localized("sidebar.worktree.clear.harness") }
+        static func linkedHarness(_ name: String) -> String {
+            String(format: localized("sidebar.worktree.linked.harness %@"), name)
+        }
+        static func launchHarness(_ name: String) -> String {
+            String(format: localized("sidebar.worktree.launch.harness %@"), name)
+        }
+
         // Remove / delete worktree
         static var removeWorktree: String { localized("sidebar.remove.worktree") }
         static var removeWorktreeTitle: String { localized("sidebar.remove.worktree.title") }
@@ -824,5 +861,131 @@ extension Strings {
         static var checkoutBranchPlaceholder: String { localized("sidebar.checkout.branch.placeholder") }
         static var checkoutBranchRequired: String { localized("sidebar.checkout.branch.required") }
         static var checkoutBranchCreate: String { localized("sidebar.checkout.branch.create") }
+    }
+
+    // MARK: - Harnesses
+
+    enum Harnesses {
+        static var title: String { localized("harnesses.title") }
+        static var refreshHelp: String { localized("harnesses.refresh.help") }
+        static var notInstalled: String { localized("harnesses.not.installed") }
+        static var initRequired: String { localized("harnesses.init.required") }
+        static var initHint: String { localized("harnesses.init.hint") }
+        static var emptyMessage: String { localized("harnesses.empty.message") }
+
+        // Row badges
+        static var sourceLocal: String { localized("harnesses.source.local") }
+        static var sourceRegistry: String { localized("harnesses.source.registry") }
+
+        // Detail view
+        static var detailInfo: String { localized("harnesses.detail.info") }
+        static var detailPath: String { localized("harnesses.detail.path") }
+        static var detailSource: String { localized("harnesses.detail.source") }
+        static var detailSubpath: String { localized("harnesses.detail.subpath") }
+        static var detailInstalledAt: String { localized("harnesses.detail.installed.at") }
+        static var detailArtifacts: String { localized("harnesses.detail.artifacts") }
+        static var detailNoArtifacts: String { localized("harnesses.detail.no.artifacts") }
+        static var detailSkills: String { localized("harnesses.detail.skills") }
+        static var detailAgents: String { localized("harnesses.detail.agents") }
+        static var detailRules: String { localized("harnesses.detail.rules") }
+        static var detailCommands: String { localized("harnesses.detail.commands") }
+        static var detailDependencies: String { localized("harnesses.detail.dependencies") }
+        static func detailIncludes(_ count: Int) -> String {
+            localized("harnesses.detail.includes %d", count)
+        }
+        static func detailDelegates(_ count: Int) -> String {
+            localized("harnesses.detail.delegates %d", count)
+        }
+        static func detailPicks(_ count: Int) -> String {
+            localized("harnesses.detail.picks %d", count)
+        }
+        static var revealInFinder: String { localized("harnesses.reveal.in.finder") }
+        static var openInBrowser: String { localized("harnesses.open.in.browser") }
+        static var closeDetail: String { localized("harnesses.close.detail") }
+        static var detailArtifactsFromIncludes: String { localized("harnesses.detail.artifacts.from.includes") }
+        static var detailFrom: String { localized("harnesses.detail.from") }
+        static var detailHooks: String { localized("harnesses.detail.hooks") }
+        static var detailMCPServers: String { localized("harnesses.detail.mcp.servers") }
+        static var detailProfiles: String { localized("harnesses.detail.profiles") }
+        static var detailFocuses: String { localized("harnesses.detail.focuses") }
+        static func detailFocusProfile(_ name: String) -> String {
+            localized("harnesses.detail.focus.profile %@", name)
+        }
+        static var detailManifest: String { localized("harnesses.detail.manifest") }
+        static var detailNoManifest: String { localized("harnesses.detail.no.manifest") }
+        static var detailResolved: String { localized("harnesses.detail.resolved") }
+        static var detailUnresolved: String { localized("harnesses.detail.unresolved") }
+        static var detailNoHooks: String { localized("harnesses.detail.no.hooks") }
+        static var detailNoMCPServers: String { localized("harnesses.detail.no.mcp.servers") }
+        static var detailNoProfiles: String { localized("harnesses.detail.no.profiles") }
+        static var detailNoFocuses: String { localized("harnesses.detail.no.focuses") }
+
+        // Launch
+        static var launchTitle: String { localized("harnesses.launch.title") }
+        static var launchVendor: String { localized("harnesses.launch.vendor") }
+        static var launchVendorUnavailable: String { localized("harnesses.launch.vendor.unavailable") }
+        static func launchVendorDefault(_ vendor: String) -> String {
+            String(format: localized("harnesses.launch.vendor.default"), vendor)
+        }
+        static var launchFocus: String { localized("harnesses.launch.focus") }
+        static var launchFocusNone: String { localized("harnesses.launch.focus.none") }
+        static var launchWorkingDirectory: String { localized("harnesses.launch.working.directory") }
+        static var launchBrowse: String { localized("harnesses.launch.browse") }
+        static var launchPrompt: String { localized("harnesses.launch.prompt") }
+        static var launchPromptPlaceholder: String { localized("harnesses.launch.prompt.placeholder") }
+        static var launchButton: String { localized("harnesses.launch.button") }
+        static var launchHelp: String { localized("harnesses.launch.help") }
+        static var launchCancel: String { localized("harnesses.launch.cancel") }
+        static var launchBackend: String { localized("harnesses.launch.backend") }
+
+        // Linked worktrees section in detail view
+        static var linkedWorktrees: String { localized("harnesses.linked.worktrees") }
+        static var linkedWorktreesNone: String { localized("harnesses.linked.worktrees.none") }
+
+        // Install sheet
+        static var installTitle: String { localized("harnesses.install.title") }
+        static var installToolbarHelp: String { localized("harnesses.install.toolbar.help") }
+        static var installTabSearch: String { localized("harnesses.install.tab.search") }
+        static var installTabGit: String { localized("harnesses.install.tab.git") }
+        static var installTabSources: String { localized("harnesses.install.tab.sources") }
+        static var installSearchPlaceholder: String { localized("harnesses.install.search.placeholder") }
+        static var installSearchPrompt: String { localized("harnesses.install.search.prompt") }
+        static var installSearchEmpty: String { localized("harnesses.install.search.empty") }
+        static var installGitURL: String { localized("harnesses.install.git.url") }
+        static var installGitURLPlaceholder: String { localized("harnesses.install.git.url.placeholder") }
+        static var installGitSubpath: String { localized("harnesses.install.git.subpath") }
+        static var installGitSubpathPlaceholder: String { localized("harnesses.install.git.subpath.placeholder") }
+        static var installCommandPreview: String { localized("harnesses.install.command.preview") }
+        static var installConfirm: String { localized("harnesses.install.confirm") }
+        static var installCancel: String { localized("harnesses.install.cancel") }
+        static var installAlreadyInstalled: String { localized("harnesses.install.already.installed") }
+        static func installFrom(_ name: String) -> String {
+            String(format: localized("harnesses.install.from %@"), name)
+        }
+        static var installSourcesEmpty: String { localized("harnesses.install.sources.empty") }
+        static var installSourcesAdd: String { localized("harnesses.install.sources.add") }
+        static var installSourcesAddHelp: String { localized("harnesses.install.sources.add.help") }
+        static var installSourcesRemove: String { localized("harnesses.install.sources.remove") }
+        static func installSourcesCount(_ count: Int) -> String {
+            String(format: localized("harnesses.install.sources.count %ld"), count)
+        }
+
+        // MARK: Update / Uninstall
+        static var updateButton: String { localized("harnesses.update.button") }
+        static var updateHelp: String { localized("harnesses.update.help") }
+        static var uninstallButton: String { localized("harnesses.uninstall.button") }
+        static var uninstallHelp: String { localized("harnesses.uninstall.help") }
+        static func uninstallAlertTitle(_ name: String) -> String {
+            String(format: localized("harnesses.uninstall.alert.title %@"), name)
+        }
+        static var uninstallAlertMessage: String { localized("harnesses.uninstall.alert.message") }
+        static func uninstallAlertWorktrees(_ count: Int) -> String {
+            String(format: localized("harnesses.uninstall.alert.worktrees %ld"), count)
+        }
+        static func uninstallAlertTerminals(_ count: Int) -> String {
+            String(format: localized("harnesses.uninstall.alert.terminals %ld"), count)
+        }
+        static var uninstallAlertConfirm: String { localized("harnesses.uninstall.alert.confirm") }
+        static var moreActionsHelp: String { localized("harnesses.more.actions.help") }
     }
 }

@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Anfrage zur externen Änderung";
-"security.external.modification.message" = "Ein externer Prozess versucht, den LLM-Kontext für Terminal '%@' zu ändern:
-
-%@
-
-Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren.";
+"security.external.modification.message" = "Ein externer Prozess versucht, den LLM-Kontext für Terminal '%@' zu ändern:\n\n%@\n\nDies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren.";
 "security.allow" = "Erlauben";
 "security.deny" = "Ablehnen";
 "security.allow.disable.prompt" = "Erlauben und nicht mehr fragen";
@@ -541,17 +537,22 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "sidebar.worktree.open.remote.commit" = "Commit auf Remote öffnen";
 "sidebar.worktree.lock" = "Worktree sperren";
 "sidebar.worktree.unlock" = "Worktree entsperren";
+
+"sidebar.worktree.set.harness" = "Harness festlegen…";
+"sidebar.worktree.clear.harness" = "Harness entfernen";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Starten %@";
 "sidebar.remove.worktree" = "Worktree löschen";
 "sidebar.remove.worktree.title" = "Worktree löschen?";
 "sidebar.remove.worktree.confirm" = "Löschen";
 "sidebar.remove.main.worktree.error" = "Der Haupt-Worktree kann nicht entfernt werden.";
-"sidebar.remove.worktree.message %@" = "Dadurch wird der Worktree bei "%@" dauerhaft gelöscht. Der Branch wird nicht gelöscht.";
+"sidebar.remove.worktree.message %@" = "Dadurch wird der Worktree bei \"%@\" dauerhaft gelöscht. Der Branch wird nicht gelöscht.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Worktree vernichten...";
 "sidebar.worktree.delete.title" = "Worktree vernichten";
 "sidebar.worktree.delete.confirm" = "Vernichten";
-"sidebar.worktree.delete.message %@" = "Der Worktree unter "%@" und alle nicht gespeicherten Änderungen werden dauerhaft vernichtet. Dies kann nicht rückgängig gemacht werden.";
+"sidebar.worktree.delete.message %@" = "Der Worktree unter \"%@\" und alle nicht gespeicherten Änderungen werden dauerhaft vernichtet. Dies kann nicht rückgängig gemacht werden.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Worktrees bereinigen…";
@@ -581,3 +582,126 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "ynh-Toolchain erneut erkennen";
+"harnesses.not.installed" = "ynh ist nicht installiert.";
+"harnesses.init.required" = "ynh gefunden, aber nicht initialisiert.\nFühre `ynh init` zur Einrichtung aus.";
+"harnesses.init.hint" = "Öffne ein Terminal und führe aus:\nynh init";
+"harnesses.empty.message" = "Noch keine Harnesses installiert.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informationen";
+"harnesses.detail.path" = "Pfad";
+"harnesses.detail.source" = "Quelle";
+"harnesses.detail.subpath" = "Unterpfad";
+"harnesses.detail.installed.at" = "Installiert";
+"harnesses.detail.artifacts" = "Artefakte";
+"harnesses.detail.no.artifacts" = "Keine Artefakte.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Regeln";
+"harnesses.detail.commands" = "Befehle";
+"harnesses.detail.dependencies" = "Abhängigkeiten";
+"harnesses.detail.includes %d" = "Enthält (%d)";
+"harnesses.detail.delegates %d" = "Delegiert an (%d)";
+"harnesses.detail.picks %d" = "Wählt aus (%d):";
+"harnesses.reveal.in.finder" = "Im Finder zeigen";
+"harnesses.open.in.browser" = "Im Browser öffnen";
+"harnesses.close.detail" = "Schließen";
+"harnesses.detail.artifacts.from.includes" = "Dieses Harness bezieht seine Artefakte aus Abhängigkeits-Includes.";
+"harnesses.detail.from" = "von";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-Server";
+"harnesses.detail.profiles" = "Profile";
+"harnesses.detail.focuses" = "Fokusprofile";
+"harnesses.detail.focus.profile %@" = "Profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Kein Manifest verfügbar.";
+"harnesses.detail.resolved" = "Aufgelöst";
+"harnesses.detail.unresolved" = "Nicht aufgelöst";
+"harnesses.detail.no.hooks" = "Dieses Harness hat keine Hooks.";
+"harnesses.detail.no.mcp.servers" = "Dieses Harness hat keine MCP-Server.";
+"harnesses.detail.no.profiles" = "Dieses Harness hat keine Profile.";
+"harnesses.detail.no.focuses" = "Dieses Harness hat keine Fokusprofile.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness starten";
+"harnesses.launch.vendor" = "Anbieter";
+"harnesses.launch.vendor.unavailable" = "(nicht installiert)";
+"harnesses.launch.vendor.default" = "Standard (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Keiner";
+"harnesses.launch.working.directory" = "Arbeitsverzeichnis";
+"harnesses.launch.browse" = "Durchsuchen…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Optionaler Prompt für den Agenten…";
+"harnesses.launch.button" = "Starten";
+"harnesses.launch.help" = "Dieses Harness in einem neuen Terminal starten";
+"harnesses.launch.cancel" = "Abbrechen";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Verknüpfte Worktrees";
+"harnesses.linked.worktrees.none" = "Keine Worktrees sind mit diesem Harness verknüpft.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-Harness-Toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "KI-Assistent-Harness-Manager";
+"settings.ynh.enable.harness.tab" = "Harnesses-Tab in der Seitenleiste anzeigen";
+"settings.ynh.enable.harness.tab.help" = "Fügt der Seitenleiste einen Harnesses-Tab zum Durchsuchen und Verwalten installierter Harnesses hinzu";
+"settings.ynh.home.override" = "$YNH_HOME überschreiben";
+"settings.ynh.home.override.placeholder" = "Standard (verwendet ynh's eigene Auflösung)";
+"settings.ynh.home.override.help" = "Überschreibt das YNH_HOME-Verzeichnis für den ynh-Unterprozess. Leer lassen für Standard.";
+"settings.ynh.resolved.paths" = "Aufgelöste Pfade";
+"settings.ynh.redetect" = "Erneut erkennen";
+"settings.ynh.init.required" = "Nicht initialisiert";
+"settings.ynh.ready" = "Bereit";
+"settings.ynh.path.label" = "Pfad:";
+"settings.ynh.ynd.path.label" = "ynd-Pfad:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain erkannt und initialisiert. Aktiviere den Seitenleisten-Tab zum Durchsuchen von Harnesses.";
+"settings.ynh.advanced" = "Erweitert";
+"settings.ynh.version.label" = "Version:";
+
+"common.clear" = "Löschen";
+
+// Install sheet
+"harnesses.install.title" = "Harness installieren";
+"harnesses.install.toolbar.help" = "Ein Harness installieren";
+"harnesses.install.tab.search" = "Suchen";
+"harnesses.install.tab.git" = "Aus Git";
+"harnesses.install.tab.sources" = "Quellen";
+"harnesses.install.search.placeholder" = "Registries und Quellen durchsuchen…";
+"harnesses.install.search.prompt" = "Zum Suchen in Registries und Quellen tippen";
+"harnesses.install.search.empty" = "Keine Ergebnisse";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Unterpfad";
+"harnesses.install.git.subpath.placeholder" = "Optionales Unterverzeichnis";
+"harnesses.install.command.preview" = "Befehlsvorschau";
+"harnesses.install.confirm" = "Installieren";
+"harnesses.install.cancel" = "Abbrechen";
+"harnesses.install.already.installed" = "Installiert";
+"harnesses.install.from %@" = "von %@";
+"harnesses.install.sources.empty" = "Keine Quellen konfiguriert. Füge ein lokales Verzeichnis hinzu, um dessen Harnesses zu durchsuchen.";
+"harnesses.install.sources.add" = "Quelle hinzufügen…";
+"harnesses.install.sources.add.help" = "Ein lokales Verzeichnis als Harness-Quelle hinzufügen";
+"harnesses.install.sources.remove" = "Entfernen";
+"harnesses.install.sources.count %ld" = "%ld Harnesses";
+
+"harnesses.update.button" = "Aktualisieren";
+"harnesses.update.help" = "Auf die neueste Version aktualisieren";
+"harnesses.uninstall.button" = "Deinstallieren";
+"harnesses.uninstall.help" = "Diesen Harness deinstallieren";
+"harnesses.uninstall.alert.title %@" = "\"%@\" deinstallieren?";
+"harnesses.uninstall.alert.message" = "Dadurch wird der Harness von Ihrem System entfernt.";
+"harnesses.uninstall.alert.worktrees %ld" = "Dieser Harness ist mit %ld Worktree(s) verknüpft — diese Verknüpfungen werden aufgehoben.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld Terminal(s) führen diesen Harness gerade aus.";
+"harnesses.uninstall.alert.confirm" = "Deinstallieren";
+"harnesses.more.actions.help" = "Weitere Aktionen";

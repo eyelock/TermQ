@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Požiadavka na externú úpravu";
-"security.external.modification.message" = "Externý proces sa pokúša upraviť kontext LLM pre terminál '%@':
-
-%@
-
-To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
+"security.external.modification.message" = "Externý proces sa pokúša upraviť kontext LLM pre terminál '%@':\n\n%@\n\nTo môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "security.allow" = "Povoliť";
 "security.deny" = "Odmietnuť";
 "security.allow.disable.prompt" = "Povoliť a znovu sa nepýtať";
@@ -539,17 +535,22 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "sidebar.worktree.open.remote.commit" = "Otvoriť commit na Remote";
 "sidebar.worktree.lock" = "Uzamknúť pracovný strom";
 "sidebar.worktree.unlock" = "Odomknúť pracovný strom";
+
+"sidebar.worktree.set.harness" = "Nastaviť harness…";
+"sidebar.worktree.clear.harness" = "Odstrániť harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Spustiť %@";
 "sidebar.remove.worktree" = "Zmazať pracovný strom";
 "sidebar.remove.worktree.title" = "Zmazať pracovný strom?";
 "sidebar.remove.worktree.confirm" = "Zmazať";
 "sidebar.remove.main.worktree.error" = "Hlavný pracovný strom nemožno odstrániť.";
-"sidebar.remove.worktree.message %@" = "Týmto sa trvalo zmaže pracovný strom v "%@". Vetva nebude vymazaná.";
+"sidebar.remove.worktree.message %@" = "Týmto sa trvalo zmaže pracovný strom v \"%@\". Vetva nebude vymazaná.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Zničiť Worktree...";
 "sidebar.worktree.delete.title" = "Zničiť Worktree";
 "sidebar.worktree.delete.confirm" = "Zničiť";
-"sidebar.worktree.delete.message %@" = "Pracovný strom na ceste "%@" a všetky neuložené zmeny budú natrvalo zničené. Túto akciu nemožno vrátiť späť.";
+"sidebar.worktree.delete.message %@" = "Pracovný strom na ceste \"%@\" a všetky neuložené zmeny budú natrvalo zničené. Túto akciu nemožno vrátiť späť.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Vyčistiť Worktrees…";
@@ -581,3 +582,126 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Postroje";
+"harnesses.refresh.help" = "Znovu detekovať nástrojový reťazec ynh";
+"harnesses.not.installed" = "ynh nie je nainštalovaný.";
+"harnesses.init.required" = "ynh bol nájdený, ale nie je inicializovaný.\nSpustite `ynh init` pre nastavenie.";
+"harnesses.init.hint" = "Otvorte terminál a spustite:\nynh init";
+"harnesses.empty.message" = "Zatiaľ nie sú nainštalované žiadne postroje.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Miestne";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informácie";
+"harnesses.detail.path" = "Cesta";
+"harnesses.detail.source" = "Zdroj";
+"harnesses.detail.subpath" = "Podcesta";
+"harnesses.detail.installed.at" = "Nainštalované";
+"harnesses.detail.artifacts" = "Artefakty";
+"harnesses.detail.no.artifacts" = "Žiadne artefakty.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenti";
+"harnesses.detail.rules" = "Pravidlá";
+"harnesses.detail.commands" = "Príkazy";
+"harnesses.detail.dependencies" = "Závislosti";
+"harnesses.detail.includes %d" = "Zahŕňa (%d)";
+"harnesses.detail.delegates %d" = "Deleguje na (%d)";
+"harnesses.detail.picks %d" = "Vyberá (%d):";
+"harnesses.reveal.in.finder" = "Zobraziť vo Finderi";
+"harnesses.open.in.browser" = "Otvoriť v prehliadači";
+"harnesses.close.detail" = "Zavrieť";
+"harnesses.detail.artifacts.from.includes" = "Tento postroj získava artefakty z inkludovaných závislostí.";
+"harnesses.detail.from" = "z";
+"harnesses.detail.hooks" = "Hooky";
+"harnesses.detail.mcp.servers" = "Servery MCP";
+"harnesses.detail.profiles" = "Profily";
+"harnesses.detail.focuses" = "Fokusy";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Žiadny manifest nie je k dispozícii.";
+"harnesses.detail.resolved" = "Vyriešené";
+"harnesses.detail.unresolved" = "Nevyriešené";
+"harnesses.detail.no.hooks" = "Tento postroj nemá žiadne hooky.";
+"harnesses.detail.no.mcp.servers" = "Tento postroj nemá žiadne servery MCP.";
+"harnesses.detail.no.profiles" = "Tento postroj nemá žiadne profily.";
+"harnesses.detail.no.focuses" = "Tento postroj nemá žiadne fokusy.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Spustiť postroj";
+"harnesses.launch.vendor" = "Dodávateľ";
+"harnesses.launch.vendor.unavailable" = "(nie je nainštalovaný)";
+"harnesses.launch.vendor.default" = "Predvolený (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Žiadny";
+"harnesses.launch.working.directory" = "Pracovný adresár";
+"harnesses.launch.browse" = "Prehľadávať…";
+"harnesses.launch.prompt" = "Výzva";
+"harnesses.launch.prompt.placeholder" = "Voliteľná výzva pre agenta…";
+"harnesses.launch.button" = "Spustiť";
+"harnesses.launch.help" = "Spustiť tento postroj v novom termináli";
+"harnesses.launch.cancel" = "Zrušiť";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Priradené worktrees";
+"harnesses.linked.worktrees.none" = "Žiadne worktrees nie sú priradené k tomuto harness.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Nástrojový reťazec YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Správca postrojov pre AI asistentov";
+"settings.ynh.enable.harness.tab" = "Zobraziť kartu postrojov v bočnom paneli";
+"settings.ynh.enable.harness.tab.help" = "Pridá kartu Postroje do bočného panela pre prehľadávanie a správu nainštalovaných postrojov";
+"settings.ynh.home.override" = "Prepísanie $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Predvolené (používa vlastné rozlíšenie ynh)";
+"settings.ynh.home.override.help" = "Prepíše adresár YNH_HOME pre podproces ynh. Pre predvolenú hodnotu ponechajte prázdne.";
+"settings.ynh.resolved.paths" = "Vyriešené cesty";
+"settings.ynh.redetect" = "Znovu detekovať";
+"settings.ynh.init.required" = "Neinicializované";
+"settings.ynh.ready" = "Pripravené";
+"settings.ynh.path.label" = "Cesta:";
+"settings.ynh.ynd.path.label" = "Cesta ynd:";
+"settings.ynh.status.label" = "Stav:";
+"settings.ynh.ready.info" = "Nástrojový reťazec bol detekovaný a inicializovaný. Aktivujte kartu bočného panela pre prehľadávanie postrojov.";
+"settings.ynh.advanced" = "Pokročilé";
+"settings.ynh.version.label" = "Verzia:";
+
+"common.clear" = "Vymazať";
+
+// Install sheet
+"harnesses.install.title" = "Nainštalovať harness";
+"harnesses.install.toolbar.help" = "Nainštalovať harness";
+"harnesses.install.tab.search" = "Hľadať";
+"harnesses.install.tab.git" = "Z Gitu";
+"harnesses.install.tab.sources" = "Zdroje";
+"harnesses.install.search.placeholder" = "Hľadať v registroch a zdrojoch…";
+"harnesses.install.search.prompt" = "Zadajte text na vyhľadávanie v registroch a zdrojoch";
+"harnesses.install.search.empty" = "Žiadne výsledky";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Podradená cesta";
+"harnesses.install.git.subpath.placeholder" = "Voliteľný podadresár";
+"harnesses.install.command.preview" = "Ukážka príkazu";
+"harnesses.install.confirm" = "Nainštalovať";
+"harnesses.install.cancel" = "Zrušiť";
+"harnesses.install.already.installed" = "Nainštalované";
+"harnesses.install.from %@" = "z %@";
+"harnesses.install.sources.empty" = "Žiadne zdroje nie sú nakonfigurované. Pridajte miestny adresár na prechádzanie jeho harnesses.";
+"harnesses.install.sources.add" = "Pridať zdroj…";
+"harnesses.install.sources.add.help" = "Pridať miestny adresár ako zdroj harness";
+"harnesses.install.sources.remove" = "Odstrániť";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Aktualizovať";
+"harnesses.update.help" = "Aktualizovať na najnovšiu verziu";
+"harnesses.uninstall.button" = "Odinštalovať";
+"harnesses.uninstall.help" = "Odinštalovať tento harness";
+"harnesses.uninstall.alert.title %@" = "Odinštalovať \"%@\"?";
+"harnesses.uninstall.alert.message" = "Týmto sa harness odstráni z vášho systému.";
+"harnesses.uninstall.alert.worktrees %ld" = "Tento harness je prepojený s %ld pracovným stromom (stromami) — tieto prepojenia budú vymazané.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminál(ov) momentálne spúšťa tento harness.";
+"harnesses.uninstall.alert.confirm" = "Odinštalovať";
+"harnesses.more.actions.help" = "Ďalšie akcie";

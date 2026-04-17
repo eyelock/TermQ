@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Solicitare de modificare externă";
-"security.external.modification.message" = "Un proces extern încearcă să modifice contextul LLM pentru terminalul '%@':
-
-%@
-
-Acest lucru ar putea afecta modul în care asistenții AI interacționează cu acest terminal.";
+"security.external.modification.message" = "Un proces extern încearcă să modifice contextul LLM pentru terminalul '%@':\n\n%@\n\nAcest lucru ar putea afecta modul în care asistenții AI interacționează cu acest terminal.";
 "security.allow" = "Permite";
 "security.deny" = "Refuză";
 "security.allow.disable.prompt" = "Permite și nu mai întreba";
@@ -539,17 +535,22 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "sidebar.worktree.open.remote.commit" = "Deschide commit-ul pe Remote";
 "sidebar.worktree.lock" = "Blochează worktree";
 "sidebar.worktree.unlock" = "Deblochează worktree";
+
+"sidebar.worktree.set.harness" = "Setează harness…";
+"sidebar.worktree.clear.harness" = "Eliberează harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Lansează %@";
 "sidebar.remove.worktree" = "Șterge arborele de lucru";
 "sidebar.remove.worktree.title" = "Ștergeți arborele de lucru?";
 "sidebar.remove.worktree.confirm" = "Șterge";
 "sidebar.remove.main.worktree.error" = "Arborele de lucru principal nu poate fi eliminat.";
-"sidebar.remove.worktree.message %@" = "Aceasta va șterge permanent arborele de lucru din "%@". Branch-ul nu va fi șters.";
+"sidebar.remove.worktree.message %@" = "Aceasta va șterge permanent arborele de lucru din \"%@\". Branch-ul nu va fi șters.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Distruge Worktree...";
 "sidebar.worktree.delete.title" = "Distruge Worktree";
 "sidebar.worktree.delete.confirm" = "Distruge";
-"sidebar.worktree.delete.message %@" = "Worktree-ul de la "%@" și orice modificări nesalvate vor fi distruse permanent. Această acțiune nu poate fi anulată.";
+"sidebar.worktree.delete.message %@" = "Worktree-ul de la \"%@\" și orice modificări nesalvate vor fi distruse permanent. Această acțiune nu poate fi anulată.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Curăță Worktrees…";
@@ -581,3 +582,126 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness-uri";
+"harnesses.refresh.help" = "Re-detectare lanț de instrumente ynh";
+"harnesses.not.installed" = "ynh nu este instalat.";
+"harnesses.init.required" = "ynh găsit dar neinitializat.\nRulează `ynh init` pentru configurare.";
+"harnesses.init.hint" = "Deschide un terminal și rulează:\nynh init";
+"harnesses.empty.message" = "Nu sunt instalate harness-uri.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Local";
+"harnesses.source.registry" = "Registru";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informații";
+"harnesses.detail.path" = "Cale";
+"harnesses.detail.source" = "Sursă";
+"harnesses.detail.subpath" = "Subcale";
+"harnesses.detail.installed.at" = "Instalat";
+"harnesses.detail.artifacts" = "Artefacte";
+"harnesses.detail.no.artifacts" = "Nicio artefactă.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenți";
+"harnesses.detail.rules" = "Reguli";
+"harnesses.detail.commands" = "Comenzi";
+"harnesses.detail.dependencies" = "Dependențe";
+"harnesses.detail.includes %d" = "Include (%d)";
+"harnesses.detail.delegates %d" = "Delegă la (%d)";
+"harnesses.detail.picks %d" = "Selectează (%d):";
+"harnesses.reveal.in.finder" = "Afișare în Finder";
+"harnesses.open.in.browser" = "Deschide în browser";
+"harnesses.close.detail" = "Închide";
+"harnesses.detail.artifacts.from.includes" = "Acest harness obține artefactele din includeri de dependențe.";
+"harnesses.detail.from" = "din";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Servere MCP";
+"harnesses.detail.profiles" = "Profiluri";
+"harnesses.detail.focuses" = "Focusuri";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Niciun manifest disponibil.";
+"harnesses.detail.resolved" = "Rezolvat";
+"harnesses.detail.unresolved" = "Nerezolvat";
+"harnesses.detail.no.hooks" = "Acest harness nu are hooks.";
+"harnesses.detail.no.mcp.servers" = "Acest harness nu are servere MCP.";
+"harnesses.detail.no.profiles" = "Acest harness nu are profiluri.";
+"harnesses.detail.no.focuses" = "Acest harness nu are focusuri.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Lansare harness";
+"harnesses.launch.vendor" = "Furnizor";
+"harnesses.launch.vendor.unavailable" = "(neinstalat)";
+"harnesses.launch.vendor.default" = "Implicit (%@)";
+"harnesses.launch.focus" = "Focus";
+"harnesses.launch.focus.none" = "Niciunul";
+"harnesses.launch.working.directory" = "Director de lucru";
+"harnesses.launch.browse" = "Răsfoire…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Prompt opțional pentru agent…";
+"harnesses.launch.button" = "Lansare";
+"harnesses.launch.help" = "Lansează acest harness într-un terminal nou";
+"harnesses.launch.cancel" = "Anulare";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree-uri legate";
+"harnesses.linked.worktrees.none" = "Niciun worktree nu este legat de acest harness.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Lanț de instrumente YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Manager de harness-uri pentru asistenți AI";
+"settings.ynh.enable.harness.tab" = "Afișare tab Harness în bara laterală";
+"settings.ynh.enable.harness.tab.help" = "Adaugă un tab Harness în bara laterală pentru navigarea și gestionarea harness-urilor instalate";
+"settings.ynh.home.override" = "Suprascrierea $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Implicit (utilizează rezoluția proprie a ynh)";
+"settings.ynh.home.override.help" = "Suprascrie directorul YNH_HOME pentru subprocesul ynh. Lasă gol pentru implicit.";
+"settings.ynh.resolved.paths" = "Căi rezolvate";
+"settings.ynh.redetect" = "Re-detectare";
+"settings.ynh.init.required" = "Neinițializat";
+"settings.ynh.ready" = "Gata";
+"settings.ynh.path.label" = "Cale:";
+"settings.ynh.ynd.path.label" = "Cale ynd:";
+"settings.ynh.status.label" = "Stare:";
+"settings.ynh.ready.info" = "Lanț de instrumente detectat și inițializat. Activează tab-ul barei laterale pentru navigarea harness-urilor.";
+"settings.ynh.advanced" = "Avansat";
+"settings.ynh.version.label" = "Versiune:";
+
+"common.clear" = "Ștergere";
+
+// Install sheet
+"harnesses.install.title" = "Instalare harness";
+"harnesses.install.toolbar.help" = "Instalează un harness";
+"harnesses.install.tab.search" = "Căutare";
+"harnesses.install.tab.git" = "Din Git";
+"harnesses.install.tab.sources" = "Surse";
+"harnesses.install.search.placeholder" = "Caută în registre și surse…";
+"harnesses.install.search.prompt" = "Tastați pentru a căuta în registre și surse";
+"harnesses.install.search.empty" = "Niciun rezultat";
+"harnesses.install.git.url" = "URL Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sub-cale";
+"harnesses.install.git.subpath.placeholder" = "Sub-director opțional";
+"harnesses.install.command.preview" = "Previzualizare comandă";
+"harnesses.install.confirm" = "Instalează";
+"harnesses.install.cancel" = "Anulează";
+"harnesses.install.already.installed" = "Instalat";
+"harnesses.install.from %@" = "din %@";
+"harnesses.install.sources.empty" = "Nicio sursă configurată. Adăugați un director local pentru a naviga prin harnesses-urile sale.";
+"harnesses.install.sources.add" = "Adaugă sursă…";
+"harnesses.install.sources.add.help" = "Adăugați un director local ca sursă harness";
+"harnesses.install.sources.remove" = "Elimină";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Actualizare";
+"harnesses.update.help" = "Actualizare la ultima versiune";
+"harnesses.uninstall.button" = "Dezinstalare";
+"harnesses.uninstall.help" = "Dezinstalați acest harness";
+"harnesses.uninstall.alert.title %@" = "Dezinstalați \"%@\"?";
+"harnesses.uninstall.alert.message" = "Aceasta va elimina harness-ul din sistemul dvs.";
+"harnesses.uninstall.alert.worktrees %ld" = "Acest harness este legat de %ld worktree(uri) — aceste asocieri vor fi șterse.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(e) rulează în prezent acest harness.";
+"harnesses.uninstall.alert.confirm" = "Dezinstalare";
+"harnesses.more.actions.help" = "Mai multe acțiuni";

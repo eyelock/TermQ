@@ -395,10 +395,16 @@ class TerminalSessionManager: ObservableObject {
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
         }
 
-        // Slightly longer delay for tmux sessions (they take a moment to attach)
-        let delay = effectiveBackend(for: card) == .tmuxAttach ? 0.8 : 0.5
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            terminal.send(txt: initCmd + "\n")
+        let backend = effectiveBackend(for: card)
+
+        if backend == .tmuxControl {
+            sendInitCommandViaControlMode(cardId: card.id, command: initCmd)
+        } else {
+            // Direct or tmux-attach: send text directly to the terminal.
+            let delay: Double = backend == .tmuxAttach ? 0.8 : 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                terminal.send(txt: initCmd + "\n")
+            }
         }
     }
 
@@ -797,6 +803,7 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
         let cardId = self.cardId
         let manager = self.manager
         let onExit = self.onExit
+        let capturedExitCode = exitCode.map { Int($0) }
         Task { @MainActor in
             // Only call onExit if the session still exists in the manager.
             // If it was intentionally removed (via removeSession), we skip the callback
@@ -804,7 +811,22 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
             guard manager?.sessionExists(for: cardId) == true else { return }
 
             manager?.markSessionTerminated(cardId: cardId)
+            var userInfo: [String: Any] = ["cardId": cardId]
+            if let code = capturedExitCode {
+                userInfo["exitCode"] = code
+            }
+            NotificationCenter.default.post(
+                name: .termqDirectSessionExited,
+                object: nil,
+                userInfo: userInfo
+            )
             onExit()
         }
     }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    static let termqDirectSessionExited = Notification.Name("termq.directSessionExited")
 }

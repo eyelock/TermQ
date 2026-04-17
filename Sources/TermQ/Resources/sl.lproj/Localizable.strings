@@ -468,11 +468,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Zahteva za zunanjo spremembo";
-"security.external.modification.message" = "Zunanji proces poskuša spremeniti kontekst LLM za terminal '%@':
-
-%@
-
-To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
+"security.external.modification.message" = "Zunanji proces poskuša spremeniti kontekst LLM za terminal '%@':\n\n%@\n\nTo lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "security.allow" = "Dovoli";
 "security.deny" = "Zavrni";
 "security.allow.disable.prompt" = "Dovoli in ne sprašuj več";
@@ -540,6 +536,11 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "sidebar.worktree.open.remote.commit" = "Odpri commit na Remote";
 "sidebar.worktree.lock" = "Zakleni delovno kopijo";
 "sidebar.worktree.unlock" = "Odkleni delovno kopijo";
+
+"sidebar.worktree.set.harness" = "Nastavi harness…";
+"sidebar.worktree.clear.harness" = "Odstrani harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Zaženi %@";
 "sidebar.remove.worktree" = "Odstrani delovno kopijo";
 "sidebar.remove.worktree.title" = "Odstrani delovno kopijo?";
 "sidebar.remove.worktree.confirm" = "Odstrani";
@@ -572,3 +573,142 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness-i";
+"harnesses.refresh.help" = "Znova zazna ynh orodni verižnik";
+"harnesses.not.installed" = "ynh ni nameščen.";
+"harnesses.init.required" = "ynh je najden, a ni inicializiran.\nZaženi `ynh init` za nastavitev.";
+"harnesses.init.hint" = "Odpri terminal in zaženi:\nynh init";
+"harnesses.empty.message" = "Ni nameščenih harness-ov.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokalno";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informacije";
+"harnesses.detail.path" = "Pot";
+"harnesses.detail.source" = "Vir";
+"harnesses.detail.subpath" = "Podpot";
+"harnesses.detail.installed.at" = "Nameščeno";
+"harnesses.detail.artifacts" = "Artefakti";
+"harnesses.detail.no.artifacts" = "Ni artefaktov.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenti";
+"harnesses.detail.rules" = "Pravila";
+"harnesses.detail.commands" = "Ukazi";
+"harnesses.detail.dependencies" = "Odvisnosti";
+"harnesses.detail.includes %d" = "Vključuje (%d)";
+"harnesses.detail.delegates %d" = "Delegira na (%d)";
+"harnesses.detail.picks %d" = "Izbere (%d):";
+"harnesses.reveal.in.finder" = "Pokaži v Finderju";
+"harnesses.open.in.browser" = "Odpri v brskalniku";
+"harnesses.close.detail" = "Zapri";
+"harnesses.detail.artifacts.from.includes" = "Ta harness pridobi artefakte iz vključenih odvisnosti.";
+"harnesses.detail.from" = "iz";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Strežniki MCP";
+"harnesses.detail.profiles" = "Profili";
+"harnesses.detail.focuses" = "Fokusi";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Ni razpoložljivega manifesta.";
+"harnesses.detail.resolved" = "Razrešeno";
+"harnesses.detail.unresolved" = "Nerazrešeno";
+"harnesses.detail.no.hooks" = "Ta harness nima hookov.";
+"harnesses.detail.no.mcp.servers" = "Ta harness nima strežnikov MCP.";
+"harnesses.detail.no.profiles" = "Ta harness nima profilov.";
+"harnesses.detail.no.focuses" = "Ta harness nima fokusov.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Zaženi harness";
+"harnesses.launch.vendor" = "Dobavitelj";
+"harnesses.launch.vendor.unavailable" = "(ni nameščen)";
+"harnesses.launch.vendor.default" = "Privzeto (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Brez";
+"harnesses.launch.working.directory" = "Delovna mapa";
+"harnesses.launch.browse" = "Brskaj…";
+"harnesses.launch.prompt" = "Poziv";
+"harnesses.launch.prompt.placeholder" = "Neobvezni poziv za agenta…";
+"harnesses.launch.button" = "Zaženi";
+"harnesses.launch.help" = "Zaženi ta harness v novem terminalu";
+"harnesses.launch.cancel" = "Prekliči";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Povezani worktreei";
+"harnesses.linked.worktrees.none" = "Noben worktree ni povezan s tem harnessom.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Orodni verižnik YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Upravljalnik harness-ov za AI asistente";
+"settings.ynh.enable.harness.tab" = "Pokaži zavihek harness-ov v stranski vrstici";
+"settings.ynh.enable.harness.tab.help" = "Doda zavihek Harness-i v stransko vrstico za brskanje in upravljanje nameščenih harness-ov";
+"settings.ynh.home.override" = "Preglasitev $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Privzeto (uporablja lastno razrešitev ynh)";
+"settings.ynh.home.override.help" = "Preglasi imenik YNH_HOME za podproces ynh. Pusti prazno za privzeto.";
+"settings.ynh.resolved.paths" = "Razrešene poti";
+"settings.ynh.redetect" = "Znova zazna";
+"settings.ynh.init.required" = "Ni inicializirano";
+"settings.ynh.ready" = "Pripravljeno";
+"settings.ynh.path.label" = "Pot:";
+"settings.ynh.ynd.path.label" = "Pot ynd:";
+"settings.ynh.status.label" = "Stanje:";
+"settings.ynh.ready.info" = "Orodni verižnik zaznan in inicializiran. Aktiviraj zavihek stranske vrstice za brskanje po harness-ih.";
+"settings.ynh.advanced" = "Napredno";
+"settings.ynh.version.label" = "Različica:";
+
+"common.clear" = "Počisti";
+
+"sidebar.worktree.create.terminal" = "Ustvari Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopiraj kot pot";
+
+"sidebar.prune.worktrees" = "Obreži worktrees…";
+
+"sidebar.prune.worktrees.title" = "Obreži worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Obreži";
+
+"sidebar.prune.worktrees.nothing.title" = "Ni za obrezovanje";
+
+"sidebar.prune.worktrees.nothing.message" = "Vsi worktrees so evidentirani. Ni zastarelih zapisov.";
+
+"sidebar.prune.worktrees.explanation" = "Ti administrativni zapisi kažejo na imenike, ki ne obstajajo več. Obrezovanje jih odstrani — vaše veje niso prizadete.";
+
+// Install sheet
+"harnesses.install.title" = "Namestitev harness";
+"harnesses.install.toolbar.help" = "Namesti harness";
+"harnesses.install.tab.search" = "Išči";
+"harnesses.install.tab.git" = "Iz Gita";
+"harnesses.install.tab.sources" = "Viri";
+"harnesses.install.search.placeholder" = "Išči v registrih in virih…";
+"harnesses.install.search.prompt" = "Vpišite besedilo za iskanje v registrih in virih";
+"harnesses.install.search.empty" = "Ni rezultatov";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Podpot";
+"harnesses.install.git.subpath.placeholder" = "Izbirni podimenik";
+"harnesses.install.command.preview" = "Predogled ukaza";
+"harnesses.install.confirm" = "Namesti";
+"harnesses.install.cancel" = "Prekliči";
+"harnesses.install.already.installed" = "Nameščeno";
+"harnesses.install.from %@" = "iz %@";
+"harnesses.install.sources.empty" = "Ni konfiguriranih virov. Dodajte lokalni imenik za brskanje po njegovih harnesses.";
+"harnesses.install.sources.add" = "Dodaj vir…";
+"harnesses.install.sources.add.help" = "Dodaj lokalni imenik kot vir harness";
+"harnesses.install.sources.remove" = "Odstrani";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Posodobi";
+"harnesses.update.help" = "Posodobi na najnovejšo različico";
+"harnesses.uninstall.button" = "Odstrani";
+"harnesses.uninstall.help" = "Odstrani ta harness";
+"harnesses.uninstall.alert.title %@" = "Odstraniti \"%@\"?";
+"harnesses.uninstall.alert.message" = "S tem boste odstranili harness iz vašega sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ta harness je povezan z %ld delovnim drevesom (drevesi) — te povezave bodo počiščene.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(ov) trenutno poganja ta harness.";
+"harnesses.uninstall.alert.confirm" = "Odstrani";
+"harnesses.more.actions.help" = "Več dejanj";

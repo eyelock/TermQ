@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Запрос на внешнее изменение";
-"security.external.modification.message" = "Внешний процесс пытается изменить контекст LLM для терминала '%@':
-
-%@
-
-Это может повлиять на то, как ИИ-ассистенты взаимодействуют с этим терминалом.";
+"security.external.modification.message" = "Внешний процесс пытается изменить контекст LLM для терминала '%@':\n\n%@\n\nЭто может повлиять на то, как ИИ-ассистенты взаимодействуют с этим терминалом.";
 "security.allow" = "Разрешить";
 "security.deny" = "Запретить";
 "security.allow.disable.prompt" = "Разрешить и больше не спрашивать";
@@ -539,6 +535,11 @@
 "sidebar.worktree.open.remote.commit" = "Открыть коммит на Remote";
 "sidebar.worktree.lock" = "Заблокировать рабочее дерево";
 "sidebar.worktree.unlock" = "Разблокировать рабочее дерево";
+
+"sidebar.worktree.set.harness" = "Установить harness…";
+"sidebar.worktree.clear.harness" = "Очистить harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Запустить %@";
 "sidebar.remove.worktree" = "Удалить рабочее дерево";
 "sidebar.remove.worktree.title" = "Удалить рабочее дерево?";
 "sidebar.remove.worktree.confirm" = "Удалить";
@@ -581,3 +582,126 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Упряжки";
+"harnesses.refresh.help" = "Повторно определить инструментарий ynh";
+"harnesses.not.installed" = "ynh не установлен.";
+"harnesses.init.required" = "ynh найден, но не инициализирован.\nЗапустите `ynh init` для настройки.";
+"harnesses.init.hint" = "Откройте терминал и запустите:\nynh init";
+"harnesses.empty.message" = "Упряжки ещё не установлены.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Локальный";
+"harnesses.source.registry" = "Реестр";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Информация";
+"harnesses.detail.path" = "Путь";
+"harnesses.detail.source" = "Источник";
+"harnesses.detail.subpath" = "Подпуть";
+"harnesses.detail.installed.at" = "Установлено";
+"harnesses.detail.artifacts" = "Артефакты";
+"harnesses.detail.no.artifacts" = "Нет артефактов.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Агенты";
+"harnesses.detail.rules" = "Правила";
+"harnesses.detail.commands" = "Команды";
+"harnesses.detail.dependencies" = "Зависимости";
+"harnesses.detail.includes %d" = "Включает (%d)";
+"harnesses.detail.delegates %d" = "Делегирует (%d)";
+"harnesses.detail.picks %d" = "Выбирает (%d):";
+"harnesses.reveal.in.finder" = "Показать в Finder";
+"harnesses.open.in.browser" = "Открыть в браузере";
+"harnesses.close.detail" = "Закрыть";
+"harnesses.detail.artifacts.from.includes" = "Эта упряжка получает артефакты из включений зависимостей.";
+"harnesses.detail.from" = "из";
+"harnesses.detail.hooks" = "Хуки";
+"harnesses.detail.mcp.servers" = "MCP-серверы";
+"harnesses.detail.profiles" = "Профили";
+"harnesses.detail.focuses" = "Фокусы";
+"harnesses.detail.focus.profile %@" = "профиль: %@";
+"harnesses.detail.manifest" = "Манифест";
+"harnesses.detail.no.manifest" = "Манифест недоступен.";
+"harnesses.detail.resolved" = "Разрешено";
+"harnesses.detail.unresolved" = "Не разрешено";
+"harnesses.detail.no.hooks" = "У этой упряжки нет хуков.";
+"harnesses.detail.no.mcp.servers" = "У этой упряжки нет MCP-серверов.";
+"harnesses.detail.no.profiles" = "У этой упряжки нет профилей.";
+"harnesses.detail.no.focuses" = "У этой упряжки нет фокусов.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Запустить упряжку";
+"harnesses.launch.vendor" = "Поставщик";
+"harnesses.launch.vendor.unavailable" = "(не установлен)";
+"harnesses.launch.vendor.default" = "По умолчанию (%@)";
+"harnesses.launch.focus" = "Фокус";
+"harnesses.launch.focus.none" = "Нет";
+"harnesses.launch.working.directory" = "Рабочий каталог";
+"harnesses.launch.browse" = "Обзор…";
+"harnesses.launch.prompt" = "Запрос";
+"harnesses.launch.prompt.placeholder" = "Необязательный запрос для агента…";
+"harnesses.launch.button" = "Запустить";
+"harnesses.launch.help" = "Запустить эту упряжку в новом терминале";
+"harnesses.launch.cancel" = "Отмена";
+"harnesses.launch.backend" = "Бэкенд";
+
+"harnesses.linked.worktrees" = "Связанные worktree";
+"harnesses.linked.worktrees.none" = "Ни один worktree не связан с этим harness.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Инструментарий YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Менеджер упряжек для ИИ-ассистентов";
+"settings.ynh.enable.harness.tab" = "Показывать вкладку упряжек на панели";
+"settings.ynh.enable.harness.tab.help" = "Добавляет вкладку «Упряжки» на боковую панель для просмотра и управления установленными упряжками";
+"settings.ynh.home.override" = "Переопределение $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "По умолчанию (использует собственное разрешение ynh)";
+"settings.ynh.home.override.help" = "Переопределяет каталог YNH_HOME для дочернего процесса ynh. Оставьте пустым для значения по умолчанию.";
+"settings.ynh.resolved.paths" = "Разрешённые пути";
+"settings.ynh.redetect" = "Определить повторно";
+"settings.ynh.init.required" = "Не инициализирован";
+"settings.ynh.ready" = "Готов";
+"settings.ynh.path.label" = "Путь:";
+"settings.ynh.ynd.path.label" = "Путь ynd:";
+"settings.ynh.status.label" = "Статус:";
+"settings.ynh.ready.info" = "Инструментарий определён и инициализирован. Включите вкладку боковой панели для просмотра упряжек.";
+"settings.ynh.advanced" = "Расширенные";
+"settings.ynh.version.label" = "Версия:";
+
+"common.clear" = "Очистить";
+
+// Install sheet
+"harnesses.install.title" = "Установить harness";
+"harnesses.install.toolbar.help" = "Установить harness";
+"harnesses.install.tab.search" = "Поиск";
+"harnesses.install.tab.git" = "Из Git";
+"harnesses.install.tab.sources" = "Источники";
+"harnesses.install.search.placeholder" = "Поиск в реестрах и источниках…";
+"harnesses.install.search.prompt" = "Введите текст для поиска в реестрах и источниках";
+"harnesses.install.search.empty" = "Нет результатов";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Подпуть";
+"harnesses.install.git.subpath.placeholder" = "Необязательный подкаталог";
+"harnesses.install.command.preview" = "Предпросмотр команды";
+"harnesses.install.confirm" = "Установить";
+"harnesses.install.cancel" = "Отмена";
+"harnesses.install.already.installed" = "Установлен";
+"harnesses.install.from %@" = "из %@";
+"harnesses.install.sources.empty" = "Источники не настроены. Добавьте локальный каталог для просмотра его harnesses.";
+"harnesses.install.sources.add" = "Добавить источник…";
+"harnesses.install.sources.add.help" = "Добавить локальный каталог как источник harness";
+"harnesses.install.sources.remove" = "Удалить";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Обновить";
+"harnesses.update.help" = "Обновить до последней версии";
+"harnesses.uninstall.button" = "Удалить";
+"harnesses.uninstall.help" = "Удалить этот harness";
+"harnesses.uninstall.alert.title %@" = "Удалить \"%@\"?";
+"harnesses.uninstall.alert.message" = "Это удалит harness с вашей системы.";
+"harnesses.uninstall.alert.worktrees %ld" = "Этот harness связан с %ld рабочим деревом (деревьями) — эти связи будут удалены.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld терминал(а/ов) в данный момент запускает этот harness.";
+"harnesses.uninstall.alert.confirm" = "Удалить";
+"harnesses.more.actions.help" = "Другие действия";

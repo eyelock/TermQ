@@ -468,11 +468,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "คำขอแก้ไขจากภายนอก";
-"security.external.modification.message" = "กระบวนการภายนอกกำลังพยายามแก้ไขบริบท LLM สำหรับเทอร์มินัล '%@':
-
-%@
-
-สิ่งนี้อาจส่งผลต่อวิธีที่ผู้ช่วย AI โต้ตอบกับเทอร์มินัลนี้";
+"security.external.modification.message" = "กระบวนการภายนอกกำลังพยายามแก้ไขบริบท LLM สำหรับเทอร์มินัล '%@':\n\n%@\n\nสิ่งนี้อาจส่งผลต่อวิธีที่ผู้ช่วย AI โต้ตอบกับเทอร์มินัลนี้";
 "security.allow" = "อนุญาต";
 "security.deny" = "ปฏิเสธ";
 "security.allow.disable.prompt" = "อนุญาตและไม่ต้องถามอีก";
@@ -540,6 +536,11 @@
 "sidebar.worktree.open.remote.commit" = "เปิด Commit บน Remote";
 "sidebar.worktree.lock" = "ล็อก worktree";
 "sidebar.worktree.unlock" = "ปลดล็อก worktree";
+
+"sidebar.worktree.set.harness" = "ตั้งค่า harness…";
+"sidebar.worktree.clear.harness" = "ล้าง harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "เปิด %@";
 "sidebar.remove.worktree" = "ลบ Worktree";
 "sidebar.remove.worktree.title" = "ลบ Worktree?";
 "sidebar.remove.worktree.confirm" = "ลบ";
@@ -572,3 +573,142 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "ตรวจหา ynh toolchain ใหม่";
+"harnesses.not.installed" = "ไม่ได้ติดตั้ง ynh";
+"harnesses.init.required" = "พบ ynh แต่ยังไม่ได้เริ่มต้น\nรัน `ynh init` เพื่อตั้งค่า";
+"harnesses.init.hint" = "เปิด Terminal แล้วรัน:\nynh init";
+"harnesses.empty.message" = "ยังไม่มี harness ที่ติดตั้งไว้";
+
+// Harnesses — row badges
+"harnesses.source.local" = "ในเครื่อง";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "ข้อมูล";
+"harnesses.detail.path" = "เส้นทาง";
+"harnesses.detail.source" = "แหล่งที่มา";
+"harnesses.detail.subpath" = "เส้นทางย่อย";
+"harnesses.detail.installed.at" = "ติดตั้งแล้ว";
+"harnesses.detail.artifacts" = "Artifacts";
+"harnesses.detail.no.artifacts" = "ไม่มี artifacts";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "กฎ";
+"harnesses.detail.commands" = "คำสั่ง";
+"harnesses.detail.dependencies" = "การพึ่งพา";
+"harnesses.detail.includes %d" = "รวม (%d)";
+"harnesses.detail.delegates %d" = "มอบหมายไปยัง (%d)";
+"harnesses.detail.picks %d" = "เลือก (%d):";
+"harnesses.reveal.in.finder" = "แสดงใน Finder";
+"harnesses.open.in.browser" = "เปิดในเบราว์เซอร์";
+"harnesses.close.detail" = "ปิด";
+"harnesses.detail.artifacts.from.includes" = "harness นี้ได้รับ artifacts จาก dependency includes";
+"harnesses.detail.from" = "จาก";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "เซิร์ฟเวอร์ MCP";
+"harnesses.detail.profiles" = "โปรไฟล์";
+"harnesses.detail.focuses" = "โฟกัส";
+"harnesses.detail.focus.profile %@" = "โปรไฟล์: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "ไม่มี manifest";
+"harnesses.detail.resolved" = "แก้ไขแล้ว";
+"harnesses.detail.unresolved" = "ยังไม่ได้แก้ไข";
+"harnesses.detail.no.hooks" = "harness นี้ไม่มี hooks";
+"harnesses.detail.no.mcp.servers" = "harness นี้ไม่มีเซิร์ฟเวอร์ MCP";
+"harnesses.detail.no.profiles" = "harness นี้ไม่มีโปรไฟล์";
+"harnesses.detail.no.focuses" = "harness นี้ไม่มีโฟกัส";
+
+// Harnesses — launch
+"harnesses.launch.title" = "เปิด Harness";
+"harnesses.launch.vendor" = "ผู้จัดจำหน่าย";
+"harnesses.launch.vendor.unavailable" = "(ไม่ได้ติดตั้ง)";
+"harnesses.launch.vendor.default" = "ค่าเริ่มต้น (%@)";
+"harnesses.launch.focus" = "โฟกัส";
+"harnesses.launch.focus.none" = "ไม่มี";
+"harnesses.launch.working.directory" = "ไดเรกทอรีทำงาน";
+"harnesses.launch.browse" = "เลือก…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "prompt ที่เป็นตัวเลือกสำหรับ agent…";
+"harnesses.launch.button" = "เปิด";
+"harnesses.launch.help" = "เปิด harness นี้ใน Terminal ใหม่";
+"harnesses.launch.cancel" = "ยกเลิก";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree ที่เชื่อมโยง";
+"harnesses.linked.worktrees.none" = "ไม่มี worktree ที่เชื่อมโยงกับ harness นี้";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness Toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "ตัวจัดการ harness สำหรับ AI assistant";
+"settings.ynh.enable.harness.tab" = "แสดงแท็บ Harness ใน sidebar";
+"settings.ynh.enable.harness.tab.help" = "เพิ่มแท็บ Harness ใน sidebar สำหรับเรียกดูและจัดการ harness ที่ติดตั้งไว้";
+"settings.ynh.home.override" = "แทนที่ $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "ค่าเริ่มต้น (ใช้การแก้ไขของ ynh เอง)";
+"settings.ynh.home.override.help" = "แทนที่ไดเรกทอรี YNH_HOME สำหรับ subprocess ของ ynh ปล่อยว่างเพื่อใช้ค่าเริ่มต้น";
+"settings.ynh.resolved.paths" = "เส้นทางที่แก้ไขแล้ว";
+"settings.ynh.redetect" = "ตรวจหาใหม่";
+"settings.ynh.init.required" = "ยังไม่ได้เริ่มต้น";
+"settings.ynh.ready" = "พร้อมใช้งาน";
+"settings.ynh.path.label" = "เส้นทาง:";
+"settings.ynh.ynd.path.label" = "เส้นทาง ynd:";
+"settings.ynh.status.label" = "สถานะ:";
+"settings.ynh.ready.info" = "ตรวจพบและเริ่มต้น toolchain แล้ว เปิดใช้งานแท็บ sidebar เพื่อเรียกดู harness";
+"settings.ynh.advanced" = "ขั้นสูง";
+"settings.ynh.version.label" = "เวอร์ชัน:";
+
+"common.clear" = "ล้าง";
+
+"sidebar.worktree.create.terminal" = "สร้าง Terminal…";
+
+"sidebar.worktree.copy.pathname" = "คัดลอกเป็นชื่อเส้นทาง";
+
+"sidebar.prune.worktrees" = "ตัดแต่ง Worktrees…";
+
+"sidebar.prune.worktrees.title" = "ตัดแต่ง Worktrees";
+
+"sidebar.prune.worktrees.confirm" = "ตัดแต่ง";
+
+"sidebar.prune.worktrees.nothing.title" = "ไม่มีอะไรต้องตัดแต่ง";
+
+"sidebar.prune.worktrees.nothing.message" = "Worktree ทั้งหมดได้รับการบัญชีแล้ว ไม่พบบันทึกที่ล้าสมัย";
+
+"sidebar.prune.worktrees.explanation" = "บันทึกการดูแลระบบเหล่านี้ชี้ไปยังไดเรกทอรีที่ไม่มีอยู่แล้ว การตัดแต่งจะลบออก — branch ของคุณไม่ได้รับผลกระทบ";
+
+// Install sheet
+"harnesses.install.title" = "ติดตั้ง Harness";
+"harnesses.install.toolbar.help" = "ติดตั้ง harness";
+"harnesses.install.tab.search" = "ค้นหา";
+"harnesses.install.tab.git" = "จาก Git";
+"harnesses.install.tab.sources" = "แหล่งข้อมูล";
+"harnesses.install.search.placeholder" = "ค้นหาในรีจิสทรีและแหล่งข้อมูล…";
+"harnesses.install.search.prompt" = "พิมพ์เพื่อค้นหาในรีจิสทรีและแหล่งข้อมูล";
+"harnesses.install.search.empty" = "ไม่พบผลลัพธ์";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "เส้นทางย่อย";
+"harnesses.install.git.subpath.placeholder" = "ไดเรกทอรีย่อยเพิ่มเติม (ไม่จำเป็น)";
+"harnesses.install.command.preview" = "ตัวอย่างคำสั่ง";
+"harnesses.install.confirm" = "ติดตั้ง";
+"harnesses.install.cancel" = "ยกเลิก";
+"harnesses.install.already.installed" = "ติดตั้งแล้ว";
+"harnesses.install.from %@" = "จาก %@";
+"harnesses.install.sources.empty" = "ไม่ได้กำหนดค่าแหล่งข้อมูล เพิ่มไดเรกทอรีในเครื่องเพื่อเรียกดู harnesses";
+"harnesses.install.sources.add" = "เพิ่มแหล่งข้อมูล…";
+"harnesses.install.sources.add.help" = "เพิ่มไดเรกทอรีในเครื่องเป็นแหล่ง harness";
+"harnesses.install.sources.remove" = "ลบออก";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "อัปเดต";
+"harnesses.update.help" = "อัปเดตเป็นเวอร์ชันล่าสุด";
+"harnesses.uninstall.button" = "ถอนการติดตั้ง";
+"harnesses.uninstall.help" = "ถอนการติดตั้ง harness นี้";
+"harnesses.uninstall.alert.title %@" = "ถอนการติดตั้ง \"%@\" หรือไม่?";
+"harnesses.uninstall.alert.message" = "การดำเนินการนี้จะลบ harness ออกจากระบบของคุณ";
+"harnesses.uninstall.alert.worktrees %ld" = "harness นี้เชื่อมโยงกับ %ld worktree — การเชื่อมโยงเหล่านั้นจะถูกล้าง";
+"harnesses.uninstall.alert.terminals %ld" = "ขณะนี้มี %ld เทอร์มินัลที่กำลังรัน harness นี้";
+"harnesses.uninstall.alert.confirm" = "ถอนการติดตั้ง";
+"harnesses.more.actions.help" = "การดำเนินการอื่น ๆ";

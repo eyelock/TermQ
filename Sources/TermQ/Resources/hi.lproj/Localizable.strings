@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "बाहरी संशोधन अनुरोध";
-"security.external.modification.message" = "एक बाहरी प्रक्रिया टर्मिनल '%@' के लिए LLM संदर्भ को संशोधित करने का प्रयास कर रही है:
-
-%@
-
-इससे AI सहायक इस टर्मिनल के साथ कैसे इंटरैक्ट करते हैं, यह प्रभावित हो सकता है।";
+"security.external.modification.message" = "एक बाहरी प्रक्रिया टर्मिनल '%@' के लिए LLM संदर्भ को संशोधित करने का प्रयास कर रही है:\n\n%@\n\nइससे AI सहायक इस टर्मिनल के साथ कैसे इंटरैक्ट करते हैं, यह प्रभावित हो सकता है।";
 "security.allow" = "अनुमति दें";
 "security.deny" = "अस्वीकार करें";
 "security.allow.disable.prompt" = "अनुमति दें और दोबारा न पूछें";
@@ -539,6 +535,11 @@
 "sidebar.worktree.open.remote.commit" = "Remote पर Commit खोलें";
 "sidebar.worktree.lock" = "Worktree लॉक करें";
 "sidebar.worktree.unlock" = "Worktree अनलॉक करें";
+
+"sidebar.worktree.set.harness" = "Harness सेट करें…";
+"sidebar.worktree.clear.harness" = "Harness हटाएं";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "लॉन्च करें %@";
 "sidebar.remove.worktree" = "Worktree हटाएं";
 "sidebar.remove.worktree.title" = "Worktree हटाएं?";
 "sidebar.remove.worktree.confirm" = "हटाएं";
@@ -571,3 +572,142 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "ynh टूलचेन फिर से खोजें";
+"harnesses.not.installed" = "ynh स्थापित नहीं है।";
+"harnesses.init.required" = "ynh मिला लेकिन आरंभ नहीं किया गया।\nसेटअप के लिए `ynh init` चलाएं।";
+"harnesses.init.hint" = "एक टर्मिनल खोलें और चलाएं:\nynh init";
+"harnesses.empty.message" = "अभी तक कोई harness स्थापित नहीं है।";
+
+// Harnesses — row badges
+"harnesses.source.local" = "स्थानीय";
+"harnesses.source.registry" = "रजिस्ट्री";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "जानकारी";
+"harnesses.detail.path" = "पथ";
+"harnesses.detail.source" = "स्रोत";
+"harnesses.detail.subpath" = "उप-पथ";
+"harnesses.detail.installed.at" = "स्थापित";
+"harnesses.detail.artifacts" = "आर्टिफैक्ट";
+"harnesses.detail.no.artifacts" = "कोई आर्टिफैक्ट नहीं।";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "एजेंट";
+"harnesses.detail.rules" = "नियम";
+"harnesses.detail.commands" = "कमांड";
+"harnesses.detail.dependencies" = "निर्भरताएं";
+"harnesses.detail.includes %d" = "शामिल है (%d)";
+"harnesses.detail.delegates %d" = "प्रतिनिधित्व (%d) को";
+"harnesses.detail.picks %d" = "चुनता है (%d):";
+"harnesses.reveal.in.finder" = "Finder में दिखाएं";
+"harnesses.open.in.browser" = "ब्राउज़र में खोलें";
+"harnesses.close.detail" = "बंद करें";
+"harnesses.detail.artifacts.from.includes" = "यह harness अपने आर्टिफैक्ट निर्भरता इंक्लूड से प्राप्त करता है।";
+"harnesses.detail.from" = "से";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP सर्वर";
+"harnesses.detail.profiles" = "प्रोफाइल";
+"harnesses.detail.focuses" = "फ़ोकस";
+"harnesses.detail.focus.profile %@" = "प्रोफाइल: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "कोई manifest उपलब्ध नहीं।";
+"harnesses.detail.resolved" = "हल किया गया";
+"harnesses.detail.unresolved" = "अनसुलझा";
+"harnesses.detail.no.hooks" = "इस harness में कोई hook नहीं है।";
+"harnesses.detail.no.mcp.servers" = "इस harness में कोई MCP सर्वर नहीं है।";
+"harnesses.detail.no.profiles" = "इस harness में कोई प्रोफाइल नहीं है।";
+"harnesses.detail.no.focuses" = "इस harness में कोई फ़ोकस नहीं है।";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness लॉन्च करें";
+"harnesses.launch.vendor" = "विक्रेता";
+"harnesses.launch.vendor.unavailable" = "(स्थापित नहीं)";
+"harnesses.launch.vendor.default" = "डिफ़ॉल्ट (%@)";
+"harnesses.launch.focus" = "फ़ोकस";
+"harnesses.launch.focus.none" = "कोई नहीं";
+"harnesses.launch.working.directory" = "कार्य निर्देशिका";
+"harnesses.launch.browse" = "ब्राउज़ करें…";
+"harnesses.launch.prompt" = "प्रॉम्प्ट";
+"harnesses.launch.prompt.placeholder" = "एजेंट को भेजने के लिए वैकल्पिक प्रॉम्प्ट…";
+"harnesses.launch.button" = "लॉन्च करें";
+"harnesses.launch.help" = "नए टर्मिनल में यह harness लॉन्च करें";
+"harnesses.launch.cancel" = "रद्द करें";
+"harnesses.launch.backend" = "बैकएंड";
+
+"harnesses.linked.worktrees" = "लिंक किए गए Worktree";
+"harnesses.linked.worktrees.none" = "इस harness से कोई worktree लिंक नहीं है।";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness टूलचेन";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI असिस्टेंट के लिए harness प्रबंधक";
+"settings.ynh.enable.harness.tab" = "साइडबार में Harness टैब दिखाएं";
+"settings.ynh.enable.harness.tab.help" = "स्थापित harnesses को ब्राउज़ और प्रबंधित करने के लिए साइडबार में Harness टैब जोड़ता है";
+"settings.ynh.home.override" = "$YNH_HOME ओवरराइड";
+"settings.ynh.home.override.placeholder" = "डिफ़ॉल्ट (ynh की अपनी रिज़ॉल्यूशन उपयोग करता है)";
+"settings.ynh.home.override.help" = "ynh सब-प्रोसेस के लिए YNH_HOME निर्देशिका को ओवरराइड करता है। डिफ़ॉल्ट के लिए खाली छोड़ें।";
+"settings.ynh.resolved.paths" = "हल किए गए पथ";
+"settings.ynh.redetect" = "फिर से खोजें";
+"settings.ynh.init.required" = "आरंभ नहीं किया गया";
+"settings.ynh.ready" = "तैयार";
+"settings.ynh.path.label" = "पथ:";
+"settings.ynh.ynd.path.label" = "ynd पथ:";
+"settings.ynh.status.label" = "स्थिति:";
+"settings.ynh.ready.info" = "टूलचेन का पता चला और आरंभ किया गया। harnesses ब्राउज़ करने के लिए साइडबार टैब सक्षम करें।";
+"settings.ynh.advanced" = "उन्नत";
+"settings.ynh.version.label" = "संस्करण:";
+
+"common.clear" = "साफ़ करें";
+
+"sidebar.worktree.create.terminal" = "Terminal बनाएं…";
+
+"sidebar.worktree.copy.pathname" = "पथनाम के रूप में कॉपी करें";
+
+"sidebar.prune.worktrees" = "Worktrees छाँटें…";
+
+"sidebar.prune.worktrees.title" = "Worktrees छाँटें";
+
+"sidebar.prune.worktrees.confirm" = "छाँटें";
+
+"sidebar.prune.worktrees.nothing.title" = "छाँटने के लिए कुछ नहीं";
+
+"sidebar.prune.worktrees.nothing.message" = "सभी worktrees का हिसाब है। कोई पुरानी प्रविष्टि नहीं मिली।";
+
+"sidebar.prune.worktrees.explanation" = "ये प्रशासनिक रिकॉर्ड उन निर्देशिकाओं की ओर इशारा करते हैं जो अब मौजूद नहीं हैं। छाँटने से ये हट जाते हैं — आपकी शाखाएं प्रभावित नहीं होतीं।";
+
+// Install sheet
+"harnesses.install.title" = "Harness इंस्टॉल करें";
+"harnesses.install.toolbar.help" = "एक harness इंस्टॉल करें";
+"harnesses.install.tab.search" = "खोजें";
+"harnesses.install.tab.git" = "Git से";
+"harnesses.install.tab.sources" = "स्रोत";
+"harnesses.install.search.placeholder" = "रजिस्ट्रियों और स्रोतों में खोजें…";
+"harnesses.install.search.prompt" = "रजिस्ट्रियों और स्रोतों में खोजने के लिए टाइप करें";
+"harnesses.install.search.empty" = "कोई परिणाम नहीं";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "उप-पथ";
+"harnesses.install.git.subpath.placeholder" = "वैकल्पिक उप-निर्देशिका";
+"harnesses.install.command.preview" = "कमांड पूर्वावलोकन";
+"harnesses.install.confirm" = "इंस्टॉल करें";
+"harnesses.install.cancel" = "रद्द करें";
+"harnesses.install.already.installed" = "इंस्टॉल है";
+"harnesses.install.from %@" = "%@ से";
+"harnesses.install.sources.empty" = "कोई स्रोत कॉन्फ़िगर नहीं हैं। इसके harnesses देखने के लिए एक स्थानीय निर्देशिका जोड़ें।";
+"harnesses.install.sources.add" = "स्रोत जोड़ें…";
+"harnesses.install.sources.add.help" = "Harness स्रोत के रूप में एक स्थानीय निर्देशिका जोड़ें";
+"harnesses.install.sources.remove" = "हटाएं";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "अपडेट करें";
+"harnesses.update.help" = "नवीनतम संस्करण में अपडेट करें";
+"harnesses.uninstall.button" = "अनइंस्टॉल करें";
+"harnesses.uninstall.help" = "इस harness को अनइंस्टॉल करें";
+"harnesses.uninstall.alert.title %@" = "\"%@\" को अनइंस्टॉल करें?";
+"harnesses.uninstall.alert.message" = "यह आपके सिस्टम से harness को हटा देगा।";
+"harnesses.uninstall.alert.worktrees %ld" = "यह harness %ld worktree(s) से जुड़ा है — वे संबद्धताएं साफ़ कर दी जाएंगी।";
+"harnesses.uninstall.alert.terminals %ld" = "%ld टर्मिनल वर्तमान में इस harness को चला रहे हैं।";
+"harnesses.uninstall.alert.confirm" = "अनइंस्टॉल करें";
+"harnesses.more.actions.help" = "अधिक क्रियाएं";

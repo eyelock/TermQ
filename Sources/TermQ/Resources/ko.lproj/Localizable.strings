@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "외부 수정 요청";
-"security.external.modification.message" = "외부 프로세스가 터미널 '%@'의 LLM 컨텍스트를 수정하려고 합니다:
-
-%@
-
-이는 AI 어시스턴트가 이 터미널과 상호 작용하는 방식에 영향을 줄 수 있습니다.";
+"security.external.modification.message" = "외부 프로세스가 터미널 '%@'의 LLM 컨텍스트를 수정하려고 합니다:\n\n%@\n\n이는 AI 어시스턴트가 이 터미널과 상호 작용하는 방식에 영향을 줄 수 있습니다.";
 "security.allow" = "허용";
 "security.deny" = "거부";
 "security.allow.disable.prompt" = "허용하고 다시 묻지 않기";
@@ -538,6 +534,11 @@
 "sidebar.worktree.open.remote.commit" = "Remote에서 커밋 열기";
 "sidebar.worktree.lock" = "워크트리 잠금";
 "sidebar.worktree.unlock" = "워크트리 잠금 해제";
+
+"sidebar.worktree.set.harness" = "Harness 설정…";
+"sidebar.worktree.clear.harness" = "Harness 제거";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "%@ 실행";
 "sidebar.remove.worktree" = "워크트리 제거";
 "sidebar.remove.worktree.title" = "워크트리를 제거하시겠습니까?";
 "sidebar.remove.worktree.confirm" = "제거";
@@ -570,3 +571,142 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "하네스";
+"harnesses.refresh.help" = "ynh 툴체인 재감지";
+"harnesses.not.installed" = "ynh가 설치되어 있지 않습니다.";
+"harnesses.init.required" = "ynh를 찾았지만 초기화되지 않았습니다.\n`ynh init`을 실행하여 설정하세요.";
+"harnesses.init.hint" = "터미널을 열고 실행하세요:\nynh init";
+"harnesses.empty.message" = "설치된 하네스가 없습니다.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "로컬";
+"harnesses.source.registry" = "레지스트리";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "정보";
+"harnesses.detail.path" = "경로";
+"harnesses.detail.source" = "소스";
+"harnesses.detail.subpath" = "하위 경로";
+"harnesses.detail.installed.at" = "설치됨";
+"harnesses.detail.artifacts" = "아티팩트";
+"harnesses.detail.no.artifacts" = "아티팩트 없음.";
+"harnesses.detail.skills" = "스킬";
+"harnesses.detail.agents" = "에이전트";
+"harnesses.detail.rules" = "규칙";
+"harnesses.detail.commands" = "명령";
+"harnesses.detail.dependencies" = "의존성";
+"harnesses.detail.includes %d" = "포함 (%d)";
+"harnesses.detail.delegates %d" = "위임 대상 (%d)";
+"harnesses.detail.picks %d" = "선택 (%d):";
+"harnesses.reveal.in.finder" = "Finder에서 보기";
+"harnesses.open.in.browser" = "브라우저에서 열기";
+"harnesses.close.detail" = "닫기";
+"harnesses.detail.artifacts.from.includes" = "이 하네스는 의존성 인클루드에서 아티팩트를 가져옵니다.";
+"harnesses.detail.from" = "출처";
+"harnesses.detail.hooks" = "훅";
+"harnesses.detail.mcp.servers" = "MCP 서버";
+"harnesses.detail.profiles" = "프로필";
+"harnesses.detail.focuses" = "포커스";
+"harnesses.detail.focus.profile %@" = "프로필: %@";
+"harnesses.detail.manifest" = "매니페스트";
+"harnesses.detail.no.manifest" = "사용 가능한 매니페스트 없음.";
+"harnesses.detail.resolved" = "해결됨";
+"harnesses.detail.unresolved" = "미해결";
+"harnesses.detail.no.hooks" = "이 하네스에는 훅이 없습니다.";
+"harnesses.detail.no.mcp.servers" = "이 하네스에는 MCP 서버가 없습니다.";
+"harnesses.detail.no.profiles" = "이 하네스에는 프로필이 없습니다.";
+"harnesses.detail.no.focuses" = "이 하네스에는 포커스가 없습니다.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "하네스 실행";
+"harnesses.launch.vendor" = "공급업체";
+"harnesses.launch.vendor.unavailable" = "(설치되지 않음)";
+"harnesses.launch.vendor.default" = "기본값 (%@)";
+"harnesses.launch.focus" = "포커스";
+"harnesses.launch.focus.none" = "없음";
+"harnesses.launch.working.directory" = "작업 디렉토리";
+"harnesses.launch.browse" = "찾아보기…";
+"harnesses.launch.prompt" = "프롬프트";
+"harnesses.launch.prompt.placeholder" = "에이전트에 전달할 선택적 프롬프트…";
+"harnesses.launch.button" = "실행";
+"harnesses.launch.help" = "새 터미널에서 이 하네스 실행";
+"harnesses.launch.cancel" = "취소";
+"harnesses.launch.backend" = "백엔드";
+
+"harnesses.linked.worktrees" = "연결된 Worktree";
+"harnesses.linked.worktrees.none" = "이 harness에 연결된 worktree가 없습니다.";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH 하네스 툴체인";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI 어시스턴트 하네스 관리자";
+"settings.ynh.enable.harness.tab" = "사이드바에 하네스 탭 표시";
+"settings.ynh.enable.harness.tab.help" = "설치된 하네스를 탐색하고 관리하기 위한 하네스 탭을 사이드바에 추가합니다";
+"settings.ynh.home.override" = "$YNH_HOME 재정의";
+"settings.ynh.home.override.placeholder" = "기본값 (ynh 자체 해석 사용)";
+"settings.ynh.home.override.help" = "ynh 서브프로세스의 YNH_HOME 디렉토리를 재정의합니다. 기본값은 비워두세요.";
+"settings.ynh.resolved.paths" = "해결된 경로";
+"settings.ynh.redetect" = "재감지";
+"settings.ynh.init.required" = "초기화되지 않음";
+"settings.ynh.ready" = "준비 완료";
+"settings.ynh.path.label" = "경로:";
+"settings.ynh.ynd.path.label" = "ynd 경로:";
+"settings.ynh.status.label" = "상태:";
+"settings.ynh.ready.info" = "툴체인이 감지되고 초기화되었습니다. 사이드바 탭을 활성화하여 하네스를 탐색하세요.";
+"settings.ynh.advanced" = "고급";
+"settings.ynh.version.label" = "버전:";
+
+"common.clear" = "지우기";
+
+"sidebar.worktree.create.terminal" = "Terminal 만들기…";
+
+"sidebar.worktree.copy.pathname" = "경로명으로 복사";
+
+"sidebar.prune.worktrees" = "Worktree 정리…";
+
+"sidebar.prune.worktrees.title" = "Worktree 정리";
+
+"sidebar.prune.worktrees.confirm" = "정리";
+
+"sidebar.prune.worktrees.nothing.title" = "정리할 항목 없음";
+
+"sidebar.prune.worktrees.nothing.message" = "모든 worktree가 확인되었습니다. 오래된 레코드가 없습니다.";
+
+"sidebar.prune.worktrees.explanation" = "이 관리 레코드들은 더 이상 존재하지 않는 디렉토리를 가리킵니다. 정리하면 제거됩니다 — 브랜치는 영향받지 않습니다.";
+
+// Install sheet
+"harnesses.install.title" = "Harness 설치";
+"harnesses.install.toolbar.help" = "Harness 설치";
+"harnesses.install.tab.search" = "검색";
+"harnesses.install.tab.git" = "Git에서";
+"harnesses.install.tab.sources" = "소스";
+"harnesses.install.search.placeholder" = "레지스트리와 소스 검색…";
+"harnesses.install.search.prompt" = "레지스트리와 소스를 검색하려면 입력하세요";
+"harnesses.install.search.empty" = "결과 없음";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "하위 경로";
+"harnesses.install.git.subpath.placeholder" = "선택적 하위 디렉토리";
+"harnesses.install.command.preview" = "명령 미리보기";
+"harnesses.install.confirm" = "설치";
+"harnesses.install.cancel" = "취소";
+"harnesses.install.already.installed" = "설치됨";
+"harnesses.install.from %@" = "%@에서";
+"harnesses.install.sources.empty" = "소스가 구성되지 않았습니다. 로컬 디렉토리를 추가하여 Harness를 탐색하세요.";
+"harnesses.install.sources.add" = "소스 추가…";
+"harnesses.install.sources.add.help" = "로컬 디렉토리를 Harness 소스로 추가";
+"harnesses.install.sources.remove" = "제거";
+"harnesses.install.sources.count %ld" = "harness %ld개";
+
+"harnesses.update.button" = "업데이트";
+"harnesses.update.help" = "최신 버전으로 업데이트";
+"harnesses.uninstall.button" = "제거";
+"harnesses.uninstall.help" = "이 Harness 제거";
+"harnesses.uninstall.alert.title %@" = "\"%@\"을(를) 제거하시겠습니까?";
+"harnesses.uninstall.alert.message" = "이 Harness가 시스템에서 제거됩니다.";
+"harnesses.uninstall.alert.worktrees %ld" = "이 Harness는 %ld개의 Worktree에 연결되어 있습니다 — 해당 연결이 해제됩니다.";
+"harnesses.uninstall.alert.terminals %ld" = "현재 %ld개의 터미널이 이 Harness를 실행 중입니다.";
+"harnesses.uninstall.alert.confirm" = "제거";
+"harnesses.more.actions.help" = "추가 작업";
