@@ -34,7 +34,11 @@ final class VendorService: ObservableObject {
             let data = Data(output.utf8)
             vendors = try JSONDecoder().decode([Vendor].self, from: data)
         } catch {
-            TermQLogger.session.warning("VendorService: ynh vendors failed: \(error.localizedDescription)")
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.session.warning("VendorService: ynh vendors failed: \(error.localizedDescription)")
+            } else {
+                TermQLogger.session.warning("VendorService: ynh vendors failed")
+            }
             vendors = []
         }
     }
