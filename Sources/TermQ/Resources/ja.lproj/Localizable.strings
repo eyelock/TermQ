@@ -539,6 +539,10 @@
 "sidebar.worktree.open.remote.commit" = "リモートでコミットを開く";
 "sidebar.worktree.lock" = "worktreeをロック";
 "sidebar.worktree.unlock" = "worktreeのロックを解除";
+
+"sidebar.worktree.set.harness" = "Harness を設定…";
+"sidebar.worktree.clear.harness" = "Harness をクリア";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "ワークツリーを削除";
 "sidebar.remove.worktree.title" = "ワークツリーを削除しますか？";
 "sidebar.remove.worktree.confirm" = "削除";
@@ -644,6 +648,9 @@
 "harnesses.launch.help" = "新しいターミナルでこのハーネスを起動";
 "harnesses.launch.cancel" = "キャンセル";
 "harnesses.launch.backend" = "バックエンド";
+
+"harnesses.linked.worktrees" = "リンク済み Worktree";
+"harnesses.linked.worktrees.none" = "この harness にリンクされた worktree はありません。";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH ハーネスツールチェーン";

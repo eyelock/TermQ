@@ -14,6 +14,7 @@ struct HarnessLaunchSheet: View {
     let harness: Harness
     let detail: HarnessDetail?
     let vendors: [Vendor]
+    let initialWorkingDirectory: String?
     let onLaunch: (HarnessLaunchConfig) -> Void
     @Environment(\.dismiss) private var dismiss
 
@@ -166,6 +167,9 @@ struct HarnessLaunchSheet: View {
         .frame(width: 480, height: 520)
         .onAppear {
             selectedBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+            if let dir = initialWorkingDirectory {
+                workingDirectory = dir
+            }
         }
     }
 

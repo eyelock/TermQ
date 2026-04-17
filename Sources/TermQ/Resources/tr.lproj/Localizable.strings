@@ -540,6 +540,10 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "sidebar.worktree.open.remote.commit" = "Commit'i Remote'ta aç";
 "sidebar.worktree.lock" = "Çalışma Ağacını Kilitle";
 "sidebar.worktree.unlock" = "Çalışma Ağacının Kilidini Aç";
+
+"sidebar.worktree.set.harness" = "Harness ayarla…";
+"sidebar.worktree.clear.harness" = "Harness’i temizle";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Çalışma Ağacını Kaldır";
 "sidebar.remove.worktree.title" = "Çalışma Ağacı Kaldırılsın mı?";
 "sidebar.remove.worktree.confirm" = "Kaldır";
@@ -635,6 +639,9 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
 "harnesses.launch.cancel" = "İptal";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Bağlı worktree’ler";
+"harnesses.linked.worktrees.none" = "Bu harness’e bağlı worktree yok.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Araç Zinciri";

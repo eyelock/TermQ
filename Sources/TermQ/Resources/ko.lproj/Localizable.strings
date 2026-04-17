@@ -538,6 +538,10 @@
 "sidebar.worktree.open.remote.commit" = "Remote에서 커밋 열기";
 "sidebar.worktree.lock" = "워크트리 잠금";
 "sidebar.worktree.unlock" = "워크트리 잠금 해제";
+
+"sidebar.worktree.set.harness" = "Harness 설정…";
+"sidebar.worktree.clear.harness" = "Harness 제거";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "워크트리 제거";
 "sidebar.remove.worktree.title" = "워크트리를 제거하시겠습니까?";
 "sidebar.remove.worktree.confirm" = "제거";
@@ -633,6 +637,9 @@
 "harnesses.launch.help" = "새 터미널에서 이 하네스 실행";
 "harnesses.launch.cancel" = "취소";
 "harnesses.launch.backend" = "백엔드";
+
+"harnesses.linked.worktrees" = "연결된 Worktree";
+"harnesses.linked.worktrees.none" = "이 harness에 연결된 worktree가 없습니다.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH 하네스 툴체인";

@@ -541,6 +541,9 @@
 "sidebar.worktree.open.remote.commit" = "Open Commit on Remote";
 "sidebar.worktree.lock" = "Lock Worktree";
 "sidebar.worktree.unlock" = "Unlock Worktree";
+"sidebar.worktree.set.harness" = "Set Harness…";
+"sidebar.worktree.clear.harness" = "Clear Harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 
 // Remove worktree (clean)
 "sidebar.remove.worktree" = "Remove Worktree";
@@ -648,6 +651,8 @@
 "harnesses.launch.help" = "Launch this harness in a new terminal";
 "harnesses.launch.cancel" = "Cancel";
 "harnesses.launch.backend" = "Backend";
+"harnesses.linked.worktrees" = "Linked Worktrees";
+"harnesses.linked.worktrees.none" = "No worktrees are linked to this harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";

@@ -541,6 +541,10 @@
 "sidebar.worktree.open.remote.commit" = "فتح الـ Commit على Remote";
 "sidebar.worktree.lock" = "قفل worktree";
 "sidebar.worktree.unlock" = "إلغاء قفل worktree";
+
+"sidebar.worktree.set.harness" = "تعيين harness…";
+"sidebar.worktree.clear.harness" = "مسح harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "حذف بيئة العمل";
 "sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
 "sidebar.remove.worktree.confirm" = "حذف";
@@ -644,6 +648,9 @@
 "harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
 "harnesses.launch.cancel" = "إلغاء";
 "harnesses.launch.backend" = "الواجهة الخلفية";
+
+"harnesses.linked.worktrees" = "Worktrees المرتبطة";
+"harnesses.linked.worktrees.none" = "لا توجد worktrees مرتبطة بهذا harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "سلسلة أدوات YNH";

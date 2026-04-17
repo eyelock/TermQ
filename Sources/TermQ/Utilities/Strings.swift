@@ -805,6 +805,13 @@ extension Strings {
         static var lockWorktree: String { localized("sidebar.worktree.lock") }
         static var unlockWorktree: String { localized("sidebar.worktree.unlock") }
 
+        // Harness linkage
+        static var setHarness: String { localized("sidebar.worktree.set.harness") }
+        static var clearHarness: String { localized("sidebar.worktree.clear.harness") }
+        static func linkedHarness(_ name: String) -> String {
+            String(format: localized("sidebar.worktree.linked.harness %@"), name)
+        }
+
         // Remove / delete worktree
         static var removeWorktree: String { localized("sidebar.remove.worktree") }
         static var removeWorktreeTitle: String { localized("sidebar.remove.worktree.title") }
@@ -927,5 +934,9 @@ extension Strings {
         static var launchHelp: String { localized("harnesses.launch.help") }
         static var launchCancel: String { localized("harnesses.launch.cancel") }
         static var launchBackend: String { localized("harnesses.launch.backend") }
+
+        // Linked worktrees section in detail view
+        static var linkedWorktrees: String { localized("harnesses.linked.worktrees") }
+        static var linkedWorktreesNone: String { localized("harnesses.linked.worktrees.none") }
     }
 }

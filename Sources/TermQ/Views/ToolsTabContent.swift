@@ -521,10 +521,13 @@ extension ToolsTabContent {
     @ViewBuilder
     private var ynhSettingsContent: some View {
         // Feature flag toggle
-        Toggle(Strings.Settings.Ynh.enableHarnessTab, isOn: Binding(
-            get: { UserDefaults.standard.bool(forKey: "feature.harnessTab") },
-            set: { UserDefaults.standard.set($0, forKey: "feature.harnessTab") }
-        ))
+        Toggle(
+            Strings.Settings.Ynh.enableHarnessTab,
+            isOn: Binding(
+                get: { UserDefaults.standard.bool(forKey: "feature.harnessTab") },
+                set: { UserDefaults.standard.set($0, forKey: "feature.harnessTab") }
+            )
+        )
         .help(Strings.Settings.Ynh.enableHarnessTabHelp)
 
         // Detected binary info (mirrors the tmux Version/Path pattern)

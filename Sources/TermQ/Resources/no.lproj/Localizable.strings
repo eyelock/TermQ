@@ -538,6 +538,10 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "sidebar.worktree.open.remote.commit" = "Åpne commit på Remote";
 "sidebar.worktree.lock" = "Lås worktree";
 "sidebar.worktree.unlock" = "Lås opp worktree";
+
+"sidebar.worktree.set.harness" = "Angi harness…";
+"sidebar.worktree.clear.harness" = "Fjern harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Fjern worktree";
 "sidebar.remove.worktree.title" = "Fjerne worktree?";
 "sidebar.remove.worktree.confirm" = "Fjern";
@@ -633,6 +637,9 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
 "harnesses.launch.cancel" = "Avbryt";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Tilknyttede worktrees";
+"harnesses.linked.worktrees.none" = "Ingen worktrees er tilknyttet dette harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-verktøykjede";

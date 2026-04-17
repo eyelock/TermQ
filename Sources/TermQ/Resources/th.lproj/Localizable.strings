@@ -540,6 +540,10 @@
 "sidebar.worktree.open.remote.commit" = "เปิด Commit บน Remote";
 "sidebar.worktree.lock" = "ล็อก worktree";
 "sidebar.worktree.unlock" = "ปลดล็อก worktree";
+
+"sidebar.worktree.set.harness" = "ตั้งค่า harness…";
+"sidebar.worktree.clear.harness" = "ล้าง harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "ลบ Worktree";
 "sidebar.remove.worktree.title" = "ลบ Worktree?";
 "sidebar.remove.worktree.confirm" = "ลบ";
@@ -635,6 +639,9 @@
 "harnesses.launch.help" = "เปิด harness นี้ใน Terminal ใหม่";
 "harnesses.launch.cancel" = "ยกเลิก";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree ที่เชื่อมโยง";
+"harnesses.linked.worktrees.none" = "ไม่มี worktree ที่เชื่อมโยงกับ harness นี้";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";

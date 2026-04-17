@@ -539,6 +539,10 @@
 "sidebar.worktree.open.remote.commit" = "Remote पर Commit खोलें";
 "sidebar.worktree.lock" = "Worktree लॉक करें";
 "sidebar.worktree.unlock" = "Worktree अनलॉक करें";
+
+"sidebar.worktree.set.harness" = "Harness सेट करें…";
+"sidebar.worktree.clear.harness" = "Harness हटाएं";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Worktree हटाएं";
 "sidebar.remove.worktree.title" = "Worktree हटाएं?";
 "sidebar.remove.worktree.confirm" = "हटाएं";
@@ -634,6 +638,9 @@
 "harnesses.launch.help" = "नए टर्मिनल में यह harness लॉन्च करें";
 "harnesses.launch.cancel" = "रद्द करें";
 "harnesses.launch.backend" = "बैकएंड";
+
+"harnesses.linked.worktrees" = "लिंक किए गए Worktree";
+"harnesses.linked.worktrees.none" = "इस harness से कोई worktree लिंक नहीं है।";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness टूलचेन";

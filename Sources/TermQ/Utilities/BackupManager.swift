@@ -44,6 +44,7 @@ enum BackupManager {
     static let backupFileName = "board-backup.json"
     static let secretsBackupFileName = "secrets-backup.enc"
     static let reposBackupFileName = "repos-backup.json"
+    static let ynhBackupFileName = "ynh-backup.json"
 
     // MARK: - UserDefaults Keys
 
@@ -138,6 +139,16 @@ enum BackupManager {
         URL(fileURLWithPath: reposBackupFilePath)
     }
 
+    /// Full path to the ynh backup file
+    static var ynhBackupFilePath: String {
+        "\(expandedBackupPath)/\(ynhBackupFileName)"
+    }
+
+    /// URL to the ynh backup file
+    static var ynhBackupFileURL: URL {
+        URL(fileURLWithPath: ynhBackupFilePath)
+    }
+
     /// App Support directory for TermQ (DEBUG-aware)
     private static var termqAppSupportDir: URL {
         guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
@@ -157,6 +168,11 @@ enum BackupManager {
     /// Path to the primary repos.json file
     static var primaryReposPath: URL {
         termqAppSupportDir.appendingPathComponent("repos.json")
+    }
+
+    /// Path to the primary ynh.json file
+    static var primaryYNHPath: URL {
+        termqAppSupportDir.appendingPathComponent("ynh.json")
     }
 
     // MARK: - Backup Operations
@@ -216,6 +232,15 @@ enum BackupManager {
                     try? fm.removeItem(atPath: reposBackupFilePath)
                 }
                 try? fm.copyItem(atPath: reposSrc, toPath: reposBackupFilePath)
+            }
+
+            // Backup ynh.json if it exists (best-effort, non-fatal)
+            let ynhSrc = primaryYNHPath.path
+            if fm.fileExists(atPath: ynhSrc) {
+                if fm.fileExists(atPath: ynhBackupFilePath) {
+                    try? fm.removeItem(atPath: ynhBackupFilePath)
+                }
+                try? fm.copyItem(atPath: ynhSrc, toPath: ynhBackupFilePath)
             }
 
             // Backup secrets file if it exists
@@ -305,6 +330,15 @@ enum BackupManager {
                 try? fm.createDirectory(at: reposDir, withIntermediateDirectories: true)
                 if fm.fileExists(atPath: reposDest) { try? fm.removeItem(atPath: reposDest) }
                 try? fm.copyItem(atPath: reposBackupFilePath, toPath: reposDest)
+            }
+
+            // Restore ynh.json if backup exists (best-effort, non-fatal)
+            if fm.fileExists(atPath: ynhBackupFilePath) {
+                let ynhDest = primaryYNHPath.path
+                let ynhDir = primaryYNHPath.deletingLastPathComponent()
+                try? fm.createDirectory(at: ynhDir, withIntermediateDirectories: true)
+                if fm.fileExists(atPath: ynhDest) { try? fm.removeItem(atPath: ynhDest) }
+                try? fm.copyItem(atPath: ynhBackupFilePath, toPath: ynhDest)
             }
 
             // Restore secrets if backup exists

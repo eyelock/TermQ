@@ -540,6 +540,10 @@
 "sidebar.worktree.open.remote.commit" = "Mở commit trên Remote";
 "sidebar.worktree.lock" = "Khoá worktree";
 "sidebar.worktree.unlock" = "Mở khoá worktree";
+
+"sidebar.worktree.set.harness" = "Đặt harness…";
+"sidebar.worktree.clear.harness" = "Xóa harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Xóa Worktree";
 "sidebar.remove.worktree.title" = "Xóa Worktree?";
 "sidebar.remove.worktree.confirm" = "Xóa";
@@ -635,6 +639,9 @@
 "harnesses.launch.help" = "Khởi chạy harness này trong terminal mới";
 "harnesses.launch.cancel" = "Hủy";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree đã liên kết";
+"harnesses.linked.worktrees.none" = "Không có worktree nào được liên kết với harness này.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Chuỗi công cụ YNH";

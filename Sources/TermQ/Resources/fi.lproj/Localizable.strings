@@ -539,6 +539,10 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "sidebar.worktree.open.remote.commit" = "Avaa commit Remotessa";
 "sidebar.worktree.lock" = "Lukitse worktree";
 "sidebar.worktree.unlock" = "Avaa worktree";
+
+"sidebar.worktree.set.harness" = "Määritä harness…";
+"sidebar.worktree.clear.harness" = "Poista harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Poista työskentelypuu";
 "sidebar.remove.worktree.title" = "Poistetaanko työskentelypuu?";
 "sidebar.remove.worktree.confirm" = "Poista";
@@ -634,6 +638,9 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "harnesses.launch.help" = "Käynnistä tämä harness uudessa päätteessä";
 "harnesses.launch.cancel" = "Peruuta";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Linkitetyt worktreest";
+"harnesses.linked.worktrees.none" = "Tähän harnessiin ei ole linkitetty yhtään worktreeä.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-työkaluketju";

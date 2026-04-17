@@ -541,6 +541,10 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "sidebar.worktree.open.remote.commit" = "Obre el commit a Remote";
 "sidebar.worktree.lock" = "Bloquejar worktree";
 "sidebar.worktree.unlock" = "Desbloquejar worktree";
+
+"sidebar.worktree.set.harness" = "Defineix el harness…";
+"sidebar.worktree.clear.harness" = "Esborra el harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Eliminar worktree";
 "sidebar.remove.worktree.title" = "Eliminar worktree?";
 "sidebar.remove.worktree.confirm" = "Eliminar";
@@ -644,6 +648,9 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "harnesses.launch.help" = "Inicia aquest arnes en un terminal nou";
 "harnesses.launch.cancel" = "Cancel·la";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktrees vinculats";
+"harnesses.linked.worktrees.none" = "Cap worktree està vinculat a aquest harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Cadena d'eines YNH";

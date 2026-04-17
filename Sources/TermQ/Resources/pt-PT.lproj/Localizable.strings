@@ -538,6 +538,10 @@ Isto pode afetar a forma como os assistentes de IA interagem com este terminal."
 "sidebar.worktree.open.remote.commit" = "Abrir commit no Remote";
 "sidebar.worktree.lock" = "Bloquear worktree";
 "sidebar.worktree.unlock" = "Desbloquear worktree";
+
+"sidebar.worktree.set.harness" = "Definir harness…";
+"sidebar.worktree.clear.harness" = "Limpar harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Remover Árvore de Trabalho";
 "sidebar.remove.worktree.title" = "Remover Árvore de Trabalho?";
 "sidebar.remove.worktree.confirm" = "Remover";
@@ -633,6 +637,9 @@ Isto pode afetar a forma como os assistentes de IA interagem com este terminal."
 "harnesses.launch.help" = "Lançar este harness num novo terminal";
 "harnesses.launch.cancel" = "Cancelar";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktrees associados";
+"harnesses.linked.worktrees.none" = "Nenhum worktree está associado a este harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";

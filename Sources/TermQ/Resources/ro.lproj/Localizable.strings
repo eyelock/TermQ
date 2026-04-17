@@ -539,6 +539,10 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "sidebar.worktree.open.remote.commit" = "Deschide commit-ul pe Remote";
 "sidebar.worktree.lock" = "Blochează worktree";
 "sidebar.worktree.unlock" = "Deblochează worktree";
+
+"sidebar.worktree.set.harness" = "Setează harness…";
+"sidebar.worktree.clear.harness" = "Eliberează harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Șterge arborele de lucru";
 "sidebar.remove.worktree.title" = "Ștergeți arborele de lucru?";
 "sidebar.remove.worktree.confirm" = "Șterge";
@@ -644,6 +648,9 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "harnesses.launch.help" = "Lansează acest harness într-un terminal nou";
 "harnesses.launch.cancel" = "Anulare";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree-uri legate";
+"harnesses.linked.worktrees.none" = "Niciun worktree nu este legat de acest harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Lanț de instrumente YNH";

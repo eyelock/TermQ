@@ -539,6 +539,10 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "sidebar.worktree.open.remote.commit" = "Commit megnyitása a Remote-on";
 "sidebar.worktree.lock" = "Munkakönyvtár zárolása";
 "sidebar.worktree.unlock" = "Munkakönyvtár feloldása";
+
+"sidebar.worktree.set.harness" = "Harness beállítása…";
+"sidebar.worktree.clear.harness" = "Harness törlése";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Munkakönyvtár eltávolítása";
 "sidebar.remove.worktree.title" = "Eltávolítja a munkakönyvtárat?";
 "sidebar.remove.worktree.confirm" = "Eltávolítás";
@@ -634,6 +638,9 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "harnesses.launch.help" = "Harness indítása új terminálban";
 "harnesses.launch.cancel" = "Mégse";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Kapcsolódó worktree-k";
+"harnesses.linked.worktrees.none" = "Nincs worktree ehhez a harnesshez kapcsolva.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH harness eszközlánc";

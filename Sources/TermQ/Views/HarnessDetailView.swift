@@ -31,7 +31,10 @@ struct HarnessDetailView: View {
     let isLoadingDetail: Bool
     let detailError: String?
     let onDismiss: () -> Void
-    let onLaunch: () -> Void
+    /// Called when the user requests a launch. Optional path pre-fills the working directory.
+    let onLaunch: (String?) -> Void
+    @ObservedObject private var ynhPersistence: YNHPersistence = .shared
+    @ObservedObject private var boardVM: BoardViewModel = .shared
 
     var body: some View {
         ScrollView {
@@ -58,6 +61,12 @@ struct HarnessDetailView: View {
                 if let detail {
                     Divider()
                     manifestSection(detail.info)
+                }
+
+                let linkedPaths = ynhPersistence.worktrees(for: harness.name)
+                if !linkedPaths.isEmpty {
+                    Divider()
+                    linkedWorktreesSection(linkedPaths)
                 }
 
                 Spacer()
@@ -91,7 +100,7 @@ struct HarnessDetailView: View {
                 }
 
                 Button {
-                    onLaunch()
+                    onLaunch(nil)
                 } label: {
                     Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
                         .font(.system(size: 12, weight: .medium))
@@ -317,5 +326,65 @@ struct HarnessDetailView: View {
             .padding(.vertical, 3)
             .background(Color.secondary.opacity(0.15))
             .clipShape(Capsule())
+    }
+}
+
+// MARK: - Linked Worktrees
+
+extension HarnessDetailView {
+    fileprivate func linkedWorktreesSection(_ paths: [String]) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(Strings.Harnesses.linkedWorktrees)
+                .font(.headline)
+
+            ForEach(paths, id: \.self) { path in
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.triangle.branch")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .frame(width: 16)
+
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(URL(fileURLWithPath: path).lastPathComponent)
+                            .font(.body)
+                        Text(path)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                            .textSelection(.enabled)
+                    }
+
+                    Spacer()
+
+                    let count = terminalCount(for: path)
+                    if count > 0 {
+                        let iconName = count <= 50 ? "\(count).circle.fill" : "circle.fill"
+                        Image(systemName: iconName)
+                            .foregroundColor(.accentColor)
+                            .imageScale(.small)
+                            .help(Strings.Sidebar.terminalBadgeHelp)
+                    }
+
+                    Button {
+                        onLaunch(path)
+                    } label: {
+                        Image(systemName: "play.fill")
+                            .imageScale(.small)
+                    }
+                    .buttonStyle(.plain)
+                    .help(Strings.Harnesses.launchHelp)
+                }
+            }
+        }
+    }
+
+    fileprivate func terminalCount(for worktreePath: String) -> Int {
+        (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
+            .filter {
+                $0.workingDirectory == worktreePath
+                    || $0.workingDirectory.hasPrefix(worktreePath + "/")
+            }
+            .count
     }
 }

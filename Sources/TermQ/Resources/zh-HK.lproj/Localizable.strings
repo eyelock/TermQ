@@ -539,6 +539,10 @@
 "sidebar.worktree.open.remote.commit" = "喺 Remote 開啟提交";
 "sidebar.worktree.lock" = "鎖定工作樹";
 "sidebar.worktree.unlock" = "解鎖工作樹";
+
+"sidebar.worktree.set.harness" = "設定 Harness…";
+"sidebar.worktree.clear.harness" = "清除 Harness";
+"sidebar.worktree.linked.harness %@" = "Harness：%@";
 "sidebar.remove.worktree" = "刪除工作樹";
 "sidebar.remove.worktree.title" = "刪除工作樹？";
 "sidebar.remove.worktree.confirm" = "刪除";
@@ -644,6 +648,9 @@
 "harnesses.launch.help" = "在新終端機中啟動此 harness";
 "harnesses.launch.cancel" = "取消";
 "harnesses.launch.backend" = "後端";
+
+"harnesses.linked.worktrees" = "連結的 Worktree";
+"harnesses.linked.worktrees.none" = "沒有 worktree 連結到此 harness。";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness 工具鏈";

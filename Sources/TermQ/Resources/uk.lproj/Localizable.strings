@@ -540,6 +540,10 @@
 "sidebar.worktree.open.remote.commit" = "Відкрити коміт на Remote";
 "sidebar.worktree.lock" = "Заблокувати робоче дерево";
 "sidebar.worktree.unlock" = "Розблокувати робоче дерево";
+
+"sidebar.worktree.set.harness" = "Встановити harness…";
+"sidebar.worktree.clear.harness" = "Видалити harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Видалити робоче дерево";
 "sidebar.remove.worktree.title" = "Видалити робоче дерево?";
 "sidebar.remove.worktree.confirm" = "Видалити";
@@ -635,6 +639,9 @@
 "harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
 "harnesses.launch.cancel" = "Скасувати";
 "harnesses.launch.backend" = "Бекенд";
+
+"harnesses.linked.worktrees" = "Пов’язані worktree";
+"harnesses.linked.worktrees.none" = "Немає worktree, пов’язаних з цим harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Інструментарій YNH";

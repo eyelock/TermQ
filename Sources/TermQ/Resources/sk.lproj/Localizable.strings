@@ -539,6 +539,10 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "sidebar.worktree.open.remote.commit" = "Otvoriť commit na Remote";
 "sidebar.worktree.lock" = "Uzamknúť pracovný strom";
 "sidebar.worktree.unlock" = "Odomknúť pracovný strom";
+
+"sidebar.worktree.set.harness" = "Nastaviť harness…";
+"sidebar.worktree.clear.harness" = "Odstrániť harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Zmazať pracovný strom";
 "sidebar.remove.worktree.title" = "Zmazať pracovný strom?";
 "sidebar.remove.worktree.confirm" = "Zmazať";
@@ -644,6 +648,9 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "harnesses.launch.help" = "Spustiť tento postroj v novom termináli";
 "harnesses.launch.cancel" = "Zrušiť";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Priradené worktrees";
+"harnesses.linked.worktrees.none" = "Žiadne worktrees nie sú priradené k tomuto harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Nástrojový reťazec YNH";

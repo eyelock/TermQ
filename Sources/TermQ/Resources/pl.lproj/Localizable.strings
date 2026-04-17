@@ -538,6 +538,10 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "sidebar.worktree.open.remote.commit" = "Otwórz commit na Remote";
 "sidebar.worktree.lock" = "Zablokuj drzewo robocze";
 "sidebar.worktree.unlock" = "Odblokuj drzewo robocze";
+
+"sidebar.worktree.set.harness" = "Ustaw harness…";
+"sidebar.worktree.clear.harness" = "Usuń harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Usuń drzewo robocze";
 "sidebar.remove.worktree.title" = "Usunąć drzewo robocze?";
 "sidebar.remove.worktree.confirm" = "Usuń";
@@ -633,6 +637,9 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "harnesses.launch.help" = "Uruchom tę uprząż w nowym terminalu";
 "harnesses.launch.cancel" = "Anuluj";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Połączone worktrees";
+"harnesses.linked.worktrees.none" = "Żadne worktrees nie są połączone z tym harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Łańcuch narzędzi YNH";

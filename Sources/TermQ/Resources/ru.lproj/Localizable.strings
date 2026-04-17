@@ -539,6 +539,10 @@
 "sidebar.worktree.open.remote.commit" = "Открыть коммит на Remote";
 "sidebar.worktree.lock" = "Заблокировать рабочее дерево";
 "sidebar.worktree.unlock" = "Разблокировать рабочее дерево";
+
+"sidebar.worktree.set.harness" = "Установить harness…";
+"sidebar.worktree.clear.harness" = "Очистить harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Удалить рабочее дерево";
 "sidebar.remove.worktree.title" = "Удалить рабочее дерево?";
 "sidebar.remove.worktree.confirm" = "Удалить";
@@ -644,6 +648,9 @@
 "harnesses.launch.help" = "Запустить эту упряжку в новом терминале";
 "harnesses.launch.cancel" = "Отмена";
 "harnesses.launch.backend" = "Бэкенд";
+
+"harnesses.linked.worktrees" = "Связанные worktree";
+"harnesses.linked.worktrees.none" = "Ни один worktree не связан с этим harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Инструментарий YNH";

@@ -7,6 +7,8 @@ import TermQShared
 struct WorktreeSidebarView: View {
     @ObservedObject var viewModel: WorktreeSidebarViewModel
     @ObservedObject private var boardVM: BoardViewModel = .shared
+    @ObservedObject private var harnessRepository: HarnessRepository = .shared
+    @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @State private var showAddRepo = false
     @State private var showNewWorktreeFor: ObservableRepository?
     @State private var showEditRepoFor: ObservableRepository?
@@ -318,6 +320,8 @@ struct WorktreeSidebarView: View {
 
             Spacer()
 
+            harnessRowBadge(for: worktree)
+
             Button {
                 // Resign sidebar first responder before creating the terminal so the
                 // NSTableView does not win the focus race against focusTerminal()'s
@@ -455,6 +459,12 @@ struct WorktreeSidebarView: View {
                 } label: {
                     Label(Strings.Sidebar.lockWorktree, systemImage: "lock")
                 }
+            }
+
+            // Group 5.5: Harness linkage (only when harnesses are available)
+            if !harnessRepository.harnesses.isEmpty {
+                Divider()
+                harnessContextItems(for: worktree)
             }
 
             Divider()
@@ -761,6 +771,49 @@ private struct WorktreeLeftIcon: View {
                     .frame(minWidth: 200)
                     .padding(.vertical, 4)
                 }
+            }
+        }
+    }
+}
+
+// MARK: - Harness Helpers
+
+extension WorktreeSidebarView {
+    @ViewBuilder
+    fileprivate func harnessRowBadge(for worktree: GitWorktree) -> some View {
+        if let harnessName = ynhPersistence.harness(for: worktree.path) {
+            Button {
+                harnessRepository.selectedHarnessName = harnessName
+            } label: {
+                Image(systemName: "puzzlepiece.extension")
+                    .imageScale(.small)
+                    .foregroundColor(.purple)
+            }
+            .buttonStyle(.plain)
+            .help(harnessName)
+        }
+    }
+
+    @ViewBuilder
+    fileprivate func harnessContextItems(for worktree: GitWorktree) -> some View {
+        let linked = ynhPersistence.harness(for: worktree.path)
+        Menu {
+            if linked != nil {
+                Button(Strings.Sidebar.clearHarness) {
+                    ynhPersistence.setHarness(nil, for: worktree.path)
+                }
+                Divider()
+            }
+            ForEach(harnessRepository.harnesses) { harness in
+                Button(harness.name) {
+                    ynhPersistence.setHarness(harness.name, for: worktree.path)
+                }
+            }
+        } label: {
+            if let linked {
+                Label(Strings.Sidebar.linkedHarness(linked), systemImage: "puzzlepiece.extension")
+            } else {
+                Label(Strings.Sidebar.setHarness, systemImage: "puzzlepiece.extension")
             }
         }
     }

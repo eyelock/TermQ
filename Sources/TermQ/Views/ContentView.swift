@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var showBin = false
     @State private var showColumnPicker = false
     @State private var showLaunchSheet = false
+    @State private var launchWorkingDirectory: String?
     /// Card that was selected before navigating to a harness detail, restored on dismiss.
     @State private var cardBeforeHarness: TerminalCard?
 
@@ -50,7 +51,8 @@ struct ContentView: View {
                                 cardBeforeHarness = nil
                             }
                         },
-                        onLaunch: {
+                        onLaunch: { path in
+                            launchWorkingDirectory = path
                             Task { await vendorService.refresh() }
                             showLaunchSheet = true
                         }
@@ -192,17 +194,22 @@ struct ContentView: View {
             .sheet(isPresented: $showBin) {
                 BinView(viewModel: viewModel)
             }
-            .sheet(isPresented: $showLaunchSheet) {
-                if let harness = harnessRepo.selectedHarness {
-                    HarnessLaunchSheet(
-                        harness: harness,
-                        detail: harnessRepo.selectedDetail,
-                        vendors: vendorService.vendors
-                    ) { config in
-                        launchHarness(config)
+            .sheet(
+                isPresented: $showLaunchSheet,
+                onDismiss: { launchWorkingDirectory = nil },
+                content: {
+                    if let harness = harnessRepo.selectedHarness {
+                        HarnessLaunchSheet(
+                            harness: harness,
+                            detail: harnessRepo.selectedDetail,
+                            vendors: vendorService.vendors,
+                            initialWorkingDirectory: launchWorkingDirectory
+                        ) { config in
+                            launchHarness(config)
+                        }
                     }
                 }
-            }
+            )
             .sheet(isPresented: $viewModel.showSessionRecovery) {
                 SessionRecoveryView(viewModel: viewModel)
             }

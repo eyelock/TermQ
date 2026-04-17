@@ -539,6 +539,10 @@ Questo potrebbe influenzare il modo in cui gli assistenti AI interagiscono con q
 "sidebar.worktree.open.remote.commit" = "Apri commit su Remote";
 "sidebar.worktree.lock" = "Blocca worktree";
 "sidebar.worktree.unlock" = "Sblocca worktree";
+
+"sidebar.worktree.set.harness" = "Imposta harness…";
+"sidebar.worktree.clear.harness" = "Rimuovi harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Elimina worktree";
 "sidebar.remove.worktree.title" = "Eliminare il worktree?";
 "sidebar.remove.worktree.confirm" = "Elimina";
@@ -644,6 +648,9 @@ Questo potrebbe influenzare il modo in cui gli assistenti AI interagiscono con q
 "harnesses.launch.help" = "Avvia questo harness in un nuovo terminale";
 "harnesses.launch.cancel" = "Annulla";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree collegati";
+"harnesses.linked.worktrees.none" = "Nessun worktree è collegato a questo harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";

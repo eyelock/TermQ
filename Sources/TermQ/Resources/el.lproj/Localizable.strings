@@ -541,6 +541,10 @@
 "sidebar.worktree.open.remote.commit" = "Άνοιγμα commit στο Remote";
 "sidebar.worktree.lock" = "Κλείδωμα worktree";
 "sidebar.worktree.unlock" = "Ξεκλείδωμα worktree";
+
+"sidebar.worktree.set.harness" = "Ορισμός harness…";
+"sidebar.worktree.clear.harness" = "Καθαρισμός harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Διαγραφή worktree";
 "sidebar.remove.worktree.title" = "Διαγραφή worktree;";
 "sidebar.remove.worktree.confirm" = "Διαγραφή";
@@ -644,6 +648,9 @@
 "harnesses.launch.help" = "Εκκίνηση αυτού του harness σε νέο τερματικό";
 "harnesses.launch.cancel" = "Ακύρωση";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Συνδεδεμένα worktrees";
+"harnesses.linked.worktrees.none" = "Δεν υπάρχουν worktrees συνδεδεμένα με αυτό το harness.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Αλυσίδα εργαλείων YNH";

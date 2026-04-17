@@ -540,6 +540,10 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "sidebar.worktree.open.remote.commit" = "Odpri commit na Remote";
 "sidebar.worktree.lock" = "Zakleni delovno kopijo";
 "sidebar.worktree.unlock" = "Odkleni delovno kopijo";
+
+"sidebar.worktree.set.harness" = "Nastavi harness…";
+"sidebar.worktree.clear.harness" = "Odstrani harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Odstrani delovno kopijo";
 "sidebar.remove.worktree.title" = "Odstrani delovno kopijo?";
 "sidebar.remove.worktree.confirm" = "Odstrani";
@@ -635,6 +639,9 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "harnesses.launch.help" = "Zaženi ta harness v novem terminalu";
 "harnesses.launch.cancel" = "Prekliči";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Povezani worktreei";
+"harnesses.linked.worktrees.none" = "Noben worktree ni povezan s tem harnessom.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Orodni verižnik YNH";

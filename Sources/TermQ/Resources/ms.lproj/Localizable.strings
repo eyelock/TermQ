@@ -538,6 +538,10 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "sidebar.worktree.open.remote.commit" = "Buka commit di Remote";
 "sidebar.worktree.lock" = "Kunci Worktree";
 "sidebar.worktree.unlock" = "Buka Kunci Worktree";
+
+"sidebar.worktree.set.harness" = "Tetapkan harness…";
+"sidebar.worktree.clear.harness" = "Padamkan harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
 "sidebar.remove.worktree" = "Buang Worktree";
 "sidebar.remove.worktree.title" = "Buang Worktree?";
 "sidebar.remove.worktree.confirm" = "Buang";
@@ -633,6 +637,9 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "harnesses.launch.help" = "Lancarkan harness ini dalam terminal baharu";
 "harnesses.launch.cancel" = "Batal";
 "harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree yang dipautkan";
+"harnesses.linked.worktrees.none" = "Tiada worktree yang dipautkan ke harness ini.";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Rantaian Alat YNH";
