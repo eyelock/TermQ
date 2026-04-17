@@ -581,3 +581,88 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Postroje";
+"harnesses.refresh.help" = "Znovu detekovat nástrojový řetězec ynh";
+"harnesses.not.installed" = "ynh není nainstalován.";
+"harnesses.init.required" = "ynh byl nalezen, ale není inicializován.\nSpusťte `ynh init` pro nastavení.";
+"harnesses.init.hint" = "Otevřete terminál a spusťte:\nynh init";
+"harnesses.empty.message" = "Zatím nejsou nainstalovány žádné postroje.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Místní";
+"harnesses.source.registry" = "Registr";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informace";
+"harnesses.detail.path" = "Cesta";
+"harnesses.detail.source" = "Zdroj";
+"harnesses.detail.subpath" = "Podcesta";
+"harnesses.detail.installed.at" = "Nainstalováno";
+"harnesses.detail.artifacts" = "Artefakty";
+"harnesses.detail.no.artifacts" = "Žádné artefakty.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenti";
+"harnesses.detail.rules" = "Pravidla";
+"harnesses.detail.commands" = "Příkazy";
+"harnesses.detail.dependencies" = "Závislosti";
+"harnesses.detail.includes %d" = "Zahrnuje (%d)";
+"harnesses.detail.delegates %d" = "Deleguje na (%d)";
+"harnesses.detail.picks %d" = "Vybírá (%d):";
+"harnesses.reveal.in.finder" = "Zobrazit ve Finderu";
+"harnesses.open.in.browser" = "Otevřít v prohlížeči";
+"harnesses.close.detail" = "Zavřít";
+"harnesses.detail.artifacts.from.includes" = "Tento postroj získává artefakty z inkludovaných závislostí.";
+"harnesses.detail.from" = "z";
+"harnesses.detail.hooks" = "Hooky";
+"harnesses.detail.mcp.servers" = "Servery MCP";
+"harnesses.detail.profiles" = "Profily";
+"harnesses.detail.focuses" = "Fokusy";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Žádný manifest není k dispozici.";
+"harnesses.detail.resolved" = "Vyřešeno";
+"harnesses.detail.unresolved" = "Nevyřešeno";
+"harnesses.detail.no.hooks" = "Tento postroj nemá žádné hooky.";
+"harnesses.detail.no.mcp.servers" = "Tento postroj nemá žádné servery MCP.";
+"harnesses.detail.no.profiles" = "Tento postroj nemá žádné profily.";
+"harnesses.detail.no.focuses" = "Tento postroj nemá žádné fokusy.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Spustit postroj";
+"harnesses.launch.vendor" = "Dodavatel";
+"harnesses.launch.vendor.unavailable" = "(není nainstalován)";
+"harnesses.launch.vendor.default" = "Výchozí (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Žádný";
+"harnesses.launch.working.directory" = "Pracovní adresář";
+"harnesses.launch.browse" = "Procházet…";
+"harnesses.launch.prompt" = "Výzva";
+"harnesses.launch.prompt.placeholder" = "Volitelná výzva pro agenta…";
+"harnesses.launch.button" = "Spustit";
+"harnesses.launch.help" = "Spustit tento postroj v novém terminálu";
+"harnesses.launch.cancel" = "Zrušit";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Nástrojový řetězec YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Správce postrojů pro AI asistenty";
+"settings.ynh.enable.harness.tab" = "Zobrazit kartu postrojů v bočním panelu";
+"settings.ynh.enable.harness.tab.help" = "Přidá kartu Postroje do bočního panelu pro procházení a správu nainstalovaných postrojů";
+"settings.ynh.home.override" = "Přepsání $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Výchozí (používá vlastní rozlišení ynh)";
+"settings.ynh.home.override.help" = "Přepíše adresář YNH_HOME pro podproces ynh. Pro výchozí hodnotu ponechte prázdné.";
+"settings.ynh.resolved.paths" = "Vyřešené cesty";
+"settings.ynh.redetect" = "Znovu detekovat";
+"settings.ynh.init.required" = "Neinicializováno";
+"settings.ynh.ready" = "Připraveno";
+"settings.ynh.path.label" = "Cesta:";
+"settings.ynh.ynd.path.label" = "Cesta ynd:";
+"settings.ynh.status.label" = "Stav:";
+"settings.ynh.ready.info" = "Nástrojový řetězec byl detekován a inicializován. Aktivujte kartu bočního panelu pro procházení postrojů.";
+"settings.ynh.advanced" = "Pokročilé";
+"settings.ynh.version.label" = "Verze:";
+
+"common.clear" = "Vymazat";

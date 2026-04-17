@@ -570,3 +570,104 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "하네스";
+"harnesses.refresh.help" = "ynh 툴체인 재감지";
+"harnesses.not.installed" = "ynh가 설치되어 있지 않습니다.";
+"harnesses.init.required" = "ynh를 찾았지만 초기화되지 않았습니다.\n`ynh init`을 실행하여 설정하세요.";
+"harnesses.init.hint" = "터미널을 열고 실행하세요:\nynh init";
+"harnesses.empty.message" = "설치된 하네스가 없습니다.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "로컬";
+"harnesses.source.registry" = "레지스트리";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "정보";
+"harnesses.detail.path" = "경로";
+"harnesses.detail.source" = "소스";
+"harnesses.detail.subpath" = "하위 경로";
+"harnesses.detail.installed.at" = "설치됨";
+"harnesses.detail.artifacts" = "아티팩트";
+"harnesses.detail.no.artifacts" = "아티팩트 없음.";
+"harnesses.detail.skills" = "스킬";
+"harnesses.detail.agents" = "에이전트";
+"harnesses.detail.rules" = "규칙";
+"harnesses.detail.commands" = "명령";
+"harnesses.detail.dependencies" = "의존성";
+"harnesses.detail.includes %d" = "포함 (%d)";
+"harnesses.detail.delegates %d" = "위임 대상 (%d)";
+"harnesses.detail.picks %d" = "선택 (%d):";
+"harnesses.reveal.in.finder" = "Finder에서 보기";
+"harnesses.open.in.browser" = "브라우저에서 열기";
+"harnesses.close.detail" = "닫기";
+"harnesses.detail.artifacts.from.includes" = "이 하네스는 의존성 인클루드에서 아티팩트를 가져옵니다.";
+"harnesses.detail.from" = "출처";
+"harnesses.detail.hooks" = "훅";
+"harnesses.detail.mcp.servers" = "MCP 서버";
+"harnesses.detail.profiles" = "프로필";
+"harnesses.detail.focuses" = "포커스";
+"harnesses.detail.focus.profile %@" = "프로필: %@";
+"harnesses.detail.manifest" = "매니페스트";
+"harnesses.detail.no.manifest" = "사용 가능한 매니페스트 없음.";
+"harnesses.detail.resolved" = "해결됨";
+"harnesses.detail.unresolved" = "미해결";
+"harnesses.detail.no.hooks" = "이 하네스에는 훅이 없습니다.";
+"harnesses.detail.no.mcp.servers" = "이 하네스에는 MCP 서버가 없습니다.";
+"harnesses.detail.no.profiles" = "이 하네스에는 프로필이 없습니다.";
+"harnesses.detail.no.focuses" = "이 하네스에는 포커스가 없습니다.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "하네스 실행";
+"harnesses.launch.vendor" = "공급업체";
+"harnesses.launch.vendor.unavailable" = "(설치되지 않음)";
+"harnesses.launch.vendor.default" = "기본값 (%@)";
+"harnesses.launch.focus" = "포커스";
+"harnesses.launch.focus.none" = "없음";
+"harnesses.launch.working.directory" = "작업 디렉토리";
+"harnesses.launch.browse" = "찾아보기…";
+"harnesses.launch.prompt" = "프롬프트";
+"harnesses.launch.prompt.placeholder" = "에이전트에 전달할 선택적 프롬프트…";
+"harnesses.launch.button" = "실행";
+"harnesses.launch.help" = "새 터미널에서 이 하네스 실행";
+"harnesses.launch.cancel" = "취소";
+"harnesses.launch.backend" = "백엔드";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH 하네스 툴체인";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI 어시스턴트 하네스 관리자";
+"settings.ynh.enable.harness.tab" = "사이드바에 하네스 탭 표시";
+"settings.ynh.enable.harness.tab.help" = "설치된 하네스를 탐색하고 관리하기 위한 하네스 탭을 사이드바에 추가합니다";
+"settings.ynh.home.override" = "$YNH_HOME 재정의";
+"settings.ynh.home.override.placeholder" = "기본값 (ynh 자체 해석 사용)";
+"settings.ynh.home.override.help" = "ynh 서브프로세스의 YNH_HOME 디렉토리를 재정의합니다. 기본값은 비워두세요.";
+"settings.ynh.resolved.paths" = "해결된 경로";
+"settings.ynh.redetect" = "재감지";
+"settings.ynh.init.required" = "초기화되지 않음";
+"settings.ynh.ready" = "준비 완료";
+"settings.ynh.path.label" = "경로:";
+"settings.ynh.ynd.path.label" = "ynd 경로:";
+"settings.ynh.status.label" = "상태:";
+"settings.ynh.ready.info" = "툴체인이 감지되고 초기화되었습니다. 사이드바 탭을 활성화하여 하네스를 탐색하세요.";
+"settings.ynh.advanced" = "고급";
+"settings.ynh.version.label" = "버전:";
+
+"common.clear" = "지우기";
+
+"sidebar.worktree.create.terminal" = "Terminal 만들기…";
+
+"sidebar.worktree.copy.pathname" = "경로명으로 복사";
+
+"sidebar.prune.worktrees" = "Worktree 정리…";
+
+"sidebar.prune.worktrees.title" = "Worktree 정리";
+
+"sidebar.prune.worktrees.confirm" = "정리";
+
+"sidebar.prune.worktrees.nothing.title" = "정리할 항목 없음";
+
+"sidebar.prune.worktrees.nothing.message" = "모든 worktree가 확인되었습니다. 오래된 레코드가 없습니다.";
+
+"sidebar.prune.worktrees.explanation" = "이 관리 레코드들은 더 이상 존재하지 않는 디렉토리를 가리킵니다. 정리하면 제거됩니다 — 브랜치는 영향받지 않습니다.";

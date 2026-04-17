@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import TermQShared
 
 /// Top-level sidebar container with tab switching between Repositories and Harnesses.
 ///
@@ -10,6 +11,7 @@ struct SidebarView: View {
     @ObservedObject var worktreeViewModel: WorktreeSidebarViewModel
     @ObservedObject var detector: YNHDetector
     @ObservedObject var harnessRepository: HarnessRepository
+    var onLaunchHarness: ((Harness) -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
 
@@ -37,7 +39,11 @@ struct SidebarView: View {
             case .repositories:
                 WorktreeSidebarView(viewModel: worktreeViewModel)
             case .harnesses where showHarnessesTab:
-                HarnessesSidebarTab(detector: detector, repository: harnessRepository)
+                HarnessesSidebarTab(
+                    detector: detector,
+                    repository: harnessRepository,
+                    onLaunchHarness: onLaunchHarness
+                )
             default:
                 // Feature flag off but selectedTab persisted as harnesses — fall back.
                 WorktreeSidebarView(viewModel: worktreeViewModel)

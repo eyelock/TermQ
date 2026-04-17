@@ -570,3 +570,104 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Uprzęże";
+"harnesses.refresh.help" = "Wykryj ponownie łańcuch narzędzi ynh";
+"harnesses.not.installed" = "ynh nie jest zainstalowany.";
+"harnesses.init.required" = "Znaleziono ynh, ale nie jest zainicjowany.\nUruchom `ynh init`, aby skonfigurować.";
+"harnesses.init.hint" = "Otwórz terminal i uruchom:\nynh init";
+"harnesses.empty.message" = "Nie zainstalowano jeszcze żadnych uprzęży.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokalne";
+"harnesses.source.registry" = "Rejestr";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informacje";
+"harnesses.detail.path" = "Ścieżka";
+"harnesses.detail.source" = "Źródło";
+"harnesses.detail.subpath" = "Podścieżka";
+"harnesses.detail.installed.at" = "Zainstalowano";
+"harnesses.detail.artifacts" = "Artefakty";
+"harnesses.detail.no.artifacts" = "Brak artefaktów.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenty";
+"harnesses.detail.rules" = "Reguły";
+"harnesses.detail.commands" = "Polecenia";
+"harnesses.detail.dependencies" = "Zależności";
+"harnesses.detail.includes %d" = "Zawiera (%d)";
+"harnesses.detail.delegates %d" = "Deleguje do (%d)";
+"harnesses.detail.picks %d" = "Wybiera (%d):";
+"harnesses.reveal.in.finder" = "Pokaż w Finderze";
+"harnesses.open.in.browser" = "Otwórz w przeglądarce";
+"harnesses.close.detail" = "Zamknij";
+"harnesses.detail.artifacts.from.includes" = "Ta uprząż pobiera artefakty z dołączeń zależności.";
+"harnesses.detail.from" = "z";
+"harnesses.detail.hooks" = "Hooki";
+"harnesses.detail.mcp.servers" = "Serwery MCP";
+"harnesses.detail.profiles" = "Profile";
+"harnesses.detail.focuses" = "Fokusy";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Brak dostępnego manifestu.";
+"harnesses.detail.resolved" = "Rozwiązano";
+"harnesses.detail.unresolved" = "Nierozwiązane";
+"harnesses.detail.no.hooks" = "Ta uprząż nie ma hooków.";
+"harnesses.detail.no.mcp.servers" = "Ta uprząż nie ma serwerów MCP.";
+"harnesses.detail.no.profiles" = "Ta uprząż nie ma profili.";
+"harnesses.detail.no.focuses" = "Ta uprząż nie ma fokusów.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Uruchom uprząż";
+"harnesses.launch.vendor" = "Dostawca";
+"harnesses.launch.vendor.unavailable" = "(niezainstalowany)";
+"harnesses.launch.vendor.default" = "Domyślny (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Brak";
+"harnesses.launch.working.directory" = "Katalog roboczy";
+"harnesses.launch.browse" = "Przeglądaj…";
+"harnesses.launch.prompt" = "Monit";
+"harnesses.launch.prompt.placeholder" = "Opcjonalny monit dla agenta…";
+"harnesses.launch.button" = "Uruchom";
+"harnesses.launch.help" = "Uruchom tę uprząż w nowym terminalu";
+"harnesses.launch.cancel" = "Anuluj";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Łańcuch narzędzi YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Menedżer uprzęży dla asystentów AI";
+"settings.ynh.enable.harness.tab" = "Pokaż kartę uprzęży na pasku bocznym";
+"settings.ynh.enable.harness.tab.help" = "Dodaje kartę Uprzęże do paska bocznego do przeglądania i zarządzania zainstalowanymi uprzężami";
+"settings.ynh.home.override" = "Nadpisanie $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Domyślnie (używa własnej rozdzielczości ynh)";
+"settings.ynh.home.override.help" = "Nadpisuje katalog YNH_HOME dla podprocesu ynh. Pozostaw puste dla domyślnego.";
+"settings.ynh.resolved.paths" = "Rozwiązane ścieżki";
+"settings.ynh.redetect" = "Wykryj ponownie";
+"settings.ynh.init.required" = "Niezainicjowany";
+"settings.ynh.ready" = "Gotowy";
+"settings.ynh.path.label" = "Ścieżka:";
+"settings.ynh.ynd.path.label" = "Ścieżka ynd:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Łańcuch narzędzi wykryty i zainicjowany. Włącz kartę paska bocznego, aby przeglądać uprzęże.";
+"settings.ynh.advanced" = "Zaawansowane";
+"settings.ynh.version.label" = "Wersja:";
+
+"common.clear" = "Wyczyść";
+
+"sidebar.worktree.create.terminal" = "Utwórz terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopiuj jako ścieżkę";
+
+"sidebar.prune.worktrees" = "Przytnij worktrees…";
+
+"sidebar.prune.worktrees.title" = "Przytnij worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Przytnij";
+
+"sidebar.prune.worktrees.nothing.title" = "Nic do przycięcia";
+
+"sidebar.prune.worktrees.nothing.message" = "Wszystkie worktrees są uwzględnione. Nie znaleziono przestarzałych rekordów.";
+
+"sidebar.prune.worktrees.explanation" = "Te rekordy administracyjne wskazują na katalogi, które już nie istnieją. Przycinanie usuwa je — Twoje gałęzie nie są dotknięte.";

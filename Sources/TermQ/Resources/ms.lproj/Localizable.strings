@@ -570,3 +570,104 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Kesan semula rantaian alat ynh";
+"harnesses.not.installed" = "ynh tidak dipasang.";
+"harnesses.init.required" = "ynh ditemui tetapi belum dimulakan.\nJalankan `ynh init` untuk menyediakan.";
+"harnesses.init.hint" = "Buka terminal dan jalankan:\nynh init";
+"harnesses.empty.message" = "Tiada harness dipasang lagi.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Tempatan";
+"harnesses.source.registry" = "Pendaftaran";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Maklumat";
+"harnesses.detail.path" = "Laluan";
+"harnesses.detail.source" = "Sumber";
+"harnesses.detail.subpath" = "Sublaluan";
+"harnesses.detail.installed.at" = "Dipasang";
+"harnesses.detail.artifacts" = "Artefak";
+"harnesses.detail.no.artifacts" = "Tiada artefak.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Ejen";
+"harnesses.detail.rules" = "Peraturan";
+"harnesses.detail.commands" = "Arahan";
+"harnesses.detail.dependencies" = "Kebergantungan";
+"harnesses.detail.includes %d" = "Termasuk (%d)";
+"harnesses.detail.delegates %d" = "Mewakilkan kepada (%d)";
+"harnesses.detail.picks %d" = "Memilih (%d):";
+"harnesses.reveal.in.finder" = "Tunjuk dalam Finder";
+"harnesses.open.in.browser" = "Buka dalam pelayar";
+"harnesses.close.detail" = "Tutup";
+"harnesses.detail.artifacts.from.includes" = "Harness ini mendapat artefak daripada include kebergantungan.";
+"harnesses.detail.from" = "dari";
+"harnesses.detail.hooks" = "Hook";
+"harnesses.detail.mcp.servers" = "Pelayan MCP";
+"harnesses.detail.profiles" = "Profil";
+"harnesses.detail.focuses" = "Fokus";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Tiada manifest tersedia.";
+"harnesses.detail.resolved" = "Diselesaikan";
+"harnesses.detail.unresolved" = "Belum diselesaikan";
+"harnesses.detail.no.hooks" = "Harness ini tiada hook.";
+"harnesses.detail.no.mcp.servers" = "Harness ini tiada pelayan MCP.";
+"harnesses.detail.no.profiles" = "Harness ini tiada profil.";
+"harnesses.detail.no.focuses" = "Harness ini tiada fokus.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Lancarkan Harness";
+"harnesses.launch.vendor" = "Vendor";
+"harnesses.launch.vendor.unavailable" = "(tidak dipasang)";
+"harnesses.launch.vendor.default" = "Lalai (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Tiada";
+"harnesses.launch.working.directory" = "Direktori Kerja";
+"harnesses.launch.browse" = "Semak imbas…";
+"harnesses.launch.prompt" = "Gesaan";
+"harnesses.launch.prompt.placeholder" = "Gesaan pilihan untuk dihantar kepada ejen…";
+"harnesses.launch.button" = "Lancarkan";
+"harnesses.launch.help" = "Lancarkan harness ini dalam terminal baharu";
+"harnesses.launch.cancel" = "Batal";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Rantaian Alat YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Pengurus harness untuk pembantu AI";
+"settings.ynh.enable.harness.tab" = "Papar tab Harness dalam bar sisi";
+"settings.ynh.enable.harness.tab.help" = "Menambah tab Harness pada bar sisi untuk menyemak imbas dan mengurus harness yang dipasang";
+"settings.ynh.home.override" = "Ganti $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Lalai (menggunakan resolusi ynh sendiri)";
+"settings.ynh.home.override.help" = "Mengganti direktori YNH_HOME untuk subproses ynh. Biarkan kosong untuk lalai.";
+"settings.ynh.resolved.paths" = "Laluan yang diselesaikan";
+"settings.ynh.redetect" = "Kesan semula";
+"settings.ynh.init.required" = "Belum dimulakan";
+"settings.ynh.ready" = "Sedia";
+"settings.ynh.path.label" = "Laluan:";
+"settings.ynh.ynd.path.label" = "Laluan ynd:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Rantaian alat dikesan dan dimulakan. Aktifkan tab bar sisi untuk menyemak imbas harness.";
+"settings.ynh.advanced" = "Lanjutan";
+"settings.ynh.version.label" = "Versi:";
+
+"common.clear" = "Kosongkan";
+
+"sidebar.worktree.create.terminal" = "Cipta Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Salin sebagai Laluan";
+
+"sidebar.prune.worktrees" = "Pangkas Worktrees…";
+
+"sidebar.prune.worktrees.title" = "Pangkas Worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Pangkas";
+
+"sidebar.prune.worktrees.nothing.title" = "Tiada yang Perlu Dipangkas";
+
+"sidebar.prune.worktrees.nothing.message" = "Semua worktrees diambil kira. Tiada rekod lapuk ditemui.";
+
+"sidebar.prune.worktrees.explanation" = "Rekod pentadbiran ini menunjuk ke direktori yang tidak lagi wujud. Pemangkasan menyingkirkannya — cawangan anda tidak terjejas.";

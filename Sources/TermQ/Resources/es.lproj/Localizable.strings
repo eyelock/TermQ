@@ -581,3 +581,88 @@ Esto podría afectar cómo los asistentes de IA interactúan con este terminal."
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Arneses";
+"harnesses.refresh.help" = "Volver a detectar la cadena de herramientas ynh";
+"harnesses.not.installed" = "ynh no está instalado.";
+"harnesses.init.required" = "ynh encontrado pero no inicializado.\nEjecuta `ynh init` para configurar.";
+"harnesses.init.hint" = "Abre un terminal y ejecuta:\nynh init";
+"harnesses.empty.message" = "Todavía no hay arneses instalados.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Local";
+"harnesses.source.registry" = "Registro";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Información";
+"harnesses.detail.path" = "Ruta";
+"harnesses.detail.source" = "Fuente";
+"harnesses.detail.subpath" = "Subruta";
+"harnesses.detail.installed.at" = "Instalado";
+"harnesses.detail.artifacts" = "Artefactos";
+"harnesses.detail.no.artifacts" = "Sin artefactos.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agentes";
+"harnesses.detail.rules" = "Reglas";
+"harnesses.detail.commands" = "Comandos";
+"harnesses.detail.dependencies" = "Dependencias";
+"harnesses.detail.includes %d" = "Incluye (%d)";
+"harnesses.detail.delegates %d" = "Delega a (%d)";
+"harnesses.detail.picks %d" = "Selecciona (%d):";
+"harnesses.reveal.in.finder" = "Mostrar en Finder";
+"harnesses.open.in.browser" = "Abrir en el navegador";
+"harnesses.close.detail" = "Cerrar";
+"harnesses.detail.artifacts.from.includes" = "Este arnés obtiene sus artefactos de las inclusiones de dependencias.";
+"harnesses.detail.from" = "de";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Servidores MCP";
+"harnesses.detail.profiles" = "Perfiles";
+"harnesses.detail.focuses" = "Focos";
+"harnesses.detail.focus.profile %@" = "perfil: %@";
+"harnesses.detail.manifest" = "Manifiesto";
+"harnesses.detail.no.manifest" = "No hay manifiesto disponible.";
+"harnesses.detail.resolved" = "Resuelto";
+"harnesses.detail.unresolved" = "Sin resolver";
+"harnesses.detail.no.hooks" = "Este arnés no tiene hooks.";
+"harnesses.detail.no.mcp.servers" = "Este arnés no tiene servidores MCP.";
+"harnesses.detail.no.profiles" = "Este arnés no tiene perfiles.";
+"harnesses.detail.no.focuses" = "Este arnés no tiene focos.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Lanzar arnés";
+"harnesses.launch.vendor" = "Proveedor";
+"harnesses.launch.vendor.unavailable" = "(no instalado)";
+"harnesses.launch.vendor.default" = "Predeterminado (%@)";
+"harnesses.launch.focus" = "Foco";
+"harnesses.launch.focus.none" = "Ninguno";
+"harnesses.launch.working.directory" = "Directorio de trabajo";
+"harnesses.launch.browse" = "Explorar…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Prompt opcional para pasar al agente…";
+"harnesses.launch.button" = "Lanzar";
+"harnesses.launch.help" = "Lanzar este arnés en un nuevo terminal";
+"harnesses.launch.cancel" = "Cancelar";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Cadena de herramientas YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Gestor de arneses para asistentes de IA";
+"settings.ynh.enable.harness.tab" = "Mostrar pestaña de arneses en la barra lateral";
+"settings.ynh.enable.harness.tab.help" = "Añade una pestaña de Arneses a la barra lateral para explorar y gestionar los arneses instalados";
+"settings.ynh.home.override" = "Anulación de $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Predeterminado (usa la resolución propia de ynh)";
+"settings.ynh.home.override.help" = "Anula el directorio YNH_HOME para el subproceso ynh. Deja en blanco para usar el predeterminado.";
+"settings.ynh.resolved.paths" = "Rutas resueltas";
+"settings.ynh.redetect" = "Volver a detectar";
+"settings.ynh.init.required" = "No inicializado";
+"settings.ynh.ready" = "Listo";
+"settings.ynh.path.label" = "Ruta:";
+"settings.ynh.ynd.path.label" = "Ruta de ynd:";
+"settings.ynh.status.label" = "Estado:";
+"settings.ynh.ready.info" = "Cadena de herramientas detectada e inicializada. Activa la pestaña de la barra lateral para explorar los arneses.";
+"settings.ynh.advanced" = "Avanzado";
+"settings.ynh.version.label" = "Versión:";
+
+"common.clear" = "Borrar";

@@ -12,6 +12,7 @@ import TermQShared
 struct HarnessesSidebarTab: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var repository: HarnessRepository
+    var onLaunchHarness: ((Harness) -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -92,6 +93,13 @@ struct HarnessesSidebarTab: View {
                 ForEach(repository.harnesses) { harness in
                     HarnessRowView(harness: harness)
                         .tag(harness.name)
+                        .contextMenu {
+                            Button {
+                                onLaunchHarness?(harness)
+                            } label: {
+                                Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
+                            }
+                        }
                 }
             }
             .listStyle(.sidebar)

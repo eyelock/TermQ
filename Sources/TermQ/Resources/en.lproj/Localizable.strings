@@ -633,6 +633,22 @@
 "harnesses.detail.no.profiles" = "This harness has no profiles.";
 "harnesses.detail.no.focuses" = "This harness has no focuses.";
 
+// Harnesses — launch
+"harnesses.launch.title" = "Launch Harness";
+"harnesses.launch.vendor" = "Vendor";
+"harnesses.launch.vendor.unavailable" = "(not installed)";
+"harnesses.launch.vendor.default" = "Default (%@)";
+"harnesses.launch.focus" = "Focus";
+"harnesses.launch.focus.none" = "None";
+"harnesses.launch.working.directory" = "Working Directory";
+"harnesses.launch.browse" = "Browse…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Optional prompt to pass to the agent…";
+"harnesses.launch.button" = "Launch";
+"harnesses.launch.help" = "Launch this harness in a new terminal";
+"harnesses.launch.cancel" = "Cancel";
+"harnesses.launch.backend" = "Backend";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
 "settings.ynh.title" = "ynh";

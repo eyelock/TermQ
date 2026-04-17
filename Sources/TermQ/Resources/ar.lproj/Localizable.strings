@@ -581,3 +581,88 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "الأطواق";
+"harnesses.refresh.help" = "إعادة اكتشاف سلسلة أدوات ynh";
+"harnesses.not.installed" = "ynh غير مثبّت.";
+"harnesses.init.required" = "تم العثور على ynh لكنه غير مُهيَّأ.\nشغّل `ynh init` للإعداد.";
+"harnesses.init.hint" = "افتح طرفية وشغّل:\nynh init";
+"harnesses.empty.message" = "لا توجد أطواق مثبّتة بعد.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "محلي";
+"harnesses.source.registry" = "السجل";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "معلومات";
+"harnesses.detail.path" = "المسار";
+"harnesses.detail.source" = "المصدر";
+"harnesses.detail.subpath" = "المسار الفرعي";
+"harnesses.detail.installed.at" = "تم التثبيت";
+"harnesses.detail.artifacts" = "المنتجات";
+"harnesses.detail.no.artifacts" = "لا توجد منتجات.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "الوكلاء";
+"harnesses.detail.rules" = "القواعد";
+"harnesses.detail.commands" = "الأوامر";
+"harnesses.detail.dependencies" = "التبعيات";
+"harnesses.detail.includes %d" = "يتضمن (%d)";
+"harnesses.detail.delegates %d" = "يفوّض إلى (%d)";
+"harnesses.detail.picks %d" = "يختار (%d):";
+"harnesses.reveal.in.finder" = "إظهار في Finder";
+"harnesses.open.in.browser" = "فتح في المتصفح";
+"harnesses.close.detail" = "إغلاق";
+"harnesses.detail.artifacts.from.includes" = "يحصل هذا الطوق على منتجاته من تضمينات التبعيات.";
+"harnesses.detail.from" = "من";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "خوادم MCP";
+"harnesses.detail.profiles" = "الملفات الشخصية";
+"harnesses.detail.focuses" = "التركيزات";
+"harnesses.detail.focus.profile %@" = "الملف الشخصي: %@";
+"harnesses.detail.manifest" = "البيان";
+"harnesses.detail.no.manifest" = "لا يوجد بيان متاح.";
+"harnesses.detail.resolved" = "تم الحل";
+"harnesses.detail.unresolved" = "غير محلول";
+"harnesses.detail.no.hooks" = "هذا الطوق لا يحتوي على hooks.";
+"harnesses.detail.no.mcp.servers" = "هذا الطوق لا يحتوي على خوادم MCP.";
+"harnesses.detail.no.profiles" = "هذا الطوق لا يحتوي على ملفات شخصية.";
+"harnesses.detail.no.focuses" = "هذا الطوق لا يحتوي على تركيزات.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "تشغيل الطوق";
+"harnesses.launch.vendor" = "المورّد";
+"harnesses.launch.vendor.unavailable" = "(غير مثبّت)";
+"harnesses.launch.vendor.default" = "الافتراضي (%@)";
+"harnesses.launch.focus" = "التركيز";
+"harnesses.launch.focus.none" = "لا شيء";
+"harnesses.launch.working.directory" = "دليل العمل";
+"harnesses.launch.browse" = "تصفّح…";
+"harnesses.launch.prompt" = "موجّه الأوامر";
+"harnesses.launch.prompt.placeholder" = "موجّه اختياري لإرساله إلى الوكيل…";
+"harnesses.launch.button" = "تشغيل";
+"harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
+"harnesses.launch.cancel" = "إلغاء";
+"harnesses.launch.backend" = "الواجهة الخلفية";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "سلسلة أدوات YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "مدير أطواق المساعدين الذكيين";
+"settings.ynh.enable.harness.tab" = "إظهار تبويب الأطواق في الشريط الجانبي";
+"settings.ynh.enable.harness.tab.help" = "يضيف تبويب الأطواق إلى الشريط الجانبي لتصفّح وإدارة الأطواق المثبّتة";
+"settings.ynh.home.override" = "تجاوز $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "الافتراضي (يستخدم دقة ynh الخاصة)";
+"settings.ynh.home.override.help" = "يتجاوز دليل YNH_HOME للعملية الفرعية ynh. اتركه فارغاً للقيمة الافتراضية.";
+"settings.ynh.resolved.paths" = "المسارات المحلولة";
+"settings.ynh.redetect" = "إعادة الاكتشاف";
+"settings.ynh.init.required" = "غير مُهيَّأ";
+"settings.ynh.ready" = "جاهز";
+"settings.ynh.path.label" = "المسار:";
+"settings.ynh.ynd.path.label" = "مسار ynd:";
+"settings.ynh.status.label" = "الحالة:";
+"settings.ynh.ready.info" = "تم اكتشاف سلسلة الأدوات وتهيئتها. فعّل تبويب الشريط الجانبي لتصفّح الأطواق.";
+"settings.ynh.advanced" = "متقدم";
+"settings.ynh.version.label" = "الإصدار:";
+
+"common.clear" = "مسح";

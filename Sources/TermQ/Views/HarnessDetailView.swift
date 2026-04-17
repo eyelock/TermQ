@@ -31,6 +31,7 @@ struct HarnessDetailView: View {
     let isLoadingDetail: Bool
     let detailError: String?
     let onDismiss: () -> Void
+    let onLaunch: () -> Void
 
     var body: some View {
         ScrollView {
@@ -88,6 +89,15 @@ struct HarnessDetailView: View {
                         .controlSize(.small)
                         .padding(.trailing, 8)
                 }
+
+                Button {
+                    onLaunch()
+                } label: {
+                    Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
+                        .font(.system(size: 12, weight: .medium))
+                }
+                .controlSize(.regular)
+                .help(Strings.Harnesses.launchHelp)
 
                 Button {
                     onDismiss()

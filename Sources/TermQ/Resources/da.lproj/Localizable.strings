@@ -581,3 +581,88 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Genregistrer ynh-toolchain";
+"harnesses.not.installed" = "ynh er ikke installeret.";
+"harnesses.init.required" = "ynh fundet men ikke initialiseret.\nKør `ynh init` for at konfigurere.";
+"harnesses.init.hint" = "Åbn en terminal og kør:\nynh init";
+"harnesses.empty.message" = "Ingen harnesses installeret endnu.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Oplysninger";
+"harnesses.detail.path" = "Sti";
+"harnesses.detail.source" = "Kilde";
+"harnesses.detail.subpath" = "Understi";
+"harnesses.detail.installed.at" = "Installeret";
+"harnesses.detail.artifacts" = "Artefakter";
+"harnesses.detail.no.artifacts" = "Ingen artefakter.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenter";
+"harnesses.detail.rules" = "Regler";
+"harnesses.detail.commands" = "Kommandoer";
+"harnesses.detail.dependencies" = "Afhængigheder";
+"harnesses.detail.includes %d" = "Inkluderer (%d)";
+"harnesses.detail.delegates %d" = "Delegerer til (%d)";
+"harnesses.detail.picks %d" = "Vælger (%d):";
+"harnesses.reveal.in.finder" = "Vis i Finder";
+"harnesses.open.in.browser" = "Åbn i browser";
+"harnesses.close.detail" = "Luk";
+"harnesses.detail.artifacts.from.includes" = "Denne harness henter sine artefakter fra afhængigheds-includes.";
+"harnesses.detail.from" = "fra";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-servere";
+"harnesses.detail.profiles" = "Profiler";
+"harnesses.detail.focuses" = "Fokusser";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Intet manifest tilgængeligt.";
+"harnesses.detail.resolved" = "Løst";
+"harnesses.detail.unresolved" = "Uløst";
+"harnesses.detail.no.hooks" = "Denne harness har ingen hooks.";
+"harnesses.detail.no.mcp.servers" = "Denne harness har ingen MCP-servere.";
+"harnesses.detail.no.profiles" = "Denne harness har ingen profiler.";
+"harnesses.detail.no.focuses" = "Denne harness har ingen fokusser.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Start harness";
+"harnesses.launch.vendor" = "Leverandør";
+"harnesses.launch.vendor.unavailable" = "(ikke installeret)";
+"harnesses.launch.vendor.default" = "Standard (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Ingen";
+"harnesses.launch.working.directory" = "Arbejdsmappe";
+"harnesses.launch.browse" = "Gennemse…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
+"harnesses.launch.button" = "Start";
+"harnesses.launch.help" = "Start denne harness i en ny terminal";
+"harnesses.launch.cancel" = "Annuller";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-manager til AI-assistenter";
+"settings.ynh.enable.harness.tab" = "Vis harnesses-fane i sidebjælken";
+"settings.ynh.enable.harness.tab.help" = "Tilføjer en Harnesses-fane til sidebjælken til at gennemse og administrere installerede harnesses";
+"settings.ynh.home.override" = "$YNH_HOME-tilsidesættelse";
+"settings.ynh.home.override.placeholder" = "Standard (bruger ynh's egen opløsning)";
+"settings.ynh.home.override.help" = "Tilsidesætter YNH_HOME-mappen for ynh-underprocessen. Lad være tomt for standard.";
+"settings.ynh.resolved.paths" = "Løste stier";
+"settings.ynh.redetect" = "Genregistrer";
+"settings.ynh.init.required" = "Ikke initialiseret";
+"settings.ynh.ready" = "Klar";
+"settings.ynh.path.label" = "Sti:";
+"settings.ynh.ynd.path.label" = "ynd-sti:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain registreret og initialiseret. Aktivér sidebjælke-fanen for at gennemse harnesses.";
+"settings.ynh.advanced" = "Avanceret";
+"settings.ynh.version.label" = "Version:";
+
+"common.clear" = "Ryd";

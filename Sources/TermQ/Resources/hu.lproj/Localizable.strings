@@ -571,3 +571,104 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnessek";
+"harnesses.refresh.help" = "ynh eszközlánc újraészlelése";
+"harnesses.not.installed" = "A ynh nincs telepítve.";
+"harnesses.init.required" = "A ynh megtalálható, de nincs inicializálva.\nFuttasd a `ynh init` parancsot a beállításhoz.";
+"harnesses.init.hint" = "Nyiss egy terminált és futtasd:\nynh init";
+"harnesses.empty.message" = "Még nincs telepített harness.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Helyi";
+"harnesses.source.registry" = "Regiszter";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Információ";
+"harnesses.detail.path" = "Útvonal";
+"harnesses.detail.source" = "Forrás";
+"harnesses.detail.subpath" = "Alútvonal";
+"harnesses.detail.installed.at" = "Telepítve";
+"harnesses.detail.artifacts" = "Összetevők";
+"harnesses.detail.no.artifacts" = "Nincs összetevő.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Ügynökök";
+"harnesses.detail.rules" = "Szabályok";
+"harnesses.detail.commands" = "Parancsok";
+"harnesses.detail.dependencies" = "Függőségek";
+"harnesses.detail.includes %d" = "Tartalmazza (%d)";
+"harnesses.detail.delegates %d" = "Delegál (%d) felé";
+"harnesses.detail.picks %d" = "Kiválaszt (%d):";
+"harnesses.reveal.in.finder" = "Megjelenítés a Finderben";
+"harnesses.open.in.browser" = "Megnyitás böngészőben";
+"harnesses.close.detail" = "Bezárás";
+"harnesses.detail.artifacts.from.includes" = "Ez a harness a függőségi tartalmakból nyeri az összetevőit.";
+"harnesses.detail.from" = "forrás";
+"harnesses.detail.hooks" = "Hookok";
+"harnesses.detail.mcp.servers" = "MCP-kiszolgálók";
+"harnesses.detail.profiles" = "Profilok";
+"harnesses.detail.focuses" = "Fókuszok";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Nem érhető el manifest.";
+"harnesses.detail.resolved" = "Feloldva";
+"harnesses.detail.unresolved" = "Fel nem oldott";
+"harnesses.detail.no.hooks" = "Ennek a harnessnek nincs hookja.";
+"harnesses.detail.no.mcp.servers" = "Ennek a harnessnek nincs MCP-kiszolgálója.";
+"harnesses.detail.no.profiles" = "Ennek a harnessnek nincs profilja.";
+"harnesses.detail.no.focuses" = "Ennek a harnessnek nincs fókusza.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness indítása";
+"harnesses.launch.vendor" = "Szállító";
+"harnesses.launch.vendor.unavailable" = "(nincs telepítve)";
+"harnesses.launch.vendor.default" = "Alapértelmezett (%@)";
+"harnesses.launch.focus" = "Fókusz";
+"harnesses.launch.focus.none" = "Nincs";
+"harnesses.launch.working.directory" = "Munkakönyvtár";
+"harnesses.launch.browse" = "Tallózás…";
+"harnesses.launch.prompt" = "Kérdés";
+"harnesses.launch.prompt.placeholder" = "Nem kötelező kérdés az ügynöknek…";
+"harnesses.launch.button" = "Indítás";
+"harnesses.launch.help" = "Harness indítása új terminálban";
+"harnesses.launch.cancel" = "Mégse";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH harness eszközlánc";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-kezelő AI-asszisztensekhez";
+"settings.ynh.enable.harness.tab" = "Harness-lap megjelenítése az oldalsávban";
+"settings.ynh.enable.harness.tab.help" = "Hozzáad egy Harness-lapot az oldalsávhoz a telepített harnessek böngészéséhez és kezeléséhez";
+"settings.ynh.home.override" = "$YNH_HOME felülírása";
+"settings.ynh.home.override.placeholder" = "Alapértelmezett (ynh saját feloldását használja)";
+"settings.ynh.home.override.help" = "Felülírja a YNH_HOME könyvtárat a ynh alfolyamat számára. Hagyd üresen az alapértelmezetthez.";
+"settings.ynh.resolved.paths" = "Feloldott útvonalak";
+"settings.ynh.redetect" = "Újraészlelés";
+"settings.ynh.init.required" = "Nem inicializált";
+"settings.ynh.ready" = "Kész";
+"settings.ynh.path.label" = "Útvonal:";
+"settings.ynh.ynd.path.label" = "ynd útvonal:";
+"settings.ynh.status.label" = "Állapot:";
+"settings.ynh.ready.info" = "Az eszközlánc észlelve és inicializálva. Az oldalsáv lapjának aktiválásával böngészheted a harnesseket.";
+"settings.ynh.advanced" = "Speciális";
+"settings.ynh.version.label" = "Verzió:";
+
+"common.clear" = "Törlés";
+
+"sidebar.worktree.create.terminal" = "Terminal létrehozása…";
+
+"sidebar.worktree.copy.pathname" = "Másolás elérési útként";
+
+"sidebar.prune.worktrees" = "Worktree-k tisztítása…";
+
+"sidebar.prune.worktrees.title" = "Worktree-k tisztítása";
+
+"sidebar.prune.worktrees.confirm" = "Tisztítás";
+
+"sidebar.prune.worktrees.nothing.title" = "Nincs mit tisztítani";
+
+"sidebar.prune.worktrees.nothing.message" = "Minden worktree nyilvántartásban van. Nem találtak elavult rekordokat.";
+
+"sidebar.prune.worktrees.explanation" = "Ezek az adminisztrációs rekordok már nem létező könyvtárakra mutatnak. A tisztítás eltávolítja őket — az ágak nem érintettek.";

@@ -395,10 +395,16 @@ class TerminalSessionManager: ObservableObject {
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
         }
 
-        // Slightly longer delay for tmux sessions (they take a moment to attach)
-        let delay = effectiveBackend(for: card) == .tmuxAttach ? 0.8 : 0.5
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            terminal.send(txt: initCmd + "\n")
+        let backend = effectiveBackend(for: card)
+
+        if backend == .tmuxControl {
+            sendInitCommandViaControlMode(cardId: card.id, command: initCmd)
+        } else {
+            // Direct or tmux-attach: send text directly to the terminal.
+            let delay: Double = backend == .tmuxAttach ? 0.8 : 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                terminal.send(txt: initCmd + "\n")
+            }
         }
     }
 

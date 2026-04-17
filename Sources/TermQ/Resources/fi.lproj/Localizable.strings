@@ -571,3 +571,104 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Tunnista ynh-työkaluketju uudelleen";
+"harnesses.not.installed" = "ynh ei ole asennettu.";
+"harnesses.init.required" = "ynh löydetty mutta ei alustettu.\nAjа `ynh init` asentaaksesi.";
+"harnesses.init.hint" = "Avaa pääte ja aja:\nynh init";
+"harnesses.empty.message" = "Ei asennettuja harness-ohjaimia.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Paikallinen";
+"harnesses.source.registry" = "Rekisteri";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Tiedot";
+"harnesses.detail.path" = "Polku";
+"harnesses.detail.source" = "Lähde";
+"harnesses.detail.subpath" = "Alipolku";
+"harnesses.detail.installed.at" = "Asennettu";
+"harnesses.detail.artifacts" = "Artefaktit";
+"harnesses.detail.no.artifacts" = "Ei artefakteja.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agentit";
+"harnesses.detail.rules" = "Säännöt";
+"harnesses.detail.commands" = "Komennot";
+"harnesses.detail.dependencies" = "Riippuvuudet";
+"harnesses.detail.includes %d" = "Sisältää (%d)";
+"harnesses.detail.delegates %d" = "Delegoi kohteelle (%d)";
+"harnesses.detail.picks %d" = "Valitsee (%d):";
+"harnesses.reveal.in.finder" = "Näytä Finderissä";
+"harnesses.open.in.browser" = "Avaa selaimessa";
+"harnesses.close.detail" = "Sulje";
+"harnesses.detail.artifacts.from.includes" = "Tämä harness saa artefaktinsa riippuvuus-includeista.";
+"harnesses.detail.from" = "kohteesta";
+"harnesses.detail.hooks" = "Hookit";
+"harnesses.detail.mcp.servers" = "MCP-palvelimet";
+"harnesses.detail.profiles" = "Profiilit";
+"harnesses.detail.focuses" = "Fokukset";
+"harnesses.detail.focus.profile %@" = "profiili: %@";
+"harnesses.detail.manifest" = "Manifesti";
+"harnesses.detail.no.manifest" = "Ei manifestia saatavilla.";
+"harnesses.detail.resolved" = "Ratkaistu";
+"harnesses.detail.unresolved" = "Ratkaisematon";
+"harnesses.detail.no.hooks" = "Tällä harness-ohjaimella ei ole hookeja.";
+"harnesses.detail.no.mcp.servers" = "Tällä harness-ohjaimella ei ole MCP-palvelimia.";
+"harnesses.detail.no.profiles" = "Tällä harness-ohjaimella ei ole profiileja.";
+"harnesses.detail.no.focuses" = "Tällä harness-ohjaimella ei ole fokuksia.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Käynnistä harness";
+"harnesses.launch.vendor" = "Toimittaja";
+"harnesses.launch.vendor.unavailable" = "(ei asennettu)";
+"harnesses.launch.vendor.default" = "Oletus (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Ei mitään";
+"harnesses.launch.working.directory" = "Työkansio";
+"harnesses.launch.browse" = "Selaa…";
+"harnesses.launch.prompt" = "Kehote";
+"harnesses.launch.prompt.placeholder" = "Valinnainen kehote agentille…";
+"harnesses.launch.button" = "Käynnistä";
+"harnesses.launch.help" = "Käynnistä tämä harness uudessa päätteessä";
+"harnesses.launch.cancel" = "Peruuta";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-työkaluketju";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-hallinta tekoälyassistenteille";
+"settings.ynh.enable.harness.tab" = "Näytä harnesses-välilehti sivupalkissa";
+"settings.ynh.enable.harness.tab.help" = "Lisää Harnesses-välilehden sivupalkkiin asennettujen harness-ohjainten selaamista ja hallintaa varten";
+"settings.ynh.home.override" = "$YNH_HOME-korvaus";
+"settings.ynh.home.override.placeholder" = "Oletus (käyttää ynh:n omaa ratkaisua)";
+"settings.ynh.home.override.help" = "Korvaa YNH_HOME-hakemiston ynh-aliprosessille. Jätä tyhjäksi oletusarvoa varten.";
+"settings.ynh.resolved.paths" = "Ratkaistut polut";
+"settings.ynh.redetect" = "Tunnista uudelleen";
+"settings.ynh.init.required" = "Ei alustettu";
+"settings.ynh.ready" = "Valmis";
+"settings.ynh.path.label" = "Polku:";
+"settings.ynh.ynd.path.label" = "ynd-polku:";
+"settings.ynh.status.label" = "Tila:";
+"settings.ynh.ready.info" = "Työkaluketju tunnistettu ja alustettu. Ota sivupalkin välilehti käyttöön selataksesi harness-ohjaimia.";
+"settings.ynh.advanced" = "Lisäasetukset";
+"settings.ynh.version.label" = "Versio:";
+
+"common.clear" = "Tyhjennä";
+
+"sidebar.worktree.create.terminal" = "Luo Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopioi polkuna";
+
+"sidebar.prune.worktrees" = "Siivoa worktrees…";
+
+"sidebar.prune.worktrees.title" = "Siivoa worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Siivoa";
+
+"sidebar.prune.worktrees.nothing.title" = "Ei siivottavaa";
+
+"sidebar.prune.worktrees.nothing.message" = "Kaikki worktrees ovat kirjanpidossa. Vanhentuneita tietueita ei löytynyt.";
+
+"sidebar.prune.worktrees.explanation" = "Nämä hallinnolliset tietueet viittaavat hakemistoihin, joita ei enää ole. Siivous poistaa ne — haarasi eivät vaikutu.";

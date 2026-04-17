@@ -572,3 +572,104 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Упряжки";
+"harnesses.refresh.help" = "Повторно визначити інструментарій ynh";
+"harnesses.not.installed" = "ynh не встановлений.";
+"harnesses.init.required" = "ynh знайдено, але не ініціалізовано.\nЗапустіть `ynh init` для налаштування.";
+"harnesses.init.hint" = "Відкрийте термінал і запустіть:\nynh init";
+"harnesses.empty.message" = "Упряжки ще не встановлені.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Локальний";
+"harnesses.source.registry" = "Реєстр";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Інформація";
+"harnesses.detail.path" = "Шлях";
+"harnesses.detail.source" = "Джерело";
+"harnesses.detail.subpath" = "Підшлях";
+"harnesses.detail.installed.at" = "Встановлено";
+"harnesses.detail.artifacts" = "Артефакти";
+"harnesses.detail.no.artifacts" = "Немає артефактів.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Агенти";
+"harnesses.detail.rules" = "Правила";
+"harnesses.detail.commands" = "Команди";
+"harnesses.detail.dependencies" = "Залежності";
+"harnesses.detail.includes %d" = "Містить (%d)";
+"harnesses.detail.delegates %d" = "Делегує (%d)";
+"harnesses.detail.picks %d" = "Вибирає (%d):";
+"harnesses.reveal.in.finder" = "Показати у Finder";
+"harnesses.open.in.browser" = "Відкрити у браузері";
+"harnesses.close.detail" = "Закрити";
+"harnesses.detail.artifacts.from.includes" = "Ця упряжка отримує артефакти з включень залежностей.";
+"harnesses.detail.from" = "з";
+"harnesses.detail.hooks" = "Хуки";
+"harnesses.detail.mcp.servers" = "MCP-сервери";
+"harnesses.detail.profiles" = "Профілі";
+"harnesses.detail.focuses" = "Фокуси";
+"harnesses.detail.focus.profile %@" = "профіль: %@";
+"harnesses.detail.manifest" = "Маніфест";
+"harnesses.detail.no.manifest" = "Маніфест недоступний.";
+"harnesses.detail.resolved" = "Вирішено";
+"harnesses.detail.unresolved" = "Не вирішено";
+"harnesses.detail.no.hooks" = "У цієї упряжки немає хуків.";
+"harnesses.detail.no.mcp.servers" = "У цієї упряжки немає MCP-серверів.";
+"harnesses.detail.no.profiles" = "У цієї упряжки немає профілів.";
+"harnesses.detail.no.focuses" = "У цієї упряжки немає фокусів.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Запустити упряжку";
+"harnesses.launch.vendor" = "Постачальник";
+"harnesses.launch.vendor.unavailable" = "(не встановлено)";
+"harnesses.launch.vendor.default" = "За замовчуванням (%@)";
+"harnesses.launch.focus" = "Фокус";
+"harnesses.launch.focus.none" = "Немає";
+"harnesses.launch.working.directory" = "Робочий каталог";
+"harnesses.launch.browse" = "Огляд…";
+"harnesses.launch.prompt" = "Запит";
+"harnesses.launch.prompt.placeholder" = "Необов'язковий запит для агента…";
+"harnesses.launch.button" = "Запустити";
+"harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
+"harnesses.launch.cancel" = "Скасувати";
+"harnesses.launch.backend" = "Бекенд";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Інструментарій YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Менеджер упряжок для ШІ-асистентів";
+"settings.ynh.enable.harness.tab" = "Показувати вкладку упряжок на панелі";
+"settings.ynh.enable.harness.tab.help" = "Додає вкладку «Упряжки» на бічну панель для перегляду та керування встановленими упряжками";
+"settings.ynh.home.override" = "Перевизначення $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "За замовчуванням (використовує власне розрішення ynh)";
+"settings.ynh.home.override.help" = "Перевизначає каталог YNH_HOME для дочірнього процесу ynh. Залиште порожнім для значення за замовчуванням.";
+"settings.ynh.resolved.paths" = "Розрішені шляхи";
+"settings.ynh.redetect" = "Визначити повторно";
+"settings.ynh.init.required" = "Не ініціалізовано";
+"settings.ynh.ready" = "Готовий";
+"settings.ynh.path.label" = "Шлях:";
+"settings.ynh.ynd.path.label" = "Шлях ynd:";
+"settings.ynh.status.label" = "Статус:";
+"settings.ynh.ready.info" = "Інструментарій визначено та ініціалізовано. Увімкніть вкладку бічної панелі для перегляду упряжок.";
+"settings.ynh.advanced" = "Розширені";
+"settings.ynh.version.label" = "Версія:";
+
+"common.clear" = "Очистити";
+
+"sidebar.worktree.create.terminal" = "Створити Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Копіювати як шлях";
+
+"sidebar.prune.worktrees" = "Прибрати worktrees…";
+
+"sidebar.prune.worktrees.title" = "Прибрати worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Прибрати";
+
+"sidebar.prune.worktrees.nothing.title" = "Нема що прибирати";
+
+"sidebar.prune.worktrees.nothing.message" = "Всі worktrees обліковані. Застарілих записів не знайдено.";
+
+"sidebar.prune.worktrees.explanation" = "Ці адміністративні записи вказують на каталоги, яких більше не існує. Прибирання видаляє їх — ваші гілки не зачіпаються.";

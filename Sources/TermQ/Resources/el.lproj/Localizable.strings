@@ -581,3 +581,88 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Εκ νέου εντοπισμός αλυσίδας εργαλείων ynh";
+"harnesses.not.installed" = "Το ynh δεν είναι εγκατεστημένο.";
+"harnesses.init.required" = "Βρέθηκε το ynh αλλά δεν έχει αρχικοποιηθεί.\nΕκτελέστε `ynh init` για ρύθμιση.";
+"harnesses.init.hint" = "Ανοίξτε ένα τερματικό και εκτελέστε:\nynh init";
+"harnesses.empty.message" = "Δεν υπάρχουν εγκατεστημένα harness.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Τοπικό";
+"harnesses.source.registry" = "Μητρώο";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Πληροφορίες";
+"harnesses.detail.path" = "Διαδρομή";
+"harnesses.detail.source" = "Πηγή";
+"harnesses.detail.subpath" = "Υποδιαδρομή";
+"harnesses.detail.installed.at" = "Εγκαταστάθηκε";
+"harnesses.detail.artifacts" = "Αντικείμενα";
+"harnesses.detail.no.artifacts" = "Χωρίς αντικείμενα.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Κανόνες";
+"harnesses.detail.commands" = "Εντολές";
+"harnesses.detail.dependencies" = "Εξαρτήσεις";
+"harnesses.detail.includes %d" = "Περιλαμβάνει (%d)";
+"harnesses.detail.delegates %d" = "Εκχωρεί σε (%d)";
+"harnesses.detail.picks %d" = "Επιλέγει (%d):";
+"harnesses.reveal.in.finder" = "Εμφάνιση στο Finder";
+"harnesses.open.in.browser" = "Άνοιγμα στο πρόγραμμα περιήγησης";
+"harnesses.close.detail" = "Κλείσιμο";
+"harnesses.detail.artifacts.from.includes" = "Αυτό το harness λαμβάνει τα αντικείμενά του από τις εξαρτήσεις.";
+"harnesses.detail.from" = "από";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Διακομιστές MCP";
+"harnesses.detail.profiles" = "Προφίλ";
+"harnesses.detail.focuses" = "Εστιάσεις";
+"harnesses.detail.focus.profile %@" = "προφίλ: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Δεν υπάρχει διαθέσιμο manifest.";
+"harnesses.detail.resolved" = "Επιλύθηκε";
+"harnesses.detail.unresolved" = "Δεν επιλύθηκε";
+"harnesses.detail.no.hooks" = "Αυτό το harness δεν έχει hooks.";
+"harnesses.detail.no.mcp.servers" = "Αυτό το harness δεν έχει διακομιστές MCP.";
+"harnesses.detail.no.profiles" = "Αυτό το harness δεν έχει προφίλ.";
+"harnesses.detail.no.focuses" = "Αυτό το harness δεν έχει εστιάσεις.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Εκκίνηση harness";
+"harnesses.launch.vendor" = "Προμηθευτής";
+"harnesses.launch.vendor.unavailable" = "(δεν είναι εγκατεστημένο)";
+"harnesses.launch.vendor.default" = "Προεπιλογή (%@)";
+"harnesses.launch.focus" = "Εστίαση";
+"harnesses.launch.focus.none" = "Κανένα";
+"harnesses.launch.working.directory" = "Κατάλογος εργασίας";
+"harnesses.launch.browse" = "Αναζήτηση…";
+"harnesses.launch.prompt" = "Ερώτημα";
+"harnesses.launch.prompt.placeholder" = "Προαιρετικό ερώτημα για τον agent…";
+"harnesses.launch.button" = "Εκκίνηση";
+"harnesses.launch.help" = "Εκκίνηση αυτού του harness σε νέο τερματικό";
+"harnesses.launch.cancel" = "Ακύρωση";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Αλυσίδα εργαλείων YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Διαχειριστής harness για AI βοηθούς";
+"settings.ynh.enable.harness.tab" = "Εμφάνιση καρτέλας harness στην πλαϊνή γραμμή";
+"settings.ynh.enable.harness.tab.help" = "Προσθέτει μια καρτέλα Harness στην πλαϊνή γραμμή για περιήγηση και διαχείριση εγκατεστημένων harness";
+"settings.ynh.home.override" = "Παράκαμψη $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Προεπιλογή (χρησιμοποιεί τη δική του επίλυση ynh)";
+"settings.ynh.home.override.help" = "Παρακάμπτει τον κατάλογο YNH_HOME για τη διεργασία ynh. Αφήστε κενό για προεπιλογή.";
+"settings.ynh.resolved.paths" = "Επιλυμένες διαδρομές";
+"settings.ynh.redetect" = "Εκ νέου εντοπισμός";
+"settings.ynh.init.required" = "Μη αρχικοποιημένο";
+"settings.ynh.ready" = "Έτοιμο";
+"settings.ynh.path.label" = "Διαδρομή:";
+"settings.ynh.ynd.path.label" = "Διαδρομή ynd:";
+"settings.ynh.status.label" = "Κατάσταση:";
+"settings.ynh.ready.info" = "Η αλυσίδα εργαλείων εντοπίστηκε και αρχικοποιήθηκε. Ενεργοποιήστε την καρτέλα πλαϊνής γραμμής για περιήγηση στα harness.";
+"settings.ynh.advanced" = "Προχωρημένα";
+"settings.ynh.version.label" = "Έκδοση:";
+
+"common.clear" = "Εκκαθάριση";

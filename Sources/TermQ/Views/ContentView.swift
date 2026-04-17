@@ -8,6 +8,7 @@ struct ContentView: View {
     @StateObject private var sidebarViewModel = WorktreeSidebarViewModel.shared
     @StateObject private var ynhDetector = YNHDetector.shared
     @StateObject private var harnessRepo = HarnessRepository.shared
+    @StateObject private var vendorService = VendorService.shared
     @EnvironmentObject var urlHandler: URLHandler
     @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
     @State private var isZoomed = false
@@ -15,6 +16,7 @@ struct ContentView: View {
     @State private var showCommandPalette = false
     @State private var showBin = false
     @State private var showColumnPicker = false
+    @State private var showLaunchSheet = false
     /// Card that was selected before navigating to a harness detail, restored on dismiss.
     @State private var cardBeforeHarness: TerminalCard?
 
@@ -24,7 +26,12 @@ struct ContentView: View {
                 SidebarView(
                     worktreeViewModel: sidebarViewModel,
                     detector: ynhDetector,
-                    harnessRepository: harnessRepo
+                    harnessRepository: harnessRepo,
+                    onLaunchHarness: { harness in
+                        harnessRepo.selectedHarnessName = harness.name
+                        Task { await vendorService.refresh() }
+                        showLaunchSheet = true
+                    }
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
@@ -35,14 +42,19 @@ struct ContentView: View {
                         harness: harness,
                         detail: harnessRepo.selectedDetail,
                         isLoadingDetail: harnessRepo.isLoadingDetail,
-                        detailError: harnessRepo.detailError
-                    ) {
-                        harnessRepo.selectedHarnessName = nil
-                        if let card = cardBeforeHarness {
-                            viewModel.selectCard(card)
-                            cardBeforeHarness = nil
+                        detailError: harnessRepo.detailError,
+                        onDismiss: {
+                            harnessRepo.selectedHarnessName = nil
+                            if let card = cardBeforeHarness {
+                                viewModel.selectCard(card)
+                                cardBeforeHarness = nil
+                            }
+                        },
+                        onLaunch: {
+                            Task { await vendorService.refresh() }
+                            showLaunchSheet = true
                         }
-                    }
+                    )
                 } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
@@ -179,6 +191,17 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showBin) {
                 BinView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $showLaunchSheet) {
+                if let harness = harnessRepo.selectedHarness {
+                    HarnessLaunchSheet(
+                        harness: harness,
+                        detail: harnessRepo.selectedDetail,
+                        vendors: vendorService.vendors
+                    ) { config in
+                        launchHarness(config)
+                    }
+                }
             }
             .sheet(isPresented: $viewModel.showSessionRecovery) {
                 SessionRecoveryView(viewModel: viewModel)
@@ -429,12 +452,17 @@ struct ContentView: View {
         }
     }
 
+}
+
+// MARK: - Private Helpers
+
+extension ContentView {
     /// MCP server status indicator
-    private var mcpStatusIndicator: some View {
+    var mcpStatusIndicator: some View {
         MCPStatusView(isWired: viewModel.selectedCard?.isWired ?? false)
     }
 
-    private var terminalActions: TerminalActions {
+    var terminalActions: TerminalActions {
         TerminalActions(
             quickNewTerminal: { viewModel.quickNewTerminal() },
             newTerminalWithDialog: {
@@ -501,7 +529,7 @@ struct ContentView: View {
     }
 
     /// Handle command palette actions
-    private func handlePaletteAction(_ action: CommandPaletteView.PaletteAction) {
+    func handlePaletteAction(_ action: CommandPaletteView.PaletteAction) {
         switch action {
         case .newTerminal:
             viewModel.quickNewTerminal()
@@ -537,13 +565,8 @@ struct ContentView: View {
         }
     }
 
-}
-
-// MARK: - Private Helpers
-
-extension ContentView {
     /// Launch native Terminal.app at the specified directory
-    fileprivate func launchNativeTerminal(at directory: String? = nil) {
+    func launchNativeTerminal(at directory: String? = nil) {
         let path = directory ?? NSHomeDirectory()
         let script = """
             tell application "Terminal"
@@ -561,8 +584,13 @@ extension ContentView {
         }
     }
 
+}
+
+// MARK: - Actions
+
+extension ContentView {
     /// Export terminal session content to a file
-    fileprivate func exportTerminalSession(for card: TerminalCard) {
+    func exportTerminalSession(for card: TerminalCard) {
         guard let terminalView = TerminalSessionManager.shared.getTerminalView(for: card.id) else {
             return
         }
@@ -589,7 +617,7 @@ extension ContentView {
         }
     }
 
-    fileprivate func handlePendingTerminal() {
+    func handlePendingTerminal() {
         guard let pending = urlHandler.pendingTerminal else { return }
 
         // Find the target column
@@ -636,5 +664,44 @@ extension ContentView {
 
         // Optionally open the terminal immediately
         viewModel.selectCard(card)
+    }
+
+    /// Launch a harness by creating a transient Card with `ynh run` as the init command.
+    func launchHarness(_ config: HarnessLaunchConfig) {
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+
+        let card = TerminalCard(
+            title: config.harnessName,
+            tags: config.tags.map { Tag(key: $0.key, value: $0.value) },
+            columnId: column.id,
+            workingDirectory: config.workingDirectory,
+            initCommand: config.command,
+            backend: config.backend
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+
+        viewModel.tabManager.addTransientCard(card)
+
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
+
+        // Clear harness selection and switch to the new Card.
+        cardBeforeHarness = nil
+        harnessRepo.selectedHarnessName = nil
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
     }
 }

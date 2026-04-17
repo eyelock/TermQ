@@ -581,3 +581,88 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "重新偵測 ynh 工具鏈";
+"harnesses.not.installed" = "ynh 未安裝。";
+"harnesses.init.required" = "已找到 ynh 但未初始化。\n請執行 `ynh init` 進行設定。";
+"harnesses.init.hint" = "開啟終端機並執行：\nynh init";
+"harnesses.empty.message" = "尚未安裝任何 harness。";
+
+// Harnesses — row badges
+"harnesses.source.local" = "本機";
+"harnesses.source.registry" = "登錄檔";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "資訊";
+"harnesses.detail.path" = "路徑";
+"harnesses.detail.source" = "來源";
+"harnesses.detail.subpath" = "子路徑";
+"harnesses.detail.installed.at" = "已安裝";
+"harnesses.detail.artifacts" = "產物";
+"harnesses.detail.no.artifacts" = "無產物。";
+"harnesses.detail.skills" = "技能";
+"harnesses.detail.agents" = "代理程式";
+"harnesses.detail.rules" = "規則";
+"harnesses.detail.commands" = "命令";
+"harnesses.detail.dependencies" = "相依項";
+"harnesses.detail.includes %d" = "包含 (%d)";
+"harnesses.detail.delegates %d" = "委派給 (%d)";
+"harnesses.detail.picks %d" = "選取 (%d)：";
+"harnesses.reveal.in.finder" = "在 Finder 中顯示";
+"harnesses.open.in.browser" = "在瀏覽器中開啟";
+"harnesses.close.detail" = "關閉";
+"harnesses.detail.artifacts.from.includes" = "此 harness 從相依包含項取得產物。";
+"harnesses.detail.from" = "來自";
+"harnesses.detail.hooks" = "掛鉤";
+"harnesses.detail.mcp.servers" = "MCP 伺服器";
+"harnesses.detail.profiles" = "設定檔";
+"harnesses.detail.focuses" = "焦點";
+"harnesses.detail.focus.profile %@" = "設定檔：%@";
+"harnesses.detail.manifest" = "清單";
+"harnesses.detail.no.manifest" = "無可用清單。";
+"harnesses.detail.resolved" = "已解析";
+"harnesses.detail.unresolved" = "未解析";
+"harnesses.detail.no.hooks" = "此 harness 沒有掛鉤。";
+"harnesses.detail.no.mcp.servers" = "此 harness 沒有 MCP 伺服器。";
+"harnesses.detail.no.profiles" = "此 harness 沒有設定檔。";
+"harnesses.detail.no.focuses" = "此 harness 沒有焦點。";
+
+// Harnesses — launch
+"harnesses.launch.title" = "啟動 Harness";
+"harnesses.launch.vendor" = "供應商";
+"harnesses.launch.vendor.unavailable" = "（未安裝）";
+"harnesses.launch.vendor.default" = "預設 (%@)";
+"harnesses.launch.focus" = "焦點";
+"harnesses.launch.focus.none" = "無";
+"harnesses.launch.working.directory" = "工作目錄";
+"harnesses.launch.browse" = "瀏覽…";
+"harnesses.launch.prompt" = "提示詞";
+"harnesses.launch.prompt.placeholder" = "傳遞給代理程式的選用提示詞…";
+"harnesses.launch.button" = "啟動";
+"harnesses.launch.help" = "在新終端機中啟動此 harness";
+"harnesses.launch.cancel" = "取消";
+"harnesses.launch.backend" = "後端";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness 工具鏈";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI 助理 harness 管理員";
+"settings.ynh.enable.harness.tab" = "在側邊欄顯示 Harness 標籤頁";
+"settings.ynh.enable.harness.tab.help" = "在側邊欄新增 Harness 標籤頁，用於瀏覽和管理已安裝的 harness";
+"settings.ynh.home.override" = "$YNH_HOME 覆寫";
+"settings.ynh.home.override.placeholder" = "預設（使用 ynh 本身的解析）";
+"settings.ynh.home.override.help" = "覆寫 ynh 子行程的 YNH_HOME 目錄。留空使用預設值。";
+"settings.ynh.resolved.paths" = "已解析路徑";
+"settings.ynh.redetect" = "重新偵測";
+"settings.ynh.init.required" = "未初始化";
+"settings.ynh.ready" = "就緒";
+"settings.ynh.path.label" = "路徑：";
+"settings.ynh.ynd.path.label" = "ynd 路徑：";
+"settings.ynh.status.label" = "狀態：";
+"settings.ynh.ready.info" = "工具鏈已偵測並初始化。啟用側邊欄標籤頁以瀏覽 harness。";
+"settings.ynh.advanced" = "進階";
+"settings.ynh.version.label" = "版本：";
+
+"common.clear" = "清除";

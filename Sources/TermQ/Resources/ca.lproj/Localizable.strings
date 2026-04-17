@@ -581,3 +581,88 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Arnesos";
+"harnesses.refresh.help" = "Torna a detectar la cadena d'eines ynh";
+"harnesses.not.installed" = "ynh no està instal·lat.";
+"harnesses.init.required" = "S'ha trobat ynh però no s'ha inicialitzat.\nExecuta `ynh init` per configurar-lo.";
+"harnesses.init.hint" = "Obre un terminal i executa:\nynh init";
+"harnesses.empty.message" = "Encara no hi ha arnesos instal·lats.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Local";
+"harnesses.source.registry" = "Registre";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informació";
+"harnesses.detail.path" = "Ruta";
+"harnesses.detail.source" = "Font";
+"harnesses.detail.subpath" = "Subruta";
+"harnesses.detail.installed.at" = "Instal·lat";
+"harnesses.detail.artifacts" = "Artefactes";
+"harnesses.detail.no.artifacts" = "Sense artefactes.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Regles";
+"harnesses.detail.commands" = "Ordres";
+"harnesses.detail.dependencies" = "Dependències";
+"harnesses.detail.includes %d" = "Inclou (%d)";
+"harnesses.detail.delegates %d" = "Delega a (%d)";
+"harnesses.detail.picks %d" = "Selecciona (%d):";
+"harnesses.reveal.in.finder" = "Mostra al Finder";
+"harnesses.open.in.browser" = "Obre al navegador";
+"harnesses.close.detail" = "Tanca";
+"harnesses.detail.artifacts.from.includes" = "Aquest arnes obté els seus artefactes de les inclusions de dependències.";
+"harnesses.detail.from" = "de";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Servidors MCP";
+"harnesses.detail.profiles" = "Perfils";
+"harnesses.detail.focuses" = "Enfocaments";
+"harnesses.detail.focus.profile %@" = "perfil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "No hi ha cap manifest disponible.";
+"harnesses.detail.resolved" = "Resolt";
+"harnesses.detail.unresolved" = "No resolt";
+"harnesses.detail.no.hooks" = "Aquest arnes no té hooks.";
+"harnesses.detail.no.mcp.servers" = "Aquest arnes no té servidors MCP.";
+"harnesses.detail.no.profiles" = "Aquest arnes no té perfils.";
+"harnesses.detail.no.focuses" = "Aquest arnes no té enfocaments.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Inicia l'arnes";
+"harnesses.launch.vendor" = "Proveïdor";
+"harnesses.launch.vendor.unavailable" = "(no instal·lat)";
+"harnesses.launch.vendor.default" = "Per defecte (%@)";
+"harnesses.launch.focus" = "Enfocament";
+"harnesses.launch.focus.none" = "Cap";
+"harnesses.launch.working.directory" = "Directori de treball";
+"harnesses.launch.browse" = "Navega…";
+"harnesses.launch.prompt" = "Indicació";
+"harnesses.launch.prompt.placeholder" = "Indicació opcional per a l'agent…";
+"harnesses.launch.button" = "Inicia";
+"harnesses.launch.help" = "Inicia aquest arnes en un terminal nou";
+"harnesses.launch.cancel" = "Cancel·la";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Cadena d'eines YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Gestor d'arnesos per a assistents d'IA";
+"settings.ynh.enable.harness.tab" = "Mostra la pestanya d'arnesos a la barra lateral";
+"settings.ynh.enable.harness.tab.help" = "Afegeix una pestanya d'Arnesos a la barra lateral per navegar i gestionar els arnesos instal·lats";
+"settings.ynh.home.override" = "Substitució de $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Per defecte (utilitza la resolució pròpia de ynh)";
+"settings.ynh.home.override.help" = "Substitueix el directori YNH_HOME per al subprocés ynh. Deixa en blanc per al valor per defecte.";
+"settings.ynh.resolved.paths" = "Rutes resoltes";
+"settings.ynh.redetect" = "Torna a detectar";
+"settings.ynh.init.required" = "No inicialitzat";
+"settings.ynh.ready" = "Llest";
+"settings.ynh.path.label" = "Ruta:";
+"settings.ynh.ynd.path.label" = "Ruta de ynd:";
+"settings.ynh.status.label" = "Estat:";
+"settings.ynh.ready.info" = "Cadena d'eines detectada i inicialitzada. Activa la pestanya de la barra lateral per navegar pels arnesos.";
+"settings.ynh.advanced" = "Avançat";
+"settings.ynh.version.label" = "Versió:";
+
+"common.clear" = "Neteja";

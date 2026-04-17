@@ -570,3 +570,104 @@ Dit kan invloed hebben op hoe AI-assistenten met deze terminal communiceren.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "ynh-toolchain opnieuw detecteren";
+"harnesses.not.installed" = "ynh is niet geïnstalleerd.";
+"harnesses.init.required" = "ynh gevonden maar niet geïnitialiseerd.\nVoer `ynh init` uit om te configureren.";
+"harnesses.init.hint" = "Open een terminal en voer uit:\nynh init";
+"harnesses.empty.message" = "Nog geen harnesses geïnstalleerd.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokaal";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informatie";
+"harnesses.detail.path" = "Pad";
+"harnesses.detail.source" = "Bron";
+"harnesses.detail.subpath" = "Subpad";
+"harnesses.detail.installed.at" = "Geïnstalleerd";
+"harnesses.detail.artifacts" = "Artefacten";
+"harnesses.detail.no.artifacts" = "Geen artefacten.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Regels";
+"harnesses.detail.commands" = "Opdrachten";
+"harnesses.detail.dependencies" = "Afhankelijkheden";
+"harnesses.detail.includes %d" = "Bevat (%d)";
+"harnesses.detail.delegates %d" = "Delegeert naar (%d)";
+"harnesses.detail.picks %d" = "Selecteert (%d):";
+"harnesses.reveal.in.finder" = "Tonen in Finder";
+"harnesses.open.in.browser" = "Openen in browser";
+"harnesses.close.detail" = "Sluiten";
+"harnesses.detail.artifacts.from.includes" = "Deze harness haalt zijn artefacten uit afhankelijkheids-includes.";
+"harnesses.detail.from" = "van";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-servers";
+"harnesses.detail.profiles" = "Profielen";
+"harnesses.detail.focuses" = "Focussen";
+"harnesses.detail.focus.profile %@" = "profiel: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Geen manifest beschikbaar.";
+"harnesses.detail.resolved" = "Opgelost";
+"harnesses.detail.unresolved" = "Niet opgelost";
+"harnesses.detail.no.hooks" = "Deze harness heeft geen hooks.";
+"harnesses.detail.no.mcp.servers" = "Deze harness heeft geen MCP-servers.";
+"harnesses.detail.no.profiles" = "Deze harness heeft geen profielen.";
+"harnesses.detail.no.focuses" = "Deze harness heeft geen focussen.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness starten";
+"harnesses.launch.vendor" = "Leverancier";
+"harnesses.launch.vendor.unavailable" = "(niet geïnstalleerd)";
+"harnesses.launch.vendor.default" = "Standaard (%@)";
+"harnesses.launch.focus" = "Focus";
+"harnesses.launch.focus.none" = "Geen";
+"harnesses.launch.working.directory" = "Werkmap";
+"harnesses.launch.browse" = "Bladeren…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Optionele prompt voor de agent…";
+"harnesses.launch.button" = "Starten";
+"harnesses.launch.help" = "Deze harness starten in een nieuwe terminal";
+"harnesses.launch.cancel" = "Annuleren";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-manager voor AI-assistenten";
+"settings.ynh.enable.harness.tab" = "Harnesses-tab in zijbalk tonen";
+"settings.ynh.enable.harness.tab.help" = "Voegt een Harnesses-tab toe aan de zijbalk voor het bekijken en beheren van geïnstalleerde harnesses";
+"settings.ynh.home.override" = "$YNH_HOME overschrijven";
+"settings.ynh.home.override.placeholder" = "Standaard (gebruikt ynh's eigen resolutie)";
+"settings.ynh.home.override.help" = "Overschrijft de YNH_HOME-map voor het ynh-subproces. Laat leeg voor standaard.";
+"settings.ynh.resolved.paths" = "Opgeloste paden";
+"settings.ynh.redetect" = "Opnieuw detecteren";
+"settings.ynh.init.required" = "Niet geïnitialiseerd";
+"settings.ynh.ready" = "Gereed";
+"settings.ynh.path.label" = "Pad:";
+"settings.ynh.ynd.path.label" = "ynd-pad:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain gedetecteerd en geïnitialiseerd. Activeer de zijbalktab om harnesses te bekijken.";
+"settings.ynh.advanced" = "Geavanceerd";
+"settings.ynh.version.label" = "Versie:";
+
+"common.clear" = "Wissen";
+
+"sidebar.worktree.create.terminal" = "Terminal aanmaken…";
+
+"sidebar.worktree.copy.pathname" = "Kopiëren als padnaam";
+
+"sidebar.prune.worktrees" = "Worktrees snoeien…";
+
+"sidebar.prune.worktrees.title" = "Worktrees snoeien";
+
+"sidebar.prune.worktrees.confirm" = "Snoeien";
+
+"sidebar.prune.worktrees.nothing.title" = "Niets te snoeien";
+
+"sidebar.prune.worktrees.nothing.message" = "Alle worktrees zijn verantwoord. Er zijn geen verouderde records gevonden.";
+
+"sidebar.prune.worktrees.explanation" = "Deze administratieve records verwijzen naar mappen die niet meer bestaan. Snoeien verwijdert ze — uw branches worden niet beïnvloed.";

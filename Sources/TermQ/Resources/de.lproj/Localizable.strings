@@ -581,3 +581,88 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "ynh-Toolchain erneut erkennen";
+"harnesses.not.installed" = "ynh ist nicht installiert.";
+"harnesses.init.required" = "ynh gefunden, aber nicht initialisiert.\nFühre `ynh init` zur Einrichtung aus.";
+"harnesses.init.hint" = "Öffne ein Terminal und führe aus:\nynh init";
+"harnesses.empty.message" = "Noch keine Harnesses installiert.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informationen";
+"harnesses.detail.path" = "Pfad";
+"harnesses.detail.source" = "Quelle";
+"harnesses.detail.subpath" = "Unterpfad";
+"harnesses.detail.installed.at" = "Installiert";
+"harnesses.detail.artifacts" = "Artefakte";
+"harnesses.detail.no.artifacts" = "Keine Artefakte.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Regeln";
+"harnesses.detail.commands" = "Befehle";
+"harnesses.detail.dependencies" = "Abhängigkeiten";
+"harnesses.detail.includes %d" = "Enthält (%d)";
+"harnesses.detail.delegates %d" = "Delegiert an (%d)";
+"harnesses.detail.picks %d" = "Wählt aus (%d):";
+"harnesses.reveal.in.finder" = "Im Finder zeigen";
+"harnesses.open.in.browser" = "Im Browser öffnen";
+"harnesses.close.detail" = "Schließen";
+"harnesses.detail.artifacts.from.includes" = "Dieses Harness bezieht seine Artefakte aus Abhängigkeits-Includes.";
+"harnesses.detail.from" = "von";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-Server";
+"harnesses.detail.profiles" = "Profile";
+"harnesses.detail.focuses" = "Fokusprofile";
+"harnesses.detail.focus.profile %@" = "Profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Kein Manifest verfügbar.";
+"harnesses.detail.resolved" = "Aufgelöst";
+"harnesses.detail.unresolved" = "Nicht aufgelöst";
+"harnesses.detail.no.hooks" = "Dieses Harness hat keine Hooks.";
+"harnesses.detail.no.mcp.servers" = "Dieses Harness hat keine MCP-Server.";
+"harnesses.detail.no.profiles" = "Dieses Harness hat keine Profile.";
+"harnesses.detail.no.focuses" = "Dieses Harness hat keine Fokusprofile.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness starten";
+"harnesses.launch.vendor" = "Anbieter";
+"harnesses.launch.vendor.unavailable" = "(nicht installiert)";
+"harnesses.launch.vendor.default" = "Standard (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Keiner";
+"harnesses.launch.working.directory" = "Arbeitsverzeichnis";
+"harnesses.launch.browse" = "Durchsuchen…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Optionaler Prompt für den Agenten…";
+"harnesses.launch.button" = "Starten";
+"harnesses.launch.help" = "Dieses Harness in einem neuen Terminal starten";
+"harnesses.launch.cancel" = "Abbrechen";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-Harness-Toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "KI-Assistent-Harness-Manager";
+"settings.ynh.enable.harness.tab" = "Harnesses-Tab in der Seitenleiste anzeigen";
+"settings.ynh.enable.harness.tab.help" = "Fügt der Seitenleiste einen Harnesses-Tab zum Durchsuchen und Verwalten installierter Harnesses hinzu";
+"settings.ynh.home.override" = "$YNH_HOME überschreiben";
+"settings.ynh.home.override.placeholder" = "Standard (verwendet ynh's eigene Auflösung)";
+"settings.ynh.home.override.help" = "Überschreibt das YNH_HOME-Verzeichnis für den ynh-Unterprozess. Leer lassen für Standard.";
+"settings.ynh.resolved.paths" = "Aufgelöste Pfade";
+"settings.ynh.redetect" = "Erneut erkennen";
+"settings.ynh.init.required" = "Nicht initialisiert";
+"settings.ynh.ready" = "Bereit";
+"settings.ynh.path.label" = "Pfad:";
+"settings.ynh.ynd.path.label" = "ynd-Pfad:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain erkannt und initialisiert. Aktiviere den Seitenleisten-Tab zum Durchsuchen von Harnesses.";
+"settings.ynh.advanced" = "Erweitert";
+"settings.ynh.version.label" = "Version:";
+
+"common.clear" = "Löschen";

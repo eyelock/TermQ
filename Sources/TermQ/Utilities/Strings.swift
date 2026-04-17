@@ -909,5 +909,23 @@ extension Strings {
         static var detailNoMCPServers: String { localized("harnesses.detail.no.mcp.servers") }
         static var detailNoProfiles: String { localized("harnesses.detail.no.profiles") }
         static var detailNoFocuses: String { localized("harnesses.detail.no.focuses") }
+
+        // Launch
+        static var launchTitle: String { localized("harnesses.launch.title") }
+        static var launchVendor: String { localized("harnesses.launch.vendor") }
+        static var launchVendorUnavailable: String { localized("harnesses.launch.vendor.unavailable") }
+        static func launchVendorDefault(_ vendor: String) -> String {
+            String(format: localized("harnesses.launch.vendor.default"), vendor)
+        }
+        static var launchFocus: String { localized("harnesses.launch.focus") }
+        static var launchFocusNone: String { localized("harnesses.launch.focus.none") }
+        static var launchWorkingDirectory: String { localized("harnesses.launch.working.directory") }
+        static var launchBrowse: String { localized("harnesses.launch.browse") }
+        static var launchPrompt: String { localized("harnesses.launch.prompt") }
+        static var launchPromptPlaceholder: String { localized("harnesses.launch.prompt.placeholder") }
+        static var launchButton: String { localized("harnesses.launch.button") }
+        static var launchHelp: String { localized("harnesses.launch.help") }
+        static var launchCancel: String { localized("harnesses.launch.cancel") }
+        static var launchBackend: String { localized("harnesses.launch.backend") }
     }
 }

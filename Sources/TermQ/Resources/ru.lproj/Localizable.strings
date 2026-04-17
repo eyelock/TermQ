@@ -581,3 +581,88 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Упряжки";
+"harnesses.refresh.help" = "Повторно определить инструментарий ynh";
+"harnesses.not.installed" = "ynh не установлен.";
+"harnesses.init.required" = "ynh найден, но не инициализирован.\nЗапустите `ynh init` для настройки.";
+"harnesses.init.hint" = "Откройте терминал и запустите:\nynh init";
+"harnesses.empty.message" = "Упряжки ещё не установлены.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Локальный";
+"harnesses.source.registry" = "Реестр";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Информация";
+"harnesses.detail.path" = "Путь";
+"harnesses.detail.source" = "Источник";
+"harnesses.detail.subpath" = "Подпуть";
+"harnesses.detail.installed.at" = "Установлено";
+"harnesses.detail.artifacts" = "Артефакты";
+"harnesses.detail.no.artifacts" = "Нет артефактов.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Агенты";
+"harnesses.detail.rules" = "Правила";
+"harnesses.detail.commands" = "Команды";
+"harnesses.detail.dependencies" = "Зависимости";
+"harnesses.detail.includes %d" = "Включает (%d)";
+"harnesses.detail.delegates %d" = "Делегирует (%d)";
+"harnesses.detail.picks %d" = "Выбирает (%d):";
+"harnesses.reveal.in.finder" = "Показать в Finder";
+"harnesses.open.in.browser" = "Открыть в браузере";
+"harnesses.close.detail" = "Закрыть";
+"harnesses.detail.artifacts.from.includes" = "Эта упряжка получает артефакты из включений зависимостей.";
+"harnesses.detail.from" = "из";
+"harnesses.detail.hooks" = "Хуки";
+"harnesses.detail.mcp.servers" = "MCP-серверы";
+"harnesses.detail.profiles" = "Профили";
+"harnesses.detail.focuses" = "Фокусы";
+"harnesses.detail.focus.profile %@" = "профиль: %@";
+"harnesses.detail.manifest" = "Манифест";
+"harnesses.detail.no.manifest" = "Манифест недоступен.";
+"harnesses.detail.resolved" = "Разрешено";
+"harnesses.detail.unresolved" = "Не разрешено";
+"harnesses.detail.no.hooks" = "У этой упряжки нет хуков.";
+"harnesses.detail.no.mcp.servers" = "У этой упряжки нет MCP-серверов.";
+"harnesses.detail.no.profiles" = "У этой упряжки нет профилей.";
+"harnesses.detail.no.focuses" = "У этой упряжки нет фокусов.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Запустить упряжку";
+"harnesses.launch.vendor" = "Поставщик";
+"harnesses.launch.vendor.unavailable" = "(не установлен)";
+"harnesses.launch.vendor.default" = "По умолчанию (%@)";
+"harnesses.launch.focus" = "Фокус";
+"harnesses.launch.focus.none" = "Нет";
+"harnesses.launch.working.directory" = "Рабочий каталог";
+"harnesses.launch.browse" = "Обзор…";
+"harnesses.launch.prompt" = "Запрос";
+"harnesses.launch.prompt.placeholder" = "Необязательный запрос для агента…";
+"harnesses.launch.button" = "Запустить";
+"harnesses.launch.help" = "Запустить эту упряжку в новом терминале";
+"harnesses.launch.cancel" = "Отмена";
+"harnesses.launch.backend" = "Бэкенд";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Инструментарий YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Менеджер упряжек для ИИ-ассистентов";
+"settings.ynh.enable.harness.tab" = "Показывать вкладку упряжек на панели";
+"settings.ynh.enable.harness.tab.help" = "Добавляет вкладку «Упряжки» на боковую панель для просмотра и управления установленными упряжками";
+"settings.ynh.home.override" = "Переопределение $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "По умолчанию (использует собственное разрешение ynh)";
+"settings.ynh.home.override.help" = "Переопределяет каталог YNH_HOME для дочернего процесса ynh. Оставьте пустым для значения по умолчанию.";
+"settings.ynh.resolved.paths" = "Разрешённые пути";
+"settings.ynh.redetect" = "Определить повторно";
+"settings.ynh.init.required" = "Не инициализирован";
+"settings.ynh.ready" = "Готов";
+"settings.ynh.path.label" = "Путь:";
+"settings.ynh.ynd.path.label" = "Путь ynd:";
+"settings.ynh.status.label" = "Статус:";
+"settings.ynh.ready.info" = "Инструментарий определён и инициализирован. Включите вкладку боковой панели для просмотра упряжек.";
+"settings.ynh.advanced" = "Расширенные";
+"settings.ynh.version.label" = "Версия:";
+
+"common.clear" = "Очистить";

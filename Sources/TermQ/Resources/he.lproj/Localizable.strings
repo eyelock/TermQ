@@ -571,3 +571,104 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "זיהוי מחדש של שרשרת הכלים ynh";
+"harnesses.not.installed" = "ynh אינו מותקן.";
+"harnesses.init.required" = "נמצא ynh אך לא אותחל.\nהפעל `ynh init` להגדרה.";
+"harnesses.init.hint" = "פתח מסוף והפעל:\nynh init";
+"harnesses.empty.message" = "אין harness מותקנים עדיין.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "מקומי";
+"harnesses.source.registry" = "רשם";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "מידע";
+"harnesses.detail.path" = "נתיב";
+"harnesses.detail.source" = "מקור";
+"harnesses.detail.subpath" = "נתיב-משנה";
+"harnesses.detail.installed.at" = "הותקן";
+"harnesses.detail.artifacts" = "ארטיפקטים";
+"harnesses.detail.no.artifacts" = "אין ארטיפקטים.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "סוכנים";
+"harnesses.detail.rules" = "כללים";
+"harnesses.detail.commands" = "פקודות";
+"harnesses.detail.dependencies" = "תלויות";
+"harnesses.detail.includes %d" = "כולל (%d)";
+"harnesses.detail.delegates %d" = "מאציל ל-(%d)";
+"harnesses.detail.picks %d" = "בוחר (%d):";
+"harnesses.reveal.in.finder" = "הצג ב-Finder";
+"harnesses.open.in.browser" = "פתח בדפדפן";
+"harnesses.close.detail" = "סגור";
+"harnesses.detail.artifacts.from.includes" = "ה-harness הזה מקבל את הארטיפקטים שלו מהכללות תלויות.";
+"harnesses.detail.from" = "מ-";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "שרתי MCP";
+"harnesses.detail.profiles" = "פרופילים";
+"harnesses.detail.focuses" = "מוקדים";
+"harnesses.detail.focus.profile %@" = "פרופיל: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "אין manifest זמין.";
+"harnesses.detail.resolved" = "נפתר";
+"harnesses.detail.unresolved" = "לא נפתר";
+"harnesses.detail.no.hooks" = "ל-harness זה אין hooks.";
+"harnesses.detail.no.mcp.servers" = "ל-harness זה אין שרתי MCP.";
+"harnesses.detail.no.profiles" = "ל-harness זה אין פרופילים.";
+"harnesses.detail.no.focuses" = "ל-harness זה אין מוקדים.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "הפעל Harness";
+"harnesses.launch.vendor" = "ספק";
+"harnesses.launch.vendor.unavailable" = "(לא מותקן)";
+"harnesses.launch.vendor.default" = "ברירת מחדל (%@)";
+"harnesses.launch.focus" = "מוקד";
+"harnesses.launch.focus.none" = "אין";
+"harnesses.launch.working.directory" = "ספריית עבודה";
+"harnesses.launch.browse" = "עיין…";
+"harnesses.launch.prompt" = "פרומפט";
+"harnesses.launch.prompt.placeholder" = "פרומפט אופציונלי לסוכן…";
+"harnesses.launch.button" = "הפעל";
+"harnesses.launch.help" = "הפעל harness זה במסוף חדש";
+"harnesses.launch.cancel" = "ביטול";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "שרשרת כלים YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "מנהל harness לעוזרי בינה מלאכותית";
+"settings.ynh.enable.harness.tab" = "הצג לשונית Harness בסרגל הצד";
+"settings.ynh.enable.harness.tab.help" = "מוסיף לשונית Harness לסרגל הצד לגלישה וניהול harness מותקנים";
+"settings.ynh.home.override" = "עקיפת $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "ברירת מחדל (משתמש בפתרון הפנימי של ynh)";
+"settings.ynh.home.override.help" = "עוקף את ספריית YNH_HOME עבור תהליך-המשנה של ynh. השאר ריק לברירת מחדל.";
+"settings.ynh.resolved.paths" = "נתיבים שנפתרו";
+"settings.ynh.redetect" = "זיהוי מחדש";
+"settings.ynh.init.required" = "לא אותחל";
+"settings.ynh.ready" = "מוכן";
+"settings.ynh.path.label" = "נתיב:";
+"settings.ynh.ynd.path.label" = "נתיב ynd:";
+"settings.ynh.status.label" = "סטטוס:";
+"settings.ynh.ready.info" = "שרשרת הכלים זוהתה ואותחלה. הפעל את לשונית סרגל הצד לגלישה ב-harness.";
+"settings.ynh.advanced" = "מתקדם";
+"settings.ynh.version.label" = "גרסה:";
+
+"common.clear" = "נקה";
+
+"sidebar.worktree.create.terminal" = "צור Terminal…";
+
+"sidebar.worktree.copy.pathname" = "העתק כנתיב";
+
+"sidebar.prune.worktrees" = "נקה worktrees…";
+
+"sidebar.prune.worktrees.title" = "נקה worktrees";
+
+"sidebar.prune.worktrees.confirm" = "נקה";
+
+"sidebar.prune.worktrees.nothing.title" = "אין מה לנקות";
+
+"sidebar.prune.worktrees.nothing.message" = "כל ה-worktrees מנוהלים. לא נמצאו רשומות מיושנות.";
+
+"sidebar.prune.worktrees.explanation" = "רשומות ניהוליות אלה מצביעות לספריות שאינן קיימות עוד. הניקוי מסיר אותן — הענפים שלך אינם מושפעים.";

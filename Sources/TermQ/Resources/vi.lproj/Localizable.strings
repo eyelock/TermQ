@@ -572,3 +572,104 @@
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Phát hiện lại chuỗi công cụ ynh";
+"harnesses.not.installed" = "ynh chưa được cài đặt.";
+"harnesses.init.required" = "Tìm thấy ynh nhưng chưa khởi tạo.\nChạy `ynh init` để thiết lập.";
+"harnesses.init.hint" = "Mở terminal và chạy:\nynh init";
+"harnesses.empty.message" = "Chưa có harness nào được cài đặt.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Cục bộ";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Thông tin";
+"harnesses.detail.path" = "Đường dẫn";
+"harnesses.detail.source" = "Nguồn";
+"harnesses.detail.subpath" = "Đường dẫn con";
+"harnesses.detail.installed.at" = "Đã cài đặt";
+"harnesses.detail.artifacts" = "Artefact";
+"harnesses.detail.no.artifacts" = "Không có artefact.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Quy tắc";
+"harnesses.detail.commands" = "Lệnh";
+"harnesses.detail.dependencies" = "Phụ thuộc";
+"harnesses.detail.includes %d" = "Bao gồm (%d)";
+"harnesses.detail.delegates %d" = "Ủy quyền cho (%d)";
+"harnesses.detail.picks %d" = "Chọn (%d):";
+"harnesses.reveal.in.finder" = "Hiển thị trong Finder";
+"harnesses.open.in.browser" = "Mở trong trình duyệt";
+"harnesses.close.detail" = "Đóng";
+"harnesses.detail.artifacts.from.includes" = "Harness này lấy artefact từ các include phụ thuộc.";
+"harnesses.detail.from" = "từ";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Máy chủ MCP";
+"harnesses.detail.profiles" = "Hồ sơ";
+"harnesses.detail.focuses" = "Tiêu điểm";
+"harnesses.detail.focus.profile %@" = "hồ sơ: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Không có manifest.";
+"harnesses.detail.resolved" = "Đã giải quyết";
+"harnesses.detail.unresolved" = "Chưa giải quyết";
+"harnesses.detail.no.hooks" = "Harness này không có hooks.";
+"harnesses.detail.no.mcp.servers" = "Harness này không có máy chủ MCP.";
+"harnesses.detail.no.profiles" = "Harness này không có hồ sơ.";
+"harnesses.detail.no.focuses" = "Harness này không có tiêu điểm.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Khởi chạy Harness";
+"harnesses.launch.vendor" = "Nhà cung cấp";
+"harnesses.launch.vendor.unavailable" = "(chưa cài đặt)";
+"harnesses.launch.vendor.default" = "Mặc định (%@)";
+"harnesses.launch.focus" = "Tiêu điểm";
+"harnesses.launch.focus.none" = "Không có";
+"harnesses.launch.working.directory" = "Thư mục làm việc";
+"harnesses.launch.browse" = "Duyệt…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Prompt tùy chọn truyền cho agent…";
+"harnesses.launch.button" = "Khởi chạy";
+"harnesses.launch.help" = "Khởi chạy harness này trong terminal mới";
+"harnesses.launch.cancel" = "Hủy";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Chuỗi công cụ YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Trình quản lý harness cho AI assistant";
+"settings.ynh.enable.harness.tab" = "Hiển thị tab Harness trong thanh bên";
+"settings.ynh.enable.harness.tab.help" = "Thêm tab Harness vào thanh bên để duyệt và quản lý harness đã cài đặt";
+"settings.ynh.home.override" = "Ghi đè $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Mặc định (sử dụng cơ chế phân giải của ynh)";
+"settings.ynh.home.override.help" = "Ghi đè thư mục YNH_HOME cho tiến trình con ynh. Để trống để dùng mặc định.";
+"settings.ynh.resolved.paths" = "Đường dẫn đã phân giải";
+"settings.ynh.redetect" = "Phát hiện lại";
+"settings.ynh.init.required" = "Chưa khởi tạo";
+"settings.ynh.ready" = "Sẵn sàng";
+"settings.ynh.path.label" = "Đường dẫn:";
+"settings.ynh.ynd.path.label" = "Đường dẫn ynd:";
+"settings.ynh.status.label" = "Trạng thái:";
+"settings.ynh.ready.info" = "Chuỗi công cụ đã được phát hiện và khởi tạo. Bật tab thanh bên để duyệt harness.";
+"settings.ynh.advanced" = "Nâng cao";
+"settings.ynh.version.label" = "Phiên bản:";
+
+"common.clear" = "Xóa";
+
+"sidebar.worktree.create.terminal" = "Tạo Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Sao chép dưới dạng đường dẫn";
+
+"sidebar.prune.worktrees" = "Dọn dẹp Worktrees…";
+
+"sidebar.prune.worktrees.title" = "Dọn dẹp Worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Dọn dẹp";
+
+"sidebar.prune.worktrees.nothing.title" = "Không có gì để dọn";
+
+"sidebar.prune.worktrees.nothing.message" = "Tất cả worktree đều được ghi nhận. Không tìm thấy bản ghi lỗi thời.";
+
+"sidebar.prune.worktrees.explanation" = "Các bản ghi quản trị này trỏ đến các thư mục không còn tồn tại. Dọn dẹp sẽ xóa chúng — các nhánh của bạn không bị ảnh hưởng.";

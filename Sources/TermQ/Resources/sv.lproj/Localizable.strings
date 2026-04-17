@@ -572,3 +572,104 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Identifiera ynh-verktygskedjan igen";
+"harnesses.not.installed" = "ynh är inte installerat.";
+"harnesses.init.required" = "ynh hittades men är inte initierat.\nKör `ynh init` för att konfigurera.";
+"harnesses.init.hint" = "Öppna en terminal och kör:\nynh init";
+"harnesses.empty.message" = "Inga harnesses installerade ännu.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Information";
+"harnesses.detail.path" = "Sökväg";
+"harnesses.detail.source" = "Källa";
+"harnesses.detail.subpath" = "Undersökväg";
+"harnesses.detail.installed.at" = "Installerad";
+"harnesses.detail.artifacts" = "Artefakter";
+"harnesses.detail.no.artifacts" = "Inga artefakter.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenter";
+"harnesses.detail.rules" = "Regler";
+"harnesses.detail.commands" = "Kommandon";
+"harnesses.detail.dependencies" = "Beroenden";
+"harnesses.detail.includes %d" = "Inkluderar (%d)";
+"harnesses.detail.delegates %d" = "Delegerar till (%d)";
+"harnesses.detail.picks %d" = "Väljer (%d):";
+"harnesses.reveal.in.finder" = "Visa i Finder";
+"harnesses.open.in.browser" = "Öppna i webbläsare";
+"harnesses.close.detail" = "Stäng";
+"harnesses.detail.artifacts.from.includes" = "Denna harness hämtar sina artefakter från beroendeincludes.";
+"harnesses.detail.from" = "från";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-servrar";
+"harnesses.detail.profiles" = "Profiler";
+"harnesses.detail.focuses" = "Fokus";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Inget manifest tillgängligt.";
+"harnesses.detail.resolved" = "Löst";
+"harnesses.detail.unresolved" = "Olöst";
+"harnesses.detail.no.hooks" = "Denna harness har inga hooks.";
+"harnesses.detail.no.mcp.servers" = "Denna harness har inga MCP-servrar.";
+"harnesses.detail.no.profiles" = "Denna harness har inga profiler.";
+"harnesses.detail.no.focuses" = "Denna harness har inga fokus.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Starta harness";
+"harnesses.launch.vendor" = "Leverantör";
+"harnesses.launch.vendor.unavailable" = "(ej installerad)";
+"harnesses.launch.vendor.default" = "Standard (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Ingen";
+"harnesses.launch.working.directory" = "Arbetskatalog";
+"harnesses.launch.browse" = "Bläddra…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Valfri prompt att skicka till agenten…";
+"harnesses.launch.button" = "Starta";
+"harnesses.launch.help" = "Starta denna harness i en ny terminal";
+"harnesses.launch.cancel" = "Avbryt";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-verktygskedja";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-hanterare för AI-assistenter";
+"settings.ynh.enable.harness.tab" = "Visa harnesses-flik i sidofältet";
+"settings.ynh.enable.harness.tab.help" = "Lägger till en Harnesses-flik i sidofältet för att bläddra och hantera installerade harnesses";
+"settings.ynh.home.override" = "$YNH_HOME-åsidosättning";
+"settings.ynh.home.override.placeholder" = "Standard (använder ynh:s egen upplösning)";
+"settings.ynh.home.override.help" = "Åsidosätter YNH_HOME-katalogen för ynh-underprocessen. Lämna tomt för standard.";
+"settings.ynh.resolved.paths" = "Lösta sökvägar";
+"settings.ynh.redetect" = "Identifiera igen";
+"settings.ynh.init.required" = "Inte initierat";
+"settings.ynh.ready" = "Redo";
+"settings.ynh.path.label" = "Sökväg:";
+"settings.ynh.ynd.path.label" = "ynd-sökväg:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Verktygskedja identifierad och initierad. Aktivera sidofältsfliken för att bläddra bland harnesses.";
+"settings.ynh.advanced" = "Avancerat";
+"settings.ynh.version.label" = "Version:";
+
+"common.clear" = "Rensa";
+
+"sidebar.worktree.create.terminal" = "Skapa Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopiera som sökväg";
+
+"sidebar.prune.worktrees" = "Rensa worktrees…";
+
+"sidebar.prune.worktrees.title" = "Rensa worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Rensa";
+
+"sidebar.prune.worktrees.nothing.title" = "Inget att rensa";
+
+"sidebar.prune.worktrees.nothing.message" = "Alla worktrees är redovisade. Inga inaktuella poster hittades.";
+
+"sidebar.prune.worktrees.explanation" = "Dessa administrativa poster pekar på kataloger som inte längre finns. Rensning tar bort dem — dina grenar påverkas inte.";

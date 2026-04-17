@@ -581,3 +581,88 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "sidebar.checkout.branch.placeholder" = "Select a branch…";
 "sidebar.checkout.branch.required" = "Select a branch to continue.";
 "sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Deteksi ulang toolchain ynh";
+"harnesses.not.installed" = "ynh belum terpasang.";
+"harnesses.init.required" = "ynh ditemukan namun belum diinisialisasi.\nJalankan `ynh init` untuk mengatur.";
+"harnesses.init.hint" = "Buka terminal dan jalankan:\nynh init";
+"harnesses.empty.message" = "Belum ada harness yang terpasang.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Registri";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informasi";
+"harnesses.detail.path" = "Jalur";
+"harnesses.detail.source" = "Sumber";
+"harnesses.detail.subpath" = "Subjalur";
+"harnesses.detail.installed.at" = "Terpasang";
+"harnesses.detail.artifacts" = "Artefak";
+"harnesses.detail.no.artifacts" = "Tidak ada artefak.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agen";
+"harnesses.detail.rules" = "Aturan";
+"harnesses.detail.commands" = "Perintah";
+"harnesses.detail.dependencies" = "Ketergantungan";
+"harnesses.detail.includes %d" = "Menyertakan (%d)";
+"harnesses.detail.delegates %d" = "Mendelegasikan ke (%d)";
+"harnesses.detail.picks %d" = "Memilih (%d):";
+"harnesses.reveal.in.finder" = "Tampilkan di Finder";
+"harnesses.open.in.browser" = "Buka di browser";
+"harnesses.close.detail" = "Tutup";
+"harnesses.detail.artifacts.from.includes" = "Harness ini mendapatkan artefak dari include ketergantungan.";
+"harnesses.detail.from" = "dari";
+"harnesses.detail.hooks" = "Hook";
+"harnesses.detail.mcp.servers" = "Server MCP";
+"harnesses.detail.profiles" = "Profil";
+"harnesses.detail.focuses" = "Fokus";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Tidak ada manifest tersedia.";
+"harnesses.detail.resolved" = "Terselesaikan";
+"harnesses.detail.unresolved" = "Belum terselesaikan";
+"harnesses.detail.no.hooks" = "Harness ini tidak memiliki hook.";
+"harnesses.detail.no.mcp.servers" = "Harness ini tidak memiliki server MCP.";
+"harnesses.detail.no.profiles" = "Harness ini tidak memiliki profil.";
+"harnesses.detail.no.focuses" = "Harness ini tidak memiliki fokus.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Jalankan Harness";
+"harnesses.launch.vendor" = "Vendor";
+"harnesses.launch.vendor.unavailable" = "(belum terpasang)";
+"harnesses.launch.vendor.default" = "Default (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Tidak ada";
+"harnesses.launch.working.directory" = "Direktori Kerja";
+"harnesses.launch.browse" = "Telusuri…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Prompt opsional untuk diteruskan ke agen…";
+"harnesses.launch.button" = "Jalankan";
+"harnesses.launch.help" = "Jalankan harness ini di terminal baru";
+"harnesses.launch.cancel" = "Batal";
+"harnesses.launch.backend" = "Backend";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Toolchain YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Manajer harness untuk asisten AI";
+"settings.ynh.enable.harness.tab" = "Tampilkan tab Harness di bilah samping";
+"settings.ynh.enable.harness.tab.help" = "Menambahkan tab Harness ke bilah samping untuk menjelajahi dan mengelola harness yang terpasang";
+"settings.ynh.home.override" = "Ganti $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Default (menggunakan resolusi ynh sendiri)";
+"settings.ynh.home.override.help" = "Mengganti direktori YNH_HOME untuk subproses ynh. Biarkan kosong untuk default.";
+"settings.ynh.resolved.paths" = "Jalur yang terselesaikan";
+"settings.ynh.redetect" = "Deteksi ulang";
+"settings.ynh.init.required" = "Belum diinisialisasi";
+"settings.ynh.ready" = "Siap";
+"settings.ynh.path.label" = "Jalur:";
+"settings.ynh.ynd.path.label" = "Jalur ynd:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain terdeteksi dan diinisialisasi. Aktifkan tab bilah samping untuk menjelajahi harness.";
+"settings.ynh.advanced" = "Lanjutan";
+"settings.ynh.version.label" = "Versi:";
+
+"common.clear" = "Hapus";
