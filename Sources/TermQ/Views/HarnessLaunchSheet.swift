@@ -240,13 +240,17 @@ struct HarnessLaunchConfig {
     let backend: TerminalBackend
 
     /// Build the `ynh run` command string.
-    var command: String {
+    /// Pass `sessionName` to bind the session to a specific tmux session name.
+    func command(sessionName: String? = nil) -> String {
         var parts = ["ynh", "run", harnessName]
         if !vendorID.isEmpty {
             parts.append(contentsOf: ["-v", vendorID])
         }
         if let focus, !focus.isEmpty {
             parts.append(contentsOf: ["--focus", focus])
+        }
+        if let sessionName {
+            parts.append(contentsOf: ["--session-name", sessionName])
         }
         if let prompt, !prompt.isEmpty {
             parts.append("--")

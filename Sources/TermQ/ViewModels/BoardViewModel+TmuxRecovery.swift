@@ -40,6 +40,9 @@ extension BoardViewModel {
         let deletedCardPrefixes = Set(
             board.cards.filter { $0.isDeleted }
                 .map { String($0.id.uuidString.prefix(8).lowercased()) })
+        let deletedCardTitles = Set(
+            board.cards.filter { $0.isDeleted }
+                .map { $0.title.lowercased() })
 
         // Persistently dismissed sessions: clean up any that no longer exist in tmux.
         let dismissedSessions = loadDismissedSessions(against: Set(sessions.map { $0.name }))
@@ -47,6 +50,7 @@ extension BoardViewModel {
         let candidates = detached.filter {
             !openCardIds.contains($0.name)
                 && !deletedCardPrefixes.contains($0.cardIdPrefix.lowercased())
+                && !deletedCardTitles.contains($0.cardIdPrefix.lowercased())
                 && !dismissedSessions.contains($0.name)
         }
 
@@ -63,7 +67,8 @@ extension BoardViewModel {
                 if let matchingCard = board.cards.first(where: {
                     !$0.isDeleted
                         && ($0.tmuxSessionName == session.name
-                            || $0.id.uuidString.prefix(8).lowercased() == prefix)
+                            || $0.id.uuidString.prefix(8).lowercased() == prefix
+                            || $0.title.lowercased() == session.cardIdPrefix.lowercased())
                 }) {
                     // Auto-reattach: add to tabs silently
                     tabManager.addTab(matchingCard.id)
@@ -98,7 +103,8 @@ extension BoardViewModel {
         if let deletedCard = board.cards.first(where: {
             $0.isDeleted
                 && ($0.tmuxSessionName == session.name
-                    || $0.id.uuidString.prefix(8).lowercased() == prefix)
+                    || $0.id.uuidString.prefix(8).lowercased() == prefix
+                    || $0.title.lowercased() == session.cardIdPrefix.lowercased())
         }) {
             // Restore the deleted card to the board without opening it
             deletedCard.deletedAt = nil
@@ -109,7 +115,8 @@ extension BoardViewModel {
         else if board.cards.contains(where: {
             !$0.isDeleted
                 && ($0.tmuxSessionName == session.name
-                    || $0.id.uuidString.prefix(8).lowercased() == prefix)
+                    || $0.id.uuidString.prefix(8).lowercased() == prefix
+                    || $0.title.lowercased() == session.cardIdPrefix.lowercased())
         }) {
             // Card already active - nothing to do
             // Session is already linked to the card
@@ -199,9 +206,13 @@ extension BoardViewModel {
         save()
         objectWillChange.send()
 
+        // Rename the tmux session to match the new card's expected name so future
+        // restarts link them by UUID and never surface this session in recovery again.
+        await tmuxManager.renameSession(from: session.name, to: card.tmuxSessionName)
+
         // Remove from recoverable list
         recoverableSessions.removeAll { $0.name == session.name }
-        tmuxManager.markSessionRecovered(name: session.name)
+        tmuxManager.markSessionRecovered(name: card.tmuxSessionName)
     }
 
     /// Dismiss a recoverable session (don't recover, but also don't kill)

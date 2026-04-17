@@ -45,7 +45,8 @@ struct ContentView: View {
                     },
                     onInstall: { showInstallSheet = true },
                     onUninstall: { name in uninstallHarness(name: name) },
-                    onUpdate: { name in updateHarness(name: name) }
+                    onUpdate: { name in updateHarness(name: name) },
+                    onNewHarness: { /* wizard is presented directly from HarnessesSidebarTab */ }
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
@@ -848,12 +849,15 @@ extension ContentView {
             return
         }
 
+        let cardID = UUID()
+        let sessionName = "termq-\(cardID.uuidString.prefix(8).lowercased())"
         let card = TerminalCard(
+            id: cardID,
             title: config.harnessName,
             tags: config.tags.map { Tag(key: $0.key, value: $0.value) },
             columnId: column.id,
             workingDirectory: config.workingDirectory,
-            initCommand: config.command,
+            initCommand: config.command(sessionName: sessionName),
             backend: config.backend
         )
         card.isTransient = true

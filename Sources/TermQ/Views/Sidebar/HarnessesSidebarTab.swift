@@ -16,8 +16,10 @@ struct HarnessesSidebarTab: View {
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
+    var onNewHarness: (() -> Void)?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @State private var harnessToUninstall: Harness?
+    @State private var showWizard = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -39,6 +41,9 @@ struct HarnessesSidebarTab: View {
             case .ready:
                 harnessList
             }
+        }
+        .sheet(isPresented: $showWizard) {
+            HarnessWizardSheet(detector: detector, harnessRepository: repository)
         }
         .onAppear {
             if case .ready = detector.status, repository.harnesses.isEmpty {
@@ -68,6 +73,15 @@ struct HarnessesSidebarTab: View {
             }
 
             if case .ready = detector.status {
+                Button {
+                    showWizard = true
+                } label: {
+                    Image(systemName: "wand.and.stars")
+                        .imageScale(.medium)
+                }
+                .buttonStyle(.plain)
+                .help("New Harness wizard")
+
                 Button {
                     onInstall?()
                 } label: {
