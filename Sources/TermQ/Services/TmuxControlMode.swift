@@ -7,6 +7,9 @@ import TermQCore
 /// - `%begin <timestamp> <number> <flags>` - Start of command output
 /// - `%end <timestamp> <number> <flags>` - End of command output
 /// - `%output <pane-id> <data>` - Pane output data (escaped)
+/// - `%extended-output <pane-id> <age-ms> : <data>` - Pane output when pause-after is active
+/// - `%pause <pane-id>` - Pane output paused due to backpressure; client must send refresh-client -A
+/// - `%continue <pane-id>` - Pane output resumed after client acknowledgment
 /// - `%pane-mode-changed <pane-id>` - Pane entered/exited mode
 /// - `%window-add <window-id>` - Window created
 /// - `%window-close <window-id>` - Window closed
@@ -59,6 +62,10 @@ public class TmuxControlModeParser: ObservableObject {
     /// Called when tmux server exits
     public var onExit: ((String?) -> Void)?
 
+    /// Called when a pane is paused due to output backpressure (pane_id)
+    /// The receiver must respond with `refresh-client -A %<pane-id>:continue`
+    public var onPausePane: ((String) -> Void)?
+
     // MARK: - Private State
 
     /// Buffer for accumulating partial lines
@@ -85,30 +92,164 @@ public class TmuxControlModeParser: ObservableObject {
     /// Parse incoming data from tmux control mode
     /// Call this method with raw output from the tmux -CC process
     public func parse(_ data: Data) {
-        // Accumulate with any previously partial UTF-8 data
         rawBuffer.append(contentsOf: data)
 
-        // Decode as much as possible — walk back from the end to find a valid UTF-8 boundary
-        var end = rawBuffer.count
-        while end > 0 {
-            let slice = rawBuffer[rawBuffer.startIndex..<rawBuffer.index(rawBuffer.startIndex, offsetBy: end)]
-            if let text = String(data: slice, encoding: .utf8) {
-                rawBuffer =
-                    end < rawBuffer.count
-                    ? Data(rawBuffer[rawBuffer.index(rawBuffer.startIndex, offsetBy: end)...])
-                    : Data()
-                parse(text)
+        // Split on 0x0A (newline) at the raw byte level.
+        //
+        // tmux control mode uses 0x0A exclusively as a protocol line terminator.
+        // Data content newlines are octal-encoded as \012, so a literal 0x0A byte
+        // is always a line boundary and never appears inside a data value.
+        //
+        // Processing lines at the byte level avoids a class of UTF-8 decode bugs:
+        // when %extended-output data sections contain multi-byte UTF-8 sequences
+        // (e.g., box-drawing chars like ─ = 0xE2 0x94 0x80), tmux may split them
+        // across consecutive %extended-output lines — the lead byte ends one line
+        // and the continuation bytes start the next.  Decoding the entire buffer
+        // as UTF-8 before splitting on newlines causes those boundary sequences to
+        // be mangled or dropped.  By splitting first and routing output lines to a
+        // byte-level decoder, the bytes are passed to SwiftTerm intact.
+        while let nlIdx = rawBuffer.firstIndex(of: 0x0A) {
+            let lineBytes = Data(rawBuffer[rawBuffer.startIndex..<nlIdx])
+            rawBuffer = Data(rawBuffer[rawBuffer.index(after: nlIdx)...])
+            processRawLine(lineBytes)
+        }
+        // Remaining bytes are a partial line — held in rawBuffer until \n arrives.
+    }
+
+    // Routes one complete raw protocol line to the appropriate handler.
+    private func processRawLine(_ lineBytes: Data) {
+        guard !lineBytes.isEmpty else { return }
+
+        // %output and %extended-output carry raw terminal bytes (including multi-byte
+        // UTF-8 sequences) that must NOT pass through a UTF-8 decode/re-encode cycle.
+        let outputPrefix = Array("%output ".utf8)
+        let extOutputPrefix = Array("%extended-output ".utf8)
+        if lineBytes.starts(with: outputPrefix) || lineBytes.starts(with: extOutputPrefix) {
+            processRawOutputLine(lineBytes)
+            return
+        }
+
+        // All other protocol lines are pure ASCII — UTF-8 decode is always safe.
+        let line = String(data: lineBytes, encoding: .utf8) ?? ""
+        parseLine(line)
+    }
+
+    // Decodes one %output or %extended-output line entirely at the byte level,
+    // extracting the data section without any UTF-8 decode/re-encode.
+    private func processRawOutputLine(_ lineBytes: Data) {
+        var pos = lineBytes.startIndex
+
+        // Skip '%'
+        guard pos < lineBytes.endIndex, lineBytes[pos] == 0x25 else { return }
+        pos = lineBytes.index(after: pos)
+
+        // Read keyword (output or extended-output)
+        let kwStart = pos
+        while pos < lineBytes.endIndex && lineBytes[pos] != 0x20 {
+            pos = lineBytes.index(after: pos)
+        }
+        let isExtended = lineBytes[kwStart..<pos].elementsEqual("extended-output".utf8)
+
+        // Skip space after keyword
+        guard pos < lineBytes.endIndex, lineBytes[pos] == 0x20 else { return }
+        pos = lineBytes.index(after: pos)
+
+        // Read pane ID token (e.g., "%86")
+        let paneStart = pos
+        while pos < lineBytes.endIndex && lineBytes[pos] != 0x20 {
+            pos = lineBytes.index(after: pos)
+        }
+        var paneId = String(bytes: Data(lineBytes[paneStart..<pos]), encoding: .ascii) ?? ""
+        if paneId.hasPrefix("%") { paneId = String(paneId.dropFirst()) }
+        guard !paneId.isEmpty else { return }
+
+        // Skip space after pane ID
+        guard pos < lineBytes.endIndex, lineBytes[pos] == 0x20 else { return }
+        pos = lineBytes.index(after: pos)
+
+        let dataSectionBytes: Data
+        if isExtended {
+            // %extended-output format: "<age-ms> [reserved...] : <data>"
+            // Find " : " separator (space-colon-space) to locate the data start.
+            let sep = Data([0x20, 0x3A, 0x20])
+            guard let sepRange = lineBytes.range(of: sep, options: [], in: pos..<lineBytes.endIndex)
+            else {
+                TermQLogger.tmux.warning("ext-output pane=\(paneId) — no ' : ' separator")
                 return
             }
-            end -= 1
+            dataSectionBytes = Data(lineBytes[sepRange.upperBound...])
+        } else {
+            dataSectionBytes = Data(lineBytes[pos...])
         }
-        // rawBuffer holds an incomplete sequence; wait for more data
+
+        let decoded = decodeTmuxOutputBytes(dataSectionBytes)
+        TermQLogger.tmux.debug("ext-output pane=\(paneId) len=\(decoded.count)")
+        let filtered = filterForSwiftTerm(decoded)
+        if !filtered.isEmpty {
+            onPaneOutput?(paneId, filtered)
+        }
+    }
+
+    /// Decode tmux control mode output escaping directly from raw bytes.
+    ///
+    /// tmux encodes pane output as follows (control.c `control_write_data`):
+    /// - Backslash → `\\` (0x5C 0x5C)
+    /// - Non-printable bytes (< 0x20 or 0x7F) → `\NNN` (backslash + 3 octal digits)
+    /// - All other bytes (0x20–0x7E, 0x80–0xFE) → passed through as-is
+    ///
+    /// Operating at the byte level preserves multi-byte UTF-8 sequences verbatim —
+    /// SwiftTerm's feed() handles UTF-8 assembly internally.
+    private func decodeTmuxOutputBytes(_ data: Data) -> Data {
+        var result = Data()
+        result.reserveCapacity(data.count)
+        var i = data.startIndex
+
+        while i < data.endIndex {
+            let b = data[i]
+            if b == 0x5C {  // backslash
+                let ni = data.index(after: i)
+                guard ni < data.endIndex else {
+                    result.append(0x5C)
+                    break
+                }
+                let nb = data[ni]
+                if nb == 0x5C {  // \\ → single backslash
+                    result.append(0x5C)
+                    i = data.index(after: ni)
+                } else if nb >= 0x30 && nb <= 0x37 {  // \NNN octal (tmux always writes 3 digits)
+                    var val: UInt16 = 0
+                    var si = ni
+                    var digits = 0
+                    while si < data.endIndex && digits < 3 {
+                        let db = data[si]
+                        guard db >= 0x30 && db <= 0x37 else { break }
+                        val = val * 8 + UInt16(db - 0x30)
+                        si = data.index(after: si)
+                        digits += 1
+                    }
+                    if digits == 3 {
+                        result.append(UInt8(val & 0xFF))
+                        i = si
+                    } else {
+                        result.append(0x5C)
+                        i = ni
+                    }
+                } else {
+                    result.append(0x5C)
+                    i = ni
+                }
+            } else {
+                result.append(b)
+                i = data.index(after: i)
+            }
+        }
+
+        return result
     }
 
     /// Parse incoming text from tmux control mode
     public func parse(_ text: String) {
         lineBuffer += text
-
         while let newlineIndex = lineBuffer.firstIndex(of: "\n") {
             let line = String(lineBuffer[..<newlineIndex])
             lineBuffer = String(lineBuffer[lineBuffer.index(after: newlineIndex)...])
@@ -168,10 +309,18 @@ public class TmuxControlModeParser: ObservableObject {
         if currentResponse != nil {
             if line.hasPrefix("%begin") || line.hasPrefix("%end") {
                 parseControlLine(line)
-            } else if line.hasPrefix("%output ") {
-                // Pane output interleaved with a command response — process immediately
+            } else if line.hasPrefix("%output ") || line.hasPrefix("%extended-output ")
+                || line.hasPrefix("%pause ") || line.hasPrefix("%continue ")
+            {
+                // Pane output / backpressure notifications interleaved with a command response
                 parseControlLine(line)
             } else {
+                // Non-output lines accumulated as command output
+                if line.hasPrefix("%") {
+                    TermQLogger.tmux.warning(
+                        "parseLine absorbing pct-line inside block: \(String(line.prefix(40)))"
+                    )
+                }
                 currentResponse?.output.append(line + "\n")
                 parseListPanesLine(line)
             }
@@ -195,6 +344,15 @@ public class TmuxControlModeParser: ObservableObject {
 
         case "output":
             handleOutput(parts)
+
+        case "extended-output":
+            handleExtendedOutput(parts)
+
+        case "pause":
+            handlePause(parts)
+
+        case "continue":
+            handleContinue(parts)
 
         case "layout-change":
             handleLayoutChange(parts)
@@ -253,6 +411,43 @@ public class TmuxControlModeParser: ObservableObject {
         if let data = decodeTmuxOutput(escapedData) {
             onPaneOutput?(paneId, filterForSwiftTerm(data))
         }
+    }
+
+    private func handleExtendedOutput(_ parts: [String.SubSequence]) {
+        guard parts.count >= 3 else { return }
+
+        let paneIdPart = String(parts[1])
+        let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
+
+        // Format: "<age-ms> [reserved...] : <escaped-data>" — split on " : " to isolate data
+        let remainder = String(parts[2])
+        guard let separatorRange = remainder.range(of: " : ") else {
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.io.warning(
+                    "ext-output pane=\(paneId) — no ' : ' separator in: \(remainder.prefix(40))")
+            }
+            return
+        }
+        let escapedData = String(remainder[separatorRange.upperBound...])
+
+        if let data = decodeTmuxOutput(escapedData) {
+            TermQLogger.tmux.debug("ext-output pane=\(paneId) len=\(data.count)")
+            onPaneOutput?(paneId, filterForSwiftTerm(data))
+        }
+    }
+
+    private func handlePause(_ parts: [String.SubSequence]) {
+        guard parts.count >= 2 else { return }
+        let paneIdPart = String(parts[1])
+        let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
+        TermQLogger.tmux.info("pause pane=\(paneId) — sending continue")
+        onPausePane?(paneId)
+    }
+
+    private func handleContinue(_ parts: [String.SubSequence]) {
+        let raw = parts.count >= 2 ? String(parts[1]) : "?"
+        let paneId = raw.hasPrefix("%") ? String(raw.dropFirst()) : raw
+        TermQLogger.tmux.info("continue pane=\(paneId) — output resuming via ext-output")
     }
 
     /// Filter tmux-specific escape sequences that SwiftTerm does not support.
@@ -582,12 +777,17 @@ public class TmuxControlModeSession: ObservableObject {
             let data = handle.availableData
 
             guard !data.isEmpty else {
+                TermQLogger.session.info("pipe EOF — removing readabilityHandler")
                 handle.readabilityHandler = nil
                 return
             }
 
             Task { @MainActor [weak self] in
-                self?.parser.parse(data)
+                guard let self else {
+                    TermQLogger.session.warning("pipe-task: session nil — \(data.count) bytes discarded")
+                    return
+                }
+                self.parser.parse(data)
             }
         }
 
@@ -613,11 +813,27 @@ public class TmuxControlModeSession: ObservableObject {
 
         // Configure session options via control mode
         if parser.isConnected {
+            // Enable the tmux backpressure pause/continue protocol.
+            // Without this, tmux kills the control client with "too far behind"
+            // if output queues for >5 minutes. With pause-after=1, tmux instead
+            // sends %pause when a pane falls 1 second behind; we respond with
+            // refresh-client -A %<id>:continue and receive %extended-output
+            // from the current pane position. This prevents the %output stream
+            // from stalling when TUI apps (Claude Code, htop) produce large
+            // bursts of escape sequences.
+            sendCommand("refresh-client -f pause-after=1")
+
             sendCommand("set-option -t \(sessionName) status off")
             sendCommand("set-option -t \(sessionName) mouse on")
-            sendCommand("set-option -t \(sessionName) default-terminal 'xterm-256color'")
+            // TERM inside tmux must be tmux or screen variant — per tmux FAQ:
+            // "Don't bother reporting problems where it isn't!"
+            sendCommand("set-option -t \(sessionName) default-terminal 'tmux-256color'")
             sendCommand("set-option -t \(sessionName) escape-time 10")
-            sendCommand("set-option -t \(sessionName) allow-passthrough off")
+            sendCommand("set-option -t \(sessionName) allow-passthrough on")
+
+            // Set an initial client size so the pane isn't stuck at tmux's
+            // default 80x24 before SwiftUI's layout fires refresh-client -C.
+            sendClientResize(cols: 120, rows: 40)
 
             // Request initial pane information
             sendCommand(
@@ -646,6 +862,13 @@ public class TmuxControlModeSession: ObservableObject {
     private var lastClientCols: Int = 0
     private var lastClientRows: Int = 0
 
+    /// Whether `sendClientResize` has been called at least once with valid dimensions.
+    ///
+    /// Used by init-command timing: processes that read terminal size at startup
+    /// (e.g. Claude's TUI) need the pane to reflect SwiftUI's actual layout, not
+    /// tmux's default 80×24. Callers poll this before sending commands.
+    public private(set) var hasReceivedClientResize: Bool = false
+
     /// Resize the tmux client window, ignoring no-op calls with the same dimensions.
     ///
     /// Each `ControlModePaneDelegate.sizeChanged` fires when any individual pane is
@@ -657,6 +880,7 @@ public class TmuxControlModeSession: ObservableObject {
         guard cols != lastClientCols || rows != lastClientRows else { return }
         lastClientCols = cols
         lastClientRows = rows
+        hasReceivedClientResize = true
         sendCommand("refresh-client -C \(cols)x\(rows)")
     }
 
@@ -852,6 +1076,11 @@ public class TmuxControlModeSession: ObservableObject {
             Task { @MainActor [weak self] in
                 self?.isConnected = false
             }
+        }
+
+        parser.onPausePane = { [weak self] paneId in
+            TermQLogger.tmux.info("onPausePane pane=\(paneId) — sending refresh-client -A continue")
+            self?.sendCommand("refresh-client -A %\(paneId):continue")
         }
     }
 }
