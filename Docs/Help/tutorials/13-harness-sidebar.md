@@ -166,8 +166,8 @@ The same action is also in the right-click menu on any harness row, if you prefe
 
 ## 13.10 — What's next
 
-The Harnesses tab covers install, update, uninstall, launching, and worktree linkage. In-app harness authoring — scaffolding a new harness and populating it with marketplace picks in one flow — is on the roadmap.
+The Harnesses tab covers install, update, uninstall, launching, and worktree linkage.
 
-For now, author harnesses on the command line with `ynd create harness \<name\>` and install them via the **Sources** or **From Git** tabs.
+To go further — creating a new harness from scratch and populating it with skills and agents from community marketplaces — continue to **[Tutorial 14: Marketplace Browser & Harness Authoring](14-marketplace.md)**.
 
 > **Feedback:** the Harnesses tab is deliberately feature-flagged for 0.8 so we can iterate on the rough edges. If something feels wrong, please [open an issue](https://github.com/eyelock/termq/issues).

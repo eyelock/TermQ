@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "Показать в Finder";
 "harnesses.open.in.browser" = "Открыть в браузере";
 "harnesses.close.detail" = "Закрыть";
+"harnesses.configure.from.marketplaces" = "Настроить из маркетплейсов…";
 "harnesses.detail.artifacts.from.includes" = "Эта упряжка получает артефакты из включений зависимостей.";
 "harnesses.detail.from" = "из";
 "harnesses.detail.hooks" = "Хуки";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "Связанные worktree";
 "harnesses.linked.worktrees.none" = "Ни один worktree не связан с этим harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Создать новый харнесс";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Инструментарий YNH";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld терминал(а/ов) в данный момент запускает этот harness.";
 "harnesses.uninstall.alert.confirm" = "Удалить";
 "harnesses.more.actions.help" = "Другие действия";
+"harnesses.copy.run.command" = "Копировать команду запуска";
+"harnesses.ynh.documentation" = "Документация YNH";
+
+"harnesses.add.registry.title" = "Добавить реестр YNH";
+"harnesses.add.registry.url.label" = "URL реестра";
+"harnesses.add.registry.hint" = "Добавьте репозиторий Git, содержащий файл registry.json. После добавления вы сможете искать и устанавливать harnesses из него.";
+"harnesses.add.registry.button" = "Добавить реестр";
+"harnesses.add.registry.success" = "Реестр успешно добавлен";
+"harnesses.add.registry.toolbar.help" = "Добавить реестр YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Маркетплейсы";
+"settings.marketplaces.section.list" = "Настроенные маркетплейсы";
+"settings.marketplaces.empty" = "Маркетплейсы ещё не добавлены.";
+"settings.marketplaces.add" = "Добавить маркетплейс…";
+"settings.marketplaces.never.fetched" = "Никогда не загружался";
+"settings.marketplaces.remove.confirm.title" = "Удалить маркетплейс";
+"settings.marketplaces.remove.confirm.message %@" = "Удалить \"%@\"? Его плагины больше не будут отображаться в браузере.";
+"settings.marketplaces.section.behaviour" = "Поведение";
+"settings.marketplaces.auto.refresh" = "Автообновление при запуске";
+"settings.marketplaces.auto.refresh.help" = "Автоматически получать обновления маркетплейса при запуске приложения";
+"settings.marketplaces.section.authoring" = "Создание harness";
+"settings.marketplaces.default.author.directory" = "Каталог автора по умолчанию";
+"settings.marketplaces.author.directory.detected.hint" = "Автоматически определено из ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Маркетплейсы";
+"marketplace.add.help" = "Добавить маркетплейс";
+"marketplace.empty" = "Маркетплейсы ещё не добавлены";
+"marketplace.add.button" = "Добавить маркетплейс";
+"marketplace.row.refresh.help" = "Обновить маркетплейс";
+"marketplace.row.refresh" = "Обновить";
+"marketplace.row.remove" = "Удалить";
+"marketplace.row.stale" = " · Может быть устаревшим";
+"marketplace.row.never.fetched" = "Ещё не загружался";
+"marketplace.add.sheet.title" = "Добавить маркетплейс";
+"marketplace.add.tab.known" = "Известные";
+"marketplace.add.tab.custom" = "Пользовательский URL";
+"marketplace.add.section.git.url" = "URL репозитория Git";
+"marketplace.add.section.display.name" = "Отображаемое имя";
+"marketplace.add.section.vendor" = "Поставщик";
+"marketplace.detail.last.fetched %@" = "Последнее обновление %@";
+"marketplace.detail.search.placeholder" = "Поиск плагинов…";
+"marketplace.detail.search.empty %@" = "Плагины по запросу «%@» не найдены";
+"marketplace.detail.empty" = "В этом маркетплейсе нет плагинов";
+"marketplace.detail.empty.hint" = "Обновите для загрузки последнего индекса.";
+"marketplace.plugin.add.to.harness" = "Добавить в харнесс";
+"marketplace.plugin.copy.install.command" = "Скопировать команду установки";
+"marketplace.plugin.copy.install.command.help" = "Копирует команду установки Claude Code в буфер обмена";
+"marketplace.plugin.load.artifacts" = "Загрузить артефакты";
+"marketplace.plugin.loading.artifacts" = "Загрузка артефактов…";
+"marketplace.plugin.no.artifacts" = "Для этого плагина не указаны артефакты.";
+"marketplace.plugin.no.artifacts.hint" = "Всё содержимое плагина будет включено.";
+"marketplace.plugin.artifacts.unavailable %@" = "Артефакты недоступны: %@";
+"marketplace.picker.step.artifacts" = "Артефакты";
+"marketplace.picker.step.harness" = "Харнесс";
+"marketplace.picker.step.apply" = "Применить";
+"marketplace.picker.select.prompt" = "Выберите артефакты для включения";
+"marketplace.picker.select.all" = "Все";
+"marketplace.picker.select.none" = "Ничего";
+"marketplace.picker.no.harnesses" = "Харнессы ещё не созданы";
+"marketplace.picker.no.harnesses.hint" = "Сначала создайте харнесс с помощью мастера нового харнесса.";
+"marketplace.picker.review.plugin" = "Плагин";
+"marketplace.picker.review.harness" = "Харнесс";
+"marketplace.picker.review.artifacts" = "Артефакты";
+"marketplace.picker.review.all.count %lld" = "Все (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "Выбрано %lld из %lld";
+"marketplace.picker.command.preview" = "Предпросмотр команды";
+"marketplace.picker.success %@" = "Плагин добавлен в %@";
+"marketplace.picker.done" = "Готово";
+"marketplace.picker.back" = "Назад";
+"marketplace.picker.next" = "Далее";
+"harness.wizard.title" = "Новый харнесс";
+"harness.wizard.name.label" = "Имя (обязательно)";
+"harness.wizard.description.label" = "Описание";
+"harness.wizard.loading.vendors" = "Загрузка поставщиков…";
+"harness.wizard.vendor.label" = "Поставщик по умолчанию";
+"harness.wizard.destination.label" = "Каталог назначения";
+"harness.wizard.install.toggle" = "Установить харнесс сразу после создания";
+"harness.wizard.success.add.plugins" = "Добавить плагины из маркетплейса";
+"harness.wizard.success.open" = "Открыть в TermQ";
+"harness.wizard.create" = "Создать";
+"harness.wizard.retry" = "Повторить";
+"harness.wizard.error.name.required" = "Имя обязательно";
+"harness.wizard.error.name.invalid" = "Имя может содержать только буквы, цифры, дефисы и знаки подчёркивания";
+"harness.wizard.error.name.duplicate %@" = "Харнесс с именем «%@» уже существует";
+"settings.marketplaces.reset" = "Сбросить";
+"settings.marketplaces.section.ynh.registries" = "Реестры YNH";
+"settings.marketplaces.ynh.registries.empty" = "Реестры не добавлены";
+"settings.marketplaces.ynh.add.registry" = "Добавить реестр…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Удалить реестр";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Удалить";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Удалить «%@» из YNH? Установленные harness-пакеты сохранятся.";
+"marketplace.add.custom.name.placeholder" = "Мой маркетплейс";
+"harness.wizard.success.created %@" = "Харнесс «%@» создан";

@@ -605,6 +605,7 @@
 "harnesses.reveal.in.finder" = "แสดงใน Finder";
 "harnesses.open.in.browser" = "เปิดในเบราว์เซอร์";
 "harnesses.close.detail" = "ปิด";
+"harnesses.configure.from.marketplaces" = "กำหนดค่าจากตลาด…";
 "harnesses.detail.artifacts.from.includes" = "harness นี้ได้รับ artifacts จาก dependency includes";
 "harnesses.detail.from" = "จาก";
 "harnesses.detail.hooks" = "Hooks";
@@ -639,6 +640,9 @@
 
 "harnesses.linked.worktrees" = "Worktree ที่เชื่อมโยง";
 "harnesses.linked.worktrees.none" = "ไม่มี worktree ที่เชื่อมโยงกับ harness นี้";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "สร้าง Harness ใหม่";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
@@ -712,3 +716,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "ขณะนี้มี %ld เทอร์มินัลที่กำลังรัน harness นี้";
 "harnesses.uninstall.alert.confirm" = "ถอนการติดตั้ง";
 "harnesses.more.actions.help" = "การดำเนินการอื่น ๆ";
+"harnesses.copy.run.command" = "คัดลอกคำสั่งเรียกใช้";
+"harnesses.ynh.documentation" = "เอกสาร YNH";
+
+"harnesses.add.registry.title" = "เพิ่ม YNH Registry";
+"harnesses.add.registry.url.label" = "URL ของ Registry";
+"harnesses.add.registry.hint" = "เพิ่ม Git repository ที่มีไฟล์ registry.json เมื่อเพิ่มแล้ว คุณสามารถค้นหาและติดตั้ง harnesses จากที่นั่นได้";
+"harnesses.add.registry.button" = "เพิ่ม Registry";
+"harnesses.add.registry.success" = "เพิ่ม Registry สำเร็จแล้ว";
+"harnesses.add.registry.toolbar.help" = "เพิ่ม YNH registry";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "มาร์เก็ตเพลส";
+"settings.marketplaces.section.list" = "มาร์เก็ตเพลสที่กำหนดค่าไว้";
+"settings.marketplaces.empty" = "ยังไม่มีมาร์เก็ตเพลสที่เพิ่มไว้";
+"settings.marketplaces.add" = "เพิ่มมาร์เก็ตเพลส…";
+"settings.marketplaces.never.fetched" = "ไม่เคยดึงข้อมูล";
+"settings.marketplaces.remove.confirm.title" = "ลบมาร์เก็ตเพลส";
+"settings.marketplaces.remove.confirm.message %@" = "ลบ \"%@\" หรือไม่? ปลั๊กอินของมาร์เก็ตเพลสนี้จะไม่แสดงในเบราว์เซอร์อีกต่อไป";
+"settings.marketplaces.section.behaviour" = "พฤติกรรม";
+"settings.marketplaces.auto.refresh" = "รีเฟรชอัตโนมัติเมื่อเปิดแอป";
+"settings.marketplaces.auto.refresh.help" = "ดึงข้อมูลอัปเดตมาร์เก็ตเพลสโดยอัตโนมัติเมื่อแอปเริ่มทำงาน";
+"settings.marketplaces.section.authoring" = "การสร้าง Harness";
+"settings.marketplaces.default.author.directory" = "ไดเรกทอรีผู้เขียนเริ่มต้น";
+"settings.marketplaces.author.directory.detected.hint" = "ตรวจจับอัตโนมัติจาก ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "มาร์เก็ตเพลส";
+"marketplace.add.help" = "เพิ่มมาร์เก็ตเพลส";
+"marketplace.empty" = "ยังไม่มีมาร์เก็ตเพลส";
+"marketplace.add.button" = "เพิ่มมาร์เก็ตเพลส";
+"marketplace.row.refresh.help" = "รีเฟรชมาร์เก็ตเพลส";
+"marketplace.row.refresh" = "รีเฟรช";
+"marketplace.row.remove" = "ลบออก";
+"marketplace.row.stale" = " · อาจล้าสมัย";
+"marketplace.row.never.fetched" = "ยังไม่เคยดึงข้อมูล";
+"marketplace.add.sheet.title" = "เพิ่มมาร์เก็ตเพลส";
+"marketplace.add.tab.known" = "ที่รู้จัก";
+"marketplace.add.tab.custom" = "URL กำหนดเอง";
+"marketplace.add.section.git.url" = "URL ที่เก็บ Git";
+"marketplace.add.section.display.name" = "ชื่อที่แสดง";
+"marketplace.add.section.vendor" = "ผู้จำหน่าย";
+"marketplace.detail.last.fetched %@" = "ดึงข้อมูลล่าสุด %@";
+"marketplace.detail.search.placeholder" = "ค้นหาปลั๊กอิน…";
+"marketplace.detail.search.empty %@" = "ไม่มีปลั๊กอินที่ตรงกับ «%@»";
+"marketplace.detail.empty" = "ไม่มีปลั๊กอินในมาร์เก็ตเพลสนี้";
+"marketplace.detail.empty.hint" = "รีเฟรชเพื่อดึงดัชนีล่าสุด";
+"marketplace.plugin.add.to.harness" = "เพิ่มใน Harness";
+"marketplace.plugin.copy.install.command" = "คัดลอกคำสั่งติดตั้ง";
+"marketplace.plugin.copy.install.command.help" = "คัดลอกคำสั่งติดตั้ง Claude Code ไปยังคลิปบอร์ด";
+"marketplace.plugin.load.artifacts" = "โหลดอาร์ติแฟกต์";
+"marketplace.plugin.loading.artifacts" = "กำลังโหลดอาร์ติแฟกต์…";
+"marketplace.plugin.no.artifacts" = "ไม่มีอาร์ติแฟกต์ที่ระบุสำหรับปลั๊กอินนี้";
+"marketplace.plugin.no.artifacts.hint" = "เนื้อหาทั้งหมดของปลั๊กอินจะถูกรวมไว้";
+"marketplace.plugin.artifacts.unavailable %@" = "อาร์ติแฟกต์ไม่พร้อมใช้งาน: %@";
+"marketplace.picker.step.artifacts" = "อาร์ติแฟกต์";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "ใช้งาน";
+"marketplace.picker.select.prompt" = "เลือกอาร์ติแฟกต์ที่จะรวม";
+"marketplace.picker.select.all" = "ทั้งหมด";
+"marketplace.picker.select.none" = "ไม่มี";
+"marketplace.picker.no.harnesses" = "ยังไม่มี Harness";
+"marketplace.picker.no.harnesses.hint" = "สร้าง Harness ก่อนโดยใช้ตัวช่วย Harness ใหม่";
+"marketplace.picker.review.plugin" = "ปลั๊กอิน";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "อาร์ติแฟกต์";
+"marketplace.picker.review.all.count %lld" = "ทั้งหมด (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "เลือก %lld จาก %lld";
+"marketplace.picker.command.preview" = "ตัวอย่างคำสั่ง";
+"marketplace.picker.success %@" = "เพิ่มปลั๊กอินใน %@ แล้ว";
+"marketplace.picker.done" = "เสร็จสิ้น";
+"marketplace.picker.back" = "ย้อนกลับ";
+"marketplace.picker.next" = "ถัดไป";
+"harness.wizard.title" = "Harness ใหม่";
+"harness.wizard.name.label" = "ชื่อ (จำเป็น)";
+"harness.wizard.description.label" = "คำอธิบาย";
+"harness.wizard.loading.vendors" = "กำลังโหลดผู้จำหน่าย…";
+"harness.wizard.vendor.label" = "ผู้จำหน่ายเริ่มต้น";
+"harness.wizard.destination.label" = "ไดเร็กทอรีปลายทาง";
+"harness.wizard.install.toggle" = "ติดตั้ง Harness ทันทีหลังสร้าง";
+"harness.wizard.success.add.plugins" = "เพิ่มปลั๊กอินจากมาร์เก็ตเพลส";
+"harness.wizard.success.open" = "เปิดใน TermQ";
+"harness.wizard.create" = "สร้าง";
+"harness.wizard.retry" = "ลองอีกครั้ง";
+"harness.wizard.error.name.required" = "ต้องระบุชื่อ";
+"harness.wizard.error.name.invalid" = "ชื่อสามารถมีได้เฉพาะตัวอักษร ตัวเลข ขีดกลาง และขีดล่าง";
+"harness.wizard.error.name.duplicate %@" = "มี Harness ชื่อ «%@» อยู่แล้ว";
+"settings.marketplaces.reset" = "รีเซ็ต";
+"settings.marketplaces.section.ynh.registries" = "ระเบียน YNH";
+"settings.marketplaces.ynh.registries.empty" = "ยังไม่มีระเบียนที่เพิ่ม";
+"settings.marketplaces.ynh.add.registry" = "เพิ่มระเบียน…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "ลบระเบียน";
+"settings.marketplaces.ynh.registry.remove.confirm" = "ลบ";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "ลบ “%@” ออกจาก YNHใช่ไหม? ฮาร์นเสสที่ติดตั้งไว้แล้วจะยังคงอยู่";
+"marketplace.add.custom.name.placeholder" = "มาร์เก็ตเพลสของฉัน";
+"harness.wizard.success.created %@" = "สร้าง Harness «%@» แล้ว";

@@ -413,6 +413,12 @@ public class TmuxManager: ObservableObject {
         recoverableSessions.removeAll { $0.name == name }
     }
 
+    /// Rename a tmux session so it stays linked to its card across restarts.
+    public func renameSession(from oldName: String, to newName: String) async {
+        guard let path = tmuxPath else { return }
+        _ = try? await runCommand(path, args: ["rename-session", "-t", oldName, newName])
+    }
+
     // MARK: - Private Helpers
 
     private func runCommand(_ executable: String, args: [String]) async throws -> String {

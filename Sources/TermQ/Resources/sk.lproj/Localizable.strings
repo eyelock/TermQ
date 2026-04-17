@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "Zobraziť vo Finderi";
 "harnesses.open.in.browser" = "Otvoriť v prehliadači";
 "harnesses.close.detail" = "Zavrieť";
+"harnesses.configure.from.marketplaces" = "Konfigurovať z trhov…";
 "harnesses.detail.artifacts.from.includes" = "Tento postroj získava artefakty z inkludovaných závislostí.";
 "harnesses.detail.from" = "z";
 "harnesses.detail.hooks" = "Hooky";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "Priradené worktrees";
 "harnesses.linked.worktrees.none" = "Žiadne worktrees nie sú priradené k tomuto harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Vytvoriť novú sadu";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Nástrojový reťazec YNH";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminál(ov) momentálne spúšťa tento harness.";
 "harnesses.uninstall.alert.confirm" = "Odinštalovať";
 "harnesses.more.actions.help" = "Ďalšie akcie";
+"harnesses.copy.run.command" = "Kopírovať príkaz spustenia";
+"harnesses.ynh.documentation" = "Dokumentácia YNH";
+
+"harnesses.add.registry.title" = "Pridať register YNH";
+"harnesses.add.registry.url.label" = "URL registra";
+"harnesses.add.registry.hint" = "Pridajte repozitár Git obsahujúci súbor registry.json. Po pridaní môžete z tohto registra vyhľadávať a inštalovať harnesses.";
+"harnesses.add.registry.button" = "Pridať register";
+"harnesses.add.registry.success" = "Register bol úspešne pridaný";
+"harnesses.add.registry.toolbar.help" = "Pridať register YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Trhoviská";
+"settings.marketplaces.section.list" = "Nakonfigurované trhoviská";
+"settings.marketplaces.empty" = "Zatiaľ neboli pridané žiadne trhoviská.";
+"settings.marketplaces.add" = "Pridať trhovisko…";
+"settings.marketplaces.never.fetched" = "Nikdy nenačítané";
+"settings.marketplaces.remove.confirm.title" = "Odstrániť trhovisko";
+"settings.marketplaces.remove.confirm.message %@" = "Odstrániť \"%@\"? Jeho pluginy sa nebudú ďalej zobrazovať v prehliadači.";
+"settings.marketplaces.section.behaviour" = "Správanie";
+"settings.marketplaces.auto.refresh" = "Automatická aktualizácia pri spustení";
+"settings.marketplaces.auto.refresh.help" = "Automaticky sťahovať aktualizácie trhoviska pri spustení aplikácie";
+"settings.marketplaces.section.authoring" = "Tvorba harnessu";
+"settings.marketplaces.default.author.directory" = "Predvolený adresár autora";
+"settings.marketplaces.author.directory.detected.hint" = "Automaticky zistené z ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Trhoviská";
+"marketplace.add.help" = "Pridať trhovisko";
+"marketplace.empty" = "Zatiaľ žiadne trhoviská";
+"marketplace.add.button" = "Pridať trhovisko";
+"marketplace.row.refresh.help" = "Obnoviť trhovisko";
+"marketplace.row.refresh" = "Obnoviť";
+"marketplace.row.remove" = "Odstrániť";
+"marketplace.row.stale" = " · Môže byť zastarané";
+"marketplace.row.never.fetched" = "Nikdy nestihnuté";
+"marketplace.add.sheet.title" = "Pridať trhovisko";
+"marketplace.add.tab.known" = "Známe";
+"marketplace.add.tab.custom" = "Vlastná URL";
+"marketplace.add.section.git.url" = "URL repozitára Git";
+"marketplace.add.section.display.name" = "Zobrazovaný názov";
+"marketplace.add.section.vendor" = "Predajca";
+"marketplace.detail.last.fetched %@" = "Naposledy stiahnuté %@";
+"marketplace.detail.search.placeholder" = "Hľadať pluginy…";
+"marketplace.detail.search.empty %@" = "Žiadne pluginy nezodpovedajú «%@»";
+"marketplace.detail.empty" = "Na tomto trhovisku nie sú žiadne pluginy";
+"marketplace.detail.empty.hint" = "Obnovte pre stiahnutie najnovšieho indexu.";
+"marketplace.plugin.add.to.harness" = "Pridať do sady";
+"marketplace.plugin.copy.install.command" = "Kopírovať príkaz na inštaláciu";
+"marketplace.plugin.copy.install.command.help" = "Skopíruje inštalačný príkaz Claude Code do schránky";
+"marketplace.plugin.load.artifacts" = "Načítať artefakty";
+"marketplace.plugin.loading.artifacts" = "Načítavajú sa artefakty…";
+"marketplace.plugin.no.artifacts" = "Pre tento plugin nie sú uvedené žiadne artefakty.";
+"marketplace.plugin.no.artifacts.hint" = "Bude zahrnutý celý obsah pluginu.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefakty nedostupné: %@";
+"marketplace.picker.step.artifacts" = "Artefakty";
+"marketplace.picker.step.harness" = "Sada";
+"marketplace.picker.step.apply" = "Použiť";
+"marketplace.picker.select.prompt" = "Vyberte artefakty na zahrnutie";
+"marketplace.picker.select.all" = "Všetko";
+"marketplace.picker.select.none" = "Nič";
+"marketplace.picker.no.harnesses" = "Zatiaľ žiadne sady";
+"marketplace.picker.no.harnesses.hint" = "Najprv vytvorte sadu pomocou sprievodcu novou sadou.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Sada";
+"marketplace.picker.review.artifacts" = "Artefakty";
+"marketplace.picker.review.all.count %lld" = "Všetko (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld z %lld vybraných";
+"marketplace.picker.command.preview" = "Náhľad príkazu";
+"marketplace.picker.success %@" = "Plugin pridaný do %@";
+"marketplace.picker.done" = "Hotovo";
+"marketplace.picker.back" = "Späť";
+"marketplace.picker.next" = "Ďalej";
+"harness.wizard.title" = "Nová sada";
+"harness.wizard.name.label" = "Názov (povinný)";
+"harness.wizard.description.label" = "Popis";
+"harness.wizard.loading.vendors" = "Načítavajú sa predajcovia…";
+"harness.wizard.vendor.label" = "Predvolený predajca";
+"harness.wizard.destination.label" = "Cieľový adresár";
+"harness.wizard.install.toggle" = "Nainštalovať sadu ihneď po vytvorení";
+"harness.wizard.success.add.plugins" = "Pridať pluginy z trhoviska";
+"harness.wizard.success.open" = "Otvoriť v TermQ";
+"harness.wizard.create" = "Vytvoriť";
+"harness.wizard.retry" = "Skúsiť znova";
+"harness.wizard.error.name.required" = "Názov je povinný";
+"harness.wizard.error.name.invalid" = "Názov môže obsahovať iba písmená, číslice, pomlčky a podčiarkovníky";
+"harness.wizard.error.name.duplicate %@" = "Sada s názvom «%@» už existuje";
+"settings.marketplaces.reset" = "Obnoviť predvolené";
+"settings.marketplaces.section.ynh.registries" = "Registre YNH";
+"settings.marketplaces.ynh.registries.empty" = "Žiadne registre neboli pridané";
+"settings.marketplaces.ynh.add.registry" = "Pridať register…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Odstrániť register";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Odstrániť";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Odstrániť „%@“ z YNH? Nainštalované harnesses zostanú.";
+"marketplace.add.custom.name.placeholder" = "Moje trhovisko";
+"harness.wizard.success.created %@" = "Sada «%@» vytvorená";

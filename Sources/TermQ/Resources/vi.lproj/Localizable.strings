@@ -605,6 +605,7 @@
 "harnesses.reveal.in.finder" = "Hiển thị trong Finder";
 "harnesses.open.in.browser" = "Mở trong trình duyệt";
 "harnesses.close.detail" = "Đóng";
+"harnesses.configure.from.marketplaces" = "Cấu hình từ Thị trường…";
 "harnesses.detail.artifacts.from.includes" = "Harness này lấy artefact từ các include phụ thuộc.";
 "harnesses.detail.from" = "từ";
 "harnesses.detail.hooks" = "Hooks";
@@ -639,6 +640,9 @@
 
 "harnesses.linked.worktrees" = "Worktree đã liên kết";
 "harnesses.linked.worktrees.none" = "Không có worktree nào được liên kết với harness này.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Tạo Harness mới";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Chuỗi công cụ YNH";
@@ -712,3 +716,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal đang chạy harness này.";
 "harnesses.uninstall.alert.confirm" = "Gỡ cài đặt";
 "harnesses.more.actions.help" = "Thêm hành động";
+"harnesses.copy.run.command" = "Sao chép lệnh chạy";
+"harnesses.ynh.documentation" = "Tài liệu YNH";
+
+"harnesses.add.registry.title" = "Thêm sổ đăng ký YNH";
+"harnesses.add.registry.url.label" = "URL sổ đăng ký";
+"harnesses.add.registry.hint" = "Thêm kho lưu trữ Git chứa tệp registry.json. Sau khi thêm, bạn có thể tìm kiếm và cài đặt harnesses từ đó.";
+"harnesses.add.registry.button" = "Thêm sổ đăng ký";
+"harnesses.add.registry.success" = "Đã thêm sổ đăng ký thành công";
+"harnesses.add.registry.toolbar.help" = "Thêm sổ đăng ký YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Chợ ứng dụng";
+"settings.marketplaces.section.list" = "Chợ ứng dụng đã cấu hình";
+"settings.marketplaces.empty" = "Chưa có chợ ứng dụng nào được thêm.";
+"settings.marketplaces.add" = "Thêm chợ ứng dụng…";
+"settings.marketplaces.never.fetched" = "Chưa từng tải";
+"settings.marketplaces.remove.confirm.title" = "Xóa chợ ứng dụng";
+"settings.marketplaces.remove.confirm.message %@" = "Xóa \"%@\"? Các plugin của nó sẽ không còn xuất hiện trong trình duyệt.";
+"settings.marketplaces.section.behaviour" = "Hành vi";
+"settings.marketplaces.auto.refresh" = "Tự động làm mới khi khởi động";
+"settings.marketplaces.auto.refresh.help" = "Tự động tải cập nhật chợ ứng dụng khi ứng dụng khởi động";
+"settings.marketplaces.section.authoring" = "Tạo Harness";
+"settings.marketplaces.default.author.directory" = "Thư mục tác giả mặc định";
+"settings.marketplaces.author.directory.detected.hint" = "Tự động phát hiện từ ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Chợ ứng dụng";
+"marketplace.add.help" = "Thêm chợ";
+"marketplace.empty" = "Chưa có chợ nào";
+"marketplace.add.button" = "Thêm chợ";
+"marketplace.row.refresh.help" = "Làm mới chợ";
+"marketplace.row.refresh" = "Làm mới";
+"marketplace.row.remove" = "Xóa";
+"marketplace.row.stale" = " · Có thể đã lỗi thời";
+"marketplace.row.never.fetched" = "Chưa từng tải về";
+"marketplace.add.sheet.title" = "Thêm chợ";
+"marketplace.add.tab.known" = "Đã biết";
+"marketplace.add.tab.custom" = "URL tùy chỉnh";
+"marketplace.add.section.git.url" = "URL kho Git";
+"marketplace.add.section.display.name" = "Tên hiển thị";
+"marketplace.add.section.vendor" = "Nhà cung cấp";
+"marketplace.detail.last.fetched %@" = "Lần tải gần nhất %@";
+"marketplace.detail.search.placeholder" = "Tìm kiếm tiện ích…";
+"marketplace.detail.search.empty %@" = "Không có tiện ích nào khớp với «%@»";
+"marketplace.detail.empty" = "Không có tiện ích trong chợ này";
+"marketplace.detail.empty.hint" = "Làm mới để tải chỉ mục mới nhất.";
+"marketplace.plugin.add.to.harness" = "Thêm vào Harness";
+"marketplace.plugin.copy.install.command" = "Sao chép lệnh cài đặt";
+"marketplace.plugin.copy.install.command.help" = "Sao chép lệnh cài đặt Claude Code vào clipboard";
+"marketplace.plugin.load.artifacts" = "Tải artefact";
+"marketplace.plugin.loading.artifacts" = "Đang tải artefact…";
+"marketplace.plugin.no.artifacts" = "Không có artefact nào được liệt kê cho tiện ích này.";
+"marketplace.plugin.no.artifacts.hint" = "Toàn bộ nội dung tiện ích sẽ được bao gồm.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefact không khả dụng: %@";
+"marketplace.picker.step.artifacts" = "Artefact";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Áp dụng";
+"marketplace.picker.select.prompt" = "Chọn artefact để bao gồm";
+"marketplace.picker.select.all" = "Tất cả";
+"marketplace.picker.select.none" = "Không có";
+"marketplace.picker.no.harnesses" = "Chưa có harness nào";
+"marketplace.picker.no.harnesses.hint" = "Trước tiên hãy tạo harness bằng trình hướng dẫn Harness mới.";
+"marketplace.picker.review.plugin" = "Tiện ích";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefact";
+"marketplace.picker.review.all.count %lld" = "Tất cả (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld trong %lld đã chọn";
+"marketplace.picker.command.preview" = "Xem trước lệnh";
+"marketplace.picker.success %@" = "Đã thêm tiện ích vào %@";
+"marketplace.picker.done" = "Xong";
+"marketplace.picker.back" = "Quay lại";
+"marketplace.picker.next" = "Tiếp theo";
+"harness.wizard.title" = "Harness mới";
+"harness.wizard.name.label" = "Tên (bắt buộc)";
+"harness.wizard.description.label" = "Mô tả";
+"harness.wizard.loading.vendors" = "Đang tải nhà cung cấp…";
+"harness.wizard.vendor.label" = "Nhà cung cấp mặc định";
+"harness.wizard.destination.label" = "Thư mục đích";
+"harness.wizard.install.toggle" = "Cài đặt harness ngay sau khi tạo";
+"harness.wizard.success.add.plugins" = "Thêm tiện ích từ chợ";
+"harness.wizard.success.open" = "Mở trong TermQ";
+"harness.wizard.create" = "Tạo";
+"harness.wizard.retry" = "Thử lại";
+"harness.wizard.error.name.required" = "Tên là bắt buộc";
+"harness.wizard.error.name.invalid" = "Tên chỉ có thể chứa chữ cái, số, dấu gạch ngang và dấu gạch dưới";
+"harness.wizard.error.name.duplicate %@" = "Đã có harness tên «%@»";
+"settings.marketplaces.reset" = "Đặt lại";
+"settings.marketplaces.section.ynh.registries" = "Sổ đăng ký YNH";
+"settings.marketplaces.ynh.registries.empty" = "Chưa có sổ đăng ký nào";
+"settings.marketplaces.ynh.add.registry" = "Thêm sổ đăng ký…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Xóa sổ đăng ký";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Xóa";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Xóa “%@” khỏi YNH? Các harness đã cài đặt sẽ được giữ lại.";
+"marketplace.add.custom.name.placeholder" = "Chợ của tôi";
+"harness.wizard.success.created %@" = "Harness «%@» đã được tạo";

@@ -605,6 +605,7 @@
 "harnesses.reveal.in.finder" = "Visa i Finder";
 "harnesses.open.in.browser" = "Öppna i webbläsare";
 "harnesses.close.detail" = "Stäng";
+"harnesses.configure.from.marketplaces" = "Konfigurera från marknadsplatser…";
 "harnesses.detail.artifacts.from.includes" = "Denna harness hämtar sina artefakter från beroendeincludes.";
 "harnesses.detail.from" = "från";
 "harnesses.detail.hooks" = "Hooks";
@@ -639,6 +640,9 @@
 
 "harnesses.linked.worktrees" = "Länkade worktrees";
 "harnesses.linked.worktrees.none" = "Inga worktrees är länkade till detta harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Skapa ett nytt harness";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-verktygskedja";
@@ -712,3 +716,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kör för närvarande denna harness.";
 "harnesses.uninstall.alert.confirm" = "Avinstallera";
 "harnesses.more.actions.help" = "Fler åtgärder";
+"harnesses.copy.run.command" = "Kopiera körkommando";
+"harnesses.ynh.documentation" = "YNH-dokumentation";
+
+"harnesses.add.registry.title" = "Lägg till YNH-register";
+"harnesses.add.registry.url.label" = "Register-URL";
+"harnesses.add.registry.hint" = "Lägg till ett Git-förråd som innehåller en registry.json-fil. När det är tillagt kan du söka efter och installera harnesses från det.";
+"harnesses.add.registry.button" = "Lägg till register";
+"harnesses.add.registry.success" = "Register lades till";
+"harnesses.add.registry.toolbar.help" = "Lägg till ett YNH-register";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Marknadsplatser";
+"settings.marketplaces.section.list" = "Konfigurerade marknadsplatser";
+"settings.marketplaces.empty" = "Inga marknadsplatser har lagts till ännu.";
+"settings.marketplaces.add" = "Lägg till marknadsplats…";
+"settings.marketplaces.never.fetched" = "Aldrig hämtad";
+"settings.marketplaces.remove.confirm.title" = "Ta bort marknadsplats";
+"settings.marketplaces.remove.confirm.message %@" = "Ta bort \"%@\"? Dess tillägg visas inte längre i webbläsaren.";
+"settings.marketplaces.section.behaviour" = "Beteende";
+"settings.marketplaces.auto.refresh" = "Uppdatera automatiskt vid start";
+"settings.marketplaces.auto.refresh.help" = "Hämta marknadsplatsuppdateringar automatiskt när appen startar";
+"settings.marketplaces.section.authoring" = "Harness-skapande";
+"settings.marketplaces.default.author.directory" = "Standardkatalog för författare";
+"settings.marketplaces.author.directory.detected.hint" = "Automatiskt identifierad från ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marknadsplatser";
+"marketplace.add.help" = "Lägg till marknadsplats";
+"marketplace.empty" = "Inga marknadsplatser ännu";
+"marketplace.add.button" = "Lägg till marknadsplats";
+"marketplace.row.refresh.help" = "Uppdatera marknadsplats";
+"marketplace.row.refresh" = "Uppdatera";
+"marketplace.row.remove" = "Ta bort";
+"marketplace.row.stale" = " · Kan vara inaktuell";
+"marketplace.row.never.fetched" = "Aldrig hämtad";
+"marketplace.add.sheet.title" = "Lägg till marknadsplats";
+"marketplace.add.tab.known" = "Kända";
+"marketplace.add.tab.custom" = "Anpassad URL";
+"marketplace.add.section.git.url" = "Git-lagringsplats-URL";
+"marketplace.add.section.display.name" = "Visningsnamn";
+"marketplace.add.section.vendor" = "Leverantör";
+"marketplace.detail.last.fetched %@" = "Senast hämtad %@";
+"marketplace.detail.search.placeholder" = "Sök plugin…";
+"marketplace.detail.search.empty %@" = "Inga plugin matchar «%@»";
+"marketplace.detail.empty" = "Inga plugin på denna marknadsplats";
+"marketplace.detail.empty.hint" = "Uppdatera för att hämta det senaste indexet.";
+"marketplace.plugin.add.to.harness" = "Lägg till i harness";
+"marketplace.plugin.copy.install.command" = "Kopiera installationskommando";
+"marketplace.plugin.copy.install.command.help" = "Kopierar Claude Code-installationskommandot till urklipp";
+"marketplace.plugin.load.artifacts" = "Läs in artefakter";
+"marketplace.plugin.loading.artifacts" = "Läser in artefakter…";
+"marketplace.plugin.no.artifacts" = "Inga artefakter listade för detta plugin.";
+"marketplace.plugin.no.artifacts.hint" = "Allt plugininnehåll inkluderas.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefakter ej tillgängliga: %@";
+"marketplace.picker.step.artifacts" = "Artefakter";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Tillämpa";
+"marketplace.picker.select.prompt" = "Välj artefakter att inkludera";
+"marketplace.picker.select.all" = "Alla";
+"marketplace.picker.select.none" = "Ingen";
+"marketplace.picker.no.harnesses" = "Inga harnesses ännu";
+"marketplace.picker.no.harnesses.hint" = "Skapa först ett harness med guiden Nytt harness.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefakter";
+"marketplace.picker.review.all.count %lld" = "Alla (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld av %lld valda";
+"marketplace.picker.command.preview" = "Förhandsgranskning av kommando";
+"marketplace.picker.success %@" = "Plugin tillagd i %@";
+"marketplace.picker.done" = "Klar";
+"marketplace.picker.back" = "Tillbaka";
+"marketplace.picker.next" = "Nästa";
+"harness.wizard.title" = "Nytt harness";
+"harness.wizard.name.label" = "Namn (obligatoriskt)";
+"harness.wizard.description.label" = "Beskrivning";
+"harness.wizard.loading.vendors" = "Läser in leverantörer…";
+"harness.wizard.vendor.label" = "Standardleverantör";
+"harness.wizard.destination.label" = "Målmapp";
+"harness.wizard.install.toggle" = "Installera harness direkt efter skapandet";
+"harness.wizard.success.add.plugins" = "Lägg till plugin från marknadsplatsen";
+"harness.wizard.success.open" = "Öppna i TermQ";
+"harness.wizard.create" = "Skapa";
+"harness.wizard.retry" = "Försök igen";
+"harness.wizard.error.name.required" = "Namn krävs";
+"harness.wizard.error.name.invalid" = "Namnet får bara innehålla bokstäver, siffror, bindestreck och understreck";
+"harness.wizard.error.name.duplicate %@" = "Det finns redan ett harness med namnet «%@»";
+"settings.marketplaces.reset" = "Återställ";
+"settings.marketplaces.section.ynh.registries" = "YNH-register";
+"settings.marketplaces.ynh.registries.empty" = "Inga register har lagts till";
+"settings.marketplaces.ynh.add.registry" = "Lägg till register…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Ta bort register";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Ta bort";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Ta bort ”%@” från YNH? Installerade harnesses behålls.";
+"marketplace.add.custom.name.placeholder" = "Min marknadsplats";
+"harness.wizard.success.created %@" = "Harness «%@» skapad";

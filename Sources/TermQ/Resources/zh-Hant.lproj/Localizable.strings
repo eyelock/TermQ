@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "在 Finder 中顯示";
 "harnesses.open.in.browser" = "在瀏覽器中開啟";
 "harnesses.close.detail" = "關閉";
+"harnesses.configure.from.marketplaces" = "從市場設定…";
 "harnesses.detail.artifacts.from.includes" = "此 harness 從相依包含項取得產物。";
 "harnesses.detail.from" = "來自";
 "harnesses.detail.hooks" = "掛鉤";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "連結的 Worktree";
 "harnesses.linked.worktrees.none" = "沒有 worktree 連結到此 harness。";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "新增 Harness";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness 工具鏈";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "目前有 %ld 個終端機正在執行此 harness。";
 "harnesses.uninstall.alert.confirm" = "移除安裝";
 "harnesses.more.actions.help" = "更多動作";
+"harnesses.copy.run.command" = "複製執行指令";
+"harnesses.ynh.documentation" = "YNH 文件";
+
+"harnesses.add.registry.title" = "新增 YNH 登錄檔";
+"harnesses.add.registry.url.label" = "登錄檔 URL";
+"harnesses.add.registry.hint" = "新增包含 registry.json 檔案的 Git 儲存庫。新增後，您可以從中搜尋並安裝 harness。";
+"harnesses.add.registry.button" = "新增登錄檔";
+"harnesses.add.registry.success" = "登錄檔已成功新增";
+"harnesses.add.registry.toolbar.help" = "新增 YNH 登錄檔";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "市場";
+"settings.marketplaces.section.list" = "已設定的市場";
+"settings.marketplaces.empty" = "尚未新增任何市場。";
+"settings.marketplaces.add" = "新增市場…";
+"settings.marketplaces.never.fetched" = "從未擷取";
+"settings.marketplaces.remove.confirm.title" = "移除市場";
+"settings.marketplaces.remove.confirm.message %@" = "移除\"%@\"？其外掛程式將不再顯示於瀏覽器中。";
+"settings.marketplaces.section.behaviour" = "行為";
+"settings.marketplaces.auto.refresh" = "啟動時自動重新整理";
+"settings.marketplaces.auto.refresh.help" = "應用程式啟動時自動擷取市場更新";
+"settings.marketplaces.section.authoring" = "Harness 撰寫";
+"settings.marketplaces.default.author.directory" = "預設作者目錄";
+"settings.marketplaces.author.directory.detected.hint" = "從 ynh 自動偵測";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "市集";
+"marketplace.add.help" = "新增市集";
+"marketplace.empty" = "尚無市集";
+"marketplace.add.button" = "新增市集";
+"marketplace.row.refresh.help" = "重新整理市集";
+"marketplace.row.refresh" = "重新整理";
+"marketplace.row.remove" = "移除";
+"marketplace.row.stale" = " · 可能已過時";
+"marketplace.row.never.fetched" = "從未擷取";
+"marketplace.add.sheet.title" = "新增市集";
+"marketplace.add.tab.known" = "已知";
+"marketplace.add.tab.custom" = "自訂 URL";
+"marketplace.add.section.git.url" = "Git 儲存庫 URL";
+"marketplace.add.section.display.name" = "顯示名稱";
+"marketplace.add.section.vendor" = "供應商";
+"marketplace.detail.last.fetched %@" = "上次擷取於 %@";
+"marketplace.detail.search.placeholder" = "搜尋外掛程式…";
+"marketplace.detail.search.empty %@" = "沒有符合「%@」的外掛程式";
+"marketplace.detail.empty" = "此市集中沒有外掛程式";
+"marketplace.detail.empty.hint" = "重新整理以擷取最新索引。";
+"marketplace.plugin.add.to.harness" = "新增至 Harness";
+"marketplace.plugin.copy.install.command" = "複製安裝指令";
+"marketplace.plugin.copy.install.command.help" = "將 Claude Code 安裝指令複製到剪貼簿";
+"marketplace.plugin.load.artifacts" = "載入成品";
+"marketplace.plugin.loading.artifacts" = "正在載入成品…";
+"marketplace.plugin.no.artifacts" = "此外掛程式沒有列出成品。";
+"marketplace.plugin.no.artifacts.hint" = "將包含外掛程式的所有內容。";
+"marketplace.plugin.artifacts.unavailable %@" = "成品無法使用：%@";
+"marketplace.picker.step.artifacts" = "成品";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "套用";
+"marketplace.picker.select.prompt" = "選取要包含的成品";
+"marketplace.picker.select.all" = "全部";
+"marketplace.picker.select.none" = "無";
+"marketplace.picker.no.harnesses" = "尚無 Harness";
+"marketplace.picker.no.harnesses.hint" = "請先使用新增 Harness 精靈建立一個 Harness。";
+"marketplace.picker.review.plugin" = "外掛程式";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "成品";
+"marketplace.picker.review.all.count %lld" = "全部 (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "已選取 %lld / %lld";
+"marketplace.picker.command.preview" = "指令預覽";
+"marketplace.picker.success %@" = "外掛程式已新增至 %@";
+"marketplace.picker.done" = "完成";
+"marketplace.picker.back" = "返回";
+"marketplace.picker.next" = "下一步";
+"harness.wizard.title" = "新增 Harness";
+"harness.wizard.name.label" = "名稱（必填）";
+"harness.wizard.description.label" = "描述";
+"harness.wizard.loading.vendors" = "正在載入供應商…";
+"harness.wizard.vendor.label" = "預設供應商";
+"harness.wizard.destination.label" = "目的地目錄";
+"harness.wizard.install.toggle" = "建立後立即安裝 Harness";
+"harness.wizard.success.add.plugins" = "從市集新增外掛程式";
+"harness.wizard.success.open" = "在 TermQ 中開啟";
+"harness.wizard.create" = "建立";
+"harness.wizard.retry" = "重試";
+"harness.wizard.error.name.required" = "名稱為必填項目";
+"harness.wizard.error.name.invalid" = "名稱只能包含字母、數字、連字號和底線";
+"harness.wizard.error.name.duplicate %@" = "名為「%@」的 Harness 已存在";
+"settings.marketplaces.reset" = "重設";
+"settings.marketplaces.section.ynh.registries" = "YNH 註冊表";
+"settings.marketplaces.ynh.registries.empty" = "未新增任何註冊表";
+"settings.marketplaces.ynh.add.registry" = "新增註冊表…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "移除註冊表";
+"settings.marketplaces.ynh.registry.remove.confirm" = "移除";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "將「%@」從 YNH 移除？已安裝的 harness 將保留。";
+"marketplace.add.custom.name.placeholder" = "我的市集";
+"harness.wizard.success.created %@" = "Harness「%@」已建立";

@@ -255,7 +255,7 @@ struct WorktreeSidebarView: View {
                     .padding(.leading, 4)
             } else {
                 ForEach(trees) { worktree in
-                    worktreeRow(worktree, repo: repo)
+                    worktreeRow(worktree, repo: repo, allWorktrees: trees)
                 }
             }
 
@@ -288,9 +288,11 @@ struct WorktreeSidebarView: View {
     }
 
     @ViewBuilder
-    private func worktreeRow(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
+    private func worktreeRow(
+        _ worktree: GitWorktree, repo: ObservableRepository, allWorktrees: [GitWorktree]
+    ) -> some View {
         HStack(spacing: 6) {
-            WorktreeLeftIcon(worktree: worktree, boardVM: boardVM)
+            WorktreeLeftIcon(worktree: worktree, allWorktrees: allWorktrees, boardVM: boardVM)
 
             VStack(alignment: .leading, spacing: 1) {
                 if worktree.branch != nil {
@@ -716,14 +718,24 @@ private struct BranchSectionDisclosureView<Content: View>: View {
 /// - N open terminals → `N.circle.fill` (accent, tappable → popover listing terminals)
 private struct WorktreeLeftIcon: View {
     let worktree: GitWorktree
+    let allWorktrees: [GitWorktree]
     @ObservedObject var boardVM: BoardViewModel
     @State private var showPopover = false
 
     private var matchingCards: [TerminalCard] {
         (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
-            .filter {
-                $0.workingDirectory == worktree.path
-                    || $0.workingDirectory.hasPrefix(worktree.path + "/")
+            .filter { card in
+                guard !card.isDeleted else { return false }
+                let wd = card.workingDirectory
+                let matchesThis = wd == worktree.path || wd.hasPrefix(worktree.path + "/")
+                guard matchesThis else { return false }
+                // Don't count this card if a more-specific sibling worktree owns it
+                // (handles the common case where worktrees live inside the main repo dir)
+                return !allWorktrees.contains { other in
+                    other.id != worktree.id
+                        && other.path.count > worktree.path.count
+                        && (wd == other.path || wd.hasPrefix(other.path + "/"))
+                }
             }
     }
 

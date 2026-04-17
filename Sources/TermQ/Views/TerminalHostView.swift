@@ -100,7 +100,8 @@ class TermQTerminalView: LocalProcessTerminalView {
             // SwiftTerm's keyDown clears selection.active before calling copy: via interpretKeyEvents,
             // so a normal Cmd+C would copy an empty string. We call copy: here first, before keyDown
             // fires, then consume the event so keyDown never runs.
-            let isCmdCOnly = event.modifierFlags.intersection([.command, .shift, .option, .control]) == .command
+            let isCmdCOnly =
+                event.modifierFlags.intersection([.command, .shift, .option, .control]) == .command
                 && event.charactersIgnoringModifiers == "c"
             if isCmdCOnly && !self.allowMouseReporting {
                 self.copy(self as Any)
@@ -657,14 +658,8 @@ class TerminalContainerView: NSView {
 
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
-        TermQLogger.focus.debug("viewDidMoveToWindow hasWindow=\(self.window != nil)")
-        // Give focus to terminal when view appears
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let fr = self.window?.firstResponder
-            let succeeded = self.window?.makeFirstResponder(self.terminal) ?? false
-            TermQLogger.focus.debug(
-                "makeFirstResponder(viewDidMoveToWindow) succeeded=\(succeeded) hasWindow=\(self.window != nil) priorFR=\(String(describing: type(of: fr)))"
-            )
+            self.window?.makeFirstResponder(self.terminal)
         }
     }
 
@@ -673,11 +668,7 @@ class TerminalContainerView: NSView {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             guard NSEvent.pressedMouseButtons == 0 else { return }
             guard !TerminalSessionManager.shared.isMouseDragInProgress else { return }
-            let fr = self.window?.firstResponder
-            let succeeded = self.window?.makeFirstResponder(self.terminal) ?? false
-            TermQLogger.focus.debug(
-                "makeFirstResponder(focusTerminal) succeeded=\(succeeded) hasWindow=\(self.window != nil) priorFR=\(String(describing: type(of: fr)))"
-            )
+            self.window?.makeFirstResponder(self.terminal)
         }
     }
 

@@ -605,6 +605,7 @@
 "harnesses.reveal.in.finder" = "Finder'da Göster";
 "harnesses.open.in.browser" = "Tarayıcıda Aç";
 "harnesses.close.detail" = "Kapat";
+"harnesses.configure.from.marketplaces" = "Pazaryerlerinden yapılandır…";
 "harnesses.detail.artifacts.from.includes" = "Bu harness artefaktlarını bağımlılık eklemelerinden alır.";
 "harnesses.detail.from" = "kaynağı";
 "harnesses.detail.hooks" = "Hook'lar";
@@ -639,6 +640,9 @@
 
 "harnesses.linked.worktrees" = "Bağlı worktree’ler";
 "harnesses.linked.worktrees.none" = "Bu harness’e bağlı worktree yok.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Yeni harness oluştur";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Araç Zinciri";
@@ -712,3 +716,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal şu anda bu harness'i çalıştırıyor.";
 "harnesses.uninstall.alert.confirm" = "Kaldır";
 "harnesses.more.actions.help" = "Daha fazla işlem";
+"harnesses.copy.run.command" = "Çalıştırma Komutunu Kopyala";
+"harnesses.ynh.documentation" = "YNH Belgeleri";
+
+"harnesses.add.registry.title" = "YNH Kayıt Defteri Ekle";
+"harnesses.add.registry.url.label" = "Kayıt Defteri URL'si";
+"harnesses.add.registry.hint" = "registry.json dosyası içeren bir Git deposu ekleyin. Eklendikten sonra buradan harness arayabilir ve kurabilirsiniz.";
+"harnesses.add.registry.button" = "Kayıt Defteri Ekle";
+"harnesses.add.registry.success" = "Kayıt defteri başarıyla eklendi";
+"harnesses.add.registry.toolbar.help" = "YNH kayıt defteri ekle";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Pazar Yerleri";
+"settings.marketplaces.section.list" = "Yapılandırılmış pazar yerleri";
+"settings.marketplaces.empty" = "Henüz pazar yeri eklenmedi.";
+"settings.marketplaces.add" = "Pazar yeri ekle…";
+"settings.marketplaces.never.fetched" = "Hiç getirilmedi";
+"settings.marketplaces.remove.confirm.title" = "Pazar Yerini Kaldır";
+"settings.marketplaces.remove.confirm.message %@" = "\"%@\" kaldırılsın mı? Eklentileri artık tarayıcıda görünmeyecek.";
+"settings.marketplaces.section.behaviour" = "Davranış";
+"settings.marketplaces.auto.refresh" = "Başlangıçta otomatik yenile";
+"settings.marketplaces.auto.refresh.help" = "Uygulama başladığında pazar yeri güncellemelerini otomatik olarak getir";
+"settings.marketplaces.section.authoring" = "Harness oluşturma";
+"settings.marketplaces.default.author.directory" = "Varsayılan yazar dizini";
+"settings.marketplaces.author.directory.detected.hint" = "ynh'den otomatik algılandı";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Pazar Yerleri";
+"marketplace.add.help" = "Pazar yeri ekle";
+"marketplace.empty" = "Henüz pazar yeri yok";
+"marketplace.add.button" = "Pazar yeri ekle";
+"marketplace.row.refresh.help" = "Pazar yerini yenile";
+"marketplace.row.refresh" = "Yenile";
+"marketplace.row.remove" = "Kaldır";
+"marketplace.row.stale" = " · Eski olabilir";
+"marketplace.row.never.fetched" = "Hiç getirilmedi";
+"marketplace.add.sheet.title" = "Pazar yeri ekle";
+"marketplace.add.tab.known" = "Bilinen";
+"marketplace.add.tab.custom" = "Özel URL";
+"marketplace.add.section.git.url" = "Git Deposu URL'si";
+"marketplace.add.section.display.name" = "Görünen ad";
+"marketplace.add.section.vendor" = "Satıcı";
+"marketplace.detail.last.fetched %@" = "Son getirme %@";
+"marketplace.detail.search.placeholder" = "Eklenti ara…";
+"marketplace.detail.search.empty %@" = "«%@» ile eşleşen eklenti yok";
+"marketplace.detail.empty" = "Bu pazar yerinde eklenti yok";
+"marketplace.detail.empty.hint" = "En son dizini almak için yenileyin.";
+"marketplace.plugin.add.to.harness" = "Harness'e ekle";
+"marketplace.plugin.copy.install.command" = "Kurulum komutunu kopyala";
+"marketplace.plugin.copy.install.command.help" = "Claude Code kurulum komutunu panoya kopyalar";
+"marketplace.plugin.load.artifacts" = "Yapıtları yükle";
+"marketplace.plugin.loading.artifacts" = "Yapıtlar yükleniyor…";
+"marketplace.plugin.no.artifacts" = "Bu eklenti için yapıt listelenmemiş.";
+"marketplace.plugin.no.artifacts.hint" = "Eklentinin tüm içeriği dahil edilecek.";
+"marketplace.plugin.artifacts.unavailable %@" = "Yapıtlar kullanılamıyor: %@";
+"marketplace.picker.step.artifacts" = "Yapıtlar";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Uygula";
+"marketplace.picker.select.prompt" = "Dahil edilecek yapıtları seçin";
+"marketplace.picker.select.all" = "Tümü";
+"marketplace.picker.select.none" = "Hiçbiri";
+"marketplace.picker.no.harnesses" = "Henüz harness yok";
+"marketplace.picker.no.harnesses.hint" = "Önce Yeni Harness sihirbazını kullanarak bir harness oluşturun.";
+"marketplace.picker.review.plugin" = "Eklenti";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Yapıtlar";
+"marketplace.picker.review.all.count %lld" = "Tümü (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld / %lld seçildi";
+"marketplace.picker.command.preview" = "Komut önizlemesi";
+"marketplace.picker.success %@" = "Eklenti %@ üzerine eklendi";
+"marketplace.picker.done" = "Bitti";
+"marketplace.picker.back" = "Geri";
+"marketplace.picker.next" = "İleri";
+"harness.wizard.title" = "Yeni harness";
+"harness.wizard.name.label" = "Ad (zorunlu)";
+"harness.wizard.description.label" = "Açıklama";
+"harness.wizard.loading.vendors" = "Satıcılar yükleniyor…";
+"harness.wizard.vendor.label" = "Varsayılan satıcı";
+"harness.wizard.destination.label" = "Hedef dizin";
+"harness.wizard.install.toggle" = "Oluşturduktan hemen sonra harness'i yükle";
+"harness.wizard.success.add.plugins" = "Pazar yerinden eklenti ekle";
+"harness.wizard.success.open" = "TermQ'da aç";
+"harness.wizard.create" = "Oluştur";
+"harness.wizard.retry" = "Tekrar dene";
+"harness.wizard.error.name.required" = "Ad zorunludur";
+"harness.wizard.error.name.invalid" = "Ad yalnızca harf, rakam, kısa çizgi ve alt çizgi içerebilir";
+"harness.wizard.error.name.duplicate %@" = "«%@» adında bir harness zaten mevcut";
+"settings.marketplaces.reset" = "Sıfırla";
+"settings.marketplaces.section.ynh.registries" = "YNH Kayıtları";
+"settings.marketplaces.ynh.registries.empty" = "Kayıt eklenmedi";
+"settings.marketplaces.ynh.add.registry" = "Kayıt Ekle…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Kaydı Kaldır";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Kaldır";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" YNH'den kaldırılsın mı? Yüklü harness'ler kalacak.";
+"marketplace.add.custom.name.placeholder" = "Benim pazar yerim";
+"harness.wizard.success.created %@" = "Harness «%@» oluşturuldu";

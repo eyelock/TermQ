@@ -62,6 +62,7 @@ struct SettingsView: View {
         case environment
         case tools
         case dataAndSecurity
+        case marketplaces
 
         var title: String {
             switch self {
@@ -69,6 +70,7 @@ struct SettingsView: View {
             case .environment: return Strings.Settings.tabEnvironment
             case .tools: return Strings.Settings.tabTools
             case .dataAndSecurity: return Strings.Settings.tabDataAndSecurity
+            case .marketplaces: return Strings.Settings.tabMarketplaces
             }
         }
     }
@@ -115,6 +117,8 @@ struct SettingsView: View {
                         allowOscClipboard: $allowOscClipboard,
                         dataDirectory: $dataDirectory
                     )
+                case .marketplaces:
+                    SettingsMarketplacesView()
                 }
             }
             .formStyle(.grouped)

@@ -604,6 +604,7 @@
 "harnesses.reveal.in.finder" = "Näytä Finderissä";
 "harnesses.open.in.browser" = "Avaa selaimessa";
 "harnesses.close.detail" = "Sulje";
+"harnesses.configure.from.marketplaces" = "Määritä markkinapaikoista…";
 "harnesses.detail.artifacts.from.includes" = "Tämä harness saa artefaktinsa riippuvuus-includeista.";
 "harnesses.detail.from" = "kohteesta";
 "harnesses.detail.hooks" = "Hookit";
@@ -638,6 +639,9 @@
 
 "harnesses.linked.worktrees" = "Linkitetyt worktreest";
 "harnesses.linked.worktrees.none" = "Tähän harnessiin ei ole linkitetty yhtään worktreeä.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Luo uusi harness";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-työkaluketju";
@@ -711,3 +715,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld pääte(ttä) käyttää tällä hetkellä tätä harnessia.";
 "harnesses.uninstall.alert.confirm" = "Poista asennus";
 "harnesses.more.actions.help" = "Lisää toimintoja";
+"harnesses.copy.run.command" = "Kopioi suorituskomento";
+"harnesses.ynh.documentation" = "YNH-dokumentaatio";
+
+"harnesses.add.registry.title" = "Lisää YNH-rekisteri";
+"harnesses.add.registry.url.label" = "Rekisterin URL";
+"harnesses.add.registry.hint" = "Lisää Git-varasto, joka sisältää registry.json-tiedoston. Lisäämisen jälkeen voit etsiä ja asentaa harnesses-kohteita siitä.";
+"harnesses.add.registry.button" = "Lisää rekisteri";
+"harnesses.add.registry.success" = "Rekisteri lisätty onnistuneesti";
+"harnesses.add.registry.toolbar.help" = "Lisää YNH-rekisteri";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Markkinapaikat";
+"settings.marketplaces.section.list" = "Määritetyt markkinapaikat";
+"settings.marketplaces.empty" = "Markkinapaikkoja ei ole vielä lisätty.";
+"settings.marketplaces.add" = "Lisää markkinapaikka…";
+"settings.marketplaces.never.fetched" = "Ei koskaan haettu";
+"settings.marketplaces.remove.confirm.title" = "Poista markkinapaikka";
+"settings.marketplaces.remove.confirm.message %@" = "Poistetaanko \"%@\"? Sen laajennukset eivät enää näy selaimessa.";
+"settings.marketplaces.section.behaviour" = "Toiminta";
+"settings.marketplaces.auto.refresh" = "Automaattinen päivitys käynnistettäessä";
+"settings.marketplaces.auto.refresh.help" = "Hae markkinapaikan päivitykset automaattisesti sovelluksen käynnistyessä";
+"settings.marketplaces.section.authoring" = "Harness-luonti";
+"settings.marketplaces.default.author.directory" = "Oletus tekijähakemisto";
+"settings.marketplaces.author.directory.detected.hint" = "Havaittu automaattisesti ynh:stä";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Markkinapaikat";
+"marketplace.add.help" = "Lisää markkinapaikka";
+"marketplace.empty" = "Ei markkinapaikkoja vielä";
+"marketplace.add.button" = "Lisää markkinapaikka";
+"marketplace.row.refresh.help" = "Päivitä markkinapaikka";
+"marketplace.row.refresh" = "Päivitä";
+"marketplace.row.remove" = "Poista";
+"marketplace.row.stale" = " · Voi olla vanhentunut";
+"marketplace.row.never.fetched" = "Ei koskaan haettu";
+"marketplace.add.sheet.title" = "Lisää markkinapaikka";
+"marketplace.add.tab.known" = "Tunnetut";
+"marketplace.add.tab.custom" = "Mukautettu URL";
+"marketplace.add.section.git.url" = "Git-säilön URL";
+"marketplace.add.section.display.name" = "Näyttönimi";
+"marketplace.add.section.vendor" = "Toimittaja";
+"marketplace.detail.last.fetched %@" = "Viimeksi haettu %@";
+"marketplace.detail.search.placeholder" = "Etsi laajennuksia…";
+"marketplace.detail.search.empty %@" = "Mikään laajennus ei vastaa hakua «%@»";
+"marketplace.detail.empty" = "Ei laajennuksia tässä markkinapaikassa";
+"marketplace.detail.empty.hint" = "Päivitä hakeaksesi uusimman hakemiston.";
+"marketplace.plugin.add.to.harness" = "Lisää harnessiin";
+"marketplace.plugin.copy.install.command" = "Kopioi asennuskomento";
+"marketplace.plugin.copy.install.command.help" = "Kopioi Claude Code -asennuskomennon leikepöydälle";
+"marketplace.plugin.load.artifacts" = "Lataa artefaktit";
+"marketplace.plugin.loading.artifacts" = "Ladataan artefakteja…";
+"marketplace.plugin.no.artifacts" = "Tälle laajennukselle ei ole lueteltu artefakteja.";
+"marketplace.plugin.no.artifacts.hint" = "Kaikki laajennuksen sisältö sisällytetään.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefaktit ei saatavilla: %@";
+"marketplace.picker.step.artifacts" = "Artefaktit";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Käytä";
+"marketplace.picker.select.prompt" = "Valitse sisällytettävät artefaktit";
+"marketplace.picker.select.all" = "Kaikki";
+"marketplace.picker.select.none" = "Ei mitään";
+"marketplace.picker.no.harnesses" = "Ei harnesseja vielä";
+"marketplace.picker.no.harnesses.hint" = "Luo ensin harness Uusi harness -ohjatun toiminnon avulla.";
+"marketplace.picker.review.plugin" = "Laajennus";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefaktit";
+"marketplace.picker.review.all.count %lld" = "Kaikki (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld/%lld valittu";
+"marketplace.picker.command.preview" = "Komentoesikatselu";
+"marketplace.picker.success %@" = "Laajennus lisätty kohteeseen %@";
+"marketplace.picker.done" = "Valmis";
+"marketplace.picker.back" = "Takaisin";
+"marketplace.picker.next" = "Seuraava";
+"harness.wizard.title" = "Uusi harness";
+"harness.wizard.name.label" = "Nimi (pakollinen)";
+"harness.wizard.description.label" = "Kuvaus";
+"harness.wizard.loading.vendors" = "Ladataan toimittajia…";
+"harness.wizard.vendor.label" = "Oletustoimittaja";
+"harness.wizard.destination.label" = "Kohdehakemisto";
+"harness.wizard.install.toggle" = "Asenna harness heti luomisen jälkeen";
+"harness.wizard.success.add.plugins" = "Lisää laajennuksia markkinapaikalta";
+"harness.wizard.success.open" = "Avaa TermQ:ssa";
+"harness.wizard.create" = "Luo";
+"harness.wizard.retry" = "Yritä uudelleen";
+"harness.wizard.error.name.required" = "Nimi on pakollinen";
+"harness.wizard.error.name.invalid" = "Nimi saa sisältää vain kirjaimia, numeroita, viivoja ja alaviivoja";
+"harness.wizard.error.name.duplicate %@" = "Harness nimeltä «%@» on jo olemassa";
+"settings.marketplaces.reset" = "Palauta";
+"settings.marketplaces.section.ynh.registries" = "YNH-rekisterit";
+"settings.marketplaces.ynh.registries.empty" = "Rekisteröintiä ei ole lisätty";
+"settings.marketplaces.ynh.add.registry" = "Lisää rekisteri…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Poista rekisteri";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Poista";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Poistetaanko „%@“ YNH:stä? Asennetut harness-paketit säilyvat.";
+"marketplace.add.custom.name.placeholder" = "Oma markkinapaikka";
+"harness.wizard.success.created %@" = "Harness «%@» luotu";

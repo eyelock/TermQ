@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "Mostra al Finder";
 "harnesses.open.in.browser" = "Obre al navegador";
 "harnesses.close.detail" = "Tanca";
+"harnesses.configure.from.marketplaces" = "Configura des dels mercats…";
 "harnesses.detail.artifacts.from.includes" = "Aquest arnes obté els seus artefactes de les inclusions de dependències.";
 "harnesses.detail.from" = "de";
 "harnesses.detail.hooks" = "Hooks";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "Worktrees vinculats";
 "harnesses.linked.worktrees.none" = "Cap worktree està vinculat a aquest harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Crea un harness nou";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Cadena d'eines YNH";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) estan executant aquest harness ara mateix.";
 "harnesses.uninstall.alert.confirm" = "Desinstal·la";
 "harnesses.more.actions.help" = "Més accions";
+"harnesses.copy.run.command" = "Copia l'ordre d'execució";
+"harnesses.ynh.documentation" = "Documentació de YNH";
+
+"harnesses.add.registry.title" = "Afegeix un registre YNH";
+"harnesses.add.registry.url.label" = "URL del registre";
+"harnesses.add.registry.hint" = "Afegeix un repositori Git que contingui un fitxer registry.json. Un cop afegit, pots cercar i instal·lar harnesses des d'ell.";
+"harnesses.add.registry.button" = "Afegeix registre";
+"harnesses.add.registry.success" = "Registre afegit correctament";
+"harnesses.add.registry.toolbar.help" = "Afegeix un registre YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Mercats";
+"settings.marketplaces.section.list" = "Mercats configurats";
+"settings.marketplaces.empty" = "Encara no s'ha afegit cap mercat.";
+"settings.marketplaces.add" = "Afegeix mercat…";
+"settings.marketplaces.never.fetched" = "Mai obtingut";
+"settings.marketplaces.remove.confirm.title" = "Elimina el mercat";
+"settings.marketplaces.remove.confirm.message %@" = "Eliminar \"%@\"? Els seus connectors ja no apareixeran al navegador.";
+"settings.marketplaces.section.behaviour" = "Comportament";
+"settings.marketplaces.auto.refresh" = "Actualització automàtica en l'inici";
+"settings.marketplaces.auto.refresh.help" = "Obtén automàticament les actualitzacions del mercat quan s'inicia l'aplicació";
+"settings.marketplaces.section.authoring" = "Creació de harness";
+"settings.marketplaces.default.author.directory" = "Directori d'autor predeterminat";
+"settings.marketplaces.author.directory.detected.hint" = "Detectat automàticament des de ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Mercats";
+"marketplace.add.help" = "Afegeix mercat";
+"marketplace.empty" = "Encara no hi ha mercats";
+"marketplace.add.button" = "Afegeix mercat";
+"marketplace.row.refresh.help" = "Actualitza el mercat";
+"marketplace.row.refresh" = "Actualitza";
+"marketplace.row.remove" = "Elimina";
+"marketplace.row.stale" = " · Pot estar desactualitzat";
+"marketplace.row.never.fetched" = "Mai obtingut";
+"marketplace.add.sheet.title" = "Afegeix mercat";
+"marketplace.add.tab.known" = "Coneguts";
+"marketplace.add.tab.custom" = "URL personalitzat";
+"marketplace.add.section.git.url" = "URL del repositori Git";
+"marketplace.add.section.display.name" = "Nom de visualització";
+"marketplace.add.section.vendor" = "Proveïdor";
+"marketplace.detail.last.fetched %@" = "Última obtenció %@";
+"marketplace.detail.search.placeholder" = "Cerca connectors…";
+"marketplace.detail.search.empty %@" = "Cap connector no coincideix amb «%@»";
+"marketplace.detail.empty" = "No hi ha connectors en aquest mercat";
+"marketplace.detail.empty.hint" = "Actualitza per obtenir l'índex més recent.";
+"marketplace.plugin.add.to.harness" = "Afegeix al harness";
+"marketplace.plugin.copy.install.command" = "Copia l'ordre d'instal·lació";
+"marketplace.plugin.copy.install.command.help" = "Copia l'ordre d'instal·lació de Claude Code al porta-retalls";
+"marketplace.plugin.load.artifacts" = "Carrega artefactes";
+"marketplace.plugin.loading.artifacts" = "Carregant artefactes…";
+"marketplace.plugin.no.artifacts" = "No hi ha artefactes enumerats per a aquest connector.";
+"marketplace.plugin.no.artifacts.hint" = "S'inclourà tot el contingut del connector.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefactes no disponibles: %@";
+"marketplace.picker.step.artifacts" = "Artefactes";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Aplica";
+"marketplace.picker.select.prompt" = "Selecciona els artefactes per incloure";
+"marketplace.picker.select.all" = "Tots";
+"marketplace.picker.select.none" = "Cap";
+"marketplace.picker.no.harnesses" = "Encara no hi ha harnesses";
+"marketplace.picker.no.harnesses.hint" = "Primer creeu un harness amb l'assistent de nou harness.";
+"marketplace.picker.review.plugin" = "Connector";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefactes";
+"marketplace.picker.review.all.count %lld" = "Tots (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld de %lld seleccionats";
+"marketplace.picker.command.preview" = "Vista prèvia de l'ordre";
+"marketplace.picker.success %@" = "Connector afegit a %@";
+"marketplace.picker.done" = "Fet";
+"marketplace.picker.back" = "Enrere";
+"marketplace.picker.next" = "Següent";
+"harness.wizard.title" = "Nou harness";
+"harness.wizard.name.label" = "Nom (obligatori)";
+"harness.wizard.description.label" = "Descripció";
+"harness.wizard.loading.vendors" = "Carregant proveïdors…";
+"harness.wizard.vendor.label" = "Proveïdor predeterminat";
+"harness.wizard.destination.label" = "Directori de destinació";
+"harness.wizard.install.toggle" = "Instal·la el harness immediatament després de la creació";
+"harness.wizard.success.add.plugins" = "Afegeix connectors del mercat";
+"harness.wizard.success.open" = "Obre a TermQ";
+"harness.wizard.create" = "Crea";
+"harness.wizard.retry" = "Torna-ho a intentar";
+"harness.wizard.error.name.required" = "El nom és obligatori";
+"harness.wizard.error.name.invalid" = "El nom només pot contenir lletres, números, guions i guions baixos";
+"harness.wizard.error.name.duplicate %@" = "Ja existeix un harness anomenat «%@»";
+"settings.marketplaces.reset" = "Restableix";
+"settings.marketplaces.section.ynh.registries" = "Registres de YNH";
+"settings.marketplaces.ynh.registries.empty" = "No s'ha afegit cap registre";
+"settings.marketplaces.ynh.add.registry" = "Afegeix un registre…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Suprimeix el registre";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Suprimeix";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Voleu suprimir «%@» de YNH? Els harnesos instal·lats es conservaran.";
+"marketplace.add.custom.name.placeholder" = "El meu mercat";
+"harness.wizard.success.created %@" = "Harness «%@» creat";

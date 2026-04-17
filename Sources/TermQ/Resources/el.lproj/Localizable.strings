@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "Εμφάνιση στο Finder";
 "harnesses.open.in.browser" = "Άνοιγμα στο πρόγραμμα περιήγησης";
 "harnesses.close.detail" = "Κλείσιμο";
+"harnesses.configure.from.marketplaces" = "Ρύθμιση από αγορές…";
 "harnesses.detail.artifacts.from.includes" = "Αυτό το harness λαμβάνει τα αντικείμενά του από τις εξαρτήσεις.";
 "harnesses.detail.from" = "από";
 "harnesses.detail.hooks" = "Hooks";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "Συνδεδεμένα worktrees";
 "harnesses.linked.worktrees.none" = "Δεν υπάρχουν worktrees συνδεδεμένα με αυτό το harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Δημιουργία νέου harness";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Αλυσίδα εργαλείων YNH";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld τερματικό(ά) εκτελεί αυτήν τη στιγμή αυτό το harness.";
 "harnesses.uninstall.alert.confirm" = "Απεγκατάσταση";
 "harnesses.more.actions.help" = "Περισσότερες ενέργειες";
+"harnesses.copy.run.command" = "Αντιγραφή εντολής εκτέλεσης";
+"harnesses.ynh.documentation" = "Τεκμηρίωση YNH";
+
+"harnesses.add.registry.title" = "Προσθήκη μητρώου YNH";
+"harnesses.add.registry.url.label" = "URL μητρώου";
+"harnesses.add.registry.hint" = "Προσθέστε ένα αποθετήριο Git που περιέχει ένα αρχείο registry.json. Μόλις προστεθεί, μπορείτε να αναζητήσετε και να εγκαταστήσετε harnesses από αυτό.";
+"harnesses.add.registry.button" = "Προσθήκη μητρώου";
+"harnesses.add.registry.success" = "Το μητρώο προστέθηκε επιτυχώς";
+"harnesses.add.registry.toolbar.help" = "Προσθήκη μητρώου YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Αγορές";
+"settings.marketplaces.section.list" = "Διαμορφωμένες αγορές";
+"settings.marketplaces.empty" = "Δεν έχουν προστεθεί αγορές ακόμα.";
+"settings.marketplaces.add" = "Προσθήκη αγοράς…";
+"settings.marketplaces.never.fetched" = "Δεν έχει ληφθεί ποτέ";
+"settings.marketplaces.remove.confirm.title" = "Αφαίρεση αγοράς";
+"settings.marketplaces.remove.confirm.message %@" = "Αφαίρεση \"%@\"; Τα πρόσθετά της δεν θα εμφανίζονται πλέον στο πρόγραμμα περιήγησης.";
+"settings.marketplaces.section.behaviour" = "Συμπεριφορά";
+"settings.marketplaces.auto.refresh" = "Αυτόματη ανανέωση κατά την εκκίνηση";
+"settings.marketplaces.auto.refresh.help" = "Αυτόματη λήψη ενημερώσεων αγοράς κατά την εκκίνηση της εφαρμογής";
+"settings.marketplaces.section.authoring" = "Δημιουργία harness";
+"settings.marketplaces.default.author.directory" = "Προεπιλεγμένος κατάλογος συγγραφέα";
+"settings.marketplaces.author.directory.detected.hint" = "Ανιχνεύθηκε αυτόματα από το ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Αγορές";
+"marketplace.add.help" = "Προσθήκη αγοράς";
+"marketplace.empty" = "Δεν υπάρχουν ακόμη αγορές";
+"marketplace.add.button" = "Προσθήκη αγοράς";
+"marketplace.row.refresh.help" = "Ανανέωση αγοράς";
+"marketplace.row.refresh" = "Ανανέωση";
+"marketplace.row.remove" = "Αφαίρεση";
+"marketplace.row.stale" = " · Μπορεί να είναι παλιό";
+"marketplace.row.never.fetched" = "Δεν έχει ληφθεί ποτέ";
+"marketplace.add.sheet.title" = "Προσθήκη αγοράς";
+"marketplace.add.tab.known" = "Γνωστές";
+"marketplace.add.tab.custom" = "Προσαρμοσμένο URL";
+"marketplace.add.section.git.url" = "URL αποθετηρίου Git";
+"marketplace.add.section.display.name" = "Εμφανιζόμενο όνομα";
+"marketplace.add.section.vendor" = "Πωλητής";
+"marketplace.detail.last.fetched %@" = "Τελευταία λήψη %@";
+"marketplace.detail.search.placeholder" = "Αναζήτηση πρόσθετων…";
+"marketplace.detail.search.empty %@" = "Κανένα πρόσθετο δεν ταιριάζει με «%@»";
+"marketplace.detail.empty" = "Δεν υπάρχουν πρόσθετα σε αυτήν την αγορά";
+"marketplace.detail.empty.hint" = "Ανανεώστε για να λάβετε τον τελευταίο κατάλογο.";
+"marketplace.plugin.add.to.harness" = "Προσθήκη στο harness";
+"marketplace.plugin.copy.install.command" = "Αντιγραφή εντολής εγκατάστασης";
+"marketplace.plugin.copy.install.command.help" = "Αντιγράφει την εντολή εγκατάστασης του Claude Code στο πρόχειρο";
+"marketplace.plugin.load.artifacts" = "Φόρτωση αντικειμένων";
+"marketplace.plugin.loading.artifacts" = "Φόρτωση αντικειμένων…";
+"marketplace.plugin.no.artifacts" = "Δεν υπάρχουν αντικείμενα για αυτό το πρόσθετο.";
+"marketplace.plugin.no.artifacts.hint" = "Θα συμπεριληφθεί όλο το περιεχόμενο του πρόσθετου.";
+"marketplace.plugin.artifacts.unavailable %@" = "Τα αντικείμενα δεν είναι διαθέσιμα: %@";
+"marketplace.picker.step.artifacts" = "Αντικείμενα";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Εφαρμογή";
+"marketplace.picker.select.prompt" = "Επιλέξτε αντικείμενα για συμπερίληψη";
+"marketplace.picker.select.all" = "Όλα";
+"marketplace.picker.select.none" = "Κανένα";
+"marketplace.picker.no.harnesses" = "Δεν υπάρχουν ακόμη harness";
+"marketplace.picker.no.harnesses.hint" = "Δημιουργήστε πρώτα ένα harness με τον οδηγό νέου harness.";
+"marketplace.picker.review.plugin" = "Πρόσθετο";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Αντικείμενα";
+"marketplace.picker.review.all.count %lld" = "Όλα (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld από %lld επιλεγμένα";
+"marketplace.picker.command.preview" = "Προεπισκόπηση εντολής";
+"marketplace.picker.success %@" = "Το πρόσθετο προστέθηκε στο %@";
+"marketplace.picker.done" = "Τέλος";
+"marketplace.picker.back" = "Πίσω";
+"marketplace.picker.next" = "Επόμενο";
+"harness.wizard.title" = "Νέο harness";
+"harness.wizard.name.label" = "Όνομα (απαιτείται)";
+"harness.wizard.description.label" = "Περιγραφή";
+"harness.wizard.loading.vendors" = "Φόρτωση πωλητών…";
+"harness.wizard.vendor.label" = "Προεπιλεγμένος πωλητής";
+"harness.wizard.destination.label" = "Κατάλογος προορισμού";
+"harness.wizard.install.toggle" = "Εγκατάσταση του harness αμέσως μετά τη δημιουργία";
+"harness.wizard.success.add.plugins" = "Προσθήκη πρόσθετων από την αγορά";
+"harness.wizard.success.open" = "Άνοιγμα στο TermQ";
+"harness.wizard.create" = "Δημιουργία";
+"harness.wizard.retry" = "Επανάληψη";
+"harness.wizard.error.name.required" = "Το όνομα είναι υποχρεωτικό";
+"harness.wizard.error.name.invalid" = "Το όνομα μπορεί να περιέχει μόνο γράμματα, αριθμούς, παύλες και κάτω παύλες";
+"harness.wizard.error.name.duplicate %@" = "Υπάρχει ήδη harness με το όνομα «%@»";
+"settings.marketplaces.reset" = "Επαναφορά";
+"settings.marketplaces.section.ynh.registries" = "Μητρώα YNH";
+"settings.marketplaces.ynh.registries.empty" = "Δεν έχουν προστεθεί μητρώα";
+"settings.marketplaces.ynh.add.registry" = "Προσθήκη μητρώου…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Αφαίρεση μητρώου";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Αφαίρεση";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Αφαίρεση «%@» από το YNH; Τα εγκατεστημένα harnesses θα παραμείνουν.";
+"marketplace.add.custom.name.placeholder" = "Η αγορά μου";
+"harness.wizard.success.created %@" = "Το harness «%@» δημιουργήθηκε";

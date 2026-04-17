@@ -604,6 +604,7 @@
 "harnesses.reveal.in.finder" = "Megjelenítés a Finderben";
 "harnesses.open.in.browser" = "Megnyitás böngészőben";
 "harnesses.close.detail" = "Bezárás";
+"harnesses.configure.from.marketplaces" = "Konfigurálás piacterekről…";
 "harnesses.detail.artifacts.from.includes" = "Ez a harness a függőségi tartalmakból nyeri az összetevőit.";
 "harnesses.detail.from" = "forrás";
 "harnesses.detail.hooks" = "Hookok";
@@ -638,6 +639,9 @@
 
 "harnesses.linked.worktrees" = "Kapcsolódó worktree-k";
 "harnesses.linked.worktrees.none" = "Nincs worktree ehhez a harnesshez kapcsolva.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Új harness létrehozása";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH harness eszközlánc";
@@ -711,3 +715,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminál jelenleg ezt a harness-t futtatja.";
 "harnesses.uninstall.alert.confirm" = "Eltávolítás";
 "harnesses.more.actions.help" = "További műveletek";
+"harnesses.copy.run.command" = "Futtatási parancs másolása";
+"harnesses.ynh.documentation" = "YNH-dokumentáció";
+
+"harnesses.add.registry.title" = "YNH-beállításjegyzék hozzáadása";
+"harnesses.add.registry.url.label" = "Beállításjegyzék URL-je";
+"harnesses.add.registry.hint" = "Adjon meg egy Git-tárházat, amely tartalmaz egy registry.json fájlt. A hozzáadás után a tárházból harness-eket kereshet és telepíthet.";
+"harnesses.add.registry.button" = "Beállításjegyzék hozzáadása";
+"harnesses.add.registry.success" = "A beállításjegyzék sikeresen hozzáadva";
+"harnesses.add.registry.toolbar.help" = "YNH-beállításjegyzék hozzáadása";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Piacterek";
+"settings.marketplaces.section.list" = "Beállított piacterek";
+"settings.marketplaces.empty" = "Még nem lett piactér hozzáadva.";
+"settings.marketplaces.add" = "Piactér hozzáadása…";
+"settings.marketplaces.never.fetched" = "Még soha nem töltötték le";
+"settings.marketplaces.remove.confirm.title" = "Piactér eltávolítása";
+"settings.marketplaces.remove.confirm.message %@" = "Eltávolítja a(z) \"%@\"-t? A bővítményei többé nem jelennek meg a böngészőben.";
+"settings.marketplaces.section.behaviour" = "Viselkedés";
+"settings.marketplaces.auto.refresh" = "Automatikus frissítés indításkor";
+"settings.marketplaces.auto.refresh.help" = "Automatikusan töltse le a piactér frissítéseit az alkalmazás indulásakor";
+"settings.marketplaces.section.authoring" = "Harness-készítés";
+"settings.marketplaces.default.author.directory" = "Alapértelmezett szerzői könyvtár";
+"settings.marketplaces.author.directory.detected.hint" = "Automatikusan felismerte a ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Piacterek";
+"marketplace.add.help" = "Piactér hozzáadása";
+"marketplace.empty" = "Még nincsenek piacterek";
+"marketplace.add.button" = "Piactér hozzáadása";
+"marketplace.row.refresh.help" = "Piactér frissítése";
+"marketplace.row.refresh" = "Frissítés";
+"marketplace.row.remove" = "Eltávolítás";
+"marketplace.row.stale" = " · Lehet, hogy elavult";
+"marketplace.row.never.fetched" = "Még nem lett lekérve";
+"marketplace.add.sheet.title" = "Piactér hozzáadása";
+"marketplace.add.tab.known" = "Ismert";
+"marketplace.add.tab.custom" = "Egyéni URL";
+"marketplace.add.section.git.url" = "Git-tároló URL";
+"marketplace.add.section.display.name" = "Megjelenítési név";
+"marketplace.add.section.vendor" = "Szállító";
+"marketplace.detail.last.fetched %@" = "Utolsó lekérés: %@";
+"marketplace.detail.search.placeholder" = "Bővítmények keresése…";
+"marketplace.detail.search.empty %@" = "Nincs «%@» feltételnek megfelelő bővítmény";
+"marketplace.detail.empty" = "Ezen a piactéren nincsenek bővítmények";
+"marketplace.detail.empty.hint" = "Frissítsen a legújabb index lekéréséhez.";
+"marketplace.plugin.add.to.harness" = "Hozzáadás a harnesshez";
+"marketplace.plugin.copy.install.command" = "Telepítési parancs másolása";
+"marketplace.plugin.copy.install.command.help" = "A Claude Code telepítési parancsát a vágólapra másolja";
+"marketplace.plugin.load.artifacts" = "Összetevők betöltése";
+"marketplace.plugin.loading.artifacts" = "Összetevők betöltése…";
+"marketplace.plugin.no.artifacts" = "Ehhez a bővítményhez nincsenek összetevők felsorolva.";
+"marketplace.plugin.no.artifacts.hint" = "A bővítmény teljes tartalma bele lesz foglalva.";
+"marketplace.plugin.artifacts.unavailable %@" = "Az összetevők nem érhetők el: %@";
+"marketplace.picker.step.artifacts" = "Összetevők";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Alkalmazás";
+"marketplace.picker.select.prompt" = "Válassza ki a belefoglalandó összetevőket";
+"marketplace.picker.select.all" = "Mind";
+"marketplace.picker.select.none" = "Egyik sem";
+"marketplace.picker.no.harnesses" = "Még nincsenek harnessek";
+"marketplace.picker.no.harnesses.hint" = "Először hozzon létre egy harnesst az új harness varázslóval.";
+"marketplace.picker.review.plugin" = "Bővítmény";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Összetevők";
+"marketplace.picker.review.all.count %lld" = "Mind (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld/%lld kiválasztva";
+"marketplace.picker.command.preview" = "Parancs előnézete";
+"marketplace.picker.success %@" = "Bővítmény hozzáadva: %@";
+"marketplace.picker.done" = "Kész";
+"marketplace.picker.back" = "Vissza";
+"marketplace.picker.next" = "Tovább";
+"harness.wizard.title" = "Új harness";
+"harness.wizard.name.label" = "Név (kötelező)";
+"harness.wizard.description.label" = "Leírás";
+"harness.wizard.loading.vendors" = "Szállítók betöltése…";
+"harness.wizard.vendor.label" = "Alapértelmezett szállító";
+"harness.wizard.destination.label" = "Célkönyvtár";
+"harness.wizard.install.toggle" = "A harness azonnali telepítése létrehozás után";
+"harness.wizard.success.add.plugins" = "Bővítmények hozzáadása a piactérről";
+"harness.wizard.success.open" = "Megnyitás a TermQ-ban";
+"harness.wizard.create" = "Létrehozás";
+"harness.wizard.retry" = "Újra";
+"harness.wizard.error.name.required" = "A név megadása kötelező";
+"harness.wizard.error.name.invalid" = "A név csak betűket, számokat, kötőjeleket és aláhúzásjeleket tartalmazhat";
+"harness.wizard.error.name.duplicate %@" = "Már létezik «%@» nevű harness";
+"settings.marketplaces.reset" = "Visszaállítás";
+"settings.marketplaces.section.ynh.registries" = "YNH-nyilvántartások";
+"settings.marketplaces.ynh.registries.empty" = "Nincs hozzáadott nyilvántartás";
+"settings.marketplaces.ynh.add.registry" = "Nyilvántartás hozzáadása…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Nyilvántartás eltávolítása";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Eltávolítás";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "„%@” eltávolítása a YNH-ból? A telepített harness-csomagok megmaradnak.";
+"marketplace.add.custom.name.placeholder" = "Saját piactér";
+"harness.wizard.success.created %@" = "A «%@» harness létrehozva";
