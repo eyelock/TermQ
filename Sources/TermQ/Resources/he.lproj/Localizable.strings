@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "בקשה לשינוי חיצוני";
-"security.external.modification.message" = "תהליך חיצוני מנסה לשנות את הקשר LLM עבור הטרמינל '%@':
-
-%@
-
-זה עשוי להשפיע על האופן שבו עוזרי AI מתקשרים עם טרמינל זה.";
+"security.external.modification.message" = "תהליך חיצוני מנסה לשנות את הקשר LLM עבור הטרמינל '%@':\n\n%@\n\nזה עשוי להשפיע על האופן שבו עוזרי AI מתקשרים עם טרמינל זה.";
 "security.allow" = "אפשר";
 "security.deny" = "דחה";
 "security.allow.disable.prompt" = "אפשר ואל תשאל שוב";

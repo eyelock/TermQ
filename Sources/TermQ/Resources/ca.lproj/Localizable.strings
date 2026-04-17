@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Sol·licitud de modificació externa";
-"security.external.modification.message" = "Un procés extern està intentant modificar el context LLM per al terminal '%@':
-
-%@
-
-Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
+"security.external.modification.message" = "Un procés extern està intentant modificar el context LLM per al terminal '%@':\n\n%@\n\nAixò podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "security.allow" = "Permetre";
 "security.deny" = "Denegar";
 "security.allow.disable.prompt" = "Permetre i no tornar a preguntar";
@@ -550,13 +546,13 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "sidebar.remove.worktree.title" = "Eliminar worktree?";
 "sidebar.remove.worktree.confirm" = "Eliminar";
 "sidebar.remove.main.worktree.error" = "El worktree principal no es pot eliminar.";
-"sidebar.remove.worktree.message %@" = "Això eliminarà permanentment el worktree a "%@". La branca no s'eliminarà.";
+"sidebar.remove.worktree.message %@" = "Això eliminarà permanentment el worktree a \"%@\". La branca no s'eliminarà.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Destruir el Worktree...";
 "sidebar.worktree.delete.title" = "Destruir el Worktree";
 "sidebar.worktree.delete.confirm" = "Destruir";
-"sidebar.worktree.delete.message %@" = "El worktree a "%@" i qualsevol canvi no desat serà destruït permanentment. Aquesta acció no es pot desfer.";
+"sidebar.worktree.delete.message %@" = "El worktree a \"%@\" i qualsevol canvi no desat serà destruït permanentment. Aquesta acció no es pot desfer.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Neteja Worktrees…";

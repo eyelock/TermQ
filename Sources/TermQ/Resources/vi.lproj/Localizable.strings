@@ -468,11 +468,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Yêu cầu sửa đổi bên ngoài";
-"security.external.modification.message" = "Một tiến trình bên ngoài đang cố gắng sửa đổi ngữ cảnh LLM cho terminal '%@':
-
-%@
-
-Điều này có thể ảnh hưởng đến cách các trợ lý AI tương tác với terminal này.";
+"security.external.modification.message" = "Một tiến trình bên ngoài đang cố gắng sửa đổi ngữ cảnh LLM cho terminal '%@':\n\n%@\n\nĐiều này có thể ảnh hưởng đến cách các trợ lý AI tương tác với terminal này.";
 "security.allow" = "Cho phép";
 "security.deny" = "Từ chối";
 "security.allow.disable.prompt" = "Cho phép và không hỏi lại";

@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Αίτημα εξωτερικής τροποποίησης";
-"security.external.modification.message" = "Μια εξωτερική διεργασία προσπαθεί να τροποποιήσει το πλαίσιο LLM για το τερματικό '%@':
-
-%@
-
-Αυτό μπορεί να επηρεάσει τον τρόπο αλληλεπίδρασης των βοηθών AI με αυτό το τερματικό.";
+"security.external.modification.message" = "Μια εξωτερική διεργασία προσπαθεί να τροποποιήσει το πλαίσιο LLM για το τερματικό '%@':\n\n%@\n\nΑυτό μπορεί να επηρεάσει τον τρόπο αλληλεπίδρασης των βοηθών AI με αυτό το τερματικό.";
 "security.allow" = "Επιτρέπεται";
 "security.deny" = "Απόρριψη";
 "security.allow.disable.prompt" = "Επιτρέπεται χωρίς επανερώτηση";
@@ -550,13 +546,13 @@
 "sidebar.remove.worktree.title" = "Διαγραφή worktree;";
 "sidebar.remove.worktree.confirm" = "Διαγραφή";
 "sidebar.remove.main.worktree.error" = "Το κύριο worktree δεν μπορεί να αφαιρεθεί.";
-"sidebar.remove.worktree.message %@" = "Αυτό θα διαγράψει μόνιμα το worktree στο "%@". Ο κλάδος δεν θα διαγραφεί.";
+"sidebar.remove.worktree.message %@" = "Αυτό θα διαγράψει μόνιμα το worktree στο \"%@\". Ο κλάδος δεν θα διαγραφεί.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Καταστροφή Worktree...";
 "sidebar.worktree.delete.title" = "Καταστροφή Worktree";
 "sidebar.worktree.delete.confirm" = "Καταστροφή";
-"sidebar.worktree.delete.message %@" = "Το worktree στο "%@" και τυχόν μη αποθηκευμένες αλλαγές θα καταστραφούν οριστικά. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.";
+"sidebar.worktree.delete.message %@" = "Το worktree στο \"%@\" και τυχόν μη αποθηκευμένες αλλαγές θα καταστραφούν οριστικά. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Εκκαθάριση Worktrees…";

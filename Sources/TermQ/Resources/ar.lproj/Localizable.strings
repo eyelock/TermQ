@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "طلب تعديل خارجي";
-"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':
-
-%@
-
-قد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
+"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':\n\n%@\n\nقد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
 "security.allow" = "سماح";
 "security.deny" = "رفض";
 "security.allow.disable.prompt" = "السماح وعدم السؤال مجدداً";
@@ -550,13 +546,13 @@
 "sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
 "sidebar.remove.worktree.confirm" = "حذف";
 "sidebar.remove.main.worktree.error" = "لا يمكن إزالة بيئة العمل الرئيسية.";
-"sidebar.remove.worktree.message %@" = "سيؤدي هذا إلى حذف بيئة العمل في "%@" بشكل دائم. لن يتم حذف الفرع.";
+"sidebar.remove.worktree.message %@" = "سيؤدي هذا إلى حذف بيئة العمل في \"%@\" بشكل دائم. لن يتم حذف الفرع.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "إتلاف Worktree...";
 "sidebar.worktree.delete.title" = "إتلاف Worktree";
 "sidebar.worktree.delete.confirm" = "إتلاف";
-"sidebar.worktree.delete.message %@" = "سيتم إتلاف worktree في "%@" وأي تغييرات غير محفوظة بشكل دائم. لا يمكن التراجع عن هذا الإجراء.";
+"sidebar.worktree.delete.message %@" = "سيتم إتلاف worktree في \"%@\" وأي تغييرات غير محفوظة بشكل دائم. لا يمكن التراجع عن هذا الإجراء.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "تنظيف Worktrees…";

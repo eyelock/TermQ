@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Ulkoinen muutospyyntö";
-"security.external.modification.message" = "Ulkoinen prosessi yrittää muokata LLM-kontekstia terminaalille '%@':
-
-%@
-
-Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tämän terminaalin kanssa.";
+"security.external.modification.message" = "Ulkoinen prosessi yrittää muokata LLM-kontekstia terminaalille '%@':\n\n%@\n\nTämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tämän terminaalin kanssa.";
 "security.allow" = "Salli";
 "security.deny" = "Estä";
 "security.allow.disable.prompt" = "Salli äläkä kysy uudelleen";

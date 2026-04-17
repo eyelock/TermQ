@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Požadavek na externí úpravu";
-"security.external.modification.message" = "Externí proces se pokouší upravit kontext LLM pro terminál '%@':
-
-%@
-
-To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
+"security.external.modification.message" = "Externí proces se pokouší upravit kontext LLM pro terminál '%@':\n\n%@\n\nTo může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "security.allow" = "Povolit";
 "security.deny" = "Zamítnout";
 "security.allow.disable.prompt" = "Povolit a znovu se neptat";
@@ -550,13 +546,13 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "sidebar.remove.worktree.title" = "Smazat pracovní strom?";
 "sidebar.remove.worktree.confirm" = "Smazat";
 "sidebar.remove.main.worktree.error" = "Hlavní pracovní strom nelze odebrat.";
-"sidebar.remove.worktree.message %@" = "Tím trvale smažete pracovní strom v "%@". Větev nebude smazána.";
+"sidebar.remove.worktree.message %@" = "Tím trvale smažete pracovní strom v \"%@\". Větev nebude smazána.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Zničit Worktree...";
 "sidebar.worktree.delete.title" = "Zničit Worktree";
 "sidebar.worktree.delete.confirm" = "Zničit";
-"sidebar.worktree.delete.message %@" = "Pracovní strom na cestě "%@" a veškeré neuložené změny budou trvale zničeny. Tuto akci nelze vrátit zpět.";
+"sidebar.worktree.delete.message %@" = "Pracovní strom na cestě \"%@\" a veškeré neuložené změny budou trvale zničeny. Tuto akci nelze vrátit zpět.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Vyčistit Worktrees…";

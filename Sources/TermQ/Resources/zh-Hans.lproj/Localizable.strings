@@ -119,8 +119,8 @@
 // MARK: - Delete Confirmation
 "delete.title" = "删除终端";
 "delete.move.to.bin" = "移至回收站";
-"delete.message %@" = "确定要删除"%@"吗？";
-"delete.bin.message %@" = ""%@"将被移至回收站，可在 30 天内恢复。";
+"delete.message %@" = "确定要删除\"%@\"吗？";
+"delete.bin.message %@" = "\"%@\"将被移至回收站，可在 30 天内恢复。";
 "delete.cancel" = "取消";
 "delete.confirm" = "删除";
 "delete.permanent" = "永久删除";
@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部修改请求";
-"security.external.modification.message" = "外部进程正在尝试修改终端 '%@' 的 LLM 上下文:
-
-%@
-
-这可能会影响 AI 助手与此终端的交互方式。";
+"security.external.modification.message" = "外部进程正在尝试修改终端 '%@' 的 LLM 上下文:\n\n%@\n\n这可能会影响 AI 助手与此终端的交互方式。";
 "security.allow" = "允许";
 "security.deny" = "拒绝";
 "security.allow.disable.prompt" = "允许并不再询问";
@@ -703,7 +699,7 @@
 "harnesses.update.help" = "更新到最新版本";
 "harnesses.uninstall.button" = "卸载";
 "harnesses.uninstall.help" = "卸载此 harness";
-"harnesses.uninstall.alert.title %@" = "卸载"%@"？";
+"harnesses.uninstall.alert.title %@" = "卸载\"%@\"？";
 "harnesses.uninstall.alert.message" = "这将从您的系统中移除该 harness。";
 "harnesses.uninstall.alert.worktrees %ld" = "此 harness 已关联 %ld 个工作树——这些关联将被清除。";
 "harnesses.uninstall.alert.terminals %ld" = "当前有 %ld 个终端正在运行此 harness。";

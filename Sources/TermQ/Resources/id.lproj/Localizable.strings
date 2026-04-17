@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Permintaan Modifikasi Eksternal";
-"security.external.modification.message" = "Proses eksternal mencoba memodifikasi konteks LLM untuk terminal '%@':
-
-%@
-
-Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
+"security.external.modification.message" = "Proses eksternal mencoba memodifikasi konteks LLM untuk terminal '%@':\n\n%@\n\nIni dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "security.allow" = "Izinkan";
 "security.deny" = "Tolak";
 "security.allow.disable.prompt" = "Izinkan & Jangan Tanya Lagi";
@@ -548,13 +544,13 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "sidebar.remove.worktree.title" = "Hapus Worktree?";
 "sidebar.remove.worktree.confirm" = "Hapus";
 "sidebar.remove.main.worktree.error" = "Worktree utama tidak dapat dihapus.";
-"sidebar.remove.worktree.message %@" = "Ini akan menghapus worktree di "%@" secara permanen. Branch tidak akan dihapus.";
+"sidebar.remove.worktree.message %@" = "Ini akan menghapus worktree di \"%@\" secara permanen. Branch tidak akan dihapus.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Hancurkan Worktree...";
 "sidebar.worktree.delete.title" = "Hancurkan Worktree";
 "sidebar.worktree.delete.confirm" = "Hancurkan";
-"sidebar.worktree.delete.message %@" = "Worktree di "%@" dan semua perubahan yang belum disimpan akan dihancurkan secara permanen. Tindakan ini tidak dapat dibatalkan.";
+"sidebar.worktree.delete.message %@" = "Worktree di \"%@\" dan semua perubahan yang belum disimpan akan dihancurkan secara permanen. Tindakan ini tidak dapat dibatalkan.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Bersihkan Worktrees…";

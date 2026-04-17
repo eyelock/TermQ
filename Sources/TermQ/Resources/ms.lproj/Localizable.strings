@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Permintaan Pengubahsuaian Luaran";
-"security.external.modification.message" = "Proses luaran cuba mengubah suai konteks LLM untuk terminal '%@':
-
-%@
-
-Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
+"security.external.modification.message" = "Proses luaran cuba mengubah suai konteks LLM untuk terminal '%@':\n\n%@\n\nIni boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "security.allow" = "Benarkan";
 "security.deny" = "Tolak";
 "security.allow.disable.prompt" = "Benarkan & Jangan Tanya Lagi";

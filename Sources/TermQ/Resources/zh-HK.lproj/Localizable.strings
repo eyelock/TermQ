@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部修改請求";
-"security.external.modification.message" = "外部程序正在嘗試修改終端機 '%@' 嘅 LLM 上下文:
-
-%@
-
-呢個可能會影響 AI 助理同呢個終端機嘅互動方式。";
+"security.external.modification.message" = "外部程序正在嘗試修改終端機 '%@' 嘅 LLM 上下文:\n\n%@\n\n呢個可能會影響 AI 助理同呢個終端機嘅互動方式。";
 "security.allow" = "允許";
 "security.deny" = "拒絕";
 "security.allow.disable.prompt" = "允許並唔再詢問";

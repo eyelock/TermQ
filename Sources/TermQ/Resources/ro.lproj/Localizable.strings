@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Solicitare de modificare externă";
-"security.external.modification.message" = "Un proces extern încearcă să modifice contextul LLM pentru terminalul '%@':
-
-%@
-
-Acest lucru ar putea afecta modul în care asistenții AI interacționează cu acest terminal.";
+"security.external.modification.message" = "Un proces extern încearcă să modifice contextul LLM pentru terminalul '%@':\n\n%@\n\nAcest lucru ar putea afecta modul în care asistenții AI interacționează cu acest terminal.";
 "security.allow" = "Permite";
 "security.deny" = "Refuză";
 "security.allow.disable.prompt" = "Permite și nu mai întreba";
@@ -548,13 +544,13 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "sidebar.remove.worktree.title" = "Ștergeți arborele de lucru?";
 "sidebar.remove.worktree.confirm" = "Șterge";
 "sidebar.remove.main.worktree.error" = "Arborele de lucru principal nu poate fi eliminat.";
-"sidebar.remove.worktree.message %@" = "Aceasta va șterge permanent arborele de lucru din "%@". Branch-ul nu va fi șters.";
+"sidebar.remove.worktree.message %@" = "Aceasta va șterge permanent arborele de lucru din \"%@\". Branch-ul nu va fi șters.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Distruge Worktree...";
 "sidebar.worktree.delete.title" = "Distruge Worktree";
 "sidebar.worktree.delete.confirm" = "Distruge";
-"sidebar.worktree.delete.message %@" = "Worktree-ul de la "%@" și orice modificări nesalvate vor fi distruse permanent. Această acțiune nu poate fi anulată.";
+"sidebar.worktree.delete.message %@" = "Worktree-ul de la \"%@\" și orice modificări nesalvate vor fi distruse permanent. Această acțiune nu poate fi anulată.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Curăță Worktrees…";

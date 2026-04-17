@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Anfrage zur externen Änderung";
-"security.external.modification.message" = "Ein externer Prozess versucht, den LLM-Kontext für Terminal '%@' zu ändern:
-
-%@
-
-Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren.";
+"security.external.modification.message" = "Ein externer Prozess versucht, den LLM-Kontext für Terminal '%@' zu ändern:\n\n%@\n\nDies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren.";
 "security.allow" = "Erlauben";
 "security.deny" = "Ablehnen";
 "security.allow.disable.prompt" = "Erlauben und nicht mehr fragen";
@@ -550,13 +546,13 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "sidebar.remove.worktree.title" = "Worktree löschen?";
 "sidebar.remove.worktree.confirm" = "Löschen";
 "sidebar.remove.main.worktree.error" = "Der Haupt-Worktree kann nicht entfernt werden.";
-"sidebar.remove.worktree.message %@" = "Dadurch wird der Worktree bei "%@" dauerhaft gelöscht. Der Branch wird nicht gelöscht.";
+"sidebar.remove.worktree.message %@" = "Dadurch wird der Worktree bei \"%@\" dauerhaft gelöscht. Der Branch wird nicht gelöscht.";
 
 // Delete worktree (force)
 "sidebar.worktree.delete" = "Worktree vernichten...";
 "sidebar.worktree.delete.title" = "Worktree vernichten";
 "sidebar.worktree.delete.confirm" = "Vernichten";
-"sidebar.worktree.delete.message %@" = "Der Worktree unter "%@" und alle nicht gespeicherten Änderungen werden dauerhaft vernichtet. Dies kann nicht rückgängig gemacht werden.";
+"sidebar.worktree.delete.message %@" = "Der Worktree unter \"%@\" und alle nicht gespeicherten Änderungen werden dauerhaft vernichtet. Dies kann nicht rückgängig gemacht werden.";
 
 // Prune worktrees
 "sidebar.prune.worktrees" = "Worktrees bereinigen…";

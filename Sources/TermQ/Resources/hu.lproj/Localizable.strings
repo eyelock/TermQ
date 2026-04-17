@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Külső módosítási kérelem";
-"security.external.modification.message" = "Egy külső folyamat megpróbálja módosítani a '%@' terminál LLM kontextusát:
-
-%@
-
-Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.";
+"security.external.modification.message" = "Egy külső folyamat megpróbálja módosítani a '%@' terminál LLM kontextusát:\n\n%@\n\nEz befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.";
 "security.allow" = "Engedélyezés";
 "security.deny" = "Elutasítás";
 "security.allow.disable.prompt" = "Engedélyezés és ne kérdezze újra";

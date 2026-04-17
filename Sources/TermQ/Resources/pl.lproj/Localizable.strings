@@ -467,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Żądanie zewnętrznej modyfikacji";
-"security.external.modification.message" = "Zewnętrzny proces próbuje zmodyfikować kontekst LLM dla terminala '%@':
-
-%@
-
-To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym terminalem.";
+"security.external.modification.message" = "Zewnętrzny proces próbuje zmodyfikować kontekst LLM dla terminala '%@':\n\n%@\n\nTo może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym terminalem.";
 "security.allow" = "Zezwól";
 "security.deny" = "Odmów";
 "security.allow.disable.prompt" = "Zezwól i nie pytaj ponownie";
