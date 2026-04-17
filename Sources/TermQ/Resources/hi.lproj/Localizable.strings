@@ -680,3 +680,27 @@
 "sidebar.prune.worktrees.nothing.message" = "सभी worktrees का हिसाब है। कोई पुरानी प्रविष्टि नहीं मिली।";
 
 "sidebar.prune.worktrees.explanation" = "ये प्रशासनिक रिकॉर्ड उन निर्देशिकाओं की ओर इशारा करते हैं जो अब मौजूद नहीं हैं। छाँटने से ये हट जाते हैं — आपकी शाखाएं प्रभावित नहीं होतीं।";
+
+// Install sheet
+"harnesses.install.title" = "Harness इंस्टॉल करें";
+"harnesses.install.toolbar.help" = "एक harness इंस्टॉल करें";
+"harnesses.install.tab.search" = "खोजें";
+"harnesses.install.tab.git" = "Git से";
+"harnesses.install.tab.sources" = "स्रोत";
+"harnesses.install.search.placeholder" = "रजिस्ट्रियों और स्रोतों में खोजें…";
+"harnesses.install.search.prompt" = "रजिस्ट्रियों और स्रोतों में खोजने के लिए टाइप करें";
+"harnesses.install.search.empty" = "कोई परिणाम नहीं";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "उप-पथ";
+"harnesses.install.git.subpath.placeholder" = "वैकल्पिक उप-निर्देशिका";
+"harnesses.install.command.preview" = "कमांड पूर्वावलोकन";
+"harnesses.install.confirm" = "इंस्टॉल करें";
+"harnesses.install.cancel" = "रद्द करें";
+"harnesses.install.already.installed" = "इंस्टॉल है";
+"harnesses.install.from %@" = "%@ से";
+"harnesses.install.sources.empty" = "कोई स्रोत कॉन्फ़िगर नहीं हैं। इसके harnesses देखने के लिए एक स्थानीय निर्देशिका जोड़ें।";
+"harnesses.install.sources.add" = "स्रोत जोड़ें…";
+"harnesses.install.sources.add.help" = "Harness स्रोत के रूप में एक स्थानीय निर्देशिका जोड़ें";
+"harnesses.install.sources.remove" = "हटाएं";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

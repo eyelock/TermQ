@@ -674,3 +674,27 @@ Questo potrebbe influenzare il modo in cui gli assistenti AI interagiscono con q
 "settings.ynh.version.label" = "Versione:";
 
 "common.clear" = "Cancella";
+
+// Install sheet
+"harnesses.install.title" = "Installa harness";
+"harnesses.install.toolbar.help" = "Installa un harness";
+"harnesses.install.tab.search" = "Cerca";
+"harnesses.install.tab.git" = "Da Git";
+"harnesses.install.tab.sources" = "Sorgenti";
+"harnesses.install.search.placeholder" = "Cerca in registri e sorgenti…";
+"harnesses.install.search.prompt" = "Digita per cercare in registri e sorgenti";
+"harnesses.install.search.empty" = "Nessun risultato";
+"harnesses.install.git.url" = "URL Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sottopercorso";
+"harnesses.install.git.subpath.placeholder" = "Sottodirectory opzionale";
+"harnesses.install.command.preview" = "Anteprima comando";
+"harnesses.install.confirm" = "Installa";
+"harnesses.install.cancel" = "Annulla";
+"harnesses.install.already.installed" = "Installato";
+"harnesses.install.from %@" = "da %@";
+"harnesses.install.sources.empty" = "Nessuna sorgente configurata. Aggiungi una directory locale per sfogliarne gli harness.";
+"harnesses.install.sources.add" = "Aggiungi sorgente…";
+"harnesses.install.sources.add.help" = "Aggiunge una directory locale come sorgente harness";
+"harnesses.install.sources.remove" = "Rimuovi";
+"harnesses.install.sources.count %ld" = "%ld harness";

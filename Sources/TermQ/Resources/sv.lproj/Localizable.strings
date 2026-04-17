@@ -681,3 +681,27 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "sidebar.prune.worktrees.nothing.message" = "Alla worktrees är redovisade. Inga inaktuella poster hittades.";
 
 "sidebar.prune.worktrees.explanation" = "Dessa administrativa poster pekar på kataloger som inte längre finns. Rensning tar bort dem — dina grenar påverkas inte.";
+
+// Install sheet
+"harnesses.install.title" = "Installera harness";
+"harnesses.install.toolbar.help" = "Installera en harness";
+"harnesses.install.tab.search" = "Sök";
+"harnesses.install.tab.git" = "Från Git";
+"harnesses.install.tab.sources" = "Källor";
+"harnesses.install.search.placeholder" = "Sök i register och källor…";
+"harnesses.install.search.prompt" = "Skriv för att söka i register och källor";
+"harnesses.install.search.empty" = "Inga resultat";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Undersökväg";
+"harnesses.install.git.subpath.placeholder" = "Valfri underkatalog";
+"harnesses.install.command.preview" = "Kommandoförhandsvisning";
+"harnesses.install.confirm" = "Installera";
+"harnesses.install.cancel" = "Avbryt";
+"harnesses.install.already.installed" = "Installerad";
+"harnesses.install.from %@" = "från %@";
+"harnesses.install.sources.empty" = "Inga källor konfigurerade. Lägg till en lokal katalog för att bläddra bland dess harnesses.";
+"harnesses.install.sources.add" = "Lägg till källa…";
+"harnesses.install.sources.add.help" = "Lägg till en lokal katalog som harness-källa";
+"harnesses.install.sources.remove" = "Ta bort";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

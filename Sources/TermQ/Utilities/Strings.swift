@@ -941,5 +941,33 @@ extension Strings {
         // Linked worktrees section in detail view
         static var linkedWorktrees: String { localized("harnesses.linked.worktrees") }
         static var linkedWorktreesNone: String { localized("harnesses.linked.worktrees.none") }
+
+        // Install sheet
+        static var installTitle: String { localized("harnesses.install.title") }
+        static var installToolbarHelp: String { localized("harnesses.install.toolbar.help") }
+        static var installTabSearch: String { localized("harnesses.install.tab.search") }
+        static var installTabGit: String { localized("harnesses.install.tab.git") }
+        static var installTabSources: String { localized("harnesses.install.tab.sources") }
+        static var installSearchPlaceholder: String { localized("harnesses.install.search.placeholder") }
+        static var installSearchPrompt: String { localized("harnesses.install.search.prompt") }
+        static var installSearchEmpty: String { localized("harnesses.install.search.empty") }
+        static var installGitURL: String { localized("harnesses.install.git.url") }
+        static var installGitURLPlaceholder: String { localized("harnesses.install.git.url.placeholder") }
+        static var installGitSubpath: String { localized("harnesses.install.git.subpath") }
+        static var installGitSubpathPlaceholder: String { localized("harnesses.install.git.subpath.placeholder") }
+        static var installCommandPreview: String { localized("harnesses.install.command.preview") }
+        static var installConfirm: String { localized("harnesses.install.confirm") }
+        static var installCancel: String { localized("harnesses.install.cancel") }
+        static var installAlreadyInstalled: String { localized("harnesses.install.already.installed") }
+        static func installFrom(_ name: String) -> String {
+            String(format: localized("harnesses.install.from %@"), name)
+        }
+        static var installSourcesEmpty: String { localized("harnesses.install.sources.empty") }
+        static var installSourcesAdd: String { localized("harnesses.install.sources.add") }
+        static var installSourcesAddHelp: String { localized("harnesses.install.sources.add.help") }
+        static var installSourcesRemove: String { localized("harnesses.install.sources.remove") }
+        static func installSourcesCount(_ count: Int) -> String {
+            String(format: localized("harnesses.install.sources.count %ld"), count)
+        }
     }
 }

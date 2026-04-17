@@ -679,3 +679,27 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "sidebar.prune.worktrees.nothing.message" = "Wszystkie worktrees są uwzględnione. Nie znaleziono przestarzałych rekordów.";
 
 "sidebar.prune.worktrees.explanation" = "Te rekordy administracyjne wskazują na katalogi, które już nie istnieją. Przycinanie usuwa je — Twoje gałęzie nie są dotknięte.";
+
+// Install sheet
+"harnesses.install.title" = "Zainstaluj harness";
+"harnesses.install.toolbar.help" = "Zainstaluj harness";
+"harnesses.install.tab.search" = "Szukaj";
+"harnesses.install.tab.git" = "Z Git";
+"harnesses.install.tab.sources" = "Źródła";
+"harnesses.install.search.placeholder" = "Szukaj w rejestrach i źródłach…";
+"harnesses.install.search.prompt" = "Wpisz, aby przeszukać rejestry i źródła";
+"harnesses.install.search.empty" = "Brak wyników";
+"harnesses.install.git.url" = "URL Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Ścieżka podrzędna";
+"harnesses.install.git.subpath.placeholder" = "Opcjonalny podkatalog";
+"harnesses.install.command.preview" = "Podgląd polecenia";
+"harnesses.install.confirm" = "Zainstaluj";
+"harnesses.install.cancel" = "Anuluj";
+"harnesses.install.already.installed" = "Zainstalowano";
+"harnesses.install.from %@" = "z %@";
+"harnesses.install.sources.empty" = "Brak skonfigurowanych źródeł. Dodaj lokalny katalog, aby przeglądać jego harnesses.";
+"harnesses.install.sources.add" = "Dodaj źródło…";
+"harnesses.install.sources.add.help" = "Dodaj lokalny katalog jako źródło harness";
+"harnesses.install.sources.remove" = "Usuń";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

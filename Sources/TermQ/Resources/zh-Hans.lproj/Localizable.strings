@@ -674,3 +674,27 @@
 "settings.ynh.version.label" = "版本：";
 
 "common.clear" = "清除";
+
+// Install sheet
+"harnesses.install.title" = "安装 Harness";
+"harnesses.install.toolbar.help" = "安装一个 harness";
+"harnesses.install.tab.search" = "搜索";
+"harnesses.install.tab.git" = "从 Git";
+"harnesses.install.tab.sources" = "来源";
+"harnesses.install.search.placeholder" = "搜索注册表和来源…";
+"harnesses.install.search.prompt" = "输入以搜索注册表和来源";
+"harnesses.install.search.empty" = "无结果";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "子路径";
+"harnesses.install.git.subpath.placeholder" = "可选子目录";
+"harnesses.install.command.preview" = "命令预览";
+"harnesses.install.confirm" = "安装";
+"harnesses.install.cancel" = "取消";
+"harnesses.install.already.installed" = "已安装";
+"harnesses.install.from %@" = "来自 %@";
+"harnesses.install.sources.empty" = "未配置来源。添加本地目录以浏览其 harnesses。";
+"harnesses.install.sources.add" = "添加来源…";
+"harnesses.install.sources.add.help" = "将本地目录添加为 harness 来源";
+"harnesses.install.sources.remove" = "移除";
+"harnesses.install.sources.count %ld" = "%ld 个 harnesses";

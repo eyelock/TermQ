@@ -674,3 +674,27 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "settings.ynh.version.label" = "Version:";
 
 "common.clear" = "Löschen";
+
+// Install sheet
+"harnesses.install.title" = "Harness installieren";
+"harnesses.install.toolbar.help" = "Ein Harness installieren";
+"harnesses.install.tab.search" = "Suchen";
+"harnesses.install.tab.git" = "Aus Git";
+"harnesses.install.tab.sources" = "Quellen";
+"harnesses.install.search.placeholder" = "Registries und Quellen durchsuchen…";
+"harnesses.install.search.prompt" = "Zum Suchen in Registries und Quellen tippen";
+"harnesses.install.search.empty" = "Keine Ergebnisse";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Unterpfad";
+"harnesses.install.git.subpath.placeholder" = "Optionales Unterverzeichnis";
+"harnesses.install.command.preview" = "Befehlsvorschau";
+"harnesses.install.confirm" = "Installieren";
+"harnesses.install.cancel" = "Abbrechen";
+"harnesses.install.already.installed" = "Installiert";
+"harnesses.install.from %@" = "von %@";
+"harnesses.install.sources.empty" = "Keine Quellen konfiguriert. Füge ein lokales Verzeichnis hinzu, um dessen Harnesses zu durchsuchen.";
+"harnesses.install.sources.add" = "Quelle hinzufügen…";
+"harnesses.install.sources.add.help" = "Ein lokales Verzeichnis als Harness-Quelle hinzufügen";
+"harnesses.install.sources.remove" = "Entfernen";
+"harnesses.install.sources.count %ld" = "%ld Harnesses";

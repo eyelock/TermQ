@@ -680,3 +680,27 @@ Ovo može utjecati na to kako AI pomoćnici komuniciraju s ovim terminalom.";
 "sidebar.prune.worktrees.nothing.message" = "Svi worktrees su evidentirani. Nisu pronađeni zastarjeli zapisi.";
 
 "sidebar.prune.worktrees.explanation" = "Ovi administrativni zapisi ukazuju na direktorije koji više ne postoje. Obrezivanje ih uklanja — vaše grane nisu zahvaćene.";
+
+// Install sheet
+"harnesses.install.title" = "Instalacija harness";
+"harnesses.install.toolbar.help" = "Instaliraj harness";
+"harnesses.install.tab.search" = "Pretraži";
+"harnesses.install.tab.git" = "Iz Gita";
+"harnesses.install.tab.sources" = "Izvori";
+"harnesses.install.search.placeholder" = "Pretraži registre i izvore…";
+"harnesses.install.search.prompt" = "Unesite tekst za pretraživanje registara i izvora";
+"harnesses.install.search.empty" = "Nema rezultata";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Podputanja";
+"harnesses.install.git.subpath.placeholder" = "Opcionalni podimenik";
+"harnesses.install.command.preview" = "Pregled naredbe";
+"harnesses.install.confirm" = "Instaliraj";
+"harnesses.install.cancel" = "Odustani";
+"harnesses.install.already.installed" = "Instalirano";
+"harnesses.install.from %@" = "iz %@";
+"harnesses.install.sources.empty" = "Nisu konfigurirani izvori. Dodajte lokalnu mapu za pregledavanje njezinih harnesses-a.";
+"harnesses.install.sources.add" = "Dodaj izvor…";
+"harnesses.install.sources.add.help" = "Dodaj lokalnu mapu kao izvor harness-a";
+"harnesses.install.sources.remove" = "Ukloni";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

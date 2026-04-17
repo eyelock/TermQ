@@ -674,3 +674,27 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "settings.ynh.version.label" = "Versiune:";
 
 "common.clear" = "Ștergere";
+
+// Install sheet
+"harnesses.install.title" = "Instalare harness";
+"harnesses.install.toolbar.help" = "Instalează un harness";
+"harnesses.install.tab.search" = "Căutare";
+"harnesses.install.tab.git" = "Din Git";
+"harnesses.install.tab.sources" = "Surse";
+"harnesses.install.search.placeholder" = "Caută în registre și surse…";
+"harnesses.install.search.prompt" = "Tastați pentru a căuta în registre și surse";
+"harnesses.install.search.empty" = "Niciun rezultat";
+"harnesses.install.git.url" = "URL Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sub-cale";
+"harnesses.install.git.subpath.placeholder" = "Sub-director opțional";
+"harnesses.install.command.preview" = "Previzualizare comandă";
+"harnesses.install.confirm" = "Instalează";
+"harnesses.install.cancel" = "Anulează";
+"harnesses.install.already.installed" = "Instalat";
+"harnesses.install.from %@" = "din %@";
+"harnesses.install.sources.empty" = "Nicio sursă configurată. Adăugați un director local pentru a naviga prin harnesses-urile sale.";
+"harnesses.install.sources.add" = "Adaugă sursă…";
+"harnesses.install.sources.add.help" = "Adăugați un director local ca sursă harness";
+"harnesses.install.sources.remove" = "Elimină";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

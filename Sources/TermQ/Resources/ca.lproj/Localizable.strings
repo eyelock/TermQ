@@ -674,3 +674,27 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "settings.ynh.version.label" = "Versió:";
 
 "common.clear" = "Neteja";
+
+// Install sheet
+"harnesses.install.title" = "Instal·la Harness";
+"harnesses.install.toolbar.help" = "Instal·la un harness";
+"harnesses.install.tab.search" = "Cerca";
+"harnesses.install.tab.git" = "Des de Git";
+"harnesses.install.tab.sources" = "Fonts";
+"harnesses.install.search.placeholder" = "Cerca als registres i fonts…";
+"harnesses.install.search.prompt" = "Escriu per cercar als registres i fonts";
+"harnesses.install.search.empty" = "Sense resultats";
+"harnesses.install.git.url" = "URL de Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Subpath";
+"harnesses.install.git.subpath.placeholder" = "Subdirectori opcional";
+"harnesses.install.command.preview" = "Previsualització de l'ordre";
+"harnesses.install.confirm" = "Instal·la";
+"harnesses.install.cancel" = "Cancel·la";
+"harnesses.install.already.installed" = "Instal·lat";
+"harnesses.install.from %@" = "de %@";
+"harnesses.install.sources.empty" = "No hi ha fonts configurades. Afegeix un directori local per explorar els seus harnesses.";
+"harnesses.install.sources.add" = "Afegeix font…";
+"harnesses.install.sources.add.help" = "Afegeix un directori local com a font de harness";
+"harnesses.install.sources.remove" = "Elimina";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

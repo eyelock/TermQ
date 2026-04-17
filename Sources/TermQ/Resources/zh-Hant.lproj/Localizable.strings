@@ -674,3 +674,27 @@
 "settings.ynh.version.label" = "版本：";
 
 "common.clear" = "清除";
+
+// Install sheet
+"harnesses.install.title" = "安裝 Harness";
+"harnesses.install.toolbar.help" = "安裝一個 harness";
+"harnesses.install.tab.search" = "搜尋";
+"harnesses.install.tab.git" = "從 Git";
+"harnesses.install.tab.sources" = "來源";
+"harnesses.install.search.placeholder" = "搜尋登錄檔和來源…";
+"harnesses.install.search.prompt" = "輸入以搜尋登錄檔和來源";
+"harnesses.install.search.empty" = "無結果";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "子路徑";
+"harnesses.install.git.subpath.placeholder" = "選用子目錄";
+"harnesses.install.command.preview" = "指令預覽";
+"harnesses.install.confirm" = "安裝";
+"harnesses.install.cancel" = "取消";
+"harnesses.install.already.installed" = "已安裝";
+"harnesses.install.from %@" = "來自 %@";
+"harnesses.install.sources.empty" = "未設定來源。新增本機目錄以瀏覽其 harnesses。";
+"harnesses.install.sources.add" = "新增來源…";
+"harnesses.install.sources.add.help" = "將本機目錄新增為 harness 來源";
+"harnesses.install.sources.remove" = "移除";
+"harnesses.install.sources.count %ld" = "%ld 個 harnesses";

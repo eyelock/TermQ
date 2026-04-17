@@ -674,3 +674,27 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "settings.ynh.version.label" = "Version:";
 
 "common.clear" = "Ryd";
+
+// Install sheet
+"harnesses.install.title" = "Installer harness";
+"harnesses.install.toolbar.help" = "Installer et harness";
+"harnesses.install.tab.search" = "Søg";
+"harnesses.install.tab.git" = "Fra Git";
+"harnesses.install.tab.sources" = "Kilder";
+"harnesses.install.search.placeholder" = "Søg i registries og kilder…";
+"harnesses.install.search.prompt" = "Skriv for at søge i registries og kilder";
+"harnesses.install.search.empty" = "Ingen resultater";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Understi";
+"harnesses.install.git.subpath.placeholder" = "Valgfri undermappe";
+"harnesses.install.command.preview" = "Kommandovisning";
+"harnesses.install.confirm" = "Installer";
+"harnesses.install.cancel" = "Annuller";
+"harnesses.install.already.installed" = "Installeret";
+"harnesses.install.from %@" = "fra %@";
+"harnesses.install.sources.empty" = "Ingen kilder konfigureret. Tilføj en lokal mappe for at gennemse dens harnesses.";
+"harnesses.install.sources.add" = "Tilføj kilde…";
+"harnesses.install.sources.add.help" = "Tilføj en lokal mappe som harness-kilde";
+"harnesses.install.sources.remove" = "Fjern";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

@@ -674,3 +674,27 @@
 "settings.ynh.version.label" = "バージョン：";
 
 "common.clear" = "クリア";
+
+// Install sheet
+"harnesses.install.title" = "Harnessをインストール";
+"harnesses.install.toolbar.help" = "Harnessをインストール";
+"harnesses.install.tab.search" = "検索";
+"harnesses.install.tab.git" = "Gitから";
+"harnesses.install.tab.sources" = "ソース";
+"harnesses.install.search.placeholder" = "レジストリとソースを検索…";
+"harnesses.install.search.prompt" = "レジストリとソースを検索するには入力してください";
+"harnesses.install.search.empty" = "結果なし";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "サブパス";
+"harnesses.install.git.subpath.placeholder" = "省略可能なサブディレクトリ";
+"harnesses.install.command.preview" = "コマンドプレビュー";
+"harnesses.install.confirm" = "インストール";
+"harnesses.install.cancel" = "キャンセル";
+"harnesses.install.already.installed" = "インストール済み";
+"harnesses.install.from %@" = "%@ から";
+"harnesses.install.sources.empty" = "ソースが設定されていません。ローカルディレクトリを追加してHarnessを閲覧してください。";
+"harnesses.install.sources.add" = "ソースを追加…";
+"harnesses.install.sources.add.help" = "ローカルディレクトリをHarnessソースとして追加";
+"harnesses.install.sources.remove" = "削除";
+"harnesses.install.sources.count %ld" = "%ld 個のharness";

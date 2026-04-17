@@ -674,3 +674,27 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "settings.ynh.version.label" = "Verzia:";
 
 "common.clear" = "Vymazať";
+
+// Install sheet
+"harnesses.install.title" = "Nainštalovať harness";
+"harnesses.install.toolbar.help" = "Nainštalovať harness";
+"harnesses.install.tab.search" = "Hľadať";
+"harnesses.install.tab.git" = "Z Gitu";
+"harnesses.install.tab.sources" = "Zdroje";
+"harnesses.install.search.placeholder" = "Hľadať v registroch a zdrojoch…";
+"harnesses.install.search.prompt" = "Zadajte text na vyhľadávanie v registroch a zdrojoch";
+"harnesses.install.search.empty" = "Žiadne výsledky";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Podradená cesta";
+"harnesses.install.git.subpath.placeholder" = "Voliteľný podadresár";
+"harnesses.install.command.preview" = "Ukážka príkazu";
+"harnesses.install.confirm" = "Nainštalovať";
+"harnesses.install.cancel" = "Zrušiť";
+"harnesses.install.already.installed" = "Nainštalované";
+"harnesses.install.from %@" = "z %@";
+"harnesses.install.sources.empty" = "Žiadne zdroje nie sú nakonfigurované. Pridajte miestny adresár na prechádzanie jeho harnesses.";
+"harnesses.install.sources.add" = "Pridať zdroj…";
+"harnesses.install.sources.add.help" = "Pridať miestny adresár ako zdroj harness";
+"harnesses.install.sources.remove" = "Odstrániť";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

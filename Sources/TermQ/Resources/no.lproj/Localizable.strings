@@ -679,3 +679,27 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "sidebar.prune.worktrees.nothing.message" = "Alle worktrees er registrert. Ingen utdaterte poster ble funnet.";
 
 "sidebar.prune.worktrees.explanation" = "Disse administrative postene peker til mapper som ikke lenger eksisterer. Beskjæring fjerner dem — grenene dine påvirkes ikke.";
+
+// Install sheet
+"harnesses.install.title" = "Installer harness";
+"harnesses.install.toolbar.help" = "Installer et harness";
+"harnesses.install.tab.search" = "Søk";
+"harnesses.install.tab.git" = "Fra Git";
+"harnesses.install.tab.sources" = "Kilder";
+"harnesses.install.search.placeholder" = "Søk i registre og kilder…";
+"harnesses.install.search.prompt" = "Skriv for å søke i registre og kilder";
+"harnesses.install.search.empty" = "Ingen resultater";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Understi";
+"harnesses.install.git.subpath.placeholder" = "Valgfri undermappe";
+"harnesses.install.command.preview" = "Forhåndsvisning av kommando";
+"harnesses.install.confirm" = "Installer";
+"harnesses.install.cancel" = "Avbryt";
+"harnesses.install.already.installed" = "Installert";
+"harnesses.install.from %@" = "fra %@";
+"harnesses.install.sources.empty" = "Ingen kilder konfigurert. Legg til en lokal mappe for å bla gjennom dens harnesses.";
+"harnesses.install.sources.add" = "Legg til kilde…";
+"harnesses.install.sources.add.help" = "Legg til en lokal mappe som harness-kilde";
+"harnesses.install.sources.remove" = "Fjern";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

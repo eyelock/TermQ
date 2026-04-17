@@ -679,3 +679,27 @@
 "sidebar.prune.worktrees.nothing.message" = "모든 worktree가 확인되었습니다. 오래된 레코드가 없습니다.";
 
 "sidebar.prune.worktrees.explanation" = "이 관리 레코드들은 더 이상 존재하지 않는 디렉토리를 가리킵니다. 정리하면 제거됩니다 — 브랜치는 영향받지 않습니다.";
+
+// Install sheet
+"harnesses.install.title" = "Harness 설치";
+"harnesses.install.toolbar.help" = "Harness 설치";
+"harnesses.install.tab.search" = "검색";
+"harnesses.install.tab.git" = "Git에서";
+"harnesses.install.tab.sources" = "소스";
+"harnesses.install.search.placeholder" = "레지스트리와 소스 검색…";
+"harnesses.install.search.prompt" = "레지스트리와 소스를 검색하려면 입력하세요";
+"harnesses.install.search.empty" = "결과 없음";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "하위 경로";
+"harnesses.install.git.subpath.placeholder" = "선택적 하위 디렉토리";
+"harnesses.install.command.preview" = "명령 미리보기";
+"harnesses.install.confirm" = "설치";
+"harnesses.install.cancel" = "취소";
+"harnesses.install.already.installed" = "설치됨";
+"harnesses.install.from %@" = "%@에서";
+"harnesses.install.sources.empty" = "소스가 구성되지 않았습니다. 로컬 디렉토리를 추가하여 Harness를 탐색하세요.";
+"harnesses.install.sources.add" = "소스 추가…";
+"harnesses.install.sources.add.help" = "로컬 디렉토리를 Harness 소스로 추가";
+"harnesses.install.sources.remove" = "제거";
+"harnesses.install.sources.count %ld" = "harness %ld개";

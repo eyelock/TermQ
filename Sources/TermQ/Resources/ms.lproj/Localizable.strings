@@ -679,3 +679,27 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "sidebar.prune.worktrees.nothing.message" = "Semua worktrees diambil kira. Tiada rekod lapuk ditemui.";
 
 "sidebar.prune.worktrees.explanation" = "Rekod pentadbiran ini menunjuk ke direktori yang tidak lagi wujud. Pemangkasan menyingkirkannya — cawangan anda tidak terjejas.";
+
+// Install sheet
+"harnesses.install.title" = "Pasang Harness";
+"harnesses.install.toolbar.help" = "Pasang harness";
+"harnesses.install.tab.search" = "Cari";
+"harnesses.install.tab.git" = "Daripada Git";
+"harnesses.install.tab.sources" = "Sumber";
+"harnesses.install.search.placeholder" = "Cari dalam registry dan sumber…";
+"harnesses.install.search.prompt" = "Taip untuk mencari dalam registry dan sumber";
+"harnesses.install.search.empty" = "Tiada hasil";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sub-laluan";
+"harnesses.install.git.subpath.placeholder" = "Sub-direktori pilihan";
+"harnesses.install.command.preview" = "Pratonton perintah";
+"harnesses.install.confirm" = "Pasang";
+"harnesses.install.cancel" = "Batal";
+"harnesses.install.already.installed" = "Sudah dipasang";
+"harnesses.install.from %@" = "daripada %@";
+"harnesses.install.sources.empty" = "Tiada sumber dikonfigurasi. Tambah direktori tempatan untuk menyemak imbas harnesses-nya.";
+"harnesses.install.sources.add" = "Tambah Sumber…";
+"harnesses.install.sources.add.help" = "Tambah direktori tempatan sebagai sumber harness";
+"harnesses.install.sources.remove" = "Buang";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

@@ -681,3 +681,27 @@
 "sidebar.prune.worktrees.nothing.message" = "Worktree ทั้งหมดได้รับการบัญชีแล้ว ไม่พบบันทึกที่ล้าสมัย";
 
 "sidebar.prune.worktrees.explanation" = "บันทึกการดูแลระบบเหล่านี้ชี้ไปยังไดเรกทอรีที่ไม่มีอยู่แล้ว การตัดแต่งจะลบออก — branch ของคุณไม่ได้รับผลกระทบ";
+
+// Install sheet
+"harnesses.install.title" = "ติดตั้ง Harness";
+"harnesses.install.toolbar.help" = "ติดตั้ง harness";
+"harnesses.install.tab.search" = "ค้นหา";
+"harnesses.install.tab.git" = "จาก Git";
+"harnesses.install.tab.sources" = "แหล่งข้อมูล";
+"harnesses.install.search.placeholder" = "ค้นหาในรีจิสทรีและแหล่งข้อมูล…";
+"harnesses.install.search.prompt" = "พิมพ์เพื่อค้นหาในรีจิสทรีและแหล่งข้อมูล";
+"harnesses.install.search.empty" = "ไม่พบผลลัพธ์";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "เส้นทางย่อย";
+"harnesses.install.git.subpath.placeholder" = "ไดเรกทอรีย่อยเพิ่มเติม (ไม่จำเป็น)";
+"harnesses.install.command.preview" = "ตัวอย่างคำสั่ง";
+"harnesses.install.confirm" = "ติดตั้ง";
+"harnesses.install.cancel" = "ยกเลิก";
+"harnesses.install.already.installed" = "ติดตั้งแล้ว";
+"harnesses.install.from %@" = "จาก %@";
+"harnesses.install.sources.empty" = "ไม่ได้กำหนดค่าแหล่งข้อมูล เพิ่มไดเรกทอรีในเครื่องเพื่อเรียกดู harnesses";
+"harnesses.install.sources.add" = "เพิ่มแหล่งข้อมูล…";
+"harnesses.install.sources.add.help" = "เพิ่มไดเรกทอรีในเครื่องเป็นแหล่ง harness";
+"harnesses.install.sources.remove" = "ลบออก";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

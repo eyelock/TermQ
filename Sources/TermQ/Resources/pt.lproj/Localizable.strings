@@ -679,3 +679,27 @@ Isso pode afetar como os assistentes de IA interagem com este terminal.";
 "sidebar.prune.worktrees.nothing.message" = "Todos os worktrees estão contabilizados. Nenhum registro desatualizado encontrado.";
 
 "sidebar.prune.worktrees.explanation" = "Esses registros administrativos apontam para diretórios que não existem mais. A poda os remove — seus branches não são afetados.";
+
+// Install sheet
+"harnesses.install.title" = "Instalar harness";
+"harnesses.install.toolbar.help" = "Instalar um harness";
+"harnesses.install.tab.search" = "Pesquisar";
+"harnesses.install.tab.git" = "Do Git";
+"harnesses.install.tab.sources" = "Fontes";
+"harnesses.install.search.placeholder" = "Pesquisar em registros e fontes…";
+"harnesses.install.search.prompt" = "Digite para pesquisar em registros e fontes";
+"harnesses.install.search.empty" = "Nenhum resultado";
+"harnesses.install.git.url" = "URL do Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Subcaminho";
+"harnesses.install.git.subpath.placeholder" = "Subdiretório opcional";
+"harnesses.install.command.preview" = "Prévia do comando";
+"harnesses.install.confirm" = "Instalar";
+"harnesses.install.cancel" = "Cancelar";
+"harnesses.install.already.installed" = "Instalado";
+"harnesses.install.from %@" = "de %@";
+"harnesses.install.sources.empty" = "Nenhuma fonte configurada. Adicione um diretório local para explorar seus harnesses.";
+"harnesses.install.sources.add" = "Adicionar fonte…";
+"harnesses.install.sources.add.help" = "Adicionar um diretório local como fonte de harness";
+"harnesses.install.sources.remove" = "Remover";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

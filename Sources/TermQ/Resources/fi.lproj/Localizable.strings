@@ -680,3 +680,27 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "sidebar.prune.worktrees.nothing.message" = "Kaikki worktrees ovat kirjanpidossa. Vanhentuneita tietueita ei löytynyt.";
 
 "sidebar.prune.worktrees.explanation" = "Nämä hallinnolliset tietueet viittaavat hakemistoihin, joita ei enää ole. Siivous poistaa ne — haarasi eivät vaikutu.";
+
+// Install sheet
+"harnesses.install.title" = "Asenna harness";
+"harnesses.install.toolbar.help" = "Asenna harness";
+"harnesses.install.tab.search" = "Haku";
+"harnesses.install.tab.git" = "Gitistä";
+"harnesses.install.tab.sources" = "Lähteet";
+"harnesses.install.search.placeholder" = "Hae rekistereistä ja lähteistä…";
+"harnesses.install.search.prompt" = "Kirjoita etsiäksesi rekistereistä ja lähteistä";
+"harnesses.install.search.empty" = "Ei tuloksia";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Alihakemistopolku";
+"harnesses.install.git.subpath.placeholder" = "Valinnainen alihakemisto";
+"harnesses.install.command.preview" = "Komennon esikatselu";
+"harnesses.install.confirm" = "Asenna";
+"harnesses.install.cancel" = "Peruuta";
+"harnesses.install.already.installed" = "Asennettu";
+"harnesses.install.from %@" = "lähteestä %@";
+"harnesses.install.sources.empty" = "Lähteitä ei ole määritetty. Lisää paikallinen hakemisto selataksesi sen harnesseja.";
+"harnesses.install.sources.add" = "Lisää lähde…";
+"harnesses.install.sources.add.help" = "Lisää paikallinen hakemisto harness-lähteeksi";
+"harnesses.install.sources.remove" = "Poista";
+"harnesses.install.sources.count %ld" = "%ld harnessia";

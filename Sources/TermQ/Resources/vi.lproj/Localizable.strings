@@ -681,3 +681,27 @@
 "sidebar.prune.worktrees.nothing.message" = "Tất cả worktree đều được ghi nhận. Không tìm thấy bản ghi lỗi thời.";
 
 "sidebar.prune.worktrees.explanation" = "Các bản ghi quản trị này trỏ đến các thư mục không còn tồn tại. Dọn dẹp sẽ xóa chúng — các nhánh của bạn không bị ảnh hưởng.";
+
+// Install sheet
+"harnesses.install.title" = "Cài đặt Harness";
+"harnesses.install.toolbar.help" = "Cài đặt một harness";
+"harnesses.install.tab.search" = "Tìm kiếm";
+"harnesses.install.tab.git" = "Từ Git";
+"harnesses.install.tab.sources" = "Nguồn";
+"harnesses.install.search.placeholder" = "Tìm kiếm trong các registry và nguồn…";
+"harnesses.install.search.prompt" = "Nhập để tìm kiếm trong các registry và nguồn";
+"harnesses.install.search.empty" = "Không có kết quả";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Đường dẫn phụ";
+"harnesses.install.git.subpath.placeholder" = "Thư mục con tùy chọn";
+"harnesses.install.command.preview" = "Xem trước lệnh";
+"harnesses.install.confirm" = "Cài đặt";
+"harnesses.install.cancel" = "Hủy";
+"harnesses.install.already.installed" = "Đã cài đặt";
+"harnesses.install.from %@" = "từ %@";
+"harnesses.install.sources.empty" = "Không có nguồn nào được cấu hình. Thêm thư mục cục bộ để duyệt các harnesses của nó.";
+"harnesses.install.sources.add" = "Thêm nguồn…";
+"harnesses.install.sources.add.help" = "Thêm thư mục cục bộ làm nguồn harness";
+"harnesses.install.sources.remove" = "Xóa";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

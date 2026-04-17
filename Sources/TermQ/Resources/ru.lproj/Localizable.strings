@@ -674,3 +674,27 @@
 "settings.ynh.version.label" = "Версия:";
 
 "common.clear" = "Очистить";
+
+// Install sheet
+"harnesses.install.title" = "Установить harness";
+"harnesses.install.toolbar.help" = "Установить harness";
+"harnesses.install.tab.search" = "Поиск";
+"harnesses.install.tab.git" = "Из Git";
+"harnesses.install.tab.sources" = "Источники";
+"harnesses.install.search.placeholder" = "Поиск в реестрах и источниках…";
+"harnesses.install.search.prompt" = "Введите текст для поиска в реестрах и источниках";
+"harnesses.install.search.empty" = "Нет результатов";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Подпуть";
+"harnesses.install.git.subpath.placeholder" = "Необязательный подкаталог";
+"harnesses.install.command.preview" = "Предпросмотр команды";
+"harnesses.install.confirm" = "Установить";
+"harnesses.install.cancel" = "Отмена";
+"harnesses.install.already.installed" = "Установлен";
+"harnesses.install.from %@" = "из %@";
+"harnesses.install.sources.empty" = "Источники не настроены. Добавьте локальный каталог для просмотра его harnesses.";
+"harnesses.install.sources.add" = "Добавить источник…";
+"harnesses.install.sources.add.help" = "Добавить локальный каталог как источник harness";
+"harnesses.install.sources.remove" = "Удалить";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

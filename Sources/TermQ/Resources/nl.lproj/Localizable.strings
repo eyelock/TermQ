@@ -679,3 +679,27 @@ Dit kan invloed hebben op hoe AI-assistenten met deze terminal communiceren.";
 "sidebar.prune.worktrees.nothing.message" = "Alle worktrees zijn verantwoord. Er zijn geen verouderde records gevonden.";
 
 "sidebar.prune.worktrees.explanation" = "Deze administratieve records verwijzen naar mappen die niet meer bestaan. Snoeien verwijdert ze — uw branches worden niet beïnvloed.";
+
+// Install sheet
+"harnesses.install.title" = "Harness installeren";
+"harnesses.install.toolbar.help" = "Een harness installeren";
+"harnesses.install.tab.search" = "Zoeken";
+"harnesses.install.tab.git" = "Vanuit Git";
+"harnesses.install.tab.sources" = "Bronnen";
+"harnesses.install.search.placeholder" = "Zoek in registers en bronnen…";
+"harnesses.install.search.prompt" = "Typ om te zoeken in registers en bronnen";
+"harnesses.install.search.empty" = "Geen resultaten";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Subpad";
+"harnesses.install.git.subpath.placeholder" = "Optionele submap";
+"harnesses.install.command.preview" = "Opdrachtenvoorbeeld";
+"harnesses.install.confirm" = "Installeren";
+"harnesses.install.cancel" = "Annuleren";
+"harnesses.install.already.installed" = "Geïnstalleerd";
+"harnesses.install.from %@" = "van %@";
+"harnesses.install.sources.empty" = "Geen bronnen geconfigureerd. Voeg een lokale map toe om de harnesses ervan te bekijken.";
+"harnesses.install.sources.add" = "Bron toevoegen…";
+"harnesses.install.sources.add.help" = "Een lokale map als harness-bron toevoegen";
+"harnesses.install.sources.remove" = "Verwijderen";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

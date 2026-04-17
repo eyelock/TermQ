@@ -655,6 +655,30 @@
 "harnesses.linked.worktrees" = "Linked Worktrees";
 "harnesses.linked.worktrees.none" = "No worktrees are linked to this harness.";
 
+// Install sheet
+"harnesses.install.title" = "Install Harness";
+"harnesses.install.toolbar.help" = "Install a harness";
+"harnesses.install.tab.search" = "Search";
+"harnesses.install.tab.git" = "From Git";
+"harnesses.install.tab.sources" = "Sources";
+"harnesses.install.search.placeholder" = "Search registries and sources…";
+"harnesses.install.search.prompt" = "Type to search registries and sources";
+"harnesses.install.search.empty" = "No results";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Subpath";
+"harnesses.install.git.subpath.placeholder" = "Optional sub-directory";
+"harnesses.install.command.preview" = "Command Preview";
+"harnesses.install.confirm" = "Install";
+"harnesses.install.cancel" = "Cancel";
+"harnesses.install.already.installed" = "Installed";
+"harnesses.install.from %@" = "from %@";
+"harnesses.install.sources.empty" = "No sources configured. Add a local directory to browse its harnesses.";
+"harnesses.install.sources.add" = "Add Source…";
+"harnesses.install.sources.add.help" = "Add a local directory as a harness source";
+"harnesses.install.sources.remove" = "Remove";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
 "settings.ynh.title" = "ynh";

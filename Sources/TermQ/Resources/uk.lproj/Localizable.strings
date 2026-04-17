@@ -681,3 +681,27 @@
 "sidebar.prune.worktrees.nothing.message" = "Всі worktrees обліковані. Застарілих записів не знайдено.";
 
 "sidebar.prune.worktrees.explanation" = "Ці адміністративні записи вказують на каталоги, яких більше не існує. Прибирання видаляє їх — ваші гілки не зачіпаються.";
+
+// Install sheet
+"harnesses.install.title" = "Встановити harness";
+"harnesses.install.toolbar.help" = "Встановити harness";
+"harnesses.install.tab.search" = "Пошук";
+"harnesses.install.tab.git" = "З Git";
+"harnesses.install.tab.sources" = "Джерела";
+"harnesses.install.search.placeholder" = "Пошук у реєстрах та джерелах…";
+"harnesses.install.search.prompt" = "Введіть текст для пошуку в реєстрах і джерелах";
+"harnesses.install.search.empty" = "Немає результатів";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Підшлях";
+"harnesses.install.git.subpath.placeholder" = "Необов'язковий підкаталог";
+"harnesses.install.command.preview" = "Попередній перегляд команди";
+"harnesses.install.confirm" = "Встановити";
+"harnesses.install.cancel" = "Скасувати";
+"harnesses.install.already.installed" = "Встановлено";
+"harnesses.install.from %@" = "з %@";
+"harnesses.install.sources.empty" = "Джерела не налаштовано. Додайте локальний каталог для перегляду його harnesses.";
+"harnesses.install.sources.add" = "Додати джерело…";
+"harnesses.install.sources.add.help" = "Додати локальний каталог як джерело harness";
+"harnesses.install.sources.remove" = "Видалити";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

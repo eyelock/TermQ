@@ -680,3 +680,27 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "sidebar.prune.worktrees.nothing.message" = "Tous les worktrees sont comptabilisés. Aucun enregistrement obsolète trouvé.";
 
 "sidebar.prune.worktrees.explanation" = "Ces enregistrements administratifs pointent vers des répertoires qui n'existent plus. L'élagage les supprime — vos branches ne sont pas affectées.";
+
+// Install sheet
+"harnesses.install.title" = "Installer un harnais";
+"harnesses.install.toolbar.help" = "Installer un harnais";
+"harnesses.install.tab.search" = "Rechercher";
+"harnesses.install.tab.git" = "Depuis Git";
+"harnesses.install.tab.sources" = "Sources";
+"harnesses.install.search.placeholder" = "Rechercher dans les registres et les sources…";
+"harnesses.install.search.prompt" = "Saisir du texte pour rechercher dans les registres et les sources";
+"harnesses.install.search.empty" = "Aucun résultat";
+"harnesses.install.git.url" = "URL Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sous-chemin";
+"harnesses.install.git.subpath.placeholder" = "Sous-répertoire optionnel";
+"harnesses.install.command.preview" = "Aperçu de la commande";
+"harnesses.install.confirm" = "Installer";
+"harnesses.install.cancel" = "Annuler";
+"harnesses.install.already.installed" = "Installé";
+"harnesses.install.from %@" = "depuis %@";
+"harnesses.install.sources.empty" = "Aucune source configurée. Ajoutez un répertoire local pour parcourir ses harnais.";
+"harnesses.install.sources.add" = "Ajouter une source…";
+"harnesses.install.sources.add.help" = "Ajouter un répertoire local comme source de harnais";
+"harnesses.install.sources.remove" = "Supprimer";
+"harnesses.install.sources.count %ld" = "%ld harnais";

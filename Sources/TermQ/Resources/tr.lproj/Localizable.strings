@@ -681,3 +681,27 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "sidebar.prune.worktrees.nothing.message" = "Tüm worktree'ler kayıt altında. Eski kayıt bulunamadı.";
 
 "sidebar.prune.worktrees.explanation" = "Bu yönetim kayıtları artık var olmayan dizinlere işaret ediyor. Budama bunları kaldırır — dallarınız etkilenmez.";
+
+// Install sheet
+"harnesses.install.title" = "Harness Kur";
+"harnesses.install.toolbar.help" = "Bir harness kur";
+"harnesses.install.tab.search" = "Ara";
+"harnesses.install.tab.git" = "Git'ten";
+"harnesses.install.tab.sources" = "Kaynaklar";
+"harnesses.install.search.placeholder" = "Kayıt defterlerinde ve kaynaklarda ara…";
+"harnesses.install.search.prompt" = "Kayıt defterlerinde ve kaynaklarda aramak için yazın";
+"harnesses.install.search.empty" = "Sonuç bulunamadı";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Alt yol";
+"harnesses.install.git.subpath.placeholder" = "İsteğe bağlı alt dizin";
+"harnesses.install.command.preview" = "Komut önizlemesi";
+"harnesses.install.confirm" = "Kur";
+"harnesses.install.cancel" = "İptal";
+"harnesses.install.already.installed" = "Kurulu";
+"harnesses.install.from %@" = "%@ kaynağından";
+"harnesses.install.sources.empty" = "Hiçbir kaynak yapılandırılmamış. Harnesses'larını incelemek için yerel bir dizin ekleyin.";
+"harnesses.install.sources.add" = "Kaynak Ekle…";
+"harnesses.install.sources.add.help" = "Harness kaynağı olarak yerel dizin ekle";
+"harnesses.install.sources.remove" = "Kaldır";
+"harnesses.install.sources.count %ld" = "%ld harness";

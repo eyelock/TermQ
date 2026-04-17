@@ -17,6 +17,8 @@ struct ContentView: View {
     @State private var showBin = false
     @State private var showColumnPicker = false
     @State private var showLaunchSheet = false
+    @State private var showInstallSheet = false
+    @State private var installCardIDs: Set<UUID> = []
     @State private var launchWorkingDirectory: String?
     /// Card that was selected before navigating to a harness detail, restored on dismiss.
     @State private var cardBeforeHarness: TerminalCard?
@@ -38,7 +40,8 @@ struct ContentView: View {
                         launchWorkingDirectory = path
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
-                    }
+                    },
+                    onInstall: { showInstallSheet = true }
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
@@ -216,6 +219,24 @@ struct ContentView: View {
                     }
                 }
             )
+            .sheet(isPresented: $showInstallSheet) {
+                HarnessInstallSheet(
+                    installedNames: Set(harnessRepo.harnesses.map(\.name))
+                ) { config in
+                    installHarness(config)
+                }
+            }
+            .onReceive(
+                NotificationCenter.default.publisher(for: .termqDirectSessionExited)
+            ) { notif in
+                guard let cardId = notif.userInfo?["cardId"] as? UUID,
+                    installCardIDs.contains(cardId)
+                else { return }
+                installCardIDs.remove(cardId)
+                if case .ready = ynhDetector.status {
+                    Task { await harnessRepo.refresh() }
+                }
+            }
             .sheet(isPresented: $viewModel.showSessionRecovery) {
                 SessionRecoveryView(viewModel: viewModel)
             }
@@ -677,6 +698,41 @@ extension ContentView {
 
         // Optionally open the terminal immediately
         viewModel.selectCard(card)
+    }
+
+    /// Install a harness by creating a transient Card running `ynh install` so the user sees output.
+    func installHarness(_ config: HarnessInstallConfig) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+        let card = TerminalCard(
+            title: "ynh install \(config.displayName)",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: config.command(ynhPath: ynhPath) + "; exit",
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        installCardIDs.insert(card.id)
+        viewModel.tabManager.addTransientCard(card)
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
+        harnessRepo.selectedHarnessName = nil
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
     }
 
     /// Launch a harness by creating a transient Card with `ynh run` as the init command.

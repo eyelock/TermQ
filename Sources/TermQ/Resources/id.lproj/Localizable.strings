@@ -674,3 +674,27 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "settings.ynh.version.label" = "Versi:";
 
 "common.clear" = "Hapus";
+
+// Install sheet
+"harnesses.install.title" = "Pasang Harness";
+"harnesses.install.toolbar.help" = "Pasang harness";
+"harnesses.install.tab.search" = "Cari";
+"harnesses.install.tab.git" = "Dari Git";
+"harnesses.install.tab.sources" = "Sumber";
+"harnesses.install.search.placeholder" = "Cari registry dan sumber…";
+"harnesses.install.search.prompt" = "Ketik untuk mencari di registry dan sumber";
+"harnesses.install.search.empty" = "Tidak ada hasil";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sub-jalur";
+"harnesses.install.git.subpath.placeholder" = "Sub-direktori opsional";
+"harnesses.install.command.preview" = "Pratinjau perintah";
+"harnesses.install.confirm" = "Pasang";
+"harnesses.install.cancel" = "Batal";
+"harnesses.install.already.installed" = "Terpasang";
+"harnesses.install.from %@" = "dari %@";
+"harnesses.install.sources.empty" = "Tidak ada sumber yang dikonfigurasi. Tambahkan direktori lokal untuk menelusuri harnesses-nya.";
+"harnesses.install.sources.add" = "Tambah Sumber…";
+"harnesses.install.sources.add.help" = "Tambah direktori lokal sebagai sumber harness";
+"harnesses.install.sources.remove" = "Hapus";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

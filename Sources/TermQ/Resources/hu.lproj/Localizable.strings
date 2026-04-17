@@ -680,3 +680,27 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "sidebar.prune.worktrees.nothing.message" = "Minden worktree nyilvántartásban van. Nem találtak elavult rekordokat.";
 
 "sidebar.prune.worktrees.explanation" = "Ezek az adminisztrációs rekordok már nem létező könyvtárakra mutatnak. A tisztítás eltávolítja őket — az ágak nem érintettek.";
+
+// Install sheet
+"harnesses.install.title" = "Harness telepítése";
+"harnesses.install.toolbar.help" = "Harness telepítése";
+"harnesses.install.tab.search" = "Keresés";
+"harnesses.install.tab.git" = "Gitről";
+"harnesses.install.tab.sources" = "Források";
+"harnesses.install.search.placeholder" = "Keresés a registrykben és forrásokban…";
+"harnesses.install.search.prompt" = "Írjon be szöveget a registrykben és forrásokban való kereséshez";
+"harnesses.install.search.empty" = "Nincs találat";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Alútvonal";
+"harnesses.install.git.subpath.placeholder" = "Opcionális alkönyvtár";
+"harnesses.install.command.preview" = "Parancs előnézete";
+"harnesses.install.confirm" = "Telepítés";
+"harnesses.install.cancel" = "Mégse";
+"harnesses.install.already.installed" = "Telepítve";
+"harnesses.install.from %@" = "%@ forrásból";
+"harnesses.install.sources.empty" = "Nincs konfigurált forrás. Adjon hozzá helyi könyvtárat a harnesses böngészéséhez.";
+"harnesses.install.sources.add" = "Forrás hozzáadása…";
+"harnesses.install.sources.add.help" = "Helyi könyvtár hozzáadása harness-forrásként";
+"harnesses.install.sources.remove" = "Eltávolítás";
+"harnesses.install.sources.count %ld" = "%ld harness";

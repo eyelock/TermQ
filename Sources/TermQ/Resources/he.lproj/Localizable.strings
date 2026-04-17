@@ -680,3 +680,27 @@
 "sidebar.prune.worktrees.nothing.message" = "כל ה-worktrees מנוהלים. לא נמצאו רשומות מיושנות.";
 
 "sidebar.prune.worktrees.explanation" = "רשומות ניהוליות אלה מצביעות לספריות שאינן קיימות עוד. הניקוי מסיר אותן — הענפים שלך אינם מושפעים.";
+
+// Install sheet
+"harnesses.install.title" = "התקנת harness";
+"harnesses.install.toolbar.help" = "התקנת harness";
+"harnesses.install.tab.search" = "חיפוש";
+"harnesses.install.tab.git" = "מ-Git";
+"harnesses.install.tab.sources" = "מקורות";
+"harnesses.install.search.placeholder" = "חיפוש ב-registries ובמקורות…";
+"harnesses.install.search.prompt" = "הקלד לחיפוש ב-registries ובמקורות";
+"harnesses.install.search.empty" = "אין תוצאות";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "נתיב משני";
+"harnesses.install.git.subpath.placeholder" = "ספריית משנה אופציונלית";
+"harnesses.install.command.preview" = "תצוגה מקדימה של פקודה";
+"harnesses.install.confirm" = "התקן";
+"harnesses.install.cancel" = "ביטול";
+"harnesses.install.already.installed" = "מותקן";
+"harnesses.install.from %@" = "מ-%@";
+"harnesses.install.sources.empty" = "לא הוגדרו מקורות. הוסף ספרייה מקומית לעיון ב-harnesses שלה.";
+"harnesses.install.sources.add" = "הוסף מקור…";
+"harnesses.install.sources.add.help" = "הוסף ספרייה מקומית כמקור harness";
+"harnesses.install.sources.remove" = "הסר";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

@@ -13,6 +13,7 @@ struct HarnessesSidebarTab: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var repository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
+    var onInstall: (() -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -60,6 +61,17 @@ struct HarnessesSidebarTab: View {
             if repository.isLoading {
                 ProgressView()
                     .controlSize(.small)
+            }
+
+            if case .ready = detector.status {
+                Button {
+                    onInstall?()
+                } label: {
+                    Image(systemName: "plus")
+                        .imageScale(.medium)
+                }
+                .buttonStyle(.plain)
+                .help(Strings.Harnesses.installToolbarHelp)
             }
 
             Button {

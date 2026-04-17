@@ -674,3 +674,27 @@
 "settings.ynh.version.label" = "الإصدار:";
 
 "common.clear" = "مسح";
+
+// Install sheet
+"harnesses.install.title" = "تثبيت Harness";
+"harnesses.install.toolbar.help" = "تثبيت harness";
+"harnesses.install.tab.search" = "بحث";
+"harnesses.install.tab.git" = "من Git";
+"harnesses.install.tab.sources" = "المصادر";
+"harnesses.install.search.placeholder" = "البحث في السجلات والمصادر…";
+"harnesses.install.search.prompt" = "اكتب للبحث في السجلات والمصادر";
+"harnesses.install.search.empty" = "لا توجد نتائج";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "المسار الفرعي";
+"harnesses.install.git.subpath.placeholder" = "مجلد فرعي اختياري";
+"harnesses.install.command.preview" = "معاينة الأمر";
+"harnesses.install.confirm" = "تثبيت";
+"harnesses.install.cancel" = "إلغاء";
+"harnesses.install.already.installed" = "مثبت";
+"harnesses.install.from %@" = "من %@";
+"harnesses.install.sources.empty" = "لا توجد مصادر مضبوطة. أضف دليلاً محلياً لاستعراض harnesses الخاصة به.";
+"harnesses.install.sources.add" = "إضافة مصدر…";
+"harnesses.install.sources.add.help" = "إضافة دليل محلي كمصدر harness";
+"harnesses.install.sources.remove" = "إزالة";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

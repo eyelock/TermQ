@@ -810,7 +810,18 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
             guard manager?.sessionExists(for: cardId) == true else { return }
 
             manager?.markSessionTerminated(cardId: cardId)
+            NotificationCenter.default.post(
+                name: .termqDirectSessionExited,
+                object: nil,
+                userInfo: ["cardId": cardId]
+            )
             onExit()
         }
     }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    static let termqDirectSessionExited = Notification.Name("termq.directSessionExited")
 }

@@ -134,6 +134,15 @@ struct WorktreeSidebarView: View {
             }
             .buttonStyle(.plain)
             .help(Strings.Sidebar.addButtonHelp)
+
+            Button {
+                viewModel.refresh()
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .imageScale(.medium)
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Sidebar.refreshWorktrees)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -548,8 +557,12 @@ struct WorktreeSidebarView: View {
     private func revealInFinder(path: String) {
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
+}
 
-    private func openRemoteBranch(worktree: GitWorktree, repo: ObservableRepository) {
+// MARK: - Remote Navigation
+
+extension WorktreeSidebarView {
+    fileprivate func openRemoteBranch(worktree: GitWorktree, repo: ObservableRepository) {
         guard let branch = worktree.branch else { return }
         Task {
             guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
@@ -561,7 +574,7 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    private func openRemoteCommit(worktree: GitWorktree, repo: ObservableRepository) {
+    fileprivate func openRemoteCommit(worktree: GitWorktree, repo: ObservableRepository) {
         Task {
             guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
                 let base = remoteWebURL(from: raw)
@@ -571,8 +584,7 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    /// Convert a raw git remote URL (SSH or HTTPS) to a browser-navigable base URL.
-    private func remoteWebURL(from remoteURL: String) -> URL? {
+    fileprivate func remoteWebURL(from remoteURL: String) -> URL? {
         var urlString = remoteURL.trimmingCharacters(in: .whitespacesAndNewlines)
         // SSH: git@github.com:user/repo.git → https://github.com/user/repo
         if urlString.hasPrefix("git@") {

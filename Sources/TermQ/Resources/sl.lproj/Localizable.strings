@@ -681,3 +681,27 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "sidebar.prune.worktrees.nothing.message" = "Vsi worktrees so evidentirani. Ni zastarelih zapisov.";
 
 "sidebar.prune.worktrees.explanation" = "Ti administrativni zapisi kažejo na imenike, ki ne obstajajo več. Obrezovanje jih odstrani — vaše veje niso prizadete.";
+
+// Install sheet
+"harnesses.install.title" = "Namestitev harness";
+"harnesses.install.toolbar.help" = "Namesti harness";
+"harnesses.install.tab.search" = "Išči";
+"harnesses.install.tab.git" = "Iz Gita";
+"harnesses.install.tab.sources" = "Viri";
+"harnesses.install.search.placeholder" = "Išči v registrih in virih…";
+"harnesses.install.search.prompt" = "Vpišite besedilo za iskanje v registrih in virih";
+"harnesses.install.search.empty" = "Ni rezultatov";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Podpot";
+"harnesses.install.git.subpath.placeholder" = "Izbirni podimenik";
+"harnesses.install.command.preview" = "Predogled ukaza";
+"harnesses.install.confirm" = "Namesti";
+"harnesses.install.cancel" = "Prekliči";
+"harnesses.install.already.installed" = "Nameščeno";
+"harnesses.install.from %@" = "iz %@";
+"harnesses.install.sources.empty" = "Ni konfiguriranih virov. Dodajte lokalni imenik za brskanje po njegovih harnesses.";
+"harnesses.install.sources.add" = "Dodaj vir…";
+"harnesses.install.sources.add.help" = "Dodaj lokalni imenik kot vir harness";
+"harnesses.install.sources.remove" = "Odstrani";
+"harnesses.install.sources.count %ld" = "%ld harnesses";

@@ -13,6 +13,7 @@ struct SidebarView: View {
     @ObservedObject var harnessRepository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
     var onLaunchHarnessInWorktree: ((String, String) -> Void)?
+    var onInstall: (() -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
 
@@ -43,7 +44,8 @@ struct SidebarView: View {
                 HarnessesSidebarTab(
                     detector: detector,
                     repository: harnessRepository,
-                    onLaunchHarness: onLaunchHarness
+                    onLaunchHarness: onLaunchHarness,
+                    onInstall: onInstall
                 )
             default:
                 // Feature flag off but selectedTab persisted as harnesses — fall back.
@@ -63,7 +65,11 @@ struct SidebarView: View {
             }
         }
         .onChange(of: selectedTab) { _, newTab in
-            if newTab != .harnesses {
+            if newTab == .harnesses {
+                if case .ready = detector.status {
+                    Task { await harnessRepository.refresh() }
+                }
+            } else {
                 harnessRepository.selectedHarnessName = nil
             }
         }
