@@ -20,6 +20,7 @@ struct HarnessesSidebarTab: View {
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @State private var harnessToUninstall: Harness?
     @State private var showWizard = false
+    @State private var showAddRegistry = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -42,8 +43,13 @@ struct HarnessesSidebarTab: View {
                 harnessList
             }
         }
-        .sheet(isPresented: $showWizard) {
-            HarnessWizardSheet(detector: detector, harnessRepository: repository)
+        .sheet(
+            isPresented: $showWizard,
+            onDismiss: { Task { await repository.refresh() } },
+            content: { HarnessWizardSheet(detector: detector, harnessRepository: repository) }
+        )
+        .sheet(isPresented: $showAddRegistry) {
+            AddRegistrySheet(detector: detector)
         }
         .onAppear {
             if case .ready = detector.status, repository.harnesses.isEmpty {
@@ -72,6 +78,15 @@ struct HarnessesSidebarTab: View {
                     .controlSize(.small)
             }
 
+            Button {
+                showAddRegistry = true
+            } label: {
+                Image(systemName: "globe")
+                    .imageScale(.medium)
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Harnesses.addRegistryToolbarHelp)
+
             if case .ready = detector.status {
                 Button {
                     showWizard = true
@@ -80,7 +95,7 @@ struct HarnessesSidebarTab: View {
                         .imageScale(.medium)
                 }
                 .buttonStyle(.plain)
-                .help("New Harness wizard")
+                .help(Strings.Harnesses.wizardToolbarHelp)
 
                 Button {
                     onInstall?()
@@ -128,6 +143,12 @@ struct HarnessesSidebarTab: View {
                                 onLaunchHarness?(harness)
                             } label: {
                                 Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
+                            }
+                            Button {
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setString("ynh run \(harness.name)", forType: .string)
+                            } label: {
+                                Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
                             }
                             Divider()
                             Button {

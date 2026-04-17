@@ -603,6 +603,7 @@
 "harnesses.reveal.in.finder" = "Finder에서 보기";
 "harnesses.open.in.browser" = "브라우저에서 열기";
 "harnesses.close.detail" = "닫기";
+"harnesses.configure.from.marketplaces" = "마켓플레이스에서 구성…";
 "harnesses.detail.artifacts.from.includes" = "이 하네스는 의존성 인클루드에서 아티팩트를 가져옵니다.";
 "harnesses.detail.from" = "출처";
 "harnesses.detail.hooks" = "훅";
@@ -637,6 +638,9 @@
 
 "harnesses.linked.worktrees" = "연결된 Worktree";
 "harnesses.linked.worktrees.none" = "이 harness에 연결된 worktree가 없습니다.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "새 하네스 만들기";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH 하네스 툴체인";
@@ -710,3 +714,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "현재 %ld개의 터미널이 이 Harness를 실행 중입니다.";
 "harnesses.uninstall.alert.confirm" = "제거";
 "harnesses.more.actions.help" = "추가 작업";
+"harnesses.copy.run.command" = "실행 명령 복사";
+"harnesses.ynh.documentation" = "YNH 문서";
+
+"harnesses.add.registry.title" = "YNH 레지스트리 추가";
+"harnesses.add.registry.url.label" = "레지스트리 URL";
+"harnesses.add.registry.hint" = "registry.json 파일이 포함된 Git 저장소를 추가하세요. 추가하면 해당 저장소에서 하네스를 검색하고 설치할 수 있습니다.";
+"harnesses.add.registry.button" = "레지스트리 추가";
+"harnesses.add.registry.success" = "레지스트리가 추가되었습니다";
+"harnesses.add.registry.toolbar.help" = "YNH 레지스트리 추가";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "마켓플레이스";
+"settings.marketplaces.section.list" = "설정된 마켓플레이스";
+"settings.marketplaces.empty" = "아직 추가된 마켓플레이스가 없습니다.";
+"settings.marketplaces.add" = "마켓플레이스 추가…";
+"settings.marketplaces.never.fetched" = "가져온 적 없음";
+"settings.marketplaces.remove.confirm.title" = "마켓플레이스 제거";
+"settings.marketplaces.remove.confirm.message %@" = "\"%@\"을(를) 제거하시겠습니까? 해당 플러그인이 브라우저에 더 이상 표시되지 않습니다.";
+"settings.marketplaces.section.behaviour" = "동작";
+"settings.marketplaces.auto.refresh" = "시작 시 자동 새로고침";
+"settings.marketplaces.auto.refresh.help" = "앱 시작 시 마켓플레이스 업데이트를 자동으로 가져옵니다";
+"settings.marketplaces.section.authoring" = "하네스 작성";
+"settings.marketplaces.default.author.directory" = "기본 작성자 디렉토리";
+"settings.marketplaces.author.directory.detected.hint" = "ynh에서 자동 감지됨";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "마켓플레이스";
+"marketplace.add.help" = "마켓플레이스 추가";
+"marketplace.empty" = "아직 마켓플레이스가 없습니다";
+"marketplace.add.button" = "마켓플레이스 추가";
+"marketplace.row.refresh.help" = "마켓플레이스 새로 고침";
+"marketplace.row.refresh" = "새로 고침";
+"marketplace.row.remove" = "제거";
+"marketplace.row.stale" = " · 오래되었을 수 있습니다";
+"marketplace.row.never.fetched" = "아직 가져오지 않음";
+"marketplace.add.sheet.title" = "마켓플레이스 추가";
+"marketplace.add.tab.known" = "알려진";
+"marketplace.add.tab.custom" = "사용자 지정 URL";
+"marketplace.add.section.git.url" = "Git 저장소 URL";
+"marketplace.add.section.display.name" = "표시 이름";
+"marketplace.add.section.vendor" = "공급업체";
+"marketplace.detail.last.fetched %@" = "마지막 가져오기 %@";
+"marketplace.detail.search.placeholder" = "플러그인 검색…";
+"marketplace.detail.search.empty %@" = "«%@»과 일치하는 플러그인이 없습니다";
+"marketplace.detail.empty" = "이 마켓플레이스에 플러그인이 없습니다";
+"marketplace.detail.empty.hint" = "최신 인덱스를 가져오려면 새로 고침하세요.";
+"marketplace.plugin.add.to.harness" = "하네스에 추가";
+"marketplace.plugin.copy.install.command" = "설치 명령 복사";
+"marketplace.plugin.copy.install.command.help" = "Claude Code 설치 명령을 클립보드에 복사합니다";
+"marketplace.plugin.load.artifacts" = "아티팩트 로드";
+"marketplace.plugin.loading.artifacts" = "아티팩트를 불러오는 중…";
+"marketplace.plugin.no.artifacts" = "이 플러그인에 대해 나열된 아티팩트가 없습니다.";
+"marketplace.plugin.no.artifacts.hint" = "플러그인의 모든 내용이 포함됩니다.";
+"marketplace.plugin.artifacts.unavailable %@" = "아티팩트를 사용할 수 없습니다: %@";
+"marketplace.picker.step.artifacts" = "아티팩트";
+"marketplace.picker.step.harness" = "하네스";
+"marketplace.picker.step.apply" = "적용";
+"marketplace.picker.select.prompt" = "포함할 아티팩트 선택";
+"marketplace.picker.select.all" = "전체";
+"marketplace.picker.select.none" = "없음";
+"marketplace.picker.no.harnesses" = "아직 하네스가 없습니다";
+"marketplace.picker.no.harnesses.hint" = "새 하네스 마법사를 사용하여 먼저 하네스를 만드세요.";
+"marketplace.picker.review.plugin" = "플러그인";
+"marketplace.picker.review.harness" = "하네스";
+"marketplace.picker.review.artifacts" = "아티팩트";
+"marketplace.picker.review.all.count %lld" = "전체 (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld개 중 %lld개 선택";
+"marketplace.picker.command.preview" = "명령 미리보기";
+"marketplace.picker.success %@" = "%@에 플러그인 추가됨";
+"marketplace.picker.done" = "완료";
+"marketplace.picker.back" = "뒤로";
+"marketplace.picker.next" = "다음";
+"harness.wizard.title" = "새 하네스";
+"harness.wizard.name.label" = "이름 (필수)";
+"harness.wizard.description.label" = "설명";
+"harness.wizard.loading.vendors" = "공급업체를 불러오는 중…";
+"harness.wizard.vendor.label" = "기본 공급업체";
+"harness.wizard.destination.label" = "대상 디렉터리";
+"harness.wizard.install.toggle" = "생성 후 즉시 하네스 설치";
+"harness.wizard.success.add.plugins" = "마켓플레이스에서 플러그인 추가";
+"harness.wizard.success.open" = "TermQ에서 열기";
+"harness.wizard.create" = "만들기";
+"harness.wizard.retry" = "재시도";
+"harness.wizard.error.name.required" = "이름은 필수입니다";
+"harness.wizard.error.name.invalid" = "이름은 문자, 숫자, 하이픈, 밑줄만 포함할 수 있습니다";
+"harness.wizard.error.name.duplicate %@" = "«%@»라는 이름의 하네스가 이미 있습니다";
+"settings.marketplaces.reset" = "재설정";
+"settings.marketplaces.section.ynh.registries" = "YNH 레지스트리";
+"settings.marketplaces.ynh.registries.empty" = "등록된 레지스트리 없음";
+"settings.marketplaces.ynh.add.registry" = "레지스트리 추가…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "레지스트리 제거";
+"settings.marketplaces.ynh.registry.remove.confirm" = "제거";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\"을 YNH에서 제거하시겠습니까? 설치된 하네스는 유지됩니다.";
+"marketplace.add.custom.name.placeholder" = "내 마켓플레이스";
+"harness.wizard.success.created %@" = "Harness «%@» 생성됨";

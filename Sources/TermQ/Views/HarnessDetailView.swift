@@ -32,6 +32,8 @@ struct HarnessDetailView: View {
     let isLoadingDetail: Bool
     let detailError: String?
     let onDismiss: () -> Void
+    @AppStorage("sidebar.selectedTab") private var sidebarTab = "repositories"
+    @ObservedObject private var marketplaceStore: MarketplaceStore = .shared
     /// Called when the user requests a launch. Optional path pre-fills the working directory.
     let onLaunch: (String?) -> Void
     let onUpdate: (String) -> Void
@@ -56,6 +58,15 @@ struct HarnessDetailView: View {
                 infoSection
                 Divider()
                 artifactSection
+
+                Button {
+                    marketplaceStore.preselectedHarnessTarget = harness.name
+                    sidebarTab = "marketplaces"  // matches SidebarView.SidebarTab.marketplaces.rawValue
+                } label: {
+                    Label(Strings.Harnesses.configureFromMarketplaces, systemImage: "storefront")
+                        .frame(maxWidth: .infinity)
+                }
+                .controlSize(.regular)
 
                 if let detail {
                     HarnessDetailCompositionView(
@@ -130,6 +141,20 @@ struct HarnessDetailView: View {
                         onUpdate(harness.name)
                     } label: {
                         Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
+                    }
+                    Button {
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString("ynh run \(harness.name)", forType: .string)
+                    } label: {
+                        Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
+                    }
+                    Divider()
+                    Button {
+                        if let url = URL(string: "https://eyelock.github.io/ynh/") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    } label: {
+                        Label(Strings.Harnesses.ynhDocumentation, systemImage: "questionmark.circle")
                     }
                     Divider()
                     Button(role: .destructive) {

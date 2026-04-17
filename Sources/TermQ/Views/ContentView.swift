@@ -46,7 +46,7 @@ struct ContentView: View {
                     onInstall: { showInstallSheet = true },
                     onUninstall: { name in uninstallHarness(name: name) },
                     onUpdate: { name in updateHarness(name: name) },
-                    onNewHarness: { /* wizard is presented directly from HarnessesSidebarTab */ }
+                    onNewHarness: {}
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
@@ -228,7 +228,8 @@ struct ContentView: View {
             )
             .sheet(isPresented: $showInstallSheet) {
                 HarnessInstallSheet(
-                    installedNames: Set(harnessRepo.harnesses.map(\.name))
+                    installedNames: Set(harnessRepo.harnesses.map(\.name)),
+                    harnesses: harnessRepo.harnesses
                 ) { config in
                     installHarness(config)
                 }
@@ -750,7 +751,7 @@ extension ContentView {
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
-            initCommand: config.command(ynhPath: ynhPath) + "; exit",
+            initCommand: config.command(ynhPath: ynhPath) + " && exit",
             backend: .direct
         )
         card.isTransient = true
@@ -785,7 +786,7 @@ extension ContentView {
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
-            initCommand: "\(ynhPath) uninstall \(shellQuote(name)); exit",
+            initCommand: "\(ynhPath) uninstall \(shellQuote(name)) && exit",
             backend: .direct
         )
         card.isTransient = true
@@ -820,7 +821,7 @@ extension ContentView {
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
-            initCommand: "\(ynhPath) update \(shellQuote(name)); exit",
+            initCommand: "\(ynhPath) update \(shellQuote(name)) && exit",
             backend: .direct
         )
         card.isTransient = true

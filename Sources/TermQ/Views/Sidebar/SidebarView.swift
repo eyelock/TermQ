@@ -18,6 +18,7 @@ struct SidebarView: View {
     var onNewHarness: (() -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
+    private static var hasResetOnLaunch = false
 
     enum SidebarTab: String, CaseIterable {
         case repositories
@@ -27,7 +28,7 @@ struct SidebarView: View {
         var icon: String {
             switch self {
             case .repositories: return "shippingbox"
-            case .harnesses:    return "puzzlepiece.extension"
+            case .harnesses: return "puzzlepiece.extension"
             case .marketplaces: return "storefront"
             }
         }
@@ -35,7 +36,7 @@ struct SidebarView: View {
         var label: String {
             switch self {
             case .repositories: return "Repositories"
-            case .harnesses:    return "Harnesses"
+            case .harnesses: return "Harnesses"
             case .marketplaces: return "Marketplaces"
             }
         }
@@ -76,6 +77,10 @@ struct SidebarView: View {
             }
         }
         .onAppear {
+            if !SidebarView.hasResetOnLaunch {
+                selectedTab = .repositories
+                SidebarView.hasResetOnLaunch = true
+            }
             if harnessTabEnabled {
                 Task { await detector.detect() }
             }

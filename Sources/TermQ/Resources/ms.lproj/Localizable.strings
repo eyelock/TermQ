@@ -603,6 +603,7 @@
 "harnesses.reveal.in.finder" = "Tunjuk dalam Finder";
 "harnesses.open.in.browser" = "Buka dalam pelayar";
 "harnesses.close.detail" = "Tutup";
+"harnesses.configure.from.marketplaces" = "Konfigurasikan dari Pasaran…";
 "harnesses.detail.artifacts.from.includes" = "Harness ini mendapat artefak daripada include kebergantungan.";
 "harnesses.detail.from" = "dari";
 "harnesses.detail.hooks" = "Hook";
@@ -637,6 +638,9 @@
 
 "harnesses.linked.worktrees" = "Worktree yang dipautkan";
 "harnesses.linked.worktrees.none" = "Tiada worktree yang dipautkan ke harness ini.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Cipta Harness Baharu";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Rantaian Alat YNH";
@@ -710,3 +714,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
 "harnesses.uninstall.alert.confirm" = "Nyahpasang";
 "harnesses.more.actions.help" = "Tindakan lain";
+"harnesses.copy.run.command" = "Salin perintah jalankan";
+"harnesses.ynh.documentation" = "Dokumentasi YNH";
+
+"harnesses.add.registry.title" = "Tambah Registry YNH";
+"harnesses.add.registry.url.label" = "URL Registry";
+"harnesses.add.registry.hint" = "Tambahkan repositori Git yang mengandungi fail registry.json. Setelah ditambah, anda boleh mencari dan memasang harnesses daripadanya.";
+"harnesses.add.registry.button" = "Tambah Registry";
+"harnesses.add.registry.success" = "Registry berjaya ditambah";
+"harnesses.add.registry.toolbar.help" = "Tambah registry YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Pasaran";
+"settings.marketplaces.section.list" = "Pasaran yang dikonfigurasi";
+"settings.marketplaces.empty" = "Belum ada pasaran yang ditambah.";
+"settings.marketplaces.add" = "Tambah Pasaran…";
+"settings.marketplaces.never.fetched" = "Belum pernah diambil";
+"settings.marketplaces.remove.confirm.title" = "Buang Pasaran";
+"settings.marketplaces.remove.confirm.message %@" = "Buang \"%@\"? Plugin-nya tidak akan muncul lagi dalam penyemak imbas.";
+"settings.marketplaces.section.behaviour" = "Tingkah laku";
+"settings.marketplaces.auto.refresh" = "Muat semula automatik semasa dilancarkan";
+"settings.marketplaces.auto.refresh.help" = "Ambil kemas kini pasaran secara automatik apabila aplikasi dimulakan";
+"settings.marketplaces.section.authoring" = "Pengarangan Harness";
+"settings.marketplaces.default.author.directory" = "Direktori pengarang lalai";
+"settings.marketplaces.author.directory.detected.hint" = "Dikesan secara automatik daripada ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Pasaran";
+"marketplace.add.help" = "Tambah pasaran";
+"marketplace.empty" = "Tiada pasaran lagi";
+"marketplace.add.button" = "Tambah pasaran";
+"marketplace.row.refresh.help" = "Muat semula pasaran";
+"marketplace.row.refresh" = "Muat semula";
+"marketplace.row.remove" = "Buang";
+"marketplace.row.stale" = " · Mungkin sudah lapuk";
+"marketplace.row.never.fetched" = "Tidak pernah diambil";
+"marketplace.add.sheet.title" = "Tambah pasaran";
+"marketplace.add.tab.known" = "Dikenali";
+"marketplace.add.tab.custom" = "URL Tersuai";
+"marketplace.add.section.git.url" = "URL Repositori Git";
+"marketplace.add.section.display.name" = "Nama Paparan";
+"marketplace.add.section.vendor" = "Vendor";
+"marketplace.detail.last.fetched %@" = "Terakhir diambil %@";
+"marketplace.detail.search.placeholder" = "Cari pemalam…";
+"marketplace.detail.search.empty %@" = "Tiada pemalam yang sepadan dengan «%@»";
+"marketplace.detail.empty" = "Tiada pemalam dalam pasaran ini";
+"marketplace.detail.empty.hint" = "Muat semula untuk mendapatkan indeks terkini.";
+"marketplace.plugin.add.to.harness" = "Tambah ke Harness";
+"marketplace.plugin.copy.install.command" = "Salin Arahan Pemasangan";
+"marketplace.plugin.copy.install.command.help" = "Menyalin arahan pemasangan Claude Code ke papan klip";
+"marketplace.plugin.load.artifacts" = "Muatkan artifak";
+"marketplace.plugin.loading.artifacts" = "Memuatkan artifak…";
+"marketplace.plugin.no.artifacts" = "Tiada artifak disenaraikan untuk pemalam ini.";
+"marketplace.plugin.no.artifacts.hint" = "Semua kandungan pemalam akan disertakan.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artifak tidak tersedia: %@";
+"marketplace.picker.step.artifacts" = "Artifak";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Guna";
+"marketplace.picker.select.prompt" = "Pilih artifak untuk disertakan";
+"marketplace.picker.select.all" = "Semua";
+"marketplace.picker.select.none" = "Tiada";
+"marketplace.picker.no.harnesses" = "Tiada harness lagi";
+"marketplace.picker.no.harnesses.hint" = "Cipta harness terlebih dahulu menggunakan wizard Harness Baharu.";
+"marketplace.picker.review.plugin" = "Pemalam";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artifak";
+"marketplace.picker.review.all.count %lld" = "Semua (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld daripada %lld dipilih";
+"marketplace.picker.command.preview" = "Pratonton arahan";
+"marketplace.picker.success %@" = "Pemalam ditambah ke %@";
+"marketplace.picker.done" = "Selesai";
+"marketplace.picker.back" = "Kembali";
+"marketplace.picker.next" = "Seterusnya";
+"harness.wizard.title" = "Harness Baharu";
+"harness.wizard.name.label" = "Nama (diperlukan)";
+"harness.wizard.description.label" = "Penerangan";
+"harness.wizard.loading.vendors" = "Memuatkan vendor…";
+"harness.wizard.vendor.label" = "Vendor Lalai";
+"harness.wizard.destination.label" = "Direktori Destinasi";
+"harness.wizard.install.toggle" = "Pasang harness serta-merta selepas penciptaan";
+"harness.wizard.success.add.plugins" = "Tambah pemalam dari pasaran";
+"harness.wizard.success.open" = "Buka dalam TermQ";
+"harness.wizard.create" = "Cipta";
+"harness.wizard.retry" = "Cuba lagi";
+"harness.wizard.error.name.required" = "Nama diperlukan";
+"harness.wizard.error.name.invalid" = "Nama hanya boleh mengandungi huruf, nombor, tanda sempang dan garis bawah";
+"harness.wizard.error.name.duplicate %@" = "Harness bernama «%@» sudah wujud";
+"settings.marketplaces.reset" = "Tetapkan semula";
+"settings.marketplaces.section.ynh.registries" = "Pendaftaran YNH";
+"settings.marketplaces.ynh.registries.empty" = "Tiada pendaftaran ditambah";
+"settings.marketplaces.ynh.add.registry" = "Tambah Pendaftaran…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Buang Pendaftaran";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Buang";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Buang “%@” daripada YNH? Harness yang dipasang akan kekal.";
+"marketplace.add.custom.name.placeholder" = "Pasaran saya";
+"harness.wizard.success.created %@" = "Harness «%@» dicipta";

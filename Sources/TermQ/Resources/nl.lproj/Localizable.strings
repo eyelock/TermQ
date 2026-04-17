@@ -603,6 +603,7 @@
 "harnesses.reveal.in.finder" = "Tonen in Finder";
 "harnesses.open.in.browser" = "Openen in browser";
 "harnesses.close.detail" = "Sluiten";
+"harnesses.configure.from.marketplaces" = "Configureer vanuit marktplaatsen…";
 "harnesses.detail.artifacts.from.includes" = "Deze harness haalt zijn artefacten uit afhankelijkheids-includes.";
 "harnesses.detail.from" = "van";
 "harnesses.detail.hooks" = "Hooks";
@@ -637,6 +638,9 @@
 
 "harnesses.linked.worktrees" = "Gekoppelde worktrees";
 "harnesses.linked.worktrees.none" = "Er zijn geen worktrees gekoppeld aan dit harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Nieuw harness aanmaken";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-toolchain";
@@ -710,3 +714,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) voeren deze harness momenteel uit.";
 "harnesses.uninstall.alert.confirm" = "Verwijderen";
 "harnesses.more.actions.help" = "Meer acties";
+"harnesses.copy.run.command" = "Opdracht kopiëren";
+"harnesses.ynh.documentation" = "YNH-documentatie";
+
+"harnesses.add.registry.title" = "YNH-register toevoegen";
+"harnesses.add.registry.url.label" = "Register-URL";
+"harnesses.add.registry.hint" = "Voeg een Git-repository toe die een registry.json-bestand bevat. Na het toevoegen kunt u harnesses doorzoeken en installeren.";
+"harnesses.add.registry.button" = "Register toevoegen";
+"harnesses.add.registry.success" = "Register succesvol toegevoegd";
+"harnesses.add.registry.toolbar.help" = "Een YNH-register toevoegen";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Marktplaatsen";
+"settings.marketplaces.section.list" = "Geconfigureerde marktplaatsen";
+"settings.marketplaces.empty" = "Nog geen marktplaatsen toegevoegd.";
+"settings.marketplaces.add" = "Marktplaats toevoegen…";
+"settings.marketplaces.never.fetched" = "Nooit opgehaald";
+"settings.marketplaces.remove.confirm.title" = "Marktplaats verwijderen";
+"settings.marketplaces.remove.confirm.message %@" = "\"%@\" verwijderen? De bijbehorende plugins verschijnen niet meer in de browser.";
+"settings.marketplaces.section.behaviour" = "Gedrag";
+"settings.marketplaces.auto.refresh" = "Automatisch vernieuwen bij start";
+"settings.marketplaces.auto.refresh.help" = "Automatisch marktplaatsupdates ophalen wanneer de app start";
+"settings.marketplaces.section.authoring" = "Harness-authoring";
+"settings.marketplaces.default.author.directory" = "Standaard auteursmap";
+"settings.marketplaces.author.directory.detected.hint" = "Automatisch gedetecteerd vanuit ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marktplaatsen";
+"marketplace.add.help" = "Marktplaats toevoegen";
+"marketplace.empty" = "Nog geen marktplaatsen";
+"marketplace.add.button" = "Marktplaats toevoegen";
+"marketplace.row.refresh.help" = "Marktplaats vernieuwen";
+"marketplace.row.refresh" = "Vernieuwen";
+"marketplace.row.remove" = "Verwijderen";
+"marketplace.row.stale" = " · Mogelijk verouderd";
+"marketplace.row.never.fetched" = "Nog niet opgehaald";
+"marketplace.add.sheet.title" = "Marktplaats toevoegen";
+"marketplace.add.tab.known" = "Bekend";
+"marketplace.add.tab.custom" = "Aangepaste URL";
+"marketplace.add.section.git.url" = "Git-repository-URL";
+"marketplace.add.section.display.name" = "Weergavenaam";
+"marketplace.add.section.vendor" = "Leverancier";
+"marketplace.detail.last.fetched %@" = "Laatste ophaling %@";
+"marketplace.detail.search.placeholder" = "Plugins zoeken…";
+"marketplace.detail.search.empty %@" = "Geen plugins komen overeen met «%@»";
+"marketplace.detail.empty" = "Geen plugins in deze marktplaats";
+"marketplace.detail.empty.hint" = "Vernieuwen om de laatste index op te halen.";
+"marketplace.plugin.add.to.harness" = "Aan harness toevoegen";
+"marketplace.plugin.copy.install.command" = "Installatieopdracht kopiëren";
+"marketplace.plugin.copy.install.command.help" = "Kopieert de Claude Code-installatieopdracht naar het klembord";
+"marketplace.plugin.load.artifacts" = "Artefacten laden";
+"marketplace.plugin.loading.artifacts" = "Artefacten worden geladen…";
+"marketplace.plugin.no.artifacts" = "Geen artefacten opgesomd voor deze plugin.";
+"marketplace.plugin.no.artifacts.hint" = "Alle plug-ininhoud wordt opgenomen.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefacten niet beschikbaar: %@";
+"marketplace.picker.step.artifacts" = "Artefacten";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Toepassen";
+"marketplace.picker.select.prompt" = "Artefacten selecteren om op te nemen";
+"marketplace.picker.select.all" = "Alles";
+"marketplace.picker.select.none" = "Geen";
+"marketplace.picker.no.harnesses" = "Nog geen harnesses";
+"marketplace.picker.no.harnesses.hint" = "Maak eerst een harness met de wizard Nieuw harness.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefacten";
+"marketplace.picker.review.all.count %lld" = "Alles (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld van %lld geselecteerd";
+"marketplace.picker.command.preview" = "Opdrachtvoorbeeld";
+"marketplace.picker.success %@" = "Plugin toegevoegd aan %@";
+"marketplace.picker.done" = "Klaar";
+"marketplace.picker.back" = "Terug";
+"marketplace.picker.next" = "Volgende";
+"harness.wizard.title" = "Nieuw harness";
+"harness.wizard.name.label" = "Naam (vereist)";
+"harness.wizard.description.label" = "Beschrijving";
+"harness.wizard.loading.vendors" = "Leveranciers worden geladen…";
+"harness.wizard.vendor.label" = "Standaardleverancier";
+"harness.wizard.destination.label" = "Doelmap";
+"harness.wizard.install.toggle" = "Harness direct na aanmaak installeren";
+"harness.wizard.success.add.plugins" = "Plugins toevoegen vanuit de marktplaats";
+"harness.wizard.success.open" = "Openen in TermQ";
+"harness.wizard.create" = "Aanmaken";
+"harness.wizard.retry" = "Opnieuw proberen";
+"harness.wizard.error.name.required" = "Naam is vereist";
+"harness.wizard.error.name.invalid" = "De naam mag alleen letters, cijfers, koppeltekens en underscores bevatten";
+"harness.wizard.error.name.duplicate %@" = "Er bestaat al een harness met de naam «%@»";
+"settings.marketplaces.reset" = "Herstellen";
+"settings.marketplaces.section.ynh.registries" = "YNH-registers";
+"settings.marketplaces.ynh.registries.empty" = "Geen registers toegevoegd";
+"settings.marketplaces.ynh.add.registry" = "Register toevoegen…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Register verwijderen";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Verwijderen";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" uit YNH verwijderen? Geïnstalleerde harnesses blijven behouden.";
+"marketplace.add.custom.name.placeholder" = "Mijn marktplaats";
+"harness.wizard.success.created %@" = "Harness «%@» aangemaakt";

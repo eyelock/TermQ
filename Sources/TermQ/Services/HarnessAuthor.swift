@@ -1,0 +1,479 @@
+import Foundation
+
+// Mutable buffer shared between readabilityHandler and terminationHandler.
+// The OS guarantees serial delivery (termination fires after readability is nil'd),
+// so @unchecked Sendable is safe here.
+private final class LineBuffer: @unchecked Sendable {
+    var data = Data()
+}
+
+/// Status of an individual command step in the authoring sequence.
+enum AuthorStepStatus: Sendable {
+    case pending
+    case running
+    case done
+    case failed(String)
+
+    var isTerminal: Bool {
+        switch self {
+        case .done, .failed: return true
+        default: return false
+        }
+    }
+}
+
+/// A single named step tracked by `HarnessAuthor`.
+struct AuthorStep: Identifiable, Sendable {
+    let id: UUID
+    let label: String
+    var status: AuthorStepStatus
+    var command: String  // preview shown to user before execution
+
+    init(label: String, command: String) {
+        self.id = UUID()
+        self.label = label
+        self.command = command
+        self.status = .pending
+    }
+}
+
+/// Sequences `ynd create harness <name>` + optional `ynh install <path>`.
+///
+/// Streams combined stdout/stderr lines to `outputLines` and tracks per-step status.
+/// `include add` calls live in `HarnessIncludePicker` — this class only handles creation.
+@MainActor
+final class HarnessAuthor: ObservableObject {
+    @Published private(set) var steps: [AuthorStep] = []
+    @Published private(set) var outputLines: [String] = []
+    @Published private(set) var isRunning = false
+    @Published private(set) var succeeded = false
+
+    private(set) var createdHarnessName: String?
+
+    func run(
+        name: String,
+        description: String,
+        vendorID: String,
+        destination: String,
+        install: Bool,
+        yndPath: String,
+        ynhPath: String,
+        environment: [String: String]
+    ) async {
+        var createCmd = "\(yndPath) create harness \(name)"
+        if !description.isEmpty { createCmd += " --description \"\(description)\"" }
+        if !vendorID.isEmpty { createCmd += " --vendor \(vendorID)" }
+        let installPath = (destination as NSString).appendingPathComponent(name)
+        let installCmd = "\(ynhPath) install \(installPath)"
+
+        steps = [AuthorStep(label: "Create harness", command: createCmd)]
+        if install {
+            steps.append(AuthorStep(label: "Install harness", command: installCmd))
+        }
+        outputLines = []
+        isRunning = true
+        succeeded = false
+
+        // Step 1: create
+        var createArgs = ["create", "harness", name]
+        if !description.isEmpty { createArgs += ["--description", description] }
+        if !vendorID.isEmpty { createArgs += ["--vendor", vendorID] }
+        let createOK = await runStep(
+            index: 0,
+            executable: yndPath,
+            args: createArgs,
+            cwd: destination,
+            environment: environment
+        )
+        guard createOK else {
+            isRunning = false
+            return
+        }
+        createdHarnessName = name
+
+        // Step 2: install (optional)
+        if install {
+            let installOK = await runStep(
+                index: 1,
+                executable: ynhPath,
+                args: ["install", installPath],
+                cwd: destination,
+                environment: environment
+            )
+            guard installOK else {
+                isRunning = false
+                return
+            }
+        }
+
+        isRunning = false
+        succeeded = true
+    }
+
+    // MARK: - Private
+
+    private func runStep(
+        index: Int,
+        executable: String,
+        args: [String],
+        cwd: String,
+        environment: [String: String]
+    ) async -> Bool {
+        steps[index].status = .running
+
+        let exitCode = await streamProcess(
+            executable: executable,
+            args: args,
+            cwd: cwd,
+            environment: environment
+        )
+
+        if exitCode == 0 {
+            steps[index].status = .done
+            return true
+        } else {
+            steps[index].status = .failed("Exit \(exitCode)")
+            return false
+        }
+    }
+
+    private func streamProcess(
+        executable: String,
+        args: [String],
+        cwd: String,
+        environment: [String: String]
+    ) async -> Int32 {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let process = Process()
+                let pipe = Pipe()
+
+                process.executableURL = URL(fileURLWithPath: executable)
+                process.arguments = args
+                process.currentDirectoryURL = URL(fileURLWithPath: cwd)
+                process.standardOutput = pipe
+                process.standardError = pipe
+                process.environment = environment
+
+                let handle = pipe.fileHandleForReading
+                let lineBuffer = LineBuffer()
+
+                handle.readabilityHandler = { fh in
+                    let chunk = fh.availableData
+                    guard !chunk.isEmpty else { return }
+                    lineBuffer.data.append(chunk)
+                    if let text = String(data: lineBuffer.data, encoding: .utf8) {
+                        let lines = text.components(separatedBy: "\n")
+                        let complete = lines.dropLast()
+                        let partial = lines.last ?? ""
+                        if !complete.isEmpty {
+                            let toEmit = complete.filter { !$0.isEmpty }
+                            lineBuffer.data = Data(partial.utf8)
+                            DispatchQueue.main.async { [weak self] in
+                                self?.outputLines.append(contentsOf: toEmit)
+                            }
+                        }
+                    }
+                }
+
+                do {
+                    try process.run()
+                } catch {
+                    handle.readabilityHandler = nil
+                    DispatchQueue.main.async { [weak self] in
+                        self?.outputLines.append("Error: \(error.localizedDescription)")
+                    }
+                    continuation.resume(returning: 1)
+                    return
+                }
+
+                process.terminationHandler = { p in
+                    handle.readabilityHandler = nil
+                    let remaining = handle.readDataToEndOfFile()
+                    if let tail = String(data: remaining, encoding: .utf8), !tail.isEmpty {
+                        let lines = tail.components(separatedBy: "\n").filter { !$0.isEmpty }
+                        DispatchQueue.main.async { [weak self] in
+                            self?.outputLines.append(contentsOf: lines)
+                        }
+                    }
+                    continuation.resume(returning: p.terminationStatus)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Registry runner (used by AddRegistrySheet)
+
+/// Runs `ynh registry add <url>` and streams output back.
+@MainActor
+final class RegistryAddRunner: ObservableObject {
+    @Published private(set) var outputLines: [String] = []
+    @Published private(set) var isRunning = false
+    @Published private(set) var succeeded = false
+    @Published private(set) var errorMessage: String?
+
+    func run(ynhPath: String, url: String, environment: [String: String]) async {
+        isRunning = true
+        outputLines = []
+        succeeded = false
+        errorMessage = nil
+
+        let exitCode = await streamProcess(
+            executable: ynhPath,
+            args: ["registry", "add", url],
+            environment: environment
+        )
+
+        isRunning = false
+        if exitCode == 0 {
+            succeeded = true
+        } else {
+            errorMessage = outputLines.last ?? "Command failed with exit code \(exitCode)"
+        }
+    }
+
+    private func streamProcess(
+        executable: String,
+        args: [String],
+        environment: [String: String]
+    ) async -> Int32 {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let process = Process()
+                let pipe = Pipe()
+
+                process.executableURL = URL(fileURLWithPath: executable)
+                process.arguments = args
+                process.standardOutput = pipe
+                process.standardError = pipe
+                process.environment = environment
+
+                let handle = pipe.fileHandleForReading
+                let lineBuffer = LineBuffer()
+
+                handle.readabilityHandler = { fh in
+                    let chunk = fh.availableData
+                    guard !chunk.isEmpty else { return }
+                    lineBuffer.data.append(chunk)
+                    if let text = String(data: lineBuffer.data, encoding: .utf8) {
+                        let lines = text.components(separatedBy: "\n")
+                        let complete = lines.dropLast()
+                        let partial = lines.last ?? ""
+                        if !complete.isEmpty {
+                            let toEmit = complete.filter { !$0.isEmpty }
+                            lineBuffer.data = Data(partial.utf8)
+                            DispatchQueue.main.async { [weak self] in
+                                self?.outputLines.append(contentsOf: toEmit)
+                            }
+                        }
+                    }
+                }
+
+                do {
+                    try process.run()
+                } catch {
+                    handle.readabilityHandler = nil
+                    DispatchQueue.main.async { [weak self] in
+                        self?.outputLines.append("Error: \(error.localizedDescription)")
+                    }
+                    continuation.resume(returning: 1)
+                    return
+                }
+
+                process.terminationHandler = { p in
+                    handle.readabilityHandler = nil
+                    let remaining = handle.readDataToEndOfFile()
+                    if let tail = String(data: remaining, encoding: .utf8), !tail.isEmpty {
+                        let lines = tail.components(separatedBy: "\n").filter { !$0.isEmpty }
+                        DispatchQueue.main.async { [weak self] in
+                            self?.outputLines.append(contentsOf: lines)
+                        }
+                    }
+                    continuation.resume(returning: p.terminationStatus)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Registry listing service (used by SettingsMarketplacesView)
+
+struct YNHRegistry: Identifiable, Decodable {
+    var id: String { url }
+    let url: String
+    let name: String
+    let description: String?
+    let ref: String?
+}
+
+@MainActor
+final class YNHRegistryService: ObservableObject {
+    @Published private(set) var registries: [YNHRegistry] = []
+    @Published private(set) var isLoading = false
+
+    func refresh(ynhPath: String, environment: [String: String]) async {
+        isLoading = true
+        defer { isLoading = false }
+        if let data = await fetch(
+            executable: ynhPath, args: ["registry", "list", "--format", "json"], environment: environment),
+            let decoded = try? JSONDecoder().decode([YNHRegistry].self, from: data)
+        {
+            registries = decoded
+        }
+    }
+
+    func remove(url: String, ynhPath: String, environment: [String: String]) async {
+        await runSilent(executable: ynhPath, args: ["registry", "remove", url], environment: environment)
+        await refresh(ynhPath: ynhPath, environment: environment)
+    }
+
+    private func fetch(executable: String, args: [String], environment: [String: String]) async -> Data? {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let process = Process()
+                let pipe = Pipe()
+                process.executableURL = URL(fileURLWithPath: executable)
+                process.arguments = args
+                process.standardOutput = pipe
+                process.standardError = Pipe()
+                process.environment = environment
+                do {
+                    try process.run()
+                    process.waitUntilExit()
+                    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                    continuation.resume(returning: process.terminationStatus == 0 ? data : nil)
+                } catch {
+                    continuation.resume(returning: nil)
+                }
+            }
+        }
+    }
+
+    private func runSilent(executable: String, args: [String], environment: [String: String]) async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let process = Process()
+                process.executableURL = URL(fileURLWithPath: executable)
+                process.arguments = args
+                process.environment = environment
+                process.standardOutput = Pipe()
+                process.standardError = Pipe()
+                try? process.run()
+                process.waitUntilExit()
+                continuation.resume()
+            }
+        }
+    }
+}
+
+// MARK: - Include runner (used by HarnessIncludePicker)
+
+/// Runs `ynh include add` and streams output back.
+@MainActor
+final class IncludeApplier: ObservableObject {
+    @Published private(set) var outputLines: [String] = []
+    @Published private(set) var isRunning = false
+    @Published private(set) var succeeded = false
+    @Published private(set) var errorMessage: String?
+
+    func apply(
+        harness: String,
+        sourceURL: String,
+        path: String?,
+        pick: [String],
+        ynhPath: String,
+        environment: [String: String]
+    ) async {
+        isRunning = true
+        outputLines = []
+        succeeded = false
+        errorMessage = nil
+
+        var args = ["include", "add", harness, sourceURL]
+        if let p = path, !p.isEmpty {
+            args += ["--path", p]
+        }
+        if !pick.isEmpty {
+            // YNH --pick expects bare artifact names; strip the type/ prefix (e.g. "skills/foo" → "foo")
+            let bareNames = pick.map { $0.components(separatedBy: "/").last ?? $0 }
+            args += ["--pick", bareNames.joined(separator: ",")]
+        }
+
+        let exitCode = await streamProcess(
+            executable: ynhPath,
+            args: args,
+            environment: environment
+        )
+
+        isRunning = false
+        if exitCode == 0 {
+            succeeded = true
+        } else {
+            errorMessage = outputLines.last ?? "Command failed with exit code \(exitCode)"
+        }
+    }
+
+    private func streamProcess(
+        executable: String,
+        args: [String],
+        environment: [String: String]
+    ) async -> Int32 {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let process = Process()
+                let pipe = Pipe()
+
+                process.executableURL = URL(fileURLWithPath: executable)
+                process.arguments = args
+                process.standardOutput = pipe
+                process.standardError = pipe
+                process.environment = environment
+
+                let handle = pipe.fileHandleForReading
+                let lineBuffer = LineBuffer()
+
+                handle.readabilityHandler = { fh in
+                    let chunk = fh.availableData
+                    guard !chunk.isEmpty else { return }
+                    lineBuffer.data.append(chunk)
+                    if let text = String(data: lineBuffer.data, encoding: .utf8) {
+                        let lines = text.components(separatedBy: "\n")
+                        let complete = lines.dropLast()
+                        let partial = lines.last ?? ""
+                        if !complete.isEmpty {
+                            let toEmit = complete.filter { !$0.isEmpty }
+                            lineBuffer.data = Data(partial.utf8)
+                            DispatchQueue.main.async { [weak self] in
+                                self?.outputLines.append(contentsOf: toEmit)
+                            }
+                        }
+                    }
+                }
+
+                do {
+                    try process.run()
+                } catch {
+                    handle.readabilityHandler = nil
+                    DispatchQueue.main.async { [weak self] in
+                        self?.outputLines.append("Error: \(error.localizedDescription)")
+                    }
+                    continuation.resume(returning: 1)
+                    return
+                }
+
+                process.terminationHandler = { p in
+                    handle.readabilityHandler = nil
+                    let remaining = handle.readDataToEndOfFile()
+                    if let tail = String(data: remaining, encoding: .utf8), !tail.isEmpty {
+                        let lines = tail.components(separatedBy: "\n").filter { !$0.isEmpty }
+                        DispatchQueue.main.async { [weak self] in
+                            self?.outputLines.append(contentsOf: lines)
+                        }
+                    }
+                    continuation.resume(returning: p.terminationStatus)
+                }
+            }
+        }
+    }
+}

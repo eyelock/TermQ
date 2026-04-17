@@ -604,6 +604,7 @@
 "harnesses.reveal.in.finder" = "Prikaži u Finderu";
 "harnesses.open.in.browser" = "Otvori u pregledniku";
 "harnesses.close.detail" = "Zatvori";
+"harnesses.configure.from.marketplaces" = "Konfiguriraj iz tržnica…";
 "harnesses.detail.artifacts.from.includes" = "Ovaj harness dobiva artefakte iz uključenih zavisnosti.";
 "harnesses.detail.from" = "iz";
 "harnesses.detail.hooks" = "Hookovi";
@@ -638,6 +639,9 @@
 
 "harnesses.linked.worktrees" = "Povezani worktreeovi";
 "harnesses.linked.worktrees.none" = "Nijedan worktree nije povezan s ovim harnessom.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Stvori novi harness";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH alatni lanac";
@@ -711,3 +715,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(a) trenutno izvodi ovaj harness.";
 "harnesses.uninstall.alert.confirm" = "Deinstaliraj";
 "harnesses.more.actions.help" = "Više radnji";
+"harnesses.copy.run.command" = "Kopiraj naredbu pokretanja";
+"harnesses.ynh.documentation" = "YNH dokumentacija";
+
+"harnesses.add.registry.title" = "Dodaj YNH registar";
+"harnesses.add.registry.url.label" = "URL registra";
+"harnesses.add.registry.hint" = "Dodajte Git repozitorij koji sadrži datoteku registry.json. Nakon dodavanja možete pretraživati i instalirati harnesses iz njega.";
+"harnesses.add.registry.button" = "Dodaj registar";
+"harnesses.add.registry.success" = "Registar uspješno dodan";
+"harnesses.add.registry.toolbar.help" = "Dodaj YNH registar";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Tržišta";
+"settings.marketplaces.section.list" = "Konfigurirana tržišta";
+"settings.marketplaces.empty" = "Još nisu dodana tržišta.";
+"settings.marketplaces.add" = "Dodaj tržište…";
+"settings.marketplaces.never.fetched" = "Nikad dohvaćeno";
+"settings.marketplaces.remove.confirm.title" = "Ukloni tržište";
+"settings.marketplaces.remove.confirm.message %@" = "Ukloniti \"%@\"? Njegovi dodaci više neće biti prikazani u pregledniku.";
+"settings.marketplaces.section.behaviour" = "Ponašanje";
+"settings.marketplaces.auto.refresh" = "Automatsko osvježavanje pri pokretanju";
+"settings.marketplaces.auto.refresh.help" = "Automatski dohvati ažuriranja tržišta kada se aplikacija pokrene";
+"settings.marketplaces.section.authoring" = "Izrada harnessa";
+"settings.marketplaces.default.author.directory" = "Zadani direktorij autora";
+"settings.marketplaces.author.directory.detected.hint" = "Automatski prepoznato iz ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Tržišta";
+"marketplace.add.help" = "Dodaj tržište";
+"marketplace.empty" = "Nema tržišta";
+"marketplace.add.button" = "Dodaj tržište";
+"marketplace.row.refresh.help" = "Osvježi tržište";
+"marketplace.row.refresh" = "Osvježi";
+"marketplace.row.remove" = "Ukloni";
+"marketplace.row.stale" = " · Može biti zastarjelo";
+"marketplace.row.never.fetched" = "Nikad dohvaćeno";
+"marketplace.add.sheet.title" = "Dodaj tržište";
+"marketplace.add.tab.known" = "Poznata";
+"marketplace.add.tab.custom" = "Prilagođeni URL";
+"marketplace.add.section.git.url" = "URL Git repozitorija";
+"marketplace.add.section.display.name" = "Naziv za prikaz";
+"marketplace.add.section.vendor" = "Dobavljač";
+"marketplace.detail.last.fetched %@" = "Zadnje dohvaćeno %@";
+"marketplace.detail.search.placeholder" = "Traži dodatke…";
+"marketplace.detail.search.empty %@" = "Nema dodataka koji odgovaraju «%@»";
+"marketplace.detail.empty" = "Nema dodataka na ovom tržištu";
+"marketplace.detail.empty.hint" = "Osvježite za dohvat najnovijeg indeksa.";
+"marketplace.plugin.add.to.harness" = "Dodaj u harness";
+"marketplace.plugin.copy.install.command" = "Kopiraj naredbu za instalaciju";
+"marketplace.plugin.copy.install.command.help" = "Kopira naredbu za instalaciju Claude Code u međuspremnik";
+"marketplace.plugin.load.artifacts" = "Učitaj artefakte";
+"marketplace.plugin.loading.artifacts" = "Učitavanje artefakata…";
+"marketplace.plugin.no.artifacts" = "Nema navedenih artefakata za ovaj dodatak.";
+"marketplace.plugin.no.artifacts.hint" = "Sav sadržaj dodatka bit će uključen.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefakti nisu dostupni: %@";
+"marketplace.picker.step.artifacts" = "Artefakti";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Primijeni";
+"marketplace.picker.select.prompt" = "Odaberi artefakte za uključivanje";
+"marketplace.picker.select.all" = "Sve";
+"marketplace.picker.select.none" = "Ništa";
+"marketplace.picker.no.harnesses" = "Nema harness-a";
+"marketplace.picker.no.harnesses.hint" = "Najprije izradite harness pomoću čarobnjaka za novi harness.";
+"marketplace.picker.review.plugin" = "Dodatak";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefakti";
+"marketplace.picker.review.all.count %lld" = "Sve (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld od %lld odabrano";
+"marketplace.picker.command.preview" = "Pregled naredbe";
+"marketplace.picker.success %@" = "Dodatak dodan u %@";
+"marketplace.picker.done" = "Gotovo";
+"marketplace.picker.back" = "Natrag";
+"marketplace.picker.next" = "Dalje";
+"harness.wizard.title" = "Novi harness";
+"harness.wizard.name.label" = "Naziv (obavezno)";
+"harness.wizard.description.label" = "Opis";
+"harness.wizard.loading.vendors" = "Učitavanje dobavljača…";
+"harness.wizard.vendor.label" = "Zadani dobavljač";
+"harness.wizard.destination.label" = "Odredišni direktorij";
+"harness.wizard.install.toggle" = "Instaliraj harness odmah nakon izrade";
+"harness.wizard.success.add.plugins" = "Dodaj dodatke s tržišta";
+"harness.wizard.success.open" = "Otvori u TermQ";
+"harness.wizard.create" = "Izradi";
+"harness.wizard.retry" = "Pokušaj ponovo";
+"harness.wizard.error.name.required" = "Naziv je obavezan";
+"harness.wizard.error.name.invalid" = "Naziv smije sadržavati samo slova, brojeve, crtice i podvlake";
+"harness.wizard.error.name.duplicate %@" = "Harness s nazivom «%@» već postoji";
+"settings.marketplaces.reset" = "Poništi";
+"settings.marketplaces.section.ynh.registries" = "YNH registri";
+"settings.marketplaces.ynh.registries.empty" = "Nema dodanih registara";
+"settings.marketplaces.ynh.add.registry" = "Dodaj registar…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Ukloni registar";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Ukloni";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Ukloniti „%@“ iz YNH-a? Instalirani harnesses ostaju.";
+"marketplace.add.custom.name.placeholder" = "Moje tržište";
+"harness.wizard.success.created %@" = "Harness «%@» izrađen";

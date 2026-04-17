@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "إظهار في Finder";
 "harnesses.open.in.browser" = "فتح في المتصفح";
 "harnesses.close.detail" = "إغلاق";
+"harnesses.configure.from.marketplaces" = "كوِّن من الأسواق…";
 "harnesses.detail.artifacts.from.includes" = "يحصل هذا الطوق على منتجاته من تضمينات التبعيات.";
 "harnesses.detail.from" = "من";
 "harnesses.detail.hooks" = "Hooks";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "Worktrees المرتبطة";
 "harnesses.linked.worktrees.none" = "لا توجد worktrees مرتبطة بهذا harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "إنشاء حزمة جديدة";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "سلسلة أدوات YNH";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld محطة (محطات) طرفية تُشغّل هذا الـ harness حاليًا.";
 "harnesses.uninstall.alert.confirm" = "إلغاء التثبيت";
 "harnesses.more.actions.help" = "إجراءات أخرى";
+"harnesses.copy.run.command" = "نسخ أمر التشغيل";
+"harnesses.ynh.documentation" = "توثيق YNH";
+
+"harnesses.add.registry.title" = "إضافة سجل YNH";
+"harnesses.add.registry.url.label" = "رابط السجل";
+"harnesses.add.registry.hint" = "أضف مستودع Git يحتوي على ملف registry.json. بعد الإضافة، يمكنك البحث عن harnesses وتثبيتها منه.";
+"harnesses.add.registry.button" = "إضافة سجل";
+"harnesses.add.registry.success" = "تمت إضافة السجل بنجاح";
+"harnesses.add.registry.toolbar.help" = "إضافة سجل YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "الأسواق";
+"settings.marketplaces.section.list" = "الأسواق المُهيَّأة";
+"settings.marketplaces.empty" = "لم تُضَف أسواق بعد.";
+"settings.marketplaces.add" = "إضافة سوق…";
+"settings.marketplaces.never.fetched" = "لم يتم الجلب مطلقاً";
+"settings.marketplaces.remove.confirm.title" = "إزالة السوق";
+"settings.marketplaces.remove.confirm.message %@" = "إزالة \"%@\"؟ لن تظهر إضافاته في المتصفح بعد الآن.";
+"settings.marketplaces.section.behaviour" = "السلوك";
+"settings.marketplaces.auto.refresh" = "تحديث تلقائي عند التشغيل";
+"settings.marketplaces.auto.refresh.help" = "جلب تحديثات السوق تلقائياً عند تشغيل التطبيق";
+"settings.marketplaces.section.authoring" = "إنشاء Harness";
+"settings.marketplaces.default.author.directory" = "مجلد المؤلف الافتراضي";
+"settings.marketplaces.author.directory.detected.hint" = "تم الكشف تلقائياً من ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "الأسواق";
+"marketplace.add.help" = "إضافة سوق";
+"marketplace.empty" = "لا توجد أسواق بعد";
+"marketplace.add.button" = "إضافة سوق";
+"marketplace.row.refresh.help" = "تحديث السوق";
+"marketplace.row.refresh" = "تحديث";
+"marketplace.row.remove" = "إزالة";
+"marketplace.row.stale" = " · قد يكون قديماً";
+"marketplace.row.never.fetched" = "لم يُجلب أبداً";
+"marketplace.add.sheet.title" = "إضافة سوق";
+"marketplace.add.tab.known" = "المعروفة";
+"marketplace.add.tab.custom" = "عنوان URL مخصص";
+"marketplace.add.section.git.url" = "عنوان URL لمستودع Git";
+"marketplace.add.section.display.name" = "الاسم المعروض";
+"marketplace.add.section.vendor" = "المورد";
+"marketplace.detail.last.fetched %@" = "آخر جلب %@";
+"marketplace.detail.search.placeholder" = "البحث في الإضافات…";
+"marketplace.detail.search.empty %@" = "لا توجد إضافات تطابق «%@»";
+"marketplace.detail.empty" = "لا توجد إضافات في هذا السوق";
+"marketplace.detail.empty.hint" = "قم بالتحديث لجلب أحدث الفهارس.";
+"marketplace.plugin.add.to.harness" = "إضافة إلى الحزمة";
+"marketplace.plugin.copy.install.command" = "نسخ أمر التثبيت";
+"marketplace.plugin.copy.install.command.help" = "ينسخ أمر تثبيت Claude Code إلى الحافظة";
+"marketplace.plugin.load.artifacts" = "تحميل القطع الأثرية";
+"marketplace.plugin.loading.artifacts" = "جارٍ تحميل القطع الأثرية…";
+"marketplace.plugin.no.artifacts" = "لا توجد قطع أثرية مدرجة لهذه الإضافة.";
+"marketplace.plugin.no.artifacts.hint" = "سيتم تضمين كامل محتوى الإضافة.";
+"marketplace.plugin.artifacts.unavailable %@" = "القطع الأثرية غير متاحة: %@";
+"marketplace.picker.step.artifacts" = "القطع الأثرية";
+"marketplace.picker.step.harness" = "الحزمة";
+"marketplace.picker.step.apply" = "تطبيق";
+"marketplace.picker.select.prompt" = "اختر القطع الأثرية للتضمين";
+"marketplace.picker.select.all" = "الكل";
+"marketplace.picker.select.none" = "لا شيء";
+"marketplace.picker.no.harnesses" = "لا توجد حزم بعد";
+"marketplace.picker.no.harnesses.hint" = "أنشئ حزمة أولاً باستخدام معالج الحزمة الجديدة.";
+"marketplace.picker.review.plugin" = "الإضافة";
+"marketplace.picker.review.harness" = "الحزمة";
+"marketplace.picker.review.artifacts" = "القطع الأثرية";
+"marketplace.picker.review.all.count %lld" = "الكل (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld من أصل %lld محدد";
+"marketplace.picker.command.preview" = "معاينة الأمر";
+"marketplace.picker.success %@" = "تمت إضافة الإضافة إلى %@";
+"marketplace.picker.done" = "تم";
+"marketplace.picker.back" = "رجوع";
+"marketplace.picker.next" = "التالي";
+"harness.wizard.title" = "حزمة جديدة";
+"harness.wizard.name.label" = "الاسم (مطلوب)";
+"harness.wizard.description.label" = "الوصف";
+"harness.wizard.loading.vendors" = "جارٍ تحميل الموردين…";
+"harness.wizard.vendor.label" = "المورد الافتراضي";
+"harness.wizard.destination.label" = "مجلد الوجهة";
+"harness.wizard.install.toggle" = "تثبيت الحزمة فوراً بعد الإنشاء";
+"harness.wizard.success.add.plugins" = "إضافة إضافات من السوق";
+"harness.wizard.success.open" = "فتح في TermQ";
+"harness.wizard.create" = "إنشاء";
+"harness.wizard.retry" = "إعادة المحاولة";
+"harness.wizard.error.name.required" = "الاسم مطلوب";
+"harness.wizard.error.name.invalid" = "يمكن أن يحتوي الاسم على أحرف وأرقام وشرطات وشرطات سفلية فقط";
+"harness.wizard.error.name.duplicate %@" = "توجد حزمة بالاسم «%@» بالفعل";
+"settings.marketplaces.reset" = "إعادة تعيين";
+"settings.marketplaces.section.ynh.registries" = "سجلات YNH";
+"settings.marketplaces.ynh.registries.empty" = "لم يُضَف أي سجل";
+"settings.marketplaces.ynh.add.registry" = "إضافة سجل…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "حذف السجل";
+"settings.marketplaces.ynh.registry.remove.confirm" = "حذف";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "حذف “%@” من YNH؟ ستظل التوصيلات المثبتة.";
+"marketplace.add.custom.name.placeholder" = "سوقي";
+"harness.wizard.success.created %@" = "تم إنشاء الحزمة «%@»";
