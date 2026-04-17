@@ -236,20 +236,25 @@ struct ContentView: View {
                 NotificationCenter.default.publisher(for: .termqDirectSessionExited)
             ) { notif in
                 guard let cardId = notif.userInfo?["cardId"] as? UUID else { return }
+                let succeeded = (notif.userInfo?["exitCode"] as? Int) == 0
+
                 if installCardIDs.remove(cardId) != nil {
                     if case .ready = ynhDetector.status {
                         Task { await harnessRepo.refresh() }
                     }
+                    if succeeded { closeHarnessCard(cardId) }
                 } else if let name = uninstallCardNames.removeValue(forKey: cardId) {
                     YNHPersistence.shared.removeAllAssociations(for: name)
                     if case .ready = ynhDetector.status {
                         Task { await harnessRepo.refresh() }
                     }
+                    if succeeded { closeHarnessCard(cardId) }
                 } else if let name = updateCardNames.removeValue(forKey: cardId) {
                     harnessRepo.invalidateDetail(for: name)
                     if case .ready = ynhDetector.status {
                         Task { await harnessRepo.refresh() }
                     }
+                    if succeeded { closeHarnessCard(cardId) }
                 }
             }
             .sheet(isPresented: $viewModel.showSessionRecovery) {
@@ -617,6 +622,12 @@ extension ContentView {
     /// Wrap a string in single quotes for safe shell argument passing.
     private func shellQuote(_ s: String) -> String {
         "'" + s.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    }
+
+    /// Close a transient harness operation card once its shell has exited.
+    private func closeHarnessCard(_ cardId: UUID) {
+        guard let card = viewModel.tabManager.card(for: cardId) else { return }
+        viewModel.closeTab(card)
     }
 
     /// Launch native Terminal.app at the specified directory

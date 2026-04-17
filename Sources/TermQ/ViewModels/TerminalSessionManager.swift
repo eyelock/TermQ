@@ -803,6 +803,7 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
         let cardId = self.cardId
         let manager = self.manager
         let onExit = self.onExit
+        let capturedExitCode = exitCode.map { Int($0) }
         Task { @MainActor in
             // Only call onExit if the session still exists in the manager.
             // If it was intentionally removed (via removeSession), we skip the callback
@@ -810,10 +811,14 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
             guard manager?.sessionExists(for: cardId) == true else { return }
 
             manager?.markSessionTerminated(cardId: cardId)
+            var userInfo: [String: Any] = ["cardId": cardId]
+            if let code = capturedExitCode {
+                userInfo["exitCode"] = code
+            }
             NotificationCenter.default.post(
                 name: .termqDirectSessionExited,
                 object: nil,
-                userInfo: ["cardId": cardId]
+                userInfo: userInfo
             )
             onExit()
         }
