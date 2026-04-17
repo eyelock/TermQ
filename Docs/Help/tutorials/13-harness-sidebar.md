@@ -174,7 +174,7 @@ The same action is also in the right-click menu on any harness row, if you prefe
 
 ## 13.10 — What's next
 
-0.8 ships the full install/update/uninstall loop and worktree linkage. In-app harness authoring — scaffolding a new harness and populating it with marketplace picks — is planned for 0.9, built on YNH's forthcoming include-editing commands.
+The Harnesses tab covers install, update, uninstall, launching, and worktree linkage. In-app harness authoring — scaffolding a new harness and populating it with marketplace picks in one flow — is on the roadmap.
 
 For now, author harnesses on the command line with `ynd create harness \<name\>` and install them via the **Sources** or **From Git** tabs.
 
