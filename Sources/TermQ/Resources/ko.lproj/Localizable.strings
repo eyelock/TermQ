@@ -542,6 +542,7 @@
 "sidebar.worktree.set.harness" = "Harness 설정…";
 "sidebar.worktree.clear.harness" = "Harness 제거";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "%@ 실행";
 "sidebar.remove.worktree" = "워크트리 제거";
 "sidebar.remove.worktree.title" = "워크트리를 제거하시겠습니까?";
 "sidebar.remove.worktree.confirm" = "제거";

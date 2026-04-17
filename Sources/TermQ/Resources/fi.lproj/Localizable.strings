@@ -543,6 +543,7 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "sidebar.worktree.set.harness" = "Määritä harness…";
 "sidebar.worktree.clear.harness" = "Poista harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Käynnistä %@";
 "sidebar.remove.worktree" = "Poista työskentelypuu";
 "sidebar.remove.worktree.title" = "Poistetaanko työskentelypuu?";
 "sidebar.remove.worktree.confirm" = "Poista";

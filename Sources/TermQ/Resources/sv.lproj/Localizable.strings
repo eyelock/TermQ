@@ -544,6 +544,7 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "sidebar.worktree.set.harness" = "Ställ in harness…";
 "sidebar.worktree.clear.harness" = "Rensa harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Starta %@";
 "sidebar.remove.worktree" = "Ta bort arbetstråd";
 "sidebar.remove.worktree.title" = "Ta bort arbetstråd?";
 "sidebar.remove.worktree.confirm" = "Ta bort";

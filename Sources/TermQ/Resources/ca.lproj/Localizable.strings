@@ -545,6 +545,7 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "sidebar.worktree.set.harness" = "Defineix el harness…";
 "sidebar.worktree.clear.harness" = "Esborra el harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Inicia %@";
 "sidebar.remove.worktree" = "Eliminar worktree";
 "sidebar.remove.worktree.title" = "Eliminar worktree?";
 "sidebar.remove.worktree.confirm" = "Eliminar";

@@ -542,6 +542,7 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "sidebar.worktree.set.harness" = "Angi harness…";
 "sidebar.worktree.clear.harness" = "Fjern harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Start %@";
 "sidebar.remove.worktree" = "Fjern worktree";
 "sidebar.remove.worktree.title" = "Fjerne worktree?";
 "sidebar.remove.worktree.confirm" = "Fjern";

@@ -543,6 +543,7 @@
 "sidebar.worktree.set.harness" = "Harness सेट करें…";
 "sidebar.worktree.clear.harness" = "Harness हटाएं";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "लॉन्च करें %@";
 "sidebar.remove.worktree" = "Worktree हटाएं";
 "sidebar.remove.worktree.title" = "Worktree हटाएं?";
 "sidebar.remove.worktree.confirm" = "हटाएं";

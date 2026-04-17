@@ -543,6 +543,7 @@
 "sidebar.worktree.set.harness" = "Установить harness…";
 "sidebar.worktree.clear.harness" = "Очистить harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Запустить %@";
 "sidebar.remove.worktree" = "Удалить рабочее дерево";
 "sidebar.remove.worktree.title" = "Удалить рабочее дерево?";
 "sidebar.remove.worktree.confirm" = "Удалить";

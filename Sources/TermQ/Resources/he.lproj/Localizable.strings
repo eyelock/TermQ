@@ -543,6 +543,7 @@
 "sidebar.worktree.set.harness" = "הגדרת harness…";
 "sidebar.worktree.clear.harness" = "ניקוי harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "הפעל %@";
 "sidebar.remove.worktree" = "הסר עץ עבודה";
 "sidebar.remove.worktree.title" = "הסר עץ עבודה?";
 "sidebar.remove.worktree.confirm" = "הסר";

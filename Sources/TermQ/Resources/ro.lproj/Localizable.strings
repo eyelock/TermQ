@@ -543,6 +543,7 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "sidebar.worktree.set.harness" = "Setează harness…";
 "sidebar.worktree.clear.harness" = "Eliberează harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Lansează %@";
 "sidebar.remove.worktree" = "Șterge arborele de lucru";
 "sidebar.remove.worktree.title" = "Ștergeți arborele de lucru?";
 "sidebar.remove.worktree.confirm" = "Șterge";

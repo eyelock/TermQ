@@ -12,6 +12,7 @@ struct SidebarView: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var harnessRepository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
+    var onLaunchHarnessInWorktree: ((String, String) -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
 
@@ -37,7 +38,7 @@ struct SidebarView: View {
 
             switch selectedTab {
             case .repositories:
-                WorktreeSidebarView(viewModel: worktreeViewModel)
+                WorktreeSidebarView(viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree)
             case .harnesses where showHarnessesTab:
                 HarnessesSidebarTab(
                     detector: detector,
@@ -46,7 +47,7 @@ struct SidebarView: View {
                 )
             default:
                 // Feature flag off but selectedTab persisted as harnesses — fall back.
-                WorktreeSidebarView(viewModel: worktreeViewModel)
+                WorktreeSidebarView(viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree)
             }
         }
         .onAppear {

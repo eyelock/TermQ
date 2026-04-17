@@ -543,6 +543,7 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "sidebar.worktree.set.harness" = "Atur harness…";
 "sidebar.worktree.clear.harness" = "Hapus harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Jalankan %@";
 "sidebar.remove.worktree" = "Hapus Worktree";
 "sidebar.remove.worktree.title" = "Hapus Worktree?";
 "sidebar.remove.worktree.confirm" = "Hapus";

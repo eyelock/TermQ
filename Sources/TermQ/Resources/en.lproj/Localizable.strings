@@ -544,6 +544,7 @@
 "sidebar.worktree.set.harness" = "Set Harness…";
 "sidebar.worktree.clear.harness" = "Clear Harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Launch %@";
 
 // Remove worktree (clean)
 "sidebar.remove.worktree" = "Remove Worktree";

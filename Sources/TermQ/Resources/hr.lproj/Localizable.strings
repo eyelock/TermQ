@@ -543,6 +543,7 @@ Ovo može utjecati na to kako AI pomoćnici komuniciraju s ovim terminalom.";
 "sidebar.worktree.set.harness" = "Postavi harness…";
 "sidebar.worktree.clear.harness" = "Ukloni harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Pokretanje %@";
 "sidebar.remove.worktree" = "Ukloni radno stablo";
 "sidebar.remove.worktree.title" = "Ukloniti radno stablo?";
 "sidebar.remove.worktree.confirm" = "Ukloni";

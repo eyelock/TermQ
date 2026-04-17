@@ -545,6 +545,7 @@ Dette kan påvirke, hvordan AI-assistenter interagerer med denne terminal.";
 "sidebar.worktree.set.harness" = "Angiv harness…";
 "sidebar.worktree.clear.harness" = "Ryd harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Start %@";
 "sidebar.remove.worktree" = "Slet worktree";
 "sidebar.remove.worktree.title" = "Slet worktree?";
 "sidebar.remove.worktree.confirm" = "Slet";

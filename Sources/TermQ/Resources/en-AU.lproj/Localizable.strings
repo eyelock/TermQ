@@ -545,6 +545,7 @@ This could affect how AI assistants interact with this terminal.";
 "sidebar.worktree.set.harness" = "Set Harness…";
 "sidebar.worktree.clear.harness" = "Clear Harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Launch %@";
 "sidebar.remove.worktree" = "Remove Worktree";
 "sidebar.remove.worktree.title" = "Remove Worktree?";
 "sidebar.remove.worktree.confirm" = "Remove";

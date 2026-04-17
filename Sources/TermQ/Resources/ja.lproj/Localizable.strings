@@ -543,6 +543,7 @@
 "sidebar.worktree.set.harness" = "Harness を設定…";
 "sidebar.worktree.clear.harness" = "Harness をクリア";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "%@ を起動";
 "sidebar.remove.worktree" = "ワークツリーを削除";
 "sidebar.remove.worktree.title" = "ワークツリーを削除しますか？";
 "sidebar.remove.worktree.confirm" = "削除";

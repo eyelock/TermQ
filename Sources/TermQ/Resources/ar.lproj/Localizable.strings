@@ -545,6 +545,7 @@
 "sidebar.worktree.set.harness" = "تعيين harness…";
 "sidebar.worktree.clear.harness" = "مسح harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "تشغيل %@";
 "sidebar.remove.worktree" = "حذف بيئة العمل";
 "sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
 "sidebar.remove.worktree.confirm" = "حذف";

@@ -543,6 +543,7 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "sidebar.worktree.set.harness" = "Définir le harness…";
 "sidebar.worktree.clear.harness" = "Effacer le harness";
 "sidebar.worktree.linked.harness %@" = "Harness : %@";
+"sidebar.worktree.launch.harness %@" = "Lancer %@";
 "sidebar.remove.worktree" = "Supprimer le worktree";
 "sidebar.remove.worktree.title" = "Supprimer le worktree?";
 "sidebar.remove.worktree.confirm" = "Supprimer";

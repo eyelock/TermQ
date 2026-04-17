@@ -543,6 +543,7 @@
 "sidebar.worktree.set.harness" = "设置 Harness…";
 "sidebar.worktree.clear.harness" = "清除 Harness";
 "sidebar.worktree.linked.harness %@" = "Harness：%@";
+"sidebar.worktree.launch.harness %@" = "启动 %@";
 "sidebar.remove.worktree" = "删除工作树";
 "sidebar.remove.worktree.title" = "删除工作树？";
 "sidebar.remove.worktree.confirm" = "删除";

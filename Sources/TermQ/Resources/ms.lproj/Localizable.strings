@@ -542,6 +542,7 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "sidebar.worktree.set.harness" = "Tetapkan harness…";
 "sidebar.worktree.clear.harness" = "Padamkan harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Lancarkan %@";
 "sidebar.remove.worktree" = "Buang Worktree";
 "sidebar.remove.worktree.title" = "Buang Worktree?";
 "sidebar.remove.worktree.confirm" = "Buang";

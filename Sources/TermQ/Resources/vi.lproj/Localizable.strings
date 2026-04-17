@@ -544,6 +544,7 @@
 "sidebar.worktree.set.harness" = "Đặt harness…";
 "sidebar.worktree.clear.harness" = "Xóa harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Khởi chạy %@";
 "sidebar.remove.worktree" = "Xóa Worktree";
 "sidebar.remove.worktree.title" = "Xóa Worktree?";
 "sidebar.remove.worktree.confirm" = "Xóa";

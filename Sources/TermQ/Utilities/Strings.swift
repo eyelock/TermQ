@@ -811,6 +811,9 @@ extension Strings {
         static func linkedHarness(_ name: String) -> String {
             String(format: localized("sidebar.worktree.linked.harness %@"), name)
         }
+        static func launchHarness(_ name: String) -> String {
+            String(format: localized("sidebar.worktree.launch.harness %@"), name)
+        }
 
         // Remove / delete worktree
         static var removeWorktree: String { localized("sidebar.remove.worktree") }

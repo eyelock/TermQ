@@ -542,6 +542,7 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "sidebar.worktree.set.harness" = "Ustaw harness…";
 "sidebar.worktree.clear.harness" = "Usuń harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Uruchom %@";
 "sidebar.remove.worktree" = "Usuń drzewo robocze";
 "sidebar.remove.worktree.title" = "Usunąć drzewo robocze?";
 "sidebar.remove.worktree.confirm" = "Usuń";

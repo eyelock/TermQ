@@ -543,6 +543,7 @@ To môže ovplyvniť, ako AI asistenti interagujú s týmto terminálom.";
 "sidebar.worktree.set.harness" = "Nastaviť harness…";
 "sidebar.worktree.clear.harness" = "Odstrániť harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Spustiť %@";
 "sidebar.remove.worktree" = "Zmazať pracovný strom";
 "sidebar.remove.worktree.title" = "Zmazať pracovný strom?";
 "sidebar.remove.worktree.confirm" = "Zmazať";

@@ -545,6 +545,7 @@
 "sidebar.worktree.set.harness" = "Ορισμός harness…";
 "sidebar.worktree.clear.harness" = "Καθαρισμός harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Εκκίνηση %@";
 "sidebar.remove.worktree" = "Διαγραφή worktree";
 "sidebar.remove.worktree.title" = "Διαγραφή worktree;";
 "sidebar.remove.worktree.confirm" = "Διαγραφή";

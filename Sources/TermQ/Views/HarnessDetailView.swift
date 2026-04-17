@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import TermQCore
 import TermQShared
 
 /// Changes the cursor to a pointing hand on hover.
@@ -35,11 +36,19 @@ struct HarnessDetailView: View {
     let onLaunch: (String?) -> Void
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
+    @State private var popoverForPath: String?
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 headerSection
+
+                let linkedPaths = ynhPersistence.worktrees(for: harness.name)
+                if !linkedPaths.isEmpty {
+                    Divider()
+                    linkedWorktreesSection(linkedPaths)
+                }
+
                 Divider()
                 infoSection
                 Divider()
@@ -61,12 +70,6 @@ struct HarnessDetailView: View {
                 if let detail {
                     Divider()
                     manifestSection(detail.info)
-                }
-
-                let linkedPaths = ynhPersistence.worktrees(for: harness.name)
-                if !linkedPaths.isEmpty {
-                    Divider()
-                    linkedWorktreesSection(linkedPaths)
                 }
 
                 Spacer()
@@ -336,55 +339,92 @@ extension HarnessDetailView {
         VStack(alignment: .leading, spacing: 8) {
             Text(Strings.Harnesses.linkedWorktrees)
                 .font(.headline)
-
             ForEach(paths, id: \.self) { path in
-                HStack(spacing: 8) {
-                    Image(systemName: "arrow.triangle.branch")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .frame(width: 16)
-
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(URL(fileURLWithPath: path).lastPathComponent)
-                            .font(.body)
-                        Text(path)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                            .textSelection(.enabled)
-                    }
-
-                    Spacer()
-
-                    let count = terminalCount(for: path)
-                    if count > 0 {
-                        let iconName = count <= 50 ? "\(count).circle.fill" : "circle.fill"
-                        Image(systemName: iconName)
-                            .foregroundColor(.accentColor)
-                            .imageScale(.small)
-                            .help(Strings.Sidebar.terminalBadgeHelp)
-                    }
-
-                    Button {
-                        onLaunch(path)
-                    } label: {
-                        Image(systemName: "play.fill")
-                            .imageScale(.small)
-                    }
-                    .buttonStyle(.plain)
-                    .help(Strings.Harnesses.launchHelp)
-                }
+                linkedWorktreeRow(path: path)
             }
         }
     }
 
-    fileprivate func terminalCount(for worktreePath: String) -> Int {
+    @ViewBuilder
+    fileprivate func linkedWorktreeRow(path: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "arrow.triangle.branch")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .frame(width: 16)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(URL(fileURLWithPath: path).lastPathComponent)
+                    .font(.body)
+                Text(path)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .textSelection(.enabled)
+            }
+
+            Spacer()
+
+            let terminals = harnessTerminals(path: path)
+            if !terminals.isEmpty {
+                let count = terminals.count
+                let iconName = count <= 50 ? "\(count).circle.fill" : "circle.fill"
+                Button {
+                    popoverForPath = popoverForPath == path ? nil : path
+                } label: {
+                    Image(systemName: iconName)
+                        .foregroundColor(.accentColor)
+                        .imageScale(.small)
+                }
+                .buttonStyle(.plain)
+                .help(Strings.Sidebar.terminalBadgeHelp)
+                .popover(
+                    isPresented: Binding(
+                        get: { popoverForPath == path },
+                        set: { if !$0 { popoverForPath = nil } }
+                    )
+                ) {
+                    terminalPopover(terminals)
+                }
+            }
+
+            Button {
+                onLaunch(path)
+            } label: {
+                Image(systemName: "play.fill")
+                    .imageScale(.small)
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Harnesses.launchHelp)
+        }
+    }
+
+    fileprivate func harnessTerminals(path: String) -> [TerminalCard] {
         (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
             .filter {
-                $0.workingDirectory == worktreePath
-                    || $0.workingDirectory.hasPrefix(worktreePath + "/")
+                ($0.workingDirectory == path || $0.workingDirectory.hasPrefix(path + "/"))
+                    && $0.tags.contains { tag in tag.key == "harness" && tag.value == harness.name }
             }
-            .count
+    }
+
+    fileprivate func terminalPopover(_ terminals: [TerminalCard]) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            ForEach(terminals) { card in
+                Button {
+                    boardVM.selectCard(card)
+                    popoverForPath = nil
+                } label: {
+                    Text(card.title)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .contentShape(Rectangle())
+            }
+        }
+        .padding(.vertical, 6)
+        .frame(minWidth: 200)
     }
 }

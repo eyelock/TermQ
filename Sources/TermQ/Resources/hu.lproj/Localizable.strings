@@ -543,6 +543,7 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "sidebar.worktree.set.harness" = "Harness beállítása…";
 "sidebar.worktree.clear.harness" = "Harness törlése";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Indítás: %@";
 "sidebar.remove.worktree" = "Munkakönyvtár eltávolítása";
 "sidebar.remove.worktree.title" = "Eltávolítja a munkakönyvtárat?";
 "sidebar.remove.worktree.confirm" = "Eltávolítás";

@@ -543,6 +543,7 @@ Questo potrebbe influenzare il modo in cui gli assistenti AI interagiscono con q
 "sidebar.worktree.set.harness" = "Imposta harness…";
 "sidebar.worktree.clear.harness" = "Rimuovi harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Avvia %@";
 "sidebar.remove.worktree" = "Elimina worktree";
 "sidebar.remove.worktree.title" = "Eliminare il worktree?";
 "sidebar.remove.worktree.confirm" = "Elimina";

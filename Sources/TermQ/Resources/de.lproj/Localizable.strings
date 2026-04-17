@@ -545,6 +545,7 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "sidebar.worktree.set.harness" = "Harness festlegen…";
 "sidebar.worktree.clear.harness" = "Harness entfernen";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Starten %@";
 "sidebar.remove.worktree" = "Worktree löschen";
 "sidebar.remove.worktree.title" = "Worktree löschen?";
 "sidebar.remove.worktree.confirm" = "Löschen";

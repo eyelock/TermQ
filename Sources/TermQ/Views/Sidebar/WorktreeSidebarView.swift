@@ -6,6 +6,7 @@ import TermQShared
 /// Collapsible sidebar showing registered repositories and their worktrees.
 struct WorktreeSidebarView: View {
     @ObservedObject var viewModel: WorktreeSidebarViewModel
+    var onLaunchHarness: ((String, String) -> Void)?
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
@@ -379,6 +380,14 @@ struct WorktreeSidebarView: View {
             boardVM.addTerminal(workingDirectory: worktree.path)
         } label: {
             Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+        }
+
+        if let harnessName = ynhPersistence.harness(for: worktree.path) {
+            Button {
+                onLaunchHarness?(harnessName, worktree.path)
+            } label: {
+                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
+            }
         }
 
         Divider()

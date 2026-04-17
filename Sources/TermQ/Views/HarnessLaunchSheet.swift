@@ -21,9 +21,24 @@ struct HarnessLaunchSheet: View {
     @State private var selectedVendorID: String = defaultVendorTag
     @State private var selectedFocus: String = ""
     @State private var selectedBackend: TerminalBackend = .direct
-    @State private var workingDirectory: String = NSHomeDirectory()
+    @State private var workingDirectory: String
     @State private var prompt: String = ""
     @AppStorage("defaultBackend") private var defaultBackendRaw: String = "direct"
+
+    init(
+        harness: Harness,
+        detail: HarnessDetail?,
+        vendors: [Vendor],
+        initialWorkingDirectory: String?,
+        onLaunch: @escaping (HarnessLaunchConfig) -> Void
+    ) {
+        self.harness = harness
+        self.detail = detail
+        self.vendors = vendors
+        self.initialWorkingDirectory = initialWorkingDirectory
+        self.onLaunch = onLaunch
+        self._workingDirectory = State(initialValue: initialWorkingDirectory ?? NSHomeDirectory())
+    }
 
     /// The effective vendor ID for the command — empty when using the default.
     private var effectiveVendorID: String {
@@ -167,9 +182,6 @@ struct HarnessLaunchSheet: View {
         .frame(width: 480, height: 520)
         .onAppear {
             selectedBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
-            if let dir = initialWorkingDirectory {
-                workingDirectory = dir
-            }
         }
     }
 

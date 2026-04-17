@@ -32,6 +32,12 @@ struct ContentView: View {
                         harnessRepo.selectedHarnessName = harness.name
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
+                    },
+                    onLaunchHarnessInWorktree: { harnessName, path in
+                        harnessRepo.selectedHarnessName = harnessName
+                        launchWorkingDirectory = path
+                        Task { await vendorService.refresh() }
+                        showLaunchSheet = true
                     }
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)

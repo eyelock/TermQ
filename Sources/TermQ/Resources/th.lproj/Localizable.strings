@@ -544,6 +544,7 @@
 "sidebar.worktree.set.harness" = "ตั้งค่า harness…";
 "sidebar.worktree.clear.harness" = "ล้าง harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "เปิด %@";
 "sidebar.remove.worktree" = "ลบ Worktree";
 "sidebar.remove.worktree.title" = "ลบ Worktree?";
 "sidebar.remove.worktree.confirm" = "ลบ";

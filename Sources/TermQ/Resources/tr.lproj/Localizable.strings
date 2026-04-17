@@ -544,6 +544,7 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "sidebar.worktree.set.harness" = "Harness ayarla…";
 "sidebar.worktree.clear.harness" = "Harness’i temizle";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Başlat %@";
 "sidebar.remove.worktree" = "Çalışma Ağacını Kaldır";
 "sidebar.remove.worktree.title" = "Çalışma Ağacı Kaldırılsın mı?";
 "sidebar.remove.worktree.confirm" = "Kaldır";
