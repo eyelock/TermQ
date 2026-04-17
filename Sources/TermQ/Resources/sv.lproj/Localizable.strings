@@ -705,3 +705,14 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "harnesses.install.sources.add.help" = "Lägg till en lokal katalog som harness-källa";
 "harnesses.install.sources.remove" = "Ta bort";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Uppdatera";
+"harnesses.update.help" = "Uppdatera till den senaste versionen";
+"harnesses.uninstall.button" = "Avinstallera";
+"harnesses.uninstall.help" = "Avinstallera denna harness";
+"harnesses.uninstall.alert.title %@" = "Avinstallera \"%@\"?";
+"harnesses.uninstall.alert.message" = "Detta tar bort harness från ditt system.";
+"harnesses.uninstall.alert.worktrees %ld" = "Denna harness är länkad till %ld worktree(s) — dessa kopplingar kommer att rensas.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kör för närvarande denna harness.";
+"harnesses.uninstall.alert.confirm" = "Avinstallera";
+"harnesses.more.actions.help" = "Fler åtgärder";

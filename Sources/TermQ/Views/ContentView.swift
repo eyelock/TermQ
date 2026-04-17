@@ -19,6 +19,8 @@ struct ContentView: View {
     @State private var showLaunchSheet = false
     @State private var showInstallSheet = false
     @State private var installCardIDs: Set<UUID> = []
+    @State private var uninstallCardNames: [UUID: String] = [:]
+    @State private var updateCardNames: [UUID: String] = [:]
     @State private var launchWorkingDirectory: String?
     /// Card that was selected before navigating to a harness detail, restored on dismiss.
     @State private var cardBeforeHarness: TerminalCard?
@@ -41,7 +43,9 @@ struct ContentView: View {
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
                     },
-                    onInstall: { showInstallSheet = true }
+                    onInstall: { showInstallSheet = true },
+                    onUninstall: { name in uninstallHarness(name: name) },
+                    onUpdate: { name in updateHarness(name: name) }
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
@@ -64,7 +68,9 @@ struct ContentView: View {
                             launchWorkingDirectory = path
                             Task { await vendorService.refresh() }
                             showLaunchSheet = true
-                        }
+                        },
+                        onUpdate: { name in updateHarness(name: name) },
+                        onUninstall: { name in uninstallHarness(name: name) }
                     )
                 } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
@@ -229,12 +235,21 @@ struct ContentView: View {
             .onReceive(
                 NotificationCenter.default.publisher(for: .termqDirectSessionExited)
             ) { notif in
-                guard let cardId = notif.userInfo?["cardId"] as? UUID,
-                    installCardIDs.contains(cardId)
-                else { return }
-                installCardIDs.remove(cardId)
-                if case .ready = ynhDetector.status {
-                    Task { await harnessRepo.refresh() }
+                guard let cardId = notif.userInfo?["cardId"] as? UUID else { return }
+                if installCardIDs.remove(cardId) != nil {
+                    if case .ready = ynhDetector.status {
+                        Task { await harnessRepo.refresh() }
+                    }
+                } else if let name = uninstallCardNames.removeValue(forKey: cardId) {
+                    YNHPersistence.shared.removeAllAssociations(for: name)
+                    if case .ready = ynhDetector.status {
+                        Task { await harnessRepo.refresh() }
+                    }
+                } else if let name = updateCardNames.removeValue(forKey: cardId) {
+                    harnessRepo.invalidateDetail(for: name)
+                    if case .ready = ynhDetector.status {
+                        Task { await harnessRepo.refresh() }
+                    }
                 }
             }
             .sheet(isPresented: $viewModel.showSessionRecovery) {
@@ -599,6 +614,11 @@ extension ContentView {
         }
     }
 
+    /// Wrap a string in single quotes for safe shell argument passing.
+    private func shellQuote(_ s: String) -> String {
+        "'" + s.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    }
+
     /// Launch native Terminal.app at the specified directory
     func launchNativeTerminal(at directory: String? = nil) {
         let path = directory ?? NSHomeDirectory()
@@ -731,6 +751,75 @@ extension ContentView {
             viewModel.tabManager.addTab(card.id)
         }
         harnessRepo.selectedHarnessName = nil
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
+    }
+
+    /// Uninstall a harness in a transient terminal; clears associations when the shell exits.
+    func uninstallHarness(name: String) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+        let card = TerminalCard(
+            title: "ynh uninstall \(name)",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: "\(ynhPath) uninstall \(shellQuote(name)); exit",
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        uninstallCardNames[card.id] = name
+        viewModel.tabManager.addTransientCard(card)
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
+        harnessRepo.selectedHarnessName = nil
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
+    }
+
+    /// Update a harness in a transient terminal; invalidates the detail cache when done.
+    func updateHarness(name: String) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        let column: Column
+        if let current = viewModel.selectedCard,
+            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = viewModel.board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+        let card = TerminalCard(
+            title: "ynh update \(name)",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: "\(ynhPath) update \(shellQuote(name)); exit",
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        updateCardNames[card.id] = name
+        viewModel.tabManager.addTransientCard(card)
+        if let current = viewModel.selectedCard {
+            viewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            viewModel.tabManager.addTab(card.id)
+        }
         viewModel.objectWillChange.send()
         viewModel.selectedCard = card
     }

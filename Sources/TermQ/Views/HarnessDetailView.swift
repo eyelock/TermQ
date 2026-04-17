@@ -34,9 +34,12 @@ struct HarnessDetailView: View {
     let onDismiss: () -> Void
     /// Called when the user requests a launch. Optional path pre-fills the working directory.
     let onLaunch: (String?) -> Void
+    let onUpdate: (String) -> Void
+    let onUninstall: (String) -> Void
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @State private var popoverForPath: String?
+    @State private var showUninstallAlert = false
 
     var body: some View {
         ScrollView {
@@ -77,6 +80,17 @@ struct HarnessDetailView: View {
             .padding(24)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .alert(
+            Strings.Harnesses.uninstallAlertTitle(harness.name),
+            isPresented: $showUninstallAlert
+        ) {
+            Button(Strings.Harnesses.uninstallAlertConfirm, role: .destructive) {
+                onUninstall(harness.name)
+            }
+            Button(Strings.Harnesses.installCancel, role: .cancel) {}
+        } message: {
+            Text(uninstallAlertMessage)
+        }
     }
 
     // MARK: - Header
@@ -110,6 +124,26 @@ struct HarnessDetailView: View {
                 }
                 .controlSize(.regular)
                 .help(Strings.Harnesses.launchHelp)
+
+                Menu {
+                    Button {
+                        onUpdate(harness.name)
+                    } label: {
+                        Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
+                    }
+                    Divider()
+                    Button(role: .destructive) {
+                        showUninstallAlert = true
+                    } label: {
+                        Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .help(Strings.Harnesses.moreActionsHelp)
 
                 Button {
                     onDismiss()
@@ -398,6 +432,24 @@ extension HarnessDetailView {
             .buttonStyle(.plain)
             .help(Strings.Harnesses.launchHelp)
         }
+    }
+
+    fileprivate var uninstallAlertMessage: String {
+        var parts = [Strings.Harnesses.uninstallAlertMessage]
+        let linkedCount = ynhPersistence.worktrees(for: harness.name).count
+        if linkedCount > 0 {
+            parts.append(Strings.Harnesses.uninstallAlertWorktrees(linkedCount))
+        }
+        let terminalCount = allHarnessTerminals().count
+        if terminalCount > 0 {
+            parts.append(Strings.Harnesses.uninstallAlertTerminals(terminalCount))
+        }
+        return parts.joined(separator: "\n\n")
+    }
+
+    fileprivate func allHarnessTerminals() -> [TerminalCard] {
+        (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
+            .filter { $0.tags.contains { tag in tag.key == "harness" && tag.value == harness.name } }
     }
 
     fileprivate func harnessTerminals(path: String) -> [TerminalCard] {

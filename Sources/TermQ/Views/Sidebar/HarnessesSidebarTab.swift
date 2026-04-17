@@ -14,6 +14,10 @@ struct HarnessesSidebarTab: View {
     @ObservedObject var repository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
     var onInstall: (() -> Void)?
+    var onUninstall: ((String) -> Void)?
+    var onUpdate: ((String) -> Void)?
+    @ObservedObject private var ynhPersistence: YNHPersistence = .shared
+    @State private var harnessToUninstall: Harness?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -111,10 +115,48 @@ struct HarnessesSidebarTab: View {
                             } label: {
                                 Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
                             }
+                            Divider()
+                            Button {
+                                onUpdate?(harness.name)
+                            } label: {
+                                Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
+                            }
+                            Button(role: .destructive) {
+                                harnessToUninstall = harness
+                            } label: {
+                                Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
+                            }
                         }
                 }
             }
             .listStyle(.sidebar)
+            .confirmationDialog(
+                harnessToUninstall.map { Strings.Harnesses.uninstallAlertTitle($0.name) } ?? "",
+                isPresented: Binding(
+                    get: { harnessToUninstall != nil },
+                    set: { if !$0 { harnessToUninstall = nil } }
+                ),
+                titleVisibility: .visible
+            ) {
+                if let harness = harnessToUninstall {
+                    Button(Strings.Harnesses.uninstallAlertConfirm, role: .destructive) {
+                        onUninstall?(harness.name)
+                        harnessToUninstall = nil
+                    }
+                    Button(Strings.Harnesses.installCancel, role: .cancel) {
+                        harnessToUninstall = nil
+                    }
+                }
+            } message: {
+                if let harness = harnessToUninstall {
+                    let linked = ynhPersistence.worktrees(for: harness.name).count
+                    Text(
+                        linked > 0
+                            ? Strings.Harnesses.uninstallAlertWorktrees(linked)
+                            : Strings.Harnesses.uninstallAlertMessage
+                    )
+                }
+            }
         }
     }
 

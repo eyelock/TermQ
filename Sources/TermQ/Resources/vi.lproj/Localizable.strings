@@ -705,3 +705,14 @@
 "harnesses.install.sources.add.help" = "Thêm thư mục cục bộ làm nguồn harness";
 "harnesses.install.sources.remove" = "Xóa";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Cập nhật";
+"harnesses.update.help" = "Cập nhật lên phiên bản mới nhất";
+"harnesses.uninstall.button" = "Gỡ cài đặt";
+"harnesses.uninstall.help" = "Gỡ cài đặt harness này";
+"harnesses.uninstall.alert.title %@" = "Gỡ cài đặt \"%@\"?";
+"harnesses.uninstall.alert.message" = "Thao tác này sẽ xóa harness khỏi hệ thống của bạn.";
+"harnesses.uninstall.alert.worktrees %ld" = "Harness này được liên kết với %ld worktree — các liên kết đó sẽ bị xóa.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal đang chạy harness này.";
+"harnesses.uninstall.alert.confirm" = "Gỡ cài đặt";
+"harnesses.more.actions.help" = "Thêm hành động";

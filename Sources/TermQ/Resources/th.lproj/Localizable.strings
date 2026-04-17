@@ -705,3 +705,14 @@
 "harnesses.install.sources.add.help" = "เพิ่มไดเรกทอรีในเครื่องเป็นแหล่ง harness";
 "harnesses.install.sources.remove" = "ลบออก";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "อัปเดต";
+"harnesses.update.help" = "อัปเดตเป็นเวอร์ชันล่าสุด";
+"harnesses.uninstall.button" = "ถอนการติดตั้ง";
+"harnesses.uninstall.help" = "ถอนการติดตั้ง harness นี้";
+"harnesses.uninstall.alert.title %@" = "ถอนการติดตั้ง \"%@\" หรือไม่?";
+"harnesses.uninstall.alert.message" = "การดำเนินการนี้จะลบ harness ออกจากระบบของคุณ";
+"harnesses.uninstall.alert.worktrees %ld" = "harness นี้เชื่อมโยงกับ %ld worktree — การเชื่อมโยงเหล่านั้นจะถูกล้าง";
+"harnesses.uninstall.alert.terminals %ld" = "ขณะนี้มี %ld เทอร์มินัลที่กำลังรัน harness นี้";
+"harnesses.uninstall.alert.confirm" = "ถอนการติดตั้ง";
+"harnesses.more.actions.help" = "การดำเนินการอื่น ๆ";

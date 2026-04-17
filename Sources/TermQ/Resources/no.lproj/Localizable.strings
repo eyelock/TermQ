@@ -703,3 +703,14 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "harnesses.install.sources.add.help" = "Legg til en lokal mappe som harness-kilde";
 "harnesses.install.sources.remove" = "Fjern";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Oppdater";
+"harnesses.update.help" = "Oppdater til nyeste versjon";
+"harnesses.uninstall.button" = "Avinstaller";
+"harnesses.uninstall.help" = "Avinstaller denne harness";
+"harnesses.uninstall.alert.title %@" = "Avinstaller \"%@\"?";
+"harnesses.uninstall.alert.message" = "Dette fjerner harness fra systemet ditt.";
+"harnesses.uninstall.alert.worktrees %ld" = "Denne harness er koblet til %ld worktree(r) — disse koblingene vil bli fjernet.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kjører denne harness for øyeblikket.";
+"harnesses.uninstall.alert.confirm" = "Avinstaller";
+"harnesses.more.actions.help" = "Flere handlinger";

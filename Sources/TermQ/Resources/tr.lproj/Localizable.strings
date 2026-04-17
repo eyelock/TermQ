@@ -705,3 +705,14 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "harnesses.install.sources.add.help" = "Harness kaynağı olarak yerel dizin ekle";
 "harnesses.install.sources.remove" = "Kaldır";
 "harnesses.install.sources.count %ld" = "%ld harness";
+
+"harnesses.update.button" = "Güncelle";
+"harnesses.update.help" = "En son sürüme güncelle";
+"harnesses.uninstall.button" = "Kaldır";
+"harnesses.uninstall.help" = "Bu harness'i kaldır";
+"harnesses.uninstall.alert.title %@" = "\"%@\" kaldırılsın mı?";
+"harnesses.uninstall.alert.message" = "Bu, harness'i sisteminizden kaldıracak.";
+"harnesses.uninstall.alert.worktrees %ld" = "Bu harness %ld worktree ile bağlantılı — bu ilişkilendirmeler temizlenecek.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal şu anda bu harness'i çalıştırıyor.";
+"harnesses.uninstall.alert.confirm" = "Kaldır";
+"harnesses.more.actions.help" = "Daha fazla işlem";

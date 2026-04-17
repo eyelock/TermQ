@@ -698,3 +698,14 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "harnesses.install.sources.add.help" = "Afegeix un directori local com a font de harness";
 "harnesses.install.sources.remove" = "Elimina";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Actualitza";
+"harnesses.update.help" = "Actualitza a la versió més recent";
+"harnesses.uninstall.button" = "Desinstal·la";
+"harnesses.uninstall.help" = "Desinstal·la aquest harness";
+"harnesses.uninstall.alert.title %@" = "Desinstal·lar \"%@\"?";
+"harnesses.uninstall.alert.message" = "Això eliminarà el harness del vostre sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Aquest harness està vinculat a %ld arbre(s) de treball — aquestes associacions s'esboraran.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) estan executant aquest harness ara mateix.";
+"harnesses.uninstall.alert.confirm" = "Desinstal·la";
+"harnesses.more.actions.help" = "Més accions";

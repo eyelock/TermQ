@@ -1,6 +1,10 @@
 import Foundation
 import TermQShared
 
+private enum HarnessDetailError: Error {
+    case missingYnd
+}
+
 /// Repository for querying installed harnesses via `ynh ls --format json`
 /// and fetching full detail via `ynh info` + `ynd compose`.
 ///
@@ -81,7 +85,6 @@ final class HarnessRepository: ObservableObject {
     /// Results are cached per session; call ``invalidateDetail(for:)`` after
     /// mutations to force a refetch.
     func fetchDetail(for name: String) async {
-        // Return cached detail immediately if available.
         if let cached = detailCache[name] {
             selectedDetail = cached
             detailError = nil
@@ -97,35 +100,27 @@ final class HarnessRepository: ObservableObject {
         detailError = nil
         defer { isLoadingDetail = false }
 
-        let env = ynhEnvironment()
-
         do {
-            // Step 1: ynh info <name> --format json
-            let infoJSON = try await YNHDetector.runCommand(
-                ynhPath,
-                args: ["info", name, "--format", "json"],
-                environment: env
-            )
-            let info = try JSONDecoder().decode(HarnessInfo.self, from: Data(infoJSON.utf8))
-
-            // Step 2: ynd compose <info.path> (defaults to JSON output)
-            guard let yndBinary = yndPath else {
-                selectedDetail = nil
-                detailError = "ynd binary not found — install the YNH dev tools for full detail"
-                return
-            }
-
-            let composeJSON = try await YNHDetector.runCommand(
-                yndBinary,
-                args: ["compose", info.path],
-                environment: env
-            )
-            let composition = try JSONDecoder().decode(
-                HarnessComposition.self, from: Data(composeJSON.utf8))
-
-            let detail = HarnessDetail(info: info, composition: composition)
+            let detail = try await buildDetail(name: name, ynhPath: ynhPath, yndPath: yndPath)
             detailCache[name] = detail
             selectedDetail = detail
+        } catch let error as YNHDetectionError {
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.ui.info("HarnessRepository: detail fetch failed error=\(error)")
+            } else {
+                TermQLogger.ui.info("HarnessRepository: detail fetch failed")
+            }
+            selectedDetail = nil
+            if case .commandFailed(_, let stderr) = error,
+                !stderr.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            {
+                detailError = stderr.trimmingCharacters(in: .whitespacesAndNewlines)
+            } else {
+                detailError = "Failed to load harness detail"
+            }
+        } catch HarnessDetailError.missingYnd {
+            selectedDetail = nil
+            detailError = "ynd binary not found — install the YNH dev tools for full detail"
         } catch {
             if TermQLogger.fileLoggingEnabled {
                 TermQLogger.ui.info("HarnessRepository: detail fetch failed error=\(error)")
@@ -135,6 +130,27 @@ final class HarnessRepository: ObservableObject {
             selectedDetail = nil
             detailError = "Failed to load harness detail"
         }
+    }
+
+    private func buildDetail(name: String, ynhPath: String, yndPath: String?) async throws -> HarnessDetail {
+        let env = ynhEnvironment()
+        let infoJSON = try await YNHDetector.runCommand(
+            ynhPath,
+            args: ["info", name, "--format", "json"],
+            environment: env
+        )
+        let info = try JSONDecoder().decode(HarnessInfo.self, from: Data(infoJSON.utf8))
+
+        guard let yndBinary = yndPath else {
+            throw HarnessDetailError.missingYnd
+        }
+        let composeJSON = try await YNHDetector.runCommand(
+            yndBinary,
+            args: ["compose", info.path],
+            environment: env
+        )
+        let composition = try JSONDecoder().decode(HarnessComposition.self, from: Data(composeJSON.utf8))
+        return HarnessDetail(info: info, composition: composition)
     }
 
     /// Invalidate cached detail for a specific harness (call after mutations).

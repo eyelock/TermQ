@@ -698,3 +698,14 @@
 "harnesses.install.sources.add.help" = "إضافة دليل محلي كمصدر harness";
 "harnesses.install.sources.remove" = "إزالة";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "تحديث";
+"harnesses.update.help" = "تحديث إلى الإصدار الأحدث";
+"harnesses.uninstall.button" = "إلغاء التثبيت";
+"harnesses.uninstall.help" = "إلغاء تثبيت هذا الـ harness";
+"harnesses.uninstall.alert.title %@" = "إلغاء تثبيت \"%@\"؟";
+"harnesses.uninstall.alert.message" = "سيؤدي هذا إلى إزالة الـ harness من نظامك.";
+"harnesses.uninstall.alert.worktrees %ld" = "هذا الـ harness مرتبط بـ %ld مستودع(ات) عمل — ستُمسح تلك الارتباطات.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld محطة (محطات) طرفية تُشغّل هذا الـ harness حاليًا.";
+"harnesses.uninstall.alert.confirm" = "إلغاء التثبيت";
+"harnesses.more.actions.help" = "إجراءات أخرى";

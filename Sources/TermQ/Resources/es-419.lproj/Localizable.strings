@@ -698,3 +698,14 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "harnesses.install.sources.add.help" = "Agregar un directorio local como fuente de arneses";
 "harnesses.install.sources.remove" = "Eliminar";
 "harnesses.install.sources.count %ld" = "%ld arneses";
+
+"harnesses.update.button" = "Actualizar";
+"harnesses.update.help" = "Actualizar a la última versión";
+"harnesses.uninstall.button" = "Desinstalar";
+"harnesses.uninstall.help" = "Desinstalar este harness";
+"harnesses.uninstall.alert.title %@" = "¿Desinstalar \"%@\"?";
+"harnesses.uninstall.alert.message" = "Esto eliminará el harness de tu sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Este harness está vinculado a %ld árbol(es) de trabajo — esas asociaciones se eliminarán.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(es) están ejecutando este harness actualmente.";
+"harnesses.uninstall.alert.confirm" = "Desinstalar";
+"harnesses.more.actions.help" = "Más acciones";

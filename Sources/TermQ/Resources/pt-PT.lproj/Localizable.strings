@@ -703,3 +703,14 @@ Isto pode afetar a forma como os assistentes de IA interagem com este terminal."
 "harnesses.install.sources.add.help" = "Adicionar um directório local como fonte de harness";
 "harnesses.install.sources.remove" = "Remover";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Actualizar";
+"harnesses.update.help" = "Actualizar para a versão mais recente";
+"harnesses.uninstall.button" = "Desinstalar";
+"harnesses.uninstall.help" = "Desinstalar este harness";
+"harnesses.uninstall.alert.title %@" = "Desinstalar \"%@\"?";
+"harnesses.uninstall.alert.message" = "Isto irá remover o harness do seu sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Este harness está ligado a %ld worktree(s) — essas associações serão eliminadas.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(is) estão actualmente a executar este harness.";
+"harnesses.uninstall.alert.confirm" = "Desinstalar";
+"harnesses.more.actions.help" = "Mais acções";

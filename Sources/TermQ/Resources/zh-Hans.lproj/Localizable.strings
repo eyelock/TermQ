@@ -698,3 +698,14 @@
 "harnesses.install.sources.add.help" = "将本地目录添加为 harness 来源";
 "harnesses.install.sources.remove" = "移除";
 "harnesses.install.sources.count %ld" = "%ld 个 harnesses";
+
+"harnesses.update.button" = "更新";
+"harnesses.update.help" = "更新到最新版本";
+"harnesses.uninstall.button" = "卸载";
+"harnesses.uninstall.help" = "卸载此 harness";
+"harnesses.uninstall.alert.title %@" = "卸载"%@"？";
+"harnesses.uninstall.alert.message" = "这将从您的系统中移除该 harness。";
+"harnesses.uninstall.alert.worktrees %ld" = "此 harness 已关联 %ld 个工作树——这些关联将被清除。";
+"harnesses.uninstall.alert.terminals %ld" = "当前有 %ld 个终端正在运行此 harness。";
+"harnesses.uninstall.alert.confirm" = "卸载";
+"harnesses.more.actions.help" = "更多操作";

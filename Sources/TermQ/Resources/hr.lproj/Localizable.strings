@@ -704,3 +704,14 @@ Ovo može utjecati na to kako AI pomoćnici komuniciraju s ovim terminalom.";
 "harnesses.install.sources.add.help" = "Dodaj lokalnu mapu kao izvor harness-a";
 "harnesses.install.sources.remove" = "Ukloni";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Ažuriraj";
+"harnesses.update.help" = "Ažuriraj na najnoviju verziju";
+"harnesses.uninstall.button" = "Deinstaliraj";
+"harnesses.uninstall.help" = "Deinstaliraj ovaj harness";
+"harnesses.uninstall.alert.title %@" = "Deinstalirati \"%@\"?";
+"harnesses.uninstall.alert.message" = "Time će se harness ukloniti s vašeg sustava.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ovaj harness je povezan s %ld worktree(om/ovima) — te će asocijacije biti obrisane.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(a) trenutno izvodi ovaj harness.";
+"harnesses.uninstall.alert.confirm" = "Deinstaliraj";
+"harnesses.more.actions.help" = "Više radnji";

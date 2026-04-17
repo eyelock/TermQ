@@ -703,3 +703,14 @@ Dit kan invloed hebben op hoe AI-assistenten met deze terminal communiceren.";
 "harnesses.install.sources.add.help" = "Een lokale map als harness-bron toevoegen";
 "harnesses.install.sources.remove" = "Verwijderen";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Bijwerken";
+"harnesses.update.help" = "Bijwerken naar de nieuwste versie";
+"harnesses.uninstall.button" = "Verwijderen";
+"harnesses.uninstall.help" = "Deze harness verwijderen";
+"harnesses.uninstall.alert.title %@" = "\"%@\" verwijderen?";
+"harnesses.uninstall.alert.message" = "Hiermee wordt de harness van uw systeem verwijderd.";
+"harnesses.uninstall.alert.worktrees %ld" = "Deze harness is gekoppeld aan %ld worktree(s) — die koppelingen worden gewist.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) voeren deze harness momenteel uit.";
+"harnesses.uninstall.alert.confirm" = "Verwijderen";
+"harnesses.more.actions.help" = "Meer acties";

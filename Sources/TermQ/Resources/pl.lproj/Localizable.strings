@@ -703,3 +703,14 @@ To może wpłynąć na sposób, w jaki asystenci AI wchodzą w interakcję z tym
 "harnesses.install.sources.add.help" = "Dodaj lokalny katalog jako źródło harness";
 "harnesses.install.sources.remove" = "Usuń";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Aktualizuj";
+"harnesses.update.help" = "Aktualizuj do najnowszej wersji";
+"harnesses.uninstall.button" = "Odinstaluj";
+"harnesses.uninstall.help" = "Odinstaluj ten harness";
+"harnesses.uninstall.alert.title %@" = "Odinstalować \"%@\"?";
+"harnesses.uninstall.alert.message" = "Spowoduje to usunięcie harness z systemu.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ten harness jest powiązany z %ld drzewem/drzewami roboczymi — te powiązania zostaną usunięte.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(i) aktualnie uruchamia ten harness.";
+"harnesses.uninstall.alert.confirm" = "Odinstaluj";
+"harnesses.more.actions.help" = "Więcej działań";

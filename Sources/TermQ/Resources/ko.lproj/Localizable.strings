@@ -703,3 +703,14 @@
 "harnesses.install.sources.add.help" = "로컬 디렉토리를 Harness 소스로 추가";
 "harnesses.install.sources.remove" = "제거";
 "harnesses.install.sources.count %ld" = "harness %ld개";
+
+"harnesses.update.button" = "업데이트";
+"harnesses.update.help" = "최신 버전으로 업데이트";
+"harnesses.uninstall.button" = "제거";
+"harnesses.uninstall.help" = "이 Harness 제거";
+"harnesses.uninstall.alert.title %@" = "\"%@\"을(를) 제거하시겠습니까?";
+"harnesses.uninstall.alert.message" = "이 Harness가 시스템에서 제거됩니다.";
+"harnesses.uninstall.alert.worktrees %ld" = "이 Harness는 %ld개의 Worktree에 연결되어 있습니다 — 해당 연결이 해제됩니다.";
+"harnesses.uninstall.alert.terminals %ld" = "현재 %ld개의 터미널이 이 Harness를 실행 중입니다.";
+"harnesses.uninstall.alert.confirm" = "제거";
+"harnesses.more.actions.help" = "추가 작업";

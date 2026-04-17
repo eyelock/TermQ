@@ -704,3 +704,14 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "harnesses.install.sources.add.help" = "Lisää paikallinen hakemisto harness-lähteeksi";
 "harnesses.install.sources.remove" = "Poista";
 "harnesses.install.sources.count %ld" = "%ld harnessia";
+
+"harnesses.update.button" = "Päivitä";
+"harnesses.update.help" = "Päivitä uusimpaan versioon";
+"harnesses.uninstall.button" = "Poista asennus";
+"harnesses.uninstall.help" = "Poista tämän harnessin asennus";
+"harnesses.uninstall.alert.title %@" = "Poistetaanko \"%@\"?";
+"harnesses.uninstall.alert.message" = "Tämä poistaa harnessin järjestelmästäsi.";
+"harnesses.uninstall.alert.worktrees %ld" = "Tämä harness on linkitetty %ld työtree(hen/hin) — nämä yhteydet poistetaan.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld pääte(ttä) käyttää tällä hetkellä tätä harnessia.";
+"harnesses.uninstall.alert.confirm" = "Poista asennus";
+"harnesses.more.actions.help" = "Lisää toimintoja";

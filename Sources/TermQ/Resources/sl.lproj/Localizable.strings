@@ -705,3 +705,14 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "harnesses.install.sources.add.help" = "Dodaj lokalni imenik kot vir harness";
 "harnesses.install.sources.remove" = "Odstrani";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Posodobi";
+"harnesses.update.help" = "Posodobi na najnovejšo različico";
+"harnesses.uninstall.button" = "Odstrani";
+"harnesses.uninstall.help" = "Odstrani ta harness";
+"harnesses.uninstall.alert.title %@" = "Odstraniti \"%@\"?";
+"harnesses.uninstall.alert.message" = "S tem boste odstranili harness iz vašega sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ta harness je povezan z %ld delovnim drevesom (drevesi) — te povezave bodo počiščene.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(ov) trenutno poganja ta harness.";
+"harnesses.uninstall.alert.confirm" = "Odstrani";
+"harnesses.more.actions.help" = "Več dejanj";

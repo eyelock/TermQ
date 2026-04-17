@@ -704,3 +704,14 @@
 "harnesses.install.sources.add.help" = "Harness स्रोत के रूप में एक स्थानीय निर्देशिका जोड़ें";
 "harnesses.install.sources.remove" = "हटाएं";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "अपडेट करें";
+"harnesses.update.help" = "नवीनतम संस्करण में अपडेट करें";
+"harnesses.uninstall.button" = "अनइंस्टॉल करें";
+"harnesses.uninstall.help" = "इस harness को अनइंस्टॉल करें";
+"harnesses.uninstall.alert.title %@" = "\"%@\" को अनइंस्टॉल करें?";
+"harnesses.uninstall.alert.message" = "यह आपके सिस्टम से harness को हटा देगा।";
+"harnesses.uninstall.alert.worktrees %ld" = "यह harness %ld worktree(s) से जुड़ा है — वे संबद्धताएं साफ़ कर दी जाएंगी।";
+"harnesses.uninstall.alert.terminals %ld" = "%ld टर्मिनल वर्तमान में इस harness को चला रहे हैं।";
+"harnesses.uninstall.alert.confirm" = "अनइंस्टॉल करें";
+"harnesses.more.actions.help" = "अधिक क्रियाएं";

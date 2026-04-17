@@ -704,3 +704,14 @@
 "harnesses.install.sources.add.help" = "הוסף ספרייה מקומית כמקור harness";
 "harnesses.install.sources.remove" = "הסר";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "עדכן";
+"harnesses.update.help" = "עדכן לגרסה האחרונה";
+"harnesses.uninstall.button" = "הסר התקנה";
+"harnesses.uninstall.help" = "הסר את ה-harness הזה";
+"harnesses.uninstall.alert.title %@" = "להסיר את \"%@\"?";
+"harnesses.uninstall.alert.message" = "פעולה זו תסיר את ה-harness מהמערכת שלך.";
+"harnesses.uninstall.alert.worktrees %ld" = "ה-harness הזה מקושר ל-%ld worktree(s) — הקשרים הללו יימחקו.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld מסוף(ים) מריצים כעת את ה-harness הזה.";
+"harnesses.uninstall.alert.confirm" = "הסר התקנה";
+"harnesses.more.actions.help" = "פעולות נוספות";

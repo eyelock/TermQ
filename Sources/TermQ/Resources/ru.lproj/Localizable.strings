@@ -698,3 +698,14 @@
 "harnesses.install.sources.add.help" = "Добавить локальный каталог как источник harness";
 "harnesses.install.sources.remove" = "Удалить";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Обновить";
+"harnesses.update.help" = "Обновить до последней версии";
+"harnesses.uninstall.button" = "Удалить";
+"harnesses.uninstall.help" = "Удалить этот harness";
+"harnesses.uninstall.alert.title %@" = "Удалить \"%@\"?";
+"harnesses.uninstall.alert.message" = "Это удалит harness с вашей системы.";
+"harnesses.uninstall.alert.worktrees %ld" = "Этот harness связан с %ld рабочим деревом (деревьями) — эти связи будут удалены.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld терминал(а/ов) в данный момент запускает этот harness.";
+"harnesses.uninstall.alert.confirm" = "Удалить";
+"harnesses.more.actions.help" = "Другие действия";

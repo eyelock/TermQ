@@ -696,3 +696,14 @@ This could affect how AI assistants interact with this terminal.";
 "harnesses.install.sources.add.help" = "Add a local directory as a harness source";
 "harnesses.install.sources.remove" = "Remove";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Update";
+"harnesses.update.help" = "Update to the latest version";
+"harnesses.uninstall.button" = "Uninstall";
+"harnesses.uninstall.help" = "Uninstall this harness";
+"harnesses.uninstall.alert.title %@" = "Uninstall \"%@\"?";
+"harnesses.uninstall.alert.message" = "This will remove the harness from your system.";
+"harnesses.uninstall.alert.worktrees %ld" = "This harness is linked to %ld worktree(s) — those associations will be cleared.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) are currently running this harness.";
+"harnesses.uninstall.alert.confirm" = "Uninstall";
+"harnesses.more.actions.help" = "More actions";

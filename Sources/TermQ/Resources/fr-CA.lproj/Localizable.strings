@@ -704,3 +704,14 @@ Cela pourrait affecter la façon dont les assistants IA interagissent avec ce te
 "harnesses.install.sources.add.help" = "Ajouter un répertoire local comme source de harnais";
 "harnesses.install.sources.remove" = "Supprimer";
 "harnesses.install.sources.count %ld" = "%ld harnais";
+
+"harnesses.update.button" = "Mettre à jour";
+"harnesses.update.help" = "Mettre à jour vers la dernière version";
+"harnesses.uninstall.button" = "Désinstaller";
+"harnesses.uninstall.help" = "Désinstaller ce harnais";
+"harnesses.uninstall.alert.title %@" = "Désinstaller \"%@\" ?";
+"harnesses.uninstall.alert.message" = "Le harnais sera supprimé de votre système.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ce harnais est lié à %ld arbre(s) de travail — ces associations seront supprimées.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) exécutent actuellement ce harnais.";
+"harnesses.uninstall.alert.confirm" = "Désinstaller";
+"harnesses.more.actions.help" = "Plus d'actions";

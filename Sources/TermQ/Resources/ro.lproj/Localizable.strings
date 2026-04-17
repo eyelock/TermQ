@@ -698,3 +698,14 @@ Acest lucru ar putea afecta modul în care asistenții AI interacționează cu a
 "harnesses.install.sources.add.help" = "Adăugați un director local ca sursă harness";
 "harnesses.install.sources.remove" = "Elimină";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Actualizare";
+"harnesses.update.help" = "Actualizare la ultima versiune";
+"harnesses.uninstall.button" = "Dezinstalare";
+"harnesses.uninstall.help" = "Dezinstalați acest harness";
+"harnesses.uninstall.alert.title %@" = "Dezinstalați \"%@\"?";
+"harnesses.uninstall.alert.message" = "Aceasta va elimina harness-ul din sistemul dvs.";
+"harnesses.uninstall.alert.worktrees %ld" = "Acest harness este legat de %ld worktree(uri) — aceste asocieri vor fi șterse.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(e) rulează în prezent acest harness.";
+"harnesses.uninstall.alert.confirm" = "Dezinstalare";
+"harnesses.more.actions.help" = "Mai multe acțiuni";

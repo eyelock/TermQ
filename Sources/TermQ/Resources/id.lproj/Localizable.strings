@@ -698,3 +698,14 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "harnesses.install.sources.add.help" = "Tambah direktori lokal sebagai sumber harness";
 "harnesses.install.sources.remove" = "Hapus";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Perbarui";
+"harnesses.update.help" = "Perbarui ke versi terbaru";
+"harnesses.uninstall.button" = "Hapus Instalasi";
+"harnesses.uninstall.help" = "Hapus instalasi harness ini";
+"harnesses.uninstall.alert.title %@" = "Hapus instalasi \"%@\"?";
+"harnesses.uninstall.alert.message" = "Ini akan menghapus harness dari sistem Anda.";
+"harnesses.uninstall.alert.worktrees %ld" = "Harness ini terhubung ke %ld worktree — asosiasi tersebut akan dihapus.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
+"harnesses.uninstall.alert.confirm" = "Hapus Instalasi";
+"harnesses.more.actions.help" = "Tindakan lainnya";

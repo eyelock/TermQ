@@ -698,3 +698,14 @@
 "harnesses.install.sources.add.help" = "ローカルディレクトリをHarnessソースとして追加";
 "harnesses.install.sources.remove" = "削除";
 "harnesses.install.sources.count %ld" = "%ld 個のharness";
+
+"harnesses.update.button" = "アップデート";
+"harnesses.update.help" = "最新バージョンにアップデート";
+"harnesses.uninstall.button" = "アンインストール";
+"harnesses.uninstall.help" = "このHarnessをアンインストール";
+"harnesses.uninstall.alert.title %@" = "「%@」をアンインストールしますか？";
+"harnesses.uninstall.alert.message" = "Harnessがシステムから削除されます。";
+"harnesses.uninstall.alert.worktrees %ld" = "このHarnessは%ld個のWorktreeにリンクされています — それらの関連付けが解除されます。";
+"harnesses.uninstall.alert.terminals %ld" = "%ld個のターミナルが現在このHarnessを実行中です。";
+"harnesses.uninstall.alert.confirm" = "アンインストール";
+"harnesses.more.actions.help" = "その他の操作";

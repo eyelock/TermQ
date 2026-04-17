@@ -698,3 +698,14 @@
 "harnesses.install.sources.add.help" = "Προσθήκη τοπικού καταλόγου ως πηγή harness";
 "harnesses.install.sources.remove" = "Αφαίρεση";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Ενημέρωση";
+"harnesses.update.help" = "Ενημέρωση στην τελευταία έκδοση";
+"harnesses.uninstall.button" = "Απεγκατάσταση";
+"harnesses.uninstall.help" = "Απεγκατάσταση αυτού του harness";
+"harnesses.uninstall.alert.title %@" = "Απεγκατάσταση \"%@\";";
+"harnesses.uninstall.alert.message" = "Αυτό θα αφαιρέσει το harness από το σύστημά σας.";
+"harnesses.uninstall.alert.worktrees %ld" = "Αυτό το harness είναι συνδεδεμένο με %ld worktree(s) — αυτές οι συσχετίσεις θα διαγραφούν.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld τερματικό(ά) εκτελεί αυτήν τη στιγμή αυτό το harness.";
+"harnesses.uninstall.alert.confirm" = "Απεγκατάσταση";
+"harnesses.more.actions.help" = "Περισσότερες ενέργειες";

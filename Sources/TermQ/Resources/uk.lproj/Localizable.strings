@@ -705,3 +705,14 @@
 "harnesses.install.sources.add.help" = "Додати локальний каталог як джерело harness";
 "harnesses.install.sources.remove" = "Видалити";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Оновити";
+"harnesses.update.help" = "Оновити до останньої версії";
+"harnesses.uninstall.button" = "Видалити";
+"harnesses.uninstall.help" = "Видалити цей harness";
+"harnesses.uninstall.alert.title %@" = "Видалити \"%@\"?";
+"harnesses.uninstall.alert.message" = "Це видалить harness з вашої системи.";
+"harnesses.uninstall.alert.worktrees %ld" = "Цей harness пов'язаний з %ld робочим деревом (деревами) — ці зв'язки буде очищено.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld термінал(и) зараз виконують цей harness.";
+"harnesses.uninstall.alert.confirm" = "Видалити";
+"harnesses.more.actions.help" = "Інші дії";

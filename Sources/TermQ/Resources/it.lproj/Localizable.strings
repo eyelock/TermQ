@@ -698,3 +698,14 @@ Questo potrebbe influenzare il modo in cui gli assistenti AI interagiscono con q
 "harnesses.install.sources.add.help" = "Aggiunge una directory locale come sorgente harness";
 "harnesses.install.sources.remove" = "Rimuovi";
 "harnesses.install.sources.count %ld" = "%ld harness";
+
+"harnesses.update.button" = "Aggiorna";
+"harnesses.update.help" = "Aggiorna all'ultima versione";
+"harnesses.uninstall.button" = "Disinstalla";
+"harnesses.uninstall.help" = "Disinstalla questo harness";
+"harnesses.uninstall.alert.title %@" = "Disinstallare \"%@\"?";
+"harnesses.uninstall.alert.message" = "Questo rimuoverà il harness dal sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Questo harness è collegato a %ld worktree — le relative associazioni verranno cancellate.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminale/i sta attualmente eseguendo questo harness.";
+"harnesses.uninstall.alert.confirm" = "Disinstalla";
+"harnesses.more.actions.help" = "Altre azioni";

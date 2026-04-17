@@ -47,6 +47,20 @@ final class YNHPersistence: ObservableObject {
 
     // MARK: - Mutations
 
+    /// Remove all worktree associations for a harness (called after uninstall).
+    func removeAllAssociations(for harnessName: String) {
+        let paths = config.worktreeHarness
+            .compactMap { $0.value == harnessName ? $0.key : nil }
+        for path in paths {
+            config.worktreeHarness.removeValue(forKey: path)
+        }
+        do {
+            try YNHConfigLoader.save(config, dataDirectory: saveURL.deletingLastPathComponent())
+        } catch {
+            TermQLogger.session.warning("YNHPersistence: save failed")
+        }
+    }
+
     func setHarness(_ harnessName: String?, for worktreePath: String) {
         if let name = harnessName {
             config.worktreeHarness[worktreePath] = name
@@ -56,7 +70,11 @@ final class YNHPersistence: ObservableObject {
         do {
             try YNHConfigLoader.save(config, dataDirectory: saveURL.deletingLastPathComponent())
         } catch {
-            TermQLogger.session.warning("YNHPersistence: save failed: \(error.localizedDescription)")
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.session.warning("YNHPersistence: save failed: \(error.localizedDescription)")
+            } else {
+                TermQLogger.session.warning("YNHPersistence: save failed")
+            }
         }
     }
 }

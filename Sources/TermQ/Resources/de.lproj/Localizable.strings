@@ -698,3 +698,14 @@ Dies könnte beeinflussen, wie KI-Assistenten mit diesem Terminal interagieren."
 "harnesses.install.sources.add.help" = "Ein lokales Verzeichnis als Harness-Quelle hinzufügen";
 "harnesses.install.sources.remove" = "Entfernen";
 "harnesses.install.sources.count %ld" = "%ld Harnesses";
+
+"harnesses.update.button" = "Aktualisieren";
+"harnesses.update.help" = "Auf die neueste Version aktualisieren";
+"harnesses.uninstall.button" = "Deinstallieren";
+"harnesses.uninstall.help" = "Diesen Harness deinstallieren";
+"harnesses.uninstall.alert.title %@" = "\"%@\" deinstallieren?";
+"harnesses.uninstall.alert.message" = "Dadurch wird der Harness von Ihrem System entfernt.";
+"harnesses.uninstall.alert.worktrees %ld" = "Dieser Harness ist mit %ld Worktree(s) verknüpft — diese Verknüpfungen werden aufgehoben.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld Terminal(s) führen diesen Harness gerade aus.";
+"harnesses.uninstall.alert.confirm" = "Deinstallieren";
+"harnesses.more.actions.help" = "Weitere Aktionen";

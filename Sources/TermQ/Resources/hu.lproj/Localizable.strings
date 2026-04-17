@@ -704,3 +704,14 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "harnesses.install.sources.add.help" = "Helyi könyvtár hozzáadása harness-forrásként";
 "harnesses.install.sources.remove" = "Eltávolítás";
 "harnesses.install.sources.count %ld" = "%ld harness";
+
+"harnesses.update.button" = "Frissítés";
+"harnesses.update.help" = "Frissítés a legújabb verzióra";
+"harnesses.uninstall.button" = "Eltávolítás";
+"harnesses.uninstall.help" = "Ez a harness eltávolítása";
+"harnesses.uninstall.alert.title %@" = "Eltávolítja: \"%@\"?";
+"harnesses.uninstall.alert.message" = "Ez eltávolítja a harness-t a rendszeréből.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ez a harness %ld munkafahoz van csatolva — ezek a kapcsolatok törlődnek.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminál jelenleg ezt a harness-t futtatja.";
+"harnesses.uninstall.alert.confirm" = "Eltávolítás";
+"harnesses.more.actions.help" = "További műveletek";

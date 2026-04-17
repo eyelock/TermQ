@@ -698,3 +698,14 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "harnesses.install.sources.add.help" = "Přidat místní adresář jako zdroj harness";
 "harnesses.install.sources.remove" = "Odebrat";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Aktualizovat";
+"harnesses.update.help" = "Aktualizovat na nejnovější verzi";
+"harnesses.uninstall.button" = "Odinstalovat";
+"harnesses.uninstall.help" = "Odinstalovat tento harness";
+"harnesses.uninstall.alert.title %@" = "Odinstalovat \"%@\"?";
+"harnesses.uninstall.alert.message" = "Tím se harness odebere z vašeho systému.";
+"harnesses.uninstall.alert.worktrees %ld" = "Tento harness je propojen s %ld pracovním stromem (stromy) — tato propojení budou vymazána.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminál(ů) aktuálně spouští tento harness.";
+"harnesses.uninstall.alert.confirm" = "Odinstalovat";
+"harnesses.more.actions.help" = "Další akce";

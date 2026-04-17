@@ -703,3 +703,14 @@ Ini boleh menjejaskan cara pembantu AI berinteraksi dengan terminal ini.";
 "harnesses.install.sources.add.help" = "Tambah direktori tempatan sebagai sumber harness";
 "harnesses.install.sources.remove" = "Buang";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Kemas Kini";
+"harnesses.update.help" = "Kemas kini ke versi terbaru";
+"harnesses.uninstall.button" = "Nyahpasang";
+"harnesses.uninstall.help" = "Nyahpasang harness ini";
+"harnesses.uninstall.alert.title %@" = "Nyahpasang \"%@\"?";
+"harnesses.uninstall.alert.message" = "Ini akan membuang harness daripada sistem anda.";
+"harnesses.uninstall.alert.worktrees %ld" = "Harness ini dikaitkan dengan %ld worktree — perkaitan tersebut akan dipadamkan.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
+"harnesses.uninstall.alert.confirm" = "Nyahpasang";
+"harnesses.more.actions.help" = "Tindakan lain";

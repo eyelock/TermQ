@@ -969,5 +969,23 @@ extension Strings {
         static func installSourcesCount(_ count: Int) -> String {
             String(format: localized("harnesses.install.sources.count %ld"), count)
         }
+
+        // MARK: Update / Uninstall
+        static var updateButton: String { localized("harnesses.update.button") }
+        static var updateHelp: String { localized("harnesses.update.help") }
+        static var uninstallButton: String { localized("harnesses.uninstall.button") }
+        static var uninstallHelp: String { localized("harnesses.uninstall.help") }
+        static func uninstallAlertTitle(_ name: String) -> String {
+            String(format: localized("harnesses.uninstall.alert.title %@"), name)
+        }
+        static var uninstallAlertMessage: String { localized("harnesses.uninstall.alert.message") }
+        static func uninstallAlertWorktrees(_ count: Int) -> String {
+            String(format: localized("harnesses.uninstall.alert.worktrees %ld"), count)
+        }
+        static func uninstallAlertTerminals(_ count: Int) -> String {
+            String(format: localized("harnesses.uninstall.alert.terminals %ld"), count)
+        }
+        static var uninstallAlertConfirm: String { localized("harnesses.uninstall.alert.confirm") }
+        static var moreActionsHelp: String { localized("harnesses.more.actions.help") }
     }
 }
