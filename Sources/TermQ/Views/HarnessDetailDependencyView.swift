@@ -347,21 +347,3 @@ struct GitPickPill: View {
             .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
-
-/// Shared URL helpers for git source display.
-enum GitURLHelper {
-    static func browserURL(for source: String, path: String? = nil) -> URL? {
-        guard !source.hasPrefix("/"), !source.hasPrefix(".") else { return nil }
-        var urlString = "https://\(source)"
-        if let path, !path.isEmpty {
-            urlString += "/tree/HEAD/\(path)"
-        }
-        return URL(string: urlString)
-    }
-
-    static func shortURL(_ url: String) -> String {
-        guard !url.hasPrefix("/"), !url.hasPrefix(".") else { return url }
-        let parts = url.split(separator: "/", maxSplits: 1)
-        return parts.count == 2 ? String(parts[1]) : url
-    }
-}

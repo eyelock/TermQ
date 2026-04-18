@@ -620,6 +620,16 @@
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Registry";
 
+// Harnesses — sidebar groups
+"harnesses.group.default" = "Default";
+"harnesses.group.local" = "Local";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.registry %@" = "Registry: %@";
+
+// Marketplace — sidebar groups
+"marketplace.group.default" = "Default";
+"marketplace.group.github %@" = "GitHub: %@";
+
 // Harnesses — detail view
 "harnesses.detail.info" = "Information";
 "harnesses.detail.path" = "Path";

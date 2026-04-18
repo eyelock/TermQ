@@ -255,7 +255,7 @@ struct WorktreeSidebarView: View {
             }
 
             Button {
-                Task { await viewModel.refreshWorktrees(for: repo) }
+                Task { await viewModel.refreshRepo(for: repo) }
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .imageScale(.small)

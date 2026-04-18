@@ -147,6 +147,17 @@ public class GitService {
     /// Uses `origin/HEAD` symref — the authoritative default branch regardless of what
     /// is currently checked out. Falls back to checking for "main"/"master" in the local
     /// branch list, then `"main"`.
+    /// Update `refs/remotes/origin/HEAD` to match what the remote currently advertises.
+    ///
+    /// Call this from manual refresh actions so that `defaultBranch` reflects the
+    /// remote's actual default branch rather than whatever was set at clone time.
+    public func updateRemoteHead(repoPath: String) async {
+        _ = try? await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["remote", "set-head", "origin", "--auto"]
+        )
+    }
+
     public func defaultBranch(repoPath: String) async -> String {
         // origin/HEAD is set by the remote and doesn't change with local checkouts.
         // --short returns "origin/main" (or "origin/feature/main" for slash-names).

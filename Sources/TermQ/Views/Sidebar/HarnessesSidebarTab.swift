@@ -4,8 +4,8 @@ import TermQShared
 
 /// Sidebar content for the Harnesses tab.
 ///
-/// Shows detection state and, when YNH is ready, the installed harness list
-/// populated from `ynh ls --format json`.
+/// Shows detection state and, when YNH is ready, harnesses grouped into
+/// collapsible disclosure sections: Default, GitHub orgs, registries, and local.
 ///
 /// The `.missing` state is handled by the parent `SidebarView` which hides
 /// the tab entirely, so this view never receives it.
@@ -22,6 +22,7 @@ struct HarnessesSidebarTab: View {
     @State private var harnessToUninstall: Harness?
     @State private var showWizard = false
     @State private var showAddRegistry = false
+    @State private var collapsedGroups: Set<String> = []
 
     var body: some View {
         VStack(spacing: 0) {
@@ -31,7 +32,6 @@ struct HarnessesSidebarTab: View {
 
             switch detector.status {
             case .missing:
-                // Should not be visible — parent hides the tab. Defensive fallback.
                 emptyState(
                     icon: "exclamationmark.triangle",
                     message: Strings.Harnesses.notInstalled
@@ -136,48 +136,20 @@ struct HarnessesSidebarTab: View {
             )
         } else {
             List(selection: $repository.selectedHarnessName) {
-                ForEach(repository.harnesses) { harness in
-                    HarnessRowView(harness: harness)
-                        .tag(harness.name)
-                        .contextMenu {
-                            Button {
-                                onLaunchHarness?(harness)
-                            } label: {
-                                Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
-                            }
-                            Button {
-                                NSPasteboard.general.clearContents()
-                                NSPasteboard.general.setString("ynh run \(harness.name)", forType: .string)
-                            } label: {
-                                Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
-                            }
-                            Divider()
-                            Button {
-                                onUpdate?(harness.name)
-                            } label: {
-                                Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
-                            }
-                            Button {
-                                Task { @MainActor in
-                                    let panel = NSOpenPanel()
-                                    panel.canChooseDirectories = true
-                                    panel.canChooseFiles = false
-                                    panel.allowsMultipleSelection = false
-                                    panel.prompt = Strings.Harnesses.exportButton
-                                    let response = await panel.begin()
-                                    if response == .OK, let url = panel.url {
-                                        onExport?(harness.name, url.path)
-                                    }
-                                }
-                            } label: {
-                                Label(Strings.Harnesses.exportButton, systemImage: "square.and.arrow.up")
-                            }
-                            Button(role: .destructive) {
-                                harnessToUninstall = harness
-                            } label: {
-                                Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
-                            }
+                ForEach(groupedHarnesses, id: \.title) { group in
+                    DisclosureGroup(
+                        isExpanded: expandedBinding(for: group.title)
+                    ) {
+                        ForEach(group.harnesses) { harness in
+                            harnessRow(harness)
                         }
+                    } label: {
+                        Label(group.title, systemImage: "puzzlepiece.extension")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                            .textCase(.uppercase)
+                    }
                 }
             }
             .listStyle(.sidebar)
@@ -211,9 +183,108 @@ struct HarnessesSidebarTab: View {
         }
     }
 
+    private func harnessRow(_ harness: Harness) -> some View {
+        HarnessRowView(harness: harness)
+            .tag(harness.name)
+            .contextMenu {
+                Button {
+                    onLaunchHarness?(harness)
+                } label: {
+                    Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
+                }
+                Button {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString("ynh run \(harness.name)", forType: .string)
+                } label: {
+                    Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
+                }
+                Divider()
+                Button {
+                    onUpdate?(harness.name)
+                } label: {
+                    Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
+                }
+                Button {
+                    Task { @MainActor in
+                        let panel = NSOpenPanel()
+                        panel.canChooseDirectories = true
+                        panel.canChooseFiles = false
+                        panel.allowsMultipleSelection = false
+                        panel.prompt = Strings.Harnesses.exportButton
+                        let response = await panel.begin()
+                        if response == .OK, let url = panel.url {
+                            onExport?(harness.name, url.path)
+                        }
+                    }
+                } label: {
+                    Label(Strings.Harnesses.exportButton, systemImage: "square.and.arrow.up")
+                }
+                Button(role: .destructive) {
+                    harnessToUninstall = harness
+                } label: {
+                    Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
+                }
+            }
+    }
+
+    // MARK: - Grouping
+
+    private struct HarnessGroup {
+        let title: String
+        let harnesses: [Harness]
+    }
+
+    private var groupedHarnesses: [HarnessGroup] {
+        let defaults = repository.harnesses.filter { KnownHarnesses.defaultNames.contains($0.name) }
+        let remaining = repository.harnesses.filter { !KnownHarnesses.defaultNames.contains($0.name) }
+
+        var groups: [HarnessGroup] = []
+
+        if !defaults.isEmpty {
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupDefault, harnesses: defaults))
+        }
+
+        var byOrg: [String: [Harness]] = [:]
+        var byRegistry: [String: [Harness]] = [:]
+        var local: [Harness] = []
+
+        for harness in remaining {
+            switch harness.installedFrom?.sourceType {
+            case "git":
+                let org = harness.installedFrom.flatMap { GitURLHelper.repoOwner($0.source) } ?? "Other"
+                byOrg[org, default: []].append(harness)
+            case "registry":
+                let name = harness.installedFrom?.registryName ?? Strings.Harnesses.sourceRegistry
+                byRegistry[name, default: []].append(harness)
+            default:
+                local.append(harness)
+            }
+        }
+
+        for (org, harnesses) in byOrg.sorted(by: { $0.key < $1.key }) {
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupGitHub(org), harnesses: harnesses))
+        }
+        for (name, harnesses) in byRegistry.sorted(by: { $0.key < $1.key }) {
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupRegistry(name), harnesses: harnesses))
+        }
+        if !local.isEmpty {
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: local))
+        }
+
+        return groups
+    }
+
+    private func expandedBinding(for title: String) -> Binding<Bool> {
+        Binding(
+            get: { !collapsedGroups.contains(title) },
+            set: { expanded in
+                if expanded { collapsedGroups.remove(title) } else { collapsedGroups.insert(title) }
+            }
+        )
+    }
+
     // MARK: - States
 
-    /// ynh binary found but not initialised — prompt the user.
     private var initRequiredState: some View {
         VStack(spacing: 12) {
             Image(systemName: "wrench.and.screwdriver")

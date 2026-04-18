@@ -850,7 +850,7 @@ extension Notification.Name {
 private func openLink(_ link: String, cwd: String?) {
     // Explicit http/https — straight to browser
     if link.hasPrefix("http://") || link.hasPrefix("https://"),
-       let url = URL(string: link)
+        let url = URL(string: link)
     {
         NSWorkspace.shared.open(url)
         return

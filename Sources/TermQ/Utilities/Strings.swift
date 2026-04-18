@@ -883,6 +883,12 @@ extension Strings {
         static var sourceLocal: String { localized("harnesses.source.local") }
         static var sourceRegistry: String { localized("harnesses.source.registry") }
 
+        // Sidebar groups
+        static var groupDefault: String { localized("harnesses.group.default") }
+        static var groupLocal: String { localized("harnesses.group.local") }
+        static func groupGitHub(_ org: String) -> String { localized("harnesses.group.github %@", org) }
+        static func groupRegistry(_ name: String) -> String { localized("harnesses.group.registry %@", name) }
+
         // Detail view
         static var detailInfo: String { localized("harnesses.detail.info") }
         static var detailPath: String { localized("harnesses.detail.path") }
@@ -1012,6 +1018,8 @@ extension Strings {
     enum Marketplace {
         static var title: String { localized("marketplace.title") }
         static var addHelp: String { localized("marketplace.add.help") }
+        static var groupDefault: String { localized("marketplace.group.default") }
+        static func groupGitHub(_ org: String) -> String { localized("marketplace.group.github %@", org) }
         static var empty: String { localized("marketplace.empty") }
         static var addButton: String { localized("marketplace.add.button") }
         static var rowRefreshHelp: String { localized("marketplace.row.refresh.help") }

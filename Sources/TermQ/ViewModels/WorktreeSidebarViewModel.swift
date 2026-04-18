@@ -226,6 +226,13 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     // MARK: - Worktree Queries
 
+    /// Manual refresh triggered by the user — updates `origin/HEAD` before refreshing
+    /// worktrees so that `defaultBranch` reflects the remote's current default.
+    func refreshRepo(for repo: ObservableRepository) async {
+        await GitService.shared.updateRemoteHead(repoPath: repo.path)
+        await refreshWorktrees(for: repo)
+    }
+
     func refreshWorktrees(for repo: ObservableRepository) async {
         // Only show the loading spinner on the initial fetch (no data yet).
         // Background refreshes (monitor callbacks, dirty-poll timer) must not toggle

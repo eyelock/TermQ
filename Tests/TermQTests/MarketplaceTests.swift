@@ -288,6 +288,27 @@ final class ExtractOrgRepoTests: XCTestCase {
     }
 }
 
+// MARK: - KnownHarnesses tests
+
+final class KnownHarnessesTests: XCTestCase {
+
+    func test_defaults_containsAssistants() {
+        XCTAssertTrue(KnownHarnesses.defaultNames.contains("assistants"))
+    }
+
+    func test_defaults_containsYnhDev() {
+        XCTAssertTrue(KnownHarnesses.defaultNames.contains("ynh-dev"))
+    }
+
+    func test_defaults_containsTermqDev() {
+        XCTAssertTrue(KnownHarnesses.defaultNames.contains("termq-dev"))
+    }
+
+    func test_defaults_areNonEmpty() {
+        XCTAssertFalse(KnownHarnesses.defaultNames.isEmpty)
+    }
+}
+
 // MARK: - KnownMarketplaces tests
 
 final class KnownMarketplacesTests: XCTestCase {
