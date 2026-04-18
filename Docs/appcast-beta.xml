@@ -1268,49 +1268,6 @@
                 type="application/octet-stream"/>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
         </item>
-        <item>
-            <title>Version 0.4.3</title>
-            <sparkle:version>0.4.3</sparkle:version>
-            <sparkle:shortVersionString>0.4.3</sparkle:shortVersionString>
-            <pubDate>Tue, 13 Jan 2026 16:18:17 +0000</pubDate>
-            <description><![CDATA[<h2 id="installation">Installation</h2>
-<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
-<ol type="1">
-<li>Download <code>TermQ-0.4.3.dmg</code></li>
-<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
-<li>Right-click and select "Open" on first launch (required for unsigned apps)</li>
-</ol>
-<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
-<ol type="1">
-<li>Download <code>TermQ-0.4.3.zip</code></li>
-<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
-</ol>
-<h3 id="cli-tool">CLI Tool</h3>
-<p>The <code>termq</code> CLI is bundled inside the app. To install it:</p>
-<ol type="1">
-<li>Open TermQ.app</li>
-<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
-<li>Click <strong>Install Command Line Tool</strong></li>
-</ol>
-<p>Or manually:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termq /usr/local/bin/</span></code></pre></div>
-<h2 id="checksums">Checksums</h2>
-<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
-<h2 id="whats-changed">What's Changed</h2>
-<ul>
-<li>chore: Makefile improvements and debug menu by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/15">https://github.com/eyelock/TermQ/pull/15</a></li>
-<li>chore: add Claude AI assistant configuration by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/16">https://github.com/eyelock/TermQ/pull/16</a></li>
-<li>feat(cli): add LLM-friendly commands for terminal automation by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/12">https://github.com/eyelock/TermQ/pull/12</a></li>
-<li>fix(terminal): prevent focus stealing during text selection by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/18">https://github.com/eyelock/TermQ/pull/18</a></li>
-</ul>
-<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.4.2...v0.4.3">https://github.com/eyelock/TermQ/compare/v0.4.2...v0.4.3</a></p>]]></description>
-            <enclosure
-                url="https://github.com/eyelock/TermQ/releases/download/v0.4.3/TermQ-0.4.3.zip"
-                
-                length="4891625"
-                type="application/octet-stream"/>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-        </item>
 
     </channel>
 </rss>
