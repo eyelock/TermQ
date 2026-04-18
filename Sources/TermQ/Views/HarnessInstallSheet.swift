@@ -20,6 +20,8 @@ struct HarnessInstallConfig {
 struct HarnessInstallSheet: View {
     /// Names of already-installed harnesses — used to show "Installed" badge in search results.
     let installedNames: Set<String>
+    /// Full installed harness list — shown as default content before any search term is entered.
+    let harnesses: [Harness]
     let onInstall: (HarnessInstallConfig) -> Void
     @Environment(\.dismiss) private var dismiss
 
@@ -96,6 +98,15 @@ struct HarnessInstallSheet: View {
 // MARK: - Search Tab
 
 extension HarnessInstallSheet {
+    private var filteredHarnesses: [Harness] {
+        let q = searchQuery.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !q.isEmpty else { return harnesses }
+        return harnesses.filter {
+            $0.name.lowercased().contains(q)
+                || ($0.description?.lowercased().contains(q) ?? false)
+        }
+    }
+
     fileprivate var searchTab: some View {
         VStack(spacing: 0) {
             TextField(Strings.Harnesses.installSearchPlaceholder, text: $searchQuery)
@@ -105,21 +116,54 @@ extension HarnessInstallSheet {
 
             Divider()
 
-            if searchQuery.trimmingCharacters(in: .whitespaces).isEmpty {
-                emptyState(icon: "magnifyingglass", message: Strings.Harnesses.installSearchPrompt)
-            } else if searchService.isSearching {
+            if searchService.isSearching {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if searchService.results.isEmpty {
-                emptyState(icon: "magnifyingglass", message: Strings.Harnesses.installSearchEmpty)
-            } else {
+            } else if !searchService.results.isEmpty {
                 List(searchService.results) { result in
                     searchResultRow(result)
                         .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
                 }
                 .listStyle(.plain)
+            } else if !filteredHarnesses.isEmpty {
+                List(filteredHarnesses) { harness in
+                    harnessRow(harness)
+                        .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
+                }
+                .listStyle(.plain)
+            } else {
+                emptyState(icon: "magnifyingglass", message: Strings.Harnesses.installSearchEmpty)
             }
         }
+    }
+
+    @ViewBuilder
+    fileprivate func harnessRow(_ harness: Harness) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 6) {
+                    Text(harness.name).font(.body).fontWeight(.medium)
+                    if !harness.version.isEmpty {
+                        Text(harness.version).font(.caption).foregroundColor(.secondary)
+                    }
+                }
+                if let desc = harness.description, !desc.isEmpty {
+                    Text(desc).font(.caption).foregroundColor(.secondary).lineLimit(2)
+                }
+                if !harness.defaultVendor.isEmpty {
+                    Text(harness.defaultVendor)
+                        .font(.caption2)
+                        .padding(.horizontal, 5).padding(.vertical, 1)
+                        .background(Color.purple.opacity(0.15))
+                        .foregroundColor(.purple)
+                        .clipShape(Capsule())
+                }
+            }
+            Spacer()
+            Text(Strings.Harnesses.installAlreadyInstalled)
+                .font(.caption).foregroundColor(.secondary)
+        }
+        .padding(.vertical, 2)
     }
 
     @ViewBuilder
@@ -179,29 +223,38 @@ extension HarnessInstallSheet {
 extension HarnessInstallSheet {
     fileprivate var gitTab: some View {
         VStack(spacing: 0) {
-            Form {
-                Section {
-                    TextField(Strings.Harnesses.installGitURLPlaceholder, text: $gitURL)
-                } header: {
+            VStack(alignment: .leading, spacing: 14) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(Strings.Harnesses.installGitURL)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    TextField(Strings.Harnesses.installGitURLPlaceholder, text: $gitURL)
+                        .textFieldStyle(.roundedBorder)
                 }
 
-                Section {
-                    TextField(Strings.Harnesses.installGitSubpathPlaceholder, text: $gitSubpath)
-                } header: {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(Strings.Harnesses.installGitSubpath)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    TextField(Strings.Harnesses.installGitSubpathPlaceholder, text: $gitSubpath)
+                        .textFieldStyle(.roundedBorder)
                 }
 
-                Section {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(Strings.Harnesses.installCommandPreview)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                     Text(buildGitPreview())
                         .font(.system(size: 11, design: .monospaced))
                         .foregroundColor(.secondary)
                         .textSelection(.enabled)
-                } header: {
-                    Text(Strings.Harnesses.installCommandPreview)
+                        .padding(8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.secondary.opacity(0.08))
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
             }
-            .formStyle(.grouped)
+            .padding(16)
 
             Spacer()
 

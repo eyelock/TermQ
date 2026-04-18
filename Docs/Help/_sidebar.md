@@ -13,12 +13,13 @@
   - [7. Lifecycle](tutorials/07-lifecycle.md)
   - [8. Git Worktrees](tutorials/12-worktree-sidebar.md)
   - [9. Harnesses](tutorials/13-harness-sidebar.md)
+  - [10. Marketplaces & Authoring](tutorials/14-marketplace.md)
 
 - **Tutorials: Automation & AI**
-  - [10. CLI Automation](tutorials/08-cli.md)
-  - [11. Persistent AI Context](tutorials/09-ai-context.md)
-  - [12. MCP Integration](tutorials/10-mcp.md)
-  - [13. Queued Actions](tutorials/11-queued-actions.md)
+  - [11. CLI Automation](tutorials/08-cli.md)
+  - [12. Persistent AI Context](tutorials/09-ai-context.md)
+  - [13. MCP Integration](tutorials/10-mcp.md)
+  - [14. Queued Actions](tutorials/11-queued-actions.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)

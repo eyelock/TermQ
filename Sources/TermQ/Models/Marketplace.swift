@@ -1,0 +1,183 @@
+import Foundation
+
+// MARK: - Top-level
+
+struct Marketplace: Codable, Identifiable, Sendable {
+    var id: UUID
+    var name: String
+    var owner: String
+    var description: String?
+    var vendor: MarketplaceVendor
+    var url: String
+    var plugins: [MarketplacePlugin]
+    var lastFetched: Date?
+    var fetchError: String?
+}
+
+enum MarketplaceVendor: String, Codable, Sendable, CaseIterable {
+    case claude
+    case cursor
+
+    var displayName: String {
+        switch self {
+        case .claude: return "Claude"
+        case .cursor: return "Cursor"
+        }
+    }
+
+    /// Relative path to the marketplace index inside the cloned repo.
+    var indexPath: String {
+        switch self {
+        case .claude: return ".claude-plugin/marketplace.json"
+        case .cursor: return ".cursor-plugin/marketplace.json"
+        }
+    }
+}
+
+// MARK: - Plugin
+
+struct MarketplacePlugin: Codable, Identifiable, Sendable {
+    var id: UUID
+    var name: String
+    var description: String?
+    var version: String?
+    var category: String?
+    var tags: [String]
+    var source: PluginSourceSpec
+    var picks: [String]  // artifact paths selectable via --pick (e.g. "skills/foo", "agents/bar")
+    var skillsState: SkillsLoadState
+}
+
+// MARK: - Source spec
+
+struct PluginSourceSpec: Codable, Sendable {
+    var type: PluginSourceType
+    var url: String  // relative path ("./plugins/foo") or external URL
+    var path: String?  // optional subdirectory within the source
+
+    init(type: PluginSourceType, url: String, path: String? = nil) {
+        self.type = type
+        self.url = url
+        self.path = path
+    }
+
+    // The vendor marketplace.json `source` field may be a plain string (relative path)
+    // or a JSON object. The object uses "source" as the type discriminator key (not "type").
+    init(from decoder: Decoder) throws {
+        if let str = try? decoder.singleValueContainer().decode(String.self) {
+            self.type = str.hasPrefix(".") ? .relative : .url
+            self.url = str
+            self.path = nil
+            return
+        }
+        // Object form: {"source": "url", "url": "https://..."}
+        let container = try decoder.container(keyedBy: RawSourceCodingKeys.self)
+        let typeStr = (try? container.decode(String.self, forKey: .source)) ?? ""
+        self.type = PluginSourceType(rawValue: typeStr) ?? .unknown
+        self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
+        self.path = try? container.decode(String.self, forKey: .path)
+    }
+
+    private enum RawSourceCodingKeys: String, CodingKey {
+        case source, url, path
+    }
+}
+
+enum PluginSourceType: String, Codable, Sendable {
+    case relative
+    case github
+    case url
+    case npm
+    case gitSubdir = "git-subdir"
+    case unknown
+
+    var isRelative: Bool { self == .relative }
+    var isExternal: Bool { !isRelative && self != .unknown }
+}
+
+// MARK: - Skills load state
+
+enum SkillsLoadState: Codable, Sendable, Equatable {
+    case eager  // fully enumerated from the marketplace clone
+    case pending  // external source — not yet cloned
+    case loading  // clone in progress
+    case failed(String)
+
+    private enum CodingKeys: String, CodingKey { case type, message }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let type = (try? container.decode(String.self, forKey: .type)) ?? "pending"
+        switch type {
+        case "eager": self = .eager
+        case "failed":
+            let msg = (try? container.decode(String.self, forKey: .message)) ?? ""
+            self = .failed(msg)
+        default: self = .pending
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .eager:
+            try container.encode("eager", forKey: .type)
+        case .pending, .loading:
+            // Don't persist transient loading state; restart as pending.
+            try container.encode("pending", forKey: .type)
+        case .failed(let msg):
+            try container.encode("failed", forKey: .type)
+            try container.encode(msg, forKey: .message)
+        }
+    }
+
+    var isResolved: Bool {
+        switch self {
+        case .eager, .failed: return true
+        default: return false
+        }
+    }
+}
+
+// MARK: - Raw JSON model for marketplace index parsing
+
+/// Raw plugin entry decoded directly from the vendor marketplace.json.
+/// TermQ maps this into `MarketplacePlugin` after enumeration.
+struct RawMarketplacePlugin: Decodable, Sendable {
+    let name: String
+    let description: String?
+    let version: String?
+    let category: String?
+    let tags: [String]?
+    let source: PluginSourceSpec?
+
+    enum CodingKeys: String, CodingKey {
+        case name, description, version, category, tags, source
+    }
+}
+
+/// Top-level structure of the vendor marketplace.json.
+struct RawMarketplaceIndex: Decodable, Sendable {
+    let name: String?
+    let owner: String?  // resolved from object {"name":...} or plain string
+    let description: String?
+    let plugins: [RawMarketplacePlugin]
+
+    private enum CodingKeys: String, CodingKey { case name, owner, description, plugins }
+    private struct OwnerObject: Decodable { let name: String }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try? c.decode(String.self, forKey: .name)
+        self.description = try? c.decode(String.self, forKey: .description)
+        self.plugins = (try? c.decode([RawMarketplacePlugin].self, forKey: .plugins)) ?? []
+        // owner may be a plain string or {"name": "...", "email": "..."}
+        if let str = try? c.decode(String.self, forKey: .owner) {
+            self.owner = str
+        } else if let obj = try? c.decode(OwnerObject.self, forKey: .owner) {
+            self.owner = obj.name
+        } else {
+            self.owner = nil
+        }
+    }
+}

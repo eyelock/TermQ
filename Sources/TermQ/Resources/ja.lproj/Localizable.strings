@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "Finder で表示";
 "harnesses.open.in.browser" = "ブラウザで開く";
 "harnesses.close.detail" = "閉じる";
+"harnesses.configure.from.marketplaces" = "マーケットプレイスから設定…";
 "harnesses.detail.artifacts.from.includes" = "このハーネスは依存インクルードからアーティファクトを取得します。";
 "harnesses.detail.from" = "元";
 "harnesses.detail.hooks" = "フック";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "リンク済み Worktree";
 "harnesses.linked.worktrees.none" = "この harness にリンクされた worktree はありません。";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "新しいハーネスを作成";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH ハーネスツールチェーン";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld個のターミナルが現在このHarnessを実行中です。";
 "harnesses.uninstall.alert.confirm" = "アンインストール";
 "harnesses.more.actions.help" = "その他の操作";
+"harnesses.copy.run.command" = "実行コマンドをコピー";
+"harnesses.ynh.documentation" = "YNHドキュメント";
+
+"harnesses.add.registry.title" = "YNH レジストリを追加";
+"harnesses.add.registry.url.label" = "レジストリ URL";
+"harnesses.add.registry.hint" = "registry.json ファイルを含む Git リポジトリを追加します。追加すると、そこからハーネスを検索してインストールできます。";
+"harnesses.add.registry.button" = "レジストリを追加";
+"harnesses.add.registry.success" = "レジストリを追加しました";
+"harnesses.add.registry.toolbar.help" = "YNH レジストリを追加";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "マーケットプレイス";
+"settings.marketplaces.section.list" = "設定済みのマーケットプレイス";
+"settings.marketplaces.empty" = "マーケットプレイスはまだ追加されていません。";
+"settings.marketplaces.add" = "マーケットプレイスを追加…";
+"settings.marketplaces.never.fetched" = "未取得";
+"settings.marketplaces.remove.confirm.title" = "マーケットプレイスを削除";
+"settings.marketplaces.remove.confirm.message %@" = "\"%@\" を削除しますか？そのプラグインはブラウザに表示されなくなります。";
+"settings.marketplaces.section.behaviour" = "動作";
+"settings.marketplaces.auto.refresh" = "起動時に自動更新";
+"settings.marketplaces.auto.refresh.help" = "アプリ起動時にマーケットプレイスの更新を自動取得する";
+"settings.marketplaces.section.authoring" = "ハーネス作成";
+"settings.marketplaces.default.author.directory" = "デフォルト作成者ディレクトリ";
+"settings.marketplaces.author.directory.detected.hint" = "ynh から自動検出";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "マーケットプレイス";
+"marketplace.add.help" = "マーケットプレイスを追加";
+"marketplace.empty" = "マーケットプレイスはまだありません";
+"marketplace.add.button" = "マーケットプレイスを追加";
+"marketplace.row.refresh.help" = "マーケットプレイスを更新";
+"marketplace.row.refresh" = "更新";
+"marketplace.row.remove" = "削除";
+"marketplace.row.stale" = " · 古い可能性があります";
+"marketplace.row.never.fetched" = "まだ取得されていません";
+"marketplace.add.sheet.title" = "マーケットプレイスを追加";
+"marketplace.add.tab.known" = "既知";
+"marketplace.add.tab.custom" = "カスタムURL";
+"marketplace.add.section.git.url" = "GitリポジトリURL";
+"marketplace.add.section.display.name" = "表示名";
+"marketplace.add.section.vendor" = "ベンダー";
+"marketplace.detail.last.fetched %@" = "最終取得 %@";
+"marketplace.detail.search.placeholder" = "プラグインを検索…";
+"marketplace.detail.search.empty %@" = "「%@」に一致するプラグインはありません";
+"marketplace.detail.empty" = "このマーケットプレイスにプラグインはありません";
+"marketplace.detail.empty.hint" = "最新のインデックスを取得するには更新してください。";
+"marketplace.plugin.add.to.harness" = "ハーネスに追加";
+"marketplace.plugin.copy.install.command" = "インストールコマンドをコピー";
+"marketplace.plugin.copy.install.command.help" = "Claude Codeのインストールコマンドをクリップボードにコピーします";
+"marketplace.plugin.load.artifacts" = "アーティファクトを読み込む";
+"marketplace.plugin.loading.artifacts" = "アーティファクトを読み込んでいます…";
+"marketplace.plugin.no.artifacts" = "このプラグインにはアーティファクトが列挙されていません。";
+"marketplace.plugin.no.artifacts.hint" = "プラグインのすべてのコンテンツが含まれます。";
+"marketplace.plugin.artifacts.unavailable %@" = "アーティファクトが利用できません: %@";
+"marketplace.picker.step.artifacts" = "アーティファクト";
+"marketplace.picker.step.harness" = "ハーネス";
+"marketplace.picker.step.apply" = "適用";
+"marketplace.picker.select.prompt" = "含めるアーティファクトを選択";
+"marketplace.picker.select.all" = "すべて";
+"marketplace.picker.select.none" = "なし";
+"marketplace.picker.no.harnesses" = "ハーネスはまだありません";
+"marketplace.picker.no.harnesses.hint" = "新しいハーネスウィザードを使ってまずハーネスを作成してください。";
+"marketplace.picker.review.plugin" = "プラグイン";
+"marketplace.picker.review.harness" = "ハーネス";
+"marketplace.picker.review.artifacts" = "アーティファクト";
+"marketplace.picker.review.all.count %lld" = "すべて (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld / %lld 件選択";
+"marketplace.picker.command.preview" = "コマンドプレビュー";
+"marketplace.picker.success %@" = "%@ にプラグインを追加しました";
+"marketplace.picker.done" = "完了";
+"marketplace.picker.back" = "戻る";
+"marketplace.picker.next" = "次へ";
+"harness.wizard.title" = "新しいハーネス";
+"harness.wizard.name.label" = "名前（必須）";
+"harness.wizard.description.label" = "説明";
+"harness.wizard.loading.vendors" = "ベンダーを読み込んでいます…";
+"harness.wizard.vendor.label" = "デフォルトベンダー";
+"harness.wizard.destination.label" = "保存先ディレクトリ";
+"harness.wizard.install.toggle" = "作成直後にハーネスをインストール";
+"harness.wizard.success.add.plugins" = "マーケットプレイスからプラグインを追加";
+"harness.wizard.success.open" = "TermQで開く";
+"harness.wizard.create" = "作成";
+"harness.wizard.retry" = "再試行";
+"harness.wizard.error.name.required" = "名前は必須です";
+"harness.wizard.error.name.invalid" = "名前には文字、数字、ハイフン、アンダースコアのみ使用できます";
+"harness.wizard.error.name.duplicate %@" = "「%@」という名前のハーネスはすでに存在します";
+"settings.marketplaces.reset" = "リセット";
+"settings.marketplaces.section.ynh.registries" = "YNHレジストリ";
+"settings.marketplaces.ynh.registries.empty" = "レジストリが未登録です";
+"settings.marketplaces.ynh.add.registry" = "レジストリを追加…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "レジストリを削除";
+"settings.marketplaces.ynh.registry.remove.confirm" = "削除";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\"をYNHから削除しますか？インストール済みのハーネスは残ります。";
+"marketplace.add.custom.name.placeholder" = "マイマーケットプレイス";
+"harness.wizard.success.created %@" = "ハーネス「%@」を作成しました";

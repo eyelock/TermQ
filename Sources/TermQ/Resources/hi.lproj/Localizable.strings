@@ -604,6 +604,7 @@
 "harnesses.reveal.in.finder" = "Finder में दिखाएं";
 "harnesses.open.in.browser" = "ब्राउज़र में खोलें";
 "harnesses.close.detail" = "बंद करें";
+"harnesses.configure.from.marketplaces" = "मार्केटप्लेस से कॉन्फ़िगर करें…";
 "harnesses.detail.artifacts.from.includes" = "यह harness अपने आर्टिफैक्ट निर्भरता इंक्लूड से प्राप्त करता है।";
 "harnesses.detail.from" = "से";
 "harnesses.detail.hooks" = "Hooks";
@@ -638,6 +639,9 @@
 
 "harnesses.linked.worktrees" = "लिंक किए गए Worktree";
 "harnesses.linked.worktrees.none" = "इस harness से कोई worktree लिंक नहीं है।";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "नई Harness बनाएं";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness टूलचेन";
@@ -711,3 +715,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld टर्मिनल वर्तमान में इस harness को चला रहे हैं।";
 "harnesses.uninstall.alert.confirm" = "अनइंस्टॉल करें";
 "harnesses.more.actions.help" = "अधिक क्रियाएं";
+"harnesses.copy.run.command" = "रन कमांड कॉपी करें";
+"harnesses.ynh.documentation" = "YNH दस्तावेज़ीकरण";
+
+"harnesses.add.registry.title" = "YNH रजिस्ट्री जोड़ें";
+"harnesses.add.registry.url.label" = "रजिस्ट्री URL";
+"harnesses.add.registry.hint" = "एक Git रिपॉज़िटरी जोड़ें जिसमें registry.json फ़ाइल हो। जोड़ने के बाद, आप उसमें से harnesses खोज और इंस्टॉल कर सकते हैं।";
+"harnesses.add.registry.button" = "रजिस्ट्री जोड़ें";
+"harnesses.add.registry.success" = "रजिस्ट्री सफलतापूर्वक जोड़ी गई";
+"harnesses.add.registry.toolbar.help" = "YNH रजिस्ट्री जोड़ें";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "मार्केटप्लेस";
+"settings.marketplaces.section.list" = "कॉन्फ़िगर किए गए मार्केटप्लेस";
+"settings.marketplaces.empty" = "अभी तक कोई मार्केटप्लेस नहीं जोड़ा गया।";
+"settings.marketplaces.add" = "मार्केटप्लेस जोड़ें…";
+"settings.marketplaces.never.fetched" = "कभी नहीं लाया गया";
+"settings.marketplaces.remove.confirm.title" = "मार्केटप्लेस हटाएं";
+"settings.marketplaces.remove.confirm.message %@" = "\"%@\" हटाएं? इसके प्लगइन ब्राउज़र में दिखाई नहीं देंगे।";
+"settings.marketplaces.section.behaviour" = "व्यवहार";
+"settings.marketplaces.auto.refresh" = "लॉन्च पर स्वतः-रीफ्रेश";
+"settings.marketplaces.auto.refresh.help" = "ऐप शुरू होने पर मार्केटप्लेस अपडेट स्वचालित रूप से प्राप्त करें";
+"settings.marketplaces.section.authoring" = "Harness निर्माण";
+"settings.marketplaces.default.author.directory" = "डिफ़ॉल्ट लेखक निर्देशिका";
+"settings.marketplaces.author.directory.detected.hint" = "ynh से स्वतः-पहचाना गया";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "मार्केटप्लेस";
+"marketplace.add.help" = "मार्केटप्लेस जोड़ें";
+"marketplace.empty" = "अभी कोई मार्केटप्लेस नहीं";
+"marketplace.add.button" = "मार्केटप्लेस जोड़ें";
+"marketplace.row.refresh.help" = "मार्केटप्लेस रीफ़्रेश करें";
+"marketplace.row.refresh" = "रीफ़्रेश";
+"marketplace.row.remove" = "हटाएं";
+"marketplace.row.stale" = " · पुराना हो सकता है";
+"marketplace.row.never.fetched" = "कभी प्राप्त नहीं किया";
+"marketplace.add.sheet.title" = "मार्केटप्लेस जोड़ें";
+"marketplace.add.tab.known" = "ज्ञात";
+"marketplace.add.tab.custom" = "कस्टम URL";
+"marketplace.add.section.git.url" = "Git रिपॉज़िटरी URL";
+"marketplace.add.section.display.name" = "प्रदर्शन नाम";
+"marketplace.add.section.vendor" = "विक्रेता";
+"marketplace.detail.last.fetched %@" = "अंतिम प्राप्ति %@";
+"marketplace.detail.search.placeholder" = "प्लगइन खोजें…";
+"marketplace.detail.search.empty %@" = "«%@» से मेल खाने वाला कोई प्लगइन नहीं";
+"marketplace.detail.empty" = "इस मार्केटप्लेस में कोई प्लगइन नहीं";
+"marketplace.detail.empty.hint" = "नवीनतम इंडेक्स प्राप्त करने के लिए रीफ़्रेश करें।";
+"marketplace.plugin.add.to.harness" = "Harness में जोड़ें";
+"marketplace.plugin.copy.install.command" = "इंस्टॉल कमांड कॉपी करें";
+"marketplace.plugin.copy.install.command.help" = "Claude Code इंस्टॉल कमांड को क्लिपबोर्ड पर कॉपी करता है";
+"marketplace.plugin.load.artifacts" = "आर्टिफैक्ट लोड करें";
+"marketplace.plugin.loading.artifacts" = "आर्टिफैक्ट लोड हो रहे हैं…";
+"marketplace.plugin.no.artifacts" = "इस प्लगइन के लिए कोई आर्टिफैक्ट सूचीबद्ध नहीं।";
+"marketplace.plugin.no.artifacts.hint" = "प्लगइन की सभी सामग्री शामिल की जाएगी।";
+"marketplace.plugin.artifacts.unavailable %@" = "आर्टिफैक्ट उपलब्ध नहीं: %@";
+"marketplace.picker.step.artifacts" = "आर्टिफैक्ट";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "लागू करें";
+"marketplace.picker.select.prompt" = "शामिल करने के लिए आर्टिफैक्ट चुनें";
+"marketplace.picker.select.all" = "सभी";
+"marketplace.picker.select.none" = "कोई नहीं";
+"marketplace.picker.no.harnesses" = "अभी कोई Harness नहीं";
+"marketplace.picker.no.harnesses.hint" = "पहले नई Harness विज़ार्ड का उपयोग करके Harness बनाएं।";
+"marketplace.picker.review.plugin" = "प्लगइन";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "आर्टिफैक्ट";
+"marketplace.picker.review.all.count %lld" = "सभी (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld में से %lld चुने गए";
+"marketplace.picker.command.preview" = "कमांड पूर्वावलोकन";
+"marketplace.picker.success %@" = "%@ में प्लगइन जोड़ा गया";
+"marketplace.picker.done" = "हो गया";
+"marketplace.picker.back" = "वापस";
+"marketplace.picker.next" = "आगे";
+"harness.wizard.title" = "नई Harness";
+"harness.wizard.name.label" = "नाम (आवश्यक)";
+"harness.wizard.description.label" = "विवरण";
+"harness.wizard.loading.vendors" = "विक्रेता लोड हो रहे हैं…";
+"harness.wizard.vendor.label" = "डिफ़ॉल्ट विक्रेता";
+"harness.wizard.destination.label" = "डेस्टिनेशन डायरेक्टरी";
+"harness.wizard.install.toggle" = "बनाने के तुरंत बाद Harness इंस्टॉल करें";
+"harness.wizard.success.add.plugins" = "मार्केटप्लेस से प्लगइन जोड़ें";
+"harness.wizard.success.open" = "TermQ में खोलें";
+"harness.wizard.create" = "बनाएं";
+"harness.wizard.retry" = "पुनः प्रयास करें";
+"harness.wizard.error.name.required" = "नाम आवश्यक है";
+"harness.wizard.error.name.invalid" = "नाम में केवल अक्षर, अंक, हाइफन और अंडरस्कोर हो सकते हैं";
+"harness.wizard.error.name.duplicate %@" = "«%@» नाम की Harness पहले से मौजूद है";
+"settings.marketplaces.reset" = "रीसेट";
+"settings.marketplaces.section.ynh.registries" = "YNH रजिस्ट्री";
+"settings.marketplaces.ynh.registries.empty" = "कोई रजिस्ट्री नहीं जोड़ी गई";
+"settings.marketplaces.ynh.add.registry" = "रजिस्ट्री जोड़ें…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "रजिस्ट्री हटाएं";
+"settings.marketplaces.ynh.registry.remove.confirm" = "हटाएं";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" को YNH से हटाएं? इंस्टॉल किए गए harness बने रहेंगे.";
+"marketplace.add.custom.name.placeholder" = "मेरा मार्केटप्लेस";
+"harness.wizard.success.created %@" = "Harness «%@» बनाई गई";

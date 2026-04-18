@@ -603,6 +603,7 @@
 "harnesses.reveal.in.finder" = "Mostrar no Finder";
 "harnesses.open.in.browser" = "Abrir no navegador";
 "harnesses.close.detail" = "Fechar";
+"harnesses.configure.from.marketplaces" = "Configurar de marketplaces…";
 "harnesses.detail.artifacts.from.includes" = "Este harness obtém seus artefatos dos includes de dependências.";
 "harnesses.detail.from" = "de";
 "harnesses.detail.hooks" = "Hooks";
@@ -637,6 +638,9 @@
 
 "harnesses.linked.worktrees" = "Worktrees vinculados";
 "harnesses.linked.worktrees.none" = "Nenhum worktree está vinculado a este harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Criar um novo harness";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";
@@ -710,3 +714,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(is) estão executando este harness no momento.";
 "harnesses.uninstall.alert.confirm" = "Desinstalar";
 "harnesses.more.actions.help" = "Mais ações";
+"harnesses.copy.run.command" = "Copiar comando de execução";
+"harnesses.ynh.documentation" = "Documentação YNH";
+
+"harnesses.add.registry.title" = "Adicionar registro YNH";
+"harnesses.add.registry.url.label" = "URL do registro";
+"harnesses.add.registry.hint" = "Adicione um repositório Git que contenha um arquivo registry.json. Depois de adicionado, você pode pesquisar e instalar harnesses a partir dele.";
+"harnesses.add.registry.button" = "Adicionar registro";
+"harnesses.add.registry.success" = "Registro adicionado com sucesso";
+"harnesses.add.registry.toolbar.help" = "Adicionar um registro YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Mercados";
+"settings.marketplaces.section.list" = "Mercados configurados";
+"settings.marketplaces.empty" = "Nenhum mercado adicionado ainda.";
+"settings.marketplaces.add" = "Adicionar mercado…";
+"settings.marketplaces.never.fetched" = "Nunca obtido";
+"settings.marketplaces.remove.confirm.title" = "Remover mercado";
+"settings.marketplaces.remove.confirm.message %@" = "Remover \"%@\"? Seus plugins não aparecerão mais no navegador.";
+"settings.marketplaces.section.behaviour" = "Comportamento";
+"settings.marketplaces.auto.refresh" = "Atualização automática ao iniciar";
+"settings.marketplaces.auto.refresh.help" = "Buscar atualizações do mercado automaticamente quando o app inicia";
+"settings.marketplaces.section.authoring" = "Criação de harness";
+"settings.marketplaces.default.author.directory" = "Diretório de autor padrão";
+"settings.marketplaces.author.directory.detected.hint" = "Detectado automaticamente do ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marketplaces";
+"marketplace.add.help" = "Adicionar marketplace";
+"marketplace.empty" = "Ainda não há marketplaces";
+"marketplace.add.button" = "Adicionar marketplace";
+"marketplace.row.refresh.help" = "Atualizar marketplace";
+"marketplace.row.refresh" = "Atualizar";
+"marketplace.row.remove" = "Remover";
+"marketplace.row.stale" = " · Pode estar desatualizado";
+"marketplace.row.never.fetched" = "Nunca obtido";
+"marketplace.add.sheet.title" = "Adicionar marketplace";
+"marketplace.add.tab.known" = "Conhecidos";
+"marketplace.add.tab.custom" = "URL personalizado";
+"marketplace.add.section.git.url" = "URL do repositório Git";
+"marketplace.add.section.display.name" = "Nome de exibição";
+"marketplace.add.section.vendor" = "Fornecedor";
+"marketplace.detail.last.fetched %@" = "Última obtenção %@";
+"marketplace.detail.search.placeholder" = "Pesquisar plugins…";
+"marketplace.detail.search.empty %@" = "Nenhum plugin corresponde a «%@»";
+"marketplace.detail.empty" = "Nenhum plugin neste marketplace";
+"marketplace.detail.empty.hint" = "Atualize para obter o índice mais recente.";
+"marketplace.plugin.add.to.harness" = "Adicionar ao harness";
+"marketplace.plugin.copy.install.command" = "Copiar comando de instalação";
+"marketplace.plugin.copy.install.command.help" = "Copia o comando de instalação do Claude Code para a área de transferência";
+"marketplace.plugin.load.artifacts" = "Carregar artefatos";
+"marketplace.plugin.loading.artifacts" = "Carregando artefatos…";
+"marketplace.plugin.no.artifacts" = "Nenhum artefato listado para este plugin.";
+"marketplace.plugin.no.artifacts.hint" = "Todo o conteúdo do plugin será incluído.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefatos indisponíveis: %@";
+"marketplace.picker.step.artifacts" = "Artefatos";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Aplicar";
+"marketplace.picker.select.prompt" = "Selecionar artefatos para incluir";
+"marketplace.picker.select.all" = "Todos";
+"marketplace.picker.select.none" = "Nenhum";
+"marketplace.picker.no.harnesses" = "Ainda não há harnesses";
+"marketplace.picker.no.harnesses.hint" = "Crie primeiro um harness usando o assistente de novo harness.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefatos";
+"marketplace.picker.review.all.count %lld" = "Todos (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld de %lld selecionados";
+"marketplace.picker.command.preview" = "Pré-visualização do comando";
+"marketplace.picker.success %@" = "Plugin adicionado a %@";
+"marketplace.picker.done" = "Concluído";
+"marketplace.picker.back" = "Voltar";
+"marketplace.picker.next" = "Próximo";
+"harness.wizard.title" = "Novo harness";
+"harness.wizard.name.label" = "Nome (obrigatório)";
+"harness.wizard.description.label" = "Descrição";
+"harness.wizard.loading.vendors" = "Carregando fornecedores…";
+"harness.wizard.vendor.label" = "Fornecedor padrão";
+"harness.wizard.destination.label" = "Diretório de destino";
+"harness.wizard.install.toggle" = "Instalar o harness imediatamente após a criação";
+"harness.wizard.success.add.plugins" = "Adicionar plugins do marketplace";
+"harness.wizard.success.open" = "Abrir no TermQ";
+"harness.wizard.create" = "Criar";
+"harness.wizard.retry" = "Tentar novamente";
+"harness.wizard.error.name.required" = "O nome é obrigatório";
+"harness.wizard.error.name.invalid" = "O nome pode conter apenas letras, números, hifens e underscores";
+"harness.wizard.error.name.duplicate %@" = "Já existe um harness chamado «%@»";
+"settings.marketplaces.reset" = "Redefinir";
+"settings.marketplaces.section.ynh.registries" = "Registros YNH";
+"settings.marketplaces.ynh.registries.empty" = "Nenhum registro adicionado";
+"settings.marketplaces.ynh.add.registry" = "Adicionar registro…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Remover registro";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Remover";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Remover “%@” do YNH? Os harneços instalados serão mantidos.";
+"marketplace.add.custom.name.placeholder" = "Meu marketplace";
+"harness.wizard.success.created %@" = "Harness «%@» criado";

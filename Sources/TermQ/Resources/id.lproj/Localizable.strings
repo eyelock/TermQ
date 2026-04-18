@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "Tampilkan di Finder";
 "harnesses.open.in.browser" = "Buka di browser";
 "harnesses.close.detail" = "Tutup";
+"harnesses.configure.from.marketplaces" = "Konfigurasikan dari Marketplace…";
 "harnesses.detail.artifacts.from.includes" = "Harness ini mendapatkan artefak dari include ketergantungan.";
 "harnesses.detail.from" = "dari";
 "harnesses.detail.hooks" = "Hook";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "Worktree tertaut";
 "harnesses.linked.worktrees.none" = "Tidak ada worktree yang tertaut ke harness ini.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Buat Harness Baru";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
 "harnesses.uninstall.alert.confirm" = "Hapus Instalasi";
 "harnesses.more.actions.help" = "Tindakan lainnya";
+"harnesses.copy.run.command" = "Salin perintah jalankan";
+"harnesses.ynh.documentation" = "Dokumentasi YNH";
+
+"harnesses.add.registry.title" = "Tambah Registry YNH";
+"harnesses.add.registry.url.label" = "URL Registry";
+"harnesses.add.registry.hint" = "Tambahkan repositori Git yang berisi file registry.json. Setelah ditambahkan, Anda dapat mencari dan menginstal harnesses darinya.";
+"harnesses.add.registry.button" = "Tambah Registry";
+"harnesses.add.registry.success" = "Registry berhasil ditambahkan";
+"harnesses.add.registry.toolbar.help" = "Tambah registry YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Pasar";
+"settings.marketplaces.section.list" = "Pasar yang dikonfigurasi";
+"settings.marketplaces.empty" = "Belum ada pasar yang ditambahkan.";
+"settings.marketplaces.add" = "Tambah Pasar…";
+"settings.marketplaces.never.fetched" = "Belum pernah diambil";
+"settings.marketplaces.remove.confirm.title" = "Hapus Pasar";
+"settings.marketplaces.remove.confirm.message %@" = "Hapus \"%@\"? Plugin-nya tidak akan muncul lagi di browser.";
+"settings.marketplaces.section.behaviour" = "Perilaku";
+"settings.marketplaces.auto.refresh" = "Segarkan otomatis saat diluncurkan";
+"settings.marketplaces.auto.refresh.help" = "Ambil pembaruan pasar secara otomatis saat aplikasi dimulai";
+"settings.marketplaces.section.authoring" = "Pembuatan Harness";
+"settings.marketplaces.default.author.directory" = "Direktori penulis default";
+"settings.marketplaces.author.directory.detected.hint" = "Terdeteksi otomatis dari ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marketplace";
+"marketplace.add.help" = "Tambah marketplace";
+"marketplace.empty" = "Belum ada marketplace";
+"marketplace.add.button" = "Tambah marketplace";
+"marketplace.row.refresh.help" = "Perbarui marketplace";
+"marketplace.row.refresh" = "Perbarui";
+"marketplace.row.remove" = "Hapus";
+"marketplace.row.stale" = " · Mungkin sudah usang";
+"marketplace.row.never.fetched" = "Belum pernah diambil";
+"marketplace.add.sheet.title" = "Tambah marketplace";
+"marketplace.add.tab.known" = "Dikenal";
+"marketplace.add.tab.custom" = "URL Kustom";
+"marketplace.add.section.git.url" = "URL Repositori Git";
+"marketplace.add.section.display.name" = "Nama Tampilan";
+"marketplace.add.section.vendor" = "Vendor";
+"marketplace.detail.last.fetched %@" = "Terakhir diambil %@";
+"marketplace.detail.search.placeholder" = "Cari plugin…";
+"marketplace.detail.search.empty %@" = "Tidak ada plugin yang cocok dengan «%@»";
+"marketplace.detail.empty" = "Tidak ada plugin di marketplace ini";
+"marketplace.detail.empty.hint" = "Perbarui untuk mengambil indeks terbaru.";
+"marketplace.plugin.add.to.harness" = "Tambah ke Harness";
+"marketplace.plugin.copy.install.command" = "Salin Perintah Instalasi";
+"marketplace.plugin.copy.install.command.help" = "Menyalin perintah instalasi Claude Code ke clipboard";
+"marketplace.plugin.load.artifacts" = "Muat artefak";
+"marketplace.plugin.loading.artifacts" = "Memuat artefak…";
+"marketplace.plugin.no.artifacts" = "Tidak ada artefak yang terdaftar untuk plugin ini.";
+"marketplace.plugin.no.artifacts.hint" = "Semua konten plugin akan disertakan.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefak tidak tersedia: %@";
+"marketplace.picker.step.artifacts" = "Artefak";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Terapkan";
+"marketplace.picker.select.prompt" = "Pilih artefak untuk disertakan";
+"marketplace.picker.select.all" = "Semua";
+"marketplace.picker.select.none" = "Tidak ada";
+"marketplace.picker.no.harnesses" = "Belum ada harness";
+"marketplace.picker.no.harnesses.hint" = "Buat harness terlebih dahulu menggunakan wizard Harness Baru.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefak";
+"marketplace.picker.review.all.count %lld" = "Semua (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld dari %lld dipilih";
+"marketplace.picker.command.preview" = "Pratinjau perintah";
+"marketplace.picker.success %@" = "Plugin ditambahkan ke %@";
+"marketplace.picker.done" = "Selesai";
+"marketplace.picker.back" = "Kembali";
+"marketplace.picker.next" = "Berikutnya";
+"harness.wizard.title" = "Harness Baru";
+"harness.wizard.name.label" = "Nama (wajib)";
+"harness.wizard.description.label" = "Deskripsi";
+"harness.wizard.loading.vendors" = "Memuat vendor…";
+"harness.wizard.vendor.label" = "Vendor Default";
+"harness.wizard.destination.label" = "Direktori Tujuan";
+"harness.wizard.install.toggle" = "Pasang harness segera setelah dibuat";
+"harness.wizard.success.add.plugins" = "Tambah plugin dari marketplace";
+"harness.wizard.success.open" = "Buka di TermQ";
+"harness.wizard.create" = "Buat";
+"harness.wizard.retry" = "Coba lagi";
+"harness.wizard.error.name.required" = "Nama wajib diisi";
+"harness.wizard.error.name.invalid" = "Nama hanya boleh mengandung huruf, angka, tanda hubung, dan garis bawah";
+"harness.wizard.error.name.duplicate %@" = "Harness bernama «%@» sudah ada";
+"settings.marketplaces.reset" = "Setel ulang";
+"settings.marketplaces.section.ynh.registries" = "Registri YNH";
+"settings.marketplaces.ynh.registries.empty" = "Belum ada registri yang ditambahkan";
+"settings.marketplaces.ynh.add.registry" = "Tambah Registri…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Hapus Registri";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Hapus";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Hapus “%@” dari YNH? Harness yang terpasang akan tetap ada.";
+"marketplace.add.custom.name.placeholder" = "Marketplace saya";
+"harness.wizard.success.created %@" = "Harness «%@» dibuat";

@@ -604,6 +604,7 @@
 "harnesses.reveal.in.finder" = "הצג ב-Finder";
 "harnesses.open.in.browser" = "פתח בדפדפן";
 "harnesses.close.detail" = "סגור";
+"harnesses.configure.from.marketplaces" = "הגדרה מהשווקים…";
 "harnesses.detail.artifacts.from.includes" = "ה-harness הזה מקבל את הארטיפקטים שלו מהכללות תלויות.";
 "harnesses.detail.from" = "מ-";
 "harnesses.detail.hooks" = "Hooks";
@@ -638,6 +639,9 @@
 
 "harnesses.linked.worktrees" = "Worktrees מקושרים";
 "harnesses.linked.worktrees.none" = "אין worktrees מקושרים ל-harness זה.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "יצירת Harness חדש";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "שרשרת כלים YNH";
@@ -711,3 +715,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld מסוף(ים) מריצים כעת את ה-harness הזה.";
 "harnesses.uninstall.alert.confirm" = "הסר התקנה";
 "harnesses.more.actions.help" = "פעולות נוספות";
+"harnesses.copy.run.command" = "העתק פקודת הפעלה";
+"harnesses.ynh.documentation" = "תיעוד YNH";
+
+"harnesses.add.registry.title" = "הוסף רישום YNH";
+"harnesses.add.registry.url.label" = "כתובת URL של הרישום";
+"harnesses.add.registry.hint" = "הוסף מאגר Git המכיל קובץ registry.json. לאחר ההוספה, תוכל לחפש ולהתקין harnesses ממנו.";
+"harnesses.add.registry.button" = "הוסף רישום";
+"harnesses.add.registry.success" = "הרישום נוסף בהצלחה";
+"harnesses.add.registry.toolbar.help" = "הוסף רישום YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "שווקים";
+"settings.marketplaces.section.list" = "שווקים מוגדרים";
+"settings.marketplaces.empty" = "טרם נוספו שווקים.";
+"settings.marketplaces.add" = "הוסף שוק…";
+"settings.marketplaces.never.fetched" = "מעולם לא נשלף";
+"settings.marketplaces.remove.confirm.title" = "הסר שוק";
+"settings.marketplaces.remove.confirm.message %@" = "להסיר את \"%@\"? התוספים שלו לא יופיעו עוד בדפדפן.";
+"settings.marketplaces.section.behaviour" = "התנהגות";
+"settings.marketplaces.auto.refresh" = "רענון אוטומטי בהפעלה";
+"settings.marketplaces.auto.refresh.help" = "שליפה אוטומטית של עדכוני שוק בעת הפעלת האפליקציה";
+"settings.marketplaces.section.authoring" = "יצירת harness";
+"settings.marketplaces.default.author.directory" = "ספריית מחבר ברירת מחדל";
+"settings.marketplaces.author.directory.detected.hint" = "זוהה אוטומטית מ-ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "שווקים";
+"marketplace.add.help" = "הוסף שוק";
+"marketplace.empty" = "אין שווקים עדיין";
+"marketplace.add.button" = "הוסף שוק";
+"marketplace.row.refresh.help" = "רענן שוק";
+"marketplace.row.refresh" = "רענן";
+"marketplace.row.remove" = "הסר";
+"marketplace.row.stale" = " · עשוי להיות מיושן";
+"marketplace.row.never.fetched" = "לא הוטען מעולם";
+"marketplace.add.sheet.title" = "הוסף שוק";
+"marketplace.add.tab.known" = "ידועים";
+"marketplace.add.tab.custom" = "כתובת URL מותאמת";
+"marketplace.add.section.git.url" = "כתובת URL של מאגר Git";
+"marketplace.add.section.display.name" = "שם להצגה";
+"marketplace.add.section.vendor" = "ספק";
+"marketplace.detail.last.fetched %@" = "טעינה אחרונה %@";
+"marketplace.detail.search.placeholder" = "חפש תוספים…";
+"marketplace.detail.search.empty %@" = "לא נמצאו תוספים התואמים ל«%@»";
+"marketplace.detail.empty" = "אין תוספים בשוק זה";
+"marketplace.detail.empty.hint" = "רענן כדי לטעון את האינדקס העדכני.";
+"marketplace.plugin.add.to.harness" = "הוסף ל-Harness";
+"marketplace.plugin.copy.install.command" = "העתק פקודת התקנה";
+"marketplace.plugin.copy.install.command.help" = "מעתיק את פקודת ההתקנה של Claude Code ללוח";
+"marketplace.plugin.load.artifacts" = "טען פריטים";
+"marketplace.plugin.loading.artifacts" = "טוען פריטים…";
+"marketplace.plugin.no.artifacts" = "לא רשומים פריטים לתוסף זה.";
+"marketplace.plugin.no.artifacts.hint" = "כל תוכן התוסף ייכלל.";
+"marketplace.plugin.artifacts.unavailable %@" = "פריטים אינם זמינים: %@";
+"marketplace.picker.step.artifacts" = "פריטים";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "החל";
+"marketplace.picker.select.prompt" = "בחר פריטים לכלול";
+"marketplace.picker.select.all" = "הכל";
+"marketplace.picker.select.none" = "כלום";
+"marketplace.picker.no.harnesses" = "אין Harness עדיין";
+"marketplace.picker.no.harnesses.hint" = "צור תחילה Harness באמצעות אשף ה-Harness החדש.";
+"marketplace.picker.review.plugin" = "תוסף";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "פריטים";
+"marketplace.picker.review.all.count %lld" = "הכל (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld מתוך %lld נבחרו";
+"marketplace.picker.command.preview" = "תצוגה מקדימה של פקודה";
+"marketplace.picker.success %@" = "תוסף נוסף ל%@";
+"marketplace.picker.done" = "סיום";
+"marketplace.picker.back" = "חזרה";
+"marketplace.picker.next" = "הבא";
+"harness.wizard.title" = "Harness חדש";
+"harness.wizard.name.label" = "שם (נדרש)";
+"harness.wizard.description.label" = "תיאור";
+"harness.wizard.loading.vendors" = "טוען ספקים…";
+"harness.wizard.vendor.label" = "ספק ברירת מחדל";
+"harness.wizard.destination.label" = "תיקיית יעד";
+"harness.wizard.install.toggle" = "התקן Harness מיד לאחר היצירה";
+"harness.wizard.success.add.plugins" = "הוסף תוספים מהשוק";
+"harness.wizard.success.open" = "פתח ב-TermQ";
+"harness.wizard.create" = "צור";
+"harness.wizard.retry" = "נסה שוב";
+"harness.wizard.error.name.required" = "שם הוא שדה חובה";
+"harness.wizard.error.name.invalid" = "השם יכול להכיל רק אותיות, מספרים, מקפים וקווים תחתיים";
+"harness.wizard.error.name.duplicate %@" = "כבר קיים Harness בשם «%@»";
+"settings.marketplaces.reset" = "אפס";
+"settings.marketplaces.section.ynh.registries" = "רשימות YNH";
+"settings.marketplaces.ynh.registries.empty" = "לא נוספו רשימות";
+"settings.marketplaces.ynh.add.registry" = "הוספת רשימה…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "הסרת רשימה";
+"settings.marketplaces.ynh.registry.remove.confirm" = "הסר";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "להסיר את “%@” מין YNH? התשתיות המותקנות ישארו.";
+"marketplace.add.custom.name.placeholder" = "השוק שלי";
+"harness.wizard.success.created %@" = "Harness «%@» נוצר";

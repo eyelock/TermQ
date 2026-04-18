@@ -614,6 +614,7 @@
 "harnesses.reveal.in.finder" = "Afișare în Finder";
 "harnesses.open.in.browser" = "Deschide în browser";
 "harnesses.close.detail" = "Închide";
+"harnesses.configure.from.marketplaces" = "Configurați din piețe…";
 "harnesses.detail.artifacts.from.includes" = "Acest harness obține artefactele din includeri de dependențe.";
 "harnesses.detail.from" = "din";
 "harnesses.detail.hooks" = "Hooks";
@@ -648,6 +649,9 @@
 
 "harnesses.linked.worktrees" = "Worktree-uri legate";
 "harnesses.linked.worktrees.none" = "Niciun worktree nu este legat de acest harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Creare harness nou";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Lanț de instrumente YNH";
@@ -705,3 +709,98 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(e) rulează în prezent acest harness.";
 "harnesses.uninstall.alert.confirm" = "Dezinstalare";
 "harnesses.more.actions.help" = "Mai multe acțiuni";
+"harnesses.copy.run.command" = "Copiați comanda de rulare";
+"harnesses.ynh.documentation" = "Documentație YNH";
+
+"harnesses.add.registry.title" = "Adăugare registru YNH";
+"harnesses.add.registry.url.label" = "URL registru";
+"harnesses.add.registry.hint" = "Adăugați un depozit Git care conține un fișier registry.json. Odată adăugat, puteți căuta și instala harnesses din el.";
+"harnesses.add.registry.button" = "Adăugare registru";
+"harnesses.add.registry.success" = "Registru adăugat cu succes";
+"harnesses.add.registry.toolbar.help" = "Adăugare registru YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Piețe";
+"settings.marketplaces.section.list" = "Piețe configurate";
+"settings.marketplaces.empty" = "Nu a fost adăugată nicio piață încă.";
+"settings.marketplaces.add" = "Adaugă piață…";
+"settings.marketplaces.never.fetched" = "Niciodată preluat";
+"settings.marketplaces.remove.confirm.title" = "Elimină piața";
+"settings.marketplaces.remove.confirm.message %@" = "Eliminați \"%@\"? Pluginurile sale nu vor mai apărea în browser.";
+"settings.marketplaces.section.behaviour" = "Comportament";
+"settings.marketplaces.auto.refresh" = "Reîmprospătare automată la lansare";
+"settings.marketplaces.auto.refresh.help" = "Preluați automat actualizările pieței când pornește aplicația";
+"settings.marketplaces.section.authoring" = "Creare harness";
+"settings.marketplaces.default.author.directory" = "Director implicit al autorului";
+"settings.marketplaces.author.directory.detected.hint" = "Detectat automat din ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Piețe";
+"marketplace.add.help" = "Adaugă piață";
+"marketplace.empty" = "Nicio piață deocamdată";
+"marketplace.add.button" = "Adaugă piață";
+"marketplace.row.refresh.help" = "Reîmprospătează piața";
+"marketplace.row.refresh" = "Reîmprospătează";
+"marketplace.row.remove" = "Elimină";
+"marketplace.row.stale" = " · Poate fi depășit";
+"marketplace.row.never.fetched" = "Niciodată preluat";
+"marketplace.add.sheet.title" = "Adaugă piață";
+"marketplace.add.tab.known" = "Cunoscute";
+"marketplace.add.tab.custom" = "URL personalizat";
+"marketplace.add.section.git.url" = "URL depozit Git";
+"marketplace.add.section.display.name" = "Nume afișat";
+"marketplace.add.section.vendor" = "Furnizor";
+"marketplace.detail.last.fetched %@" = "Ultima preluare %@";
+"marketplace.detail.search.placeholder" = "Caută pluginuri…";
+"marketplace.detail.search.empty %@" = "Niciun plugin nu corespunde cu «%@»";
+"marketplace.detail.empty" = "Niciun plugin în această piață";
+"marketplace.detail.empty.hint" = "Reîmprospătați pentru a prelua cel mai recent index.";
+"marketplace.plugin.add.to.harness" = "Adaugă la harness";
+"marketplace.plugin.copy.install.command" = "Copiază comanda de instalare";
+"marketplace.plugin.copy.install.command.help" = "Copiază comanda de instalare Claude Code în clipboard";
+"marketplace.plugin.load.artifacts" = "Încarcă artefacte";
+"marketplace.plugin.loading.artifacts" = "Se încarcă artefactele…";
+"marketplace.plugin.no.artifacts" = "Niciun artefact enumerat pentru acest plugin.";
+"marketplace.plugin.no.artifacts.hint" = "Tot conținutul pluginului va fi inclus.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefacte indisponibile: %@";
+"marketplace.picker.step.artifacts" = "Artefacte";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Aplică";
+"marketplace.picker.select.prompt" = "Selectați artefactele de inclus";
+"marketplace.picker.select.all" = "Toate";
+"marketplace.picker.select.none" = "Niciunul";
+"marketplace.picker.no.harnesses" = "Niciun harness deocamdată";
+"marketplace.picker.no.harnesses.hint" = "Creați mai întâi un harness cu asistentul Harness nou.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefacte";
+"marketplace.picker.review.all.count %lld" = "Toate (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld din %lld selectate";
+"marketplace.picker.command.preview" = "Previzualizare comandă";
+"marketplace.picker.success %@" = "Plugin adăugat la %@";
+"marketplace.picker.done" = "Gata";
+"marketplace.picker.back" = "Înapoi";
+"marketplace.picker.next" = "Înainte";
+"harness.wizard.title" = "Harness nou";
+"harness.wizard.name.label" = "Nume (obligatoriu)";
+"harness.wizard.description.label" = "Descriere";
+"harness.wizard.loading.vendors" = "Se încarcă furnizorii…";
+"harness.wizard.vendor.label" = "Furnizor implicit";
+"harness.wizard.destination.label" = "Director destinație";
+"harness.wizard.install.toggle" = "Instalează harness-ul imediat după creare";
+"harness.wizard.success.add.plugins" = "Adaugă pluginuri din piață";
+"harness.wizard.success.open" = "Deschide în TermQ";
+"harness.wizard.create" = "Creează";
+"harness.wizard.retry" = "Reîncearcă";
+"harness.wizard.error.name.required" = "Numele este obligatoriu";
+"harness.wizard.error.name.invalid" = "Numele poate conține doar litere, cifre, cratime și underscore-uri";
+"harness.wizard.error.name.duplicate %@" = "Există deja un harness cu numele «%@»";
+"settings.marketplaces.reset" = "Resetează";
+"settings.marketplaces.section.ynh.registries" = "Registre YNH";
+"settings.marketplaces.ynh.registries.empty" = "Niciun registru adăugat";
+"settings.marketplaces.ynh.add.registry" = "Adaugă registru…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Șterge registru";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Șterge";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Eliminare „%@” din YNH? Harness-urile instalate vor rămâne.";
+"marketplace.add.custom.name.placeholder" = "Piața mea";
+"harness.wizard.success.created %@" = "Harness «%@» creat";
