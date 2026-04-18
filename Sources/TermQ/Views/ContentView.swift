@@ -43,9 +43,25 @@ struct ContentView: View {
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
                     },
+                    onAutoLaunchHarness: { harnessName, path in
+                        let harness = harnessRepo.harnesses.first { $0.name == harnessName }
+                        let config = HarnessLaunchConfig(
+                            harnessName: harnessName,
+                            vendorID: "",
+                            defaultVendor: harness?.defaultVendor ?? "",
+                            focus: nil,
+                            workingDirectory: path,
+                            prompt: nil,
+                            backend: TerminalBackend(
+                                rawValue: UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct") ?? .direct
+                        )
+                        launchHarness(config)
+                    },
                     onInstall: { showInstallSheet = true },
                     onUninstall: { name in uninstallHarness(name: name) },
-                    onUpdate: { name in updateHarness(name: name) }
+                    onUpdate: { name in updateHarness(name: name) },
+                    onExport: { name, dir in exportHarness(name: name, outputDir: dir) },
+                    onNewHarness: {}
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
@@ -227,7 +243,8 @@ struct ContentView: View {
             )
             .sheet(isPresented: $showInstallSheet) {
                 HarnessInstallSheet(
-                    installedNames: Set(harnessRepo.harnesses.map(\.name))
+                    installedNames: Set(harnessRepo.harnesses.map(\.name)),
+                    harnesses: harnessRepo.harnesses
                 ) { config in
                     installHarness(config)
                 }
@@ -278,8 +295,20 @@ struct ContentView: View {
                             viewModel.deselectCard()
                         } label: {
                             Image(systemName: "rectangle.grid.2x2")
+                                .frame(width: 16)
                         }
                         .help(Strings.Toolbar.backHelp)
+                    } else {
+                        Button {
+                            if let first = viewModel.tabCards.first {
+                                viewModel.selectCard(first)
+                            }
+                        } label: {
+                            Image(systemName: "terminal")
+                                .frame(width: 16)
+                        }
+                        .help(Strings.Toolbar.openTerminalsHelp)
+                        .disabled(viewModel.tabCards.isEmpty)
                     }
                 }
 
@@ -300,45 +329,8 @@ struct ContentView: View {
                                     .clipShape(Capsule())
                             }
                         }
-                    } else if let selectedCard = viewModel.selectedCard {
-                        HStack(spacing: 8) {
-                            // MCP status indicator
-                            mcpStatusIndicator
-
-                            Text(selectedCard.title)
-                                .font(.headline)
-
-                            // TMUX system badge (if using tmux backend)
-                            if selectedCard.backend.usesTmux {
-                                Text(Strings.Card.tmux)
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(Color.purple.opacity(0.3))
-                                    .foregroundColor(.purple)
-                                    .clipShape(Capsule())
-                                    .help(Strings.Card.tmuxHelp)
-                            }
-
-                            // Display user badges
-                            ForEach(selectedCard.badges, id: \.self) { badge in
-                                Text(badge)
-                                    .font(.caption)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(Color.secondary.opacity(0.2))
-                                    .clipShape(Capsule())
-                            }
-                        }
-                        .padding(.horizontal, 8)
                     } else {
-                        // Board view - show MCP status in title area
-                        HStack(spacing: 8) {
-                            mcpStatusIndicator
-                            Text(Strings.appName)
-                                .font(.headline)
-                        }
+                        mcpStatusIndicator
                     }
                 }
 
@@ -497,7 +489,7 @@ struct ContentView: View {
                     Text(Strings.Delete.binMessage(""))
                 }
             }
-            .navigationTitle(viewModel.selectedCard == nil ? Strings.appName : "")
+            .navigationTitle(Strings.appName)
             .focusedSceneValue(\.terminalActions, terminalActions)
         }
         .onAppear {
@@ -749,7 +741,7 @@ extension ContentView {
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
-            initCommand: config.command(ynhPath: ynhPath) + "; exit",
+            initCommand: config.command(ynhPath: ynhPath) + " && exit",
             backend: .direct
         )
         card.isTransient = true
@@ -784,7 +776,7 @@ extension ContentView {
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
-            initCommand: "\(ynhPath) uninstall \(shellQuote(name)); exit",
+            initCommand: "\(ynhPath) uninstall \(shellQuote(name)) && exit",
             backend: .direct
         )
         card.isTransient = true
@@ -819,7 +811,7 @@ extension ContentView {
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
-            initCommand: "\(ynhPath) update \(shellQuote(name)); exit",
+            initCommand: "\(ynhPath) update \(shellQuote(name)) && exit",
             backend: .direct
         )
         card.isTransient = true
@@ -831,6 +823,29 @@ extension ContentView {
         } else {
             viewModel.tabManager.addTab(card.id)
         }
+        viewModel.objectWillChange.send()
+        viewModel.selectedCard = card
+    }
+
+    func exportHarness(name: String, outputDir: String) {
+        guard case .ready(_, let yndPath?, _) = ynhDetector.status,
+            let harness = harnessRepo.harnesses.first(where: { $0.name == name }),
+            let column = viewModel.selectedCard.flatMap({ c in
+                viewModel.board.columns.first { $0.id == c.columnId }
+            }) ?? viewModel.board.columns.first
+        else { return }
+        let card = TerminalCard(
+            title: "ynd export \(name)",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: harness.path,
+            initCommand: "\(yndPath) export \(shellQuote(harness.path)) -o \(shellQuote(outputDir)) && exit",
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        viewModel.tabManager.addTransientCard(card)
+        viewModel.tabManager.addTab(card.id)
         viewModel.objectWillChange.send()
         viewModel.selectedCard = card
     }
@@ -848,12 +863,15 @@ extension ContentView {
             return
         }
 
+        let cardID = UUID()
+        let sessionName = "termq-\(cardID.uuidString.prefix(8).lowercased())"
         let card = TerminalCard(
+            id: cardID,
             title: config.harnessName,
             tags: config.tags.map { Tag(key: $0.key, value: $0.value) },
             columnId: column.id,
             workingDirectory: config.workingDirectory,
-            initCommand: config.command,
+            initCommand: config.command(sessionName: sessionName),
             backend: config.backend
         )
         card.isTransient = true

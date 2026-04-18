@@ -7,9 +7,11 @@ import TermQShared
 struct WorktreeSidebarView: View {
     @ObservedObject var viewModel: WorktreeSidebarViewModel
     var onLaunchHarness: ((String, String) -> Void)?
+    var onAutoLaunchHarness: ((String, String) -> Void)?
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
+    @ObservedObject private var ynhDetector: YNHDetector = .shared
     @State private var showAddRepo = false
     @State private var showNewWorktreeFor: ObservableRepository?
     @State private var showEditRepoFor: ObservableRepository?
@@ -180,6 +182,15 @@ struct WorktreeSidebarView: View {
         } label: {
             repoLabel(repo)
                 .contextMenu {
+                    if let harnessName = ynhPersistence.repoDefaultHarness(for: repo.path) {
+                        Button {
+                            onLaunchHarness?(harnessName, repo.path)
+                        } label: {
+                            Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
+                        }
+                        Divider()
+                    }
+
                     Button {
                         showNewWorktreeFor = repo
                     } label: {
@@ -207,6 +218,11 @@ struct WorktreeSidebarView: View {
                     }
                     .disabled(isPruneAnalysing)
 
+                    if !harnessRepository.harnesses.isEmpty {
+                        Divider()
+                        repoDefaultHarnessContextItems(for: repo)
+                    }
+
                     Divider()
 
                     Button(role: .destructive) {
@@ -225,6 +241,18 @@ struct WorktreeSidebarView: View {
                 .lineLimit(1)
 
             Spacer()
+
+            if let harnessName = ynhPersistence.repoDefaultHarness(for: repo.path) {
+                Button {
+                    harnessRepository.selectedHarnessName = harnessName
+                } label: {
+                    Image(systemName: "puzzlepiece.extension")
+                        .imageScale(.small)
+                        .foregroundColor(.green)
+                }
+                .buttonStyle(.plain)
+                .help(Strings.Sidebar.linkedHarness(harnessName))
+            }
 
             Button {
                 Task { await viewModel.refreshWorktrees(for: repo) }
@@ -255,7 +283,7 @@ struct WorktreeSidebarView: View {
                     .padding(.leading, 4)
             } else {
                 ForEach(trees) { worktree in
-                    worktreeRow(worktree, repo: repo)
+                    worktreeRow(worktree, repo: repo, allWorktrees: trees)
                 }
             }
 
@@ -288,34 +316,29 @@ struct WorktreeSidebarView: View {
     }
 
     @ViewBuilder
-    private func worktreeRow(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
+    private func worktreeRow(
+        _ worktree: GitWorktree, repo: ObservableRepository, allWorktrees: [GitWorktree]
+    ) -> some View {
         HStack(spacing: 6) {
-            WorktreeLeftIcon(worktree: worktree, boardVM: boardVM)
+            WorktreeLeftIcon(worktree: worktree, allWorktrees: allWorktrees, boardVM: boardVM)
 
             VStack(alignment: .leading, spacing: 1) {
-                if worktree.branch != nil {
-                    Button {
-                        openRemoteBranch(worktree: worktree, repo: repo)
-                    } label: {
-                        HStack(spacing: 4) {
-                            Text(worktree.branch ?? Strings.Sidebar.detachedHead)
-                                .font(.subheadline)
-                                .lineLimit(1)
-                                .foregroundColor(.primary)
-                            if worktree.isDirty {
-                                Circle()
-                                    .fill(Color.orange)
-                                    .frame(width: 6, height: 6)
-                            }
+                Button {
+                    primaryAction(worktree: worktree, repo: repo)
+                } label: {
+                    HStack(spacing: 4) {
+                        Text(worktree.branch ?? Strings.Sidebar.detachedHead)
+                            .font(.subheadline)
+                            .lineLimit(1)
+                            .foregroundColor(.primary)
+                        if worktree.isDirty {
+                            Circle()
+                                .fill(Color.orange)
+                                .frame(width: 6, height: 6)
                         }
                     }
-                    .buttonStyle(.plain)
-                    .help(Strings.Sidebar.openRemoteBranch)
-                } else {
-                    Text(Strings.Sidebar.detachedHead)
-                        .font(.subheadline)
-                        .lineLimit(1)
                 }
+                .buttonStyle(.plain)
                 Button {
                     openRemoteCommit(worktree: worktree, repo: repo)
                 } label: {
@@ -330,7 +353,7 @@ struct WorktreeSidebarView: View {
 
             Spacer()
 
-            harnessRowBadge(for: worktree)
+            harnessRowBadge(for: worktree, repo: repo)
 
             Button {
                 // Resign sidebar first responder before creating the terminal so the
@@ -378,6 +401,19 @@ struct WorktreeSidebarView: View {
 
     @ViewBuilder
     private func worktreeContextMenu(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
+        let effectiveHarness =
+            ynhPersistence.harness(for: worktree.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
+
+        // Launch harness is the primary action when one is configured — show it first.
+        if let harnessName = effectiveHarness {
+            Button {
+                onLaunchHarness?(harnessName, worktree.path)
+            } label: {
+                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
+            }
+            Divider()
+        }
+
         // Group 1: Terminal actions
         Button {
             boardVM.newTerminal(at: worktree.path)
@@ -389,14 +425,6 @@ struct WorktreeSidebarView: View {
             boardVM.addTerminal(workingDirectory: worktree.path)
         } label: {
             Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
-        }
-
-        if let harnessName = ynhPersistence.harness(for: worktree.path) {
-            Button {
-                onLaunchHarness?(harnessName, worktree.path)
-            } label: {
-                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
-            }
         }
 
         Divider()
@@ -447,6 +475,11 @@ struct WorktreeSidebarView: View {
             } label: {
                 Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
             }
+
+            if !harnessRepository.harnesses.isEmpty {
+                Divider()
+                harnessContextItems(forPath: worktree.path)
+            }
         }
 
         // Group 5: Lock (linked worktrees only)
@@ -482,7 +515,7 @@ struct WorktreeSidebarView: View {
             // Group 5.5: Harness linkage (only when harnesses are available)
             if !harnessRepository.harnesses.isEmpty {
                 Divider()
-                harnessContextItems(for: worktree)
+                harnessContextItems(forPath: worktree.path)
             }
 
             Divider()
@@ -522,41 +555,6 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    // MARK: - Worktree Actions
-
-    private func openInTerminal(path: String) {
-        guard !path.contains("\n"), !path.contains("\r") else {
-            TermQLogger.ui.error("openInTerminal: path contains newline, aborting")
-            return
-        }
-        let escaped = path.replacingOccurrences(of: "'", with: "'\\''")
-        let script = """
-            tell application "Terminal"
-                activate
-                do script "cd '\(escaped)'"
-            end tell
-            """
-        // Task.detached: NSAppleScript.executeAndReturnError is synchronous and blocks the calling
-        // thread. Detaching keeps it off the main actor without holding a cooperative thread.
-        Task.detached {
-            if let appleScript = NSAppleScript(source: script) {
-                var error: NSDictionary?
-                appleScript.executeAndReturnError(&error)
-                if let error = error {
-                    let code = (error[NSAppleScript.errorNumber] as? NSNumber)?.intValue ?? -1
-                    if TermQLogger.fileLoggingEnabled {
-                        TermQLogger.ui.error("openInTerminal AppleScript error=\(error)")
-                    } else {
-                        TermQLogger.ui.error("openInTerminal AppleScript failed code=\(code)")
-                    }
-                }
-            }
-        }
-    }
-
-    private func revealInFinder(path: String) {
-        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
-    }
 }
 
 // MARK: - Remote Navigation
@@ -598,6 +596,52 @@ extension WorktreeSidebarView {
         if urlString.hasSuffix(".git") { urlString = String(urlString.dropLast(4)) }
         if urlString.hasSuffix("/") { urlString = String(urlString.dropLast()) }
         return URL(string: urlString)
+    }
+
+    fileprivate func primaryAction(worktree: GitWorktree, repo: ObservableRepository) {
+        let harnessName =
+            ynhPersistence.harness(for: worktree.path)
+            ?? ynhPersistence.repoDefaultHarness(for: repo.path)
+        if case .ready = ynhDetector.status, let name = harnessName {
+            onAutoLaunchHarness?(name, worktree.path)
+        } else {
+            NSApp.keyWindow?.makeFirstResponder(nil)
+            boardVM.newTerminal(at: worktree.path)
+        }
+    }
+
+    fileprivate func openInTerminal(path: String) {
+        guard !path.contains("\n"), !path.contains("\r") else {
+            TermQLogger.ui.error("openInTerminal: path contains newline, aborting")
+            return
+        }
+        let escaped = path.replacingOccurrences(of: "'", with: "'\\''")
+        let script = """
+            tell application "Terminal"
+                activate
+                do script "cd '\(escaped)'"
+            end tell
+            """
+        // Task.detached: NSAppleScript.executeAndReturnError is synchronous and blocks the calling
+        // thread. Detaching keeps it off the main actor without holding a cooperative thread.
+        Task.detached {
+            if let appleScript = NSAppleScript(source: script) {
+                var error: NSDictionary?
+                appleScript.executeAndReturnError(&error)
+                if let error = error {
+                    let code = (error[NSAppleScript.errorNumber] as? NSNumber)?.intValue ?? -1
+                    if TermQLogger.fileLoggingEnabled {
+                        TermQLogger.ui.error("openInTerminal AppleScript error=\(error)")
+                    } else {
+                        TermQLogger.ui.error("openInTerminal AppleScript failed code=\(code)")
+                    }
+                }
+            }
+        }
+    }
+
+    fileprivate func revealInFinder(path: String) {
+        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 }
 
@@ -716,14 +760,24 @@ private struct BranchSectionDisclosureView<Content: View>: View {
 /// - N open terminals → `N.circle.fill` (accent, tappable → popover listing terminals)
 private struct WorktreeLeftIcon: View {
     let worktree: GitWorktree
+    let allWorktrees: [GitWorktree]
     @ObservedObject var boardVM: BoardViewModel
     @State private var showPopover = false
 
     private var matchingCards: [TerminalCard] {
         (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
-            .filter {
-                $0.workingDirectory == worktree.path
-                    || $0.workingDirectory.hasPrefix(worktree.path + "/")
+            .filter { card in
+                guard !card.isDeleted else { return false }
+                let wd = card.workingDirectory
+                let matchesThis = wd == worktree.path || wd.hasPrefix(worktree.path + "/")
+                guard matchesThis else { return false }
+                // Don't count this card if a more-specific sibling worktree owns it
+                // (handles the common case where worktrees live inside the main repo dir)
+                return !allWorktrees.contains { other in
+                    other.id != worktree.id
+                        && other.path.count > worktree.path.count
+                        && (wd == other.path || wd.hasPrefix(other.path + "/"))
+                }
             }
     }
 
@@ -800,34 +854,48 @@ private struct WorktreeLeftIcon: View {
 // MARK: - Harness Helpers
 
 extension WorktreeSidebarView {
+    /// Jigsaw badge for worktree rows.
+    ///
+    /// Orange = explicit override on this worktree; dim = inherited from repo default.
+    /// The repo header separately shows a green badge when a default is configured.
     @ViewBuilder
-    fileprivate func harnessRowBadge(for worktree: GitWorktree) -> some View {
+    fileprivate func harnessRowBadge(for worktree: GitWorktree, repo: ObservableRepository) -> some View {
         if let harnessName = ynhPersistence.harness(for: worktree.path) {
             Button {
                 harnessRepository.selectedHarnessName = harnessName
             } label: {
                 Image(systemName: "puzzlepiece.extension")
                     .imageScale(.small)
-                    .foregroundColor(.purple)
+                    .foregroundColor(.orange)
             }
             .buttonStyle(.plain)
             .help(harnessName)
+        } else if let inherited = ynhPersistence.repoDefaultHarness(for: repo.path) {
+            Button {
+                harnessRepository.selectedHarnessName = inherited
+            } label: {
+                Image(systemName: "puzzlepiece.extension")
+                    .imageScale(.small)
+                    .foregroundColor(.secondary)
+            }
+            .buttonStyle(.plain)
+            .help(inherited)
         }
     }
 
     @ViewBuilder
-    fileprivate func harnessContextItems(for worktree: GitWorktree) -> some View {
-        let linked = ynhPersistence.harness(for: worktree.path)
+    fileprivate func harnessContextItems(forPath path: String) -> some View {
+        let linked = ynhPersistence.harness(for: path)
         Menu {
             if linked != nil {
                 Button(Strings.Sidebar.clearHarness) {
-                    ynhPersistence.setHarness(nil, for: worktree.path)
+                    ynhPersistence.setHarness(nil, for: path)
                 }
                 Divider()
             }
             ForEach(harnessRepository.harnesses) { harness in
                 Button(harness.name) {
-                    ynhPersistence.setHarness(harness.name, for: worktree.path)
+                    ynhPersistence.setHarness(harness.name, for: path)
                 }
             }
         } label: {
@@ -838,4 +906,31 @@ extension WorktreeSidebarView {
             }
         }
     }
+
+    /// Context items for setting the repository-level default harness.
+    /// Reads/writes `repoHarness` — independent from worktree overrides.
+    @ViewBuilder
+    fileprivate func repoDefaultHarnessContextItems(for repo: ObservableRepository) -> some View {
+        let linked = ynhPersistence.repoDefaultHarness(for: repo.path)
+        Menu {
+            if linked != nil {
+                Button(Strings.Sidebar.clearHarness) {
+                    ynhPersistence.setRepoDefaultHarness(nil, for: repo.path)
+                }
+                Divider()
+            }
+            ForEach(harnessRepository.harnesses) { harness in
+                Button(harness.name) {
+                    ynhPersistence.setRepoDefaultHarness(harness.name, for: repo.path)
+                }
+            }
+        } label: {
+            if let linked {
+                Label(Strings.Sidebar.linkedHarness(linked), systemImage: "puzzlepiece.extension")
+            } else {
+                Label(Strings.Sidebar.setHarness, systemImage: "puzzlepiece.extension")
+            }
+        }
+    }
+
 }

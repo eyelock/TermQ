@@ -92,6 +92,7 @@
 "toolbar.new.terminal" = "New Terminal";
 "toolbar.new.column" = "New Column";
 "toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.open.terminals.help" = "Open Terminals";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
@@ -415,6 +416,23 @@
 "settings.allow.osc.clipboard.help" = "Allow terminal programs to read and write the system clipboard using OSC 52 escape sequences";
 "settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
+"settings.default.safe.paste" = "Enable Safe Paste for New Terminals";
+"settings.default.safe.paste.help" = "New terminals will have Safe Paste enabled by default. You can override this per terminal in the card editor.";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "External Sources";
+"settings.marketplaces.section.list" = "Configured Marketplaces";
+"settings.marketplaces.empty" = "No marketplaces added yet.";
+"settings.marketplaces.add" = "Add Marketplace…";
+"settings.marketplaces.never.fetched" = "Never fetched";
+"settings.marketplaces.remove.confirm.title" = "Remove Marketplace";
+"settings.marketplaces.remove.confirm.message %@" = "Remove \"%@\"? Its plugins will no longer appear in the browser.";
+"settings.marketplaces.section.behaviour" = "Behaviour";
+"settings.marketplaces.auto.refresh" = "Auto-Refresh on Launch";
+"settings.marketplaces.auto.refresh.help" = "Automatically fetch marketplace updates when the app starts";
+"settings.marketplaces.section.authoring" = "Harness Authoring";
+"settings.marketplaces.default.author.directory" = "Default Author Directory";
+"settings.marketplaces.author.directory.detected.hint" = "Auto-detected from ynh";
 
 // MARK: - Command Palette
 "palette.placeholder" = "Search commands...";
@@ -621,6 +639,7 @@
 "harnesses.reveal.in.finder" = "Reveal in Finder";
 "harnesses.open.in.browser" = "Open in browser";
 "harnesses.close.detail" = "Close";
+"harnesses.configure.from.marketplaces" = "Configure from Marketplaces…";
 "harnesses.detail.artifacts.from.includes" = "This harness gets its artifacts from dependency includes.";
 "harnesses.detail.from" = "from";
 "harnesses.detail.hooks" = "Hooks";
@@ -654,6 +673,9 @@
 "harnesses.launch.backend" = "Backend";
 "harnesses.linked.worktrees" = "Linked Worktrees";
 "harnesses.linked.worktrees.none" = "No worktrees are linked to this harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Create a new harness";
 
 // Install sheet
 "harnesses.install.title" = "Install Harness";
@@ -689,6 +711,15 @@
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) are currently running this harness.";
 "harnesses.uninstall.alert.confirm" = "Uninstall";
 "harnesses.more.actions.help" = "More actions";
+"harnesses.copy.run.command" = "Copy Run Command";
+"harnesses.export.button" = "Export as Marketplace…";
+"harnesses.ynh.documentation" = "YNH Documentation";
+"harnesses.add.registry.title" = "Add YNH Registry";
+"harnesses.add.registry.url.label" = "Registry URL";
+"harnesses.add.registry.hint" = "Add a Git repository that contains a registry.json file. Once added, you can search and install harnesses from it.";
+"harnesses.add.registry.button" = "Add Registry";
+"harnesses.add.registry.success" = "Registry added successfully";
+"harnesses.add.registry.toolbar.help" = "Add a YNH registry";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
@@ -709,3 +740,84 @@
 "settings.ynh.ready.info" = "Toolchain detected and initialised. Enable the sidebar tab to browse harnesses.";
 "settings.ynh.advanced" = "Advanced";
 "settings.ynh.version.label" = "Version:";
+"settings.ynh.docs.link.label" = "YNH Documentation →";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marketplaces";
+"marketplace.add.help" = "Add marketplace";
+"marketplace.empty" = "No marketplaces yet";
+"marketplace.add.button" = "Add Marketplace";
+"marketplace.row.refresh.help" = "Refresh marketplace";
+"marketplace.row.refresh" = "Refresh";
+"marketplace.row.remove" = "Remove";
+"marketplace.row.stale" = " · May be outdated";
+"marketplace.row.never.fetched" = "Not yet fetched";
+"marketplace.refresh.all.help" = "Refresh all marketplaces";
+"marketplace.restore.defaults" = "Restore Defaults";
+"marketplace.restore.defaults.help" = "Re-add default marketplaces";
+"marketplace.add.sheet.title" = "Add Marketplace";
+"marketplace.add.tab.known" = "Known";
+"marketplace.add.tab.custom" = "Custom URL";
+"marketplace.add.section.git.url" = "Git Repository URL";
+"marketplace.add.section.display.name" = "Display Name";
+"marketplace.add.section.vendor" = "Vendor";
+"marketplace.detail.last.fetched %@" = "Last fetched %@";
+"marketplace.detail.search.placeholder" = "Search plugins…";
+"marketplace.detail.search.empty %@" = "No plugins match \"%@\"";
+"marketplace.detail.empty" = "No plugins in this marketplace";
+"marketplace.detail.empty.hint" = "Refresh to fetch the latest index.";
+"marketplace.plugin.add.to.harness" = "Add to Harness";
+"marketplace.plugin.copy.install.command" = "Copy Install Command";
+"marketplace.plugin.copy.install.command.help" = "Copies the Claude Code install command to clipboard";
+"marketplace.plugin.load.artifacts" = "Load artifacts";
+"marketplace.plugin.loading.artifacts" = "Loading artifacts…";
+"marketplace.plugin.no.artifacts" = "No artifacts enumerated for this plugin.";
+"marketplace.plugin.no.artifacts.hint" = "All plugin contents will be included.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artifacts unavailable: %@";
+
+// MARK: - Harness Include Picker
+"marketplace.picker.step.artifacts" = "Artifacts";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Apply";
+"marketplace.picker.select.prompt" = "Select artifacts to include";
+"marketplace.picker.select.all" = "All";
+"marketplace.picker.select.none" = "None";
+"marketplace.picker.no.harnesses" = "No harnesses yet";
+"marketplace.picker.no.harnesses.hint" = "Create a harness first using the New Harness wizard.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artifacts";
+"marketplace.picker.review.all.count %lld" = "All (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld of %lld selected";
+"marketplace.picker.command.preview" = "Command preview";
+"marketplace.picker.success %@" = "Plugin added to %@";
+"marketplace.picker.done" = "Done";
+"marketplace.picker.back" = "Back";
+"marketplace.picker.next" = "Next";
+
+// MARK: - Harness Wizard
+"harness.wizard.title" = "New Harness";
+"harness.wizard.name.label" = "Name (required)";
+"harness.wizard.description.label" = "Description";
+"harness.wizard.loading.vendors" = "Loading vendors…";
+"harness.wizard.vendor.label" = "Default Vendor";
+"harness.wizard.destination.label" = "Destination Directory";
+"harness.wizard.install.toggle" = "Install harness immediately after creation";
+"harness.wizard.success.add.plugins" = "Add plugins from marketplace";
+"harness.wizard.success.open" = "Open in TermQ";
+"harness.wizard.create" = "Create";
+"harness.wizard.retry" = "Retry";
+"harness.wizard.error.name.required" = "Name is required";
+"harness.wizard.error.name.invalid" = "Name may only contain letters, numbers, hyphens, and underscores";
+"harness.wizard.error.name.duplicate %@" = "A harness named \"%@\" already exists";
+
+// MARK: - Settings — Marketplaces extras
+"settings.marketplaces.reset" = "Reset";
+"settings.marketplaces.section.ynh.registries" = "YNH Registries";
+"settings.marketplaces.ynh.registries.empty" = "No registries added";
+"settings.marketplaces.ynh.add.registry" = "Add Registry…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Remove Registry";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Remove";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Remove \"%@\" from YNH? Installed harnesses will remain.";
+"marketplace.add.custom.name.placeholder" = "My Marketplace";
+"harness.wizard.success.created %@" = "Harness \"%@\" created";
