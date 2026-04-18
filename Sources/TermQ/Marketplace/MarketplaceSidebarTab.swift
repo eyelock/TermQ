@@ -9,7 +9,8 @@ struct MarketplaceSelection: Identifiable {
 
 /// Top-level content for the Marketplaces sidebar tab.
 ///
-/// Shows the list of configured marketplaces and a toolbar to add/refresh.
+/// Shows marketplaces grouped into collapsible disclosure sections:
+/// Default (known marketplaces) and dynamic GitHub org groups.
 /// Selecting a marketplace opens `MarketplaceDetailView` as a sheet.
 struct MarketplaceSidebarTab: View {
     @ObservedObject var detector: YNHDetector
@@ -19,6 +20,7 @@ struct MarketplaceSidebarTab: View {
     @State private var selectedMarketplace: MarketplaceSelection?
     @State private var showAddSheet = false
     @State private var showWizard = false
+    @State private var collapsedGroups: Set<String> = []
 
     var body: some View {
         VStack(spacing: 0) {
@@ -131,25 +133,79 @@ struct MarketplaceSidebarTab: View {
 
     private var marketplaceList: some View {
         List {
-            ForEach(store.marketplaces) { marketplace in
-                MarketplaceRowView(
-                    marketplace: marketplace,
-                    onRefresh: {
-                        Task { await refresh(marketplace) }
+            ForEach(groupedMarketplaces, id: \.title) { group in
+                DisclosureGroup(
+                    isExpanded: expandedBinding(for: group.title)
+                ) {
+                    ForEach(group.marketplaces) { marketplace in
+                        marketplaceRow(marketplace)
                     }
-                )
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    selectedMarketplace = MarketplaceSelection(id: marketplace.id, marketplace: marketplace)
-                }
-                .contextMenu {
-                    Button(Strings.Marketplace.rowRefresh) { Task { await refresh(marketplace) } }
-                    Divider()
-                    Button(Strings.Marketplace.rowRemove, role: .destructive) { store.remove(id: marketplace.id) }
+                } label: {
+                    Label(group.title, systemImage: "storefront")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                        .textCase(.uppercase)
                 }
             }
         }
         .listStyle(.sidebar)
+    }
+
+    private func marketplaceRow(_ marketplace: Marketplace) -> some View {
+        MarketplaceRowView(
+            marketplace: marketplace,
+            onRefresh: { Task { await refresh(marketplace) } }
+        )
+        .contentShape(Rectangle())
+        .onTapGesture {
+            selectedMarketplace = MarketplaceSelection(id: marketplace.id, marketplace: marketplace)
+        }
+        .contextMenu {
+            Button(Strings.Marketplace.rowRefresh) { Task { await refresh(marketplace) } }
+            Divider()
+            Button(Strings.Marketplace.rowRemove, role: .destructive) { store.remove(id: marketplace.id) }
+        }
+    }
+
+    // MARK: - Grouping
+
+    private struct MarketplaceGroup {
+        let title: String
+        let marketplaces: [Marketplace]
+    }
+
+    private var groupedMarketplaces: [MarketplaceGroup] {
+        let knownURLs = Set(KnownMarketplaces.all.map { $0.url })
+        let defaults = store.marketplaces.filter { knownURLs.contains($0.url) }
+        let remaining = store.marketplaces.filter { !knownURLs.contains($0.url) }
+
+        var groups: [MarketplaceGroup] = []
+
+        if !defaults.isEmpty {
+            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupDefault, marketplaces: defaults))
+        }
+
+        var byOrg: [String: [Marketplace]] = [:]
+        for marketplace in remaining {
+            let org = GitURLHelper.repoOwner(marketplace.url) ?? "Other"
+            byOrg[org, default: []].append(marketplace)
+        }
+
+        for (org, marketplaces) in byOrg.sorted(by: { $0.key < $1.key }) {
+            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupGitHub(org), marketplaces: marketplaces))
+        }
+
+        return groups
+    }
+
+    private func expandedBinding(for title: String) -> Binding<Bool> {
+        Binding(
+            get: { !collapsedGroups.contains(title) },
+            set: { expanded in
+                if expanded { collapsedGroups.remove(title) } else { collapsedGroups.insert(title) }
+            }
+        )
     }
 
     // MARK: - Fetch
@@ -179,11 +235,15 @@ struct MarketplaceRowView: View {
         return last < cutoff
     }
 
+    private var displayName: String {
+        GitURLHelper.shortURL(marketplace.url)
+    }
+
     var body: some View {
         HStack(spacing: 8) {
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 4) {
-                    Text(marketplace.name)
+                    Text(displayName)
                         .font(.subheadline)
                         .lineLimit(1)
                     vendorBadge
