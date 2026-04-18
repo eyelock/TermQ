@@ -2,14 +2,32 @@ import Foundation
 
 /// Persisted YNH configuration stored in `ynh.json` (app-local).
 public struct LocalYNHConfig: Codable, Sendable {
-    /// Maps worktree path to linked harness name.
+    /// Maps worktree path to an explicit harness override for that specific worktree.
     public var worktreeHarness: [String: String]
+    /// Maps repository root path to a repo-level default harness.
+    ///
+    /// Separate from `worktreeHarness` so repo defaults and worktree overrides
+    /// are independent even when the main worktree path equals the repo path.
+    public var repoHarness: [String: String]
     /// Global preferred vendor ID for harness launches.
     public var preferredVendor: String?
 
-    public init(worktreeHarness: [String: String] = [:], preferredVendor: String? = nil) {
+    public init(
+        worktreeHarness: [String: String] = [:],
+        repoHarness: [String: String] = [:],
+        preferredVendor: String? = nil
+    ) {
         self.worktreeHarness = worktreeHarness
+        self.repoHarness = repoHarness
         self.preferredVendor = preferredVendor
+    }
+
+    // Custom decoder for backward compat: `repoHarness` may be absent in older ynh.json files.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        worktreeHarness = (try? c.decode([String: String].self, forKey: .worktreeHarness)) ?? [:]
+        repoHarness = (try? c.decode([String: String].self, forKey: .repoHarness)) ?? [:]
+        preferredVendor = try? c.decode(String.self, forKey: .preferredVendor)
     }
 }
 

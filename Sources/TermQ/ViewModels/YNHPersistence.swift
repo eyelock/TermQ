@@ -35,8 +35,14 @@ final class YNHPersistence: ObservableObject {
 
     // MARK: - Queries
 
+    /// Explicit harness override for a specific worktree path.
     func harness(for worktreePath: String) -> String? {
         config.worktreeHarness[worktreePath]
+    }
+
+    /// Repository-level default harness. Independent from worktree overrides.
+    func repoDefaultHarness(for repoPath: String) -> String? {
+        config.repoHarness[repoPath]
     }
 
     func worktrees(for harnessName: String) -> [String] {
@@ -47,12 +53,34 @@ final class YNHPersistence: ObservableObject {
 
     // MARK: - Mutations
 
+    func setRepoDefaultHarness(_ harnessName: String?, for repoPath: String) {
+        if let name = harnessName {
+            config.repoHarness[repoPath] = name
+        } else {
+            config.repoHarness.removeValue(forKey: repoPath)
+        }
+        do {
+            try YNHConfigLoader.save(config, dataDirectory: saveURL.deletingLastPathComponent())
+        } catch {
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.session.warning("YNHPersistence: save failed: \(error.localizedDescription)")
+            } else {
+                TermQLogger.session.warning("YNHPersistence: save failed")
+            }
+        }
+    }
+
     /// Remove all worktree associations for a harness (called after uninstall).
     func removeAllAssociations(for harnessName: String) {
         let paths = config.worktreeHarness
             .compactMap { $0.value == harnessName ? $0.key : nil }
         for path in paths {
             config.worktreeHarness.removeValue(forKey: path)
+        }
+        let repoPaths = config.repoHarness
+            .compactMap { $0.value == harnessName ? $0.key : nil }
+        for path in repoPaths {
+            config.repoHarness.removeValue(forKey: path)
         }
         do {
             try YNHConfigLoader.save(config, dataDirectory: saveURL.deletingLastPathComponent())
