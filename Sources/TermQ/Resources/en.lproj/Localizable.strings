@@ -434,6 +434,21 @@
 "settings.marketplaces.default.author.directory" = "Default Author Directory";
 "settings.marketplaces.author.directory.detected.hint" = "Auto-detected from ynh";
 
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "External Sources";
+"settings.marketplaces.section.list" = "Configured Marketplaces";
+"settings.marketplaces.empty" = "No marketplaces added yet.";
+"settings.marketplaces.add" = "Add Marketplace…";
+"settings.marketplaces.never.fetched" = "Never fetched";
+"settings.marketplaces.remove.confirm.title" = "Remove Marketplace";
+"settings.marketplaces.remove.confirm.message %@" = "Remove \"%@\"? Its plugins will no longer appear in the browser.";
+"settings.marketplaces.section.behaviour" = "Behaviour";
+"settings.marketplaces.auto.refresh" = "Auto-Refresh on Launch";
+"settings.marketplaces.auto.refresh.help" = "Automatically fetch marketplace updates when the app starts";
+"settings.marketplaces.section.authoring" = "Harness Authoring";
+"settings.marketplaces.default.author.directory" = "Default Author Directory";
+"settings.marketplaces.author.directory.detected.hint" = "Auto-detected from ynh";
+
 // MARK: - Command Palette
 "palette.placeholder" = "Search commands...";
 "palette.no.results" = "No results found";

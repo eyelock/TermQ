@@ -59,6 +59,15 @@ struct HarnessDetailView: View {
                 Divider()
                 artifactSection
 
+                Button {
+                    marketplaceStore.preselectedHarnessTarget = harness.name
+                    sidebarTab = "marketplaces"  // matches SidebarView.SidebarTab.marketplaces.rawValue
+                } label: {
+                    Label(Strings.Harnesses.configureFromMarketplaces, systemImage: "storefront")
+                        .frame(maxWidth: .infinity)
+                }
+                .controlSize(.regular)
+
                 if let detail {
                     HarnessDetailCompositionView(
                         composition: detail.composition
