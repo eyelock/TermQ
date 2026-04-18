@@ -67,20 +67,35 @@ Each worktree appears as a row with two icon slots on the left, branch name and 
 - `○` (empty circle) — no open terminals at this path
 - `①` `②` … — one or more open terminals; the number matches the count. Tap to see a popover list.
 
+**Harness badge (jigsaw icon, far right):**
+When YNH is installed, a jigsaw icon can appear on worktree rows and the repo header to indicate which harness applies:
+- `🟢` (green, on repo header) — a repository-level default harness is set for this repo
+- `🟠` (orange, on worktree row) — this specific worktree has its own harness override
+- `○` (dim, on worktree row) — no own harness, but inheriting the repo default
+- *(absent)* — no harness applies at any level
+
+Tapping the jigsaw badge navigates to that harness in the Harnesses sidebar.
+
 **Dirty indicator:**
 An orange dot next to the branch name means the worktree has uncommitted changes — either staged or unstaged. TermQ checks this on every branch switch and every 15 seconds for expanded repos.
 
 ---
 
-## 12.4 — Open a terminal at a worktree
+## 12.4 — Open a terminal or launch a harness
 
-Click the **terminal** button (`⌞`) on the right of any worktree row to open a new terminal at that path.
+**Clicking the branch name** is the primary action:
+- If a harness is linked to this worktree (or inherited from the repo default) and YNH is running, clicking launches the harness directly — no sheet, no prompts. A transient terminal card opens running `ynh run <harness>` at the worktree path.
+- If no harness applies, clicking opens a plain new terminal at that path.
 
-If you already have terminals open there, the number badge on the left icon shows the count. Click it to see the list and jump directly to one.
+The **terminal button** (`⌞`) on the right of the row always opens a plain terminal, bypassing harness lookup — useful when you want a shell without the harness environment.
+
+If you already have terminals open at a worktree, the number badge on the left icon shows the count. Click it to see the list and jump directly to one.
 
 ![Terminal Badge Popover](../Images/worktree-terminal-badge-popover.png)
 
 When you jump to a terminal from the popover, the tab bar scrolls to bring that tab into view — useful when you have many terminals open across several worktrees.
+
+**Context menu ordering:** Right-clicking a row when a harness is linked puts **Launch `<harness>`** at the top of the menu — the most contextual action is always first.
 
 ---
 
@@ -97,6 +112,30 @@ Fill in the fields:
 - **Path** — auto-filled from the branch name and worktree base path. Override if needed.
 
 Click **Create**. Git runs `git worktree add -b <branch> <path> <base>` and the new row appears in the sidebar immediately.
+
+---
+
+## 12.5b — Harness integration from the sidebar
+
+If you have YNH installed, you can link harnesses directly from the worktree sidebar — no need to leave the Repositories tab.
+
+### Setting a repository default harness
+
+Right-click the **repository header row** (the row showing the repo name, e.g. "my-app"). If harnesses are installed, a **Set Harness…** submenu appears. Choose one to set it as the repository default — every worktree that doesn't have its own override will inherit it.
+
+Once set, a green jigsaw icon appears on the repo header. Clear it via the same submenu → **Clear Harness**.
+
+### Setting a per-worktree override
+
+Right-click any worktree row — including the **main worktree** row — and choose **Set Harness…** to pick a harness for that specific worktree. An orange jigsaw badge appears on the row to signal the override.
+
+Worktrees that inherit from the repo default (no own override) show a dimmed jigsaw badge instead.
+
+### What takes precedence
+
+1. Worktree-level override — always wins
+2. Repository default — used when no override is set
+3. Nothing — no harness, plain terminal
 
 ---
 
@@ -202,6 +241,9 @@ TermQ constructs the URL from the repo's `origin` remote, converting SSH remotes
 
 - The **worktree sidebar** lists all git worktrees for registered repositories, with branch, commit, and dirty state
 - The **dual icon** on each row shows the worktree's status (main/locked/regular) and how many TermQ terminals are open there
+- **Clicking the branch name** launches the linked harness (if any) or opens a plain terminal — the harness action is always first in the context menu too
+- **Jigsaw badges** show harness state: green on the repo header (default set), orange on a worktree (override), dim (inherited from repo default)
+- **Set Harness** is available on the repo header row (sets a default for all worktrees) and on individual worktree rows (including the main worktree)
 - **Add Repository** registers a repo with a configurable worktree base path; the `.gitignore` checkbox prevents clutter in `git status`
 - **Lock** protects a worktree from accidental removal; **Unlock** reverses it
 - **Remove Worktree** is the safe default — it fails if the worktree is locked or dirty
