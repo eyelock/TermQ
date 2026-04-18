@@ -124,7 +124,8 @@ Same format as commit message: `feat(scope): Brief description`
 
 ## Merge Rules
 
-**NEVER use `gh pr merge --admin`** — this bypasses CI and is strictly forbidden.
+**NEVER use `gh pr merge --admin`** — bypasses CI, strictly forbidden.
+**NEVER use `gh pr merge --auto`** — sets auto-merge on GitHub; only the user may do this.
 
 Only merge when:
 - All CI checks pass
@@ -139,15 +140,28 @@ gh pr merge --squash
 
 ## Post-Merge Cleanup
 
+**Order matters** — follow exactly to avoid CWD becoming invalid.
+
 ```bash
-# Verify merged into develop (for feature branches)
-git branch -r --merged origin/develop | grep <branch-name>
+# 1. Capture the main repo path and branch name BEFORE moving anywhere
+MAIN_REPO=$(git rev-parse --show-toplevel 2>/dev/null || echo "<main-repo-path>")
+BRANCH=<branch-name>
 
-# For release promotion PRs, verify merged into main:
-git branch -r --merged origin/main | grep <branch-name>
+# 2. Verify merged into develop (feature branches) or main (release PRs)
+git -C "$MAIN_REPO" branch -r --merged origin/develop | grep "$BRANCH"
 
-# Clean up (from main repo, not worktree)
-git worktree remove ../TermQ-worktrees/<branch-name>
-git branch -d <branch-name>
-git push origin --delete <branch-name>
+# 3. Pivot CWD to main repo FIRST (before removing worktree — once removed, CWD is invalid)
+cd "$MAIN_REPO"
+
+# 4. Remove worktree (path relative to main repo)
+git worktree remove ../TermQ-worktrees/"$BRANCH"
+
+# 5. Delete local branch
+git branch -d "$BRANCH"
+
+# 6. Delete remote branch only if it still exists (GitHub auto-deletes on merge)
+git ls-remote --exit-code origin "$BRANCH" 2>/dev/null && git push origin --delete "$BRANCH" || echo "Remote branch already deleted"
 ```
+
+**Never** run cleanup from inside the worktree — `git worktree remove` and `git branch -d` must
+run from the main repo. **Never** assume the remote branch still exists after merge.

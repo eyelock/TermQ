@@ -44,6 +44,7 @@ Push committed work, open a PR targeting the correct base branch, monitor CI, an
    gh pr merge --squash
    ```
 
-10. After merge: delete the remote branch, local branch, and worktree if applicable.
-    Consult commit-conventions skill for cleanup steps — feature branches verify against
-    `origin/develop`; `develop` and `hotfix/*` verify against `origin/main`.
+10. After merge: clean up the branch and worktree.
+    Follow the post-merge cleanup steps in the commit-conventions skill exactly — order matters
+    to avoid CWD becoming invalid. Feature branches verify against `origin/develop`;
+    `develop` and `hotfix/*` verify against `origin/main`.
