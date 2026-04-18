@@ -12,6 +12,7 @@ struct SettingsGeneralView: View {
     @Binding var copyOnSelect: Bool
     @Binding var defaultWorkingDirectory: String
     @Binding var defaultBackend: TerminalBackend
+    @Binding var scrollbackLines: Int
 
     // Bin preferences
     @Binding var binRetentionDays: Int
@@ -59,6 +60,9 @@ struct SettingsGeneralView: View {
                 }
             }
             .help(Strings.Settings.fieldDefaultBackendHelp)
+
+            ScrollbackField(lines: $scrollbackLines)
+                .help(Strings.Settings.scrollbackLinesHelp)
         } header: {
             Text(Strings.Settings.sectionTerminal)
         }
@@ -192,6 +196,55 @@ struct SettingsGeneralView: View {
             return Strings.Editor.backendTmuxAttach
         case .tmuxControl:
             return Strings.Editor.backendTmuxControl
+        }
+    }
+}
+
+private struct ScrollbackField: View {
+    @Binding var lines: Int
+    @State private var text: String = ""
+
+    private let range = 500...100_000
+
+    private var parsedValue: Int? {
+        Int(text.trimmingCharacters(in: .whitespaces))
+    }
+    private var isInvalid: Bool {
+        guard let v = parsedValue else { return !text.trimmingCharacters(in: .whitespaces).isEmpty }
+        return !range.contains(v)
+    }
+
+    var body: some View {
+        VStack(alignment: .trailing, spacing: 4) {
+            HStack {
+                Text(Strings.Settings.scrollbackLabel)
+                Spacer()
+                TextField("", text: $text)
+                    .frame(width: 80)
+                    .multilineTextAlignment(.trailing)
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit { commit() }
+                    .onChange(of: text) { _, _ in
+                        if let v = parsedValue, range.contains(v) { lines = v }
+                    }
+                Text(Strings.Settings.scrollbackUnit)
+                    .foregroundColor(.secondary)
+            }
+            if isInvalid {
+                Text(Strings.Settings.scrollbackInvalid)
+                    .font(.caption)
+                    .foregroundColor(.red)
+            }
+        }
+        .onAppear { text = "\(lines)" }
+        .onDisappear { commit() }
+    }
+
+    private func commit() {
+        if let v = parsedValue, range.contains(v) {
+            lines = v
+        } else {
+            text = "\(lines)"
         }
     }
 }

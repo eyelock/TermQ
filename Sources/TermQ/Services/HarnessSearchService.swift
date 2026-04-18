@@ -10,17 +10,13 @@ final class HarnessSearchService: ObservableObject {
 
     private var searchTask: Task<Void, Never>?
 
+    /// Search registries and sources. An empty query browses all available harnesses.
     func search(_ query: String) {
         searchTask?.cancel()
         let trimmed = query.trimmingCharacters(in: .whitespaces)
-        guard !trimmed.isEmpty else {
-            results = []
-            error = nil
-            isSearching = false
-            return
-        }
+        let debounce: UInt64 = trimmed.isEmpty ? 0 : 350
         searchTask = Task {
-            try? await Task.sleep(for: .milliseconds(350))
+            if debounce > 0 { try? await Task.sleep(for: .milliseconds(debounce)) }
             guard !Task.isCancelled else { return }
             guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else {
                 results = []
@@ -33,10 +29,13 @@ final class HarnessSearchService: ObservableObject {
             if let override = YNHDetector.shared.ynhHomeOverride {
                 env["YNH_HOME"] = override
             }
+            let args: [String] = trimmed.isEmpty
+                ? ["search", "--format", "json"]
+                : ["search", trimmed, "--format", "json"]
             do {
                 let output = try await YNHDetector.runCommand(
                     ynhPath,
-                    args: ["search", trimmed, "--format", "json"],
+                    args: args,
                     environment: env
                 )
                 guard !Task.isCancelled else { return }

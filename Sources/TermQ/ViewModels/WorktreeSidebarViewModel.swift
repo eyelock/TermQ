@@ -345,6 +345,17 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
+    func mergedLocalBranches(repo: ObservableRepository) async throws -> [String] {
+        try await GitService.shared.mergedLocalBranches(repoPath: repo.path)
+    }
+
+    func deleteBranches(repo: ObservableRepository, branches: [String]) async throws {
+        for branch in branches {
+            try await GitService.shared.deleteLocalBranch(repoPath: repo.path, branch: branch)
+        }
+        await refreshAvailableBranches(for: repo)
+    }
+
     /// Infer a worktree directory path based on the repo's base path convention.
     ///
     /// Slashes in `branchName` are preserved so `fix/my-issue` creates

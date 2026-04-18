@@ -10,6 +10,7 @@ import TermQShared
 /// The `.missing` state is handled by the parent `SidebarView` which hides
 /// the tab entirely, so this view never receives it.
 struct HarnessesSidebarTab: View {
+    @Environment(\.openSettings) private var openSettings
     @ObservedObject var detector: YNHDetector
     @ObservedObject var repository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
@@ -20,9 +21,12 @@ struct HarnessesSidebarTab: View {
     var onNewHarness: (() -> Void)?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @State private var harnessToUninstall: Harness?
+    @State private var harnessToDuplicate: Harness?
     @State private var showWizard = false
     @State private var showAddRegistry = false
     @State private var collapsedGroups: Set<String> = []
+    @StateObject private var sampleRunner = RegistryAddRunner()
+    @StateObject private var registryService = YNHRegistryService()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -52,16 +56,27 @@ struct HarnessesSidebarTab: View {
         .sheet(isPresented: $showAddRegistry) {
             AddRegistrySheet(detector: detector)
         }
+        .sheet(item: $harnessToDuplicate) { harness in
+            DuplicateHarnessSheet(harness: harness, detector: detector, repository: repository)
+        }
         .onAppear {
-            if case .ready = detector.status, repository.harnesses.isEmpty {
-                Task { await repository.refresh() }
-            }
+            if repository.harnesses.isEmpty { Task { await repository.refresh() } }
+            refreshRegistryService()
         }
-        .onChange(of: detector.status) { _, newStatus in
-            if case .ready = newStatus {
-                Task { await repository.refresh() }
-            }
+        .onChange(of: detector.status) { _, _ in
+            Task { await repository.refresh() }
+            refreshRegistryService()
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { _ in
+            refreshRegistryService()
+        }
+    }
+
+    private func refreshRegistryService() {
+        guard case .ready(let p, _, _) = detector.status else { return }
+        var env = ProcessInfo.processInfo.environment
+        if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
+        Task { await registryService.refresh(ynhPath: p, environment: env) }
     }
 
     // MARK: - Header
@@ -130,10 +145,7 @@ struct HarnessesSidebarTab: View {
     @ViewBuilder
     private var harnessList: some View {
         if repository.harnesses.isEmpty && !repository.isLoading {
-            emptyState(
-                icon: "puzzlepiece.extension",
-                message: Strings.Harnesses.emptyMessage
-            )
+            harnessesEmptyState
         } else {
             List(selection: $repository.selectedHarnessName) {
                 ForEach(groupedHarnesses, id: \.title) { group in
@@ -149,6 +161,7 @@ struct HarnessesSidebarTab: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
                             .textCase(.uppercase)
+                            .contextMenu { groupContextMenu(for: group) }
                     }
                 }
             }
@@ -198,6 +211,24 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
                 }
+                Button {
+                    NSWorkspace.shared.activateFileViewerSelecting(
+                        [URL(fileURLWithPath: harness.path)]
+                    )
+                } label: {
+                    Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
+                }
+                if let source = harness.installedFrom?.source,
+                   let url = GitURLHelper.browserURL(
+                       for: source,
+                       path: harness.installedFrom?.path
+                   ) {
+                    Button {
+                        NSWorkspace.shared.open(url)
+                    } label: {
+                        Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
+                    }
+                }
                 Divider()
                 Button {
                     onUpdate?(harness.name)
@@ -205,11 +236,17 @@ struct HarnessesSidebarTab: View {
                     Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
                 }
                 Button {
+                    harnessToDuplicate = harness
+                } label: {
+                    Label(Strings.HarnessDuplicate.duplicateButton, systemImage: "doc.on.doc")
+                }
+                Button {
                     Task { @MainActor in
                         let panel = NSOpenPanel()
                         panel.canChooseDirectories = true
                         panel.canChooseFiles = false
                         panel.allowsMultipleSelection = false
+                        panel.canCreateDirectories = true
                         panel.prompt = Strings.Harnesses.exportButton
                         let response = await panel.begin()
                         if response == .OK, let url = panel.url {
@@ -219,6 +256,7 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Harnesses.exportButton, systemImage: "square.and.arrow.up")
                 }
+                Divider()
                 Button(role: .destructive) {
                     harnessToUninstall = harness
                 } label: {
@@ -229,9 +267,14 @@ struct HarnessesSidebarTab: View {
 
     // MARK: - Grouping
 
+    private enum GroupKind {
+        case `default`, github, registry, local
+    }
+
     private struct HarnessGroup {
         let title: String
         let harnesses: [Harness]
+        let kind: GroupKind
     }
 
     private var groupedHarnesses: [HarnessGroup] {
@@ -241,7 +284,7 @@ struct HarnessesSidebarTab: View {
         var groups: [HarnessGroup] = []
 
         if !defaults.isEmpty {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupDefault, harnesses: defaults))
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupDefault, harnesses: defaults, kind: .default))
         }
 
         var byOrg: [String: [Harness]] = [:]
@@ -262,13 +305,13 @@ struct HarnessesSidebarTab: View {
         }
 
         for (org, harnesses) in byOrg.sorted(by: { $0.key < $1.key }) {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupGitHub(org), harnesses: harnesses))
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupGitHub(org), harnesses: harnesses, kind: .github))
         }
         for (name, harnesses) in byRegistry.sorted(by: { $0.key < $1.key }) {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupRegistry(name), harnesses: harnesses))
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupRegistry(name), harnesses: harnesses, kind: .registry))
         }
         if !local.isEmpty {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: local))
+            groups.append(HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: local, kind: .local))
         }
 
         return groups
@@ -303,6 +346,130 @@ struct HarnessesSidebarTab: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
+    }
+
+    private var hasRegistries: Bool {
+        !registryService.registries.isEmpty
+    }
+
+    @ViewBuilder
+    private func groupContextMenu(for group: HarnessGroup) -> some View {
+        switch group.kind {
+        case .registry, .github:
+            Button {
+                SettingsCoordinator.shared.requestedTab = .marketplaces
+                openSettings()
+            } label: {
+                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
+            }
+            if let source = group.harnesses.first?.installedFrom?.source,
+               let url = GitURLHelper.browserURL(for: source) {
+                Button {
+                    NSWorkspace.shared.open(url)
+                } label: {
+                    Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
+                }
+            }
+
+        case .default:
+            Button {
+                SettingsCoordinator.shared.requestedTab = .marketplaces
+                openSettings()
+            } label: {
+                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
+            }
+
+        case .local:
+            Button {
+                SettingsCoordinator.shared.requestedTab = .marketplaces
+                openSettings()
+            } label: {
+                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
+            }
+            Button {
+                revealLocalGroupInFinder(group)
+            } label: {
+                Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
+            }
+        }
+    }
+
+    private func revealLocalGroupInFinder(_ group: HarnessGroup) {
+        let path = group.harnesses.first?.installedFrom?.source
+            ?? UserDefaults.standard.string(forKey: "defaultHarnessAuthorDirectory")
+        guard let path, !path.isEmpty else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
+    }
+
+    private var harnessesEmptyState: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "puzzlepiece.extension")
+                .font(.system(size: 32))
+                .foregroundColor(.secondary)
+
+            if hasRegistries {
+                Text(Strings.Harnesses.emptyMessage)
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+
+                Button(Strings.Harnesses.searchButton) {
+                    onInstall?()
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+            } else {
+                Text(Strings.Harnesses.emptyNoRegistriesMessage)
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+
+                Button(Strings.Harnesses.addSampleButton) {
+                    Task { await addSampleRegistry() }
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+                .disabled(sampleRunner.isRunning || ynhPathFromDetector == nil)
+
+                Button(Strings.Harnesses.addRegistryButton) {
+                    showAddRegistry = true
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+            }
+
+            Button(Strings.Harnesses.createHarnessButton) {
+                showWizard = true
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
+
+    private var ynhPathFromDetector: String? {
+        if case .ready(let p, _, _) = detector.status { return p }
+        return nil
+    }
+
+    private func addSampleRegistry() async {
+        guard let ynhPath = ynhPathFromDetector else { return }
+        var env = ProcessInfo.processInfo.environment
+        if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
+        await sampleRunner.run(
+            ynhPath: ynhPath,
+            url: "https://github.com/eyelock/assistants",
+            environment: env
+        )
+        if sampleRunner.succeeded, let ynhPath = ynhPathFromDetector {
+            var env = ProcessInfo.processInfo.environment
+            if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
+            Task {
+                await repository.refresh()
+                await registryService.refresh(ynhPath: ynhPath, environment: env)
+            }
+        }
     }
 
     private func emptyState(icon: String, message: String) -> some View {

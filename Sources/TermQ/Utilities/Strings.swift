@@ -474,6 +474,10 @@ enum Strings {
         }
         static var fieldDefaultBackend: String { localized("settings.field.default.backend") }
         static var fieldDefaultBackendHelp: String { localized("settings.field.default.backend.help") }
+        static var scrollbackLabel: String { localized("settings.scrollback.label") }
+        static var scrollbackUnit: String { localized("settings.scrollback.unit") }
+        static var scrollbackInvalid: String { localized("settings.scrollback.invalid") }
+        static var scrollbackLinesHelp: String { localized("settings.scrollback.lines.help") }
 
         // General - Bin section
         static var sectionBin: String { localized("settings.section.bin") }
@@ -843,6 +847,12 @@ extension Strings {
         static var pruneWorktreesNothingTitle: String { localized("sidebar.prune.worktrees.nothing.title") }
         static var pruneWorktreesNothingMessage: String { localized("sidebar.prune.worktrees.nothing.message") }
         static var pruneWorktreesExplanation: String { localized("sidebar.prune.worktrees.explanation") }
+        static var pruneBranches: String { localized("sidebar.prune.branches") }
+        static var pruneBranchesTitle: String { localized("sidebar.prune.branches.title") }
+        static var pruneBranchesConfirm: String { localized("sidebar.prune.branches.confirm") }
+        static var pruneBranchesNothingTitle: String { localized("sidebar.prune.branches.nothing.title") }
+        static var pruneBranchesNothingMessage: String { localized("sidebar.prune.branches.nothing.message") }
+        static var pruneBranchesExplanation: String { localized("sidebar.prune.branches.explanation") }
 
         // New worktree sheet
         static var newWorktreeTitle: String { localized("sidebar.new.worktree.title") }
@@ -878,6 +888,8 @@ extension Strings {
         static var initRequired: String { localized("harnesses.init.required") }
         static var initHint: String { localized("harnesses.init.hint") }
         static var emptyMessage: String { localized("harnesses.empty.message") }
+        static var emptyNoRegistriesMessage: String { localized("harnesses.empty.no.registries.message") }
+        static var searchButton: String { localized("harnesses.search.button") }
 
         // Row badges
         static var sourceLocal: String { localized("harnesses.source.local") }
@@ -964,6 +976,11 @@ extension Strings {
         static var installSearchPlaceholder: String { localized("harnesses.install.search.placeholder") }
         static var installSearchPrompt: String { localized("harnesses.install.search.prompt") }
         static var installSearchEmpty: String { localized("harnesses.install.search.empty") }
+        static var installSectionInstalled: String { localized("harnesses.install.section.installed") }
+        static var installSectionAvailable: String { localized("harnesses.install.section.available") }
+        static var installSectionLocal: String { localized("harnesses.install.section.local") }
+        static var installBrowsing: String { localized("harnesses.install.browsing") }
+        static var installRetry: String { localized("harnesses.install.retry") }
         static var installGitURL: String { localized("harnesses.install.git.url") }
         static var installGitURLPlaceholder: String { localized("harnesses.install.git.url.placeholder") }
         static var installGitSubpath: String { localized("harnesses.install.git.subpath") }
@@ -1009,6 +1026,9 @@ extension Strings {
         static var addRegistryButton: String { localized("harnesses.add.registry.button") }
         static var addRegistrySuccess: String { localized("harnesses.add.registry.success") }
         static var addRegistryToolbarHelp: String { localized("harnesses.add.registry.toolbar.help") }
+        static var addSampleButton: String { localized("harnesses.add.sample.button") }
+        static var groupMenuSettings: String { localized("harnesses.group.menu.settings") }
+        static var createHarnessButton: String { localized("harnesses.create.harness.button") }
     }
 }
 
@@ -1089,6 +1109,13 @@ extension Strings {
 // MARK: - Harness Wizard
 
 extension Strings {
+    enum HarnessDuplicate {
+        static var title: String { localized("harness.duplicate.title") }
+        static var duplicateButton: String { localized("harness.duplicate.button") }
+        static var installing: String { localized("harness.duplicate.installing") }
+        static func success(_ name: String) -> String { localized("harness.duplicate.success %@", name) }
+    }
+
     enum HarnessWizard {
         static var title: String { localized("harness.wizard.title") }
         static var nameLabel: String { localized("harness.wizard.name.label") }

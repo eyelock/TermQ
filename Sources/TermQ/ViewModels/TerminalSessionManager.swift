@@ -134,6 +134,8 @@ class TerminalSessionManager: ObservableObject {
 
         // Create new terminal (using our subclass that fixes copy/paste)
         let terminal = TermQTerminalView(frame: .zero)
+        let scrollback = UserDefaults.standard.integer(forKey: "terminalScrollbackLines")
+        terminal.changeScrollback(scrollback > 0 ? scrollback : 5000)
         terminal.cardId = cardId
         terminal.terminalTitle = card.title
         terminal.safePasteEnabled = card.safePasteEnabled

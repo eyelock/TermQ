@@ -74,6 +74,7 @@ struct HarnessInstallSheet: View {
         .frame(width: 520, height: 540)
         .onAppear {
             Task { await sourcesService.refresh() }
+            searchService.search("")
         }
         .onChange(of: searchQuery) { _, query in
             searchService.search(query)
@@ -116,23 +117,71 @@ extension HarnessInstallSheet {
 
             Divider()
 
-            if searchService.isSearching {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if !searchService.results.isEmpty {
-                List(searchService.results) { result in
-                    searchResultRow(result)
-                        .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
+            let isTyping = !searchQuery.trimmingCharacters(in: .whitespaces).isEmpty
+
+            if isTyping {
+                // Active search: show spinner or results
+                if searchService.isSearching {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if !searchService.results.isEmpty {
+                    List(searchService.results) { result in
+                        searchResultRow(result)
+                            .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
+                    }
+                    .listStyle(.plain)
+                } else {
+                    emptyState(icon: "magnifyingglass", message: Strings.Harnesses.installSearchEmpty)
                 }
-                .listStyle(.plain)
-            } else if !filteredHarnesses.isEmpty {
-                List(filteredHarnesses) { harness in
-                    harnessRow(harness)
-                        .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
-                }
-                .listStyle(.plain)
             } else {
-                emptyState(icon: "magnifyingglass", message: Strings.Harnesses.installSearchEmpty)
+                // Browse mode: installed immediately, registry results appended as they load
+                let uninstalled = searchService.results.filter { !installedNames.contains($0.name) }
+                let fromRegistry = uninstalled.filter { $0.from.type == .registry }.sorted { $0.name < $1.name }
+                let fromLocal = uninstalled.filter { $0.from.type == .source }.sorted { $0.name < $1.name }
+                List {
+                    if !harnesses.isEmpty {
+                        Section(Strings.Harnesses.installSectionInstalled) {
+                            ForEach(harnesses) { harness in
+                                harnessRow(harness)
+                                    .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
+                            }
+                        }
+                    }
+                    if !fromLocal.isEmpty {
+                        Section(Strings.Harnesses.installSectionLocal) {
+                            ForEach(fromLocal) { result in
+                                searchResultRow(result)
+                                    .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
+                            }
+                        }
+                    }
+                    Section {
+                        if searchService.isSearching {
+                            HStack {
+                                ProgressView().controlSize(.small)
+                                Text(Strings.Harnesses.installBrowsing)
+                                    .font(.caption).foregroundColor(.secondary)
+                            }
+                            .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                        } else if let err = searchService.error {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(err)
+                                    .font(.caption).foregroundColor(.red)
+                                Button(Strings.Harnesses.installRetry) { searchService.search("") }
+                                    .font(.caption)
+                            }
+                            .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                        } else {
+                            ForEach(fromRegistry) { result in
+                                searchResultRow(result)
+                                    .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
+                            }
+                        }
+                    } header: {
+                        Text(Strings.Harnesses.installSectionAvailable)
+                    }
+                }
+                .listStyle(.plain)
             }
         }
     }
@@ -187,14 +236,17 @@ extension HarnessInstallSheet {
                         .lineLimit(2)
                 }
                 HStack(spacing: 4) {
-                    Text(Strings.Harnesses.installFrom(result.from.name))
+                    let isRegistry = result.from.type == .registry
+                    Text(result.from.name)
                         .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 5).padding(.vertical, 1)
+                        .background(isRegistry ? Color.blue.opacity(0.15) : Color.secondary.opacity(0.15))
+                        .foregroundColor(isRegistry ? .blue : .secondary)
+                        .clipShape(Capsule())
                     ForEach(result.vendors ?? [], id: \.self) { vendor in
                         Text(vendor)
                             .font(.caption2)
-                            .padding(.horizontal, 5)
-                            .padding(.vertical, 1)
+                            .padding(.horizontal, 5).padding(.vertical, 1)
                             .background(Color.purple.opacity(0.15))
                             .foregroundColor(.purple)
                             .clipShape(Capsule())

@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQShared
 
@@ -13,6 +14,7 @@ struct MarketplaceSelection: Identifiable {
 /// Default (known marketplaces) and dynamic GitHub org groups.
 /// Selecting a marketplace opens `MarketplaceDetailView` as a sheet.
 struct MarketplaceSidebarTab: View {
+    @Environment(\.openSettings) private var openSettings
     @ObservedObject var detector: YNHDetector
     @ObservedObject var harnessRepository: HarnessRepository
     @ObservedObject private var store: MarketplaceStore = .shared
@@ -146,6 +148,7 @@ struct MarketplaceSidebarTab: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                         .textCase(.uppercase)
+                        .contextMenu { groupContextMenu(for: group) }
                 }
             }
         }
@@ -163,6 +166,13 @@ struct MarketplaceSidebarTab: View {
         }
         .contextMenu {
             Button(Strings.Marketplace.rowRefresh) { Task { await refresh(marketplace) } }
+            if let url = marketplaceBrowserURL(marketplace) {
+                Button {
+                    NSWorkspace.shared.open(url)
+                } label: {
+                    Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
+                }
+            }
             Divider()
             Button(Strings.Marketplace.rowRemove, role: .destructive) { store.remove(id: marketplace.id) }
         }
@@ -170,9 +180,15 @@ struct MarketplaceSidebarTab: View {
 
     // MARK: - Grouping
 
+    private enum MarketplaceGroupKind {
+        case `default`
+        case github(String)
+    }
+
     private struct MarketplaceGroup {
         let title: String
         let marketplaces: [Marketplace]
+        let kind: MarketplaceGroupKind
     }
 
     private var groupedMarketplaces: [MarketplaceGroup] {
@@ -183,7 +199,7 @@ struct MarketplaceSidebarTab: View {
         var groups: [MarketplaceGroup] = []
 
         if !defaults.isEmpty {
-            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupDefault, marketplaces: defaults))
+            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupDefault, marketplaces: defaults, kind: .default))
         }
 
         var byOrg: [String: [Marketplace]] = [:]
@@ -193,10 +209,36 @@ struct MarketplaceSidebarTab: View {
         }
 
         for (org, marketplaces) in byOrg.sorted(by: { $0.key < $1.key }) {
-            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupGitHub(org), marketplaces: marketplaces))
+            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupGitHub(org), marketplaces: marketplaces, kind: .github(org)))
         }
 
         return groups
+    }
+
+    @ViewBuilder
+    private func groupContextMenu(for group: MarketplaceGroup) -> some View {
+        Button {
+            SettingsCoordinator.shared.requestedTab = .marketplaces
+            openSettings()
+        } label: {
+            Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
+        }
+        if case .github(let org) = group.kind,
+           let url = URL(string: "https://github.com/\(org)") {
+            Button {
+                NSWorkspace.shared.open(url)
+            } label: {
+                Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
+            }
+        }
+    }
+
+    private func marketplaceBrowserURL(_ marketplace: Marketplace) -> URL? {
+        // marketplace.url may already include the scheme
+        if marketplace.url.hasPrefix("http") {
+            return URL(string: marketplace.url)
+        }
+        return GitURLHelper.browserURL(for: marketplace.url)
     }
 
     private func expandedBinding(for title: String) -> Binding<Bool> {

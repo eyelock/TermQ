@@ -38,7 +38,7 @@ public struct JSONFragment: Codable, Sendable, Equatable {
         let rawValue = try container.decode(RawJSON.self)
         let data = try JSONSerialization.data(
             withJSONObject: rawValue.value,
-            options: [.prettyPrinted, .sortedKeys]
+            options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         )
         rawString = String(data: data, encoding: .utf8) ?? "{}"
     }

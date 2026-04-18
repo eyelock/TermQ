@@ -148,7 +148,32 @@ For iterative authoring (adding more plugins later), just open the harness detai
 
 ---
 
-## 14.9 — What's next
+## 14.9 — Context menus
+
+Right-clicking anywhere in the Marketplaces sidebar gives you quick access to the most common actions without opening any sheets.
+
+### Group headers (DEFAULT, GITHUB: X)
+
+Right-click a disclosure group header to see:
+
+![Marketplace group context menu](../Images/marketplace-group-context-menu.png)
+
+- **Settings…** — opens **Settings → External Sources** directly, so you can add or remove marketplaces and registries without hunting through the menus
+- **Open in Browser** *(GitHub groups only)* — opens the GitHub organisation page for that group in your default browser
+
+### Marketplace rows
+
+Right-click any marketplace row for per-marketplace actions:
+
+![Marketplace row context menu](../Images/marketplace-row-context-menu.png)
+
+- **Refresh** — re-fetches the marketplace index immediately
+- **Open in Browser** — opens the specific marketplace repository in your browser
+- **Remove** — removes the marketplace from TermQ (destructive; use Settings to re-add)
+
+---
+
+## 14.10 — What's next
 
 You've covered the complete lifecycle: add a marketplace, browse plugins, add content to a harness, and create new harnesses from scratch.
 
