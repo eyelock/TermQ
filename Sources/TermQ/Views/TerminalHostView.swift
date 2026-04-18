@@ -88,13 +88,26 @@ class TermQTerminalView: LocalProcessTerminalView {
 
         keyInputMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             // Check if the keystroke is going to our terminal
-            if let self = self,
+            guard let self = self,
                 let window = event.window,
                 window == self.window,
                 window.firstResponder === self
-            {
-                self.lastUserInputTime = Date()
+            else { return event }
+
+            self.lastUserInputTime = Date()
+
+            // Intercept Cmd+C when a drag-selection is live (allowMouseReporting == false).
+            // SwiftTerm's keyDown clears selection.active before calling copy: via interpretKeyEvents,
+            // so a normal Cmd+C would copy an empty string. We call copy: here first, before keyDown
+            // fires, then consume the event so keyDown never runs.
+            let isCmdCOnly =
+                event.modifierFlags.intersection([.command, .shift, .option, .control]) == .command
+                && event.charactersIgnoringModifiers == "c"
+            if isCmdCOnly && !self.allowMouseReporting {
+                self.copy(self as Any)
+                return nil
             }
+
             return event
         }
     }
@@ -229,6 +242,10 @@ class TermQTerminalView: LocalProcessTerminalView {
             return
         }
 
+        // Restore mouse reporting so clicks are forwarded to the running app (e.g. Claude Code TUI).
+        // This was disabled during a drag-to-select to prevent SwiftTerm from intercepting drags.
+        allowMouseReporting = true
+
         let localPoint = convert(event.locationInWindow, from: nil)
         dragStartedInTerminal = bounds.contains(localPoint)
 
@@ -249,9 +266,17 @@ class TermQTerminalView: LocalProcessTerminalView {
             stopAutoScrollTimer()
             lastDragPosition = nil
             dragStartedInTerminal = false
-            // Clear global drag flag to allow focus management again
             TerminalSessionManager.shared.isMouseDragInProgress = false
+            // Do NOT restore allowMouseReporting here — leaving it false keeps SwiftTerm from
+            // calling selectNone() on the next linefeed while streaming continues.
+            // allowMouseReporting is restored in handleMouseDownForAutoScroll on the next click.
             return
+        }
+
+        if event.type == .leftMouseDragged {
+            if dragStartedInTerminal && allowMouseReporting {
+                allowMouseReporting = false
+            }
         }
 
         // Only process drag if it started inside the terminal (not toolbar/titlebar)
@@ -600,26 +625,18 @@ class TerminalContainerView: NSView {
 
         // Check if terminal is in alternate buffer (fullscreen apps like less, vim)
         let term = terminal.getTerminal()
-        if term.isCurrentBufferAlternate {
-            // Send arrow key sequences instead of scrolling buffer
+        // Only convert scroll → arrow keys when:
+        //   1. alternate buffer is active (vim, less, etc.)
+        //   2. application cursor mode is set (the app requested arrow key sequences)
+        //   3. mouse mode is off (app has NOT enabled its own mouse tracking)
+        // If the app has enabled mouse tracking (e.g. Claude Code), let SwiftTerm pass the
+        // scroll as a proper mouse event sequence — never inject extra arrow keys.
+        if term.isCurrentBufferAlternate && term.applicationCursor && term.mouseMode == .off {
             let lines = calcScrollLines(delta: abs(event.deltaY))
-
-            // Determine escape sequence based on application cursor mode
-            let upSequence: String
-            let downSequence: String
-            if term.applicationCursor {
-                upSequence = "\u{1b}OA"
-                downSequence = "\u{1b}OB"
-            } else {
-                upSequence = "\u{1b}[A"
-                downSequence = "\u{1b}[B"
-            }
-
-            let sequence = event.deltaY > 0 ? upSequence : downSequence
+            let sequence = event.deltaY > 0 ? "\u{1b}OA" : "\u{1b}OB"
             for _ in 0..<lines {
                 terminal.send(txt: sequence)
             }
-
             return nil  // Consume the event
         }
 
@@ -641,25 +658,17 @@ class TerminalContainerView: NSView {
 
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
-        TermQLogger.focus.debug("viewDidMoveToWindow hasWindow=\(self.window != nil)")
-        // Give focus to terminal when view appears
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let fr = self.window?.firstResponder
-            let succeeded = self.window?.makeFirstResponder(self.terminal) ?? false
-            TermQLogger.focus.debug(
-                "makeFirstResponder(viewDidMoveToWindow) succeeded=\(succeeded) hasWindow=\(self.window != nil) priorFR=\(String(describing: type(of: fr)))"
-            )
+            self.window?.makeFirstResponder(self.terminal)
         }
     }
 
     /// Re-focus the terminal
     func focusTerminal() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let fr = self.window?.firstResponder
-            let succeeded = self.window?.makeFirstResponder(self.terminal) ?? false
-            TermQLogger.focus.debug(
-                "makeFirstResponder(focusTerminal) succeeded=\(succeeded) hasWindow=\(self.window != nil) priorFR=\(String(describing: type(of: fr)))"
-            )
+            guard NSEvent.pressedMouseButtons == 0 else { return }
+            guard !TerminalSessionManager.shared.isMouseDragInProgress else { return }
+            self.window?.makeFirstResponder(self.terminal)
         }
     }
 
@@ -713,15 +722,11 @@ struct TerminalHostView: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: TerminalContainerView, context: Context) {
-        // Only focus terminal when:
-        // 1. Not in search mode
-        // 2. Terminal doesn't already have focus (avoid interrupting text selection)
-        // 3. No mouse drag in progress (protect selection operations)
-        if !isSearching && !TerminalSessionManager.shared.isMouseDragInProgress {
-            let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
-            if !alreadyFocused {
-                nsView.focusTerminal()
-            }
+        let mouseDown = NSEvent.pressedMouseButtons != 0
+        let dragInProgress = TerminalSessionManager.shared.isMouseDragInProgress
+        let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
+        if !isSearching && !dragInProgress && !mouseDown && !alreadyFocused {
+            nsView.focusTerminal()
         }
     }
 
