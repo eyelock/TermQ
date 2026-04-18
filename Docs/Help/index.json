@@ -1,108 +1,147 @@
 {
   "sections": [
     {
-      "title": "How to Use",
+      "title": "Introduction",
       "topics": [
         {
-          "id": "getting-started",
-          "title": "Getting Started",
-          "icon": "star",
-          "keywords": ["start", "begin", "intro", "introduction", "overview", "welcome"]
-        },
-        {
-          "id": "columns-organization",
-          "title": "Columns & Organization",
-          "icon": "rectangle.split.3x1",
-          "keywords": ["column", "organize", "drag", "drop", "move", "workflow", "kanban"]
-        },
-        {
-          "id": "working-with-terminals",
-          "title": "Working with Terminals",
-          "icon": "terminal",
-          "keywords": ["terminal", "card", "create", "new", "session", "shell", "native", "Terminal.app"]
-        },
-        {
-          "id": "pinned-terminals",
-          "title": "Pinned Terminals & Tabs",
-          "icon": "star.fill",
-          "keywords": ["pin", "tab", "favorite", "star", "quick", "access"]
-        },
-        {
-          "id": "command-palette",
-          "title": "Command Palette",
-          "icon": "magnifyingglass",
-          "keywords": ["command", "palette", "search", "quick", "switch", "navigate"]
-        },
-        {
-          "id": "zoom-search",
-          "title": "Zoom Mode & Search",
-          "icon": "arrow.up.left.and.arrow.down.right",
-          "keywords": ["zoom", "fullscreen", "maximize", "search", "find", "export", "save"]
-        },
-        {
-          "id": "bin-recovery",
-          "title": "Bin & Recovery",
-          "icon": "trash",
-          "keywords": ["bin", "trash", "delete", "recover", "restore", "undo", "retention"]
-        },
-        {
-          "id": "themes-appearance",
-          "title": "Themes & Appearance",
-          "icon": "paintpalette",
-          "keywords": ["theme", "color", "appearance", "font", "dark", "light", "dracula", "nord", "solarized"]
-        },
-        {
-          "id": "updates",
-          "title": "Automatic Updates",
-          "icon": "arrow.triangle.2.circlepath",
-          "keywords": ["update", "automatic", "sparkle", "version", "upgrade", "download", "release"]
+          "id": "why",
+          "title": "Why TermQ",
+          "icon": "lightbulb",
+          "keywords": ["why", "reason", "motivation", "design", "philosophy", "kanban", "workflow", "overview"]
         }
       ]
     },
     {
-      "title": "Advanced Topics",
+      "title": "Tutorials: The Board",
       "topics": [
         {
-          "id": "keyboard-shortcuts",
+          "id": "tutorials/01-first-board",
+          "title": "Your First Board",
+          "icon": "star",
+          "keywords": ["start", "begin", "intro", "overview", "welcome", "first", "board", "create", "column"]
+        },
+        {
+          "id": "tutorials/02-richer-cards",
+          "title": "Richer Cards",
+          "icon": "terminal",
+          "keywords": ["terminal", "card", "create", "title", "color", "environment", "tag", "badge"]
+        },
+        {
+          "id": "tutorials/03-find-anything-fast",
+          "title": "Find Anything Fast",
+          "icon": "magnifyingglass",
+          "keywords": ["command", "palette", "search", "quick", "switch", "navigate", "find", "zoom"]
+        },
+        {
+          "id": "tutorials/04-organise-your-space",
+          "title": "Organise Your Space",
+          "icon": "rectangle.split.3x1",
+          "keywords": ["column", "organize", "drag", "drop", "move", "workflow", "kanban", "board", "stage"]
+        }
+      ]
+    },
+    {
+      "title": "Tutorials: Power Workflows",
+      "topics": [
+        {
+          "id": "tutorials/05-persistent-sessions",
+          "title": "Persistent Sessions",
+          "icon": "rectangle.split.2x2",
+          "keywords": ["tmux", "session", "persist", "restore", "recovery", "backend", "multiplexer", "pin", "tab"]
+        },
+        {
+          "id": "tutorials/06-terminal-context",
+          "title": "Terminal Context",
+          "icon": "key",
+          "keywords": ["environment", "variable", "secret", "keychain", "api", "token", "password", "context"]
+        },
+        {
+          "id": "tutorials/07-lifecycle",
+          "title": "Lifecycle",
+          "icon": "arrow.clockwise",
+          "keywords": ["lifecycle", "bin", "trash", "delete", "recover", "restore", "retention", "theme"]
+        },
+        {
+          "id": "tutorials/12-worktree-sidebar",
+          "title": "Git Worktrees",
+          "icon": "shippingbox",
+          "keywords": ["git", "worktree", "repository", "branch", "sidebar", "checkout", "harness"]
+        },
+        {
+          "id": "tutorials/13-harness-sidebar",
+          "title": "Harnesses",
+          "icon": "puzzlepiece.extension",
+          "keywords": ["harness", "ynh", "ai", "agent", "install", "launch", "registry", "sidebar"]
+        },
+        {
+          "id": "tutorials/14-marketplace",
+          "title": "Marketplaces & Authoring",
+          "icon": "storefront",
+          "keywords": ["marketplace", "plugin", "artifact", "skill", "install", "browse", "configure", "authoring"]
+        }
+      ]
+    },
+    {
+      "title": "Tutorials: Automation & AI",
+      "topics": [
+        {
+          "id": "tutorials/08-cli",
+          "title": "CLI Automation",
+          "icon": "apple.terminal",
+          "keywords": ["cli", "command", "line", "automation", "script", "termq", "install"]
+        },
+        {
+          "id": "tutorials/09-ai-context",
+          "title": "Persistent AI Context",
+          "icon": "sparkles",
+          "keywords": ["ai", "context", "persistent", "claude", "llm", "assistant", "prompt"]
+        },
+        {
+          "id": "tutorials/10-mcp",
+          "title": "MCP Integration",
+          "icon": "server.rack",
+          "keywords": ["mcp", "model", "context", "protocol", "server", "ai", "claude", "integration"]
+        },
+        {
+          "id": "tutorials/11-queued-actions",
+          "title": "Queued Actions",
+          "icon": "list.bullet",
+          "keywords": ["queue", "action", "batch", "autorun", "sequence", "automation"]
+        }
+      ]
+    },
+    {
+      "title": "Reference",
+      "topics": [
+        {
+          "id": "reference/keyboard-shortcuts",
           "title": "Keyboard Shortcuts",
           "icon": "keyboard",
           "keywords": ["shortcut", "keyboard", "hotkey", "key", "command", "ctrl", "cmd"]
         },
         {
-          "id": "cli-tool",
-          "title": "CLI Tool",
+          "id": "reference/cli",
+          "title": "CLI Reference",
           "icon": "apple.terminal",
-          "keywords": ["cli", "command", "line", "terminal", "shell", "install", "termq"]
+          "keywords": ["cli", "command", "line", "reference", "termq", "flags", "options"]
         },
         {
-          "id": "mcp-server",
-          "title": "MCP Server",
+          "id": "reference/mcp",
+          "title": "MCP Reference",
           "icon": "server.rack",
-          "keywords": ["mcp", "model", "context", "protocol", "server", "ai", "claude", "llm", "integration"]
+          "keywords": ["mcp", "model", "context", "protocol", "server", "tools", "reference"]
         },
         {
-          "id": "tmux-sessions",
-          "title": "Tmux Sessions",
-          "icon": "rectangle.split.2x2",
-          "keywords": ["tmux", "session", "persist", "restore", "recovery", "backend", "multiplexer"]
-        },
-        {
-          "id": "environment-variables",
-          "title": "Environment Variables & Secrets",
-          "icon": "key",
-          "keywords": ["environment", "variable", "secret", "keychain", "api", "token", "password", "encryption", "global", "terminal"]
-        },
-        {
-          "id": "security",
-          "title": "Security",
-          "icon": "lock.shield",
-          "keywords": ["security", "safe", "paste", "clipboard", "osc", "autorun", "protection", "validation", "entitlements", "sandbox"]
-        },
-        {
-          "id": "configuration",
+          "id": "reference/configuration",
           "title": "Configuration & Data",
           "icon": "gearshape",
           "keywords": ["config", "settings", "data", "storage", "json", "backup", "preferences"]
+        },
+        {
+          "id": "reference/security",
+          "title": "Security",
+          "icon": "lock.shield",
+          "keywords": ["security", "safe", "paste", "clipboard", "osc", "autorun", "protection", "sandbox"]
         }
       ]
     },
@@ -110,14 +149,14 @@
       "title": "Further Info",
       "topics": [
         {
-          "id": "tips-tricks",
-          "title": "Tips & Tricks",
-          "icon": "lightbulb",
-          "keywords": ["tip", "trick", "productivity", "efficient", "workflow", "advice", "native"]
+          "id": "updates",
+          "title": "Updates & Releases",
+          "icon": "arrow.triangle.2.circlepath",
+          "keywords": ["update", "release", "sparkle", "version", "upgrade", "download", "changelog"]
         },
         {
           "id": "about",
-          "title": "About TermQ",
+          "title": "About",
           "icon": "info.circle",
           "keywords": ["about", "info", "version", "license", "credit", "github"]
         }

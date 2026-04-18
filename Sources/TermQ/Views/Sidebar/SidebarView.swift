@@ -12,9 +12,11 @@ struct SidebarView: View {
     @ObservedObject var harnessRepository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
     var onLaunchHarnessInWorktree: ((String, String) -> Void)?
+    var onAutoLaunchHarness: ((String, String) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
+    var onExport: ((String, String) -> Void)?
     var onNewHarness: (() -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
@@ -56,7 +58,9 @@ struct SidebarView: View {
 
             switch selectedTab {
             case .repositories:
-                WorktreeSidebarView(viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree)
+                WorktreeSidebarView(
+                    viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
+                    onAutoLaunchHarness: onAutoLaunchHarness)
             case .harnesses where showHarnessesTab:
                 HarnessesSidebarTab(
                     detector: detector,
@@ -65,6 +69,7 @@ struct SidebarView: View {
                     onInstall: onInstall,
                     onUninstall: onUninstall,
                     onUpdate: onUpdate,
+                    onExport: onExport,
                     onNewHarness: onNewHarness
                 )
             case .marketplaces where showHarnessesTab:
@@ -73,7 +78,9 @@ struct SidebarView: View {
                     harnessRepository: harnessRepository
                 )
             default:
-                WorktreeSidebarView(viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree)
+                WorktreeSidebarView(
+                    viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
+                    onAutoLaunchHarness: onAutoLaunchHarness)
             }
         }
         .onAppear {

@@ -16,6 +16,7 @@ struct HarnessesSidebarTab: View {
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
+    var onExport: ((String, String) -> Void)?
     var onNewHarness: (() -> Void)?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @State private var harnessToUninstall: Harness?
@@ -155,6 +156,21 @@ struct HarnessesSidebarTab: View {
                                 onUpdate?(harness.name)
                             } label: {
                                 Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
+                            }
+                            Button {
+                                Task { @MainActor in
+                                    let panel = NSOpenPanel()
+                                    panel.canChooseDirectories = true
+                                    panel.canChooseFiles = false
+                                    panel.allowsMultipleSelection = false
+                                    panel.prompt = Strings.Harnesses.exportButton
+                                    let response = await panel.begin()
+                                    if response == .OK, let url = panel.url {
+                                        onExport?(harness.name, url.path)
+                                    }
+                                }
+                            } label: {
+                                Label(Strings.Harnesses.exportButton, systemImage: "square.and.arrow.up")
                             }
                             Button(role: .destructive) {
                                 harnessToUninstall = harness

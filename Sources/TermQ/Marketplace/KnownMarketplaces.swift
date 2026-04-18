@@ -16,7 +16,14 @@ enum KnownMarketplaces {
             description: "The official catalog of Claude Code plugins from Anthropic.",
             vendor: .claude,
             url: "https://github.com/anthropics/claude-plugins-official"
-        )
+        ),
+        KnownMarketplace(
+            name: "eyelock assistants",
+            owner: "eyelock",
+            description: "Community assistants for TermQ and ynh from eyelock.",
+            vendor: .claude,
+            url: "https://github.com/eyelock/assistants"
+        ),
         // Cursor deliberately omitted from v1: no fetchable Git index available.
     ]
 }

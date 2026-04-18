@@ -563,7 +563,11 @@ extension ToolsTabContent {
     private var ynhBinaryInfo: some View {
         switch ynhDetector.status {
         case .missing:
-            EmptyView()
+            Link(
+                Strings.Settings.Ynh.docsLinkLabel,
+                destination: URL(string: "https://eyelock.github.io/ynh")!
+            )
+            .font(.caption)
 
         case .binaryOnly(let ynhPath):
             VStack(alignment: .leading, spacing: 4) {

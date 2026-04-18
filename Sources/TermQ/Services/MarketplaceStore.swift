@@ -35,6 +35,28 @@ final class MarketplaceStore: ObservableObject {
         decoder.dateDecodingStrategy = .iso8601
 
         load()
+        seedDefaultsIfNeeded()
+    }
+
+    private static let defaultsSeedKey = "marketplaces.defaultsSeeded.v1"
+
+    private func seedDefaultsIfNeeded() {
+        guard !UserDefaults.standard.bool(forKey: Self.defaultsSeedKey) else { return }
+        restoreDefaults()
+        UserDefaults.standard.set(true, forKey: Self.defaultsSeedKey)
+    }
+
+    /// Add any default marketplaces that are not already present.
+    func restoreDefaults() {
+        for seed in KnownMarketplaces.all {
+            add(
+                Marketplace(
+                    id: UUID(), name: seed.name, owner: seed.owner,
+                    description: seed.description, vendor: seed.vendor,
+                    url: seed.url, plugins: [], lastFetched: nil, fetchError: nil
+                )
+            )
+        }
     }
 
     // MARK: - Persistence

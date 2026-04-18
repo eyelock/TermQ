@@ -7,6 +7,7 @@ struct SettingsDataSecurityView: View {
     @Binding var enableTerminalAutorun: Bool
     @Binding var confirmExternalLLMModifications: Bool
     @Binding var allowOscClipboard: Bool
+    @Binding var defaultSafePaste: Bool
 
     // Data directory
     @Binding var dataDirectory: String
@@ -22,6 +23,9 @@ struct SettingsDataSecurityView: View {
 
             Toggle(Strings.Settings.allowOscClipboard, isOn: $allowOscClipboard)
                 .help(Strings.Settings.allowOscClipboardHelp)
+
+            Toggle(Strings.Settings.defaultSafePaste, isOn: $defaultSafePaste)
+                .help(Strings.Settings.defaultSafePasteHelp)
         } header: {
             Text(Strings.Settings.sectionSecurity)
         }

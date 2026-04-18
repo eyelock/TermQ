@@ -71,6 +71,20 @@ struct MarketplaceSidebarTab: View {
             }
             .buttonStyle(.plain)
             .help(Strings.Marketplace.addHelp)
+
+            Button {
+                Task {
+                    for marketplace in store.marketplaces {
+                        await refresh(marketplace)
+                    }
+                }
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .imageScale(.medium)
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Marketplace.refreshAllHelp)
+            .disabled(store.marketplaces.isEmpty)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -96,8 +110,19 @@ struct MarketplaceSidebarTab: View {
                 .font(.callout)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
+            Button(Strings.Marketplace.restoreDefaults) {
+                store.restoreDefaults()
+                Task {
+                    for marketplace in store.marketplaces {
+                        await refresh(marketplace)
+                    }
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.small)
+            .help(Strings.Marketplace.restoreDefaultsHelp)
             Button(Strings.Marketplace.addButton) { showAddSheet = true }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.bordered)
                 .controlSize(.small)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

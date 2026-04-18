@@ -43,6 +43,7 @@ struct SettingsView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @AppStorage("confirmExternalLLMModifications") private var confirmExternalLLMModifications = true
     @AppStorage("allowOscClipboard") private var allowOscClipboard = false
+    @AppStorage("defaultSafePaste") private var defaultSafePaste = true
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
@@ -115,6 +116,7 @@ struct SettingsView: View {
                         enableTerminalAutorun: $enableTerminalAutorun,
                         confirmExternalLLMModifications: $confirmExternalLLMModifications,
                         allowOscClipboard: $allowOscClipboard,
+                        defaultSafePaste: $defaultSafePaste,
                         dataDirectory: $dataDirectory
                     )
                 case .marketplaces:

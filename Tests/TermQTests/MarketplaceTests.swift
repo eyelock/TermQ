@@ -288,6 +288,46 @@ final class ExtractOrgRepoTests: XCTestCase {
     }
 }
 
+// MARK: - KnownMarketplaces tests
+
+final class KnownMarketplacesTests: XCTestCase {
+
+    func test_defaults_containsClaudePluginsOfficial() {
+        let urls = KnownMarketplaces.all.map(\.url)
+        XCTAssertTrue(
+            urls.contains("https://github.com/anthropics/claude-plugins-official"),
+            "Expected claude-plugins-official in defaults"
+        )
+    }
+
+    func test_defaults_containsEyelockAssistants() {
+        let urls = KnownMarketplaces.all.map(\.url)
+        XCTAssertTrue(
+            urls.contains("https://github.com/eyelock/assistants"),
+            "Expected eyelock/assistants in defaults"
+        )
+    }
+
+    func test_defaults_allHaveClaudeVendor() {
+        for seed in KnownMarketplaces.all {
+            XCTAssertEqual(seed.vendor, .claude, "\(seed.name) should use .claude vendor")
+        }
+    }
+
+    func test_defaults_allHaveNonEmptyFields() {
+        for seed in KnownMarketplaces.all {
+            XCTAssertFalse(seed.name.isEmpty, "name should not be empty")
+            XCTAssertFalse(seed.owner.isEmpty, "owner should not be empty")
+            XCTAssertFalse(seed.url.isEmpty, "url should not be empty")
+        }
+    }
+
+    func test_defaults_urlsAreUnique() {
+        let urls = KnownMarketplaces.all.map(\.url)
+        XCTAssertEqual(urls.count, Set(urls).count, "Default marketplace URLs should be unique")
+    }
+}
+
 // MARK: - AuthorStepStatus tests
 
 final class AuthorStepStatusTests: XCTestCase {

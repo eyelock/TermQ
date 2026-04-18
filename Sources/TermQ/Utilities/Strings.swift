@@ -245,6 +245,7 @@ enum Strings {
         static func binCount(_ count: Int) -> String {
             localized("toolbar.bin.count %lld", count)
         }
+        static var openTerminalsHelp: String { localized("toolbar.open.terminals.help") }
     }
 
     // MARK: - Menu Commands
@@ -639,6 +640,8 @@ enum Strings {
         static var confirmExternalModificationsHelp: String {
             localized("settings.confirm.external.modifications.help")
         }
+        static var defaultSafePaste: String { localized("settings.default.safe.paste") }
+        static var defaultSafePasteHelp: String { localized("settings.default.safe.paste.help") }
 
     }
 
@@ -754,6 +757,7 @@ extension Strings.Settings {
         static var readyInfo: String { localized("settings.ynh.ready.info") }
         static var advanced: String { localized("settings.ynh.advanced") }
         static var versionLabel: String { localized("settings.ynh.version.label") }
+        static var docsLinkLabel: String { localized("settings.ynh.docs.link.label") }
     }
 }
 
@@ -991,6 +995,7 @@ extension Strings {
         static var uninstallAlertConfirm: String { localized("harnesses.uninstall.alert.confirm") }
         static var moreActionsHelp: String { localized("harnesses.more.actions.help") }
         static var copyRunCommand: String { localized("harnesses.copy.run.command") }
+        static var exportButton: String { localized("harnesses.export.button") }
         static var ynhDocumentation: String { localized("harnesses.ynh.documentation") }
         static var addRegistryTitle: String { localized("harnesses.add.registry.title") }
         static var addRegistryURLLabel: String { localized("harnesses.add.registry.url.label") }
@@ -1014,6 +1019,9 @@ extension Strings {
         static var rowRemove: String { localized("marketplace.row.remove") }
         static var rowStale: String { localized("marketplace.row.stale") }
         static var rowNeverFetched: String { localized("marketplace.row.never.fetched") }
+        static var refreshAllHelp: String { localized("marketplace.refresh.all.help") }
+        static var restoreDefaults: String { localized("marketplace.restore.defaults") }
+        static var restoreDefaultsHelp: String { localized("marketplace.restore.defaults.help") }
         static var addSheetTitle: String { localized("marketplace.add.sheet.title") }
         static var addTabKnown: String { localized("marketplace.add.tab.known") }
         static var addTabCustom: String { localized("marketplace.add.tab.custom") }

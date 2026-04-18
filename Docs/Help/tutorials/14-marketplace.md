@@ -21,27 +21,37 @@ TermQ clones the marketplace repo on demand and reads the index directly — no 
 
 ---
 
-## 14.2 — Adding a marketplace
+## 14.2 — Default marketplaces
 
-Open **Settings** (**⌘,**) and navigate to the **Marketplaces** tab.
+On first launch, TermQ automatically adds two default marketplaces:
 
-![Marketplaces settings tab](../Images/marketplace-settings.png)
+- **Claude Plugins Official** (`github.com/anthropics/claude-plugins-official`) — Anthropic's curated catalogue
+- **eyelock assistants** (`github.com/eyelock/assistants`) — community plugins for TermQ and YNH workflows
 
-Click **Add Marketplace…**. The sheet asks for:
-- **Git URL** — the HTTPS clone URL of the marketplace repository
-- **Vendor** — whether the index follows the Claude or Cursor layout
+These are fetched in the background immediately after being added. If you remove them and want them back, open the **Marketplaces** sidebar tab and click **Restore Defaults** — it re-adds any defaults that are missing without duplicating ones you still have.
 
-Click **Add**. TermQ stores the marketplace in its own config (under `~/Library/Application Support/TermQ/marketplaces.json`) and immediately kicks off the first fetch in the background.
-
-> **Known marketplaces:** If TermQ recognises the URL you pasted, it auto-fills the vendor and a friendly display name.
-
-The settings row updates once the fetch completes, showing the last-fetched timestamp. If the fetch fails (bad URL, no network), the row shows the error inline.
-
-**Auto-refresh:** Toggle *Refresh marketplaces on launch* (also in the Marketplaces settings tab) to keep indices current without manual intervention.
+The Marketplaces sidebar header has two buttons: **+** (add a new marketplace) and **↺** (refresh all). Use **↺** to manually re-fetch all marketplace indices at once.
 
 ---
 
-## 14.3 — Browsing the marketplace
+## 14.3 — Adding a custom marketplace
+
+Click **+** in the Marketplaces sidebar header, or open **Settings** (**⌘,**) → **Marketplaces**.
+
+The **Add Marketplace** sheet has two tabs:
+
+- **Known** — a list of well-known marketplaces TermQ recognises; click **Add** on any row
+- **Custom** — paste any HTTPS Git URL and pick the vendor layout (Claude or Cursor)
+
+Click **Add**. TermQ stores the marketplace in its own config (under `~/Library/Application Support/TermQ/marketplaces.json`) and immediately kicks off the first fetch in the background.
+
+> **Known marketplaces:** If TermQ recognises the URL you pasted in Custom tab, it auto-fills the vendor and a friendly display name.
+
+The settings row updates once the fetch completes, showing the last-fetched timestamp. If the fetch fails (bad URL, no network), the row shows the error inline.
+
+---
+
+## 14.4 — Browsing the marketplace
 
 The marketplace browser lives in the **Sidebar** under the Marketplaces section. Select a marketplace from the list to open its plugin catalogue.
 
@@ -59,7 +69,7 @@ Click a plugin to open the detail pane, which shows the full description, tags, 
 
 ---
 
-## 14.4 — Adding plugins to a harness
+## 14.5 — Adding plugins to a harness
 
 With the plugin detail pane open, click **Add to Harness…**. The **HarnessIncludePicker** sheet opens.
 
@@ -77,7 +87,7 @@ Click **Add**. TermQ runs the command in a transient terminal pane at the bottom
 
 ---
 
-## 14.5 — Default author directory
+## 14.6 — Default author directory
 
 Before creating a harness, tell TermQ where to scaffold new harnesses by default. Open **Settings → Marketplaces → Default Author Directory** and click **Browse…**.
 
@@ -89,7 +99,7 @@ If you don't set a default, the wizard falls back to the harnesses directory YNH
 
 ---
 
-## 14.6 — Creating a harness with the wizard
+## 14.7 — Creating a harness with the wizard
 
 Click the **wand** button (✦) in the Harnesses sidebar header. The **New Harness** wizard opens.
 
@@ -125,7 +135,7 @@ On success, the wizard shows a completion overlay with three options:
 
 ---
 
-## 14.7 — The typical authoring loop
+## 14.8 — The typical authoring loop
 
 A complete session — from idea to populated harness — looks like this:
 
@@ -138,7 +148,7 @@ For iterative authoring (adding more plugins later), just open the harness detai
 
 ---
 
-## 14.8 — What's next
+## 14.9 — What's next
 
 You've covered the complete lifecycle: add a marketplace, browse plugins, add content to a harness, and create new harnesses from scratch.
 

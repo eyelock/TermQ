@@ -57,6 +57,33 @@ When YNH is installed and ready, the harness list appears.
 
 Click the **+** button in the Harnesses tab header. The **Install Harness** sheet opens with three tabs.
 
+### Step 0 — Add a registry first (recommended)
+
+Search only finds harnesses in configured YNH registries. On a fresh YNH install, no registries are configured, so the Search tab will be empty.
+
+Click the **globe** (🌐) button in the Harnesses sidebar header to add a registry.
+
+![Add Registry Sheet](../Images/harness-add-registry.png)
+
+**Walk-through: add the eyelock/assistants registry**
+
+1. Click the **globe** button.
+2. Paste this URL into the **Registry URL** field:
+   ```
+   https://github.com/eyelock/assistants
+   ```
+3. Click **Add**. TermQ runs `ynh registry add https://github.com/eyelock/assistants` in a transient terminal, which clones the registry index locally. The terminal auto-closes on success.
+
+Once the registry is added, open the **Install Harness** sheet (**+** button) and switch to **Search** — harnesses from `eyelock/assistants` now appear in search results.
+
+**Install a harness from search:**
+
+1. Click **+** to open the Install sheet.
+2. Type a search term — for example `dev` or `ynh-dev`.
+3. Click **Install** next to the harness you want.
+
+TermQ runs `ynh install \<name\>`, streams the output in a transient terminal, and auto-closes on success. The harness appears in the sidebar list immediately.
+
 ### Search
 
 ![Install Sheet — Search](../Images/harness-install-sheet-search.png)
@@ -65,7 +92,7 @@ The Search tab queries configured YNH registries and local sources via `ynh sear
 
 Click **Install** on any row. TermQ opens a transient terminal tab running `ynh install \<name\>`, shows the output, and auto-closes the tab on success.
 
-> **No search results?** Search only finds harnesses in configured registries and sources. If you haven't added either, Search will always be empty — use the Git or Sources tabs instead.
+> **No search results?** Add a registry first — see Step 0 above. If registries are configured and results are still empty, the registry index may not contain a harness matching your search term.
 
 ### From Git
 
@@ -105,15 +132,25 @@ The pane is split into sections:
 
 ## 13.6 — Linking a worktree to a harness
 
-This is the connective tissue that makes harnesses useful: tell TermQ which harness a worktree should use, and every terminal launched at that worktree inherits the harness configuration.
+This is the connective tissue that makes harnesses useful: tell TermQ which harness a worktree should use, and clicking the worktree row will launch it automatically.
 
-Switch to the **Repositories** tab. Right-click any worktree row.
+### Repository default vs. worktree override
 
-![Worktree Context Menu](../Images/harness-worktree-context-menu.png)
+There are two levels of linkage, both accessible from the **Repositories** sidebar:
 
-Use **Set Harness…** to pick from your installed list, or **Clear Harness** to unlink. The choice persists in TermQ's `ynh.json` (never in YNH's own storage — TermQ owns its side of the mapping).
+**Repository default:** Right-click the **repo header row** (the row showing the repo name). Choose **Set Harness…** to pick a default that applies to every worktree in that repo unless overridden. A green jigsaw icon appears on the repo header.
 
-Once linked, the worktree row shows a harness chip, and the context menu gains a **Launch \<harness-name\>** item that skips the usual picker.
+**Worktree override:** Right-click any **worktree row** — including the main worktree. Choose **Set Harness…** to assign a harness specifically to that worktree. An orange jigsaw icon appears on the row.
+
+Worktrees that inherit from the repo default (no own override) show a dimmed jigsaw badge.
+
+The choice persists in TermQ's `ynh.json` (never in YNH's own storage — TermQ owns its side of the mapping).
+
+### Auto-launch
+
+Once a harness is linked, **clicking the branch name** in the worktree row launches it immediately — no sheet, no prompts. TermQ creates a transient terminal running `ynh run <harness>` at the worktree path.
+
+The context menu also gains a **Launch `<harness>`** item as the first entry, for when you want the full launch sheet (vendor, focus, backend, prompt options).
 
 ---
 
@@ -164,9 +201,31 @@ The same action is also in the right-click menu on any harness row, if you prefe
 
 ---
 
-## 13.10 — What's next
+## 13.10 — Exporting a harness as a marketplace package
 
-The Harnesses tab covers install, update, uninstall, launching, and worktree linkage.
+If you author harnesses and want to share them — or turn a private harness into a marketplace that other TermQ users can browse — you can export it directly from the sidebar.
+
+**Requires:** YND CLI installed (the `ynd` authoring toolchain).
+
+Right-click a harness row and choose **Export as Marketplace…**.
+
+A directory picker opens. Choose where you want the export to land. TermQ then opens a transient terminal running:
+
+```
+ynd export <harness-path> -o <output-dir>
+```
+
+The output directory receives a `marketplace.json` index (in the appropriate vendor format) that TermQ — or any other YNH-compatible client — can consume as a marketplace source.
+
+The terminal stays open so you can read any output or errors. It auto-closes on success.
+
+> **Note:** Export requires the `ynd` binary (part of the YNH toolchain) in addition to `ynh`. If `ynd` is not detected, the menu item is absent.
+
+---
+
+## 13.11 — What's next
+
+The Harnesses tab covers install, update, uninstall, launching, worktree linkage, and export.
 
 To go further — creating a new harness from scratch and populating it with skills and agents from community marketplaces — continue to **[Tutorial 14: Marketplace Browser & Harness Authoring](14-marketplace.md)**.
 

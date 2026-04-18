@@ -160,10 +160,12 @@ class BoardViewModel: ObservableObject {
 
         let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
 
         let card = board.addCard(
             to: column,
             workingDirectory: workingDirectory,
+            safePasteEnabled: defaultSafePaste,
             backend: defaultBackend
         )
         objectWillChange.send()
@@ -179,10 +181,12 @@ class BoardViewModel: ObservableObject {
             UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
         let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
 
         let card = board.addCard(
             to: column,
             workingDirectory: defaultWorkingDirectory,
+            safePasteEnabled: defaultSafePaste,
             backend: defaultBackend
         )
         objectWillChange.send()
@@ -482,11 +486,13 @@ class BoardViewModel: ObservableObject {
 
         let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
 
         let card = TerminalCard(
             title: title,
             columnId: column.id,
             workingDirectory: path,
+            safePasteEnabled: defaultSafePaste,
             backend: defaultBackend
         )
         card.isTransient = true
@@ -531,11 +537,13 @@ class BoardViewModel: ObservableObject {
         // Use the user's chosen default backend, falling back to direct if unavailable
         let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
 
         let card = TerminalCard(
             title: title,
             columnId: column.id,
             workingDirectory: workingDirectory,
+            safePasteEnabled: defaultSafePaste,
             backend: defaultBackend
         )
         card.isTransient = true

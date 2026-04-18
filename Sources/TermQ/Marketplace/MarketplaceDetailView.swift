@@ -9,6 +9,7 @@ struct MarketplaceDetailView: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var harnessRepository: HarnessRepository
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var store: MarketplaceStore = .shared
 
     @State private var searchText = ""
     @State private var pickerPlugin: MarketplacePlugin?
@@ -41,15 +42,24 @@ struct MarketplaceDetailView: View {
             }
         }
         .frame(minWidth: 560, minHeight: 480)
+        .task {
+            if marketplace.lastFetched == nil {
+                await refreshMarketplace()
+            }
+        }
         .sheet(item: $pickerPlugin) { plugin in
+            let targetHarness = store.preselectedHarnessTarget
             NavigationStack {
                 HarnessIncludePicker(
                     plugin: plugin,
                     marketplace: marketplace,
                     harnessRepository: harnessRepository,
                     detector: detector,
-                    mode: .standalone,
-                    onDone: { pickerPlugin = nil }
+                    mode: targetHarness.map { .wizard(harnessName: $0) } ?? .standalone,
+                    onDone: {
+                        store.preselectedHarnessTarget = nil
+                        pickerPlugin = nil
+                    }
                 )
             }
         }
@@ -161,12 +171,18 @@ struct MarketplaceDetailView: View {
 
     private var emptyState: some View {
         VStack(spacing: 8) {
-            Image(systemName: "storefront")
-                .font(.system(size: 36)).foregroundColor(.secondary)
-            Text(Strings.Marketplace.detailEmpty)
-                .font(.callout).foregroundColor(.secondary)
-            Text(Strings.Marketplace.detailEmptyHint)
-                .font(.caption).foregroundColor(.secondary)
+            if isRefreshing {
+                ProgressView()
+                Text(Strings.Marketplace.detailEmptyHint)
+                    .font(.caption).foregroundColor(.secondary)
+            } else {
+                Image(systemName: "storefront")
+                    .font(.system(size: 36)).foregroundColor(.secondary)
+                Text(Strings.Marketplace.detailEmpty)
+                    .font(.callout).foregroundColor(.secondary)
+                Text(Strings.Marketplace.detailEmptyHint)
+                    .font(.caption).foregroundColor(.secondary)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

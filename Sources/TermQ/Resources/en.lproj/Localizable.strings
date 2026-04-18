@@ -92,6 +92,7 @@
 "toolbar.new.terminal" = "New Terminal";
 "toolbar.new.column" = "New Column";
 "toolbar.bin.count %lld" = "Bin (%lld)";
+"toolbar.open.terminals.help" = "Open Terminals";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
@@ -415,6 +416,8 @@
 "settings.allow.osc.clipboard.help" = "Allow terminal programs to read and write the system clipboard using OSC 52 escape sequences";
 "settings.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
+"settings.default.safe.paste" = "Enable Safe Paste for New Terminals";
+"settings.default.safe.paste.help" = "New terminals will have Safe Paste enabled by default. You can override this per terminal in the card editor.";
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "External Sources";
@@ -709,6 +712,7 @@
 "harnesses.uninstall.alert.confirm" = "Uninstall";
 "harnesses.more.actions.help" = "More actions";
 "harnesses.copy.run.command" = "Copy Run Command";
+"harnesses.export.button" = "Export as Marketplace…";
 "harnesses.ynh.documentation" = "YNH Documentation";
 "harnesses.add.registry.title" = "Add YNH Registry";
 "harnesses.add.registry.url.label" = "Registry URL";
@@ -736,6 +740,7 @@
 "settings.ynh.ready.info" = "Toolchain detected and initialised. Enable the sidebar tab to browse harnesses.";
 "settings.ynh.advanced" = "Advanced";
 "settings.ynh.version.label" = "Version:";
+"settings.ynh.docs.link.label" = "YNH Documentation →";
 
 // MARK: - Marketplace sidebar tab
 "marketplace.title" = "Marketplaces";
@@ -747,6 +752,9 @@
 "marketplace.row.remove" = "Remove";
 "marketplace.row.stale" = " · May be outdated";
 "marketplace.row.never.fetched" = "Not yet fetched";
+"marketplace.refresh.all.help" = "Refresh all marketplaces";
+"marketplace.restore.defaults" = "Restore Defaults";
+"marketplace.restore.defaults.help" = "Re-add default marketplaces";
 "marketplace.add.sheet.title" = "Add Marketplace";
 "marketplace.add.tab.known" = "Known";
 "marketplace.add.tab.custom" = "Custom URL";
