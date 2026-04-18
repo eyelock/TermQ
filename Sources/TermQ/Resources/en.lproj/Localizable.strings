@@ -273,6 +273,10 @@
 "settings.field.default.working.directory.help" = "Default working directory for new terminals";
 "settings.field.default.backend" = "Default Backend";
 "settings.field.default.backend.help" = "Default backend (Direct or TMUX) for new terminals";
+"settings.scrollback.label" = "Scrollback";
+"settings.scrollback.unit" = "lines";
+"settings.scrollback.invalid" = "Enter a number between 500 and 100,000";
+"settings.scrollback.lines.help" = "Lines retained in scroll history (500–100,000). Changes apply to new terminals.";
 
 // Settings - Bin section
 "settings.section.bin" = "Bin";
@@ -584,6 +588,12 @@
 "sidebar.prune.worktrees.nothing.title" = "Nothing to Prune";
 "sidebar.prune.worktrees.nothing.message" = "All worktrees are accounted for. No stale records were found.";
 "sidebar.prune.worktrees.explanation" = "These administrative records point to directories that no longer exist. Pruning removes them — your branches are not affected.";
+"sidebar.prune.branches" = "Prune Merged Branches";
+"sidebar.prune.branches.title" = "Prune Merged Branches";
+"sidebar.prune.branches.confirm" = "Delete Branches";
+"sidebar.prune.branches.nothing.title" = "Nothing to Prune";
+"sidebar.prune.branches.nothing.message" = "No merged branches found. Any branches not yet merged into the remote default branch are kept.";
+"sidebar.prune.branches.explanation" = "These branches are fully merged into the remote default branch and have no active worktree. Deleting them is safe and cannot be undone.";
 
 // New worktree sheet
 "sidebar.new.worktree.title" = "New Worktree";
@@ -615,6 +625,8 @@
 "harnesses.init.required" = "ynh found but not initialised.\nRun `ynh init` to set up.";
 "harnesses.init.hint" = "Open a terminal and run:\nynh init";
 "harnesses.empty.message" = "No harnesses installed yet.";
+"harnesses.empty.no.registries.message" = "No harnesses or registries installed yet.";
+"harnesses.search.button" = "Search for Harnesses";
 
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
@@ -696,6 +708,11 @@
 "harnesses.install.search.placeholder" = "Search registries and sources…";
 "harnesses.install.search.prompt" = "Type to search registries and sources";
 "harnesses.install.search.empty" = "No results";
+"harnesses.install.section.installed" = "Installed";
+"harnesses.install.section.available" = "Available from Registries";
+"harnesses.install.section.local" = "Available Locally";
+"harnesses.install.browsing" = "Loading available harnesses…";
+"harnesses.install.retry" = "Retry";
 "harnesses.install.git.url" = "Git URL";
 "harnesses.install.git.url.placeholder" = "github.com/user/repo";
 "harnesses.install.git.subpath" = "Subpath";
@@ -730,6 +747,9 @@
 "harnesses.add.registry.button" = "Add Registry";
 "harnesses.add.registry.success" = "Registry added successfully";
 "harnesses.add.registry.toolbar.help" = "Add a YNH registry";
+"harnesses.add.sample.button" = "Add sample eyelock/assistants";
+"harnesses.group.menu.settings" = "Settings…";
+"harnesses.create.harness.button" = "Create a new harness";
 
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
@@ -804,6 +824,12 @@
 "marketplace.picker.done" = "Done";
 "marketplace.picker.back" = "Back";
 "marketplace.picker.next" = "Next";
+
+// MARK: - Harness Duplicate
+"harness.duplicate.title" = "Duplicate Harness";
+"harness.duplicate.button" = "Duplicate";
+"harness.duplicate.installing" = "Installing duplicate…";
+"harness.duplicate.success %@" = "%@ installed successfully.";
 
 // MARK: - Harness Wizard
 "harness.wizard.title" = "New Harness";

@@ -19,7 +19,7 @@ The Harnesses tab brings this workflow into TermQ directly:
 - Browse and install harnesses from registries, Git, or local source directories
 - View a full breakdown of what each harness contains (hooks, MCP servers, profiles, focuses)
 - Link git worktrees to harnesses so launching a terminal "just works"
-- Update and uninstall harnesses with one right-click
+- Update, duplicate, and uninstall harnesses with one right-click
 
 ![Harnesses Sidebar Overview](../Images/harness-sidebar-overview.png)
 
@@ -53,60 +53,43 @@ When YNH is installed and ready, the harness list appears.
 
 ---
 
-## 13.4 — Installing your first harness
+## 13.4 — Installing a harness
 
-Click the **+** button in the Harnesses tab header. The **Install Harness** sheet opens with three tabs.
+Click the **+** button in the Harnesses tab header. The **Install Harness** sheet opens with three tabs: **Search**, **From Git**, and **Sources**.
 
-### Step 0 — Add a registry first (recommended)
+### Search tab — browse and discover
 
-Search only finds harnesses in configured YNH registries. On a fresh YNH install, no registries are configured, so the Search tab will be empty.
+![Install Sheet — browse mode](../Images/harness-install-browse.png)
 
-Click the **globe** (🌐) button in the Harnesses sidebar header to add a registry.
+The Search tab opens in **browse mode** immediately — no typing required. TermQ queries all configured registries and local sources in the background and organises results into three sections:
 
-![Add Registry Sheet](../Images/harness-add-registry.png)
+- **Installed** — harnesses you already have, shown for reference
+- **Available from Registries** — harnesses in your configured YNH registries that aren't yet installed. Each row shows a coloured registry pill (blue) alongside the vendor chips.
+- **Available Locally** — harnesses found in configured local sources that aren't installed. These show a grey source pill and are typically your own forks or experiments.
 
-**Walk-through: add the eyelock/assistants registry**
+![Install Sheet — search results](../Images/harness-install-search-results.png)
 
-1. Click the **globe** button.
-2. Paste this URL into the **Registry URL** field:
-   ```
-   https://github.com/eyelock/assistants
-   ```
-3. Click **Add**. TermQ runs `ynh registry add https://github.com/eyelock/assistants` in a transient terminal, which clones the registry index locally. The terminal auto-closes on success.
+Type in the search field to filter. Results update live across all configured registries and sources as you type. Clear the field to return to browse mode.
 
-Once the registry is added, open the **Install Harness** sheet (**+** button) and switch to **Search** — harnesses from `eyelock/assistants` now appear in search results.
+Click **Install** on any row. TermQ opens a transient terminal running `ynh install <name>`, streams the output, and auto-closes on success. The harness appears in the sidebar immediately.
 
-**Install a harness from search:**
+> **Empty registries section?** Add a registry first — click the **globe** button in the Harnesses sidebar header. See §13.3 for a walk-through.
 
-1. Click **+** to open the Install sheet.
-2. Type a search term — for example `dev` or `ynh-dev`.
-3. Click **Install** next to the harness you want.
-
-TermQ runs `ynh install \<name\>`, streams the output in a transient terminal, and auto-closes on success. The harness appears in the sidebar list immediately.
-
-### Search
-
-![Install Sheet — Search](../Images/harness-install-sheet-search.png)
-
-The Search tab queries configured YNH registries and local sources via `ynh search`. Type a term — results update live. Each row shows the harness name, version, description, vendor chips, and where it came from ("from \<registry\>" or "from \<source\>").
-
-Click **Install** on any row. TermQ opens a transient terminal tab running `ynh install \<name\>`, shows the output, and auto-closes the tab on success.
-
-> **No search results?** Add a registry first — see Step 0 above. If registries are configured and results are still empty, the registry index may not contain a harness matching your search term.
+> **No locally available section?** Local sources aren't configured yet — use the **Sources** tab to add one.
 
 ### From Git
 
 ![Install Sheet — From Git](../Images/harness-install-sheet-git.png)
 
-Install directly from any Git URL. The Subpath field is optional — use it when a monorepo has a harness at `ynh/my-harness` rather than at the root.
+Install directly from any Git URL. The Subpath field is optional — use it when a monorepo has a harness at `ynh/my-harness` rather than the repo root.
 
-A live command preview shows the exact `ynh install` invocation TermQ will run, so you can sanity-check the URL before clicking **Install**.
+A live command preview shows the exact `ynh install` invocation TermQ will run, so you can verify before clicking **Install**.
 
 ### Sources
 
 ![Install Sheet — Sources](../Images/harness-install-sheet-sources.png)
 
-Local source directories are places YNH searches when you run `ynh search` or `ynh install \<name\>`. They're ideal for harnesses you're authoring locally and iterating on.
+Local source directories are places YNH searches when you run `ynh search` or `ynh install <name>`. They're ideal for harnesses you're authoring locally and iterating on — changes you make on disk are picked up immediately without reinstalling.
 
 Click **Add Source…** to pick a directory. The row shows the source name, path, and harness count — the count renders in orange when zero, which usually means the directory doesn't contain any `.harness.json` files yet.
 
@@ -223,10 +206,34 @@ The terminal stays open so you can read any output or errors. It auto-closes on 
 
 ---
 
-## 13.11 — What's next
+## 13.11 — Duplicating a harness
 
-The Harnesses tab covers install, update, uninstall, launching, worktree linkage, and export.
+Duplicating creates a new locally-owned harness that starts from the same configuration as an existing one — same vendor, same includes, same hooks. Use it when you want to build a customised variant of a registry harness without modifying the original.
 
-To go further — creating a new harness from scratch and populating it with skills and agents from community marketplaces — continue to **[Tutorial 14: Marketplace Browser & Harness Authoring](14-marketplace.md)**.
+Right-click any harness row and choose **Duplicate**.
+
+![Duplicate context menu](../Images/harness-duplicate-menu.png)
+
+The **Duplicate Harness** sheet opens with a suggested name (`copy-of-<original>`) and your default harness directory pre-filled as the destination.
+
+![Duplicate Harness sheet](../Images/harness-duplicate-sheet.png)
+
+Change the name to whatever you want, adjust the destination if needed, then click **Duplicate**. TermQ:
+
+1. Reads the source harness manifest
+2. Writes a new `harness.json` with your chosen name at `<destination>/<name>/`
+3. Runs `ynh install <path>` to register it
+
+The new harness appears in the **Local** group of the sidebar immediately. From there you can add artifacts, modify includes, attach MCP servers, or link it to worktrees — the same as any other locally-authored harness.
+
+> **Tip:** The destination is independent of the original. The duplicate is fully self-contained — updating or uninstalling the original has no effect on the copy.
+
+---
+
+## 13.12 — What's next
+
+The Harnesses tab covers install, update, duplicate, uninstall, launching, worktree linkage, and export.
+
+To go further — creating a new harness from scratch and populating it with skills and agents from community marketplaces — continue to **[Tutorial 14: Marketplace Browser &amp; Harness Authoring](14-marketplace.md)**.
 
 > **Feedback:** the Harnesses tab is deliberately feature-flagged for 0.8 so we can iterate on the rough edges. If something feels wrong, please [open an issue](https://github.com/eyelock/termq/issues).

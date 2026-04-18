@@ -224,6 +224,26 @@ You can also reach this sheet from two other entry points without knowing which 
 
 > **Difference from New Worktree:** The standard **New Worktree** action creates a fresh branch (`git worktree add -b`). **New Worktree from Branch** checks out an existing branch without creating anything new.
 
+### Prune merged branches
+
+Over time, the **Local Branches** list fills with branches whose work is long since merged and forgotten. **Prune Merged Branches** removes them all at once.
+
+Right-click the **LOCAL BRANCHES** section header and choose **Prune Merged Branches**.
+
+![Prune Merged Branches context menu](../Images/worktree-prune-branches-menu.png)
+
+TermQ opens a sheet and runs `git branch --merged` against the remote default branch in the background. Once analysis completes, the sheet lists every branch that is safe to delete: fully merged into the remote default branch and not currently checked out as a worktree. Branches with active worktrees are always excluded.
+
+![Prune Merged Branches sheet with results](../Images/prune-branches-with-list.png)
+
+If every branch is still live, TermQ says so inline.
+
+![Prune Merged Branches sheet — nothing to prune](../Images/prune-branches-no-results.png)
+
+Review the list, then click **Delete Branches**. TermQ deletes each branch with `git branch -d` — the safe-delete flag that refuses to remove anything not fully merged, so there is no risk of losing unmerged work. The **Local Branches** section updates immediately when the sheet closes.
+
+> **How branches are protected:** The remote default branch is detected dynamically via `git symbolic-ref refs/remotes/origin/HEAD` — no branch names are hardcoded. Any branch that is checked out in an active worktree is also excluded, regardless of its merge state.
+
 ---
 
 ## 12.9 — Remote links
@@ -250,6 +270,7 @@ TermQ constructs the URL from the repo's `origin` remote, converting SSH remotes
 - **Force Delete** bypasses all safety checks and deletes the directory; use with caution
 - **Prune** cleans up stale git records for worktrees whose directories no longer exist
 - **Local Branches** shows branches that exist locally but have no worktree; right-click any row → **New Worktree** to check it out as a worktree instantly
+- **Prune Merged Branches** removes branches fully merged into the remote default; right-click the **LOCAL BRANCHES** header to access it — active worktrees and the default branch are always protected
 
 ## Next
 

@@ -95,6 +95,9 @@ class TermQTerminalView: LocalProcessTerminalView {
             else { return event }
 
             self.lastUserInputTime = Date()
+            #if TERMQ_DEBUG_BUILD
+            TermQLogger.io.debug("keyDown allowMouseReporting=\(self.allowMouseReporting)")
+            #endif
 
             // Intercept Cmd+C when a drag-selection is live (allowMouseReporting == false).
             // SwiftTerm's keyDown clears selection.active before calling copy: via interpretKeyEvents,
@@ -122,6 +125,14 @@ class TermQTerminalView: LocalProcessTerminalView {
 
     /// Called when terminal view needs redrawing (indicates new content)
     override func setNeedsDisplay(_ invalidRect: NSRect) {
+        #if TERMQ_DEBUG_BUILD
+        let sinceInput = Date().timeIntervalSince(lastUserInputTime)
+        if sinceInput < 2.0 {
+            TermQLogger.io.debug(
+                "setNeedsDisplay sinceUserInput=\(String(format: "%.2f", sinceInput))s allowMouseReporting=\(self.allowMouseReporting)"
+            )
+        }
+        #endif
         super.setNeedsDisplay(invalidRect)
 
         // Only trigger activity if:

@@ -24,6 +24,7 @@ struct WorktreeSidebarView: View {
     @State private var pruneStaleEntries: [String] = []
     @State private var isShowingPruneNothingAlert = false
     @State private var isPruneAnalysing = false
+    @State private var pruneBranchesSheetFor: ObservableRepository?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -55,6 +56,9 @@ struct WorktreeSidebarView: View {
         }
         .sheet(item: $pruneSheetFor) { repo in
             PruneWorktreesSheet(repo: repo, staleEntries: pruneStaleEntries, viewModel: viewModel)
+        }
+        .sheet(item: $pruneBranchesSheetFor) { repo in
+            PruneBranchesSheet(repo: repo, viewModel: viewModel)
         }
         .alert(Strings.Sidebar.pruneWorktreesNothingTitle, isPresented: $isShowingPruneNothingAlert) {
             Button(Strings.Common.ok) {}
@@ -300,7 +304,11 @@ struct WorktreeSidebarView: View {
 
             // Local branches without worktrees
             if let branches = viewModel.availableBranches[repo.id], !branches.isEmpty {
-                BranchSectionDisclosureView(repo: repo, viewModel: viewModel) {
+                BranchSectionDisclosureView(
+                    repo: repo,
+                    viewModel: viewModel,
+                    onPruneBranches: { analyseAndPruneBranches(repo: repo) }
+                ) {
                     ForEach(branches, id: \.self) { branch in
                         branchRow(branch, repo: repo)
                     }
@@ -555,6 +563,10 @@ struct WorktreeSidebarView: View {
         }
     }
 
+    private func analyseAndPruneBranches(repo: ObservableRepository) {
+        pruneBranchesSheetFor = repo
+    }
+
 }
 
 // MARK: - Remote Navigation
@@ -714,15 +726,18 @@ private struct BranchSectionDisclosureView<Content: View>: View {
     let repo: ObservableRepository
     @ObservedObject var viewModel: WorktreeSidebarViewModel
     @ViewBuilder let content: () -> Content
+    var onPruneBranches: (() -> Void)?
     @State private var isExpanded: Bool
 
     init(
         repo: ObservableRepository,
         viewModel: WorktreeSidebarViewModel,
+        onPruneBranches: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.repo = repo
         self.viewModel = viewModel
+        self.onPruneBranches = onPruneBranches
         self.content = content
         self._isExpanded = State(initialValue: viewModel.expandedBranchSectionIDs.contains(repo.id))
     }
@@ -735,6 +750,13 @@ private struct BranchSectionDisclosureView<Content: View>: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .textCase(.uppercase)
+                .contextMenu {
+                    Button {
+                        onPruneBranches?()
+                    } label: {
+                        Label(Strings.Sidebar.pruneBranches, systemImage: "scissors")
+                    }
+                }
         }
         .onChange(of: isExpanded) { _, newValue in
             viewModel.setBranchSectionExpanded(repo.id, expanded: newValue)

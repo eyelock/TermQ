@@ -135,20 +135,17 @@ struct SettingsMarketplacesView: View {
 
     @ViewBuilder
     private func marketplaceRow(_ marketplace: Marketplace) -> some View {
+        let name = marketplace.name.isEmpty ? GitURLHelper.shortURL(marketplace.url) : marketplace.name
+        let browserURL: URL? = marketplace.url.hasPrefix("http")
+            ? URL(string: marketplace.url)
+            : GitURLHelper.browserURL(for: marketplace.url)
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(marketplace.vendor.displayName)
-                    .fontWeight(.medium)
-                if let fetched = marketplace.lastFetched {
-                    Text(fetched, style: .relative)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                } else {
-                    Text(Strings.Settings.Marketplaces.neverFetched)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
+            ExternalSourceRowLabel(
+                name: name,
+                shortURL: GitURLHelper.shortURL(marketplace.url),
+                description: marketplace.description,
+                browserURL: browserURL
+            )
             Spacer()
             Button(role: .destructive) {
                 marketplaceToRemove = marketplace
@@ -164,22 +161,12 @@ struct SettingsMarketplacesView: View {
     @ViewBuilder
     private func registryRow(_ registry: YNHRegistry, ynhPath: String) -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(registry.name)
-                    .fontWeight(.medium)
-                if let description = registry.description, !description.isEmpty {
-                    Text(description)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(2)
-                } else {
-                    Text(registry.url)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                        .truncationMode(.middle)
-                }
-            }
+            ExternalSourceRowLabel(
+                name: registry.name,
+                shortURL: GitURLHelper.shortURL(registry.url),
+                description: registry.description,
+                browserURL: GitURLHelper.browserURL(for: registry.url)
+            )
             Spacer()
             Button(role: .destructive) {
                 registryToRemove = registry
@@ -209,10 +196,51 @@ struct SettingsMarketplacesView: View {
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = true
         Task {
             let response = await panel.begin()
             if response == .OK, let url = panel.url {
                 defaultHarnessAuthorDirectory = url.path(percentEncoded: false)
+            }
+        }
+    }
+}
+
+/// Standardised label for marketplace and registry rows: name (clickable link) + org/repo + description.
+private struct ExternalSourceRowLabel: View {
+    let name: String
+    let shortURL: String
+    let description: String?
+    let browserURL: URL?
+
+    @State private var isHovering = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Group {
+                if let url = browserURL {
+                    Text(name)
+                        .fontWeight(.medium)
+                        .foregroundStyle(isHovering ? Color.accentColor : Color.primary)
+                        .underline(isHovering)
+                        .onHover { hovering in
+                            isHovering = hovering
+                            if hovering { NSCursor.pointingHand.push() } else { NSCursor.pop() }
+                        }
+                        .onTapGesture { NSWorkspace.shared.open(url) }
+                } else {
+                    Text(name)
+                        .fontWeight(.medium)
+                }
+            }
+            Text(shortURL)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            if let desc = description, !desc.isEmpty {
+                Text(desc)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
             }
         }
     }

@@ -334,6 +334,7 @@ struct HarnessWizardSheet: View {
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = true
         Task {
             let response = await panel.begin()
             if response == .OK, let url = panel.url {
