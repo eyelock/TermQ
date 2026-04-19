@@ -44,7 +44,7 @@ jobs:
           cp Docs/appcast-beta.xml _site/appcast-beta.xml
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: '_site'
 
