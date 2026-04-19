@@ -129,6 +129,33 @@ public class GitService {
 
     // MARK: - Branch Operations
 
+    /// Find local branches that are fully merged into the remote default branch and have no
+    /// active worktree. The default branch is detected dynamically via `origin/HEAD` — no
+    /// branch names are hardcoded.
+    ///
+    /// Returns branch names safe to delete with `git branch -d`.
+    public func mergedLocalBranches(repoPath: String) async throws -> [String] {
+        let remote = "origin/\(await defaultBranch(repoPath: repoPath))"
+        let output = try await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["branch", "--merged", remote, "--format=%(refname:short)"]
+        )
+        let candidates = output
+            .components(separatedBy: "\n")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+
+        let worktrees = try await GitServiceShared.listWorktrees(repoPath: repoPath)
+        let occupied = Set(worktrees.compactMap(\.branch))
+
+        return candidates.filter { !occupied.contains($0) }
+    }
+
+    /// Safe-delete a local branch (`git branch -d`). Throws if not fully merged.
+    public func deleteLocalBranch(repoPath: String, branch: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(repoPath: repoPath, args: ["branch", "-d", branch])
+    }
+
     /// List local branches for the repository at `repoPath`.
     public func listBranches(repoPath: String) async throws -> [String] {
         let output = try await GitServiceShared.runGitCommand(
