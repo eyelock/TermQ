@@ -46,6 +46,9 @@ ehthumbs.db
 # Logs
 *.log
 
+# Git worktrees
+.worktrees/
+
 # Claude Code - Personal and temporary files
 .claude/settings.local.json
 .claude/plans
