@@ -11,7 +11,7 @@ struct AddRegistrySheet: View {
     @State private var done = false
 
     private var ynhPath: String? {
-        if case .ready(let p, _, _) = detector.status { return p }
+        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
         return nil
     }
 

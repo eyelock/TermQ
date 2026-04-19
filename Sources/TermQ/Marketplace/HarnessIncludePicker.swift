@@ -30,7 +30,7 @@ struct HarnessIncludePicker: View {
     @State private var resolvedPicks: [String] = []
 
     private var ynhPath: String? {
-        if case .ready(let p, _, _) = detector.status { return p }
+        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
         return nil
     }
 
@@ -263,7 +263,7 @@ struct HarnessIncludePicker: View {
 
     private var commandPreview: String {
         var parts = ["ynh", "include", "add", targetHarnessName ?? "<harness>", plugin.source.url]
-        if let p = plugin.source.path { parts += ["--path", p] }
+        if let path = plugin.source.path { parts += ["--path", path] }
         let pick = Array(selectedPicks).sorted()
         if !pick.isEmpty && pick.count < resolvedPicks.count {
             let bareNames = pick.map { $0.components(separatedBy: "/").last ?? $0 }

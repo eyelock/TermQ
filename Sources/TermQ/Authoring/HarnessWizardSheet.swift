@@ -30,11 +30,11 @@ struct HarnessWizardSheet: View {
     enum WizardStep { case identity, create }
 
     private var ynhPath: String? {
-        if case .ready(let p, _, _) = detector.status { return p }
+        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
         return nil
     }
     private var yndPath: String? {
-        if case .ready(_, let d, _) = detector.status { return d }
+        if case .ready(_, let yndPath, _) = detector.status { return yndPath }
         return nil
     }
     private var ynhEnvironment: [String: String] {

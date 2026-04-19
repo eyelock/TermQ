@@ -22,7 +22,7 @@ struct DuplicateHarnessSheet: View {
     @State private var errorMessage: String?
 
     private var ynhPath: String? {
-        if case .ready(let p, _, _) = detector.status { return p }
+        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
         return nil
     }
     private var ynhEnvironment: [String: String] {
@@ -58,7 +58,9 @@ struct DuplicateHarnessSheet: View {
             Text(Strings.HarnessDuplicate.title)
                 .font(.headline)
             Spacer()
-            Button { dismiss() } label: {
+            Button {
+                dismiss()
+            } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title2).foregroundColor(.secondary)
             }
@@ -219,7 +221,8 @@ struct DuplicateHarnessSheet: View {
 
             // Write .harness.json — ynh install expects this filename in the source directory
             let destManifest = (newDir as NSString).appendingPathComponent(".harness.json")
-            let outData = try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
+            let outData = try JSONSerialization.data(
+                withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
             try outData.write(to: URL(fileURLWithPath: destManifest))
 
             // ynh install <new-path>

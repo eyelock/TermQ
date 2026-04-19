@@ -22,6 +22,7 @@ struct ContentView: View {
     @State private var uninstallCardNames: [UUID: String] = [:]
     @State private var updateCardNames: [UUID: String] = [:]
     @State private var launchWorkingDirectory: String?
+    @State private var launchWorktreeBranch: String?
     /// Card that was selected before navigating to a harness detail, restored on dismiss.
     @State private var cardBeforeHarness: TerminalCard?
 
@@ -37,13 +38,14 @@ struct ContentView: View {
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
                     },
-                    onLaunchHarnessInWorktree: { harnessName, path in
+                    onLaunchHarnessInWorktree: { harnessName, path, branch in
                         harnessRepo.selectedHarnessName = harnessName
                         launchWorkingDirectory = path
+                        launchWorktreeBranch = branch
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
                     },
-                    onAutoLaunchHarness: { harnessName, path in
+                    onAutoLaunchHarness: { harnessName, path, branch in
                         let harness = harnessRepo.harnesses.first { $0.name == harnessName }
                         let config = HarnessLaunchConfig(
                             harnessName: harnessName,
@@ -53,7 +55,9 @@ struct ContentView: View {
                             workingDirectory: path,
                             prompt: nil,
                             backend: TerminalBackend(
-                                rawValue: UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct") ?? .direct
+                                rawValue: UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct")
+                                ?? .direct,
+                            branch: branch
                         )
                         launchHarness(config)
                     },
@@ -227,14 +231,18 @@ struct ContentView: View {
             }
             .sheet(
                 isPresented: $showLaunchSheet,
-                onDismiss: { launchWorkingDirectory = nil },
+                onDismiss: {
+                    launchWorkingDirectory = nil
+                    launchWorktreeBranch = nil
+                },
                 content: {
                     if let harness = harnessRepo.selectedHarness {
                         HarnessLaunchSheet(
                             harness: harness,
                             detail: harnessRepo.selectedDetail,
                             vendors: vendorService.vendors,
-                            initialWorkingDirectory: launchWorkingDirectory
+                            initialWorkingDirectory: launchWorkingDirectory,
+                            initialBranch: launchWorktreeBranch
                         ) { config in
                             launchHarness(config)
                         }
@@ -612,8 +620,8 @@ extension ContentView {
     }
 
     /// Wrap a string in single quotes for safe shell argument passing.
-    private func shellQuote(_ s: String) -> String {
-        "'" + s.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    private func shellQuote(_ str: String) -> String {
+        "'" + str.replacingOccurrences(of: "'", with: "'\\''") + "'"
     }
 
     /// Close a transient harness operation card once its shell has exited.
@@ -865,10 +873,20 @@ extension ContentView {
 
         let cardID = UUID()
         let sessionName = "termq-\(cardID.uuidString.prefix(8).lowercased())"
+        let shell =
+            ProcessInfo.processInfo.environment["SHELL"]
+            .map { URL(fileURLWithPath: $0).lastPathComponent } ?? "sh"
+        var allTags = config.tags.map { Tag(key: $0.key, value: $0.value) }
+        allTags.append(Tag(key: "backend", value: config.backend.tagValue))
+        allTags.append(Tag(key: "shell", value: shell))
+        if config.backend.usesTmux {
+            allTags.append(Tag(key: "session", value: sessionName))
+            allTags.append(Tag(key: "window", value: "0"))
+        }
         let card = TerminalCard(
             id: cardID,
-            title: config.harnessName,
-            tags: config.tags.map { Tag(key: $0.key, value: $0.value) },
+            title: config.branch ?? config.harnessName,
+            tags: allTags,
             columnId: column.id,
             workingDirectory: config.workingDirectory,
             initCommand: config.command(sessionName: sessionName),

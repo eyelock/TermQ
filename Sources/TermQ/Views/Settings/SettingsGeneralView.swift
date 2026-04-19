@@ -210,8 +210,8 @@ private struct ScrollbackField: View {
         Int(text.trimmingCharacters(in: .whitespaces))
     }
     private var isInvalid: Bool {
-        guard let v = parsedValue else { return !text.trimmingCharacters(in: .whitespaces).isEmpty }
-        return !range.contains(v)
+        guard let value = parsedValue else { return !text.trimmingCharacters(in: .whitespaces).isEmpty }
+        return !range.contains(value)
     }
 
     var body: some View {
@@ -225,7 +225,7 @@ private struct ScrollbackField: View {
                     .textFieldStyle(.roundedBorder)
                     .onSubmit { commit() }
                     .onChange(of: text) { _, _ in
-                        if let v = parsedValue, range.contains(v) { lines = v }
+                        if let value = parsedValue, range.contains(value) { lines = value }
                     }
                 Text(Strings.Settings.scrollbackUnit)
                     .foregroundColor(.secondary)
@@ -241,8 +241,8 @@ private struct ScrollbackField: View {
     }
 
     private func commit() {
-        if let v = parsedValue, range.contains(v) {
-            lines = v
+        if let value = parsedValue, range.contains(value) {
+            lines = value
         } else {
             text = "\(lines)"
         }

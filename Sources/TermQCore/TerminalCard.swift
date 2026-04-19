@@ -45,6 +45,15 @@ public enum TerminalBackend: String, Codable, CaseIterable, Sendable {
             return true
         }
     }
+
+    /// Short tag value for the `backend` auto-tag
+    public var tagValue: String {
+        switch self {
+        case .direct: return "pty"
+        case .tmuxAttach: return "tmux-attach"
+        case .tmuxControl: return "tmux-control"
+        }
+    }
 }
 
 /// Represents a terminal instance with metadata

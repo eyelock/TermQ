@@ -479,8 +479,8 @@ extension TerminalSessionManager {
             proc.arguments = ["has-session", "-t", name]
             proc.standardOutput = Pipe()
             proc.standardError = Pipe()
-            proc.terminationHandler = { p in
-                continuation.resume(returning: p.terminationStatus == 0)
+            proc.terminationHandler = { terminatedProc in
+                continuation.resume(returning: terminatedProc.terminationStatus == 0)
             }
             try? proc.run()
         }

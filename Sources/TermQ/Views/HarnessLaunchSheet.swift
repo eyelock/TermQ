@@ -15,6 +15,7 @@ struct HarnessLaunchSheet: View {
     let detail: HarnessDetail?
     let vendors: [Vendor]
     let initialWorkingDirectory: String?
+    let initialBranch: String?
     let onLaunch: (HarnessLaunchConfig) -> Void
     @Environment(\.dismiss) private var dismiss
 
@@ -30,12 +31,14 @@ struct HarnessLaunchSheet: View {
         detail: HarnessDetail?,
         vendors: [Vendor],
         initialWorkingDirectory: String?,
+        initialBranch: String? = nil,
         onLaunch: @escaping (HarnessLaunchConfig) -> Void
     ) {
         self.harness = harness
         self.detail = detail
         self.vendors = vendors
         self.initialWorkingDirectory = initialWorkingDirectory
+        self.initialBranch = initialBranch
         self.onLaunch = onLaunch
         self._workingDirectory = State(initialValue: initialWorkingDirectory ?? NSHomeDirectory())
     }
@@ -169,7 +172,8 @@ struct HarnessLaunchSheet: View {
                             focus: selectedFocus.isEmpty ? nil : selectedFocus,
                             workingDirectory: workingDirectory,
                             prompt: prompt.isEmpty ? nil : prompt,
-                            backend: selectedBackend
+                            backend: selectedBackend,
+                            branch: initialBranch
                         )
                         onLaunch(config)
                         dismiss()
@@ -238,6 +242,8 @@ struct HarnessLaunchConfig {
     let workingDirectory: String
     let prompt: String?
     let backend: TerminalBackend
+    /// Branch name of the worktree this harness was launched from, if any.
+    let branch: String?
 
     /// Build the `ynh run` command string.
     /// Pass `sessionName` to bind the session to a specific tmux session name.
@@ -263,17 +269,21 @@ struct HarnessLaunchConfig {
         "'" + str.replacingOccurrences(of: "'", with: "'\\''") + "'"
     }
 
-    /// Tags to apply to the created Card.
+    /// Tags to apply to the created Card (excluding runtime-derived tags added in launchHarness).
     var tags: [(key: String, value: String)] {
         let vendorTag = vendorID.isEmpty ? defaultVendor : vendorID
         var result: [(key: String, value: String)] = [
-            ("harness", harnessName)
+            ("source", "harness"),
+            ("harness", harnessName),
         ]
         if !vendorTag.isEmpty {
             result.append(("vendor", vendorTag))
         }
         if let focus, !focus.isEmpty {
             result.append(("focus", focus))
+        }
+        if let branch, !branch.isEmpty {
+            result.append(("branch", branch))
         }
         return result
     }

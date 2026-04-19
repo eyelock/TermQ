@@ -73,10 +73,10 @@ struct HarnessesSidebarTab: View {
     }
 
     private func refreshRegistryService() {
-        guard case .ready(let p, _, _) = detector.status else { return }
+        guard case .ready(let ynhPath, _, _) = detector.status else { return }
         var env = ProcessInfo.processInfo.environment
         if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
-        Task { await registryService.refresh(ynhPath: p, environment: env) }
+        Task { await registryService.refresh(ynhPath: ynhPath, environment: env) }
     }
 
     // MARK: - Header
@@ -219,10 +219,11 @@ struct HarnessesSidebarTab: View {
                     Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
                 }
                 if let source = harness.installedFrom?.source,
-                   let url = GitURLHelper.browserURL(
-                       for: source,
-                       path: harness.installedFrom?.path
-                   ) {
+                    let url = GitURLHelper.browserURL(
+                        for: source,
+                        path: harness.installedFrom?.path
+                    )
+                {
                     Button {
                         NSWorkspace.shared.open(url)
                     } label: {
@@ -308,7 +309,8 @@ struct HarnessesSidebarTab: View {
             groups.append(HarnessGroup(title: Strings.Harnesses.groupGitHub(org), harnesses: harnesses, kind: .github))
         }
         for (name, harnesses) in byRegistry.sorted(by: { $0.key < $1.key }) {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupRegistry(name), harnesses: harnesses, kind: .registry))
+            groups.append(
+                HarnessGroup(title: Strings.Harnesses.groupRegistry(name), harnesses: harnesses, kind: .registry))
         }
         if !local.isEmpty {
             groups.append(HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: local, kind: .local))
@@ -363,7 +365,8 @@ struct HarnessesSidebarTab: View {
                 Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
             }
             if let source = group.harnesses.first?.installedFrom?.source,
-               let url = GitURLHelper.browserURL(for: source) {
+                let url = GitURLHelper.browserURL(for: source)
+            {
                 Button {
                     NSWorkspace.shared.open(url)
                 } label: {
@@ -395,7 +398,8 @@ struct HarnessesSidebarTab: View {
     }
 
     private func revealLocalGroupInFinder(_ group: HarnessGroup) {
-        let path = group.harnesses.first?.installedFrom?.source
+        let path =
+            group.harnesses.first?.installedFrom?.source
             ?? UserDefaults.standard.string(forKey: "defaultHarnessAuthorDirectory")
         guard let path, !path.isEmpty else { return }
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
@@ -449,7 +453,7 @@ struct HarnessesSidebarTab: View {
     }
 
     private var ynhPathFromDetector: String? {
-        if case .ready(let p, _, _) = detector.status { return p }
+        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
         return nil
     }
 

@@ -565,6 +565,7 @@ extension ToolsTabContent {
         case .missing:
             Link(
                 Strings.Settings.Ynh.docsLinkLabel,
+                // swiftlint:disable:next force_unwrapping
                 destination: URL(string: "https://eyelock.github.io/ynh")!
             )
             .font(.caption)
