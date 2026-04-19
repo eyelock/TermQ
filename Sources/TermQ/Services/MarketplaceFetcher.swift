@@ -241,9 +241,9 @@ enum MarketplaceFetcher {
     }
 
     /// FNV-1a 64-bit hash — deterministic across processes, no external dependencies.
-    private static func fnv1a64(_ s: String) -> String {
+    private static func fnv1a64(_ str: String) -> String {
         var hash: UInt64 = 14_695_981_039_346_656_037
-        for byte in s.utf8 {
+        for byte in str.utf8 {
             hash ^= UInt64(byte)
             hash = hash &* 1_099_511_628_211
         }
@@ -256,14 +256,14 @@ enum MarketplaceFetcher {
             return path
         }
         // Fallback: try `which git` synchronously (findGit is called from a background thread)
-        let p = Process()
+        let proc = Process()
         let out = Pipe()
-        p.executableURL = URL(fileURLWithPath: "/usr/bin/which")
-        p.arguments = ["git"]
-        p.standardOutput = out
-        p.standardError = Pipe()
-        if (try? p.run()) != nil {
-            p.waitUntilExit()
+        proc.executableURL = URL(fileURLWithPath: "/usr/bin/which")
+        proc.arguments = ["git"]
+        proc.standardOutput = out
+        proc.standardError = Pipe()
+        if (try? proc.run()) != nil {
+            proc.waitUntilExit()
             let data = out.fileHandleForReading.readDataToEndOfFile()
             let trimmed = (String(data: data, encoding: .utf8) ?? "")
                 .trimmingCharacters(in: .whitespacesAndNewlines)

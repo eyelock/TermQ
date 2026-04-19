@@ -93,22 +93,21 @@ struct SettingsMarketplacesView: View {
                 if case .ready(let ynhPath, _, _) = ynhDetector.status {
                     Task { await registryService.refresh(ynhPath: ynhPath, environment: ynhEnvironment) }
                 }
-            }
-        ) {
-            AddRegistrySheet(detector: ynhDetector)
-        }
+            },
+            content: { AddRegistrySheet(detector: ynhDetector) }
+        )
         .confirmationDialog(
             Strings.Settings.Marketplaces.removeConfirmTitle,
             isPresented: $showRemoveConfirmation,
             titleVisibility: .visible
         ) {
             Button(Strings.Marketplace.rowRemove, role: .destructive) {
-                if let m = marketplaceToRemove { store.remove(id: m.id) }
+                if let marketplace = marketplaceToRemove { store.remove(id: marketplace.id) }
             }
             Button(Strings.Common.cancel, role: .cancel) {}
         } message: {
-            if let m = marketplaceToRemove {
-                Text(Strings.Settings.Marketplaces.removeConfirmMessage(m.vendor.displayName))
+            if let marketplace = marketplaceToRemove {
+                Text(Strings.Settings.Marketplaces.removeConfirmMessage(marketplace.vendor.displayName))
             }
         }
         .confirmationDialog(

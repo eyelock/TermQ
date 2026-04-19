@@ -22,7 +22,7 @@ struct DuplicateHarnessSheet: View {
     @State private var errorMessage: String?
 
     private var ynhPath: String? {
-        if case .ready(let p, _, _) = detector.status { return p }
+        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
         return nil
     }
     private var ynhEnvironment: [String: String] {

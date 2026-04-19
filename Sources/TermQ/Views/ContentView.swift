@@ -620,8 +620,8 @@ extension ContentView {
     }
 
     /// Wrap a string in single quotes for safe shell argument passing.
-    private func shellQuote(_ s: String) -> String {
-        "'" + s.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    private func shellQuote(_ str: String) -> String {
+        "'" + str.replacingOccurrences(of: "'", with: "'\\''") + "'"
     }
 
     /// Close a transient harness operation card once its shell has exited.

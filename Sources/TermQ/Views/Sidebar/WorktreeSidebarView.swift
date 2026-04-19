@@ -307,12 +307,13 @@ struct WorktreeSidebarView: View {
                 BranchSectionDisclosureView(
                     repo: repo,
                     viewModel: viewModel,
-                    onPruneBranches: { analyseAndPruneBranches(repo: repo) }
-                ) {
-                    ForEach(branches, id: \.self) { branch in
-                        branchRow(branch, repo: repo)
+                    onPruneBranches: { analyseAndPruneBranches(repo: repo) },
+                    content: {
+                        ForEach(branches, id: \.self) { branch in
+                            branchRow(branch, repo: repo)
+                        }
                     }
-                }
+                )
                 .padding(.top, 4)
             }
         } else {

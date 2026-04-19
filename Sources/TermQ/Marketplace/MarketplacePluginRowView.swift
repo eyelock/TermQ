@@ -153,8 +153,8 @@ struct MarketplacePluginRowView: View {
         }
         let order = ["skills", "agents", "commands", "rules"]
         let labels: [String] = order.compactMap { key in
-            guard let n = counts[key], n > 0 else { return nil }
-            return "\(n) \(key.dropLast(n == 1 ? 1 : 0))"
+            guard let count = counts[key], count > 0 else { return nil }
+            return "\(count) \(key.dropLast(count == 1 ? 1 : 0))"
         }
         return labels.isEmpty ? "\(picks.count) artifacts" : labels.joined(separator: " · ")
     }

@@ -187,7 +187,7 @@ final class HarnessAuthor: ObservableObject {
                     return
                 }
 
-                process.terminationHandler = { p in
+                process.terminationHandler = { terminatedProc in
                     handle.readabilityHandler = nil
                     let remaining = handle.readDataToEndOfFile()
                     if let tail = String(data: remaining, encoding: .utf8), !tail.isEmpty {
@@ -196,7 +196,7 @@ final class HarnessAuthor: ObservableObject {
                             self?.outputLines.append(contentsOf: lines)
                         }
                     }
-                    continuation.resume(returning: p.terminationStatus)
+                    continuation.resume(returning: terminatedProc.terminationStatus)
                 }
             }
         }
@@ -281,7 +281,7 @@ final class RegistryAddRunner: ObservableObject {
                     return
                 }
 
-                process.terminationHandler = { p in
+                process.terminationHandler = { terminatedProc in
                     handle.readabilityHandler = nil
                     let remaining = handle.readDataToEndOfFile()
                     if let tail = String(data: remaining, encoding: .utf8), !tail.isEmpty {
@@ -290,7 +290,7 @@ final class RegistryAddRunner: ObservableObject {
                             self?.outputLines.append(contentsOf: lines)
                         }
                     }
-                    continuation.resume(returning: p.terminationStatus)
+                    continuation.resume(returning: terminatedProc.terminationStatus)
                 }
             }
         }
@@ -391,8 +391,8 @@ final class IncludeApplier: ObservableObject {
         errorMessage = nil
 
         var args = ["include", "add", harness, sourceURL]
-        if let p = path, !p.isEmpty {
-            args += ["--path", p]
+        if let path, !path.isEmpty {
+            args += ["--path", path]
         }
         if !pick.isEmpty {
             // YNH --pick expects bare artifact names; strip the type/ prefix (e.g. "skills/foo" → "foo")
@@ -462,7 +462,7 @@ final class IncludeApplier: ObservableObject {
                     return
                 }
 
-                process.terminationHandler = { p in
+                process.terminationHandler = { terminatedProc in
                     handle.readabilityHandler = nil
                     let remaining = handle.readDataToEndOfFile()
                     if let tail = String(data: remaining, encoding: .utf8), !tail.isEmpty {
@@ -471,7 +471,7 @@ final class IncludeApplier: ObservableObject {
                             self?.outputLines.append(contentsOf: lines)
                         }
                     }
-                    continuation.resume(returning: p.terminationStatus)
+                    continuation.resume(returning: terminatedProc.terminationStatus)
                 }
             }
         }

@@ -101,8 +101,8 @@ final class MarketplaceStore: ObservableObject {
 
     func stale(daysThreshold: Int = 7) -> [Marketplace] {
         let cutoff = Calendar.current.date(byAdding: .day, value: -daysThreshold, to: Date()) ?? Date()
-        return marketplaces.filter { m in
-            guard let last = m.lastFetched else { return true }
+        return marketplaces.filter { marketplace in
+            guard let last = marketplace.lastFetched else { return true }
             return last < cutoff
         }
     }

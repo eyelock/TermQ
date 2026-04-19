@@ -46,9 +46,9 @@ class TmuxSeparatorOverlayNSView: NSView {
         NSColor(white: 0.3, alpha: 1.0).setStroke()
 
         for i in 0..<paneFrames.count {
-            for j in 0..<paneFrames.count where j != i {
+            for otherIndex in 0..<paneFrames.count where otherIndex != i {
                 let fa = paneFrames[i].frame
-                let fb = paneFrames[j].frame
+                let fb = paneFrames[otherIndex].frame
 
                 // Vertical separator: A is to the left of B.
                 if abs(fa.maxX - fb.minX) < epsilon && fb.minX >= fa.maxX - epsilon {

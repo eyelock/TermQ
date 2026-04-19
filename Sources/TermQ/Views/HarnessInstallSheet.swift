@@ -100,11 +100,11 @@ struct HarnessInstallSheet: View {
 
 extension HarnessInstallSheet {
     private var filteredHarnesses: [Harness] {
-        let q = searchQuery.trimmingCharacters(in: .whitespaces).lowercased()
-        guard !q.isEmpty else { return harnesses }
+        let query = searchQuery.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !query.isEmpty else { return harnesses }
         return harnesses.filter {
-            $0.name.lowercased().contains(q)
-                || ($0.description?.lowercased().contains(q) ?? false)
+            $0.name.lowercased().contains(query)
+                || ($0.description?.lowercased().contains(query) ?? false)
         }
     }
 

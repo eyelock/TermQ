@@ -73,10 +73,10 @@ struct HarnessesSidebarTab: View {
     }
 
     private func refreshRegistryService() {
-        guard case .ready(let p, _, _) = detector.status else { return }
+        guard case .ready(let ynhPath, _, _) = detector.status else { return }
         var env = ProcessInfo.processInfo.environment
         if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
-        Task { await registryService.refresh(ynhPath: p, environment: env) }
+        Task { await registryService.refresh(ynhPath: ynhPath, environment: env) }
     }
 
     // MARK: - Header
@@ -453,7 +453,7 @@ struct HarnessesSidebarTab: View {
     }
 
     private var ynhPathFromDetector: String? {
-        if case .ready(let p, _, _) = detector.status { return p }
+        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
         return nil
     }
 

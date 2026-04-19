@@ -20,13 +20,13 @@ struct MarketplaceDetailView: View {
         guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
             return marketplace.plugins
         }
-        let q = searchText.lowercased()
+        let query = searchText.lowercased()
         return marketplace.plugins.filter {
-            $0.name.lowercased().contains(q)
-                || ($0.description?.lowercased().contains(q) ?? false)
-                || ($0.category?.lowercased().contains(q) ?? false)
-                || $0.tags.contains { $0.lowercased().contains(q) }
-                || $0.picks.contains { $0.lowercased().contains(q) }
+            $0.name.lowercased().contains(query)
+                || ($0.description?.lowercased().contains(query) ?? false)
+                || ($0.category?.lowercased().contains(query) ?? false)
+                || $0.tags.contains { $0.lowercased().contains(query) }
+                || $0.picks.contains { $0.lowercased().contains(query) }
         }
     }
 
