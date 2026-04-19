@@ -55,6 +55,20 @@ gh run list --workflow=update-appcast.yml --limit 1
 curl -s https://eyelock.github.io/TermQ/appcast.xml | grep "{VERSION}"
 ```
 
+### 6. Forward-Port Appcast to Develop — MANDATORY
+
+The `update-appcast.yml` workflow commits updated appcast files directly to main. These must be synced back to develop to prevent conflicts on the next release.
+
+```bash
+git checkout -b fix/sync-appcast-v{VERSION} develop
+git checkout origin/main -- Docs/appcast.xml Docs/appcast-beta.xml
+git commit -m "chore: Sync appcast entries for v{VERSION} back to develop"
+git push -u origin fix/sync-appcast-v{VERSION}
+gh pr create --base develop --title "chore: Sync appcast entries for v{VERSION} back to develop"
+```
+
+Merge once CI passes.
+
 ## Troubleshooting
 
 **Release workflow fails on CI check:** The commit must have a passing CI run.
