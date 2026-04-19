@@ -147,14 +147,14 @@ class TmuxMultiPaneContainerNSView: NSView {
     override func layout() {
         super.layout()
 
-        let w = bounds.width
-        let h = bounds.height
-        guard w > 0, h > 0, !currentPanes.isEmpty else { return }
+        let boundsWidth = bounds.width
+        let boundsHeight = bounds.height
+        guard boundsWidth > 0, boundsHeight > 0, !currentPanes.isEmpty else { return }
 
         let totalCols = currentPanes.map { $0.x + $0.width }.max() ?? 80
         let totalRows = currentPanes.map { $0.y + $0.height }.max() ?? 24
-        let colScale = w / CGFloat(totalCols)
-        let rowScale = h / CGFloat(totalRows)
+        let colScale = boundsWidth / CGFloat(totalCols)
+        let rowScale = boundsHeight / CGFloat(totalRows)
 
         // Tmux uses 1 column/row for border characters between panes, so adjacent
         // panes have a 1-unit gap in their coordinates. To tile frames edge-to-edge
@@ -193,7 +193,7 @@ class TmuxMultiPaneContainerNSView: NSView {
         // Zoom detection: when a pane is zoomed its tmux-reported dimensions fill the
         // entire window, producing a frame that equals the container bounds exactly
         // (no half-gap extensions apply at the window edges).
-        let isZoomed = framesForOverlay.contains { abs($0.frame.width - w) < 1 && abs($0.frame.height - h) < 1 }
+        let isZoomed = framesForOverlay.contains { abs($0.frame.width - boundsWidth) < 1 && abs($0.frame.height - boundsHeight) < 1 }
         let activeId = overlay.activePaneId
 
         // When zoomed, pass only the zoomed pane's frame to the overlay. The separator

@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Застосувати";
 "common.preview" = "Попередній перегляд";
+"common.close.window" = "Закрити вікно";
 
 // MARK: - Board View
 "board.column.options" = "Параметри колонки";
@@ -40,11 +41,11 @@
 "card.unpin" = "Відкріпити термінал";
 "card.running" = "Термінал працює";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Підключено";
 "card.wired.help" = "Підключено до агента MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Наступний закріплений термінал";
 "menu.previous.pinned" = "Попередній закріплений термінал";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Показати/сховати бічну панель";
 
 
 // MARK: - Command Palette
@@ -466,32 +468,29 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Запит на зовнішню зміну";
-"security.external.modification.message" = "Зовнішній процес намагається змінити контекст LLM для терміналу '%@':
-
-%@
-
-Це може вплинути на те, як асистенти ШІ взаємодіють із цим терміналом.";
+"security.external.modification.message" = "Зовнішній процес намагається змінити контекст LLM для терміналу '%@':\n\n%@\n\nЦе може вплинути на те, як асистенти ШІ взаємодіють із цим терміналом.";
 "security.allow" = "Дозволити";
 "security.deny" = "Відхилити";
 "security.allow.disable.prompt" = "Дозволити і більше не питати";
 "security.osc.clipboard.enabled" = "Доступ до буфера обміну OSC 52 увімкнено";
 "security.osc.clipboard.disabled" = "Доступ до буфера обміну OSC 52 вимкнено";
 
+// Settings - Updates section
 "settings.auto.check.updates" = "Автоматично перевіряти оновлення";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Коли увімкнено, TermQ буде час від часу перевіряти нові версії";
+"settings.check.for.updates" = "Перевірити оновлення...";
+"settings.include.beta.releases" = "Включати бета-версії";
+"settings.include.beta.releases.help" = "Отримуйте попередні версії з новими функціями";
+"settings.section.updates" = "Оновлення";
 "editor.section.add.tag" = "Додати тег";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Дозволити дії у черзі";
+"editor.allow.agent.prompts.help" = "Дозволити вставлення {{PROMPT}} і {{NEXT_ACTION}} у початкову команду цього терміналу";
+"editor.allow.agent.prompts.disabled.globally" = "Дії у черзі вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
 "editor.allow.osc.clipboard.disabled.globally" = "Вимкнено глобально - увімкніть у Налаштування > Дані та безпека";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Підтвердження вимкнено глобально - змініть у Налаштування > Дані та безпека";
 
-"settings.debug.update.warning.title" = "Попередження про збірку для налагодження";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Попередження: Debug збірка";
+"settings.debug.update.warning.message" = "Продовження оновлення встановить виробничу версію TermQ.";
 
 "editor.no.tags" = "Теги не визначено";
 
@@ -500,3 +499,315 @@
 "settings.environment.section.add.variable" = "Додати змінну середовища";
 
 "settings.mcp.install" = "Встановити сервер MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Репозиторії";
+"sidebar.add.button.help" = "Додати репозиторій";
+"sidebar.empty.message" = "Репозиторії не додано.\nНатисніть +, щоб додати git репозиторій.";
+"sidebar.worktrees.placeholder" = "Робочі дерева зʼявляться тут";
+"sidebar.remove.repository" = "Видалити репозиторій";
+"sidebar.toggle.help" = "Показати/сховати бічну панель репозиторіїв (⌘⇧L)";
+"sidebar.add.title" = "Додати репозиторій";
+"sidebar.add.path.label" = "Шлях";
+"sidebar.add.name.label" = "Відображувана назва";
+"sidebar.add.name.placeholder" = "Визначається автоматично з git";
+"sidebar.add.cancel" = "Скасувати";
+"sidebar.add.add" = "Додати";
+"sidebar.add.advanced" = "Додатково";
+"sidebar.edit.title" = "Редагувати репозиторій";
+"sidebar.edit.repository" = "Редагувати репозиторій";
+"sidebar.worktree.base.path.label" = "Базовий шлях worktree";
+"sidebar.worktree.base.path.help" = "Нові worktrees створюються тут. За замовчуванням — батьківська папка директорії репозиторію.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" не є git репозиторієм.";
+"sidebar.worktrees.empty" = "Робочих дерев не знайдено.";
+"sidebar.worktree.detached.head" = "Відʼєднана HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Оновити робочі дерева";
+"sidebar.worktree.new" = "Нове робоче дерево";
+"sidebar.worktree.new.terminal" = "Новий Terminal";
+"sidebar.worktree.terminals.badge.help" = "Натисніть для швидких посилань для відкриття терміналів";
+"sidebar.worktree.open.in.terminal" = "Відкрити в Terminal";
+"sidebar.worktree.reveal.in.finder" = "Показати у Finder";
+"sidebar.worktree.open.remote.branch" = "Відкрити гілку на Remote";
+"sidebar.worktree.open.remote.commit" = "Відкрити коміт на Remote";
+"sidebar.worktree.lock" = "Заблокувати робоче дерево";
+"sidebar.worktree.unlock" = "Розблокувати робоче дерево";
+
+"sidebar.worktree.set.harness" = "Встановити harness…";
+"sidebar.worktree.clear.harness" = "Видалити harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Запустити %@";
+"sidebar.remove.worktree" = "Видалити робоче дерево";
+"sidebar.remove.worktree.title" = "Видалити робоче дерево?";
+"sidebar.remove.worktree.confirm" = "Видалити";
+"sidebar.remove.main.worktree.error" = "Головне робоче дерево неможливо видалити.";
+"sidebar.remove.worktree.message %@" = "Це остаточно видалить робоче дерево у \"%@\". Гілку буде збережено.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Видалити Worktree...";
+"sidebar.worktree.delete.title" = "Видалити Worktree";
+"sidebar.worktree.delete.confirm" = "Видалити";
+"sidebar.worktree.delete.message %@" = "Робоче дерево за шляхом \"%@\" та всі незбережені зміни буде назавжди видалено. Цю дію неможливо скасувати.";
+"sidebar.new.worktree.title" = "Нове робоче дерево";
+"sidebar.new.worktree.branch.label" = "Назва нової гілки";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Введіть назву гілки для продовження.";
+"sidebar.new.worktree.base.label" = "Базова гілка";
+"sidebar.new.worktree.base.placeholder" = "Фільтр гілок...";
+"sidebar.new.worktree.path.label" = "Шлях до робочого дерева";
+"sidebar.new.worktree.path.required" = "Введіть шлях робочого дерева для продовження.";
+"sidebar.new.worktree.create" = "Створити";
+"sidebar.new.worktree.loading.branches" = "Завантаження гілок...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Упряжки";
+"harnesses.refresh.help" = "Повторно визначити інструментарій ynh";
+"harnesses.not.installed" = "ynh не встановлений.";
+"harnesses.init.required" = "ynh знайдено, але не ініціалізовано.\nЗапустіть `ynh init` для налаштування.";
+"harnesses.init.hint" = "Відкрийте термінал і запустіть:\nynh init";
+"harnesses.empty.message" = "Упряжки ще не встановлені.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Локальний";
+"harnesses.source.registry" = "Реєстр";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Інформація";
+"harnesses.detail.path" = "Шлях";
+"harnesses.detail.source" = "Джерело";
+"harnesses.detail.subpath" = "Підшлях";
+"harnesses.detail.installed.at" = "Встановлено";
+"harnesses.detail.artifacts" = "Артефакти";
+"harnesses.detail.no.artifacts" = "Немає артефактів.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Агенти";
+"harnesses.detail.rules" = "Правила";
+"harnesses.detail.commands" = "Команди";
+"harnesses.detail.dependencies" = "Залежності";
+"harnesses.detail.includes %d" = "Містить (%d)";
+"harnesses.detail.delegates %d" = "Делегує (%d)";
+"harnesses.detail.picks %d" = "Вибирає (%d):";
+"harnesses.reveal.in.finder" = "Показати у Finder";
+"harnesses.open.in.browser" = "Відкрити у браузері";
+"harnesses.close.detail" = "Закрити";
+"harnesses.configure.from.marketplaces" = "Налаштувати з маркетплейсів…";
+"harnesses.detail.artifacts.from.includes" = "Ця упряжка отримує артефакти з включень залежностей.";
+"harnesses.detail.from" = "з";
+"harnesses.detail.hooks" = "Хуки";
+"harnesses.detail.mcp.servers" = "MCP-сервери";
+"harnesses.detail.profiles" = "Профілі";
+"harnesses.detail.focuses" = "Фокуси";
+"harnesses.detail.focus.profile %@" = "профіль: %@";
+"harnesses.detail.manifest" = "Маніфест";
+"harnesses.detail.no.manifest" = "Маніфест недоступний.";
+"harnesses.detail.resolved" = "Вирішено";
+"harnesses.detail.unresolved" = "Не вирішено";
+"harnesses.detail.no.hooks" = "У цієї упряжки немає хуків.";
+"harnesses.detail.no.mcp.servers" = "У цієї упряжки немає MCP-серверів.";
+"harnesses.detail.no.profiles" = "У цієї упряжки немає профілів.";
+"harnesses.detail.no.focuses" = "У цієї упряжки немає фокусів.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Запустити упряжку";
+"harnesses.launch.vendor" = "Постачальник";
+"harnesses.launch.vendor.unavailable" = "(не встановлено)";
+"harnesses.launch.vendor.default" = "За замовчуванням (%@)";
+"harnesses.launch.focus" = "Фокус";
+"harnesses.launch.focus.none" = "Немає";
+"harnesses.launch.working.directory" = "Робочий каталог";
+"harnesses.launch.browse" = "Огляд…";
+"harnesses.launch.prompt" = "Запит";
+"harnesses.launch.prompt.placeholder" = "Необов'язковий запит для агента…";
+"harnesses.launch.button" = "Запустити";
+"harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
+"harnesses.launch.cancel" = "Скасувати";
+"harnesses.launch.backend" = "Бекенд";
+
+"harnesses.linked.worktrees" = "Пов’язані worktree";
+"harnesses.linked.worktrees.none" = "Немає worktree, пов’язаних з цим harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Створити новий харнес";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Інструментарій YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Менеджер упряжок для ШІ-асистентів";
+"settings.ynh.enable.harness.tab" = "Показувати вкладку упряжок на панелі";
+"settings.ynh.enable.harness.tab.help" = "Додає вкладку «Упряжки» на бічну панель для перегляду та керування встановленими упряжками";
+"settings.ynh.home.override" = "Перевизначення $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "За замовчуванням (використовує власне розрішення ynh)";
+"settings.ynh.home.override.help" = "Перевизначає каталог YNH_HOME для дочірнього процесу ynh. Залиште порожнім для значення за замовчуванням.";
+"settings.ynh.resolved.paths" = "Розрішені шляхи";
+"settings.ynh.redetect" = "Визначити повторно";
+"settings.ynh.init.required" = "Не ініціалізовано";
+"settings.ynh.ready" = "Готовий";
+"settings.ynh.path.label" = "Шлях:";
+"settings.ynh.ynd.path.label" = "Шлях ynd:";
+"settings.ynh.status.label" = "Статус:";
+"settings.ynh.ready.info" = "Інструментарій визначено та ініціалізовано. Увімкніть вкладку бічної панелі для перегляду упряжок.";
+"settings.ynh.advanced" = "Розширені";
+"settings.ynh.version.label" = "Версія:";
+
+"common.clear" = "Очистити";
+
+"sidebar.worktree.create.terminal" = "Створити Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Копіювати як шлях";
+
+"sidebar.prune.worktrees" = "Прибрати worktrees…";
+
+"sidebar.prune.worktrees.title" = "Прибрати worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Прибрати";
+
+"sidebar.prune.worktrees.nothing.title" = "Нема що прибирати";
+
+"sidebar.prune.worktrees.nothing.message" = "Всі worktrees обліковані. Застарілих записів не знайдено.";
+
+"sidebar.prune.worktrees.explanation" = "Ці адміністративні записи вказують на каталоги, яких більше не існує. Прибирання видаляє їх — ваші гілки не зачіпаються.";
+
+// Install sheet
+"harnesses.install.title" = "Встановити harness";
+"harnesses.install.toolbar.help" = "Встановити harness";
+"harnesses.install.tab.search" = "Пошук";
+"harnesses.install.tab.git" = "З Git";
+"harnesses.install.tab.sources" = "Джерела";
+"harnesses.install.search.placeholder" = "Пошук у реєстрах та джерелах…";
+"harnesses.install.search.prompt" = "Введіть текст для пошуку в реєстрах і джерелах";
+"harnesses.install.search.empty" = "Немає результатів";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Підшлях";
+"harnesses.install.git.subpath.placeholder" = "Необов'язковий підкаталог";
+"harnesses.install.command.preview" = "Попередній перегляд команди";
+"harnesses.install.confirm" = "Встановити";
+"harnesses.install.cancel" = "Скасувати";
+"harnesses.install.already.installed" = "Встановлено";
+"harnesses.install.from %@" = "з %@";
+"harnesses.install.sources.empty" = "Джерела не налаштовано. Додайте локальний каталог для перегляду його harnesses.";
+"harnesses.install.sources.add" = "Додати джерело…";
+"harnesses.install.sources.add.help" = "Додати локальний каталог як джерело harness";
+"harnesses.install.sources.remove" = "Видалити";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Оновити";
+"harnesses.update.help" = "Оновити до останньої версії";
+"harnesses.uninstall.button" = "Видалити";
+"harnesses.uninstall.help" = "Видалити цей harness";
+"harnesses.uninstall.alert.title %@" = "Видалити \"%@\"?";
+"harnesses.uninstall.alert.message" = "Це видалить harness з вашої системи.";
+"harnesses.uninstall.alert.worktrees %ld" = "Цей harness пов'язаний з %ld робочим деревом (деревами) — ці зв'язки буде очищено.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld термінал(и) зараз виконують цей harness.";
+"harnesses.uninstall.alert.confirm" = "Видалити";
+"harnesses.more.actions.help" = "Інші дії";
+"harnesses.copy.run.command" = "Копіювати команду запуску";
+"harnesses.ynh.documentation" = "Документація YNH";
+
+"harnesses.add.registry.title" = "Додати реєстр YNH";
+"harnesses.add.registry.url.label" = "URL реєстру";
+"harnesses.add.registry.hint" = "Додайте репозиторій Git, що містить файл registry.json. Після додавання ви зможете шукати та встановлювати harnesses з нього.";
+"harnesses.add.registry.button" = "Додати реєстр";
+"harnesses.add.registry.success" = "Реєстр успішно додано";
+"harnesses.add.registry.toolbar.help" = "Додати реєстр YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Маркетплейси";
+"settings.marketplaces.section.list" = "Налаштовані маркетплейси";
+"settings.marketplaces.empty" = "Маркетплейси ще не додано.";
+"settings.marketplaces.add" = "Додати маркетплейс…";
+"settings.marketplaces.never.fetched" = "Ніколи не завантажувалось";
+"settings.marketplaces.remove.confirm.title" = "Видалити маркетплейс";
+"settings.marketplaces.remove.confirm.message %@" = "Видалити \"%@\"? Його плагіни більше не відображатимуться у браузері.";
+"settings.marketplaces.section.behaviour" = "Поведінка";
+"settings.marketplaces.auto.refresh" = "Автооновлення при запуску";
+"settings.marketplaces.auto.refresh.help" = "Автоматично отримувати оновлення маркетплейсу при запуску застосунку";
+"settings.marketplaces.section.authoring" = "Створення harness";
+"settings.marketplaces.default.author.directory" = "Типовий каталог автора";
+"settings.marketplaces.author.directory.detected.hint" = "Автоматично визначено з ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Маркетплейси";
+"marketplace.add.help" = "Додати маркетплейс";
+"marketplace.empty" = "Маркетплейси ще не додані";
+"marketplace.add.button" = "Додати маркетплейс";
+"marketplace.row.refresh.help" = "Оновити маркетплейс";
+"marketplace.row.refresh" = "Оновити";
+"marketplace.row.remove" = "Видалити";
+"marketplace.row.stale" = " · Може бути застарілим";
+"marketplace.row.never.fetched" = "Ще не завантажувався";
+"marketplace.add.sheet.title" = "Додати маркетплейс";
+"marketplace.add.tab.known" = "Відомі";
+"marketplace.add.tab.custom" = "Власна URL";
+"marketplace.add.section.git.url" = "URL репозиторію Git";
+"marketplace.add.section.display.name" = "Відображувана назва";
+"marketplace.add.section.vendor" = "Постачальник";
+"marketplace.detail.last.fetched %@" = "Останнє оновлення %@";
+"marketplace.detail.search.placeholder" = "Пошук плагінів…";
+"marketplace.detail.search.empty %@" = "Плагіни за запитом «%@» не знайдено";
+"marketplace.detail.empty" = "У цьому маркетплейсі немає плагінів";
+"marketplace.detail.empty.hint" = "Оновіть для завантаження останнього індексу.";
+"marketplace.plugin.add.to.harness" = "Додати до харнесу";
+"marketplace.plugin.copy.install.command" = "Скопіювати команду встановлення";
+"marketplace.plugin.copy.install.command.help" = "Копіює команду встановлення Claude Code до буфера обміну";
+"marketplace.plugin.load.artifacts" = "Завантажити артефакти";
+"marketplace.plugin.loading.artifacts" = "Завантаження артефактів…";
+"marketplace.plugin.no.artifacts" = "Для цього плагіна не зазначено артефактів.";
+"marketplace.plugin.no.artifacts.hint" = "Весь вміст плагіна буде включено.";
+"marketplace.plugin.artifacts.unavailable %@" = "Артефакти недоступні: %@";
+"marketplace.picker.step.artifacts" = "Артефакти";
+"marketplace.picker.step.harness" = "Харнес";
+"marketplace.picker.step.apply" = "Застосувати";
+"marketplace.picker.select.prompt" = "Виберіть артефакти для включення";
+"marketplace.picker.select.all" = "Усі";
+"marketplace.picker.select.none" = "Жодного";
+"marketplace.picker.no.harnesses" = "Харнеси ще не створено";
+"marketplace.picker.no.harnesses.hint" = "Спершу створіть харнес за допомогою майстра нового харнесу.";
+"marketplace.picker.review.plugin" = "Плагін";
+"marketplace.picker.review.harness" = "Харнес";
+"marketplace.picker.review.artifacts" = "Артефакти";
+"marketplace.picker.review.all.count %lld" = "Усі (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "Вибрано %lld з %lld";
+"marketplace.picker.command.preview" = "Попередній перегляд команди";
+"marketplace.picker.success %@" = "Плагін додано до %@";
+"marketplace.picker.done" = "Готово";
+"marketplace.picker.back" = "Назад";
+"marketplace.picker.next" = "Далі";
+"harness.wizard.title" = "Новий харнес";
+"harness.wizard.name.label" = "Назва (обов'язково)";
+"harness.wizard.description.label" = "Опис";
+"harness.wizard.loading.vendors" = "Завантаження постачальників…";
+"harness.wizard.vendor.label" = "Типовий постачальник";
+"harness.wizard.destination.label" = "Каталог призначення";
+"harness.wizard.install.toggle" = "Встановити харнес одразу після створення";
+"harness.wizard.success.add.plugins" = "Додати плагіни з маркетплейсу";
+"harness.wizard.success.open" = "Відкрити в TermQ";
+"harness.wizard.create" = "Створити";
+"harness.wizard.retry" = "Повторити";
+"harness.wizard.error.name.required" = "Назва обов'язкова";
+"harness.wizard.error.name.invalid" = "Назва може містити лише літери, цифри, дефіси та підкреслення";
+"harness.wizard.error.name.duplicate %@" = "Харнес з назвою «%@» вже існує";
+"settings.marketplaces.reset" = "Скинути";
+"settings.marketplaces.section.ynh.registries" = "Реєстри YNH";
+"settings.marketplaces.ynh.registries.empty" = "Реєстри не додано";
+"settings.marketplaces.ynh.add.registry" = "Додати реєстр…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Видалити реєстр";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Видалити";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Видалити «%@» з YNH? Встановлені harness-пакети залишаться.";
+"marketplace.add.custom.name.placeholder" = "Мій маркетплейс";
+"harness.wizard.success.created %@" = "Харнес «%@» створено";

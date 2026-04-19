@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Bruk";
 "common.preview" = "Forhåndsvisning";
+"common.close.window" = "Lukk vindu";
 
 // MARK: - Board View
 "board.column.options" = "Kolonnealternativer";
@@ -40,11 +41,11 @@
 "card.unpin" = "Løsne terminal";
 "card.running" = "Terminal kjører";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Tilkoblet";
 "card.wired.help" = "Tilkoblet MCP-agent";
@@ -466,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Forespørsel om ekstern endring";
-"security.external.modification.message" = "En ekstern prosess prøver å endre LLM-kontekst for terminalen '%@':
-
-%@
-
-Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
+"security.external.modification.message" = "En ekstern prosess prøver å endre LLM-kontekst for terminalen '%@':\n\n%@\n\nDette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "security.allow" = "Tillat";
 "security.deny" = "Avslå";
 "security.allow.disable.prompt" = "Tillat og ikke spør igjen";
@@ -478,20 +475,19 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "security.osc.clipboard.disabled" = "OSC 52 utklippstavle-tilgang deaktivert";
 
 "settings.auto.check.updates" = "Sjekk automatisk etter oppdateringer";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Når aktivert, vil TermQ periodisk sjekke etter nye versjoner";
+"settings.check.for.updates" = "Se etter oppdateringer...";
+"settings.include.beta.releases" = "Inkluder beta-utgivelser";
+"settings.include.beta.releases.help" = "Meld deg på for å motta forhåndsversjoner med nye funksjoner";
+"settings.section.updates" = "Oppdateringer";
+"settings.debug.update.warning.title" = "Advarsel om debug-bygg";
+"settings.debug.update.warning.message" = "Hvis du fortsetter med oppdateringer, installeres produksjonsversjonen av TermQ.";
 "editor.section.add.tag" = "Legg til etikett";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
 "editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Deaktivert globalt - aktiver i Innstillinger > Data og sikkerhet";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
-
-"settings.debug.update.warning.title" = "Advarsel for feilsøkingsversjon";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Ingen koder definert";
 
@@ -500,3 +496,316 @@ Dette kan påvirke hvordan AI-assistenter samhandler med denne terminalen.";
 "settings.environment.section.add.variable" = "Legg til miljøvariabel";
 
 "settings.mcp.install" = "Installer MCP-server";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositories";
+"sidebar.add.button.help" = "Legg til repository";
+"sidebar.empty.message" = "Ingen repositories lagt til.\nKlikk + for å legge til et git-repository.";
+"sidebar.worktrees.placeholder" = "Worktrees vises her";
+"sidebar.remove.repository" = "Fjern repository";
+"sidebar.toggle.help" = "Veksle repositories-sidepanel (⌘⇧L)";
+"sidebar.add.title" = "Legg til repository";
+"sidebar.add.path.label" = "Sti";
+"sidebar.add.name.label" = "Visningsnavn";
+"sidebar.add.name.placeholder" = "Oppdages automatisk fra git";
+"sidebar.add.cancel" = "Avbryt";
+"sidebar.add.add" = "Legg til";
+"sidebar.add.advanced" = "Avansert";
+"sidebar.edit.title" = "Rediger repository";
+"sidebar.edit.repository" = "Rediger repository";
+"sidebar.worktree.base.path.label" = "Grunnsti for worktree";
+"sidebar.worktree.base.path.help" = "Nye worktrees opprettes her. Standard er overordnet mappe for repoet.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" er ikke et git-repository.";
+"menu.toggle.sidebar" = "Veksle sidepanel";
+"sidebar.worktrees.empty" = "Ingen worktrees funnet.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Oppdater worktrees";
+"sidebar.worktree.new" = "Ny worktree";
+"sidebar.worktree.new.terminal" = "Nytt Terminal";
+"sidebar.worktree.terminals.badge.help" = "Klikk for hurtiglenker for å åpne terminaler";
+"sidebar.worktree.open.in.terminal" = "Åpne i Terminal";
+"sidebar.worktree.reveal.in.finder" = "Vis i Finder";
+"sidebar.worktree.open.remote.branch" = "Åpne gren på Remote";
+"sidebar.worktree.open.remote.commit" = "Åpne commit på Remote";
+"sidebar.worktree.lock" = "Lås worktree";
+"sidebar.worktree.unlock" = "Lås opp worktree";
+
+"sidebar.worktree.set.harness" = "Angi harness…";
+"sidebar.worktree.clear.harness" = "Fjern harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Start %@";
+"sidebar.remove.worktree" = "Fjern worktree";
+"sidebar.remove.worktree.title" = "Fjerne worktree?";
+"sidebar.remove.worktree.confirm" = "Fjern";
+"sidebar.remove.main.worktree.error" = "Hoved-worktreen kan ikke fjernes.";
+"sidebar.remove.worktree.message %@" = "Dette vil fjerne worktree på \"%@\" permanent. Branchen slettes ikke.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Slett Worktree...";
+"sidebar.worktree.delete.title" = "Slett Worktree";
+"sidebar.worktree.delete.confirm" = "Slett";
+"sidebar.worktree.delete.message %@" = "Worktree på \"%@\" og eventuelle ikke-lagrede endringer slettes permanent. Dette kan ikke angres.";
+"sidebar.new.worktree.title" = "Ny worktree";
+"sidebar.new.worktree.branch.label" = "Navn på ny branch";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Skriv inn et grennavn for å fortsette.";
+"sidebar.new.worktree.base.label" = "Basisbranch";
+"sidebar.new.worktree.base.placeholder" = "Filtrer branches...";
+"sidebar.new.worktree.path.label" = "Worktree-sti";
+"sidebar.new.worktree.path.required" = "Skriv inn en worktree-bane for å fortsette.";
+"sidebar.new.worktree.create" = "Opprett";
+"sidebar.new.worktree.loading.branches" = "Laster branches...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Gjenkjenn ynh-verktøykjeden på nytt";
+"harnesses.not.installed" = "ynh er ikke installert.";
+"harnesses.init.required" = "ynh funnet men ikke initialisert.\nKjør `ynh init` for å konfigurere.";
+"harnesses.init.hint" = "Åpne en terminal og kjør:\nynh init";
+"harnesses.empty.message" = "Ingen harnesses installert ennå.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informasjon";
+"harnesses.detail.path" = "Sti";
+"harnesses.detail.source" = "Kilde";
+"harnesses.detail.subpath" = "Understi";
+"harnesses.detail.installed.at" = "Installert";
+"harnesses.detail.artifacts" = "Artefakter";
+"harnesses.detail.no.artifacts" = "Ingen artefakter.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenter";
+"harnesses.detail.rules" = "Regler";
+"harnesses.detail.commands" = "Kommandoer";
+"harnesses.detail.dependencies" = "Avhengigheter";
+"harnesses.detail.includes %d" = "Inkluderer (%d)";
+"harnesses.detail.delegates %d" = "Delegerer til (%d)";
+"harnesses.detail.picks %d" = "Velger (%d):";
+"harnesses.reveal.in.finder" = "Vis i Finder";
+"harnesses.open.in.browser" = "Åpne i nettleser";
+"harnesses.close.detail" = "Lukk";
+"harnesses.configure.from.marketplaces" = "Konfigurer fra markedsplasser…";
+"harnesses.detail.artifacts.from.includes" = "Denne harness henter sine artefakter fra avhengighets-includes.";
+"harnesses.detail.from" = "fra";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-servere";
+"harnesses.detail.profiles" = "Profiler";
+"harnesses.detail.focuses" = "Fokuser";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Ingen manifest tilgjengelig.";
+"harnesses.detail.resolved" = "Løst";
+"harnesses.detail.unresolved" = "Uløst";
+"harnesses.detail.no.hooks" = "Denne harness har ingen hooks.";
+"harnesses.detail.no.mcp.servers" = "Denne harness har ingen MCP-servere.";
+"harnesses.detail.no.profiles" = "Denne harness har ingen profiler.";
+"harnesses.detail.no.focuses" = "Denne harness har ingen fokuser.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Start harness";
+"harnesses.launch.vendor" = "Leverandør";
+"harnesses.launch.vendor.unavailable" = "(ikke installert)";
+"harnesses.launch.vendor.default" = "Standard (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Ingen";
+"harnesses.launch.working.directory" = "Arbeidsmappe";
+"harnesses.launch.browse" = "Bla gjennom…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
+"harnesses.launch.button" = "Start";
+"harnesses.launch.help" = "Start denne harness i en ny terminal";
+"harnesses.launch.cancel" = "Avbryt";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Tilknyttede worktrees";
+"harnesses.linked.worktrees.none" = "Ingen worktrees er tilknyttet dette harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Opprett et nytt harness";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-verktøykjede";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-behandler for AI-assistenter";
+"settings.ynh.enable.harness.tab" = "Vis harnesses-fane i sidepanelet";
+"settings.ynh.enable.harness.tab.help" = "Legger til en Harnesses-fane i sidepanelet for å bla gjennom og administrere installerte harnesses";
+"settings.ynh.home.override" = "$YNH_HOME-overstyring";
+"settings.ynh.home.override.placeholder" = "Standard (bruker ynh's egen resolusjon)";
+"settings.ynh.home.override.help" = "Overstyrer YNH_HOME-mappen for ynh-delprosessen. La stå tomt for standard.";
+"settings.ynh.resolved.paths" = "Løste stier";
+"settings.ynh.redetect" = "Gjenkjenn på nytt";
+"settings.ynh.init.required" = "Ikke initialisert";
+"settings.ynh.ready" = "Klar";
+"settings.ynh.path.label" = "Sti:";
+"settings.ynh.ynd.path.label" = "ynd-sti:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Verktøykjede gjenkjent og initialisert. Aktiver sidepanel-fanen for å bla gjennom harnesses.";
+"settings.ynh.advanced" = "Avansert";
+"settings.ynh.version.label" = "Versjon:";
+
+"common.clear" = "Tøm";
+
+"sidebar.worktree.create.terminal" = "Opprett Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopier som filsti";
+
+"sidebar.prune.worktrees" = "Beskjær worktrees…";
+
+"sidebar.prune.worktrees.title" = "Beskjær worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Beskjær";
+
+"sidebar.prune.worktrees.nothing.title" = "Ingenting å beskjære";
+
+"sidebar.prune.worktrees.nothing.message" = "Alle worktrees er registrert. Ingen utdaterte poster ble funnet.";
+
+"sidebar.prune.worktrees.explanation" = "Disse administrative postene peker til mapper som ikke lenger eksisterer. Beskjæring fjerner dem — grenene dine påvirkes ikke.";
+
+// Install sheet
+"harnesses.install.title" = "Installer harness";
+"harnesses.install.toolbar.help" = "Installer et harness";
+"harnesses.install.tab.search" = "Søk";
+"harnesses.install.tab.git" = "Fra Git";
+"harnesses.install.tab.sources" = "Kilder";
+"harnesses.install.search.placeholder" = "Søk i registre og kilder…";
+"harnesses.install.search.prompt" = "Skriv for å søke i registre og kilder";
+"harnesses.install.search.empty" = "Ingen resultater";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Understi";
+"harnesses.install.git.subpath.placeholder" = "Valgfri undermappe";
+"harnesses.install.command.preview" = "Forhåndsvisning av kommando";
+"harnesses.install.confirm" = "Installer";
+"harnesses.install.cancel" = "Avbryt";
+"harnesses.install.already.installed" = "Installert";
+"harnesses.install.from %@" = "fra %@";
+"harnesses.install.sources.empty" = "Ingen kilder konfigurert. Legg til en lokal mappe for å bla gjennom dens harnesses.";
+"harnesses.install.sources.add" = "Legg til kilde…";
+"harnesses.install.sources.add.help" = "Legg til en lokal mappe som harness-kilde";
+"harnesses.install.sources.remove" = "Fjern";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Oppdater";
+"harnesses.update.help" = "Oppdater til nyeste versjon";
+"harnesses.uninstall.button" = "Avinstaller";
+"harnesses.uninstall.help" = "Avinstaller denne harness";
+"harnesses.uninstall.alert.title %@" = "Avinstaller \"%@\"?";
+"harnesses.uninstall.alert.message" = "Dette fjerner harness fra systemet ditt.";
+"harnesses.uninstall.alert.worktrees %ld" = "Denne harness er koblet til %ld worktree(r) — disse koblingene vil bli fjernet.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kjører denne harness for øyeblikket.";
+"harnesses.uninstall.alert.confirm" = "Avinstaller";
+"harnesses.more.actions.help" = "Flere handlinger";
+"harnesses.copy.run.command" = "Kopier kjørekommando";
+"harnesses.ynh.documentation" = "YNH-dokumentasjon";
+
+"harnesses.add.registry.title" = "Legg til YNH-register";
+"harnesses.add.registry.url.label" = "Register-URL";
+"harnesses.add.registry.hint" = "Legg til et Git-lager som inneholder en registry.json-fil. Etter at det er lagt til, kan du søke etter og installere harnesses fra det.";
+"harnesses.add.registry.button" = "Legg til register";
+"harnesses.add.registry.success" = "Register ble lagt til";
+"harnesses.add.registry.toolbar.help" = "Legg til et YNH-register";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Markedsplasser";
+"settings.marketplaces.section.list" = "Konfigurerte markedsplasser";
+"settings.marketplaces.empty" = "Ingen markedsplasser lagt til ennå.";
+"settings.marketplaces.add" = "Legg til markedsplass…";
+"settings.marketplaces.never.fetched" = "Aldri hentet";
+"settings.marketplaces.remove.confirm.title" = "Fjern markedsplass";
+"settings.marketplaces.remove.confirm.message %@" = "Fjerne \"%@\"? Tilleggene vil ikke lenger vises i nettleseren.";
+"settings.marketplaces.section.behaviour" = "Virkemåte";
+"settings.marketplaces.auto.refresh" = "Automatisk oppdatering ved oppstart";
+"settings.marketplaces.auto.refresh.help" = "Hent markedsplassoppdateringer automatisk når appen starter";
+"settings.marketplaces.section.authoring" = "Harness-oppretting";
+"settings.marketplaces.default.author.directory" = "Standard forfatterkatalog";
+"settings.marketplaces.author.directory.detected.hint" = "Automatisk oppdaget fra ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Markedsplasser";
+"marketplace.add.help" = "Legg til markedsplass";
+"marketplace.empty" = "Ingen markedsplasser ennå";
+"marketplace.add.button" = "Legg til markedsplass";
+"marketplace.row.refresh.help" = "Oppdater markedsplass";
+"marketplace.row.refresh" = "Oppdater";
+"marketplace.row.remove" = "Fjern";
+"marketplace.row.stale" = " · Kan være utdatert";
+"marketplace.row.never.fetched" = "Aldri hentet";
+"marketplace.add.sheet.title" = "Legg til markedsplass";
+"marketplace.add.tab.known" = "Kjente";
+"marketplace.add.tab.custom" = "Egendefinert URL";
+"marketplace.add.section.git.url" = "Git-lager-URL";
+"marketplace.add.section.display.name" = "Visningsnavn";
+"marketplace.add.section.vendor" = "Leverandør";
+"marketplace.detail.last.fetched %@" = "Sist hentet %@";
+"marketplace.detail.search.placeholder" = "Søk i plugins…";
+"marketplace.detail.search.empty %@" = "Ingen plugins samsvarer med «%@»";
+"marketplace.detail.empty" = "Ingen plugins på denne markedsplassen";
+"marketplace.detail.empty.hint" = "Oppdater for å hente siste indeks.";
+"marketplace.plugin.add.to.harness" = "Legg til i harness";
+"marketplace.plugin.copy.install.command" = "Kopier installasjonskommando";
+"marketplace.plugin.copy.install.command.help" = "Kopierer Claude Code-installasjonskommandoen til utklippstavlen";
+"marketplace.plugin.load.artifacts" = "Last inn artefakter";
+"marketplace.plugin.loading.artifacts" = "Laster inn artefakter…";
+"marketplace.plugin.no.artifacts" = "Ingen artefakter oppført for denne plugin.";
+"marketplace.plugin.no.artifacts.hint" = "Alt plugininnhold vil bli inkludert.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefakter utilgjengelige: %@";
+"marketplace.picker.step.artifacts" = "Artefakter";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Bruk";
+"marketplace.picker.select.prompt" = "Velg artefakter å inkludere";
+"marketplace.picker.select.all" = "Alle";
+"marketplace.picker.select.none" = "Ingen";
+"marketplace.picker.no.harnesses" = "Ingen harnesses ennå";
+"marketplace.picker.no.harnesses.hint" = "Opprett først et harness med veiviseren Nytt harness.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefakter";
+"marketplace.picker.review.all.count %lld" = "Alle (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld av %lld valgt";
+"marketplace.picker.command.preview" = "Forhåndsvisning av kommando";
+"marketplace.picker.success %@" = "Plugin lagt til i %@";
+"marketplace.picker.done" = "Ferdig";
+"marketplace.picker.back" = "Tilbake";
+"marketplace.picker.next" = "Neste";
+"harness.wizard.title" = "Nytt harness";
+"harness.wizard.name.label" = "Navn (påkrevd)";
+"harness.wizard.description.label" = "Beskrivelse";
+"harness.wizard.loading.vendors" = "Laster inn leverandører…";
+"harness.wizard.vendor.label" = "Standard leverandør";
+"harness.wizard.destination.label" = "Målmappe";
+"harness.wizard.install.toggle" = "Installer harness umiddelbart etter opprettelse";
+"harness.wizard.success.add.plugins" = "Legg til plugins fra markedsplassen";
+"harness.wizard.success.open" = "Åpne i TermQ";
+"harness.wizard.create" = "Opprett";
+"harness.wizard.retry" = "Prøv igjen";
+"harness.wizard.error.name.required" = "Navn er påkrevd";
+"harness.wizard.error.name.invalid" = "Navnet kan bare inneholde bokstaver, tall, bindestreker og understreker";
+"harness.wizard.error.name.duplicate %@" = "Det finnes allerede et harness med navnet «%@»";
+"settings.marketplaces.reset" = "Tilbakestill";
+"settings.marketplaces.section.ynh.registries" = "YNH-registre";
+"settings.marketplaces.ynh.registries.empty" = "Ingen registre lagt til";
+"settings.marketplaces.ynh.add.registry" = "Legg til register…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Fjern register";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Fjern";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Fjern «%@» fra YNH? Installerte harnesses beholdes.";
+"marketplace.add.custom.name.placeholder" = "Min markedsplass";
+"harness.wizard.success.created %@" = "Harness «%@» opprettet";

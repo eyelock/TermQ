@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部変更リクエスト";
-"security.external.modification.message" = "外部プロセスがターミナル '%@' のLLMコンテキストを変更しようとしています:
-
-%@
-
-これにより、AIアシスタントがこのターミナルとどのように対話するかに影響を与える可能性があります。";
+"security.external.modification.message" = "外部プロセスがターミナル '%@' のLLMコンテキストを変更しようとしています:\n\n%@\n\nこれにより、AIアシスタントがこのターミナルとどのように対話するかに影響を与える可能性があります。";
 "security.allow" = "許可";
 "security.deny" = "拒否";
 "security.allow.disable.prompt" = "許可して次回から確認しない";
@@ -478,20 +474,20 @@
 "security.osc.clipboard.disabled" = "OSC 52クリップボードアクセスが無効";
 
 "settings.auto.check.updates" = "アップデートを自動的に確認";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "有効にすると、TermQ は定期的に新しいバージョンを確認します";
+"settings.check.for.updates" = "アップデートを確認...";
+"settings.include.beta.releases" = "ベータリリースを含める";
+"settings.include.beta.releases.help" = "新機能を含むプレリリース版を受け取るよう設定します";
+"settings.section.updates" = "アップデート";
 "editor.section.add.tag" = "タグを追加";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "キューアクションを許可";
+"editor.allow.agent.prompts.help" = "{{PROMPT}} および {{NEXT_ACTION}} をこのターミナルの初期化コマンドに挿入することを許可します";
+"editor.allow.agent.prompts.disabled.globally" = "キューアクションはグローバルに無効 - 設定 > データとセキュリティで有効にする";
 "editor.allow.osc.clipboard.disabled.globally" = "グローバルに無効 - 設定 > データとセキュリティで有効にする";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "確認はグローバルに無効 - 設定 > データとセキュリティで変更する";
 
 "settings.debug.update.warning.title" = "デバッグビルドの警告";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.message" = "アップデートを続行すると、TermQ の本番バージョンがインストールされます。";
 
 "editor.no.tags" = "タグが定義されていません";
 
@@ -500,3 +496,311 @@
 "settings.environment.section.add.variable" = "環境変数を追加";
 
 "settings.mcp.install" = "MCPサーバーをインストール";
+
+// MARK: - Sidebar
+"sidebar.title" = "リポジトリ";
+"sidebar.add.button.help" = "リポジトリを追加";
+"sidebar.empty.message" = "リポジトリが追加されていません。\n+ をクリックして Git リポジトリを追加してください。";
+"sidebar.worktrees.placeholder" = "ワークツリーがここに表示されます";
+"sidebar.remove.repository" = "リポジトリを削除";
+"sidebar.toggle.help" = "リポジトリサイドバーの切り替え (⌘⇧L)";
+"sidebar.add.title" = "リポジトリを追加";
+"sidebar.add.path.label" = "パス";
+"sidebar.add.name.label" = "表示名";
+"sidebar.add.name.placeholder" = "Git から自動検出";
+"sidebar.add.cancel" = "キャンセル";
+"sidebar.add.add" = "追加";
+"sidebar.add.advanced" = "詳細";
+"sidebar.edit.title" = "リポジトリを編集";
+"sidebar.edit.repository" = "リポジトリを編集";
+"sidebar.worktree.base.path.label" = "worktreeのベースパス";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "「%@」 は Git リポジトリではありません。";
+"sidebar.worktrees.empty" = "ワークツリーが見つかりません。";
+"sidebar.worktree.detached.head" = "デタッチド HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "ワークツリーを更新";
+"sidebar.worktree.new" = "新しいワークツリー";
+"sidebar.worktree.new.terminal" = "クイックターミナル";
+"sidebar.worktree.create.terminal" = "ターミナルを作成…";
+"sidebar.worktree.terminals.badge.help" = "クリックしてターミナルを開くクイックリンクにアクセス";
+"sidebar.worktree.open.in.terminal" = "Terminalで表示";
+"sidebar.worktree.reveal.in.finder" = "Finderで表示";
+"sidebar.worktree.copy.pathname" = "パスとしてコピー";
+"sidebar.worktree.open.remote.branch" = "リモートでブランチを開く";
+"sidebar.worktree.open.remote.commit" = "リモートでコミットを開く";
+"sidebar.worktree.lock" = "worktreeをロック";
+"sidebar.worktree.unlock" = "worktreeのロックを解除";
+
+"sidebar.worktree.set.harness" = "Harness を設定…";
+"sidebar.worktree.clear.harness" = "Harness をクリア";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "%@ を起動";
+"sidebar.remove.worktree" = "ワークツリーを削除";
+"sidebar.remove.worktree.title" = "ワークツリーを削除しますか？";
+"sidebar.remove.worktree.confirm" = "削除";
+"sidebar.remove.main.worktree.error" = "メインのワークツリーは削除できません。";
+"sidebar.remove.worktree.message %@" = "「%@」 のワークツリーを完全に削除します。ブランチは削除されません。";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree を破壊...";
+"sidebar.worktree.delete.title" = "Worktree を破壊";
+"sidebar.worktree.delete.confirm" = "破壊";
+"sidebar.worktree.delete.message %@" = "“%@” の Worktree とコミットされていない変更はすべて完全に破壊されます。この操作は取り消せません。";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Worktree を整理…";
+"sidebar.prune.worktrees.title" = "Worktree を整理";
+"sidebar.prune.worktrees.confirm" = "整理";
+"sidebar.prune.worktrees.nothing.title" = "整理するものがありません";
+"sidebar.prune.worktrees.nothing.message" = "すべてのワークツリーは正常に記録されています。古いレコードは見つかりませんでした。";
+"sidebar.prune.worktrees.explanation" = "これらの管理レコードは存在しないディレクトリを参照しています。整理するとそれらが削除されます — ブランチは影響を受けません。";
+"sidebar.new.worktree.title" = "新しいワークツリー";
+"sidebar.new.worktree.branch.label" = "新しいブランチ名";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "続行するにはブランチ名を入力してください。";
+"sidebar.new.worktree.base.label" = "ベースブランチ";
+"sidebar.new.worktree.base.placeholder" = "ブランチを絞り込む...";
+"sidebar.new.worktree.path.label" = "ワークツリーパス";
+"sidebar.new.worktree.path.required" = "続行するには Worktree のパスを入力してください。";
+"sidebar.new.worktree.create" = "作成";
+"sidebar.new.worktree.loading.branches" = "ブランチを読み込み中...";
+"common.close.window" = "ウィンドウを閉じる";
+"menu.toggle.sidebar" = "サイドバーの切り替え";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "ハーネス";
+"harnesses.refresh.help" = "ynh ツールチェーンを再検出";
+"harnesses.not.installed" = "ynh がインストールされていません。";
+"harnesses.init.required" = "ynh が見つかりましたが初期化されていません。\n`ynh init` を実行してセットアップしてください。";
+"harnesses.init.hint" = "ターミナルを開いて実行してください：\nynh init";
+"harnesses.empty.message" = "ハーネスがまだインストールされていません。";
+
+// Harnesses — row badges
+"harnesses.source.local" = "ローカル";
+"harnesses.source.registry" = "レジストリ";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "情報";
+"harnesses.detail.path" = "パス";
+"harnesses.detail.source" = "ソース";
+"harnesses.detail.subpath" = "サブパス";
+"harnesses.detail.installed.at" = "インストール済み";
+"harnesses.detail.artifacts" = "アーティファクト";
+"harnesses.detail.no.artifacts" = "アーティファクトなし。";
+"harnesses.detail.skills" = "スキル";
+"harnesses.detail.agents" = "エージェント";
+"harnesses.detail.rules" = "ルール";
+"harnesses.detail.commands" = "コマンド";
+"harnesses.detail.dependencies" = "依存関係";
+"harnesses.detail.includes %d" = "含む (%d)";
+"harnesses.detail.delegates %d" = "委任先 (%d)";
+"harnesses.detail.picks %d" = "選択 (%d)：";
+"harnesses.reveal.in.finder" = "Finder で表示";
+"harnesses.open.in.browser" = "ブラウザで開く";
+"harnesses.close.detail" = "閉じる";
+"harnesses.configure.from.marketplaces" = "マーケットプレイスから設定…";
+"harnesses.detail.artifacts.from.includes" = "このハーネスは依存インクルードからアーティファクトを取得します。";
+"harnesses.detail.from" = "元";
+"harnesses.detail.hooks" = "フック";
+"harnesses.detail.mcp.servers" = "MCP サーバー";
+"harnesses.detail.profiles" = "プロファイル";
+"harnesses.detail.focuses" = "フォーカス";
+"harnesses.detail.focus.profile %@" = "プロファイル：%@";
+"harnesses.detail.manifest" = "マニフェスト";
+"harnesses.detail.no.manifest" = "マニフェストがありません。";
+"harnesses.detail.resolved" = "解決済み";
+"harnesses.detail.unresolved" = "未解決";
+"harnesses.detail.no.hooks" = "このハーネスにはフックがありません。";
+"harnesses.detail.no.mcp.servers" = "このハーネスには MCP サーバーがありません。";
+"harnesses.detail.no.profiles" = "このハーネスにはプロファイルがありません。";
+"harnesses.detail.no.focuses" = "このハーネスにはフォーカスがありません。";
+
+// Harnesses — launch
+"harnesses.launch.title" = "ハーネスを起動";
+"harnesses.launch.vendor" = "ベンダー";
+"harnesses.launch.vendor.unavailable" = "（未インストール）";
+"harnesses.launch.vendor.default" = "デフォルト (%@)";
+"harnesses.launch.focus" = "フォーカス";
+"harnesses.launch.focus.none" = "なし";
+"harnesses.launch.working.directory" = "作業ディレクトリ";
+"harnesses.launch.browse" = "参照…";
+"harnesses.launch.prompt" = "プロンプト";
+"harnesses.launch.prompt.placeholder" = "エージェントに渡すオプションのプロンプト…";
+"harnesses.launch.button" = "起動";
+"harnesses.launch.help" = "新しいターミナルでこのハーネスを起動";
+"harnesses.launch.cancel" = "キャンセル";
+"harnesses.launch.backend" = "バックエンド";
+
+"harnesses.linked.worktrees" = "リンク済み Worktree";
+"harnesses.linked.worktrees.none" = "この harness にリンクされた worktree はありません。";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "新しいハーネスを作成";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH ハーネスツールチェーン";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI アシスタント用ハーネスマネージャー";
+"settings.ynh.enable.harness.tab" = "サイドバーにハーネスタブを表示";
+"settings.ynh.enable.harness.tab.help" = "インストール済みハーネスの閲覧・管理用にサイドバーにハーネスタブを追加します";
+"settings.ynh.home.override" = "$YNH_HOME の上書き";
+"settings.ynh.home.override.placeholder" = "デフォルト（ynh 自身の解決を使用）";
+"settings.ynh.home.override.help" = "ynh サブプロセスの YNH_HOME ディレクトリを上書きします。デフォルトの場合は空白のままにしてください。";
+"settings.ynh.resolved.paths" = "解決済みパス";
+"settings.ynh.redetect" = "再検出";
+"settings.ynh.init.required" = "未初期化";
+"settings.ynh.ready" = "準備完了";
+"settings.ynh.path.label" = "パス：";
+"settings.ynh.ynd.path.label" = "ynd パス：";
+"settings.ynh.status.label" = "ステータス：";
+"settings.ynh.ready.info" = "ツールチェーンが検出・初期化されました。サイドバータブを有効にしてハーネスを閲覧してください。";
+"settings.ynh.advanced" = "詳細";
+"settings.ynh.version.label" = "バージョン：";
+
+"common.clear" = "クリア";
+
+// Install sheet
+"harnesses.install.title" = "Harnessをインストール";
+"harnesses.install.toolbar.help" = "Harnessをインストール";
+"harnesses.install.tab.search" = "検索";
+"harnesses.install.tab.git" = "Gitから";
+"harnesses.install.tab.sources" = "ソース";
+"harnesses.install.search.placeholder" = "レジストリとソースを検索…";
+"harnesses.install.search.prompt" = "レジストリとソースを検索するには入力してください";
+"harnesses.install.search.empty" = "結果なし";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "サブパス";
+"harnesses.install.git.subpath.placeholder" = "省略可能なサブディレクトリ";
+"harnesses.install.command.preview" = "コマンドプレビュー";
+"harnesses.install.confirm" = "インストール";
+"harnesses.install.cancel" = "キャンセル";
+"harnesses.install.already.installed" = "インストール済み";
+"harnesses.install.from %@" = "%@ から";
+"harnesses.install.sources.empty" = "ソースが設定されていません。ローカルディレクトリを追加してHarnessを閲覧してください。";
+"harnesses.install.sources.add" = "ソースを追加…";
+"harnesses.install.sources.add.help" = "ローカルディレクトリをHarnessソースとして追加";
+"harnesses.install.sources.remove" = "削除";
+"harnesses.install.sources.count %ld" = "%ld 個のharness";
+
+"harnesses.update.button" = "アップデート";
+"harnesses.update.help" = "最新バージョンにアップデート";
+"harnesses.uninstall.button" = "アンインストール";
+"harnesses.uninstall.help" = "このHarnessをアンインストール";
+"harnesses.uninstall.alert.title %@" = "「%@」をアンインストールしますか？";
+"harnesses.uninstall.alert.message" = "Harnessがシステムから削除されます。";
+"harnesses.uninstall.alert.worktrees %ld" = "このHarnessは%ld個のWorktreeにリンクされています — それらの関連付けが解除されます。";
+"harnesses.uninstall.alert.terminals %ld" = "%ld個のターミナルが現在このHarnessを実行中です。";
+"harnesses.uninstall.alert.confirm" = "アンインストール";
+"harnesses.more.actions.help" = "その他の操作";
+"harnesses.copy.run.command" = "実行コマンドをコピー";
+"harnesses.ynh.documentation" = "YNHドキュメント";
+
+"harnesses.add.registry.title" = "YNH レジストリを追加";
+"harnesses.add.registry.url.label" = "レジストリ URL";
+"harnesses.add.registry.hint" = "registry.json ファイルを含む Git リポジトリを追加します。追加すると、そこからハーネスを検索してインストールできます。";
+"harnesses.add.registry.button" = "レジストリを追加";
+"harnesses.add.registry.success" = "レジストリを追加しました";
+"harnesses.add.registry.toolbar.help" = "YNH レジストリを追加";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "マーケットプレイス";
+"settings.marketplaces.section.list" = "設定済みのマーケットプレイス";
+"settings.marketplaces.empty" = "マーケットプレイスはまだ追加されていません。";
+"settings.marketplaces.add" = "マーケットプレイスを追加…";
+"settings.marketplaces.never.fetched" = "未取得";
+"settings.marketplaces.remove.confirm.title" = "マーケットプレイスを削除";
+"settings.marketplaces.remove.confirm.message %@" = "\"%@\" を削除しますか？そのプラグインはブラウザに表示されなくなります。";
+"settings.marketplaces.section.behaviour" = "動作";
+"settings.marketplaces.auto.refresh" = "起動時に自動更新";
+"settings.marketplaces.auto.refresh.help" = "アプリ起動時にマーケットプレイスの更新を自動取得する";
+"settings.marketplaces.section.authoring" = "ハーネス作成";
+"settings.marketplaces.default.author.directory" = "デフォルト作成者ディレクトリ";
+"settings.marketplaces.author.directory.detected.hint" = "ynh から自動検出";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "マーケットプレイス";
+"marketplace.add.help" = "マーケットプレイスを追加";
+"marketplace.empty" = "マーケットプレイスはまだありません";
+"marketplace.add.button" = "マーケットプレイスを追加";
+"marketplace.row.refresh.help" = "マーケットプレイスを更新";
+"marketplace.row.refresh" = "更新";
+"marketplace.row.remove" = "削除";
+"marketplace.row.stale" = " · 古い可能性があります";
+"marketplace.row.never.fetched" = "まだ取得されていません";
+"marketplace.add.sheet.title" = "マーケットプレイスを追加";
+"marketplace.add.tab.known" = "既知";
+"marketplace.add.tab.custom" = "カスタムURL";
+"marketplace.add.section.git.url" = "GitリポジトリURL";
+"marketplace.add.section.display.name" = "表示名";
+"marketplace.add.section.vendor" = "ベンダー";
+"marketplace.detail.last.fetched %@" = "最終取得 %@";
+"marketplace.detail.search.placeholder" = "プラグインを検索…";
+"marketplace.detail.search.empty %@" = "「%@」に一致するプラグインはありません";
+"marketplace.detail.empty" = "このマーケットプレイスにプラグインはありません";
+"marketplace.detail.empty.hint" = "最新のインデックスを取得するには更新してください。";
+"marketplace.plugin.add.to.harness" = "ハーネスに追加";
+"marketplace.plugin.copy.install.command" = "インストールコマンドをコピー";
+"marketplace.plugin.copy.install.command.help" = "Claude Codeのインストールコマンドをクリップボードにコピーします";
+"marketplace.plugin.load.artifacts" = "アーティファクトを読み込む";
+"marketplace.plugin.loading.artifacts" = "アーティファクトを読み込んでいます…";
+"marketplace.plugin.no.artifacts" = "このプラグインにはアーティファクトが列挙されていません。";
+"marketplace.plugin.no.artifacts.hint" = "プラグインのすべてのコンテンツが含まれます。";
+"marketplace.plugin.artifacts.unavailable %@" = "アーティファクトが利用できません: %@";
+"marketplace.picker.step.artifacts" = "アーティファクト";
+"marketplace.picker.step.harness" = "ハーネス";
+"marketplace.picker.step.apply" = "適用";
+"marketplace.picker.select.prompt" = "含めるアーティファクトを選択";
+"marketplace.picker.select.all" = "すべて";
+"marketplace.picker.select.none" = "なし";
+"marketplace.picker.no.harnesses" = "ハーネスはまだありません";
+"marketplace.picker.no.harnesses.hint" = "新しいハーネスウィザードを使ってまずハーネスを作成してください。";
+"marketplace.picker.review.plugin" = "プラグイン";
+"marketplace.picker.review.harness" = "ハーネス";
+"marketplace.picker.review.artifacts" = "アーティファクト";
+"marketplace.picker.review.all.count %lld" = "すべて (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld / %lld 件選択";
+"marketplace.picker.command.preview" = "コマンドプレビュー";
+"marketplace.picker.success %@" = "%@ にプラグインを追加しました";
+"marketplace.picker.done" = "完了";
+"marketplace.picker.back" = "戻る";
+"marketplace.picker.next" = "次へ";
+"harness.wizard.title" = "新しいハーネス";
+"harness.wizard.name.label" = "名前（必須）";
+"harness.wizard.description.label" = "説明";
+"harness.wizard.loading.vendors" = "ベンダーを読み込んでいます…";
+"harness.wizard.vendor.label" = "デフォルトベンダー";
+"harness.wizard.destination.label" = "保存先ディレクトリ";
+"harness.wizard.install.toggle" = "作成直後にハーネスをインストール";
+"harness.wizard.success.add.plugins" = "マーケットプレイスからプラグインを追加";
+"harness.wizard.success.open" = "TermQで開く";
+"harness.wizard.create" = "作成";
+"harness.wizard.retry" = "再試行";
+"harness.wizard.error.name.required" = "名前は必須です";
+"harness.wizard.error.name.invalid" = "名前には文字、数字、ハイフン、アンダースコアのみ使用できます";
+"harness.wizard.error.name.duplicate %@" = "「%@」という名前のハーネスはすでに存在します";
+"settings.marketplaces.reset" = "リセット";
+"settings.marketplaces.section.ynh.registries" = "YNHレジストリ";
+"settings.marketplaces.ynh.registries.empty" = "レジストリが未登録です";
+"settings.marketplaces.ynh.add.registry" = "レジストリを追加…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "レジストリを削除";
+"settings.marketplaces.ynh.registry.remove.confirm" = "削除";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\"をYNHから削除しますか？インストール済みのハーネスは残ります。";
+"marketplace.add.custom.name.placeholder" = "マイマーケットプレイス";
+"harness.wizard.success.created %@" = "ハーネス「%@」を作成しました";

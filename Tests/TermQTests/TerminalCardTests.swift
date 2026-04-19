@@ -462,4 +462,10 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertNotNil(decoded.lastLLMGet)
         XCTAssertEqual(decoded.backend, .tmuxAttach)
     }
+
+    func testBackendTagValues() {
+        XCTAssertEqual(TerminalBackend.direct.tagValue, "pty")
+        XCTAssertEqual(TerminalBackend.tmuxAttach.tagValue, "tmux-attach")
+        XCTAssertEqual(TerminalBackend.tmuxControl.tagValue, "tmux-control")
+    }
 }

@@ -41,18 +41,28 @@ Example: `git worktree add ../TermQ-worktrees/feat-quick-actions -b feat-quick-a
 **Only remove a worktree after its PR is merged.**
 
 ```bash
-# 1. Verify merged into develop (feature branches)
+# 1. Verify merged (from inside worktree or main repo)
 git branch -r --merged origin/develop | grep <branch-name>
 # If nothing shows, the branch is NOT merged — do not proceed
 
-# 2. Clean up from main repo (not from inside the worktree)
-git worktree remove ../TermQ-worktrees/<branch-name>
-git branch -d <branch-name>
-git push origin --delete <branch-name>
+# 2. Capture paths BEFORE moving anywhere
+MAIN_REPO=$(git rev-parse --show-toplevel)
+BRANCH=<branch-name>
+
+# 3. Pivot to main repo FIRST — once worktree is removed, its CWD becomes invalid
+cd "$MAIN_REPO"
+
+# 4. Remove worktree, delete local branch
+git worktree remove ../TermQ-worktrees/"$BRANCH"
+git branch -d "$BRANCH"
+
+# 5. Delete remote branch only if it still exists (GitHub auto-deletes on merge)
+git ls-remote --exit-code origin "$BRANCH" 2>/dev/null && git push origin --delete "$BRANCH" || echo "Remote branch already deleted — skipping"
 ```
 
 **Never** use `rm -rf` on a worktree directory — use `git worktree remove`.
 **Never** use `git branch -D` (force delete) without understanding why.
+**Always** `cd` to the main repo before removing the worktree — never run removal from inside it.
 
 ## Summarising Unmerged Worktree Work
 

@@ -15,6 +15,7 @@
 "common.delete" = "حذف";
 "common.edit" = "تعديل";
 "common.close" = "إغلاق";
+"common.close.window" = "إغلاق النافذة";
 "common.add" = "إضافة";
 "common.reinstall" = "إعادة التثبيت";
 "common.uninstall" = "إلغاء التثبيت";
@@ -466,23 +467,19 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "طلب تعديل خارجي";
-"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':
-
-%@
-
-قد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
+"security.external.modification.message" = "يحاول عملية خارجية تعديل سياق LLM للطرفية '%@':\n\n%@\n\nقد يؤثر هذا على كيفية تفاعل مساعدي الذكاء الاصطناعي مع هذه الطرفية.";
 "security.allow" = "سماح";
 "security.deny" = "رفض";
 "security.allow.disable.prompt" = "السماح وعدم السؤال مجدداً";
 "security.osc.clipboard.enabled" = "تم تمكين الوصول إلى الحافظة OSC 52";
 "security.osc.clipboard.disabled" = "تم تعطيل الوصول إلى الحافظة OSC 52";
 
-"settings.auto.check.updates" = "التحقق من التحديثات تلقائيًا";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "البحث التلقائي عن التحديثات";
+"settings.auto.check.updates.help" = "عند التفعيل، سيتحقق TermQ دوريًا من الإصدارات الجديدة";
+"settings.check.for.updates" = "التحقق من التحديثات...";
+"settings.include.beta.releases" = "تضمين الإصدارات التجريبية";
+"settings.include.beta.releases.help" = "اشترك لتلقي الإصدارات التجريبية مع الميزات الجديدة";
+"settings.section.updates" = "التحديثات";
 "editor.section.add.tag" = "إضافة علامة";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +487,8 @@
 "editor.allow.osc.clipboard.disabled.globally" = "معطل عالميًا - تمكين في الإعدادات > البيانات والأمان";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "تحذير إصدار التصحيح";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "تحذير إصدار التطوير";
+"settings.debug.update.warning.message" = "المتابعة في التحديثات ستثبت الإصدار الإنتاجي من TermQ.";
 
 "editor.no.tags" = "لا توجد علامات";
 
@@ -500,3 +497,310 @@
 "settings.environment.section.add.variable" = "إضافة متغير بيئة";
 
 "settings.mcp.install" = "تثبيت خادم MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "المستودعات";
+"sidebar.add.button.help" = "إضافة مستودع";
+"sidebar.empty.message" = "لم تتم إضافة مستودعات.\nانقر + لإضافة مستودع git.";
+"sidebar.worktrees.placeholder" = "ستظهر بيئات العمل هنا";
+"sidebar.remove.repository" = "إزالة المستودع";
+"sidebar.toggle.help" = "إظهار/إخفاء الشريط الجانبي للمستودعات (⌘⇧L)";
+"sidebar.add.title" = "إضافة مستودع";
+"sidebar.add.path.label" = "المسار";
+"sidebar.add.name.label" = "اسم العرض";
+"sidebar.add.name.placeholder" = "يُكتشف تلقائيًا من git";
+"sidebar.add.cancel" = "إلغاء";
+"sidebar.add.add" = "إضافة";
+"sidebar.add.advanced" = "متقدم";
+"sidebar.edit.title" = "تعديل المستودع";
+"sidebar.edit.repository" = "تعديل المستودع";
+"sidebar.worktree.base.path.label" = "المسار الأساسي لـ worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ليس مستودع git.";
+"menu.toggle.sidebar" = "إظهار/إخفاء الشريط الجانبي";
+"sidebar.worktrees.empty" = "لا توجد بيئات عمل.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "تحديث بيئات العمل";
+"sidebar.worktree.new" = "بيئة عمل جديدة";
+"sidebar.worktree.new.terminal" = "طرفية سريعة";
+"sidebar.worktree.create.terminal" = "إنشاء طرفية…";
+"sidebar.worktree.terminals.badge.help" = "انقر للحصول على روابط سريعة لفتح الطرفيات";
+"sidebar.worktree.open.in.terminal" = "إظهار في Terminal";
+"sidebar.worktree.reveal.in.finder" = "الكشف في Finder";
+"sidebar.worktree.copy.pathname" = "نسخ كمسار";
+"sidebar.worktree.open.remote.branch" = "فتح الفرع على Remote";
+"sidebar.worktree.open.remote.commit" = "فتح الـ Commit على Remote";
+"sidebar.worktree.lock" = "قفل worktree";
+"sidebar.worktree.unlock" = "إلغاء قفل worktree";
+
+"sidebar.worktree.set.harness" = "تعيين harness…";
+"sidebar.worktree.clear.harness" = "مسح harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "تشغيل %@";
+"sidebar.remove.worktree" = "حذف بيئة العمل";
+"sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
+"sidebar.remove.worktree.confirm" = "حذف";
+"sidebar.remove.main.worktree.error" = "لا يمكن إزالة بيئة العمل الرئيسية.";
+"sidebar.remove.worktree.message %@" = "سيؤدي هذا إلى حذف بيئة العمل في \"%@\" بشكل دائم. لن يتم حذف الفرع.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "إتلاف Worktree...";
+"sidebar.worktree.delete.title" = "إتلاف Worktree";
+"sidebar.worktree.delete.confirm" = "إتلاف";
+"sidebar.worktree.delete.message %@" = "سيتم إتلاف worktree في \"%@\" وأي تغييرات غير محفوظة بشكل دائم. لا يمكن التراجع عن هذا الإجراء.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "تنظيف Worktrees…";
+"sidebar.prune.worktrees.title" = "تنظيف Worktrees";
+"sidebar.prune.worktrees.confirm" = "تنظيف";
+"sidebar.prune.worktrees.nothing.title" = "لا يوجد ما يُنظَّف";
+"sidebar.prune.worktrees.nothing.message" = "جميع بيئات العمل مُسجَّلة. لم يُعثر على أي سجلات قديمة.";
+"sidebar.prune.worktrees.explanation" = "تشير هذه السجلات الإدارية إلى مسارات لم تعد موجودة. يؤدي التنظيف إلى إزالتها — ولا تتأثر فروعك.";
+"sidebar.new.worktree.title" = "بيئة عمل جديدة";
+"sidebar.new.worktree.branch.label" = "اسم الفرع الجديد";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "أدخل اسم فرع للمتابعة.";
+"sidebar.new.worktree.base.label" = "الفرع الأساسي";
+"sidebar.new.worktree.base.placeholder" = "تصفية الفروع...";
+"sidebar.new.worktree.path.label" = "مسار بيئة العمل";
+"sidebar.new.worktree.path.required" = "أدخل مسار worktree للمتابعة.";
+"sidebar.new.worktree.create" = "إنشاء";
+"sidebar.new.worktree.loading.branches" = "جارٍ تحميل الفروع...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "الأطواق";
+"harnesses.refresh.help" = "إعادة اكتشاف سلسلة أدوات ynh";
+"harnesses.not.installed" = "ynh غير مثبّت.";
+"harnesses.init.required" = "تم العثور على ynh لكنه غير مُهيَّأ.\nشغّل `ynh init` للإعداد.";
+"harnesses.init.hint" = "افتح طرفية وشغّل:\nynh init";
+"harnesses.empty.message" = "لا توجد أطواق مثبّتة بعد.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "محلي";
+"harnesses.source.registry" = "السجل";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "معلومات";
+"harnesses.detail.path" = "المسار";
+"harnesses.detail.source" = "المصدر";
+"harnesses.detail.subpath" = "المسار الفرعي";
+"harnesses.detail.installed.at" = "تم التثبيت";
+"harnesses.detail.artifacts" = "المنتجات";
+"harnesses.detail.no.artifacts" = "لا توجد منتجات.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "الوكلاء";
+"harnesses.detail.rules" = "القواعد";
+"harnesses.detail.commands" = "الأوامر";
+"harnesses.detail.dependencies" = "التبعيات";
+"harnesses.detail.includes %d" = "يتضمن (%d)";
+"harnesses.detail.delegates %d" = "يفوّض إلى (%d)";
+"harnesses.detail.picks %d" = "يختار (%d):";
+"harnesses.reveal.in.finder" = "إظهار في Finder";
+"harnesses.open.in.browser" = "فتح في المتصفح";
+"harnesses.close.detail" = "إغلاق";
+"harnesses.configure.from.marketplaces" = "كوِّن من الأسواق…";
+"harnesses.detail.artifacts.from.includes" = "يحصل هذا الطوق على منتجاته من تضمينات التبعيات.";
+"harnesses.detail.from" = "من";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "خوادم MCP";
+"harnesses.detail.profiles" = "الملفات الشخصية";
+"harnesses.detail.focuses" = "التركيزات";
+"harnesses.detail.focus.profile %@" = "الملف الشخصي: %@";
+"harnesses.detail.manifest" = "البيان";
+"harnesses.detail.no.manifest" = "لا يوجد بيان متاح.";
+"harnesses.detail.resolved" = "تم الحل";
+"harnesses.detail.unresolved" = "غير محلول";
+"harnesses.detail.no.hooks" = "هذا الطوق لا يحتوي على hooks.";
+"harnesses.detail.no.mcp.servers" = "هذا الطوق لا يحتوي على خوادم MCP.";
+"harnesses.detail.no.profiles" = "هذا الطوق لا يحتوي على ملفات شخصية.";
+"harnesses.detail.no.focuses" = "هذا الطوق لا يحتوي على تركيزات.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "تشغيل الطوق";
+"harnesses.launch.vendor" = "المورّد";
+"harnesses.launch.vendor.unavailable" = "(غير مثبّت)";
+"harnesses.launch.vendor.default" = "الافتراضي (%@)";
+"harnesses.launch.focus" = "التركيز";
+"harnesses.launch.focus.none" = "لا شيء";
+"harnesses.launch.working.directory" = "دليل العمل";
+"harnesses.launch.browse" = "تصفّح…";
+"harnesses.launch.prompt" = "موجّه الأوامر";
+"harnesses.launch.prompt.placeholder" = "موجّه اختياري لإرساله إلى الوكيل…";
+"harnesses.launch.button" = "تشغيل";
+"harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
+"harnesses.launch.cancel" = "إلغاء";
+"harnesses.launch.backend" = "الواجهة الخلفية";
+
+"harnesses.linked.worktrees" = "Worktrees المرتبطة";
+"harnesses.linked.worktrees.none" = "لا توجد worktrees مرتبطة بهذا harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "إنشاء حزمة جديدة";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "سلسلة أدوات YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "مدير أطواق المساعدين الذكيين";
+"settings.ynh.enable.harness.tab" = "إظهار تبويب الأطواق في الشريط الجانبي";
+"settings.ynh.enable.harness.tab.help" = "يضيف تبويب الأطواق إلى الشريط الجانبي لتصفّح وإدارة الأطواق المثبّتة";
+"settings.ynh.home.override" = "تجاوز $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "الافتراضي (يستخدم دقة ynh الخاصة)";
+"settings.ynh.home.override.help" = "يتجاوز دليل YNH_HOME للعملية الفرعية ynh. اتركه فارغاً للقيمة الافتراضية.";
+"settings.ynh.resolved.paths" = "المسارات المحلولة";
+"settings.ynh.redetect" = "إعادة الاكتشاف";
+"settings.ynh.init.required" = "غير مُهيَّأ";
+"settings.ynh.ready" = "جاهز";
+"settings.ynh.path.label" = "المسار:";
+"settings.ynh.ynd.path.label" = "مسار ynd:";
+"settings.ynh.status.label" = "الحالة:";
+"settings.ynh.ready.info" = "تم اكتشاف سلسلة الأدوات وتهيئتها. فعّل تبويب الشريط الجانبي لتصفّح الأطواق.";
+"settings.ynh.advanced" = "متقدم";
+"settings.ynh.version.label" = "الإصدار:";
+
+"common.clear" = "مسح";
+
+// Install sheet
+"harnesses.install.title" = "تثبيت Harness";
+"harnesses.install.toolbar.help" = "تثبيت harness";
+"harnesses.install.tab.search" = "بحث";
+"harnesses.install.tab.git" = "من Git";
+"harnesses.install.tab.sources" = "المصادر";
+"harnesses.install.search.placeholder" = "البحث في السجلات والمصادر…";
+"harnesses.install.search.prompt" = "اكتب للبحث في السجلات والمصادر";
+"harnesses.install.search.empty" = "لا توجد نتائج";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "المسار الفرعي";
+"harnesses.install.git.subpath.placeholder" = "مجلد فرعي اختياري";
+"harnesses.install.command.preview" = "معاينة الأمر";
+"harnesses.install.confirm" = "تثبيت";
+"harnesses.install.cancel" = "إلغاء";
+"harnesses.install.already.installed" = "مثبت";
+"harnesses.install.from %@" = "من %@";
+"harnesses.install.sources.empty" = "لا توجد مصادر مضبوطة. أضف دليلاً محلياً لاستعراض harnesses الخاصة به.";
+"harnesses.install.sources.add" = "إضافة مصدر…";
+"harnesses.install.sources.add.help" = "إضافة دليل محلي كمصدر harness";
+"harnesses.install.sources.remove" = "إزالة";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "تحديث";
+"harnesses.update.help" = "تحديث إلى الإصدار الأحدث";
+"harnesses.uninstall.button" = "إلغاء التثبيت";
+"harnesses.uninstall.help" = "إلغاء تثبيت هذا الـ harness";
+"harnesses.uninstall.alert.title %@" = "إلغاء تثبيت \"%@\"؟";
+"harnesses.uninstall.alert.message" = "سيؤدي هذا إلى إزالة الـ harness من نظامك.";
+"harnesses.uninstall.alert.worktrees %ld" = "هذا الـ harness مرتبط بـ %ld مستودع(ات) عمل — ستُمسح تلك الارتباطات.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld محطة (محطات) طرفية تُشغّل هذا الـ harness حاليًا.";
+"harnesses.uninstall.alert.confirm" = "إلغاء التثبيت";
+"harnesses.more.actions.help" = "إجراءات أخرى";
+"harnesses.copy.run.command" = "نسخ أمر التشغيل";
+"harnesses.ynh.documentation" = "توثيق YNH";
+
+"harnesses.add.registry.title" = "إضافة سجل YNH";
+"harnesses.add.registry.url.label" = "رابط السجل";
+"harnesses.add.registry.hint" = "أضف مستودع Git يحتوي على ملف registry.json. بعد الإضافة، يمكنك البحث عن harnesses وتثبيتها منه.";
+"harnesses.add.registry.button" = "إضافة سجل";
+"harnesses.add.registry.success" = "تمت إضافة السجل بنجاح";
+"harnesses.add.registry.toolbar.help" = "إضافة سجل YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "الأسواق";
+"settings.marketplaces.section.list" = "الأسواق المُهيَّأة";
+"settings.marketplaces.empty" = "لم تُضَف أسواق بعد.";
+"settings.marketplaces.add" = "إضافة سوق…";
+"settings.marketplaces.never.fetched" = "لم يتم الجلب مطلقاً";
+"settings.marketplaces.remove.confirm.title" = "إزالة السوق";
+"settings.marketplaces.remove.confirm.message %@" = "إزالة \"%@\"؟ لن تظهر إضافاته في المتصفح بعد الآن.";
+"settings.marketplaces.section.behaviour" = "السلوك";
+"settings.marketplaces.auto.refresh" = "تحديث تلقائي عند التشغيل";
+"settings.marketplaces.auto.refresh.help" = "جلب تحديثات السوق تلقائياً عند تشغيل التطبيق";
+"settings.marketplaces.section.authoring" = "إنشاء Harness";
+"settings.marketplaces.default.author.directory" = "مجلد المؤلف الافتراضي";
+"settings.marketplaces.author.directory.detected.hint" = "تم الكشف تلقائياً من ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "الأسواق";
+"marketplace.add.help" = "إضافة سوق";
+"marketplace.empty" = "لا توجد أسواق بعد";
+"marketplace.add.button" = "إضافة سوق";
+"marketplace.row.refresh.help" = "تحديث السوق";
+"marketplace.row.refresh" = "تحديث";
+"marketplace.row.remove" = "إزالة";
+"marketplace.row.stale" = " · قد يكون قديماً";
+"marketplace.row.never.fetched" = "لم يُجلب أبداً";
+"marketplace.add.sheet.title" = "إضافة سوق";
+"marketplace.add.tab.known" = "المعروفة";
+"marketplace.add.tab.custom" = "عنوان URL مخصص";
+"marketplace.add.section.git.url" = "عنوان URL لمستودع Git";
+"marketplace.add.section.display.name" = "الاسم المعروض";
+"marketplace.add.section.vendor" = "المورد";
+"marketplace.detail.last.fetched %@" = "آخر جلب %@";
+"marketplace.detail.search.placeholder" = "البحث في الإضافات…";
+"marketplace.detail.search.empty %@" = "لا توجد إضافات تطابق «%@»";
+"marketplace.detail.empty" = "لا توجد إضافات في هذا السوق";
+"marketplace.detail.empty.hint" = "قم بالتحديث لجلب أحدث الفهارس.";
+"marketplace.plugin.add.to.harness" = "إضافة إلى الحزمة";
+"marketplace.plugin.copy.install.command" = "نسخ أمر التثبيت";
+"marketplace.plugin.copy.install.command.help" = "ينسخ أمر تثبيت Claude Code إلى الحافظة";
+"marketplace.plugin.load.artifacts" = "تحميل القطع الأثرية";
+"marketplace.plugin.loading.artifacts" = "جارٍ تحميل القطع الأثرية…";
+"marketplace.plugin.no.artifacts" = "لا توجد قطع أثرية مدرجة لهذه الإضافة.";
+"marketplace.plugin.no.artifacts.hint" = "سيتم تضمين كامل محتوى الإضافة.";
+"marketplace.plugin.artifacts.unavailable %@" = "القطع الأثرية غير متاحة: %@";
+"marketplace.picker.step.artifacts" = "القطع الأثرية";
+"marketplace.picker.step.harness" = "الحزمة";
+"marketplace.picker.step.apply" = "تطبيق";
+"marketplace.picker.select.prompt" = "اختر القطع الأثرية للتضمين";
+"marketplace.picker.select.all" = "الكل";
+"marketplace.picker.select.none" = "لا شيء";
+"marketplace.picker.no.harnesses" = "لا توجد حزم بعد";
+"marketplace.picker.no.harnesses.hint" = "أنشئ حزمة أولاً باستخدام معالج الحزمة الجديدة.";
+"marketplace.picker.review.plugin" = "الإضافة";
+"marketplace.picker.review.harness" = "الحزمة";
+"marketplace.picker.review.artifacts" = "القطع الأثرية";
+"marketplace.picker.review.all.count %lld" = "الكل (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld من أصل %lld محدد";
+"marketplace.picker.command.preview" = "معاينة الأمر";
+"marketplace.picker.success %@" = "تمت إضافة الإضافة إلى %@";
+"marketplace.picker.done" = "تم";
+"marketplace.picker.back" = "رجوع";
+"marketplace.picker.next" = "التالي";
+"harness.wizard.title" = "حزمة جديدة";
+"harness.wizard.name.label" = "الاسم (مطلوب)";
+"harness.wizard.description.label" = "الوصف";
+"harness.wizard.loading.vendors" = "جارٍ تحميل الموردين…";
+"harness.wizard.vendor.label" = "المورد الافتراضي";
+"harness.wizard.destination.label" = "مجلد الوجهة";
+"harness.wizard.install.toggle" = "تثبيت الحزمة فوراً بعد الإنشاء";
+"harness.wizard.success.add.plugins" = "إضافة إضافات من السوق";
+"harness.wizard.success.open" = "فتح في TermQ";
+"harness.wizard.create" = "إنشاء";
+"harness.wizard.retry" = "إعادة المحاولة";
+"harness.wizard.error.name.required" = "الاسم مطلوب";
+"harness.wizard.error.name.invalid" = "يمكن أن يحتوي الاسم على أحرف وأرقام وشرطات وشرطات سفلية فقط";
+"harness.wizard.error.name.duplicate %@" = "توجد حزمة بالاسم «%@» بالفعل";
+"settings.marketplaces.reset" = "إعادة تعيين";
+"settings.marketplaces.section.ynh.registries" = "سجلات YNH";
+"settings.marketplaces.ynh.registries.empty" = "لم يُضَف أي سجل";
+"settings.marketplaces.ynh.add.registry" = "إضافة سجل…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "حذف السجل";
+"settings.marketplaces.ynh.registry.remove.confirm" = "حذف";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "حذف “%@” من YNH؟ ستظل التوصيلات المثبتة.";
+"marketplace.add.custom.name.placeholder" = "سوقي";
+"harness.wizard.success.created %@" = "تم إنشاء الحزمة «%@»";

@@ -32,6 +32,7 @@ struct SettingsView: View {
     @AppStorage("binRetentionDays") private var binRetentionDays = 14
     @AppStorage("defaultWorkingDirectory") private var defaultWorkingDirectory = NSHomeDirectory()
     @AppStorage("defaultBackend") private var defaultBackendRawValue: String = "direct"
+    @AppStorage("terminalScrollbackLines") private var scrollbackLines = 5000
 
     // Computed property to convert between String and TerminalBackend
     private var defaultBackend: TerminalBackend {
@@ -43,6 +44,7 @@ struct SettingsView: View {
     @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
     @AppStorage("confirmExternalLLMModifications") private var confirmExternalLLMModifications = true
     @AppStorage("allowOscClipboard") private var allowOscClipboard = false
+    @AppStorage("defaultSafePaste") private var defaultSafePaste = true
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
@@ -62,6 +64,7 @@ struct SettingsView: View {
         case environment
         case tools
         case dataAndSecurity
+        case marketplaces
 
         var title: String {
             switch self {
@@ -69,6 +72,7 @@ struct SettingsView: View {
             case .environment: return Strings.Settings.tabEnvironment
             case .tools: return Strings.Settings.tabTools
             case .dataAndSecurity: return Strings.Settings.tabDataAndSecurity
+            case .marketplaces: return Strings.Settings.tabMarketplaces
             }
         }
     }
@@ -98,6 +102,7 @@ struct SettingsView: View {
                             get: { defaultBackend },
                             set: { newValue in defaultBackendRawValue = newValue.rawValue }
                         ),
+                        scrollbackLines: $scrollbackLines,
                         binRetentionDays: $binRetentionDays,
                         boardViewModel: boardViewModel,
                         updaterViewModel: updaterViewModel,
@@ -113,8 +118,11 @@ struct SettingsView: View {
                         enableTerminalAutorun: $enableTerminalAutorun,
                         confirmExternalLLMModifications: $confirmExternalLLMModifications,
                         allowOscClipboard: $allowOscClipboard,
+                        defaultSafePaste: $defaultSafePaste,
                         dataDirectory: $dataDirectory
                     )
+                case .marketplaces:
+                    SettingsMarketplacesView()
                 }
             }
             .formStyle(.grouped)
@@ -129,16 +137,20 @@ struct SettingsView: View {
             Text(alertMessage ?? "")
         }
         .onAppear {
-            // Check coordinator first (for navigation from other views)
             if let requestedTab = coordinator.requestedTab {
                 selectedTab = requestedTab
                 coordinator.clearRequest()
             } else if let initialTab = initialTab {
-                // Fall back to initialTab (for deep linking)
                 selectedTab = initialTab
             }
             refreshInstallStatus()
             refreshMCPInstallStatus()
+        }
+        .onChange(of: coordinator.requestedTab) { _, tab in
+            if let tab {
+                selectedTab = tab
+                coordinator.clearRequest()
+            }
         }
     }
 

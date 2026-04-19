@@ -15,6 +15,7 @@
 "common.delete" = "Törlés";
 "common.edit" = "Szerkesztés";
 "common.close" = "Bezárás";
+"common.close.window" = "Ablak bezárása";
 "common.add" = "Hozzáadás";
 "common.reinstall" = "Újratelepítés";
 "common.uninstall" = "Eltávolítás";
@@ -40,11 +41,11 @@
 "card.unpin" = "Terminál feloldása";
 "card.running" = "Terminál fut";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Csatlakoztatva";
 "card.wired.help" = "Csatlakoztatva MCP agenthez";
@@ -466,32 +467,28 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Külső módosítási kérelem";
-"security.external.modification.message" = "Egy külső folyamat megpróbálja módosítani a '%@' terminál LLM kontextusát:
-
-%@
-
-Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.";
+"security.external.modification.message" = "Egy külső folyamat megpróbálja módosítani a '%@' terminál LLM kontextusát:\n\n%@\n\nEz befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.";
 "security.allow" = "Engedélyezés";
 "security.deny" = "Elutasítás";
 "security.allow.disable.prompt" = "Engedélyezés és ne kérdezze újra";
 "security.osc.clipboard.enabled" = "OSC 52 vágólap-hozzáférés engedélyezve";
 "security.osc.clipboard.disabled" = "OSC 52 vágólap-hozzáférés letiltva";
 
-"settings.auto.check.updates" = "Frissítések automatikus ellenőrzése";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Frissítések automatikus keresése";
+"settings.auto.check.updates.help" = "Ha engedélyezve van, a TermQ rendszeresen ellenőrzi az új verziókat";
+"settings.check.for.updates" = "Frissítések keresése...";
+"settings.include.beta.releases" = "Béta kiadások belefoglalása";
+"settings.include.beta.releases.help" = "Feliratkozás az új funkciókkal rendelkező előzetes kiadásokra";
+"settings.section.updates" = "Frissítések";
+"settings.debug.update.warning.title" = "Hibakeresési verzió figyelmeztetése";
+"settings.debug.update.warning.message" = "A frissítés folytatásával a TermQ produkciós verziója kerül telepítésre.";
 "editor.section.add.tag" = "Címke hozzáadása";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
 "editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
 "editor.allow.osc.clipboard.disabled.globally" = "Globálisan letiltva - engedélyezze a Beállítások > Adatok és biztonság menüpontban";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
-
-"settings.debug.update.warning.title" = "Hibakeresési verzió figyelmeztetése";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
 
 "editor.no.tags" = "Nincsenek meghatározott címkék";
 
@@ -500,3 +497,316 @@ Ez befolyásolhatja, hogyan működnek az AI asszisztensek ezzel a terminállal.
 "settings.environment.section.add.variable" = "Környezeti változó hozzáadása";
 
 "settings.mcp.install" = "MCP-szerver telepítése";
+
+// MARK: - Sidebar
+"sidebar.title" = "Tárolók";
+"sidebar.add.button.help" = "Tároló hozzáadása";
+"sidebar.empty.message" = "Nincs hozzáadott tároló.\nKattintson a + gombra egy git tároló hozzáadásához.";
+"sidebar.worktrees.placeholder" = "A munkakönyvtárak itt jelennek meg";
+"sidebar.remove.repository" = "Tároló eltávolítása";
+"sidebar.toggle.help" = "Tárolók oldalsáv be-/kikapcsolása (⌘⇧L)";
+"sidebar.add.title" = "Tároló hozzáadása";
+"sidebar.add.path.label" = "Elérési út";
+"sidebar.add.name.label" = "Megjelenített név";
+"sidebar.add.name.placeholder" = "Automatikusan észlel a gitből";
+"sidebar.add.cancel" = "Mégse";
+"sidebar.add.add" = "Hozzáadás";
+"sidebar.add.advanced" = "Speciális";
+"sidebar.edit.title" = "Tároló szerkesztése";
+"sidebar.edit.repository" = "Tároló szerkesztése";
+"sidebar.worktree.base.path.label" = "Worktree alap elérési útja";
+"sidebar.worktree.base.path.help" = "Az új worktrees-ek itt jönnek létre. Alapértelmezés szerint a tároló könyvtárának szülőmappája.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" nem git tároló.";
+"menu.toggle.sidebar" = "Oldalsáv be-/kikapcsolása";
+"sidebar.worktrees.empty" = "Nem található munkakönyvtár.";
+"sidebar.worktree.detached.head" = "Leválasztott HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Munkakönyvtárak frissítése";
+"sidebar.worktree.new" = "Új munkakönyvtár";
+"sidebar.worktree.new.terminal" = "Új Terminal";
+"sidebar.worktree.terminals.badge.help" = "Kattintson a terminálok megnyitásához szükséges gyorshivatkozásokért";
+"sidebar.worktree.open.in.terminal" = "Megnyitás Terminálban";
+"sidebar.worktree.reveal.in.finder" = "Megjelenítés Finderben";
+"sidebar.worktree.open.remote.branch" = "Ág megnyitása a Remote-on";
+"sidebar.worktree.open.remote.commit" = "Commit megnyitása a Remote-on";
+"sidebar.worktree.lock" = "Munkakönyvtár zárolása";
+"sidebar.worktree.unlock" = "Munkakönyvtár feloldása";
+
+"sidebar.worktree.set.harness" = "Harness beállítása…";
+"sidebar.worktree.clear.harness" = "Harness törlése";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Indítás: %@";
+"sidebar.remove.worktree" = "Munkakönyvtár eltávolítása";
+"sidebar.remove.worktree.title" = "Eltávolítja a munkakönyvtárat?";
+"sidebar.remove.worktree.confirm" = "Eltávolítás";
+"sidebar.remove.main.worktree.error" = "A fő munkakönyvtár nem távolítható el.";
+"sidebar.remove.worktree.message %@" = "Ez véglegesen eltávolítja a \"%@\" munkakönyvtárat. Az ág nem törlődik.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree törlése...";
+"sidebar.worktree.delete.title" = "Worktree törlése";
+"sidebar.worktree.delete.confirm" = "Törlés";
+"sidebar.worktree.delete.message %@" = "A \"%@\" elérési úton lévő munkakönyvtár és az összes nem mentett módosítás véglegesen törlődik. Ez a művelet nem vonható vissza.";
+"sidebar.new.worktree.title" = "Új munkakönyvtár";
+"sidebar.new.worktree.branch.label" = "Új ág neve";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "A folytatáshoz adjon meg egy ágnevet.";
+"sidebar.new.worktree.base.label" = "Alapág";
+"sidebar.new.worktree.base.placeholder" = "Ágak szűrése...";
+"sidebar.new.worktree.path.label" = "Munkakönyvtár elérési útja";
+"sidebar.new.worktree.path.required" = "A folytatáshoz adjon meg egy worktree elérési utat.";
+"sidebar.new.worktree.create" = "Létrehozás";
+"sidebar.new.worktree.loading.branches" = "Ágak betöltése...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnessek";
+"harnesses.refresh.help" = "ynh eszközlánc újraészlelése";
+"harnesses.not.installed" = "A ynh nincs telepítve.";
+"harnesses.init.required" = "A ynh megtalálható, de nincs inicializálva.\nFuttasd a `ynh init` parancsot a beállításhoz.";
+"harnesses.init.hint" = "Nyiss egy terminált és futtasd:\nynh init";
+"harnesses.empty.message" = "Még nincs telepített harness.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Helyi";
+"harnesses.source.registry" = "Regiszter";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Információ";
+"harnesses.detail.path" = "Útvonal";
+"harnesses.detail.source" = "Forrás";
+"harnesses.detail.subpath" = "Alútvonal";
+"harnesses.detail.installed.at" = "Telepítve";
+"harnesses.detail.artifacts" = "Összetevők";
+"harnesses.detail.no.artifacts" = "Nincs összetevő.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Ügynökök";
+"harnesses.detail.rules" = "Szabályok";
+"harnesses.detail.commands" = "Parancsok";
+"harnesses.detail.dependencies" = "Függőségek";
+"harnesses.detail.includes %d" = "Tartalmazza (%d)";
+"harnesses.detail.delegates %d" = "Delegál (%d) felé";
+"harnesses.detail.picks %d" = "Kiválaszt (%d):";
+"harnesses.reveal.in.finder" = "Megjelenítés a Finderben";
+"harnesses.open.in.browser" = "Megnyitás böngészőben";
+"harnesses.close.detail" = "Bezárás";
+"harnesses.configure.from.marketplaces" = "Konfigurálás piacterekről…";
+"harnesses.detail.artifacts.from.includes" = "Ez a harness a függőségi tartalmakból nyeri az összetevőit.";
+"harnesses.detail.from" = "forrás";
+"harnesses.detail.hooks" = "Hookok";
+"harnesses.detail.mcp.servers" = "MCP-kiszolgálók";
+"harnesses.detail.profiles" = "Profilok";
+"harnesses.detail.focuses" = "Fókuszok";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Nem érhető el manifest.";
+"harnesses.detail.resolved" = "Feloldva";
+"harnesses.detail.unresolved" = "Fel nem oldott";
+"harnesses.detail.no.hooks" = "Ennek a harnessnek nincs hookja.";
+"harnesses.detail.no.mcp.servers" = "Ennek a harnessnek nincs MCP-kiszolgálója.";
+"harnesses.detail.no.profiles" = "Ennek a harnessnek nincs profilja.";
+"harnesses.detail.no.focuses" = "Ennek a harnessnek nincs fókusza.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness indítása";
+"harnesses.launch.vendor" = "Szállító";
+"harnesses.launch.vendor.unavailable" = "(nincs telepítve)";
+"harnesses.launch.vendor.default" = "Alapértelmezett (%@)";
+"harnesses.launch.focus" = "Fókusz";
+"harnesses.launch.focus.none" = "Nincs";
+"harnesses.launch.working.directory" = "Munkakönyvtár";
+"harnesses.launch.browse" = "Tallózás…";
+"harnesses.launch.prompt" = "Kérdés";
+"harnesses.launch.prompt.placeholder" = "Nem kötelező kérdés az ügynöknek…";
+"harnesses.launch.button" = "Indítás";
+"harnesses.launch.help" = "Harness indítása új terminálban";
+"harnesses.launch.cancel" = "Mégse";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Kapcsolódó worktree-k";
+"harnesses.linked.worktrees.none" = "Nincs worktree ehhez a harnesshez kapcsolva.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Új harness létrehozása";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH harness eszközlánc";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-kezelő AI-asszisztensekhez";
+"settings.ynh.enable.harness.tab" = "Harness-lap megjelenítése az oldalsávban";
+"settings.ynh.enable.harness.tab.help" = "Hozzáad egy Harness-lapot az oldalsávhoz a telepített harnessek böngészéséhez és kezeléséhez";
+"settings.ynh.home.override" = "$YNH_HOME felülírása";
+"settings.ynh.home.override.placeholder" = "Alapértelmezett (ynh saját feloldását használja)";
+"settings.ynh.home.override.help" = "Felülírja a YNH_HOME könyvtárat a ynh alfolyamat számára. Hagyd üresen az alapértelmezetthez.";
+"settings.ynh.resolved.paths" = "Feloldott útvonalak";
+"settings.ynh.redetect" = "Újraészlelés";
+"settings.ynh.init.required" = "Nem inicializált";
+"settings.ynh.ready" = "Kész";
+"settings.ynh.path.label" = "Útvonal:";
+"settings.ynh.ynd.path.label" = "ynd útvonal:";
+"settings.ynh.status.label" = "Állapot:";
+"settings.ynh.ready.info" = "Az eszközlánc észlelve és inicializálva. Az oldalsáv lapjának aktiválásával böngészheted a harnesseket.";
+"settings.ynh.advanced" = "Speciális";
+"settings.ynh.version.label" = "Verzió:";
+
+"common.clear" = "Törlés";
+
+"sidebar.worktree.create.terminal" = "Terminal létrehozása…";
+
+"sidebar.worktree.copy.pathname" = "Másolás elérési útként";
+
+"sidebar.prune.worktrees" = "Worktree-k tisztítása…";
+
+"sidebar.prune.worktrees.title" = "Worktree-k tisztítása";
+
+"sidebar.prune.worktrees.confirm" = "Tisztítás";
+
+"sidebar.prune.worktrees.nothing.title" = "Nincs mit tisztítani";
+
+"sidebar.prune.worktrees.nothing.message" = "Minden worktree nyilvántartásban van. Nem találtak elavult rekordokat.";
+
+"sidebar.prune.worktrees.explanation" = "Ezek az adminisztrációs rekordok már nem létező könyvtárakra mutatnak. A tisztítás eltávolítja őket — az ágak nem érintettek.";
+
+// Install sheet
+"harnesses.install.title" = "Harness telepítése";
+"harnesses.install.toolbar.help" = "Harness telepítése";
+"harnesses.install.tab.search" = "Keresés";
+"harnesses.install.tab.git" = "Gitről";
+"harnesses.install.tab.sources" = "Források";
+"harnesses.install.search.placeholder" = "Keresés a registrykben és forrásokban…";
+"harnesses.install.search.prompt" = "Írjon be szöveget a registrykben és forrásokban való kereséshez";
+"harnesses.install.search.empty" = "Nincs találat";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Alútvonal";
+"harnesses.install.git.subpath.placeholder" = "Opcionális alkönyvtár";
+"harnesses.install.command.preview" = "Parancs előnézete";
+"harnesses.install.confirm" = "Telepítés";
+"harnesses.install.cancel" = "Mégse";
+"harnesses.install.already.installed" = "Telepítve";
+"harnesses.install.from %@" = "%@ forrásból";
+"harnesses.install.sources.empty" = "Nincs konfigurált forrás. Adjon hozzá helyi könyvtárat a harnesses böngészéséhez.";
+"harnesses.install.sources.add" = "Forrás hozzáadása…";
+"harnesses.install.sources.add.help" = "Helyi könyvtár hozzáadása harness-forrásként";
+"harnesses.install.sources.remove" = "Eltávolítás";
+"harnesses.install.sources.count %ld" = "%ld harness";
+
+"harnesses.update.button" = "Frissítés";
+"harnesses.update.help" = "Frissítés a legújabb verzióra";
+"harnesses.uninstall.button" = "Eltávolítás";
+"harnesses.uninstall.help" = "Ez a harness eltávolítása";
+"harnesses.uninstall.alert.title %@" = "Eltávolítja: \"%@\"?";
+"harnesses.uninstall.alert.message" = "Ez eltávolítja a harness-t a rendszeréből.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ez a harness %ld munkafahoz van csatolva — ezek a kapcsolatok törlődnek.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminál jelenleg ezt a harness-t futtatja.";
+"harnesses.uninstall.alert.confirm" = "Eltávolítás";
+"harnesses.more.actions.help" = "További műveletek";
+"harnesses.copy.run.command" = "Futtatási parancs másolása";
+"harnesses.ynh.documentation" = "YNH-dokumentáció";
+
+"harnesses.add.registry.title" = "YNH-beállításjegyzék hozzáadása";
+"harnesses.add.registry.url.label" = "Beállításjegyzék URL-je";
+"harnesses.add.registry.hint" = "Adjon meg egy Git-tárházat, amely tartalmaz egy registry.json fájlt. A hozzáadás után a tárházból harness-eket kereshet és telepíthet.";
+"harnesses.add.registry.button" = "Beállításjegyzék hozzáadása";
+"harnesses.add.registry.success" = "A beállításjegyzék sikeresen hozzáadva";
+"harnesses.add.registry.toolbar.help" = "YNH-beállításjegyzék hozzáadása";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Piacterek";
+"settings.marketplaces.section.list" = "Beállított piacterek";
+"settings.marketplaces.empty" = "Még nem lett piactér hozzáadva.";
+"settings.marketplaces.add" = "Piactér hozzáadása…";
+"settings.marketplaces.never.fetched" = "Még soha nem töltötték le";
+"settings.marketplaces.remove.confirm.title" = "Piactér eltávolítása";
+"settings.marketplaces.remove.confirm.message %@" = "Eltávolítja a(z) \"%@\"-t? A bővítményei többé nem jelennek meg a böngészőben.";
+"settings.marketplaces.section.behaviour" = "Viselkedés";
+"settings.marketplaces.auto.refresh" = "Automatikus frissítés indításkor";
+"settings.marketplaces.auto.refresh.help" = "Automatikusan töltse le a piactér frissítéseit az alkalmazás indulásakor";
+"settings.marketplaces.section.authoring" = "Harness-készítés";
+"settings.marketplaces.default.author.directory" = "Alapértelmezett szerzői könyvtár";
+"settings.marketplaces.author.directory.detected.hint" = "Automatikusan felismerte a ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Piacterek";
+"marketplace.add.help" = "Piactér hozzáadása";
+"marketplace.empty" = "Még nincsenek piacterek";
+"marketplace.add.button" = "Piactér hozzáadása";
+"marketplace.row.refresh.help" = "Piactér frissítése";
+"marketplace.row.refresh" = "Frissítés";
+"marketplace.row.remove" = "Eltávolítás";
+"marketplace.row.stale" = " · Lehet, hogy elavult";
+"marketplace.row.never.fetched" = "Még nem lett lekérve";
+"marketplace.add.sheet.title" = "Piactér hozzáadása";
+"marketplace.add.tab.known" = "Ismert";
+"marketplace.add.tab.custom" = "Egyéni URL";
+"marketplace.add.section.git.url" = "Git-tároló URL";
+"marketplace.add.section.display.name" = "Megjelenítési név";
+"marketplace.add.section.vendor" = "Szállító";
+"marketplace.detail.last.fetched %@" = "Utolsó lekérés: %@";
+"marketplace.detail.search.placeholder" = "Bővítmények keresése…";
+"marketplace.detail.search.empty %@" = "Nincs «%@» feltételnek megfelelő bővítmény";
+"marketplace.detail.empty" = "Ezen a piactéren nincsenek bővítmények";
+"marketplace.detail.empty.hint" = "Frissítsen a legújabb index lekéréséhez.";
+"marketplace.plugin.add.to.harness" = "Hozzáadás a harnesshez";
+"marketplace.plugin.copy.install.command" = "Telepítési parancs másolása";
+"marketplace.plugin.copy.install.command.help" = "A Claude Code telepítési parancsát a vágólapra másolja";
+"marketplace.plugin.load.artifacts" = "Összetevők betöltése";
+"marketplace.plugin.loading.artifacts" = "Összetevők betöltése…";
+"marketplace.plugin.no.artifacts" = "Ehhez a bővítményhez nincsenek összetevők felsorolva.";
+"marketplace.plugin.no.artifacts.hint" = "A bővítmény teljes tartalma bele lesz foglalva.";
+"marketplace.plugin.artifacts.unavailable %@" = "Az összetevők nem érhetők el: %@";
+"marketplace.picker.step.artifacts" = "Összetevők";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Alkalmazás";
+"marketplace.picker.select.prompt" = "Válassza ki a belefoglalandó összetevőket";
+"marketplace.picker.select.all" = "Mind";
+"marketplace.picker.select.none" = "Egyik sem";
+"marketplace.picker.no.harnesses" = "Még nincsenek harnessek";
+"marketplace.picker.no.harnesses.hint" = "Először hozzon létre egy harnesst az új harness varázslóval.";
+"marketplace.picker.review.plugin" = "Bővítmény";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Összetevők";
+"marketplace.picker.review.all.count %lld" = "Mind (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld/%lld kiválasztva";
+"marketplace.picker.command.preview" = "Parancs előnézete";
+"marketplace.picker.success %@" = "Bővítmény hozzáadva: %@";
+"marketplace.picker.done" = "Kész";
+"marketplace.picker.back" = "Vissza";
+"marketplace.picker.next" = "Tovább";
+"harness.wizard.title" = "Új harness";
+"harness.wizard.name.label" = "Név (kötelező)";
+"harness.wizard.description.label" = "Leírás";
+"harness.wizard.loading.vendors" = "Szállítók betöltése…";
+"harness.wizard.vendor.label" = "Alapértelmezett szállító";
+"harness.wizard.destination.label" = "Célkönyvtár";
+"harness.wizard.install.toggle" = "A harness azonnali telepítése létrehozás után";
+"harness.wizard.success.add.plugins" = "Bővítmények hozzáadása a piactérről";
+"harness.wizard.success.open" = "Megnyitás a TermQ-ban";
+"harness.wizard.create" = "Létrehozás";
+"harness.wizard.retry" = "Újra";
+"harness.wizard.error.name.required" = "A név megadása kötelező";
+"harness.wizard.error.name.invalid" = "A név csak betűket, számokat, kötőjeleket és aláhúzásjeleket tartalmazhat";
+"harness.wizard.error.name.duplicate %@" = "Már létezik «%@» nevű harness";
+"settings.marketplaces.reset" = "Visszaállítás";
+"settings.marketplaces.section.ynh.registries" = "YNH-nyilvántartások";
+"settings.marketplaces.ynh.registries.empty" = "Nincs hozzáadott nyilvántartás";
+"settings.marketplaces.ynh.add.registry" = "Nyilvántartás hozzáadása…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Nyilvántartás eltávolítása";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Eltávolítás";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "„%@” eltávolítása a YNH-ból? A telepített harness-csomagok megmaradnak.";
+"marketplace.add.custom.name.placeholder" = "Saját piactér";
+"harness.wizard.success.created %@" = "A «%@» harness létrehozva";

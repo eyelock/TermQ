@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Uygula";
 "common.preview" = "Önizleme";
+"common.close.window" = "Pencereyi Kapat";
 
 // MARK: - Board View
 "board.column.options" = "Sütun seçenekleri";
@@ -40,11 +41,11 @@
 "card.unpin" = "Terminal sabitlemesini kaldır";
 "card.running" = "Terminal çalışıyor";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Bağlı";
 "card.wired.help" = "MCP aracısına bağlı";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Sonraki Sabitlenmiş Terminal";
 "menu.previous.pinned" = "Önceki Sabitlenmiş Terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Kenar Çubuğunu Aç/Kapat";
 
 
 // MARK: - Command Palette
@@ -466,32 +468,29 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Harici Değişiklik İsteği";
-"security.external.modification.message" = "Harici bir işlem, '%@' terminali için LLM bağlamını değiştirmeye çalışıyor:
-
-%@
-
-Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkileyebilir.";
+"security.external.modification.message" = "Harici bir işlem, '%@' terminali için LLM bağlamını değiştirmeye çalışıyor:\n\n%@\n\nBu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkileyebilir.";
 "security.allow" = "İzin Ver";
 "security.deny" = "Reddet";
 "security.allow.disable.prompt" = "İzin Ver ve Bir Daha Sorma";
 "security.osc.clipboard.enabled" = "OSC 52 pano erişimi etkin";
 "security.osc.clipboard.disabled" = "OSC 52 pano erişimi devre dışı";
 
-"settings.auto.check.updates" = "Güncellemeleri otomatik olarak kontrol et";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Güncellemeleri otomatik kontrol et";
+"settings.auto.check.updates.help" = "Etkinleştirildiğinde TermQ yeni sürümleri periyodik olarak kontrol eder";
+"settings.check.for.updates" = "Güncellemeleri Kontrol Et...";
+"settings.include.beta.releases" = "Beta sürümleri dahil et";
+"settings.include.beta.releases.help" = "Yeni özellikler içeren ön sürümleri almayı seçin";
+"settings.section.updates" = "Güncellemeler";
 "editor.section.add.tag" = "Etiket ekle";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Sıraya Alınan İşlemlere İzin Ver";
+"editor.allow.agent.prompts.help" = "{{PROMPT}} ve {{NEXT_ACTION}} öğelerinin bu terminalin başlangıç komutuna eklenmesine izin ver";
+"editor.allow.agent.prompts.disabled.globally" = "Sıraya Alınan İşlemler genel olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
 "editor.allow.osc.clipboard.disabled.globally" = "Global olarak devre dışı - Ayarlar > Veri ve Güvenlik'te etkinleştirin";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Onay genel olarak devre dışı - Ayarlar > Veri ve Güvenlik'te değiştirin";
 
-"settings.debug.update.warning.title" = "Hata Ayıklama Sürümü Uyarısı";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Debug Sürüm Uyarısı";
+"settings.debug.update.warning.message" = "Güncellemeler ile devam etmek TermQ'nun Üretim sürümünü yükleyecek.";
 
 "editor.no.tags" = "Etiket tanımlanmamış";
 
@@ -500,3 +499,315 @@ Bu, yapay zeka asistanlarının bu terminalle nasıl etkileşim kurduğunu etkil
 "settings.environment.section.add.variable" = "Ortam Değişkeni Ekle";
 
 "settings.mcp.install" = "MCP Sunucusunu Yükle";
+
+// MARK: - Sidebar
+"sidebar.title" = "Depolar";
+"sidebar.add.button.help" = "Depo ekle";
+"sidebar.empty.message" = "Henüz depo eklenmedi.\nGit deposu eklemek için + düğmesine tıklayın.";
+"sidebar.worktrees.placeholder" = "Çalışma ağaçları burada görünecek";
+"sidebar.remove.repository" = "Depoyu Kaldır";
+"sidebar.toggle.help" = "Depolar kenar çubuğunu aç/kapat (⌘⇧L)";
+"sidebar.add.title" = "Depo Ekle";
+"sidebar.add.path.label" = "Yol";
+"sidebar.add.name.label" = "Görünen Ad";
+"sidebar.add.name.placeholder" = "Git'ten otomatik algılanır";
+"sidebar.add.cancel" = "İptal";
+"sidebar.add.add" = "Ekle";
+"sidebar.add.advanced" = "Gelişmiş";
+"sidebar.edit.title" = "Depoyu Düzenle";
+"sidebar.edit.repository" = "Depoyu Düzenle";
+"sidebar.worktree.base.path.label" = "Worktree Temel Yolu";
+"sidebar.worktree.base.path.help" = "Yeni worktrees burada oluşturulur. Varsayılan olarak repo dizininin üst klasörüdür.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" bir git deposu değil.";
+"sidebar.worktrees.empty" = "Çalışma ağacı bulunamadı.";
+"sidebar.worktree.detached.head" = "Ayrık HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Çalışma ağaçlarını yenile";
+"sidebar.worktree.new" = "Yeni Çalışma Ağacı";
+"sidebar.worktree.new.terminal" = "Yeni Terminal";
+"sidebar.worktree.terminals.badge.help" = "Terminal açmak için hızlı bağlantılar için tıklayın";
+"sidebar.worktree.open.in.terminal" = "Terminal'de Aç";
+"sidebar.worktree.reveal.in.finder" = "Finder'da Göster";
+"sidebar.worktree.open.remote.branch" = "Dalı Remote'ta aç";
+"sidebar.worktree.open.remote.commit" = "Commit'i Remote'ta aç";
+"sidebar.worktree.lock" = "Çalışma Ağacını Kilitle";
+"sidebar.worktree.unlock" = "Çalışma Ağacının Kilidini Aç";
+
+"sidebar.worktree.set.harness" = "Harness ayarla…";
+"sidebar.worktree.clear.harness" = "Harness’i temizle";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Başlat %@";
+"sidebar.remove.worktree" = "Çalışma Ağacını Kaldır";
+"sidebar.remove.worktree.title" = "Çalışma Ağacı Kaldırılsın mı?";
+"sidebar.remove.worktree.confirm" = "Kaldır";
+"sidebar.remove.main.worktree.error" = "Ana çalışma ağacı kaldırılamaz.";
+"sidebar.remove.worktree.message %@" = "\"%@\" konumundaki çalışma ağacı kalıcı olarak kaldırılacak. Dal silinmeyecek.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Worktree'yi Sil...";
+"sidebar.worktree.delete.title" = "Worktree'yi Sil";
+"sidebar.worktree.delete.confirm" = "Sil";
+"sidebar.worktree.delete.message %@" = "\"%@\" konumundaki worktree ve tüm kaydedilmemiş değişiklikler kalıcı olarak silinecek. Bu işlem geri alınamaz.";
+"sidebar.new.worktree.title" = "Yeni Çalışma Ağacı";
+"sidebar.new.worktree.branch.label" = "Yeni Dal Adı";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Devam etmek için bir dal adı girin.";
+"sidebar.new.worktree.base.label" = "Temel Dal";
+"sidebar.new.worktree.base.placeholder" = "Dalları filtrele...";
+"sidebar.new.worktree.path.label" = "Çalışma Ağacı Yolu";
+"sidebar.new.worktree.path.required" = "Devam etmek için bir worktree yolu girin.";
+"sidebar.new.worktree.create" = "Oluştur";
+"sidebar.new.worktree.loading.branches" = "Dallar yükleniyor...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness'ler";
+"harnesses.refresh.help" = "ynh araç zincirini yeniden algıla";
+"harnesses.not.installed" = "ynh yüklü değil.";
+"harnesses.init.required" = "ynh bulundu ancak başlatılmadı.\nKurulum için `ynh init` komutunu çalıştırın.";
+"harnesses.init.hint" = "Bir terminal açın ve çalıştırın:\nynh init";
+"harnesses.empty.message" = "Henüz harness yüklü değil.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Yerel";
+"harnesses.source.registry" = "Kayıt Defteri";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Bilgi";
+"harnesses.detail.path" = "Yol";
+"harnesses.detail.source" = "Kaynak";
+"harnesses.detail.subpath" = "Alt yol";
+"harnesses.detail.installed.at" = "Yüklenme tarihi";
+"harnesses.detail.artifacts" = "Artefaktlar";
+"harnesses.detail.no.artifacts" = "Artefakt yok.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Ajanlar";
+"harnesses.detail.rules" = "Kurallar";
+"harnesses.detail.commands" = "Komutlar";
+"harnesses.detail.dependencies" = "Bağımlılıklar";
+"harnesses.detail.includes %d" = "İçerir (%d)";
+"harnesses.detail.delegates %d" = "Devredilen (%d)";
+"harnesses.detail.picks %d" = "Seçilen (%d):";
+"harnesses.reveal.in.finder" = "Finder'da Göster";
+"harnesses.open.in.browser" = "Tarayıcıda Aç";
+"harnesses.close.detail" = "Kapat";
+"harnesses.configure.from.marketplaces" = "Pazaryerlerinden yapılandır…";
+"harnesses.detail.artifacts.from.includes" = "Bu harness artefaktlarını bağımlılık eklemelerinden alır.";
+"harnesses.detail.from" = "kaynağı";
+"harnesses.detail.hooks" = "Hook'lar";
+"harnesses.detail.mcp.servers" = "MCP Sunucuları";
+"harnesses.detail.profiles" = "Profiller";
+"harnesses.detail.focuses" = "Odaklar";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Kullanılabilir manifest yok.";
+"harnesses.detail.resolved" = "Çözüldü";
+"harnesses.detail.unresolved" = "Çözülmedi";
+"harnesses.detail.no.hooks" = "Bu harness'in hook'u yok.";
+"harnesses.detail.no.mcp.servers" = "Bu harness'in MCP sunucusu yok.";
+"harnesses.detail.no.profiles" = "Bu harness'in profili yok.";
+"harnesses.detail.no.focuses" = "Bu harness'in odağı yok.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Harness Başlat";
+"harnesses.launch.vendor" = "Sağlayıcı";
+"harnesses.launch.vendor.unavailable" = "(yüklü değil)";
+"harnesses.launch.vendor.default" = "Varsayılan (%@)";
+"harnesses.launch.focus" = "Odak";
+"harnesses.launch.focus.none" = "Yok";
+"harnesses.launch.working.directory" = "Çalışma Dizini";
+"harnesses.launch.browse" = "Gözat…";
+"harnesses.launch.prompt" = "İstem";
+"harnesses.launch.prompt.placeholder" = "Ajana iletilecek isteğe bağlı istem…";
+"harnesses.launch.button" = "Başlat";
+"harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
+"harnesses.launch.cancel" = "İptal";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Bağlı worktree’ler";
+"harnesses.linked.worktrees.none" = "Bu harness’e bağlı worktree yok.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Yeni harness oluştur";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness Araç Zinciri";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "YZ asistanları için harness yöneticisi";
+"settings.ynh.enable.harness.tab" = "Yan çubukta Harness sekmesini göster";
+"settings.ynh.enable.harness.tab.help" = "Yüklü harness'lere göz atmak ve yönetmek için yan çubuğa bir Harness sekmesi ekler";
+"settings.ynh.home.override" = "$YNH_HOME Geçersiz Kılma";
+"settings.ynh.home.override.placeholder" = "Varsayılan (ynh'nin kendi çözümünü kullanır)";
+"settings.ynh.home.override.help" = "ynh alt işlemi için YNH_HOME dizinini geçersiz kılar. Varsayılan için boş bırakın.";
+"settings.ynh.resolved.paths" = "Çözümlenen Yollar";
+"settings.ynh.redetect" = "Yeniden Algıla";
+"settings.ynh.init.required" = "Başlatılmadı";
+"settings.ynh.ready" = "Hazır";
+"settings.ynh.path.label" = "Yol:";
+"settings.ynh.ynd.path.label" = "ynd Yolu:";
+"settings.ynh.status.label" = "Durum:";
+"settings.ynh.ready.info" = "Araç zinciri algılandı ve başlatıldı. Harness'lere göz atmak için yan çubuk sekmesini etkinleştirin.";
+"settings.ynh.advanced" = "Gelişmiş";
+"settings.ynh.version.label" = "Sürüm:";
+
+"common.clear" = "Temizle";
+
+"sidebar.worktree.create.terminal" = "Terminal Oluştur…";
+
+"sidebar.worktree.copy.pathname" = "Yol Adı Olarak Kopyala";
+
+"sidebar.prune.worktrees" = "Worktree'leri Budа…";
+
+"sidebar.prune.worktrees.title" = "Worktree'leri Buda";
+
+"sidebar.prune.worktrees.confirm" = "Buda";
+
+"sidebar.prune.worktrees.nothing.title" = "Budanacak Bir Şey Yok";
+
+"sidebar.prune.worktrees.nothing.message" = "Tüm worktree'ler kayıt altında. Eski kayıt bulunamadı.";
+
+"sidebar.prune.worktrees.explanation" = "Bu yönetim kayıtları artık var olmayan dizinlere işaret ediyor. Budama bunları kaldırır — dallarınız etkilenmez.";
+
+// Install sheet
+"harnesses.install.title" = "Harness Kur";
+"harnesses.install.toolbar.help" = "Bir harness kur";
+"harnesses.install.tab.search" = "Ara";
+"harnesses.install.tab.git" = "Git'ten";
+"harnesses.install.tab.sources" = "Kaynaklar";
+"harnesses.install.search.placeholder" = "Kayıt defterlerinde ve kaynaklarda ara…";
+"harnesses.install.search.prompt" = "Kayıt defterlerinde ve kaynaklarda aramak için yazın";
+"harnesses.install.search.empty" = "Sonuç bulunamadı";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Alt yol";
+"harnesses.install.git.subpath.placeholder" = "İsteğe bağlı alt dizin";
+"harnesses.install.command.preview" = "Komut önizlemesi";
+"harnesses.install.confirm" = "Kur";
+"harnesses.install.cancel" = "İptal";
+"harnesses.install.already.installed" = "Kurulu";
+"harnesses.install.from %@" = "%@ kaynağından";
+"harnesses.install.sources.empty" = "Hiçbir kaynak yapılandırılmamış. Harnesses'larını incelemek için yerel bir dizin ekleyin.";
+"harnesses.install.sources.add" = "Kaynak Ekle…";
+"harnesses.install.sources.add.help" = "Harness kaynağı olarak yerel dizin ekle";
+"harnesses.install.sources.remove" = "Kaldır";
+"harnesses.install.sources.count %ld" = "%ld harness";
+
+"harnesses.update.button" = "Güncelle";
+"harnesses.update.help" = "En son sürüme güncelle";
+"harnesses.uninstall.button" = "Kaldır";
+"harnesses.uninstall.help" = "Bu harness'i kaldır";
+"harnesses.uninstall.alert.title %@" = "\"%@\" kaldırılsın mı?";
+"harnesses.uninstall.alert.message" = "Bu, harness'i sisteminizden kaldıracak.";
+"harnesses.uninstall.alert.worktrees %ld" = "Bu harness %ld worktree ile bağlantılı — bu ilişkilendirmeler temizlenecek.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal şu anda bu harness'i çalıştırıyor.";
+"harnesses.uninstall.alert.confirm" = "Kaldır";
+"harnesses.more.actions.help" = "Daha fazla işlem";
+"harnesses.copy.run.command" = "Çalıştırma Komutunu Kopyala";
+"harnesses.ynh.documentation" = "YNH Belgeleri";
+
+"harnesses.add.registry.title" = "YNH Kayıt Defteri Ekle";
+"harnesses.add.registry.url.label" = "Kayıt Defteri URL'si";
+"harnesses.add.registry.hint" = "registry.json dosyası içeren bir Git deposu ekleyin. Eklendikten sonra buradan harness arayabilir ve kurabilirsiniz.";
+"harnesses.add.registry.button" = "Kayıt Defteri Ekle";
+"harnesses.add.registry.success" = "Kayıt defteri başarıyla eklendi";
+"harnesses.add.registry.toolbar.help" = "YNH kayıt defteri ekle";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Pazar Yerleri";
+"settings.marketplaces.section.list" = "Yapılandırılmış pazar yerleri";
+"settings.marketplaces.empty" = "Henüz pazar yeri eklenmedi.";
+"settings.marketplaces.add" = "Pazar yeri ekle…";
+"settings.marketplaces.never.fetched" = "Hiç getirilmedi";
+"settings.marketplaces.remove.confirm.title" = "Pazar Yerini Kaldır";
+"settings.marketplaces.remove.confirm.message %@" = "\"%@\" kaldırılsın mı? Eklentileri artık tarayıcıda görünmeyecek.";
+"settings.marketplaces.section.behaviour" = "Davranış";
+"settings.marketplaces.auto.refresh" = "Başlangıçta otomatik yenile";
+"settings.marketplaces.auto.refresh.help" = "Uygulama başladığında pazar yeri güncellemelerini otomatik olarak getir";
+"settings.marketplaces.section.authoring" = "Harness oluşturma";
+"settings.marketplaces.default.author.directory" = "Varsayılan yazar dizini";
+"settings.marketplaces.author.directory.detected.hint" = "ynh'den otomatik algılandı";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Pazar Yerleri";
+"marketplace.add.help" = "Pazar yeri ekle";
+"marketplace.empty" = "Henüz pazar yeri yok";
+"marketplace.add.button" = "Pazar yeri ekle";
+"marketplace.row.refresh.help" = "Pazar yerini yenile";
+"marketplace.row.refresh" = "Yenile";
+"marketplace.row.remove" = "Kaldır";
+"marketplace.row.stale" = " · Eski olabilir";
+"marketplace.row.never.fetched" = "Hiç getirilmedi";
+"marketplace.add.sheet.title" = "Pazar yeri ekle";
+"marketplace.add.tab.known" = "Bilinen";
+"marketplace.add.tab.custom" = "Özel URL";
+"marketplace.add.section.git.url" = "Git Deposu URL'si";
+"marketplace.add.section.display.name" = "Görünen ad";
+"marketplace.add.section.vendor" = "Satıcı";
+"marketplace.detail.last.fetched %@" = "Son getirme %@";
+"marketplace.detail.search.placeholder" = "Eklenti ara…";
+"marketplace.detail.search.empty %@" = "«%@» ile eşleşen eklenti yok";
+"marketplace.detail.empty" = "Bu pazar yerinde eklenti yok";
+"marketplace.detail.empty.hint" = "En son dizini almak için yenileyin.";
+"marketplace.plugin.add.to.harness" = "Harness'e ekle";
+"marketplace.plugin.copy.install.command" = "Kurulum komutunu kopyala";
+"marketplace.plugin.copy.install.command.help" = "Claude Code kurulum komutunu panoya kopyalar";
+"marketplace.plugin.load.artifacts" = "Yapıtları yükle";
+"marketplace.plugin.loading.artifacts" = "Yapıtlar yükleniyor…";
+"marketplace.plugin.no.artifacts" = "Bu eklenti için yapıt listelenmemiş.";
+"marketplace.plugin.no.artifacts.hint" = "Eklentinin tüm içeriği dahil edilecek.";
+"marketplace.plugin.artifacts.unavailable %@" = "Yapıtlar kullanılamıyor: %@";
+"marketplace.picker.step.artifacts" = "Yapıtlar";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Uygula";
+"marketplace.picker.select.prompt" = "Dahil edilecek yapıtları seçin";
+"marketplace.picker.select.all" = "Tümü";
+"marketplace.picker.select.none" = "Hiçbiri";
+"marketplace.picker.no.harnesses" = "Henüz harness yok";
+"marketplace.picker.no.harnesses.hint" = "Önce Yeni Harness sihirbazını kullanarak bir harness oluşturun.";
+"marketplace.picker.review.plugin" = "Eklenti";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Yapıtlar";
+"marketplace.picker.review.all.count %lld" = "Tümü (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld / %lld seçildi";
+"marketplace.picker.command.preview" = "Komut önizlemesi";
+"marketplace.picker.success %@" = "Eklenti %@ üzerine eklendi";
+"marketplace.picker.done" = "Bitti";
+"marketplace.picker.back" = "Geri";
+"marketplace.picker.next" = "İleri";
+"harness.wizard.title" = "Yeni harness";
+"harness.wizard.name.label" = "Ad (zorunlu)";
+"harness.wizard.description.label" = "Açıklama";
+"harness.wizard.loading.vendors" = "Satıcılar yükleniyor…";
+"harness.wizard.vendor.label" = "Varsayılan satıcı";
+"harness.wizard.destination.label" = "Hedef dizin";
+"harness.wizard.install.toggle" = "Oluşturduktan hemen sonra harness'i yükle";
+"harness.wizard.success.add.plugins" = "Pazar yerinden eklenti ekle";
+"harness.wizard.success.open" = "TermQ'da aç";
+"harness.wizard.create" = "Oluştur";
+"harness.wizard.retry" = "Tekrar dene";
+"harness.wizard.error.name.required" = "Ad zorunludur";
+"harness.wizard.error.name.invalid" = "Ad yalnızca harf, rakam, kısa çizgi ve alt çizgi içerebilir";
+"harness.wizard.error.name.duplicate %@" = "«%@» adında bir harness zaten mevcut";
+"settings.marketplaces.reset" = "Sıfırla";
+"settings.marketplaces.section.ynh.registries" = "YNH Kayıtları";
+"settings.marketplaces.ynh.registries.empty" = "Kayıt eklenmedi";
+"settings.marketplaces.ynh.add.registry" = "Kayıt Ekle…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Kaydı Kaldır";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Kaldır";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" YNH'den kaldırılsın mı? Yüklü harness'ler kalacak.";
+"marketplace.add.custom.name.placeholder" = "Benim pazar yerim";
+"harness.wizard.success.created %@" = "Harness «%@» oluşturuldu";

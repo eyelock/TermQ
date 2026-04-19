@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "นำไปใช้";
 "common.preview" = "แสดงตัวอย่าง";
+"common.close.window" = "ปิดหน้าต่าง";
 
 // MARK: - Board View
 "board.column.options" = "ตัวเลือกคอลัมน์";
@@ -40,11 +41,11 @@
 "card.unpin" = "เลิกปักหมุดเทอร์มินัล";
 "card.running" = "เทอร์มินัลกำลังทำงาน";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "เชื่อมต่อแล้ว";
 "card.wired.help" = "เชื่อมต่อกับตัวแทน MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "เทอร์มินัลปักหมุดถัดไป";
 "menu.previous.pinned" = "เทอร์มินัลปักหมุดก่อนหน้า";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "สลับแถบด้านข้าง";
 
 
 // MARK: - Command Palette
@@ -466,32 +468,29 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "คำขอแก้ไขจากภายนอก";
-"security.external.modification.message" = "กระบวนการภายนอกกำลังพยายามแก้ไขบริบท LLM สำหรับเทอร์มินัล '%@':
-
-%@
-
-สิ่งนี้อาจส่งผลต่อวิธีที่ผู้ช่วย AI โต้ตอบกับเทอร์มินัลนี้";
+"security.external.modification.message" = "กระบวนการภายนอกกำลังพยายามแก้ไขบริบท LLM สำหรับเทอร์มินัล '%@':\n\n%@\n\nสิ่งนี้อาจส่งผลต่อวิธีที่ผู้ช่วย AI โต้ตอบกับเทอร์มินัลนี้";
 "security.allow" = "อนุญาต";
 "security.deny" = "ปฏิเสธ";
 "security.allow.disable.prompt" = "อนุญาตและไม่ต้องถามอีก";
 "security.osc.clipboard.enabled" = "เปิดใช้งานการเข้าถึงคลิปบอร์ด OSC 52";
 "security.osc.clipboard.disabled" = "ปิดใช้งานการเข้าถึงคลิปบอร์ด OSC 52";
 
-"settings.auto.check.updates" = "ตรวจสอบการอัปเดตอัตโนมัติ";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "ตรวจสอบการอัปเดตโดยอัตโนมัติ";
+"settings.auto.check.updates.help" = "เมื่อเปิดใช้งาน TermQ จะตรวจสอบเวอร์ชันใหม่เป็นระยะ";
+"settings.check.for.updates" = "ตรวจสอบการอัปเดต...";
+"settings.include.beta.releases" = "รวมเวอร์ชันเบต้า";
+"settings.include.beta.releases.help" = "เลือกรับเวอร์ชันก่อนเผยแพร่ที่มีคุณสมบัติใหม่";
+"settings.section.updates" = "การอัปเดต";
 "editor.section.add.tag" = "เพิ่มแท็ก";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "อนุญาตการดำเนินการที่จัดคิว";
+"editor.allow.agent.prompts.help" = "อนุญาตให้ {{PROMPT}} และ {{NEXT_ACTION}} ถูกแทรกในคำสั่งเริ่มต้นของเทอร์มินัลนี้";
+"editor.allow.agent.prompts.disabled.globally" = "การดำเนินการที่จัดคิวปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
 "editor.allow.osc.clipboard.disabled.globally" = "ปิดใช้งานทั่วโลก - เปิดใช้งานใน การตั้งค่า > ข้อมูลและความปลอดภัย";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "การยืนยันปิดใช้งานทั่วโลก - เปลี่ยนใน การตั้งค่า > ข้อมูลและความปลอดภัย";
 
-"settings.debug.update.warning.title" = "คำเตือนบิลด์ดีบัก";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "คำเตือน: เวอร์ชัน Debug";
+"settings.debug.update.warning.message" = "การดำเนินการอัปเดตต่อไปจะติดตั้งเวอร์ชันการผลิตของ TermQ";
 
 "editor.no.tags" = "ไม่มีแท็กที่กำหนด";
 
@@ -500,3 +499,315 @@
 "settings.environment.section.add.variable" = "เพิ่มตัวแปรสภาพแวดล้อม";
 
 "settings.mcp.install" = "ติดตั้งเซิร์ฟเวอร์ MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "คลังเก็บโค้ด";
+"sidebar.add.button.help" = "เพิ่มคลังเก็บโค้ด";
+"sidebar.empty.message" = "ยังไม่ได้เพิ่มคลังเก็บโค้ด\nคลิก + เพื่อเพิ่ม git repository";
+"sidebar.worktrees.placeholder" = "Worktrees จะปรากฏที่นี่";
+"sidebar.remove.repository" = "ลบคลังเก็บโค้ด";
+"sidebar.toggle.help" = "สลับแถบด้านข้างคลังเก็บโค้ด (⌘⇧L)";
+"sidebar.add.title" = "เพิ่มคลังเก็บโค้ด";
+"sidebar.add.path.label" = "เส้นทาง";
+"sidebar.add.name.label" = "ชื่อที่แสดง";
+"sidebar.add.name.placeholder" = "ตรวจพบอัตโนมัติจาก git";
+"sidebar.add.cancel" = "ยกเลิก";
+"sidebar.add.add" = "เพิ่ม";
+"sidebar.add.advanced" = "ขั้นสูง";
+"sidebar.edit.title" = "แก้ไขที่เก็บ";
+"sidebar.edit.repository" = "แก้ไขที่เก็บ";
+"sidebar.worktree.base.path.label" = "เส้นทางพื้นฐาน worktree";
+"sidebar.worktree.base.path.help" = "worktrees ใหม่จะถูกสร้างที่นี่ ค่าเริ่มต้นคือโฟลเดอร์หลักของไดเรกทอรีที่เก็บ";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ไม่ใช่ git repository";
+"sidebar.worktrees.empty" = "ไม่พบ worktrees";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "รีเฟรช worktrees";
+"sidebar.worktree.new" = "Worktree ใหม่";
+"sidebar.worktree.new.terminal" = "Terminal ใหม่";
+"sidebar.worktree.terminals.badge.help" = "คลิกเพื่อเข้าถึงลิงก์ด่วนสำหรับเปิด Terminal";
+"sidebar.worktree.open.in.terminal" = "เปิดใน Terminal";
+"sidebar.worktree.reveal.in.finder" = "แสดงใน Finder";
+"sidebar.worktree.open.remote.branch" = "เปิด Branch บน Remote";
+"sidebar.worktree.open.remote.commit" = "เปิด Commit บน Remote";
+"sidebar.worktree.lock" = "ล็อก worktree";
+"sidebar.worktree.unlock" = "ปลดล็อก worktree";
+
+"sidebar.worktree.set.harness" = "ตั้งค่า harness…";
+"sidebar.worktree.clear.harness" = "ล้าง harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "เปิด %@";
+"sidebar.remove.worktree" = "ลบ Worktree";
+"sidebar.remove.worktree.title" = "ลบ Worktree?";
+"sidebar.remove.worktree.confirm" = "ลบ";
+"sidebar.remove.main.worktree.error" = "ไม่สามารถลบ worktree หลักได้";
+"sidebar.remove.worktree.message %@" = "การดำเนินการนี้จะลบ worktree ที่ \"%@\" อย่างถาวร สาขาจะไม่ถูกลบ";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "ลบ Worktree...";
+"sidebar.worktree.delete.title" = "ลบ Worktree";
+"sidebar.worktree.delete.confirm" = "ลบ";
+"sidebar.worktree.delete.message %@" = "Worktree ที่ \"%@\" และการเปลี่ยนแปลงที่ยังไม่ได้บันทึกทั้งหมดจะถูกลบถาวร ไม่สามารถเลิกทำการดำเนินการนี้ได้";
+"sidebar.new.worktree.title" = "Worktree ใหม่";
+"sidebar.new.worktree.branch.label" = "ชื่อสาขาใหม่";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "ป้อนชื่อ Branch เพื่อดำเนินการต่อ";
+"sidebar.new.worktree.base.label" = "สาขาฐาน";
+"sidebar.new.worktree.base.placeholder" = "กรองสาขา...";
+"sidebar.new.worktree.path.label" = "เส้นทาง Worktree";
+"sidebar.new.worktree.path.required" = "ป้อนเส้นทาง Worktree เพื่อดำเนินการต่อ";
+"sidebar.new.worktree.create" = "สร้าง";
+"sidebar.new.worktree.loading.branches" = "กำลังโหลดสาขา...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "ตรวจหา ynh toolchain ใหม่";
+"harnesses.not.installed" = "ไม่ได้ติดตั้ง ynh";
+"harnesses.init.required" = "พบ ynh แต่ยังไม่ได้เริ่มต้น\nรัน `ynh init` เพื่อตั้งค่า";
+"harnesses.init.hint" = "เปิด Terminal แล้วรัน:\nynh init";
+"harnesses.empty.message" = "ยังไม่มี harness ที่ติดตั้งไว้";
+
+// Harnesses — row badges
+"harnesses.source.local" = "ในเครื่อง";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "ข้อมูล";
+"harnesses.detail.path" = "เส้นทาง";
+"harnesses.detail.source" = "แหล่งที่มา";
+"harnesses.detail.subpath" = "เส้นทางย่อย";
+"harnesses.detail.installed.at" = "ติดตั้งแล้ว";
+"harnesses.detail.artifacts" = "Artifacts";
+"harnesses.detail.no.artifacts" = "ไม่มี artifacts";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "กฎ";
+"harnesses.detail.commands" = "คำสั่ง";
+"harnesses.detail.dependencies" = "การพึ่งพา";
+"harnesses.detail.includes %d" = "รวม (%d)";
+"harnesses.detail.delegates %d" = "มอบหมายไปยัง (%d)";
+"harnesses.detail.picks %d" = "เลือก (%d):";
+"harnesses.reveal.in.finder" = "แสดงใน Finder";
+"harnesses.open.in.browser" = "เปิดในเบราว์เซอร์";
+"harnesses.close.detail" = "ปิด";
+"harnesses.configure.from.marketplaces" = "กำหนดค่าจากตลาด…";
+"harnesses.detail.artifacts.from.includes" = "harness นี้ได้รับ artifacts จาก dependency includes";
+"harnesses.detail.from" = "จาก";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "เซิร์ฟเวอร์ MCP";
+"harnesses.detail.profiles" = "โปรไฟล์";
+"harnesses.detail.focuses" = "โฟกัส";
+"harnesses.detail.focus.profile %@" = "โปรไฟล์: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "ไม่มี manifest";
+"harnesses.detail.resolved" = "แก้ไขแล้ว";
+"harnesses.detail.unresolved" = "ยังไม่ได้แก้ไข";
+"harnesses.detail.no.hooks" = "harness นี้ไม่มี hooks";
+"harnesses.detail.no.mcp.servers" = "harness นี้ไม่มีเซิร์ฟเวอร์ MCP";
+"harnesses.detail.no.profiles" = "harness นี้ไม่มีโปรไฟล์";
+"harnesses.detail.no.focuses" = "harness นี้ไม่มีโฟกัส";
+
+// Harnesses — launch
+"harnesses.launch.title" = "เปิด Harness";
+"harnesses.launch.vendor" = "ผู้จัดจำหน่าย";
+"harnesses.launch.vendor.unavailable" = "(ไม่ได้ติดตั้ง)";
+"harnesses.launch.vendor.default" = "ค่าเริ่มต้น (%@)";
+"harnesses.launch.focus" = "โฟกัส";
+"harnesses.launch.focus.none" = "ไม่มี";
+"harnesses.launch.working.directory" = "ไดเรกทอรีทำงาน";
+"harnesses.launch.browse" = "เลือก…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "prompt ที่เป็นตัวเลือกสำหรับ agent…";
+"harnesses.launch.button" = "เปิด";
+"harnesses.launch.help" = "เปิด harness นี้ใน Terminal ใหม่";
+"harnesses.launch.cancel" = "ยกเลิก";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree ที่เชื่อมโยง";
+"harnesses.linked.worktrees.none" = "ไม่มี worktree ที่เชื่อมโยงกับ harness นี้";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "สร้าง Harness ใหม่";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness Toolchain";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "ตัวจัดการ harness สำหรับ AI assistant";
+"settings.ynh.enable.harness.tab" = "แสดงแท็บ Harness ใน sidebar";
+"settings.ynh.enable.harness.tab.help" = "เพิ่มแท็บ Harness ใน sidebar สำหรับเรียกดูและจัดการ harness ที่ติดตั้งไว้";
+"settings.ynh.home.override" = "แทนที่ $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "ค่าเริ่มต้น (ใช้การแก้ไขของ ynh เอง)";
+"settings.ynh.home.override.help" = "แทนที่ไดเรกทอรี YNH_HOME สำหรับ subprocess ของ ynh ปล่อยว่างเพื่อใช้ค่าเริ่มต้น";
+"settings.ynh.resolved.paths" = "เส้นทางที่แก้ไขแล้ว";
+"settings.ynh.redetect" = "ตรวจหาใหม่";
+"settings.ynh.init.required" = "ยังไม่ได้เริ่มต้น";
+"settings.ynh.ready" = "พร้อมใช้งาน";
+"settings.ynh.path.label" = "เส้นทาง:";
+"settings.ynh.ynd.path.label" = "เส้นทาง ynd:";
+"settings.ynh.status.label" = "สถานะ:";
+"settings.ynh.ready.info" = "ตรวจพบและเริ่มต้น toolchain แล้ว เปิดใช้งานแท็บ sidebar เพื่อเรียกดู harness";
+"settings.ynh.advanced" = "ขั้นสูง";
+"settings.ynh.version.label" = "เวอร์ชัน:";
+
+"common.clear" = "ล้าง";
+
+"sidebar.worktree.create.terminal" = "สร้าง Terminal…";
+
+"sidebar.worktree.copy.pathname" = "คัดลอกเป็นชื่อเส้นทาง";
+
+"sidebar.prune.worktrees" = "ตัดแต่ง Worktrees…";
+
+"sidebar.prune.worktrees.title" = "ตัดแต่ง Worktrees";
+
+"sidebar.prune.worktrees.confirm" = "ตัดแต่ง";
+
+"sidebar.prune.worktrees.nothing.title" = "ไม่มีอะไรต้องตัดแต่ง";
+
+"sidebar.prune.worktrees.nothing.message" = "Worktree ทั้งหมดได้รับการบัญชีแล้ว ไม่พบบันทึกที่ล้าสมัย";
+
+"sidebar.prune.worktrees.explanation" = "บันทึกการดูแลระบบเหล่านี้ชี้ไปยังไดเรกทอรีที่ไม่มีอยู่แล้ว การตัดแต่งจะลบออก — branch ของคุณไม่ได้รับผลกระทบ";
+
+// Install sheet
+"harnesses.install.title" = "ติดตั้ง Harness";
+"harnesses.install.toolbar.help" = "ติดตั้ง harness";
+"harnesses.install.tab.search" = "ค้นหา";
+"harnesses.install.tab.git" = "จาก Git";
+"harnesses.install.tab.sources" = "แหล่งข้อมูล";
+"harnesses.install.search.placeholder" = "ค้นหาในรีจิสทรีและแหล่งข้อมูล…";
+"harnesses.install.search.prompt" = "พิมพ์เพื่อค้นหาในรีจิสทรีและแหล่งข้อมูล";
+"harnesses.install.search.empty" = "ไม่พบผลลัพธ์";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "เส้นทางย่อย";
+"harnesses.install.git.subpath.placeholder" = "ไดเรกทอรีย่อยเพิ่มเติม (ไม่จำเป็น)";
+"harnesses.install.command.preview" = "ตัวอย่างคำสั่ง";
+"harnesses.install.confirm" = "ติดตั้ง";
+"harnesses.install.cancel" = "ยกเลิก";
+"harnesses.install.already.installed" = "ติดตั้งแล้ว";
+"harnesses.install.from %@" = "จาก %@";
+"harnesses.install.sources.empty" = "ไม่ได้กำหนดค่าแหล่งข้อมูล เพิ่มไดเรกทอรีในเครื่องเพื่อเรียกดู harnesses";
+"harnesses.install.sources.add" = "เพิ่มแหล่งข้อมูล…";
+"harnesses.install.sources.add.help" = "เพิ่มไดเรกทอรีในเครื่องเป็นแหล่ง harness";
+"harnesses.install.sources.remove" = "ลบออก";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "อัปเดต";
+"harnesses.update.help" = "อัปเดตเป็นเวอร์ชันล่าสุด";
+"harnesses.uninstall.button" = "ถอนการติดตั้ง";
+"harnesses.uninstall.help" = "ถอนการติดตั้ง harness นี้";
+"harnesses.uninstall.alert.title %@" = "ถอนการติดตั้ง \"%@\" หรือไม่?";
+"harnesses.uninstall.alert.message" = "การดำเนินการนี้จะลบ harness ออกจากระบบของคุณ";
+"harnesses.uninstall.alert.worktrees %ld" = "harness นี้เชื่อมโยงกับ %ld worktree — การเชื่อมโยงเหล่านั้นจะถูกล้าง";
+"harnesses.uninstall.alert.terminals %ld" = "ขณะนี้มี %ld เทอร์มินัลที่กำลังรัน harness นี้";
+"harnesses.uninstall.alert.confirm" = "ถอนการติดตั้ง";
+"harnesses.more.actions.help" = "การดำเนินการอื่น ๆ";
+"harnesses.copy.run.command" = "คัดลอกคำสั่งเรียกใช้";
+"harnesses.ynh.documentation" = "เอกสาร YNH";
+
+"harnesses.add.registry.title" = "เพิ่ม YNH Registry";
+"harnesses.add.registry.url.label" = "URL ของ Registry";
+"harnesses.add.registry.hint" = "เพิ่ม Git repository ที่มีไฟล์ registry.json เมื่อเพิ่มแล้ว คุณสามารถค้นหาและติดตั้ง harnesses จากที่นั่นได้";
+"harnesses.add.registry.button" = "เพิ่ม Registry";
+"harnesses.add.registry.success" = "เพิ่ม Registry สำเร็จแล้ว";
+"harnesses.add.registry.toolbar.help" = "เพิ่ม YNH registry";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "มาร์เก็ตเพลส";
+"settings.marketplaces.section.list" = "มาร์เก็ตเพลสที่กำหนดค่าไว้";
+"settings.marketplaces.empty" = "ยังไม่มีมาร์เก็ตเพลสที่เพิ่มไว้";
+"settings.marketplaces.add" = "เพิ่มมาร์เก็ตเพลส…";
+"settings.marketplaces.never.fetched" = "ไม่เคยดึงข้อมูล";
+"settings.marketplaces.remove.confirm.title" = "ลบมาร์เก็ตเพลส";
+"settings.marketplaces.remove.confirm.message %@" = "ลบ \"%@\" หรือไม่? ปลั๊กอินของมาร์เก็ตเพลสนี้จะไม่แสดงในเบราว์เซอร์อีกต่อไป";
+"settings.marketplaces.section.behaviour" = "พฤติกรรม";
+"settings.marketplaces.auto.refresh" = "รีเฟรชอัตโนมัติเมื่อเปิดแอป";
+"settings.marketplaces.auto.refresh.help" = "ดึงข้อมูลอัปเดตมาร์เก็ตเพลสโดยอัตโนมัติเมื่อแอปเริ่มทำงาน";
+"settings.marketplaces.section.authoring" = "การสร้าง Harness";
+"settings.marketplaces.default.author.directory" = "ไดเรกทอรีผู้เขียนเริ่มต้น";
+"settings.marketplaces.author.directory.detected.hint" = "ตรวจจับอัตโนมัติจาก ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "มาร์เก็ตเพลส";
+"marketplace.add.help" = "เพิ่มมาร์เก็ตเพลส";
+"marketplace.empty" = "ยังไม่มีมาร์เก็ตเพลส";
+"marketplace.add.button" = "เพิ่มมาร์เก็ตเพลส";
+"marketplace.row.refresh.help" = "รีเฟรชมาร์เก็ตเพลส";
+"marketplace.row.refresh" = "รีเฟรช";
+"marketplace.row.remove" = "ลบออก";
+"marketplace.row.stale" = " · อาจล้าสมัย";
+"marketplace.row.never.fetched" = "ยังไม่เคยดึงข้อมูล";
+"marketplace.add.sheet.title" = "เพิ่มมาร์เก็ตเพลส";
+"marketplace.add.tab.known" = "ที่รู้จัก";
+"marketplace.add.tab.custom" = "URL กำหนดเอง";
+"marketplace.add.section.git.url" = "URL ที่เก็บ Git";
+"marketplace.add.section.display.name" = "ชื่อที่แสดง";
+"marketplace.add.section.vendor" = "ผู้จำหน่าย";
+"marketplace.detail.last.fetched %@" = "ดึงข้อมูลล่าสุด %@";
+"marketplace.detail.search.placeholder" = "ค้นหาปลั๊กอิน…";
+"marketplace.detail.search.empty %@" = "ไม่มีปลั๊กอินที่ตรงกับ «%@»";
+"marketplace.detail.empty" = "ไม่มีปลั๊กอินในมาร์เก็ตเพลสนี้";
+"marketplace.detail.empty.hint" = "รีเฟรชเพื่อดึงดัชนีล่าสุด";
+"marketplace.plugin.add.to.harness" = "เพิ่มใน Harness";
+"marketplace.plugin.copy.install.command" = "คัดลอกคำสั่งติดตั้ง";
+"marketplace.plugin.copy.install.command.help" = "คัดลอกคำสั่งติดตั้ง Claude Code ไปยังคลิปบอร์ด";
+"marketplace.plugin.load.artifacts" = "โหลดอาร์ติแฟกต์";
+"marketplace.plugin.loading.artifacts" = "กำลังโหลดอาร์ติแฟกต์…";
+"marketplace.plugin.no.artifacts" = "ไม่มีอาร์ติแฟกต์ที่ระบุสำหรับปลั๊กอินนี้";
+"marketplace.plugin.no.artifacts.hint" = "เนื้อหาทั้งหมดของปลั๊กอินจะถูกรวมไว้";
+"marketplace.plugin.artifacts.unavailable %@" = "อาร์ติแฟกต์ไม่พร้อมใช้งาน: %@";
+"marketplace.picker.step.artifacts" = "อาร์ติแฟกต์";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "ใช้งาน";
+"marketplace.picker.select.prompt" = "เลือกอาร์ติแฟกต์ที่จะรวม";
+"marketplace.picker.select.all" = "ทั้งหมด";
+"marketplace.picker.select.none" = "ไม่มี";
+"marketplace.picker.no.harnesses" = "ยังไม่มี Harness";
+"marketplace.picker.no.harnesses.hint" = "สร้าง Harness ก่อนโดยใช้ตัวช่วย Harness ใหม่";
+"marketplace.picker.review.plugin" = "ปลั๊กอิน";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "อาร์ติแฟกต์";
+"marketplace.picker.review.all.count %lld" = "ทั้งหมด (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "เลือก %lld จาก %lld";
+"marketplace.picker.command.preview" = "ตัวอย่างคำสั่ง";
+"marketplace.picker.success %@" = "เพิ่มปลั๊กอินใน %@ แล้ว";
+"marketplace.picker.done" = "เสร็จสิ้น";
+"marketplace.picker.back" = "ย้อนกลับ";
+"marketplace.picker.next" = "ถัดไป";
+"harness.wizard.title" = "Harness ใหม่";
+"harness.wizard.name.label" = "ชื่อ (จำเป็น)";
+"harness.wizard.description.label" = "คำอธิบาย";
+"harness.wizard.loading.vendors" = "กำลังโหลดผู้จำหน่าย…";
+"harness.wizard.vendor.label" = "ผู้จำหน่ายเริ่มต้น";
+"harness.wizard.destination.label" = "ไดเร็กทอรีปลายทาง";
+"harness.wizard.install.toggle" = "ติดตั้ง Harness ทันทีหลังสร้าง";
+"harness.wizard.success.add.plugins" = "เพิ่มปลั๊กอินจากมาร์เก็ตเพลส";
+"harness.wizard.success.open" = "เปิดใน TermQ";
+"harness.wizard.create" = "สร้าง";
+"harness.wizard.retry" = "ลองอีกครั้ง";
+"harness.wizard.error.name.required" = "ต้องระบุชื่อ";
+"harness.wizard.error.name.invalid" = "ชื่อสามารถมีได้เฉพาะตัวอักษร ตัวเลข ขีดกลาง และขีดล่าง";
+"harness.wizard.error.name.duplicate %@" = "มี Harness ชื่อ «%@» อยู่แล้ว";
+"settings.marketplaces.reset" = "รีเซ็ต";
+"settings.marketplaces.section.ynh.registries" = "ระเบียน YNH";
+"settings.marketplaces.ynh.registries.empty" = "ยังไม่มีระเบียนที่เพิ่ม";
+"settings.marketplaces.ynh.add.registry" = "เพิ่มระเบียน…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "ลบระเบียน";
+"settings.marketplaces.ynh.registry.remove.confirm" = "ลบ";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "ลบ “%@” ออกจาก YNHใช่ไหม? ฮาร์นเสสที่ติดตั้งไว้แล้วจะยังคงอยู่";
+"marketplace.add.custom.name.placeholder" = "มาร์เก็ตเพลสของฉัน";
+"harness.wizard.success.created %@" = "สร้าง Harness «%@» แล้ว";

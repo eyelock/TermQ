@@ -134,6 +134,8 @@ class TerminalSessionManager: ObservableObject {
 
         // Create new terminal (using our subclass that fixes copy/paste)
         let terminal = TermQTerminalView(frame: .zero)
+        let scrollback = UserDefaults.standard.integer(forKey: "terminalScrollbackLines")
+        terminal.changeScrollback(scrollback > 0 ? scrollback : 5000)
         terminal.cardId = cardId
         terminal.terminalTitle = card.title
         terminal.safePasteEnabled = card.safePasteEnabled
@@ -358,7 +360,8 @@ class TerminalSessionManager: ObservableObject {
     private func runInitCommand(terminal: TermQTerminalView, card: TerminalCard) {
         guard !card.initCommand.isEmpty else { return }
 
-        let hasNextActionToken = card.initCommand.contains("{{NEXT_ACTION}}") || card.initCommand.contains("{{LLM_NEXT_ACTION}}")
+        let hasNextActionToken =
+            card.initCommand.contains("{{NEXT_ACTION}}") || card.initCommand.contains("{{LLM_NEXT_ACTION}}")
         let hadNextAction = !card.llmNextAction.isEmpty
 
         // Check if queued actions are enabled (global AND per-terminal)
@@ -394,10 +397,16 @@ class TerminalSessionManager: ObservableObject {
             initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
         }
 
-        // Slightly longer delay for tmux sessions (they take a moment to attach)
-        let delay = effectiveBackend(for: card) == .tmuxAttach ? 0.8 : 0.5
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            terminal.send(txt: initCmd + "\n")
+        let backend = effectiveBackend(for: card)
+
+        if backend == .tmuxControl {
+            sendInitCommandViaControlMode(cardId: card.id, command: initCmd)
+        } else {
+            // Direct or tmux-attach: send text directly to the terminal.
+            let delay: Double = backend == .tmuxAttach ? 0.8 : 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                terminal.send(txt: initCmd + "\n")
+            }
         }
     }
 
@@ -791,11 +800,21 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
         }
     }
 
+    func requestOpenLink(source: TerminalView, link: String, params: [String: String]) {
+        let cardId = self.cardId
+        let manager = self.manager
+        Task { @MainActor in
+            let cwd = manager?.getCurrentDirectory(for: cardId)
+            openLink(link, cwd: cwd)
+        }
+    }
+
     func processTerminated(source: TerminalView, exitCode: Int32?) {
         // Capture values before Task to avoid Swift 6 Sendable issues
         let cardId = self.cardId
         let manager = self.manager
         let onExit = self.onExit
+        let capturedExitCode = exitCode.map { Int($0) }
         Task { @MainActor in
             // Only call onExit if the session still exists in the manager.
             // If it was intentionally removed (via removeSession), we skip the callback
@@ -803,7 +822,63 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
             guard manager?.sessionExists(for: cardId) == true else { return }
 
             manager?.markSessionTerminated(cardId: cardId)
+            var userInfo: [String: Any] = ["cardId": cardId]
+            if let code = capturedExitCode {
+                userInfo["exitCode"] = code
+            }
+            NotificationCenter.default.post(
+                name: .termqDirectSessionExited,
+                object: nil,
+                userInfo: userInfo
+            )
             onExit()
         }
+    }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    static let termqDirectSessionExited = Notification.Name("termq.directSessionExited")
+}
+
+// MARK: - Link Opening
+
+/// Resolves and opens a link from a terminal Cmd+click.
+/// - http/https URLs open in the default browser.
+/// - Absolute paths open with their default app (or reveal in Finder if they don't exist).
+/// - Relative paths are resolved against `cwd` before opening.
+@MainActor
+private func openLink(_ link: String, cwd: String?) {
+    // Explicit http/https — straight to browser
+    if link.hasPrefix("http://") || link.hasPrefix("https://"),
+        let url = URL(string: link)
+    {
+        NSWorkspace.shared.open(url)
+        return
+    }
+
+    // Resolve to an absolute path
+    let resolvedPath: String
+    if link.hasPrefix("/") {
+        resolvedPath = link
+    } else if let base = cwd {
+        resolvedPath = (base as NSString).appendingPathComponent(link)
+    } else {
+        // No cwd and not absolute — fall back to default SwiftTerm behaviour
+        if let url = URL(string: link) { NSWorkspace.shared.open(url) }
+        return
+    }
+
+    let url = URL(fileURLWithPath: resolvedPath).standardized
+    if FileManager.default.fileExists(atPath: url.path) {
+        NSWorkspace.shared.open(url)
+    } else {
+        // Path doesn't exist — reveal the nearest parent that does
+        var parent = url.deletingLastPathComponent()
+        while !FileManager.default.fileExists(atPath: parent.path) && parent.path != "/" {
+            parent = parent.deletingLastPathComponent()
+        }
+        NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: parent.path)
     }
 }

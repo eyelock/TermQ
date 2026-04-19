@@ -15,6 +15,7 @@
 "common.delete" = "Διαγραφή";
 "common.edit" = "Επεξεργασία";
 "common.close" = "Κλείσιμο";
+"common.close.window" = "Κλείσιμο παραθύρου";
 "common.add" = "Προσθήκη";
 "common.reinstall" = "Επανεγκατάσταση";
 "common.uninstall" = "Απεγκατάσταση";
@@ -466,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Αίτημα εξωτερικής τροποποίησης";
-"security.external.modification.message" = "Μια εξωτερική διεργασία προσπαθεί να τροποποιήσει το πλαίσιο LLM για το τερματικό '%@':
-
-%@
-
-Αυτό μπορεί να επηρεάσει τον τρόπο αλληλεπίδρασης των βοηθών AI με αυτό το τερματικό.";
+"security.external.modification.message" = "Μια εξωτερική διεργασία προσπαθεί να τροποποιήσει το πλαίσιο LLM για το τερματικό '%@':\n\n%@\n\nΑυτό μπορεί να επηρεάσει τον τρόπο αλληλεπίδρασης των βοηθών AI με αυτό το τερματικό.";
 "security.allow" = "Επιτρέπεται";
 "security.deny" = "Απόρριψη";
 "security.allow.disable.prompt" = "Επιτρέπεται χωρίς επανερώτηση";
@@ -478,11 +475,11 @@
 "security.osc.clipboard.disabled" = "Πρόσβαση στο πρόχειρο OSC 52 απενεργοποιημένη";
 
 "settings.auto.check.updates" = "Αυτόματος έλεγχος για ενημερώσεις";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Όταν είναι ενεργοποιημένο, το TermQ θα ελέγχει περιοδικά για νέες εκδόσεις";
+"settings.check.for.updates" = "Έλεγχος για ενημερώσεις...";
+"settings.include.beta.releases" = "Συμπερίληψη beta εκδόσεων";
+"settings.include.beta.releases.help" = "Εγγραφείτε για να λαμβάνετε προκαταρκτικές εκδόσεις με νέες δυνατότητες";
+"settings.section.updates" = "Ενημερώσεις";
 "editor.section.add.tag" = "Προσθήκη ετικέτας";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -491,7 +488,7 @@
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
 "settings.debug.update.warning.title" = "Προειδοποίηση έκδοσης εντοπισμού σφαλμάτων";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.message" = "Η συνέχεια με τις ενημερώσεις θα εγκαταστήσει την έκδοση παραγωγής του TermQ.";
 
 "editor.no.tags" = "Δεν έχουν οριστεί ετικέτες";
 
@@ -500,3 +497,310 @@
 "settings.environment.section.add.variable" = "Προσθήκη μεταβλητής περιβάλλοντος";
 
 "settings.mcp.install" = "Εγκατάσταση διακομιστή MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Αποθετήρια";
+"sidebar.add.button.help" = "Προσθήκη αποθετηρίου";
+"sidebar.empty.message" = "Δεν έχουν προστεθεί αποθετήρια.\nΚάντε κλικ στο + για να προσθέσετε ένα αποθετήριο git.";
+"sidebar.worktrees.placeholder" = "Τα worktree θα εμφανιστούν εδώ";
+"sidebar.remove.repository" = "Αφαίρεση αποθετηρίου";
+"sidebar.toggle.help" = "Εμφάνιση/απόκρυψη πλευρικής μπάρας αποθετηρίων (⌘⇧L)";
+"sidebar.add.title" = "Προσθήκη αποθετηρίου";
+"sidebar.add.path.label" = "Διαδρομή";
+"sidebar.add.name.label" = "Εμφανιζόμενο όνομα";
+"sidebar.add.name.placeholder" = "Αυτόματη ανίχνευση από το git";
+"sidebar.add.cancel" = "Ακύρωση";
+"sidebar.add.add" = "Προσθήκη";
+"sidebar.add.advanced" = "Σύνθετα";
+"sidebar.edit.title" = "Επεξεργασία αποθετηρίου";
+"sidebar.edit.repository" = "Επεξεργασία αποθετηρίου";
+"sidebar.worktree.base.path.label" = "Βασική διαδρομή worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "Το \"%@\" δεν είναι αποθετήριο git.";
+"menu.toggle.sidebar" = "Εμφάνιση/απόκρυψη πλευρικής μπάρας";
+"sidebar.worktrees.empty" = "Δεν βρέθηκαν worktree.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Ανανέωση worktree";
+"sidebar.worktree.new" = "Νέο worktree";
+"sidebar.worktree.new.terminal" = "Γρήγορο Terminal";
+"sidebar.worktree.create.terminal" = "Δημιουργία Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Κάντε κλικ για γρήγορους συνδέσμους για άνοιγμα τερματικών";
+"sidebar.worktree.open.in.terminal" = "Εμφάνιση στο Terminal";
+"sidebar.worktree.reveal.in.finder" = "Εμφάνιση στο Finder";
+"sidebar.worktree.copy.pathname" = "Αντιγραφή ως διαδρομή";
+"sidebar.worktree.open.remote.branch" = "Άνοιγμα κλάδου στο Remote";
+"sidebar.worktree.open.remote.commit" = "Άνοιγμα commit στο Remote";
+"sidebar.worktree.lock" = "Κλείδωμα worktree";
+"sidebar.worktree.unlock" = "Ξεκλείδωμα worktree";
+
+"sidebar.worktree.set.harness" = "Ορισμός harness…";
+"sidebar.worktree.clear.harness" = "Καθαρισμός harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Εκκίνηση %@";
+"sidebar.remove.worktree" = "Διαγραφή worktree";
+"sidebar.remove.worktree.title" = "Διαγραφή worktree;";
+"sidebar.remove.worktree.confirm" = "Διαγραφή";
+"sidebar.remove.main.worktree.error" = "Το κύριο worktree δεν μπορεί να αφαιρεθεί.";
+"sidebar.remove.worktree.message %@" = "Αυτό θα διαγράψει μόνιμα το worktree στο \"%@\". Ο κλάδος δεν θα διαγραφεί.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Καταστροφή Worktree...";
+"sidebar.worktree.delete.title" = "Καταστροφή Worktree";
+"sidebar.worktree.delete.confirm" = "Καταστροφή";
+"sidebar.worktree.delete.message %@" = "Το worktree στο \"%@\" και τυχόν μη αποθηκευμένες αλλαγές θα καταστραφούν οριστικά. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Εκκαθάριση Worktrees…";
+"sidebar.prune.worktrees.title" = "Εκκαθάριση Worktrees";
+"sidebar.prune.worktrees.confirm" = "Εκκαθάριση";
+"sidebar.prune.worktrees.nothing.title" = "Τίποτα για εκκαθάριση";
+"sidebar.prune.worktrees.nothing.message" = "Όλα τα worktrees είναι καταγεγραμμένα. Δεν βρέθηκαν παρωχημένες εγγραφές.";
+"sidebar.prune.worktrees.explanation" = "Αυτές οι διαχειριστικές εγγραφές δείχνουν σε καταλόγους που δεν υπάρχουν πλέον. Η εκκαθάριση τις αφαιρεί — τα κλαδιά σας δεν επηρεάζονται.";
+"sidebar.new.worktree.title" = "Νέο worktree";
+"sidebar.new.worktree.branch.label" = "Όνομα νέου κλάδου";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Εισαγάγετε ένα όνομα κλάδου για να συνεχίσετε.";
+"sidebar.new.worktree.base.label" = "Βασικός κλάδος";
+"sidebar.new.worktree.base.placeholder" = "Φιλτράρισμα κλάδων...";
+"sidebar.new.worktree.path.label" = "Διαδρομή worktree";
+"sidebar.new.worktree.path.required" = "Εισαγάγετε μια διαδρομή worktree για να συνεχίσετε.";
+"sidebar.new.worktree.create" = "Δημιουργία";
+"sidebar.new.worktree.loading.branches" = "Φόρτωση κλάδων...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Εκ νέου εντοπισμός αλυσίδας εργαλείων ynh";
+"harnesses.not.installed" = "Το ynh δεν είναι εγκατεστημένο.";
+"harnesses.init.required" = "Βρέθηκε το ynh αλλά δεν έχει αρχικοποιηθεί.\nΕκτελέστε `ynh init` για ρύθμιση.";
+"harnesses.init.hint" = "Ανοίξτε ένα τερματικό και εκτελέστε:\nynh init";
+"harnesses.empty.message" = "Δεν υπάρχουν εγκατεστημένα harness.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Τοπικό";
+"harnesses.source.registry" = "Μητρώο";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Πληροφορίες";
+"harnesses.detail.path" = "Διαδρομή";
+"harnesses.detail.source" = "Πηγή";
+"harnesses.detail.subpath" = "Υποδιαδρομή";
+"harnesses.detail.installed.at" = "Εγκαταστάθηκε";
+"harnesses.detail.artifacts" = "Αντικείμενα";
+"harnesses.detail.no.artifacts" = "Χωρίς αντικείμενα.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Κανόνες";
+"harnesses.detail.commands" = "Εντολές";
+"harnesses.detail.dependencies" = "Εξαρτήσεις";
+"harnesses.detail.includes %d" = "Περιλαμβάνει (%d)";
+"harnesses.detail.delegates %d" = "Εκχωρεί σε (%d)";
+"harnesses.detail.picks %d" = "Επιλέγει (%d):";
+"harnesses.reveal.in.finder" = "Εμφάνιση στο Finder";
+"harnesses.open.in.browser" = "Άνοιγμα στο πρόγραμμα περιήγησης";
+"harnesses.close.detail" = "Κλείσιμο";
+"harnesses.configure.from.marketplaces" = "Ρύθμιση από αγορές…";
+"harnesses.detail.artifacts.from.includes" = "Αυτό το harness λαμβάνει τα αντικείμενά του από τις εξαρτήσεις.";
+"harnesses.detail.from" = "από";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Διακομιστές MCP";
+"harnesses.detail.profiles" = "Προφίλ";
+"harnesses.detail.focuses" = "Εστιάσεις";
+"harnesses.detail.focus.profile %@" = "προφίλ: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Δεν υπάρχει διαθέσιμο manifest.";
+"harnesses.detail.resolved" = "Επιλύθηκε";
+"harnesses.detail.unresolved" = "Δεν επιλύθηκε";
+"harnesses.detail.no.hooks" = "Αυτό το harness δεν έχει hooks.";
+"harnesses.detail.no.mcp.servers" = "Αυτό το harness δεν έχει διακομιστές MCP.";
+"harnesses.detail.no.profiles" = "Αυτό το harness δεν έχει προφίλ.";
+"harnesses.detail.no.focuses" = "Αυτό το harness δεν έχει εστιάσεις.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Εκκίνηση harness";
+"harnesses.launch.vendor" = "Προμηθευτής";
+"harnesses.launch.vendor.unavailable" = "(δεν είναι εγκατεστημένο)";
+"harnesses.launch.vendor.default" = "Προεπιλογή (%@)";
+"harnesses.launch.focus" = "Εστίαση";
+"harnesses.launch.focus.none" = "Κανένα";
+"harnesses.launch.working.directory" = "Κατάλογος εργασίας";
+"harnesses.launch.browse" = "Αναζήτηση…";
+"harnesses.launch.prompt" = "Ερώτημα";
+"harnesses.launch.prompt.placeholder" = "Προαιρετικό ερώτημα για τον agent…";
+"harnesses.launch.button" = "Εκκίνηση";
+"harnesses.launch.help" = "Εκκίνηση αυτού του harness σε νέο τερματικό";
+"harnesses.launch.cancel" = "Ακύρωση";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Συνδεδεμένα worktrees";
+"harnesses.linked.worktrees.none" = "Δεν υπάρχουν worktrees συνδεδεμένα με αυτό το harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Δημιουργία νέου harness";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Αλυσίδα εργαλείων YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Διαχειριστής harness για AI βοηθούς";
+"settings.ynh.enable.harness.tab" = "Εμφάνιση καρτέλας harness στην πλαϊνή γραμμή";
+"settings.ynh.enable.harness.tab.help" = "Προσθέτει μια καρτέλα Harness στην πλαϊνή γραμμή για περιήγηση και διαχείριση εγκατεστημένων harness";
+"settings.ynh.home.override" = "Παράκαμψη $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Προεπιλογή (χρησιμοποιεί τη δική του επίλυση ynh)";
+"settings.ynh.home.override.help" = "Παρακάμπτει τον κατάλογο YNH_HOME για τη διεργασία ynh. Αφήστε κενό για προεπιλογή.";
+"settings.ynh.resolved.paths" = "Επιλυμένες διαδρομές";
+"settings.ynh.redetect" = "Εκ νέου εντοπισμός";
+"settings.ynh.init.required" = "Μη αρχικοποιημένο";
+"settings.ynh.ready" = "Έτοιμο";
+"settings.ynh.path.label" = "Διαδρομή:";
+"settings.ynh.ynd.path.label" = "Διαδρομή ynd:";
+"settings.ynh.status.label" = "Κατάσταση:";
+"settings.ynh.ready.info" = "Η αλυσίδα εργαλείων εντοπίστηκε και αρχικοποιήθηκε. Ενεργοποιήστε την καρτέλα πλαϊνής γραμμής για περιήγηση στα harness.";
+"settings.ynh.advanced" = "Προχωρημένα";
+"settings.ynh.version.label" = "Έκδοση:";
+
+"common.clear" = "Εκκαθάριση";
+
+// Install sheet
+"harnesses.install.title" = "Εγκατάσταση harness";
+"harnesses.install.toolbar.help" = "Εγκατάσταση ενός harness";
+"harnesses.install.tab.search" = "Αναζήτηση";
+"harnesses.install.tab.git" = "Από Git";
+"harnesses.install.tab.sources" = "Πηγές";
+"harnesses.install.search.placeholder" = "Αναζήτηση σε μητρώα και πηγές…";
+"harnesses.install.search.prompt" = "Πληκτρολογήστε για αναζήτηση σε μητρώα και πηγές";
+"harnesses.install.search.empty" = "Δεν βρέθηκαν αποτελέσματα";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Υποδιαδρομή";
+"harnesses.install.git.subpath.placeholder" = "Προαιρετικός υποφάκελος";
+"harnesses.install.command.preview" = "Προεπισκόπηση εντολής";
+"harnesses.install.confirm" = "Εγκατάσταση";
+"harnesses.install.cancel" = "Ακύρωση";
+"harnesses.install.already.installed" = "Εγκατεστημένο";
+"harnesses.install.from %@" = "από %@";
+"harnesses.install.sources.empty" = "Δεν έχουν ρυθμιστεί πηγές. Προσθέστε έναν τοπικό κατάλογο για περιήγηση στα harnesses του.";
+"harnesses.install.sources.add" = "Προσθήκη πηγής…";
+"harnesses.install.sources.add.help" = "Προσθήκη τοπικού καταλόγου ως πηγή harness";
+"harnesses.install.sources.remove" = "Αφαίρεση";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Ενημέρωση";
+"harnesses.update.help" = "Ενημέρωση στην τελευταία έκδοση";
+"harnesses.uninstall.button" = "Απεγκατάσταση";
+"harnesses.uninstall.help" = "Απεγκατάσταση αυτού του harness";
+"harnesses.uninstall.alert.title %@" = "Απεγκατάσταση \"%@\";";
+"harnesses.uninstall.alert.message" = "Αυτό θα αφαιρέσει το harness από το σύστημά σας.";
+"harnesses.uninstall.alert.worktrees %ld" = "Αυτό το harness είναι συνδεδεμένο με %ld worktree(s) — αυτές οι συσχετίσεις θα διαγραφούν.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld τερματικό(ά) εκτελεί αυτήν τη στιγμή αυτό το harness.";
+"harnesses.uninstall.alert.confirm" = "Απεγκατάσταση";
+"harnesses.more.actions.help" = "Περισσότερες ενέργειες";
+"harnesses.copy.run.command" = "Αντιγραφή εντολής εκτέλεσης";
+"harnesses.ynh.documentation" = "Τεκμηρίωση YNH";
+
+"harnesses.add.registry.title" = "Προσθήκη μητρώου YNH";
+"harnesses.add.registry.url.label" = "URL μητρώου";
+"harnesses.add.registry.hint" = "Προσθέστε ένα αποθετήριο Git που περιέχει ένα αρχείο registry.json. Μόλις προστεθεί, μπορείτε να αναζητήσετε και να εγκαταστήσετε harnesses από αυτό.";
+"harnesses.add.registry.button" = "Προσθήκη μητρώου";
+"harnesses.add.registry.success" = "Το μητρώο προστέθηκε επιτυχώς";
+"harnesses.add.registry.toolbar.help" = "Προσθήκη μητρώου YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Αγορές";
+"settings.marketplaces.section.list" = "Διαμορφωμένες αγορές";
+"settings.marketplaces.empty" = "Δεν έχουν προστεθεί αγορές ακόμα.";
+"settings.marketplaces.add" = "Προσθήκη αγοράς…";
+"settings.marketplaces.never.fetched" = "Δεν έχει ληφθεί ποτέ";
+"settings.marketplaces.remove.confirm.title" = "Αφαίρεση αγοράς";
+"settings.marketplaces.remove.confirm.message %@" = "Αφαίρεση \"%@\"; Τα πρόσθετά της δεν θα εμφανίζονται πλέον στο πρόγραμμα περιήγησης.";
+"settings.marketplaces.section.behaviour" = "Συμπεριφορά";
+"settings.marketplaces.auto.refresh" = "Αυτόματη ανανέωση κατά την εκκίνηση";
+"settings.marketplaces.auto.refresh.help" = "Αυτόματη λήψη ενημερώσεων αγοράς κατά την εκκίνηση της εφαρμογής";
+"settings.marketplaces.section.authoring" = "Δημιουργία harness";
+"settings.marketplaces.default.author.directory" = "Προεπιλεγμένος κατάλογος συγγραφέα";
+"settings.marketplaces.author.directory.detected.hint" = "Ανιχνεύθηκε αυτόματα από το ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Αγορές";
+"marketplace.add.help" = "Προσθήκη αγοράς";
+"marketplace.empty" = "Δεν υπάρχουν ακόμη αγορές";
+"marketplace.add.button" = "Προσθήκη αγοράς";
+"marketplace.row.refresh.help" = "Ανανέωση αγοράς";
+"marketplace.row.refresh" = "Ανανέωση";
+"marketplace.row.remove" = "Αφαίρεση";
+"marketplace.row.stale" = " · Μπορεί να είναι παλιό";
+"marketplace.row.never.fetched" = "Δεν έχει ληφθεί ποτέ";
+"marketplace.add.sheet.title" = "Προσθήκη αγοράς";
+"marketplace.add.tab.known" = "Γνωστές";
+"marketplace.add.tab.custom" = "Προσαρμοσμένο URL";
+"marketplace.add.section.git.url" = "URL αποθετηρίου Git";
+"marketplace.add.section.display.name" = "Εμφανιζόμενο όνομα";
+"marketplace.add.section.vendor" = "Πωλητής";
+"marketplace.detail.last.fetched %@" = "Τελευταία λήψη %@";
+"marketplace.detail.search.placeholder" = "Αναζήτηση πρόσθετων…";
+"marketplace.detail.search.empty %@" = "Κανένα πρόσθετο δεν ταιριάζει με «%@»";
+"marketplace.detail.empty" = "Δεν υπάρχουν πρόσθετα σε αυτήν την αγορά";
+"marketplace.detail.empty.hint" = "Ανανεώστε για να λάβετε τον τελευταίο κατάλογο.";
+"marketplace.plugin.add.to.harness" = "Προσθήκη στο harness";
+"marketplace.plugin.copy.install.command" = "Αντιγραφή εντολής εγκατάστασης";
+"marketplace.plugin.copy.install.command.help" = "Αντιγράφει την εντολή εγκατάστασης του Claude Code στο πρόχειρο";
+"marketplace.plugin.load.artifacts" = "Φόρτωση αντικειμένων";
+"marketplace.plugin.loading.artifacts" = "Φόρτωση αντικειμένων…";
+"marketplace.plugin.no.artifacts" = "Δεν υπάρχουν αντικείμενα για αυτό το πρόσθετο.";
+"marketplace.plugin.no.artifacts.hint" = "Θα συμπεριληφθεί όλο το περιεχόμενο του πρόσθετου.";
+"marketplace.plugin.artifacts.unavailable %@" = "Τα αντικείμενα δεν είναι διαθέσιμα: %@";
+"marketplace.picker.step.artifacts" = "Αντικείμενα";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Εφαρμογή";
+"marketplace.picker.select.prompt" = "Επιλέξτε αντικείμενα για συμπερίληψη";
+"marketplace.picker.select.all" = "Όλα";
+"marketplace.picker.select.none" = "Κανένα";
+"marketplace.picker.no.harnesses" = "Δεν υπάρχουν ακόμη harness";
+"marketplace.picker.no.harnesses.hint" = "Δημιουργήστε πρώτα ένα harness με τον οδηγό νέου harness.";
+"marketplace.picker.review.plugin" = "Πρόσθετο";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Αντικείμενα";
+"marketplace.picker.review.all.count %lld" = "Όλα (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld από %lld επιλεγμένα";
+"marketplace.picker.command.preview" = "Προεπισκόπηση εντολής";
+"marketplace.picker.success %@" = "Το πρόσθετο προστέθηκε στο %@";
+"marketplace.picker.done" = "Τέλος";
+"marketplace.picker.back" = "Πίσω";
+"marketplace.picker.next" = "Επόμενο";
+"harness.wizard.title" = "Νέο harness";
+"harness.wizard.name.label" = "Όνομα (απαιτείται)";
+"harness.wizard.description.label" = "Περιγραφή";
+"harness.wizard.loading.vendors" = "Φόρτωση πωλητών…";
+"harness.wizard.vendor.label" = "Προεπιλεγμένος πωλητής";
+"harness.wizard.destination.label" = "Κατάλογος προορισμού";
+"harness.wizard.install.toggle" = "Εγκατάσταση του harness αμέσως μετά τη δημιουργία";
+"harness.wizard.success.add.plugins" = "Προσθήκη πρόσθετων από την αγορά";
+"harness.wizard.success.open" = "Άνοιγμα στο TermQ";
+"harness.wizard.create" = "Δημιουργία";
+"harness.wizard.retry" = "Επανάληψη";
+"harness.wizard.error.name.required" = "Το όνομα είναι υποχρεωτικό";
+"harness.wizard.error.name.invalid" = "Το όνομα μπορεί να περιέχει μόνο γράμματα, αριθμούς, παύλες και κάτω παύλες";
+"harness.wizard.error.name.duplicate %@" = "Υπάρχει ήδη harness με το όνομα «%@»";
+"settings.marketplaces.reset" = "Επαναφορά";
+"settings.marketplaces.section.ynh.registries" = "Μητρώα YNH";
+"settings.marketplaces.ynh.registries.empty" = "Δεν έχουν προστεθεί μητρώα";
+"settings.marketplaces.ynh.add.registry" = "Προσθήκη μητρώου…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Αφαίρεση μητρώου";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Αφαίρεση";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Αφαίρεση «%@» από το YNH; Τα εγκατεστημένα harnesses θα παραμείνουν.";
+"marketplace.add.custom.name.placeholder" = "Η αγορά μου";
+"harness.wizard.success.created %@" = "Το harness «%@» δημιουργήθηκε";

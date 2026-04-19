@@ -30,16 +30,13 @@ struct BinView: View {
 
                 Spacer()
 
-                if !viewModel.binCards.isEmpty {
-                    Button(Strings.Bin.emptyButton, role: .destructive) {
-                        viewModel.emptyBin()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.red)
-                } else {
-                    // Invisible placeholder to balance the close button
-                    Color.clear.frame(width: 80)
+                Button(Strings.Bin.emptyButton, role: .destructive) {
+                    viewModel.emptyBin()
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(.red)
+                .opacity(viewModel.binCards.isEmpty ? 0 : 1)
+                .allowsHitTesting(!viewModel.binCards.isEmpty)
             }
             .padding()
             .background(Color(nsColor: .windowBackgroundColor))

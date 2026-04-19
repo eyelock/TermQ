@@ -15,6 +15,7 @@
 "common.delete" = "מחיקה";
 "common.edit" = "עריכה";
 "common.close" = "סגירה";
+"common.close.window" = "סגור חלון";
 "common.add" = "הוספה";
 "common.reinstall" = "התקנה מחדש";
 "common.uninstall" = "הסרה";
@@ -40,11 +41,11 @@
 "card.unpin" = "ביטול הצמדת מסוף";
 "card.running" = "המסוף פועל";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "מחובר";
 "card.wired.help" = "מחובר לסוכן MCP";
@@ -466,23 +467,19 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "בקשה לשינוי חיצוני";
-"security.external.modification.message" = "תהליך חיצוני מנסה לשנות את הקשר LLM עבור הטרמינל '%@':
-
-%@
-
-זה עשוי להשפיע על האופן שבו עוזרי AI מתקשרים עם טרמינל זה.";
+"security.external.modification.message" = "תהליך חיצוני מנסה לשנות את הקשר LLM עבור הטרמינל '%@':\n\n%@\n\nזה עשוי להשפיע על האופן שבו עוזרי AI מתקשרים עם טרמינל זה.";
 "security.allow" = "אפשר";
 "security.deny" = "דחה";
 "security.allow.disable.prompt" = "אפשר ואל תשאל שוב";
 "security.osc.clipboard.enabled" = "גישה ללוח OSC 52 מופעלת";
 "security.osc.clipboard.disabled" = "גישה ללוח OSC 52 מושבתת";
 
-"settings.auto.check.updates" = "חפש עדכונים אוטומטית";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "בדוק עדכונים אוטומטית";
+"settings.auto.check.updates.help" = "כאשר מופעל, TermQ יבדוק מעת לעת גרסאות חדשות";
+"settings.check.for.updates" = "חפש עדכונים...";
+"settings.include.beta.releases" = "כלול גרסאות בטא";
+"settings.include.beta.releases.help" = "הצטרף לקבלת גרסאות טרום-שחרור עם תכונות חדשות";
+"settings.section.updates" = "עדכונים";
 "editor.section.add.tag" = "הוסף תג";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +487,8 @@
 "editor.allow.osc.clipboard.disabled.globally" = "מושבת באופן גלובלי - הפעל בהגדרות > נתונים ואבטחה";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "אזהרת גרסת ניפוי שגיאות";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "אזהרת גרסת דיבאג";
+"settings.debug.update.warning.message" = "המשך עדכון יתקין את גרסת הייצור של TermQ.";
 
 "editor.no.tags" = "אין תגיות מוגדרות";
 
@@ -500,3 +497,316 @@
 "settings.environment.section.add.variable" = "הוסף משתנה סביבה";
 
 "settings.mcp.install" = "התקן שרת MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "מאגרים";
+"sidebar.add.button.help" = "הוסף מאגר";
+"sidebar.empty.message" = "לא נוספו מאגרים.\nלחץ + להוספת מאגר git.";
+"sidebar.worktrees.placeholder" = "עצי העבודה יופיעו כאן";
+"sidebar.remove.repository" = "הסר מאגר";
+"sidebar.toggle.help" = "הצג/הסתר סרגל צד מאגרים (⌘⇧L)";
+"sidebar.add.title" = "הוסף מאגר";
+"sidebar.add.path.label" = "נתיב";
+"sidebar.add.name.label" = "שם תצוגה";
+"sidebar.add.name.placeholder" = "זוהה אוטומטית מ-git";
+"sidebar.add.cancel" = "ביטול";
+"sidebar.add.add" = "הוסף";
+"sidebar.add.advanced" = "מתקדם";
+"sidebar.edit.title" = "ערוך מאגר";
+"sidebar.edit.repository" = "ערוך מאגר";
+"sidebar.worktree.base.path.label" = "נתיב בסיס worktree";
+"sidebar.worktree.base.path.help" = "כאן נוצרים worktrees חדשים. ברירת המחדל היא ספריית האב של תיקיית המאגר.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" אינו מאגר git.";
+"menu.toggle.sidebar" = "הצג/הסתר סרגל צד";
+"sidebar.worktrees.empty" = "לא נמצאו עצי עבודה.";
+"sidebar.worktree.detached.head" = "HEAD מנותק";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "רענן עצי עבודה";
+"sidebar.worktree.new" = "עץ עבודה חדש";
+"sidebar.worktree.new.terminal" = "Terminal חדש";
+"sidebar.worktree.terminals.badge.help" = "לחץ לקישורים מהירים לפתיחת מסופים";
+"sidebar.worktree.open.in.terminal" = "פתח ב-Terminal";
+"sidebar.worktree.reveal.in.finder" = "חשוף ב-Finder";
+"sidebar.worktree.open.remote.branch" = "פתח ענף ב-Remote";
+"sidebar.worktree.open.remote.commit" = "פתח Commit ב-Remote";
+"sidebar.worktree.lock" = "נעל worktree";
+"sidebar.worktree.unlock" = "בטל נעילת worktree";
+
+"sidebar.worktree.set.harness" = "הגדרת harness…";
+"sidebar.worktree.clear.harness" = "ניקוי harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "הפעל %@";
+"sidebar.remove.worktree" = "הסר עץ עבודה";
+"sidebar.remove.worktree.title" = "הסר עץ עבודה?";
+"sidebar.remove.worktree.confirm" = "הסר";
+"sidebar.remove.main.worktree.error" = "לא ניתן להסיר את עץ העבודה הראשי.";
+"sidebar.remove.worktree.message %@" = "פעולה זו תסיר לצמיתות את עץ העבודה ב-\"%@\". הענף לא יימחק.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "מחק Worktree...";
+"sidebar.worktree.delete.title" = "מחק Worktree";
+"sidebar.worktree.delete.confirm" = "מחק";
+"sidebar.worktree.delete.message %@" = "ה-worktree ב-\"%@\" וכל השינויים שלא נשמרו יימחקו לצמיתות. לא ניתן לבטל פעולה זו.";
+"sidebar.new.worktree.title" = "עץ עבודה חדש";
+"sidebar.new.worktree.branch.label" = "שם ענף חדש";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "הזן שם ענף כדי להמשיך.";
+"sidebar.new.worktree.base.label" = "ענף בסיס";
+"sidebar.new.worktree.base.placeholder" = "סנן ענפים...";
+"sidebar.new.worktree.path.label" = "נתיב עץ עבודה";
+"sidebar.new.worktree.path.required" = "הזן נתיב worktree כדי להמשיך.";
+"sidebar.new.worktree.create" = "צור";
+"sidebar.new.worktree.loading.branches" = "טוען ענפים...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "זיהוי מחדש של שרשרת הכלים ynh";
+"harnesses.not.installed" = "ynh אינו מותקן.";
+"harnesses.init.required" = "נמצא ynh אך לא אותחל.\nהפעל `ynh init` להגדרה.";
+"harnesses.init.hint" = "פתח מסוף והפעל:\nynh init";
+"harnesses.empty.message" = "אין harness מותקנים עדיין.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "מקומי";
+"harnesses.source.registry" = "רשם";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "מידע";
+"harnesses.detail.path" = "נתיב";
+"harnesses.detail.source" = "מקור";
+"harnesses.detail.subpath" = "נתיב-משנה";
+"harnesses.detail.installed.at" = "הותקן";
+"harnesses.detail.artifacts" = "ארטיפקטים";
+"harnesses.detail.no.artifacts" = "אין ארטיפקטים.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "סוכנים";
+"harnesses.detail.rules" = "כללים";
+"harnesses.detail.commands" = "פקודות";
+"harnesses.detail.dependencies" = "תלויות";
+"harnesses.detail.includes %d" = "כולל (%d)";
+"harnesses.detail.delegates %d" = "מאציל ל-(%d)";
+"harnesses.detail.picks %d" = "בוחר (%d):";
+"harnesses.reveal.in.finder" = "הצג ב-Finder";
+"harnesses.open.in.browser" = "פתח בדפדפן";
+"harnesses.close.detail" = "סגור";
+"harnesses.configure.from.marketplaces" = "הגדרה מהשווקים…";
+"harnesses.detail.artifacts.from.includes" = "ה-harness הזה מקבל את הארטיפקטים שלו מהכללות תלויות.";
+"harnesses.detail.from" = "מ-";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "שרתי MCP";
+"harnesses.detail.profiles" = "פרופילים";
+"harnesses.detail.focuses" = "מוקדים";
+"harnesses.detail.focus.profile %@" = "פרופיל: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "אין manifest זמין.";
+"harnesses.detail.resolved" = "נפתר";
+"harnesses.detail.unresolved" = "לא נפתר";
+"harnesses.detail.no.hooks" = "ל-harness זה אין hooks.";
+"harnesses.detail.no.mcp.servers" = "ל-harness זה אין שרתי MCP.";
+"harnesses.detail.no.profiles" = "ל-harness זה אין פרופילים.";
+"harnesses.detail.no.focuses" = "ל-harness זה אין מוקדים.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "הפעל Harness";
+"harnesses.launch.vendor" = "ספק";
+"harnesses.launch.vendor.unavailable" = "(לא מותקן)";
+"harnesses.launch.vendor.default" = "ברירת מחדל (%@)";
+"harnesses.launch.focus" = "מוקד";
+"harnesses.launch.focus.none" = "אין";
+"harnesses.launch.working.directory" = "ספריית עבודה";
+"harnesses.launch.browse" = "עיין…";
+"harnesses.launch.prompt" = "פרומפט";
+"harnesses.launch.prompt.placeholder" = "פרומפט אופציונלי לסוכן…";
+"harnesses.launch.button" = "הפעל";
+"harnesses.launch.help" = "הפעל harness זה במסוף חדש";
+"harnesses.launch.cancel" = "ביטול";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktrees מקושרים";
+"harnesses.linked.worktrees.none" = "אין worktrees מקושרים ל-harness זה.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "יצירת Harness חדש";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "שרשרת כלים YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "מנהל harness לעוזרי בינה מלאכותית";
+"settings.ynh.enable.harness.tab" = "הצג לשונית Harness בסרגל הצד";
+"settings.ynh.enable.harness.tab.help" = "מוסיף לשונית Harness לסרגל הצד לגלישה וניהול harness מותקנים";
+"settings.ynh.home.override" = "עקיפת $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "ברירת מחדל (משתמש בפתרון הפנימי של ynh)";
+"settings.ynh.home.override.help" = "עוקף את ספריית YNH_HOME עבור תהליך-המשנה של ynh. השאר ריק לברירת מחדל.";
+"settings.ynh.resolved.paths" = "נתיבים שנפתרו";
+"settings.ynh.redetect" = "זיהוי מחדש";
+"settings.ynh.init.required" = "לא אותחל";
+"settings.ynh.ready" = "מוכן";
+"settings.ynh.path.label" = "נתיב:";
+"settings.ynh.ynd.path.label" = "נתיב ynd:";
+"settings.ynh.status.label" = "סטטוס:";
+"settings.ynh.ready.info" = "שרשרת הכלים זוהתה ואותחלה. הפעל את לשונית סרגל הצד לגלישה ב-harness.";
+"settings.ynh.advanced" = "מתקדם";
+"settings.ynh.version.label" = "גרסה:";
+
+"common.clear" = "נקה";
+
+"sidebar.worktree.create.terminal" = "צור Terminal…";
+
+"sidebar.worktree.copy.pathname" = "העתק כנתיב";
+
+"sidebar.prune.worktrees" = "נקה worktrees…";
+
+"sidebar.prune.worktrees.title" = "נקה worktrees";
+
+"sidebar.prune.worktrees.confirm" = "נקה";
+
+"sidebar.prune.worktrees.nothing.title" = "אין מה לנקות";
+
+"sidebar.prune.worktrees.nothing.message" = "כל ה-worktrees מנוהלים. לא נמצאו רשומות מיושנות.";
+
+"sidebar.prune.worktrees.explanation" = "רשומות ניהוליות אלה מצביעות לספריות שאינן קיימות עוד. הניקוי מסיר אותן — הענפים שלך אינם מושפעים.";
+
+// Install sheet
+"harnesses.install.title" = "התקנת harness";
+"harnesses.install.toolbar.help" = "התקנת harness";
+"harnesses.install.tab.search" = "חיפוש";
+"harnesses.install.tab.git" = "מ-Git";
+"harnesses.install.tab.sources" = "מקורות";
+"harnesses.install.search.placeholder" = "חיפוש ב-registries ובמקורות…";
+"harnesses.install.search.prompt" = "הקלד לחיפוש ב-registries ובמקורות";
+"harnesses.install.search.empty" = "אין תוצאות";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "נתיב משני";
+"harnesses.install.git.subpath.placeholder" = "ספריית משנה אופציונלית";
+"harnesses.install.command.preview" = "תצוגה מקדימה של פקודה";
+"harnesses.install.confirm" = "התקן";
+"harnesses.install.cancel" = "ביטול";
+"harnesses.install.already.installed" = "מותקן";
+"harnesses.install.from %@" = "מ-%@";
+"harnesses.install.sources.empty" = "לא הוגדרו מקורות. הוסף ספרייה מקומית לעיון ב-harnesses שלה.";
+"harnesses.install.sources.add" = "הוסף מקור…";
+"harnesses.install.sources.add.help" = "הוסף ספרייה מקומית כמקור harness";
+"harnesses.install.sources.remove" = "הסר";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "עדכן";
+"harnesses.update.help" = "עדכן לגרסה האחרונה";
+"harnesses.uninstall.button" = "הסר התקנה";
+"harnesses.uninstall.help" = "הסר את ה-harness הזה";
+"harnesses.uninstall.alert.title %@" = "להסיר את \"%@\"?";
+"harnesses.uninstall.alert.message" = "פעולה זו תסיר את ה-harness מהמערכת שלך.";
+"harnesses.uninstall.alert.worktrees %ld" = "ה-harness הזה מקושר ל-%ld worktree(s) — הקשרים הללו יימחקו.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld מסוף(ים) מריצים כעת את ה-harness הזה.";
+"harnesses.uninstall.alert.confirm" = "הסר התקנה";
+"harnesses.more.actions.help" = "פעולות נוספות";
+"harnesses.copy.run.command" = "העתק פקודת הפעלה";
+"harnesses.ynh.documentation" = "תיעוד YNH";
+
+"harnesses.add.registry.title" = "הוסף רישום YNH";
+"harnesses.add.registry.url.label" = "כתובת URL של הרישום";
+"harnesses.add.registry.hint" = "הוסף מאגר Git המכיל קובץ registry.json. לאחר ההוספה, תוכל לחפש ולהתקין harnesses ממנו.";
+"harnesses.add.registry.button" = "הוסף רישום";
+"harnesses.add.registry.success" = "הרישום נוסף בהצלחה";
+"harnesses.add.registry.toolbar.help" = "הוסף רישום YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "שווקים";
+"settings.marketplaces.section.list" = "שווקים מוגדרים";
+"settings.marketplaces.empty" = "טרם נוספו שווקים.";
+"settings.marketplaces.add" = "הוסף שוק…";
+"settings.marketplaces.never.fetched" = "מעולם לא נשלף";
+"settings.marketplaces.remove.confirm.title" = "הסר שוק";
+"settings.marketplaces.remove.confirm.message %@" = "להסיר את \"%@\"? התוספים שלו לא יופיעו עוד בדפדפן.";
+"settings.marketplaces.section.behaviour" = "התנהגות";
+"settings.marketplaces.auto.refresh" = "רענון אוטומטי בהפעלה";
+"settings.marketplaces.auto.refresh.help" = "שליפה אוטומטית של עדכוני שוק בעת הפעלת האפליקציה";
+"settings.marketplaces.section.authoring" = "יצירת harness";
+"settings.marketplaces.default.author.directory" = "ספריית מחבר ברירת מחדל";
+"settings.marketplaces.author.directory.detected.hint" = "זוהה אוטומטית מ-ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "שווקים";
+"marketplace.add.help" = "הוסף שוק";
+"marketplace.empty" = "אין שווקים עדיין";
+"marketplace.add.button" = "הוסף שוק";
+"marketplace.row.refresh.help" = "רענן שוק";
+"marketplace.row.refresh" = "רענן";
+"marketplace.row.remove" = "הסר";
+"marketplace.row.stale" = " · עשוי להיות מיושן";
+"marketplace.row.never.fetched" = "לא הוטען מעולם";
+"marketplace.add.sheet.title" = "הוסף שוק";
+"marketplace.add.tab.known" = "ידועים";
+"marketplace.add.tab.custom" = "כתובת URL מותאמת";
+"marketplace.add.section.git.url" = "כתובת URL של מאגר Git";
+"marketplace.add.section.display.name" = "שם להצגה";
+"marketplace.add.section.vendor" = "ספק";
+"marketplace.detail.last.fetched %@" = "טעינה אחרונה %@";
+"marketplace.detail.search.placeholder" = "חפש תוספים…";
+"marketplace.detail.search.empty %@" = "לא נמצאו תוספים התואמים ל«%@»";
+"marketplace.detail.empty" = "אין תוספים בשוק זה";
+"marketplace.detail.empty.hint" = "רענן כדי לטעון את האינדקס העדכני.";
+"marketplace.plugin.add.to.harness" = "הוסף ל-Harness";
+"marketplace.plugin.copy.install.command" = "העתק פקודת התקנה";
+"marketplace.plugin.copy.install.command.help" = "מעתיק את פקודת ההתקנה של Claude Code ללוח";
+"marketplace.plugin.load.artifacts" = "טען פריטים";
+"marketplace.plugin.loading.artifacts" = "טוען פריטים…";
+"marketplace.plugin.no.artifacts" = "לא רשומים פריטים לתוסף זה.";
+"marketplace.plugin.no.artifacts.hint" = "כל תוכן התוסף ייכלל.";
+"marketplace.plugin.artifacts.unavailable %@" = "פריטים אינם זמינים: %@";
+"marketplace.picker.step.artifacts" = "פריטים";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "החל";
+"marketplace.picker.select.prompt" = "בחר פריטים לכלול";
+"marketplace.picker.select.all" = "הכל";
+"marketplace.picker.select.none" = "כלום";
+"marketplace.picker.no.harnesses" = "אין Harness עדיין";
+"marketplace.picker.no.harnesses.hint" = "צור תחילה Harness באמצעות אשף ה-Harness החדש.";
+"marketplace.picker.review.plugin" = "תוסף";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "פריטים";
+"marketplace.picker.review.all.count %lld" = "הכל (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld מתוך %lld נבחרו";
+"marketplace.picker.command.preview" = "תצוגה מקדימה של פקודה";
+"marketplace.picker.success %@" = "תוסף נוסף ל%@";
+"marketplace.picker.done" = "סיום";
+"marketplace.picker.back" = "חזרה";
+"marketplace.picker.next" = "הבא";
+"harness.wizard.title" = "Harness חדש";
+"harness.wizard.name.label" = "שם (נדרש)";
+"harness.wizard.description.label" = "תיאור";
+"harness.wizard.loading.vendors" = "טוען ספקים…";
+"harness.wizard.vendor.label" = "ספק ברירת מחדל";
+"harness.wizard.destination.label" = "תיקיית יעד";
+"harness.wizard.install.toggle" = "התקן Harness מיד לאחר היצירה";
+"harness.wizard.success.add.plugins" = "הוסף תוספים מהשוק";
+"harness.wizard.success.open" = "פתח ב-TermQ";
+"harness.wizard.create" = "צור";
+"harness.wizard.retry" = "נסה שוב";
+"harness.wizard.error.name.required" = "שם הוא שדה חובה";
+"harness.wizard.error.name.invalid" = "השם יכול להכיל רק אותיות, מספרים, מקפים וקווים תחתיים";
+"harness.wizard.error.name.duplicate %@" = "כבר קיים Harness בשם «%@»";
+"settings.marketplaces.reset" = "אפס";
+"settings.marketplaces.section.ynh.registries" = "רשימות YNH";
+"settings.marketplaces.ynh.registries.empty" = "לא נוספו רשימות";
+"settings.marketplaces.ynh.add.registry" = "הוספת רשימה…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "הסרת רשימה";
+"settings.marketplaces.ynh.registry.remove.confirm" = "הסר";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "להסיר את “%@” מין YNH? התשתיות המותקנות ישארו.";
+"marketplace.add.custom.name.placeholder" = "השוק שלי";
+"harness.wizard.success.created %@" = "Harness «%@» נוצר";

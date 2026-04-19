@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Harnesses sidebar tab** (feature-flagged, opt-in via Settings → YNH Harness
+  Toolchain) — detects the `ynh` binary on launch and app-focus and surfaces
+  the full harness lifecycle inside TermQ:
+  - Installed harnesses list sourced from `ynh ls`
+  - Detail pane with info, composition (`ynd compose`), dependencies, and the
+    raw `.harness.json` manifest
+  - Three-tab install sheet — registry search (`ynh search`), direct Git URL,
+    and local source management (`ynh sources add/remove`)
+  - Worktree ↔ harness linking — right-click a worktree to set, clear, or
+    launch its configured harness. Linkage stored in TermQ's `ynh.json`.
+  - Launch sheet with vendor, focus, prompt, working directory, and backend
+    pickers, backed by `ynh run`
+  - Update and uninstall from the detail pane's ⋯ menu or the sidebar
+    context menu — confirmation alert warns about linked worktrees and open
+    terminals before uninstalling. Transient operation terminals auto-close
+    on success and stay open on failure so errors remain readable.
+  - YNH subprocess stderr now surfaces directly in the detail error banner
+    instead of a generic fallback
+- New tutorial: **[Tutorial 13 — Harnesses](docs/Help/tutorials/13-harness-sidebar.md)**
+
 ### Changed
 
 - **CLI renamed**: `termq` → `termqcli` to fix Swift Package Manager case-insensitivity issue

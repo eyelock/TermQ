@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "外部修改請求";
-"security.external.modification.message" = "外部程序正在嘗試修改終端機 '%@' 嘅 LLM 上下文:
-
-%@
-
-呢個可能會影響 AI 助理同呢個終端機嘅互動方式。";
+"security.external.modification.message" = "外部程序正在嘗試修改終端機 '%@' 嘅 LLM 上下文:\n\n%@\n\n呢個可能會影響 AI 助理同呢個終端機嘅互動方式。";
 "security.allow" = "允許";
 "security.deny" = "拒絕";
 "security.allow.disable.prompt" = "允許並唔再詢問";
@@ -478,20 +474,20 @@
 "security.osc.clipboard.disabled" = "OSC 52 剪貼簿存取已停用";
 
 "settings.auto.check.updates" = "自動檢查更新";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "啟用後，TermQ 會定期檢查新版本";
+"settings.check.for.updates" = "檢查更新…";
+"settings.include.beta.releases" = "包含 Beta 版本";
+"settings.include.beta.releases.help" = "選擇接收包含新功能嘅預發布版本";
+"settings.section.updates" = "更新";
 "editor.section.add.tag" = "新增標籤";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "允許排隊操作";
+"editor.allow.agent.prompts.help" = "允許將 {{PROMPT}} 同 {{NEXT_ACTION}} 注入呢個終端嘅初始化命令";
+"editor.allow.agent.prompts.disabled.globally" = "排隊操作已全域停用 - 喺設定 > 資料與安全性中啟用";
 "editor.allow.osc.clipboard.disabled.globally" = "全域停用 - 在設定 > 資料與安全性中啟用";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "確認已全域停用 - 喺設定 > 資料與安全性中更改";
 
-"settings.debug.update.warning.title" = "偵錯版本警告";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "除錯版本警告";
+"settings.debug.update.warning.message" = "繼續更新將會安裝 TermQ 嘅正式版本。";
 
 "editor.no.tags" = "未定義標籤";
 
@@ -500,3 +496,311 @@
 "settings.environment.section.add.variable" = "新增環境變數";
 
 "settings.mcp.install" = "安裝 MCP 伺服器";
+
+// MARK: - Sidebar
+"sidebar.title" = "儲存庫";
+"sidebar.add.button.help" = "新增儲存庫";
+"sidebar.empty.message" = "未新增任何儲存庫。\n點擊 + 新增 Git 儲存庫。";
+"sidebar.worktrees.placeholder" = "工作樹將顯示喺呢度";
+"sidebar.remove.repository" = "移除儲存庫";
+"sidebar.toggle.help" = "切換儲存庫側邊欄 (⌘⇧L)";
+"sidebar.add.title" = "新增儲存庫";
+"sidebar.add.path.label" = "路徑";
+"sidebar.add.name.label" = "顯示名稱";
+"sidebar.add.name.placeholder" = "從 Git 自動偵測";
+"sidebar.add.cancel" = "取消";
+"sidebar.add.add" = "新增";
+"sidebar.add.advanced" = "進階";
+"sidebar.edit.title" = "編輯儲存庫";
+"sidebar.edit.repository" = "編輯儲存庫";
+"sidebar.worktree.base.path.label" = "worktree 基礎路徑";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "「%@」唔係 Git 儲存庫。";
+"sidebar.worktrees.empty" = "未搵到工作樹。";
+"sidebar.worktree.detached.head" = "分離的 HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "重新整理工作樹";
+"sidebar.worktree.new" = "新建工作樹";
+"sidebar.worktree.new.terminal" = "快速終端機";
+"sidebar.worktree.create.terminal" = "建立終端機…";
+"sidebar.worktree.terminals.badge.help" = "按一下以取得開啟終端機嘅快速連結";
+"sidebar.worktree.open.in.terminal" = "在 Terminal 中顯示";
+"sidebar.worktree.reveal.in.finder" = "在 Finder 中顯示";
+"sidebar.worktree.copy.pathname" = "複製路徑";
+"sidebar.worktree.open.remote.branch" = "喺 Remote 開啟分支";
+"sidebar.worktree.open.remote.commit" = "喺 Remote 開啟提交";
+"sidebar.worktree.lock" = "鎖定工作樹";
+"sidebar.worktree.unlock" = "解鎖工作樹";
+
+"sidebar.worktree.set.harness" = "設定 Harness…";
+"sidebar.worktree.clear.harness" = "清除 Harness";
+"sidebar.worktree.linked.harness %@" = "Harness：%@";
+"sidebar.worktree.launch.harness %@" = "啟動 %@";
+"sidebar.remove.worktree" = "刪除工作樹";
+"sidebar.remove.worktree.title" = "刪除工作樹？";
+"sidebar.remove.worktree.confirm" = "刪除";
+"sidebar.remove.main.worktree.error" = "無法移除主要工作樹。";
+"sidebar.remove.worktree.message %@" = "呢個操作將永久刪除「%@」處嘅工作樹。分支唔會被刪除。";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "摧毀 Worktree...";
+"sidebar.worktree.delete.title" = "摧毀 Worktree";
+"sidebar.worktree.delete.confirm" = "摧毀";
+"sidebar.worktree.delete.message %@" = "路徑「%@」嘅 Worktree 同所有未提交嘅更改將永久摧毀。此操作無法還原。";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "清理 Worktree…";
+"sidebar.prune.worktrees.title" = "清理 Worktree";
+"sidebar.prune.worktrees.confirm" = "清理";
+"sidebar.prune.worktrees.nothing.title" = "無需清理";
+"sidebar.prune.worktrees.nothing.message" = "所有工作樹均已記錄在案，未發現過期條目。";
+"sidebar.prune.worktrees.explanation" = "呢啲管理條目指向已唔存在嘅目錄。清理會將佢哋移除——您嘅分支唔會受影響。";
+"sidebar.new.worktree.title" = "新建工作樹";
+"sidebar.new.worktree.branch.label" = "新分支名稱";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "請輸入分支名稱以繼續。";
+"sidebar.new.worktree.base.label" = "基礎分支";
+"sidebar.new.worktree.base.placeholder" = "篩選分支...";
+"sidebar.new.worktree.path.label" = "工作樹路徑";
+"sidebar.new.worktree.path.required" = "請輸入 Worktree 路徑以繼續。";
+"sidebar.new.worktree.create" = "建立";
+"sidebar.new.worktree.loading.branches" = "正在載入分支…";
+"common.close.window" = "關閉視窗";
+"menu.toggle.sidebar" = "切換側邊欄";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "重新偵測 ynh 工具鏈";
+"harnesses.not.installed" = "ynh 未安裝。";
+"harnesses.init.required" = "已找到 ynh 但未初始化。\n請執行 `ynh init` 進行設定。";
+"harnesses.init.hint" = "開啟終端機並執行：\nynh init";
+"harnesses.empty.message" = "尚未安裝任何 harness。";
+
+// Harnesses — row badges
+"harnesses.source.local" = "本地";
+"harnesses.source.registry" = "登錄冊";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "資訊";
+"harnesses.detail.path" = "路徑";
+"harnesses.detail.source" = "來源";
+"harnesses.detail.subpath" = "子路徑";
+"harnesses.detail.installed.at" = "已安裝";
+"harnesses.detail.artifacts" = "產物";
+"harnesses.detail.no.artifacts" = "無產物。";
+"harnesses.detail.skills" = "技能";
+"harnesses.detail.agents" = "代理程式";
+"harnesses.detail.rules" = "規則";
+"harnesses.detail.commands" = "命令";
+"harnesses.detail.dependencies" = "相依項";
+"harnesses.detail.includes %d" = "包含 (%d)";
+"harnesses.detail.delegates %d" = "委派給 (%d)";
+"harnesses.detail.picks %d" = "選取 (%d)：";
+"harnesses.reveal.in.finder" = "在 Finder 中顯示";
+"harnesses.open.in.browser" = "在瀏覽器中開啟";
+"harnesses.close.detail" = "關閉";
+"harnesses.configure.from.marketplaces" = "從市場設定…";
+"harnesses.detail.artifacts.from.includes" = "此 harness 從相依包含項取得產物。";
+"harnesses.detail.from" = "來自";
+"harnesses.detail.hooks" = "掛鉤";
+"harnesses.detail.mcp.servers" = "MCP 伺服器";
+"harnesses.detail.profiles" = "設定檔";
+"harnesses.detail.focuses" = "焦點";
+"harnesses.detail.focus.profile %@" = "設定檔：%@";
+"harnesses.detail.manifest" = "清單";
+"harnesses.detail.no.manifest" = "無可用清單。";
+"harnesses.detail.resolved" = "已解析";
+"harnesses.detail.unresolved" = "未解析";
+"harnesses.detail.no.hooks" = "此 harness 沒有掛鉤。";
+"harnesses.detail.no.mcp.servers" = "此 harness 沒有 MCP 伺服器。";
+"harnesses.detail.no.profiles" = "此 harness 沒有設定檔。";
+"harnesses.detail.no.focuses" = "此 harness 沒有焦點。";
+
+// Harnesses — launch
+"harnesses.launch.title" = "啟動 Harness";
+"harnesses.launch.vendor" = "供應商";
+"harnesses.launch.vendor.unavailable" = "（未安裝）";
+"harnesses.launch.vendor.default" = "預設 (%@)";
+"harnesses.launch.focus" = "焦點";
+"harnesses.launch.focus.none" = "無";
+"harnesses.launch.working.directory" = "工作目錄";
+"harnesses.launch.browse" = "瀏覽…";
+"harnesses.launch.prompt" = "提示詞";
+"harnesses.launch.prompt.placeholder" = "傳遞給代理程式的選用提示詞…";
+"harnesses.launch.button" = "啟動";
+"harnesses.launch.help" = "在新終端機中啟動此 harness";
+"harnesses.launch.cancel" = "取消";
+"harnesses.launch.backend" = "後端";
+
+"harnesses.linked.worktrees" = "連結的 Worktree";
+"harnesses.linked.worktrees.none" = "沒有 worktree 連結到此 harness。";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "新增 Harness";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH Harness 工具鏈";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "AI 助理 harness 管理員";
+"settings.ynh.enable.harness.tab" = "在側邊欄顯示 Harness 標籤頁";
+"settings.ynh.enable.harness.tab.help" = "在側邊欄新增 Harness 標籤頁，用於瀏覽和管理已安裝的 harness";
+"settings.ynh.home.override" = "$YNH_HOME 覆寫";
+"settings.ynh.home.override.placeholder" = "預設（使用 ynh 本身的解析）";
+"settings.ynh.home.override.help" = "覆寫 ynh 子行程的 YNH_HOME 目錄。留空使用預設值。";
+"settings.ynh.resolved.paths" = "已解析路徑";
+"settings.ynh.redetect" = "重新偵測";
+"settings.ynh.init.required" = "未初始化";
+"settings.ynh.ready" = "就緒";
+"settings.ynh.path.label" = "路徑：";
+"settings.ynh.ynd.path.label" = "ynd 路徑：";
+"settings.ynh.status.label" = "狀態：";
+"settings.ynh.ready.info" = "工具鏈已偵測並初始化。啟用側邊欄標籤頁以瀏覽 harness。";
+"settings.ynh.advanced" = "進階";
+"settings.ynh.version.label" = "版本：";
+
+"common.clear" = "清除";
+
+// Install sheet
+"harnesses.install.title" = "安裝 Harness";
+"harnesses.install.toolbar.help" = "安裝一個 harness";
+"harnesses.install.tab.search" = "搜尋";
+"harnesses.install.tab.git" = "從 Git";
+"harnesses.install.tab.sources" = "來源";
+"harnesses.install.search.placeholder" = "搜尋登錄表和來源…";
+"harnesses.install.search.prompt" = "輸入以搜尋登錄表和來源";
+"harnesses.install.search.empty" = "沒有結果";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "子路徑";
+"harnesses.install.git.subpath.placeholder" = "可選子目錄";
+"harnesses.install.command.preview" = "命令預覽";
+"harnesses.install.confirm" = "安裝";
+"harnesses.install.cancel" = "取消";
+"harnesses.install.already.installed" = "已安裝";
+"harnesses.install.from %@" = "來自 %@";
+"harnesses.install.sources.empty" = "未設定來源。新增本地目錄以瀏覽其 harnesses。";
+"harnesses.install.sources.add" = "新增來源…";
+"harnesses.install.sources.add.help" = "將本地目錄新增為 harness 來源";
+"harnesses.install.sources.remove" = "移除";
+"harnesses.install.sources.count %ld" = "%ld 個 harnesses";
+
+"harnesses.update.button" = "更新";
+"harnesses.update.help" = "更新至最新版本";
+"harnesses.uninstall.button" = "解除安裝";
+"harnesses.uninstall.help" = "解除安裝此 harness";
+"harnesses.uninstall.alert.title %@" = "解除安裝「%@」？";
+"harnesses.uninstall.alert.message" = "這將從您的系統中移除該 harness。";
+"harnesses.uninstall.alert.worktrees %ld" = "此 harness 已連結 %ld 個工作樹——這些關聯將被清除。";
+"harnesses.uninstall.alert.terminals %ld" = "目前有 %ld 個終端機正在執行此 harness。";
+"harnesses.uninstall.alert.confirm" = "解除安裝";
+"harnesses.more.actions.help" = "更多操作";
+"harnesses.copy.run.command" = "複製執行指令";
+"harnesses.ynh.documentation" = "YNH 文件";
+
+"harnesses.add.registry.title" = "新增 YNH 登錄檔";
+"harnesses.add.registry.url.label" = "登錄檔 URL";
+"harnesses.add.registry.hint" = "新增包含 registry.json 檔案嘅 Git 儲存庫。新增後，您可以喺入面搜尋同安裝 harness。";
+"harnesses.add.registry.button" = "新增登錄檔";
+"harnesses.add.registry.success" = "登錄檔已成功新增";
+"harnesses.add.registry.toolbar.help" = "新增 YNH 登錄檔";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "市場";
+"settings.marketplaces.section.list" = "已設定的市場";
+"settings.marketplaces.empty" = "尚未新增任何市場。";
+"settings.marketplaces.add" = "新增市場…";
+"settings.marketplaces.never.fetched" = "從未擷取";
+"settings.marketplaces.remove.confirm.title" = "移除市場";
+"settings.marketplaces.remove.confirm.message %@" = "移除\"%@\"？其外掛程式將不再顯示於瀏覽器中。";
+"settings.marketplaces.section.behaviour" = "行為";
+"settings.marketplaces.auto.refresh" = "啟動時自動重新整理";
+"settings.marketplaces.auto.refresh.help" = "應用程式啟動時自動擷取市場更新";
+"settings.marketplaces.section.authoring" = "Harness 撰寫";
+"settings.marketplaces.default.author.directory" = "預設作者目錄";
+"settings.marketplaces.author.directory.detected.hint" = "從 ynh 自動偵測";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "市集";
+"marketplace.add.help" = "新增市集";
+"marketplace.empty" = "尚無市集";
+"marketplace.add.button" = "新增市集";
+"marketplace.row.refresh.help" = "重新整理市集";
+"marketplace.row.refresh" = "重新整理";
+"marketplace.row.remove" = "移除";
+"marketplace.row.stale" = " · 可能已過時";
+"marketplace.row.never.fetched" = "從未擷取";
+"marketplace.add.sheet.title" = "新增市集";
+"marketplace.add.tab.known" = "已知";
+"marketplace.add.tab.custom" = "自訂 URL";
+"marketplace.add.section.git.url" = "Git 儲存庫 URL";
+"marketplace.add.section.display.name" = "顯示名稱";
+"marketplace.add.section.vendor" = "供應商";
+"marketplace.detail.last.fetched %@" = "上次擷取於 %@";
+"marketplace.detail.search.placeholder" = "搜尋外掛程式…";
+"marketplace.detail.search.empty %@" = "沒有符合「%@」的外掛程式";
+"marketplace.detail.empty" = "此市集中沒有外掛程式";
+"marketplace.detail.empty.hint" = "重新整理以擷取最新索引。";
+"marketplace.plugin.add.to.harness" = "新增至 Harness";
+"marketplace.plugin.copy.install.command" = "複製安裝指令";
+"marketplace.plugin.copy.install.command.help" = "將 Claude Code 安裝指令複製到剪貼簿";
+"marketplace.plugin.load.artifacts" = "載入成品";
+"marketplace.plugin.loading.artifacts" = "正在載入成品…";
+"marketplace.plugin.no.artifacts" = "此外掛程式沒有列出成品。";
+"marketplace.plugin.no.artifacts.hint" = "將包含外掛程式的所有內容。";
+"marketplace.plugin.artifacts.unavailable %@" = "成品無法使用：%@";
+"marketplace.picker.step.artifacts" = "成品";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "套用";
+"marketplace.picker.select.prompt" = "選取要包含的成品";
+"marketplace.picker.select.all" = "全部";
+"marketplace.picker.select.none" = "無";
+"marketplace.picker.no.harnesses" = "尚無 Harness";
+"marketplace.picker.no.harnesses.hint" = "請先使用新增 Harness 精靈建立一個 Harness。";
+"marketplace.picker.review.plugin" = "外掛程式";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "成品";
+"marketplace.picker.review.all.count %lld" = "全部 (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "已選取 %lld / %lld";
+"marketplace.picker.command.preview" = "指令預覽";
+"marketplace.picker.success %@" = "外掛程式已新增至 %@";
+"marketplace.picker.done" = "完成";
+"marketplace.picker.back" = "返回";
+"marketplace.picker.next" = "下一步";
+"harness.wizard.title" = "新增 Harness";
+"harness.wizard.name.label" = "名稱（必填）";
+"harness.wizard.description.label" = "描述";
+"harness.wizard.loading.vendors" = "正在載入供應商…";
+"harness.wizard.vendor.label" = "預設供應商";
+"harness.wizard.destination.label" = "目的地目錄";
+"harness.wizard.install.toggle" = "建立後立即安裝 Harness";
+"harness.wizard.success.add.plugins" = "從市集新增外掛程式";
+"harness.wizard.success.open" = "在 TermQ 中開啟";
+"harness.wizard.create" = "建立";
+"harness.wizard.retry" = "重試";
+"harness.wizard.error.name.required" = "名稱為必填項目";
+"harness.wizard.error.name.invalid" = "名稱只能包含字母、數字、連字號和底線";
+"harness.wizard.error.name.duplicate %@" = "名為「%@」的 Harness 已存在";
+"settings.marketplaces.reset" = "重設";
+"settings.marketplaces.section.ynh.registries" = "YNH 註冊表";
+"settings.marketplaces.ynh.registries.empty" = "未添加任何註冊表";
+"settings.marketplaces.ynh.add.registry" = "新增註冊表…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "移除註冊表";
+"settings.marketplaces.ynh.registry.remove.confirm" = "移除";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "將「%@」從 YNH 移除？已安裝的 harness 將保留。";
+"marketplace.add.custom.name.placeholder" = "我的市集";
+"harness.wizard.success.created %@" = "Harness「%@」已建立";

@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Uporabi";
 "common.preview" = "Predogled";
+"common.close.window" = "Zapri okno";
 
 // MARK: - Board View
 "board.column.options" = "Možnosti stolpca";
@@ -40,11 +41,11 @@
 "card.unpin" = "Odpni terminal";
 "card.running" = "Terminal deluje";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Povezano";
 "card.wired.help" = "Povezano z agentom MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Naslednji pripeti terminal";
 "menu.previous.pinned" = "Prejšnji pripeti terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Preklopi stransko vrstico";
 
 
 // MARK: - Command Palette
@@ -466,32 +468,29 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Zahteva za zunanjo spremembo";
-"security.external.modification.message" = "Zunanji proces poskuša spremeniti kontekst LLM za terminal '%@':
-
-%@
-
-To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
+"security.external.modification.message" = "Zunanji proces poskuša spremeniti kontekst LLM za terminal '%@':\n\n%@\n\nTo lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "security.allow" = "Dovoli";
 "security.deny" = "Zavrni";
 "security.allow.disable.prompt" = "Dovoli in ne sprašuj več";
 "security.osc.clipboard.enabled" = "Dostop do odložišča OSC 52 omogočen";
 "security.osc.clipboard.disabled" = "Dostop do odložišča OSC 52 onemogočen";
 
-"settings.auto.check.updates" = "Samodejno preveri za posodobitve";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Samodejno preveri posodobitve";
+"settings.auto.check.updates.help" = "Ko je omogočeno, bo TermQ občasno preverjal nove različice";
+"settings.check.for.updates" = "Preveri posodobitve...";
+"settings.include.beta.releases" = "Vključi beta različice";
+"settings.include.beta.releases.help" = "Prijavite se za prejemanje predizhodnih različic z novimi funkcijami";
+"settings.section.updates" = "Posodobitve";
 "editor.section.add.tag" = "Dodaj oznako";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Dovoli čakalne akcije";
+"editor.allow.agent.prompts.help" = "Dovoli vstavljanje {{PROMPT}} in {{NEXT_ACTION}} v začetni ukaz tega terminala";
+"editor.allow.agent.prompts.disabled.globally" = "Čakalne akcije so globalno onemogočene - omogoči v Nastavitve > Podatki in varnost";
 "editor.allow.osc.clipboard.disabled.globally" = "Onemogočeno globalno - omogoči v Nastavitve > Podatki in varnost";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Potrditev je globalno onemogočena - spremeni v Nastavitve > Podatki in varnost";
 
-"settings.debug.update.warning.title" = "Opozorilo za razhroščevalno različico";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Opozorilo: Debug gradnja";
+"settings.debug.update.warning.message" = "Nadaljevanje s posodobitvami bo namestilo produkcijsko različico TermQ.";
 
 "editor.no.tags" = "Ni definiranih oznak";
 
@@ -500,3 +499,315 @@ To lahko vpliva na to, kako AI pomočniki komunicirajo s tem terminalom.";
 "settings.environment.section.add.variable" = "Dodaj spremenljivko okolja";
 
 "settings.mcp.install" = "Namesti strežnik MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repozitoriji";
+"sidebar.add.button.help" = "Dodaj repozitorij";
+"sidebar.empty.message" = "Ni dodanih repozitorijev.\nKliknite + za dodajanje git repozitorija.";
+"sidebar.worktrees.placeholder" = "Delovne kopije se bodo prikazale tukaj";
+"sidebar.remove.repository" = "Odstrani repozitorij";
+"sidebar.toggle.help" = "Preklopi stransko vrstico repozitorijev (⌘⇧L)";
+"sidebar.add.title" = "Dodaj repozitorij";
+"sidebar.add.path.label" = "Pot";
+"sidebar.add.name.label" = "Prikazno ime";
+"sidebar.add.name.placeholder" = "Samodejno zaznano iz git";
+"sidebar.add.cancel" = "Prekliči";
+"sidebar.add.add" = "Dodaj";
+"sidebar.add.advanced" = "Napredno";
+"sidebar.edit.title" = "Uredi repozitorij";
+"sidebar.edit.repository" = "Uredi repozitorij";
+"sidebar.worktree.base.path.label" = "Osnovna pot worktree";
+"sidebar.worktree.base.path.help" = "Novi worktrees se ustvarijo tukaj. Privzeto je nadrejena mapa imenika repozitorija.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ni git repozitorij.";
+"sidebar.worktrees.empty" = "Ni najdenih delovnih kopij.";
+"sidebar.worktree.detached.head" = "Ločena HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Osveži delovne kopije";
+"sidebar.worktree.new" = "Nova delovna kopija";
+"sidebar.worktree.new.terminal" = "Nov Terminal";
+"sidebar.worktree.terminals.badge.help" = "Kliknite za hitre povezave za odpiranje terminalov";
+"sidebar.worktree.open.in.terminal" = "Odpri v Terminalu";
+"sidebar.worktree.reveal.in.finder" = "Pokaži v Finderju";
+"sidebar.worktree.open.remote.branch" = "Odpri vejo na Remote";
+"sidebar.worktree.open.remote.commit" = "Odpri commit na Remote";
+"sidebar.worktree.lock" = "Zakleni delovno kopijo";
+"sidebar.worktree.unlock" = "Odkleni delovno kopijo";
+
+"sidebar.worktree.set.harness" = "Nastavi harness…";
+"sidebar.worktree.clear.harness" = "Odstrani harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Zaženi %@";
+"sidebar.remove.worktree" = "Odstrani delovno kopijo";
+"sidebar.remove.worktree.title" = "Odstrani delovno kopijo?";
+"sidebar.remove.worktree.confirm" = "Odstrani";
+"sidebar.remove.main.worktree.error" = "Glavne delovne kopije ni mogoče odstraniti.";
+"sidebar.remove.worktree.message %@" = "To bo trajno odstranilo delovno kopijo na \"%@\". Veja ne bo izbrisana.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Izbriši Worktree...";
+"sidebar.worktree.delete.title" = "Izbriši Worktree";
+"sidebar.worktree.delete.confirm" = "Izbriši";
+"sidebar.worktree.delete.message %@" = "Delovno drevo na poti \"%@\" in vse neshranjene spremembe bodo trajno izbrisane. Tega ni mogoče razveljaviti.";
+"sidebar.new.worktree.title" = "Nova delovna kopija";
+"sidebar.new.worktree.branch.label" = "Ime nove veje";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Vnesite ime veje za nadaljevanje.";
+"sidebar.new.worktree.base.label" = "Osnovna veja";
+"sidebar.new.worktree.base.placeholder" = "Filtriraj veje...";
+"sidebar.new.worktree.path.label" = "Pot delovne kopije";
+"sidebar.new.worktree.path.required" = "Vnesite pot do delovnega drevesa za nadaljevanje.";
+"sidebar.new.worktree.create" = "Ustvari";
+"sidebar.new.worktree.loading.branches" = "Nalaganje vej...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness-i";
+"harnesses.refresh.help" = "Znova zazna ynh orodni verižnik";
+"harnesses.not.installed" = "ynh ni nameščen.";
+"harnesses.init.required" = "ynh je najden, a ni inicializiran.\nZaženi `ynh init` za nastavitev.";
+"harnesses.init.hint" = "Odpri terminal in zaženi:\nynh init";
+"harnesses.empty.message" = "Ni nameščenih harness-ov.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokalno";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informacije";
+"harnesses.detail.path" = "Pot";
+"harnesses.detail.source" = "Vir";
+"harnesses.detail.subpath" = "Podpot";
+"harnesses.detail.installed.at" = "Nameščeno";
+"harnesses.detail.artifacts" = "Artefakti";
+"harnesses.detail.no.artifacts" = "Ni artefaktov.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenti";
+"harnesses.detail.rules" = "Pravila";
+"harnesses.detail.commands" = "Ukazi";
+"harnesses.detail.dependencies" = "Odvisnosti";
+"harnesses.detail.includes %d" = "Vključuje (%d)";
+"harnesses.detail.delegates %d" = "Delegira na (%d)";
+"harnesses.detail.picks %d" = "Izbere (%d):";
+"harnesses.reveal.in.finder" = "Pokaži v Finderju";
+"harnesses.open.in.browser" = "Odpri v brskalniku";
+"harnesses.close.detail" = "Zapri";
+"harnesses.configure.from.marketplaces" = "Konfiguriraj iz tržnic…";
+"harnesses.detail.artifacts.from.includes" = "Ta harness pridobi artefakte iz vključenih odvisnosti.";
+"harnesses.detail.from" = "iz";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Strežniki MCP";
+"harnesses.detail.profiles" = "Profili";
+"harnesses.detail.focuses" = "Fokusi";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Ni razpoložljivega manifesta.";
+"harnesses.detail.resolved" = "Razrešeno";
+"harnesses.detail.unresolved" = "Nerazrešeno";
+"harnesses.detail.no.hooks" = "Ta harness nima hookov.";
+"harnesses.detail.no.mcp.servers" = "Ta harness nima strežnikov MCP.";
+"harnesses.detail.no.profiles" = "Ta harness nima profilov.";
+"harnesses.detail.no.focuses" = "Ta harness nima fokusov.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Zaženi harness";
+"harnesses.launch.vendor" = "Dobavitelj";
+"harnesses.launch.vendor.unavailable" = "(ni nameščen)";
+"harnesses.launch.vendor.default" = "Privzeto (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Brez";
+"harnesses.launch.working.directory" = "Delovna mapa";
+"harnesses.launch.browse" = "Brskaj…";
+"harnesses.launch.prompt" = "Poziv";
+"harnesses.launch.prompt.placeholder" = "Neobvezni poziv za agenta…";
+"harnesses.launch.button" = "Zaženi";
+"harnesses.launch.help" = "Zaženi ta harness v novem terminalu";
+"harnesses.launch.cancel" = "Prekliči";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Povezani worktreei";
+"harnesses.linked.worktrees.none" = "Noben worktree ni povezan s tem harnessom.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Ustvari nov harness";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Orodni verižnik YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Upravljalnik harness-ov za AI asistente";
+"settings.ynh.enable.harness.tab" = "Pokaži zavihek harness-ov v stranski vrstici";
+"settings.ynh.enable.harness.tab.help" = "Doda zavihek Harness-i v stransko vrstico za brskanje in upravljanje nameščenih harness-ov";
+"settings.ynh.home.override" = "Preglasitev $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Privzeto (uporablja lastno razrešitev ynh)";
+"settings.ynh.home.override.help" = "Preglasi imenik YNH_HOME za podproces ynh. Pusti prazno za privzeto.";
+"settings.ynh.resolved.paths" = "Razrešene poti";
+"settings.ynh.redetect" = "Znova zazna";
+"settings.ynh.init.required" = "Ni inicializirano";
+"settings.ynh.ready" = "Pripravljeno";
+"settings.ynh.path.label" = "Pot:";
+"settings.ynh.ynd.path.label" = "Pot ynd:";
+"settings.ynh.status.label" = "Stanje:";
+"settings.ynh.ready.info" = "Orodni verižnik zaznan in inicializiran. Aktiviraj zavihek stranske vrstice za brskanje po harness-ih.";
+"settings.ynh.advanced" = "Napredno";
+"settings.ynh.version.label" = "Različica:";
+
+"common.clear" = "Počisti";
+
+"sidebar.worktree.create.terminal" = "Ustvari Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopiraj kot pot";
+
+"sidebar.prune.worktrees" = "Obreži worktrees…";
+
+"sidebar.prune.worktrees.title" = "Obreži worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Obreži";
+
+"sidebar.prune.worktrees.nothing.title" = "Ni za obrezovanje";
+
+"sidebar.prune.worktrees.nothing.message" = "Vsi worktrees so evidentirani. Ni zastarelih zapisov.";
+
+"sidebar.prune.worktrees.explanation" = "Ti administrativni zapisi kažejo na imenike, ki ne obstajajo več. Obrezovanje jih odstrani — vaše veje niso prizadete.";
+
+// Install sheet
+"harnesses.install.title" = "Namestitev harness";
+"harnesses.install.toolbar.help" = "Namesti harness";
+"harnesses.install.tab.search" = "Išči";
+"harnesses.install.tab.git" = "Iz Gita";
+"harnesses.install.tab.sources" = "Viri";
+"harnesses.install.search.placeholder" = "Išči v registrih in virih…";
+"harnesses.install.search.prompt" = "Vpišite besedilo za iskanje v registrih in virih";
+"harnesses.install.search.empty" = "Ni rezultatov";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Podpot";
+"harnesses.install.git.subpath.placeholder" = "Izbirni podimenik";
+"harnesses.install.command.preview" = "Predogled ukaza";
+"harnesses.install.confirm" = "Namesti";
+"harnesses.install.cancel" = "Prekliči";
+"harnesses.install.already.installed" = "Nameščeno";
+"harnesses.install.from %@" = "iz %@";
+"harnesses.install.sources.empty" = "Ni konfiguriranih virov. Dodajte lokalni imenik za brskanje po njegovih harnesses.";
+"harnesses.install.sources.add" = "Dodaj vir…";
+"harnesses.install.sources.add.help" = "Dodaj lokalni imenik kot vir harness";
+"harnesses.install.sources.remove" = "Odstrani";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Posodobi";
+"harnesses.update.help" = "Posodobi na najnovejšo različico";
+"harnesses.uninstall.button" = "Odstrani";
+"harnesses.uninstall.help" = "Odstrani ta harness";
+"harnesses.uninstall.alert.title %@" = "Odstraniti \"%@\"?";
+"harnesses.uninstall.alert.message" = "S tem boste odstranili harness iz vašega sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Ta harness je povezan z %ld delovnim drevesom (drevesi) — te povezave bodo počiščene.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(ov) trenutno poganja ta harness.";
+"harnesses.uninstall.alert.confirm" = "Odstrani";
+"harnesses.more.actions.help" = "Več dejanj";
+"harnesses.copy.run.command" = "Kopiraj ukaz za zagon";
+"harnesses.ynh.documentation" = "Dokumentacija YNH";
+
+"harnesses.add.registry.title" = "Dodaj register YNH";
+"harnesses.add.registry.url.label" = "URL registra";
+"harnesses.add.registry.hint" = "Dodajte repozitorij Git, ki vsebuje datoteko registry.json. Ko je dodan, lahko iz njega iščete in nameščate harnesses.";
+"harnesses.add.registry.button" = "Dodaj register";
+"harnesses.add.registry.success" = "Register je bil uspešno dodan";
+"harnesses.add.registry.toolbar.help" = "Dodaj register YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Tržnice";
+"settings.marketplaces.section.list" = "Konfigurirane tržnice";
+"settings.marketplaces.empty" = "Še nobena tržnica ni dodana.";
+"settings.marketplaces.add" = "Dodaj tržnico…";
+"settings.marketplaces.never.fetched" = "Nikoli pridobljeno";
+"settings.marketplaces.remove.confirm.title" = "Odstrani tržnico";
+"settings.marketplaces.remove.confirm.message %@" = "Odstraniti \"%@\"? Njeni vtičniki se ne bodo več prikazali v brskalniku.";
+"settings.marketplaces.section.behaviour" = "Obnašanje";
+"settings.marketplaces.auto.refresh" = "Samodejno osveževanje ob zagonu";
+"settings.marketplaces.auto.refresh.help" = "Samodejno pridobi posodobitve tržnice ob zagonu aplikacije";
+"settings.marketplaces.section.authoring" = "Ustvarjanje harnessa";
+"settings.marketplaces.default.author.directory" = "Privzeta mapa avtorja";
+"settings.marketplaces.author.directory.detected.hint" = "Samodejno zaznano iz ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Tržnice";
+"marketplace.add.help" = "Dodaj tržnico";
+"marketplace.empty" = "Zaenkrat ni tržnic";
+"marketplace.add.button" = "Dodaj tržnico";
+"marketplace.row.refresh.help" = "Osveži tržnico";
+"marketplace.row.refresh" = "Osveži";
+"marketplace.row.remove" = "Odstrani";
+"marketplace.row.stale" = " · Morda zastarelo";
+"marketplace.row.never.fetched" = "Nikoli pridobljeno";
+"marketplace.add.sheet.title" = "Dodaj tržnico";
+"marketplace.add.tab.known" = "Znane";
+"marketplace.add.tab.custom" = "URL po meri";
+"marketplace.add.section.git.url" = "URL repozitorija Git";
+"marketplace.add.section.display.name" = "Prikazno ime";
+"marketplace.add.section.vendor" = "Ponudnik";
+"marketplace.detail.last.fetched %@" = "Zadnja pridobitev %@";
+"marketplace.detail.search.placeholder" = "Išči vtičnike…";
+"marketplace.detail.search.empty %@" = "Noben vtičnik ne ustreza «%@»";
+"marketplace.detail.empty" = "Na tej tržnici ni vtičnikov";
+"marketplace.detail.empty.hint" = "Osvežite za pridobitev najnovejšega indeksa.";
+"marketplace.plugin.add.to.harness" = "Dodaj v harness";
+"marketplace.plugin.copy.install.command" = "Kopiraj ukaz za namestitev";
+"marketplace.plugin.copy.install.command.help" = "Kopira ukaz za namestitev Claude Code v odložišče";
+"marketplace.plugin.load.artifacts" = "Naloži artefakte";
+"marketplace.plugin.loading.artifacts" = "Nalaganje artefaktov…";
+"marketplace.plugin.no.artifacts" = "Za ta vtičnik ni navedenih artefaktov.";
+"marketplace.plugin.no.artifacts.hint" = "Vsa vsebina vtičnika bo vključena.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefakti niso na voljo: %@";
+"marketplace.picker.step.artifacts" = "Artefakti";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Uporabi";
+"marketplace.picker.select.prompt" = "Izberi artefakte za vključitev";
+"marketplace.picker.select.all" = "Vse";
+"marketplace.picker.select.none" = "Nič";
+"marketplace.picker.no.harnesses" = "Zaenkrat ni harnessov";
+"marketplace.picker.no.harnesses.hint" = "Najprej ustvarite harness s čarovnikom za novi harness.";
+"marketplace.picker.review.plugin" = "Vtičnik";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefakti";
+"marketplace.picker.review.all.count %lld" = "Vse (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld od %lld izbrano";
+"marketplace.picker.command.preview" = "Predogled ukaza";
+"marketplace.picker.success %@" = "Vtičnik dodan v %@";
+"marketplace.picker.done" = "Končano";
+"marketplace.picker.back" = "Nazaj";
+"marketplace.picker.next" = "Naprej";
+"harness.wizard.title" = "Nov harness";
+"harness.wizard.name.label" = "Ime (obvezno)";
+"harness.wizard.description.label" = "Opis";
+"harness.wizard.loading.vendors" = "Nalaganje ponudnikov…";
+"harness.wizard.vendor.label" = "Privzeti ponudnik";
+"harness.wizard.destination.label" = "Ciljni imenik";
+"harness.wizard.install.toggle" = "Namesti harness takoj po ustvaritvi";
+"harness.wizard.success.add.plugins" = "Dodaj vtičnike s tržnice";
+"harness.wizard.success.open" = "Odpri v TermQ";
+"harness.wizard.create" = "Ustvari";
+"harness.wizard.retry" = "Poskusi znova";
+"harness.wizard.error.name.required" = "Ime je obvezno";
+"harness.wizard.error.name.invalid" = "Ime lahko vsebuje samo črke, številke, pomišljaje in podčrtaje";
+"harness.wizard.error.name.duplicate %@" = "Harness z imenom «%@» že obstaja";
+"settings.marketplaces.reset" = "Ponastavi";
+"settings.marketplaces.section.ynh.registries" = "Registri YNH";
+"settings.marketplaces.ynh.registries.empty" = "Ni dodanih registrov";
+"settings.marketplaces.ynh.add.registry" = "Dodaj register…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Odstrani register";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Odstrani";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Odstrani »%@« iz YNH? Nameščeni harnesses bodo ostali.";
+"marketplace.add.custom.name.placeholder" = "Moja tržnica";
+"harness.wizard.success.created %@" = "Harness «%@» ustvarjen";

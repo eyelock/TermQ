@@ -21,6 +21,7 @@ import SwiftUI
 struct PathInputField: View {
     let label: String
     @Binding var path: String
+    let placeholder: String
     let helpText: String?
     let validatePath: Bool
 
@@ -29,11 +30,13 @@ struct PathInputField: View {
     init(
         label: String,
         path: Binding<String>,
+        placeholder: String = "",
         helpText: String? = nil,
         validatePath: Bool = false
     ) {
         self.label = label
         self._path = path
+        self.placeholder = placeholder
         self.helpText = helpText
         self.validatePath = validatePath
     }
@@ -54,7 +57,7 @@ struct PathInputField: View {
 
             // Line 2: Full-width path input
             HStack(spacing: 4) {
-                TextField("", text: $path)
+                TextField(placeholder, text: $path)
                     .textFieldStyle(.roundedBorder)
                     .font(.system(.body, design: .monospaced))
                     .frame(maxWidth: .infinity)
