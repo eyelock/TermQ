@@ -465,7 +465,7 @@ struct CardEditorView: View {
         workingDirectory = card.workingDirectory
         shellPath = card.shellPath
         selectedColumnId = card.columnId
-        tags = card.tags
+        tags = card.tags.sorted { $0.key < $1.key }
         isFavourite = card.isFavourite
         initCommand = card.initCommand
         llmPrompt = card.llmPrompt

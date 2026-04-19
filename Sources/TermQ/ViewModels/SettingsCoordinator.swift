@@ -10,7 +10,10 @@ final class SettingsCoordinator: ObservableObject {
 
     private init() {}
 
-    /// Request to open Settings with a specific tab
+    /// Request navigation to a specific Settings tab.
+    ///
+    /// Callers are responsible for also opening the Settings window (e.g. via
+    /// `@Environment(\.openSettings)` or a `SettingsLink`).
     func openSettings(tab: SettingsView.SettingsTab) {
         requestedTab = tab
     }

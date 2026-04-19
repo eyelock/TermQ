@@ -15,6 +15,7 @@
 "common.delete" = "Eliminar";
 "common.edit" = "Editar";
 "common.close" = "Tancar";
+"common.close.window" = "Tancar finestra";
 "common.add" = "Afegir";
 "common.reinstall" = "Reinstal·lar";
 "common.uninstall" = "Desinstal·lar";
@@ -466,23 +467,19 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Sol·licitud de modificació externa";
-"security.external.modification.message" = "Un procés extern està intentant modificar el context LLM per al terminal '%@':
-
-%@
-
-Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
+"security.external.modification.message" = "Un procés extern està intentant modificar el context LLM per al terminal '%@':\n\n%@\n\nAixò podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "security.allow" = "Permetre";
 "security.deny" = "Denegar";
 "security.allow.disable.prompt" = "Permetre i no tornar a preguntar";
 "security.osc.clipboard.enabled" = "Accés al porta-retalls OSC 52 activat";
 "security.osc.clipboard.disabled" = "Accés al porta-retalls OSC 52 desactivat";
 
-"settings.auto.check.updates" = "Comprova actualitzacions automàticament";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates" = "Comprovació automàtica d'actualitzacions";
+"settings.auto.check.updates.help" = "Quan està activat, TermQ comprova periòdicament si hi ha noves versions";
+"settings.check.for.updates" = "Comprova si hi ha actualitzacions...";
+"settings.include.beta.releases" = "Inclou versions beta";
+"settings.include.beta.releases.help" = "Subscriu-te per rebre versions de preproducció amb noves funcionalitats";
+"settings.section.updates" = "Actualitzacions";
 "editor.section.add.tag" = "Afegir etiqueta";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +487,8 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "editor.allow.osc.clipboard.disabled.globally" = "Desactivat globalment - activeu a Configuració > Dades i seguretat";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Avís de versió de depuració";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Avís de compilació de depuració";
+"settings.debug.update.warning.message" = "Continuar amb les actualitzacions instal·larà la versió de producció de TermQ.";
 
 "editor.no.tags" = "Cap etiqueta definida";
 
@@ -500,3 +497,310 @@ Això podria afectar com els assistents d'IA interactuen amb aquest terminal.";
 "settings.environment.section.add.variable" = "Afegeix una variable d'entorn";
 
 "settings.mcp.install" = "Instal·la el servidor MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositoris";
+"sidebar.add.button.help" = "Afegir repositori";
+"sidebar.empty.message" = "No s'han afegit repositoris.\nFeu clic a + per afegir un repositori git.";
+"sidebar.worktrees.placeholder" = "Els worktrees apareixeran aquí";
+"sidebar.remove.repository" = "Eliminar repositori";
+"sidebar.toggle.help" = "Mostrar/ocultar la barra lateral de repositoris (⌘⇧L)";
+"sidebar.add.title" = "Afegir repositori";
+"sidebar.add.path.label" = "Ruta";
+"sidebar.add.name.label" = "Nom de visualització";
+"sidebar.add.name.placeholder" = "Detecció automàtica des de git";
+"sidebar.add.cancel" = "Cancel·lar";
+"sidebar.add.add" = "Afegir";
+"sidebar.add.advanced" = "Avançat";
+"sidebar.edit.title" = "Edita el repositori";
+"sidebar.edit.repository" = "Edita el repositori";
+"sidebar.worktree.base.path.label" = "Camí base del worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" no és un repositori git.";
+"menu.toggle.sidebar" = "Mostrar/ocultar barra lateral";
+"sidebar.worktrees.empty" = "No s'han trobat worktrees.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Actualitzar worktrees";
+"sidebar.worktree.new" = "Nou worktree";
+"sidebar.worktree.new.terminal" = "Terminal Ràpid";
+"sidebar.worktree.create.terminal" = "Crea Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Feu clic per als enllaços ràpids per obrir terminals";
+"sidebar.worktree.open.in.terminal" = "Mostra al Terminal";
+"sidebar.worktree.reveal.in.finder" = "Mostrar al Finder";
+"sidebar.worktree.copy.pathname" = "Copia com a camí";
+"sidebar.worktree.open.remote.branch" = "Obre la branca a Remote";
+"sidebar.worktree.open.remote.commit" = "Obre el commit a Remote";
+"sidebar.worktree.lock" = "Bloquejar worktree";
+"sidebar.worktree.unlock" = "Desbloquejar worktree";
+
+"sidebar.worktree.set.harness" = "Defineix el harness…";
+"sidebar.worktree.clear.harness" = "Esborra el harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Inicia %@";
+"sidebar.remove.worktree" = "Eliminar worktree";
+"sidebar.remove.worktree.title" = "Eliminar worktree?";
+"sidebar.remove.worktree.confirm" = "Eliminar";
+"sidebar.remove.main.worktree.error" = "El worktree principal no es pot eliminar.";
+"sidebar.remove.worktree.message %@" = "Això eliminarà permanentment el worktree a \"%@\". La branca no s'eliminarà.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Destruir el Worktree...";
+"sidebar.worktree.delete.title" = "Destruir el Worktree";
+"sidebar.worktree.delete.confirm" = "Destruir";
+"sidebar.worktree.delete.message %@" = "El worktree a \"%@\" i qualsevol canvi no desat serà destruït permanentment. Aquesta acció no es pot desfer.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Neteja Worktrees…";
+"sidebar.prune.worktrees.title" = "Neteja Worktrees";
+"sidebar.prune.worktrees.confirm" = "Neteja";
+"sidebar.prune.worktrees.nothing.title" = "Res a netejar";
+"sidebar.prune.worktrees.nothing.message" = "Tots els worktrees estan comptabilitzats. No s'han trobat registres obsolets.";
+"sidebar.prune.worktrees.explanation" = "Aquests registres administratius apunten a directoris que ja no existeixen. La neteja els elimina — les teves branques no es veuen afectades.";
+"sidebar.new.worktree.title" = "Nou worktree";
+"sidebar.new.worktree.branch.label" = "Nom de la nova branca";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Introduïu un nom de branca per continuar.";
+"sidebar.new.worktree.base.label" = "Branca base";
+"sidebar.new.worktree.base.placeholder" = "Filtra les branques...";
+"sidebar.new.worktree.path.label" = "Ruta del worktree";
+"sidebar.new.worktree.path.required" = "Introduïu un camí de worktree per continuar.";
+"sidebar.new.worktree.create" = "Crear";
+"sidebar.new.worktree.loading.branches" = "Carregant branques...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Arnesos";
+"harnesses.refresh.help" = "Torna a detectar la cadena d'eines ynh";
+"harnesses.not.installed" = "ynh no està instal·lat.";
+"harnesses.init.required" = "S'ha trobat ynh però no s'ha inicialitzat.\nExecuta `ynh init` per configurar-lo.";
+"harnesses.init.hint" = "Obre un terminal i executa:\nynh init";
+"harnesses.empty.message" = "Encara no hi ha arnesos instal·lats.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Local";
+"harnesses.source.registry" = "Registre";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informació";
+"harnesses.detail.path" = "Ruta";
+"harnesses.detail.source" = "Font";
+"harnesses.detail.subpath" = "Subruta";
+"harnesses.detail.installed.at" = "Instal·lat";
+"harnesses.detail.artifacts" = "Artefactes";
+"harnesses.detail.no.artifacts" = "Sense artefactes.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Regles";
+"harnesses.detail.commands" = "Ordres";
+"harnesses.detail.dependencies" = "Dependències";
+"harnesses.detail.includes %d" = "Inclou (%d)";
+"harnesses.detail.delegates %d" = "Delega a (%d)";
+"harnesses.detail.picks %d" = "Selecciona (%d):";
+"harnesses.reveal.in.finder" = "Mostra al Finder";
+"harnesses.open.in.browser" = "Obre al navegador";
+"harnesses.close.detail" = "Tanca";
+"harnesses.configure.from.marketplaces" = "Configura des dels mercats…";
+"harnesses.detail.artifacts.from.includes" = "Aquest arnes obté els seus artefactes de les inclusions de dependències.";
+"harnesses.detail.from" = "de";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Servidors MCP";
+"harnesses.detail.profiles" = "Perfils";
+"harnesses.detail.focuses" = "Enfocaments";
+"harnesses.detail.focus.profile %@" = "perfil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "No hi ha cap manifest disponible.";
+"harnesses.detail.resolved" = "Resolt";
+"harnesses.detail.unresolved" = "No resolt";
+"harnesses.detail.no.hooks" = "Aquest arnes no té hooks.";
+"harnesses.detail.no.mcp.servers" = "Aquest arnes no té servidors MCP.";
+"harnesses.detail.no.profiles" = "Aquest arnes no té perfils.";
+"harnesses.detail.no.focuses" = "Aquest arnes no té enfocaments.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Inicia l'arnes";
+"harnesses.launch.vendor" = "Proveïdor";
+"harnesses.launch.vendor.unavailable" = "(no instal·lat)";
+"harnesses.launch.vendor.default" = "Per defecte (%@)";
+"harnesses.launch.focus" = "Enfocament";
+"harnesses.launch.focus.none" = "Cap";
+"harnesses.launch.working.directory" = "Directori de treball";
+"harnesses.launch.browse" = "Navega…";
+"harnesses.launch.prompt" = "Indicació";
+"harnesses.launch.prompt.placeholder" = "Indicació opcional per a l'agent…";
+"harnesses.launch.button" = "Inicia";
+"harnesses.launch.help" = "Inicia aquest arnes en un terminal nou";
+"harnesses.launch.cancel" = "Cancel·la";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktrees vinculats";
+"harnesses.linked.worktrees.none" = "Cap worktree està vinculat a aquest harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Crea un harness nou";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Cadena d'eines YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Gestor d'arnesos per a assistents d'IA";
+"settings.ynh.enable.harness.tab" = "Mostra la pestanya d'arnesos a la barra lateral";
+"settings.ynh.enable.harness.tab.help" = "Afegeix una pestanya d'Arnesos a la barra lateral per navegar i gestionar els arnesos instal·lats";
+"settings.ynh.home.override" = "Substitució de $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Per defecte (utilitza la resolució pròpia de ynh)";
+"settings.ynh.home.override.help" = "Substitueix el directori YNH_HOME per al subprocés ynh. Deixa en blanc per al valor per defecte.";
+"settings.ynh.resolved.paths" = "Rutes resoltes";
+"settings.ynh.redetect" = "Torna a detectar";
+"settings.ynh.init.required" = "No inicialitzat";
+"settings.ynh.ready" = "Llest";
+"settings.ynh.path.label" = "Ruta:";
+"settings.ynh.ynd.path.label" = "Ruta de ynd:";
+"settings.ynh.status.label" = "Estat:";
+"settings.ynh.ready.info" = "Cadena d'eines detectada i inicialitzada. Activa la pestanya de la barra lateral per navegar pels arnesos.";
+"settings.ynh.advanced" = "Avançat";
+"settings.ynh.version.label" = "Versió:";
+
+"common.clear" = "Neteja";
+
+// Install sheet
+"harnesses.install.title" = "Instal·la Harness";
+"harnesses.install.toolbar.help" = "Instal·la un harness";
+"harnesses.install.tab.search" = "Cerca";
+"harnesses.install.tab.git" = "Des de Git";
+"harnesses.install.tab.sources" = "Fonts";
+"harnesses.install.search.placeholder" = "Cerca als registres i fonts…";
+"harnesses.install.search.prompt" = "Escriu per cercar als registres i fonts";
+"harnesses.install.search.empty" = "Sense resultats";
+"harnesses.install.git.url" = "URL de Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Subpath";
+"harnesses.install.git.subpath.placeholder" = "Subdirectori opcional";
+"harnesses.install.command.preview" = "Previsualització de l'ordre";
+"harnesses.install.confirm" = "Instal·la";
+"harnesses.install.cancel" = "Cancel·la";
+"harnesses.install.already.installed" = "Instal·lat";
+"harnesses.install.from %@" = "de %@";
+"harnesses.install.sources.empty" = "No hi ha fonts configurades. Afegeix un directori local per explorar els seus harnesses.";
+"harnesses.install.sources.add" = "Afegeix font…";
+"harnesses.install.sources.add.help" = "Afegeix un directori local com a font de harness";
+"harnesses.install.sources.remove" = "Elimina";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Actualitza";
+"harnesses.update.help" = "Actualitza a la versió més recent";
+"harnesses.uninstall.button" = "Desinstal·la";
+"harnesses.uninstall.help" = "Desinstal·la aquest harness";
+"harnesses.uninstall.alert.title %@" = "Desinstal·lar \"%@\"?";
+"harnesses.uninstall.alert.message" = "Això eliminarà el harness del vostre sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Aquest harness està vinculat a %ld arbre(s) de treball — aquestes associacions s'esboraran.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) estan executant aquest harness ara mateix.";
+"harnesses.uninstall.alert.confirm" = "Desinstal·la";
+"harnesses.more.actions.help" = "Més accions";
+"harnesses.copy.run.command" = "Copia l'ordre d'execució";
+"harnesses.ynh.documentation" = "Documentació de YNH";
+
+"harnesses.add.registry.title" = "Afegeix un registre YNH";
+"harnesses.add.registry.url.label" = "URL del registre";
+"harnesses.add.registry.hint" = "Afegeix un repositori Git que contingui un fitxer registry.json. Un cop afegit, pots cercar i instal·lar harnesses des d'ell.";
+"harnesses.add.registry.button" = "Afegeix registre";
+"harnesses.add.registry.success" = "Registre afegit correctament";
+"harnesses.add.registry.toolbar.help" = "Afegeix un registre YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Mercats";
+"settings.marketplaces.section.list" = "Mercats configurats";
+"settings.marketplaces.empty" = "Encara no s'ha afegit cap mercat.";
+"settings.marketplaces.add" = "Afegeix mercat…";
+"settings.marketplaces.never.fetched" = "Mai obtingut";
+"settings.marketplaces.remove.confirm.title" = "Elimina el mercat";
+"settings.marketplaces.remove.confirm.message %@" = "Eliminar \"%@\"? Els seus connectors ja no apareixeran al navegador.";
+"settings.marketplaces.section.behaviour" = "Comportament";
+"settings.marketplaces.auto.refresh" = "Actualització automàtica en l'inici";
+"settings.marketplaces.auto.refresh.help" = "Obtén automàticament les actualitzacions del mercat quan s'inicia l'aplicació";
+"settings.marketplaces.section.authoring" = "Creació de harness";
+"settings.marketplaces.default.author.directory" = "Directori d'autor predeterminat";
+"settings.marketplaces.author.directory.detected.hint" = "Detectat automàticament des de ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Mercats";
+"marketplace.add.help" = "Afegeix mercat";
+"marketplace.empty" = "Encara no hi ha mercats";
+"marketplace.add.button" = "Afegeix mercat";
+"marketplace.row.refresh.help" = "Actualitza el mercat";
+"marketplace.row.refresh" = "Actualitza";
+"marketplace.row.remove" = "Elimina";
+"marketplace.row.stale" = " · Pot estar desactualitzat";
+"marketplace.row.never.fetched" = "Mai obtingut";
+"marketplace.add.sheet.title" = "Afegeix mercat";
+"marketplace.add.tab.known" = "Coneguts";
+"marketplace.add.tab.custom" = "URL personalitzat";
+"marketplace.add.section.git.url" = "URL del repositori Git";
+"marketplace.add.section.display.name" = "Nom de visualització";
+"marketplace.add.section.vendor" = "Proveïdor";
+"marketplace.detail.last.fetched %@" = "Última obtenció %@";
+"marketplace.detail.search.placeholder" = "Cerca connectors…";
+"marketplace.detail.search.empty %@" = "Cap connector no coincideix amb «%@»";
+"marketplace.detail.empty" = "No hi ha connectors en aquest mercat";
+"marketplace.detail.empty.hint" = "Actualitza per obtenir l'índex més recent.";
+"marketplace.plugin.add.to.harness" = "Afegeix al harness";
+"marketplace.plugin.copy.install.command" = "Copia l'ordre d'instal·lació";
+"marketplace.plugin.copy.install.command.help" = "Copia l'ordre d'instal·lació de Claude Code al porta-retalls";
+"marketplace.plugin.load.artifacts" = "Carrega artefactes";
+"marketplace.plugin.loading.artifacts" = "Carregant artefactes…";
+"marketplace.plugin.no.artifacts" = "No hi ha artefactes enumerats per a aquest connector.";
+"marketplace.plugin.no.artifacts.hint" = "S'inclourà tot el contingut del connector.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefactes no disponibles: %@";
+"marketplace.picker.step.artifacts" = "Artefactes";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Aplica";
+"marketplace.picker.select.prompt" = "Selecciona els artefactes per incloure";
+"marketplace.picker.select.all" = "Tots";
+"marketplace.picker.select.none" = "Cap";
+"marketplace.picker.no.harnesses" = "Encara no hi ha harnesses";
+"marketplace.picker.no.harnesses.hint" = "Primer creeu un harness amb l'assistent de nou harness.";
+"marketplace.picker.review.plugin" = "Connector";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefactes";
+"marketplace.picker.review.all.count %lld" = "Tots (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld de %lld seleccionats";
+"marketplace.picker.command.preview" = "Vista prèvia de l'ordre";
+"marketplace.picker.success %@" = "Connector afegit a %@";
+"marketplace.picker.done" = "Fet";
+"marketplace.picker.back" = "Enrere";
+"marketplace.picker.next" = "Següent";
+"harness.wizard.title" = "Nou harness";
+"harness.wizard.name.label" = "Nom (obligatori)";
+"harness.wizard.description.label" = "Descripció";
+"harness.wizard.loading.vendors" = "Carregant proveïdors…";
+"harness.wizard.vendor.label" = "Proveïdor predeterminat";
+"harness.wizard.destination.label" = "Directori de destinació";
+"harness.wizard.install.toggle" = "Instal·la el harness immediatament després de la creació";
+"harness.wizard.success.add.plugins" = "Afegeix connectors del mercat";
+"harness.wizard.success.open" = "Obre a TermQ";
+"harness.wizard.create" = "Crea";
+"harness.wizard.retry" = "Torna-ho a intentar";
+"harness.wizard.error.name.required" = "El nom és obligatori";
+"harness.wizard.error.name.invalid" = "El nom només pot contenir lletres, números, guions i guions baixos";
+"harness.wizard.error.name.duplicate %@" = "Ja existeix un harness anomenat «%@»";
+"settings.marketplaces.reset" = "Restableix";
+"settings.marketplaces.section.ynh.registries" = "Registres de YNH";
+"settings.marketplaces.ynh.registries.empty" = "No s'ha afegit cap registre";
+"settings.marketplaces.ynh.add.registry" = "Afegeix un registre…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Suprimeix el registre";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Suprimeix";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Voleu suprimir «%@» de YNH? Els harnesos instal·lats es conservaran.";
+"marketplace.add.custom.name.placeholder" = "El meu mercat";
+"harness.wizard.success.created %@" = "Harness «%@» creat";

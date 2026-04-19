@@ -144,16 +144,52 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Card Operations
 
+    /// Open the new-terminal editor with `workingDirectory` pre-filled.
+    /// Uses the same column-selection logic as `newTerminal(at:)`.
+    func addTerminal(workingDirectory: String, branch: String? = nil, repoName: String? = nil) {
+        let column: Column
+        if let current = selectedCard,
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+
+        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
+        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+
+        let card = board.addCard(
+            to: column,
+            title: branch ?? "New Terminal",
+            workingDirectory: workingDirectory,
+            safePasteEnabled: defaultSafePaste,
+            backend: defaultBackend
+        )
+        card.tags = autoTags(source: "card", backend: defaultBackend, branch: branch, repoName: repoName)
+
+        objectWillChange.send()
+        save()
+
+        isEditingNewCard = true
+        isEditingCard = card
+    }
+
     func addTerminal(to column: Column) {
         // Read defaults from UserDefaults
         let defaultWorkingDirectory =
             UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
         let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
 
         let card = board.addCard(
             to: column,
             workingDirectory: defaultWorkingDirectory,
+            safePasteEnabled: defaultSafePaste,
             backend: defaultBackend
         )
         objectWillChange.send()
@@ -428,6 +464,47 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Quick Actions
 
+    /// Create a new transient terminal at a specific directory and select it.
+    /// Matches the board column and backend defaults of `quickNewTerminal`.
+    func newTerminal(at path: String, branch: String? = nil, repoName: String? = nil) {
+        let column: Column
+        if let current = selectedCard,
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+        } else {
+            return
+        }
+
+        let existingTitles = Set(
+            board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
+        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
+        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+
+        let card = TerminalCard(
+            title: nextTransientTitle(base: branch, existing: existingTitles),
+            tags: autoTags(source: "worktree", backend: defaultBackend, branch: branch, repoName: repoName),
+            columnId: column.id,
+            workingDirectory: path,
+            safePasteEnabled: defaultSafePaste,
+            backend: defaultBackend
+        )
+        card.isTransient = true
+        tabManager.addTransientCard(card)
+
+        if let current = selectedCard {
+            tabManager.insertTab(card.id, after: current.id)
+        } else {
+            tabManager.addTab(card.id)
+        }
+
+        objectWillChange.send()
+        selectedCard = card
+    }
+
     func quickNewTerminal() {
         let column: Column
         let workingDirectory: String
@@ -447,21 +524,17 @@ class BoardViewModel: ObservableObject {
         }
 
         let existingTitles = Set(board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
-        var counter = 1
-        var title = "Terminal \(counter)"
-        while existingTitles.contains(title) {
-            counter += 1
-            title = "Terminal \(counter)"
-        }
-
         // Use the user's chosen default backend, falling back to direct if unavailable
         let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
 
         let card = TerminalCard(
-            title: title,
+            title: nextTransientTitle(base: nil, existing: existingTitles),
+            tags: autoTags(source: "quick", backend: defaultBackend),
             columnId: column.id,
             workingDirectory: workingDirectory,
+            safePasteEnabled: defaultSafePaste,
             backend: defaultBackend
         )
         card.isTransient = true
@@ -593,4 +666,41 @@ class BoardViewModel: ObservableObject {
             save()
         }
     }
+}
+
+// MARK: - Private helpers
+
+private func nextTransientTitle(base: String?, existing: Set<String>) -> String {
+    if let base {
+        var candidate = base
+        var counter = 2
+        while existing.contains(candidate) {
+            candidate = "\(base) \(counter)"
+            counter += 1
+        }
+        return candidate
+    }
+    var counter = 1
+    var candidate = "Terminal \(counter)"
+    while existing.contains(candidate) {
+        counter += 1
+        candidate = "Terminal \(counter)"
+    }
+    return candidate
+}
+
+private func autoTags(
+    source: String, backend: TerminalBackend, branch: String? = nil, repoName: String? = nil
+) -> [Tag] {
+    let shell =
+        ProcessInfo.processInfo.environment["SHELL"]
+        .map { URL(fileURLWithPath: $0).lastPathComponent } ?? "sh"
+    var tags: [Tag] = [
+        Tag(key: "source", value: source),
+        Tag(key: "backend", value: backend.tagValue),
+        Tag(key: "shell", value: shell),
+    ]
+    if let branch { tags.append(Tag(key: "branch", value: branch)) }
+    if let repoName { tags.append(Tag(key: "repository", value: repoName)) }
+    return tags
 }

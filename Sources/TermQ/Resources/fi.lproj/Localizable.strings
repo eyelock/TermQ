@@ -15,6 +15,7 @@
 "common.delete" = "Poista";
 "common.edit" = "Muokkaa";
 "common.close" = "Sulje";
+"common.close.window" = "Sulje ikkuna";
 "common.add" = "Lisää";
 "common.reinstall" = "Asenna uudelleen";
 "common.uninstall" = "Poista asennus";
@@ -40,11 +41,11 @@
 "card.unpin" = "Irrota terminaali";
 "card.running" = "Terminaali käynnissä";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Yhdistetty";
 "card.wired.help" = "Yhdistetty MCP-agenttiin";
@@ -466,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Ulkoinen muutospyyntö";
-"security.external.modification.message" = "Ulkoinen prosessi yrittää muokata LLM-kontekstia terminaalille '%@':
-
-%@
-
-Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tämän terminaalin kanssa.";
+"security.external.modification.message" = "Ulkoinen prosessi yrittää muokata LLM-kontekstia terminaalille '%@':\n\n%@\n\nTämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tämän terminaalin kanssa.";
 "security.allow" = "Salli";
 "security.deny" = "Estä";
 "security.allow.disable.prompt" = "Salli äläkä kysy uudelleen";
@@ -478,11 +475,11 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "security.osc.clipboard.disabled" = "OSC 52 leikepöydän käyttö pois käytöstä";
 
 "settings.auto.check.updates" = "Tarkista päivitykset automaattisesti";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Kun käytössä, TermQ tarkistaa säännöllisesti uudet versiot";
+"settings.check.for.updates" = "Tarkista päivitykset...";
+"settings.include.beta.releases" = "Sisällytä betajulkaisut";
+"settings.include.beta.releases.help" = "Tilaa ennakkojulkaisut uusilla ominaisuuksilla";
+"settings.section.updates" = "Päivitykset";
 "editor.section.add.tag" = "Lisää tunniste";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +487,8 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "editor.allow.osc.clipboard.disabled.globally" = "Poistettu käytöstä yleisesti - ota käyttöön Asetukset > Tiedot ja turvallisuus";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Debug-version varoitus";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Virheenkorjausversiovaroitus";
+"settings.debug.update.warning.message" = "Päivityksen jatkaminen asentaa TermQ:n tuotantoversion.";
 
 "editor.no.tags" = "Ei tageja määritetty";
 
@@ -500,3 +497,316 @@ Tämä voi vaikuttaa siihen, miten tekoälyavustajat ovat vuorovaikutuksessa tä
 "settings.environment.section.add.variable" = "Lisää ympäristömuuttuja";
 
 "settings.mcp.install" = "Asenna MCP-palvelin";
+
+// MARK: - Sidebar
+"sidebar.title" = "Tietovarastot";
+"sidebar.add.button.help" = "Lisää tietovarasto";
+"sidebar.empty.message" = "Ei tietovarastoja lisätty.\nNapsauta + lisätäksesi git-tietovaraston.";
+"sidebar.worktrees.placeholder" = "Työskentelypuut näkyvät tässä";
+"sidebar.remove.repository" = "Poista tietovarasto";
+"sidebar.toggle.help" = "Näytä/piilota Tietovarastot-sivupalkki (⌘⇧L)";
+"sidebar.add.title" = "Lisää tietovarasto";
+"sidebar.add.path.label" = "Polku";
+"sidebar.add.name.label" = "Näyttönimi";
+"sidebar.add.name.placeholder" = "Tunnistettu automaattisesti gitistä";
+"sidebar.add.cancel" = "Kumoa";
+"sidebar.add.add" = "Lisää";
+"sidebar.add.advanced" = "Lisäasetukset";
+"sidebar.edit.title" = "Muokkaa repositoriota";
+"sidebar.edit.repository" = "Muokkaa repositoriota";
+"sidebar.worktree.base.path.label" = "Worktreen perushakemisto";
+"sidebar.worktree.base.path.help" = "Uudet worktrees luodaan tänne. Oletusarvo on repositorion ylähakemisto.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" ei ole git-tietovarasto.";
+"menu.toggle.sidebar" = "Näytä/piilota sivupalkki";
+"sidebar.worktrees.empty" = "Työskentelypuita ei löydy.";
+"sidebar.worktree.detached.head" = "Irrotettu HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Päivitä työskentelypuut";
+"sidebar.worktree.new" = "Uusi työskentelypuu";
+"sidebar.worktree.new.terminal" = "Uusi Terminal";
+"sidebar.worktree.terminals.badge.help" = "Napsauta pikalinkkejä terminaalien avaamiseksi";
+"sidebar.worktree.open.in.terminal" = "Avaa Terminaalissa";
+"sidebar.worktree.reveal.in.finder" = "Näytä Finderissä";
+"sidebar.worktree.open.remote.branch" = "Avaa haara Remotessa";
+"sidebar.worktree.open.remote.commit" = "Avaa commit Remotessa";
+"sidebar.worktree.lock" = "Lukitse worktree";
+"sidebar.worktree.unlock" = "Avaa worktree";
+
+"sidebar.worktree.set.harness" = "Määritä harness…";
+"sidebar.worktree.clear.harness" = "Poista harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Käynnistä %@";
+"sidebar.remove.worktree" = "Poista työskentelypuu";
+"sidebar.remove.worktree.title" = "Poistetaanko työskentelypuu?";
+"sidebar.remove.worktree.confirm" = "Poista";
+"sidebar.remove.main.worktree.error" = "Päätyöskentelypuuta ei voi poistaa.";
+"sidebar.remove.worktree.message %@" = "Tämä poistaa pysyvästi työskentelypuun kohteessa \"%@\". Haaraa ei poisteta.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Poista Worktree...";
+"sidebar.worktree.delete.title" = "Poista Worktree";
+"sidebar.worktree.delete.confirm" = "Poista";
+"sidebar.worktree.delete.message %@" = "Worktree osoitteessa \"%@\" ja kaikki tallentamattomat muutokset poistetaan pysyvästi. Tätä ei voi kumota.";
+"sidebar.new.worktree.title" = "Uusi työskentelypuu";
+"sidebar.new.worktree.branch.label" = "Uuden haaran nimi";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Syötä haaranimi jatkaaksesi.";
+"sidebar.new.worktree.base.label" = "Pohjahaara";
+"sidebar.new.worktree.base.placeholder" = "Suodata haaroja...";
+"sidebar.new.worktree.path.label" = "Työskentelypuun polku";
+"sidebar.new.worktree.path.required" = "Syötä worktree-polku jatkaaksesi.";
+"sidebar.new.worktree.create" = "Luo";
+"sidebar.new.worktree.loading.branches" = "Ladataan haaroja...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Tunnista ynh-työkaluketju uudelleen";
+"harnesses.not.installed" = "ynh ei ole asennettu.";
+"harnesses.init.required" = "ynh löydetty mutta ei alustettu.\nAjа `ynh init` asentaaksesi.";
+"harnesses.init.hint" = "Avaa pääte ja aja:\nynh init";
+"harnesses.empty.message" = "Ei asennettuja harness-ohjaimia.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Paikallinen";
+"harnesses.source.registry" = "Rekisteri";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Tiedot";
+"harnesses.detail.path" = "Polku";
+"harnesses.detail.source" = "Lähde";
+"harnesses.detail.subpath" = "Alipolku";
+"harnesses.detail.installed.at" = "Asennettu";
+"harnesses.detail.artifacts" = "Artefaktit";
+"harnesses.detail.no.artifacts" = "Ei artefakteja.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agentit";
+"harnesses.detail.rules" = "Säännöt";
+"harnesses.detail.commands" = "Komennot";
+"harnesses.detail.dependencies" = "Riippuvuudet";
+"harnesses.detail.includes %d" = "Sisältää (%d)";
+"harnesses.detail.delegates %d" = "Delegoi kohteelle (%d)";
+"harnesses.detail.picks %d" = "Valitsee (%d):";
+"harnesses.reveal.in.finder" = "Näytä Finderissä";
+"harnesses.open.in.browser" = "Avaa selaimessa";
+"harnesses.close.detail" = "Sulje";
+"harnesses.configure.from.marketplaces" = "Määritä markkinapaikoista…";
+"harnesses.detail.artifacts.from.includes" = "Tämä harness saa artefaktinsa riippuvuus-includeista.";
+"harnesses.detail.from" = "kohteesta";
+"harnesses.detail.hooks" = "Hookit";
+"harnesses.detail.mcp.servers" = "MCP-palvelimet";
+"harnesses.detail.profiles" = "Profiilit";
+"harnesses.detail.focuses" = "Fokukset";
+"harnesses.detail.focus.profile %@" = "profiili: %@";
+"harnesses.detail.manifest" = "Manifesti";
+"harnesses.detail.no.manifest" = "Ei manifestia saatavilla.";
+"harnesses.detail.resolved" = "Ratkaistu";
+"harnesses.detail.unresolved" = "Ratkaisematon";
+"harnesses.detail.no.hooks" = "Tällä harness-ohjaimella ei ole hookeja.";
+"harnesses.detail.no.mcp.servers" = "Tällä harness-ohjaimella ei ole MCP-palvelimia.";
+"harnesses.detail.no.profiles" = "Tällä harness-ohjaimella ei ole profiileja.";
+"harnesses.detail.no.focuses" = "Tällä harness-ohjaimella ei ole fokuksia.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Käynnistä harness";
+"harnesses.launch.vendor" = "Toimittaja";
+"harnesses.launch.vendor.unavailable" = "(ei asennettu)";
+"harnesses.launch.vendor.default" = "Oletus (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Ei mitään";
+"harnesses.launch.working.directory" = "Työkansio";
+"harnesses.launch.browse" = "Selaa…";
+"harnesses.launch.prompt" = "Kehote";
+"harnesses.launch.prompt.placeholder" = "Valinnainen kehote agentille…";
+"harnesses.launch.button" = "Käynnistä";
+"harnesses.launch.help" = "Käynnistä tämä harness uudessa päätteessä";
+"harnesses.launch.cancel" = "Peruuta";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Linkitetyt worktreest";
+"harnesses.linked.worktrees.none" = "Tähän harnessiin ei ole linkitetty yhtään worktreeä.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Luo uusi harness";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-työkaluketju";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-hallinta tekoälyassistenteille";
+"settings.ynh.enable.harness.tab" = "Näytä harnesses-välilehti sivupalkissa";
+"settings.ynh.enable.harness.tab.help" = "Lisää Harnesses-välilehden sivupalkkiin asennettujen harness-ohjainten selaamista ja hallintaa varten";
+"settings.ynh.home.override" = "$YNH_HOME-korvaus";
+"settings.ynh.home.override.placeholder" = "Oletus (käyttää ynh:n omaa ratkaisua)";
+"settings.ynh.home.override.help" = "Korvaa YNH_HOME-hakemiston ynh-aliprosessille. Jätä tyhjäksi oletusarvoa varten.";
+"settings.ynh.resolved.paths" = "Ratkaistut polut";
+"settings.ynh.redetect" = "Tunnista uudelleen";
+"settings.ynh.init.required" = "Ei alustettu";
+"settings.ynh.ready" = "Valmis";
+"settings.ynh.path.label" = "Polku:";
+"settings.ynh.ynd.path.label" = "ynd-polku:";
+"settings.ynh.status.label" = "Tila:";
+"settings.ynh.ready.info" = "Työkaluketju tunnistettu ja alustettu. Ota sivupalkin välilehti käyttöön selataksesi harness-ohjaimia.";
+"settings.ynh.advanced" = "Lisäasetukset";
+"settings.ynh.version.label" = "Versio:";
+
+"common.clear" = "Tyhjennä";
+
+"sidebar.worktree.create.terminal" = "Luo Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopioi polkuna";
+
+"sidebar.prune.worktrees" = "Siivoa worktrees…";
+
+"sidebar.prune.worktrees.title" = "Siivoa worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Siivoa";
+
+"sidebar.prune.worktrees.nothing.title" = "Ei siivottavaa";
+
+"sidebar.prune.worktrees.nothing.message" = "Kaikki worktrees ovat kirjanpidossa. Vanhentuneita tietueita ei löytynyt.";
+
+"sidebar.prune.worktrees.explanation" = "Nämä hallinnolliset tietueet viittaavat hakemistoihin, joita ei enää ole. Siivous poistaa ne — haarasi eivät vaikutu.";
+
+// Install sheet
+"harnesses.install.title" = "Asenna harness";
+"harnesses.install.toolbar.help" = "Asenna harness";
+"harnesses.install.tab.search" = "Haku";
+"harnesses.install.tab.git" = "Gitistä";
+"harnesses.install.tab.sources" = "Lähteet";
+"harnesses.install.search.placeholder" = "Hae rekistereistä ja lähteistä…";
+"harnesses.install.search.prompt" = "Kirjoita etsiäksesi rekistereistä ja lähteistä";
+"harnesses.install.search.empty" = "Ei tuloksia";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Alihakemistopolku";
+"harnesses.install.git.subpath.placeholder" = "Valinnainen alihakemisto";
+"harnesses.install.command.preview" = "Komennon esikatselu";
+"harnesses.install.confirm" = "Asenna";
+"harnesses.install.cancel" = "Peruuta";
+"harnesses.install.already.installed" = "Asennettu";
+"harnesses.install.from %@" = "lähteestä %@";
+"harnesses.install.sources.empty" = "Lähteitä ei ole määritetty. Lisää paikallinen hakemisto selataksesi sen harnesseja.";
+"harnesses.install.sources.add" = "Lisää lähde…";
+"harnesses.install.sources.add.help" = "Lisää paikallinen hakemisto harness-lähteeksi";
+"harnesses.install.sources.remove" = "Poista";
+"harnesses.install.sources.count %ld" = "%ld harnessia";
+
+"harnesses.update.button" = "Päivitä";
+"harnesses.update.help" = "Päivitä uusimpaan versioon";
+"harnesses.uninstall.button" = "Poista asennus";
+"harnesses.uninstall.help" = "Poista tämän harnessin asennus";
+"harnesses.uninstall.alert.title %@" = "Poistetaanko \"%@\"?";
+"harnesses.uninstall.alert.message" = "Tämä poistaa harnessin järjestelmästäsi.";
+"harnesses.uninstall.alert.worktrees %ld" = "Tämä harness on linkitetty %ld työtree(hen/hin) — nämä yhteydet poistetaan.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld pääte(ttä) käyttää tällä hetkellä tätä harnessia.";
+"harnesses.uninstall.alert.confirm" = "Poista asennus";
+"harnesses.more.actions.help" = "Lisää toimintoja";
+"harnesses.copy.run.command" = "Kopioi suorituskomento";
+"harnesses.ynh.documentation" = "YNH-dokumentaatio";
+
+"harnesses.add.registry.title" = "Lisää YNH-rekisteri";
+"harnesses.add.registry.url.label" = "Rekisterin URL";
+"harnesses.add.registry.hint" = "Lisää Git-varasto, joka sisältää registry.json-tiedoston. Lisäämisen jälkeen voit etsiä ja asentaa harnesses-kohteita siitä.";
+"harnesses.add.registry.button" = "Lisää rekisteri";
+"harnesses.add.registry.success" = "Rekisteri lisätty onnistuneesti";
+"harnesses.add.registry.toolbar.help" = "Lisää YNH-rekisteri";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Markkinapaikat";
+"settings.marketplaces.section.list" = "Määritetyt markkinapaikat";
+"settings.marketplaces.empty" = "Markkinapaikkoja ei ole vielä lisätty.";
+"settings.marketplaces.add" = "Lisää markkinapaikka…";
+"settings.marketplaces.never.fetched" = "Ei koskaan haettu";
+"settings.marketplaces.remove.confirm.title" = "Poista markkinapaikka";
+"settings.marketplaces.remove.confirm.message %@" = "Poistetaanko \"%@\"? Sen laajennukset eivät enää näy selaimessa.";
+"settings.marketplaces.section.behaviour" = "Toiminta";
+"settings.marketplaces.auto.refresh" = "Automaattinen päivitys käynnistettäessä";
+"settings.marketplaces.auto.refresh.help" = "Hae markkinapaikan päivitykset automaattisesti sovelluksen käynnistyessä";
+"settings.marketplaces.section.authoring" = "Harness-luonti";
+"settings.marketplaces.default.author.directory" = "Oletus tekijähakemisto";
+"settings.marketplaces.author.directory.detected.hint" = "Havaittu automaattisesti ynh:stä";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Markkinapaikat";
+"marketplace.add.help" = "Lisää markkinapaikka";
+"marketplace.empty" = "Ei markkinapaikkoja vielä";
+"marketplace.add.button" = "Lisää markkinapaikka";
+"marketplace.row.refresh.help" = "Päivitä markkinapaikka";
+"marketplace.row.refresh" = "Päivitä";
+"marketplace.row.remove" = "Poista";
+"marketplace.row.stale" = " · Voi olla vanhentunut";
+"marketplace.row.never.fetched" = "Ei koskaan haettu";
+"marketplace.add.sheet.title" = "Lisää markkinapaikka";
+"marketplace.add.tab.known" = "Tunnetut";
+"marketplace.add.tab.custom" = "Mukautettu URL";
+"marketplace.add.section.git.url" = "Git-säilön URL";
+"marketplace.add.section.display.name" = "Näyttönimi";
+"marketplace.add.section.vendor" = "Toimittaja";
+"marketplace.detail.last.fetched %@" = "Viimeksi haettu %@";
+"marketplace.detail.search.placeholder" = "Etsi laajennuksia…";
+"marketplace.detail.search.empty %@" = "Mikään laajennus ei vastaa hakua «%@»";
+"marketplace.detail.empty" = "Ei laajennuksia tässä markkinapaikassa";
+"marketplace.detail.empty.hint" = "Päivitä hakeaksesi uusimman hakemiston.";
+"marketplace.plugin.add.to.harness" = "Lisää harnessiin";
+"marketplace.plugin.copy.install.command" = "Kopioi asennuskomento";
+"marketplace.plugin.copy.install.command.help" = "Kopioi Claude Code -asennuskomennon leikepöydälle";
+"marketplace.plugin.load.artifacts" = "Lataa artefaktit";
+"marketplace.plugin.loading.artifacts" = "Ladataan artefakteja…";
+"marketplace.plugin.no.artifacts" = "Tälle laajennukselle ei ole lueteltu artefakteja.";
+"marketplace.plugin.no.artifacts.hint" = "Kaikki laajennuksen sisältö sisällytetään.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefaktit ei saatavilla: %@";
+"marketplace.picker.step.artifacts" = "Artefaktit";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Käytä";
+"marketplace.picker.select.prompt" = "Valitse sisällytettävät artefaktit";
+"marketplace.picker.select.all" = "Kaikki";
+"marketplace.picker.select.none" = "Ei mitään";
+"marketplace.picker.no.harnesses" = "Ei harnesseja vielä";
+"marketplace.picker.no.harnesses.hint" = "Luo ensin harness Uusi harness -ohjatun toiminnon avulla.";
+"marketplace.picker.review.plugin" = "Laajennus";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefaktit";
+"marketplace.picker.review.all.count %lld" = "Kaikki (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld/%lld valittu";
+"marketplace.picker.command.preview" = "Komentoesikatselu";
+"marketplace.picker.success %@" = "Laajennus lisätty kohteeseen %@";
+"marketplace.picker.done" = "Valmis";
+"marketplace.picker.back" = "Takaisin";
+"marketplace.picker.next" = "Seuraava";
+"harness.wizard.title" = "Uusi harness";
+"harness.wizard.name.label" = "Nimi (pakollinen)";
+"harness.wizard.description.label" = "Kuvaus";
+"harness.wizard.loading.vendors" = "Ladataan toimittajia…";
+"harness.wizard.vendor.label" = "Oletustoimittaja";
+"harness.wizard.destination.label" = "Kohdehakemisto";
+"harness.wizard.install.toggle" = "Asenna harness heti luomisen jälkeen";
+"harness.wizard.success.add.plugins" = "Lisää laajennuksia markkinapaikalta";
+"harness.wizard.success.open" = "Avaa TermQ:ssa";
+"harness.wizard.create" = "Luo";
+"harness.wizard.retry" = "Yritä uudelleen";
+"harness.wizard.error.name.required" = "Nimi on pakollinen";
+"harness.wizard.error.name.invalid" = "Nimi saa sisältää vain kirjaimia, numeroita, viivoja ja alaviivoja";
+"harness.wizard.error.name.duplicate %@" = "Harness nimeltä «%@» on jo olemassa";
+"settings.marketplaces.reset" = "Palauta";
+"settings.marketplaces.section.ynh.registries" = "YNH-rekisterit";
+"settings.marketplaces.ynh.registries.empty" = "Rekisteröintiä ei ole lisätty";
+"settings.marketplaces.ynh.add.registry" = "Lisää rekisteri…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Poista rekisteri";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Poista";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Poistetaanko „%@“ YNH:stä? Asennetut harness-paketit säilyvat.";
+"marketplace.add.custom.name.placeholder" = "Oma markkinapaikka";
+"harness.wizard.success.created %@" = "Harness «%@» luotu";

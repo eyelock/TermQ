@@ -519,7 +519,7 @@ struct Find: ParsableCommand {
                         let key = String(parts[0]).lowercased()
                         let value = String(parts[1]).lowercased()
                         cards = cards.filter { card in
-                            card.tags.contains { $0.key.lowercased() == key && $0.value.lowercased() == value }
+                            card.tags.contains { $0.key.lowercased() == key && $0.value.lowercased().contains(value) }
                         }
                     }
                 } else {

@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Запрос на внешнее изменение";
-"security.external.modification.message" = "Внешний процесс пытается изменить контекст LLM для терминала '%@':
-
-%@
-
-Это может повлиять на то, как ИИ-ассистенты взаимодействуют с этим терминалом.";
+"security.external.modification.message" = "Внешний процесс пытается изменить контекст LLM для терминала '%@':\n\n%@\n\nЭто может повлиять на то, как ИИ-ассистенты взаимодействуют с этим терминалом.";
 "security.allow" = "Разрешить";
 "security.deny" = "Запретить";
 "security.allow.disable.prompt" = "Разрешить и больше не спрашивать";
@@ -478,20 +474,20 @@
 "security.osc.clipboard.disabled" = "Доступ к буферу обмена OSC 52 отключён";
 
 "settings.auto.check.updates" = "Автоматически проверять обновления";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Если включено, TermQ будет периодически проверять наличие новых версий";
+"settings.check.for.updates" = "Проверить обновления...";
+"settings.include.beta.releases" = "Включать бета-версии";
+"settings.include.beta.releases.help" = "Включите, чтобы получать предварительные версии с новыми функциями";
+"settings.section.updates" = "Обновления";
 "editor.section.add.tag" = "Добавить тег";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Разрешить очередь действий";
+"editor.allow.agent.prompts.help" = "Разрешить вставку {{PROMPT}} и {{NEXT_ACTION}} в команду инициализации этого терминала";
+"editor.allow.agent.prompts.disabled.globally" = "Очередь действий отключена глобально - включите в Настройки > Данные и безопасность";
 "editor.allow.osc.clipboard.disabled.globally" = "Отключено глобально - включите в Настройки > Данные и безопасность";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Подтверждение отключено глобально - измените в Настройки > Данные и безопасность";
 
-"settings.debug.update.warning.title" = "Предупреждение об отладочной сборке";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Предупреждение отладочной сборки";
+"settings.debug.update.warning.message" = "Продолжение обновления установит производственную версию TermQ.";
 
 "editor.no.tags" = "Теги не определены";
 
@@ -500,3 +496,311 @@
 "settings.environment.section.add.variable" = "Добавить переменную среды";
 
 "settings.mcp.install" = "Установить сервер MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Репозитории";
+"sidebar.add.button.help" = "Добавить репозиторий";
+"sidebar.empty.message" = "Репозитории не добавлены.\nНажмите +, чтобы добавить git-репозиторий.";
+"sidebar.worktrees.placeholder" = "Рабочие деревья появятся здесь";
+"sidebar.remove.repository" = "Удалить репозиторий";
+"sidebar.toggle.help" = "Показать/скрыть боковую панель репозиториев (⌘⇧L)";
+"sidebar.add.title" = "Добавить репозиторий";
+"sidebar.add.path.label" = "Путь";
+"sidebar.add.name.label" = "Отображаемое имя";
+"sidebar.add.name.placeholder" = "Определяется автоматически из git";
+"sidebar.add.cancel" = "Отмена";
+"sidebar.add.add" = "Добавить";
+"sidebar.add.advanced" = "Дополнительно";
+"sidebar.edit.title" = "Редактировать репозиторий";
+"sidebar.edit.repository" = "Редактировать репозиторий";
+"sidebar.worktree.base.path.label" = "Базовый путь worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "«%@» не является git-репозиторием.";
+"sidebar.worktrees.empty" = "Рабочие деревья не найдены.";
+"sidebar.worktree.detached.head" = "Отсоединённый HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Обновить рабочие деревья";
+"sidebar.worktree.new" = "Новое рабочее дерево";
+"sidebar.worktree.new.terminal" = "Быстрый Terminal";
+"sidebar.worktree.create.terminal" = "Создать Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Нажмите для быстрого доступа к терминалам";
+"sidebar.worktree.open.in.terminal" = "Показать в Terminal";
+"sidebar.worktree.reveal.in.finder" = "Показать в Finder";
+"sidebar.worktree.copy.pathname" = "Копировать как путь";
+"sidebar.worktree.open.remote.branch" = "Открыть ветку на Remote";
+"sidebar.worktree.open.remote.commit" = "Открыть коммит на Remote";
+"sidebar.worktree.lock" = "Заблокировать рабочее дерево";
+"sidebar.worktree.unlock" = "Разблокировать рабочее дерево";
+
+"sidebar.worktree.set.harness" = "Установить harness…";
+"sidebar.worktree.clear.harness" = "Очистить harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Запустить %@";
+"sidebar.remove.worktree" = "Удалить рабочее дерево";
+"sidebar.remove.worktree.title" = "Удалить рабочее дерево?";
+"sidebar.remove.worktree.confirm" = "Удалить";
+"sidebar.remove.main.worktree.error" = "Основное рабочее дерево не может быть удалено.";
+"sidebar.remove.worktree.message %@" = "Это навсегда удалит рабочее дерево по пути «%@». Ветка удалена не будет.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Уничтожить Worktree...";
+"sidebar.worktree.delete.title" = "Уничтожить Worktree";
+"sidebar.worktree.delete.confirm" = "Уничтожить";
+"sidebar.worktree.delete.message %@" = "Рабочее дерево по пути “%@” и все несохранённые изменения будут безвозвратно уничтожены. Это действие нельзя отменить.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Очистить рабочие деревья…";
+"sidebar.prune.worktrees.title" = "Очистить рабочие деревья";
+"sidebar.prune.worktrees.confirm" = "Очистить";
+"sidebar.prune.worktrees.nothing.title" = "Нечего очищать";
+"sidebar.prune.worktrees.nothing.message" = "Все рабочие деревья учтены. Устаревшие записи не найдены.";
+"sidebar.prune.worktrees.explanation" = "Эти административные записи указывают на каталоги, которые больше не существуют. Очистка удаляет их — ваши ветки не затрагиваются.";
+"sidebar.new.worktree.title" = "Новое рабочее дерево";
+"sidebar.new.worktree.branch.label" = "Имя новой ветки";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Введите имя ветки для продолжения.";
+"sidebar.new.worktree.base.label" = "Базовая ветка";
+"sidebar.new.worktree.base.placeholder" = "Фильтр веток...";
+"sidebar.new.worktree.path.label" = "Путь рабочего дерева";
+"sidebar.new.worktree.path.required" = "Введите путь рабочего дерева для продолжения.";
+"sidebar.new.worktree.create" = "Создать";
+"sidebar.new.worktree.loading.branches" = "Загрузка веток...";
+"common.close.window" = "Закрыть окно";
+"menu.toggle.sidebar" = "Показать/скрыть боковую панель";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Упряжки";
+"harnesses.refresh.help" = "Повторно определить инструментарий ynh";
+"harnesses.not.installed" = "ynh не установлен.";
+"harnesses.init.required" = "ynh найден, но не инициализирован.\nЗапустите `ynh init` для настройки.";
+"harnesses.init.hint" = "Откройте терминал и запустите:\nynh init";
+"harnesses.empty.message" = "Упряжки ещё не установлены.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Локальный";
+"harnesses.source.registry" = "Реестр";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Информация";
+"harnesses.detail.path" = "Путь";
+"harnesses.detail.source" = "Источник";
+"harnesses.detail.subpath" = "Подпуть";
+"harnesses.detail.installed.at" = "Установлено";
+"harnesses.detail.artifacts" = "Артефакты";
+"harnesses.detail.no.artifacts" = "Нет артефактов.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Агенты";
+"harnesses.detail.rules" = "Правила";
+"harnesses.detail.commands" = "Команды";
+"harnesses.detail.dependencies" = "Зависимости";
+"harnesses.detail.includes %d" = "Включает (%d)";
+"harnesses.detail.delegates %d" = "Делегирует (%d)";
+"harnesses.detail.picks %d" = "Выбирает (%d):";
+"harnesses.reveal.in.finder" = "Показать в Finder";
+"harnesses.open.in.browser" = "Открыть в браузере";
+"harnesses.close.detail" = "Закрыть";
+"harnesses.configure.from.marketplaces" = "Настроить из маркетплейсов…";
+"harnesses.detail.artifacts.from.includes" = "Эта упряжка получает артефакты из включений зависимостей.";
+"harnesses.detail.from" = "из";
+"harnesses.detail.hooks" = "Хуки";
+"harnesses.detail.mcp.servers" = "MCP-серверы";
+"harnesses.detail.profiles" = "Профили";
+"harnesses.detail.focuses" = "Фокусы";
+"harnesses.detail.focus.profile %@" = "профиль: %@";
+"harnesses.detail.manifest" = "Манифест";
+"harnesses.detail.no.manifest" = "Манифест недоступен.";
+"harnesses.detail.resolved" = "Разрешено";
+"harnesses.detail.unresolved" = "Не разрешено";
+"harnesses.detail.no.hooks" = "У этой упряжки нет хуков.";
+"harnesses.detail.no.mcp.servers" = "У этой упряжки нет MCP-серверов.";
+"harnesses.detail.no.profiles" = "У этой упряжки нет профилей.";
+"harnesses.detail.no.focuses" = "У этой упряжки нет фокусов.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Запустить упряжку";
+"harnesses.launch.vendor" = "Поставщик";
+"harnesses.launch.vendor.unavailable" = "(не установлен)";
+"harnesses.launch.vendor.default" = "По умолчанию (%@)";
+"harnesses.launch.focus" = "Фокус";
+"harnesses.launch.focus.none" = "Нет";
+"harnesses.launch.working.directory" = "Рабочий каталог";
+"harnesses.launch.browse" = "Обзор…";
+"harnesses.launch.prompt" = "Запрос";
+"harnesses.launch.prompt.placeholder" = "Необязательный запрос для агента…";
+"harnesses.launch.button" = "Запустить";
+"harnesses.launch.help" = "Запустить эту упряжку в новом терминале";
+"harnesses.launch.cancel" = "Отмена";
+"harnesses.launch.backend" = "Бэкенд";
+
+"harnesses.linked.worktrees" = "Связанные worktree";
+"harnesses.linked.worktrees.none" = "Ни один worktree не связан с этим harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Создать новый харнесс";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Инструментарий YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Менеджер упряжек для ИИ-ассистентов";
+"settings.ynh.enable.harness.tab" = "Показывать вкладку упряжек на панели";
+"settings.ynh.enable.harness.tab.help" = "Добавляет вкладку «Упряжки» на боковую панель для просмотра и управления установленными упряжками";
+"settings.ynh.home.override" = "Переопределение $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "По умолчанию (использует собственное разрешение ynh)";
+"settings.ynh.home.override.help" = "Переопределяет каталог YNH_HOME для дочернего процесса ynh. Оставьте пустым для значения по умолчанию.";
+"settings.ynh.resolved.paths" = "Разрешённые пути";
+"settings.ynh.redetect" = "Определить повторно";
+"settings.ynh.init.required" = "Не инициализирован";
+"settings.ynh.ready" = "Готов";
+"settings.ynh.path.label" = "Путь:";
+"settings.ynh.ynd.path.label" = "Путь ynd:";
+"settings.ynh.status.label" = "Статус:";
+"settings.ynh.ready.info" = "Инструментарий определён и инициализирован. Включите вкладку боковой панели для просмотра упряжек.";
+"settings.ynh.advanced" = "Расширенные";
+"settings.ynh.version.label" = "Версия:";
+
+"common.clear" = "Очистить";
+
+// Install sheet
+"harnesses.install.title" = "Установить harness";
+"harnesses.install.toolbar.help" = "Установить harness";
+"harnesses.install.tab.search" = "Поиск";
+"harnesses.install.tab.git" = "Из Git";
+"harnesses.install.tab.sources" = "Источники";
+"harnesses.install.search.placeholder" = "Поиск в реестрах и источниках…";
+"harnesses.install.search.prompt" = "Введите текст для поиска в реестрах и источниках";
+"harnesses.install.search.empty" = "Нет результатов";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Подпуть";
+"harnesses.install.git.subpath.placeholder" = "Необязательный подкаталог";
+"harnesses.install.command.preview" = "Предпросмотр команды";
+"harnesses.install.confirm" = "Установить";
+"harnesses.install.cancel" = "Отмена";
+"harnesses.install.already.installed" = "Установлен";
+"harnesses.install.from %@" = "из %@";
+"harnesses.install.sources.empty" = "Источники не настроены. Добавьте локальный каталог для просмотра его harnesses.";
+"harnesses.install.sources.add" = "Добавить источник…";
+"harnesses.install.sources.add.help" = "Добавить локальный каталог как источник harness";
+"harnesses.install.sources.remove" = "Удалить";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Обновить";
+"harnesses.update.help" = "Обновить до последней версии";
+"harnesses.uninstall.button" = "Удалить";
+"harnesses.uninstall.help" = "Удалить этот harness";
+"harnesses.uninstall.alert.title %@" = "Удалить \"%@\"?";
+"harnesses.uninstall.alert.message" = "Это удалит harness с вашей системы.";
+"harnesses.uninstall.alert.worktrees %ld" = "Этот harness связан с %ld рабочим деревом (деревьями) — эти связи будут удалены.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld терминал(а/ов) в данный момент запускает этот harness.";
+"harnesses.uninstall.alert.confirm" = "Удалить";
+"harnesses.more.actions.help" = "Другие действия";
+"harnesses.copy.run.command" = "Копировать команду запуска";
+"harnesses.ynh.documentation" = "Документация YNH";
+
+"harnesses.add.registry.title" = "Добавить реестр YNH";
+"harnesses.add.registry.url.label" = "URL реестра";
+"harnesses.add.registry.hint" = "Добавьте репозиторий Git, содержащий файл registry.json. После добавления вы сможете искать и устанавливать harnesses из него.";
+"harnesses.add.registry.button" = "Добавить реестр";
+"harnesses.add.registry.success" = "Реестр успешно добавлен";
+"harnesses.add.registry.toolbar.help" = "Добавить реестр YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Маркетплейсы";
+"settings.marketplaces.section.list" = "Настроенные маркетплейсы";
+"settings.marketplaces.empty" = "Маркетплейсы ещё не добавлены.";
+"settings.marketplaces.add" = "Добавить маркетплейс…";
+"settings.marketplaces.never.fetched" = "Никогда не загружался";
+"settings.marketplaces.remove.confirm.title" = "Удалить маркетплейс";
+"settings.marketplaces.remove.confirm.message %@" = "Удалить \"%@\"? Его плагины больше не будут отображаться в браузере.";
+"settings.marketplaces.section.behaviour" = "Поведение";
+"settings.marketplaces.auto.refresh" = "Автообновление при запуске";
+"settings.marketplaces.auto.refresh.help" = "Автоматически получать обновления маркетплейса при запуске приложения";
+"settings.marketplaces.section.authoring" = "Создание harness";
+"settings.marketplaces.default.author.directory" = "Каталог автора по умолчанию";
+"settings.marketplaces.author.directory.detected.hint" = "Автоматически определено из ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Маркетплейсы";
+"marketplace.add.help" = "Добавить маркетплейс";
+"marketplace.empty" = "Маркетплейсы ещё не добавлены";
+"marketplace.add.button" = "Добавить маркетплейс";
+"marketplace.row.refresh.help" = "Обновить маркетплейс";
+"marketplace.row.refresh" = "Обновить";
+"marketplace.row.remove" = "Удалить";
+"marketplace.row.stale" = " · Может быть устаревшим";
+"marketplace.row.never.fetched" = "Ещё не загружался";
+"marketplace.add.sheet.title" = "Добавить маркетплейс";
+"marketplace.add.tab.known" = "Известные";
+"marketplace.add.tab.custom" = "Пользовательский URL";
+"marketplace.add.section.git.url" = "URL репозитория Git";
+"marketplace.add.section.display.name" = "Отображаемое имя";
+"marketplace.add.section.vendor" = "Поставщик";
+"marketplace.detail.last.fetched %@" = "Последнее обновление %@";
+"marketplace.detail.search.placeholder" = "Поиск плагинов…";
+"marketplace.detail.search.empty %@" = "Плагины по запросу «%@» не найдены";
+"marketplace.detail.empty" = "В этом маркетплейсе нет плагинов";
+"marketplace.detail.empty.hint" = "Обновите для загрузки последнего индекса.";
+"marketplace.plugin.add.to.harness" = "Добавить в харнесс";
+"marketplace.plugin.copy.install.command" = "Скопировать команду установки";
+"marketplace.plugin.copy.install.command.help" = "Копирует команду установки Claude Code в буфер обмена";
+"marketplace.plugin.load.artifacts" = "Загрузить артефакты";
+"marketplace.plugin.loading.artifacts" = "Загрузка артефактов…";
+"marketplace.plugin.no.artifacts" = "Для этого плагина не указаны артефакты.";
+"marketplace.plugin.no.artifacts.hint" = "Всё содержимое плагина будет включено.";
+"marketplace.plugin.artifacts.unavailable %@" = "Артефакты недоступны: %@";
+"marketplace.picker.step.artifacts" = "Артефакты";
+"marketplace.picker.step.harness" = "Харнесс";
+"marketplace.picker.step.apply" = "Применить";
+"marketplace.picker.select.prompt" = "Выберите артефакты для включения";
+"marketplace.picker.select.all" = "Все";
+"marketplace.picker.select.none" = "Ничего";
+"marketplace.picker.no.harnesses" = "Харнессы ещё не созданы";
+"marketplace.picker.no.harnesses.hint" = "Сначала создайте харнесс с помощью мастера нового харнесса.";
+"marketplace.picker.review.plugin" = "Плагин";
+"marketplace.picker.review.harness" = "Харнесс";
+"marketplace.picker.review.artifacts" = "Артефакты";
+"marketplace.picker.review.all.count %lld" = "Все (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "Выбрано %lld из %lld";
+"marketplace.picker.command.preview" = "Предпросмотр команды";
+"marketplace.picker.success %@" = "Плагин добавлен в %@";
+"marketplace.picker.done" = "Готово";
+"marketplace.picker.back" = "Назад";
+"marketplace.picker.next" = "Далее";
+"harness.wizard.title" = "Новый харнесс";
+"harness.wizard.name.label" = "Имя (обязательно)";
+"harness.wizard.description.label" = "Описание";
+"harness.wizard.loading.vendors" = "Загрузка поставщиков…";
+"harness.wizard.vendor.label" = "Поставщик по умолчанию";
+"harness.wizard.destination.label" = "Каталог назначения";
+"harness.wizard.install.toggle" = "Установить харнесс сразу после создания";
+"harness.wizard.success.add.plugins" = "Добавить плагины из маркетплейса";
+"harness.wizard.success.open" = "Открыть в TermQ";
+"harness.wizard.create" = "Создать";
+"harness.wizard.retry" = "Повторить";
+"harness.wizard.error.name.required" = "Имя обязательно";
+"harness.wizard.error.name.invalid" = "Имя может содержать только буквы, цифры, дефисы и знаки подчёркивания";
+"harness.wizard.error.name.duplicate %@" = "Харнесс с именем «%@» уже существует";
+"settings.marketplaces.reset" = "Сбросить";
+"settings.marketplaces.section.ynh.registries" = "Реестры YNH";
+"settings.marketplaces.ynh.registries.empty" = "Реестры не добавлены";
+"settings.marketplaces.ynh.add.registry" = "Добавить реестр…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Удалить реестр";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Удалить";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Удалить «%@» из YNH? Установленные harness-пакеты сохранятся.";
+"marketplace.add.custom.name.placeholder" = "Мой маркетплейс";
+"harness.wizard.success.created %@" = "Харнесс «%@» создан";

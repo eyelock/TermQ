@@ -466,11 +466,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Permintaan Modifikasi Eksternal";
-"security.external.modification.message" = "Proses eksternal mencoba memodifikasi konteks LLM untuk terminal '%@':
-
-%@
-
-Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
+"security.external.modification.message" = "Proses eksternal mencoba memodifikasi konteks LLM untuk terminal '%@':\n\n%@\n\nIni dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "security.allow" = "Izinkan";
 "security.deny" = "Tolak";
 "security.allow.disable.prompt" = "Izinkan & Jangan Tanya Lagi";
@@ -478,20 +474,20 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "security.osc.clipboard.disabled" = "Akses clipboard OSC 52 dinonaktifkan";
 
 "settings.auto.check.updates" = "Periksa pembaruan secara otomatis";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Jika diaktifkan, TermQ akan memeriksa versi baru secara berkala";
+"settings.check.for.updates" = "Periksa Pembaruan...";
+"settings.include.beta.releases" = "Sertakan rilis beta";
+"settings.include.beta.releases.help" = "Pilih untuk menerima versi pra-rilis dengan fitur baru";
+"settings.section.updates" = "Pembaruan";
 "editor.section.add.tag" = "Tambah Tag";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Izinkan Tindakan Antrean";
+"editor.allow.agent.prompts.help" = "Izinkan {{PROMPT}} dan {{NEXT_ACTION}} untuk disuntikkan ke perintah init terminal ini";
+"editor.allow.agent.prompts.disabled.globally" = "Tindakan Antrean dinonaktifkan secara global - aktifkan di Pengaturan > Data & Keamanan";
 "editor.allow.osc.clipboard.disabled.globally" = "Dinonaktifkan secara global - aktifkan di Pengaturan > Data & Keamanan";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Konfirmasi dinonaktifkan secara global - ubah di Pengaturan > Data & Keamanan";
 
 "settings.debug.update.warning.title" = "Peringatan Build Debug";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.message" = "Melanjutkan pembaruan akan menginstal versi Produksi TermQ.";
 
 "editor.no.tags" = "Tidak ada tag yang ditentukan";
 
@@ -500,3 +496,311 @@ Ini dapat memengaruhi cara asisten AI berinteraksi dengan terminal ini.";
 "settings.environment.section.add.variable" = "Tambah Variabel Lingkungan";
 
 "settings.mcp.install" = "Instal Server MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositori";
+"sidebar.add.button.help" = "Tambah repositori";
+"sidebar.empty.message" = "Tidak ada repositori yang ditambahkan.\nKlik + untuk menambahkan repositori git.";
+"sidebar.worktrees.placeholder" = "Worktree akan muncul di sini";
+"sidebar.remove.repository" = "Hapus Repositori";
+"sidebar.toggle.help" = "Tampilkan/sembunyikan bilah sisi Repositori (⌘⇧L)";
+"sidebar.add.title" = "Tambah Repositori";
+"sidebar.add.path.label" = "Jalur";
+"sidebar.add.name.label" = "Nama Tampilan";
+"sidebar.add.name.placeholder" = "Terdeteksi otomatis dari git";
+"sidebar.add.cancel" = "Batal";
+"sidebar.add.add" = "Tambah";
+"sidebar.add.advanced" = "Lanjutan";
+"sidebar.edit.title" = "Edit Repositori";
+"sidebar.edit.repository" = "Edit Repositori";
+"sidebar.worktree.base.path.label" = "Jalur Dasar Worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" bukan repositori git.";
+"sidebar.worktrees.empty" = "Tidak ada worktree yang ditemukan.";
+"sidebar.worktree.detached.head" = "HEAD Terlepas";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Segarkan worktree";
+"sidebar.worktree.new" = "Worktree Baru";
+"sidebar.worktree.new.terminal" = "Terminal Cepat";
+"sidebar.worktree.create.terminal" = "Buat Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Klik untuk tautan cepat membuka terminal";
+"sidebar.worktree.open.in.terminal" = "Tampilkan di Terminal";
+"sidebar.worktree.reveal.in.finder" = "Tampilkan di Finder";
+"sidebar.worktree.copy.pathname" = "Salin sebagai jalur";
+"sidebar.worktree.open.remote.branch" = "Buka cabang di Remote";
+"sidebar.worktree.open.remote.commit" = "Buka commit di Remote";
+"sidebar.worktree.lock" = "Kunci Worktree";
+"sidebar.worktree.unlock" = "Buka Kunci Worktree";
+
+"sidebar.worktree.set.harness" = "Atur harness…";
+"sidebar.worktree.clear.harness" = "Hapus harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Jalankan %@";
+"sidebar.remove.worktree" = "Hapus Worktree";
+"sidebar.remove.worktree.title" = "Hapus Worktree?";
+"sidebar.remove.worktree.confirm" = "Hapus";
+"sidebar.remove.main.worktree.error" = "Worktree utama tidak dapat dihapus.";
+"sidebar.remove.worktree.message %@" = "Ini akan menghapus worktree di \"%@\" secara permanen. Branch tidak akan dihapus.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Hancurkan Worktree...";
+"sidebar.worktree.delete.title" = "Hancurkan Worktree";
+"sidebar.worktree.delete.confirm" = "Hancurkan";
+"sidebar.worktree.delete.message %@" = "Worktree di \"%@\" dan semua perubahan yang belum disimpan akan dihancurkan secara permanen. Tindakan ini tidak dapat dibatalkan.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Bersihkan Worktrees…";
+"sidebar.prune.worktrees.title" = "Bersihkan Worktrees";
+"sidebar.prune.worktrees.confirm" = "Bersihkan";
+"sidebar.prune.worktrees.nothing.title" = "Tidak ada yang perlu dibersihkan";
+"sidebar.prune.worktrees.nothing.message" = "Semua worktree sudah tercatat. Tidak ada catatan usang yang ditemukan.";
+"sidebar.prune.worktrees.explanation" = "Catatan administratif ini menunjuk ke direktori yang tidak lagi ada. Pembersihan menghapusnya — branch Anda tidak terpengaruh.";
+"sidebar.new.worktree.title" = "Worktree Baru";
+"sidebar.new.worktree.branch.label" = "Nama Branch Baru";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Masukkan nama cabang untuk melanjutkan.";
+"sidebar.new.worktree.base.label" = "Branch Dasar";
+"sidebar.new.worktree.base.placeholder" = "Filter branch...";
+"sidebar.new.worktree.path.label" = "Jalur Worktree";
+"sidebar.new.worktree.path.required" = "Masukkan jalur worktree untuk melanjutkan.";
+"sidebar.new.worktree.create" = "Buat";
+"sidebar.new.worktree.loading.branches" = "Memuat branch...";
+"common.close.window" = "Tutup Jendela";
+"menu.toggle.sidebar" = "Tampilkan/Sembunyikan Bilah Sisi";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Deteksi ulang toolchain ynh";
+"harnesses.not.installed" = "ynh belum terpasang.";
+"harnesses.init.required" = "ynh ditemukan namun belum diinisialisasi.\nJalankan `ynh init` untuk mengatur.";
+"harnesses.init.hint" = "Buka terminal dan jalankan:\nynh init";
+"harnesses.empty.message" = "Belum ada harness yang terpasang.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Registri";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informasi";
+"harnesses.detail.path" = "Jalur";
+"harnesses.detail.source" = "Sumber";
+"harnesses.detail.subpath" = "Subjalur";
+"harnesses.detail.installed.at" = "Terpasang";
+"harnesses.detail.artifacts" = "Artefak";
+"harnesses.detail.no.artifacts" = "Tidak ada artefak.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agen";
+"harnesses.detail.rules" = "Aturan";
+"harnesses.detail.commands" = "Perintah";
+"harnesses.detail.dependencies" = "Ketergantungan";
+"harnesses.detail.includes %d" = "Menyertakan (%d)";
+"harnesses.detail.delegates %d" = "Mendelegasikan ke (%d)";
+"harnesses.detail.picks %d" = "Memilih (%d):";
+"harnesses.reveal.in.finder" = "Tampilkan di Finder";
+"harnesses.open.in.browser" = "Buka di browser";
+"harnesses.close.detail" = "Tutup";
+"harnesses.configure.from.marketplaces" = "Konfigurasikan dari Marketplace…";
+"harnesses.detail.artifacts.from.includes" = "Harness ini mendapatkan artefak dari include ketergantungan.";
+"harnesses.detail.from" = "dari";
+"harnesses.detail.hooks" = "Hook";
+"harnesses.detail.mcp.servers" = "Server MCP";
+"harnesses.detail.profiles" = "Profil";
+"harnesses.detail.focuses" = "Fokus";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Tidak ada manifest tersedia.";
+"harnesses.detail.resolved" = "Terselesaikan";
+"harnesses.detail.unresolved" = "Belum terselesaikan";
+"harnesses.detail.no.hooks" = "Harness ini tidak memiliki hook.";
+"harnesses.detail.no.mcp.servers" = "Harness ini tidak memiliki server MCP.";
+"harnesses.detail.no.profiles" = "Harness ini tidak memiliki profil.";
+"harnesses.detail.no.focuses" = "Harness ini tidak memiliki fokus.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Jalankan Harness";
+"harnesses.launch.vendor" = "Vendor";
+"harnesses.launch.vendor.unavailable" = "(belum terpasang)";
+"harnesses.launch.vendor.default" = "Default (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Tidak ada";
+"harnesses.launch.working.directory" = "Direktori Kerja";
+"harnesses.launch.browse" = "Telusuri…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Prompt opsional untuk diteruskan ke agen…";
+"harnesses.launch.button" = "Jalankan";
+"harnesses.launch.help" = "Jalankan harness ini di terminal baru";
+"harnesses.launch.cancel" = "Batal";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree tertaut";
+"harnesses.linked.worktrees.none" = "Tidak ada worktree yang tertaut ke harness ini.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Buat Harness Baru";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Toolchain YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Manajer harness untuk asisten AI";
+"settings.ynh.enable.harness.tab" = "Tampilkan tab Harness di bilah samping";
+"settings.ynh.enable.harness.tab.help" = "Menambahkan tab Harness ke bilah samping untuk menjelajahi dan mengelola harness yang terpasang";
+"settings.ynh.home.override" = "Ganti $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Default (menggunakan resolusi ynh sendiri)";
+"settings.ynh.home.override.help" = "Mengganti direktori YNH_HOME untuk subproses ynh. Biarkan kosong untuk default.";
+"settings.ynh.resolved.paths" = "Jalur yang terselesaikan";
+"settings.ynh.redetect" = "Deteksi ulang";
+"settings.ynh.init.required" = "Belum diinisialisasi";
+"settings.ynh.ready" = "Siap";
+"settings.ynh.path.label" = "Jalur:";
+"settings.ynh.ynd.path.label" = "Jalur ynd:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Toolchain terdeteksi dan diinisialisasi. Aktifkan tab bilah samping untuk menjelajahi harness.";
+"settings.ynh.advanced" = "Lanjutan";
+"settings.ynh.version.label" = "Versi:";
+
+"common.clear" = "Hapus";
+
+// Install sheet
+"harnesses.install.title" = "Pasang Harness";
+"harnesses.install.toolbar.help" = "Pasang harness";
+"harnesses.install.tab.search" = "Cari";
+"harnesses.install.tab.git" = "Dari Git";
+"harnesses.install.tab.sources" = "Sumber";
+"harnesses.install.search.placeholder" = "Cari registry dan sumber…";
+"harnesses.install.search.prompt" = "Ketik untuk mencari di registry dan sumber";
+"harnesses.install.search.empty" = "Tidak ada hasil";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Sub-jalur";
+"harnesses.install.git.subpath.placeholder" = "Sub-direktori opsional";
+"harnesses.install.command.preview" = "Pratinjau perintah";
+"harnesses.install.confirm" = "Pasang";
+"harnesses.install.cancel" = "Batal";
+"harnesses.install.already.installed" = "Terpasang";
+"harnesses.install.from %@" = "dari %@";
+"harnesses.install.sources.empty" = "Tidak ada sumber yang dikonfigurasi. Tambahkan direktori lokal untuk menelusuri harnesses-nya.";
+"harnesses.install.sources.add" = "Tambah Sumber…";
+"harnesses.install.sources.add.help" = "Tambah direktori lokal sebagai sumber harness";
+"harnesses.install.sources.remove" = "Hapus";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Perbarui";
+"harnesses.update.help" = "Perbarui ke versi terbaru";
+"harnesses.uninstall.button" = "Hapus Instalasi";
+"harnesses.uninstall.help" = "Hapus instalasi harness ini";
+"harnesses.uninstall.alert.title %@" = "Hapus instalasi \"%@\"?";
+"harnesses.uninstall.alert.message" = "Ini akan menghapus harness dari sistem Anda.";
+"harnesses.uninstall.alert.worktrees %ld" = "Harness ini terhubung ke %ld worktree — asosiasi tersebut akan dihapus.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
+"harnesses.uninstall.alert.confirm" = "Hapus Instalasi";
+"harnesses.more.actions.help" = "Tindakan lainnya";
+"harnesses.copy.run.command" = "Salin perintah jalankan";
+"harnesses.ynh.documentation" = "Dokumentasi YNH";
+
+"harnesses.add.registry.title" = "Tambah Registry YNH";
+"harnesses.add.registry.url.label" = "URL Registry";
+"harnesses.add.registry.hint" = "Tambahkan repositori Git yang berisi file registry.json. Setelah ditambahkan, Anda dapat mencari dan menginstal harnesses darinya.";
+"harnesses.add.registry.button" = "Tambah Registry";
+"harnesses.add.registry.success" = "Registry berhasil ditambahkan";
+"harnesses.add.registry.toolbar.help" = "Tambah registry YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Pasar";
+"settings.marketplaces.section.list" = "Pasar yang dikonfigurasi";
+"settings.marketplaces.empty" = "Belum ada pasar yang ditambahkan.";
+"settings.marketplaces.add" = "Tambah Pasar…";
+"settings.marketplaces.never.fetched" = "Belum pernah diambil";
+"settings.marketplaces.remove.confirm.title" = "Hapus Pasar";
+"settings.marketplaces.remove.confirm.message %@" = "Hapus \"%@\"? Plugin-nya tidak akan muncul lagi di browser.";
+"settings.marketplaces.section.behaviour" = "Perilaku";
+"settings.marketplaces.auto.refresh" = "Segarkan otomatis saat diluncurkan";
+"settings.marketplaces.auto.refresh.help" = "Ambil pembaruan pasar secara otomatis saat aplikasi dimulai";
+"settings.marketplaces.section.authoring" = "Pembuatan Harness";
+"settings.marketplaces.default.author.directory" = "Direktori penulis default";
+"settings.marketplaces.author.directory.detected.hint" = "Terdeteksi otomatis dari ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marketplace";
+"marketplace.add.help" = "Tambah marketplace";
+"marketplace.empty" = "Belum ada marketplace";
+"marketplace.add.button" = "Tambah marketplace";
+"marketplace.row.refresh.help" = "Perbarui marketplace";
+"marketplace.row.refresh" = "Perbarui";
+"marketplace.row.remove" = "Hapus";
+"marketplace.row.stale" = " · Mungkin sudah usang";
+"marketplace.row.never.fetched" = "Belum pernah diambil";
+"marketplace.add.sheet.title" = "Tambah marketplace";
+"marketplace.add.tab.known" = "Dikenal";
+"marketplace.add.tab.custom" = "URL Kustom";
+"marketplace.add.section.git.url" = "URL Repositori Git";
+"marketplace.add.section.display.name" = "Nama Tampilan";
+"marketplace.add.section.vendor" = "Vendor";
+"marketplace.detail.last.fetched %@" = "Terakhir diambil %@";
+"marketplace.detail.search.placeholder" = "Cari plugin…";
+"marketplace.detail.search.empty %@" = "Tidak ada plugin yang cocok dengan «%@»";
+"marketplace.detail.empty" = "Tidak ada plugin di marketplace ini";
+"marketplace.detail.empty.hint" = "Perbarui untuk mengambil indeks terbaru.";
+"marketplace.plugin.add.to.harness" = "Tambah ke Harness";
+"marketplace.plugin.copy.install.command" = "Salin Perintah Instalasi";
+"marketplace.plugin.copy.install.command.help" = "Menyalin perintah instalasi Claude Code ke clipboard";
+"marketplace.plugin.load.artifacts" = "Muat artefak";
+"marketplace.plugin.loading.artifacts" = "Memuat artefak…";
+"marketplace.plugin.no.artifacts" = "Tidak ada artefak yang terdaftar untuk plugin ini.";
+"marketplace.plugin.no.artifacts.hint" = "Semua konten plugin akan disertakan.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefak tidak tersedia: %@";
+"marketplace.picker.step.artifacts" = "Artefak";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Terapkan";
+"marketplace.picker.select.prompt" = "Pilih artefak untuk disertakan";
+"marketplace.picker.select.all" = "Semua";
+"marketplace.picker.select.none" = "Tidak ada";
+"marketplace.picker.no.harnesses" = "Belum ada harness";
+"marketplace.picker.no.harnesses.hint" = "Buat harness terlebih dahulu menggunakan wizard Harness Baru.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefak";
+"marketplace.picker.review.all.count %lld" = "Semua (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld dari %lld dipilih";
+"marketplace.picker.command.preview" = "Pratinjau perintah";
+"marketplace.picker.success %@" = "Plugin ditambahkan ke %@";
+"marketplace.picker.done" = "Selesai";
+"marketplace.picker.back" = "Kembali";
+"marketplace.picker.next" = "Berikutnya";
+"harness.wizard.title" = "Harness Baru";
+"harness.wizard.name.label" = "Nama (wajib)";
+"harness.wizard.description.label" = "Deskripsi";
+"harness.wizard.loading.vendors" = "Memuat vendor…";
+"harness.wizard.vendor.label" = "Vendor Default";
+"harness.wizard.destination.label" = "Direktori Tujuan";
+"harness.wizard.install.toggle" = "Pasang harness segera setelah dibuat";
+"harness.wizard.success.add.plugins" = "Tambah plugin dari marketplace";
+"harness.wizard.success.open" = "Buka di TermQ";
+"harness.wizard.create" = "Buat";
+"harness.wizard.retry" = "Coba lagi";
+"harness.wizard.error.name.required" = "Nama wajib diisi";
+"harness.wizard.error.name.invalid" = "Nama hanya boleh mengandung huruf, angka, tanda hubung, dan garis bawah";
+"harness.wizard.error.name.duplicate %@" = "Harness bernama «%@» sudah ada";
+"settings.marketplaces.reset" = "Setel ulang";
+"settings.marketplaces.section.ynh.registries" = "Registri YNH";
+"settings.marketplaces.ynh.registries.empty" = "Belum ada registri yang ditambahkan";
+"settings.marketplaces.ynh.add.registry" = "Tambah Registri…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Hapus Registri";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Hapus";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Hapus “%@” dari YNH? Harness yang terpasang akan tetap ada.";
+"marketplace.add.custom.name.placeholder" = "Marketplace saya";
+"harness.wizard.success.created %@" = "Harness «%@» dibuat";

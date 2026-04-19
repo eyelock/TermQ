@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Använd";
 "common.preview" = "Förhandsvisa";
+"common.close.window" = "Stäng fönster";
 
 // MARK: - Board View
 "board.column.options" = "Kolumnalternativ";
@@ -40,11 +41,11 @@
 "card.unpin" = "Lossa terminal";
 "card.running" = "Terminalen körs";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Ansluten";
 "card.wired.help" = "Ansluten till MCP-agent";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Nästa fästa terminal";
 "menu.previous.pinned" = "Föregående fästa terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Växla sidofält";
 
 
 // MARK: - Command Palette
@@ -466,32 +468,29 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Begäran om extern ändring";
-"security.external.modification.message" = "En extern process försöker ändra LLM-kontexten för terminalen '%@':
-
-%@
-
-Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
+"security.external.modification.message" = "En extern process försöker ändra LLM-kontexten för terminalen '%@':\n\n%@\n\nDetta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "security.allow" = "Tillåt";
 "security.deny" = "Neka";
 "security.allow.disable.prompt" = "Tillåt och fråga inte igen";
 "security.osc.clipboard.enabled" = "OSC 52 urklippsåtkomst aktiverad";
 "security.osc.clipboard.disabled" = "OSC 52 urklippsåtkomst inaktiverad";
 
-"settings.auto.check.updates" = "Sök automatiskt efter uppdateringar";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+// Settings - Updates section
+"settings.auto.check.updates" = "Kontrollera uppdateringar automatiskt";
+"settings.auto.check.updates.help" = "När aktiverat kontrollerar TermQ periodiskt efter nya versioner";
+"settings.check.for.updates" = "Sök efter uppdateringar...";
+"settings.include.beta.releases" = "Inkludera betaversioner";
+"settings.include.beta.releases.help" = "Välj att ta emot förhandsversioner med nya funktioner";
+"settings.section.updates" = "Uppdateringar";
 "editor.section.add.tag" = "Lägg till tagg";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Tillåt köade åtgärder";
+"editor.allow.agent.prompts.help" = "Tillåt att {{PROMPT}} och {{NEXT_ACTION}} injiceras i denna terminals startkommando";
+"editor.allow.agent.prompts.disabled.globally" = "Köade åtgärder inaktiverade globalt – aktivera i Inställningar > Data och säkerhet";
 "editor.allow.osc.clipboard.disabled.globally" = "Inaktiverat globalt - aktivera i Inställningar > Data och säkerhet";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Bekräftelse inaktiverad globalt – ändra i Inställningar > Data och säkerhet";
 
-"settings.debug.update.warning.title" = "Varning för felsökningsversion";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Varning: Debug-version";
+"settings.debug.update.warning.message" = "Att fortsätta med uppdateringar installerar produktionsversionen av TermQ.";
 
 "editor.no.tags" = "Inga taggar definierade";
 
@@ -500,3 +499,315 @@ Detta kan påverka hur AI-assistenter interagerar med denna terminal.";
 "settings.environment.section.add.variable" = "Lägg till miljövariabel";
 
 "settings.mcp.install" = "Installera MCP-server";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositorier";
+"sidebar.add.button.help" = "Lägg till repositorium";
+"sidebar.empty.message" = "Inga repositorier tillagda.\nKlicka på + för att lägga till ett git-repositorium.";
+"sidebar.worktrees.placeholder" = "Arbetsträd visas här";
+"sidebar.remove.repository" = "Ta bort repositorium";
+"sidebar.toggle.help" = "Växla sidofält för repositorier (⌘⇧L)";
+"sidebar.add.title" = "Lägg till repositorium";
+"sidebar.add.path.label" = "Sökväg";
+"sidebar.add.name.label" = "Visningsnamn";
+"sidebar.add.name.placeholder" = "Identifieras automatiskt från git";
+"sidebar.add.cancel" = "Avbryt";
+"sidebar.add.add" = "Lägg till";
+"sidebar.add.advanced" = "Avancerat";
+"sidebar.edit.title" = "Redigera repository";
+"sidebar.edit.repository" = "Redigera repository";
+"sidebar.worktree.base.path.label" = "Grundsökväg för worktree";
+"sidebar.worktree.base.path.help" = "Nya worktrees skapas här. Standard är den överordnade mappen för repokatalogen.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" är inte ett git-repositorium.";
+"sidebar.worktrees.empty" = "Inga arbetsträd hittades.";
+"sidebar.worktree.detached.head" = "Frånkopplad HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Uppdatera arbetsträd";
+"sidebar.worktree.new" = "Nytt arbetstråd";
+"sidebar.worktree.new.terminal" = "Nytt Terminal";
+"sidebar.worktree.terminals.badge.help" = "Klicka för snabblänkar för att öppna terminaler";
+"sidebar.worktree.open.in.terminal" = "Öppna i Terminal";
+"sidebar.worktree.reveal.in.finder" = "Visa i Finder";
+"sidebar.worktree.open.remote.branch" = "Öppna gren på Remote";
+"sidebar.worktree.open.remote.commit" = "Öppna commit på Remote";
+"sidebar.worktree.lock" = "Lås arbetstråd";
+"sidebar.worktree.unlock" = "Lås upp arbetstråd";
+
+"sidebar.worktree.set.harness" = "Ställ in harness…";
+"sidebar.worktree.clear.harness" = "Rensa harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Starta %@";
+"sidebar.remove.worktree" = "Ta bort arbetstråd";
+"sidebar.remove.worktree.title" = "Ta bort arbetstråd?";
+"sidebar.remove.worktree.confirm" = "Ta bort";
+"sidebar.remove.main.worktree.error" = "Huvudarbetstrådet kan inte tas bort.";
+"sidebar.remove.worktree.message %@" = "Detta tar permanent bort arbetstrådet på \"%@\". Grenen raderas inte.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Ta bort Worktree...";
+"sidebar.worktree.delete.title" = "Ta bort Worktree";
+"sidebar.worktree.delete.confirm" = "Ta bort";
+"sidebar.worktree.delete.message %@" = "Worktree på \"%@\" och eventuella ej sparade ändringar tas bort permanent. Det går inte att ångra detta.";
+"sidebar.new.worktree.title" = "Nytt arbetstråd";
+"sidebar.new.worktree.branch.label" = "Nytt grennamn";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Ange ett grennamn för att fortsätta.";
+"sidebar.new.worktree.base.label" = "Basgren";
+"sidebar.new.worktree.base.placeholder" = "Filtrera grenar...";
+"sidebar.new.worktree.path.label" = "Arbetstrådsökväg";
+"sidebar.new.worktree.path.required" = "Ange en worktree-sökväg för att fortsätta.";
+"sidebar.new.worktree.create" = "Skapa";
+"sidebar.new.worktree.loading.branches" = "Laddar grenar...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harnesses";
+"harnesses.refresh.help" = "Identifiera ynh-verktygskedjan igen";
+"harnesses.not.installed" = "ynh är inte installerat.";
+"harnesses.init.required" = "ynh hittades men är inte initierat.\nKör `ynh init` för att konfigurera.";
+"harnesses.init.hint" = "Öppna en terminal och kör:\nynh init";
+"harnesses.empty.message" = "Inga harnesses installerade ännu.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Lokal";
+"harnesses.source.registry" = "Register";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Information";
+"harnesses.detail.path" = "Sökväg";
+"harnesses.detail.source" = "Källa";
+"harnesses.detail.subpath" = "Undersökväg";
+"harnesses.detail.installed.at" = "Installerad";
+"harnesses.detail.artifacts" = "Artefakter";
+"harnesses.detail.no.artifacts" = "Inga artefakter.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenter";
+"harnesses.detail.rules" = "Regler";
+"harnesses.detail.commands" = "Kommandon";
+"harnesses.detail.dependencies" = "Beroenden";
+"harnesses.detail.includes %d" = "Inkluderar (%d)";
+"harnesses.detail.delegates %d" = "Delegerar till (%d)";
+"harnesses.detail.picks %d" = "Väljer (%d):";
+"harnesses.reveal.in.finder" = "Visa i Finder";
+"harnesses.open.in.browser" = "Öppna i webbläsare";
+"harnesses.close.detail" = "Stäng";
+"harnesses.configure.from.marketplaces" = "Konfigurera från marknadsplatser…";
+"harnesses.detail.artifacts.from.includes" = "Denna harness hämtar sina artefakter från beroendeincludes.";
+"harnesses.detail.from" = "från";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "MCP-servrar";
+"harnesses.detail.profiles" = "Profiler";
+"harnesses.detail.focuses" = "Fokus";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Inget manifest tillgängligt.";
+"harnesses.detail.resolved" = "Löst";
+"harnesses.detail.unresolved" = "Olöst";
+"harnesses.detail.no.hooks" = "Denna harness har inga hooks.";
+"harnesses.detail.no.mcp.servers" = "Denna harness har inga MCP-servrar.";
+"harnesses.detail.no.profiles" = "Denna harness har inga profiler.";
+"harnesses.detail.no.focuses" = "Denna harness har inga fokus.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Starta harness";
+"harnesses.launch.vendor" = "Leverantör";
+"harnesses.launch.vendor.unavailable" = "(ej installerad)";
+"harnesses.launch.vendor.default" = "Standard (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Ingen";
+"harnesses.launch.working.directory" = "Arbetskatalog";
+"harnesses.launch.browse" = "Bläddra…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Valfri prompt att skicka till agenten…";
+"harnesses.launch.button" = "Starta";
+"harnesses.launch.help" = "Starta denna harness i en ny terminal";
+"harnesses.launch.cancel" = "Avbryt";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Länkade worktrees";
+"harnesses.linked.worktrees.none" = "Inga worktrees är länkade till detta harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Skapa ett nytt harness";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "YNH-harness-verktygskedja";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Harness-hanterare för AI-assistenter";
+"settings.ynh.enable.harness.tab" = "Visa harnesses-flik i sidofältet";
+"settings.ynh.enable.harness.tab.help" = "Lägger till en Harnesses-flik i sidofältet för att bläddra och hantera installerade harnesses";
+"settings.ynh.home.override" = "$YNH_HOME-åsidosättning";
+"settings.ynh.home.override.placeholder" = "Standard (använder ynh:s egen upplösning)";
+"settings.ynh.home.override.help" = "Åsidosätter YNH_HOME-katalogen för ynh-underprocessen. Lämna tomt för standard.";
+"settings.ynh.resolved.paths" = "Lösta sökvägar";
+"settings.ynh.redetect" = "Identifiera igen";
+"settings.ynh.init.required" = "Inte initierat";
+"settings.ynh.ready" = "Redo";
+"settings.ynh.path.label" = "Sökväg:";
+"settings.ynh.ynd.path.label" = "ynd-sökväg:";
+"settings.ynh.status.label" = "Status:";
+"settings.ynh.ready.info" = "Verktygskedja identifierad och initierad. Aktivera sidofältsfliken för att bläddra bland harnesses.";
+"settings.ynh.advanced" = "Avancerat";
+"settings.ynh.version.label" = "Version:";
+
+"common.clear" = "Rensa";
+
+"sidebar.worktree.create.terminal" = "Skapa Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Kopiera som sökväg";
+
+"sidebar.prune.worktrees" = "Rensa worktrees…";
+
+"sidebar.prune.worktrees.title" = "Rensa worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Rensa";
+
+"sidebar.prune.worktrees.nothing.title" = "Inget att rensa";
+
+"sidebar.prune.worktrees.nothing.message" = "Alla worktrees är redovisade. Inga inaktuella poster hittades.";
+
+"sidebar.prune.worktrees.explanation" = "Dessa administrativa poster pekar på kataloger som inte längre finns. Rensning tar bort dem — dina grenar påverkas inte.";
+
+// Install sheet
+"harnesses.install.title" = "Installera harness";
+"harnesses.install.toolbar.help" = "Installera en harness";
+"harnesses.install.tab.search" = "Sök";
+"harnesses.install.tab.git" = "Från Git";
+"harnesses.install.tab.sources" = "Källor";
+"harnesses.install.search.placeholder" = "Sök i register och källor…";
+"harnesses.install.search.prompt" = "Skriv för att söka i register och källor";
+"harnesses.install.search.empty" = "Inga resultat";
+"harnesses.install.git.url" = "Git-URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Undersökväg";
+"harnesses.install.git.subpath.placeholder" = "Valfri underkatalog";
+"harnesses.install.command.preview" = "Kommandoförhandsvisning";
+"harnesses.install.confirm" = "Installera";
+"harnesses.install.cancel" = "Avbryt";
+"harnesses.install.already.installed" = "Installerad";
+"harnesses.install.from %@" = "från %@";
+"harnesses.install.sources.empty" = "Inga källor konfigurerade. Lägg till en lokal katalog för att bläddra bland dess harnesses.";
+"harnesses.install.sources.add" = "Lägg till källa…";
+"harnesses.install.sources.add.help" = "Lägg till en lokal katalog som harness-källa";
+"harnesses.install.sources.remove" = "Ta bort";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Uppdatera";
+"harnesses.update.help" = "Uppdatera till den senaste versionen";
+"harnesses.uninstall.button" = "Avinstallera";
+"harnesses.uninstall.help" = "Avinstallera denna harness";
+"harnesses.uninstall.alert.title %@" = "Avinstallera \"%@\"?";
+"harnesses.uninstall.alert.message" = "Detta tar bort harness från ditt system.";
+"harnesses.uninstall.alert.worktrees %ld" = "Denna harness är länkad till %ld worktree(s) — dessa kopplingar kommer att rensas.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kör för närvarande denna harness.";
+"harnesses.uninstall.alert.confirm" = "Avinstallera";
+"harnesses.more.actions.help" = "Fler åtgärder";
+"harnesses.copy.run.command" = "Kopiera körkommando";
+"harnesses.ynh.documentation" = "YNH-dokumentation";
+
+"harnesses.add.registry.title" = "Lägg till YNH-register";
+"harnesses.add.registry.url.label" = "Register-URL";
+"harnesses.add.registry.hint" = "Lägg till ett Git-förråd som innehåller en registry.json-fil. När det är tillagt kan du söka efter och installera harnesses från det.";
+"harnesses.add.registry.button" = "Lägg till register";
+"harnesses.add.registry.success" = "Register lades till";
+"harnesses.add.registry.toolbar.help" = "Lägg till ett YNH-register";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Marknadsplatser";
+"settings.marketplaces.section.list" = "Konfigurerade marknadsplatser";
+"settings.marketplaces.empty" = "Inga marknadsplatser har lagts till ännu.";
+"settings.marketplaces.add" = "Lägg till marknadsplats…";
+"settings.marketplaces.never.fetched" = "Aldrig hämtad";
+"settings.marketplaces.remove.confirm.title" = "Ta bort marknadsplats";
+"settings.marketplaces.remove.confirm.message %@" = "Ta bort \"%@\"? Dess tillägg visas inte längre i webbläsaren.";
+"settings.marketplaces.section.behaviour" = "Beteende";
+"settings.marketplaces.auto.refresh" = "Uppdatera automatiskt vid start";
+"settings.marketplaces.auto.refresh.help" = "Hämta marknadsplatsuppdateringar automatiskt när appen startar";
+"settings.marketplaces.section.authoring" = "Harness-skapande";
+"settings.marketplaces.default.author.directory" = "Standardkatalog för författare";
+"settings.marketplaces.author.directory.detected.hint" = "Automatiskt identifierad från ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marknadsplatser";
+"marketplace.add.help" = "Lägg till marknadsplats";
+"marketplace.empty" = "Inga marknadsplatser ännu";
+"marketplace.add.button" = "Lägg till marknadsplats";
+"marketplace.row.refresh.help" = "Uppdatera marknadsplats";
+"marketplace.row.refresh" = "Uppdatera";
+"marketplace.row.remove" = "Ta bort";
+"marketplace.row.stale" = " · Kan vara inaktuell";
+"marketplace.row.never.fetched" = "Aldrig hämtad";
+"marketplace.add.sheet.title" = "Lägg till marknadsplats";
+"marketplace.add.tab.known" = "Kända";
+"marketplace.add.tab.custom" = "Anpassad URL";
+"marketplace.add.section.git.url" = "Git-lagringsplats-URL";
+"marketplace.add.section.display.name" = "Visningsnamn";
+"marketplace.add.section.vendor" = "Leverantör";
+"marketplace.detail.last.fetched %@" = "Senast hämtad %@";
+"marketplace.detail.search.placeholder" = "Sök plugin…";
+"marketplace.detail.search.empty %@" = "Inga plugin matchar «%@»";
+"marketplace.detail.empty" = "Inga plugin på denna marknadsplats";
+"marketplace.detail.empty.hint" = "Uppdatera för att hämta det senaste indexet.";
+"marketplace.plugin.add.to.harness" = "Lägg till i harness";
+"marketplace.plugin.copy.install.command" = "Kopiera installationskommando";
+"marketplace.plugin.copy.install.command.help" = "Kopierar Claude Code-installationskommandot till urklipp";
+"marketplace.plugin.load.artifacts" = "Läs in artefakter";
+"marketplace.plugin.loading.artifacts" = "Läser in artefakter…";
+"marketplace.plugin.no.artifacts" = "Inga artefakter listade för detta plugin.";
+"marketplace.plugin.no.artifacts.hint" = "Allt plugininnehåll inkluderas.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefakter ej tillgängliga: %@";
+"marketplace.picker.step.artifacts" = "Artefakter";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Tillämpa";
+"marketplace.picker.select.prompt" = "Välj artefakter att inkludera";
+"marketplace.picker.select.all" = "Alla";
+"marketplace.picker.select.none" = "Ingen";
+"marketplace.picker.no.harnesses" = "Inga harnesses ännu";
+"marketplace.picker.no.harnesses.hint" = "Skapa först ett harness med guiden Nytt harness.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefakter";
+"marketplace.picker.review.all.count %lld" = "Alla (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld av %lld valda";
+"marketplace.picker.command.preview" = "Förhandsgranskning av kommando";
+"marketplace.picker.success %@" = "Plugin tillagd i %@";
+"marketplace.picker.done" = "Klar";
+"marketplace.picker.back" = "Tillbaka";
+"marketplace.picker.next" = "Nästa";
+"harness.wizard.title" = "Nytt harness";
+"harness.wizard.name.label" = "Namn (obligatoriskt)";
+"harness.wizard.description.label" = "Beskrivning";
+"harness.wizard.loading.vendors" = "Läser in leverantörer…";
+"harness.wizard.vendor.label" = "Standardleverantör";
+"harness.wizard.destination.label" = "Målmapp";
+"harness.wizard.install.toggle" = "Installera harness direkt efter skapandet";
+"harness.wizard.success.add.plugins" = "Lägg till plugin från marknadsplatsen";
+"harness.wizard.success.open" = "Öppna i TermQ";
+"harness.wizard.create" = "Skapa";
+"harness.wizard.retry" = "Försök igen";
+"harness.wizard.error.name.required" = "Namn krävs";
+"harness.wizard.error.name.invalid" = "Namnet får bara innehålla bokstäver, siffror, bindestreck och understreck";
+"harness.wizard.error.name.duplicate %@" = "Det finns redan ett harness med namnet «%@»";
+"settings.marketplaces.reset" = "Återställ";
+"settings.marketplaces.section.ynh.registries" = "YNH-register";
+"settings.marketplaces.ynh.registries.empty" = "Inga register har lagts till";
+"settings.marketplaces.ynh.add.registry" = "Lägg till register…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Ta bort register";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Ta bort";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Ta bort ”%@” från YNH? Installerade harnesses behålls.";
+"marketplace.add.custom.name.placeholder" = "Min marknadsplats";
+"harness.wizard.success.created %@" = "Harness «%@» skapad";

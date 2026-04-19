@@ -15,6 +15,7 @@
 "common.delete" = "Eliminar";
 "common.edit" = "Editar";
 "common.close" = "Cerrar";
+"common.close.window" = "Cerrar ventana";
 "common.add" = "Agregar";
 "common.reinstall" = "Reinstalar";
 "common.uninstall" = "Desinstalar";
@@ -466,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Solicitud de modificación externa";
-"security.external.modification.message" = "Un proceso externo está intentando modificar el contexto LLM para la terminal '%@':
-
-%@
-
-Esto podría afectar cómo los asistentes de IA interactúan con esta terminal.";
+"security.external.modification.message" = "Un proceso externo está intentando modificar el contexto LLM para la terminal '%@':\n\n%@\n\nEsto podría afectar cómo los asistentes de IA interactúan con esta terminal.";
 "security.allow" = "Permitir";
 "security.deny" = "Denegar";
 "security.allow.disable.prompt" = "Permitir y no volver a preguntar";
@@ -478,11 +475,11 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "security.osc.clipboard.disabled" = "Acceso al portapapeles OSC 52 desactivado";
 
 "settings.auto.check.updates" = "Buscar actualizaciones automáticamente";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Cuando está activado, TermQ verificará periódicamente si hay nuevas versiones";
+"settings.check.for.updates" = "Buscar actualizaciones...";
+"settings.include.beta.releases" = "Incluir versiones beta";
+"settings.include.beta.releases.help" = "Suscríbete para recibir versiones preliminares con nuevas funcionalidades";
+"settings.section.updates" = "Actualizaciones";
 "editor.section.add.tag" = "Agregar etiqueta";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +487,8 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "editor.allow.osc.clipboard.disabled.globally" = "Deshabilitado globalmente - habilitar en Configuración > Datos y seguridad";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Advertencia de versión de depuración";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Advertencia de compilación de depuración";
+"settings.debug.update.warning.message" = "Continuar con las actualizaciones instalará la versión de producción de TermQ.";
 
 "editor.no.tags" = "Sin etiquetas definidas";
 
@@ -500,3 +497,310 @@ Esto podría afectar cómo los asistentes de IA interactúan con esta terminal."
 "settings.environment.section.add.variable" = "Agregar variable de entorno";
 
 "settings.mcp.install" = "Instalar servidor MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repositorios";
+"sidebar.add.button.help" = "Agregar repositorio";
+"sidebar.empty.message" = "No se han agregado repositorios.\nHaz clic en + para agregar un repositorio git.";
+"sidebar.worktrees.placeholder" = "Los worktrees aparecerán aquí";
+"sidebar.remove.repository" = "Eliminar repositorio";
+"sidebar.toggle.help" = "Mostrar/ocultar la barra lateral de repositorios (⌘⇧L)";
+"sidebar.add.title" = "Agregar repositorio";
+"sidebar.add.path.label" = "Ruta";
+"sidebar.add.name.label" = "Nombre para mostrar";
+"sidebar.add.name.placeholder" = "Detección automática desde git";
+"sidebar.add.cancel" = "Cancelar";
+"sidebar.add.add" = "Agregar";
+"sidebar.add.advanced" = "Avanzado";
+"sidebar.edit.title" = "Editar repositorio";
+"sidebar.edit.repository" = "Editar repositorio";
+"sidebar.worktree.base.path.label" = "Ruta base del worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" no es un repositorio git.";
+"menu.toggle.sidebar" = "Mostrar/ocultar barra lateral";
+"sidebar.worktrees.empty" = "No se encontraron worktrees.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Actualizar worktrees";
+"sidebar.worktree.new" = "Nuevo worktree";
+"sidebar.worktree.new.terminal" = "Terminal Rápido";
+"sidebar.worktree.create.terminal" = "Crear Terminal…";
+"sidebar.worktree.terminals.badge.help" = "Haz clic para acceder rápidamente a los terminales";
+"sidebar.worktree.open.in.terminal" = "Mostrar en Terminal";
+"sidebar.worktree.reveal.in.finder" = "Mostrar en el Finder";
+"sidebar.worktree.copy.pathname" = "Copiar como ruta";
+"sidebar.worktree.open.remote.branch" = "Abrir rama en Remote";
+"sidebar.worktree.open.remote.commit" = "Abrir commit en Remote";
+"sidebar.worktree.lock" = "Bloquear worktree";
+"sidebar.worktree.unlock" = "Desbloquear worktree";
+
+"sidebar.worktree.set.harness" = "Establecer harness…";
+"sidebar.worktree.clear.harness" = "Eliminar harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Iniciar %@";
+"sidebar.remove.worktree" = "Eliminar Worktree";
+"sidebar.remove.worktree.title" = "¿Eliminar Worktree?";
+"sidebar.remove.worktree.confirm" = "Eliminar";
+"sidebar.remove.main.worktree.error" = "El worktree principal no se puede eliminar.";
+"sidebar.remove.worktree.message %@" = "Esto eliminará permanentemente el worktree en \"%@\". La rama no se eliminará.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Destruir Worktree...";
+"sidebar.worktree.delete.title" = "Destruir Worktree";
+"sidebar.worktree.delete.confirm" = "Destruir";
+"sidebar.worktree.delete.message %@" = "El worktree en \"%@\" y cualquier cambio sin confirmar serán destruidos permanentemente. Esta acción no se puede deshacer.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Limpiar Worktrees…";
+"sidebar.prune.worktrees.title" = "Limpiar Worktrees";
+"sidebar.prune.worktrees.confirm" = "Limpiar";
+"sidebar.prune.worktrees.nothing.title" = "Nada que limpiar";
+"sidebar.prune.worktrees.nothing.message" = "Todos los worktrees están contabilizados. No se encontraron registros obsoletos.";
+"sidebar.prune.worktrees.explanation" = "Estos registros administrativos apuntan a directorios que ya no existen. Limpiarlos los elimina — tus ramas no se ven afectadas.";
+"sidebar.new.worktree.title" = "Nuevo worktree";
+"sidebar.new.worktree.branch.label" = "Nombre de la nueva rama";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Introduce un nombre de rama para continuar.";
+"sidebar.new.worktree.base.label" = "Rama base";
+"sidebar.new.worktree.base.placeholder" = "Filtrar ramas...";
+"sidebar.new.worktree.path.label" = "Ruta del worktree";
+"sidebar.new.worktree.path.required" = "Introduce una ruta de worktree para continuar.";
+"sidebar.new.worktree.create" = "Crear";
+"sidebar.new.worktree.loading.branches" = "Cargando ramas...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Arneses";
+"harnesses.refresh.help" = "Volver a detectar la cadena de herramientas ynh";
+"harnesses.not.installed" = "ynh no está instalado.";
+"harnesses.init.required" = "ynh encontrado pero no inicializado.\nEjecuta `ynh init` para configurar.";
+"harnesses.init.hint" = "Abre un terminal y ejecuta:\nynh init";
+"harnesses.empty.message" = "Todavía no hay arneses instalados.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Local";
+"harnesses.source.registry" = "Registro";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Información";
+"harnesses.detail.path" = "Ruta";
+"harnesses.detail.source" = "Fuente";
+"harnesses.detail.subpath" = "Subruta";
+"harnesses.detail.installed.at" = "Instalado";
+"harnesses.detail.artifacts" = "Artefactos";
+"harnesses.detail.no.artifacts" = "Sin artefactos.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agentes";
+"harnesses.detail.rules" = "Reglas";
+"harnesses.detail.commands" = "Comandos";
+"harnesses.detail.dependencies" = "Dependencias";
+"harnesses.detail.includes %d" = "Incluye (%d)";
+"harnesses.detail.delegates %d" = "Delega a (%d)";
+"harnesses.detail.picks %d" = "Selecciona (%d):";
+"harnesses.reveal.in.finder" = "Mostrar en Finder";
+"harnesses.open.in.browser" = "Abrir en el navegador";
+"harnesses.close.detail" = "Cerrar";
+"harnesses.configure.from.marketplaces" = "Configurar desde mercados…";
+"harnesses.detail.artifacts.from.includes" = "Este arnés obtiene sus artefactos de las inclusiones de dependencias.";
+"harnesses.detail.from" = "de";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Servidores MCP";
+"harnesses.detail.profiles" = "Perfiles";
+"harnesses.detail.focuses" = "Focos";
+"harnesses.detail.focus.profile %@" = "perfil: %@";
+"harnesses.detail.manifest" = "Manifiesto";
+"harnesses.detail.no.manifest" = "No hay manifiesto disponible.";
+"harnesses.detail.resolved" = "Resuelto";
+"harnesses.detail.unresolved" = "Sin resolver";
+"harnesses.detail.no.hooks" = "Este arnés no tiene hooks.";
+"harnesses.detail.no.mcp.servers" = "Este arnés no tiene servidores MCP.";
+"harnesses.detail.no.profiles" = "Este arnés no tiene perfiles.";
+"harnesses.detail.no.focuses" = "Este arnés no tiene focos.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Lanzar arnés";
+"harnesses.launch.vendor" = "Proveedor";
+"harnesses.launch.vendor.unavailable" = "(no instalado)";
+"harnesses.launch.vendor.default" = "Predeterminado (%@)";
+"harnesses.launch.focus" = "Foco";
+"harnesses.launch.focus.none" = "Ninguno";
+"harnesses.launch.working.directory" = "Directorio de trabajo";
+"harnesses.launch.browse" = "Explorar…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Prompt opcional para pasar al agente…";
+"harnesses.launch.button" = "Lanzar";
+"harnesses.launch.help" = "Lanzar este arnés en un nuevo terminal";
+"harnesses.launch.cancel" = "Cancelar";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktrees vinculados";
+"harnesses.linked.worktrees.none" = "No hay worktrees vinculados a este harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Crear un nuevo harness";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Cadena de herramientas YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Gestor de arneses para asistentes de IA";
+"settings.ynh.enable.harness.tab" = "Mostrar pestaña de arneses en la barra lateral";
+"settings.ynh.enable.harness.tab.help" = "Añade una pestaña de Arneses a la barra lateral para explorar y gestionar los arneses instalados";
+"settings.ynh.home.override" = "Anulación de $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Predeterminado (usa la resolución propia de ynh)";
+"settings.ynh.home.override.help" = "Anula el directorio YNH_HOME para el subproceso ynh. Deja en blanco para usar el predeterminado.";
+"settings.ynh.resolved.paths" = "Rutas resueltas";
+"settings.ynh.redetect" = "Volver a detectar";
+"settings.ynh.init.required" = "No inicializado";
+"settings.ynh.ready" = "Listo";
+"settings.ynh.path.label" = "Ruta:";
+"settings.ynh.ynd.path.label" = "Ruta de ynd:";
+"settings.ynh.status.label" = "Estado:";
+"settings.ynh.ready.info" = "Cadena de herramientas detectada e inicializada. Activa la pestaña de la barra lateral para explorar los arneses.";
+"settings.ynh.advanced" = "Avanzado";
+"settings.ynh.version.label" = "Versión:";
+
+"common.clear" = "Borrar";
+
+// Install sheet
+"harnesses.install.title" = "Instalar arnés";
+"harnesses.install.toolbar.help" = "Instalar un arnés";
+"harnesses.install.tab.search" = "Buscar";
+"harnesses.install.tab.git" = "Desde Git";
+"harnesses.install.tab.sources" = "Fuentes";
+"harnesses.install.search.placeholder" = "Buscar en registros y fuentes…";
+"harnesses.install.search.prompt" = "Escribe para buscar en registros y fuentes";
+"harnesses.install.search.empty" = "Sin resultados";
+"harnesses.install.git.url" = "URL de Git";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Subruta";
+"harnesses.install.git.subpath.placeholder" = "Subdirectorio opcional";
+"harnesses.install.command.preview" = "Vista previa del comando";
+"harnesses.install.confirm" = "Instalar";
+"harnesses.install.cancel" = "Cancelar";
+"harnesses.install.already.installed" = "Instalado";
+"harnesses.install.from %@" = "desde %@";
+"harnesses.install.sources.empty" = "No hay fuentes configuradas. Agrega un directorio local para explorar sus arneses.";
+"harnesses.install.sources.add" = "Agregar fuente…";
+"harnesses.install.sources.add.help" = "Agregar un directorio local como fuente de arneses";
+"harnesses.install.sources.remove" = "Eliminar";
+"harnesses.install.sources.count %ld" = "%ld arneses";
+
+"harnesses.update.button" = "Actualizar";
+"harnesses.update.help" = "Actualizar a la última versión";
+"harnesses.uninstall.button" = "Desinstalar";
+"harnesses.uninstall.help" = "Desinstalar este harness";
+"harnesses.uninstall.alert.title %@" = "¿Desinstalar \"%@\"?";
+"harnesses.uninstall.alert.message" = "Esto eliminará el harness de tu sistema.";
+"harnesses.uninstall.alert.worktrees %ld" = "Este harness está vinculado a %ld árbol(es) de trabajo — esas asociaciones se eliminarán.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal(es) están ejecutando este harness actualmente.";
+"harnesses.uninstall.alert.confirm" = "Desinstalar";
+"harnesses.more.actions.help" = "Más acciones";
+"harnesses.copy.run.command" = "Copiar comando de ejecución";
+"harnesses.ynh.documentation" = "Documentación de YNH";
+
+"harnesses.add.registry.title" = "Agregar registro YNH";
+"harnesses.add.registry.url.label" = "URL del registro";
+"harnesses.add.registry.hint" = "Agrega un repositorio Git que contenga un archivo registry.json. Una vez agregado, podrás buscar e instalar harnesses desde él.";
+"harnesses.add.registry.button" = "Agregar registro";
+"harnesses.add.registry.success" = "Registro agregado correctamente";
+"harnesses.add.registry.toolbar.help" = "Agregar un registro YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Mercados";
+"settings.marketplaces.section.list" = "Mercados configurados";
+"settings.marketplaces.empty" = "Aún no se han agregado mercados.";
+"settings.marketplaces.add" = "Agregar mercado…";
+"settings.marketplaces.never.fetched" = "Nunca recuperado";
+"settings.marketplaces.remove.confirm.title" = "Eliminar mercado";
+"settings.marketplaces.remove.confirm.message %@" = "¿Eliminar \"%@\"? Sus complementos ya no aparecerán en el navegador.";
+"settings.marketplaces.section.behaviour" = "Comportamiento";
+"settings.marketplaces.auto.refresh" = "Actualización automática al iniciar";
+"settings.marketplaces.auto.refresh.help" = "Obtener automáticamente actualizaciones del mercado al iniciar la aplicación";
+"settings.marketplaces.section.authoring" = "Creación de harness";
+"settings.marketplaces.default.author.directory" = "Directorio de autor predeterminado";
+"settings.marketplaces.author.directory.detected.hint" = "Detectado automáticamente desde ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Marketplaces";
+"marketplace.add.help" = "Agregar marketplace";
+"marketplace.empty" = "Todavía no hay marketplaces";
+"marketplace.add.button" = "Agregar marketplace";
+"marketplace.row.refresh.help" = "Actualizar marketplace";
+"marketplace.row.refresh" = "Actualizar";
+"marketplace.row.remove" = "Eliminar";
+"marketplace.row.stale" = " · Puede estar desactualizado";
+"marketplace.row.never.fetched" = "Nunca obtenido";
+"marketplace.add.sheet.title" = "Agregar marketplace";
+"marketplace.add.tab.known" = "Conocidos";
+"marketplace.add.tab.custom" = "URL personalizada";
+"marketplace.add.section.git.url" = "URL del repositorio Git";
+"marketplace.add.section.display.name" = "Nombre para mostrar";
+"marketplace.add.section.vendor" = "Proveedor";
+"marketplace.detail.last.fetched %@" = "Última obtención %@";
+"marketplace.detail.search.placeholder" = "Buscar plugins…";
+"marketplace.detail.search.empty %@" = "Ningún plugin coincide con «%@»";
+"marketplace.detail.empty" = "No hay plugins en este marketplace";
+"marketplace.detail.empty.hint" = "Actualiza para obtener el índice más reciente.";
+"marketplace.plugin.add.to.harness" = "Agregar al harness";
+"marketplace.plugin.copy.install.command" = "Copiar comando de instalación";
+"marketplace.plugin.copy.install.command.help" = "Copia el comando de instalación de Claude Code al portapapeles";
+"marketplace.plugin.load.artifacts" = "Cargar artefactos";
+"marketplace.plugin.loading.artifacts" = "Cargando artefactos…";
+"marketplace.plugin.no.artifacts" = "No hay artefactos enumerados para este plugin.";
+"marketplace.plugin.no.artifacts.hint" = "Se incluirá todo el contenido del plugin.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefactos no disponibles: %@";
+"marketplace.picker.step.artifacts" = "Artefactos";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Aplicar";
+"marketplace.picker.select.prompt" = "Seleccionar artefactos a incluir";
+"marketplace.picker.select.all" = "Todos";
+"marketplace.picker.select.none" = "Ninguno";
+"marketplace.picker.no.harnesses" = "Todavía no hay harnesses";
+"marketplace.picker.no.harnesses.hint" = "Crea primero un harness con el asistente de nuevo harness.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefactos";
+"marketplace.picker.review.all.count %lld" = "Todos (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld de %lld seleccionados";
+"marketplace.picker.command.preview" = "Vista previa del comando";
+"marketplace.picker.success %@" = "Plugin agregado a %@";
+"marketplace.picker.done" = "Listo";
+"marketplace.picker.back" = "Atrás";
+"marketplace.picker.next" = "Siguiente";
+"harness.wizard.title" = "Nuevo harness";
+"harness.wizard.name.label" = "Nombre (obligatorio)";
+"harness.wizard.description.label" = "Descripción";
+"harness.wizard.loading.vendors" = "Cargando proveedores…";
+"harness.wizard.vendor.label" = "Proveedor predeterminado";
+"harness.wizard.destination.label" = "Directorio de destino";
+"harness.wizard.install.toggle" = "Instalar el harness inmediatamente después de la creación";
+"harness.wizard.success.add.plugins" = "Agregar plugins desde el marketplace";
+"harness.wizard.success.open" = "Abrir en TermQ";
+"harness.wizard.create" = "Crear";
+"harness.wizard.retry" = "Reintentar";
+"harness.wizard.error.name.required" = "El nombre es obligatorio";
+"harness.wizard.error.name.invalid" = "El nombre solo puede contener letras, números, guiones y guiones bajos";
+"harness.wizard.error.name.duplicate %@" = "Ya existe un harness llamado «%@»";
+"settings.marketplaces.reset" = "Restablecer";
+"settings.marketplaces.section.ynh.registries" = "Registros de YNH";
+"settings.marketplaces.ynh.registries.empty" = "No se han agregado registros";
+"settings.marketplaces.ynh.add.registry" = "Agregar registro…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Eliminar registro";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Eliminar";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Eliminar «%@» de YNH? Los arneses instalados permanecerán.";
+"marketplace.add.custom.name.placeholder" = "Mi marketplace";
+"harness.wizard.success.created %@" = "Harness «%@» creado";

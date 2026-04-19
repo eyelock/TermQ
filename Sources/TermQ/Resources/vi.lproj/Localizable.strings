@@ -25,6 +25,7 @@
 "common.select" = "Select";
 "common.apply" = "Áp dụng";
 "common.preview" = "Xem trước";
+"common.close.window" = "Đóng cửa sổ";
 
 // MARK: - Board View
 "board.column.options" = "Tùy chọn cột";
@@ -40,11 +41,11 @@
 "card.unpin" = "Bỏ ghim terminal";
 "card.running" = "Terminal đang chạy";
 "card.open" = "Open";
-
+
 "card.edit" = "Edit Details...";
-
+
 "card.delete" = "Delete";
-
+
 "card.duplicate" = "Duplicate";
 "card.wired" = "Đã kết nối";
 "card.wired.help" = "Đã kết nối với tác nhân MCP";
@@ -104,6 +105,7 @@
 "menu.next.pinned" = "Terminal ghim tiếp theo";
 "menu.previous.pinned" = "Terminal ghim trước đó";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.toggle.sidebar" = "Bật/tắt thanh bên";
 
 
 // MARK: - Command Palette
@@ -466,32 +468,29 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Yêu cầu sửa đổi bên ngoài";
-"security.external.modification.message" = "Một tiến trình bên ngoài đang cố gắng sửa đổi ngữ cảnh LLM cho terminal '%@':
-
-%@
-
-Điều này có thể ảnh hưởng đến cách các trợ lý AI tương tác với terminal này.";
+"security.external.modification.message" = "Một tiến trình bên ngoài đang cố gắng sửa đổi ngữ cảnh LLM cho terminal '%@':\n\n%@\n\nĐiều này có thể ảnh hưởng đến cách các trợ lý AI tương tác với terminal này.";
 "security.allow" = "Cho phép";
 "security.deny" = "Từ chối";
 "security.allow.disable.prompt" = "Cho phép và không hỏi lại";
 "security.osc.clipboard.enabled" = "Đã bật quyền truy cập clipboard OSC 52";
 "security.osc.clipboard.disabled" = "Đã tắt quyền truy cập clipboard OSC 52";
 
+// Settings - Updates section
 "settings.auto.check.updates" = "Tự động kiểm tra cập nhật";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Khi bật, TermQ sẽ định kỳ kiểm tra các phiên bản mới";
+"settings.check.for.updates" = "Kiểm tra cập nhật...";
+"settings.include.beta.releases" = "Bao gồm bản beta";
+"settings.include.beta.releases.help" = "Nhận các phiên bản tiền phát hành với tính năng mới";
+"settings.section.updates" = "Cập nhật";
 "editor.section.add.tag" = "Thêm thẻ";
-"editor.allow.agent.prompts" = "Allow Queued Actions";
-"editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
-"editor.allow.agent.prompts.disabled.globally" = "Queued Actions disabled globally - enable in Settings > Data & Security";
+"editor.allow.agent.prompts" = "Cho phép hành động trong hàng đợi";
+"editor.allow.agent.prompts.help" = "Cho phép {{PROMPT}} và {{NEXT_ACTION}} được chèn vào lệnh khởi tạo của terminal này";
+"editor.allow.agent.prompts.disabled.globally" = "Hành động trong hàng đợi bị tắt toàn cục - bật trong Cài đặt > Dữ liệu & Bảo mật";
 "editor.allow.osc.clipboard.disabled.globally" = "Bị vô hiệu hóa toàn cầu - bật trong Cài đặt > Dữ liệu & Bảo mật";
-"editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
+"editor.confirm.external.modifications.disabled.globally" = "Xác nhận bị tắt toàn cục - thay đổi trong Cài đặt > Dữ liệu & Bảo mật";
 
-"settings.debug.update.warning.title" = "Cảnh báo phiên bản gỡ lỗi";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Cảnh báo: Bản Debug";
+"settings.debug.update.warning.message" = "Tiếp tục cập nhật sẽ cài đặt phiên bản Sản xuất của TermQ.";
 
 "editor.no.tags" = "Không có thẻ nào được xác định";
 
@@ -500,3 +499,315 @@
 "settings.environment.section.add.variable" = "Thêm biến môi trường";
 
 "settings.mcp.install" = "Cài đặt máy chủ MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Kho lưu trữ";
+"sidebar.add.button.help" = "Thêm kho lưu trữ";
+"sidebar.empty.message" = "Chưa có kho lưu trữ nào.\nNhấn + để thêm git repository.";
+"sidebar.worktrees.placeholder" = "Worktrees sẽ xuất hiện ở đây";
+"sidebar.remove.repository" = "Xóa kho lưu trữ";
+"sidebar.toggle.help" = "Bật/tắt thanh bên kho lưu trữ (⌘⇧L)";
+"sidebar.add.title" = "Thêm kho lưu trữ";
+"sidebar.add.path.label" = "Đường dẫn";
+"sidebar.add.name.label" = "Tên hiển thị";
+"sidebar.add.name.placeholder" = "Tự động phát hiện từ git";
+"sidebar.add.cancel" = "Hủy";
+"sidebar.add.add" = "Thêm";
+"sidebar.add.advanced" = "Nâng cao";
+"sidebar.edit.title" = "Chỉnh sửa kho lưu trữ";
+"sidebar.edit.repository" = "Chỉnh sửa kho lưu trữ";
+"sidebar.worktree.base.path.label" = "Đường dẫn cơ sở worktree";
+"sidebar.worktree.base.path.help" = "Các worktrees mới được tạo tại đây. Mặc định là thư mục cha của thư mục kho lưu trữ.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" không phải là git repository.";
+"sidebar.worktrees.empty" = "Không tìm thấy worktree nào.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Làm mới worktrees";
+"sidebar.worktree.new" = "Worktree mới";
+"sidebar.worktree.new.terminal" = "Terminal mới";
+"sidebar.worktree.terminals.badge.help" = "Nhấp để truy cập liên kết nhanh mở terminal";
+"sidebar.worktree.open.in.terminal" = "Mở trong Terminal";
+"sidebar.worktree.reveal.in.finder" = "Hiện trong Finder";
+"sidebar.worktree.open.remote.branch" = "Mở nhánh trên Remote";
+"sidebar.worktree.open.remote.commit" = "Mở commit trên Remote";
+"sidebar.worktree.lock" = "Khoá worktree";
+"sidebar.worktree.unlock" = "Mở khoá worktree";
+
+"sidebar.worktree.set.harness" = "Đặt harness…";
+"sidebar.worktree.clear.harness" = "Xóa harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Khởi chạy %@";
+"sidebar.remove.worktree" = "Xóa Worktree";
+"sidebar.remove.worktree.title" = "Xóa Worktree?";
+"sidebar.remove.worktree.confirm" = "Xóa";
+"sidebar.remove.main.worktree.error" = "Không thể xóa worktree chính.";
+"sidebar.remove.worktree.message %@" = "Thao tác này sẽ xóa vĩnh viễn worktree tại \"%@\". Nhánh sẽ không bị xóa.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Xóa Worktree...";
+"sidebar.worktree.delete.title" = "Xóa Worktree";
+"sidebar.worktree.delete.confirm" = "Xóa";
+"sidebar.worktree.delete.message %@" = "Worktree tại \"%@\" và mọi thay đổi chưa được lưu sẽ bị xóa vĩnh viễn. Không thể hoàn tác thao tác này.";
+"sidebar.new.worktree.title" = "Worktree mới";
+"sidebar.new.worktree.branch.label" = "Tên nhánh mới";
+"sidebar.new.worktree.branch.placeholder" = "feat-my-feature";
+"sidebar.new.worktree.branch.required" = "Nhập tên nhánh để tiếp tục.";
+"sidebar.new.worktree.base.label" = "Nhánh cơ sở";
+"sidebar.new.worktree.base.placeholder" = "Lọc nhánh...";
+"sidebar.new.worktree.path.label" = "Đường dẫn Worktree";
+"sidebar.new.worktree.path.required" = "Nhập đường dẫn worktree để tiếp tục.";
+"sidebar.new.worktree.create" = "Tạo";
+"sidebar.new.worktree.loading.branches" = "Đang tải nhánh...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Harness";
+"harnesses.refresh.help" = "Phát hiện lại chuỗi công cụ ynh";
+"harnesses.not.installed" = "ynh chưa được cài đặt.";
+"harnesses.init.required" = "Tìm thấy ynh nhưng chưa khởi tạo.\nChạy `ynh init` để thiết lập.";
+"harnesses.init.hint" = "Mở terminal và chạy:\nynh init";
+"harnesses.empty.message" = "Chưa có harness nào được cài đặt.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Cục bộ";
+"harnesses.source.registry" = "Registry";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Thông tin";
+"harnesses.detail.path" = "Đường dẫn";
+"harnesses.detail.source" = "Nguồn";
+"harnesses.detail.subpath" = "Đường dẫn con";
+"harnesses.detail.installed.at" = "Đã cài đặt";
+"harnesses.detail.artifacts" = "Artefact";
+"harnesses.detail.no.artifacts" = "Không có artefact.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agents";
+"harnesses.detail.rules" = "Quy tắc";
+"harnesses.detail.commands" = "Lệnh";
+"harnesses.detail.dependencies" = "Phụ thuộc";
+"harnesses.detail.includes %d" = "Bao gồm (%d)";
+"harnesses.detail.delegates %d" = "Ủy quyền cho (%d)";
+"harnesses.detail.picks %d" = "Chọn (%d):";
+"harnesses.reveal.in.finder" = "Hiển thị trong Finder";
+"harnesses.open.in.browser" = "Mở trong trình duyệt";
+"harnesses.close.detail" = "Đóng";
+"harnesses.configure.from.marketplaces" = "Cấu hình từ Thị trường…";
+"harnesses.detail.artifacts.from.includes" = "Harness này lấy artefact từ các include phụ thuộc.";
+"harnesses.detail.from" = "từ";
+"harnesses.detail.hooks" = "Hooks";
+"harnesses.detail.mcp.servers" = "Máy chủ MCP";
+"harnesses.detail.profiles" = "Hồ sơ";
+"harnesses.detail.focuses" = "Tiêu điểm";
+"harnesses.detail.focus.profile %@" = "hồ sơ: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Không có manifest.";
+"harnesses.detail.resolved" = "Đã giải quyết";
+"harnesses.detail.unresolved" = "Chưa giải quyết";
+"harnesses.detail.no.hooks" = "Harness này không có hooks.";
+"harnesses.detail.no.mcp.servers" = "Harness này không có máy chủ MCP.";
+"harnesses.detail.no.profiles" = "Harness này không có hồ sơ.";
+"harnesses.detail.no.focuses" = "Harness này không có tiêu điểm.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Khởi chạy Harness";
+"harnesses.launch.vendor" = "Nhà cung cấp";
+"harnesses.launch.vendor.unavailable" = "(chưa cài đặt)";
+"harnesses.launch.vendor.default" = "Mặc định (%@)";
+"harnesses.launch.focus" = "Tiêu điểm";
+"harnesses.launch.focus.none" = "Không có";
+"harnesses.launch.working.directory" = "Thư mục làm việc";
+"harnesses.launch.browse" = "Duyệt…";
+"harnesses.launch.prompt" = "Prompt";
+"harnesses.launch.prompt.placeholder" = "Prompt tùy chọn truyền cho agent…";
+"harnesses.launch.button" = "Khởi chạy";
+"harnesses.launch.help" = "Khởi chạy harness này trong terminal mới";
+"harnesses.launch.cancel" = "Hủy";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Worktree đã liên kết";
+"harnesses.linked.worktrees.none" = "Không có worktree nào được liên kết với harness này.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Tạo Harness mới";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Chuỗi công cụ YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Trình quản lý harness cho AI assistant";
+"settings.ynh.enable.harness.tab" = "Hiển thị tab Harness trong thanh bên";
+"settings.ynh.enable.harness.tab.help" = "Thêm tab Harness vào thanh bên để duyệt và quản lý harness đã cài đặt";
+"settings.ynh.home.override" = "Ghi đè $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Mặc định (sử dụng cơ chế phân giải của ynh)";
+"settings.ynh.home.override.help" = "Ghi đè thư mục YNH_HOME cho tiến trình con ynh. Để trống để dùng mặc định.";
+"settings.ynh.resolved.paths" = "Đường dẫn đã phân giải";
+"settings.ynh.redetect" = "Phát hiện lại";
+"settings.ynh.init.required" = "Chưa khởi tạo";
+"settings.ynh.ready" = "Sẵn sàng";
+"settings.ynh.path.label" = "Đường dẫn:";
+"settings.ynh.ynd.path.label" = "Đường dẫn ynd:";
+"settings.ynh.status.label" = "Trạng thái:";
+"settings.ynh.ready.info" = "Chuỗi công cụ đã được phát hiện và khởi tạo. Bật tab thanh bên để duyệt harness.";
+"settings.ynh.advanced" = "Nâng cao";
+"settings.ynh.version.label" = "Phiên bản:";
+
+"common.clear" = "Xóa";
+
+"sidebar.worktree.create.terminal" = "Tạo Terminal…";
+
+"sidebar.worktree.copy.pathname" = "Sao chép dưới dạng đường dẫn";
+
+"sidebar.prune.worktrees" = "Dọn dẹp Worktrees…";
+
+"sidebar.prune.worktrees.title" = "Dọn dẹp Worktrees";
+
+"sidebar.prune.worktrees.confirm" = "Dọn dẹp";
+
+"sidebar.prune.worktrees.nothing.title" = "Không có gì để dọn";
+
+"sidebar.prune.worktrees.nothing.message" = "Tất cả worktree đều được ghi nhận. Không tìm thấy bản ghi lỗi thời.";
+
+"sidebar.prune.worktrees.explanation" = "Các bản ghi quản trị này trỏ đến các thư mục không còn tồn tại. Dọn dẹp sẽ xóa chúng — các nhánh của bạn không bị ảnh hưởng.";
+
+// Install sheet
+"harnesses.install.title" = "Cài đặt Harness";
+"harnesses.install.toolbar.help" = "Cài đặt một harness";
+"harnesses.install.tab.search" = "Tìm kiếm";
+"harnesses.install.tab.git" = "Từ Git";
+"harnesses.install.tab.sources" = "Nguồn";
+"harnesses.install.search.placeholder" = "Tìm kiếm trong các registry và nguồn…";
+"harnesses.install.search.prompt" = "Nhập để tìm kiếm trong các registry và nguồn";
+"harnesses.install.search.empty" = "Không có kết quả";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Đường dẫn phụ";
+"harnesses.install.git.subpath.placeholder" = "Thư mục con tùy chọn";
+"harnesses.install.command.preview" = "Xem trước lệnh";
+"harnesses.install.confirm" = "Cài đặt";
+"harnesses.install.cancel" = "Hủy";
+"harnesses.install.already.installed" = "Đã cài đặt";
+"harnesses.install.from %@" = "từ %@";
+"harnesses.install.sources.empty" = "Không có nguồn nào được cấu hình. Thêm thư mục cục bộ để duyệt các harnesses của nó.";
+"harnesses.install.sources.add" = "Thêm nguồn…";
+"harnesses.install.sources.add.help" = "Thêm thư mục cục bộ làm nguồn harness";
+"harnesses.install.sources.remove" = "Xóa";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Cập nhật";
+"harnesses.update.help" = "Cập nhật lên phiên bản mới nhất";
+"harnesses.uninstall.button" = "Gỡ cài đặt";
+"harnesses.uninstall.help" = "Gỡ cài đặt harness này";
+"harnesses.uninstall.alert.title %@" = "Gỡ cài đặt \"%@\"?";
+"harnesses.uninstall.alert.message" = "Thao tác này sẽ xóa harness khỏi hệ thống của bạn.";
+"harnesses.uninstall.alert.worktrees %ld" = "Harness này được liên kết với %ld worktree — các liên kết đó sẽ bị xóa.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminal đang chạy harness này.";
+"harnesses.uninstall.alert.confirm" = "Gỡ cài đặt";
+"harnesses.more.actions.help" = "Thêm hành động";
+"harnesses.copy.run.command" = "Sao chép lệnh chạy";
+"harnesses.ynh.documentation" = "Tài liệu YNH";
+
+"harnesses.add.registry.title" = "Thêm sổ đăng ký YNH";
+"harnesses.add.registry.url.label" = "URL sổ đăng ký";
+"harnesses.add.registry.hint" = "Thêm kho lưu trữ Git chứa tệp registry.json. Sau khi thêm, bạn có thể tìm kiếm và cài đặt harnesses từ đó.";
+"harnesses.add.registry.button" = "Thêm sổ đăng ký";
+"harnesses.add.registry.success" = "Đã thêm sổ đăng ký thành công";
+"harnesses.add.registry.toolbar.help" = "Thêm sổ đăng ký YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Chợ ứng dụng";
+"settings.marketplaces.section.list" = "Chợ ứng dụng đã cấu hình";
+"settings.marketplaces.empty" = "Chưa có chợ ứng dụng nào được thêm.";
+"settings.marketplaces.add" = "Thêm chợ ứng dụng…";
+"settings.marketplaces.never.fetched" = "Chưa từng tải";
+"settings.marketplaces.remove.confirm.title" = "Xóa chợ ứng dụng";
+"settings.marketplaces.remove.confirm.message %@" = "Xóa \"%@\"? Các plugin của nó sẽ không còn xuất hiện trong trình duyệt.";
+"settings.marketplaces.section.behaviour" = "Hành vi";
+"settings.marketplaces.auto.refresh" = "Tự động làm mới khi khởi động";
+"settings.marketplaces.auto.refresh.help" = "Tự động tải cập nhật chợ ứng dụng khi ứng dụng khởi động";
+"settings.marketplaces.section.authoring" = "Tạo Harness";
+"settings.marketplaces.default.author.directory" = "Thư mục tác giả mặc định";
+"settings.marketplaces.author.directory.detected.hint" = "Tự động phát hiện từ ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Chợ ứng dụng";
+"marketplace.add.help" = "Thêm chợ";
+"marketplace.empty" = "Chưa có chợ nào";
+"marketplace.add.button" = "Thêm chợ";
+"marketplace.row.refresh.help" = "Làm mới chợ";
+"marketplace.row.refresh" = "Làm mới";
+"marketplace.row.remove" = "Xóa";
+"marketplace.row.stale" = " · Có thể đã lỗi thời";
+"marketplace.row.never.fetched" = "Chưa từng tải về";
+"marketplace.add.sheet.title" = "Thêm chợ";
+"marketplace.add.tab.known" = "Đã biết";
+"marketplace.add.tab.custom" = "URL tùy chỉnh";
+"marketplace.add.section.git.url" = "URL kho Git";
+"marketplace.add.section.display.name" = "Tên hiển thị";
+"marketplace.add.section.vendor" = "Nhà cung cấp";
+"marketplace.detail.last.fetched %@" = "Lần tải gần nhất %@";
+"marketplace.detail.search.placeholder" = "Tìm kiếm tiện ích…";
+"marketplace.detail.search.empty %@" = "Không có tiện ích nào khớp với «%@»";
+"marketplace.detail.empty" = "Không có tiện ích trong chợ này";
+"marketplace.detail.empty.hint" = "Làm mới để tải chỉ mục mới nhất.";
+"marketplace.plugin.add.to.harness" = "Thêm vào Harness";
+"marketplace.plugin.copy.install.command" = "Sao chép lệnh cài đặt";
+"marketplace.plugin.copy.install.command.help" = "Sao chép lệnh cài đặt Claude Code vào clipboard";
+"marketplace.plugin.load.artifacts" = "Tải artefact";
+"marketplace.plugin.loading.artifacts" = "Đang tải artefact…";
+"marketplace.plugin.no.artifacts" = "Không có artefact nào được liệt kê cho tiện ích này.";
+"marketplace.plugin.no.artifacts.hint" = "Toàn bộ nội dung tiện ích sẽ được bao gồm.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefact không khả dụng: %@";
+"marketplace.picker.step.artifacts" = "Artefact";
+"marketplace.picker.step.harness" = "Harness";
+"marketplace.picker.step.apply" = "Áp dụng";
+"marketplace.picker.select.prompt" = "Chọn artefact để bao gồm";
+"marketplace.picker.select.all" = "Tất cả";
+"marketplace.picker.select.none" = "Không có";
+"marketplace.picker.no.harnesses" = "Chưa có harness nào";
+"marketplace.picker.no.harnesses.hint" = "Trước tiên hãy tạo harness bằng trình hướng dẫn Harness mới.";
+"marketplace.picker.review.plugin" = "Tiện ích";
+"marketplace.picker.review.harness" = "Harness";
+"marketplace.picker.review.artifacts" = "Artefact";
+"marketplace.picker.review.all.count %lld" = "Tất cả (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld trong %lld đã chọn";
+"marketplace.picker.command.preview" = "Xem trước lệnh";
+"marketplace.picker.success %@" = "Đã thêm tiện ích vào %@";
+"marketplace.picker.done" = "Xong";
+"marketplace.picker.back" = "Quay lại";
+"marketplace.picker.next" = "Tiếp theo";
+"harness.wizard.title" = "Harness mới";
+"harness.wizard.name.label" = "Tên (bắt buộc)";
+"harness.wizard.description.label" = "Mô tả";
+"harness.wizard.loading.vendors" = "Đang tải nhà cung cấp…";
+"harness.wizard.vendor.label" = "Nhà cung cấp mặc định";
+"harness.wizard.destination.label" = "Thư mục đích";
+"harness.wizard.install.toggle" = "Cài đặt harness ngay sau khi tạo";
+"harness.wizard.success.add.plugins" = "Thêm tiện ích từ chợ";
+"harness.wizard.success.open" = "Mở trong TermQ";
+"harness.wizard.create" = "Tạo";
+"harness.wizard.retry" = "Thử lại";
+"harness.wizard.error.name.required" = "Tên là bắt buộc";
+"harness.wizard.error.name.invalid" = "Tên chỉ có thể chứa chữ cái, số, dấu gạch ngang và dấu gạch dưới";
+"harness.wizard.error.name.duplicate %@" = "Đã có harness tên «%@»";
+"settings.marketplaces.reset" = "Đặt lại";
+"settings.marketplaces.section.ynh.registries" = "Sổ đăng ký YNH";
+"settings.marketplaces.ynh.registries.empty" = "Chưa có sổ đăng ký nào";
+"settings.marketplaces.ynh.add.registry" = "Thêm sổ đăng ký…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Xóa sổ đăng ký";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Xóa";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Xóa “%@” khỏi YNH? Các harness đã cài đặt sẽ được giữ lại.";
+"marketplace.add.custom.name.placeholder" = "Chợ của tôi";
+"harness.wizard.success.created %@" = "Harness «%@» đã được tạo";

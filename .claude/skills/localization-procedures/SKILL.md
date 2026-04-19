@@ -88,6 +88,20 @@ Sync is a two-phase operation. Both phases must complete before committing.
 
 If translation cannot be completed (e.g. awaiting external translators), do not commit the English key addition either. Keep both changes together.
 
+## .strings File Escape Sequences
+
+**Never use Swift unicode escapes in `.strings` files.** The formats are different:
+
+| Context | Correct | Wrong |
+|---|---|---|
+| `.strings` file | literal `…` or `\U2026` | `\u{2026}` ← Swift only |
+| `.strings` file | literal `"` escaped as `\"` | — |
+| Swift source | `\u{2026}` | — |
+
+`.strings` files support only: `\\`, `\"`, `\n`, `\r`, `\t`, and `\UXXXX` (uppercase U, exactly 4 hex digits). The Swift `\u{XXXX}` brace form is **not** recognised — it renders as literal `{XXXX}` text in the UI.
+
+**Rule:** Always use the literal Unicode character (e.g. `…`, `–`, `"`) when writing `.strings` values, unless you specifically need `\U` for a non-printable character.
+
 ## String Key Convention
 
 Format: `domain.action` or `domain.noun`

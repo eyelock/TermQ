@@ -79,14 +79,29 @@ enum HelpContentLoader {
         return index.sections
     }
 
-    /// Load markdown content for a topic
+    /// Load markdown content for a topic.
+    ///
+    /// `topicId` may be a flat name ("about") or a path ("reference/keyboard-shortcuts").
     static func loadContent(for topicId: String) -> String {
-        guard let url = resourceBundle.url(forResource: topicId, withExtension: "md", subdirectory: "Help"),
+        // Flat IDs — file is directly inside Help/
+        if let url = resourceBundle.url(forResource: topicId, withExtension: "md", subdirectory: "Help"),
             let content = try? String(contentsOf: url, encoding: .utf8)
-        else {
-            return "Content not found for topic: \(topicId)"
+        {
+            return content
         }
-        return content
+        // Path IDs like "reference/keyboard-shortcuts" or "tutorials/01-first-board"
+        let parts = topicId.split(separator: "/", maxSplits: 1)
+        if parts.count == 2,
+            let url = resourceBundle.url(
+                forResource: String(parts[1]),
+                withExtension: "md",
+                subdirectory: "Help/\(parts[0])"
+            ),
+            let content = try? String(contentsOf: url, encoding: .utf8)
+        {
+            return content
+        }
+        return "Content not found for topic: \(topicId)"
     }
 
     /// Load an image from the Help/Images folder
@@ -487,10 +502,18 @@ private struct MarkdownContentView: View {
     }
 
     private func parseInlineMarkdown(_ text: String) -> AttributedString {
-        // Use SwiftUI's built-in markdown parsing for inline elements
-        // This handles **bold**, *italic*, `code`, and [links](url)
         do {
-            return try AttributedString(markdown: text)
+            var result = try AttributedString(markdown: text)
+            // Strip relative/internal links — they can't be opened by NSWorkspace and
+            // produce macOS error -50. Only absolute http/https links stay clickable.
+            for run in result.runs {
+                if let link = run.link,
+                    link.scheme != "https" && link.scheme != "http"
+                {
+                    result[run.range].link = nil
+                }
+            }
+            return result
         } catch {
             return AttributedString(text)
         }

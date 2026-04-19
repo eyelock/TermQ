@@ -15,6 +15,7 @@
 "common.delete" = "Smazat";
 "common.edit" = "Upravit";
 "common.close" = "Zavřít";
+"common.close.window" = "Zavřít okno";
 "common.add" = "Přidat";
 "common.reinstall" = "Přeinstalovat";
 "common.uninstall" = "Odinstalovat";
@@ -466,11 +467,7 @@
 "settings.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can set LLM prompts without confirmation";
 // MARK: - Security
 "security.external.modification.title" = "Požadavek na externí úpravu";
-"security.external.modification.message" = "Externí proces se pokouší upravit kontext LLM pro terminál '%@':
-
-%@
-
-To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
+"security.external.modification.message" = "Externí proces se pokouší upravit kontext LLM pro terminál '%@':\n\n%@\n\nTo může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "security.allow" = "Povolit";
 "security.deny" = "Zamítnout";
 "security.allow.disable.prompt" = "Povolit a znovu se neptat";
@@ -478,11 +475,11 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "security.osc.clipboard.disabled" = "Přístup ke schránce OSC 52 zakázán";
 
 "settings.auto.check.updates" = "Automaticky kontrolovat aktualizace";
-"settings.auto.check.updates.help" = "When enabled, TermQ will periodically check for new versions";
-"settings.check.for.updates" = "Check for Updates...";
-"settings.include.beta.releases" = "Include beta releases";
-"settings.include.beta.releases.help" = "Opt in to receive pre-release versions with new features";
-"settings.section.updates" = "Updates";
+"settings.auto.check.updates.help" = "Když je povoleno, TermQ bude pravidelně kontrolovat nové verze";
+"settings.check.for.updates" = "Zkontrolovat aktualizace...";
+"settings.include.beta.releases" = "Zahrnout beta verze";
+"settings.include.beta.releases.help" = "Přihlaste se k odběru předběžných verzí s novými funkcemi";
+"settings.section.updates" = "Aktualizace";
 "editor.section.add.tag" = "Přidat štítek";
 "editor.allow.agent.prompts" = "Allow Queued Actions";
 "editor.allow.agent.prompts.help" = "Allow {{PROMPT}} and {{NEXT_ACTION}} to be injected into this terminal's init command";
@@ -490,8 +487,8 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "editor.allow.osc.clipboard.disabled.globally" = "Zakázáno globálně - povolit v Nastavení > Data a zabezpečení";
 "editor.confirm.external.modifications.disabled.globally" = "Confirmation disabled globally - change in Settings > Data & Security";
 
-"settings.debug.update.warning.title" = "Upozornění na ladění";
-"settings.debug.update.warning.message" = "Proceeding with updates will install the Production version of TermQ.";
+"settings.debug.update.warning.title" = "Upozornění sestavení pro ladění";
+"settings.debug.update.warning.message" = "Pokračováním v aktualizacích se nainstaluje produkční verze TermQ.";
 
 "editor.no.tags" = "Žádné štítky";
 
@@ -500,3 +497,310 @@ To může ovlivnit, jak asistenti AI interagují s tímto terminálem.";
 "settings.environment.section.add.variable" = "Přidat proměnnou prostředí";
 
 "settings.mcp.install" = "Nainstalovat server MCP";
+
+// MARK: - Sidebar
+"sidebar.title" = "Repozitáře";
+"sidebar.add.button.help" = "Přidat repozitář";
+"sidebar.empty.message" = "Nejsou přidány žádné repozitáře.\nKlikněte na + pro přidání git repozitáře.";
+"sidebar.worktrees.placeholder" = "Pracovní stromy se zobrazí zde";
+"sidebar.remove.repository" = "Odebrat repozitář";
+"sidebar.toggle.help" = "Zobrazit/skrýt boční panel repozitářů (⌘⇧L)";
+"sidebar.add.title" = "Přidat repozitář";
+"sidebar.add.path.label" = "Cesta";
+"sidebar.add.name.label" = "Zobrazované jméno";
+"sidebar.add.name.placeholder" = "Automaticky zjištěno z git";
+"sidebar.add.cancel" = "Zrušit";
+"sidebar.add.add" = "Přidat";
+"sidebar.add.advanced" = "Pokročilé";
+"sidebar.edit.title" = "Upravit repozitář";
+"sidebar.edit.repository" = "Upravit repozitář";
+"sidebar.worktree.base.path.label" = "Základní cesta worktree";
+"sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
+"sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
+"sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
+"sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
+"sidebar.error.not.git.repo %@" = "\"%@\" není git repozitář.";
+"menu.toggle.sidebar" = "Zobrazit/skrýt boční panel";
+"sidebar.worktrees.empty" = "Nenalezeny žádné pracovní stromy.";
+"sidebar.worktree.detached.head" = "Detached HEAD";
+"sidebar.worktree.main.badge" = "main";
+"sidebar.worktrees.refresh" = "Obnovit pracovní stromy";
+"sidebar.worktree.new" = "Nový pracovní strom";
+"sidebar.worktree.new.terminal" = "Rychlý terminál";
+"sidebar.worktree.create.terminal" = "Vytvořit terminál…";
+"sidebar.worktree.terminals.badge.help" = "Klikněte pro rychlé odkazy k otevření terminálů";
+"sidebar.worktree.open.in.terminal" = "Zobrazit v Terminálu";
+"sidebar.worktree.reveal.in.finder" = "Zobrazit ve Finderu";
+"sidebar.worktree.copy.pathname" = "Kopírovat jako cestu";
+"sidebar.worktree.open.remote.branch" = "Otevřít větev na Remote";
+"sidebar.worktree.open.remote.commit" = "Otevřít commit na Remote";
+"sidebar.worktree.lock" = "Uzamknout pracovní strom";
+"sidebar.worktree.unlock" = "Odemknout pracovní strom";
+
+"sidebar.worktree.set.harness" = "Nastavit harness…";
+"sidebar.worktree.clear.harness" = "Odebrat harness";
+"sidebar.worktree.linked.harness %@" = "Harness: %@";
+"sidebar.worktree.launch.harness %@" = "Spustit %@";
+"sidebar.remove.worktree" = "Smazat pracovní strom";
+"sidebar.remove.worktree.title" = "Smazat pracovní strom?";
+"sidebar.remove.worktree.confirm" = "Smazat";
+"sidebar.remove.main.worktree.error" = "Hlavní pracovní strom nelze odebrat.";
+"sidebar.remove.worktree.message %@" = "Tím trvale smažete pracovní strom v \"%@\". Větev nebude smazána.";
+
+// Delete worktree (force)
+"sidebar.worktree.delete" = "Zničit Worktree...";
+"sidebar.worktree.delete.title" = "Zničit Worktree";
+"sidebar.worktree.delete.confirm" = "Zničit";
+"sidebar.worktree.delete.message %@" = "Pracovní strom na cestě \"%@\" a veškeré neuložené změny budou trvale zničeny. Tuto akci nelze vrátit zpět.";
+
+// Prune worktrees
+"sidebar.prune.worktrees" = "Vyčistit Worktrees…";
+"sidebar.prune.worktrees.title" = "Vyčistit Worktrees";
+"sidebar.prune.worktrees.confirm" = "Vyčistit";
+"sidebar.prune.worktrees.nothing.title" = "Nic k vyčistění";
+"sidebar.prune.worktrees.nothing.message" = "Všechny pracovní stromy jsou evidovány. Žádné zastaralé záznamy nebyly nalezeny.";
+"sidebar.prune.worktrees.explanation" = "Tyto administrativní záznamy ukazují na adresáře, které již neexistují. Vyčistění je odstraní — vaše větve nejsou ovlivněny.";
+"sidebar.new.worktree.title" = "Nový pracovní strom";
+"sidebar.new.worktree.branch.label" = "Název nové větve";
+"sidebar.new.worktree.branch.placeholder" = "feat/my-feat";
+"sidebar.new.worktree.branch.required" = "Zadejte název větve pro pokračování.";
+"sidebar.new.worktree.base.label" = "Základní větev";
+"sidebar.new.worktree.base.placeholder" = "Filtrovat větve...";
+"sidebar.new.worktree.path.label" = "Cesta pracovního stromu";
+"sidebar.new.worktree.path.required" = "Zadejte cestu pracovního stromu pro pokračování.";
+"sidebar.new.worktree.create" = "Vytvořit";
+"sidebar.new.worktree.loading.branches" = "Načítání větví...";
+
+// Local branches section
+"sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+
+// Checkout branch as worktree sheet
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses sidebar tab
+"harnesses.title" = "Postroje";
+"harnesses.refresh.help" = "Znovu detekovat nástrojový řetězec ynh";
+"harnesses.not.installed" = "ynh není nainstalován.";
+"harnesses.init.required" = "ynh byl nalezen, ale není inicializován.\nSpusťte `ynh init` pro nastavení.";
+"harnesses.init.hint" = "Otevřete terminál a spusťte:\nynh init";
+"harnesses.empty.message" = "Zatím nejsou nainstalovány žádné postroje.";
+
+// Harnesses — row badges
+"harnesses.source.local" = "Místní";
+"harnesses.source.registry" = "Registr";
+
+// Harnesses — detail view
+"harnesses.detail.info" = "Informace";
+"harnesses.detail.path" = "Cesta";
+"harnesses.detail.source" = "Zdroj";
+"harnesses.detail.subpath" = "Podcesta";
+"harnesses.detail.installed.at" = "Nainstalováno";
+"harnesses.detail.artifacts" = "Artefakty";
+"harnesses.detail.no.artifacts" = "Žádné artefakty.";
+"harnesses.detail.skills" = "Skills";
+"harnesses.detail.agents" = "Agenti";
+"harnesses.detail.rules" = "Pravidla";
+"harnesses.detail.commands" = "Příkazy";
+"harnesses.detail.dependencies" = "Závislosti";
+"harnesses.detail.includes %d" = "Zahrnuje (%d)";
+"harnesses.detail.delegates %d" = "Deleguje na (%d)";
+"harnesses.detail.picks %d" = "Vybírá (%d):";
+"harnesses.reveal.in.finder" = "Zobrazit ve Finderu";
+"harnesses.open.in.browser" = "Otevřít v prohlížeči";
+"harnesses.close.detail" = "Zavřít";
+"harnesses.configure.from.marketplaces" = "Konfigurovat z tržišť…";
+"harnesses.detail.artifacts.from.includes" = "Tento postroj získává artefakty z inkludovaných závislostí.";
+"harnesses.detail.from" = "z";
+"harnesses.detail.hooks" = "Hooky";
+"harnesses.detail.mcp.servers" = "Servery MCP";
+"harnesses.detail.profiles" = "Profily";
+"harnesses.detail.focuses" = "Fokusy";
+"harnesses.detail.focus.profile %@" = "profil: %@";
+"harnesses.detail.manifest" = "Manifest";
+"harnesses.detail.no.manifest" = "Žádný manifest není k dispozici.";
+"harnesses.detail.resolved" = "Vyřešeno";
+"harnesses.detail.unresolved" = "Nevyřešeno";
+"harnesses.detail.no.hooks" = "Tento postroj nemá žádné hooky.";
+"harnesses.detail.no.mcp.servers" = "Tento postroj nemá žádné servery MCP.";
+"harnesses.detail.no.profiles" = "Tento postroj nemá žádné profily.";
+"harnesses.detail.no.focuses" = "Tento postroj nemá žádné fokusy.";
+
+// Harnesses — launch
+"harnesses.launch.title" = "Spustit postroj";
+"harnesses.launch.vendor" = "Dodavatel";
+"harnesses.launch.vendor.unavailable" = "(není nainstalován)";
+"harnesses.launch.vendor.default" = "Výchozí (%@)";
+"harnesses.launch.focus" = "Fokus";
+"harnesses.launch.focus.none" = "Žádný";
+"harnesses.launch.working.directory" = "Pracovní adresář";
+"harnesses.launch.browse" = "Procházet…";
+"harnesses.launch.prompt" = "Výzva";
+"harnesses.launch.prompt.placeholder" = "Volitelná výzva pro agenta…";
+"harnesses.launch.button" = "Spustit";
+"harnesses.launch.help" = "Spustit tento postroj v novém terminálu";
+"harnesses.launch.cancel" = "Zrušit";
+"harnesses.launch.backend" = "Backend";
+
+"harnesses.linked.worktrees" = "Propojené worktrees";
+"harnesses.linked.worktrees.none" = "Žádné worktrees nejsou propojeny s tímto harness.";
+
+// Toolbar tooltips
+"harnesses.wizard.toolbar.help" = "Vytvořit novou sadu";
+
+// MARK: - Settings — YNH
+"settings.ynh.section" = "Nástrojový řetězec YNH";
+"settings.ynh.title" = "ynh";
+"settings.ynh.description" = "Správce postrojů pro AI asistenty";
+"settings.ynh.enable.harness.tab" = "Zobrazit kartu postrojů v bočním panelu";
+"settings.ynh.enable.harness.tab.help" = "Přidá kartu Postroje do bočního panelu pro procházení a správu nainstalovaných postrojů";
+"settings.ynh.home.override" = "Přepsání $YNH_HOME";
+"settings.ynh.home.override.placeholder" = "Výchozí (používá vlastní rozlišení ynh)";
+"settings.ynh.home.override.help" = "Přepíše adresář YNH_HOME pro podproces ynh. Pro výchozí hodnotu ponechte prázdné.";
+"settings.ynh.resolved.paths" = "Vyřešené cesty";
+"settings.ynh.redetect" = "Znovu detekovat";
+"settings.ynh.init.required" = "Neinicializováno";
+"settings.ynh.ready" = "Připraveno";
+"settings.ynh.path.label" = "Cesta:";
+"settings.ynh.ynd.path.label" = "Cesta ynd:";
+"settings.ynh.status.label" = "Stav:";
+"settings.ynh.ready.info" = "Nástrojový řetězec byl detekován a inicializován. Aktivujte kartu bočního panelu pro procházení postrojů.";
+"settings.ynh.advanced" = "Pokročilé";
+"settings.ynh.version.label" = "Verze:";
+
+"common.clear" = "Vymazat";
+
+// Install sheet
+"harnesses.install.title" = "Nainstalovat harness";
+"harnesses.install.toolbar.help" = "Nainstalovat harness";
+"harnesses.install.tab.search" = "Hledat";
+"harnesses.install.tab.git" = "Z Gitu";
+"harnesses.install.tab.sources" = "Zdroje";
+"harnesses.install.search.placeholder" = "Hledat v registrech a zdrojích…";
+"harnesses.install.search.prompt" = "Zadejte text pro vyhledávání v registrech a zdrojích";
+"harnesses.install.search.empty" = "Žádné výsledky";
+"harnesses.install.git.url" = "Git URL";
+"harnesses.install.git.url.placeholder" = "github.com/user/repo";
+"harnesses.install.git.subpath" = "Dílčí cesta";
+"harnesses.install.git.subpath.placeholder" = "Volitelný podadresář";
+"harnesses.install.command.preview" = "Náhled příkazu";
+"harnesses.install.confirm" = "Nainstalovat";
+"harnesses.install.cancel" = "Zrušit";
+"harnesses.install.already.installed" = "Nainstalováno";
+"harnesses.install.from %@" = "z %@";
+"harnesses.install.sources.empty" = "Žádné zdroje nejsou nakonfigurovány. Přidejte místní adresář pro procházení jeho harnesses.";
+"harnesses.install.sources.add" = "Přidat zdroj…";
+"harnesses.install.sources.add.help" = "Přidat místní adresář jako zdroj harness";
+"harnesses.install.sources.remove" = "Odebrat";
+"harnesses.install.sources.count %ld" = "%ld harnesses";
+
+"harnesses.update.button" = "Aktualizovat";
+"harnesses.update.help" = "Aktualizovat na nejnovější verzi";
+"harnesses.uninstall.button" = "Odinstalovat";
+"harnesses.uninstall.help" = "Odinstalovat tento harness";
+"harnesses.uninstall.alert.title %@" = "Odinstalovat \"%@\"?";
+"harnesses.uninstall.alert.message" = "Tím se harness odebere z vašeho systému.";
+"harnesses.uninstall.alert.worktrees %ld" = "Tento harness je propojen s %ld pracovním stromem (stromy) — tato propojení budou vymazána.";
+"harnesses.uninstall.alert.terminals %ld" = "%ld terminál(ů) aktuálně spouští tento harness.";
+"harnesses.uninstall.alert.confirm" = "Odinstalovat";
+"harnesses.more.actions.help" = "Další akce";
+"harnesses.copy.run.command" = "Kopírovat příkaz spuštění";
+"harnesses.ynh.documentation" = "Dokumentace YNH";
+
+"harnesses.add.registry.title" = "Přidat registr YNH";
+"harnesses.add.registry.url.label" = "URL registru";
+"harnesses.add.registry.hint" = "Přidejte repozitář Git obsahující soubor registry.json. Po přidání můžete z tohoto registru vyhledávat a instalovat harnesses.";
+"harnesses.add.registry.button" = "Přidat registr";
+"harnesses.add.registry.success" = "Registr byl úspěšně přidán";
+"harnesses.add.registry.toolbar.help" = "Přidat registr YNH";
+
+// MARK: - Settings — Marketplaces tab
+"settings.tab.marketplaces" = "Tržiště";
+"settings.marketplaces.section.list" = "Nakonfigurovaná tržiště";
+"settings.marketplaces.empty" = "Zatím nebyla přidána žádná tržiště.";
+"settings.marketplaces.add" = "Přidat tržiště…";
+"settings.marketplaces.never.fetched" = "Nikdy nenačteno";
+"settings.marketplaces.remove.confirm.title" = "Odebrat tržiště";
+"settings.marketplaces.remove.confirm.message %@" = "Odebrat \"%@\"? Jeho pluginy se již nebudou zobrazovat v prohlížeči.";
+"settings.marketplaces.section.behaviour" = "Chování";
+"settings.marketplaces.auto.refresh" = "Automatická aktualizace při spuštění";
+"settings.marketplaces.auto.refresh.help" = "Automaticky stahovat aktualizace tržiště při spuštění aplikace";
+"settings.marketplaces.section.authoring" = "Tvorba harnessu";
+"settings.marketplaces.default.author.directory" = "Výchozí adresář autora";
+"settings.marketplaces.author.directory.detected.hint" = "Automaticky zjištěno z ynh";
+
+// MARK: - Marketplace sidebar tab
+"marketplace.title" = "Tržiště";
+"marketplace.add.help" = "Přidat tržiště";
+"marketplace.empty" = "Žádná tržiště zatím";
+"marketplace.add.button" = "Přidat tržiště";
+"marketplace.row.refresh.help" = "Aktualizovat tržiště";
+"marketplace.row.refresh" = "Aktualizovat";
+"marketplace.row.remove" = "Odebrat";
+"marketplace.row.stale" = " · Může být zastaralé";
+"marketplace.row.never.fetched" = "Nikdy nestaženo";
+"marketplace.add.sheet.title" = "Přidat tržiště";
+"marketplace.add.tab.known" = "Známá";
+"marketplace.add.tab.custom" = "Vlastní URL";
+"marketplace.add.section.git.url" = "URL repozitáře Git";
+"marketplace.add.section.display.name" = "Zobrazovaný název";
+"marketplace.add.section.vendor" = "Prodejce";
+"marketplace.detail.last.fetched %@" = "Naposledy staženo %@";
+"marketplace.detail.search.placeholder" = "Hledat pluginy…";
+"marketplace.detail.search.empty %@" = "Žádné pluginy neodpovídají «%@»";
+"marketplace.detail.empty" = "Na tomto tržišti nejsou žádné pluginy";
+"marketplace.detail.empty.hint" = "Aktualizujte a stáhněte nejnovější index.";
+"marketplace.plugin.add.to.harness" = "Přidat do sady";
+"marketplace.plugin.copy.install.command" = "Kopírovat příkaz pro instalaci";
+"marketplace.plugin.copy.install.command.help" = "Zkopíruje instalační příkaz Claude Code do schránky";
+"marketplace.plugin.load.artifacts" = "Načíst artefakty";
+"marketplace.plugin.loading.artifacts" = "Načítají se artefakty…";
+"marketplace.plugin.no.artifacts" = "Pro tento plugin nejsou uvedeny žádné artefakty.";
+"marketplace.plugin.no.artifacts.hint" = "Bude zahrnuto veškeré obsah pluginu.";
+"marketplace.plugin.artifacts.unavailable %@" = "Artefakty nedostupné: %@";
+"marketplace.picker.step.artifacts" = "Artefakty";
+"marketplace.picker.step.harness" = "Sada";
+"marketplace.picker.step.apply" = "Použít";
+"marketplace.picker.select.prompt" = "Vyberte artefakty k zahrnutí";
+"marketplace.picker.select.all" = "Vše";
+"marketplace.picker.select.none" = "Nic";
+"marketplace.picker.no.harnesses" = "Zatím žádné sady";
+"marketplace.picker.no.harnesses.hint" = "Nejprve vytvořte sadu pomocí průvodce novou sadou.";
+"marketplace.picker.review.plugin" = "Plugin";
+"marketplace.picker.review.harness" = "Sada";
+"marketplace.picker.review.artifacts" = "Artefakty";
+"marketplace.picker.review.all.count %lld" = "Vše (%lld)";
+"marketplace.picker.review.selected %lld %lld" = "%lld z %lld vybráno";
+"marketplace.picker.command.preview" = "Náhled příkazu";
+"marketplace.picker.success %@" = "Plugin přidán do %@";
+"marketplace.picker.done" = "Hotovo";
+"marketplace.picker.back" = "Zpět";
+"marketplace.picker.next" = "Další";
+"harness.wizard.title" = "Nová sada";
+"harness.wizard.name.label" = "Název (povinný)";
+"harness.wizard.description.label" = "Popis";
+"harness.wizard.loading.vendors" = "Načítají se prodejci…";
+"harness.wizard.vendor.label" = "Výchozí prodejce";
+"harness.wizard.destination.label" = "Cílový adresář";
+"harness.wizard.install.toggle" = "Nainstalovat sadu ihned po vytvoření";
+"harness.wizard.success.add.plugins" = "Přidat pluginy z tržiště";
+"harness.wizard.success.open" = "Otevřít v TermQ";
+"harness.wizard.create" = "Vytvořit";
+"harness.wizard.retry" = "Zkusit znovu";
+"harness.wizard.error.name.required" = "Název je povinný";
+"harness.wizard.error.name.invalid" = "Název smí obsahovat pouze písmena, číslice, pomlčky a podtržítka";
+"harness.wizard.error.name.duplicate %@" = "Sada s názvem «%@» již existuje";
+"settings.marketplaces.reset" = "Obnovit výchozí";
+"settings.marketplaces.section.ynh.registries" = "Registry YNH";
+"settings.marketplaces.ynh.registries.empty" = "Žádné registry nebyly přidány";
+"settings.marketplaces.ynh.add.registry" = "Přidat registr…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Odebrat registr";
+"settings.marketplaces.ynh.registry.remove.confirm" = "Odebrat";
+"settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Odebrat „%@“ z YNH? Nainstalované harnessy zůstanou.";
+"marketplace.add.custom.name.placeholder" = "Moje tržiště";
+"harness.wizard.success.created %@" = "Sada «%@» vytvořena";
