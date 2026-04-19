@@ -418,6 +418,13 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         return true
     }
 
+    /// Log when the window is about to miniaturize so we can diagnose spontaneous occurrences.
+    /// The call stack captured here will reveal whether it's Cmd+M, an external tool, or macOS.
+    func windowWillMiniaturize(_ notification: Notification) {
+        let stack = Thread.callStackSymbols.prefix(12).joined(separator: "\n  ")
+        TermQLogger.window.notice("windowWillMiniaturize triggered — stack:\n  \(stack)")
+    }
+
     /// Keep app running even if last window closes (user can reopen from Dock)
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return false
