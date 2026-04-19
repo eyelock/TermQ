@@ -136,7 +136,8 @@ struct SettingsMarketplacesView: View {
     @ViewBuilder
     private func marketplaceRow(_ marketplace: Marketplace) -> some View {
         let name = marketplace.name.isEmpty ? GitURLHelper.shortURL(marketplace.url) : marketplace.name
-        let browserURL: URL? = marketplace.url.hasPrefix("http")
+        let browserURL: URL? =
+            marketplace.url.hasPrefix("http")
             ? URL(string: marketplace.url)
             : GitURLHelper.browserURL(for: marketplace.url)
         HStack {

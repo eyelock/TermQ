@@ -140,7 +140,8 @@ public class GitService {
             repoPath: repoPath,
             args: ["branch", "--merged", remote, "--format=%(refname:short)"]
         )
-        let candidates = output
+        let candidates =
+            output
             .components(separatedBy: "\n")
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }

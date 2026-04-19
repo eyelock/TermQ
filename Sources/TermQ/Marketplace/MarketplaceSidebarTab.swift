@@ -199,7 +199,8 @@ struct MarketplaceSidebarTab: View {
         var groups: [MarketplaceGroup] = []
 
         if !defaults.isEmpty {
-            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupDefault, marketplaces: defaults, kind: .default))
+            groups.append(
+                MarketplaceGroup(title: Strings.Marketplace.groupDefault, marketplaces: defaults, kind: .default))
         }
 
         var byOrg: [String: [Marketplace]] = [:]
@@ -209,7 +210,9 @@ struct MarketplaceSidebarTab: View {
         }
 
         for (org, marketplaces) in byOrg.sorted(by: { $0.key < $1.key }) {
-            groups.append(MarketplaceGroup(title: Strings.Marketplace.groupGitHub(org), marketplaces: marketplaces, kind: .github(org)))
+            groups.append(
+                MarketplaceGroup(
+                    title: Strings.Marketplace.groupGitHub(org), marketplaces: marketplaces, kind: .github(org)))
         }
 
         return groups
@@ -224,7 +227,8 @@ struct MarketplaceSidebarTab: View {
             Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
         }
         if case .github(let org) = group.kind,
-           let url = URL(string: "https://github.com/\(org)") {
+            let url = URL(string: "https://github.com/\(org)")
+        {
             Button {
                 NSWorkspace.shared.open(url)
             } label: {

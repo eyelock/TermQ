@@ -6,8 +6,8 @@ import TermQShared
 /// Collapsible sidebar showing registered repositories and their worktrees.
 struct WorktreeSidebarView: View {
     @ObservedObject var viewModel: WorktreeSidebarViewModel
-    var onLaunchHarness: ((String, String) -> Void)?
-    var onAutoLaunchHarness: ((String, String) -> Void)?
+    var onLaunchHarness: ((String, String, String?) -> Void)?
+    var onAutoLaunchHarness: ((String, String, String?) -> Void)?
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
@@ -188,7 +188,7 @@ struct WorktreeSidebarView: View {
                 .contextMenu {
                     if let harnessName = ynhPersistence.repoDefaultHarness(for: repo.path) {
                         Button {
-                            onLaunchHarness?(harnessName, repo.path)
+                            onLaunchHarness?(harnessName, repo.path, nil)
                         } label: {
                             Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
                         }
@@ -369,7 +369,8 @@ struct WorktreeSidebarView: View {
                 // 100 ms asyncAfter. Without this, the NSTableView re-renders its
                 // badge count due to the new transientCard and reclaims focus.
                 NSApp.keyWindow?.makeFirstResponder(nil)
-                boardVM.newTerminal(at: worktree.path)
+                boardVM.newTerminal(
+                    at: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
             } label: {
                 Image(systemName: "terminal")
                     .imageScale(.small)
@@ -415,7 +416,7 @@ struct WorktreeSidebarView: View {
         // Launch harness is the primary action when one is configured — show it first.
         if let harnessName = effectiveHarness {
             Button {
-                onLaunchHarness?(harnessName, worktree.path)
+                onLaunchHarness?(harnessName, worktree.path, worktree.branch)
             } label: {
                 Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
             }
@@ -424,13 +425,14 @@ struct WorktreeSidebarView: View {
 
         // Group 1: Terminal actions
         Button {
-            boardVM.newTerminal(at: worktree.path)
+            boardVM.newTerminal(at: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
         } label: {
             Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
         }
 
         Button {
-            boardVM.addTerminal(workingDirectory: worktree.path)
+            boardVM.addTerminal(
+                workingDirectory: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
         } label: {
             Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
         }
@@ -615,11 +617,18 @@ extension WorktreeSidebarView {
             ynhPersistence.harness(for: worktree.path)
             ?? ynhPersistence.repoDefaultHarness(for: repo.path)
         if case .ready = ynhDetector.status, let name = harnessName {
-            onAutoLaunchHarness?(name, worktree.path)
+            onAutoLaunchHarness?(name, worktree.path, worktree.branch)
         } else {
             NSApp.keyWindow?.makeFirstResponder(nil)
-            boardVM.newTerminal(at: worktree.path)
+            boardVM.newTerminal(at: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
         }
+    }
+
+    fileprivate func orgRepoName(repoPath: String) -> String {
+        let url = URL(fileURLWithPath: repoPath)
+        let repo = url.lastPathComponent
+        let org = url.deletingLastPathComponent().lastPathComponent
+        return "\(org)/\(repo)"
     }
 
     fileprivate func openInTerminal(path: String) {

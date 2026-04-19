@@ -550,6 +550,15 @@ private struct TabItemView: View {
     // Fixed width for action buttons area to prevent size jumping
     private let actionButtonsWidth: CGFloat = 32
 
+    private var tabTooltip: String {
+        var lines = [Strings.Terminal.tabHelp(tabCard.title, columnName)]
+        if !tabCard.tags.isEmpty {
+            lines.append("")
+            lines.append(contentsOf: tabCard.tags.sorted { $0.key < $1.key }.map { "\($0.key): \($0.value)" })
+        }
+        return lines.joined(separator: "\n")
+    }
+
     var body: some View {
         HStack(spacing: 2) {
             // Main tab button
@@ -638,7 +647,7 @@ private struct TabItemView: View {
                 isHovering = hovering
             }
         }
-        .help(Strings.Terminal.tabHelp(tabCard.title, columnName))
+        .help(tabTooltip)
         .contextMenu {
             Button(Strings.Card.edit) {
                 onEdit()

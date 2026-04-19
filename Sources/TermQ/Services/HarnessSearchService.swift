@@ -29,7 +29,8 @@ final class HarnessSearchService: ObservableObject {
             if let override = YNHDetector.shared.ynhHomeOverride {
                 env["YNH_HOME"] = override
             }
-            let args: [String] = trimmed.isEmpty
+            let args: [String] =
+                trimmed.isEmpty
                 ? ["search", "--format", "json"]
                 : ["search", trimmed, "--format", "json"]
             do {

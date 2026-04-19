@@ -11,8 +11,8 @@ struct SidebarView: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var harnessRepository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
-    var onLaunchHarnessInWorktree: ((String, String) -> Void)?
-    var onAutoLaunchHarness: ((String, String) -> Void)?
+    var onLaunchHarnessInWorktree: ((String, String, String?) -> Void)?
+    var onAutoLaunchHarness: ((String, String, String?) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
