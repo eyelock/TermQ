@@ -293,6 +293,9 @@ struct MarketplaceRowView: View {
                         .font(.subheadline)
                         .lineLimit(1)
                     vendorBadge
+                    if marketplace.ref != nil {
+                        pinIcon
+                    }
                 }
                 subtitle
             }
@@ -306,6 +309,13 @@ struct MarketplaceRowView: View {
             .help(Strings.Marketplace.rowRefreshHelp)
         }
         .padding(.vertical, 2)
+    }
+
+    private var pinIcon: some View {
+        Image(systemName: marketplace.isPinnedToSHA ? "pin.fill" : "pin")
+            .imageScale(.small)
+            .foregroundColor(marketplace.isPinnedToSHA ? .accentColor : .secondary)
+            .help(marketplace.ref.map { Strings.Marketplace.rowPinnedHelp($0) } ?? "")
     }
 
     private var vendorBadge: some View {

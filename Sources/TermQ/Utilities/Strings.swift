@@ -986,6 +986,8 @@ extension Strings {
         static var installGitURLPlaceholder: String { localized("harnesses.install.git.url.placeholder") }
         static var installGitSubpath: String { localized("harnesses.install.git.subpath") }
         static var installGitSubpathPlaceholder: String { localized("harnesses.install.git.subpath.placeholder") }
+        static var installGitRef: String { localized("harnesses.install.git.ref") }
+        static var installGitRefPlaceholder: String { localized("harnesses.install.git.ref.placeholder") }
         static var installCommandPreview: String { localized("harnesses.install.command.preview") }
         static var installConfirm: String { localized("harnesses.install.confirm") }
         static var installCancel: String { localized("harnesses.install.cancel") }
@@ -1057,6 +1059,9 @@ extension Strings {
         static var addSectionGitURL: String { localized("marketplace.add.section.git.url") }
         static var addSectionDisplayName: String { localized("marketplace.add.section.display.name") }
         static var addSectionVendor: String { localized("marketplace.add.section.vendor") }
+        static var addSectionRef: String { localized("marketplace.add.section.ref") }
+        static var addRefPlaceholder: String { localized("marketplace.add.ref.placeholder") }
+        static func rowPinnedHelp(_ ref: String) -> String { localized("marketplace.row.pinned.help %@", ref) }
         static func detailLastFetched(_ rel: String) -> String {
             localized("marketplace.detail.last.fetched %@", rel)
         }

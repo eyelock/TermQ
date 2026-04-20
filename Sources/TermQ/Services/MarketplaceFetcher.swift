@@ -42,7 +42,7 @@ enum MarketplaceFetcher {
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
         // Clone
-        try await clone(gitPath: gitPath, url: marketplace.url, into: tempDir)
+        try await clone(gitPath: gitPath, url: marketplace.url, ref: marketplace.ref, into: tempDir)
 
         // Parse index
         let indexRelPath = marketplace.vendor.indexPath
@@ -110,7 +110,7 @@ enum MarketplaceFetcher {
             cloneURL = "https://github.com/\(cloneURL)"
         }
 
-        try await clone(gitPath: gitPath, url: cloneURL, into: cacheDir)
+        try await clone(gitPath: gitPath, url: cloneURL, ref: nil, into: cacheDir)
 
         // Stamp the version so future fetches can detect staleness
         try? (plugin.version ?? "").write(to: versionFile, atomically: true, encoding: .utf8)
@@ -121,32 +121,75 @@ enum MarketplaceFetcher {
 
     // MARK: - Helpers
 
-    private static func clone(gitPath: String, url: String, into dir: URL) async throws {
+    private static func clone(gitPath: String, url: String, ref: String?, into dir: URL) async throws {
+        // Detect SHA refs: 7-40 hex chars → can't use --branch, need post-clone checkout.
+        let hex = CharacterSet(charactersIn: "0123456789abcdefABCDEF")
+        let isSHA = ref.map { r in
+            r.count >= 7 && r.count <= 40 && r.unicodeScalars.allSatisfy { hex.contains($0) }
+        } ?? false
+
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             DispatchQueue.global(qos: .userInitiated).async {
-                let process = Process()
-                let stderr = Pipe()
+                // Build clone arguments.
+                var cloneArgs = ["clone", "--quiet"]
+                if let ref, !isSHA {
+                    cloneArgs += ["--depth", "1", "--branch", ref]
+                } else if ref == nil {
+                    cloneArgs += ["--depth", "1"]
+                }
+                // SHA: omit --depth so we can checkout the specific commit afterward.
+                cloneArgs += [url, dir.path]
 
-                process.executableURL = URL(fileURLWithPath: gitPath)
-                process.arguments = ["clone", "--depth", "1", "--quiet", url, dir.path]
-                process.standardOutput = Pipe()
-                process.standardError = stderr
+                let cloneProcess = Process()
+                let stderr = Pipe()
+                cloneProcess.executableURL = URL(fileURLWithPath: gitPath)
+                cloneProcess.arguments = cloneArgs
+                cloneProcess.standardOutput = Pipe()
+                cloneProcess.standardError = stderr
 
                 do {
-                    try process.run()
-                    process.waitUntilExit()
-                    if process.terminationStatus == 0 {
-                        continuation.resume()
-                    } else {
+                    try cloneProcess.run()
+                    cloneProcess.waitUntilExit()
+                    guard cloneProcess.terminationStatus == 0 else {
                         let errData = stderr.fileHandleForReading.readDataToEndOfFile()
                         let errStr =
                             String(data: errData, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines)
                             ?? ""
                         continuation.resume(throwing: FetchError.cloneFailed(errStr))
+                        return
                     }
                 } catch {
                     continuation.resume(throwing: FetchError.cloneFailed(error.localizedDescription))
+                    return
                 }
+
+                // For SHA refs, checkout the specific commit after cloning.
+                if let ref, isSHA {
+                    let checkoutProcess = Process()
+                    let checkoutErr = Pipe()
+                    checkoutProcess.executableURL = URL(fileURLWithPath: gitPath)
+                    checkoutProcess.arguments = ["-C", dir.path, "checkout", ref]
+                    checkoutProcess.standardOutput = Pipe()
+                    checkoutProcess.standardError = checkoutErr
+
+                    do {
+                        try checkoutProcess.run()
+                        checkoutProcess.waitUntilExit()
+                        if checkoutProcess.terminationStatus != 0 {
+                            let errData = checkoutErr.fileHandleForReading.readDataToEndOfFile()
+                            let errStr =
+                                String(data: errData, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines)
+                                ?? ""
+                            continuation.resume(throwing: FetchError.cloneFailed("checkout \(ref): \(errStr)"))
+                            return
+                        }
+                    } catch {
+                        continuation.resume(throwing: FetchError.cloneFailed(error.localizedDescription))
+                        return
+                    }
+                }
+
+                continuation.resume()
             }
         }
     }

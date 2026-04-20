@@ -9,9 +9,21 @@ struct Marketplace: Codable, Identifiable, Sendable {
     var description: String?
     var vendor: MarketplaceVendor
     var url: String
+    /// Optional git ref (branch name, tag, or full/abbreviated SHA) to pin fetches to.
+    /// nil → always fetch latest HEAD.
+    var ref: String?
     var plugins: [MarketplacePlugin]
     var lastFetched: Date?
     var fetchError: String?
+
+    /// True when `ref` is a commit SHA (40 hex chars or a 7-40 char hex abbreviation).
+    /// Branch/tag refs are mutable; SHAs are immutable — truly pinned.
+    var isPinnedToSHA: Bool {
+        guard let ref else { return false }
+        let hex = CharacterSet(charactersIn: "0123456789abcdefABCDEF")
+        return ref.count >= 7 && ref.count <= 40
+            && ref.unicodeScalars.allSatisfy { hex.contains($0) }
+    }
 }
 
 enum MarketplaceVendor: String, Codable, Sendable, CaseIterable {
