@@ -88,6 +88,12 @@ public final class BoardPersistence {
         self.saveURL = termqDir.appendingPathComponent("board.json")
     }
 
+    init(saveURL: URL) {
+        try? FileManager.default.createDirectory(
+            at: saveURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        self.saveURL = saveURL
+    }
+
     deinit {
         fileMonitor = nil
     }

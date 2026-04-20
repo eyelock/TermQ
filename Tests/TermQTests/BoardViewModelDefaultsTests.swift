@@ -21,15 +21,27 @@ final class BoardViewModelDefaultsTests: XCTestCase {
     private var savedAllowOscClipboard: Any?
     private var savedConfirmExternalModifications: Any?
 
+    private var tempBoardURL: URL!
+
     override func setUp() {
         super.setUp()
         savedSafePaste = defaults.object(forKey: safePasteKey)
         savedAllowAutorun = defaults.object(forKey: allowAutorunKey)
         savedAllowOscClipboard = defaults.object(forKey: allowOscClipboardKey)
         savedConfirmExternalModifications = defaults.object(forKey: confirmExternalModificationsKey)
+
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("BoardViewModelTests-\(UUID().uuidString)")
+        try? FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        tempBoardURL = tempDir.appendingPathComponent("board.json")
+        let seedBoard = #"{"columns":[{"id":"00000000-0000-0000-0000-000000000001","name":"To Do","orderIndex":0}],"cards":[]}"#
+        try? Data(seedBoard.utf8).write(to: tempBoardURL)
     }
 
     override func tearDown() {
+        if let tempDir = tempBoardURL?.deletingLastPathComponent() {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
         restore(savedSafePaste, forKey: safePasteKey)
         restore(savedAllowAutorun, forKey: allowAutorunKey)
         restore(savedAllowOscClipboard, forKey: allowOscClipboardKey)
@@ -45,42 +57,42 @@ final class BoardViewModelDefaultsTests: XCTestCase {
 
     @MainActor func testNewTerminal_safePasteDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: safePasteKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.newTerminal(at: NSHomeDirectory())
         XCTAssertEqual(viewModel.selectedCard?.safePasteEnabled, false)
     }
 
     @MainActor func testNewTerminal_safePasteEnabled_cardInheritsEnabled() {
         defaults.set(true, forKey: safePasteKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.newTerminal(at: NSHomeDirectory())
         XCTAssertEqual(viewModel.selectedCard?.safePasteEnabled, true)
     }
 
     @MainActor func testNewTerminal_allowAutorunEnabled_cardInheritsEnabled() {
         defaults.set(true, forKey: allowAutorunKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.newTerminal(at: NSHomeDirectory())
         XCTAssertEqual(viewModel.selectedCard?.allowAutorun, true)
     }
 
     @MainActor func testNewTerminal_allowAutorunDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: allowAutorunKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.newTerminal(at: NSHomeDirectory())
         XCTAssertEqual(viewModel.selectedCard?.allowAutorun, false)
     }
 
     @MainActor func testNewTerminal_oscClipboardDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: allowOscClipboardKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.newTerminal(at: NSHomeDirectory())
         XCTAssertEqual(viewModel.selectedCard?.allowOscClipboard, false)
     }
 
     @MainActor func testNewTerminal_confirmExternalModificationsDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: confirmExternalModificationsKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.newTerminal(at: NSHomeDirectory())
         XCTAssertEqual(viewModel.selectedCard?.confirmExternalModifications, false)
     }
@@ -89,42 +101,42 @@ final class BoardViewModelDefaultsTests: XCTestCase {
 
     @MainActor func testQuickNewTerminal_safePasteDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: safePasteKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.quickNewTerminal()
         XCTAssertEqual(viewModel.selectedCard?.safePasteEnabled, false)
     }
 
     @MainActor func testQuickNewTerminal_safePasteEnabled_cardInheritsEnabled() {
         defaults.set(true, forKey: safePasteKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.quickNewTerminal()
         XCTAssertEqual(viewModel.selectedCard?.safePasteEnabled, true)
     }
 
     @MainActor func testQuickNewTerminal_allowAutorunEnabled_cardInheritsEnabled() {
         defaults.set(true, forKey: allowAutorunKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.quickNewTerminal()
         XCTAssertEqual(viewModel.selectedCard?.allowAutorun, true)
     }
 
     @MainActor func testQuickNewTerminal_allowAutorunDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: allowAutorunKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.quickNewTerminal()
         XCTAssertEqual(viewModel.selectedCard?.allowAutorun, false)
     }
 
     @MainActor func testQuickNewTerminal_oscClipboardDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: allowOscClipboardKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.quickNewTerminal()
         XCTAssertEqual(viewModel.selectedCard?.allowOscClipboard, false)
     }
 
     @MainActor func testQuickNewTerminal_confirmExternalModificationsDisabled_cardInheritsDisabled() {
         defaults.set(false, forKey: confirmExternalModificationsKey)
-        let viewModel = BoardViewModel()
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: tempBoardURL))
         viewModel.quickNewTerminal()
         XCTAssertEqual(viewModel.selectedCard?.confirmExternalModifications, false)
     }
