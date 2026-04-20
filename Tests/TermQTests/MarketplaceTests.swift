@@ -349,6 +349,75 @@ final class KnownMarketplacesTests: XCTestCase {
     }
 }
 
+// MARK: - PluginSourceSpec.resolved(marketplaceURL:) tests
+
+final class PluginSourceSpecResolvedTests: XCTestCase {
+
+    private let marketplaceURL = "https://github.com/eyelock/assistants"
+
+    func test_resolved_externalSource_passesThrough() {
+        let spec = PluginSourceSpec(type: .github, url: "owner/repo", path: "plugins")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, "owner/repo")
+        XCTAssertEqual(path, "plugins")
+    }
+
+    func test_resolved_relativeSource_usesMarketplaceURL() {
+        let spec = PluginSourceSpec(type: .relative, url: "./skills/infra")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, marketplaceURL)
+        XCTAssertEqual(path, "skills/infra")
+    }
+
+    func test_resolved_relativeSource_withoutDotSlash_usesMarketplaceURL() {
+        let spec = PluginSourceSpec(type: .relative, url: "skills/infra")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, marketplaceURL)
+        XCTAssertEqual(path, "skills/infra")
+    }
+
+    func test_resolved_relativeSource_withSubpath_appendsSubpath() {
+        let spec = PluginSourceSpec(type: .relative, url: "./plugins/foo", path: "src")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, marketplaceURL)
+        XCTAssertEqual(path, "plugins/foo/src")
+    }
+
+    func test_resolved_relativeSource_rootDot_returnsNilPath() {
+        let spec = PluginSourceSpec(type: .relative, url: "./")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, marketplaceURL)
+        XCTAssertNil(path)
+    }
+
+    func test_resolved_urlSource_passesThrough() {
+        let spec = PluginSourceSpec(type: .url, url: "https://example.com/pkg.tgz")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, "https://example.com/pkg.tgz")
+        XCTAssertNil(path)
+    }
+
+    func test_resolved_unknownTypeWithDotSlashURL_treatedAsRelative() {
+        // After persistence round-trip through old decoder, relative plugins had type=.unknown.
+        // resolved() must still resolve them by falling back to the URL prefix.
+        let spec = PluginSourceSpec(type: .unknown, url: "./skills/infra")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, marketplaceURL)
+        XCTAssertEqual(path, "skills/infra")
+    }
+
+    func test_resolved_persistenceRoundTrip_preservesRelativeType() throws {
+        // Encode then decode — type must survive so resolved() works on reloaded data.
+        let spec = PluginSourceSpec(type: .relative, url: "./skills/infra")
+        let data = try JSONEncoder().encode(spec)
+        let decoded = try JSONDecoder().decode(PluginSourceSpec.self, from: data)
+        XCTAssertEqual(decoded.type, .relative)
+        let (url, path) = decoded.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, marketplaceURL)
+        XCTAssertEqual(path, "skills/infra")
+    }
+}
+
 // MARK: - AuthorStepStatus tests
 
 final class AuthorStepStatusTests: XCTestCase {
