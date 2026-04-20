@@ -158,18 +158,19 @@ class BoardViewModel: ObservableObject {
             return
         }
 
-        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
-        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaults = newTerminalDefaults()
 
         let card = board.addCard(
             to: column,
             title: branch ?? "New Terminal",
             workingDirectory: workingDirectory,
-            safePasteEnabled: defaultSafePaste,
-            backend: defaultBackend
+            safePasteEnabled: defaults.safePaste,
+            allowAutorun: defaults.allowAutorun,
+            allowOscClipboard: defaults.allowOscClipboard,
+            confirmExternalModifications: defaults.confirmExternalModifications,
+            backend: defaults.backend
         )
-        card.tags = autoTags(source: "card", backend: defaultBackend, branch: branch, repoName: repoName)
+        card.tags = autoTags(source: "card", backend: defaults.backend, branch: branch, repoName: repoName)
 
         objectWillChange.send()
         save()
@@ -179,18 +180,16 @@ class BoardViewModel: ObservableObject {
     }
 
     func addTerminal(to column: Column) {
-        // Read defaults from UserDefaults
-        let defaultWorkingDirectory =
-            UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
-        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
-        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaults = newTerminalDefaults()
 
         let card = board.addCard(
             to: column,
-            workingDirectory: defaultWorkingDirectory,
-            safePasteEnabled: defaultSafePaste,
-            backend: defaultBackend
+            workingDirectory: defaults.workingDirectory,
+            safePasteEnabled: defaults.safePaste,
+            allowAutorun: defaults.allowAutorun,
+            allowOscClipboard: defaults.allowOscClipboard,
+            confirmExternalModifications: defaults.confirmExternalModifications,
+            backend: defaults.backend
         )
         objectWillChange.send()
         save()
@@ -480,17 +479,18 @@ class BoardViewModel: ObservableObject {
 
         let existingTitles = Set(
             board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
-        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
-        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaults = newTerminalDefaults()
 
         let card = TerminalCard(
             title: nextTransientTitle(base: branch, existing: existingTitles),
-            tags: autoTags(source: "worktree", backend: defaultBackend, branch: branch, repoName: repoName),
+            tags: autoTags(source: "worktree", backend: defaults.backend, branch: branch, repoName: repoName),
             columnId: column.id,
             workingDirectory: path,
-            safePasteEnabled: defaultSafePaste,
-            backend: defaultBackend
+            safePasteEnabled: defaults.safePaste,
+            allowAutorun: defaults.allowAutorun,
+            allowOscClipboard: defaults.allowOscClipboard,
+            confirmExternalModifications: defaults.confirmExternalModifications,
+            backend: defaults.backend
         )
         card.isTransient = true
         tabManager.addTransientCard(card)
@@ -524,18 +524,18 @@ class BoardViewModel: ObservableObject {
         }
 
         let existingTitles = Set(board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
-        // Use the user's chosen default backend, falling back to direct if unavailable
-        let defaultBackendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
-        let defaultBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaults = newTerminalDefaults()
 
         let card = TerminalCard(
             title: nextTransientTitle(base: nil, existing: existingTitles),
-            tags: autoTags(source: "quick", backend: defaultBackend),
+            tags: autoTags(source: "quick", backend: defaults.backend),
             columnId: column.id,
             workingDirectory: workingDirectory,
-            safePasteEnabled: defaultSafePaste,
-            backend: defaultBackend
+            safePasteEnabled: defaults.safePaste,
+            allowAutorun: defaults.allowAutorun,
+            allowOscClipboard: defaults.allowOscClipboard,
+            confirmExternalModifications: defaults.confirmExternalModifications,
+            backend: defaults.backend
         )
         card.isTransient = true
         tabManager.addTransientCard(card)
@@ -665,6 +665,38 @@ class BoardViewModel: ObservableObject {
             objectWillChange.send()
             save()
         }
+    }
+}
+
+// MARK: - New Terminal Defaults
+
+private struct NewTerminalDefaults {
+    let workingDirectory: String
+    let backend: TerminalBackend
+    let safePaste: Bool
+    let allowAutorun: Bool
+    let allowOscClipboard: Bool
+    let confirmExternalModifications: Bool
+}
+
+private extension BoardViewModel {
+    func newTerminalDefaults() -> NewTerminalDefaults {
+        let workingDirectory = UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
+        let backendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
+        let backend = TerminalBackend(rawValue: backendRaw) ?? .direct
+        let safePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let allowAutorun = UserDefaults.standard.object(forKey: "enableTerminalAutorun") as? Bool ?? false
+        let allowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        let confirmExternalModifications =
+            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        return NewTerminalDefaults(
+            workingDirectory: workingDirectory,
+            backend: backend,
+            safePaste: safePaste,
+            allowAutorun: allowAutorun,
+            allowOscClipboard: allowOscClipboard,
+            confirmExternalModifications: confirmExternalModifications
+        )
     }
 }
 
