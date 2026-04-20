@@ -47,8 +47,12 @@ class BoardViewModel: ObservableObject {
     /// Tabs that need attention - proxied from TabManager
     var needsAttention: Set<UUID> { tabManager.needsAttention }
 
-    init() {
-        self.persistence = BoardPersistence()
+    convenience init() {
+        self.init(persistence: BoardPersistence())
+    }
+
+    init(persistence: BoardPersistence) {
+        self.persistence = persistence
         self.tabManager = TabManager()
         self.board = persistence.loadBoard()
 
