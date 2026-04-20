@@ -808,6 +808,7 @@ extension Strings {
         static var terminalBadgeHelp: String { localized("sidebar.worktree.terminals.badge.help") }
         static var openInTerminal: String { localized("sidebar.worktree.open.in.terminal") }
         static var revealInFinder: String { localized("sidebar.worktree.reveal.in.finder") }
+        static var openIn: String { localized("sidebar.worktree.open.in") }
         static var copyPathname: String { localized("sidebar.worktree.copy.pathname") }
         static var openRemoteBranch: String { localized("sidebar.worktree.open.remote.branch") }
         static var openRemoteCommit: String { localized("sidebar.worktree.open.remote.commit") }
