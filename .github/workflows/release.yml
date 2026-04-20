@@ -406,13 +406,13 @@ jobs:
           {
             if [ -s /tmp/features.txt ]; then
               printf "## What's New\n\n"
-              while IFS= read -r line; do printf "- %s\n" "$line"; done < /tmp/features.txt
+              while IFS= read -r line; do echo "- $line"; done < /tmp/features.txt
               printf "\n"
             fi
 
             if [ -s /tmp/fixes.txt ]; then
               printf "## Bug Fixes\n\n"
-              while IFS= read -r line; do printf "- %s\n" "$line"; done < /tmp/fixes.txt
+              while IFS= read -r line; do echo "- $line"; done < /tmp/fixes.txt
               printf "\n"
             fi
 
