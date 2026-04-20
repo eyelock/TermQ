@@ -242,7 +242,9 @@ If every branch is still live, TermQ says so inline.
 
 Review the list, then click **Delete Branches**. TermQ deletes each branch with `git branch -d` — the safe-delete flag that refuses to remove anything not fully merged, so there is no risk of losing unmerged work. The **Local Branches** section updates immediately when the sheet closes.
 
-> **How branches are protected:** The remote default branch is detected dynamically via `git symbolic-ref refs/remotes/origin/HEAD` — no branch names are hardcoded. Any branch that is checked out in an active worktree is also excluded, regardless of its merge state.
+> **How branches are protected:** The remote default branch is detected dynamically via `git symbolic-ref refs/remotes/origin/HEAD` — no branch names are hardcoded. Any branch that is checked out in an active worktree is also excluded. In addition, branches listed in the **Protected Branches** setting (see Settings → General → Git) are always excluded from the prune list, regardless of merge state. By default this list contains `main`, `master`, and `develop`. You can also override the protected branches list for a specific repository via **Edit Repository** (right-click the repo row → **Edit Repository…**).
+
+![Settings Git section — Protected Branches](../Images/settings-protected-branches.png)
 
 ---
 
@@ -270,7 +272,8 @@ TermQ constructs the URL from the repo's `origin` remote, converting SSH remotes
 - **Force Delete** bypasses all safety checks and deletes the directory; use with caution
 - **Prune** cleans up stale git records for worktrees whose directories no longer exist
 - **Local Branches** shows branches that exist locally but have no worktree; right-click any row → **New Worktree** to check it out as a worktree instantly
-- **Prune Merged Branches** removes branches fully merged into the remote default; right-click the **LOCAL BRANCHES** header to access it — active worktrees and the default branch are always protected
+- **Prune Merged Branches** removes branches fully merged into the remote default; right-click the **LOCAL BRANCHES** header to access it — active worktrees, the default branch, and any **Protected Branches** are always excluded
+- **Protected Branches** — a configurable deny-list (default: `main`, `master`, `develop`) prevents those branches from ever appearing in the prune list; set globally in Settings → General → Git, or override per-repo in **Edit Repository**
 
 ## Next
 

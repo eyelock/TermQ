@@ -6,6 +6,8 @@ public struct GitRepository: Codable, Sendable, Identifiable {
     public var name: String
     public var path: String
     public var worktreeBasePath: String?
+    /// Per-repository protected branch override. When nil, the global app setting is used.
+    public var protectedBranches: [String]?
     public let addedAt: Date
 
     public init(
@@ -13,12 +15,14 @@ public struct GitRepository: Codable, Sendable, Identifiable {
         name: String,
         path: String,
         worktreeBasePath: String? = nil,
+        protectedBranches: [String]? = nil,
         addedAt: Date = Date()
     ) {
         self.id = id
         self.name = name
         self.path = path
         self.worktreeBasePath = worktreeBasePath
+        self.protectedBranches = protectedBranches
         self.addedAt = addedAt
     }
 }

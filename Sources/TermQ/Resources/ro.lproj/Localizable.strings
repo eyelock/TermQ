@@ -259,6 +259,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Ramuri protejate";
+"settings.protected.branches.help" = "Ramuri care nu sunt niciodată oferite pentru ștergere la curățare. Separați numele cu virgule.";
+"settings.protected.branches.prompt" = "Nume de ramuri separate prin virgule";
 
 // Settings - Language section
 "settings.section.language" = "Limbă";
@@ -516,6 +521,9 @@
 "sidebar.worktree.base.path.label" = "Calea de bază a worktree";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Ramuri protejate";
+"sidebar.protected.branches.override.help" = "Ramuri excluse din curățare în acest depozit. Suprascrie setarea globală. Lăsați gol pentru a folosi setarea globală.";
+"sidebar.protected.branches.override.placeholder" = "(folosiți setarea globală)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

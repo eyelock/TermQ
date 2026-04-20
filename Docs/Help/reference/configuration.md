@@ -24,6 +24,12 @@ Open Settings with **⌘,** or via the TermQ menu.
 | **Default Backend** | Direct or tmux for new terminals |
 | **Bin Retention** | Days before binned terminals are auto-deleted (0 = keep indefinitely) |
 
+### Git
+
+| Setting | Description |
+|---|---|
+| **Protected Branches** | Comma-separated list of branch names that are never offered for deletion when pruning merged branches. Defaults to `main, master, develop`. Can be overridden per-repository in **Edit Repository**. |
+
 ### Appearance
 
 | Setting | Description |
