@@ -55,6 +55,9 @@ public class Board: ObservableObject, Codable {
         id: UUID? = nil,
         workingDirectory: String? = nil,
         safePasteEnabled: Bool = true,
+        allowAutorun: Bool = false,
+        allowOscClipboard: Bool = true,
+        confirmExternalModifications: Bool = true,
         backend: TerminalBackend? = nil
     ) -> TerminalCard {
         let maxIndex = cards(for: column).map(\.orderIndex).max() ?? -1
@@ -65,6 +68,9 @@ public class Board: ObservableObject, Codable {
             orderIndex: maxIndex + 1,
             workingDirectory: workingDirectory ?? NSHomeDirectory(),
             safePasteEnabled: safePasteEnabled,
+            allowAutorun: allowAutorun,
+            allowOscClipboard: allowOscClipboard,
+            confirmExternalModifications: confirmExternalModifications,
             backend: backend ?? .direct
         )
         cards.append(card)

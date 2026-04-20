@@ -244,7 +244,7 @@ struct ContentView: View {
                             initialWorkingDirectory: launchWorkingDirectory,
                             initialBranch: launchWorktreeBranch
                         ) { config in
-                            launchHarness(config)
+                            launchHarness(config, reuseExisting: false)
                         }
                     }
                 }
@@ -699,10 +699,18 @@ extension ContentView {
         }
 
         // Create the card with optional pre-generated ID (from CLI/MCP)
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaultAllowAutorun = UserDefaults.standard.object(forKey: "enableTerminalAutorun") as? Bool ?? false
+        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = viewModel.board.addCard(
             to: targetColumn,
             title: pending.name ?? "Terminal",
-            id: pending.cardId
+            id: pending.cardId,
+            safePasteEnabled: defaultSafePaste,
+            allowAutorun: defaultAllowAutorun,
+            allowOscClipboard: defaultAllowOscClipboard,
+            confirmExternalModifications: defaultConfirmExternalModifications
         )
         card.workingDirectory = pending.path
         if let desc = pending.description {
@@ -744,12 +752,18 @@ extension ContentView {
         } else {
             return
         }
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynh install \(config.displayName)",
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
             initCommand: config.command(ynhPath: ynhPath) + " && exit",
+            safePasteEnabled: defaultSafePaste,
+            allowOscClipboard: defaultAllowOscClipboard,
+            confirmExternalModifications: defaultConfirmExternalModifications,
             backend: .direct
         )
         card.isTransient = true
@@ -779,12 +793,18 @@ extension ContentView {
         } else {
             return
         }
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynh uninstall \(name)",
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
             initCommand: "\(ynhPath) uninstall \(shellQuote(name)) && exit",
+            safePasteEnabled: defaultSafePaste,
+            allowOscClipboard: defaultAllowOscClipboard,
+            confirmExternalModifications: defaultConfirmExternalModifications,
             backend: .direct
         )
         card.isTransient = true
@@ -814,12 +834,18 @@ extension ContentView {
         } else {
             return
         }
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynh update \(name)",
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
             initCommand: "\(ynhPath) update \(shellQuote(name)) && exit",
+            safePasteEnabled: defaultSafePaste,
+            allowOscClipboard: defaultAllowOscClipboard,
+            confirmExternalModifications: defaultConfirmExternalModifications,
             backend: .direct
         )
         card.isTransient = true
@@ -842,12 +868,18 @@ extension ContentView {
                 viewModel.board.columns.first { $0.id == c.columnId }
             }) ?? viewModel.board.columns.first
         else { return }
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynd export \(name)",
             tags: [],
             columnId: column.id,
             workingDirectory: harness.path,
             initCommand: "\(yndPath) export \(shellQuote(harness.path)) -o \(shellQuote(outputDir)) && exit",
+            safePasteEnabled: defaultSafePaste,
+            allowOscClipboard: defaultAllowOscClipboard,
+            confirmExternalModifications: defaultConfirmExternalModifications,
             backend: .direct
         )
         card.isTransient = true
@@ -858,8 +890,24 @@ extension ContentView {
         viewModel.selectedCard = card
     }
 
-    /// Launch a harness by creating a transient Card with `ynh run` as the init command.
-    func launchHarness(_ config: HarnessLaunchConfig) {
+    /// Launch a harness by creating a persistent Card with `ynh run` as the init command.
+    /// If `reuseExisting` is true and a matching card already exists (same harness + working
+    /// directory), switches to it instead of creating a duplicate.
+    func launchHarness(_ config: HarnessLaunchConfig, reuseExisting: Bool = true) {
+        if reuseExisting,
+            let existing = viewModel.allTerminals.first(where: { card in
+                card.workingDirectory == config.workingDirectory
+                    && card.tags.contains(where: { $0.key == "harness" && $0.value == config.harnessName })
+            })
+        {
+            cardBeforeHarness = nil
+            harnessRepo.selectedHarnessName = nil
+            viewModel.tabManager.addTab(existing.id)
+            viewModel.objectWillChange.send()
+            viewModel.selectedCard = existing
+            return
+        }
+
         let column: Column
         if let current = viewModel.selectedCard,
             let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
@@ -883,6 +931,9 @@ extension ContentView {
             allTags.append(Tag(key: "session", value: sessionName))
             allTags.append(Tag(key: "window", value: "0"))
         }
+        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
+        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             id: cardID,
             title: config.branch ?? config.harnessName,
@@ -890,12 +941,15 @@ extension ContentView {
             columnId: column.id,
             workingDirectory: config.workingDirectory,
             initCommand: config.command(sessionName: sessionName),
+            safePasteEnabled: defaultSafePaste,
+            allowOscClipboard: defaultAllowOscClipboard,
+            confirmExternalModifications: defaultConfirmExternalModifications,
             backend: config.backend
         )
-        card.isTransient = true
         card.allowAutorun = true
 
-        viewModel.tabManager.addTransientCard(card)
+        viewModel.board.cards.append(card)
+        viewModel.save()
 
         if let current = viewModel.selectedCard {
             viewModel.tabManager.insertTab(card.id, after: current.id)
