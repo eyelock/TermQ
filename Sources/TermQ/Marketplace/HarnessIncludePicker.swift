@@ -262,14 +262,20 @@ struct HarnessIncludePicker: View {
     }
 
     private var commandPreview: String {
-        var parts = ["ynh", "include", "add", targetHarnessName ?? "<harness>", plugin.source.url]
-        if let path = plugin.source.path { parts += ["--path", path] }
+        var parts = ["ynh", "include", "add", targetHarnessName ?? "<harness>"]
+        let (resolvedURL, resolvedPath) = resolvedSource
+        parts.append(resolvedURL)
+        if let path = resolvedPath { parts += ["--path", path] }
         let pick = Array(selectedPicks).sorted()
         if !pick.isEmpty && pick.count < resolvedPicks.count {
             let bareNames = pick.map { $0.components(separatedBy: "/").last ?? $0 }
             parts += ["--pick", bareNames.joined(separator: ",")]
         }
         return parts.joined(separator: " ")
+    }
+
+    private var resolvedSource: (url: String, path: String?) {
+        plugin.source.resolved(marketplaceURL: marketplace.url)
     }
 
     // MARK: - Progress & success
@@ -404,10 +410,11 @@ struct HarnessIncludePicker: View {
             pick = Array(selectedPicks).sorted()
         }
 
+        let (sourceURL, sourcePath) = resolvedSource
         await applier.apply(
             harness: harness,
-            sourceURL: plugin.source.url,
-            path: plugin.source.path,
+            sourceURL: sourceURL,
+            path: sourcePath,
             pick: pick,
             ynhPath: ynhPath,
             environment: ynhEnvironment
