@@ -244,7 +244,7 @@ struct ContentView: View {
                             initialWorkingDirectory: launchWorkingDirectory,
                             initialBranch: launchWorktreeBranch
                         ) { config in
-                            launchHarness(config)
+                            launchHarness(config, reuseExisting: false)
                         }
                     }
                 }
@@ -858,8 +858,24 @@ extension ContentView {
         viewModel.selectedCard = card
     }
 
-    /// Launch a harness by creating a transient Card with `ynh run` as the init command.
-    func launchHarness(_ config: HarnessLaunchConfig) {
+    /// Launch a harness by creating a persistent Card with `ynh run` as the init command.
+    /// If `reuseExisting` is true and a matching card already exists (same harness + working
+    /// directory), switches to it instead of creating a duplicate.
+    func launchHarness(_ config: HarnessLaunchConfig, reuseExisting: Bool = true) {
+        if reuseExisting,
+            let existing = viewModel.allTerminals.first(where: { card in
+                card.workingDirectory == config.workingDirectory
+                    && card.tags.contains(where: { $0.key == "harness" && $0.value == config.harnessName })
+            })
+        {
+            cardBeforeHarness = nil
+            harnessRepo.selectedHarnessName = nil
+            viewModel.tabManager.addTab(existing.id)
+            viewModel.objectWillChange.send()
+            viewModel.selectedCard = existing
+            return
+        }
+
         let column: Column
         if let current = viewModel.selectedCard,
             let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
@@ -892,10 +908,10 @@ extension ContentView {
             initCommand: config.command(sessionName: sessionName),
             backend: config.backend
         )
-        card.isTransient = true
         card.allowAutorun = true
 
-        viewModel.tabManager.addTransientCard(card)
+        viewModel.board.cards.append(card)
+        viewModel.save()
 
         if let current = viewModel.selectedCard {
             viewModel.tabManager.insertTab(card.id, after: current.id)
