@@ -71,7 +71,7 @@ EOF
 
 Ask: **what is the minimum number of commits that meaningfully separates this work?**
 
-This project uses squash-merge (`gh pr merge --squash`), so branch commits are ephemeral — they become one commit on `develop` regardless. Their only job is to help a reviewer understand the PR. That means:
+Feature/fix branch PRs use squash-merge (`gh pr merge --squash`), so branch commits are ephemeral — they become one commit on `develop` regardless. Their only job is to help a reviewer understand the PR. That means:
 
 - Lean toward 1–3 commits per PR, one per logical concern
 - WIP checkpoints, format commits, and implementation-journey fixes → squash them away
@@ -135,7 +135,13 @@ Only merge when:
 ```bash
 gh pr checks         # verify all pass
 gh pr view --comments  # verify no unresolved comments
-gh pr merge --squash
+gh pr merge --squash   # feature/fix branches → develop
+```
+
+**Exception — release promotion PR (`develop` → `main`):** always use `--merge` (true merge), never `--squash`. Squash loses ancestry and makes `git log v{VERSION}..develop` show the entire history as if nothing was released.
+
+```bash
+gh pr merge --merge   # develop → main only
 ```
 
 ## Post-Merge Cleanup
