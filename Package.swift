@@ -93,14 +93,20 @@ let package = Package(
                 .process("Resources/zh-HK.lproj")
             ]
         ),
-        // CLI tool
-        .executableTarget(
-            name: "termq-cli",
+        // CLI command library (testable — logic separated from executable entry point)
+        .target(
+            name: "TermQCLICore",
             dependencies: [
                 "TermQShared",
                 "MCPServerLib",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
+            path: "Sources/TermQCLICore"
+        ),
+        // CLI tool entry point (thin wrapper over TermQCLICore)
+        .executableTarget(
+            name: "termq-cli",
+            dependencies: ["TermQCLICore"],
             path: "Sources/termq-cli"
         ),
         // MCP Server library (shared logic)
@@ -140,6 +146,11 @@ let package = Package(
             name: "TermQSharedTests",
             dependencies: ["TermQShared"],
             path: "Tests/TermQSharedTests"
+        ),
+        .testTarget(
+            name: "TermQCLITests",
+            dependencies: ["TermQCLICore", "TermQShared", "MCPServerLib"],
+            path: "Tests/TermQCLITests"
         )
     ]
 )
