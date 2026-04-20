@@ -119,6 +119,8 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: ${{ needs.verify-ci.outputs.tag }}
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
@@ -368,6 +370,74 @@ jobs:
           shasum -a 256 TermQ-${{ steps.version.outputs.VERSION }}.zip >> checksums.txt
           cat checksums.txt
 
+      - name: Generate release notes
+        id: release-notes
+        run: |
+          TAG="${{ needs.verify-ci.outputs.tag }}"
+
+          # Stable: find previous stable tag. Pre-release: find previous tag of any kind.
+          if [[ "$TAG" =~ -(alpha|beta|rc)\. ]]; then
+            PREV_TAG=$(git tag --sort=-version:refname | grep -v "^${TAG}$" | head -1)
+          else
+            PREV_TAG=$(git tag --sort=-version:refname | grep -v "^${TAG}$" | grep -vE '\-(alpha|beta|rc)\.' | head -1)
+          fi
+
+          echo "Release notes: $TAG since $PREV_TAG"
+
+          # Features always land on develop. Fetch it so stable tags (on main) can
+          # still see the full commit history.
+          git fetch origin develop 2>/dev/null || true
+
+          RANGE="${PREV_TAG}..origin/develop"
+
+          git log "$RANGE" --no-merges --format="%s" \
+            | grep -E '^feat(\([^)]+\))?!?:' \
+            | sed -E 's/^[^:]+: //' \
+            > /tmp/features.txt
+
+          git log "$RANGE" --no-merges --format="%s" \
+            | grep -E '^fix(\([^)]+\))?!?:' \
+            | sed -E 's/^[^:]+: //' \
+            > /tmp/fixes.txt
+
+          echo "  feat: $(wc -l < /tmp/features.txt | tr -d ' ') entries"
+          echo "  fix:  $(wc -l < /tmp/fixes.txt | tr -d ' ') entries"
+
+          {
+            if [ -s /tmp/features.txt ]; then
+              printf "## What's New\n\n"
+              while IFS= read -r line; do printf "- %s\n" "$line"; done < /tmp/features.txt
+              printf "\n"
+            fi
+
+            if [ -s /tmp/fixes.txt ]; then
+              printf "## Bug Fixes\n\n"
+              while IFS= read -r line; do printf "- %s\n" "$line"; done < /tmp/fixes.txt
+              printf "\n"
+            fi
+
+            printf "---\n\n"
+            printf "## Installation\n\n"
+            printf "### macOS App (Recommended)\n"
+            printf "1. Download \`TermQ-${{ steps.version.outputs.VERSION }}.dmg\`\n"
+            printf "2. Open the DMG and drag \`TermQ.app\` to your Applications folder\n"
+            printf "3. Double-click to launch\n\n"
+            printf "### Alternative: Zip Archive\n"
+            printf "1. Download \`TermQ-${{ steps.version.outputs.VERSION }}.zip\`\n"
+            printf "2. Unzip and move \`TermQ.app\` to your Applications folder\n\n"
+            printf "### CLI Tool\n"
+            printf "The \`termqcli\` CLI is bundled inside the app. To install it:\n"
+            printf "1. Open TermQ.app\n"
+            printf "2. Go to **TermQ → Settings** (or press ⌘,)\n"
+            printf "3. Click **Install Command Line Tool**\n\n"
+            printf "Or manually:\n"
+            printf "\`\`\`bash\n"
+            printf "sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli\n"
+            printf "\`\`\`\n\n"
+            printf "## Checksums\n"
+            printf "See \`checksums.txt\` for SHA-256 checksums of all release artifacts.\n"
+          } > /tmp/release-notes.md
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
@@ -375,37 +445,13 @@ jobs:
           name: TermQ v${{ steps.version.outputs.VERSION }}
           draft: false
           prerelease: ${{ contains(needs.verify-ci.outputs.tag, 'alpha') || contains(needs.verify-ci.outputs.tag, 'beta') || contains(needs.verify-ci.outputs.tag, 'rc') }}
-          generate_release_notes: true
+          generate_release_notes: false
+          body_path: /tmp/release-notes.md
           files: |
             TermQ-${{ steps.version.outputs.VERSION }}.dmg
             TermQ-${{ steps.version.outputs.VERSION }}.zip
             TermQ-${{ steps.version.outputs.VERSION }}.zip.sig
             checksums.txt
-          body: |
-            ## Installation
-
-            ### macOS App (Recommended)
-            1. Download `TermQ-${{ steps.version.outputs.VERSION }}.dmg`
-            2. Open the DMG and drag `TermQ.app` to your Applications folder
-            3. Double-click to launch
-
-            ### Alternative: Zip Archive
-            1. Download `TermQ-${{ steps.version.outputs.VERSION }}.zip`
-            2. Unzip and move `TermQ.app` to your Applications folder
-
-            ### CLI Tool
-            The `termqcli` CLI is bundled inside the app. To install it:
-            1. Open TermQ.app
-            2. Go to **TermQ → Settings** (or press ⌘,)
-            3. Click **Install Command Line Tool**
-
-            Or manually:
-            ```bash
-            sudo cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli
-            ```
-
-            ## Checksums
-            See `checksums.txt` for SHA-256 checksums of all release artifacts.
 
       - name: Trigger appcast update
         env:
