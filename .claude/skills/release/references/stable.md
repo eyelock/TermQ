@@ -28,9 +28,11 @@ gh pr create --base main --head develop \
   --body "Promotes develop to main for stable release v{VERSION}"
 ```
 
-Wait for CI to pass on the PR, then merge. After merge:
+Wait for CI to pass on the PR, then merge using a **true merge** (not squash, not rebase). This preserves ancestry so `git log v{VERSION}..develop` stays clean after the release.
 
 ```bash
+gh pr checks   # wait until all pass
+gh pr merge --merge
 git checkout main && git pull
 ```
 
