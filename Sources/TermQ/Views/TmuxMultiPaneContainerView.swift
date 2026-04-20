@@ -193,7 +193,9 @@ class TmuxMultiPaneContainerNSView: NSView {
         // Zoom detection: when a pane is zoomed its tmux-reported dimensions fill the
         // entire window, producing a frame that equals the container bounds exactly
         // (no half-gap extensions apply at the window edges).
-        let isZoomed = framesForOverlay.contains { abs($0.frame.width - boundsWidth) < 1 && abs($0.frame.height - boundsHeight) < 1 }
+        let isZoomed = framesForOverlay.contains {
+            abs($0.frame.width - boundsWidth) < 1 && abs($0.frame.height - boundsHeight) < 1
+        }
         let activeId = overlay.activePaneId
 
         // When zoomed, pass only the zoomed pane's frame to the overlay. The separator

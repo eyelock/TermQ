@@ -2,23 +2,47 @@
 
 ## Prerequisites
 
-- All changes merged to main via PR
-- CI passing on main
-- `make check` passes locally
+- All feature/fix work merged to develop
+- CI passing on develop
 
 ## Steps
 
-### 1. Pre-Release Checks
+### 0. Update CHANGELOG.md (on develop, before opening the release PR)
 
 ```bash
-git checkout main
-git pull
+# In CHANGELOG.md:
+# 1. Rename ## [Unreleased] → ## [VERSION] - YYYY-MM-DD
+# 2. Add a new empty ## [Unreleased] section above it
+git add CHANGELOG.md
+git commit -m "chore: Update CHANGELOG for v{VERSION}"
+git push
+```
+
+This commit must land on develop (or a `release/vVERSION` branch) and be included in the develop → main PR. The release workflow reads `CHANGELOG.md` from the tagged commit — if it's not committed before the tag is pushed, the release notes will be empty.
+
+### 1. Open and Merge the Release PR
+
+```bash
+gh pr create --base main --head develop \
+  --title "release: TermQ v{VERSION}" \
+  --body "Promotes develop to main for stable release v{VERSION}"
+```
+
+Wait for CI to pass on the PR, then merge. After merge:
+
+```bash
+git checkout main && git pull
+```
+
+### 2. Pre-Release Checks
+
+```bash
 make check
 ```
 
 All checks must pass: build zero errors, lint zero errors, format clean, all tests pass.
 
-### 2. Create Release Tag
+### 3. Create Release Tag
 
 ```bash
 # Interactive — prompts for patch/minor/major
@@ -32,7 +56,7 @@ make release-major   # 0.6.4 → 1.0.0
 
 This checks for uncommitted changes, verifies you're on main, calculates the next version from git tags, creates an annotated tag, and pushes it.
 
-### 3. Monitor Automated Release
+### 4. Monitor Automated Release
 
 ```bash
 gh run list --workflow=release.yml --limit 1
@@ -41,14 +65,14 @@ gh run watch <run-id>
 
 The workflow automatically: verifies CI passed → builds → signs → notarizes (~5-15 min) → creates DMG + ZIP + checksums → publishes GitHub release.
 
-### 4. Verify Release
+### 5. Verify Release
 
 ```bash
 gh release view v{VERSION}
 # Should show: title "TermQ v{VERSION}", assets (DMG, ZIP, checksums), NOT pre-release
 ```
 
-### 5. Verify Appcast Update
+### 6. Verify Appcast Update
 
 ```bash
 gh run list --workflow=update-appcast.yml --limit 1

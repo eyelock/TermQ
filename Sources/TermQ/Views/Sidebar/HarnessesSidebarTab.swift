@@ -20,6 +20,7 @@ struct HarnessesSidebarTab: View {
     var onExport: ((String, String) -> Void)?
     var onNewHarness: (() -> Void)?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
+    @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @State private var harnessToUninstall: Harness?
     @State private var harnessToDuplicate: Harness?
     @State private var showWizard = false
@@ -211,6 +212,9 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
                 }
+
+                Divider()
+
                 Button {
                     NSWorkspace.shared.activateFileViewerSelecting(
                         [URL(fileURLWithPath: harness.path)]
@@ -218,18 +222,35 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
                 }
+                Button {
+                    openInTerminal(path: harness.path)
+                } label: {
+                    Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
+                }
+                if !editorRegistry.available.isEmpty {
+                    Menu(Strings.Sidebar.openIn) {
+                        ForEach(editorRegistry.available) { editor in
+                            Button(editor.displayName) {
+                                openIn(editor: editor, path: harness.path)
+                            }
+                        }
+                    }
+                }
+
                 if let source = harness.installedFrom?.source,
                     let url = GitURLHelper.browserURL(
                         for: source,
                         path: harness.installedFrom?.path
                     )
                 {
+                    Divider()
                     Button {
                         NSWorkspace.shared.open(url)
                     } label: {
                         Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
                     }
                 }
+
                 Divider()
                 Button {
                     onUpdate?(harness.name)
@@ -395,6 +416,41 @@ struct HarnessesSidebarTab: View {
                 Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
             }
         }
+    }
+
+    private func openInTerminal(path: String) {
+        guard !path.contains("\n"), !path.contains("\r") else {
+            TermQLogger.ui.error("openInTerminal: path contains newline, aborting")
+            return
+        }
+        let escaped = path.replacingOccurrences(of: "'", with: "'\\''")
+        let script = """
+            tell application "Terminal"
+                activate
+                do script "cd '\(escaped)'"
+            end tell
+            """
+        Task.detached {
+            if let appleScript = NSAppleScript(source: script) {
+                var error: NSDictionary?
+                appleScript.executeAndReturnError(&error)
+                if let error = error {
+                    let code = (error[NSAppleScript.errorNumber] as? NSNumber)?.intValue ?? -1
+                    if TermQLogger.fileLoggingEnabled {
+                        TermQLogger.ui.error("openInTerminal AppleScript error=\(error)")
+                    } else {
+                        TermQLogger.ui.error("openInTerminal AppleScript failed code=\(code)")
+                    }
+                }
+            }
+        }
+    }
+
+    private func openIn(editor: ExternalEditor, path: String) {
+        let url = URL(fileURLWithPath: path)
+        let config = NSWorkspace.OpenConfiguration()
+        config.addsToRecentItems = false
+        NSWorkspace.shared.open([url], withApplicationAt: editor.appURL, configuration: config)
     }
 
     private func revealLocalGroupInFinder(_ group: HarnessGroup) {

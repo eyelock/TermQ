@@ -362,6 +362,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        EditorRegistry.shared.start()
         // Prevent macOS from auto-tabbing windows (e.g. when "Prefer tabs" is set in System Settings)
         NSWindow.allowsAutomaticWindowTabbing = false
         // Log window state at launch to detect unexpected pre-existing windows
