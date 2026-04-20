@@ -10,6 +10,7 @@ struct AddMarketplaceSheet: View {
     @State private var customURL = ""
     @State private var customVendor: MarketplaceVendor = .claude
     @State private var customName = ""
+    @State private var customRef = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -17,8 +18,6 @@ struct AddMarketplaceSheet: View {
                 Text(Strings.Marketplace.addSheetTitle)
                     .font(.headline)
                 Spacer()
-                Button(Strings.Common.cancel) { dismiss() }
-                    .keyboardShortcut(.cancelAction)
             }
             .padding()
 
@@ -39,46 +38,57 @@ struct AddMarketplaceSheet: View {
             case .custom: customTab
             }
         }
-        .frame(width: 460, height: 380)
+        .frame(width: 460, height: 400)
     }
 
     // MARK: - Known seeds
 
     private var knownTab: some View {
-        List(KnownMarketplaces.all, id: \.url) { seed in
-            HStack(spacing: 12) {
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack(spacing: 4) {
-                        Text(seed.name).font(.body).fontWeight(.medium)
-                        Text(seed.vendor.displayName)
-                            .font(.caption2)
-                            .padding(.horizontal, 5).padding(.vertical, 1)
-                            .background(Color.accentColor.opacity(0.15))
-                            .foregroundColor(.accentColor)
-                            .clipShape(Capsule())
+        VStack(spacing: 0) {
+            List(KnownMarketplaces.all, id: \.url) { seed in
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack(spacing: 4) {
+                            Text(seed.name).font(.body).fontWeight(.medium)
+                            Text(seed.vendor.displayName)
+                                .font(.caption2)
+                                .padding(.horizontal, 5).padding(.vertical, 1)
+                                .background(Color.accentColor.opacity(0.15))
+                                .foregroundColor(.accentColor)
+                                .clipShape(Capsule())
+                        }
+                        Text(seed.description)
+                            .font(.caption).foregroundColor(.secondary).lineLimit(2)
+                        Text(seed.url)
+                            .font(.caption2).foregroundColor(.secondary)
+                            .lineLimit(1).truncationMode(.middle)
                     }
-                    Text(seed.description)
-                        .font(.caption).foregroundColor(.secondary).lineLimit(2)
-                    Text(seed.url)
-                        .font(.caption2).foregroundColor(.secondary)
-                        .lineLimit(1).truncationMode(.middle)
+                    Spacer()
+                    Button(Strings.Common.add) {
+                        let marketplace = Marketplace(
+                            id: UUID(), name: seed.name, owner: seed.owner,
+                            description: seed.description, vendor: seed.vendor,
+                            url: seed.url, ref: nil, plugins: [], lastFetched: nil, fetchError: nil
+                        )
+                        onAdd(marketplace)
+                        dismiss()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.small)
                 }
-                Spacer()
-                Button(Strings.Common.add) {
-                    let marketplace = Marketplace(
-                        id: UUID(), name: seed.name, owner: seed.owner,
-                        description: seed.description, vendor: seed.vendor,
-                        url: seed.url, plugins: [], lastFetched: nil, fetchError: nil
-                    )
-                    onAdd(marketplace)
-                    dismiss()
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.small)
+                .padding(.vertical, 4)
             }
-            .padding(.vertical, 4)
+            .listStyle(.plain)
+
+            Divider()
+
+            HStack {
+                Button(Strings.Common.cancel) { dismiss() }
+                    .keyboardShortcut(.cancelAction)
+                Spacer()
+            }
+            .padding()
         }
-        .listStyle(.plain)
     }
 
     // MARK: - Custom URL
@@ -94,6 +104,8 @@ struct AddMarketplaceSheet: View {
                                 customName = Self.extractOrgRepo(from: val)
                             }
                         }
+                    TextField(Strings.Marketplace.addRefPlaceholder, text: $customRef)
+                        .textFieldStyle(.roundedBorder)
                 } header: {
                     Text(Strings.Marketplace.addSectionGitURL)
                 }
@@ -121,12 +133,15 @@ struct AddMarketplaceSheet: View {
             Spacer()
 
             HStack {
+                Button(Strings.Common.cancel) { dismiss() }
+                    .keyboardShortcut(.cancelAction)
                 Spacer()
                 Button(Strings.Common.add) {
                     let trimURL = customURL.trimmingCharacters(in: .whitespaces)
                     let orgRepo = Self.extractOrgRepo(from: trimURL)
                     let name = customName.trimmingCharacters(in: .whitespaces)
                     let owner = orgRepo.components(separatedBy: "/").first ?? ""
+                    let trimRef = customRef.trimmingCharacters(in: .whitespaces)
                     let marketplace = Marketplace(
                         id: UUID(),
                         name: name.isEmpty ? orgRepo : name,
@@ -134,6 +149,7 @@ struct AddMarketplaceSheet: View {
                         description: nil,
                         vendor: customVendor,
                         url: trimURL,
+                        ref: trimRef.isEmpty ? nil : trimRef,
                         plugins: [],
                         lastFetched: nil,
                         fetchError: nil
