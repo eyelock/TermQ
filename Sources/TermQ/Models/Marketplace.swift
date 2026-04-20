@@ -82,16 +82,36 @@ struct PluginSourceSpec: Codable, Sendable {
             self.path = nil
             return
         }
-        // Object form: {"source": "url", "url": "https://..."}
+        // Object form from vendor JSON: {"source": "github", "url": "..."}
+        // Object form from TermQ persistence: {"type": "github", "url": "..."}
+
         let container = try decoder.container(keyedBy: RawSourceCodingKeys.self)
-        let typeStr = (try? container.decode(String.self, forKey: .source)) ?? ""
+        let typeStr = (try? container.decode(String.self, forKey: .source))
+            ?? (try? container.decode(String.self, forKey: .type))
+            ?? ""
         self.type = PluginSourceType(rawValue: typeStr) ?? .unknown
         self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
         self.path = try? container.decode(String.self, forKey: .path)
     }
 
     private enum RawSourceCodingKeys: String, CodingKey {
-        case source, url, path
+        case source, type, url, path
+    }
+}
+
+extension PluginSourceSpec {
+    /// Resolves the effective `(url, path)` pair for `ynh include add`.
+    ///
+    /// Relative-source plugins live inside the marketplace repo, so the correct
+    /// source URL is the marketplace git URL, not the relative path stored in
+    /// the plugin spec (which is meaningless as a standalone git URL to YNH).
+    func resolved(marketplaceURL: String) -> (url: String, path: String?) {
+        // Also catch persisted entries where type was corrupted to .unknown due to
+        // the "source" vs "type" key mismatch in the old decoder.
+        guard type.isRelative || url.hasPrefix("./") else { return (url, path) }
+        let rawPath = url.hasPrefix("./") ? String(url.dropFirst(2)) : url
+        let fullPath = path.map { "\(rawPath)/\($0)" } ?? rawPath
+        return (marketplaceURL, fullPath.isEmpty ? nil : fullPath)
     }
 }
 
