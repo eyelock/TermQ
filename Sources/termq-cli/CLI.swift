@@ -116,15 +116,11 @@ struct New: ParsableCommand {
             // Headless path - use BoardWriter directly
             do {
                 let card = try HeadlessWriter.createCard(
-                    name: cardName,
-                    columnName: column,
-                    workingDirectory: cwd,
-                    description: nil,
-                    llmPrompt: nil,
-                    llmNextAction: nil,
-                    tags: nil,
-                    dataDirectory: nil,
-                    debug: false
+                    HeadlessWriter.CardCreationOptions(
+                        workingDirectory: cwd,
+                        name: cardName,
+                        column: column
+                    )
                 )
 
                 JSONHelper.printJSON(
@@ -263,14 +259,13 @@ struct Create: ParsableCommand {
 
             do {
                 let card = try HeadlessWriter.createCard(
-                    name: cardName,
-                    columnName: column,
-                    workingDirectory: cwd,
-                    description: description,
-                    llmPrompt: nil,
-                    llmNextAction: nil,
-                    tags: parsedTags.isEmpty ? nil : parsedTags,
-                    dataDirectory: nil,
+                    HeadlessWriter.CardCreationOptions(
+                        workingDirectory: cwd,
+                        name: cardName,
+                        column: column,
+                        description: description,
+                        tags: parsedTags.isEmpty ? nil : parsedTags
+                    ),
                     debug: shouldUseDebugMode(false)
                 )
 

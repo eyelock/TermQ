@@ -37,6 +37,26 @@ struct AuthorStep: Identifiable, Sendable {
     }
 }
 
+struct HarnessCreationOptions {
+    let name: String
+    let description: String
+    let vendorID: String
+    let destination: String
+    let install: Bool
+}
+
+struct YNHBinaries {
+    let yndPath: String
+    let ynhPath: String
+}
+
+struct IncludeApplicationOptions {
+    let harness: String
+    let sourceURL: String
+    let path: String?
+    let pick: [String]
+}
+
 /// Sequences `ynd create harness <name>` + optional `ynh install <path>`.
 ///
 /// Streams combined stdout/stderr lines to `outputLines` and tracks per-step status.
@@ -50,24 +70,15 @@ final class HarnessAuthor: ObservableObject {
 
     private(set) var createdHarnessName: String?
 
-    func run(
-        name: String,
-        description: String,
-        vendorID: String,
-        destination: String,
-        install: Bool,
-        yndPath: String,
-        ynhPath: String,
-        environment: [String: String]
-    ) async {
-        var createCmd = "\(yndPath) create harness \(name)"
-        if !description.isEmpty { createCmd += " --description \"\(description)\"" }
-        if !vendorID.isEmpty { createCmd += " --vendor \(vendorID)" }
-        let installPath = (destination as NSString).appendingPathComponent(name)
-        let installCmd = "\(ynhPath) install \(installPath)"
+    func run(_ options: HarnessCreationOptions, binaries: YNHBinaries, environment: [String: String]) async {
+        var createCmd = "\(binaries.yndPath) create harness \(options.name)"
+        if !options.description.isEmpty { createCmd += " --description \"\(options.description)\"" }
+        if !options.vendorID.isEmpty { createCmd += " --vendor \(options.vendorID)" }
+        let installPath = (options.destination as NSString).appendingPathComponent(options.name)
+        let installCmd = "\(binaries.ynhPath) install \(installPath)"
 
         steps = [AuthorStep(label: "Create harness", command: createCmd)]
-        if install {
+        if options.install {
             steps.append(AuthorStep(label: "Install harness", command: installCmd))
         }
         outputLines = []
@@ -75,29 +86,29 @@ final class HarnessAuthor: ObservableObject {
         succeeded = false
 
         // Step 1: create
-        var createArgs = ["create", "harness", name]
-        if !description.isEmpty { createArgs += ["--description", description] }
-        if !vendorID.isEmpty { createArgs += ["--vendor", vendorID] }
+        var createArgs = ["create", "harness", options.name]
+        if !options.description.isEmpty { createArgs += ["--description", options.description] }
+        if !options.vendorID.isEmpty { createArgs += ["--vendor", options.vendorID] }
         let createOK = await runStep(
             index: 0,
-            executable: yndPath,
+            executable: binaries.yndPath,
             args: createArgs,
-            cwd: destination,
+            cwd: options.destination,
             environment: environment
         )
         guard createOK else {
             isRunning = false
             return
         }
-        createdHarnessName = name
+        createdHarnessName = options.name
 
         // Step 2: install (optional)
-        if install {
+        if options.install {
             let installOK = await runStep(
                 index: 1,
-                executable: ynhPath,
+                executable: binaries.ynhPath,
                 args: ["install", installPath],
-                cwd: destination,
+                cwd: options.destination,
                 environment: environment
             )
             guard installOK else {
@@ -377,26 +388,19 @@ final class IncludeApplier: ObservableObject {
     @Published private(set) var succeeded = false
     @Published private(set) var errorMessage: String?
 
-    func apply(
-        harness: String,
-        sourceURL: String,
-        path: String?,
-        pick: [String],
-        ynhPath: String,
-        environment: [String: String]
-    ) async {
+    func apply(_ options: IncludeApplicationOptions, ynhPath: String, environment: [String: String]) async {
         isRunning = true
         outputLines = []
         succeeded = false
         errorMessage = nil
 
-        var args = ["include", "add", harness, sourceURL]
-        if let path, !path.isEmpty {
+        var args = ["include", "add", options.harness, options.sourceURL]
+        if let path = options.path, !path.isEmpty {
             args += ["--path", path]
         }
-        if !pick.isEmpty {
+        if !options.pick.isEmpty {
             // YNH --pick expects bare artifact names; strip the type/ prefix (e.g. "skills/foo" → "foo")
-            let bareNames = pick.map { $0.components(separatedBy: "/").last ?? $0 }
+            let bareNames = options.pick.map { $0.components(separatedBy: "/").last ?? $0 }
             args += ["--pick", bareNames.joined(separator: ",")]
         }
 

@@ -412,10 +412,12 @@ struct HarnessIncludePicker: View {
 
         let (sourceURL, sourcePath) = resolvedSource
         await applier.apply(
-            harness: harness,
-            sourceURL: sourceURL,
-            path: sourcePath,
-            pick: pick,
+            IncludeApplicationOptions(
+                harness: harness,
+                sourceURL: sourceURL,
+                path: sourcePath,
+                pick: pick
+            ),
             ynhPath: ynhPath,
             environment: ynhEnvironment
         )
