@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "보호된 브랜치";
+"settings.protected.branches.help" = "정리 시 삭제 대상으로 표시되지 않는 브랜치입니다. 이름은 쉼표로 구분하세요.";
+"settings.protected.branches.prompt" = "쉼표로 구분된 브랜치 이름";
 
 // Settings - Language section
 "settings.section.language" = "언어";
@@ -516,6 +521,9 @@
 "sidebar.worktree.base.path.label" = "Worktree 기본 경로";
 "sidebar.worktree.base.path.help" = "새 worktree가 여기에 생성됩니다. 기본값은 저장소 디렉토리의 상위 폴더입니다.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "보호된 브랜치";
+"sidebar.protected.branches.override.help" = "이 저장소의 정리에서 제외되는 브랜치입니다. 전역 설정을 재정의합니다. 전역 설정을 사용하려면 비워 두세요.";
+"sidebar.protected.branches.override.placeholder" = "(전역 설정 사용)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

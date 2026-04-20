@@ -261,6 +261,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Nhánh được bảo vệ";
+"settings.protected.branches.help" = "Các nhánh không bao giờ được đề xuất xóa khi dọn dẹp. Phân tách tên bằng dấu phẩy.";
+"settings.protected.branches.prompt" = "Tên nhánh phân cách bằng dấu phẩy";
 
 // Settings - Language section
 "settings.section.language" = "Ngôn ngữ";
@@ -519,6 +524,9 @@
 "sidebar.worktree.base.path.label" = "Đường dẫn cơ sở worktree";
 "sidebar.worktree.base.path.help" = "Các worktrees mới được tạo tại đây. Mặc định là thư mục cha của thư mục kho lưu trữ.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Nhánh được bảo vệ";
+"sidebar.protected.branches.override.help" = "Các nhánh bị loại trừ khỏi việc dọn dẹp trong kho lưu trữ này. Ghi đè cài đặt toàn cục. Để trống để sử dụng cài đặt toàn cục.";
+"sidebar.protected.branches.override.placeholder" = "(sử dụng cài đặt toàn cục)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

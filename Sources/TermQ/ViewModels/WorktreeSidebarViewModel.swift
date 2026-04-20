@@ -218,9 +218,15 @@ final class WorktreeSidebarViewModel: ObservableObject {
         save()
     }
 
-    func updateRepository(_ repo: ObservableRepository, name: String, worktreeBasePath: String?) {
+    func updateRepository(
+        _ repo: ObservableRepository,
+        name: String,
+        worktreeBasePath: String?,
+        protectedBranches: [String]? = nil
+    ) {
         repo.name = name
         repo.worktreeBasePath = worktreeBasePath
+        repo.protectedBranches = protectedBranches
         save()
     }
 
@@ -346,7 +352,19 @@ final class WorktreeSidebarViewModel: ObservableObject {
     }
 
     func mergedLocalBranches(repo: ObservableRepository) async throws -> [String] {
-        try await GitService.shared.mergedLocalBranches(repoPath: repo.path)
+        let branches = try await GitService.shared.mergedLocalBranches(repoPath: repo.path)
+        let protected = Set(effectiveProtectedBranches(for: repo))
+        return branches.filter { !protected.contains($0) }
+    }
+
+    private func effectiveProtectedBranches(for repo: ObservableRepository) -> [String] {
+        if let override = repo.protectedBranches {
+            return override
+        }
+        let stored = UserDefaults.standard.string(forKey: "protectedBranches") ?? ""
+        return stored.split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
     }
 
     func deleteBranches(repo: ObservableRepository, branches: [String]) async throws {
@@ -402,6 +420,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
                 existing.name = gitRepo.name
                 existing.path = gitRepo.path
                 existing.worktreeBasePath = gitRepo.worktreeBasePath
+                existing.protectedBranches = gitRepo.protectedBranches
                 updated.append(existing)
             } else {
                 updated.append(ObservableRepository(from: gitRepo))
@@ -421,6 +440,7 @@ extension ObservableRepository {
             name: gitRepo.name,
             path: gitRepo.path,
             worktreeBasePath: gitRepo.worktreeBasePath,
+            protectedBranches: gitRepo.protectedBranches,
             addedAt: gitRepo.addedAt
         )
     }
@@ -432,6 +452,7 @@ extension ObservableRepository {
             name: name,
             path: path,
             worktreeBasePath: worktreeBasePath,
+            protectedBranches: protectedBranches,
             addedAt: addedAt
         )
     }

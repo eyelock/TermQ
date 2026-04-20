@@ -261,6 +261,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Захищені гілки";
+"settings.protected.branches.help" = "Гілки, які ніколи не пропонуються для видалення під час очищення. Розділяйте імена комами.";
+"settings.protected.branches.prompt" = "Імена гілок через кому";
 
 // Settings - Language section
 "settings.section.language" = "Мова";
@@ -519,6 +524,9 @@
 "sidebar.worktree.base.path.label" = "Базовий шлях worktree";
 "sidebar.worktree.base.path.help" = "Нові worktrees створюються тут. За замовчуванням — батьківська папка директорії репозиторію.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Захищені гілки";
+"sidebar.protected.branches.override.help" = "Гілки, виключені з очищення в цьому репозиторії. Замінює глобальне налаштування. Залиште порожнім, щоб використовувати глобальне налаштування.";
+"sidebar.protected.branches.override.placeholder" = "(використовувати глобальне налаштування)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

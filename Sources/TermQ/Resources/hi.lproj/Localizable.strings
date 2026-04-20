@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "संरक्षित शाखाएं";
+"settings.protected.branches.help" = "शाखाएं जो छंटाई के दौरान कभी भी हटाने के लिए प्रस्तावित नहीं होती हैं। नामों को अल्पविराम से अलग करें।";
+"settings.protected.branches.prompt" = "अल्पविराम से अलग की गई शाखाओं के नाम";
 
 // Settings - Language section
 "settings.section.language" = "भाषा";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "Worktree का आधार पथ";
 "sidebar.worktree.base.path.help" = "नए worktrees यहाँ बनाए जाते हैं। डिफ़ॉल्ट रूप से रेपो डायरेक्टरी के पैरेंट फ़ोल्डर का उपयोग होता है।";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "संरक्षित शाखाएं";
+"sidebar.protected.branches.override.help" = "इस रिपॉजिटरी में छंटाई से बाहर की गई शाखाएं। वैश्विक सेटिंग को ओवरराइड करता है। वैश्विक सेटिंग उपयोग करने के लिए खाली छोड़ें।";
+"sidebar.protected.branches.override.placeholder" = "(वैश्विक सेटिंग उपयोग करें)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

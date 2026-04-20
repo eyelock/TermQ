@@ -511,6 +511,12 @@ enum Strings {
         static var dataDirectory: String { localized("settings.data.directory") }
         static var dataDirectoryHelp: String { localized("settings.data.directory.help") }
 
+        // General - Git section
+        static var sectionGit: String { localized("settings.section.git") }
+        static var protectedBranchesLabel: String { localized("settings.protected.branches.label") }
+        static var protectedBranchesHelp: String { localized("settings.protected.branches.help") }
+        static var protectedBranchesPrompt: String { localized("settings.protected.branches.prompt") }
+
         // General - Language section
         static var sectionLanguage: String { localized("settings.section.language") }
         static var fieldCurrent: String { localized("settings.field.current") }
@@ -784,6 +790,11 @@ extension Strings {
         static var worktreeBasePathLabel: String { localized("sidebar.worktree.base.path.label") }
         static var worktreeBasePathHelp: String { localized("sidebar.worktree.base.path.help") }
         static var worktreeBasePathPlaceholder: String { localized("sidebar.worktree.base.path.placeholder") }
+        static var protectedBranchesOverrideLabel: String { localized("sidebar.protected.branches.override.label") }
+        static var protectedBranchesOverrideHelp: String { localized("sidebar.protected.branches.override.help") }
+        static var protectedBranchesOverridePlaceholder: String {
+            localized("sidebar.protected.branches.override.placeholder")
+        }
         static var basePathEqualsRepo: String { localized("sidebar.base.path.equals.repo") }
         static var basePathIsParentOfRepo: String { localized("sidebar.base.path.is.parent") }
         static func addToGitignore(_ entry: String) -> String {

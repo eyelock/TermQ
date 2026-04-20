@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Geschützte Branches";
+"settings.protected.branches.help" = "Branches, die beim Bereinigen nie zum Löschen angeboten werden. Namen mit Komma trennen.";
+"settings.protected.branches.prompt" = "Kommagetrennte Branch-Namen";
 
 // Settings - Language section
 "settings.section.language" = "Sprache";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "Worktree-Basispfad";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Geschützte Branches";
+"sidebar.protected.branches.override.help" = "Branches, die in diesem Repository vom Bereinigen ausgeschlossen sind. Überschreibt die globale Einstellung. Leer lassen, um die globale Einstellung zu verwenden.";
+"sidebar.protected.branches.override.placeholder" = "(globale Einstellung verwenden)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

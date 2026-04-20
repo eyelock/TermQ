@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Zaštićene grane";
+"settings.protected.branches.help" = "Grane koje se nikad ne nude za brisanje pri čišćenju. Odvojite nazive zarezima.";
+"settings.protected.branches.prompt" = "Nazivi grana odvojeni zarezima";
 
 // Settings - Language section
 "settings.section.language" = "Jezik";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "Osnovna putanja worktree";
 "sidebar.worktree.base.path.help" = "Novi worktrees stvaraju se ovdje. Zadano je nadređeni direktorij repozitorija.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Zaštićene grane";
+"sidebar.protected.branches.override.help" = "Grane isključene iz čišćenja u ovom repozitoriju. Zamjenjuje globalnu postavku. Ostavite prazno za korištenje globalne postavke.";
+"sidebar.protected.branches.override.placeholder" = "(koristite globalnu postavku)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

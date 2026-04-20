@@ -259,6 +259,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "受保護的分支";
+"settings.protected.branches.help" = "整理時永不提供刪除的分支。以逗號分隔名稱。";
+"settings.protected.branches.prompt" = "以逗號分隔的分支名稱";
 
 // Settings - Language section
 "settings.section.language" = "語言";
@@ -516,6 +521,9 @@
 "sidebar.worktree.base.path.label" = "worktree 基礎路徑";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "受保護的分支";
+"sidebar.protected.branches.override.help" = "此儲存庫中從整理中排除的分支。覆蓋全域設定。留空以使用全域設定。";
+"sidebar.protected.branches.override.placeholder" = "(使用全域設定)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";

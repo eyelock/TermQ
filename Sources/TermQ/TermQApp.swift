@@ -713,6 +713,10 @@ struct TermQApp: App {
     }
 
     init() {
+        UserDefaults.standard.register(defaults: [
+            "protectedBranches": "main,master,develop"
+        ])
+
         // Register URL handler
         NSAppleEventManager.shared().setEventHandler(
             URLEventHandler.shared,
