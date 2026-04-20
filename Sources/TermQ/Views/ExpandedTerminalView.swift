@@ -561,43 +561,45 @@ private struct TabItemView: View {
 
     var body: some View {
         HStack(spacing: 2) {
-            // Main tab button
-            Button(action: onSelect) {
-                HStack(spacing: 4) {
-                    // Show star for favourites
-                    if tabCard.isFavourite {
-                        Image(systemName: "star.fill")
-                            .font(.caption2)
-                            .foregroundColor(.yellow)
-                    }
-                    // Fixed-width icon area: terminal icon, spinner, or attention indicator
-                    // This prevents layout shifts when state changes
-                    // Priority: attention > processing > default
-                    Group {
-                        if needsAttention {
-                            // Attention indicator (highest priority - requires user action)
-                            Image(systemName: "bell.fill")
-                                .font(.caption2)
-                                .foregroundColor(.orange)
-                        } else if isProcessing {
-                            // Spinner when processing
-                            ProgressView()
-                                .scaleEffect(0.5)
-                        } else {
-                            // Terminal icon colored by column
-                            Image(systemName: "terminal")
-                                .font(.caption2)
-                                .foregroundColor(columnColor)
-                        }
-                    }
-                    .frame(width: 14, height: 14)
-                    Text(tabCard.title)
-                        .font(.subheadline)
-                        .lineLimit(1)
+            // Main tab label — uses onTapGesture instead of Button so .draggable() can initiate
+            HStack(spacing: 4) {
+                // Show star for favourites
+                if tabCard.isFavourite {
+                    Image(systemName: "star.fill")
+                        .font(.caption2)
+                        .foregroundColor(.yellow)
                 }
+                // Fixed-width icon area: terminal icon, spinner, or attention indicator
+                // This prevents layout shifts when state changes
+                // Priority: attention > processing > default
+                Group {
+                    if needsAttention {
+                        // Attention indicator (highest priority - requires user action)
+                        Image(systemName: "bell.fill")
+                            .font(.caption2)
+                            .foregroundColor(.orange)
+                    } else if isProcessing {
+                        // Spinner when processing
+                        ProgressView()
+                            .scaleEffect(0.5)
+                    } else {
+                        // Terminal icon colored by column
+                        Image(systemName: "terminal")
+                            .font(.caption2)
+                            .foregroundColor(columnColor)
+                    }
+                }
+                .frame(width: 14, height: 14)
+                Text(tabCard.title)
+                    .font(.subheadline)
+                    .lineLimit(1)
             }
-            .buttonStyle(.plain)
             .foregroundColor(isSelected ? .accentColor : .primary)
+            .onTapGesture {
+                onSelect()
+            }
+            .accessibilityAddTraits(.isButton)
+            .accessibilityLabel(tabCard.title)
 
             // Action buttons area (fixed width to prevent jumping)
             HStack(spacing: 1) {
