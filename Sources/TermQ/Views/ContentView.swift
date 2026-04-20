@@ -903,6 +903,9 @@ extension ContentView {
             viewModel.tabManager.addTab(card.id)
         }
 
+        // Promote to a persistent favourite so it appears in Board View immediately.
+        viewModel.toggleFavourite(card)
+
         // Clear harness selection and switch to the new Card.
         cardBeforeHarness = nil
         harnessRepo.selectedHarnessName = nil
