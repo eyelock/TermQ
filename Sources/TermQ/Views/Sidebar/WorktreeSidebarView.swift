@@ -12,6 +12,7 @@ struct WorktreeSidebarView: View {
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var ynhDetector: YNHDetector = .shared
+    @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @State private var showAddRepo = false
     @State private var showNewWorktreeFor: ObservableRepository?
     @State private var showEditRepoFor: ObservableRepository?
@@ -460,6 +461,16 @@ struct WorktreeSidebarView: View {
             Label(Strings.Sidebar.copyPathname, systemImage: "doc.on.clipboard")
         }
 
+        if !editorRegistry.available.isEmpty {
+            Menu(Strings.Sidebar.openIn) {
+                ForEach(editorRegistry.available) { editor in
+                    Button(editor.displayName) {
+                        openIn(editor: editor, worktree: worktree)
+                    }
+                }
+            }
+        }
+
         Divider()
 
         // Group 3: Remote links
@@ -664,6 +675,13 @@ extension WorktreeSidebarView {
 
     fileprivate func revealInFinder(path: String) {
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
+    }
+
+    fileprivate func openIn(editor: ExternalEditor, worktree: GitWorktree) {
+        let url = URL(fileURLWithPath: worktree.path)
+        let config = NSWorkspace.OpenConfiguration()
+        config.addsToRecentItems = false
+        NSWorkspace.shared.open([url], withApplicationAt: editor.appURL, configuration: config)
     }
 }
 
