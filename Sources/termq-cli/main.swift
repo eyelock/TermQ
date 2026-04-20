@@ -1,0 +1,3 @@
+import TermQCLICore
+
+TermQCLI.main()
