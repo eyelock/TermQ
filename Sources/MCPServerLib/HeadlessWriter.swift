@@ -36,25 +36,51 @@ public enum HeadlessWriter {
         }
     }
 
+    /// Parameters for creating a new card via the MCP tool
+    public struct CardCreationOptions {
+        public var name: String?
+        public var column: String?
+        public var workingDirectory: String
+        public var description: String?
+        public var llmPrompt: String?
+        public var llmNextAction: String?
+        public var initCommand: String?
+        public var tags: [(key: String, value: String)]?
+
+        public init(
+            workingDirectory: String,
+            name: String? = nil,
+            column: String? = nil,
+            description: String? = nil,
+            llmPrompt: String? = nil,
+            llmNextAction: String? = nil,
+            initCommand: String? = nil,
+            tags: [(key: String, value: String)]? = nil
+        ) {
+            self.workingDirectory = workingDirectory
+            self.name = name
+            self.column = column
+            self.description = description
+            self.llmPrompt = llmPrompt
+            self.llmNextAction = llmNextAction
+            self.initCommand = initCommand
+            self.tags = tags
+        }
+    }
+
     /// Create a new card via BoardWriter with MCP-specific fields
     /// Marks card with needsTmuxSession=true for GUI to create sessions later
     public static func createCard(
-        name: String,
-        columnName: String?,
-        workingDirectory: String,
-        description: String?,
-        llmPrompt: String?,
-        llmNextAction: String?,
-        tags: [(key: String, value: String)]?,
+        _ options: CardCreationOptions,
         dataDirectory: URL? = nil,
         debug: Bool = false
     ) throws -> Card {
         // Create the card using BoardWriter
         var card = try BoardWriter.createCard(
-            name: name,
-            columnName: columnName,
-            workingDirectory: workingDirectory,
-            description: description ?? "",
+            name: options.name ?? "Terminal",
+            columnName: options.column,
+            workingDirectory: options.workingDirectory,
+            description: options.description ?? "",
             dataDirectory: dataDirectory,
             debug: debug
         )
@@ -62,11 +88,11 @@ public enum HeadlessWriter {
         // Build updates for additional MCP fields
         var updates: [String: Any] = [:]
 
-        if let llmPrompt = llmPrompt {
+        if let llmPrompt = options.llmPrompt {
             updates["llmPrompt"] = llmPrompt
         }
 
-        if let llmNextAction = llmNextAction {
+        if let llmNextAction = options.llmNextAction {
             updates["llmNextAction"] = llmNextAction
         }
 
@@ -74,7 +100,7 @@ public enum HeadlessWriter {
         updates["needsTmuxSession"] = true
 
         // Convert tags to dictionary format for storage
-        if let tags = tags, !tags.isEmpty {
+        if let tags = options.tags, !tags.isEmpty {
             let tagDicts = tags.map {
                 [
                     "id": UUID().uuidString,

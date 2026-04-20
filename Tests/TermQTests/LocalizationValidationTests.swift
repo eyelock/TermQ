@@ -125,7 +125,7 @@ final class LocalizationValidationTests: XCTestCase {
 
     /// Finds duplicate keys in a .strings file
     private func findDuplicateKeys(languageCode: String) -> [String] {
-        guard let dict = loadStringsFile(languageCode: languageCode) else {
+        guard loadStringsFile(languageCode: languageCode) != nil else {
             return []
         }
 

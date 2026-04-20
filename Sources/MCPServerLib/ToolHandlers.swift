@@ -467,42 +467,24 @@ extension TermQMCPServer {
             guiAvailable = await GUIDetector.waitForGUI()
         }
 
+        let options = HeadlessWriter.CardCreationOptions(
+            workingDirectory: path,
+            name: name,
+            column: column,
+            description: description,
+            llmPrompt: llmPrompt,
+            llmNextAction: llmNextAction,
+            initCommand: initCommand,
+            tags: tags
+        )
         if guiAvailable {
-            // GUI path - use URL scheme
-            return try await handleCreateViaGUI(
-                name: name,
-                column: column,
-                description: description,
-                llmPrompt: llmPrompt,
-                llmNextAction: llmNextAction,
-                initCommand: initCommand,
-                path: path,
-                tags: tags
-            )
+            return try await handleCreateViaGUI(options)
         } else {
-            // Headless path - use BoardWriter directly
-            return try await handleCreateHeadless(
-                name: name,
-                column: column,
-                description: description,
-                llmPrompt: llmPrompt,
-                llmNextAction: llmNextAction,
-                path: path,
-                tags: tags
-            )
+            return try await handleCreateHeadless(options)
         }
     }
 
-    private func handleCreateViaGUI(
-        name: String?,
-        column: String?,
-        description: String?,
-        llmPrompt: String?,
-        llmNextAction: String?,
-        initCommand: String?,
-        path: String,
-        tags: [(key: String, value: String)]?
-    ) async throws -> CallTool.Result {
+    private func handleCreateViaGUI(_ options: HeadlessWriter.CardCreationOptions) async throws -> CallTool.Result {
         // Generate card ID upfront so we can return it
         let cardId = UUID()
 
@@ -510,14 +492,14 @@ extension TermQMCPServer {
         let urlString = URLOpener.buildOpenURL(
             params: URLOpener.OpenURLParams(
                 cardId: cardId,
-                path: path,
-                name: name,
-                description: description,
-                column: column,
-                tags: tags,
-                llmPrompt: llmPrompt,
-                llmNextAction: llmNextAction,
-                initCommand: initCommand
+                path: options.workingDirectory,
+                name: options.name,
+                description: options.description,
+                column: options.column,
+                tags: options.tags,
+                llmPrompt: options.llmPrompt,
+                llmNextAction: options.llmNextAction,
+                initCommand: options.initCommand
             )
         )
 
@@ -554,26 +536,9 @@ extension TermQMCPServer {
         }
     }
 
-    private func handleCreateHeadless(
-        name: String?,
-        column: String?,
-        description: String?,
-        llmPrompt: String?,
-        llmNextAction: String?,
-        path: String,
-        tags: [(key: String, value: String)]?
-    ) async throws -> CallTool.Result {
+    private func handleCreateHeadless(_ options: HeadlessWriter.CardCreationOptions) async throws -> CallTool.Result {
         do {
-            let card = try HeadlessWriter.createCard(
-                name: name ?? "Terminal",
-                columnName: column,
-                workingDirectory: path,
-                description: description,
-                llmPrompt: llmPrompt,
-                llmNextAction: llmNextAction,
-                tags: tags,
-                dataDirectory: dataDirectory
-            )
+            let card = try HeadlessWriter.createCard(options, dataDirectory: dataDirectory)
 
             let board = try loadBoard()
             let output = TerminalOutput(

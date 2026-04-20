@@ -298,13 +298,14 @@ struct HarnessWizardSheet: View {
         guard let ynd = yndPath, let ynh = ynhPath ?? (installAfterCreate ? nil : "") else { return }
         let ynhBin = installAfterCreate ? (ynhPath ?? "") : ynh
         await author.run(
-            name: trimmedName,
-            description: description.trimmingCharacters(in: .whitespaces),
-            vendorID: selectedVendorID,
-            destination: trimmedDest,
-            install: installAfterCreate,
-            yndPath: ynd,
-            ynhPath: ynhBin,
+            HarnessCreationOptions(
+                name: trimmedName,
+                description: description.trimmingCharacters(in: .whitespaces),
+                vendorID: selectedVendorID,
+                destination: trimmedDest,
+                install: installAfterCreate
+            ),
+            binaries: YNHBinaries(yndPath: ynd, ynhPath: ynhBin),
             environment: ynhEnvironment
         )
         if author.succeeded {
