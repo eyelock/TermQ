@@ -144,6 +144,41 @@ final class MarketplaceModelTests: XCTestCase {
         XCTAssertNil(raw.plugins[1].version)
     }
 
+    // MARK: Marketplace.isPinnedToSHA
+
+    func test_isPinnedToSHA_nilRef_returnsFalse() {
+        let m = makeMarketplace(ref: nil)
+        XCTAssertFalse(m.isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_branchName_returnsFalse() {
+        XCTAssertFalse(makeMarketplace(ref: "main").isPinnedToSHA)
+        XCTAssertFalse(makeMarketplace(ref: "develop").isPinnedToSHA)
+        XCTAssertFalse(makeMarketplace(ref: "feature/foo").isPinnedToSHA)
+        XCTAssertFalse(makeMarketplace(ref: "v1.2.3").isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_fullSHA_returnsTrue() {
+        XCTAssertTrue(makeMarketplace(ref: "a0d08828b29a8ba267836d4b40a368b8a56b8b0a").isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_abbreviatedSHA_returnsTrue() {
+        XCTAssertTrue(makeMarketplace(ref: "a0d08828").isPinnedToSHA)
+        XCTAssertTrue(makeMarketplace(ref: "1cb524ac").isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_tooShort_returnsFalse() {
+        XCTAssertFalse(makeMarketplace(ref: "abc123").isPinnedToSHA)  // 6 chars
+    }
+
+    private func makeMarketplace(ref: String?) -> Marketplace {
+        Marketplace(
+            id: UUID(), name: "test", owner: "owner", description: nil,
+            vendor: .claude, url: "https://github.com/owner/repo", ref: ref,
+            plugins: [], lastFetched: nil, fetchError: nil
+        )
+    }
+
     // MARK: - Helpers
 
     private func assertSkillsStateRoundTrip(_ state: SkillsLoadState) throws {

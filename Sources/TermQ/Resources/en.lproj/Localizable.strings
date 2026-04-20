@@ -717,6 +717,8 @@
 "harnesses.install.git.url.placeholder" = "github.com/user/repo";
 "harnesses.install.git.subpath" = "Subpath";
 "harnesses.install.git.subpath.placeholder" = "Optional sub-directory";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
 "harnesses.install.command.preview" = "Command Preview";
 "harnesses.install.confirm" = "Install";
 "harnesses.install.cancel" = "Cancel";
@@ -791,6 +793,9 @@
 "marketplace.add.section.git.url" = "Git Repository URL";
 "marketplace.add.section.display.name" = "Display Name";
 "marketplace.add.section.vendor" = "Vendor";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.add.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
+"marketplace.row.pinned.help %@" = "Pinned to %@";
 "marketplace.detail.last.fetched %@" = "Last fetched %@";
 "marketplace.detail.search.placeholder" = "Search plugins…";
 "marketplace.detail.search.empty %@" = "No plugins match \"%@\"";

@@ -53,7 +53,7 @@ final class MarketplaceStore: ObservableObject {
                 Marketplace(
                     id: UUID(), name: seed.name, owner: seed.owner,
                     description: seed.description, vendor: seed.vendor,
-                    url: seed.url, plugins: [], lastFetched: nil, fetchError: nil
+                    url: seed.url, ref: nil, plugins: [], lastFetched: nil, fetchError: nil
                 )
             )
         }
