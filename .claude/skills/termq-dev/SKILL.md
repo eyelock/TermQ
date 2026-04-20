@@ -31,6 +31,8 @@ Follow the three-tier settings architecture. See [settings.md](references/settin
 
 For TermQLogger usage, log streaming, and `TERMQ_DEBUG` mode, see [debugging.md](references/debugging.md).
 
+For test structure, what is/isn't testable, and the rule that tests are not optional, see [testing.md](references/testing.md).
+
 ## Session Start
 
 See [session-start.md](references/session-start.md) for the session initialization checklist.
