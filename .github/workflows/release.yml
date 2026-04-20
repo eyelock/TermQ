@@ -416,7 +416,7 @@ jobs:
               printf "\n"
             fi
 
-            printf "---\n\n"
+            printf '%s\n\n' '---'
             printf "## Installation\n\n"
             printf "### macOS App (Recommended)\n"
             printf "1. Download \`TermQ-${{ steps.version.outputs.VERSION }}.dmg\`\n"
