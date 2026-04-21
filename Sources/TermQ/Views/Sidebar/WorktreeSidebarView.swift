@@ -568,28 +568,6 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    // MARK: - Repository Actions
-
-    private func analyseAndPrune(repo: ObservableRepository) async {
-        isPruneAnalysing = true
-        defer { isPruneAnalysing = false }
-        do {
-            let stale = try await viewModel.pruneWorktreesDryRun(repo: repo)
-            if stale.isEmpty {
-                isShowingPruneNothingAlert = true
-            } else {
-                pruneStaleEntries = stale
-                pruneSheetFor = repo
-            }
-        } catch {
-            viewModel.operationError = error.localizedDescription
-        }
-    }
-
-    private func analyseAndPruneBranches(repo: ObservableRepository) {
-        pruneBranchesSheetFor = repo
-    }
-
 }
 
 // MARK: - Remote Navigation
@@ -996,6 +974,26 @@ extension WorktreeSidebarView {
                 Label(Strings.Sidebar.setHarness, systemImage: "puzzlepiece.extension")
             }
         }
+    }
+
+    private func analyseAndPrune(repo: ObservableRepository) async {
+        isPruneAnalysing = true
+        defer { isPruneAnalysing = false }
+        do {
+            let stale = try await viewModel.pruneWorktreesDryRun(repo: repo)
+            if stale.isEmpty {
+                isShowingPruneNothingAlert = true
+            } else {
+                pruneStaleEntries = stale
+                pruneSheetFor = repo
+            }
+        } catch {
+            viewModel.operationError = error.localizedDescription
+        }
+    }
+
+    private func analyseAndPruneBranches(repo: ObservableRepository) {
+        pruneBranchesSheetFor = repo
     }
 
 }
