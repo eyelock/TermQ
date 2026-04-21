@@ -13,7 +13,7 @@ class TerminalSessionManager: ObservableObject {
     let themeManager = TerminalThemeManager()
 
     /// Reference to the tmux manager for tmux-backed sessions
-    let tmuxManager = TmuxManager.shared
+    let tmuxManager: any TmuxManagerProtocol
 
     /// Current theme ID - proxied to theme manager
     var themeId: String {
@@ -58,7 +58,8 @@ class TerminalSessionManager: ObservableObject {
         var activePaneId: String?  // Currently active pane ID for input routing
     }
 
-    private init() {
+    init(tmuxManager: any TmuxManagerProtocol = TmuxManager.shared) {
+        self.tmuxManager = tmuxManager
         // Set up theme change callback
         themeManager.onThemeChanged = { [weak self] in
             self?.applyThemeToAllSessions()
