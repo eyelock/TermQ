@@ -126,6 +126,16 @@ The Makefile automatically sets `DEVELOPER_DIR` to use the full Xcode toolchain,
 
 > **Note:** Tests require full Xcode.app installed (not just Command Line Tools). If unavailable locally, tests will still run in CI.
 
+### Test output: "0 tests in 0 suites"
+
+You will see this line at the end of `make test` output:
+
+```
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
+```
+
+This is expected and is not a failure. Xcode 16+ ships two test runners: XCTest (which runs the project's test suite) and the newer Swift Testing framework (`@Test`-attributed functions). TermQ uses XCTest exclusively, so the Swift Testing runner finds nothing and exits cleanly with this message. All 900+ tests ran via XCTest and their results appear earlier in the output.
+
 ## Linting & Formatting
 
 ```bash

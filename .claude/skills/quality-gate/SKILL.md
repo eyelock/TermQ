@@ -26,7 +26,13 @@ The output must be clean. Any `warning:` or `error:` lines in the output are fai
 
 Never proceed to commit with build errors, lint errors, formatting violations, or failing tests.
 
-**Verification scope:** Run `make check`, not `swift build` or `make build` alone. Test targets compile separately — warnings in test files only surface during `make check`, not a standalone build.
+**Verification scope:** Always run a **clean** build before declaring the gate passed:
+
+```bash
+swift package clean && make check
+```
+
+Incremental compilation caches object files — repeat `make check` runs will not regenerate warnings for already-compiled test files. Only a clean build guarantees the full warning picture. **Never declare success from an incremental build.**
 
 If `make check` passes locally but CI fails, that is a bug — investigate and file an issue rather than pushing again.
 
