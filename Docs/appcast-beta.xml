@@ -6,6 +6,46 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.9.0.b5</title>
+            <sparkle:version>0.9.0.b5</sparkle:version>
+            <sparkle:shortVersionString>0.9.0.b5</sparkle:shortVersionString>
+            <pubDate>Tue, 21 Apr 2026 20:29:11 +0000</pubDate>
+            <description><![CDATA[<h2 id="bug-fixes">Bug Fixes</h2>
+<ul>
+<li>guard NSApp.unhide against calling on visible app to prevent spontaneous window hide (#199)</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.0-beta.5.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.0-beta.5.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.9.0-beta.5/TermQ-0.9.0-beta.5.zip"
+                sparkle:edSignature="ZJPM7lbobK3QJzOOkU8dDVDAsfLl6RoI/DKg5zg7kUuukQnwhr06XnnrmhL6ri/LiCWS1hUeMiKPLUO5QKWgCQ=="
+                length="23347255"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.9.0.b4</title>
             <sparkle:version>0.9.0.b4</sparkle:version>
             <sparkle:shortVersionString>0.9.0.b4</sparkle:shortVersionString>
@@ -1292,70 +1332,6 @@
                 url="https://github.com/eyelock/TermQ/releases/download/v0.7.0-beta.2/TermQ-0.7.0-beta.2.zip"
                 
                 length="13995770"
-                type="application/octet-stream"/>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-        </item>
-        <item>
-            <title>Version 0.7.0.b1</title>
-            <sparkle:version>0.7.0.b1</sparkle:version>
-            <sparkle:shortVersionString>0.7.0.b1</sparkle:shortVersionString>
-            <pubDate>Mon, 19 Jan 2026 07:44:59 +0000</pubDate>
-            <description><![CDATA[<h2 id="installation">Installation</h2>
-<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
-<ol type="1">
-<li>Download <code>TermQ-0.7.0-beta.1.dmg</code></li>
-<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
-<li>Double-click to launch</li>
-</ol>
-<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
-<ol type="1">
-<li>Download <code>TermQ-0.7.0-beta.1.zip</code></li>
-<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
-</ol>
-<h3 id="cli-tool">CLI Tool</h3>
-<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
-<ol type="1">
-<li>Open TermQ.app</li>
-<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
-<li>Click <strong>Install Command Line Tool</strong></li>
-</ol>
-<p>Or manually:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
-<h2 id="checksums">Checksums</h2>
-<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
-<h2 id="whats-changed">What's Changed</h2>
-<ul>
-<li>test: Improve unit test coverage by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/49">https://github.com/eyelock/TermQ/pull/49</a></li>
-<li>feat: Add environment variables and secrets management by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/51">https://github.com/eyelock/TermQ/pull/51</a></li>
-<li>feat(ui): Add TMUX badge for terminals using tmux backend by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/52">https://github.com/eyelock/TermQ/pull/52</a></li>
-<li>feat(release): Add Developer ID signing and notarization by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/53">https://github.com/eyelock/TermQ/pull/53</a></li>
-<li>feat(security): Add security hardening for MCP, URL scheme, and per-terminal controls by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/50">https://github.com/eyelock/TermQ/pull/50</a></li>
-<li>fix(terminal): Fix PTY size synchronization with Auto Layout by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/54">https://github.com/eyelock/TermQ/pull/54</a></li>
-<li>feat(update): Add Sparkle auto-update framework integration by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/56">https://github.com/eyelock/TermQ/pull/56</a></li>
-<li>fix(window): Enforce single window to prevent blank terminals by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/57">https://github.com/eyelock/TermQ/pull/57</a></li>
-<li>fix(ci): Add workflow_dispatch trigger to release workflow by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/58">https://github.com/eyelock/TermQ/pull/58</a></li>
-<li>ci(claude): Add Claude Code GitHub Workflow by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/59">https://github.com/eyelock/TermQ/pull/59</a></li>
-<li>fix(window): Replace reactive window closing with proactive prevention by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/60">https://github.com/eyelock/TermQ/pull/60</a></li>
-<li>docs(claude): Consolidate CLAUDE.md with command file references by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/62">https://github.com/eyelock/TermQ/pull/62</a></li>
-<li>fix: improve TMUX backend labeling consistency by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/63">https://github.com/eyelock/TermQ/pull/63</a></li>
-<li>fix: preserve tmux sessions when deleting cards and improve recovery UX by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/64">https://github.com/eyelock/TermQ/pull/64</a></li>
-<li>feat: add global default working directory and backend settings by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/65">https://github.com/eyelock/TermQ/pull/65</a></li>
-<li>ci(claude): Add persistent settings and comprehensive workflow documentation by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/66">https://github.com/eyelock/TermQ/pull/66</a></li>
-<li>feat: Add reusable UI components for settings improvements (PR #1/8) by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/67">https://github.com/eyelock/TermQ/pull/67</a></li>
-<li>feat: Add SharedToggle component and reorganize settings tabs (PR #2) by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/70">https://github.com/eyelock/TermQ/pull/70</a></li>
-<li>docs: improve workflow documentation visibility and enforceability by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/69">https://github.com/eyelock/TermQ/pull/69</a></li>
-<li>PR #3: Environment Tab Integration by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/71">https://github.com/eyelock/TermQ/pull/71</a></li>
-<li>feat: Complete Settings UI improvements (PR #4/8) - Tab navigation and tags editor by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/72">https://github.com/eyelock/TermQ/pull/72</a></li>
-<li>feat: apply PathInputField and SharedToggle to Terminal settings (PR #5/8) by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/73">https://github.com/eyelock/TermQ/pull/73</a></li>
-<li>feat: improve terminal editor with Prompts tab and better components (PR #6/8) by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/74">https://github.com/eyelock/TermQ/pull/74</a></li>
-<li>PR #7: Final Polish - StatusIndicator &amp; Settings View Extraction by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/75">https://github.com/eyelock/TermQ/pull/75</a></li>
-<li>PR #8: Fix Badge Wrapping on Terminal Cards (Final PR) by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/76">https://github.com/eyelock/TermQ/pull/76</a></li>
-</ul>
-<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.6.1...v0.7.0-beta.1">https://github.com/eyelock/TermQ/compare/v0.6.1...v0.7.0-beta.1</a></p>]]></description>
-            <enclosure
-                url="https://github.com/eyelock/TermQ/releases/download/v0.7.0-beta.1/TermQ-0.7.0-beta.1.zip"
-                
-                length="13939594"
                 type="application/octet-stream"/>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
         </item>
