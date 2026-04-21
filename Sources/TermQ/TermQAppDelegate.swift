@@ -74,7 +74,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             window.tabbingMode = .disallowed
             windowVisibilityObservation = window.observe(\.isVisible, options: [.new, .old]) { _, change in
                 guard change.oldValue == true, change.newValue == false else { return }
-                let stack = Thread.callStackSymbols.prefix(12).joined(separator: "\n  ")
+                let stack = Thread.callStackSymbols.prefix(32).joined(separator: "\n  ")
                 TermQLogger.window.notice("mainWindow isVisible true→false — stack:\n  \(stack)")
             }
             let desc = "\(type(of: window)) frame=\(window.frame)"
@@ -97,16 +97,22 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// Prevent creating new windows when user tries to open the app again
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         let windows = NSApplication.shared.windows
-        TermQLogger.window.notice("applicationShouldHandleReopen: hasVisibleWindows=\(flag) total=\(windows.count)")
+        let appHidden = NSApp.isHidden
+        TermQLogger.window.notice(
+            "applicationShouldHandleReopen: hasVisibleWindows=\(flag) isAppHidden=\(appHidden) total=\(windows.count)"
+        )
         for (i, win) in windows.enumerated() {
             let desc = "\(type(of: win)) visible=\(win.isVisible) frame=\(win.frame)"
             TermQLogger.window.notice("  window[\(i)]: \(desc)")
         }
         if let window = mainWindow {
-            // Unhide the app (handles the NSApp.hide case from windowShouldClose where
-            // macOS sees hasVisibleWindows=false even though our window exists).
-            // Return false to prevent SwiftUI from trying to open another Window instance.
-            NSApp.unhide(nil)
+            // Only call unhide if the app is actually hidden (e.g. from windowShouldClose → NSApp.hide).
+            // Calling unhide on a non-hidden app schedules a deferred _doOrderWindow orderOut block that
+            // fires when the run loop returns to NSDefaultRunLoopMode — which a busy terminal defers for
+            // seconds or minutes, producing the "spontaneous" window hide.
+            if NSApp.isHidden {
+                NSApp.unhide(nil)
+            }
             window.makeKeyAndOrderFront(nil)
             return false
         }
@@ -117,14 +123,14 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// Log when the app is about to hide (Cmd+H, "Hide TermQ" menu, or external caller).
     /// The call stack reveals whether this is user-initiated or driven by an external tool.
     func applicationWillHide(_ notification: Notification) {
-        let stack = Thread.callStackSymbols.prefix(12).joined(separator: "\n  ")
+        let stack = Thread.callStackSymbols.prefix(32).joined(separator: "\n  ")
         TermQLogger.window.notice("applicationWillHide triggered — stack:\n  \(stack)")
     }
 
     /// Log when the window is about to miniaturize so we can diagnose spontaneous occurrences.
     /// The call stack captured here will reveal whether it's Cmd+M, an external tool, or macOS.
     func windowWillMiniaturize(_ notification: Notification) {
-        let stack = Thread.callStackSymbols.prefix(12).joined(separator: "\n  ")
+        let stack = Thread.callStackSymbols.prefix(32).joined(separator: "\n  ")
         TermQLogger.window.notice("windowWillMiniaturize triggered — stack:\n  \(stack)")
     }
 
