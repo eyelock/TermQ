@@ -672,6 +672,10 @@ class BoardViewModel: ObservableObject {
     }
 }
 
+// MARK: - BoardViewModelProtocol Conformance
+
+extension BoardViewModel: BoardViewModelProtocol {}
+
 // MARK: - New Terminal Defaults
 
 private struct NewTerminalDefaults {
