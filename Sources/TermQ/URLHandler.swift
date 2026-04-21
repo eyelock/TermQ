@@ -9,6 +9,12 @@ import TermQShared
 class URLHandler: ObservableObject {
     static let shared = URLHandler()
 
+    private let boardViewModel: any BoardViewModelProtocol
+
+    init(boardViewModel: any BoardViewModelProtocol = BoardViewModel.shared) {
+        self.boardViewModel = boardViewModel
+    }
+
     @Published var pendingTerminal: PendingTerminal?
 
     /// User preference key for requiring confirmation on external LLM context modifications
@@ -150,7 +156,7 @@ class URLHandler: ObservableObject {
         let qi = QueryItemExtractor(queryItems)
         guard let cardId = qi.uuid("id") else { return }
 
-        let viewModel = BoardViewModel.shared
+        let viewModel = boardViewModel
 
         guard let card = viewModel.card(for: cardId) else { return }
 
@@ -221,7 +227,7 @@ class URLHandler: ObservableObject {
             let columnName = qi.optionalString("column")
         else { return }
 
-        let viewModel = BoardViewModel.shared
+        let viewModel = boardViewModel
         guard let card = viewModel.card(for: cardId) else { return }
 
         let columnLower = columnName.lowercased()
@@ -238,7 +244,7 @@ class URLHandler: ObservableObject {
         let qi = QueryItemExtractor(queryItems)
         guard let cardId = qi.uuid("id") else { return }
 
-        let viewModel = BoardViewModel.shared
+        let viewModel = boardViewModel
         guard let card = viewModel.card(for: cardId) else { return }
 
         viewModel.selectCard(card)
@@ -248,7 +254,7 @@ class URLHandler: ObservableObject {
         let qi = QueryItemExtractor(queryItems)
         guard let cardId = qi.uuid("id") else { return }
 
-        let viewModel = BoardViewModel.shared
+        let viewModel = boardViewModel
         guard let card = viewModel.card(for: cardId) else { return }
 
         if qi.bool("permanent") {
