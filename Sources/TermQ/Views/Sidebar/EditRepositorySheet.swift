@@ -57,7 +57,8 @@ struct EditRepositorySheet: View {
                 .keyboardShortcut(.escape, modifiers: [])
 
                 Button(Strings.Common.save) {
-                    let parsed = protectedBranchesText
+                    let parsed =
+                        protectedBranchesText
                         .split(separator: ",")
                         .map { $0.trimmingCharacters(in: .whitespaces) }
                         .filter { !$0.isEmpty }

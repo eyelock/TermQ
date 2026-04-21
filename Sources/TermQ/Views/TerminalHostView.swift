@@ -128,8 +128,9 @@ class TermQTerminalView: LocalProcessTerminalView {
         #if TERMQ_DEBUG_BUILD
             let sinceInput = Date().timeIntervalSince(lastUserInputTime)
             if sinceInput < 2.0 {
+                let sinceFmt = String(format: "%.2f", sinceInput)
                 TermQLogger.io.debug(
-                    "setNeedsDisplay sinceUserInput=\(String(format: "%.2f", sinceInput))s allowMouseReporting=\(self.allowMouseReporting)"
+                    "setNeedsDisplay sinceUserInput=\(sinceFmt)s allowMouseReporting=\(self.allowMouseReporting)"
                 )
             }
         #endif

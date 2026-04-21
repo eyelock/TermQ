@@ -626,11 +626,10 @@ enum Strings {
                 let globalPart = global > 0 ? "\(global) global secret\(global == 1 ? "" : "s")" : nil
                 let terminalPart = terminal > 0 ? "\(terminal) terminal secret\(terminal == 1 ? "" : "s")" : nil
 
-                let parts = [globalPart, terminalPart].compactMap { $0 }
-                let secretsList = parts.joined(separator: " and ")
-
-                return
-                    "This will permanently delete \(secretsList) (\(total) total). These secrets will be unrecoverable after the encryption key is reset.\n\n\(resetConfirmMessage)"
+                let secretsList = [globalPart, terminalPart].compactMap { $0 }.joined(separator: " and ")
+                return "This will permanently delete \(secretsList) (\(total) total)."
+                    + " These secrets will be unrecoverable after the encryption key is reset."
+                    + "\n\n\(resetConfirmMessage)"
             }
 
             static var troubleshooting: String { localized("settings.environment.troubleshooting") }

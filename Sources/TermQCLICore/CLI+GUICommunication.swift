@@ -83,14 +83,20 @@ func setViaGUI(_ options: SetOptions) throws {
     ]
 
     if let name = options.name { queryItems.append(URLQueryItem(name: "name", value: name)) }
-    if let description = options.description { queryItems.append(URLQueryItem(name: "description", value: description)) }
+    if let description = options.description {
+        queryItems.append(URLQueryItem(name: "description", value: description))
+    }
     if let column = options.column { queryItems.append(URLQueryItem(name: "column", value: column)) }
     if let badge = options.badge { queryItems.append(URLQueryItem(name: "badge", value: badge)) }
     if let llmPrompt = options.llmPrompt { queryItems.append(URLQueryItem(name: "llmPrompt", value: llmPrompt)) }
-    if let llmNextAction = options.llmNextAction { queryItems.append(URLQueryItem(name: "llmNextAction", value: llmNextAction)) }
+    if let llmNextAction = options.llmNextAction {
+        queryItems.append(URLQueryItem(name: "llmNextAction", value: llmNextAction))
+    }
     for tagStr in options.tags { queryItems.append(URLQueryItem(name: "tag", value: tagStr)) }
     if options.replaceTags { queryItems.append(URLQueryItem(name: "replaceTags", value: "true")) }
-    if let initCommand = options.initCommand { queryItems.append(URLQueryItem(name: "initCommand", value: initCommand)) }
+    if let initCommand = options.initCommand {
+        queryItems.append(URLQueryItem(name: "initCommand", value: initCommand))
+    }
     if options.favourite { queryItems.append(URLQueryItem(name: "favourite", value: "true")) }
     if options.unfavourite { queryItems.append(URLQueryItem(name: "favourite", value: "false")) }
 

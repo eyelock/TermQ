@@ -61,8 +61,8 @@ final class CLIHelpersTests: XCTestCase {
     func test_shouldUseDebugMode_false_returnsFalseInRelease() {
         // In non-TERMQ_DEBUG_BUILD environments the explicit flag controls the result
         #if !TERMQ_DEBUG_BUILD
-        XCTAssertFalse(shouldUseDebugMode(false))
-        XCTAssertTrue(shouldUseDebugMode(true))
+            XCTAssertFalse(shouldUseDebugMode(false))
+            XCTAssertTrue(shouldUseDebugMode(true))
         #endif
     }
 }

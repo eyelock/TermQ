@@ -54,7 +54,7 @@ final class CLIPendingTests: CLITestCase {
 
     func test_pending_returnsAllActiveTerminals() throws {
         let output = try captureOutput {
-            var cmd = try Pending.parse(["--data-directory", tempDirectory.path])
+            let cmd = try Pending.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let result = try decodeOutput(output, as: PendingJSON.self)
@@ -65,7 +65,7 @@ final class CLIPendingTests: CLITestCase {
 
     func test_pending_summaryCountsWithNextAction() throws {
         let output = try captureOutput {
-            var cmd = try Pending.parse(["--data-directory", tempDirectory.path])
+            let cmd = try Pending.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let result = try decodeOutput(output, as: PendingJSON.self)
@@ -74,7 +74,7 @@ final class CLIPendingTests: CLITestCase {
 
     func test_pending_summaryCountsStaleAndFresh() throws {
         let output = try captureOutput {
-            var cmd = try Pending.parse(["--data-directory", tempDirectory.path])
+            let cmd = try Pending.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let result = try decodeOutput(output, as: PendingJSON.self)
@@ -86,7 +86,7 @@ final class CLIPendingTests: CLITestCase {
 
     func test_pending_actionsOnly_onlyIncludesCardsWithActions() throws {
         let output = try captureOutput {
-            var cmd = try Pending.parse(["--actions-only", "--data-directory", tempDirectory.path])
+            let cmd = try Pending.parse(["--actions-only", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let result = try decodeOutput(output, as: PendingJSON.self)
@@ -98,7 +98,7 @@ final class CLIPendingTests: CLITestCase {
 
     func test_pending_cardsWithActionsSortFirst() throws {
         let output = try captureOutput {
-            var cmd = try Pending.parse(["--data-directory", tempDirectory.path])
+            let cmd = try Pending.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let result = try decodeOutput(output, as: PendingJSON.self)
@@ -112,7 +112,7 @@ final class CLIPendingTests: CLITestCase {
 
     func test_pending_includesStalenessField() throws {
         let output = try captureOutput {
-            var cmd = try Pending.parse(["--data-directory", tempDirectory.path])
+            let cmd = try Pending.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let result = try decodeOutput(output, as: PendingJSON.self)
@@ -125,7 +125,7 @@ final class CLIPendingTests: CLITestCase {
     func test_pending_emptyBoard_returnsZeroTotals() throws {
         try seedBoard(columns: [SeedColumn(id: col1, name: "To Do", orderIndex: 0)])
         let output = try captureOutput {
-            var cmd = try Pending.parse(["--data-directory", tempDirectory.path])
+            let cmd = try Pending.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let result = try decodeOutput(output, as: PendingJSON.self)
@@ -137,14 +137,14 @@ final class CLIPendingTests: CLITestCase {
 
     func test_getFilteredAndSortedCards_withActionsOnly_filtersCorrectly() throws {
         let board = try loadBoard()
-        var cmd = try Pending.parse(["--actions-only", "--data-directory", tempDirectory.path])
+        let cmd = try Pending.parse(["--actions-only", "--data-directory", tempDirectory.path])
         let cards = cmd.getFilteredAndSortedCards(from: board)
         XCTAssertTrue(cards.allSatisfy { !$0.llmNextAction.isEmpty })
     }
 
     func test_buildPendingOutput_countsCorrectly() throws {
         let board = try loadBoard()
-        var cmd = try Pending.parse(["--data-directory", tempDirectory.path])
+        let cmd = try Pending.parse(["--data-directory", tempDirectory.path])
         let cards = cmd.getFilteredAndSortedCards(from: board)
         let output = cmd.buildPendingOutput(cards: cards, board: board)
         XCTAssertEqual(output.summary.total, 3)

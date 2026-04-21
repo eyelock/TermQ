@@ -164,7 +164,9 @@ struct Open: ParsableCommand {
             if !launchTermQ() {
                 let appName = AppProfile.Current.appBundleName
                 JSONHelper.printErrorJSON(
-                    "The 'open' command requires TermQ GUI to be running. Could not launch \(appName). Please ensure \(appName) is in /Applications or current directory"
+                    "The 'open' command requires TermQ GUI to be running."
+                        + " Could not launch \(appName)."
+                        + " Please ensure \(appName) is in /Applications or current directory"
                 )
                 throw ExitCode.failure
             }

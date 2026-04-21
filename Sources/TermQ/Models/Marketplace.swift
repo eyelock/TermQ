@@ -86,7 +86,8 @@ struct PluginSourceSpec: Codable, Sendable {
         // Object form from TermQ persistence: {"type": "github", "url": "..."}
 
         let container = try decoder.container(keyedBy: RawSourceCodingKeys.self)
-        let typeStr = (try? container.decode(String.self, forKey: .source))
+        let typeStr =
+            (try? container.decode(String.self, forKey: .source))
             ?? (try? container.decode(String.self, forKey: .type))
             ?? ""
         self.type = PluginSourceType(rawValue: typeStr) ?? .unknown

@@ -683,8 +683,8 @@ private struct NewTerminalDefaults {
     let confirmExternalModifications: Bool
 }
 
-private extension BoardViewModel {
-    func newTerminalDefaults() -> NewTerminalDefaults {
+extension BoardViewModel {
+    fileprivate func newTerminalDefaults() -> NewTerminalDefaults {
         let workingDirectory = UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
         let backendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let backend = TerminalBackend(rawValue: backendRaw) ?? .direct
