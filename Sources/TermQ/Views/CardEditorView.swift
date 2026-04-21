@@ -9,35 +9,11 @@ struct CardEditorView: View {
     let onSave: (_ switchToTerminal: Bool) -> Void
     let onCancel: () -> Void
 
-    @State private var title: String = ""
-    @State private var description: String = ""
-    @State private var workingDirectory: String = ""
-    @State private var shellPath: String = ""
-    @State private var selectedColumnId: UUID = UUID()
-    @State private var tags: [Tag] = []
-    @State private var tagItems: [KeyValueItem] = []
-    @State private var switchToTerminal: Bool = true
-    @State private var isFavourite: Bool = false
-    @State private var initCommand: String = ""
-    @State private var llmPrompt: String = ""
-    @State private var llmNextAction: String = ""
-    @State private var badge: String = ""
-    @State private var fontName: String = ""
-    @State private var fontSize: CGFloat = 13
-    @State private var safePasteEnabled: Bool = true
-    @State private var themeId: String = ""
+    @StateObject private var viewModel = CardEditorViewModel()
     @State private var selectedTab: EditorTab = .general
-    @State private var mcpInstalled: Bool = false
-    @State private var allowAutorun: Bool = false
-    @State private var allowOscClipboard: Bool = true
-    @State private var confirmExternalModifications: Bool = true
     @AppStorage("enableTerminalAutorun") private var globalAllowAgentPrompts = false
     @AppStorage("allowOscClipboard") private var globalAllowOscClipboard = false
     @AppStorage("confirmExternalLLMModifications") private var globalConfirmExternalModifications = true
-    @State private var selectedLLMVendor: LLMVendor = .claudeCode
-    @State private var interactiveMode: Bool = true
-    @State private var backend: TerminalBackend = .direct
-    @State private var environmentVariables: [EnvironmentVariable] = []
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @AppStorage("tmuxEnabled") private var tmuxEnabled = true
@@ -74,10 +50,10 @@ struct CardEditorView: View {
 
     /// Preview font based on current selection
     private var previewFont: Font {
-        if fontName.isEmpty {
-            return .system(size: fontSize, design: .monospaced)
+        if viewModel.fontName.isEmpty {
+            return .system(size: viewModel.fontSize, design: .monospaced)
         } else {
-            return .custom(fontName, size: fontSize)
+            return .custom(viewModel.fontName, size: viewModel.fontSize)
         }
     }
 
@@ -94,8 +70,8 @@ struct CardEditorView: View {
                 .keyboardShortcut(.cancelAction)
 
                 Button(Strings.Editor.save) {
-                    saveChanges()
-                    onSave(isNewCard && switchToTerminal)
+                    viewModel.save(to: card)
+                    onSave(isNewCard && viewModel.switchToTerminal)
                 }
                 .keyboardShortcut(.defaultAction)
                 .buttonStyle(.borderedProminent)
@@ -123,7 +99,7 @@ struct CardEditorView: View {
                     terminalContent
                 case .environment:
                     CardEditorEnvironmentTab(
-                        environmentVariables: $environmentVariables,
+                        environmentVariables: $viewModel.environmentVariables,
                         cardId: card.id
                     )
                 case .metadata:
@@ -137,8 +113,8 @@ struct CardEditorView: View {
         }
         .frame(width: 600, height: 580)
         .onAppear {
-            loadFromCard()
-            mcpInstalled = MCPServerInstaller.currentInstallLocation != nil
+            viewModel.load(from: card)
+            viewModel.mcpInstalled = MCPServerInstaller.currentInstallLocation != nil
         }
     }
 
@@ -147,36 +123,36 @@ struct CardEditorView: View {
     @ViewBuilder
     private var generalContent: some View {
         Section(Strings.Editor.sectionDetails) {
-            TextField(Strings.Editor.fieldName, text: $title)
-            TextField(Strings.Editor.fieldDescription, text: $description, axis: .vertical)
+            TextField(Strings.Editor.fieldName, text: $viewModel.title)
+            TextField(Strings.Editor.fieldDescription, text: $viewModel.description, axis: .vertical)
                 .lineLimit(3...6)
-            TextField(Strings.Editor.fieldBadges, text: $badge)
+            TextField(Strings.Editor.fieldBadges, text: $viewModel.badge)
                 .help(Strings.Editor.fieldBadgesHelp)
         }
 
         Section(Strings.Editor.fieldColumn) {
-            Picker(Strings.Editor.fieldColumn, selection: $selectedColumnId) {
+            Picker(Strings.Editor.fieldColumn, selection: $viewModel.selectedColumnId) {
                 ForEach(columns) { column in
                     Text(column.name).tag(column.id)
                 }
             }
 
-            Toggle(Strings.Card.pin, isOn: $isFavourite)
+            Toggle(Strings.Card.pin, isOn: $viewModel.isFavourite)
 
             if isNewCard {
-                Toggle(Strings.Editor.saveOpen, isOn: $switchToTerminal)
+                Toggle(Strings.Editor.saveOpen, isOn: $viewModel.switchToTerminal)
             }
         }
 
         Section(Strings.Editor.sectionAppearance) {
-            Picker(Strings.Editor.fieldTheme, selection: $themeId) {
+            Picker(Strings.Editor.fieldTheme, selection: $viewModel.themeId) {
                 Text(Strings.Editor.fieldThemeDefault).tag("")
                 ForEach(TerminalTheme.allThemes) { theme in
                     Text(theme.name).tag(theme.id)
                 }
             }
 
-            Picker(Strings.Editor.fieldFontSize, selection: $fontName) {
+            Picker(Strings.Editor.fieldFontSize, selection: $viewModel.fontName) {
                 ForEach(monospaceFonts, id: \.self) { font in
                     Text(font).tag(font == "System Default" ? "" : font)
                 }
@@ -184,14 +160,15 @@ struct CardEditorView: View {
 
             HStack {
                 Text(Strings.Editor.fieldFontSize)
-                Slider(value: $fontSize, in: 9...24, step: 1)
-                Text("\(Int(fontSize)) pt")
+                Slider(value: $viewModel.fontSize, in: 9...24, step: 1)
+                Text("\(Int(viewModel.fontSize)) pt")
                     .frame(width: 40)
             }
 
             // Font preview with theme colors
             let previewTheme =
-                themeId.isEmpty ? TerminalTheme.defaultDark : TerminalTheme.theme(for: themeId)
+                viewModel.themeId.isEmpty
+                ? TerminalTheme.defaultDark : TerminalTheme.theme(for: viewModel.themeId)
             Text(Strings.Editor.fontPreview)
                 .font(previewFont)
                 .padding(8)
@@ -211,7 +188,7 @@ struct CardEditorView: View {
             let hasActiveSession = sessionManager.hasActiveSession(for: card.id)
 
             Section(Strings.Editor.sectionBackend) {
-                Picker(Strings.Editor.fieldBackend, selection: $backend) {
+                Picker(Strings.Editor.fieldBackend, selection: $viewModel.backend) {
                     ForEach(TerminalBackend.allCases, id: \.self) { backend in
                         Text(localizedName(for: backend)).tag(backend)
                     }
@@ -224,9 +201,11 @@ struct CardEditorView: View {
                         .font(.caption)
                         .foregroundColor(.orange)
                 } else {
-                    Text("\(localizedDescription(for: backend)) \(Strings.Editor.backendRestartHint)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    Text(
+                        "\(localizedDescription(for: viewModel.backend)) \(Strings.Editor.backendRestartHint)"
+                    )
+                    .font(.caption)
+                    .foregroundColor(.secondary)
                 }
             }
         }
@@ -234,23 +213,23 @@ struct CardEditorView: View {
         Section(Strings.Editor.sectionTerminal) {
             PathInputField(
                 label: Strings.Editor.fieldDirectory,
-                path: $workingDirectory,
+                path: $viewModel.workingDirectory,
                 helpText: Strings.Editor.fieldDirectoryHelp,
                 validatePath: true
             )
 
-            TextField(Strings.Editor.fieldShell, text: $shellPath)
+            TextField(Strings.Editor.fieldShell, text: $viewModel.shellPath)
                 .font(.system(.body, design: .monospaced))
                 .help(Strings.Editor.fieldShellHelp)
         }
 
         Section(Strings.Editor.sectionSecurity) {
-            Toggle(Strings.Editor.fieldSafePaste, isOn: $safePasteEnabled)
+            Toggle(Strings.Editor.fieldSafePaste, isOn: $viewModel.safePasteEnabled)
                 .help(Strings.Editor.fieldSafePasteHelp)
 
             SharedToggle(
                 label: Strings.Editor.allowAgentPrompts,
-                isOn: $allowAutorun,
+                isOn: $viewModel.allowAutorun,
                 isGloballyEnabled: globalAllowAgentPrompts,
                 disabledMessage: Strings.Editor.allowAgentPromptsDisabledGlobally,
                 helpText: Strings.Editor.allowAgentPromptsHelp
@@ -258,7 +237,7 @@ struct CardEditorView: View {
 
             SharedToggle(
                 label: Strings.Editor.confirmExternalModifications,
-                isOn: $confirmExternalModifications,
+                isOn: $viewModel.confirmExternalModifications,
                 isGloballyEnabled: globalConfirmExternalModifications,
                 disabledMessage: Strings.Editor.confirmExternalModificationsDisabledGlobally,
                 helpText: Strings.Editor.confirmExternalModificationsHelp
@@ -266,7 +245,7 @@ struct CardEditorView: View {
 
             SharedToggle(
                 label: Strings.Editor.allowOscClipboard,
-                isOn: $allowOscClipboard,
+                isOn: $viewModel.allowOscClipboard,
                 isGloballyEnabled: globalAllowOscClipboard,
                 disabledMessage: Strings.Editor.allowOscClipboardDisabledGlobally,
                 helpText: Strings.Editor.allowOscClipboardHelp
@@ -278,22 +257,24 @@ struct CardEditorView: View {
                 Text(Strings.Editor.fieldInitCommand)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                TextField(Strings.Editor.fieldInitCommandHelp, text: $initCommand, axis: .vertical)
-                    .lineLimit(3...8)
-                    .help(Strings.Editor.fieldInitCommandHelp)
+                TextField(
+                    Strings.Editor.fieldInitCommandHelp, text: $viewModel.initCommand, axis: .vertical
+                )
+                .lineLimit(3...8)
+                .help(Strings.Editor.fieldInitCommandHelp)
             }
 
             // Command Generator - only show when agent prompts are allowed
-            if globalAllowAgentPrompts && allowAutorun {
-                Picker(Strings.Editor.sectionCommandGenerator, selection: $selectedLLMVendor) {
+            if globalAllowAgentPrompts && viewModel.allowAutorun {
+                Picker(Strings.Editor.sectionCommandGenerator, selection: $viewModel.selectedLLMVendor) {
                     ForEach(LLMVendor.allCases, id: \.self) { vendor in
                         Text(vendor.rawValue).tag(vendor)
                     }
                 }
                 .pickerStyle(.menu)
 
-                if selectedLLMVendor.supportsInteractiveToggle {
-                    Toggle(Strings.Editor.interactiveModeToggle, isOn: $interactiveMode)
+                if viewModel.selectedLLMVendor.supportsInteractiveToggle {
+                    Toggle(Strings.Editor.interactiveModeToggle, isOn: $viewModel.interactiveMode)
                         .help(Strings.Editor.interactiveModeHelp)
                 }
 
@@ -301,22 +282,25 @@ struct CardEditorView: View {
                     Text(Strings.Common.preview)
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    Text(selectedLLMVendor.commandTemplate(interactive: interactiveMode))
-                        .font(.system(.body, design: .monospaced))
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(8)
-                        .background(Color(NSColor.textBackgroundColor))
-                        .cornerRadius(4)
+                    Text(
+                        viewModel.selectedLLMVendor.commandTemplate(
+                            interactive: viewModel.interactiveMode)
+                    )
+                    .font(.system(.body, design: .monospaced))
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(8)
+                    .background(Color(NSColor.textBackgroundColor))
+                    .cornerRadius(4)
                 }
 
-                if !selectedLLMVendor.includesPrompt {
+                if !viewModel.selectedLLMVendor.includesPrompt {
                     Text(Strings.Editor.noLlmPromptWarning)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
 
-                if !interactiveMode && selectedLLMVendor.supportsInteractiveToggle {
+                if !viewModel.interactiveMode && viewModel.selectedLLMVendor.supportsInteractiveToggle {
                     Text(Strings.Editor.nonInteractiveModeNote)
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -325,7 +309,8 @@ struct CardEditorView: View {
                 HStack {
                     Spacer()
                     Button(Strings.Editor.fieldApplyToInitCommand) {
-                        initCommand = selectedLLMVendor.commandTemplate(interactive: interactiveMode)
+                        viewModel.initCommand = viewModel.selectedLLMVendor.commandTemplate(
+                            interactive: viewModel.interactiveMode)
                     }
                     .help(Strings.Editor.fieldApplyToInitCommandHelp)
                 }
@@ -341,9 +326,9 @@ struct CardEditorView: View {
             // Existing tags list
             Section(Strings.Editor.sectionTags) {
                 KeyValueList(
-                    items: $tagItems,
+                    items: $viewModel.tagItems,
                     onDelete: { id in
-                        deleteTag(id: id)
+                        viewModel.deleteTag(id: id)
                     },
                     emptyMessage: Strings.Editor.noTags
                 )
@@ -353,17 +338,17 @@ struct CardEditorView: View {
             Section {
                 KeyValueAddForm(
                     config: .tags,
-                    existingKeys: Set(tags.map { $0.key }),
-                    items: tagItems,
+                    existingKeys: Set(viewModel.tags.map { $0.key }),
+                    items: viewModel.tagItems,
                     onAdd: { key, value, _ in
-                        addTag(key: key, value: value)
+                        viewModel.addTag(key: key, value: value)
                     }
                 )
             } header: {
                 Text(Strings.Editor.sectionAddTag)
             }
 
-            if tags.isEmpty {
+            if viewModel.tags.isEmpty {
                 Section {
                     Text(Strings.Editor.tagsHelp)
                         .font(.caption)
@@ -372,10 +357,10 @@ struct CardEditorView: View {
             }
         }
         .onAppear {
-            syncTagItems()
+            viewModel.syncTagItems()
         }
-        .onChange(of: tags) { _, _ in
-            syncTagItems()
+        .onChange(of: viewModel.tags) { _, _ in
+            viewModel.syncTagItems()
         }
     }
 
@@ -388,19 +373,20 @@ struct CardEditorView: View {
             StatusIndicator(
                 icon: "cpu",
                 label: Strings.Settings.mcpTitle,
-                status: mcpInstalled ? .installed : .inactive,
-                message: mcpInstalled ? Strings.Settings.cliInstalled : Strings.Settings.cliNotInstalled
+                status: viewModel.mcpInstalled ? .installed : .inactive,
+                message: viewModel.mcpInstalled
+                    ? Strings.Settings.cliInstalled : Strings.Settings.cliNotInstalled
             )
 
             StatusIndicator(
                 icon: "bolt.fill",
                 label: Strings.Editor.allowAgentPrompts,
-                status: (globalAllowAgentPrompts && allowAutorun) ? .active : .disabled,
+                status: (globalAllowAgentPrompts && viewModel.allowAutorun) ? .active : .disabled,
                 message: {
                     if !globalAllowAgentPrompts {
                         return Strings.Editor.allowAgentPromptsDisabledGlobally
                     }
-                    return allowAutorun ? Strings.Common.enabled : Strings.Common.disabled
+                    return viewModel.allowAutorun ? Strings.Common.enabled : Strings.Common.disabled
                 }()
             )
             .help(
@@ -412,12 +398,14 @@ struct CardEditorView: View {
             StatusIndicator(
                 icon: "checkmark.shield.fill",
                 label: Strings.Editor.confirmExternalModifications,
-                status: (globalConfirmExternalModifications && confirmExternalModifications) ? .active : .disabled,
+                status: (globalConfirmExternalModifications && viewModel.confirmExternalModifications)
+                    ? .active : .disabled,
                 message: {
                     if !globalConfirmExternalModifications {
                         return Strings.Editor.confirmExternalModificationsDisabledGlobally
                     }
-                    return confirmExternalModifications ? Strings.Common.enabled : Strings.Common.disabled
+                    return viewModel.confirmExternalModifications
+                        ? Strings.Common.enabled : Strings.Common.disabled
                 }()
             )
             .help(
@@ -431,7 +419,7 @@ struct CardEditorView: View {
         Section(Strings.Editor.sectionPrompts) {
             LargeTextInput(
                 label: Strings.Editor.fieldPersistentContext,
-                text: $llmPrompt,
+                text: $viewModel.llmPrompt,
                 placeholder: Strings.Editor.fieldPersistentContextHelp,
                 helpText: Strings.Editor.fieldPersistentContextHelp,
                 minLines: 3,
@@ -440,7 +428,7 @@ struct CardEditorView: View {
 
             LargeTextInput(
                 label: Strings.Editor.fieldNextAction,
-                text: $llmNextAction,
+                text: $viewModel.llmNextAction,
                 placeholder: Strings.Editor.fieldNextActionHelp,
                 helpText: Strings.Editor.fieldNextActionHelp,
                 minLines: 3,
@@ -456,72 +444,6 @@ struct CardEditorView: View {
                         .foregroundColor(.orange)
                 }
             }
-        }
-    }
-
-    private func loadFromCard() {
-        title = card.title
-        description = card.description
-        workingDirectory = card.workingDirectory
-        shellPath = card.shellPath
-        selectedColumnId = card.columnId
-        tags = card.tags.sorted { $0.key < $1.key }
-        isFavourite = card.isFavourite
-        initCommand = card.initCommand
-        llmPrompt = card.llmPrompt
-        llmNextAction = card.llmNextAction
-        badge = card.badge
-        fontName = card.fontName
-        fontSize = card.fontSize > 0 ? card.fontSize : 13
-        safePasteEnabled = card.safePasteEnabled
-        themeId = card.themeId
-        allowAutorun = card.allowAutorun
-        allowOscClipboard = card.allowOscClipboard
-        confirmExternalModifications = card.confirmExternalModifications
-        backend = card.backend
-        environmentVariables = card.environmentVariables
-    }
-
-    private func saveChanges() {
-        card.title = title
-        card.description = description
-        card.workingDirectory = workingDirectory
-        card.shellPath = shellPath
-        card.columnId = selectedColumnId
-        card.tags = tags
-        card.isFavourite = isFavourite
-        card.initCommand = initCommand
-        card.llmPrompt = llmPrompt
-        card.llmNextAction = llmNextAction
-        card.badge = badge
-        card.fontName = fontName
-        card.fontSize = fontSize
-        card.safePasteEnabled = safePasteEnabled
-        card.themeId = themeId
-        card.allowAutorun = allowAutorun
-        card.allowOscClipboard = allowOscClipboard
-        card.confirmExternalModifications = confirmExternalModifications
-        card.backend = backend
-        card.environmentVariables = environmentVariables
-    }
-
-    private func addTag(key: String, value: String) {
-        let tag = Tag(key: key, value: value)
-        tags.append(tag)
-    }
-
-    private func deleteTag(id: UUID) {
-        tags.removeAll { $0.id == id }
-    }
-
-    private func syncTagItems() {
-        tagItems = tags.map { tag in
-            KeyValueItem(
-                id: tag.id,
-                key: tag.key,
-                value: tag.value,
-                isSecret: false
-            )
         }
     }
 

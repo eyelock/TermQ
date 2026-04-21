@@ -49,37 +49,32 @@ final class CLIFindTests: CLITestCase {
     // MARK: - normalizeToWords
 
     func test_normalizeToWords_hyphenSeparated_splitIntoWords() {
-        let cmd = Find()
-        let result = cmd.normalizeToWords("hello-world")
+        let result = CardFilterEngine.normalizeToWords("hello-world")
         XCTAssertTrue(result.contains("hello"))
         XCTAssertTrue(result.contains("world"))
     }
 
     func test_normalizeToWords_slashSeparated_splitIntoWords() {
-        let cmd = Find()
-        let result = cmd.normalizeToWords("eyelock/api")
+        let result = CardFilterEngine.normalizeToWords("eyelock/api")
         XCTAssertTrue(result.contains("eyelock"))
         XCTAssertTrue(result.contains("api"))
     }
 
     func test_normalizeToWords_singleCharWord_filtered() {
-        let cmd = Find()
-        let result = cmd.normalizeToWords("a b hello")
+        let result = CardFilterEngine.normalizeToWords("a b hello")
         XCTAssertFalse(result.contains("a"))
         XCTAssertFalse(result.contains("b"))
         XCTAssertTrue(result.contains("hello"))
     }
 
     func test_normalizeToWords_uppercase_lowercased() {
-        let cmd = Find()
-        let result = cmd.normalizeToWords("Hello World")
+        let result = CardFilterEngine.normalizeToWords("Hello World")
         XCTAssertTrue(result.contains("hello"))
         XCTAssertTrue(result.contains("world"))
     }
 
     func test_normalizeToWords_emptyString_returnsEmpty() {
-        let cmd = Find()
-        XCTAssertTrue(cmd.normalizeToWords("").isEmpty)
+        XCTAssertTrue(CardFilterEngine.normalizeToWords("").isEmpty)
     }
 
     // MARK: - Filter: name

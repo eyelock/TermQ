@@ -191,7 +191,7 @@ class TerminalSessionManager: ObservableObject {
 
         // Add tag environment variables (TERMQ_TERMINAL_TAG_<KEY>=value)
         for tag in card.tags {
-            let sanitizedKey = sanitizeEnvVarName(tag.key)
+            let sanitizedKey = ShellEscaper.envVarName(tag.key)
             if !sanitizedKey.isEmpty {
                 env["TERMQ_TERMINAL_TAG_\(sanitizedKey)"] = tag.value
             }
@@ -251,7 +251,9 @@ class TerminalSessionManager: ObservableObject {
         // 1. Starting command shell (non-interactive)
         // 2. cd to the working directory
         // 3. exec the user's shell as a login shell (replaces the process)
-        let startCommand = "cd \(escapeShellArg(card.workingDirectory)) && exec \(escapeShellArg(card.shellPath)) -l"
+        let workDir = ShellEscaper.singleQuote(card.workingDirectory)
+        let shell = ShellEscaper.singleQuote(card.shellPath)
+        let startCommand = "cd \(workDir) && exec \(shell) -l"
         terminal.startProcess(
             executable: Constants.Shell.commandShell,
             args: ["-c", startCommand],
@@ -286,23 +288,23 @@ class TerminalSessionManager: ObservableObject {
         // Create and attach to tmux session (traditional mode)
         let script = """
             # Create session if it doesn't exist
-            if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
-                \(escapeShellArg(tmuxPath)) new-session -d \\
-                    -s \(escapeShellArg(sessionName)) \\
-                    -c \(escapeShellArg(card.workingDirectory)) \\
-                    \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \\
-                    \(escapeShellArg(card.shellPath)) -l
+            if ! \(ShellEscaper.singleQuote(tmuxPath)) has-session -t \(ShellEscaper.singleQuote(sessionName)) 2>/dev/null; then
+                \(ShellEscaper.singleQuote(tmuxPath)) new-session -d \\
+                    -s \(ShellEscaper.singleQuote(sessionName)) \\
+                    -c \(ShellEscaper.singleQuote(card.workingDirectory)) \\
+                    \(tmuxEnvArgs.map { ShellEscaper.singleQuote($0) }.joined(separator: " ")) \\
+                    \(ShellEscaper.singleQuote(card.shellPath)) -l
             fi
             # Configure session for TermQ
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse off 2>/dev/null || true
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) \\
+            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) status off 2>/dev/null || true
+            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) mouse off 2>/dev/null || true
+            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) \\
                 default-terminal 'xterm-256color' 2>/dev/null || true
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) escape-time 10 2>/dev/null || true
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) \\
+            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) escape-time 10 2>/dev/null || true
+            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) \\
                 allow-passthrough off 2>/dev/null || true
             # Attach to the session
-            exec \(escapeShellArg(tmuxPath)) attach-session -t \(escapeShellArg(sessionName))
+            exec \(ShellEscaper.singleQuote(tmuxPath)) attach-session -t \(ShellEscaper.singleQuote(sessionName))
             """
 
         terminal.startProcess(
@@ -377,30 +379,21 @@ class TerminalSessionManager: ObservableObject {
         // Perform token replacement based on queued action settings
         var initCmd = card.initCommand
 
+        let tokenizer = InitCommandTokenizer()
         if autorunAllowed {
-            // Inject values with escaping for double-quote context
-            // Note: Values are escaped to prevent shell injection while allowing variable expansion
             // Templates should include quotes: claude "{{PROMPT}} {{NEXT_ACTION}}"
-            let escapedPrompt = escapeForDoubleQuotes(card.llmPrompt)
-            let escapedNextAction = escapeForDoubleQuotes(card.llmNextAction)
+            let tokens = InitCommandTokenizer.Tokens(
+                prompt: ShellEscaper.doubleQuote(card.llmPrompt),
+                nextAction: ShellEscaper.doubleQuote(card.llmNextAction)
+            )
+            initCmd = tokenizer.replace(initCmd, with: tokens)
 
-            // Support both new token names and legacy names for backward compatibility
-            initCmd = initCmd.replacingOccurrences(of: "{{PROMPT}}", with: escapedPrompt)
-            initCmd = initCmd.replacingOccurrences(of: "{{NEXT_ACTION}}", with: escapedNextAction)
-            initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: escapedPrompt)
-            initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: escapedNextAction)
-
-            // Clear llmNextAction after use (if token was present and had a value)
             if hasNextActionToken && hadNextAction {
                 card.llmNextAction = ""
                 BoardViewModel.shared.updateCard(card)
             }
         } else {
-            // Replace both tokens with empty string (don't inject anything)
-            initCmd = initCmd.replacingOccurrences(of: "{{PROMPT}}", with: "")
-            initCmd = initCmd.replacingOccurrences(of: "{{NEXT_ACTION}}", with: "")
-            initCmd = initCmd.replacingOccurrences(of: "{{LLM_PROMPT}}", with: "")
-            initCmd = initCmd.replacingOccurrences(of: "{{LLM_NEXT_ACTION}}", with: "")
+            initCmd = tokenizer.replace(initCmd, with: .init(prompt: "", nextAction: ""))
         }
 
         let backend = effectiveBackend(for: card)
@@ -707,48 +700,6 @@ class TerminalSessionManager: ObservableObject {
             }
             self.objectWillChange.send()
         }
-    }
-
-    // MARK: - Private Helpers
-
-    /// Escape string for use as a shell argument (single-quote style)
-    /// Used for paths, shell names, and other non-LLM values
-    internal func escapeShellArg(_ arg: String) -> String {
-        return "'" + arg.replacingOccurrences(of: "'", with: "'\"'\"'") + "'"
-    }
-
-    /// Escape string for use inside double quotes (for LLM values)
-    /// Escapes: " $ ` \ (prevents injection while templates contain the quotes)
-    private func escapeForDoubleQuotes(_ str: String) -> String {
-        return
-            str
-            .replacingOccurrences(of: "\\", with: "\\\\")  // Backslash first
-            .replacingOccurrences(of: "\"", with: "\\\"")  // Double quotes
-            .replacingOccurrences(of: "$", with: "\\$")  // Dollar signs (prevents variable expansion)
-            .replacingOccurrences(of: "`", with: "\\`")  // Backticks (prevents command substitution)
-    }
-
-    /// Sanitize a string to be a valid environment variable name suffix
-    /// - Converts to uppercase
-    /// - Replaces invalid characters with underscores
-    /// - Removes leading digits
-    private func sanitizeEnvVarName(_ name: String) -> String {
-        var result = name.uppercased()
-
-        // Replace any character that isn't A-Z, 0-9, or underscore with underscore
-        result = result.map { char -> Character in
-            if char.isLetter || char.isNumber || char == "_" {
-                return char
-            }
-            return "_"
-        }.reduce("") { String($0) + String($1) }
-
-        // Remove leading digits/underscores
-        while let first = result.first, first.isNumber || first == "_" {
-            result.removeFirst()
-        }
-
-        return result
     }
 
     // MARK: - Theme Support
