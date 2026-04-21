@@ -56,6 +56,14 @@ struct TermQApp: App {
                 .keyboardShortcut("w", modifiers: .command)
             }
 
+            // Utilities menu — developer tools available in all builds
+            CommandMenu(Strings.Menu.utilities) {
+                Button(Strings.Menu.utilitiesLogging) {
+                    DiagnosticsWindowController.shared.show()
+                }
+                .keyboardShortcut("d", modifiers: [.command, .option])
+            }
+
             // Help menu
             CommandGroup(replacing: .help) {
                 Button(Strings.Menu.help) {

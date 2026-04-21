@@ -818,3 +818,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "„%@” eltávolítása a YNH-ból? A telepített harness-csomagok megmaradnak.";
 "marketplace.add.custom.name.placeholder" = "Saját piactér";
 "harness.wizard.success.created %@" = "A «%@» harness létrehozva";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Segédprogramok";
+"menu.utilities.logging" = "Naplózás…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ Diagnosztika";
+"diagnostics.filter.category" = "Kategória";
+"diagnostics.filter.category.all" = "Mind";
+"diagnostics.filter.level" = "Szint";
+"diagnostics.search.placeholder" = "Keresés…";
+"diagnostics.clear" = "Törlés";
+"diagnostics.export" = "Exportálás…";
+"diagnostics.jump.to.latest" = "Ugrás a legújabbhoz";
+"diagnostics.status.live" = "Élő";
+"diagnostics.status.paused" = "Szüneteltetve";
+"diagnostics.status.entries %lld %lld" = "%lld bejegyzés · %lld egyezik a szűrővel";
+"diagnostics.verbose.mode" = "Részletes mód";
+"diagnostics.verbose.mode.help" = "debug és info üzenetek rögzítése a notice/warning/error mellett";
+"diagnostics.verbose.warning" = "Nagy mennyiség — kapcsolja ki, ha végzett";
+"diagnostics.export.title" = "TermQ Diagnosztikai jelentés";
+"diagnostics.export.footer" = "Beküldve a TermQ beépített diagnosztikájával.";

@@ -1,4 +1,5 @@
 import Foundation
+import TermQCore
 import os
 
 /// Structured diagnostic logging for TermQ.
@@ -106,6 +107,7 @@ enum TermQLogger {
         func debug(_ message: String) {
             osLog.debug("\(message, privacy: .public)")
             TermQLogger.writeToFile(category: category, level: "", message: message)
+            TermQLogBuffer.shared.append(level: .debug, category: category, message: message)
         }
 
         /// Noteworthy state changes that help trace the happy path: session
@@ -113,6 +115,7 @@ enum TermQLogger {
         func info(_ message: String) {
             osLog.info("\(message, privacy: .public)")
             TermQLogger.writeToFile(category: category, level: "info", message: message)
+            TermQLogBuffer.shared.append(level: .info, category: category, message: message)
         }
 
         /// Important lifecycle events that should appear in `log stream` without
@@ -122,6 +125,7 @@ enum TermQLogger {
         func notice(_ message: String) {
             osLog.notice("\(message, privacy: .public)")
             TermQLogger.writeToFile(category: category, level: "notice", message: message)
+            TermQLogBuffer.shared.append(level: .notice, category: category, message: message)
         }
 
         /// Unexpected but recoverable situations: missing pane in parser, skipped
@@ -129,6 +133,7 @@ enum TermQLogger {
         func warning(_ message: String) {
             osLog.warning("\(message, privacy: .public)")
             TermQLogger.writeToFile(category: category, level: "warn", message: message)
+            TermQLogBuffer.shared.append(level: .warning, category: category, message: message)
         }
 
         /// Failures that affect functionality: connect threw, process died,
@@ -136,6 +141,7 @@ enum TermQLogger {
         func error(_ message: String) {
             osLog.error("\(message, privacy: .public)")
             TermQLogger.writeToFile(category: category, level: "error", message: message)
+            TermQLogBuffer.shared.append(level: .error, category: category, message: message)
         }
     }
 }

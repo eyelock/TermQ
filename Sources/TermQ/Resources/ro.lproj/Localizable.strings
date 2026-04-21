@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Eliminare „%@” din YNH? Harness-urile instalate vor rămâne.";
 "marketplace.add.custom.name.placeholder" = "Piața mea";
 "harness.wizard.success.created %@" = "Harness «%@» creat";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Utilitare";
+"menu.utilities.logging" = "Jurnalizare…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostice TermQ";
+"diagnostics.filter.category" = "Categorie";
+"diagnostics.filter.category.all" = "Toate";
+"diagnostics.filter.level" = "Nivel";
+"diagnostics.search.placeholder" = "Caută…";
+"diagnostics.clear" = "Șterge";
+"diagnostics.export" = "Exportă…";
+"diagnostics.jump.to.latest" = "Salt la cel mai recent";
+"diagnostics.status.live" = "Live";
+"diagnostics.status.paused" = "Pausat";
+"diagnostics.status.entries %lld %lld" = "%lld intrări · %lld corespund filtrului";
+"diagnostics.verbose.mode" = "Mod detaliat";
+"diagnostics.verbose.mode.help" = "Înregistrează mesaje debug și info pe lângă notice/warning/error";
+"diagnostics.verbose.warning" = "Volum mare — dezactivează când termini";
+"diagnostics.export.title" = "Raport diagnostic TermQ";
+"diagnostics.export.footer" = "Depus prin diagnosticele integrate TermQ.";

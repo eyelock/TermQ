@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Hapus “%@” dari YNH? Harness yang terpasang akan tetap ada.";
 "marketplace.add.custom.name.placeholder" = "Marketplace saya";
 "harness.wizard.success.created %@" = "Harness «%@» dibuat";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Utilitas";
+"menu.utilities.logging" = "Pencatatan Log…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostik TermQ";
+"diagnostics.filter.category" = "Kategori";
+"diagnostics.filter.category.all" = "Semua";
+"diagnostics.filter.level" = "Level";
+"diagnostics.search.placeholder" = "Cari…";
+"diagnostics.clear" = "Hapus";
+"diagnostics.export" = "Ekspor…";
+"diagnostics.jump.to.latest" = "Lompat ke Terbaru";
+"diagnostics.status.live" = "Langsung";
+"diagnostics.status.paused" = "Dijeda";
+"diagnostics.status.entries %lld %lld" = "%lld entri · %lld cocok dengan filter";
+"diagnostics.verbose.mode" = "Mode Rinci";
+"diagnostics.verbose.mode.help" = "Merekam pesan debug dan info selain notice/warning/error";
+"diagnostics.verbose.warning" = "Volume tinggi — nonaktifkan setelah selesai";
+"diagnostics.export.title" = "Laporan Diagnostik TermQ";
+"diagnostics.export.footer" = "Diajukan melalui diagnostik bawaan TermQ.";

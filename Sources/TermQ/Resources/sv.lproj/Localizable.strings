@@ -819,3 +819,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Ta bort ”%@” från YNH? Installerade harnesses behålls.";
 "marketplace.add.custom.name.placeholder" = "Min marknadsplats";
 "harness.wizard.success.created %@" = "Harness «%@» skapad";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Verktyg";
+"menu.utilities.logging" = "Loggning…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ Diagnostik";
+"diagnostics.filter.category" = "Kategori";
+"diagnostics.filter.category.all" = "Alla";
+"diagnostics.filter.level" = "Nivå";
+"diagnostics.search.placeholder" = "Sök…";
+"diagnostics.clear" = "Rensa";
+"diagnostics.export" = "Exportera…";
+"diagnostics.jump.to.latest" = "Gå till senaste";
+"diagnostics.status.live" = "Live";
+"diagnostics.status.paused" = "Pausad";
+"diagnostics.status.entries %lld %lld" = "%lld poster · %lld matchar filter";
+"diagnostics.verbose.mode" = "Utförligt läge";
+"diagnostics.verbose.mode.help" = "Samlar in debug- och info-meddelanden utöver notice/warning/error";
+"diagnostics.verbose.warning" = "Högt volym — inaktivera när klar";
+"diagnostics.export.title" = "TermQ Diagnostikrapport";
+"diagnostics.export.footer" = "Inskickad via TermQs inbyggda diagnostik.";

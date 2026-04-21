@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "將「%@」從 YNH 移除？已安裝的 harness 將保留。";
 "marketplace.add.custom.name.placeholder" = "我的市集";
 "harness.wizard.success.created %@" = "Harness「%@」已建立";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "工具程式";
+"menu.utilities.logging" = "記錄…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ 診斷";
+"diagnostics.filter.category" = "類別";
+"diagnostics.filter.category.all" = "全部";
+"diagnostics.filter.level" = "層級";
+"diagnostics.search.placeholder" = "搜尋…";
+"diagnostics.clear" = "清除";
+"diagnostics.export" = "匯出…";
+"diagnostics.jump.to.latest" = "跳到最新";
+"diagnostics.status.live" = "即時";
+"diagnostics.status.paused" = "已暫停";
+"diagnostics.status.entries %lld %lld" = "%lld 筆記錄 · %lld 筆符合篩選條件";
+"diagnostics.verbose.mode" = "詳細模式";
+"diagnostics.verbose.mode.help" = "除 notice/warning/error 外，額外擷取 debug 與 info 層級訊息";
+"diagnostics.verbose.warning" = "記錄量龐大 — 完成後請關閉";
+"diagnostics.export.title" = "TermQ 診斷報告";
+"diagnostics.export.footer" = "透過 TermQ 內建診斷工具提交。";

@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Eliminar «%@» de YNH? Los arneses instalados permanecerán.";
 "marketplace.add.custom.name.placeholder" = "Mi marketplace";
 "harness.wizard.success.created %@" = "Harness «%@» creado";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Utilidades";
+"menu.utilities.logging" = "Registro…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnósticos de TermQ";
+"diagnostics.filter.category" = "Categoría";
+"diagnostics.filter.category.all" = "Todos";
+"diagnostics.filter.level" = "Nivel";
+"diagnostics.search.placeholder" = "Buscar…";
+"diagnostics.clear" = "Limpiar";
+"diagnostics.export" = "Exportar…";
+"diagnostics.jump.to.latest" = "Ir al más reciente";
+"diagnostics.status.live" = "En vivo";
+"diagnostics.status.paused" = "En pausa";
+"diagnostics.status.entries %lld %lld" = "%lld entradas · %lld coinciden con el filtro";
+"diagnostics.verbose.mode" = "Modo detallado";
+"diagnostics.verbose.mode.help" = "Captura mensajes de debug e info además de notice/warning/error";
+"diagnostics.verbose.warning" = "Alto volumen — desactiva al terminar";
+"diagnostics.export.title" = "Informe de diagnósticos de TermQ";
+"diagnostics.export.footer" = "Enviado mediante los diagnósticos integrados de TermQ.";

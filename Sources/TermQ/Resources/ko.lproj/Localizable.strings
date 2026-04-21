@@ -817,3 +817,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\"을 YNH에서 제거하시겠습니까? 설치된 하네스는 유지됩니다.";
 "marketplace.add.custom.name.placeholder" = "내 마켓플레이스";
 "harness.wizard.success.created %@" = "Harness «%@» 생성됨";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "유틸리티";
+"menu.utilities.logging" = "로깅…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ 진단";
+"diagnostics.filter.category" = "카테고리";
+"diagnostics.filter.category.all" = "전체";
+"diagnostics.filter.level" = "수준";
+"diagnostics.search.placeholder" = "검색…";
+"diagnostics.clear" = "지우기";
+"diagnostics.export" = "내보내기…";
+"diagnostics.jump.to.latest" = "최신으로 이동";
+"diagnostics.status.live" = "라이브";
+"diagnostics.status.paused" = "일시 중지";
+"diagnostics.status.entries %lld %lld" = "%lld개 항목 · %lld개 필터 일치";
+"diagnostics.verbose.mode" = "상세 모드";
+"diagnostics.verbose.mode.help" = "notice/warning/error 외에 debug 및 info 수준 메시지도 기록";
+"diagnostics.verbose.warning" = "대용량 — 완료 후 비활성화하세요";
+"diagnostics.export.title" = "TermQ 진단 보고서";
+"diagnostics.export.footer" = "TermQ 내장 진단을 통해 제출됨.";

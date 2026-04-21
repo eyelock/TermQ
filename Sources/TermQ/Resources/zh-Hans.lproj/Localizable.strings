@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "将“%@”从 YNH 中移除？已安装的 harness 将保留。";
 "marketplace.add.custom.name.placeholder" = "我的市场";
 "harness.wizard.success.created %@" = "Harness「%@」已创建";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "实用工具";
+"menu.utilities.logging" = "日志…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ 诊断";
+"diagnostics.filter.category" = "类别";
+"diagnostics.filter.category.all" = "全部";
+"diagnostics.filter.level" = "级别";
+"diagnostics.search.placeholder" = "搜索…";
+"diagnostics.clear" = "清除";
+"diagnostics.export" = "导出…";
+"diagnostics.jump.to.latest" = "跳转至最新";
+"diagnostics.status.live" = "实时";
+"diagnostics.status.paused" = "已暂停";
+"diagnostics.status.entries %lld %lld" = "%lld 条记录 · %lld 条匹配筛选器";
+"diagnostics.verbose.mode" = "详细模式";
+"diagnostics.verbose.mode.help" = "除 notice/warning/error 外，还记录 debug 和 info 级别的消息";
+"diagnostics.verbose.warning" = "日志量大 — 完成后请关闭";
+"diagnostics.export.title" = "TermQ 诊断报告";
+"diagnostics.export.footer" = "通过 TermQ 内置诊断工具提交。";
