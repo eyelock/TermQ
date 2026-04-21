@@ -184,7 +184,8 @@ final class BackupManagerTests: XCTestCase {
         }
         let result = BackupManager.backup()
         if case .failure(let backupError) = result {
-            if case .sourceNotFound = backupError { /* expected */
+            if case .sourceNotFound = backupError {
+                // expected
             } else {
                 XCTFail("Expected .sourceNotFound, got \(backupError)")
             }
@@ -198,7 +199,8 @@ final class BackupManagerTests: XCTestCase {
         }
         let result = BackupManager.restore()
         if case .failure(let backupError) = result {
-            if case .noBackupFound = backupError { /* expected */
+            if case .noBackupFound = backupError {
+                // expected
             } else {
                 XCTFail("Expected .noBackupFound, got \(backupError)")
             }
@@ -216,7 +218,8 @@ final class BackupManagerTests: XCTestCase {
 
         let result = BackupManager.restore(from: badFile)
         if case .failure(let backupError) = result {
-            if case .invalidBackupData = backupError { /* expected */
+            if case .invalidBackupData = backupError {
+                // expected
             } else {
                 XCTFail("Expected .invalidBackupData, got \(backupError)")
             }
@@ -237,7 +240,8 @@ final class BackupManagerTests: XCTestCase {
 
         let result = BackupManager.restore(from: badFile)
         if case .failure(let backupError) = result {
-            if case .invalidBackupData = backupError { /* expected */
+            if case .invalidBackupData = backupError {
+                // expected
             } else {
                 XCTFail("Expected .invalidBackupData, got \(backupError)")
             }

@@ -287,14 +287,20 @@ class TerminalSessionManager: ObservableObject {
         let script = """
             # Create session if it doesn't exist
             if ! \(escapeShellArg(tmuxPath)) has-session -t \(escapeShellArg(sessionName)) 2>/dev/null; then
-                \(escapeShellArg(tmuxPath)) new-session -d -s \(escapeShellArg(sessionName)) -c \(escapeShellArg(card.workingDirectory)) \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \(escapeShellArg(card.shellPath)) -l
+                \(escapeShellArg(tmuxPath)) new-session -d \\
+                    -s \(escapeShellArg(sessionName)) \\
+                    -c \(escapeShellArg(card.workingDirectory)) \\
+                    \(tmuxEnvArgs.map { escapeShellArg($0) }.joined(separator: " ")) \\
+                    \(escapeShellArg(card.shellPath)) -l
             fi
             # Configure session for TermQ
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) status off 2>/dev/null || true
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) mouse off 2>/dev/null || true
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) default-terminal 'xterm-256color' 2>/dev/null || true
+            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) \\
+                default-terminal 'xterm-256color' 2>/dev/null || true
             \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) escape-time 10 2>/dev/null || true
-            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) allow-passthrough off 2>/dev/null || true
+            \(escapeShellArg(tmuxPath)) set-option -t \(escapeShellArg(sessionName)) \\
+                allow-passthrough off 2>/dev/null || true
             # Attach to the session
             exec \(escapeShellArg(tmuxPath)) attach-session -t \(escapeShellArg(sessionName))
             """

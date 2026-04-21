@@ -47,7 +47,8 @@ extension TermQMCPServer {
                 inputSchema: Schema.objectSchema([
                     Schema.string(
                         "query",
-                        "Smart search: matches ANY word across name, description, path, tags. Best for natural language queries."
+                        "Smart search: matches ANY word across name, description, path, tags."
+                            + " Best for natural language queries."
                     ),
                     Schema.string("name", "Filter by name (word-based matching)"),
                     Schema.string("column", "Filter by column name"),

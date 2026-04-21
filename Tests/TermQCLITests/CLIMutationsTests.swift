@@ -31,7 +31,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_name_updatesCardName() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--name", "Renamed Card", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -44,7 +44,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_description_updatesDescription() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--set-description", "New description", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -57,7 +57,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_badge_updatesBadge() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--badge", "urgent", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -70,7 +70,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_llmPrompt_updatesPrompt() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--llm-prompt", "Remember this context", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -83,7 +83,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_llmNextAction_updatesNextAction() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--llm-next-action", "Fix the bug", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -96,7 +96,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_addTag_mergesWithExisting() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--tag", "env=dev", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -109,7 +109,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_favourite_setsIsFavouriteTrue() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--favourite", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -121,12 +121,12 @@ final class CLIMutationsTests: CLITestCase {
     func test_set_unfavourite_clearsFavourite() throws {
         // First set as favourite
         try captureOutput {
-            var cmd = try Set.parse(["My Card", "--favourite", "--data-directory", tempDirectory.path])
+            let cmd = try Set.parse(["My Card", "--favourite", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         // Then unfavourite
         try captureOutput {
-            var cmd = try Set.parse(["My Card", "--unfavourite", "--data-directory", tempDirectory.path])
+            let cmd = try Set.parse(["My Card", "--unfavourite", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let board = try loadBoard()
@@ -137,7 +137,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_set_column_movesCardToColumn() throws {
         try captureOutput {
-            var cmd = try Set.parse([
+            let cmd = try Set.parse([
                 "My Card", "--column", "Done", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -150,19 +150,20 @@ final class CLIMutationsTests: CLITestCase {
     // MARK: - Set: terminal not found
 
     func test_set_unknownTerminal_throwsFailure() {
-        XCTAssertThrowsError(try captureOutput {
-            var cmd = try Set.parse([
-                "Nonexistent Card", "--name", "New Name", "--data-directory", tempDirectory.path,
-            ])
-            try cmd.run()
-        })
+        XCTAssertThrowsError(
+            try captureOutput {
+                let cmd = try Set.parse([
+                    "Nonexistent Card", "--name", "New Name", "--data-directory", tempDirectory.path,
+                ])
+                try cmd.run()
+            })
     }
 
     // MARK: - Move
 
     func test_move_movesCardToTargetColumn() throws {
         try captureOutput {
-            var cmd = try Move.parse([
+            let cmd = try Move.parse([
                 "My Card", "Done", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -173,28 +174,30 @@ final class CLIMutationsTests: CLITestCase {
     }
 
     func test_move_invalidColumn_throwsFailure() {
-        XCTAssertThrowsError(try captureOutput {
-            var cmd = try Move.parse([
-                "My Card", "Nonexistent", "--data-directory", tempDirectory.path,
-            ])
-            try cmd.run()
-        })
+        XCTAssertThrowsError(
+            try captureOutput {
+                let cmd = try Move.parse([
+                    "My Card", "Nonexistent", "--data-directory", tempDirectory.path,
+                ])
+                try cmd.run()
+            })
     }
 
     func test_move_unknownTerminal_throwsFailure() {
-        XCTAssertThrowsError(try captureOutput {
-            var cmd = try Move.parse([
-                "Ghost Card", "Done", "--data-directory", tempDirectory.path,
-            ])
-            try cmd.run()
-        })
+        XCTAssertThrowsError(
+            try captureOutput {
+                let cmd = try Move.parse([
+                    "Ghost Card", "Done", "--data-directory", tempDirectory.path,
+                ])
+                try cmd.run()
+            })
     }
 
     // MARK: - Delete: soft
 
     func test_delete_soft_setsDeletedAt() throws {
         try captureOutput {
-            var cmd = try Delete.parse([
+            let cmd = try Delete.parse([
                 "My Card", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -210,7 +213,7 @@ final class CLIMutationsTests: CLITestCase {
 
     func test_delete_permanent_removesCardFromBoard() throws {
         try captureOutput {
-            var cmd = try Delete.parse([
+            let cmd = try Delete.parse([
                 "My Card", "--permanent", "--data-directory", tempDirectory.path,
             ])
             try cmd.run()
@@ -220,11 +223,12 @@ final class CLIMutationsTests: CLITestCase {
     }
 
     func test_delete_unknownTerminal_throwsFailure() {
-        XCTAssertThrowsError(try captureOutput {
-            var cmd = try Delete.parse([
-                "Ghost Card", "--data-directory", tempDirectory.path,
-            ])
-            try cmd.run()
-        })
+        XCTAssertThrowsError(
+            try captureOutput {
+                let cmd = try Delete.parse([
+                    "Ghost Card", "--data-directory", tempDirectory.path,
+                ])
+                try cmd.run()
+            })
     }
 }

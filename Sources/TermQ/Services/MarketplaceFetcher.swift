@@ -124,9 +124,10 @@ enum MarketplaceFetcher {
     private static func clone(gitPath: String, url: String, ref: String?, into dir: URL) async throws {
         // Detect SHA refs: 7-40 hex chars → can't use --branch, need post-clone checkout.
         let hex = CharacterSet(charactersIn: "0123456789abcdefABCDEF")
-        let isSHA = ref.map { r in
-            r.count >= 7 && r.count <= 40 && r.unicodeScalars.allSatisfy { hex.contains($0) }
-        } ?? false
+        let isSHA =
+            ref.map { r in
+                r.count >= 7 && r.count <= 40 && r.unicodeScalars.allSatisfy { hex.contains($0) }
+            } ?? false
 
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             DispatchQueue.global(qos: .userInitiated).async {

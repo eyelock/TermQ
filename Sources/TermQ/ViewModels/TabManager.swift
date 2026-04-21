@@ -173,9 +173,8 @@ public final class TabManager: ObservableObject {
     /// Mark a tab as needing attention (e.g., from terminal bell)
     func markNeedsAttention(_ cardId: UUID, currentSelection: UUID?) {
         #if DEBUG
-            print(
-                "[TabManager] markNeedsAttention called for: \(cardId), selected: \(currentSelection?.uuidString ?? "nil")"
-            )
+            let selStr = currentSelection?.uuidString ?? "nil"
+            print("[TabManager] markNeedsAttention called for: \(cardId), selected: \(selStr)")
         #endif
         if currentSelection != cardId {
             needsAttention.insert(cardId)

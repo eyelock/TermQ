@@ -140,7 +140,8 @@ struct ExpandedTerminalView: View {
                     .id("\(card.id)-\(restartCounter)")
                     .onAppear {
                         TermQLogger.ui.debug(
-                            "TerminalHostView appeared backend=\(backend) hasControlSession=\(hasControlSession) paneCount=\(paneCount)"
+                            "TerminalHostView appeared backend=\(backend)"
+                                + " hasControlSession=\(hasControlSession) paneCount=\(paneCount)"
                         )
                     }
                 }

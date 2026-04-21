@@ -86,7 +86,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byName_partialMatch_returnsMatches() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--name", "api", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--name", "api", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -96,7 +96,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byName_caseInsensitive() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--name", "API PROJECT", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--name", "API PROJECT", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -105,7 +105,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byName_noMatch_returnsEmpty() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--name", "nonexistent", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--name", "nonexistent", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -116,7 +116,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byColumn_returnsCardsInColumn() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--column", "To Do", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--column", "To Do", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -126,7 +126,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byColumn_partialMatch() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--column", "progress", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--column", "progress", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -138,7 +138,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byTagKey_returnsMatchingCards() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--tag", "project", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--tag", "project", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -149,7 +149,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byTagKeyValue_exactMatch() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--tag", "staleness=stale", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--tag", "staleness=stale", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -159,7 +159,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byTagKeyValue_noMatch_returnsEmpty() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--tag", "staleness=ancient", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--tag", "staleness=ancient", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -170,7 +170,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byBadge_returnsMatchingCard() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--badge", "urgent", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--badge", "urgent", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -182,7 +182,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_favourites_onlyReturnsFavourites() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--favourites", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--favourites", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -197,7 +197,7 @@ final class CLIFindTests: CLITestCase {
         let cardId = board.activeCards.first!.id.uuidString
 
         let output = try captureOutput {
-            var cmd = try Find.parse(["--id", cardId, "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--id", cardId, "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -207,7 +207,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_byInvalidUUID_returnsEmpty() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--id", "not-a-uuid", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--id", "not-a-uuid", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -218,7 +218,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_query_matchesAcrossFields() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--query", "postgres", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--query", "postgres", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -229,7 +229,7 @@ final class CLIFindTests: CLITestCase {
     func test_find_query_emptyQuery_returnsAll() throws {
         // An empty --query string means no filter — all active cards are returned
         let output = try captureOutput {
-            var cmd = try Find.parse(["--query", "", "--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--query", "", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -240,7 +240,7 @@ final class CLIFindTests: CLITestCase {
 
     func test_find_noFilters_returnsAllActive() throws {
         let output = try captureOutput {
-            var cmd = try Find.parse(["--data-directory", tempDirectory.path])
+            let cmd = try Find.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)

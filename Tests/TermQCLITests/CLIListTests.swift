@@ -27,7 +27,7 @@ final class CLIListTests: CLITestCase {
 
     func test_list_all_returnsAllActiveCards() throws {
         let output = try captureOutput {
-            var cmd = try List.parse(["--data-directory", tempDirectory.path])
+            let cmd = try List.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -37,7 +37,7 @@ final class CLIListTests: CLITestCase {
     func test_list_emptyBoard_returnsEmptyArray() throws {
         try seedBoard()
         let output = try captureOutput {
-            var cmd = try List.parse(["--data-directory", tempDirectory.path])
+            let cmd = try List.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -48,7 +48,7 @@ final class CLIListTests: CLITestCase {
 
     func test_list_filterByColumn_returnsOnlyMatchingCards() throws {
         let output = try captureOutput {
-            var cmd = try List.parse(["--column", "To Do", "--data-directory", tempDirectory.path])
+            let cmd = try List.parse(["--column", "To Do", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -58,7 +58,7 @@ final class CLIListTests: CLITestCase {
 
     func test_list_filterByColumn_caseInsensitive() throws {
         let output = try captureOutput {
-            var cmd = try List.parse(["--column", "done", "--data-directory", tempDirectory.path])
+            let cmd = try List.parse(["--column", "done", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -68,7 +68,7 @@ final class CLIListTests: CLITestCase {
 
     func test_list_filterByColumn_noMatch_returnsEmpty() throws {
         let output = try captureOutput {
-            var cmd = try List.parse(["--column", "Backlog", "--data-directory", tempDirectory.path])
+            let cmd = try List.parse(["--column", "Backlog", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)
@@ -79,7 +79,7 @@ final class CLIListTests: CLITestCase {
 
     func test_list_columnsFlag_returnsColumnInfo() throws {
         let output = try captureOutput {
-            var cmd = try List.parse(["--columns", "--data-directory", tempDirectory.path])
+            let cmd = try List.parse(["--columns", "--data-directory", tempDirectory.path])
             try cmd.run()
         }
         // ColumnOutput is a JSON array with id, name, terminalCount fields
@@ -95,7 +95,7 @@ final class CLIListTests: CLITestCase {
 
     func test_list_sortedByColumnThenOrderIndex() throws {
         let output = try captureOutput {
-            var cmd = try List.parse(["--data-directory", tempDirectory.path])
+            let cmd = try List.parse(["--data-directory", tempDirectory.path])
             try cmd.run()
         }
         let results = try decodeOutput(output, as: [TerminalOutput].self)

@@ -34,7 +34,8 @@ final class BoardViewModelDefaultsTests: XCTestCase {
             .appendingPathComponent("BoardViewModelTests-\(UUID().uuidString)")
         try? FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
         tempBoardURL = tempDir.appendingPathComponent("board.json")
-        let seedBoard = #"{"columns":[{"id":"00000000-0000-0000-0000-000000000001","name":"To Do","orderIndex":0}],"cards":[]}"#
+        let seedBoard =
+            #"{"columns":[{"id":"00000000-0000-0000-0000-000000000001","name":"To Do","orderIndex":0}],"cards":[]}"#
         try? Data(seedBoard.utf8).write(to: tempBoardURL)
     }
 

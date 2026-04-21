@@ -113,7 +113,8 @@ struct Set: ParsableCommand {
 
                 if initCommand != nil {
                     JSONHelper.printErrorJSON(
-                        "Warning: initCommand is only supported when TermQ GUI is running. Value ignored in headless mode."
+                        "Warning: initCommand is only supported when TermQ GUI is running."
+                            + " Value ignored in headless mode."
                     )
                 }
 

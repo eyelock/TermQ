@@ -13,7 +13,7 @@ final class CLICreateTests: CLITestCase {
 
     func test_new_headless_createsCard() throws {
         try captureOutput {
-            var cmd = try New.parse([
+            let cmd = try New.parse([
                 "--name", "My Terminal",
                 "--path", "/projects/test",
                 "--data-directory", tempDirectory.path,
@@ -28,7 +28,7 @@ final class CLICreateTests: CLITestCase {
 
     func test_new_headless_defaultsNameToDirectoryName() throws {
         try captureOutput {
-            var cmd = try New.parse([
+            let cmd = try New.parse([
                 "--path", "/projects/myapp",
                 "--data-directory", tempDirectory.path,
             ])
@@ -48,7 +48,7 @@ final class CLICreateTests: CLITestCase {
         )
 
         try captureOutput {
-            var cmd = try New.parse([
+            let cmd = try New.parse([
                 "--name", "Test",
                 "--path", "/tmp",
                 "--column", "In Progress",
@@ -63,7 +63,7 @@ final class CLICreateTests: CLITestCase {
 
     func test_new_headless_outputsJSON() throws {
         let output = try captureOutput {
-            var cmd = try New.parse([
+            let cmd = try New.parse([
                 "--name", "Output Test",
                 "--path", "/tmp",
                 "--data-directory", tempDirectory.path,
@@ -80,7 +80,7 @@ final class CLICreateTests: CLITestCase {
 
     func test_create_headless_createsCard() throws {
         try captureOutput {
-            var cmd = try Create.parse([
+            let cmd = try Create.parse([
                 "--name", "Created Terminal",
                 "--path", "/projects/created",
                 "--data-directory", tempDirectory.path,
@@ -94,7 +94,7 @@ final class CLICreateTests: CLITestCase {
 
     func test_create_headless_withDescription_setsDescription() throws {
         try captureOutput {
-            var cmd = try Create.parse([
+            let cmd = try Create.parse([
                 "--name", "Described",
                 "--description", "A test terminal",
                 "--path", "/tmp",
@@ -108,7 +108,7 @@ final class CLICreateTests: CLITestCase {
 
     func test_create_headless_withTags_setsTagsOnCard() throws {
         try captureOutput {
-            var cmd = try Create.parse([
+            let cmd = try Create.parse([
                 "--name", "Tagged",
                 "--path", "/tmp",
                 "--tag", "project=myapp",
@@ -125,22 +125,23 @@ final class CLICreateTests: CLITestCase {
     }
 
     func test_create_headless_invalidColumn_throwsFailure() throws {
-        XCTAssertThrowsError(try {
-            try captureOutput {
-                var cmd = try Create.parse([
-                    "--name", "Test",
-                    "--column", "Nonexistent Column",
-                    "--path", "/tmp",
-                    "--data-directory", tempDirectory.path,
-                ])
-                try cmd.run()
-            }
-        }())
+        XCTAssertThrowsError(
+            try {
+                try captureOutput {
+                    let cmd = try Create.parse([
+                        "--name", "Test",
+                        "--column", "Nonexistent Column",
+                        "--path", "/tmp",
+                        "--data-directory", tempDirectory.path,
+                    ])
+                    try cmd.run()
+                }
+            }())
     }
 
     func test_create_headless_setsNeedsTmuxSession() throws {
         try captureOutput {
-            var cmd = try Create.parse([
+            let cmd = try Create.parse([
                 "--name", "Tmux Card",
                 "--path", "/tmp",
                 "--data-directory", tempDirectory.path,
