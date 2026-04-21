@@ -63,15 +63,6 @@ final class MockGitService: GitServiceProtocol {
 @MainActor
 final class WorktreeSidebarViewModelTests: XCTestCase {
 
-    /// Scrub any /tmp/ repos that leaked from a previous run before each test.
-    override func setUp() async throws {
-        try await super.setUp()
-        let scrub = WorktreeSidebarViewModel(gitService: MockGitService())
-        scrub.repositories
-            .filter { $0.path.hasPrefix("/tmp/") }
-            .forEach { scrub.removeRepository($0) }
-    }
-
     private func makeVM(gitService: MockGitService = MockGitService()) -> WorktreeSidebarViewModel {
         WorktreeSidebarViewModel(gitService: gitService)
     }
