@@ -6,7 +6,7 @@ import TermQShared
 /// Follows the `RepoPersistence` pattern: owns the save URL, delegates encode/decode
 /// to `YNHConfigLoader` (which uses NSFileCoordinator).
 @MainActor
-final class YNHPersistence: ObservableObject {
+final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
     static let shared = YNHPersistence()
 
     @Published private(set) var config = LocalYNHConfig()
