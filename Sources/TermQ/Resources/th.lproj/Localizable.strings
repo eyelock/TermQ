@@ -819,3 +819,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "ลบ “%@” ออกจาก YNHใช่ไหม? ฮาร์นเสสที่ติดตั้งไว้แล้วจะยังคงอยู่";
 "marketplace.add.custom.name.placeholder" = "มาร์เก็ตเพลสของฉัน";
 "harness.wizard.success.created %@" = "สร้าง Harness «%@» แล้ว";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "ยูทิลิตี้";
+"menu.utilities.logging" = "การบันทึก…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "การวินิจฉัย TermQ";
+"diagnostics.filter.category" = "หมวดหมู่";
+"diagnostics.filter.category.all" = "ทั้งหมด";
+"diagnostics.filter.level" = "ระดับ";
+"diagnostics.search.placeholder" = "ค้นหา…";
+"diagnostics.clear" = "ล้าง";
+"diagnostics.export" = "ส่งออก…";
+"diagnostics.jump.to.latest" = "ไปที่ล่าสุด";
+"diagnostics.status.live" = "สด";
+"diagnostics.status.paused" = "หยุดชั่วคราว";
+"diagnostics.status.entries %lld %lld" = "%lld รายการ · %lld ตรงกับตัวกรอง";
+"diagnostics.verbose.mode" = "โหมดละเอียด";
+"diagnostics.verbose.mode.help" = "บันทึกข้อความระดับ debug และ info นอกเหนือจาก notice/warning/error";
+"diagnostics.verbose.warning" = "ปริมาณสูง — ปิดการใช้งานเมื่อเสร็จสิ้น";
+"diagnostics.export.title" = "รายงานการวินิจฉัย TermQ";
+"diagnostics.export.footer" = "ยื่นผ่านระบบวินิจฉัยในตัวของ TermQ";

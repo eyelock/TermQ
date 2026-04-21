@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Voleu suprimir «%@» de YNH? Els harnesos instal·lats es conservaran.";
 "marketplace.add.custom.name.placeholder" = "El meu mercat";
 "harness.wizard.success.created %@" = "Harness «%@» creat";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Utilitats";
+"menu.utilities.logging" = "Registre…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnòstics de TermQ";
+"diagnostics.filter.category" = "Categoria";
+"diagnostics.filter.category.all" = "Tots";
+"diagnostics.filter.level" = "Nivell";
+"diagnostics.search.placeholder" = "Cerca…";
+"diagnostics.clear" = "Esborra";
+"diagnostics.export" = "Exporta…";
+"diagnostics.jump.to.latest" = "Vés al més recent";
+"diagnostics.status.live" = "En directe";
+"diagnostics.status.paused" = "En pausa";
+"diagnostics.status.entries %lld %lld" = "%lld entrades · %lld coincidents amb el filtre";
+"diagnostics.verbose.mode" = "Mode detallat";
+"diagnostics.verbose.mode.help" = "Captura missatges de debug i info a més de notice/warning/error";
+"diagnostics.verbose.warning" = "Volum alt — desactiva quan acabis";
+"diagnostics.export.title" = "Informe de diagnòstics de TermQ";
+"diagnostics.export.footer" = "Enviat mitjançant els diagnòstics integrats de TermQ.";

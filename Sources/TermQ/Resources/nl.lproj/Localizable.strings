@@ -817,3 +817,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" uit YNH verwijderen? Geïnstalleerde harnesses blijven behouden.";
 "marketplace.add.custom.name.placeholder" = "Mijn marktplaats";
 "harness.wizard.success.created %@" = "Harness «%@» aangemaakt";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Hulpprogramma's";
+"menu.utilities.logging" = "Logboekregistratie…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ Diagnostiek";
+"diagnostics.filter.category" = "Categorie";
+"diagnostics.filter.category.all" = "Alles";
+"diagnostics.filter.level" = "Niveau";
+"diagnostics.search.placeholder" = "Zoeken…";
+"diagnostics.clear" = "Wissen";
+"diagnostics.export" = "Exporteren…";
+"diagnostics.jump.to.latest" = "Naar nieuwste gaan";
+"diagnostics.status.live" = "Live";
+"diagnostics.status.paused" = "Gepauzeerd";
+"diagnostics.status.entries %lld %lld" = "%lld vermeldingen · %lld voldoen aan filter";
+"diagnostics.verbose.mode" = "Uitgebreide modus";
+"diagnostics.verbose.mode.help" = "Registreert debug- en info-berichten naast notice/warning/error";
+"diagnostics.verbose.warning" = "Hoog volume — uitschakelen als klaar";
+"diagnostics.export.title" = "TermQ Diagnostiekrapport";
+"diagnostics.export.footer" = "Ingediend via de ingebouwde diagnostiek van TermQ.";

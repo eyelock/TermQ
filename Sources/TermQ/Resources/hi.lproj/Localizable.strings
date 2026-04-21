@@ -818,3 +818,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" को YNH से हटाएं? इंस्टॉल किए गए harness बने रहेंगे.";
 "marketplace.add.custom.name.placeholder" = "मेरा मार्केटप्लेस";
 "harness.wizard.success.created %@" = "Harness «%@» बनाई गई";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "उपयोगिताएँ";
+"menu.utilities.logging" = "लॉगिंग…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ निदान";
+"diagnostics.filter.category" = "श्रेणी";
+"diagnostics.filter.category.all" = "सभी";
+"diagnostics.filter.level" = "स्तर";
+"diagnostics.search.placeholder" = "खोजें…";
+"diagnostics.clear" = "साफ़ करें";
+"diagnostics.export" = "निर्यात करें…";
+"diagnostics.jump.to.latest" = "नवीनतम पर जाएँ";
+"diagnostics.status.live" = "लाइव";
+"diagnostics.status.paused" = "रुका हुआ";
+"diagnostics.status.entries %lld %lld" = "%lld प्रविष्टियाँ · %lld फ़िल्टर से मेल खाती हैं";
+"diagnostics.verbose.mode" = "विस्तृत मोड";
+"diagnostics.verbose.mode.help" = "notice/warning/error के अलावा debug और info संदेश भी कैप्चर करता है";
+"diagnostics.verbose.warning" = "उच्च मात्रा — पूरा होने पर बंद करें";
+"diagnostics.export.title" = "TermQ निदान रिपोर्ट";
+"diagnostics.export.footer" = "TermQ के अंतर्निहित निदान के माध्यम से दर्ज किया गया।";

@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Αφαίρεση «%@» από το YNH; Τα εγκατεστημένα harnesses θα παραμείνουν.";
 "marketplace.add.custom.name.placeholder" = "Η αγορά μου";
 "harness.wizard.success.created %@" = "Το harness «%@» δημιουργήθηκε";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Βοηθητικά";
+"menu.utilities.logging" = "Καταγραφή…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Διαγνωστικά TermQ";
+"diagnostics.filter.category" = "Κατηγορία";
+"diagnostics.filter.category.all" = "Όλα";
+"diagnostics.filter.level" = "Επίπεδο";
+"diagnostics.search.placeholder" = "Αναζήτηση…";
+"diagnostics.clear" = "Εκκαθάριση";
+"diagnostics.export" = "Εξαγωγή…";
+"diagnostics.jump.to.latest" = "Μετάβαση στο τελευταίο";
+"diagnostics.status.live" = "Ζωντανά";
+"diagnostics.status.paused" = "Σε παύση";
+"diagnostics.status.entries %lld %lld" = "%lld εγγραφές · %lld ταιριάζουν με το φίλτρο";
+"diagnostics.verbose.mode" = "Λεπτομερής λειτουργία";
+"diagnostics.verbose.mode.help" = "Καταγράφει μηνύματα debug και info πέρα από notice/warning/error";
+"diagnostics.verbose.warning" = "Υψηλός όγκος — απενεργοποιήστε όταν τελειώσετε";
+"diagnostics.export.title" = "Αναφορά διαγνωστικών TermQ";
+"diagnostics.export.footer" = "Υποβλήθηκε μέσω του ενσωματωμένου διαγνωστικού TermQ.";

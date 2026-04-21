@@ -818,3 +818,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "להסיר את “%@” מין YNH? התשתיות המותקנות ישארו.";
 "marketplace.add.custom.name.placeholder" = "השוק שלי";
 "harness.wizard.success.created %@" = "Harness «%@» נוצר";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "כלי עזר";
+"menu.utilities.logging" = "רישום יומן…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "אבחון TermQ";
+"diagnostics.filter.category" = "קטגוריה";
+"diagnostics.filter.category.all" = "הכל";
+"diagnostics.filter.level" = "רמה";
+"diagnostics.search.placeholder" = "חיפוש…";
+"diagnostics.clear" = "נקה";
+"diagnostics.export" = "ייצוא…";
+"diagnostics.jump.to.latest" = "עבור לאחרון";
+"diagnostics.status.live" = "חי";
+"diagnostics.status.paused" = "מושהה";
+"diagnostics.status.entries %lld %lld" = "%lld רשומות · %lld תואמות לסינון";
+"diagnostics.verbose.mode" = "מצב מפורט";
+"diagnostics.verbose.mode.help" = "לוכד הודעות debug ו-info בנוסף ל-notice/warning/error";
+"diagnostics.verbose.warning" = "נפח גבוה — כבה בסיום";
+"diagnostics.export.title" = "דוח אבחון TermQ";
+"diagnostics.export.footer" = "הוגש דרך כלי האבחון המובנה של TermQ.";
