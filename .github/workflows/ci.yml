@@ -7,6 +7,12 @@ on:
     branches: [main, develop]
   workflow_dispatch:
 
+# Pin the Xcode version used by all jobs. The Makefile reads XCODE_DEVELOPER_DIR
+# via `xcode-select -p` (with ?= so this env var takes precedence). Update here
+# when upgrading the toolchain — one place, all jobs.
+env:
+  XCODE_DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+
 jobs:
   # Detect which files changed to determine what checks to run
   changes:
@@ -42,9 +48,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
-
       - name: Show Swift version
         run: swift --version
 
@@ -61,8 +64,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+      - name: Show Swift version
+        run: swift --version
 
       - name: Run tests
         run: make test
@@ -77,6 +80,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Show Swift version
+        run: swift --version
+
       - name: Run SwiftLint
         run: make lint
 
@@ -89,6 +95,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
+      - name: Show Swift version
+        run: swift --version
 
       - name: Check formatting
         run: make format-check
@@ -106,8 +115,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+      - name: Show Swift version
+        run: swift --version
 
       - name: Build release
         run: make build-release
