@@ -9,10 +9,18 @@ final class VendorService: ObservableObject {
     @Published private(set) var vendors: [Vendor] = []
     @Published private(set) var isLoading = false
 
-    private init() {}
+    private let ynhDetector: any YNHDetectorProtocol
+
+    private convenience init() {
+        self.init(ynhDetector: YNHDetector.shared)
+    }
+
+    init(ynhDetector: any YNHDetectorProtocol) {
+        self.ynhDetector = ynhDetector
+    }
 
     func refresh() async {
-        guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else {
             vendors = []
             return
         }
@@ -21,7 +29,7 @@ final class VendorService: ObservableObject {
         defer { isLoading = false }
 
         var env = ProcessInfo.processInfo.environment
-        if let override = YNHDetector.shared.ynhHomeOverride {
+        if let override = ynhDetector.ynhHomeOverride {
             env["YNH_HOME"] = override
         }
 
