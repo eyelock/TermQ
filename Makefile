@@ -32,7 +32,7 @@ RELEASE_BUILD_DIR := $(BUILD_DIR)/release
 # Installation paths (customize for different systems)
 INSTALL_APP_DIR := /Applications
 INSTALL_CLI_DIR := /usr/local/bin
-XCODE_DEVELOPER_DIR := /Applications/Xcode.app/Contents/Developer
+XCODE_DEVELOPER_DIR ?= $(shell xcode-select -p)
 
 # Version from git tags (single source of truth)
 # Gets the most recent tag, strips 'v' prefix
