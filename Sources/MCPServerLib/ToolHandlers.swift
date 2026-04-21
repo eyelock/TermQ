@@ -145,24 +145,10 @@ extension TermQMCPServer {
 
             // Get cards, optionally filtered by column
             var cards = board.activeCards
-
-            if let columnFilter = columnFilter {
-                let filterLower = columnFilter.lowercased()
-                let matchingColumnIds = board.columns
-                    .filter { $0.name.lowercased().contains(filterLower) }
-                    .map { $0.id }
-                cards = cards.filter { matchingColumnIds.contains($0.columnId) }
-            }
+            cards = CardFilterEngine.filterByColumn(cards, column: columnFilter, columns: board.columns)
 
             // Sort by column order, then card order
-            cards.sort { lhs, rhs in
-                let lhsColOrder = board.columns.first { $0.id == lhs.columnId }?.orderIndex ?? 0
-                let rhsColOrder = board.columns.first { $0.id == rhs.columnId }?.orderIndex ?? 0
-                if lhsColOrder != rhsColOrder {
-                    return lhsColOrder < rhsColOrder
-                }
-                return lhs.orderIndex < rhs.orderIndex
-            }
+            cards = CardFilterEngine.sortByColumnThenOrder(cards, columns: board.columns)
 
             let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
             let json = try JSONHelper.encode(output)
@@ -200,14 +186,14 @@ extension TermQMCPServer {
 
             // Smart query search (multi-word, multi-field)
             if let query = query, !query.isEmpty {
-                let queryWords = normalizeToWords(query)
+                let queryWords = CardFilterEngine.normalizeToWords(query)
                 guard !queryWords.isEmpty else {
                     let json = try JSONHelper.encode([TerminalOutput]())
                     return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
                 }
 
                 cards = cards.filter { card in
-                    let score = calculateRelevanceScore(card: card, queryWords: queryWords)
+                    let score = CardFilterEngine.relevanceScore(card: card, queryWords: queryWords)
                     if score > 0 {
                         relevanceScores[card.id] = score
                         return true
@@ -227,54 +213,13 @@ extension TermQMCPServer {
                 cards = cards.filter { $0.title.lowercased().contains(filterLower) }
             }
 
-            // Filter by column
-            if let columnFilter = columnFilter {
-                let filterLower = columnFilter.lowercased()
-                let matchingColumnIds = board.columns
-                    .filter { $0.name.lowercased().contains(filterLower) }
-                    .map { $0.id }
-                cards = cards.filter { matchingColumnIds.contains($0.columnId) }
-            }
+            cards = CardFilterEngine.filterByColumn(cards, column: columnFilter, columns: board.columns)
+            cards = CardFilterEngine.filterByTag(cards, tagFilter: tagFilter, valueMatch: .exact)
+            cards = CardFilterEngine.filterByBadge(cards, badge: badgeFilter)
+            if favouritesOnly { cards = CardFilterEngine.filterFavourites(cards) }
 
-            // Filter by tag
-            if let tagFilter = tagFilter {
-                if tagFilter.contains("=") {
-                    // key=value format
-                    let parts = tagFilter.split(separator: "=", maxSplits: 1)
-                    if parts.count == 2 {
-                        let key = String(parts[0]).lowercased()
-                        let value = String(parts[1]).lowercased()
-                        cards = cards.filter { card in
-                            card.tags.contains { $0.key.lowercased() == key && $0.value.lowercased() == value }
-                        }
-                    }
-                } else {
-                    // key only format
-                    let key = tagFilter.lowercased()
-                    cards = cards.filter { card in
-                        card.tags.contains { $0.key.lowercased() == key }
-                    }
-                }
-            }
-
-            // Filter by badge
-            if let badgeFilter = badgeFilter {
-                let filterLower = badgeFilter.lowercased()
-                cards = cards.filter { $0.badge.lowercased().contains(filterLower) }
-            }
-
-            // Filter by favourites
-            if favouritesOnly {
-                cards = cards.filter { $0.isFavourite }
-            }
-
-            // Sort by relevance if query was used, otherwise maintain default order
             if !relevanceScores.isEmpty {
-                cards.sort { card1, card2 in
-                    let score1 = relevanceScores[card1.id] ?? 0
-                    let score2 = relevanceScores[card2.id] ?? 0
-                    return score1 > score2
-                }
+                cards = CardFilterEngine.sortByRelevance(cards, scores: relevanceScores)
             }
 
             let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
@@ -286,62 +231,6 @@ extension TermQMCPServer {
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true)
         }
-    }
-
-    // MARK: - Smart Search Helpers
-
-    /// Normalize text to searchable words (lowercase, remove punctuation, split on separators)
-    private func normalizeToWords(_ text: String) -> Set<String> {
-        // Replace common separators with spaces
-        let normalized =
-            text
-            .lowercased()
-            .replacingOccurrences(of: "-", with: " ")
-            .replacingOccurrences(of: "_", with: " ")
-            .replacingOccurrences(of: ":", with: " ")
-            .replacingOccurrences(of: "/", with: " ")
-            .replacingOccurrences(of: ".", with: " ")
-
-        // Split into words and filter out empty/short words
-        let words =
-            normalized
-            .components(separatedBy: .whitespacesAndNewlines)
-            .map { $0.trimmingCharacters(in: .punctuationCharacters) }
-            .filter { $0.count >= 2 }
-
-        return Set(words)
-    }
-
-    /// Calculate relevance score for a card based on query words
-    private func calculateRelevanceScore(card: Card, queryWords: Set<String>) -> Int {
-        var score = 0
-
-        // Get searchable words from card fields
-        let titleWords = normalizeToWords(card.title)
-        let descriptionWords = normalizeToWords(card.description)
-        let pathWords = normalizeToWords(card.workingDirectory)
-        var tagWords = Set<String>()
-        for tag in card.tags {
-            tagWords.formUnion(normalizeToWords(tag.key))
-            tagWords.formUnion(normalizeToWords(tag.value))
-        }
-
-        // Score each query word
-        for queryWord in queryWords {
-            // Exact word matches (higher score)
-            if titleWords.contains(queryWord) { score += 10 }
-            if descriptionWords.contains(queryWord) { score += 5 }
-            if pathWords.contains(queryWord) { score += 3 }
-            if tagWords.contains(queryWord) { score += 7 }
-
-            // Prefix matches (lower score but still useful)
-            if titleWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 4 }
-            if descriptionWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 2 }
-            if pathWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 1 }
-            if tagWords.contains(where: { $0.hasPrefix(queryWord) || queryWord.hasPrefix($0) }) { score += 3 }
-        }
-
-        return score
     }
 
     func handleOpen(_ arguments: [String: Value]?) async throws -> CallTool.Result {
