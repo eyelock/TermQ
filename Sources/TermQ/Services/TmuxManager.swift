@@ -455,6 +455,10 @@ public class TmuxManager: ObservableObject {
     }
 }
 
+// MARK: - Protocol Conformance
+
+extension TmuxManager: TmuxManagerProtocol {}
+
 // MARK: - Supporting Types
 
 /// Information about a tmux session
