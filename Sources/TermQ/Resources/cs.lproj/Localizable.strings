@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Odebrat „%@“ z YNH? Nainstalované harnessy zůstanou.";
 "marketplace.add.custom.name.placeholder" = "Moje tržiště";
 "harness.wizard.success.created %@" = "Sada «%@» vytvořena";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Nástroje";
+"menu.utilities.logging" = "Protokolování…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostika TermQ";
+"diagnostics.filter.category" = "Kategorie";
+"diagnostics.filter.category.all" = "Vše";
+"diagnostics.filter.level" = "Úroveň";
+"diagnostics.search.placeholder" = "Hledat…";
+"diagnostics.clear" = "Vymazat";
+"diagnostics.export" = "Exportovat…";
+"diagnostics.jump.to.latest" = "Přejít na nejnovější";
+"diagnostics.status.live" = "Živě";
+"diagnostics.status.paused" = "Pozastaveno";
+"diagnostics.status.entries %lld %lld" = "%lld záznamů · %lld odpovídá filtru";
+"diagnostics.verbose.mode" = "Podrobný režim";
+"diagnostics.verbose.mode.help" = "Zachycuje zprávy debug a info navíc k notice/warning/error";
+"diagnostics.verbose.warning" = "Vysoký objem — po dokončení vypněte";
+"diagnostics.export.title" = "Diagnostická zpráva TermQ";
+"diagnostics.export.footer" = "Odesláno prostřednictvím vestavěné diagnostiky TermQ.";

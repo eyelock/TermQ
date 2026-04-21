@@ -819,3 +819,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Видалити «%@» з YNH? Встановлені harness-пакети залишаться.";
 "marketplace.add.custom.name.placeholder" = "Мій маркетплейс";
 "harness.wizard.success.created %@" = "Харнес «%@» створено";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Утиліти";
+"menu.utilities.logging" = "Протоколювання…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Діагностика TermQ";
+"diagnostics.filter.category" = "Категорія";
+"diagnostics.filter.category.all" = "Усі";
+"diagnostics.filter.level" = "Рівень";
+"diagnostics.search.placeholder" = "Пошук…";
+"diagnostics.clear" = "Очистити";
+"diagnostics.export" = "Експортувати…";
+"diagnostics.jump.to.latest" = "Перейти до останнього";
+"diagnostics.status.live" = "У реальному часі";
+"diagnostics.status.paused" = "На паузі";
+"diagnostics.status.entries %lld %lld" = "%lld записів · %lld збігається з фільтром";
+"diagnostics.verbose.mode" = "Докладний режим";
+"diagnostics.verbose.mode.help" = "Записує повідомлення debug і info на додаток до notice/warning/error";
+"diagnostics.verbose.warning" = "Великий обсяг — вимкніть після завершення";
+"diagnostics.export.title" = "Звіт діагностики TermQ";
+"diagnostics.export.footer" = "Надіслано через вбудовану діагностику TermQ.";

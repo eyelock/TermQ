@@ -817,3 +817,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Usunąć „%@” z YNH? Zainstalowane winobrania pozostaną.";
 "marketplace.add.custom.name.placeholder" = "Moja platforma";
 "harness.wizard.success.created %@" = "Wiązka «%@» utworzona";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Narzędzia";
+"menu.utilities.logging" = "Rejestrowanie…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostyka TermQ";
+"diagnostics.filter.category" = "Kategoria";
+"diagnostics.filter.category.all" = "Wszystkie";
+"diagnostics.filter.level" = "Poziom";
+"diagnostics.search.placeholder" = "Szukaj…";
+"diagnostics.clear" = "Wyczyść";
+"diagnostics.export" = "Eksportuj…";
+"diagnostics.jump.to.latest" = "Przejdź do najnowszego";
+"diagnostics.status.live" = "Na żywo";
+"diagnostics.status.paused" = "Wstrzymano";
+"diagnostics.status.entries %lld %lld" = "%lld wpisów · %lld pasuje do filtru";
+"diagnostics.verbose.mode" = "Tryb szczegółowy";
+"diagnostics.verbose.mode.help" = "Rejestruje wiadomości debug i info poza notice/warning/error";
+"diagnostics.verbose.warning" = "Duża ilość — wyłącz po zakończeniu";
+"diagnostics.export.title" = "Raport diagnostyczny TermQ";
+"diagnostics.export.footer" = "Przesłano za pomocą wbudowanej diagnostyki TermQ.";

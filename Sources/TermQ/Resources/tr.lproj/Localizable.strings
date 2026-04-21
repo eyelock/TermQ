@@ -819,3 +819,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" YNH'den kaldırılsın mı? Yüklü harness'ler kalacak.";
 "marketplace.add.custom.name.placeholder" = "Benim pazar yerim";
 "harness.wizard.success.created %@" = "Harness «%@» oluşturuldu";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Araçlar";
+"menu.utilities.logging" = "Günlükleme…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ Tanılama";
+"diagnostics.filter.category" = "Kategori";
+"diagnostics.filter.category.all" = "Tümü";
+"diagnostics.filter.level" = "Düzey";
+"diagnostics.search.placeholder" = "Ara…";
+"diagnostics.clear" = "Temizle";
+"diagnostics.export" = "Dışa Aktar…";
+"diagnostics.jump.to.latest" = "En Yeniye Git";
+"diagnostics.status.live" = "Canlı";
+"diagnostics.status.paused" = "Duraklatıldı";
+"diagnostics.status.entries %lld %lld" = "%lld giriş · %lld filtreyle eşleşiyor";
+"diagnostics.verbose.mode" = "Ayrıntılı Mod";
+"diagnostics.verbose.mode.help" = "notice/warning/error'a ek olarak debug ve info düzeyindeki iletileri yakalar";
+"diagnostics.verbose.warning" = "Yüksek hacim — tamamlandığında devre dışı bırakın";
+"diagnostics.export.title" = "TermQ Tanılama Raporu";
+"diagnostics.export.footer" = "TermQ yerleşik tanılama aracıyla gönderildi.";

@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\"をYNHから削除しますか？インストール済みのハーネスは残ります。";
 "marketplace.add.custom.name.placeholder" = "マイマーケットプレイス";
 "harness.wizard.success.created %@" = "ハーネス「%@」を作成しました";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "ユーティリティ";
+"menu.utilities.logging" = "ログ…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ 診断";
+"diagnostics.filter.category" = "カテゴリ";
+"diagnostics.filter.category.all" = "すべて";
+"diagnostics.filter.level" = "レベル";
+"diagnostics.search.placeholder" = "検索…";
+"diagnostics.clear" = "クリア";
+"diagnostics.export" = "書き出す…";
+"diagnostics.jump.to.latest" = "最新へジャンプ";
+"diagnostics.status.live" = "ライブ";
+"diagnostics.status.paused" = "一時停止";
+"diagnostics.status.entries %lld %lld" = "%lld 件 · フィルタに一致 %lld 件";
+"diagnostics.verbose.mode" = "詳細モード";
+"diagnostics.verbose.mode.help" = "notice/warning/error に加えて debug および info レベルのメッセージを記録する";
+"diagnostics.verbose.warning" = "大量のログが生成されます — 完了後は無効にしてください";
+"diagnostics.export.title" = "TermQ 診断レポート";
+"diagnostics.export.footer" = "TermQ 内蔵診断ツール経由で提出。";

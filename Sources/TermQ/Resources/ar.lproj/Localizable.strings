@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "حذف “%@” من YNH؟ ستظل التوصيلات المثبتة.";
 "marketplace.add.custom.name.placeholder" = "سوقي";
 "harness.wizard.success.created %@" = "تم إنشاء الحزمة «%@»";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "الأدوات";
+"menu.utilities.logging" = "السجلات…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "تشخيصات TermQ";
+"diagnostics.filter.category" = "الفئة";
+"diagnostics.filter.category.all" = "الكل";
+"diagnostics.filter.level" = "المستوى";
+"diagnostics.search.placeholder" = "بحث…";
+"diagnostics.clear" = "مسح";
+"diagnostics.export" = "تصدير…";
+"diagnostics.jump.to.latest" = "الانتقال إلى الأحدث";
+"diagnostics.status.live" = "مباشر";
+"diagnostics.status.paused" = "متوقف مؤقتاً";
+"diagnostics.status.entries %lld %lld" = "%lld إدخال · %lld مطابق للفلتر";
+"diagnostics.verbose.mode" = "الوضع التفصيلي";
+"diagnostics.verbose.mode.help" = "التقاط رسائل debug وinfo بالإضافة إلى notice/warning/error";
+"diagnostics.verbose.warning" = "حجم كبير — أوقف التشغيل عند الانتهاء";
+"diagnostics.export.title" = "تقرير تشخيصات TermQ";
+"diagnostics.export.footer" = "مُقدَّم عبر أداة التشخيص المدمجة في TermQ.";

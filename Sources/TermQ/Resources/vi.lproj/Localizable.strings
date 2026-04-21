@@ -819,3 +819,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Xóa “%@” khỏi YNH? Các harness đã cài đặt sẽ được giữ lại.";
 "marketplace.add.custom.name.placeholder" = "Chợ của tôi";
 "harness.wizard.success.created %@" = "Harness «%@» đã được tạo";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Tiện ích";
+"menu.utilities.logging" = "Ghi nhật ký…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Chẩn đoán TermQ";
+"diagnostics.filter.category" = "Danh mục";
+"diagnostics.filter.category.all" = "Tất cả";
+"diagnostics.filter.level" = "Mức độ";
+"diagnostics.search.placeholder" = "Tìm kiếm…";
+"diagnostics.clear" = "Xoá";
+"diagnostics.export" = "Xuất…";
+"diagnostics.jump.to.latest" = "Chuyển đến mới nhất";
+"diagnostics.status.live" = "Trực tiếp";
+"diagnostics.status.paused" = "Đã tạm dừng";
+"diagnostics.status.entries %lld %lld" = "%lld mục · %lld khớp với bộ lọc";
+"diagnostics.verbose.mode" = "Chế độ chi tiết";
+"diagnostics.verbose.mode.help" = "Ghi lại thông báo debug và info ngoài notice/warning/error";
+"diagnostics.verbose.warning" = "Khối lượng lớn — tắt khi hoàn thành";
+"diagnostics.export.title" = "Báo cáo chẩn đoán TermQ";
+"diagnostics.export.footer" = "Được nộp qua công cụ chẩn đoán tích hợp của TermQ.";

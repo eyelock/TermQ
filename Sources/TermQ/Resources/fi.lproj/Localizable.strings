@@ -818,3 +818,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Poistetaanko „%@“ YNH:stä? Asennetut harness-paketit säilyvat.";
 "marketplace.add.custom.name.placeholder" = "Oma markkinapaikka";
 "harness.wizard.success.created %@" = "Harness «%@» luotu";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Apuohjelmat";
+"menu.utilities.logging" = "Lokitus…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ-diagnostiikka";
+"diagnostics.filter.category" = "Luokka";
+"diagnostics.filter.category.all" = "Kaikki";
+"diagnostics.filter.level" = "Taso";
+"diagnostics.search.placeholder" = "Hae…";
+"diagnostics.clear" = "Tyhjennä";
+"diagnostics.export" = "Vie…";
+"diagnostics.jump.to.latest" = "Siirry uusimpaan";
+"diagnostics.status.live" = "Live";
+"diagnostics.status.paused" = "Tauotettu";
+"diagnostics.status.entries %lld %lld" = "%lld merkintää · %lld vastaa suodatinta";
+"diagnostics.verbose.mode" = "Yksityiskohtainen tila";
+"diagnostics.verbose.mode.help" = "Tallentaa debug- ja info-viestit notice/warning/error-viestien lisäksi";
+"diagnostics.verbose.warning" = "Suuri määrä — poista käytöstä kun valmis";
+"diagnostics.export.title" = "TermQ-diagnostiikkaraportti";
+"diagnostics.export.footer" = "Lähetetty TermQ:n sisäänrakennetun diagnostiikan kautta.";

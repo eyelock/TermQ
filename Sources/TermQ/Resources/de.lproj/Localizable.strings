@@ -812,3 +812,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "\"%@\" aus YNH entfernen? Installierte Harnesses bleiben erhalten.";
 "marketplace.add.custom.name.placeholder" = "Mein Marktplatz";
 "harness.wizard.success.created %@" = "Harness \"%@\" erstellt";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Dienstprogramme";
+"menu.utilities.logging" = "Protokollierung…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ Diagnose";
+"diagnostics.filter.category" = "Kategorie";
+"diagnostics.filter.category.all" = "Alle";
+"diagnostics.filter.level" = "Ebene";
+"diagnostics.search.placeholder" = "Suchen…";
+"diagnostics.clear" = "Löschen";
+"diagnostics.export" = "Exportieren…";
+"diagnostics.jump.to.latest" = "Zum Neuesten springen";
+"diagnostics.status.live" = "Live";
+"diagnostics.status.paused" = "Angehalten";
+"diagnostics.status.entries %lld %lld" = "%lld Einträge · %lld entsprechen dem Filter";
+"diagnostics.verbose.mode" = "Ausführlicher Modus";
+"diagnostics.verbose.mode.help" = "Erfasst debug- und info-Meldungen zusätzlich zu notice/warning/error";
+"diagnostics.verbose.warning" = "Hohes Volumen — nach Fertigstellung deaktivieren";
+"diagnostics.export.title" = "TermQ Diagnosebericht";
+"diagnostics.export.footer" = "Übermittelt über die integrierte TermQ-Diagnose.";

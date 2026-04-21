@@ -819,3 +819,25 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Odstrani »%@« iz YNH? Nameščeni harnesses bodo ostali.";
 "marketplace.add.custom.name.placeholder" = "Moja tržnica";
 "harness.wizard.success.created %@" = "Harness «%@» ustvarjen";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Orodja";
+"menu.utilities.logging" = "Beleženje…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostika TermQ";
+"diagnostics.filter.category" = "Kategorija";
+"diagnostics.filter.category.all" = "Vse";
+"diagnostics.filter.level" = "Raven";
+"diagnostics.search.placeholder" = "Iskanje…";
+"diagnostics.clear" = "Počisti";
+"diagnostics.export" = "Izvozi…";
+"diagnostics.jump.to.latest" = "Skoči na najnovejše";
+"diagnostics.status.live" = "V živo";
+"diagnostics.status.paused" = "Zaustavljeno";
+"diagnostics.status.entries %lld %lld" = "%lld vnosov · %lld ustreza filtru";
+"diagnostics.verbose.mode" = "Podroben način";
+"diagnostics.verbose.mode.help" = "Beleži sporočila debug in info poleg notice/warning/error";
+"diagnostics.verbose.warning" = "Visok obseg — onemogočite, ko končate";
+"diagnostics.export.title" = "Poročilo diagnostike TermQ";
+"diagnostics.export.footer" = "Predloženo prek vgrajene diagnostike TermQ.";
