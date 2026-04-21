@@ -25,7 +25,6 @@ struct WorktreeSidebarView: View {
     @State private var pruneStaleEntries: [String] = []
     @State private var isShowingPruneNothingAlert = false
     @State private var isPruneAnalysing = false
-    @State private var deletingWorktreeIDs: Set<String> = []
     @State private var pruneBranchesSheetFor: ObservableRepository?
 
     var body: some View {
@@ -91,10 +90,7 @@ struct WorktreeSidebarView: View {
         .alert(Strings.Sidebar.deleteWorktreeTitle, isPresented: $isShowingDeleteAlert) {
             Button(Strings.Sidebar.deleteWorktreeConfirm, role: .destructive) {
                 if let (repo, worktree) = pendingForceDelete {
-                    let worktreeID = worktree.id
                     Task {
-                        deletingWorktreeIDs.insert(worktreeID)
-                        defer { deletingWorktreeIDs.remove(worktreeID) }
                         do {
                             try await viewModel.forceDeleteWorktree(repo: repo, worktree: worktree)
                         } catch {
@@ -338,7 +334,7 @@ struct WorktreeSidebarView: View {
                 worktree: worktree,
                 allWorktrees: allWorktrees,
                 boardVM: boardVM,
-                isDeleting: deletingWorktreeIDs.contains(worktree.id)
+                isDeleting: viewModel.deletingWorktreeIDs.contains(worktree.id)
             )
 
             VStack(alignment: .leading, spacing: 1) {
@@ -568,6 +564,30 @@ struct WorktreeSidebarView: View {
         }
     }
 
+}
+
+// MARK: - Repository Actions
+
+extension WorktreeSidebarView {
+    fileprivate func analyseAndPrune(repo: ObservableRepository) async {
+        isPruneAnalysing = true
+        defer { isPruneAnalysing = false }
+        do {
+            let stale = try await viewModel.pruneWorktreesDryRun(repo: repo)
+            if stale.isEmpty {
+                isShowingPruneNothingAlert = true
+            } else {
+                pruneStaleEntries = stale
+                pruneSheetFor = repo
+            }
+        } catch {
+            viewModel.operationError = error.localizedDescription
+        }
+    }
+
+    fileprivate func analyseAndPruneBranches(repo: ObservableRepository) {
+        pruneBranchesSheetFor = repo
+    }
 }
 
 // MARK: - Remote Navigation
@@ -974,26 +994,6 @@ extension WorktreeSidebarView {
                 Label(Strings.Sidebar.setHarness, systemImage: "puzzlepiece.extension")
             }
         }
-    }
-
-    private func analyseAndPrune(repo: ObservableRepository) async {
-        isPruneAnalysing = true
-        defer { isPruneAnalysing = false }
-        do {
-            let stale = try await viewModel.pruneWorktreesDryRun(repo: repo)
-            if stale.isEmpty {
-                isShowingPruneNothingAlert = true
-            } else {
-                pruneStaleEntries = stale
-                pruneSheetFor = repo
-            }
-        } catch {
-            viewModel.operationError = error.localizedDescription
-        }
-    }
-
-    private func analyseAndPruneBranches(repo: ObservableRepository) {
-        pruneBranchesSheetFor = repo
     }
 
 }
