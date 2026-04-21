@@ -27,13 +27,21 @@ final class HarnessRepository: ObservableObject {
     /// Per-session cache of fetched details keyed by harness name.
     private var detailCache: [String: HarnessDetail] = [:]
 
+    private let ynhDetector: any YNHDetectorProtocol
+
     /// The currently selected harness, derived from `selectedHarnessName`.
     var selectedHarness: Harness? {
         guard let name = selectedHarnessName else { return nil }
         return harnesses.first { $0.name == name }
     }
 
-    private init() {}
+    private convenience init() {
+        self.init(ynhDetector: YNHDetector.shared)
+    }
+
+    init(ynhDetector: any YNHDetectorProtocol) {
+        self.ynhDetector = ynhDetector
+    }
 
     // MARK: - List
 
@@ -41,7 +49,7 @@ final class HarnessRepository: ObservableObject {
     ///
     /// Requires `YNHDetector.status` to be `.ready`; clears the list otherwise.
     func refresh() async {
-        guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else {
             harnesses = []
             selectedHarnessName = nil
             return
@@ -91,7 +99,7 @@ final class HarnessRepository: ObservableObject {
             return
         }
 
-        guard case .ready(let ynhPath, let yndPath, _) = YNHDetector.shared.status else {
+        guard case .ready(let ynhPath, let yndPath, _) = ynhDetector.status else {
             detailError = "YNH toolchain not ready"
             return
         }
@@ -171,7 +179,7 @@ final class HarnessRepository: ObservableObject {
 
     private func ynhEnvironment() -> [String: String] {
         var env = ProcessInfo.processInfo.environment
-        if let override = YNHDetector.shared.ynhHomeOverride {
+        if let override = ynhDetector.ynhHomeOverride {
             env["YNH_HOME"] = override
         }
         return env

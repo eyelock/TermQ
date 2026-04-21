@@ -169,6 +169,10 @@ final class YNHDetector: ObservableObject {
     }
 }
 
+// MARK: - Protocol Conformance
+
+extension YNHDetector: YNHDetectorProtocol {}
+
 // MARK: - Errors
 
 enum YNHDetectionError: Error, LocalizedError, Sendable {
