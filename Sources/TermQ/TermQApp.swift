@@ -340,44 +340,36 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
 
         // Check if production config exists
         guard fileManager.fileExists(atPath: productionBoard.path) else {
-            let alert = NSAlert()
-            alert.messageText = "No Production Config"
-            alert.informativeText = "Could not find board.json in the production folder."
-            alert.alertStyle = .warning
-            alert.runModal()
+            AlertBuilder.show(
+                title: "No Production Config",
+                message: "Could not find board.json in the production folder.",
+                style: .warning)
             return
         }
 
         // Confirm overwrite if debug config exists
         if fileManager.fileExists(atPath: debugBoard.path) {
-            let alert = NSAlert()
-            alert.messageText = "Replace Debug Config?"
-            alert.informativeText = "This will replace your current debug board.json with the production version."
-            alert.addButton(withTitle: "Replace")
-            alert.addButton(withTitle: "Cancel")
-            alert.alertStyle = .warning
-
-            if alert.runModal() != .alertFirstButtonReturn {
-                return
-            }
+            guard
+                AlertBuilder.confirm(
+                    title: "Replace Debug Config?",
+                    message: "This will replace your current debug board.json with the production version.",
+                    confirmButton: "Replace")
+            else { return }
 
             try? fileManager.removeItem(at: debugBoard)
         }
 
         do {
             try fileManager.copyItem(at: productionBoard, to: debugBoard)
-
-            let alert = NSAlert()
-            alert.messageText = "Config Copied"
-            alert.informativeText = "Production config has been copied to the debug folder. Restart TermQ to load it."
-            alert.alertStyle = .informational
-            alert.runModal()
+            AlertBuilder.show(
+                title: "Config Copied",
+                message: "Production config has been copied to the debug folder. Restart TermQ to load it.",
+                style: .informational)
         } catch {
-            let alert = NSAlert()
-            alert.messageText = "Copy Failed"
-            alert.informativeText = error.localizedDescription
-            alert.alertStyle = .critical
-            alert.runModal()
+            AlertBuilder.show(
+                title: "Copy Failed",
+                message: error.localizedDescription,
+                style: .critical)
         }
     }
 

@@ -110,23 +110,17 @@ class URLHandler: ObservableObject {
     }
 
     private func handleOpen(queryItems: [URLQueryItem]) {
-        let path = queryItems.first { $0.name == "path" }?.value ?? NSHomeDirectory()
-        let name = queryItems.first { $0.name == "name" }?.value
-        let description = queryItems.first { $0.name == "description" }?.value
-        let column = queryItems.first { $0.name == "column" }?.value
-        let llmPrompt = queryItems.first { $0.name == "llmPrompt" }?.value
-        let llmNextAction = queryItems.first { $0.name == "llmNextAction" }?.value
-        let initCommand = queryItems.first { $0.name == "initCommand" }?.value
+        let qi = QueryItemExtractor(queryItems)
+        let path = qi.string("path", default: NSHomeDirectory())
+        let name = qi.optionalString("name")
+        let description = qi.optionalString("description")
+        let column = qi.optionalString("column")
+        let llmPrompt = qi.optionalString("llmPrompt")
+        let llmNextAction = qi.optionalString("llmNextAction")
+        let initCommand = qi.optionalString("initCommand")
+        let cardId = qi.uuid("id")
 
-        // Parse optional card ID (for MCP/CLI to track created terminals)
-        let cardId: UUID?
-        if let idString = queryItems.first(where: { $0.name == "id" })?.value {
-            cardId = UUID(uuidString: idString)
-        } else {
-            cardId = nil
-        }
-
-        // Parse tags
+        // Parse tags — multiple items share the "tag" name, each with "key=value" format
         let tags: [TermQCore.Tag] =
             queryItems
             .filter { $0.name == "tag" }
@@ -153,73 +147,41 @@ class URLHandler: ObservableObject {
     }
 
     private func handleUpdate(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString)
-        else { return }
+        let qi = QueryItemExtractor(queryItems)
+        guard let cardId = qi.uuid("id") else { return }
 
         let viewModel = BoardViewModel.shared
 
         guard let card = viewModel.card(for: cardId) else { return }
 
-        // Check for sensitive LLM context modifications that require user confirmation
-        let llmPromptChange = queryItems.first(where: { $0.name == "llmPrompt" })?.value
-        let llmNextActionChange = queryItems.first(where: { $0.name == "llmNextAction" })?.value
+        let llmPromptChange = qi.optionalString("llmPrompt")
+        let llmNextActionChange = qi.optionalString("llmNextAction")
 
-        // If LLM fields are being modified and confirmation is enabled, ask user
         if confirmExternalLLMModifications && (llmPromptChange != nil || llmNextActionChange != nil) {
             let approved = confirmLLMModification(
                 terminalName: card.title,
                 llmPromptChange: llmPromptChange,
                 llmNextActionChange: llmNextActionChange
             )
-            if !approved {
-                return  // User denied the modification
-            }
+            if !approved { return }
         }
 
-        // Update name
-        if let name = queryItems.first(where: { $0.name == "name" })?.value {
-            card.title = name
-        }
+        if let name = qi.optionalString("name") { card.title = name }
+        if let description = qi.optionalString("description") { card.description = description }
+        if let badge = qi.optionalString("badge") { card.badge = badge }
+        if let llmPrompt = llmPromptChange { card.llmPrompt = llmPrompt }
+        if let llmNextAction = llmNextActionChange { card.llmNextAction = llmNextAction }
+        if let initCommand = qi.optionalString("initCommand") { card.initCommand = initCommand }
 
-        // Update description
-        if let description = queryItems.first(where: { $0.name == "description" })?.value {
-            card.description = description
-        }
-
-        // Update badge
-        if let badge = queryItems.first(where: { $0.name == "badge" })?.value {
-            card.badge = badge
-        }
-
-        // Update LLM prompt (already confirmed if needed)
-        if let llmPrompt = llmPromptChange {
-            card.llmPrompt = llmPrompt
-        }
-
-        // Update LLM next action (already confirmed if needed)
-        if let llmNextAction = llmNextActionChange {
-            card.llmNextAction = llmNextAction
-        }
-
-        // Update init command
-        if let initCommand = queryItems.first(where: { $0.name == "initCommand" })?.value {
-            card.initCommand = initCommand
-        }
-
-        // Update favourite status
-        if let favouriteStr = queryItems.first(where: { $0.name == "favourite" })?.value {
-            let shouldBeFavourite = favouriteStr.lowercased() == "true"
+        if let shouldBeFavourite = qi.optionalBool("favourite") {
             if card.isFavourite != shouldBeFavourite {
                 viewModel.toggleFavourite(card)
             }
         }
 
-        // Check if we should replace tags or add to existing
-        let shouldReplaceTags =
-            queryItems.first(where: { $0.name == "replaceTags" })?.value?.lowercased() == "true"
+        let shouldReplaceTags = qi.bool("replaceTags")
 
-        // Parse tags
+        // Parse tags — multiple items share the "tag" name, each with "key=value" format
         let newTags: [TermQCore.Tag] =
             queryItems
             .filter { $0.name == "tag" }
@@ -238,12 +200,10 @@ class URLHandler: ObservableObject {
                 card.tags.append(contentsOf: newTags)
             }
         } else if shouldReplaceTags {
-            // replaceTags with no tags means clear all tags
             card.tags = []
         }
 
-        // Update column if specified
-        if let columnName = queryItems.first(where: { $0.name == "column" })?.value {
+        if let columnName = qi.optionalString("column") {
             let columnLower = columnName.lowercased()
             if let targetColumn = viewModel.board.columns.first(where: {
                 $0.name.lowercased() == columnLower
@@ -256,13 +216,12 @@ class URLHandler: ObservableObject {
     }
 
     private func handleMove(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString),
-            let columnName = queryItems.first(where: { $0.name == "column" })?.value
+        let qi = QueryItemExtractor(queryItems)
+        guard let cardId = qi.uuid("id"),
+            let columnName = qi.optionalString("column")
         else { return }
 
         let viewModel = BoardViewModel.shared
-
         guard let card = viewModel.card(for: cardId) else { return }
 
         let columnLower = columnName.lowercased()
@@ -276,31 +235,23 @@ class URLHandler: ObservableObject {
     }
 
     private func handleFocus(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString)
-        else { return }
+        let qi = QueryItemExtractor(queryItems)
+        guard let cardId = qi.uuid("id") else { return }
 
         let viewModel = BoardViewModel.shared
-
         guard let card = viewModel.card(for: cardId) else { return }
 
         viewModel.selectCard(card)
     }
 
     private func handleDelete(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString)
-        else { return }
+        let qi = QueryItemExtractor(queryItems)
+        guard let cardId = qi.uuid("id") else { return }
 
         let viewModel = BoardViewModel.shared
-
         guard let card = viewModel.card(for: cardId) else { return }
 
-        // Check for permanent deletion flag
-        let permanent =
-            queryItems.first(where: { $0.name == "permanent" })?.value?.lowercased() == "true"
-
-        if permanent {
+        if qi.bool("permanent") {
             viewModel.permanentlyDeleteCard(card)
         } else {
             viewModel.deleteCard(card)

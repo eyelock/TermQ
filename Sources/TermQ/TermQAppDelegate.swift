@@ -157,25 +157,16 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }.count
 
         if directSessionCount > 0 {
-            // Show confirmation alert (same as quit)
-            let alert = NSAlert()
-            alert.messageText = Strings.Alert.quitWithDirectSessions
-
-            // Only mention tmux persistence if there are tmux sessions
-            if tmuxSessionCount > 0 {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
-            } else {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
-            }
-
-            alert.addButton(withTitle: Strings.Common.closeWindow)
-            alert.addButton(withTitle: Strings.Common.cancel)
-            alert.alertStyle = .warning
-
-            let response = alert.runModal()
-            if response == .alertSecondButtonReturn {
-                return false  // Don't close
-            }
+            let message =
+                tmuxSessionCount > 0
+                ? Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
+                : Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
+            let confirmed = AlertBuilder.confirm(
+                title: Strings.Alert.quitWithDirectSessions,
+                message: message,
+                confirmButton: Strings.Common.closeWindow,
+                cancelButton: Strings.Common.cancel)
+            if !confirmed { return false }
         }
 
         // Hide the app instead of closing — NSApp.hide(nil) preserves all state
@@ -199,25 +190,16 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }.count
 
         if directSessionCount > 0 {
-            // Show confirmation alert
-            let alert = NSAlert()
-            alert.messageText = Strings.Alert.quitWithDirectSessions
-
-            // Only mention tmux persistence if there are tmux sessions
-            if tmuxSessionCount > 0 {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
-            } else {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
-            }
-
-            alert.addButton(withTitle: Strings.Common.quit)
-            alert.addButton(withTitle: Strings.Common.cancel)
-            alert.alertStyle = .warning
-
-            let response = alert.runModal()
-            if response == .alertSecondButtonReturn {
-                return .terminateCancel
-            }
+            let message =
+                tmuxSessionCount > 0
+                ? Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
+                : Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
+            let confirmed = AlertBuilder.confirm(
+                title: Strings.Alert.quitWithDirectSessions,
+                message: message,
+                confirmButton: Strings.Common.quit,
+                cancelButton: Strings.Common.cancel)
+            if !confirmed { return .terminateCancel }
         }
 
         // Clean up all sessions before quitting

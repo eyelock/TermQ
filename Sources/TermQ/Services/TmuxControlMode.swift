@@ -330,124 +330,67 @@ public class TmuxControlModeParser: ObservableObject {
     }
 
     private func parseControlLine(_ line: String) {
-        let parts = line.dropFirst().split(separator: " ", maxSplits: 2, omittingEmptySubsequences: false)
-        guard !parts.isEmpty else { return }
+        switch ControlModeLineParser().parse(line) {
+        case .begin(let commandId):
+            currentResponse = CommandResponse(id: commandId)
 
-        let command = String(parts[0])
+        case .end(let commandId):
+            if var response = currentResponse, response.id == commandId {
+                response.isComplete = true
+                pendingCommands[commandId] = response
+                currentResponse = nil
+            }
 
-        switch command {
-        case "begin":
-            handleBegin(parts)
+        case .output(let paneId, let escapedData):
+            if let data = decodeTmuxOutput(escapedData) {
+                onPaneOutput?(paneId, filterForSwiftTerm(data))
+            }
 
-        case "end":
-            handleEnd(parts)
+        case .extendedOutput(let paneId, let escapedData):
+            if let data = decodeTmuxOutput(escapedData) {
+                TermQLogger.tmux.debug("ext-output pane=\(paneId) len=\(data.count)")
+                onPaneOutput?(paneId, filterForSwiftTerm(data))
+            }
 
-        case "output":
-            handleOutput(parts)
+        case .pause(let paneId):
+            TermQLogger.tmux.info("pause pane=\(paneId) — sending continue")
+            onPausePane?(paneId)
 
-        case "extended-output":
-            handleExtendedOutput(parts)
+        case .continue(let paneId):
+            TermQLogger.tmux.info("continue pane=\(paneId) — output resuming via ext-output")
 
-        case "pause":
-            handlePause(parts)
+        case .layoutChange(let windowId, let layout):
+            currentLayout = layout
+            onLayoutChange?(windowId, layout)
 
-        case "continue":
-            handleContinue(parts)
+        case .windowAdd(let windowId):
+            if !windows.contains(where: { $0.id == windowId }) {
+                windows.append(TmuxWindow(id: windowId, name: "Window \(windowId)"))
+            }
+            onWindowAdd?(windowId)
 
-        case "layout-change":
-            handleLayoutChange(parts)
+        case .windowClose(let windowId):
+            windows.removeAll { $0.id == windowId }
+            panes.removeAll { $0.windowId == windowId }
+            onWindowClose?(windowId)
 
-        case "window-add":
-            handleWindowAdd(parts)
+        case .sessionChanged(let sessionId, let name):
+            isConnected = true
+            onSessionChange?(sessionId, name)
 
-        case "window-close":
-            handleWindowClose(parts)
+        case .paneModeChanged(let paneId):
+            if let index = panes.firstIndex(where: { $0.id == paneId }) {
+                panes[index].inCopyMode.toggle()
+            }
+            onPaneModeChanged?(paneId)
 
-        case "session-changed":
-            handleSessionChanged(parts)
+        case .exit(let reason):
+            isConnected = false
+            onExit?(reason)
 
-        case "pane-mode-changed":
-            handlePaneModeChanged(parts)
-
-        case "exit":
-            handleExit(parts)
-
-        default:
+        case .unknown:
             break
         }
-    }
-
-    // MARK: - Control Message Handlers
-
-    private func handleBegin(_ parts: [String.SubSequence]) {
-        guard parts.count >= 3 else { return }
-
-        let numberPart = parts[2].split(separator: " ").first ?? parts[2]
-        guard let commandId = Int(numberPart) else { return }
-
-        currentResponse = CommandResponse(id: commandId)
-    }
-
-    private func handleEnd(_ parts: [String.SubSequence]) {
-        guard parts.count >= 3 else { return }
-
-        let numberPart = parts[2].split(separator: " ").first ?? parts[2]
-        guard let commandId = Int(numberPart) else { return }
-
-        if var response = currentResponse, response.id == commandId {
-            response.isComplete = true
-            pendingCommands[commandId] = response
-            currentResponse = nil
-        }
-    }
-
-    private func handleOutput(_ parts: [String.SubSequence]) {
-        guard parts.count >= 2 else { return }
-
-        let paneIdPart = String(parts[1])
-        let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
-
-        let escapedData = parts.count > 2 ? String(parts[2]) : ""
-        if let data = decodeTmuxOutput(escapedData) {
-            onPaneOutput?(paneId, filterForSwiftTerm(data))
-        }
-    }
-
-    private func handleExtendedOutput(_ parts: [String.SubSequence]) {
-        guard parts.count >= 3 else { return }
-
-        let paneIdPart = String(parts[1])
-        let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
-
-        // Format: "<age-ms> [reserved...] : <escaped-data>" — split on " : " to isolate data
-        let remainder = String(parts[2])
-        guard let separatorRange = remainder.range(of: " : ") else {
-            if TermQLogger.fileLoggingEnabled {
-                TermQLogger.io.warning(
-                    "ext-output pane=\(paneId) — no ' : ' separator in: \(remainder.prefix(40))")
-            }
-            return
-        }
-        let escapedData = String(remainder[separatorRange.upperBound...])
-
-        if let data = decodeTmuxOutput(escapedData) {
-            TermQLogger.tmux.debug("ext-output pane=\(paneId) len=\(data.count)")
-            onPaneOutput?(paneId, filterForSwiftTerm(data))
-        }
-    }
-
-    private func handlePause(_ parts: [String.SubSequence]) {
-        guard parts.count >= 2 else { return }
-        let paneIdPart = String(parts[1])
-        let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
-        TermQLogger.tmux.info("pause pane=\(paneId) — sending continue")
-        onPausePane?(paneId)
-    }
-
-    private func handleContinue(_ parts: [String.SubSequence]) {
-        let raw = parts.count >= 2 ? String(parts[1]) : "?"
-        let paneId = raw.hasPrefix("%") ? String(raw.dropFirst()) : raw
-        TermQLogger.tmux.info("continue pane=\(paneId) — output resuming via ext-output")
     }
 
     /// Filter tmux-specific escape sequences that SwiftTerm does not support.
@@ -488,72 +431,6 @@ public class TmuxControlModeParser: ObservableObject {
             }
         }
         return Data(result)
-    }
-
-    private func handleLayoutChange(_ parts: [String.SubSequence]) {
-        guard parts.count >= 3 else { return }
-
-        let windowIdPart = String(parts[1])
-        let windowId = windowIdPart.hasPrefix("@") ? String(windowIdPart.dropFirst()) : windowIdPart
-        let layout = String(parts[2])
-
-        currentLayout = layout
-        onLayoutChange?(windowId, layout)
-    }
-
-    private func handleWindowAdd(_ parts: [String.SubSequence]) {
-        guard parts.count >= 2 else { return }
-
-        let windowIdPart = String(parts[1])
-        let windowId = windowIdPart.hasPrefix("@") ? String(windowIdPart.dropFirst()) : windowIdPart
-
-        if !windows.contains(where: { $0.id == windowId }) {
-            windows.append(TmuxWindow(id: windowId, name: "Window \(windowId)"))
-        }
-
-        onWindowAdd?(windowId)
-    }
-
-    private func handleWindowClose(_ parts: [String.SubSequence]) {
-        guard parts.count >= 2 else { return }
-
-        let windowIdPart = String(parts[1])
-        let windowId = windowIdPart.hasPrefix("@") ? String(windowIdPart.dropFirst()) : windowIdPart
-
-        windows.removeAll { $0.id == windowId }
-        panes.removeAll { $0.windowId == windowId }
-
-        onWindowClose?(windowId)
-    }
-
-    private func handleSessionChanged(_ parts: [String.SubSequence]) {
-        guard parts.count >= 3 else { return }
-
-        let sessionIdPart = String(parts[1])
-        let sessionId = sessionIdPart.hasPrefix("$") ? String(sessionIdPart.dropFirst()) : sessionIdPart
-        let name = String(parts[2])
-
-        isConnected = true
-        onSessionChange?(sessionId, name)
-    }
-
-    private func handlePaneModeChanged(_ parts: [String.SubSequence]) {
-        guard parts.count >= 2 else { return }
-
-        let paneIdPart = String(parts[1])
-        let paneId = paneIdPart.hasPrefix("%") ? String(paneIdPart.dropFirst()) : paneIdPart
-
-        if let index = panes.firstIndex(where: { $0.id == paneId }) {
-            panes[index].inCopyMode.toggle()
-        }
-
-        onPaneModeChanged?(paneId)
-    }
-
-    private func handleExit(_ parts: [String.SubSequence]) {
-        let reason = parts.count > 1 ? String(parts[1]) : nil
-        isConnected = false
-        onExit?(reason)
     }
 
     // MARK: - Layout Parsing
