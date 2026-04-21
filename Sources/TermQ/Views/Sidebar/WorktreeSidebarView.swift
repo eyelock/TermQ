@@ -25,7 +25,6 @@ struct WorktreeSidebarView: View {
     @State private var pruneStaleEntries: [String] = []
     @State private var isShowingPruneNothingAlert = false
     @State private var isPruneAnalysing = false
-    @State private var deletingWorktreeIDs: Set<String> = []
     @State private var pruneBranchesSheetFor: ObservableRepository?
 
     var body: some View {
@@ -91,10 +90,7 @@ struct WorktreeSidebarView: View {
         .alert(Strings.Sidebar.deleteWorktreeTitle, isPresented: $isShowingDeleteAlert) {
             Button(Strings.Sidebar.deleteWorktreeConfirm, role: .destructive) {
                 if let (repo, worktree) = pendingForceDelete {
-                    let worktreeID = worktree.id
                     Task {
-                        deletingWorktreeIDs.insert(worktreeID)
-                        defer { deletingWorktreeIDs.remove(worktreeID) }
                         do {
                             try await viewModel.forceDeleteWorktree(repo: repo, worktree: worktree)
                         } catch {
@@ -338,7 +334,7 @@ struct WorktreeSidebarView: View {
                 worktree: worktree,
                 allWorktrees: allWorktrees,
                 boardVM: boardVM,
-                isDeleting: deletingWorktreeIDs.contains(worktree.id)
+                isDeleting: viewModel.deletingWorktreeIDs.contains(worktree.id)
             )
 
             VStack(alignment: .leading, spacing: 1) {
@@ -568,9 +564,12 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    // MARK: - Repository Actions
+}
 
-    private func analyseAndPrune(repo: ObservableRepository) async {
+// MARK: - Repository Actions
+
+extension WorktreeSidebarView {
+    fileprivate func analyseAndPrune(repo: ObservableRepository) async {
         isPruneAnalysing = true
         defer { isPruneAnalysing = false }
         do {
@@ -586,10 +585,9 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    private func analyseAndPruneBranches(repo: ObservableRepository) {
+    fileprivate func analyseAndPruneBranches(repo: ObservableRepository) {
         pruneBranchesSheetFor = repo
     }
-
 }
 
 // MARK: - Remote Navigation

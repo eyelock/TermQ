@@ -10,7 +10,7 @@ import TermQShared
 /// All methods delegate to `GitServiceShared` which contains the shared process-execution
 /// logic. Git commands are fast enough that main-actor isolation is not a concern.
 @MainActor
-public class GitService {
+public class GitService: GitServiceProtocol {
     public static let shared = GitService()
 
     private init() {}
