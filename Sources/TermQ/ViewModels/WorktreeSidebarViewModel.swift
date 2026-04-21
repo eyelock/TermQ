@@ -50,13 +50,17 @@ final class WorktreeSidebarViewModel: ObservableObject {
     @Published private(set) var deletingWorktreeIDs: Set<String> = []
 
     private let gitService: any GitServiceProtocol
-    private let persistence = RepoPersistence()
+    private let persistence: any RepoPersistenceProtocol
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     private var monitors: [UUID: GitRepositoryMonitor] = [:]
     private var dirtyPollTimer: Timer?
 
-    init(gitService: any GitServiceProtocol = GitService.shared) {
+    init(
+        gitService: any GitServiceProtocol = GitService.shared,
+        persistence: any RepoPersistenceProtocol = RepoPersistence()
+    ) {
+        self.persistence = persistence
         self.gitService = gitService
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })

@@ -4,7 +4,7 @@ import XCTest
 @testable import TermQ
 @testable import TermQCore
 
-// MARK: - Mock
+// MARK: - Mocks
 
 @MainActor
 final class MockGitService: GitServiceProtocol {
@@ -58,13 +58,31 @@ final class MockGitService: GitServiceProtocol {
     func inferRepoName(repoPath: String) async -> String { inferRepoNameResult }
 }
 
+@MainActor
+final class MockRepoPersistence: RepoPersistenceProtocol {
+    var config = RepoConfig(repositories: [])
+    var saveError: Error?
+    private(set) var saveCalled = false
+
+    func loadConfig() -> RepoConfig { config }
+    func save(_ config: RepoConfig) throws {
+        saveCalled = true
+        if let error = saveError { throw error }
+        self.config = config
+    }
+    func startFileMonitoring(onExternalChange: @escaping @Sendable () -> Void) {}
+}
+
 // MARK: - Tests
 
 @MainActor
 final class WorktreeSidebarViewModelTests: XCTestCase {
 
-    private func makeVM(gitService: MockGitService = MockGitService()) -> WorktreeSidebarViewModel {
-        WorktreeSidebarViewModel(gitService: gitService)
+    private func makeVM(
+        gitService: MockGitService = MockGitService(),
+        persistence: MockRepoPersistence = MockRepoPersistence()
+    ) -> WorktreeSidebarViewModel {
+        WorktreeSidebarViewModel(gitService: gitService, persistence: persistence)
     }
 
     private func makeRepo(path: String = "/tmp/test-repo") -> ObservableRepository {
@@ -193,7 +211,6 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         let vm = makeVM(gitService: mock)
 
         try await vm.addRepository(path: "/tmp/my-repo")
-        defer { vm.repositories.filter { $0.path == "/tmp/my-repo" }.forEach { vm.removeRepository($0) } }
 
         XCTAssertTrue(vm.repositories.contains { $0.path == "/tmp/my-repo" })
     }
@@ -204,7 +221,6 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         let vm = makeVM(gitService: mock)
 
         try await vm.addRepository(path: "/tmp/my-repo", name: "custom-name")
-        defer { vm.repositories.filter { $0.path == "/tmp/my-repo" }.forEach { vm.removeRepository($0) } }
 
         XCTAssertTrue(vm.repositories.contains { $0.name == "custom-name" })
     }
@@ -216,8 +232,30 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         let vm = makeVM(gitService: mock)
 
         try await vm.addRepository(path: "/tmp/my-repo")
-        defer { vm.repositories.filter { $0.path == "/tmp/my-repo" }.forEach { vm.removeRepository($0) } }
 
         XCTAssertTrue(vm.repositories.contains { $0.name == "inferred-name" })
+    }
+
+    // MARK: - persistence
+
+    func testAddRepository_persistsToStorage() async throws {
+        let mock = MockGitService()
+        mock.isGitRepoResult = true
+        let mockPersistence = MockRepoPersistence()
+        let vm = makeVM(gitService: mock, persistence: mockPersistence)
+
+        try await vm.addRepository(path: "/tmp/my-repo")
+
+        XCTAssertTrue(mockPersistence.saveCalled)
+    }
+
+    func testLoadRepositories_populatesFromPersistence() {
+        let mockPersistence = MockRepoPersistence()
+        let existingRepo = GitRepository(name: "pre-loaded", path: "/tmp/pre-loaded-repo")
+        mockPersistence.config = RepoConfig(repositories: [existingRepo])
+
+        let vm = makeVM(persistence: mockPersistence)
+
+        XCTAssertTrue(vm.repositories.contains { $0.path == "/tmp/pre-loaded-repo" })
     }
 }
