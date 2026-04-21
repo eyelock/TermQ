@@ -75,6 +75,7 @@ class CLITestCase: XCTestCase {
     // MARK: - Stdout Capture
 
     /// Runs `block`, captures everything printed to stdout, and returns it as a String.
+    @discardableResult
     func captureOutput(executing block: () throws -> Void) throws -> String {
         let pipe = Pipe()
         let originalFd = dup(STDOUT_FILENO)

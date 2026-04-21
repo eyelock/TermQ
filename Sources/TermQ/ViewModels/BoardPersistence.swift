@@ -135,7 +135,7 @@ public final class BoardPersistence {
 
         fileMonitor = FileMonitor(path: path) { [weak self] in
             Task { @MainActor in
-                guard let self else { return }
+                guard let self, FileManager.default.fileExists(atPath: self.saveURL.path) else { return }
                 self.onExternalChange?()
                 self.fileMonitor?.restartMonitoring(path: self.saveURL.path)
             }
