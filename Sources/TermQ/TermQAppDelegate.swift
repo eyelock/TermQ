@@ -20,6 +20,9 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// Reference to the main window (first window created)
     private var mainWindow: NSWindow?
 
+    /// KVO token tracking main window visibility; non-nil while observing
+    private var windowVisibilityObservation: NSKeyValueObservation?
+
     override init() {
         // Initialize Sparkle updater with delegate for dynamic feed URL
         // SUPublicEDKey is read from Info.plist
@@ -65,9 +68,15 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     private func setupMainWindowDelegate() {
         if let window = NSApplication.shared.windows.first(where: { $0.isVisible }) {
+            windowVisibilityObservation = nil
             mainWindow = window
             window.delegate = self
             window.tabbingMode = .disallowed
+            windowVisibilityObservation = window.observe(\.isVisible, options: [.new, .old]) { _, change in
+                guard change.oldValue == true, change.newValue == false else { return }
+                let stack = Thread.callStackSymbols.prefix(12).joined(separator: "\n  ")
+                TermQLogger.window.notice("mainWindow isVisible true→false — stack:\n  \(stack)")
+            }
             let desc = "\(type(of: window)) frame=\(window.frame)"
             TermQLogger.window.notice("setupMainWindowDelegate: delegate set on \(desc)")
         } else {
@@ -103,6 +112,13 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         // No main window tracked yet — allow the system to open one
         return true
+    }
+
+    /// Log when the app is about to hide (Cmd+H, "Hide TermQ" menu, or external caller).
+    /// The call stack reveals whether this is user-initiated or driven by an external tool.
+    func applicationWillHide(_ notification: Notification) {
+        let stack = Thread.callStackSymbols.prefix(12).joined(separator: "\n  ")
+        TermQLogger.window.notice("applicationWillHide triggered — stack:\n  \(stack)")
     }
 
     /// Log when the window is about to miniaturize so we can diagnose spontaneous occurrences.
