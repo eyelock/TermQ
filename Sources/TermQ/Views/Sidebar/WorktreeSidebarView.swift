@@ -25,6 +25,7 @@ struct WorktreeSidebarView: View {
     @State private var pruneStaleEntries: [String] = []
     @State private var isShowingPruneNothingAlert = false
     @State private var isPruneAnalysing = false
+    @State private var deletingWorktreeIDs: Set<String> = []
     @State private var pruneBranchesSheetFor: ObservableRepository?
 
     var body: some View {
@@ -90,7 +91,10 @@ struct WorktreeSidebarView: View {
         .alert(Strings.Sidebar.deleteWorktreeTitle, isPresented: $isShowingDeleteAlert) {
             Button(Strings.Sidebar.deleteWorktreeConfirm, role: .destructive) {
                 if let (repo, worktree) = pendingForceDelete {
+                    let worktreeID = worktree.id
                     Task {
+                        deletingWorktreeIDs.insert(worktreeID)
+                        defer { deletingWorktreeIDs.remove(worktreeID) }
                         do {
                             try await viewModel.forceDeleteWorktree(repo: repo, worktree: worktree)
                         } catch {
@@ -330,7 +334,12 @@ struct WorktreeSidebarView: View {
         _ worktree: GitWorktree, repo: ObservableRepository, allWorktrees: [GitWorktree]
     ) -> some View {
         HStack(spacing: 6) {
-            WorktreeLeftIcon(worktree: worktree, allWorktrees: allWorktrees, boardVM: boardVM)
+            WorktreeLeftIcon(
+                worktree: worktree,
+                allWorktrees: allWorktrees,
+                boardVM: boardVM,
+                isDeleting: deletingWorktreeIDs.contains(worktree.id)
+            )
 
             VStack(alignment: .leading, spacing: 1) {
                 Button {
@@ -812,6 +821,7 @@ private struct WorktreeLeftIcon: View {
     let worktree: GitWorktree
     let allWorktrees: [GitWorktree]
     @ObservedObject var boardVM: BoardViewModel
+    let isDeleting: Bool
     @State private var showPopover = false
 
     private var matchingCards: [TerminalCard] {
@@ -833,19 +843,24 @@ private struct WorktreeLeftIcon: View {
 
     var body: some View {
         HStack(spacing: 2) {
-            // Left slot — status badge (optional)
+            // Left slot — spinner during deletion, otherwise status badge
             Group {
-                if worktree.isMainWorktree {
+                if isDeleting {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .controlSize(.mini)
+                } else if worktree.isMainWorktree {
                     Image(systemName: "house.fill")
                         .foregroundColor(.secondary)
+                        .imageScale(.small)
                 } else if worktree.isLocked {
                     Image(systemName: "lock.fill")
                         .foregroundColor(.orange)
+                        .imageScale(.small)
                 } else {
                     Color.clear
                 }
             }
-            .imageScale(.small)
             .frame(width: 12)
 
             // Right slot — terminal count (always shown)
