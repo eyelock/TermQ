@@ -287,25 +287,30 @@ class TerminalSessionManager: ObservableObject {
         }
 
         // Create and attach to tmux session (traditional mode)
+        let tmux = ShellEscaper.singleQuote(tmuxPath)
+        let name = ShellEscaper.singleQuote(sessionName)
+        let cwd = ShellEscaper.singleQuote(card.workingDirectory)
+        let shell = ShellEscaper.singleQuote(card.shellPath)
+        let envArgs = tmuxEnvArgs.map { ShellEscaper.singleQuote($0) }.joined(separator: " ")
         let script = """
             # Create session if it doesn't exist
-            if ! \(ShellEscaper.singleQuote(tmuxPath)) has-session -t \(ShellEscaper.singleQuote(sessionName)) 2>/dev/null; then
-                \(ShellEscaper.singleQuote(tmuxPath)) new-session -d \\
-                    -s \(ShellEscaper.singleQuote(sessionName)) \\
-                    -c \(ShellEscaper.singleQuote(card.workingDirectory)) \\
-                    \(tmuxEnvArgs.map { ShellEscaper.singleQuote($0) }.joined(separator: " ")) \\
-                    \(ShellEscaper.singleQuote(card.shellPath)) -l
+            if ! \(tmux) has-session -t \(name) 2>/dev/null; then
+                \(tmux) new-session -d \\
+                    -s \(name) \\
+                    -c \(cwd) \\
+                    \(envArgs) \\
+                    \(shell) -l
             fi
             # Configure session for TermQ
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) status off 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) mouse off 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) \\
+            \(tmux) set-option -t \(name) status off 2>/dev/null || true
+            \(tmux) set-option -t \(name) mouse off 2>/dev/null || true
+            \(tmux) set-option -t \(name) \\
                 default-terminal 'xterm-256color' 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) escape-time 10 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) \\
+            \(tmux) set-option -t \(name) escape-time 10 2>/dev/null || true
+            \(tmux) set-option -t \(name) \\
                 allow-passthrough off 2>/dev/null || true
             # Attach to the session
-            exec \(ShellEscaper.singleQuote(tmuxPath)) attach-session -t \(ShellEscaper.singleQuote(sessionName))
+            exec \(tmux) attach-session -t \(name)
             """
 
         terminal.startProcess(
