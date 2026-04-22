@@ -229,9 +229,9 @@ enum MarketplaceFetcher {
     ///
     /// Returns paths in `type/name` format matching what `ynh include add --pick` expects:
     /// - `skills/<name>` — directory containing SKILL.md
-    /// - `agents/<name>` — flat .md file
-    /// - `commands/<name>` — flat .md file
-    /// - `rules/<name>` — flat .md file
+    /// - `agents/<name>.md` — flat .md file
+    /// - `commands/<name>.md` — flat .md file
+    /// - `rules/<name>.md` — flat .md file
     static func enumerateArtifacts(in directory: URL) -> [String] {
         var results: [String] = []
 
@@ -257,7 +257,7 @@ enum MarketplaceFetcher {
                 at: typeDir, includingPropertiesForKeys: [.isRegularFileKey], options: .skipsHiddenFiles
             ) {
                 for entry in entries where entry.pathExtension == "md" {
-                    results.append("\(typeName)/\(entry.deletingPathExtension().lastPathComponent)")
+                    results.append("\(typeName)/\(entry.lastPathComponent)")
                 }
             }
         }

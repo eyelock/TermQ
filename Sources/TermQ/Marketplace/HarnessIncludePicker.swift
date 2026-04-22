@@ -268,8 +268,7 @@ struct HarnessIncludePicker: View {
         if let path = resolvedPath { parts += ["--path", path] }
         let pick = Array(selectedPicks).sorted()
         if !pick.isEmpty && pick.count < resolvedPicks.count {
-            let bareNames = pick.map { $0.components(separatedBy: "/").last ?? $0 }
-            parts += ["--pick", bareNames.joined(separator: ",")]
+            parts += ["--pick", pick.joined(separator: ",")]
         }
         return parts.joined(separator: " ")
     }
