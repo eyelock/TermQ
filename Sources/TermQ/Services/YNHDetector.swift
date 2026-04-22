@@ -6,13 +6,19 @@ import TermQShared
 /// Drives sidebar visibility and placeholder content:
 /// - `.missing` → hide the Harnesses tab entirely
 /// - `.binaryOnly` → show tab with "Run `ynh init`" CTA
+/// - `.outdated` → show tab with "Upgrade YNH" CTA (capability version below minimum)
 /// - `.ready` → show tab with harness list (Phase 2+)
 enum YNHStatus: Equatable, Sendable {
     /// Neither `ynh` nor `ynd` found on `$PATH`.
     case missing
     /// `ynh` binary found but `ynh paths` failed (not initialised or broken config).
     case binaryOnly(ynhPath: String)
-    /// `ynh paths` succeeded — toolchain is fully operational.
+    /// `ynh` binary found and initialised, but its declared `capabilities` version
+    /// is below `YNHDetector.minimumCapabilitiesVersion`. TermQ will refuse to issue
+    /// marketplace/harness-editing commands against it because the wire contract
+    /// (e.g. canonical pick form) is not yet supported.
+    case outdated(ynhPath: String, version: String?, capabilities: String?)
+    /// `ynh paths` succeeded and capabilities meet the minimum — toolchain is fully operational.
     case ready(ynhPath: String, yndPath: String?, paths: YNHPaths)
 }
 
@@ -27,6 +33,22 @@ final class YNHDetector: ObservableObject {
 
     @Published private(set) var status: YNHStatus = .missing
     @Published private(set) var version: String?
+    @Published private(set) var capabilities: String?
+
+    /// The wire-contract version of YNH that this build of TermQ is tested against.
+    ///
+    /// Bumped when TermQ starts relying on a YNH feature or contract change introduced
+    /// in a new `CapabilitiesVersion`. Gating on this avoids writing harness configs
+    /// that older YNH binaries cannot consume (e.g. canonical `type/name` picks).
+    ///
+    /// Can be *lowered* at runtime by setting the `TERMQ_YNH_CAPABILITIES_MIN_OVERRIDE`
+    /// UserDefaults key — intended for developers testing against older YNH builds.
+    /// Raising the gate via override is ignored (TermQ has not been tested above its
+    /// built-in minimum).
+    nonisolated static let minimumCapabilitiesVersion = "0.2.0"
+
+    /// UserDefaults key for the dev override described on `minimumCapabilitiesVersion`.
+    private static let capabilitiesMinOverrideKey = "TERMQ_YNH_CAPABILITIES_MIN_OVERRIDE"
 
     /// UserDefaults key for the `$YNH_HOME` override set in TermQ settings.
     private static let ynhHomeOverrideKey = "ynh.homeOverride"
@@ -58,11 +80,21 @@ final class YNHDetector: ObservableObject {
 
         let yndPath = findBinary("ynd")
 
-        // Fetch version (best-effort — don't fail detection if this errors).
-        if let raw = try? await Self.runCommand(ynhPath, args: ["version"]) {
-            version = raw.trimmingCharacters(in: .whitespacesAndNewlines)
-        } else {
-            version = nil
+        // Fetch version + capabilities via `ynh version --format json`. Older YNH
+        // builds predate this flag — they print the plain version string instead,
+        // which decodes as capabilities=nil and is treated as below-min below.
+        (version, capabilities) = await Self.fetchVersionInfo(ynhPath: ynhPath)
+
+        // Capability gate. Before any expensive path probe, confirm the binary
+        // speaks a contract TermQ knows how to drive. If it doesn't, stop here
+        // and surface an .outdated status so the UI can prompt for an upgrade.
+        let minRequired = effectiveMinimumCapabilities()
+        if !Self.capabilityMeets(capabilities, minimum: minRequired) {
+            TermQLogger.ui.info(
+                "YNHDetector: YNH capabilities below minimum — marketplace and harness-editing disabled (binary reports capabilities \(capabilities ?? "<none>"), minimum required \(minRequired))"
+            )
+            status = .outdated(ynhPath: ynhPath, version: version, capabilities: capabilities)
+            return
         }
 
         // Build environment for the subprocess, injecting YNH_HOME if overridden.
@@ -87,6 +119,69 @@ final class YNHDetector: ObservableObject {
             }
             status = .binaryOnly(ynhPath: ynhPath)
         }
+    }
+
+    /// Return the active minimum capability version, honouring the dev UserDefaults
+    /// override. Override can only *lower* the built-in minimum; raising it is
+    /// ignored (TermQ has not been tested above `minimumCapabilitiesVersion`).
+    private func effectiveMinimumCapabilities() -> String {
+        let builtIn = Self.minimumCapabilitiesVersion
+        guard
+            let override = UserDefaults.standard.string(forKey: Self.capabilitiesMinOverrideKey),
+            !override.isEmpty
+        else {
+            return builtIn
+        }
+        // Allow override only if it is <= built-in minimum.
+        if Self.compareSemver(override, builtIn) <= 0 {
+            TermQLogger.ui.info(
+                "YNHDetector: capability minimum lowered to \(override) via UserDefaults override (built-in is \(builtIn))"
+            )
+            return override
+        }
+        TermQLogger.ui.info(
+            "YNHDetector: ignoring capability override \(override) — cannot raise above built-in minimum \(builtIn)"
+        )
+        return builtIn
+    }
+
+    /// Run `ynh version --format json` and parse the `{version, capabilities}` payload.
+    /// Falls back to plain `ynh version` for older binaries that don't support the flag;
+    /// in that case `capabilities` comes back `nil`.
+    static func fetchVersionInfo(ynhPath: String) async -> (version: String?, capabilities: String?) {
+        if let json = try? await runCommand(ynhPath, args: ["version", "--format", "json"]),
+            let info = try? JSONDecoder().decode(VersionInfo.self, from: Data(json.utf8))
+        {
+            return (info.version, info.capabilities)
+        }
+        // Pre-capability binary: best-effort plain version, no capability claim.
+        if let raw = try? await runCommand(ynhPath, args: ["version"]) {
+            return (raw.trimmingCharacters(in: .whitespacesAndNewlines), nil)
+        }
+        return (nil, nil)
+    }
+
+    /// Test whether `reported` satisfies `minimum` using 3-segment semver comparison.
+    /// A `nil` or unparseable `reported` always fails (treat pre-capability YNH as below-min).
+    nonisolated static func capabilityMeets(_ reported: String?, minimum: String) -> Bool {
+        guard let reported else { return false }
+        return compareSemver(reported, minimum) >= 0
+    }
+
+    /// Compare two semver-ish version strings segment-by-segment. Non-numeric segments
+    /// compare as zero. Missing trailing segments compare as zero (so "0.2" == "0.2.0").
+    /// Returns -1 if a < b, 0 if a == b, 1 if a > b.
+    nonisolated static func compareSemver(_ a: String, _ b: String) -> Int {
+        let aParts = a.split(separator: ".").map { Int($0) ?? 0 }
+        let bParts = b.split(separator: ".").map { Int($0) ?? 0 }
+        let count = max(aParts.count, bParts.count)
+        for i in 0..<count {
+            let av = i < aParts.count ? aParts[i] : 0
+            let bv = i < bParts.count ? bParts[i] : 0
+            if av < bv { return -1 }
+            if av > bv { return 1 }
+        }
+        return 0
     }
 
     // MARK: - Binary Discovery
@@ -172,6 +267,14 @@ final class YNHDetector: ObservableObject {
 // MARK: - Protocol Conformance
 
 extension YNHDetector: YNHDetectorProtocol {}
+
+// MARK: - Supporting types
+
+/// Decoded payload of `ynh version --format json`.
+private struct VersionInfo: Decodable {
+    let version: String?
+    let capabilities: String?
+}
 
 // MARK: - Errors
 

@@ -129,6 +129,11 @@ extension Strings {
         static var notInstalled: String { localized("harnesses.not.installed") }
         static var initRequired: String { localized("harnesses.init.required") }
         static var initHint: String { localized("harnesses.init.hint") }
+        static var outdatedHeadline: String { localized("harnesses.outdated.headline") }
+        static var outdatedCapabilitiesUnknown: String { localized("harnesses.outdated.capabilities.unknown") }
+        static func outdatedDetail(reported: String, minimum: String) -> String {
+            localized("harnesses.outdated.detail %@ %@", reported, minimum)
+        }
         static var emptyMessage: String { localized("harnesses.empty.message") }
         static var emptyNoRegistriesMessage: String { localized("harnesses.empty.no.registries.message") }
         static var searchButton: String { localized("harnesses.search.button") }
