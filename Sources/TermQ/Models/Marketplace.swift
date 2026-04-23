@@ -96,7 +96,13 @@ extension PluginSourceSpec {
     func resolved(marketplaceURL: String) -> (url: String, path: String?) {
         // Also catch persisted entries where type was corrupted to .unknown due to
         // the "source" vs "type" key mismatch in the old decoder.
-        guard type.isRelative || url.hasPrefix("./") else { return (url, path) }
+        guard type.isRelative || url.hasPrefix("./") else {
+            if type == .github {
+                let expanded = url.hasPrefix("github.com/") ? url : "github.com/\(url)"
+                return (expanded, path)
+            }
+            return (url, path)
+        }
         let rawPath = url.hasPrefix("./") ? String(url.dropFirst(2)) : url
         let fullPath = path.map { "\(rawPath)/\($0)" } ?? rawPath
         return (marketplaceURL, fullPath.isEmpty ? nil : fullPath)

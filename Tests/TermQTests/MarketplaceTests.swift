@@ -355,11 +355,18 @@ final class PluginSourceSpecResolvedTests: XCTestCase {
 
     private let marketplaceURL = "https://github.com/eyelock/assistants"
 
-    func test_resolved_externalSource_passesThrough() {
+    func test_resolved_githubSource_expandsShorthand() {
         let spec = PluginSourceSpec(type: .github, url: "owner/repo", path: "plugins")
         let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
-        XCTAssertEqual(url, "owner/repo")
+        XCTAssertEqual(url, "github.com/owner/repo")
         XCTAssertEqual(path, "plugins")
+    }
+
+    func test_resolved_githubSource_alreadyExpanded_passesThrough() {
+        let spec = PluginSourceSpec(type: .github, url: "github.com/owner/repo")
+        let (url, path) = spec.resolved(marketplaceURL: marketplaceURL)
+        XCTAssertEqual(url, "github.com/owner/repo")
+        XCTAssertNil(path)
     }
 
     func test_resolved_relativeSource_usesMarketplaceURL() {

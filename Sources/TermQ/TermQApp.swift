@@ -407,10 +407,13 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             TermQLogger.window.notice("  window[\(i)]: \(desc)")
         }
         if let window = mainWindow {
-            // Unhide the app (handles the NSApp.hide case from windowShouldClose where
-            // macOS sees hasVisibleWindows=false even though our window exists).
-            // Return false to prevent SwiftUI from trying to open another Window instance.
-            NSApp.unhide(nil)
+            // Only call unhide if the app is actually hidden (e.g. from windowShouldClose → NSApp.hide).
+            // Calling unhide on a non-hidden app schedules a deferred _doOrderWindow orderOut block that
+            // fires when the run loop returns to NSDefaultRunLoopMode — which a busy terminal defers for
+            // seconds or minutes, producing the "spontaneous" window hide.
+            if NSApp.isHidden {
+                NSApp.unhide(nil)
+            }
             window.makeKeyAndOrderFront(nil)
             return false
         }
