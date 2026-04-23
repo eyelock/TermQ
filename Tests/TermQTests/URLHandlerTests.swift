@@ -617,4 +617,117 @@ final class URLHandlerTests: XCTestCase {
         XCTAssertEqual(mock.permanentlyDeleteCardCalls.count, 1)
         XCTAssertEqual(mock.permanentlyDeleteCardCalls.first?.id, card.id)
     }
+
+    // MARK: - handleURL routing — confirms dispatch for each known host
+
+    func testHandleURL_openHost_setsPendingTerminal() {
+        let handler = URLHandler(boardViewModel: MockBoardViewModel())
+        XCTAssertNil(handler.pendingTerminal)
+
+        handler.handleURL(makeURL(host: "open", items: [qi("path", "/tmp/example")]))
+
+        XCTAssertNotNil(handler.pendingTerminal)
+        XCTAssertEqual(handler.pendingTerminal?.path, "/tmp/example")
+    }
+
+    func testHandleURL_updateHost_routesToHandleUpdate() {
+        let mock = MockBoardViewModel()
+        let card = makeCard()
+        mock.stubbedCards[card.id] = card
+        let handler = URLHandler(boardViewModel: mock)
+
+        handler.handleURL(
+            makeURL(
+                host: "update",
+                items: [qi("id", card.id.uuidString), qi("name", "Renamed")]))
+
+        XCTAssertEqual(mock.cardLookups.count, 1)
+        XCTAssertEqual(mock.cardLookups.first, card.id)
+    }
+
+    func testHandleURL_moveHost_routesToHandleMove() {
+        let mock = MockBoardViewModel()
+        let card = makeCard()
+        mock.stubbedCards[card.id] = card
+        mock.board = Board(columns: [makeColumn(name: "Done")], cards: [card])
+        let handler = URLHandler(boardViewModel: mock)
+
+        handler.handleURL(
+            makeURL(
+                host: "move",
+                items: [qi("id", card.id.uuidString), qi("column", "Done")]))
+
+        XCTAssertEqual(mock.moveCardCalls.count, 1)
+    }
+
+    func testHandleURL_focusHost_routesToHandleFocus() {
+        let mock = MockBoardViewModel()
+        let card = makeCard()
+        mock.stubbedCards[card.id] = card
+        let handler = URLHandler(boardViewModel: mock)
+
+        handler.handleURL(makeURL(host: "focus", items: [qi("id", card.id.uuidString)]))
+
+        XCTAssertEqual(mock.selectCardCalls.count, 1)
+    }
+
+    func testHandleURL_deleteHost_routesToHandleDelete() {
+        let mock = MockBoardViewModel()
+        let card = makeCard()
+        mock.stubbedCards[card.id] = card
+        let handler = URLHandler(boardViewModel: mock)
+
+        handler.handleURL(makeURL(host: "delete", items: [qi("id", card.id.uuidString)]))
+
+        XCTAssertEqual(mock.deleteCardCalls.count, 1)
+    }
+
+    func testHandleURL_emptyHost_isIgnored() {
+        let mock = MockBoardViewModel()
+        let handler = URLHandler(boardViewModel: mock)
+
+        handler.handleURL(URL(string: "termq://")!)
+
+        XCTAssertNil(handler.pendingTerminal)
+        XCTAssertTrue(mock.cardLookups.isEmpty)
+    }
+
+    // MARK: - confirmExternalLLMModifications UserDefaults
+
+    func testConfirmExternalLLMModifications_setGet_roundTrip() {
+        let handler = URLHandler(boardViewModel: MockBoardViewModel())
+
+        let originalValue = handler.confirmExternalLLMModifications
+        defer { handler.confirmExternalLLMModifications = originalValue }
+
+        handler.confirmExternalLLMModifications = false
+        XCTAssertFalse(handler.confirmExternalLLMModifications)
+
+        handler.confirmExternalLLMModifications = true
+        XCTAssertTrue(handler.confirmExternalLLMModifications)
+    }
+
+    // MARK: - handleUpdate — LLM confirmation bypass when setting disabled
+
+    func testHandleUpdate_whenConfirmationDisabled_llmFieldsApplied() {
+        let mock = MockBoardViewModel()
+        let card = makeCard()
+        card.llmPrompt = "old prompt"
+        mock.stubbedCards[card.id] = card
+        let handler = URLHandler(boardViewModel: mock)
+
+        let originalValue = handler.confirmExternalLLMModifications
+        defer { handler.confirmExternalLLMModifications = originalValue }
+        handler.confirmExternalLLMModifications = false
+
+        handler.handleURL(
+            makeURL(
+                host: "update",
+                items: [
+                    qi("id", card.id.uuidString),
+                    qi("llmPrompt", "new prompt"),
+                ]))
+
+        XCTAssertEqual(card.llmPrompt, "new prompt")
+    }
 }
