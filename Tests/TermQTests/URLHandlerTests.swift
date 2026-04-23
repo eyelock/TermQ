@@ -377,12 +377,11 @@ final class URLHandlerTests: XCTestCase {
         card.tags = [Tag(key: "old", value: "value")]
         mock.stubbedCards[card.id] = card
         let handler = URLHandler(boardViewModel: mock)
-        var items: [URLQueryItem] = [
+        let items: [URLQueryItem] = [
             qi("id", card.id.uuidString),
             qi("replaceTags", "true"),
             URLQueryItem(name: "tag", value: "new=tag"),
         ]
-        _ = items  // silence unused warning
         let url = makeURL(host: "update", items: items)
         UserDefaults.standard.set(false, forKey: "confirmExternalLLMModifications")
         defer { UserDefaults.standard.removeObject(forKey: "confirmExternalLLMModifications") }

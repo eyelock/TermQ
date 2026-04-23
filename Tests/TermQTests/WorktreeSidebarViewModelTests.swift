@@ -34,7 +34,6 @@ final class MockGitService: GitServiceProtocol {
 
     func addWorktree(repo: GitRepository, branch: String, path: String, baseBranch: String?) async throws {}
     func removeWorktree(repo: GitRepository, path: String) async throws {}
-    func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws {}
 
     func forceDeleteWorktree(repoPath: String, worktreePath: String) async throws {
         forceDeleteWorktreeCalled = true
