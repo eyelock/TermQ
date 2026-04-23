@@ -36,6 +36,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This caused build issues where the CLI binary would overwrite the GUI binary
   - All CLI commands now use `termqcli` prefix: `termqcli list`, `termqcli open`, etc.
 
+## [0.8.2] - 2026-04-23
+
+### Fixed
+
+- **Spontaneous window hide on macOS Sequoia** — Guard `NSApp.unhide(nil)` in
+  `applicationShouldHandleReopen` with `if NSApp.isHidden`. Unconditional unhide
+  scheduled a deferred `_doOrderWindow orderOut` block that fired when the run loop
+  returned to `NSDefaultRunLoopMode`, producing a window hide seconds or minutes
+  after a dock click in a busy terminal.
+- **Worktree deletion spinner** — Show a `ProgressView` in the worktree left-slot
+  icon while deletion is in flight, replacing the static home/lock/empty icon.
+- **Marketplace GitHub shorthand expansion** — Expand bare `owner/repo` strings to
+  `github.com/owner/repo` in `resolved()` before passing to `ynh include add`,
+  which misinterpreted bare shorthand as an SSH host alias.
+
 ## [0.5.2] - 2026-01-14
 
 ### Fixed
