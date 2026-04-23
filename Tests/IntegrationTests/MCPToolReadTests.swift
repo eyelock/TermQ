@@ -68,7 +68,7 @@ final class MCPToolReadTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -87,7 +87,7 @@ final class MCPToolReadTests: XCTestCase {
         let args: [String: Value] = ["columnsOnly": .bool(true)]
         let result = try await server.handleList(args)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -103,7 +103,7 @@ final class MCPToolReadTests: XCTestCase {
         let args: [String: Value] = ["columnsOnly": .bool(true)]
         let result = try await server.handleList(args)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -294,7 +294,7 @@ final class MCPToolReadTests: XCTestCase {
 
         XCTAssertTrue(result.isError ?? false)
 
-        guard case .text(let message) = result.content[0] else {
+        guard case .text(let message, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -314,7 +314,7 @@ final class MCPToolReadTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -332,7 +332,7 @@ final class MCPToolReadTests: XCTestCase {
         let args: [String: Value] = ["actionsOnly": .bool(true)]
         let result = try await server.handlePending(args)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -351,7 +351,7 @@ final class MCPToolReadTests: XCTestCase {
     func testPendingSortOrder() async throws {
         let result = try await server.handlePending(nil)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -369,7 +369,7 @@ final class MCPToolReadTests: XCTestCase {
     func testPendingSummaryAccuracy() async throws {
         let result = try await server.handlePending(nil)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -384,7 +384,7 @@ final class MCPToolReadTests: XCTestCase {
     func testPendingStalenessValues() async throws {
         let result = try await server.handlePending(nil)
 
-        guard case .text(let json) = result.content[0] else {
+        guard case .text(let json, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -404,7 +404,7 @@ final class MCPToolReadTests: XCTestCase {
 
         XCTAssertFalse(result.isError ?? false)
 
-        guard case .text(let content) = result.content[0] else {
+        guard case .text(let content, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -416,7 +416,7 @@ final class MCPToolReadTests: XCTestCase {
     func testContextContainsTagSchema() async throws {
         let result = try await server.handleContext()
 
-        guard case .text(let content) = result.content[0] else {
+        guard case .text(let content, _, _) = result.content[0] else {
             XCTFail("Expected text content")
             return
         }
@@ -537,7 +537,7 @@ final class MCPToolReadTests: XCTestCase {
 
 /// Extract terminal array from tool result
 func extractTerminalArray(from result: CallTool.Result) throws -> [[String: Any]] {
-    guard case .text(let json) = result.content[0] else {
+    guard case .text(let json, _, _) = result.content[0] else {
         throw TestHelperError.noTextContent
     }
 
@@ -552,7 +552,7 @@ func extractTerminalArray(from result: CallTool.Result) throws -> [[String: Any]
 
 /// Extract single terminal from tool result
 func extractTerminal(from result: CallTool.Result) throws -> [String: Any] {
-    guard case .text(let json) = result.content[0] else {
+    guard case .text(let json, _, _) = result.content[0] else {
         throw TestHelperError.noTextContent
     }
 
