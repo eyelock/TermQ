@@ -38,7 +38,7 @@ struct Find: ParsableCommand {
     @Flag(name: .long, help: "Only show favourites")
     var favourites: Bool = false
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {

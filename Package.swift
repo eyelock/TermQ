@@ -151,6 +151,11 @@ let package = Package(
             name: "TermQCLITests",
             dependencies: ["TermQCLICore", "TermQShared", "MCPServerLib"],
             path: "Tests/TermQCLITests"
+        ),
+        .testTarget(
+            name: "IntegrationTests",
+            dependencies: ["MCPServerLib", "TermQCLICore", "TermQShared"],
+            path: "Tests/IntegrationTests"
         )
     ]
 )

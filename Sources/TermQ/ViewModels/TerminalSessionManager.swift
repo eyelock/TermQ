@@ -15,6 +15,12 @@ class TerminalSessionManager: ObservableObject {
     /// Reference to the tmux manager for tmux-backed sessions
     let tmuxManager: any TmuxManagerProtocol
 
+    /// Resolver for the board view model. Called lazily at use time so that production
+    /// wiring can default to `BoardViewModel.shared` without triggering a singleton
+    /// init cycle (BVM.init touches TSM.shared, so TSM.init must not touch BVM.shared).
+    /// Tests inject a closure returning a mock conforming to `BoardViewModelProtocol`.
+    private let boardViewModelProvider: @MainActor () -> any BoardViewModelProtocol
+
     /// Current theme ID - proxied to theme manager
     var themeId: String {
         get { themeManager.themeId }
@@ -58,8 +64,12 @@ class TerminalSessionManager: ObservableObject {
         var activePaneId: String?  // Currently active pane ID for input routing
     }
 
-    init(tmuxManager: any TmuxManagerProtocol = TmuxManager.shared) {
+    init(
+        tmuxManager: any TmuxManagerProtocol = TmuxManager.shared,
+        boardViewModel: @escaping @MainActor () -> any BoardViewModelProtocol = { BoardViewModel.shared }
+    ) {
         self.tmuxManager = tmuxManager
+        self.boardViewModelProvider = boardViewModel
         // Set up theme change callback
         themeManager.onThemeChanged = { [weak self] in
             self?.applyThemeToAllSessions()
@@ -287,25 +297,30 @@ class TerminalSessionManager: ObservableObject {
         }
 
         // Create and attach to tmux session (traditional mode)
+        let tmux = ShellEscaper.singleQuote(tmuxPath)
+        let name = ShellEscaper.singleQuote(sessionName)
+        let cwd = ShellEscaper.singleQuote(card.workingDirectory)
+        let shell = ShellEscaper.singleQuote(card.shellPath)
+        let envArgs = tmuxEnvArgs.map { ShellEscaper.singleQuote($0) }.joined(separator: " ")
         let script = """
             # Create session if it doesn't exist
-            if ! \(ShellEscaper.singleQuote(tmuxPath)) has-session -t \(ShellEscaper.singleQuote(sessionName)) 2>/dev/null; then
-                \(ShellEscaper.singleQuote(tmuxPath)) new-session -d \\
-                    -s \(ShellEscaper.singleQuote(sessionName)) \\
-                    -c \(ShellEscaper.singleQuote(card.workingDirectory)) \\
-                    \(tmuxEnvArgs.map { ShellEscaper.singleQuote($0) }.joined(separator: " ")) \\
-                    \(ShellEscaper.singleQuote(card.shellPath)) -l
+            if ! \(tmux) has-session -t \(name) 2>/dev/null; then
+                \(tmux) new-session -d \\
+                    -s \(name) \\
+                    -c \(cwd) \\
+                    \(envArgs) \\
+                    \(shell) -l
             fi
             # Configure session for TermQ
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) status off 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) mouse off 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) \\
+            \(tmux) set-option -t \(name) status off 2>/dev/null || true
+            \(tmux) set-option -t \(name) mouse off 2>/dev/null || true
+            \(tmux) set-option -t \(name) \\
                 default-terminal 'xterm-256color' 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) escape-time 10 2>/dev/null || true
-            \(ShellEscaper.singleQuote(tmuxPath)) set-option -t \(ShellEscaper.singleQuote(sessionName)) \\
+            \(tmux) set-option -t \(name) escape-time 10 2>/dev/null || true
+            \(tmux) set-option -t \(name) \\
                 allow-passthrough off 2>/dev/null || true
             # Attach to the session
-            exec \(ShellEscaper.singleQuote(tmuxPath)) attach-session -t \(ShellEscaper.singleQuote(sessionName))
+            exec \(tmux) attach-session -t \(name)
             """
 
         terminal.startProcess(
@@ -391,7 +406,7 @@ class TerminalSessionManager: ObservableObject {
 
             if hasNextActionToken && hadNextAction {
                 card.llmNextAction = ""
-                BoardViewModel.shared.updateCard(card)
+                boardViewModelProvider().updateCard(card)
             }
         } else {
             initCmd = tokenizer.replace(initCmd, with: .init(prompt: "", nextAction: ""))

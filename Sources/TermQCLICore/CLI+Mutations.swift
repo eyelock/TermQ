@@ -50,7 +50,7 @@ struct Set: ParsableCommand {
     @Flag(name: .long, help: "Remove favourite status")
     var unfavourite: Bool = false
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {
@@ -156,7 +156,7 @@ struct Move: ParsableCommand {
     @Flag(name: .long, help: "Use debug data directory (TermQ-Debug)")
     var debug: Bool = false
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {
@@ -224,7 +224,7 @@ struct Delete: ParsableCommand {
     @Flag(name: .long, help: "Permanently delete (skip bin, cannot be recovered)")
     var permanent: Bool = false
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {
