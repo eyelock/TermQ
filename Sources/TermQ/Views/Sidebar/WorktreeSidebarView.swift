@@ -14,9 +14,8 @@ struct WorktreeSidebarView: View {
     @ObservedObject private var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @State private var showAddRepo = false
-    @State private var showNewWorktreeFor: ObservableRepository?
+    @State private var newWorktreeContext: NewWorktreeContext?
     @State private var showEditRepoFor: ObservableRepository?
-    @State private var checkoutBranchContext: CheckoutBranchContext?
     @State private var pendingRemoval: (ObservableRepository, GitWorktree)?
     @State private var isShowingRemoveAlert = false
     @State private var pendingForceDelete: (ObservableRepository, GitWorktree)?
@@ -42,13 +41,10 @@ struct WorktreeSidebarView: View {
         .sheet(isPresented: $showAddRepo) {
             AddRepositorySheet(viewModel: viewModel)
         }
-        .sheet(item: $showNewWorktreeFor) { repo in
-            NewWorktreeSheet(repo: repo, viewModel: viewModel)
-        }
-        .sheet(item: $checkoutBranchContext) { ctx in
-            CheckoutBranchSheet(
+        .sheet(item: $newWorktreeContext) { ctx in
+            NewWorktreeSheet(
                 repo: ctx.repo,
-                preselectedBranch: ctx.preselectedBranch,
+                initialBaseBranch: ctx.initialBaseBranch,
                 viewModel: viewModel
             )
         }
@@ -197,15 +193,9 @@ struct WorktreeSidebarView: View {
                     }
 
                     Button {
-                        showNewWorktreeFor = repo
+                        newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: nil)
                     } label: {
                         Label(Strings.Sidebar.newWorktree, systemImage: "plus")
-                    }
-
-                    Button {
-                        checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: nil)
-                    } label: {
-                        Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
                     }
 
                     Divider()
@@ -293,7 +283,7 @@ struct WorktreeSidebarView: View {
             }
 
             Button {
-                showNewWorktreeFor = repo
+                newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: nil)
             } label: {
                 Label(Strings.Sidebar.newWorktree, systemImage: "plus")
                     .font(.caption)
@@ -408,7 +398,7 @@ struct WorktreeSidebarView: View {
         .contentShape(Rectangle())
         .contextMenu {
             Button {
-                checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: branch)
+                newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: branch)
             } label: {
                 Label(Strings.Sidebar.newWorktree, systemImage: "plus")
             }
@@ -498,9 +488,9 @@ struct WorktreeSidebarView: View {
             Divider()
 
             Button {
-                checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: nil)
+                newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: worktree.branch)
             } label: {
-                Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
+                Label(Strings.Sidebar.newWorktree, systemImage: "plus")
             }
 
             if !harnessRepository.harnesses.isEmpty {
@@ -692,15 +682,16 @@ extension WorktreeSidebarView {
     }
 }
 
-// MARK: - Checkout Branch Context
+// MARK: - New Worktree Context
 
-/// Carries both the target repository and an optional pre-selected branch into
-/// `CheckoutBranchSheet`. Using a wrapper struct avoids secondary `@State` variables
-/// and lets `sheet(item:)` bind to a single optional.
-private struct CheckoutBranchContext: Identifiable {
+/// Carries the target repository and an optional base-branch seed into
+/// `NewWorktreeSheet`. Lets `sheet(item:)` bind to a single optional while
+/// preserving the branch-row entry point where the clicked branch becomes
+/// the default base for the new worktree.
+private struct NewWorktreeContext: Identifiable {
     let id = UUID()
     let repo: ObservableRepository
-    let preselectedBranch: String?
+    let initialBaseBranch: String?
 }
 
 // MARK: - Repo Disclosure Wrapper

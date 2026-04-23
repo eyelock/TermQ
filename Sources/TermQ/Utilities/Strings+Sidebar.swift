@@ -110,14 +110,6 @@ extension Strings {
 
         // Local branches section
         static var localBranches: String { localized("sidebar.local.branches") }
-        static var newWorktreeFromBranch: String { localized("sidebar.branch.new.worktree.from.branch") }
-
-        // Checkout branch as worktree sheet
-        static var checkoutBranchTitle: String { localized("sidebar.checkout.branch.title") }
-        static var checkoutBranchLabel: String { localized("sidebar.checkout.branch.label") }
-        static var checkoutBranchPlaceholder: String { localized("sidebar.checkout.branch.placeholder") }
-        static var checkoutBranchRequired: String { localized("sidebar.checkout.branch.required") }
-        static var checkoutBranchCreate: String { localized("sidebar.checkout.branch.create") }
     }
 
     // MARK: - Harnesses

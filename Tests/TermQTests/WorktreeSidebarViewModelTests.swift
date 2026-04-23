@@ -26,7 +26,6 @@ final class MockGitService: GitServiceProtocol {
     private(set) var isGitRepoCalled = false
     private(set) var addWorktreeCalled = false
     private(set) var removeWorktreeCalled = false
-    private(set) var checkoutBranchAsWorktreeCalled = false
     private(set) var lockWorktreeCalled = false
     private(set) var unlockWorktreeCalled = false
     private(set) var deleteLocalBranchCalls: [String] = []
@@ -49,10 +48,6 @@ final class MockGitService: GitServiceProtocol {
 
     func removeWorktree(repo: GitRepository, path: String) async throws {
         removeWorktreeCalled = true
-    }
-
-    func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws {
-        checkoutBranchAsWorktreeCalled = true
     }
 
     func forceDeleteWorktree(repoPath: String, worktreePath: String) async throws {
@@ -512,19 +507,6 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         try await vm.removeWorktree(repo: repo, worktree: makeWorktree())
 
         XCTAssertTrue(mock.removeWorktreeCalled)
-    }
-
-    // MARK: - checkoutBranchAsWorktree
-
-    func testCheckoutBranchAsWorktree_callsGitService() async throws {
-        let mock = MockGitService()
-        let vm = makeVM(gitService: mock)
-        let repo = makeRepo()
-
-        try await vm.checkoutBranchAsWorktree(
-            repo: repo, branch: "feat/existing", path: "/tmp/wt")
-
-        XCTAssertTrue(mock.checkoutBranchAsWorktreeCalled)
     }
 
     // MARK: - listBranches pass-through
