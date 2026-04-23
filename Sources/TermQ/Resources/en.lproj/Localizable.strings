@@ -634,6 +634,9 @@
 "harnesses.not.installed" = "ynh is not installed.";
 "harnesses.init.required" = "ynh found but not initialised.\nRun `ynh init` to set up.";
 "harnesses.init.hint" = "Open a terminal and run:\nynh init";
+"harnesses.outdated.headline" = "YNH upgrade required";
+"harnesses.outdated.capabilities.unknown" = "unknown";
+"harnesses.outdated.detail %@ %@" = "YNH reports capabilities %1$@, but TermQ requires %2$@ or newer. Update YNH to enable marketplace and harness-editing features.";
 "harnesses.empty.message" = "No harnesses installed yet.";
 "harnesses.empty.no.registries.message" = "No harnesses or registries installed yet.";
 "harnesses.search.button" = "Search for Harnesses";
@@ -776,6 +779,10 @@
 "settings.ynh.redetect" = "Re-detect";
 "settings.ynh.init.required" = "Not initialised";
 "settings.ynh.ready" = "Ready";
+"settings.ynh.outdated.badge" = "Upgrade required";
+"settings.ynh.capabilities.label" = "Capabilities:";
+"settings.ynh.capabilities.unknown" = "unknown";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
 "settings.ynh.path.label" = "Path:";
 "settings.ynh.ynd.path.label" = "ynd Path:";
 "settings.ynh.status.label" = "Status:";

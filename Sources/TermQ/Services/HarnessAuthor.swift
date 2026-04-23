@@ -394,15 +394,7 @@ final class IncludeApplier: ObservableObject {
         succeeded = false
         errorMessage = nil
 
-        var args = ["include", "add", options.harness, options.sourceURL]
-        if let path = options.path, !path.isEmpty {
-            args += ["--path", path]
-        }
-        if !options.pick.isEmpty {
-            // YNH --pick expects bare artifact names; strip the type/ prefix (e.g. "skills/foo" → "foo")
-            let bareNames = options.pick.map { $0.components(separatedBy: "/").last ?? $0 }
-            args += ["--pick", bareNames.joined(separator: ",")]
-        }
+        let args = Self.buildIncludeAddArgs(options)
 
         let exitCode = await streamProcess(
             executable: ynhPath,
@@ -416,6 +408,19 @@ final class IncludeApplier: ObservableObject {
         } else {
             errorMessage = outputLines.last ?? "Command failed with exit code \(exitCode)"
         }
+    }
+
+    /// Builds the `ynh include add` argument vector. Pure function — exposed for testing.
+    /// YNH expects full `type/name[.md]` paths for `--pick`; do not strip the type prefix.
+    nonisolated static func buildIncludeAddArgs(_ options: IncludeApplicationOptions) -> [String] {
+        var args = ["include", "add", options.harness, options.sourceURL]
+        if let path = options.path, !path.isEmpty {
+            args += ["--path", path]
+        }
+        if !options.pick.isEmpty {
+            args += ["--pick", options.pick.joined(separator: ",")]
+        }
+        return args
     }
 
     private func streamProcess(

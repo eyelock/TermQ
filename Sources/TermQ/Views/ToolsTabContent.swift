@@ -459,6 +459,7 @@ extension ToolsTabContent {
         switch ynhDetector.status {
         case .missing: return .inactive
         case .binaryOnly: return .disabled
+        case .outdated: return .disabled
         case .ready: return .installed
         }
     }
@@ -467,6 +468,7 @@ extension ToolsTabContent {
         switch ynhDetector.status {
         case .missing: return Strings.Settings.notInstalled
         case .binaryOnly: return Strings.Settings.Ynh.initRequired
+        case .outdated: return Strings.Settings.Ynh.outdatedBadge
         case .ready: return Strings.Settings.Ynh.ready
         }
     }
@@ -497,6 +499,14 @@ extension ToolsTabContent {
                             Image(systemName: "exclamationmark.triangle")
                                 .foregroundColor(.orange)
                             Text(Strings.Settings.Ynh.initRequired)
+                                .foregroundColor(.orange)
+                        }
+                        .font(.caption)
+                    } else if case .outdated = ynhDetector.status {
+                        HStack(spacing: 4) {
+                            Image(systemName: "arrow.up.circle")
+                                .foregroundColor(.orange)
+                            Text(Strings.Settings.Ynh.outdatedBadge)
                                 .foregroundColor(.orange)
                         }
                         .font(.caption)
@@ -596,6 +606,41 @@ extension ToolsTabContent {
                         .foregroundColor(.secondary)
                     Text(Strings.Settings.Ynh.initRequired)
                         .foregroundColor(.orange)
+                }
+                .font(.caption)
+            }
+
+        case .outdated(let ynhPath, _, let capabilities):
+            VStack(alignment: .leading, spacing: 4) {
+                if let version = ynhDetector.version {
+                    HStack {
+                        Text(Strings.Settings.Ynh.versionLabel)
+                            .foregroundColor(.secondary)
+                        Text(version)
+                            .font(.system(.body, design: .monospaced))
+                    }
+                    .font(.caption)
+                }
+
+                HStack {
+                    Text(Strings.Settings.Ynh.pathLabel)
+                        .foregroundColor(.secondary)
+                    Text(ynhPath)
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                }
+                .font(.caption)
+
+                HStack {
+                    Text(Strings.Settings.Ynh.capabilitiesLabel)
+                        .foregroundColor(.secondary)
+                    Text(
+                        Strings.Settings.Ynh.capabilitiesBelowMinimum(
+                            reported: capabilities ?? Strings.Settings.Ynh.capabilitiesUnknown,
+                            minimum: YNHDetector.minimumCapabilitiesVersion
+                        )
+                    )
+                    .foregroundColor(.orange)
                 }
                 .font(.caption)
             }

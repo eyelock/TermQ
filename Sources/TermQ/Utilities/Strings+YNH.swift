@@ -24,5 +24,11 @@ extension Strings.Settings {
         static var advanced: String { localized("settings.ynh.advanced") }
         static var versionLabel: String { localized("settings.ynh.version.label") }
         static var docsLinkLabel: String { localized("settings.ynh.docs.link.label") }
+        static var capabilitiesLabel: String { localized("settings.ynh.capabilities.label") }
+        static var capabilitiesUnknown: String { localized("settings.ynh.capabilities.unknown") }
+        static var outdatedBadge: String { localized("settings.ynh.outdated.badge") }
+        static func capabilitiesBelowMinimum(reported: String, minimum: String) -> String {
+            localized("settings.ynh.capabilities.below.minimum %@ %@", reported, minimum)
+        }
     }
 }

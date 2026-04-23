@@ -91,12 +91,16 @@ struct PluginSourceSpec: Codable, Sendable {
             ?? (try? container.decode(String.self, forKey: .type))
             ?? ""
         self.type = PluginSourceType(rawValue: typeStr) ?? .unknown
-        self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
+        if self.type == .github, let repo = try? container.decode(String.self, forKey: .repo) {
+            self.url = "https://github.com/\(repo)"
+        } else {
+            self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
+        }
         self.path = try? container.decode(String.self, forKey: .path)
     }
 
     private enum RawSourceCodingKeys: String, CodingKey {
-        case source, type, url, path
+        case source, type, url, path, repo
     }
 }
 
@@ -111,7 +115,12 @@ extension PluginSourceSpec {
         // the "source" vs "type" key mismatch in the old decoder.
         guard type.isRelative || url.hasPrefix("./") else {
             if type == .github {
-                let expanded = url.hasPrefix("github.com/") ? url : "github.com/\(url)"
+                let expanded: String
+                if url.hasPrefix("http") || url.hasPrefix("github.com/") {
+                    expanded = url
+                } else {
+                    expanded = "github.com/\(url)"
+                }
                 return (expanded, path)
             }
             return (url, path)

@@ -45,6 +45,9 @@ struct HarnessesSidebarTab: View {
             case .binaryOnly:
                 initRequiredState
 
+            case .outdated(_, _, let capabilities):
+                outdatedState(reportedCapabilities: capabilities)
+
             case .ready:
                 harnessList
             }
@@ -350,6 +353,31 @@ struct HarnessesSidebarTab: View {
     }
 
     // MARK: - States
+
+    private func outdatedState(reportedCapabilities: String?) -> some View {
+        VStack(spacing: 12) {
+            Image(systemName: "arrow.up.circle")
+                .font(.system(size: 32))
+                .foregroundColor(.secondary)
+
+            Text(Strings.Harnesses.outdatedHeadline)
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+
+            Text(
+                Strings.Harnesses.outdatedDetail(
+                    reported: reportedCapabilities ?? Strings.Harnesses.outdatedCapabilitiesUnknown,
+                    minimum: YNHDetector.minimumCapabilitiesVersion
+                )
+            )
+            .font(.caption)
+            .foregroundColor(Color(nsColor: .tertiaryLabelColor))
+            .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
 
     private var initRequiredState: some View {
         VStack(spacing: 12) {
