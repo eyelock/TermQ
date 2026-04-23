@@ -15,6 +15,12 @@ class TerminalSessionManager: ObservableObject {
     /// Reference to the tmux manager for tmux-backed sessions
     let tmuxManager: any TmuxManagerProtocol
 
+    /// Resolver for the board view model. Called lazily at use time so that production
+    /// wiring can default to `BoardViewModel.shared` without triggering a singleton
+    /// init cycle (BVM.init touches TSM.shared, so TSM.init must not touch BVM.shared).
+    /// Tests inject a closure returning a mock conforming to `BoardViewModelProtocol`.
+    private let boardViewModelProvider: @MainActor () -> any BoardViewModelProtocol
+
     /// Current theme ID - proxied to theme manager
     var themeId: String {
         get { themeManager.themeId }
@@ -58,8 +64,12 @@ class TerminalSessionManager: ObservableObject {
         var activePaneId: String?  // Currently active pane ID for input routing
     }
 
-    init(tmuxManager: any TmuxManagerProtocol = TmuxManager.shared) {
+    init(
+        tmuxManager: any TmuxManagerProtocol = TmuxManager.shared,
+        boardViewModel: @escaping @MainActor () -> any BoardViewModelProtocol = { BoardViewModel.shared }
+    ) {
         self.tmuxManager = tmuxManager
+        self.boardViewModelProvider = boardViewModel
         // Set up theme change callback
         themeManager.onThemeChanged = { [weak self] in
             self?.applyThemeToAllSessions()
@@ -396,7 +406,7 @@ class TerminalSessionManager: ObservableObject {
 
             if hasNextActionToken && hadNextAction {
                 card.llmNextAction = ""
-                BoardViewModel.shared.updateCard(card)
+                boardViewModelProvider().updateCard(card)
             }
         } else {
             initCmd = tokenizer.replace(initCmd, with: .init(prompt: "", nextAction: ""))
