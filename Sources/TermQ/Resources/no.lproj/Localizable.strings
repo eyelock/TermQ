@@ -572,6 +572,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Slett gren";
+"sidebar.branch.delete.title" = "Slett gren";
+"sidebar.branch.delete.confirm" = "Slett";
+"sidebar.branch.delete.message %@" = "Slette den lokale grenen \"%@\"? Dette kan ikke angres.";
+"sidebar.branch.destroy" = "Ødelegg gren";
+"sidebar.branch.destroy.title" = "Ødelegg gren";
+"sidebar.branch.destroy.confirm" = "Ødelegg";
+"sidebar.branch.destroy.message %@" = "Tvangsslette den lokale grenen \"%@\"? Ikke-sammenslåtte commits forkastes og kan ikke angres.";
+"sidebar.branch.update.from.origin" = "Oppdater fra Origin";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -721,6 +730,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Denne harness er koblet til %ld worktree(r) — disse koblingene vil bli fjernet.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kjører denne harness for øyeblikket.";
 "harnesses.uninstall.alert.confirm" = "Avinstaller";
+"harnesses.delete.local.button" = "Slett harness";
+"harnesses.delete.local.title %@" = "Slett \"%@\"?";
+"harnesses.delete.local.message" = "Dette avinstallerer harness fra YNH og sletter filene permanent. Denne handlingen kan ikke angres.";
+"harnesses.delete.local.confirm" = "Slett harness";
 "harnesses.more.actions.help" = "Flere handlinger";
 "harnesses.copy.run.command" = "Kopier kjørekommando";
 "harnesses.ynh.documentation" = "YNH-dokumentasjon";
@@ -759,6 +772,15 @@
 "marketplace.row.never.fetched" = "Aldri hentet";
 "marketplace.add.sheet.title" = "Legg til markedsplass";
 "marketplace.add.tab.known" = "Kjente";
+"marketplace.group.default" = "Standard";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokal";
+"marketplace.add.tab.local" = "Lokal mappe";
+"marketplace.add.section.local.path" = "Mappebane";
+"marketplace.add.local.browse" = "Velg mappe…";
+"marketplace.add.local.path.placeholder" = "/sti/til/markedsplass";
+"marketplace.row.local" = "Lokal";
+"marketplace.row.reveal" = "Vis i Finder";
 "marketplace.add.tab.custom" = "Egendefinert URL";
 "marketplace.add.section.git.url" = "Git-lager-URL";
 "marketplace.add.section.display.name" = "Visningsnavn";
@@ -839,3 +861,64 @@
 "diagnostics.verbose.warning" = "Høyt volum — deaktiver når ferdig";
 "diagnostics.export.title" = "TermQ Diagnostikkrapport";
 "diagnostics.export.footer" = "Sendt inn via innebygd diagnostikk i TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Dupliser";
+"harness.duplicate.installing" = "Installerer duplikat…";
+"harness.duplicate.success %@" = "%@ installert.";
+"harness.duplicate.title" = "Dupliser harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Legg til eksempel eyelock/assistants";
+"harnesses.create.harness.button" = "Opprett ny harness";
+"harnesses.empty.no.registries.message" = "Ingen harnesses eller registre installert ennå.";
+"harnesses.export.button" = "Eksporter som marketplace…";
+"harnesses.group.default" = "Standard";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokal";
+"harnesses.group.menu.settings" = "Innstillinger…";
+"harnesses.group.registry %@" = "Register: %@";
+"harnesses.install.browsing" = "Laster tilgjengelige harnesses…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag eller commit-SHA (valgfritt)";
+"harnesses.install.retry" = "Prøv igjen";
+"harnesses.install.section.available" = "Tilgjengelig fra registre";
+"harnesses.install.section.installed" = "Installert";
+"harnesses.install.section.local" = "Tilgjengelig lokalt";
+"harnesses.outdated.capabilities.unknown" = "ukjent";
+"harnesses.outdated.detail %@ %@" = "YNH rapporterer funksjoner %1$@, men TermQ krever %2$@ eller nyere. Oppdater YNH for å aktivere marketplace- og harness-redigeringsfunksjoner.";
+"harnesses.outdated.headline" = "YNH-oppdatering påkrevd";
+"harnesses.search.button" = "Søk etter harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tag eller commit-SHA (valgfritt)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Oppdater alle marketplaces";
+"marketplace.restore.defaults" = "Gjenopprett standarder";
+"marketplace.restore.defaults.help" = "Legg til standardmarketplaces igjen";
+"marketplace.row.pinned.help %@" = "Festet til %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Aktiver sikker liming for nye terminaler";
+"settings.default.safe.paste.help" = "Nye terminaler har sikker liming aktivert som standard. Du kan overstyre dette per terminal i kortets redigeringsverktøy.";
+"settings.scrollback.invalid" = "Angi et tall mellom 500 og 100 000";
+"settings.scrollback.label" = "Rullehistorikk";
+"settings.scrollback.lines.help" = "Linjer lagret i rullehistorikken (500–100 000). Endringer gjelder for nye terminaler.";
+"settings.scrollback.unit" = "linjer";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Funksjoner:";
+"settings.ynh.capabilities.unknown" = "ukjent";
+"settings.ynh.docs.link.label" = "YNH-dokumentasjon →";
+"settings.ynh.outdated.badge" = "Oppdatering påkrevd";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Fjern sammenslåtte grener";
+"sidebar.prune.branches.confirm" = "Slett grener";
+"sidebar.prune.branches.explanation" = "Disse grenene er fullstendig slått sammen med fjernstandard-grenen og har ingen aktiv worktree. Sletting er trygt og kan ikke angres.";
+"sidebar.prune.branches.nothing.message" = "Ingen sammenslåtte grener funnet. Grener som ennå ikke er slått sammen med fjernstandard-grenen beholdes.";
+"sidebar.prune.branches.nothing.title" = "Ingenting å fjerne";
+"sidebar.prune.branches.title" = "Fjern sammenslåtte grener";
+"sidebar.worktree.open.in" = "Åpne i…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Åpne terminaler";

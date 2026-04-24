@@ -574,6 +574,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Dalı sil";
+"sidebar.branch.delete.title" = "Dalı sil";
+"sidebar.branch.delete.confirm" = "Sil";
+"sidebar.branch.delete.message %@" = "\"%@\" yerel dalı silinsin mi? Bu işlem geri alınamaz.";
+"sidebar.branch.destroy" = "Dalı yok et";
+"sidebar.branch.destroy.title" = "Dalı yok et";
+"sidebar.branch.destroy.confirm" = "Yok et";
+"sidebar.branch.destroy.message %@" = "\"%@\" yerel dalı zorla silinsin mi? Birleştirilmemiş commitler silinecek ve bu işlem geri alınamaz.";
+"sidebar.branch.update.from.origin" = "Origin\'dan güncelle";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -723,6 +732,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Bu harness %ld worktree ile bağlantılı — bu ilişkilendirmeler temizlenecek.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal şu anda bu harness'i çalıştırıyor.";
 "harnesses.uninstall.alert.confirm" = "Kaldır";
+"harnesses.delete.local.button" = "Harness'i sil";
+"harnesses.delete.local.title %@" = "\"%@\" silinsin mi?";
+"harnesses.delete.local.message" = "Bu, harness'i YNH'dan kaldıracak ve dosyalarını kalıcı olarak silecektir. Bu işlem geri alınamaz.";
+"harnesses.delete.local.confirm" = "Harness'i sil";
 "harnesses.more.actions.help" = "Daha fazla işlem";
 "harnesses.copy.run.command" = "Çalıştırma Komutunu Kopyala";
 "harnesses.ynh.documentation" = "YNH Belgeleri";
@@ -761,6 +774,15 @@
 "marketplace.row.never.fetched" = "Hiç getirilmedi";
 "marketplace.add.sheet.title" = "Pazar yeri ekle";
 "marketplace.add.tab.known" = "Bilinen";
+"marketplace.group.default" = "Varsayılan";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Yerel";
+"marketplace.add.tab.local" = "Yerel Klasör";
+"marketplace.add.section.local.path" = "Klasör Yolu";
+"marketplace.add.local.browse" = "Klasör Seç…";
+"marketplace.add.local.path.placeholder" = "/yol/marketplace";
+"marketplace.row.local" = "Yerel";
+"marketplace.row.reveal" = "Finder'da Göster";
 "marketplace.add.tab.custom" = "Özel URL";
 "marketplace.add.section.git.url" = "Git Deposu URL'si";
 "marketplace.add.section.display.name" = "Görünen ad";
@@ -841,3 +863,64 @@
 "diagnostics.verbose.warning" = "Yüksek hacim — tamamlandığında devre dışı bırakın";
 "diagnostics.export.title" = "TermQ Tanılama Raporu";
 "diagnostics.export.footer" = "TermQ yerleşik tanılama aracıyla gönderildi.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Çoğalt";
+"harness.duplicate.installing" = "Kopya yükleniyor…";
+"harness.duplicate.success %@" = "%@ başarıyla yüklendi.";
+"harness.duplicate.title" = "Harness'i çoğalt";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Örnek eyelock/assistants ekle";
+"harnesses.create.harness.button" = "Yeni harness oluştur";
+"harnesses.empty.no.registries.message" = "Henüz yüklü harness veya kayıt defteri yok.";
+"harnesses.export.button" = "Marketplace olarak dışa aktar…";
+"harnesses.group.default" = "Varsayılan";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Yerel";
+"harnesses.group.menu.settings" = "Ayarlar…";
+"harnesses.group.registry %@" = "Kayıt Defteri: %@";
+"harnesses.install.browsing" = "Mevcut harness'ler yükleniyor…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Dal, etiket veya commit SHA (isteğe bağlı)";
+"harnesses.install.retry" = "Yeniden dene";
+"harnesses.install.section.available" = "Kayıt defterlerinden mevcut";
+"harnesses.install.section.installed" = "Yüklü";
+"harnesses.install.section.local" = "Yerel olarak mevcut";
+"harnesses.outdated.capabilities.unknown" = "bilinmiyor";
+"harnesses.outdated.detail %@ %@" = "YNH %1$@ özelliklerini bildiriyor ancak TermQ %2$@ veya daha yenisini gerektiriyor. Marketplace ve harness düzenleme özelliklerini etkinleştirmek için YNH'yi güncelleyin.";
+"harnesses.outdated.headline" = "YNH güncellemesi gerekli";
+"harnesses.search.button" = "Harness ara";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Dal, etiket veya commit SHA (isteğe bağlı)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Tüm marketplace'leri yenile";
+"marketplace.restore.defaults" = "Varsayılanlara geri yükle";
+"marketplace.restore.defaults.help" = "Varsayılan marketplace'leri yeniden ekle";
+"marketplace.row.pinned.help %@" = "%@ öğesine sabitlendi";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Yeni terminaller için güvenli yapıştırmayı etkinleştir";
+"settings.default.safe.paste.help" = "Yeni terminallerde güvenli yapıştırma varsayılan olarak etkinleştirilecektir. Bunu kart düzenleyicisinde terminal başına geçersiz kılabilirsiniz.";
+"settings.scrollback.invalid" = "500 ile 100.000 arasında bir sayı girin";
+"settings.scrollback.label" = "Kaydırma geçmişi";
+"settings.scrollback.lines.help" = "Kaydırma geçmişinde saklanan satırlar (500–100.000). Değişiklikler yeni terminaller için geçerlidir.";
+"settings.scrollback.unit" = "satır";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Özellikler:";
+"settings.ynh.capabilities.unknown" = "bilinmiyor";
+"settings.ynh.docs.link.label" = "YNH Belgeleri →";
+"settings.ynh.outdated.badge" = "Güncelleme gerekli";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Birleştirilmiş dalları temizle";
+"sidebar.prune.branches.confirm" = "Dalları sil";
+"sidebar.prune.branches.explanation" = "Bu dallar uzak varsayılan dalla tamamen birleştirilmiştir ve aktif worktree'si yoktur. Silme işlemi güvenlidir ve geri alınamaz.";
+"sidebar.prune.branches.nothing.message" = "Birleştirilmiş dal bulunamadı. Uzak varsayılan dalla henüz birleştirilmemiş dallar korunur.";
+"sidebar.prune.branches.nothing.title" = "Temizlenecek bir şey yok";
+"sidebar.prune.branches.title" = "Birleştirilmiş dalları temizle";
+"sidebar.worktree.open.in" = "Şurada aç…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Terminalleri aç";

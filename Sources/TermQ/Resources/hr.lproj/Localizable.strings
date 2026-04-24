@@ -573,6 +573,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Obriši granu";
+"sidebar.branch.delete.title" = "Obriši granu";
+"sidebar.branch.delete.confirm" = "Obriši";
+"sidebar.branch.delete.message %@" = "Obrisati lokalnu granu \"%@\"? Ova radnja se ne može poništiti.";
+"sidebar.branch.destroy" = "Uništi granu";
+"sidebar.branch.destroy.title" = "Uništi granu";
+"sidebar.branch.destroy.confirm" = "Uništi";
+"sidebar.branch.destroy.message %@" = "Prisilno obrisati lokalnu granu \"%@\"? Nepreneseni commitovi bit će odbačeni i ova radnja se ne može poništiti.";
+"sidebar.branch.update.from.origin" = "Ažuriraj iz Origina";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -722,6 +731,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Ovaj harness je povezan s %ld worktree(om/ovima) — te će asocijacije biti obrisane.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(a) trenutno izvodi ovaj harness.";
 "harnesses.uninstall.alert.confirm" = "Deinstaliraj";
+"harnesses.delete.local.button" = "Obriši harness";
+"harnesses.delete.local.title %@" = "Obrisati \"%@\"?";
+"harnesses.delete.local.message" = "Time ćete deinstalirati harness iz YNH-a i trajno obrisati njegove datoteke. Ova radnja se ne može poništiti.";
+"harnesses.delete.local.confirm" = "Obriši harness";
 "harnesses.more.actions.help" = "Više radnji";
 "harnesses.copy.run.command" = "Kopiraj naredbu pokretanja";
 "harnesses.ynh.documentation" = "YNH dokumentacija";
@@ -760,6 +773,15 @@
 "marketplace.row.never.fetched" = "Nikad dohvaćeno";
 "marketplace.add.sheet.title" = "Dodaj tržište";
 "marketplace.add.tab.known" = "Poznata";
+"marketplace.group.default" = "Zadano";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokalno";
+"marketplace.add.tab.local" = "Lokalna mapa";
+"marketplace.add.section.local.path" = "Put mape";
+"marketplace.add.local.browse" = "Odaberi mapu…";
+"marketplace.add.local.path.placeholder" = "/put/do/marketplace";
+"marketplace.row.local" = "Lokalno";
+"marketplace.row.reveal" = "Otkrij u Finderu";
 "marketplace.add.tab.custom" = "Prilagođeni URL";
 "marketplace.add.section.git.url" = "URL Git repozitorija";
 "marketplace.add.section.display.name" = "Naziv za prikaz";
@@ -840,3 +862,64 @@
 "diagnostics.verbose.warning" = "Velik broj zapisa — onemogući kada završiš";
 "diagnostics.export.title" = "TermQ Dijagnostički izvještaj";
 "diagnostics.export.footer" = "Predano putem ugrađene dijagnostike TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Dupliciraj";
+"harness.duplicate.installing" = "Instalira se duplikat…";
+"harness.duplicate.success %@" = "%@ uspješno instaliran.";
+"harness.duplicate.title" = "Dupliciraj harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Dodaj primjer eyelock/assistants";
+"harnesses.create.harness.button" = "Stvori novi harness";
+"harnesses.empty.no.registries.message" = "Nema instaliranih harness-a ili registara.";
+"harnesses.export.button" = "Izvezi kao marketplace…";
+"harnesses.group.default" = "Zadana";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokalna";
+"harnesses.group.menu.settings" = "Postavke…";
+"harnesses.group.registry %@" = "Registar: %@";
+"harnesses.install.browsing" = "Učitavanje dostupnih harness-a…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Grana, oznaka ili commit SHA (neobavezno)";
+"harnesses.install.retry" = "Pokušaj ponovo";
+"harnesses.install.section.available" = "Dostupno iz registara";
+"harnesses.install.section.installed" = "Instalirano";
+"harnesses.install.section.local" = "Dostupno lokalno";
+"harnesses.outdated.capabilities.unknown" = "nepoznato";
+"harnesses.outdated.detail %@ %@" = "YNH prijavljuje mogućnosti %1$@, ali TermQ zahtijeva %2$@ ili noviji. Ažurirajte YNH da biste omogućili funkcije marketplace-a i uređivanja harness-a.";
+"harnesses.outdated.headline" = "Potrebno ažuriranje YNH-a";
+"harnesses.search.button" = "Pretraži harness-e";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Grana, oznaka ili commit SHA (neobavezno)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Osvježi sve marketplace-ove";
+"marketplace.restore.defaults" = "Vrati zadane vrijednosti";
+"marketplace.restore.defaults.help" = "Ponovo dodaj zadane marketplace-ove";
+"marketplace.row.pinned.help %@" = "Prikvačeno na %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Omogući sigurno lijepljenje za nove terminale";
+"settings.default.safe.paste.help" = "Novi terminali imat će sigurno lijepljenje omogućeno prema zadanim postavkama. To možete promijeniti po terminalu u uređivaču kartice.";
+"settings.scrollback.invalid" = "Unesite broj između 500 i 100.000";
+"settings.scrollback.label" = "Povijest pomicanja";
+"settings.scrollback.lines.help" = "Redci sačuvani u povijesti pomicanja (500–100.000). Promjene se primjenjuju na nove terminale.";
+"settings.scrollback.unit" = "redaka";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Mogućnosti:";
+"settings.ynh.capabilities.unknown" = "nepoznato";
+"settings.ynh.docs.link.label" = "YNH dokumentacija →";
+"settings.ynh.outdated.badge" = "Potrebno ažuriranje";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Ukloni spojene grane";
+"sidebar.prune.branches.confirm" = "Obriši grane";
+"sidebar.prune.branches.explanation" = "Ove grane su u potpunosti spojene u zadanu udaljenu granu i nemaju aktivni worktree. Brisanje je sigurno i ne može se poništiti.";
+"sidebar.prune.branches.nothing.message" = "Nisu pronađene spojene grane. Grane koje još nisu spojene u zadanu udaljenu granu se zadržavaju.";
+"sidebar.prune.branches.nothing.title" = "Nema ništa za ukloniti";
+"sidebar.prune.branches.title" = "Ukloni spojene grane";
+"sidebar.worktree.open.in" = "Otvori u…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Otvori terminale";

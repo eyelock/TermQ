@@ -583,6 +583,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Branch löschen";
+"sidebar.branch.delete.title" = "Branch löschen";
+"sidebar.branch.delete.confirm" = "Löschen";
+"sidebar.branch.delete.message %@" = "Den lokalen Branch \"%@\" löschen? Dies kann nicht rückgängig gemacht werden.";
+"sidebar.branch.destroy" = "Branch vernichten";
+"sidebar.branch.destroy.title" = "Branch vernichten";
+"sidebar.branch.destroy.confirm" = "Vernichten";
+"sidebar.branch.destroy.message %@" = "Den lokalen Branch \"%@\" erzwungen löschen? Dabei werden alle nicht gemergten Commits verworfen und dies kann nicht rückgängig gemacht werden.";
+"sidebar.branch.update.from.origin" = "Von Origin aktualisieren";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -716,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Dieser Harness ist mit %ld Worktree(s) verknüpft — diese Verknüpfungen werden aufgehoben.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld Terminal(s) führen diesen Harness gerade aus.";
 "harnesses.uninstall.alert.confirm" = "Deinstallieren";
+"harnesses.delete.local.button" = "Harness löschen";
+"harnesses.delete.local.title %@" = "\"%@\" löschen?";
+"harnesses.delete.local.message" = "Dadurch wird der Harness aus YNH deinstalliert und seine Dateien dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.";
+"harnesses.delete.local.confirm" = "Harness löschen";
 "harnesses.more.actions.help" = "Weitere Aktionen";
 "harnesses.copy.run.command" = "Ausführungsbefehl kopieren";
 "harnesses.ynh.documentation" = "YNH-Dokumentation";
@@ -754,6 +767,15 @@
 "marketplace.row.never.fetched" = "Noch nicht abgerufen";
 "marketplace.add.sheet.title" = "Marktplatz hinzufügen";
 "marketplace.add.tab.known" = "Bekannt";
+"marketplace.group.default" = "Standard";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokal";
+"marketplace.add.tab.local" = "Lokaler Ordner";
+"marketplace.add.section.local.path" = "Ordnerpfad";
+"marketplace.add.local.browse" = "Ordner auswählen…";
+"marketplace.add.local.path.placeholder" = "/pfad/zum/marktplatz";
+"marketplace.row.local" = "Lokal";
+"marketplace.row.reveal" = "Im Finder zeigen";
 "marketplace.add.tab.custom" = "Benutzerdefinierte URL";
 "marketplace.add.section.git.url" = "Git-Repository-URL";
 "marketplace.add.section.display.name" = "Anzeigename";
@@ -834,3 +856,64 @@
 "diagnostics.verbose.warning" = "Hohes Volumen — nach Fertigstellung deaktivieren";
 "diagnostics.export.title" = "TermQ Diagnosebericht";
 "diagnostics.export.footer" = "Übermittelt über die integrierte TermQ-Diagnose.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplizieren";
+"harness.duplicate.installing" = "Duplikat wird installiert…";
+"harness.duplicate.success %@" = "%@ erfolgreich installiert.";
+"harness.duplicate.title" = "Harness duplizieren";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Beispiel eyelock/assistants hinzufügen";
+"harnesses.create.harness.button" = "Neues Harness erstellen";
+"harnesses.empty.no.registries.message" = "Noch keine Harnesses oder Registries installiert.";
+"harnesses.export.button" = "Als Marketplace exportieren…";
+"harnesses.group.default" = "Standard";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokal";
+"harnesses.group.menu.settings" = "Einstellungen…";
+"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.install.browsing" = "Verfügbare Harnesses werden geladen…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, Tag oder Commit-SHA (optional)";
+"harnesses.install.retry" = "Erneut versuchen";
+"harnesses.install.section.available" = "Aus Registries verfügbar";
+"harnesses.install.section.installed" = "Installiert";
+"harnesses.install.section.local" = "Lokal verfügbar";
+"harnesses.outdated.capabilities.unknown" = "unbekannt";
+"harnesses.outdated.detail %@ %@" = "YNH meldet Funktionen %1$@, aber TermQ erfordert %2$@ oder neuer. Aktualisieren Sie YNH, um Marketplace- und Harness-Bearbeitungsfunktionen zu aktivieren.";
+"harnesses.outdated.headline" = "YNH-Aktualisierung erforderlich";
+"harnesses.search.button" = "Nach Harnesses suchen";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, Tag oder Commit-SHA (optional)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Alle Marketplaces aktualisieren";
+"marketplace.restore.defaults" = "Standards wiederherstellen";
+"marketplace.restore.defaults.help" = "Standard-Marketplaces erneut hinzufügen";
+"marketplace.row.pinned.help %@" = "Angeheftet an %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Sicheres Einfügen für neue Terminals aktivieren";
+"settings.default.safe.paste.help" = "Neue Terminals haben standardmäßig sicheres Einfügen aktiviert. Sie können dies im Karten-Editor pro Terminal überschreiben.";
+"settings.scrollback.invalid" = "Geben Sie eine Zahl zwischen 500 und 100.000 ein";
+"settings.scrollback.label" = "Scrollback";
+"settings.scrollback.lines.help" = "Im Scroll-Verlauf gespeicherte Zeilen (500–100.000). Änderungen gelten für neue Terminals.";
+"settings.scrollback.unit" = "Zeilen";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (Minimum %2$@)";
+"settings.ynh.capabilities.label" = "Funktionen:";
+"settings.ynh.capabilities.unknown" = "unbekannt";
+"settings.ynh.docs.link.label" = "YNH-Dokumentation →";
+"settings.ynh.outdated.badge" = "Aktualisierung erforderlich";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Zusammengeführte Branches bereinigen";
+"sidebar.prune.branches.confirm" = "Branches löschen";
+"sidebar.prune.branches.explanation" = "Diese Branches sind vollständig in den Remote-Standard-Branch zusammengeführt und haben keinen aktiven Worktree. Das Löschen ist sicher und kann nicht rückgängig gemacht werden.";
+"sidebar.prune.branches.nothing.message" = "Keine zusammengeführten Branches gefunden. Branches, die noch nicht in den Remote-Standard-Branch zusammengeführt wurden, werden behalten.";
+"sidebar.prune.branches.nothing.title" = "Nichts zu bereinigen";
+"sidebar.prune.branches.title" = "Zusammengeführte Branches bereinigen";
+"sidebar.worktree.open.in" = "Öffnen in…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Terminals öffnen";

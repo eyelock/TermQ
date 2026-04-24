@@ -573,6 +573,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Ág törlése";
+"sidebar.branch.delete.title" = "Ág törlése";
+"sidebar.branch.delete.confirm" = "Törlés";
+"sidebar.branch.delete.message %@" = "Törli a(z) \"%@\" helyi ágat? Ez a művelet nem vonható vissza.";
+"sidebar.branch.destroy" = "Ág megsemmisítése";
+"sidebar.branch.destroy.title" = "Ág megsemmisítése";
+"sidebar.branch.destroy.confirm" = "Megsemmisítés";
+"sidebar.branch.destroy.message %@" = "Kényszerrel törli a(z) \"%@\" helyi ágat? Az egyesítetlen commitok elvesznek, és ez a művelet nem vonható vissza.";
+"sidebar.branch.update.from.origin" = "Frissítés az Originból";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -722,6 +731,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Ez a harness %ld munkafahoz van csatolva — ezek a kapcsolatok törlődnek.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminál jelenleg ezt a harness-t futtatja.";
 "harnesses.uninstall.alert.confirm" = "Eltávolítás";
+"harnesses.delete.local.button" = "Harness törlése";
+"harnesses.delete.local.title %@" = "Törli: \"%@\"?";
+"harnesses.delete.local.message" = "Ez eltávolítja a harnesst a YNH-ból és véglegesen törli a fájljait. Ez a művelet nem vonható vissza.";
+"harnesses.delete.local.confirm" = "Harness törlése";
 "harnesses.more.actions.help" = "További műveletek";
 "harnesses.copy.run.command" = "Futtatási parancs másolása";
 "harnesses.ynh.documentation" = "YNH-dokumentáció";
@@ -760,6 +773,15 @@
 "marketplace.row.never.fetched" = "Még nem lett lekérve";
 "marketplace.add.sheet.title" = "Piactér hozzáadása";
 "marketplace.add.tab.known" = "Ismert";
+"marketplace.group.default" = "Alapértelmezett";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Helyi";
+"marketplace.add.tab.local" = "Helyi mappa";
+"marketplace.add.section.local.path" = "Mappa elérési útja";
+"marketplace.add.local.browse" = "Mappa kiválasztása…";
+"marketplace.add.local.path.placeholder" = "/elérési/út/marketplace";
+"marketplace.row.local" = "Helyi";
+"marketplace.row.reveal" = "Megjelenítés a Finderben";
 "marketplace.add.tab.custom" = "Egyéni URL";
 "marketplace.add.section.git.url" = "Git-tároló URL";
 "marketplace.add.section.display.name" = "Megjelenítési név";
@@ -840,3 +862,64 @@
 "diagnostics.verbose.warning" = "Nagy mennyiség — kapcsolja ki, ha végzett";
 "diagnostics.export.title" = "TermQ Diagnosztikai jelentés";
 "diagnostics.export.footer" = "Beküldve a TermQ beépített diagnosztikájával.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplikálás";
+"harness.duplicate.installing" = "Másolat telepítése…";
+"harness.duplicate.success %@" = "%@ sikeresen telepítve.";
+"harness.duplicate.title" = "Harness duplikálása";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Minta eyelock/assistants hozzáadása";
+"harnesses.create.harness.button" = "Új harness létrehozása";
+"harnesses.empty.no.registries.message" = "Még nincs telepített harness vagy registry.";
+"harnesses.export.button" = "Exportálás marketplace-ként…";
+"harnesses.group.default" = "Alapértelmezett";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Helyi";
+"harnesses.group.menu.settings" = "Beállítások…";
+"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.install.browsing" = "Elérhető harness-ek betöltése…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag vagy commit SHA (opcionális)";
+"harnesses.install.retry" = "Újrapróbálás";
+"harnesses.install.section.available" = "Elérhető a registry-kből";
+"harnesses.install.section.installed" = "Telepítve";
+"harnesses.install.section.local" = "Helyileg elérhető";
+"harnesses.outdated.capabilities.unknown" = "ismeretlen";
+"harnesses.outdated.detail %@ %@" = "A YNH %1$@ képességeket jelez, de a TermQ %2$@ vagy újabb verziót igényel. Frissítse a YNH-t a marketplace és harness-szerkesztési funkciók engedélyezéséhez.";
+"harnesses.outdated.headline" = "YNH frissítés szükséges";
+"harnesses.search.button" = "Harness-ek keresése";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tag vagy commit SHA (opcionális)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Összes marketplace frissítése";
+"marketplace.restore.defaults" = "Alapértelmezések visszaállítása";
+"marketplace.restore.defaults.help" = "Alapértelmezett marketplace-ek újbóli hozzáadása";
+"marketplace.row.pinned.help %@" = "Rögzítve ide: %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Biztonságos beillesztés engedélyezése új terminálokhoz";
+"settings.default.safe.paste.help" = "Az új terminálok alapértelmezetten biztonságos beillesztéssel rendelkeznek. Ezt terminálonként felülbírálhatja a kártyaszerkesztőben.";
+"settings.scrollback.invalid" = "Adjon meg egy számot 500 és 100 000 között";
+"settings.scrollback.label" = "Görgetési előzmény";
+"settings.scrollback.lines.help" = "A görgetési előzményben tárolt sorok száma (500–100 000). A módosítások az új terminálokra vonatkoznak.";
+"settings.scrollback.unit" = "sor";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Képességek:";
+"settings.ynh.capabilities.unknown" = "ismeretlen";
+"settings.ynh.docs.link.label" = "YNH dokumentáció →";
+"settings.ynh.outdated.badge" = "Frissítés szükséges";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Összevont ágak törlése";
+"sidebar.prune.branches.confirm" = "Ágak törlése";
+"sidebar.prune.branches.explanation" = "Ezek az ágak teljesen egyesítve vannak a távoli alapértelmezett ággal, és nincs aktív worktree-jük. A törlés biztonságos és nem vonható vissza.";
+"sidebar.prune.branches.nothing.message" = "Nem találhatók összevont ágak. A távoli alapértelmezett ágba még nem összevont ágak megmaradnak.";
+"sidebar.prune.branches.nothing.title" = "Nincs mit törölni";
+"sidebar.prune.branches.title" = "Összevont ágak törlése";
+"sidebar.worktree.open.in" = "Megnyitás ebben:…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Terminálok megnyitása";

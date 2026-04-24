@@ -583,6 +583,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Vymazať vetvu";
+"sidebar.branch.delete.title" = "Vymazať vetvu";
+"sidebar.branch.delete.confirm" = "Vymazať";
+"sidebar.branch.delete.message %@" = "Vymazať lokálnu vetvu \"%@\"? Túto akciu nie je možné vrátiť.";
+"sidebar.branch.destroy" = "Zničiť vetvu";
+"sidebar.branch.destroy.title" = "Zničiť vetvu";
+"sidebar.branch.destroy.confirm" = "Zničiť";
+"sidebar.branch.destroy.message %@" = "Vynútene vymazať lokálnu vetvu \"%@\"? Nezmergované commity budú zahodené a túto akciu nie je možné vrátiť.";
+"sidebar.branch.update.from.origin" = "Aktualizovať z Origin";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -716,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Tento harness je prepojený s %ld pracovným stromom (stromami) — tieto prepojenia budú vymazané.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminál(ov) momentálne spúšťa tento harness.";
 "harnesses.uninstall.alert.confirm" = "Odinštalovať";
+"harnesses.delete.local.button" = "Vymazať harness";
+"harnesses.delete.local.title %@" = "Vymazať \"%@\"?";
+"harnesses.delete.local.message" = "Tým sa harness odinštaluje z YNH a jeho súbory sa natrvalo vymažú. Túto akciu nie je možné vrátiť.";
+"harnesses.delete.local.confirm" = "Vymazať harness";
 "harnesses.more.actions.help" = "Ďalšie akcie";
 "harnesses.copy.run.command" = "Kopírovať príkaz spustenia";
 "harnesses.ynh.documentation" = "Dokumentácia YNH";
@@ -754,6 +767,15 @@
 "marketplace.row.never.fetched" = "Nikdy nestihnuté";
 "marketplace.add.sheet.title" = "Pridať trhovisko";
 "marketplace.add.tab.known" = "Známe";
+"marketplace.group.default" = "Predvolený";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Miestny";
+"marketplace.add.tab.local" = "Miestny priečinok";
+"marketplace.add.section.local.path" = "Cesta k priečinku";
+"marketplace.add.local.browse" = "Vybrať priečinok…";
+"marketplace.add.local.path.placeholder" = "/cesta/k/marketplace";
+"marketplace.row.local" = "Miestny";
+"marketplace.row.reveal" = "Zobraziť vo Finderi";
 "marketplace.add.tab.custom" = "Vlastná URL";
 "marketplace.add.section.git.url" = "URL repozitára Git";
 "marketplace.add.section.display.name" = "Zobrazovaný názov";
@@ -834,3 +856,64 @@
 "diagnostics.verbose.warning" = "Vysoký objem — po dokončení vypnite";
 "diagnostics.export.title" = "Diagnostická správa TermQ";
 "diagnostics.export.footer" = "Odoslané prostredníctvom vstavanej diagnostiky TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplikovať";
+"harness.duplicate.installing" = "Inštalujem duplikát…";
+"harness.duplicate.success %@" = "%@ bol úspešne nainštalovaný.";
+"harness.duplicate.title" = "Duplikovať harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Pridať ukážku eyelock/assistants";
+"harnesses.create.harness.button" = "Vytvoriť nový harness";
+"harnesses.empty.no.registries.message" = "Zatiaľ nie sú nainštalované žiadne harnessy ani registre.";
+"harnesses.export.button" = "Exportovať ako marketplace…";
+"harnesses.group.default" = "Predvolená";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Miestna";
+"harnesses.group.menu.settings" = "Nastavenia…";
+"harnesses.group.registry %@" = "Register: %@";
+"harnesses.install.browsing" = "Načítavam dostupné harnessy…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Vetva, tag alebo SHA commitu (voliteľné)";
+"harnesses.install.retry" = "Skúsiť znova";
+"harnesses.install.section.available" = "Dostupné z registrov";
+"harnesses.install.section.installed" = "Nainštalované";
+"harnesses.install.section.local" = "Dostupné lokálne";
+"harnesses.outdated.capabilities.unknown" = "neznámy";
+"harnesses.outdated.detail %@ %@" = "YNH hlási funkcie %1$@, ale TermQ vyžaduje %2$@ alebo novší. Aktualizujte YNH pre zapnutie funkcií marketplace a úprav harnessu.";
+"harnesses.outdated.headline" = "Vyžaduje sa aktualizácia YNH";
+"harnesses.search.button" = "Hľadať harnessy";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Vetva, tag alebo SHA commitu (voliteľné)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Obnoviť všetky marketplace";
+"marketplace.restore.defaults" = "Obnoviť predvolené";
+"marketplace.restore.defaults.help" = "Znova pridať predvolené marketplace";
+"marketplace.row.pinned.help %@" = "Pripnuté k %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Povoliť bezpečné vkladanie pre nové terminály";
+"settings.default.safe.paste.help" = "Nové terminály budú mať bezpečné vkladanie povolené v predvolenom nastavení. Môžete to zmeniť pre každý terminál v editore karty.";
+"settings.scrollback.invalid" = "Zadajte číslo medzi 500 a 100 000";
+"settings.scrollback.label" = "História posúvania";
+"settings.scrollback.lines.help" = "Riadky uložené v histórii posúvania (500–100 000). Zmeny sa vzťahujú na nové terminály.";
+"settings.scrollback.unit" = "riadky";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Funkcie:";
+"settings.ynh.capabilities.unknown" = "neznámy";
+"settings.ynh.docs.link.label" = "Dokumentácia YNH →";
+"settings.ynh.outdated.badge" = "Vyžaduje sa aktualizácia";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Odstrániť zlúčené vetvy";
+"sidebar.prune.branches.confirm" = "Zmazať vetvy";
+"sidebar.prune.branches.explanation" = "Tieto vetvy sú úplne zlúčené do predvolenej vzdialenej vetvy a nemajú aktívny worktree. Zmazanie je bezpečné a nedá sa vrátiť späť.";
+"sidebar.prune.branches.nothing.message" = "Nenašli sa žiadne zlúčené vetvy. Vetvy, ktoré ešte neboli zlúčené do predvolenej vzdialenej vetvy, sú zachované.";
+"sidebar.prune.branches.nothing.title" = "Nič na odstránenie";
+"sidebar.prune.branches.title" = "Odstrániť zlúčené vetvy";
+"sidebar.worktree.open.in" = "Otvoriť v…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Otvoriť terminály";

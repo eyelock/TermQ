@@ -583,6 +583,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Удалить ветку";
+"sidebar.branch.delete.title" = "Удалить ветку";
+"sidebar.branch.delete.confirm" = "Удалить";
+"sidebar.branch.delete.message %@" = "Удалить локальную ветку \"%@\"? Это действие нельзя отменить.";
+"sidebar.branch.destroy" = "Уничтожить ветку";
+"sidebar.branch.destroy.title" = "Уничтожить ветку";
+"sidebar.branch.destroy.confirm" = "Уничтожить";
+"sidebar.branch.destroy.message %@" = "Принудительно удалить локальную ветку \"%@\"? Несмерженные коммиты будут удалены, и это нельзя отменить.";
+"sidebar.branch.update.from.origin" = "Обновить из Origin";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -716,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Этот harness связан с %ld рабочим деревом (деревьями) — эти связи будут удалены.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld терминал(а/ов) в данный момент запускает этот harness.";
 "harnesses.uninstall.alert.confirm" = "Удалить";
+"harnesses.delete.local.button" = "Удалить harness";
+"harnesses.delete.local.title %@" = "Удалить \"%@\"?";
+"harnesses.delete.local.message" = "Это удалит harness из YNH и безвозвратно удалит его файлы. Это действие нельзя отменить.";
+"harnesses.delete.local.confirm" = "Удалить harness";
 "harnesses.more.actions.help" = "Другие действия";
 "harnesses.copy.run.command" = "Копировать команду запуска";
 "harnesses.ynh.documentation" = "Документация YNH";
@@ -754,6 +767,15 @@
 "marketplace.row.never.fetched" = "Ещё не загружался";
 "marketplace.add.sheet.title" = "Добавить маркетплейс";
 "marketplace.add.tab.known" = "Известные";
+"marketplace.group.default" = "По умолчанию";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Локальный";
+"marketplace.add.tab.local" = "Локальная папка";
+"marketplace.add.section.local.path" = "Путь к папке";
+"marketplace.add.local.browse" = "Выбрать папку…";
+"marketplace.add.local.path.placeholder" = "/путь/к/marketplace";
+"marketplace.row.local" = "Локальный";
+"marketplace.row.reveal" = "Показать в Finder";
 "marketplace.add.tab.custom" = "Пользовательский URL";
 "marketplace.add.section.git.url" = "URL репозитория Git";
 "marketplace.add.section.display.name" = "Отображаемое имя";
@@ -834,3 +856,64 @@
 "diagnostics.verbose.warning" = "Большой объём — отключите после завершения";
 "diagnostics.export.title" = "Отчёт диагностики TermQ";
 "diagnostics.export.footer" = "Отправлено через встроенную диагностику TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Дублировать";
+"harness.duplicate.installing" = "Установка копии…";
+"harness.duplicate.success %@" = "%@ успешно установлен.";
+"harness.duplicate.title" = "Дублировать harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Добавить пример eyelock/assistants";
+"harnesses.create.harness.button" = "Создать новый harness";
+"harnesses.empty.no.registries.message" = "Harness-ы и реестры ещё не установлены.";
+"harnesses.export.button" = "Экспортировать как marketplace…";
+"harnesses.group.default" = "По умолчанию";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Локальная";
+"harnesses.group.menu.settings" = "Настройки…";
+"harnesses.group.registry %@" = "Реестр: %@";
+"harnesses.install.browsing" = "Загрузка доступных harness-ов…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Ветка, тег или SHA коммита (необязательно)";
+"harnesses.install.retry" = "Повторить";
+"harnesses.install.section.available" = "Доступно из реестров";
+"harnesses.install.section.installed" = "Установлено";
+"harnesses.install.section.local" = "Доступно локально";
+"harnesses.outdated.capabilities.unknown" = "неизвестно";
+"harnesses.outdated.detail %@ %@" = "YNH сообщает о возможностях %1$@, но TermQ требует %2$@ или новее. Обновите YNH для включения функций marketplace и редактирования harness.";
+"harnesses.outdated.headline" = "Требуется обновление YNH";
+"harnesses.search.button" = "Найти harness-ы";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Ветка, тег или SHA коммита (необязательно)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Обновить все marketplace";
+"marketplace.restore.defaults" = "Восстановить по умолчанию";
+"marketplace.restore.defaults.help" = "Снова добавить marketplace по умолчанию";
+"marketplace.row.pinned.help %@" = "Закреплено за %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Включить безопасную вставку для новых терминалов";
+"settings.default.safe.paste.help" = "Новые терминалы будут иметь безопасную вставку включённой по умолчанию. Вы можете изменить это для каждого терминала в редакторе карточки.";
+"settings.scrollback.invalid" = "Введите число от 500 до 100 000";
+"settings.scrollback.label" = "История прокрутки";
+"settings.scrollback.lines.help" = "Строки, сохраняемые в истории прокрутки (500–100 000). Изменения применяются к новым терминалам.";
+"settings.scrollback.unit" = "строки";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (минимум %2$@)";
+"settings.ynh.capabilities.label" = "Возможности:";
+"settings.ynh.capabilities.unknown" = "неизвестно";
+"settings.ynh.docs.link.label" = "Документация YNH →";
+"settings.ynh.outdated.badge" = "Требуется обновление";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Удалить слитые ветки";
+"sidebar.prune.branches.confirm" = "Удалить ветки";
+"sidebar.prune.branches.explanation" = "Эти ветки полностью слиты с удалённой веткой по умолчанию и не имеют активного worktree. Удаление безопасно и не может быть отменено.";
+"sidebar.prune.branches.nothing.message" = "Слитые ветки не найдены. Ветки, ещё не слитые с удалённой веткой по умолчанию, сохраняются.";
+"sidebar.prune.branches.nothing.title" = "Нечего удалять";
+"sidebar.prune.branches.title" = "Удалить слитые ветки";
+"sidebar.worktree.open.in" = "Открыть в…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Открыть терминалы";
