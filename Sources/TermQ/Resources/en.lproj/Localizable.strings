@@ -642,18 +642,18 @@
 "harnesses.outdated.capabilities.unknown" = "unknown";
 "harnesses.outdated.detail %@ %@" = "YNH reports capabilities %1$@, but TermQ requires %2$@ or newer. Update YNH to enable marketplace and harness-editing features.";
 "harnesses.empty.message" = "No harnesses installed yet.";
-"harnesses.empty.no.registries.message" = "No harnesses or registries installed yet.";
+"harnesses.empty.no.registries.message" = "No harnesses or marketplaces installed yet.";
 "harnesses.search.button" = "Search for Harnesses";
 
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
-"harnesses.source.registry" = "Registry";
+"harnesses.source.registry" = "Marketplace";
 
 // Harnesses — sidebar groups
 "harnesses.group.default" = "Default";
 "harnesses.group.local" = "Local";
 "harnesses.group.github %@" = "GitHub: %@";
-"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.registry %@" = "Marketplace: %@";
 
 // Marketplace — sidebar groups
 "marketplace.group.default" = "Default";
@@ -729,8 +729,8 @@
 "harnesses.install.tab.search" = "Search";
 "harnesses.install.tab.git" = "From Git";
 "harnesses.install.tab.sources" = "Sources";
-"harnesses.install.search.placeholder" = "Search registries and sources…";
-"harnesses.install.search.prompt" = "Type to search registries and sources";
+"harnesses.install.search.placeholder" = "Search marketplaces and sources…";
+"harnesses.install.search.prompt" = "Type to search marketplaces and sources";
 "harnesses.install.search.empty" = "No results";
 "harnesses.install.section.installed" = "Installed";
 "harnesses.install.section.available" = "Available from Registries";
@@ -771,12 +771,12 @@
 "harnesses.copy.run.command" = "Copy Run Command";
 "harnesses.export.button" = "Export as Marketplace…";
 "harnesses.ynh.documentation" = "YNH Documentation";
-"harnesses.add.registry.title" = "Add YNH Registry";
-"harnesses.add.registry.url.label" = "Registry URL";
-"harnesses.add.registry.hint" = "Add a Git repository that contains a registry.json file. Once added, you can search and install harnesses from it.";
-"harnesses.add.registry.button" = "Add Registry";
-"harnesses.add.registry.success" = "Registry added successfully";
-"harnesses.add.registry.toolbar.help" = "Add a YNH registry";
+"harnesses.add.registry.title" = "Add YNH Marketplace";
+"harnesses.add.registry.url.label" = "Marketplace URL";
+"harnesses.add.registry.hint" = "Add a Git repository that contains a marketplace.json file. Once added, you can search and install harnesses from it.";
+"harnesses.add.registry.button" = "Add Marketplace";
+"harnesses.add.registry.success" = "Marketplace added successfully";
+"harnesses.add.registry.toolbar.help" = "Add a YNH marketplace";
 "harnesses.add.sample.button" = "Add sample eyelock/assistants";
 "harnesses.group.menu.settings" = "Settings…";
 "harnesses.create.harness.button" = "Create a new harness";
@@ -886,10 +886,10 @@
 
 // MARK: - Settings — Marketplaces extras
 "settings.marketplaces.reset" = "Reset";
-"settings.marketplaces.section.ynh.registries" = "YNH Registries";
-"settings.marketplaces.ynh.registries.empty" = "No registries added";
-"settings.marketplaces.ynh.add.registry" = "Add Registry…";
-"settings.marketplaces.ynh.registry.remove.confirm.title" = "Remove Registry";
+"settings.marketplaces.section.ynh.registries" = "YNH Marketplaces";
+"settings.marketplaces.ynh.registries.empty" = "No marketplaces added";
+"settings.marketplaces.ynh.add.registry" = "Add Marketplace…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Remove Marketplace";
 "settings.marketplaces.ynh.registry.remove.confirm" = "Remove";
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Remove \"%@\" from YNH? Installed harnesses will remain.";
 "marketplace.add.custom.name.placeholder" = "My Marketplace";

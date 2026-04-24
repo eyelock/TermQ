@@ -377,7 +377,7 @@ struct HarnessDetailView: View {
         case "local":
             label = Strings.Harnesses.sourceLocal
         case "registry":
-            label = provenance.registryName ?? Strings.Harnesses.sourceRegistry
+            label = provenance.registryName ?? Strings.Harnesses.sourceMarketplace
         default:
             label = provenance.sourceType
         }

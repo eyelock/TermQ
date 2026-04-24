@@ -1,13 +1,13 @@
 import SwiftUI
 import TermQShared
 
-/// Sheet for adding a YNH registry via `ynh registry add <url>`.
-struct AddRegistrySheet: View {
+/// Sheet for adding a YNH marketplace via `ynh registry add <url>`.
+struct AddYNHMarketplaceSheet: View {
     @ObservedObject var detector: YNHDetector
     @Environment(\.dismiss) private var dismiss
 
     @State private var url = ""
-    @StateObject private var runner = RegistryAddRunner()
+    @StateObject private var runner = MarketplaceAddRunner()
     @State private var done = false
 
     private var ynhPath: String? {
@@ -34,7 +34,7 @@ struct AddRegistrySheet: View {
 
     private var headerRow: some View {
         HStack {
-            Text(Strings.Harnesses.addRegistryTitle).font(.headline)
+            Text(Strings.Harnesses.addMarketplaceTitle).font(.headline)
             Spacer()
         }
         .padding()
@@ -54,13 +54,13 @@ struct AddRegistrySheet: View {
     private var formState: some View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(Strings.Harnesses.addRegistryURLLabel)
+                Text(Strings.Harnesses.addMarketplaceURLLabel)
                     .font(.caption).foregroundColor(.secondary)
                 TextField("https://github.com/owner/repo.git", text: $url)
                     .textFieldStyle(.roundedBorder)
             }
 
-            Text(Strings.Harnesses.addRegistryHint)
+            Text(Strings.Harnesses.addMarketplaceHint)
                 .font(.caption).foregroundColor(.secondary)
 
             if let err = runner.errorMessage {
@@ -95,7 +95,7 @@ struct AddRegistrySheet: View {
         VStack(spacing: 0) {
             HStack(spacing: 8) {
                 Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-                Text(Strings.Harnesses.addRegistrySuccess).font(.headline)
+                Text(Strings.Harnesses.addMarketplaceSuccess).font(.headline)
             }
             .padding(.horizontal, 16).padding(.vertical, 10)
 
@@ -122,7 +122,7 @@ struct AddRegistrySheet: View {
                 .disabled(runner.isRunning)
             Spacer()
             if !done && !runner.isRunning {
-                Button(Strings.Harnesses.addRegistryButton) {
+                Button(Strings.Harnesses.addMarketplaceButton) {
                     Task { await addRegistry() }
                 }
                 .keyboardShortcut(.defaultAction)

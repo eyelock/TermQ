@@ -244,14 +244,6 @@ extension HarnessInstallSheet {
                         .background(isRegistry ? Color.blue.opacity(0.15) : Color.secondary.opacity(0.15))
                         .foregroundColor(isRegistry ? .blue : .secondary)
                         .clipShape(Capsule())
-                    ForEach(result.vendors ?? [], id: \.self) { vendor in
-                        Text(vendor)
-                            .font(.caption2)
-                            .padding(.horizontal, 5).padding(.vertical, 1)
-                            .background(Color.purple.opacity(0.15))
-                            .foregroundColor(.purple)
-                            .clipShape(Capsule())
-                    }
                 }
             }
             Spacer()

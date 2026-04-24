@@ -90,8 +90,9 @@ final class YNHDetector: ObservableObject {
         // and surface an .outdated status so the UI can prompt for an upgrade.
         let minRequired = effectiveMinimumCapabilities()
         if !Self.capabilityMeets(capabilities, minimum: minRequired) {
+            let reported = capabilities ?? "<none>"
             TermQLogger.ui.info(
-                "YNHDetector: YNH capabilities below minimum — marketplace and harness-editing disabled (binary reports capabilities \(capabilities ?? "<none>"), minimum required \(minRequired))"
+                "YNHDetector: capabilities below minimum — disabled (reported \(reported), required \(minRequired))"
             )
             status = .outdated(ynhPath: ynhPath, version: version, capabilities: capabilities)
             return
@@ -135,7 +136,7 @@ final class YNHDetector: ObservableObject {
         // Allow override only if it is <= built-in minimum.
         if Self.compareSemver(override, builtIn) <= 0 {
             TermQLogger.ui.info(
-                "YNHDetector: capability minimum lowered to \(override) via UserDefaults override (built-in is \(builtIn))"
+                "YNHDetector: capability minimum lowered to \(override) via override (built-in \(builtIn))"
             )
             return override
         }
@@ -170,16 +171,16 @@ final class YNHDetector: ObservableObject {
 
     /// Compare two semver-ish version strings segment-by-segment. Non-numeric segments
     /// compare as zero. Missing trailing segments compare as zero (so "0.2" == "0.2.0").
-    /// Returns -1 if a < b, 0 if a == b, 1 if a > b.
-    nonisolated static func compareSemver(_ a: String, _ b: String) -> Int {
-        let aParts = a.split(separator: ".").map { Int($0) ?? 0 }
-        let bParts = b.split(separator: ".").map { Int($0) ?? 0 }
-        let count = max(aParts.count, bParts.count)
+    /// Returns -1 if lhs < rhs, 0 if lhs == rhs, 1 if lhs > rhs.
+    nonisolated static func compareSemver(_ lhs: String, _ rhs: String) -> Int {
+        let lhsParts = lhs.split(separator: ".").map { Int($0) ?? 0 }
+        let rhsParts = rhs.split(separator: ".").map { Int($0) ?? 0 }
+        let count = max(lhsParts.count, rhsParts.count)
         for i in 0..<count {
-            let av = i < aParts.count ? aParts[i] : 0
-            let bv = i < bParts.count ? bParts[i] : 0
-            if av < bv { return -1 }
-            if av > bv { return 1 }
+            let lv = i < lhsParts.count ? lhsParts[i] : 0
+            let rv = i < rhsParts.count ? rhsParts[i] : 0
+            if lv < rv { return -1 }
+            if lv > rv { return 1 }
         }
         return 0
     }

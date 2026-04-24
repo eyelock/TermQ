@@ -136,14 +136,16 @@ extension Strings.Settings {
             localized("settings.marketplaces.author.directory.detected.hint")
         }
         static var reset: String { localized("settings.marketplaces.reset") }
-        static var sectionYNHRegistries: String { localized("settings.marketplaces.section.ynh.registries") }
-        static var noRegistries: String { localized("settings.marketplaces.ynh.registries.empty") }
-        static var addYNHRegistry: String { localized("settings.marketplaces.ynh.add.registry") }
-        static var removeRegistryConfirmTitle: String {
+        static var sectionYNHMarketplaces: String { localized("settings.marketplaces.section.ynh.registries") }
+        static var noYNHMarketplaces: String { localized("settings.marketplaces.ynh.registries.empty") }
+        static var addYNHMarketplace: String { localized("settings.marketplaces.ynh.add.registry") }
+        static var removeYNHMarketplaceConfirmTitle: String {
             localized("settings.marketplaces.ynh.registry.remove.confirm.title")
         }
-        static var removeRegistryConfirm: String { localized("settings.marketplaces.ynh.registry.remove.confirm") }
-        static func removeRegistryConfirmMessage(_ name: String) -> String {
+        static var removeYNHMarketplaceConfirm: String {
+            localized("settings.marketplaces.ynh.registry.remove.confirm")
+        }
+        static func removeYNHMarketplaceConfirmMessage(_ name: String) -> String {
             localized("settings.marketplaces.ynh.registry.remove.confirm.message %@", name)
         }
     }

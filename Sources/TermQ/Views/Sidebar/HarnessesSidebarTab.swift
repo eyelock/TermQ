@@ -25,10 +25,10 @@ struct HarnessesSidebarTab: View {
     @State private var harnessToDelete: Harness?
     @State private var harnessToDuplicate: Harness?
     @State private var showWizard = false
-    @State private var showAddRegistry = false
+    @State private var showAddMarketplace = false
     @State private var collapsedGroups: Set<String> = []
-    @StateObject private var sampleRunner = RegistryAddRunner()
-    @StateObject private var registryService = YNHRegistryService()
+    @StateObject private var sampleRunner = MarketplaceAddRunner()
+    @StateObject private var marketplaceService = YNHMarketplaceService()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -58,8 +58,8 @@ struct HarnessesSidebarTab: View {
             onDismiss: { Task { await repository.refresh() } },
             content: { HarnessWizardSheet(detector: detector, harnessRepository: repository) }
         )
-        .sheet(isPresented: $showAddRegistry) {
-            AddRegistrySheet(detector: detector)
+        .sheet(isPresented: $showAddMarketplace) {
+            AddYNHMarketplaceSheet(detector: detector)
         }
         .sheet(item: $harnessToDuplicate) { harness in
             DuplicateHarnessSheet(harness: harness, detector: detector, repository: repository)
@@ -81,7 +81,7 @@ struct HarnessesSidebarTab: View {
         guard case .ready(let ynhPath, _, _) = detector.status else { return }
         var env = ProcessInfo.processInfo.environment
         if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
-        Task { await registryService.refresh(ynhPath: ynhPath, environment: env) }
+        Task { await marketplaceService.refresh(ynhPath: ynhPath, environment: env) }
     }
 
     // MARK: - Header
@@ -100,13 +100,13 @@ struct HarnessesSidebarTab: View {
             }
 
             Button {
-                showAddRegistry = true
+                showAddMarketplace = true
             } label: {
                 Image(systemName: "globe")
                     .imageScale(.medium)
             }
             .buttonStyle(.plain)
-            .help(Strings.Harnesses.addRegistryToolbarHelp)
+            .help(Strings.Harnesses.addMarketplaceToolbarHelp)
 
             if case .ready = detector.status {
                 Button {
@@ -355,7 +355,7 @@ struct HarnessesSidebarTab: View {
                 let org = harness.installedFrom.flatMap { GitURLHelper.repoOwner($0.source) } ?? "Other"
                 byOrg[org, default: []].append(harness)
             case "registry":
-                let name = harness.installedFrom?.registryName ?? Strings.Harnesses.sourceRegistry
+                let name = harness.installedFrom?.registryName ?? Strings.Harnesses.sourceMarketplace
                 byRegistry[name, default: []].append(harness)
             default:
                 local.append(harness)
@@ -366,7 +366,9 @@ struct HarnessesSidebarTab: View {
         for (name, harnesses) in byRegistry.sorted(by: { $0.key < $1.key }) {
             groups.append(
                 HarnessGroup(
-                    title: Strings.Harnesses.groupRegistry(name), harnesses: alphaSorted(harnesses), kind: .registry))
+                    title: Strings.Harnesses.groupMarketplace(name),
+                    harnesses: alphaSorted(harnesses),
+                    kind: .registry))
         }
         for (org, harnesses) in byOrg.sorted(by: { $0.key < $1.key }) {
             groups.append(
@@ -437,17 +439,13 @@ struct HarnessesSidebarTab: View {
         .padding()
     }
 
-    private var hasRegistries: Bool {
-        !registryService.registries.isEmpty
-    }
-
     private var harnessesEmptyState: some View {
         VStack(spacing: 10) {
             Image(systemName: "puzzlepiece.extension")
                 .font(.system(size: 32))
                 .foregroundColor(.secondary)
 
-            if hasRegistries {
+            if !marketplaceService.marketplaces.isEmpty {
                 Text(Strings.Harnesses.emptyMessage)
                     .font(.callout)
                     .foregroundColor(.secondary)
@@ -459,7 +457,7 @@ struct HarnessesSidebarTab: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.small)
             } else {
-                Text(Strings.Harnesses.emptyNoRegistriesMessage)
+                Text(Strings.Harnesses.emptyNoMarketplacesMessage)
                     .font(.callout)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -471,8 +469,8 @@ struct HarnessesSidebarTab: View {
                 .controlSize(.small)
                 .disabled(sampleRunner.isRunning || ynhPathFromDetector == nil)
 
-                Button(Strings.Harnesses.addRegistryButton) {
-                    showAddRegistry = true
+                Button(Strings.Harnesses.addMarketplaceButton) {
+                    showAddMarketplace = true
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
@@ -489,8 +487,8 @@ struct HarnessesSidebarTab: View {
     }
 
     private var ynhPathFromDetector: String? {
-        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
-        return nil
+        guard case .ready(let ynhPath, _, _) = detector.status else { return nil }
+        return ynhPath
     }
 
     private func addSampleRegistry() async {
@@ -507,7 +505,7 @@ struct HarnessesSidebarTab: View {
             if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
             Task {
                 await repository.refresh()
-                await registryService.refresh(ynhPath: ynhPath, environment: env)
+                await marketplaceService.refresh(ynhPath: ynhPath, environment: env)
             }
         }
     }

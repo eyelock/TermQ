@@ -6,12 +6,20 @@ import Foundation
 /// contract defined in YNH's `docs/cli-structured.md`. Uses `snake_case` JSON
 /// keys per the YNH convention.
 public struct Harness: Codable, Equatable, Sendable, Identifiable {
-    public var id: String { name }
+    /// Unique identifier. Includes namespace when present: `"org/repo/name"`.
+    /// Falls back to plain `name` for flat/local installs.
+    public var id: String {
+        guard let ns = namespace, !ns.isEmpty else { return name }
+        return "\(ns)/\(name)"
+    }
 
     public let name: String
     public let version: String
     public let description: String?
     public let defaultVendor: String
+    /// Namespace derived from the registry entry (e.g. `"eyelock/assistants"`).
+    /// `nil` for locally installed or flat harnesses.
+    public let namespace: String?
     public let path: String
     public let installedFrom: HarnessProvenance?
     public let artifacts: HarnessArtifactCounts
@@ -19,7 +27,7 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     public let delegatesTo: [HarnessDelegate]
 
     enum CodingKeys: String, CodingKey {
-        case name, version, description, path, artifacts, includes
+        case name, version, description, path, artifacts, includes, namespace
         case defaultVendor = "default_vendor"
         case installedFrom = "installed_from"
         case delegatesTo = "delegates_to"
@@ -30,6 +38,7 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         version: String,
         description: String? = nil,
         defaultVendor: String,
+        namespace: String? = nil,
         path: String,
         installedFrom: HarnessProvenance? = nil,
         artifacts: HarnessArtifactCounts,
@@ -40,6 +49,7 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         self.version = version
         self.description = description
         self.defaultVendor = defaultVendor
+        self.namespace = namespace
         self.path = path
         self.installedFrom = installedFrom
         self.artifacts = artifacts
@@ -55,9 +65,15 @@ public struct HarnessProvenance: Codable, Equatable, Sendable {
     public let path: String?
     public let registryName: String?
     public let installedAt: String
+    /// Git ref resolved at install time (ynh 0.2+, registry installs only).
+    public let ref: String?
+    /// Git commit SHA resolved at install time (ynh 0.2+, registry installs only).
+    public let sha: String?
+    /// Namespace of the registry entry this harness was installed from (ynh 0.2+).
+    public let namespace: String?
 
     enum CodingKeys: String, CodingKey {
-        case source, path
+        case source, path, ref, sha, namespace
         case sourceType = "source_type"
         case registryName = "registry_name"
         case installedAt = "installed_at"
