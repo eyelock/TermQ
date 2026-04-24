@@ -6,7 +6,6 @@ protocol GitServiceProtocol: AnyObject {
     func listWorktrees(repoPath: String) async throws -> [GitWorktree]
     func addWorktree(repo: GitRepository, branch: String, path: String, baseBranch: String?) async throws
     func removeWorktree(repo: GitRepository, path: String) async throws
-    func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws
     func forceDeleteWorktree(repoPath: String, worktreePath: String) async throws
     func lockWorktree(repoPath: String, worktreePath: String) async throws
     func unlockWorktree(repoPath: String, worktreePath: String) async throws

@@ -3,15 +3,16 @@ import SwiftUI
 import TermQCore
 import TermQShared
 
-// MARK: - Checkout Branch Context
+// MARK: - New Worktree Context
 
-/// Carries both the target repository and an optional pre-selected branch into
-/// `CheckoutBranchSheet`. Using a wrapper struct avoids secondary `@State` variables
-/// and lets `sheet(item:)` bind to a single optional.
-struct CheckoutBranchContext: Identifiable {
+/// Carries the target repository and an optional base-branch seed into
+/// `NewWorktreeSheet`. Lets `sheet(item:)` bind to a single optional while
+/// preserving the branch-row entry point where the clicked branch becomes
+/// the default base for the new worktree.
+struct NewWorktreeContext: Identifiable {
     let id = UUID()
     let repo: ObservableRepository
-    let preselectedBranch: String?
+    let initialBaseBranch: String?
 }
 
 // MARK: - Repo Disclosure Wrapper

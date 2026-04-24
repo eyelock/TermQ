@@ -14,9 +14,8 @@ struct WorktreeSidebarView: View {
     @ObservedObject private var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @State private var showAddRepo = false
-    @State private var showNewWorktreeFor: ObservableRepository?
+    @State private var newWorktreeContext: NewWorktreeContext?
     @State private var showEditRepoFor: ObservableRepository?
-    @State private var checkoutBranchContext: CheckoutBranchContext?
     @State private var pendingRemoval: (ObservableRepository, GitWorktree)?
     @State private var isShowingRemoveAlert = false
     @State private var pendingForceDelete: (ObservableRepository, GitWorktree)?
@@ -46,13 +45,10 @@ struct WorktreeSidebarView: View {
         .sheet(isPresented: $showAddRepo) {
             AddRepositorySheet(viewModel: viewModel)
         }
-        .sheet(item: $showNewWorktreeFor) { repo in
-            NewWorktreeSheet(repo: repo, viewModel: viewModel)
-        }
-        .sheet(item: $checkoutBranchContext) { ctx in
-            CheckoutBranchSheet(
+        .sheet(item: $newWorktreeContext) { ctx in
+            NewWorktreeSheet(
                 repo: ctx.repo,
-                preselectedBranch: ctx.preselectedBranch,
+                initialBaseBranch: ctx.initialBaseBranch,
                 viewModel: viewModel
             )
         }
@@ -244,15 +240,9 @@ struct WorktreeSidebarView: View {
                     }
 
                     Button {
-                        showNewWorktreeFor = repo
+                        newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: nil)
                     } label: {
                         Label(Strings.Sidebar.newWorktree, systemImage: "plus")
-                    }
-
-                    Button {
-                        checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: nil)
-                    } label: {
-                        Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
                     }
 
                     Divider()
@@ -340,7 +330,7 @@ struct WorktreeSidebarView: View {
             }
 
             Button {
-                showNewWorktreeFor = repo
+                newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: nil)
             } label: {
                 Label(Strings.Sidebar.newWorktree, systemImage: "plus")
                     .font(.caption)
@@ -467,7 +457,7 @@ extension WorktreeSidebarView {
         .contentShape(Rectangle())
         .contextMenu {
             Button {
-                checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: branch)
+                newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: branch)
             } label: {
                 Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
             }
@@ -597,9 +587,9 @@ extension WorktreeSidebarView {
         if worktree.isMainWorktree {
             Divider()
             Button {
-                checkoutBranchContext = CheckoutBranchContext(repo: repo, preselectedBranch: nil)
+                newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: worktree.branch)
             } label: {
-                Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
+                Label(Strings.Sidebar.newWorktree, systemImage: "plus")
             }
             if !harnessRepository.harnesses.isEmpty {
                 Divider()

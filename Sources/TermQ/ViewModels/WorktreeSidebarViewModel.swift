@@ -325,17 +325,6 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
-    /// Check out an existing local branch as a new worktree.
-    func checkoutBranchAsWorktree(repo: ObservableRepository, branch: String, path: String) async throws {
-        try await gitService.checkoutBranchAsWorktree(
-            repo: repo.toGitRepository(),
-            branch: branch,
-            path: path
-        )
-        monitors[repo.id]?.resetWatches()
-        await refreshWorktrees(for: repo)
-    }
-
     func listBranches(for repo: ObservableRepository) async throws -> [String] {
         try await gitService.listBranches(repoPath: repo.path)
     }

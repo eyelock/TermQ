@@ -23,7 +23,7 @@ struct Pending: ParsableCommand {
     @Flag(name: .long, help: "Only show terminals with llmNextAction set")
     var actionsOnly: Bool = false
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {

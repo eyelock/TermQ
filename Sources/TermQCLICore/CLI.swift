@@ -102,7 +102,7 @@ struct New: ParsableCommand {
     @Option(help: .hidden)
     var path: String?
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {
@@ -156,7 +156,7 @@ struct Open: ParsableCommand {
     @Flag(name: .long, help: "Use debug data directory (TermQ-Debug)")
     var debug: Bool = false
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {
@@ -240,7 +240,7 @@ struct Create: ParsableCommand {
     @Option(name: [.short, .long], help: "Working directory (defaults to current directory)")
     var path: String?
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {
@@ -373,7 +373,7 @@ struct List: ParsableCommand {
     @Flag(name: .long, help: "Include column information in output")
     var columns: Bool = false
 
-    @Option(help: .hidden)
+    @Option(name: [.customLong("data-dir"), .customLong("data-directory")], help: .hidden)
     var dataDirectory: String?
 
     func run() throws {

@@ -206,4 +206,63 @@ final class EnvironmentVariableTests: XCTestCase {
         let variable = EnvironmentVariable(key: "X", value: "value", isSecret: false)
         XCTAssertTrue(variable.isValidKey)
     }
+
+    // MARK: - sanitizeKey
+
+    func testSanitizeKey_empty_returnsEmpty() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey(""), "")
+    }
+
+    func testSanitizeKey_validLowercase_upcases() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("api_key"), "API_KEY")
+    }
+
+    func testSanitizeKey_replacesHyphens() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("api-key"), "API_KEY")
+    }
+
+    func testSanitizeKey_replacesSpaces() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("my var name"), "MY_VAR_NAME")
+    }
+
+    func testSanitizeKey_replacesDots() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("config.value"), "CONFIG_VALUE")
+    }
+
+    func testSanitizeKey_replacesMixedSpecialChars() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("my-var@name"), "MY_VAR_NAME")
+    }
+
+    func testSanitizeKey_leadingDigit_prependsUnderscore() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("3rd_party"), "_3RD_PARTY")
+    }
+
+    func testSanitizeKey_singleDigit_prependsUnderscore() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("1"), "_1")
+    }
+
+    func testSanitizeKey_alreadyValid_unchanged() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("ALREADY_VALID"), "ALREADY_VALID")
+    }
+
+    func testSanitizeKey_preservesNumbers() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("var_123"), "VAR_123")
+    }
+
+    func testSanitizeKey_preservesUnderscore() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("_internal"), "_INTERNAL")
+    }
+
+    func testSanitizeKey_punctuation_replacedWithUnderscore() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("a!b?c"), "A_B_C")
+    }
+
+    func testSanitizeKey_leadingWithSpecial_handled() {
+        // "@foo" → "@FOO" → "_FOO"; first is "_", not digit, so no extra prepend
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("@foo"), "_FOO")
+    }
+
+    func testSanitizeKey_allInvalidChars() {
+        XCTAssertEqual(EnvironmentVariable.sanitizeKey("!@#"), "___")
+    }
 }

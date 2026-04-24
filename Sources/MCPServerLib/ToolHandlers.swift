@@ -468,17 +468,24 @@ extension TermQMCPServer {
                 isError: true)
         }
 
-        // Parse tags if provided
+        // Parse tags if provided (accepts either `tag` singular string or `tags` array of "key=value")
         var tags: [(key: String, value: String)]?
+        let parseTagString: (String) -> (key: String, value: String)? = { tagStr in
+            guard let eqIndex = tagStr.firstIndex(of: "=") else { return nil }
+            let key = String(tagStr[..<eqIndex])
+            let value = String(tagStr[tagStr.index(after: eqIndex)...])
+            return (key: key, value: value)
+        }
         if let tagValues = arguments?["tags"]?.arrayValue {
             tags = tagValues.compactMap { tagValue -> (key: String, value: String)? in
-                guard let tagStr = tagValue.stringValue,
-                    let eqIndex = tagStr.firstIndex(of: "=")
-                else { return nil }
-                let key = String(tagStr[..<eqIndex])
-                let value = String(tagStr[tagStr.index(after: eqIndex)...])
-                return (key: key, value: value)
+                guard let tagStr = tagValue.stringValue else { return nil }
+                return parseTagString(tagStr)
             }
+        }
+        if let singleTag = arguments?["tag"]?.stringValue, let parsed = parseTagString(singleTag) {
+            var merged = tags ?? []
+            merged.append(parsed)
+            tags = merged
         }
 
         let replaceTags = InputValidator.optionalBool("replaceTags", from: arguments)
@@ -576,11 +583,21 @@ extension TermQMCPServer {
                 replaceTags: params.replaceTags
             )
 
-            let card = try HeadlessWriter.updateCard(
+            var card = try HeadlessWriter.updateCard(
                 identifier: identifier,
                 params: updateParams,
                 dataDirectory: dataDirectory
             )
+
+            // `termq_set` with a `column` argument is equivalent to a move — apply it
+            // after the field updates so a rename + column change in one call both land.
+            if let column = params.column {
+                card = try HeadlessWriter.moveCard(
+                    identifier: card.id.uuidString,
+                    toColumn: column,
+                    dataDirectory: dataDirectory
+                )
+            }
 
             let board = try loadBoard()
             let output = TerminalOutput(
