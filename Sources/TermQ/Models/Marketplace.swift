@@ -16,6 +16,9 @@ struct Marketplace: Codable, Identifiable, Sendable {
     var lastFetched: Date?
     var fetchError: String?
 
+    /// True when this marketplace points to a local folder rather than a remote Git repository.
+    var isLocal: Bool { url.hasPrefix("/") || url.hasPrefix("file:///") }
+
     /// True when `ref` is a commit SHA (40 hex chars or a 7-40 char hex abbreviation).
     /// Branch/tag refs are mutable; SHAs are immutable — truly pinned.
     var isPinnedToSHA: Bool {

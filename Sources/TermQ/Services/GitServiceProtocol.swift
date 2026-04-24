@@ -15,6 +15,9 @@ protocol GitServiceProtocol: AnyObject {
     func listBranches(repoPath: String) async throws -> [String]
     func mergedLocalBranches(repoPath: String) async throws -> [String]
     func deleteLocalBranch(repoPath: String, branch: String) async throws
+    func forceDeleteLocalBranch(repoPath: String, branch: String) async throws
+    func fetchBranchFromOrigin(repoPath: String, branch: String) async throws
+    func pullBranch(worktreePath: String) async throws
     func defaultBranch(repoPath: String) async -> String
     func updateRemoteHead(repoPath: String) async
     func inferRepoName(repoPath: String) async -> String

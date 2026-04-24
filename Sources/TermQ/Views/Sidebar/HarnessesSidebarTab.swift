@@ -22,6 +22,7 @@ struct HarnessesSidebarTab: View {
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @State private var harnessToUninstall: Harness?
+    @State private var harnessToDelete: Harness?
     @State private var harnessToDuplicate: Harness?
     @State private var showWizard = false
     @State private var showAddRegistry = false
@@ -197,6 +198,26 @@ struct HarnessesSidebarTab: View {
                     )
                 }
             }
+            .confirmationDialog(
+                harnessToDelete.map { Strings.Harnesses.deleteLocalTitle($0.name) } ?? "",
+                isPresented: Binding(
+                    get: { harnessToDelete != nil },
+                    set: { if !$0 { harnessToDelete = nil } }
+                ),
+                titleVisibility: .visible
+            ) {
+                if let harness = harnessToDelete {
+                    Button(Strings.Harnesses.deleteLocalConfirm, role: .destructive) {
+                        performDeleteLocalHarness(harness)
+                        harnessToDelete = nil
+                    }
+                    Button(Strings.Harnesses.installCancel, role: .cancel) {
+                        harnessToDelete = nil
+                    }
+                }
+            } message: {
+                Text(Strings.Harnesses.deleteLocalMessage)
+            }
         }
     }
 
@@ -287,6 +308,13 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
                 }
+                if harness.installedFrom == nil || harness.installedFrom?.sourceType == "local" {
+                    Button(role: .destructive) {
+                        harnessToDelete = harness
+                    } label: {
+                        Label(Strings.Harnesses.deleteLocalButton, systemImage: "trash.fill")
+                    }
+                }
             }
     }
 
@@ -303,13 +331,18 @@ struct HarnessesSidebarTab: View {
     }
 
     private var groupedHarnesses: [HarnessGroup] {
+        let alphaSorted: ([Harness]) -> [Harness] = { harnesses in
+            harnesses.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        }
+
         let defaults = repository.harnesses.filter { KnownHarnesses.defaultNames.contains($0.name) }
         let remaining = repository.harnesses.filter { !KnownHarnesses.defaultNames.contains($0.name) }
 
         var groups: [HarnessGroup] = []
 
         if !defaults.isEmpty {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupDefault, harnesses: defaults, kind: .default))
+            groups.append(
+                HarnessGroup(title: Strings.Harnesses.groupDefault, harnesses: alphaSorted(defaults), kind: .default))
         }
 
         var byOrg: [String: [Harness]] = [:]
@@ -329,15 +362,20 @@ struct HarnessesSidebarTab: View {
             }
         }
 
-        for (org, harnesses) in byOrg.sorted(by: { $0.key < $1.key }) {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupGitHub(org), harnesses: harnesses, kind: .github))
-        }
+        // Order: DEFAULT → REGISTRY (alpha) → GitHub (alpha) → LOCAL
         for (name, harnesses) in byRegistry.sorted(by: { $0.key < $1.key }) {
             groups.append(
-                HarnessGroup(title: Strings.Harnesses.groupRegistry(name), harnesses: harnesses, kind: .registry))
+                HarnessGroup(
+                    title: Strings.Harnesses.groupRegistry(name), harnesses: alphaSorted(harnesses), kind: .registry))
+        }
+        for (org, harnesses) in byOrg.sorted(by: { $0.key < $1.key }) {
+            groups.append(
+                HarnessGroup(
+                    title: Strings.Harnesses.groupGitHub(org), harnesses: alphaSorted(harnesses), kind: .github))
         }
         if !local.isEmpty {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: local, kind: .local))
+            groups.append(
+                HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: alphaSorted(local), kind: .local))
         }
 
         return groups
@@ -401,92 +439,6 @@ struct HarnessesSidebarTab: View {
 
     private var hasRegistries: Bool {
         !registryService.registries.isEmpty
-    }
-
-    @ViewBuilder
-    private func groupContextMenu(for group: HarnessGroup) -> some View {
-        switch group.kind {
-        case .registry, .github:
-            Button {
-                SettingsCoordinator.shared.requestedTab = .marketplaces
-                openSettings()
-            } label: {
-                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
-            }
-            if let source = group.harnesses.first?.installedFrom?.source,
-                let url = GitURLHelper.browserURL(for: source)
-            {
-                Button {
-                    NSWorkspace.shared.open(url)
-                } label: {
-                    Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
-                }
-            }
-
-        case .default:
-            Button {
-                SettingsCoordinator.shared.requestedTab = .marketplaces
-                openSettings()
-            } label: {
-                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
-            }
-
-        case .local:
-            Button {
-                SettingsCoordinator.shared.requestedTab = .marketplaces
-                openSettings()
-            } label: {
-                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
-            }
-            Button {
-                revealLocalGroupInFinder(group)
-            } label: {
-                Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
-            }
-        }
-    }
-
-    private func openInTerminal(path: String) {
-        guard !path.contains("\n"), !path.contains("\r") else {
-            TermQLogger.ui.error("openInTerminal: path contains newline, aborting")
-            return
-        }
-        let escaped = path.replacingOccurrences(of: "'", with: "'\\''")
-        let script = """
-            tell application "Terminal"
-                activate
-                do script "cd '\(escaped)'"
-            end tell
-            """
-        Task.detached {
-            if let appleScript = NSAppleScript(source: script) {
-                var error: NSDictionary?
-                appleScript.executeAndReturnError(&error)
-                if let error = error {
-                    let code = (error[NSAppleScript.errorNumber] as? NSNumber)?.intValue ?? -1
-                    if TermQLogger.fileLoggingEnabled {
-                        TermQLogger.ui.error("openInTerminal AppleScript error=\(error)")
-                    } else {
-                        TermQLogger.ui.error("openInTerminal AppleScript failed code=\(code)")
-                    }
-                }
-            }
-        }
-    }
-
-    private func openIn(editor: ExternalEditor, path: String) {
-        let url = URL(fileURLWithPath: path)
-        let config = NSWorkspace.OpenConfiguration()
-        config.addsToRecentItems = false
-        NSWorkspace.shared.open([url], withApplicationAt: editor.appURL, configuration: config)
-    }
-
-    private func revealLocalGroupInFinder(_ group: HarnessGroup) {
-        let path =
-            group.harnesses.first?.installedFrom?.source
-            ?? UserDefaults.standard.string(forKey: "defaultHarnessAuthorDirectory")
-        guard let path, !path.isEmpty else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 
     private var harnessesEmptyState: some View {
@@ -573,5 +525,100 @@ struct HarnessesSidebarTab: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
+    }
+}
+
+// MARK: - Helpers
+
+extension HarnessesSidebarTab {
+    @ViewBuilder
+    private func groupContextMenu(for group: HarnessGroup) -> some View {
+        switch group.kind {
+        case .registry, .github:
+            Button {
+                SettingsCoordinator.shared.requestedTab = .marketplaces
+                openSettings()
+            } label: {
+                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
+            }
+            if let source = group.harnesses.first?.installedFrom?.source,
+                let url = GitURLHelper.browserURL(for: source)
+            {
+                Button {
+                    NSWorkspace.shared.open(url)
+                } label: {
+                    Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
+                }
+            }
+
+        case .default:
+            Button {
+                SettingsCoordinator.shared.requestedTab = .marketplaces
+                openSettings()
+            } label: {
+                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
+            }
+
+        case .local:
+            Button {
+                SettingsCoordinator.shared.requestedTab = .marketplaces
+                openSettings()
+            } label: {
+                Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
+            }
+            Button {
+                revealLocalGroupInFinder(group)
+            } label: {
+                Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
+            }
+        }
+    }
+
+    fileprivate func performDeleteLocalHarness(_ harness: Harness) {
+        onUninstall?(harness.name)
+        try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
+    }
+
+    private func revealLocalGroupInFinder(_ group: HarnessGroup) {
+        let path =
+            group.harnesses.first?.installedFrom?.source
+            ?? UserDefaults.standard.string(forKey: "defaultHarnessAuthorDirectory")
+        guard let path, !path.isEmpty else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
+    }
+
+    fileprivate func openInTerminal(path: String) {
+        guard !path.contains("\n"), !path.contains("\r") else {
+            TermQLogger.ui.error("openInTerminal: path contains newline, aborting")
+            return
+        }
+        let escaped = path.replacingOccurrences(of: "'", with: "'\\''")
+        let script = """
+            tell application "Terminal"
+                activate
+                do script "cd '\(escaped)'"
+            end tell
+            """
+        Task.detached {
+            if let appleScript = NSAppleScript(source: script) {
+                var error: NSDictionary?
+                appleScript.executeAndReturnError(&error)
+                if let error = error {
+                    let code = (error[NSAppleScript.errorNumber] as? NSNumber)?.intValue ?? -1
+                    if TermQLogger.fileLoggingEnabled {
+                        TermQLogger.ui.error("openInTerminal AppleScript error=\(error)")
+                    } else {
+                        TermQLogger.ui.error("openInTerminal AppleScript failed code=\(code)")
+                    }
+                }
+            }
+        }
+    }
+
+    fileprivate func openIn(editor: ExternalEditor, path: String) {
+        let url = URL(fileURLWithPath: path)
+        let config = NSWorkspace.OpenConfiguration()
+        config.addsToRecentItems = false
+        NSWorkspace.shared.open([url], withApplicationAt: editor.appURL, configuration: config)
     }
 }

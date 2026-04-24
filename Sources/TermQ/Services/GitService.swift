@@ -157,6 +157,27 @@ public class GitService: GitServiceProtocol {
         _ = try await GitServiceShared.runGitCommand(repoPath: repoPath, args: ["branch", "-d", branch])
     }
 
+    /// Force-delete a local branch (`git branch -D`). Discards any unmerged commits.
+    public func forceDeleteLocalBranch(repoPath: String, branch: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(repoPath: repoPath, args: ["branch", "-D", branch])
+    }
+
+    /// Fast-forward a local branch to match origin without checking it out.
+    ///
+    /// Runs `git fetch origin <branch>:<branch>` which updates the local ref only
+    /// when the fast-forward is clean. Throws if the branch has diverged.
+    public func fetchBranchFromOrigin(repoPath: String, branch: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["fetch", "origin", "\(branch):\(branch)"]
+        )
+    }
+
+    /// Pull the current branch in the given worktree directory (`git pull`).
+    public func pullBranch(worktreePath: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["pull"])
+    }
+
     /// List local branches for the repository at `repoPath`.
     public func listBranches(repoPath: String) async throws -> [String] {
         let output = try await GitServiceShared.runGitCommand(

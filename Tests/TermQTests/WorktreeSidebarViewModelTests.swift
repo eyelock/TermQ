@@ -15,6 +15,8 @@ final class MockGitService: GitServiceProtocol {
     var listBranchesResult: [String] = []
     var forceDeleteWorktreeError: Error?
     var pruneWorktreesError: Error?
+    var pullBranchError: Error?
+    var fetchBranchError: Error?
     var inferRepoNameResult: String = "mock-repo"
 
     private(set) var forceDeleteWorktreeCalled = false
@@ -53,6 +55,13 @@ final class MockGitService: GitServiceProtocol {
     func listBranches(repoPath: String) async throws -> [String] { listBranchesResult }
     func mergedLocalBranches(repoPath: String) async throws -> [String] { [] }
     func deleteLocalBranch(repoPath: String, branch: String) async throws {}
+    func forceDeleteLocalBranch(repoPath: String, branch: String) async throws {}
+    func fetchBranchFromOrigin(repoPath: String, branch: String) async throws {
+        if let error = fetchBranchError { throw error }
+    }
+    func pullBranch(worktreePath: String) async throws {
+        if let error = pullBranchError { throw error }
+    }
     func defaultBranch(repoPath: String) async -> String { "main" }
     func updateRemoteHead(repoPath: String) async {}
     func inferRepoName(repoPath: String) async -> String { inferRepoNameResult }
@@ -62,7 +71,7 @@ final class MockGitService: GitServiceProtocol {
 final class MockRepoPersistence: RepoPersistenceProtocol {
     var config = RepoConfig(repositories: [])
     var saveError: Error?
-    private(set) var saveCalled = false
+    var saveCalled = false
 
     func loadConfig() -> RepoConfig { config }
     func save(_ config: RepoConfig) throws {
@@ -257,5 +266,187 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         let vm = makeVM(persistence: mockPersistence)
 
         XCTAssertTrue(vm.repositories.contains { $0.path == "/tmp/pre-loaded-repo" })
+    }
+
+    // MARK: - moveRepository
+
+    func testMoveRepository_updatesOrder() {
+        let mockPersistence = MockRepoPersistence()
+        let repoA = GitRepository(name: "alpha", path: "/tmp/alpha")
+        let repoB = GitRepository(name: "beta", path: "/tmp/beta")
+        let repoC = GitRepository(name: "gamma", path: "/tmp/gamma")
+        mockPersistence.config = RepoConfig(repositories: [repoA, repoB, repoC])
+        let vm = makeVM(persistence: mockPersistence)
+
+        vm.moveRepository(from: IndexSet(integer: 0), to: 3)
+
+        XCTAssertEqual(vm.repositories.map(\.name), ["beta", "gamma", "alpha"])
+    }
+
+    func testMoveRepository_persists() {
+        let mockPersistence = MockRepoPersistence()
+        let repoA = GitRepository(name: "alpha", path: "/tmp/alpha")
+        let repoB = GitRepository(name: "beta", path: "/tmp/beta")
+        mockPersistence.config = RepoConfig(repositories: [repoA, repoB])
+        let vm = makeVM(persistence: mockPersistence)
+        mockPersistence.saveCalled = false
+
+        vm.moveRepository(from: IndexSet(integer: 0), to: 2)
+
+        XCTAssertTrue(mockPersistence.saveCalled)
+    }
+
+    // MARK: - worktree sorting
+
+    func testRefreshWorktrees_mainWorktreeAlwaysFirst() async {
+        let mock = MockGitService()
+        let linked = GitWorktree(
+            path: "/tmp/repo/.worktrees/feat", branch: "feat/a", commitHash: "aaa",
+            isMainWorktree: false, isLocked: false)
+        let main = GitWorktree(
+            path: "/tmp/repo", branch: "develop", commitHash: "bbb",
+            isMainWorktree: true, isLocked: false)
+        mock.listWorktreesResult = [linked, main]
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo(path: "/tmp/repo")
+        vm.repositories = [repo]
+
+        await vm.refreshWorktrees(for: repo)
+
+        XCTAssertTrue(vm.worktrees[repo.id]?.first?.isMainWorktree == true)
+    }
+
+    func testRefreshWorktrees_linkedWorktreesAlphabetical() async {
+        let mock = MockGitService()
+        let z = GitWorktree(
+            path: "/tmp/repo/.worktrees/z", branch: "z-branch", commitHash: "zzz",
+            isMainWorktree: false, isLocked: false)
+        let a = GitWorktree(
+            path: "/tmp/repo/.worktrees/a", branch: "a-branch", commitHash: "aaa",
+            isMainWorktree: false, isLocked: false)
+        let main = GitWorktree(
+            path: "/tmp/repo", branch: "main", commitHash: "mmm",
+            isMainWorktree: true, isLocked: false)
+        mock.listWorktreesResult = [z, main, a]
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo(path: "/tmp/repo")
+        vm.repositories = [repo]
+
+        await vm.refreshWorktrees(for: repo)
+
+        let branches = vm.worktrees[repo.id]?.map(\.branch) ?? []
+        XCTAssertEqual(branches, ["main", "a-branch", "z-branch"])
+    }
+
+    // MARK: - branch sorting
+
+    func testRefreshAvailableBranches_sortedAlphabetically() async {
+        let mock = MockGitService()
+        mock.listBranchesResult = ["z-feat", "a-fix", "m-chore"]
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo()
+        vm.repositories = [repo]
+        vm.worktrees[repo.id] = []
+
+        await vm.refreshAvailableBranches(for: repo)
+
+        XCTAssertEqual(vm.availableBranches[repo.id], ["a-fix", "m-chore", "z-feat"])
+    }
+
+    func testRefreshAvailableBranches_excludesOccupiedBranches() async {
+        let mock = MockGitService()
+        mock.listBranchesResult = ["main", "feat/a", "feat/b"]
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo(path: "/tmp/repo")
+        vm.repositories = [repo]
+        let occupied = GitWorktree(
+            path: "/tmp/repo/.worktrees/a", branch: "feat/a", commitHash: "aaa",
+            isMainWorktree: false, isLocked: false)
+        vm.worktrees[repo.id] = [occupied]
+
+        await vm.refreshAvailableBranches(for: repo)
+
+        XCTAssertFalse(vm.availableBranches[repo.id]?.contains("feat/a") == true)
+        XCTAssertTrue(vm.availableBranches[repo.id]?.contains("main") == true)
+    }
+
+    // MARK: - isProtectedBranch
+
+    func testIsProtectedBranch_repoOverride_matchesOverride() {
+        let vm = makeVM()
+        let repo = makeRepo()
+        repo.protectedBranches = ["main", "develop"]
+
+        XCTAssertTrue(vm.isProtectedBranch("main", for: repo))
+        XCTAssertTrue(vm.isProtectedBranch("develop", for: repo))
+        XCTAssertFalse(vm.isProtectedBranch("feat/x", for: repo))
+    }
+
+    func testIsProtectedBranch_noOverride_usesGlobalDefault() {
+        let vm = makeVM()
+        let repo = makeRepo()
+        repo.protectedBranches = nil
+        UserDefaults.standard.set("main,develop", forKey: "protectedBranches")
+        defer { UserDefaults.standard.removeObject(forKey: "protectedBranches") }
+
+        XCTAssertTrue(vm.isProtectedBranch("main", for: repo))
+        XCTAssertTrue(vm.isProtectedBranch("develop", for: repo))
+        XCTAssertFalse(vm.isProtectedBranch("feat/x", for: repo))
+    }
+
+    // MARK: - pullBranch spinners
+
+    func testPullBranch_updatingIDClearedAfterSuccess() async throws {
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo(path: "/tmp/repo")
+        let worktree = makeWorktree()
+        vm.repositories = [repo]
+        vm.worktrees[repo.id] = [worktree]
+
+        try await vm.pullBranch(worktree: worktree, repo: repo)
+
+        XCTAssertTrue(vm.updatingWorktreeIDs.isEmpty)
+    }
+
+    func testPullBranch_updatingIDClearedAfterError() async {
+        let mock = MockGitService()
+        mock.pullBranchError = NSError(domain: "git", code: 1)
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo(path: "/tmp/repo")
+        let worktree = makeWorktree()
+        vm.repositories = [repo]
+        vm.worktrees[repo.id] = [worktree]
+
+        _ = try? await vm.pullBranch(worktree: worktree, repo: repo)
+
+        XCTAssertTrue(vm.updatingWorktreeIDs.isEmpty)
+    }
+
+    // MARK: - fetchBranchFromOrigin spinners
+
+    func testFetchBranchFromOrigin_fetchingNameClearedAfterSuccess() async throws {
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo()
+        vm.repositories = [repo]
+        vm.worktrees[repo.id] = []
+
+        try await vm.fetchBranchFromOrigin(repo: repo, branch: "feat/x")
+
+        XCTAssertTrue(vm.fetchingBranchNames.isEmpty)
+    }
+
+    func testFetchBranchFromOrigin_fetchingNameClearedAfterError() async {
+        let mock = MockGitService()
+        mock.fetchBranchError = NSError(domain: "git", code: 1)
+        let vm = makeVM(gitService: mock)
+        let repo = makeRepo()
+        vm.repositories = [repo]
+        vm.worktrees[repo.id] = []
+
+        _ = try? await vm.fetchBranchFromOrigin(repo: repo, branch: "feat/x")
+
+        XCTAssertTrue(vm.fetchingBranchNames.isEmpty)
     }
 }
