@@ -34,7 +34,7 @@ struct ContentView: View {
                     detector: ynhDetector,
                     harnessRepository: harnessRepo,
                     onLaunchHarness: { harness in
-                        harnessRepo.selectedHarnessName = harness.name
+                        harnessRepo.selectedHarnessName = harness.id
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
                     },

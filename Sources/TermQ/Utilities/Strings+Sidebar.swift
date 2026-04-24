@@ -142,18 +142,18 @@ extension Strings {
             localized("harnesses.outdated.detail %@ %@", reported, minimum)
         }
         static var emptyMessage: String { localized("harnesses.empty.message") }
-        static var emptyNoRegistriesMessage: String { localized("harnesses.empty.no.registries.message") }
+        static var emptyNoMarketplacesMessage: String { localized("harnesses.empty.no.registries.message") }
         static var searchButton: String { localized("harnesses.search.button") }
 
         // Row badges
         static var sourceLocal: String { localized("harnesses.source.local") }
-        static var sourceRegistry: String { localized("harnesses.source.registry") }
+        static var sourceMarketplace: String { localized("harnesses.source.registry") }
 
         // Sidebar groups
         static var groupDefault: String { localized("harnesses.group.default") }
         static var groupLocal: String { localized("harnesses.group.local") }
         static func groupGitHub(_ org: String) -> String { localized("harnesses.group.github %@", org) }
-        static func groupRegistry(_ name: String) -> String { localized("harnesses.group.registry %@", name) }
+        static func groupMarketplace(_ name: String) -> String { localized("harnesses.group.registry %@", name) }
 
         // Detail view
         static var detailInfo: String { localized("harnesses.detail.info") }
@@ -282,12 +282,12 @@ extension Strings {
         static var copyRunCommand: String { localized("harnesses.copy.run.command") }
         static var exportButton: String { localized("harnesses.export.button") }
         static var ynhDocumentation: String { localized("harnesses.ynh.documentation") }
-        static var addRegistryTitle: String { localized("harnesses.add.registry.title") }
-        static var addRegistryURLLabel: String { localized("harnesses.add.registry.url.label") }
-        static var addRegistryHint: String { localized("harnesses.add.registry.hint") }
-        static var addRegistryButton: String { localized("harnesses.add.registry.button") }
-        static var addRegistrySuccess: String { localized("harnesses.add.registry.success") }
-        static var addRegistryToolbarHelp: String { localized("harnesses.add.registry.toolbar.help") }
+        static var addMarketplaceTitle: String { localized("harnesses.add.registry.title") }
+        static var addMarketplaceURLLabel: String { localized("harnesses.add.registry.url.label") }
+        static var addMarketplaceHint: String { localized("harnesses.add.registry.hint") }
+        static var addMarketplaceButton: String { localized("harnesses.add.registry.button") }
+        static var addMarketplaceSuccess: String { localized("harnesses.add.registry.success") }
+        static var addMarketplaceToolbarHelp: String { localized("harnesses.add.registry.toolbar.help") }
         static var addSampleButton: String { localized("harnesses.add.sample.button") }
         static var groupMenuSettings: String { localized("harnesses.group.menu.settings") }
         static var createHarnessButton: String { localized("harnesses.create.harness.button") }

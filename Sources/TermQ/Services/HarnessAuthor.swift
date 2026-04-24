@@ -214,11 +214,11 @@ final class HarnessAuthor: ObservableObject {
     }
 }
 
-// MARK: - Registry runner (used by AddRegistrySheet)
+// MARK: - Marketplace runner (used by AddYNHMarketplaceSheet)
 
 /// Runs `ynh registry add <url>` and streams output back.
 @MainActor
-final class RegistryAddRunner: ObservableObject {
+final class MarketplaceAddRunner: ObservableObject {
     @Published private(set) var outputLines: [String] = []
     @Published private(set) var isRunning = false
     @Published private(set) var succeeded = false
@@ -308,9 +308,9 @@ final class RegistryAddRunner: ObservableObject {
     }
 }
 
-// MARK: - Registry listing service (used by SettingsMarketplacesView)
+// MARK: - Marketplace listing service (used by SettingsMarketplacesView)
 
-struct YNHRegistry: Identifiable, Decodable {
+struct YNHMarketplace: Identifiable, Decodable {
     var id: String { url }
     let url: String
     let name: String
@@ -319,8 +319,8 @@ struct YNHRegistry: Identifiable, Decodable {
 }
 
 @MainActor
-final class YNHRegistryService: ObservableObject {
-    @Published private(set) var registries: [YNHRegistry] = []
+final class YNHMarketplaceService: ObservableObject {
+    @Published private(set) var marketplaces: [YNHMarketplace] = []
     @Published private(set) var isLoading = false
 
     func refresh(ynhPath: String, environment: [String: String]) async {
@@ -328,9 +328,9 @@ final class YNHRegistryService: ObservableObject {
         defer { isLoading = false }
         if let data = await fetch(
             executable: ynhPath, args: ["registry", "list", "--format", "json"], environment: environment),
-            let decoded = try? JSONDecoder().decode([YNHRegistry].self, from: data)
+            let decoded = try? JSONDecoder().decode([YNHMarketplace].self, from: data)
         {
-            registries = decoded
+            marketplaces = decoded
         }
     }
 

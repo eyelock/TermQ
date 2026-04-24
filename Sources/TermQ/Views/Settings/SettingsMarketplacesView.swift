@@ -4,16 +4,16 @@ import SwiftUI
 struct SettingsMarketplacesView: View {
     @ObservedObject private var store = MarketplaceStore.shared
     @ObservedObject private var ynhDetector: YNHDetector = .shared
-    @StateObject private var registryService = YNHRegistryService()
+    @StateObject private var marketplaceService = YNHMarketplaceService()
     @AppStorage("marketplaceAutoRefresh") private var autoRefresh = true
     @AppStorage("defaultHarnessAuthorDirectory") private var defaultHarnessAuthorDirectory = ""
 
     @State private var showAddSheet = false
     @State private var marketplaceToRemove: Marketplace?
     @State private var showRemoveConfirmation = false
-    @State private var showAddRegistrySheet = false
-    @State private var registryToRemove: YNHRegistry?
-    @State private var showRemoveRegistryConfirmation = false
+    @State private var showAddYNHMarketplaceSheet = false
+    @State private var ynhMarketplaceToRemove: YNHMarketplace?
+    @State private var showRemoveYNHMarketplaceConfirmation = false
 
     var body: some View {
         Group {
@@ -32,19 +32,19 @@ struct SettingsMarketplacesView: View {
             }
 
             if case .ready(let ynhPath, _, _) = ynhDetector.status {
-                Section(Strings.Settings.Marketplaces.sectionYNHRegistries) {
-                    if registryService.isLoading {
+                Section(Strings.Settings.Marketplaces.sectionYNHMarketplaces) {
+                    if marketplaceService.isLoading {
                         ProgressView().controlSize(.small)
-                    } else if registryService.registries.isEmpty {
-                        Text(Strings.Settings.Marketplaces.noRegistries)
+                    } else if marketplaceService.marketplaces.isEmpty {
+                        Text(Strings.Settings.Marketplaces.noYNHMarketplaces)
                             .foregroundStyle(.secondary)
                     } else {
-                        ForEach(registryService.registries) { registry in
-                            registryRow(registry, ynhPath: ynhPath)
+                        ForEach(marketplaceService.marketplaces) { ynhMarketplace in
+                            ynhMarketplaceRow(ynhMarketplace, ynhPath: ynhPath)
                         }
                     }
-                    Button(Strings.Settings.Marketplaces.addYNHRegistry) {
-                        showAddRegistrySheet = true
+                    Button(Strings.Settings.Marketplaces.addYNHMarketplace) {
+                        showAddYNHMarketplaceSheet = true
                     }
                 }
             }
@@ -79,7 +79,7 @@ struct SettingsMarketplacesView: View {
         }
         .onAppear {
             if case .ready(let ynhPath, _, _) = ynhDetector.status {
-                Task { await registryService.refresh(ynhPath: ynhPath, environment: ynhEnvironment) }
+                Task { await marketplaceService.refresh(ynhPath: ynhPath, environment: ynhEnvironment) }
             }
         }
         .sheet(isPresented: $showAddSheet) {
@@ -88,13 +88,13 @@ struct SettingsMarketplacesView: View {
             }
         }
         .sheet(
-            isPresented: $showAddRegistrySheet,
+            isPresented: $showAddYNHMarketplaceSheet,
             onDismiss: {
                 if case .ready(let ynhPath, _, _) = ynhDetector.status {
-                    Task { await registryService.refresh(ynhPath: ynhPath, environment: ynhEnvironment) }
+                    Task { await marketplaceService.refresh(ynhPath: ynhPath, environment: ynhEnvironment) }
                 }
             },
-            content: { AddRegistrySheet(detector: ynhDetector) }
+            content: { AddYNHMarketplaceSheet(detector: ynhDetector) }
         )
         .confirmationDialog(
             Strings.Settings.Marketplaces.removeConfirmTitle,
@@ -111,23 +111,24 @@ struct SettingsMarketplacesView: View {
             }
         }
         .confirmationDialog(
-            Strings.Settings.Marketplaces.removeRegistryConfirmTitle,
-            isPresented: $showRemoveRegistryConfirmation,
+            Strings.Settings.Marketplaces.removeYNHMarketplaceConfirmTitle,
+            isPresented: $showRemoveYNHMarketplaceConfirmation,
             titleVisibility: .visible
         ) {
-            if let registry = registryToRemove,
+            if let ynhMarketplace = ynhMarketplaceToRemove,
                 case .ready(let ynhPath, _, _) = ynhDetector.status
             {
-                Button(Strings.Settings.Marketplaces.removeRegistryConfirm, role: .destructive) {
+                Button(Strings.Settings.Marketplaces.removeYNHMarketplaceConfirm, role: .destructive) {
                     Task {
-                        await registryService.remove(url: registry.url, ynhPath: ynhPath, environment: ynhEnvironment)
+                        await marketplaceService.remove(
+                            url: ynhMarketplace.url, ynhPath: ynhPath, environment: ynhEnvironment)
                     }
                 }
             }
             Button(Strings.Common.cancel, role: .cancel) {}
         } message: {
-            if let registry = registryToRemove {
-                Text(Strings.Settings.Marketplaces.removeRegistryConfirmMessage(registry.name))
+            if let ynhMarketplace = ynhMarketplaceToRemove {
+                Text(Strings.Settings.Marketplaces.removeYNHMarketplaceConfirmMessage(ynhMarketplace.name))
             }
         }
     }
@@ -159,18 +160,18 @@ struct SettingsMarketplacesView: View {
     }
 
     @ViewBuilder
-    private func registryRow(_ registry: YNHRegistry, ynhPath: String) -> some View {
+    private func ynhMarketplaceRow(_ ynhMarketplace: YNHMarketplace, ynhPath: String) -> some View {
         HStack {
             ExternalSourceRowLabel(
-                name: registry.name,
-                shortURL: GitURLHelper.shortURL(registry.url),
-                description: registry.description,
-                browserURL: GitURLHelper.browserURL(for: registry.url)
+                name: ynhMarketplace.name,
+                shortURL: GitURLHelper.shortURL(ynhMarketplace.url),
+                description: ynhMarketplace.description,
+                browserURL: GitURLHelper.browserURL(for: ynhMarketplace.url)
             )
             Spacer()
             Button(role: .destructive) {
-                registryToRemove = registry
-                showRemoveRegistryConfirmation = true
+                ynhMarketplaceToRemove = ynhMarketplace
+                showRemoveYNHMarketplaceConfirmation = true
             } label: {
                 Image(systemName: "trash")
             }
