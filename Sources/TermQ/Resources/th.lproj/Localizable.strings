@@ -573,6 +573,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "ลบ Branch";
+"sidebar.branch.delete.title" = "ลบ Branch";
+"sidebar.branch.delete.confirm" = "ลบ";
+"sidebar.branch.delete.message %@" = "ลบ Branch \"%@\" ในเครื่องหรือไม่? ไม่สามารถยกเลิกการดำเนินการนี้ได้";
+"sidebar.branch.destroy" = "บังคับลบ Branch";
+"sidebar.branch.destroy.title" = "บังคับลบ Branch";
+"sidebar.branch.destroy.confirm" = "บังคับลบ";
+"sidebar.branch.destroy.message %@" = "บังคับลบ Branch \"%@\" ในเครื่องหรือไม่? Commits ที่ยังไม่ได้รวมจะถูกยกเลิก และไม่สามารถยกเลิกได้";
+"sidebar.branch.update.from.origin" = "อัปเดตจาก Origin";
 
 // Checkout branch as worktree sheet
 
@@ -717,6 +727,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "harness นี้เชื่อมโยงกับ %ld worktree — การเชื่อมโยงเหล่านั้นจะถูกล้าง";
 "harnesses.uninstall.alert.terminals %ld" = "ขณะนี้มี %ld เทอร์มินัลที่กำลังรัน harness นี้";
 "harnesses.uninstall.alert.confirm" = "ถอนการติดตั้ง";
+"harnesses.delete.local.button" = "ลบ Harness";
+"harnesses.delete.local.title %@" = "ลบ \"%@\" หรือไม่?";
+"harnesses.delete.local.message" = "การดำเนินการนี้จะถอนการติดตั้ง Harness จาก YNH และลบไฟล์ถาวร ไม่สามารถยกเลิกได้";
+"harnesses.delete.local.confirm" = "ลบ Harness";
 "harnesses.more.actions.help" = "การดำเนินการอื่น ๆ";
 "harnesses.copy.run.command" = "คัดลอกคำสั่งเรียกใช้";
 "harnesses.ynh.documentation" = "เอกสาร YNH";
@@ -755,6 +769,15 @@
 "marketplace.row.never.fetched" = "ยังไม่เคยดึงข้อมูล";
 "marketplace.add.sheet.title" = "เพิ่มมาร์เก็ตเพลส";
 "marketplace.add.tab.known" = "ที่รู้จัก";
+"marketplace.group.default" = "ค่าเริ่มต้น";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "ในเครื่อง";
+"marketplace.add.tab.local" = "โฟลเดอร์ในเครื่อง";
+"marketplace.add.section.local.path" = "เส้นทางโฟลเดอร์";
+"marketplace.add.local.browse" = "เลือกโฟลเดอร์…";
+"marketplace.add.local.path.placeholder" = "/เส้นทาง/ถึง/marketplace";
+"marketplace.row.local" = "ในเครื่อง";
+"marketplace.row.reveal" = "แสดงใน Finder";
 "marketplace.add.tab.custom" = "URL กำหนดเอง";
 "marketplace.add.section.git.url" = "URL ที่เก็บ Git";
 "marketplace.add.section.display.name" = "ชื่อที่แสดง";
@@ -835,3 +858,64 @@
 "diagnostics.verbose.warning" = "ปริมาณสูง — ปิดการใช้งานเมื่อเสร็จสิ้น";
 "diagnostics.export.title" = "รายงานการวินิจฉัย TermQ";
 "diagnostics.export.footer" = "ยื่นผ่านระบบวินิจฉัยในตัวของ TermQ";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "ทำซ้ำ";
+"harness.duplicate.installing" = "กำลังติดตั้งสำเนา…";
+"harness.duplicate.success %@" = "ติดตั้ง %@ สำเร็จ";
+"harness.duplicate.title" = "ทำซ้ำ Harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "เพิ่มตัวอย่าง eyelock/assistants";
+"harnesses.create.harness.button" = "สร้าง Harness ใหม่";
+"harnesses.empty.no.registries.message" = "ยังไม่มี Harness หรือ Registry ที่ติดตั้ง";
+"harnesses.export.button" = "ส่งออกเป็น Marketplace…";
+"harnesses.group.default" = "ค่าเริ่มต้น";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "ในเครื่อง";
+"harnesses.group.menu.settings" = "การตั้งค่า…";
+"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.install.browsing" = "กำลังโหลด Harness ที่มีอยู่…";
+"harnesses.install.git.ref" = "อ้างอิง";
+"harnesses.install.git.ref.placeholder" = "สาขา แท็ก หรือ commit SHA (ไม่บังคับ)";
+"harnesses.install.retry" = "ลองอีกครั้ง";
+"harnesses.install.section.available" = "มีจาก Registry";
+"harnesses.install.section.installed" = "ติดตั้งแล้ว";
+"harnesses.install.section.local" = "มีในเครื่อง";
+"harnesses.outdated.capabilities.unknown" = "ไม่ทราบ";
+"harnesses.outdated.detail %@ %@" = "YNH รายงานความสามารถ %1$@ แต่ TermQ ต้องการ %2$@ หรือใหม่กว่า อัปเดต YNH เพื่อเปิดใช้คุณสมบัติ marketplace และการแก้ไข harness";
+"harnesses.outdated.headline" = "ต้องอัปเกรด YNH";
+"harnesses.search.button" = "ค้นหา Harness";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "สาขา แท็ก หรือ commit SHA (ไม่บังคับ)";
+"marketplace.add.section.ref" = "อ้างอิง";
+"marketplace.refresh.all.help" = "รีเฟรช Marketplace ทั้งหมด";
+"marketplace.restore.defaults" = "คืนค่าเริ่มต้น";
+"marketplace.restore.defaults.help" = "เพิ่ม Marketplace เริ่มต้นอีกครั้ง";
+"marketplace.row.pinned.help %@" = "ปักหมุดไว้ที่ %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "เปิดใช้การวางที่ปลอดภัยสำหรับเทอร์มินัลใหม่";
+"settings.default.safe.paste.help" = "เทอร์มินัลใหม่จะเปิดใช้การวางที่ปลอดภัยตามค่าเริ่มต้น คุณสามารถเปลี่ยนแปลงได้ต่อเทอร์มินัลในตัวแก้ไขการ์ด";
+"settings.scrollback.invalid" = "กรุณาป้อนตัวเลขระหว่าง 500 ถึง 100,000";
+"settings.scrollback.label" = "ประวัติการเลื่อน";
+"settings.scrollback.lines.help" = "บรรทัดที่เก็บไว้ในประวัติการเลื่อน (500–100,000) การเปลี่ยนแปลงจะใช้กับเทอร์มินัลใหม่";
+"settings.scrollback.unit" = "บรรทัด";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (ขั้นต่ำ %2$@)";
+"settings.ynh.capabilities.label" = "ความสามารถ:";
+"settings.ynh.capabilities.unknown" = "ไม่ทราบ";
+"settings.ynh.docs.link.label" = "เอกสาร YNH →";
+"settings.ynh.outdated.badge" = "ต้องอัปเกรด";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "ลบสาขาที่ถูก Merge แล้ว";
+"sidebar.prune.branches.confirm" = "ลบสาขา";
+"sidebar.prune.branches.explanation" = "สาขาเหล่านี้ถูก Merge เข้าสาขาระยะไกลหลักอย่างสมบูรณ์และไม่มี worktree ที่ใช้งานอยู่ การลบมีความปลอดภัยและไม่สามารถยกเลิกได้";
+"sidebar.prune.branches.nothing.message" = "ไม่พบสาขาที่ถูก Merge สาขาที่ยังไม่ได้ Merge เข้าสาขาระยะไกลหลักจะถูกเก็บไว้";
+"sidebar.prune.branches.nothing.title" = "ไม่มีสิ่งที่ต้องลบ";
+"sidebar.prune.branches.title" = "ลบสาขาที่ถูก Merge แล้ว";
+"sidebar.worktree.open.in" = "เปิดใน…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "เปิดเทอร์มินัล";

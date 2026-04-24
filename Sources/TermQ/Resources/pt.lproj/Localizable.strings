@@ -571,6 +571,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Apagar branch";
+"sidebar.branch.delete.title" = "Apagar branch";
+"sidebar.branch.delete.confirm" = "Apagar";
+"sidebar.branch.delete.message %@" = "Apagar o branch local \"%@\"? Esta ação não pode ser desfeita.";
+"sidebar.branch.destroy" = "Destruir branch";
+"sidebar.branch.destroy.title" = "Destruir branch";
+"sidebar.branch.destroy.confirm" = "Destruir";
+"sidebar.branch.destroy.message %@" = "Forçar a exclusão do branch local \"%@\"? Isso descarta commits não mesclados e não pode ser desfeito.";
+"sidebar.branch.update.from.origin" = "Atualizar do Origin";
 
 // Checkout branch as worktree sheet
 
@@ -715,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Este harness está vinculado a %ld worktree(s) — essas associações serão removidas.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(is) estão executando este harness no momento.";
 "harnesses.uninstall.alert.confirm" = "Desinstalar";
+"harnesses.delete.local.button" = "Apagar harness";
+"harnesses.delete.local.title %@" = "Apagar \"%@\"?";
+"harnesses.delete.local.message" = "Isso desinstalará o harness do YNH e excluirá permanentemente seus arquivos. Esta ação não pode ser desfeita.";
+"harnesses.delete.local.confirm" = "Apagar harness";
 "harnesses.more.actions.help" = "Mais ações";
 "harnesses.copy.run.command" = "Copiar comando de execução";
 "harnesses.ynh.documentation" = "Documentação YNH";
@@ -753,6 +767,15 @@
 "marketplace.row.never.fetched" = "Nunca obtido";
 "marketplace.add.sheet.title" = "Adicionar marketplace";
 "marketplace.add.tab.known" = "Conhecidos";
+"marketplace.group.default" = "Padrão";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Pasta local";
+"marketplace.add.section.local.path" = "Caminho da pasta";
+"marketplace.add.local.browse" = "Escolher pasta…";
+"marketplace.add.local.path.placeholder" = "/caminho/para/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Mostrar no Finder";
 "marketplace.add.tab.custom" = "URL personalizado";
 "marketplace.add.section.git.url" = "URL do repositório Git";
 "marketplace.add.section.display.name" = "Nome de exibição";
@@ -833,3 +856,64 @@
 "diagnostics.verbose.warning" = "Alto volume — desative quando terminar";
 "diagnostics.export.title" = "Relatório de diagnósticos do TermQ";
 "diagnostics.export.footer" = "Enviado pelo diagnóstico integrado do TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplicar";
+"harness.duplicate.installing" = "Instalando duplicata…";
+"harness.duplicate.success %@" = "%@ instalado com sucesso.";
+"harness.duplicate.title" = "Duplicar harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Adicionar exemplo eyelock/assistants";
+"harnesses.create.harness.button" = "Criar um novo harness";
+"harnesses.empty.no.registries.message" = "Nenhum harness ou registro instalado ainda.";
+"harnesses.export.button" = "Exportar como marketplace…";
+"harnesses.group.default" = "Padrão";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Local";
+"harnesses.group.menu.settings" = "Configurações…";
+"harnesses.group.registry %@" = "Registro: %@";
+"harnesses.install.browsing" = "Carregando harnesses disponíveis…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag ou SHA de commit (opcional)";
+"harnesses.install.retry" = "Tentar novamente";
+"harnesses.install.section.available" = "Disponível nos registros";
+"harnesses.install.section.installed" = "Instalado";
+"harnesses.install.section.local" = "Disponível localmente";
+"harnesses.outdated.capabilities.unknown" = "desconhecido";
+"harnesses.outdated.detail %@ %@" = "YNH reporta capacidades %1$@, mas o TermQ requer %2$@ ou mais recente. Atualize o YNH para ativar os recursos de marketplace e edição de harness.";
+"harnesses.outdated.headline" = "Atualização do YNH necessária";
+"harnesses.search.button" = "Buscar harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tag ou SHA de commit (opcional)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Atualizar todos os marketplaces";
+"marketplace.restore.defaults" = "Restaurar padrões";
+"marketplace.restore.defaults.help" = "Adicionar novamente os marketplaces padrão";
+"marketplace.row.pinned.help %@" = "Fixado em %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Habilitar colagem segura para novos terminais";
+"settings.default.safe.paste.help" = "Novos terminais terão a colagem segura habilitada por padrão. Você pode alterar isso por terminal no editor de cartão.";
+"settings.scrollback.invalid" = "Insira um número entre 500 e 100.000";
+"settings.scrollback.label" = "Histórico de rolagem";
+"settings.scrollback.lines.help" = "Linhas mantidas no histórico de rolagem (500–100.000). As alterações se aplicam aos novos terminais.";
+"settings.scrollback.unit" = "linhas";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (mínimo %2$@)";
+"settings.ynh.capabilities.label" = "Capacidades:";
+"settings.ynh.capabilities.unknown" = "desconhecido";
+"settings.ynh.docs.link.label" = "Documentação do YNH →";
+"settings.ynh.outdated.badge" = "Atualização necessária";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Remover branches mesclados";
+"sidebar.prune.branches.confirm" = "Excluir branches";
+"sidebar.prune.branches.explanation" = "Esses branches estão totalmente mesclados no branch remoto padrão e não têm worktree ativo. Excluí-los é seguro e não pode ser desfeito.";
+"sidebar.prune.branches.nothing.message" = "Nenhum branch mesclado encontrado. Os branches ainda não mesclados no branch remoto padrão são mantidos.";
+"sidebar.prune.branches.nothing.title" = "Nada para remover";
+"sidebar.prune.branches.title" = "Remover branches mesclados";
+"sidebar.worktree.open.in" = "Abrir em…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Abrir terminais";

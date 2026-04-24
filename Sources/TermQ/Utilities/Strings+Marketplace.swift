@@ -9,6 +9,13 @@ extension Strings {
         static var addHelp: String { localized("marketplace.add.help") }
         static var groupDefault: String { localized("marketplace.group.default") }
         static func groupGitHub(_ org: String) -> String { localized("marketplace.group.github %@", org) }
+        static var groupLocal: String { localized("marketplace.group.local") }
+        static var addTabLocal: String { localized("marketplace.add.tab.local") }
+        static var addSectionLocalPath: String { localized("marketplace.add.section.local.path") }
+        static var addLocalBrowse: String { localized("marketplace.add.local.browse") }
+        static var addLocalPathPlaceholder: String { localized("marketplace.add.local.path.placeholder") }
+        static var rowLocal: String { localized("marketplace.row.local") }
+        static var rowReveal: String { localized("marketplace.row.reveal") }
         static var empty: String { localized("marketplace.empty") }
         static var addButton: String { localized("marketplace.add.button") }
         static var rowRefreshHelp: String { localized("marketplace.row.refresh.help") }

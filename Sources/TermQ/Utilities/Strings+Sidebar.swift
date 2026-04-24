@@ -110,6 +110,21 @@ extension Strings {
 
         // Local branches section
         static var localBranches: String { localized("sidebar.local.branches") }
+        static var newWorktreeFromBranch: String { localized("sidebar.branch.new.worktree.from.branch") }
+        static var deleteBranch: String { localized("sidebar.branch.delete") }
+        static var deleteBranchTitle: String { localized("sidebar.branch.delete.title") }
+        static var deleteBranchConfirm: String { localized("sidebar.branch.delete.confirm") }
+        static func deleteBranchMessage(_ branch: String) -> String {
+            localized("sidebar.branch.delete.message %@", branch)
+        }
+        static var destroyBranch: String { localized("sidebar.branch.destroy") }
+        static var destroyBranchTitle: String { localized("sidebar.branch.destroy.title") }
+        static var destroyBranchConfirm: String { localized("sidebar.branch.destroy.confirm") }
+        static func destroyBranchMessage(_ branch: String) -> String {
+            localized("sidebar.branch.destroy.message %@", branch)
+        }
+        static var updateFromOrigin: String { localized("sidebar.branch.update.from.origin") }
+
     }
 
     // MARK: - Harnesses
@@ -257,6 +272,12 @@ extension Strings {
             String(format: localized("harnesses.uninstall.alert.terminals %ld"), count)
         }
         static var uninstallAlertConfirm: String { localized("harnesses.uninstall.alert.confirm") }
+        static var deleteLocalButton: String { localized("harnesses.delete.local.button") }
+        static func deleteLocalTitle(_ name: String) -> String {
+            String(format: localized("harnesses.delete.local.title %@"), name)
+        }
+        static var deleteLocalMessage: String { localized("harnesses.delete.local.message") }
+        static var deleteLocalConfirm: String { localized("harnesses.delete.local.confirm") }
         static var moreActionsHelp: String { localized("harnesses.more.actions.help") }
         static var copyRunCommand: String { localized("harnesses.copy.run.command") }
         static var exportButton: String { localized("harnesses.export.button") }

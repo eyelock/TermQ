@@ -5,12 +5,15 @@ struct AddMarketplaceSheet: View {
     let onAdd: (Marketplace) -> Void
     @Environment(\.dismiss) private var dismiss
 
-    enum AddTab { case known, custom }
+    enum AddTab { case known, custom, local }
     @State private var tab: AddTab = .known
     @State private var customURL = ""
     @State private var customVendor: MarketplaceVendor = .claude
     @State private var customName = ""
     @State private var customRef = ""
+    @State private var localPath = ""
+    @State private var localVendor: MarketplaceVendor = .claude
+    @State private var localName = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -26,6 +29,7 @@ struct AddMarketplaceSheet: View {
             Picker("", selection: $tab) {
                 Text(Strings.Marketplace.addTabKnown).tag(AddTab.known)
                 Text(Strings.Marketplace.addTabCustom).tag(AddTab.custom)
+                Text(Strings.Marketplace.addTabLocal).tag(AddTab.local)
             }
             .pickerStyle(.segmented)
             .padding(.horizontal, 16)
@@ -36,6 +40,7 @@ struct AddMarketplaceSheet: View {
             switch tab {
             case .known: knownTab
             case .custom: customTab
+            case .local: localTab
             }
         }
         .frame(width: 460, height: 400)
@@ -159,6 +164,92 @@ struct AddMarketplaceSheet: View {
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(customURL.trimmingCharacters(in: .whitespaces).isEmpty)
+            }
+            .padding()
+        }
+    }
+
+    // MARK: - Local Folder
+
+    private var localTab: some View {
+        VStack(spacing: 0) {
+            Form {
+                Section {
+                    HStack {
+                        TextField(Strings.Marketplace.addLocalPathPlaceholder, text: $localPath)
+                            .textFieldStyle(.roundedBorder)
+                            .onChange(of: localPath) { _, val in
+                                if localName.isEmpty {
+                                    localName = URL(fileURLWithPath: val).lastPathComponent
+                                }
+                            }
+                        Button(Strings.Marketplace.addLocalBrowse) {
+                            Task { @MainActor in
+                                let panel = NSOpenPanel()
+                                panel.canChooseDirectories = true
+                                panel.canChooseFiles = false
+                                panel.allowsMultipleSelection = false
+                                panel.canCreateDirectories = false
+                                let response = await panel.begin()
+                                if response == .OK, let url = panel.url {
+                                    localPath = url.path
+                                    if localName.isEmpty { localName = url.lastPathComponent }
+                                }
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                } header: {
+                    Text(Strings.Marketplace.addSectionLocalPath)
+                }
+
+                Section {
+                    TextField(Strings.Marketplace.addCustomNamePlaceholder, text: $localName)
+                        .textFieldStyle(.roundedBorder)
+                } header: {
+                    Text(Strings.Marketplace.addSectionDisplayName)
+                }
+
+                Section {
+                    Picker(Strings.Marketplace.addSectionVendor, selection: $localVendor) {
+                        ForEach(MarketplaceVendor.allCases, id: \.self) { vendor in
+                            Text(vendor.displayName).tag(vendor)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text(Strings.Marketplace.addSectionVendor)
+                }
+            }
+            .formStyle(.grouped)
+
+            Spacer()
+
+            HStack {
+                Button(Strings.Common.cancel) { dismiss() }
+                    .keyboardShortcut(.cancelAction)
+                Spacer()
+                Button(Strings.Common.add) {
+                    let trimPath = localPath.trimmingCharacters(in: .whitespaces)
+                    let name = localName.trimmingCharacters(in: .whitespaces)
+                    let folderName = URL(fileURLWithPath: trimPath).lastPathComponent
+                    let marketplace = Marketplace(
+                        id: UUID(),
+                        name: name.isEmpty ? folderName : name,
+                        owner: "Local",
+                        description: nil,
+                        vendor: localVendor,
+                        url: trimPath,
+                        ref: nil,
+                        plugins: [],
+                        lastFetched: nil,
+                        fetchError: nil
+                    )
+                    onAdd(marketplace)
+                    dismiss()
+                }
+                .keyboardShortcut(.defaultAction)
+                .disabled(localPath.trimmingCharacters(in: .whitespaces).isEmpty)
             }
             .padding()
         }

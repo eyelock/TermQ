@@ -571,6 +571,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Usuń gałąź";
+"sidebar.branch.delete.title" = "Usuń gałąź";
+"sidebar.branch.delete.confirm" = "Usuń";
+"sidebar.branch.delete.message %@" = "Usunąć lokalną gałąź \"%@\"? Tej operacji nie można cofnąć.";
+"sidebar.branch.destroy" = "Zniszcz gałąź";
+"sidebar.branch.destroy.title" = "Zniszcz gałąź";
+"sidebar.branch.destroy.confirm" = "Zniszcz";
+"sidebar.branch.destroy.message %@" = "Wymusić usunięcie lokalnej gałęzi \"%@\"? Niezmergowane commity zostaną odrzucone i tej operacji nie można cofnąć.";
+"sidebar.branch.update.from.origin" = "Aktualizuj z Origin";
 
 // Checkout branch as worktree sheet
 
@@ -715,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Ten harness jest powiązany z %ld drzewem/drzewami roboczymi — te powiązania zostaną usunięte.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(i) aktualnie uruchamia ten harness.";
 "harnesses.uninstall.alert.confirm" = "Odinstaluj";
+"harnesses.delete.local.button" = "Usuń harness";
+"harnesses.delete.local.title %@" = "Usunąć \"%@\"?";
+"harnesses.delete.local.message" = "Spowoduje to odinstalowanie harness z YNH i trwałe usunięcie jego plików. Tej operacji nie można cofnąć.";
+"harnesses.delete.local.confirm" = "Usuń harness";
 "harnesses.more.actions.help" = "Więcej działań";
 "harnesses.copy.run.command" = "Kopiuj polecenie uruchomienia";
 "harnesses.ynh.documentation" = "Dokumentacja YNH";
@@ -753,6 +767,15 @@
 "marketplace.row.never.fetched" = "Nigdy nie pobrano";
 "marketplace.add.sheet.title" = "Dodaj platformę handlową";
 "marketplace.add.tab.known" = "Znane";
+"marketplace.group.default" = "Domyślny";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokalny";
+"marketplace.add.tab.local" = "Lokalny folder";
+"marketplace.add.section.local.path" = "Ścieżka folderu";
+"marketplace.add.local.browse" = "Wybierz folder…";
+"marketplace.add.local.path.placeholder" = "/ścieżka/do/marketplace";
+"marketplace.row.local" = "Lokalny";
+"marketplace.row.reveal" = "Pokaż w Finderze";
 "marketplace.add.tab.custom" = "Niestandardowy URL";
 "marketplace.add.section.git.url" = "URL repozytorium Git";
 "marketplace.add.section.display.name" = "Nazwa wyświetlana";
@@ -833,3 +856,64 @@
 "diagnostics.verbose.warning" = "Duża ilość — wyłącz po zakończeniu";
 "diagnostics.export.title" = "Raport diagnostyczny TermQ";
 "diagnostics.export.footer" = "Przesłano za pomocą wbudowanej diagnostyki TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplikuj";
+"harness.duplicate.installing" = "Instalowanie duplikatu…";
+"harness.duplicate.success %@" = "%@ zainstalowany pomyślnie.";
+"harness.duplicate.title" = "Duplikuj harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Dodaj przykład eyelock/assistants";
+"harnesses.create.harness.button" = "Utwórz nowy harness";
+"harnesses.empty.no.registries.message" = "Brak zainstalowanych harnessy lub rejestrów.";
+"harnesses.export.button" = "Eksportuj jako marketplace…";
+"harnesses.group.default" = "Domyślna";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokalna";
+"harnesses.group.menu.settings" = "Ustawienia…";
+"harnesses.group.registry %@" = "Rejestr: %@";
+"harnesses.install.browsing" = "Wczytywanie dostępnych harnessy…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Gałąź, tag lub SHA commita (opcjonalnie)";
+"harnesses.install.retry" = "Spróbuj ponownie";
+"harnesses.install.section.available" = "Dostępne z rejestrów";
+"harnesses.install.section.installed" = "Zainstalowane";
+"harnesses.install.section.local" = "Dostępne lokalnie";
+"harnesses.outdated.capabilities.unknown" = "nieznany";
+"harnesses.outdated.detail %@ %@" = "YNH zgłasza możliwości %1$@, ale TermQ wymaga %2$@ lub nowszego. Zaktualizuj YNH, aby włączyć funkcje marketplace i edycji harness.";
+"harnesses.outdated.headline" = "Wymagana aktualizacja YNH";
+"harnesses.search.button" = "Szukaj harnessy";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Gałąź, tag lub SHA commita (opcjonalnie)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Odśwież wszystkie marketplace";
+"marketplace.restore.defaults" = "Przywróć domyślne";
+"marketplace.restore.defaults.help" = "Ponownie dodaj domyślne marketplace";
+"marketplace.row.pinned.help %@" = "Przypięty do %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Włącz bezpieczne wklejanie dla nowych terminali";
+"settings.default.safe.paste.help" = "Nowe terminale będą miały domyślnie włączone bezpieczne wklejanie. Możesz to zmienić dla każdego terminalu w edytorze karty.";
+"settings.scrollback.invalid" = "Wprowadź liczbę między 500 a 100 000";
+"settings.scrollback.label" = "Historia przewijania";
+"settings.scrollback.lines.help" = "Linie zachowane w historii przewijania (500–100 000). Zmiany dotyczą nowych terminali.";
+"settings.scrollback.unit" = "linie";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Możliwości:";
+"settings.ynh.capabilities.unknown" = "nieznany";
+"settings.ynh.docs.link.label" = "Dokumentacja YNH →";
+"settings.ynh.outdated.badge" = "Wymagana aktualizacja";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Usuń scalone gałęzie";
+"sidebar.prune.branches.confirm" = "Usuń gałęzie";
+"sidebar.prune.branches.explanation" = "Te gałęzie są w pełni scalone z domyślną gałęzią zdalną i nie mają aktywnego worktree. Usunięcie jest bezpieczne i nie można go cofnąć.";
+"sidebar.prune.branches.nothing.message" = "Nie znaleziono scalonych gałęzi. Gałęzie jeszcze nie scalone z domyślną gałęzią zdalną są zachowane.";
+"sidebar.prune.branches.nothing.title" = "Brak do usunięcia";
+"sidebar.prune.branches.title" = "Usuń scalone gałęzie";
+"sidebar.worktree.open.in" = "Otwórz w…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Otwórz terminale";

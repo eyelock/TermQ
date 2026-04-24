@@ -582,6 +582,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Elimina la branca";
+"sidebar.branch.delete.title" = "Elimina la branca";
+"sidebar.branch.delete.confirm" = "Elimina";
+"sidebar.branch.delete.message %@" = "Voleu eliminar la branca local \"%@\"? Aquesta acció no es pot desfer.";
+"sidebar.branch.destroy" = "Destrueix la branca";
+"sidebar.branch.destroy.title" = "Destrueix la branca";
+"sidebar.branch.destroy.confirm" = "Destrueix";
+"sidebar.branch.destroy.message %@" = "Voleu forçar l\'eliminació de la branca local \"%@\"? S\'eliminaran els commits no fusionats i no es pot desfer.";
+"sidebar.branch.update.from.origin" = "Actualitza des d\'Origin";
 
 // Checkout branch as worktree sheet
 
@@ -710,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Aquest harness està vinculat a %ld arbre(s) de treball — aquestes associacions s'esboraran.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) estan executant aquest harness ara mateix.";
 "harnesses.uninstall.alert.confirm" = "Desinstal·la";
+"harnesses.delete.local.button" = "Elimina el harness";
+"harnesses.delete.local.title %@" = "Voleu eliminar \"%@\"?";
+"harnesses.delete.local.message" = "Això desinstal·larà el harness de YNH i eliminarà permanentment els seus fitxers. Aquesta acció no es pot desfer.";
+"harnesses.delete.local.confirm" = "Elimina el harness";
 "harnesses.more.actions.help" = "Més accions";
 "harnesses.copy.run.command" = "Copia l'ordre d'execució";
 "harnesses.ynh.documentation" = "Documentació de YNH";
@@ -748,6 +762,15 @@
 "marketplace.row.never.fetched" = "Mai obtingut";
 "marketplace.add.sheet.title" = "Afegeix mercat";
 "marketplace.add.tab.known" = "Coneguts";
+"marketplace.group.default" = "Per defecte";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Carpeta local";
+"marketplace.add.section.local.path" = "Ruta de la carpeta";
+"marketplace.add.local.browse" = "Tria una carpeta…";
+"marketplace.add.local.path.placeholder" = "/ruta/al/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Mostra al Finder";
 "marketplace.add.tab.custom" = "URL personalitzat";
 "marketplace.add.section.git.url" = "URL del repositori Git";
 "marketplace.add.section.display.name" = "Nom de visualització";
@@ -828,3 +851,64 @@
 "diagnostics.verbose.warning" = "Volum alt — desactiva quan acabis";
 "diagnostics.export.title" = "Informe de diagnòstics de TermQ";
 "diagnostics.export.footer" = "Enviat mitjançant els diagnòstics integrats de TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplica";
+"harness.duplicate.installing" = "Instal·lant duplicat…";
+"harness.duplicate.success %@" = "%@ s'ha instal·lat correctament.";
+"harness.duplicate.title" = "Duplica el harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Afegeix l'exemple eyelock/assistants";
+"harnesses.create.harness.button" = "Crea un nou harness";
+"harnesses.empty.no.registries.message" = "Encara no hi ha cap harness ni registre instal·lat.";
+"harnesses.export.button" = "Exporta com a marketplace…";
+"harnesses.group.default" = "Per defecte";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Local";
+"harnesses.group.menu.settings" = "Configuració…";
+"harnesses.group.registry %@" = "Registre: %@";
+"harnesses.install.browsing" = "Carregant harnesses disponibles…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branca, etiqueta o SHA de commit (opcional)";
+"harnesses.install.retry" = "Torna-ho a intentar";
+"harnesses.install.section.available" = "Disponible als registres";
+"harnesses.install.section.installed" = "Instal·lat";
+"harnesses.install.section.local" = "Disponible localment";
+"harnesses.outdated.capabilities.unknown" = "desconegut";
+"harnesses.outdated.detail %@ %@" = "YNH informa de les capacitats %1$@, però TermQ requereix %2$@ o posterior. Actualitza YNH per activar les funcions de marketplace i edició de harness.";
+"harnesses.outdated.headline" = "Cal actualitzar YNH";
+"harnesses.search.button" = "Cerca harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branca, etiqueta o SHA de commit (opcional)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Actualitza tots els marketplaces";
+"marketplace.restore.defaults" = "Restaura els valors predeterminats";
+"marketplace.restore.defaults.help" = "Torna a afegir els marketplaces predeterminats";
+"marketplace.row.pinned.help %@" = "Fixat a %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Activa l'enganxament segur per als nous terminals";
+"settings.default.safe.paste.help" = "Els nous terminals tindran l'enganxament segur activat per defecte. Podeu canviar-ho per terminal a l'editor de targeta.";
+"settings.scrollback.invalid" = "Introduïu un número entre 500 i 100.000";
+"settings.scrollback.label" = "Historial de desplaçament";
+"settings.scrollback.lines.help" = "Línies conservades a l'historial de desplaçament (500–100.000). Els canvis s'apliquen als nous terminals.";
+"settings.scrollback.unit" = "línies";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (mínim %2$@)";
+"settings.ynh.capabilities.label" = "Capacitats:";
+"settings.ynh.capabilities.unknown" = "desconegut";
+"settings.ynh.docs.link.label" = "Documentació de YNH →";
+"settings.ynh.outdated.badge" = "Cal una actualització";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Elimina les branques fusionades";
+"sidebar.prune.branches.confirm" = "Elimina les branques";
+"sidebar.prune.branches.explanation" = "Aquestes branques estan completament fusionades a la branca remota predeterminada i no tenen cap worktree actiu. L'eliminació és segura i no es pot desfer.";
+"sidebar.prune.branches.nothing.message" = "No s'han trobat branques fusionades. Les branques que encara no s'han fusionat a la branca remota predeterminada es conserven.";
+"sidebar.prune.branches.nothing.title" = "Res per eliminar";
+"sidebar.prune.branches.title" = "Elimina les branques fusionades";
+"sidebar.worktree.open.in" = "Obre a…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Obre els terminals";

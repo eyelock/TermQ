@@ -582,6 +582,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "ブランチを削除";
+"sidebar.branch.delete.title" = "ブランチを削除";
+"sidebar.branch.delete.confirm" = "削除";
+"sidebar.branch.delete.message %@" = "ローカルブランチ \"%@\" を削除しますか？この操作は元に戻せません。";
+"sidebar.branch.destroy" = "ブランチを強制削除";
+"sidebar.branch.destroy.title" = "ブランチを強制削除";
+"sidebar.branch.destroy.confirm" = "強制削除";
+"sidebar.branch.destroy.message %@" = "ローカルブランチ \"%@\" を強制削除しますか？未マージのコミットは破棄され、元に戻せません。";
+"sidebar.branch.update.from.origin" = "Originから更新";
 
 // Checkout branch as worktree sheet
 
@@ -710,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "このHarnessは%ld個のWorktreeにリンクされています — それらの関連付けが解除されます。";
 "harnesses.uninstall.alert.terminals %ld" = "%ld個のターミナルが現在このHarnessを実行中です。";
 "harnesses.uninstall.alert.confirm" = "アンインストール";
+"harnesses.delete.local.button" = "Harnessを削除";
+"harnesses.delete.local.title %@" = "\"%@\" を削除しますか？";
+"harnesses.delete.local.message" = "YNHからHarnessをアンインストールし、ファイルを完全に削除します。この操作は元に戻せません。";
+"harnesses.delete.local.confirm" = "Harnessを削除";
 "harnesses.more.actions.help" = "その他の操作";
 "harnesses.copy.run.command" = "実行コマンドをコピー";
 "harnesses.ynh.documentation" = "YNHドキュメント";
@@ -748,6 +762,15 @@
 "marketplace.row.never.fetched" = "まだ取得されていません";
 "marketplace.add.sheet.title" = "マーケットプレイスを追加";
 "marketplace.add.tab.known" = "既知";
+"marketplace.group.default" = "デフォルト";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "ローカル";
+"marketplace.add.tab.local" = "ローカルフォルダ";
+"marketplace.add.section.local.path" = "フォルダパス";
+"marketplace.add.local.browse" = "フォルダを選択…";
+"marketplace.add.local.path.placeholder" = "/path/to/marketplace";
+"marketplace.row.local" = "ローカル";
+"marketplace.row.reveal" = "Finderで表示";
 "marketplace.add.tab.custom" = "カスタムURL";
 "marketplace.add.section.git.url" = "GitリポジトリURL";
 "marketplace.add.section.display.name" = "表示名";
@@ -828,3 +851,64 @@
 "diagnostics.verbose.warning" = "大量のログが生成されます — 完了後は無効にしてください";
 "diagnostics.export.title" = "TermQ 診断レポート";
 "diagnostics.export.footer" = "TermQ 内蔵診断ツール経由で提出。";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "複製";
+"harness.duplicate.installing" = "複製をインストール中…";
+"harness.duplicate.success %@" = "%@ が正常にインストールされました。";
+"harness.duplicate.title" = "ハーネスを複製";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "サンプル eyelock/assistants を追加";
+"harnesses.create.harness.button" = "新しいハーネスを作成";
+"harnesses.empty.no.registries.message" = "ハーネスもレジストリもまだインストールされていません。";
+"harnesses.export.button" = "マーケットプレイスとしてエクスポート…";
+"harnesses.group.default" = "デフォルト";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "ローカル";
+"harnesses.group.menu.settings" = "設定…";
+"harnesses.group.registry %@" = "レジストリ: %@";
+"harnesses.install.browsing" = "利用可能なハーネスを読み込み中…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "ブランチ、タグ、またはコミットSHA（任意）";
+"harnesses.install.retry" = "再試行";
+"harnesses.install.section.available" = "レジストリから利用可能";
+"harnesses.install.section.installed" = "インストール済み";
+"harnesses.install.section.local" = "ローカルで利用可能";
+"harnesses.outdated.capabilities.unknown" = "不明";
+"harnesses.outdated.detail %@ %@" = "YNH は機能 %1$@ を報告していますが、TermQ は %2$@ 以降が必要です。マーケットプレイスとハーネス編集機能を有効にするには YNH を更新してください。";
+"harnesses.outdated.headline" = "YNH のアップグレードが必要です";
+"harnesses.search.button" = "ハーネスを検索";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "ブランチ、タグ、またはコミットSHA（任意）";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "すべてのマーケットプレイスを更新";
+"marketplace.restore.defaults" = "デフォルトに戻す";
+"marketplace.restore.defaults.help" = "デフォルトのマーケットプレイスを再追加";
+"marketplace.row.pinned.help %@" = "%@ に固定済み";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "新しいターミナルで安全な貼り付けを有効にする";
+"settings.default.safe.paste.help" = "新しいターミナルはデフォルトで安全な貼り付けが有効になります。カードエディタでターミナルごとに変更できます。";
+"settings.scrollback.invalid" = "500 から 100,000 の間の数値を入力してください";
+"settings.scrollback.label" = "スクロールバック";
+"settings.scrollback.lines.help" = "スクロール履歴に保持する行数（500〜100,000）。変更は新しいターミナルに適用されます。";
+"settings.scrollback.unit" = "行";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@（最低 %2$@）";
+"settings.ynh.capabilities.label" = "機能:";
+"settings.ynh.capabilities.unknown" = "不明";
+"settings.ynh.docs.link.label" = "YNH ドキュメント →";
+"settings.ynh.outdated.badge" = "アップグレードが必要です";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "マージ済みブランチを削除";
+"sidebar.prune.branches.confirm" = "ブランチを削除";
+"sidebar.prune.branches.explanation" = "これらのブランチはリモートのデフォルトブランチに完全にマージされており、アクティブな worktree がありません。削除は安全で元に戻せません。";
+"sidebar.prune.branches.nothing.message" = "マージ済みのブランチが見つかりませんでした。リモートのデフォルトブランチにまだマージされていないブランチは保持されます。";
+"sidebar.prune.branches.nothing.title" = "削除するものがありません";
+"sidebar.prune.branches.title" = "マージ済みブランチを削除";
+"sidebar.worktree.open.in" = "次で開く…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "ターミナルを開く";

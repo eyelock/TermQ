@@ -582,6 +582,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "حذف الفرع";
+"sidebar.branch.delete.title" = "حذف الفرع";
+"sidebar.branch.delete.confirm" = "حذف";
+"sidebar.branch.delete.message %@" = "حذف الفرع المحلي \"%@\"؟ لا يمكن التراجع عن هذا الإجراء.";
+"sidebar.branch.destroy" = "إتلاف الفرع";
+"sidebar.branch.destroy.title" = "إتلاف الفرع";
+"sidebar.branch.destroy.confirm" = "إتلاف";
+"sidebar.branch.destroy.message %@" = "حذف الفرع المحلي \"%@\" قسراً؟ سيُفقد أي commits غير مدمجة ولا يمكن التراجع عن ذلك.";
+"sidebar.branch.update.from.origin" = "تحديث من Origin";
 
 // Checkout branch as worktree sheet
 
@@ -710,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "هذا الـ harness مرتبط بـ %ld مستودع(ات) عمل — ستُمسح تلك الارتباطات.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld محطة (محطات) طرفية تُشغّل هذا الـ harness حاليًا.";
 "harnesses.uninstall.alert.confirm" = "إلغاء التثبيت";
+"harnesses.delete.local.button" = "حذف Harness";
+"harnesses.delete.local.title %@" = "حذف \"%@\"؟";
+"harnesses.delete.local.message" = "سيؤدي ذلك إلى إلغاء تثبيت Harness من YNH وحذف ملفاته نهائياً. لا يمكن التراجع عن هذا الإجراء.";
+"harnesses.delete.local.confirm" = "حذف Harness";
 "harnesses.more.actions.help" = "إجراءات أخرى";
 "harnesses.copy.run.command" = "نسخ أمر التشغيل";
 "harnesses.ynh.documentation" = "توثيق YNH";
@@ -748,6 +762,15 @@
 "marketplace.row.never.fetched" = "لم يُجلب أبداً";
 "marketplace.add.sheet.title" = "إضافة سوق";
 "marketplace.add.tab.known" = "المعروفة";
+"marketplace.group.default" = "افتراضي";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "محلي";
+"marketplace.add.tab.local" = "مجلد محلي";
+"marketplace.add.section.local.path" = "مسار المجلد";
+"marketplace.add.local.browse" = "اختر مجلداً…";
+"marketplace.add.local.path.placeholder" = "/مسار/إلى/marketplace";
+"marketplace.row.local" = "محلي";
+"marketplace.row.reveal" = "إظهار في Finder";
 "marketplace.add.tab.custom" = "عنوان URL مخصص";
 "marketplace.add.section.git.url" = "عنوان URL لمستودع Git";
 "marketplace.add.section.display.name" = "الاسم المعروض";
@@ -828,3 +851,64 @@
 "diagnostics.verbose.warning" = "حجم كبير — أوقف التشغيل عند الانتهاء";
 "diagnostics.export.title" = "تقرير تشخيصات TermQ";
 "diagnostics.export.footer" = "مُقدَّم عبر أداة التشخيص المدمجة في TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "تكرار";
+"harness.duplicate.installing" = "جارٍ تثبيت النسخة المكررة…";
+"harness.duplicate.success %@" = "تم تثبيت %@ بنجاح.";
+"harness.duplicate.title" = "تكرار الـ harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "إضافة نموذج eyelock/assistants";
+"harnesses.create.harness.button" = "إنشاء harness جديد";
+"harnesses.empty.no.registries.message" = "لم يتم تثبيت أي harness أو سجلات بعد.";
+"harnesses.export.button" = "تصدير كـ marketplace…";
+"harnesses.group.default" = "افتراضي";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "محلي";
+"harnesses.group.menu.settings" = "الإعدادات…";
+"harnesses.group.registry %@" = "السجل: %@";
+"harnesses.install.browsing" = "جارٍ تحميل الـ harness المتاحة…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "فرع أو وسم أو SHA الإيداع (اختياري)";
+"harnesses.install.retry" = "إعادة المحاولة";
+"harnesses.install.section.available" = "متاح من السجلات";
+"harnesses.install.section.installed" = "مثبَّت";
+"harnesses.install.section.local" = "متاح محلياً";
+"harnesses.outdated.capabilities.unknown" = "غير معروف";
+"harnesses.outdated.detail %@ %@" = "يُبلِّغ YNH عن قدرات %1$@، لكن TermQ يتطلب %2$@ أو أحدث. حدِّث YNH لتفعيل ميزات marketplace وتعديل الـ harness.";
+"harnesses.outdated.headline" = "مطلوب تحديث YNH";
+"harnesses.search.button" = "البحث عن harness";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "فرع أو وسم أو SHA الإيداع (اختياري)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "تحديث جميع الـ marketplace";
+"marketplace.restore.defaults" = "استعادة الافتراضيات";
+"marketplace.restore.defaults.help" = "إعادة إضافة الـ marketplace الافتراضية";
+"marketplace.row.pinned.help %@" = "مثبَّت على %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "تمكين اللصق الآمن للطرفيات الجديدة";
+"settings.default.safe.paste.help" = "ستتوفر اللصق الآمن مفعَّلاً افتراضياً في الطرفيات الجديدة. يمكنك تغيير ذلك لكل طرفية في محرر البطاقة.";
+"settings.scrollback.invalid" = "أدخل رقماً بين 500 و100,000";
+"settings.scrollback.label" = "سجل التمرير";
+"settings.scrollback.lines.help" = "الأسطر المحفوظة في سجل التمرير (500–100,000). تُطبَّق التغييرات على الطرفيات الجديدة.";
+"settings.scrollback.unit" = "أسطر";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (الحد الأدنى %2$@)";
+"settings.ynh.capabilities.label" = "القدرات:";
+"settings.ynh.capabilities.unknown" = "غير معروف";
+"settings.ynh.docs.link.label" = "توثيق YNH →";
+"settings.ynh.outdated.badge" = "مطلوب تحديث";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "حذف الفروع المدموجة";
+"sidebar.prune.branches.confirm" = "حذف الفروع";
+"sidebar.prune.branches.explanation" = "هذه الفروع مدموجة بالكامل في الفرع البعيد الافتراضي وليس لها worktree نشط. الحذف آمن ولا يمكن التراجع عنه.";
+"sidebar.prune.branches.nothing.message" = "لم يتم العثور على فروع مدموجة. الفروع التي لم تُدمج بعد في الفرع البعيد الافتراضي تُحتفظ بها.";
+"sidebar.prune.branches.nothing.title" = "لا شيء للحذف";
+"sidebar.prune.branches.title" = "حذف الفروع المدموجة";
+"sidebar.worktree.open.in" = "فتح في…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "فتح الطرفيات";

@@ -571,6 +571,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Eliminar ramo";
+"sidebar.branch.delete.title" = "Eliminar ramo";
+"sidebar.branch.delete.confirm" = "Eliminar";
+"sidebar.branch.delete.message %@" = "Eliminar o ramo local \"%@\"? Esta ação não pode ser revertida.";
+"sidebar.branch.destroy" = "Destruir ramo";
+"sidebar.branch.destroy.title" = "Destruir ramo";
+"sidebar.branch.destroy.confirm" = "Destruir";
+"sidebar.branch.destroy.message %@" = "Forçar a eliminação do ramo local \"%@\"? Serão descartados os commits não fundidos e a ação não pode ser revertida.";
+"sidebar.branch.update.from.origin" = "Atualizar a partir da Origem";
 
 // Checkout branch as worktree sheet
 
@@ -715,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Este harness está ligado a %ld worktree(s) — essas associações serão eliminadas.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(is) estão actualmente a executar este harness.";
 "harnesses.uninstall.alert.confirm" = "Desinstalar";
+"harnesses.delete.local.button" = "Eliminar harness";
+"harnesses.delete.local.title %@" = "Eliminar \"%@\"?";
+"harnesses.delete.local.message" = "Isto irá desinstalar o harness do YNH e eliminar permanentemente os seus ficheiros. Esta ação não pode ser revertida.";
+"harnesses.delete.local.confirm" = "Eliminar harness";
 "harnesses.more.actions.help" = "Mais acções";
 "harnesses.copy.run.command" = "Copiar comando de execução";
 "harnesses.ynh.documentation" = "Documentação YNH";
@@ -753,6 +767,15 @@
 "marketplace.row.never.fetched" = "Nunca obtido";
 "marketplace.add.sheet.title" = "Adicionar marketplace";
 "marketplace.add.tab.known" = "Conhecidos";
+"marketplace.group.default" = "Predefinição";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Pasta local";
+"marketplace.add.section.local.path" = "Caminho da pasta";
+"marketplace.add.local.browse" = "Escolher pasta…";
+"marketplace.add.local.path.placeholder" = "/caminho/para/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Mostrar no Finder";
 "marketplace.add.tab.custom" = "URL personalizado";
 "marketplace.add.section.git.url" = "URL do repositório Git";
 "marketplace.add.section.display.name" = "Nome a apresentar";
@@ -833,3 +856,64 @@
 "diagnostics.verbose.warning" = "Volume elevado — desative quando terminar";
 "diagnostics.export.title" = "Relatório de diagnósticos do TermQ";
 "diagnostics.export.footer" = "Enviado pelo diagnóstico integrado do TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplicar";
+"harness.duplicate.installing" = "A instalar duplicado…";
+"harness.duplicate.success %@" = "%@ instalado com sucesso.";
+"harness.duplicate.title" = "Duplicar harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Adicionar exemplo eyelock/assistants";
+"harnesses.create.harness.button" = "Criar um novo harness";
+"harnesses.empty.no.registries.message" = "Ainda não há harnesses nem registos instalados.";
+"harnesses.export.button" = "Exportar como marketplace…";
+"harnesses.group.default" = "Predefinição";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Local";
+"harnesses.group.menu.settings" = "Definições…";
+"harnesses.group.registry %@" = "Registo: %@";
+"harnesses.install.browsing" = "A carregar harnesses disponíveis…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag ou SHA de commit (opcional)";
+"harnesses.install.retry" = "Tentar novamente";
+"harnesses.install.section.available" = "Disponível nos registos";
+"harnesses.install.section.installed" = "Instalado";
+"harnesses.install.section.local" = "Disponível localmente";
+"harnesses.outdated.capabilities.unknown" = "desconhecido";
+"harnesses.outdated.detail %@ %@" = "O YNH reporta capacidades %1$@, mas o TermQ requer %2$@ ou mais recente. Actualize o YNH para activar as funcionalidades de marketplace e edição de harness.";
+"harnesses.outdated.headline" = "Actualização do YNH necessária";
+"harnesses.search.button" = "Procurar harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tag ou SHA de commit (opcional)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Actualizar todos os marketplaces";
+"marketplace.restore.defaults" = "Restaurar predefinições";
+"marketplace.restore.defaults.help" = "Adicionar novamente os marketplaces predefinidos";
+"marketplace.row.pinned.help %@" = "Fixado em %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Activar colagem segura para novos terminais";
+"settings.default.safe.paste.help" = "Os novos terminais terão a colagem segura activada por predefinição. Pode alterar isto por terminal no editor de cartão.";
+"settings.scrollback.invalid" = "Introduza um número entre 500 e 100.000";
+"settings.scrollback.label" = "Histórico de deslocamento";
+"settings.scrollback.lines.help" = "Linhas guardadas no histórico de deslocamento (500–100.000). As alterações aplicam-se aos novos terminais.";
+"settings.scrollback.unit" = "linhas";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (mínimo %2$@)";
+"settings.ynh.capabilities.label" = "Capacidades:";
+"settings.ynh.capabilities.unknown" = "desconhecido";
+"settings.ynh.docs.link.label" = "Documentação do YNH →";
+"settings.ynh.outdated.badge" = "Actualização necessária";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Remover branches fundidos";
+"sidebar.prune.branches.confirm" = "Eliminar branches";
+"sidebar.prune.branches.explanation" = "Estes branches estão completamente fundidos no branch remoto predefinido e não têm worktree activo. Eliminá-los é seguro e não pode ser desfeito.";
+"sidebar.prune.branches.nothing.message" = "Nenhum branch fundido encontrado. Os branches ainda não fundidos no branch remoto predefinido são mantidos.";
+"sidebar.prune.branches.nothing.title" = "Nada para remover";
+"sidebar.prune.branches.title" = "Remover branches fundidos";
+"sidebar.worktree.open.in" = "Abrir em…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Abrir terminais";

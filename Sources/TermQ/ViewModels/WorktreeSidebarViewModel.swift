@@ -48,6 +48,8 @@ final class WorktreeSidebarViewModel: ObservableObject {
     @Published var expandedRepoIDs: Set<UUID> = []
     @Published var expandedBranchSectionIDs: Set<UUID> = []
     @Published private(set) var deletingWorktreeIDs: Set<String> = []
+    @Published private(set) var updatingWorktreeIDs: Set<String> = []
+    @Published private(set) var fetchingBranchNames: Set<String> = []
 
     private let gitService: any GitServiceProtocol
     private let persistence: any RepoPersistenceProtocol
@@ -218,6 +220,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
         }
     }
 
+    func moveRepository(from source: IndexSet, to destination: Int) {
+        repositories.move(fromOffsets: source, toOffset: destination)
+        save()
+    }
+
     func removeRepository(_ repo: ObservableRepository) {
         stopMonitor(for: repo.id)
         repositories.removeAll { $0.id == repo.id }
@@ -256,7 +263,13 @@ final class WorktreeSidebarViewModel: ObservableObject {
         defer { if isInitialLoad { loadingRepos.remove(repo.id) } }
         do {
             let trees = try await gitService.listWorktrees(repoPath: repo.path)
-            worktrees[repo.id] = trees
+            worktrees[repo.id] = trees.sorted {
+                if $0.isMainWorktree { return true }
+                if $1.isMainWorktree { return false }
+                let lhs = $0.branch ?? ""
+                let rhs = $1.branch ?? ""
+                return lhs.localizedCaseInsensitiveCompare(rhs) == .orderedAscending
+            }
         } catch {
             if TermQLogger.fileLoggingEnabled {
                 TermQLogger.ui.error("WorktreeSidebarViewModel: refreshWorktrees failed error=\(error)")
@@ -276,7 +289,10 @@ final class WorktreeSidebarViewModel: ObservableObject {
         do {
             let all = try await gitService.listBranches(repoPath: repo.path)
             let occupied = Set(worktrees[repo.id]?.compactMap(\.branch) ?? [])
-            availableBranches[repo.id] = all.filter { !occupied.contains($0) }
+            availableBranches[repo.id] =
+                all
+                .filter { !occupied.contains($0) }
+                .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         } catch {
             availableBranches[repo.id] = availableBranches[repo.id] ?? []
         }
@@ -355,6 +371,10 @@ final class WorktreeSidebarViewModel: ObservableObject {
         return branches.filter { !protected.contains($0) }
     }
 
+    func isProtectedBranch(_ branch: String, for repo: ObservableRepository) -> Bool {
+        effectiveProtectedBranches(for: repo).contains(branch)
+    }
+
     private func effectiveProtectedBranches(for repo: ObservableRepository) -> [String] {
         if let override = repo.protectedBranches {
             return override
@@ -370,6 +390,30 @@ final class WorktreeSidebarViewModel: ObservableObject {
             try await gitService.deleteLocalBranch(repoPath: repo.path, branch: branch)
         }
         await refreshAvailableBranches(for: repo)
+    }
+
+    func deleteBranch(repo: ObservableRepository, branch: String) async throws {
+        try await gitService.deleteLocalBranch(repoPath: repo.path, branch: branch)
+        await refreshAvailableBranches(for: repo)
+    }
+
+    func forceDeleteBranch(repo: ObservableRepository, branch: String) async throws {
+        try await gitService.forceDeleteLocalBranch(repoPath: repo.path, branch: branch)
+        await refreshAvailableBranches(for: repo)
+    }
+
+    func fetchBranchFromOrigin(repo: ObservableRepository, branch: String) async throws {
+        fetchingBranchNames.insert(branch)
+        defer { fetchingBranchNames.remove(branch) }
+        try await gitService.fetchBranchFromOrigin(repoPath: repo.path, branch: branch)
+        await refreshAvailableBranches(for: repo)
+    }
+
+    func pullBranch(worktree: GitWorktree, repo: ObservableRepository) async throws {
+        updatingWorktreeIDs.insert(worktree.id)
+        defer { updatingWorktreeIDs.remove(worktree.id) }
+        try await gitService.pullBranch(worktreePath: worktree.path)
+        await refreshWorktrees(for: repo)
     }
 
     /// Infer a worktree directory path based on the repo's base path convention.

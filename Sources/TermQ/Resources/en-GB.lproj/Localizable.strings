@@ -580,6 +580,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Delete Branch";
+"sidebar.branch.delete.title" = "Delete Branch";
+"sidebar.branch.delete.confirm" = "Delete";
+"sidebar.branch.delete.message %@" = "Delete the local branch \"%@\"? This cannot be undone.";
+"sidebar.branch.destroy" = "Destroy Branch";
+"sidebar.branch.destroy.title" = "Destroy Branch";
+"sidebar.branch.destroy.confirm" = "Destroy";
+"sidebar.branch.destroy.message %@" = "Force-delete the local branch \"%@\"? This discards any unmerged commits and cannot be undone.";
+"sidebar.branch.update.from.origin" = "Update from Origin";
 
 // Checkout branch as worktree sheet
 
@@ -708,6 +718,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "This harness is linked to %ld worktree(s) — those associations will be cleared.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) are currently running this harness.";
 "harnesses.uninstall.alert.confirm" = "Uninstall";
+"harnesses.delete.local.button" = "Delete Harness";
+"harnesses.delete.local.title %@" = "Delete \"%@\"?";
+"harnesses.delete.local.message" = "This will uninstall the harness from YNH and permanently delete its files. This action cannot be undone.";
+"harnesses.delete.local.confirm" = "Delete Harness";
 "harnesses.more.actions.help" = "More actions";
 "harnesses.copy.run.command" = "Copy Run Command";
 "harnesses.ynh.documentation" = "YNH Documentation";
@@ -746,6 +760,15 @@
 "marketplace.row.never.fetched" = "Not yet fetched";
 "marketplace.add.sheet.title" = "Add Marketplace";
 "marketplace.add.tab.known" = "Known";
+"marketplace.group.default" = "Default";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Local Folder";
+"marketplace.add.section.local.path" = "Folder Path";
+"marketplace.add.local.browse" = "Choose Folder…";
+"marketplace.add.local.path.placeholder" = "/path/to/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Reveal in Finder";
 "marketplace.add.tab.custom" = "Custom URL";
 "marketplace.add.section.git.url" = "Git Repository URL";
 "marketplace.add.section.display.name" = "Display Name";
@@ -826,3 +849,64 @@
 "diagnostics.verbose.warning" = "High volume — disable when done";
 "diagnostics.export.title" = "TermQ Diagnostics Report";
 "diagnostics.export.footer" = "Filed via TermQ built-in diagnostics.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplicate";
+"harness.duplicate.installing" = "Installing duplicate…";
+"harness.duplicate.success %@" = "%@ installed successfully.";
+"harness.duplicate.title" = "Duplicate Harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Add sample eyelock/assistants";
+"harnesses.create.harness.button" = "Create a new harness";
+"harnesses.empty.no.registries.message" = "No harnesses or registries installed yet.";
+"harnesses.export.button" = "Export as Marketplace…";
+"harnesses.group.default" = "Default";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Local";
+"harnesses.group.menu.settings" = "Settings…";
+"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.install.browsing" = "Loading available harnesses…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
+"harnesses.install.retry" = "Retry";
+"harnesses.install.section.available" = "Available from Registries";
+"harnesses.install.section.installed" = "Installed";
+"harnesses.install.section.local" = "Available Locally";
+"harnesses.outdated.capabilities.unknown" = "unknown";
+"harnesses.outdated.detail %@ %@" = "YNH reports capabilities %1$@, but TermQ requires %2$@ or newer. Update YNH to enable marketplace and harness-editing features.";
+"harnesses.outdated.headline" = "YNH upgrade required";
+"harnesses.search.button" = "Search for Harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Refresh all marketplaces";
+"marketplace.restore.defaults" = "Restore Defaults";
+"marketplace.restore.defaults.help" = "Re-add default marketplaces";
+"marketplace.row.pinned.help %@" = "Pinned to %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Enable Safe Paste for New Terminals";
+"settings.default.safe.paste.help" = "New terminals will have Safe Paste enabled by default. You can override this per terminal in the card editor.";
+"settings.scrollback.invalid" = "Enter a number between 500 and 100,000";
+"settings.scrollback.label" = "Scrollback";
+"settings.scrollback.lines.help" = "Lines retained in scroll history (500–100,000). Changes apply to new terminals.";
+"settings.scrollback.unit" = "lines";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Capabilities:";
+"settings.ynh.capabilities.unknown" = "unknown";
+"settings.ynh.docs.link.label" = "YNH Documentation →";
+"settings.ynh.outdated.badge" = "Upgrade required";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Prune Merged Branches";
+"sidebar.prune.branches.confirm" = "Delete Branches";
+"sidebar.prune.branches.explanation" = "These branches are fully merged into the remote default branch and have no active worktree. Deleting them is safe and cannot be undone.";
+"sidebar.prune.branches.nothing.message" = "No merged branches found. Any branches not yet merged into the remote default branch are kept.";
+"sidebar.prune.branches.nothing.title" = "Nothing to Prune";
+"sidebar.prune.branches.title" = "Prune Merged Branches";
+"sidebar.worktree.open.in" = "Open in…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Open Terminals";

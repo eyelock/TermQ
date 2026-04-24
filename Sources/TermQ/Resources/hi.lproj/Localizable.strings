@@ -572,6 +572,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "शाखा हटाएं";
+"sidebar.branch.delete.title" = "शाखा हटाएं";
+"sidebar.branch.delete.confirm" = "हटाएं";
+"sidebar.branch.delete.message %@" = "स्थानीय शाखा \"%@\" को हटाएं? यह क्रिया पूर्ववत नहीं की जा सकती।";
+"sidebar.branch.destroy" = "शाखा नष्ट करें";
+"sidebar.branch.destroy.title" = "शाखा नष्ट करें";
+"sidebar.branch.destroy.confirm" = "नष्ट करें";
+"sidebar.branch.destroy.message %@" = "स्थानीय शाखा \"%@\" को बाध्यकारी रूप से हटाएं? अनमर्ज किए गए commits खो जाएंगे और यह पूर्ववत नहीं किया जा सकता।";
+"sidebar.branch.update.from.origin" = "Origin से अपडेट करें";
 
 // Checkout branch as worktree sheet
 
@@ -716,6 +726,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "यह harness %ld worktree(s) से जुड़ा है — वे संबद्धताएं साफ़ कर दी जाएंगी।";
 "harnesses.uninstall.alert.terminals %ld" = "%ld टर्मिनल वर्तमान में इस harness को चला रहे हैं।";
 "harnesses.uninstall.alert.confirm" = "अनइंस्टॉल करें";
+"harnesses.delete.local.button" = "Harness हटाएं";
+"harnesses.delete.local.title %@" = "\"%@\" हटाएं?";
+"harnesses.delete.local.message" = "यह YNH से harness को अनइंस्टॉल करेगा और इसकी फ़ाइलों को स्थायी रूप से मिटा देगा। यह क्रिया पूर्ववत नहीं की जा सकती।";
+"harnesses.delete.local.confirm" = "Harness हटाएं";
 "harnesses.more.actions.help" = "अधिक क्रियाएं";
 "harnesses.copy.run.command" = "रन कमांड कॉपी करें";
 "harnesses.ynh.documentation" = "YNH दस्तावेज़ीकरण";
@@ -754,6 +768,15 @@
 "marketplace.row.never.fetched" = "कभी प्राप्त नहीं किया";
 "marketplace.add.sheet.title" = "मार्केटप्लेस जोड़ें";
 "marketplace.add.tab.known" = "ज्ञात";
+"marketplace.group.default" = "डिफ़ॉल्ट";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "स्थानीय";
+"marketplace.add.tab.local" = "स्थानीय फ़ोल्डर";
+"marketplace.add.section.local.path" = "फ़ोल्डर पथ";
+"marketplace.add.local.browse" = "फ़ोल्डर चुनें…";
+"marketplace.add.local.path.placeholder" = "/पथ/to/marketplace";
+"marketplace.row.local" = "स्थानीय";
+"marketplace.row.reveal" = "Finder में दिखाएं";
 "marketplace.add.tab.custom" = "कस्टम URL";
 "marketplace.add.section.git.url" = "Git रिपॉज़िटरी URL";
 "marketplace.add.section.display.name" = "प्रदर्शन नाम";
@@ -834,3 +857,64 @@
 "diagnostics.verbose.warning" = "उच्च मात्रा — पूरा होने पर बंद करें";
 "diagnostics.export.title" = "TermQ निदान रिपोर्ट";
 "diagnostics.export.footer" = "TermQ के अंतर्निहित निदान के माध्यम से दर्ज किया गया।";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "डुप्लिकेट करें";
+"harness.duplicate.installing" = "डुप्लिकेट इंस्टॉल हो रहा है…";
+"harness.duplicate.success %@" = "%@ सफलतापूर्वक इंस्टॉल हो गया।";
+"harness.duplicate.title" = "Harness डुप्लिकेट करें";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "उदाहरण eyelock/assistants जोड़ें";
+"harnesses.create.harness.button" = "नया harness बनाएं";
+"harnesses.empty.no.registries.message" = "अभी तक कोई harness या registry इंस्टॉल नहीं है।";
+"harnesses.export.button" = "Marketplace के रूप में निर्यात करें…";
+"harnesses.group.default" = "डिफ़ॉल्ट";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "स्थानीय";
+"harnesses.group.menu.settings" = "सेटिंग्स…";
+"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.install.browsing" = "उपलब्ध harness लोड हो रहे हैं…";
+"harnesses.install.git.ref" = "संदर्भ";
+"harnesses.install.git.ref.placeholder" = "शाखा, टैग या commit SHA (वैकल्पिक)";
+"harnesses.install.retry" = "पुनः प्रयास करें";
+"harnesses.install.section.available" = "Registries से उपलब्ध";
+"harnesses.install.section.installed" = "इंस्टॉल है";
+"harnesses.install.section.local" = "स्थानीय रूप से उपलब्ध";
+"harnesses.outdated.capabilities.unknown" = "अज्ञात";
+"harnesses.outdated.detail %@ %@" = "YNH क्षमताएं %1$@ रिपोर्ट करता है, लेकिन TermQ को %2$@ या नए की आवश्यकता है। marketplace और harness-संपादन सुविधाएं सक्षम करने के लिए YNH अपडेट करें।";
+"harnesses.outdated.headline" = "YNH अपग्रेड आवश्यक है";
+"harnesses.search.button" = "Harness खोजें";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "शाखा, टैग या commit SHA (वैकल्पिक)";
+"marketplace.add.section.ref" = "संदर्भ";
+"marketplace.refresh.all.help" = "सभी marketplace रिफ्रेश करें";
+"marketplace.restore.defaults" = "डिफ़ॉल्ट पुनर्स्थापित करें";
+"marketplace.restore.defaults.help" = "डिफ़ॉल्ट marketplace दोबारा जोड़ें";
+"marketplace.row.pinned.help %@" = "%@ पर पिन किया गया";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "नए टर्मिनलों के लिए सुरक्षित पेस्ट सक्षम करें";
+"settings.default.safe.paste.help" = "नए टर्मिनलों में डिफ़ॉल्ट रूप से सुरक्षित पेस्ट सक्षम रहेगी। आप इसे कार्ड संपादक में प्रत्येक टर्मिनल के लिए बदल सकते हैं।";
+"settings.scrollback.invalid" = "500 से 100,000 के बीच की संख्या दर्ज करें";
+"settings.scrollback.label" = "स्क्रॉल इतिहास";
+"settings.scrollback.lines.help" = "स्क्रॉल इतिहास में सुरक्षित पंक्तियाँ (500–100,000)। परिवर्तन नए टर्मिनलों पर लागू होते हैं।";
+"settings.scrollback.unit" = "पंक्तियाँ";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (न्यूनतम %2$@)";
+"settings.ynh.capabilities.label" = "क्षमताएं:";
+"settings.ynh.capabilities.unknown" = "अज्ञात";
+"settings.ynh.docs.link.label" = "YNH दस्तावेज़ीकरण →";
+"settings.ynh.outdated.badge" = "अपग्रेड आवश्यक";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "मर्ज की गई शाखाएं हटाएं";
+"sidebar.prune.branches.confirm" = "शाखाएं हटाएं";
+"sidebar.prune.branches.explanation" = "ये शाखाएं रिमोट डिफ़ॉल्ट शाखा में पूरी तरह मर्ज हो चुकी हैं और इनमें कोई सक्रिय worktree नहीं है। हटाना सुरक्षित है और पूर्ववत नहीं किया जा सकता।";
+"sidebar.prune.branches.nothing.message" = "कोई मर्ज की गई शाखाएं नहीं मिलीं। वे शाखाएं जो अभी तक रिमोट डिफ़ॉल्ट शाखा में मर्ज नहीं हुई हैं, रखी जाएंगी।";
+"sidebar.prune.branches.nothing.title" = "हटाने के लिए कुछ नहीं";
+"sidebar.prune.branches.title" = "मर्ज की गई शाखाएं हटाएं";
+"sidebar.worktree.open.in" = "इसमें खोलें…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "टर्मिनल खोलें";

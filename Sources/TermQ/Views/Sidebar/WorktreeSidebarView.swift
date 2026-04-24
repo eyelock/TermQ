@@ -25,6 +25,10 @@ struct WorktreeSidebarView: View {
     @State private var isShowingPruneNothingAlert = false
     @State private var isPruneAnalysing = false
     @State private var pruneBranchesSheetFor: ObservableRepository?
+    @State private var branchToDelete: (ObservableRepository, String)?
+    @State private var isShowingDeleteBranchAlert = false
+    @State private var branchToDestroy: (ObservableRepository, String)?
+    @State private var isShowingDestroyBranchAlert = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -104,6 +108,44 @@ struct WorktreeSidebarView: View {
                 Text(Strings.Sidebar.deleteWorktreeMessage(worktree.path))
             }
         }
+        .alert(Strings.Sidebar.deleteBranchTitle, isPresented: $isShowingDeleteBranchAlert) {
+            Button(Strings.Sidebar.deleteBranchConfirm, role: .destructive) {
+                if let (repo, branch) = branchToDelete {
+                    Task {
+                        do {
+                            try await viewModel.deleteBranch(repo: repo, branch: branch)
+                        } catch {
+                            viewModel.operationError = error.localizedDescription
+                        }
+                    }
+                    branchToDelete = nil
+                }
+            }
+            Button(Strings.Sidebar.cancelButton, role: .cancel) { branchToDelete = nil }
+        } message: {
+            if let (_, branch) = branchToDelete {
+                Text(Strings.Sidebar.deleteBranchMessage(branch))
+            }
+        }
+        .alert(Strings.Sidebar.destroyBranchTitle, isPresented: $isShowingDestroyBranchAlert) {
+            Button(Strings.Sidebar.destroyBranchConfirm, role: .destructive) {
+                if let (repo, branch) = branchToDestroy {
+                    Task {
+                        do {
+                            try await viewModel.forceDeleteBranch(repo: repo, branch: branch)
+                        } catch {
+                            viewModel.operationError = error.localizedDescription
+                        }
+                    }
+                    branchToDestroy = nil
+                }
+            }
+            Button(Strings.Sidebar.cancelButton, role: .cancel) { branchToDestroy = nil }
+        } message: {
+            if let (_, branch) = branchToDestroy {
+                Text(Strings.Sidebar.destroyBranchMessage(branch))
+            }
+        }
         .alert(
             Strings.Alert.error,
             isPresented: Binding(
@@ -170,8 +212,13 @@ struct WorktreeSidebarView: View {
     // MARK: - Repository List
 
     private var repoList: some View {
-        List(viewModel.repositories) { repo in
-            repoRow(repo)
+        List {
+            ForEach(viewModel.repositories) { repo in
+                repoRow(repo)
+            }
+            .onMove { from, to in
+                viewModel.moveRepository(from: from, to: to)
+            }
         }
         .listStyle(.sidebar)
     }
@@ -324,7 +371,8 @@ struct WorktreeSidebarView: View {
                 worktree: worktree,
                 allWorktrees: allWorktrees,
                 boardVM: boardVM,
-                isDeleting: viewModel.deletingWorktreeIDs.contains(worktree.id)
+                isDeleting: viewModel.deletingWorktreeIDs.contains(worktree.id),
+                isUpdating: viewModel.updatingWorktreeIDs.contains(worktree.id)
             )
 
             VStack(alignment: .leading, spacing: 1) {
@@ -379,8 +427,13 @@ struct WorktreeSidebarView: View {
         .contextMenu { worktreeContextMenu(worktree, repo: repo) }
     }
 
+}
+
+// MARK: - Context Menus
+
+extension WorktreeSidebarView {
     @ViewBuilder
-    private func branchRow(_ branch: String, repo: ObservableRepository) -> some View {
+    fileprivate func branchRow(_ branch: String, repo: ObservableRepository) -> some View {
         HStack(spacing: 6) {
             Image(systemName: "arrow.triangle.branch")
                 .imageScale(.small)
@@ -393,6 +446,12 @@ struct WorktreeSidebarView: View {
                 .foregroundColor(.primary)
 
             Spacer()
+
+            if viewModel.fetchingBranchNames.contains(branch) {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .controlSize(.mini)
+            }
         }
         .padding(.leading, 4)
         .contentShape(Rectangle())
@@ -400,17 +459,54 @@ struct WorktreeSidebarView: View {
             Button {
                 newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: branch)
             } label: {
-                Label(Strings.Sidebar.newWorktree, systemImage: "plus")
+                Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
+            }
+
+            Divider()
+
+            Button {
+                openBranchOnRemote(branch: branch, repo: repo)
+            } label: {
+                Label(Strings.Sidebar.openRemoteBranch, systemImage: "network")
+            }
+
+            Button {
+                Task {
+                    do {
+                        try await viewModel.fetchBranchFromOrigin(repo: repo, branch: branch)
+                    } catch {
+                        viewModel.operationError = error.localizedDescription
+                    }
+                }
+            } label: {
+                Label(Strings.Sidebar.updateFromOrigin, systemImage: "arrow.down.circle")
+            }
+
+            if !viewModel.isProtectedBranch(branch, for: repo) {
+                Divider()
+
+                Button(role: .destructive) {
+                    branchToDelete = (repo, branch)
+                    isShowingDeleteBranchAlert = true
+                } label: {
+                    Label(Strings.Sidebar.deleteBranch, systemImage: "minus.circle")
+                }
+
+                Button(role: .destructive) {
+                    branchToDestroy = (repo, branch)
+                    isShowingDestroyBranchAlert = true
+                } label: {
+                    Label(Strings.Sidebar.destroyBranch, systemImage: "trash")
+                }
             }
         }
     }
 
     @ViewBuilder
-    private func worktreeContextMenu(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
+    fileprivate func worktreeContextMenu(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
         let effectiveHarness =
             ynhPersistence.harness(for: worktree.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
 
-        // Launch harness is the primary action when one is configured — show it first.
         if let harnessName = effectiveHarness {
             Button {
                 onLaunchHarness?(harnessName, worktree.path, worktree.branch)
@@ -426,7 +522,6 @@ struct WorktreeSidebarView: View {
         } label: {
             Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
         }
-
         Button {
             boardVM.addTerminal(
                 workingDirectory: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
@@ -442,26 +537,21 @@ struct WorktreeSidebarView: View {
         } label: {
             Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
         }
-
         Button {
             openInTerminal(path: worktree.path)
         } label: {
             Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
         }
-
         Button {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(worktree.path, forType: .string)
         } label: {
             Label(Strings.Sidebar.copyPathname, systemImage: "doc.on.clipboard")
         }
-
         if !editorRegistry.available.isEmpty {
             Menu(Strings.Sidebar.openIn) {
                 ForEach(editorRegistry.available) { editor in
-                    Button(editor.displayName) {
-                        openIn(editor: editor, worktree: worktree)
-                    }
+                    Button(editor.displayName) { openIn(editor: editor, worktree: worktree) }
                 }
             }
         }
@@ -476,84 +566,89 @@ struct WorktreeSidebarView: View {
                 Label(Strings.Sidebar.openRemoteBranch, systemImage: "network")
             }
         }
-
         Button {
             openRemoteCommit(worktree: worktree, repo: repo)
         } label: {
             Label(Strings.Sidebar.openRemoteCommit, systemImage: "chevron.left.forwardslash.chevron.right")
         }
+        if worktree.branch != nil {
+            Button {
+                Task {
+                    do { try await viewModel.pullBranch(worktree: worktree, repo: repo) } catch {
+                        viewModel.operationError = error.localizedDescription
+                    }
+                }
+            } label: {
+                Label(Strings.Sidebar.updateFromOrigin, systemImage: "arrow.down.circle")
+            }
+        }
 
-        // Group 4: Worktree actions (main worktree only)
+        // Group 4: Main-worktree actions
         if worktree.isMainWorktree {
             Divider()
-
             Button {
                 newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: worktree.branch)
             } label: {
                 Label(Strings.Sidebar.newWorktree, systemImage: "plus")
             }
-
             if !harnessRepository.harnesses.isEmpty {
                 Divider()
                 harnessContextItems(forPath: worktree.path)
             }
         }
 
-        // Group 5: Lock (linked worktrees only)
+        // Groups 5–6: Linked-worktree-only actions
         if !worktree.isMainWorktree {
-            Divider()
-
-            if worktree.isLocked {
-                Button {
-                    Task {
-                        do {
-                            try await viewModel.unlockWorktree(repo: repo, worktree: worktree)
-                        } catch {
-                            viewModel.operationError = error.localizedDescription
-                        }
-                    }
-                } label: {
-                    Label(Strings.Sidebar.unlockWorktree, systemImage: "lock.open")
-                }
-            } else {
-                Button {
-                    Task {
-                        do {
-                            try await viewModel.lockWorktree(repo: repo, worktree: worktree)
-                        } catch {
-                            viewModel.operationError = error.localizedDescription
-                        }
-                    }
-                } label: {
-                    Label(Strings.Sidebar.lockWorktree, systemImage: "lock")
-                }
-            }
-
-            // Group 5.5: Harness linkage (only when harnesses are available)
-            if !harnessRepository.harnesses.isEmpty {
-                Divider()
-                harnessContextItems(forPath: worktree.path)
-            }
-
-            Divider()
-
-            // Group 6: Destructive (linked worktrees only)
-            Button(role: .destructive) {
-                pendingRemoval = (repo, worktree)
-                isShowingRemoveAlert = true
-            } label: {
-                Label(Strings.Sidebar.removeWorktree, systemImage: "minus.circle")
-            }
-
-            Button(role: .destructive) {
-                pendingForceDelete = (repo, worktree)
-                isShowingDeleteAlert = true
-            } label: {
-                Label(Strings.Sidebar.deleteWorktree, systemImage: "trash")
-            }
+            linkedWorktreeContextItems(worktree, repo: repo)
         }
     }
 
+    @ViewBuilder
+    private func linkedWorktreeContextItems(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
+        Divider()
+
+        if worktree.isLocked {
+            Button {
+                Task {
+                    do { try await viewModel.unlockWorktree(repo: repo, worktree: worktree) } catch {
+                        viewModel.operationError = error.localizedDescription
+                    }
+                }
+            } label: {
+                Label(Strings.Sidebar.unlockWorktree, systemImage: "lock.open")
+            }
+        } else {
+            Button {
+                Task {
+                    do { try await viewModel.lockWorktree(repo: repo, worktree: worktree) } catch {
+                        viewModel.operationError = error.localizedDescription
+                    }
+                }
+            } label: {
+                Label(Strings.Sidebar.lockWorktree, systemImage: "lock")
+            }
+        }
+
+        if !harnessRepository.harnesses.isEmpty {
+            Divider()
+            harnessContextItems(forPath: worktree.path)
+        }
+
+        Divider()
+
+        Button(role: .destructive) {
+            pendingRemoval = (repo, worktree)
+            isShowingRemoveAlert = true
+        } label: {
+            Label(Strings.Sidebar.removeWorktree, systemImage: "minus.circle")
+        }
+        Button(role: .destructive) {
+            pendingForceDelete = (repo, worktree)
+            isShowingDeleteAlert = true
+        } label: {
+            Label(Strings.Sidebar.deleteWorktree, systemImage: "trash")
+        }
+    }
 }
 
 // MARK: - Repository Actions
@@ -583,6 +678,16 @@ extension WorktreeSidebarView {
 // MARK: - Remote Navigation
 
 extension WorktreeSidebarView {
+    fileprivate func openBranchOnRemote(branch: String, repo: ObservableRepository) {
+        Task {
+            guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
+                let base = remoteWebURL(from: raw)
+            else { return }
+            let urlStr = base.absoluteString + "/tree/" + branch
+            if let url = URL(string: urlStr) { NSWorkspace.shared.open(url) }
+        }
+    }
+
     fileprivate func openRemoteBranch(worktree: GitWorktree, repo: ObservableRepository) {
         guard let branch = worktree.branch else { return }
         Task {
@@ -679,229 +784,6 @@ extension WorktreeSidebarView {
         let config = NSWorkspace.OpenConfiguration()
         config.addsToRecentItems = false
         NSWorkspace.shared.open([url], withApplicationAt: editor.appURL, configuration: config)
-    }
-}
-
-// MARK: - New Worktree Context
-
-/// Carries the target repository and an optional base-branch seed into
-/// `NewWorktreeSheet`. Lets `sheet(item:)` bind to a single optional while
-/// preserving the branch-row entry point where the clicked branch becomes
-/// the default base for the new worktree.
-private struct NewWorktreeContext: Identifiable {
-    let id = UUID()
-    let repo: ObservableRepository
-    let initialBaseBranch: String?
-}
-
-// MARK: - Repo Disclosure Wrapper
-
-/// Owns the `@State` for a repo's expanded/collapsed state so the `DisclosureGroup`
-/// never mutates the `@ObservableObject` ViewModel synchronously during a SwiftUI render
-/// pass. Doing so caused reentrant NSTableView delegate calls and visible flicker.
-///
-/// - `isExpanded` drives the visual state directly.
-/// - `.onChange(of: isExpanded)` persists to the ViewModel *after* the render completes.
-/// - `.onChange(of: viewModel.expandedRepoIDs)` syncs back when the ViewModel changes
-///   externally (reload, programmatic expand).
-private struct RepoDisclosureView<Content: View, Label: View>: View {
-    let repo: ObservableRepository
-    @ObservedObject var viewModel: WorktreeSidebarViewModel
-    @ViewBuilder let content: () -> Content
-    @ViewBuilder let label: () -> Label
-    @State private var isExpanded: Bool
-
-    init(
-        repo: ObservableRepository,
-        viewModel: WorktreeSidebarViewModel,
-        @ViewBuilder content: @escaping () -> Content,
-        @ViewBuilder label: @escaping () -> Label
-    ) {
-        self.repo = repo
-        self.viewModel = viewModel
-        self.content = content
-        self.label = label
-        self._isExpanded = State(initialValue: viewModel.expandedRepoIDs.contains(repo.id))
-    }
-
-    var body: some View {
-        DisclosureGroup(isExpanded: $isExpanded) {
-            content()
-        } label: {
-            label()
-        }
-        .onChange(of: isExpanded) { _, newValue in
-            viewModel.setExpanded(repo.id, expanded: newValue)
-            if newValue && viewModel.worktrees[repo.id] == nil {
-                Task { await viewModel.refreshWorktrees(for: repo) }
-            }
-        }
-        .onChange(of: viewModel.expandedRepoIDs) { _, ids in
-            let should = ids.contains(repo.id)
-            if isExpanded != should { isExpanded = should }
-        }
-    }
-}
-
-// MARK: - Branch Section Disclosure Wrapper
-
-/// Owns the `@State` for a repo's "Local Branches" section expanded/collapsed state,
-/// using the same deferred-mutation pattern as `RepoDisclosureView` to avoid
-/// reentrant NSTableView calls during SwiftUI render.
-private struct BranchSectionDisclosureView<Content: View>: View {
-    let repo: ObservableRepository
-    @ObservedObject var viewModel: WorktreeSidebarViewModel
-    @ViewBuilder let content: () -> Content
-    var onPruneBranches: (() -> Void)?
-    @State private var isExpanded: Bool
-
-    init(
-        repo: ObservableRepository,
-        viewModel: WorktreeSidebarViewModel,
-        onPruneBranches: (() -> Void)? = nil,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
-        self.repo = repo
-        self.viewModel = viewModel
-        self.onPruneBranches = onPruneBranches
-        self.content = content
-        self._isExpanded = State(initialValue: viewModel.expandedBranchSectionIDs.contains(repo.id))
-    }
-
-    var body: some View {
-        DisclosureGroup(isExpanded: $isExpanded) {
-            content()
-        } label: {
-            Text(Strings.Sidebar.localBranches)
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .textCase(.uppercase)
-                .contextMenu {
-                    Button {
-                        onPruneBranches?()
-                    } label: {
-                        Label(Strings.Sidebar.pruneBranches, systemImage: "scissors")
-                    }
-                }
-        }
-        .onChange(of: isExpanded) { _, newValue in
-            viewModel.setBranchSectionExpanded(repo.id, expanded: newValue)
-        }
-        .onChange(of: viewModel.expandedBranchSectionIDs) { _, ids in
-            let should = ids.contains(repo.id)
-            if isExpanded != should { isExpanded = should }
-        }
-    }
-}
-
-// MARK: - Left Icon
-
-/// Two-slot icon for a worktree row.
-///
-/// Left slot (12 pt, optional):
-/// - Main worktree → `house.fill` (secondary)
-/// - Locked worktree → `lock.fill` (orange)
-/// - Regular worktree → empty
-///
-/// Right slot (14 pt, always present):
-/// - No open terminals → `circle` (secondary)
-/// - N open terminals → `N.circle.fill` (accent, tappable → popover listing terminals)
-private struct WorktreeLeftIcon: View {
-    let worktree: GitWorktree
-    let allWorktrees: [GitWorktree]
-    @ObservedObject var boardVM: BoardViewModel
-    let isDeleting: Bool
-    @State private var showPopover = false
-
-    private var matchingCards: [TerminalCard] {
-        (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
-            .filter { card in
-                guard !card.isDeleted else { return false }
-                let wd = card.workingDirectory
-                let matchesThis = wd == worktree.path || wd.hasPrefix(worktree.path + "/")
-                guard matchesThis else { return false }
-                // Don't count this card if a more-specific sibling worktree owns it
-                // (handles the common case where worktrees live inside the main repo dir)
-                return !allWorktrees.contains { other in
-                    other.id != worktree.id
-                        && other.path.count > worktree.path.count
-                        && (wd == other.path || wd.hasPrefix(other.path + "/"))
-                }
-            }
-    }
-
-    var body: some View {
-        HStack(spacing: 2) {
-            // Left slot — spinner during deletion, otherwise status badge
-            Group {
-                if isDeleting {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .controlSize(.mini)
-                } else if worktree.isMainWorktree {
-                    Image(systemName: "house.fill")
-                        .foregroundColor(.secondary)
-                        .imageScale(.small)
-                } else if worktree.isLocked {
-                    Image(systemName: "lock.fill")
-                        .foregroundColor(.orange)
-                        .imageScale(.small)
-                } else {
-                    Color.clear
-                }
-            }
-            .frame(width: 12)
-
-            // Right slot — terminal count (always shown)
-            let cards = matchingCards
-            if cards.isEmpty {
-                Image(systemName: "circle")
-                    .foregroundColor(.secondary)
-                    .imageScale(.small)
-                    .frame(width: 14)
-            } else {
-                let iconName = cards.count <= 50 ? "\(cards.count).circle.fill" : "circle.fill"
-                Button {
-                    showPopover = true
-                } label: {
-                    Image(systemName: iconName)
-                        .foregroundColor(.accentColor)
-                        .imageScale(.small)
-                        .frame(width: 14)
-                }
-                .buttonStyle(.plain)
-                .help(Strings.Sidebar.terminalBadgeHelp)
-                .popover(isPresented: $showPopover, arrowEdge: .leading) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(cards) { card in
-                            Button {
-                                boardVM.selectCard(card)
-                                showPopover = false
-                            } label: {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "terminal")
-                                        .imageScale(.small)
-                                        .foregroundColor(.secondary)
-                                        .frame(width: 16)
-                                    Text(card.title)
-                                        .lineLimit(1)
-                                }
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 7)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .contentShape(Rectangle())
-                            }
-                            .buttonStyle(.plain)
-                            if card.id != cards.last?.id {
-                                Divider()
-                            }
-                        }
-                    }
-                    .frame(minWidth: 200)
-                    .padding(.vertical, 4)
-                }
-            }
-        }
     }
 }
 

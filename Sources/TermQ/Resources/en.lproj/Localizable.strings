@@ -619,6 +619,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Delete Branch";
+"sidebar.branch.delete.title" = "Delete Branch";
+"sidebar.branch.delete.confirm" = "Delete";
+"sidebar.branch.delete.message %@" = "Delete the local branch \"%@\"? This cannot be undone.";
+"sidebar.branch.destroy" = "Destroy Branch";
+"sidebar.branch.destroy.title" = "Destroy Branch";
+"sidebar.branch.destroy.confirm" = "Destroy";
+"sidebar.branch.destroy.message %@" = "Force-delete the local branch \"%@\"? This discards any unmerged commits and cannot be undone.";
+"sidebar.branch.update.from.origin" = "Update from Origin";
 
 // Checkout branch as worktree sheet
 
@@ -648,6 +658,13 @@
 // Marketplace — sidebar groups
 "marketplace.group.default" = "Default";
 "marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Local Folder";
+"marketplace.add.section.local.path" = "Folder Path";
+"marketplace.add.local.browse" = "Choose Folder…";
+"marketplace.add.local.path.placeholder" = "/path/to/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Reveal in Finder";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Information";
@@ -746,6 +763,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "This harness is linked to %ld worktree(s) — those associations will be cleared.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) are currently running this harness.";
 "harnesses.uninstall.alert.confirm" = "Uninstall";
+"harnesses.delete.local.button" = "Delete Harness";
+"harnesses.delete.local.title %@" = "Delete \"%@\"?";
+"harnesses.delete.local.message" = "This will uninstall the harness from YNH and permanently delete its files. This action cannot be undone.";
+"harnesses.delete.local.confirm" = "Delete Harness";
 "harnesses.more.actions.help" = "More actions";
 "harnesses.copy.run.command" = "Copy Run Command";
 "harnesses.export.button" = "Export as Marketplace…";

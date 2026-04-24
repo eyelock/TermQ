@@ -166,7 +166,17 @@ struct MarketplaceSidebarTab: View {
         }
         .contextMenu {
             Button(Strings.Marketplace.rowRefresh) { Task { await refresh(marketplace) } }
-            if let url = marketplaceBrowserURL(marketplace) {
+            if marketplace.isLocal {
+                Button {
+                    let path =
+                        marketplace.url.hasPrefix("file:///")
+                        ? String(marketplace.url.dropFirst(7))
+                        : marketplace.url
+                    NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
+                } label: {
+                    Label(Strings.Marketplace.rowReveal, systemImage: "folder")
+                }
+            } else if let url = marketplaceBrowserURL(marketplace) {
                 Button {
                     NSWorkspace.shared.open(url)
                 } label: {
@@ -183,6 +193,7 @@ struct MarketplaceSidebarTab: View {
     private enum MarketplaceGroupKind {
         case `default`
         case github(String)
+        case local
     }
 
     private struct MarketplaceGroup {
@@ -192,6 +203,10 @@ struct MarketplaceSidebarTab: View {
     }
 
     private var groupedMarketplaces: [MarketplaceGroup] {
+        let alphaSorted: ([Marketplace]) -> [Marketplace] = { items in
+            items.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        }
+
         let knownURLs = Set(KnownMarketplaces.all.map { $0.url })
         let defaults = store.marketplaces.filter { knownURLs.contains($0.url) }
         let remaining = store.marketplaces.filter { !knownURLs.contains($0.url) }
@@ -200,19 +215,36 @@ struct MarketplaceSidebarTab: View {
 
         if !defaults.isEmpty {
             groups.append(
-                MarketplaceGroup(title: Strings.Marketplace.groupDefault, marketplaces: defaults, kind: .default))
+                MarketplaceGroup(
+                    title: Strings.Marketplace.groupDefault, marketplaces: alphaSorted(defaults), kind: .default))
         }
 
         var byOrg: [String: [Marketplace]] = [:]
+        var local: [Marketplace] = []
+
         for marketplace in remaining {
-            let org = GitURLHelper.repoOwner(marketplace.url) ?? "Other"
-            byOrg[org, default: []].append(marketplace)
+            if marketplace.isLocal {
+                local.append(marketplace)
+            } else {
+                let org = GitURLHelper.repoOwner(marketplace.url) ?? "Other"
+                byOrg[org, default: []].append(marketplace)
+            }
         }
 
         for (org, marketplaces) in byOrg.sorted(by: { $0.key < $1.key }) {
             groups.append(
                 MarketplaceGroup(
-                    title: Strings.Marketplace.groupGitHub(org), marketplaces: marketplaces, kind: .github(org)))
+                    title: Strings.Marketplace.groupGitHub(org),
+                    marketplaces: alphaSorted(marketplaces),
+                    kind: .github(org)
+                )
+            )
+        }
+
+        if !local.isEmpty {
+            groups.append(
+                MarketplaceGroup(
+                    title: Strings.Marketplace.groupLocal, marketplaces: alphaSorted(local), kind: .local))
         }
 
         return groups
@@ -226,14 +258,29 @@ struct MarketplaceSidebarTab: View {
         } label: {
             Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
         }
-        if case .github(let org) = group.kind,
-            let url = URL(string: "https://github.com/\(org)")
-        {
-            Button {
-                NSWorkspace.shared.open(url)
-            } label: {
-                Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
+        switch group.kind {
+        case .github(let org):
+            if let url = URL(string: "https://github.com/\(org)") {
+                Button {
+                    NSWorkspace.shared.open(url)
+                } label: {
+                    Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
+                }
             }
+        case .local:
+            if let first = group.marketplaces.first {
+                Button {
+                    let path =
+                        first.url.hasPrefix("file:///")
+                        ? String(first.url.dropFirst(7))
+                        : first.url
+                    NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
+                } label: {
+                    Label(Strings.Marketplace.rowReveal, systemImage: "folder")
+                }
+            }
+        default:
+            EmptyView()
         }
     }
 
@@ -282,7 +329,15 @@ struct MarketplaceRowView: View {
     }
 
     private var displayName: String {
-        GitURLHelper.shortURL(marketplace.url)
+        if marketplace.isLocal {
+            if !marketplace.name.isEmpty { return marketplace.name }
+            let path =
+                marketplace.url.hasPrefix("file:///")
+                ? String(marketplace.url.dropFirst(7))
+                : marketplace.url
+            return URL(fileURLWithPath: path).lastPathComponent
+        }
+        return GitURLHelper.shortURL(marketplace.url)
     }
 
     var body: some View {

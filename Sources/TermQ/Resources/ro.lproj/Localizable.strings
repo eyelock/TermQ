@@ -582,6 +582,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Șterge ramura";
+"sidebar.branch.delete.title" = "Șterge ramura";
+"sidebar.branch.delete.confirm" = "Șterge";
+"sidebar.branch.delete.message %@" = "Șterge ramura locală \"%@\"? Această acțiune nu poate fi anulată.";
+"sidebar.branch.destroy" = "Distruge ramura";
+"sidebar.branch.destroy.title" = "Distruge ramura";
+"sidebar.branch.destroy.confirm" = "Distruge";
+"sidebar.branch.destroy.message %@" = "Forțezi ștergerea ramurii locale \"%@\"? Commit-urile neîmbinate vor fi pierdute și această acțiune nu poate fi anulată.";
+"sidebar.branch.update.from.origin" = "Actualizează din Origin";
 
 // Checkout branch as worktree sheet
 
@@ -710,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Acest harness este legat de %ld worktree(uri) — aceste asocieri vor fi șterse.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(e) rulează în prezent acest harness.";
 "harnesses.uninstall.alert.confirm" = "Dezinstalare";
+"harnesses.delete.local.button" = "Șterge harness";
+"harnesses.delete.local.title %@" = "Șterge \"%@\"?";
+"harnesses.delete.local.message" = "Aceasta va dezinstala harness-ul din YNH și va șterge definitiv fișierele sale. Această acțiune nu poate fi anulată.";
+"harnesses.delete.local.confirm" = "Șterge harness";
 "harnesses.more.actions.help" = "Mai multe acțiuni";
 "harnesses.copy.run.command" = "Copiați comanda de rulare";
 "harnesses.ynh.documentation" = "Documentație YNH";
@@ -748,6 +762,15 @@
 "marketplace.row.never.fetched" = "Niciodată preluat";
 "marketplace.add.sheet.title" = "Adaugă piață";
 "marketplace.add.tab.known" = "Cunoscute";
+"marketplace.group.default" = "Implicit";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Dosar local";
+"marketplace.add.section.local.path" = "Calea dosarului";
+"marketplace.add.local.browse" = "Alege dosar…";
+"marketplace.add.local.path.placeholder" = "/cale/spre/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Dezvăluire în Finder";
 "marketplace.add.tab.custom" = "URL personalizat";
 "marketplace.add.section.git.url" = "URL depozit Git";
 "marketplace.add.section.display.name" = "Nume afișat";
@@ -828,3 +851,64 @@
 "diagnostics.verbose.warning" = "Volum mare — dezactivează când termini";
 "diagnostics.export.title" = "Raport diagnostic TermQ";
 "diagnostics.export.footer" = "Depus prin diagnosticele integrate TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplica";
+"harness.duplicate.installing" = "Se instalează duplicatul…";
+"harness.duplicate.success %@" = "%@ instalat cu succes.";
+"harness.duplicate.title" = "Duplica harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Adaugă exemplu eyelock/assistants";
+"harnesses.create.harness.button" = "Creează un harness nou";
+"harnesses.empty.no.registries.message" = "Niciun harness sau registru instalat încă.";
+"harnesses.export.button" = "Exportă ca marketplace…";
+"harnesses.group.default" = "Implicit";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Local";
+"harnesses.group.menu.settings" = "Setări…";
+"harnesses.group.registry %@" = "Registru: %@";
+"harnesses.install.browsing" = "Se încarcă harness-urile disponibile…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Ramură, tag sau SHA commit (opțional)";
+"harnesses.install.retry" = "Reîncearcă";
+"harnesses.install.section.available" = "Disponibil din registre";
+"harnesses.install.section.installed" = "Instalat";
+"harnesses.install.section.local" = "Disponibil local";
+"harnesses.outdated.capabilities.unknown" = "necunoscut";
+"harnesses.outdated.detail %@ %@" = "YNH raportează capabilități %1$@, dar TermQ necesită %2$@ sau mai nou. Actualizați YNH pentru a activa funcțiile de marketplace și editare harness.";
+"harnesses.outdated.headline" = "Actualizare YNH necesară";
+"harnesses.search.button" = "Caută harness-uri";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Ramură, tag sau SHA commit (opțional)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Reîmprospătează toate marketplace-urile";
+"marketplace.restore.defaults" = "Restaurează valorile implicite";
+"marketplace.restore.defaults.help" = "Adaugă din nou marketplace-urile implicite";
+"marketplace.row.pinned.help %@" = "Fixat la %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Activează lipirea sigură pentru terminalele noi";
+"settings.default.safe.paste.help" = "Terminalele noi vor avea lipirea sigură activată implicit. Puteți modifica aceasta per terminal în editorul de card.";
+"settings.scrollback.invalid" = "Introduceți un număr între 500 și 100.000";
+"settings.scrollback.label" = "Istoric derulare";
+"settings.scrollback.lines.help" = "Linii păstrate în istoricul de derulare (500–100.000). Modificările se aplică terminalelor noi.";
+"settings.scrollback.unit" = "linii";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Capabilități:";
+"settings.ynh.capabilities.unknown" = "necunoscut";
+"settings.ynh.docs.link.label" = "Documentație YNH →";
+"settings.ynh.outdated.badge" = "Actualizare necesară";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Șterge ramurile fuzionate";
+"sidebar.prune.branches.confirm" = "Șterge ramurile";
+"sidebar.prune.branches.explanation" = "Aceste ramuri sunt complet fuzionate în ramura implicită la distanță și nu au un worktree activ. Ștergerea este sigură și nu poate fi anulată.";
+"sidebar.prune.branches.nothing.message" = "Nu s-au găsit ramuri fuzionate. Ramurile care nu au fost încă fuzionate în ramura implicită la distanță sunt păstrate.";
+"sidebar.prune.branches.nothing.title" = "Nimic de șters";
+"sidebar.prune.branches.title" = "Șterge ramurile fuzionate";
+"sidebar.worktree.open.in" = "Deschide în…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Deschide terminale";

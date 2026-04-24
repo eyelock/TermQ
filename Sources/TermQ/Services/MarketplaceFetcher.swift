@@ -31,11 +31,53 @@ enum MarketplaceFetcher {
 
     // MARK: - Public entry point
 
-    /// Clone the marketplace repo and parse its index.
+    /// Clone the marketplace repo (or read a local folder) and parse its index.
     ///
     /// Returns an updated `Marketplace` with `plugins` populated and `lastFetched` set.
     /// Throws `FetchError` on any failure.
     static func fetch(marketplace: Marketplace) async throws -> Marketplace {
+        if marketplace.isLocal {
+            return try await fetchLocal(marketplace: marketplace)
+        }
+        return try await fetchRemote(marketplace: marketplace)
+    }
+
+    private static func fetchLocal(marketplace: Marketplace) async throws -> Marketplace {
+        let folderPath =
+            marketplace.url.hasPrefix("file:///")
+            ? String(marketplace.url.dropFirst(7))
+            : marketplace.url
+        let folderURL = URL(fileURLWithPath: folderPath)
+
+        let indexRelPath = marketplace.vendor.indexPath
+        let indexURL = folderURL.appendingPathComponent(indexRelPath)
+        guard FileManager.default.fileExists(atPath: indexURL.path) else {
+            throw FetchError.indexNotFound(indexRelPath)
+        }
+        let indexData: Data
+        do { indexData = try Data(contentsOf: indexURL) } catch {
+            throw FetchError.indexMalformed(error.localizedDescription)
+        }
+        let raw: RawMarketplaceIndex
+        do {
+            raw = try JSONDecoder().decode(RawMarketplaceIndex.self, from: indexData)
+        } catch {
+            throw FetchError.indexMalformed(error.localizedDescription)
+        }
+
+        let plugins = raw.plugins.map { mapPlugin($0, cloneRoot: folderURL) }
+
+        var updated = marketplace
+        updated.name = raw.name ?? marketplace.name
+        updated.owner = raw.owner ?? marketplace.owner
+        if let desc = raw.description { updated.description = desc }
+        updated.plugins = plugins
+        updated.lastFetched = Date()
+        updated.fetchError = nil
+        return updated
+    }
+
+    private static func fetchRemote(marketplace: Marketplace) async throws -> Marketplace {
         let gitPath = try findGit()
         let tempDir = FileManager.default.temporaryDirectory
             .appendingPathComponent("termq-mkt-\(UUID().uuidString)", isDirectory: true)

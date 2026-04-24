@@ -571,6 +571,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Branch verwijderen";
+"sidebar.branch.delete.title" = "Branch verwijderen";
+"sidebar.branch.delete.confirm" = "Verwijderen";
+"sidebar.branch.delete.message %@" = "De lokale branch \"%@\" verwijderen? Dit kan niet ongedaan worden gemaakt.";
+"sidebar.branch.destroy" = "Branch vernietigen";
+"sidebar.branch.destroy.title" = "Branch vernietigen";
+"sidebar.branch.destroy.confirm" = "Vernietigen";
+"sidebar.branch.destroy.message %@" = "De lokale branch \"%@\" geforceerd verwijderen? Niet-samengevoegde commits gaan verloren en dit kan niet ongedaan worden gemaakt.";
+"sidebar.branch.update.from.origin" = "Bijwerken vanuit Origin";
 
 // Checkout branch as worktree sheet
 
@@ -715,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Deze harness is gekoppeld aan %ld worktree(s) — die koppelingen worden gewist.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) voeren deze harness momenteel uit.";
 "harnesses.uninstall.alert.confirm" = "Verwijderen";
+"harnesses.delete.local.button" = "Harness verwijderen";
+"harnesses.delete.local.title %@" = "\"%@\" verwijderen?";
+"harnesses.delete.local.message" = "Hiermee wordt de harness verwijderd uit YNH en worden de bestanden permanent gewist. Deze actie kan niet ongedaan worden gemaakt.";
+"harnesses.delete.local.confirm" = "Harness verwijderen";
 "harnesses.more.actions.help" = "Meer acties";
 "harnesses.copy.run.command" = "Opdracht kopiëren";
 "harnesses.ynh.documentation" = "YNH-documentatie";
@@ -753,6 +767,15 @@
 "marketplace.row.never.fetched" = "Nog niet opgehaald";
 "marketplace.add.sheet.title" = "Marktplaats toevoegen";
 "marketplace.add.tab.known" = "Bekend";
+"marketplace.group.default" = "Standaard";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokaal";
+"marketplace.add.tab.local" = "Lokale map";
+"marketplace.add.section.local.path" = "Mappad";
+"marketplace.add.local.browse" = "Map kiezen…";
+"marketplace.add.local.path.placeholder" = "/pad/naar/marktplaats";
+"marketplace.row.local" = "Lokaal";
+"marketplace.row.reveal" = "Tonen in Finder";
 "marketplace.add.tab.custom" = "Aangepaste URL";
 "marketplace.add.section.git.url" = "Git-repository-URL";
 "marketplace.add.section.display.name" = "Weergavenaam";
@@ -833,3 +856,64 @@
 "diagnostics.verbose.warning" = "Hoog volume — uitschakelen als klaar";
 "diagnostics.export.title" = "TermQ Diagnostiekrapport";
 "diagnostics.export.footer" = "Ingediend via de ingebouwde diagnostiek van TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Dupliceren";
+"harness.duplicate.installing" = "Duplicaat wordt geïnstalleerd…";
+"harness.duplicate.success %@" = "%@ succesvol geïnstalleerd.";
+"harness.duplicate.title" = "Harness dupliceren";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Voorbeeldpakket eyelock/assistants toevoegen";
+"harnesses.create.harness.button" = "Nieuwe harness aanmaken";
+"harnesses.empty.no.registries.message" = "Nog geen harnesses of registers geïnstalleerd.";
+"harnesses.export.button" = "Exporteren als marketplace…";
+"harnesses.group.default" = "Standaard";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokaal";
+"harnesses.group.menu.settings" = "Instellingen…";
+"harnesses.group.registry %@" = "Register: %@";
+"harnesses.install.browsing" = "Beschikbare harnesses laden…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag of commit-SHA (optioneel)";
+"harnesses.install.retry" = "Opnieuw proberen";
+"harnesses.install.section.available" = "Beschikbaar via registers";
+"harnesses.install.section.installed" = "Geïnstalleerd";
+"harnesses.install.section.local" = "Lokaal beschikbaar";
+"harnesses.outdated.capabilities.unknown" = "onbekend";
+"harnesses.outdated.detail %@ %@" = "YNH rapporteert mogelijkheden %1$@, maar TermQ vereist %2$@ of nieuwer. Werk YNH bij om marketplace- en harness-bewerkingsfuncties in te schakelen.";
+"harnesses.outdated.headline" = "YNH-update vereist";
+"harnesses.search.button" = "Zoeken naar harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tag of commit-SHA (optioneel)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Alle marketplaces vernieuwen";
+"marketplace.restore.defaults" = "Standaard herstellen";
+"marketplace.restore.defaults.help" = "Standaard-marketplaces opnieuw toevoegen";
+"marketplace.row.pinned.help %@" = "Vastgemaakt aan %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Veilig plakken inschakelen voor nieuwe terminals";
+"settings.default.safe.paste.help" = "Nieuwe terminals hebben veilig plakken standaard ingeschakeld. Je kunt dit per terminal overschrijven in de kaartbewerker.";
+"settings.scrollback.invalid" = "Voer een getal in tussen 500 en 100.000";
+"settings.scrollback.label" = "Scrollgeschiedenis";
+"settings.scrollback.lines.help" = "Regels bewaard in de scrollgeschiedenis (500–100.000). Wijzigingen gelden voor nieuwe terminals.";
+"settings.scrollback.unit" = "regels";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Mogelijkheden:";
+"settings.ynh.capabilities.unknown" = "onbekend";
+"settings.ynh.docs.link.label" = "YNH-documentatie →";
+"settings.ynh.outdated.badge" = "Update vereist";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Samengevoegde branches verwijderen";
+"sidebar.prune.branches.confirm" = "Branches verwijderen";
+"sidebar.prune.branches.explanation" = "Deze branches zijn volledig samengevoegd in de externe standaard-branch en hebben geen actieve worktree. Verwijderen is veilig en kan niet ongedaan worden gemaakt.";
+"sidebar.prune.branches.nothing.message" = "Geen samengevoegde branches gevonden. Branches die nog niet zijn samengevoegd in de externe standaard-branch worden bewaard.";
+"sidebar.prune.branches.nothing.title" = "Niets te verwijderen";
+"sidebar.prune.branches.title" = "Samengevoegde branches verwijderen";
+"sidebar.worktree.open.in" = "Openen in…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Terminals openen";

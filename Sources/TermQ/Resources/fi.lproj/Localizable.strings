@@ -572,6 +572,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Poista haara";
+"sidebar.branch.delete.title" = "Poista haara";
+"sidebar.branch.delete.confirm" = "Poista";
+"sidebar.branch.delete.message %@" = "Poistetaanko paikallinen haara \"%@\"? Tätä ei voi perua.";
+"sidebar.branch.destroy" = "Tuhoa haara";
+"sidebar.branch.destroy.title" = "Tuhoa haara";
+"sidebar.branch.destroy.confirm" = "Tuhoa";
+"sidebar.branch.destroy.message %@" = "Pakotetaanko paikallisen haaran \"%@\" poistaminen? Yhdistämättömät commitit hylätään, eikä tätä voi perua.";
+"sidebar.branch.update.from.origin" = "Päivitä Originista";
 
 // Checkout branch as worktree sheet
 
@@ -716,6 +726,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Tämä harness on linkitetty %ld työtree(hen/hin) — nämä yhteydet poistetaan.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld pääte(ttä) käyttää tällä hetkellä tätä harnessia.";
 "harnesses.uninstall.alert.confirm" = "Poista asennus";
+"harnesses.delete.local.button" = "Poista harness";
+"harnesses.delete.local.title %@" = "Poistetaanko \"%@\"?";
+"harnesses.delete.local.message" = "Tämä poistaa harnessin asennuksen YNH:sta ja poistaa sen tiedostot pysyvästi. Tätä ei voi perua.";
+"harnesses.delete.local.confirm" = "Poista harness";
 "harnesses.more.actions.help" = "Lisää toimintoja";
 "harnesses.copy.run.command" = "Kopioi suorituskomento";
 "harnesses.ynh.documentation" = "YNH-dokumentaatio";
@@ -754,6 +768,15 @@
 "marketplace.row.never.fetched" = "Ei koskaan haettu";
 "marketplace.add.sheet.title" = "Lisää markkinapaikka";
 "marketplace.add.tab.known" = "Tunnetut";
+"marketplace.group.default" = "Oletus";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Paikallinen";
+"marketplace.add.tab.local" = "Paikallinen kansio";
+"marketplace.add.section.local.path" = "Kansion polku";
+"marketplace.add.local.browse" = "Valitse kansio…";
+"marketplace.add.local.path.placeholder" = "/polku/markkinapaikkaan";
+"marketplace.row.local" = "Paikallinen";
+"marketplace.row.reveal" = "Näytä Finderissä";
 "marketplace.add.tab.custom" = "Mukautettu URL";
 "marketplace.add.section.git.url" = "Git-säilön URL";
 "marketplace.add.section.display.name" = "Näyttönimi";
@@ -834,3 +857,64 @@
 "diagnostics.verbose.warning" = "Suuri määrä — poista käytöstä kun valmis";
 "diagnostics.export.title" = "TermQ-diagnostiikkaraportti";
 "diagnostics.export.footer" = "Lähetetty TermQ:n sisäänrakennetun diagnostiikan kautta.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Kopioi";
+"harness.duplicate.installing" = "Asennetaan kopiota…";
+"harness.duplicate.success %@" = "%@ asennettu onnistuneesti.";
+"harness.duplicate.title" = "Kopioi harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Lisää esimerkki eyelock/assistants";
+"harnesses.create.harness.button" = "Luo uusi harness";
+"harnesses.empty.no.registries.message" = "Ei harnessia tai rekisterejä asennettuna.";
+"harnesses.export.button" = "Vie marketplacena…";
+"harnesses.group.default" = "Oletus";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Paikallinen";
+"harnesses.group.menu.settings" = "Asetukset…";
+"harnesses.group.registry %@" = "Rekisteri: %@";
+"harnesses.install.browsing" = "Ladataan saatavilla olevia harnessia…";
+"harnesses.install.git.ref" = "Viite";
+"harnesses.install.git.ref.placeholder" = "Haara, tagi tai commit-SHA (valinnainen)";
+"harnesses.install.retry" = "Yritä uudelleen";
+"harnesses.install.section.available" = "Saatavilla rekistereistä";
+"harnesses.install.section.installed" = "Asennettu";
+"harnesses.install.section.local" = "Saatavilla paikallisesti";
+"harnesses.outdated.capabilities.unknown" = "tuntematon";
+"harnesses.outdated.detail %@ %@" = "YNH ilmoittaa ominaisuudet %1$@, mutta TermQ vaatii %2$@ tai uudemman. Päivitä YNH ottaaksesi käyttöön marketplace- ja harness-muokkausominaisuudet.";
+"harnesses.outdated.headline" = "YNH-päivitys vaaditaan";
+"harnesses.search.button" = "Etsi harnessia";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Haara, tagi tai commit-SHA (valinnainen)";
+"marketplace.add.section.ref" = "Viite";
+"marketplace.refresh.all.help" = "Päivitä kaikki marketplacet";
+"marketplace.restore.defaults" = "Palauta oletukset";
+"marketplace.restore.defaults.help" = "Lisää oletusmarketplacet uudelleen";
+"marketplace.row.pinned.help %@" = "Kiinnitetty kohteeseen %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Ota turvallinen liittäminen käyttöön uusille terminaaleille";
+"settings.default.safe.paste.help" = "Uusissa terminaaleissa on turvallinen liittäminen oletuksena käytössä. Voit muuttaa tätä terminaalikohtaisesti korttieditorissa.";
+"settings.scrollback.invalid" = "Syötä luku väliltä 500–100 000";
+"settings.scrollback.label" = "Vierityshistoria";
+"settings.scrollback.lines.help" = "Vierityshistoriaan tallennetut rivit (500–100 000). Muutokset koskevat uusia terminaaleja.";
+"settings.scrollback.unit" = "riviä";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimi %2$@)";
+"settings.ynh.capabilities.label" = "Ominaisuudet:";
+"settings.ynh.capabilities.unknown" = "tuntematon";
+"settings.ynh.docs.link.label" = "YNH-dokumentaatio →";
+"settings.ynh.outdated.badge" = "Päivitys vaaditaan";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Poista yhdistetyt haarat";
+"sidebar.prune.branches.confirm" = "Poista haarat";
+"sidebar.prune.branches.explanation" = "Nämä haarat on yhdistetty kokonaan etäoletushaaran kanssa, eikä niillä ole aktiivista worktreeta. Poistaminen on turvallista eikä sitä voi kumota.";
+"sidebar.prune.branches.nothing.message" = "Yhdistettyjä haaroja ei löydy. Haarat, joita ei ole vielä yhdistetty etäoletushaaraan, säilytetään.";
+"sidebar.prune.branches.nothing.title" = "Ei poistettavaa";
+"sidebar.prune.branches.title" = "Poista yhdistetyt haarat";
+"sidebar.worktree.open.in" = "Avaa sovelluksessa…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Avaa terminaalit";

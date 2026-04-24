@@ -573,6 +573,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Ta bort gren";
+"sidebar.branch.delete.title" = "Ta bort gren";
+"sidebar.branch.delete.confirm" = "Ta bort";
+"sidebar.branch.delete.message %@" = "Ta bort den lokala grenen \"%@\"? Det går inte att ångra.";
+"sidebar.branch.destroy" = "Förstör gren";
+"sidebar.branch.destroy.title" = "Förstör gren";
+"sidebar.branch.destroy.confirm" = "Förstör";
+"sidebar.branch.destroy.message %@" = "Tvångsbort den lokala grenen \"%@\"? Ej sammanslagare commits kasseras och det går inte att ångra.";
+"sidebar.branch.update.from.origin" = "Uppdatera från Origin";
 
 // Checkout branch as worktree sheet
 
@@ -717,6 +727,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Denna harness är länkad till %ld worktree(s) — dessa kopplingar kommer att rensas.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kör för närvarande denna harness.";
 "harnesses.uninstall.alert.confirm" = "Avinstallera";
+"harnesses.delete.local.button" = "Ta bort harness";
+"harnesses.delete.local.title %@" = "Ta bort \"%@\"?";
+"harnesses.delete.local.message" = "Detta avinstallerar harness från YNH och tar permanent bort dess filer. Åtgärden kan inte ångras.";
+"harnesses.delete.local.confirm" = "Ta bort harness";
 "harnesses.more.actions.help" = "Fler åtgärder";
 "harnesses.copy.run.command" = "Kopiera körkommando";
 "harnesses.ynh.documentation" = "YNH-dokumentation";
@@ -755,6 +769,15 @@
 "marketplace.row.never.fetched" = "Aldrig hämtad";
 "marketplace.add.sheet.title" = "Lägg till marknadsplats";
 "marketplace.add.tab.known" = "Kända";
+"marketplace.group.default" = "Standard";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokal";
+"marketplace.add.tab.local" = "Lokal mapp";
+"marketplace.add.section.local.path" = "Mappsökväg";
+"marketplace.add.local.browse" = "Välj mapp…";
+"marketplace.add.local.path.placeholder" = "/sökväg/till/marknadsplats";
+"marketplace.row.local" = "Lokal";
+"marketplace.row.reveal" = "Visa i Finder";
 "marketplace.add.tab.custom" = "Anpassad URL";
 "marketplace.add.section.git.url" = "Git-lagringsplats-URL";
 "marketplace.add.section.display.name" = "Visningsnamn";
@@ -835,3 +858,64 @@
 "diagnostics.verbose.warning" = "Högt volym — inaktivera när klar";
 "diagnostics.export.title" = "TermQ Diagnostikrapport";
 "diagnostics.export.footer" = "Inskickad via TermQs inbyggda diagnostik.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplicera";
+"harness.duplicate.installing" = "Installerar duplikat…";
+"harness.duplicate.success %@" = "%@ installerat.";
+"harness.duplicate.title" = "Duplicera harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Lägg till exempel eyelock/assistants";
+"harnesses.create.harness.button" = "Skapa ny harness";
+"harnesses.empty.no.registries.message" = "Inga harnesses eller register installerade ännu.";
+"harnesses.export.button" = "Exportera som marketplace…";
+"harnesses.group.default" = "Standard";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokal";
+"harnesses.group.menu.settings" = "Inställningar…";
+"harnesses.group.registry %@" = "Register: %@";
+"harnesses.install.browsing" = "Laddar tillgängliga harnesses…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tagg eller commit-SHA (valfritt)";
+"harnesses.install.retry" = "Försök igen";
+"harnesses.install.section.available" = "Tillgänglig från register";
+"harnesses.install.section.installed" = "Installerad";
+"harnesses.install.section.local" = "Tillgänglig lokalt";
+"harnesses.outdated.capabilities.unknown" = "okänd";
+"harnesses.outdated.detail %@ %@" = "YNH rapporterar funktioner %1$@, men TermQ kräver %2$@ eller senare. Uppdatera YNH för att aktivera marketplace- och harness-redigeringsfunktioner.";
+"harnesses.outdated.headline" = "YNH-uppdatering krävs";
+"harnesses.search.button" = "Sök efter harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tagg eller commit-SHA (valfritt)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Uppdatera alla marketplaces";
+"marketplace.restore.defaults" = "Återställ standardvärden";
+"marketplace.restore.defaults.help" = "Lägg till standardmarketplaces igen";
+"marketplace.row.pinned.help %@" = "Fäst vid %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Aktivera säker inklistring för nya terminaler";
+"settings.default.safe.paste.help" = "Nya terminaler har säker inklistring aktiverat som standard. Du kan ändra detta per terminal i kortets redigerare.";
+"settings.scrollback.invalid" = "Ange ett tal mellan 500 och 100 000";
+"settings.scrollback.label" = "Rullningshistorik";
+"settings.scrollback.lines.help" = "Rader sparade i rullningshistoriken (500–100 000). Ändringar gäller för nya terminaler.";
+"settings.scrollback.unit" = "rader";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Funktioner:";
+"settings.ynh.capabilities.unknown" = "okänd";
+"settings.ynh.docs.link.label" = "YNH-dokumentation →";
+"settings.ynh.outdated.badge" = "Uppdatering krävs";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Ta bort sammanfogade grenar";
+"sidebar.prune.branches.confirm" = "Ta bort grenar";
+"sidebar.prune.branches.explanation" = "Dessa grenar är helt sammanfogade med fjärrstandard-grenen och har ingen aktiv worktree. Det är säkert att ta bort dem och åtgärden kan inte ångras.";
+"sidebar.prune.branches.nothing.message" = "Inga sammanfogade grenar hittades. Grenar som ännu inte sammanfogats med fjärrstandard-grenen bevaras.";
+"sidebar.prune.branches.nothing.title" = "Inget att ta bort";
+"sidebar.prune.branches.title" = "Ta bort sammanfogade grenar";
+"sidebar.worktree.open.in" = "Öppna i…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Öppna terminaler";

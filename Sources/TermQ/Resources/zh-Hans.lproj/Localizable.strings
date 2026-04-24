@@ -582,6 +582,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "删除分支";
+"sidebar.branch.delete.title" = "删除分支";
+"sidebar.branch.delete.confirm" = "删除";
+"sidebar.branch.delete.message %@" = "删除本地分支 \"%@\"？此操作无法撤销。";
+"sidebar.branch.destroy" = "强制删除分支";
+"sidebar.branch.destroy.title" = "强制删除分支";
+"sidebar.branch.destroy.confirm" = "强制删除";
+"sidebar.branch.destroy.message %@" = "强制删除本地分支 \"%@\"？这将丢弃所有未合并的提交，且无法撤销。";
+"sidebar.branch.update.from.origin" = "从 Origin 更新";
 
 // Checkout branch as worktree sheet
 
@@ -710,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "此 harness 已关联 %ld 个工作树——这些关联将被清除。";
 "harnesses.uninstall.alert.terminals %ld" = "当前有 %ld 个终端正在运行此 harness。";
 "harnesses.uninstall.alert.confirm" = "卸载";
+"harnesses.delete.local.button" = "删除 Harness";
+"harnesses.delete.local.title %@" = "删除 \"%@\"？";
+"harnesses.delete.local.message" = "这将从 YNH 卸载 Harness 并永久删除其文件。此操作无法撤销。";
+"harnesses.delete.local.confirm" = "删除 Harness";
 "harnesses.more.actions.help" = "更多操作";
 "harnesses.copy.run.command" = "复制运行命令";
 "harnesses.ynh.documentation" = "YNH 文档";
@@ -748,6 +762,15 @@
 "marketplace.row.never.fetched" = "从未获取";
 "marketplace.add.sheet.title" = "添加市场";
 "marketplace.add.tab.known" = "已知";
+"marketplace.group.default" = "默认";
+"marketplace.group.github %@" = "GitHub：%@";
+"marketplace.group.local" = "本地";
+"marketplace.add.tab.local" = "本地文件夹";
+"marketplace.add.section.local.path" = "文件夹路径";
+"marketplace.add.local.browse" = "选择文件夹…";
+"marketplace.add.local.path.placeholder" = "/路径/到/marketplace";
+"marketplace.row.local" = "本地";
+"marketplace.row.reveal" = "在 Finder 中显示";
 "marketplace.add.tab.custom" = "自定义 URL";
 "marketplace.add.section.git.url" = "Git 仓库 URL";
 "marketplace.add.section.display.name" = "显示名称";
@@ -828,3 +851,64 @@
 "diagnostics.verbose.warning" = "日志量大 — 完成后请关闭";
 "diagnostics.export.title" = "TermQ 诊断报告";
 "diagnostics.export.footer" = "通过 TermQ 内置诊断工具提交。";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "复制";
+"harness.duplicate.installing" = "正在安装副本…";
+"harness.duplicate.success %@" = "%@ 安装成功。";
+"harness.duplicate.title" = "复制 Harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "添加示例 eyelock/assistants";
+"harnesses.create.harness.button" = "创建新 Harness";
+"harnesses.empty.no.registries.message" = "尚未安装任何 Harness 或注册表。";
+"harnesses.export.button" = "导出为 Marketplace…";
+"harnesses.group.default" = "默认";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "本地";
+"harnesses.group.menu.settings" = "设置…";
+"harnesses.group.registry %@" = "注册表: %@";
+"harnesses.install.browsing" = "正在加载可用 Harness…";
+"harnesses.install.git.ref" = "引用";
+"harnesses.install.git.ref.placeholder" = "分支、标签或提交 SHA（可选）";
+"harnesses.install.retry" = "重试";
+"harnesses.install.section.available" = "可从注册表获取";
+"harnesses.install.section.installed" = "已安装";
+"harnesses.install.section.local" = "本地可用";
+"harnesses.outdated.capabilities.unknown" = "未知";
+"harnesses.outdated.detail %@ %@" = "YNH 报告的功能为 %1$@，但 TermQ 需要 %2$@ 或更高版本。请更新 YNH 以启用 Marketplace 和 Harness 编辑功能。";
+"harnesses.outdated.headline" = "需要升级 YNH";
+"harnesses.search.button" = "搜索 Harness";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "分支、标签或提交 SHA（可选）";
+"marketplace.add.section.ref" = "引用";
+"marketplace.refresh.all.help" = "刷新所有 Marketplace";
+"marketplace.restore.defaults" = "恢复默认";
+"marketplace.restore.defaults.help" = "重新添加默认 Marketplace";
+"marketplace.row.pinned.help %@" = "已固定到 %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "为新终端启用安全粘贴";
+"settings.default.safe.paste.help" = "新终端默认启用安全粘贴。您可在卡片编辑器中针对每个终端进行覆盖设置。";
+"settings.scrollback.invalid" = "请输入 500 到 100,000 之间的数字";
+"settings.scrollback.label" = "滚动历史";
+"settings.scrollback.lines.help" = "滚动历史中保留的行数（500–100,000）。更改适用于新终端。";
+"settings.scrollback.unit" = "行";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@（最低 %2$@）";
+"settings.ynh.capabilities.label" = "功能：";
+"settings.ynh.capabilities.unknown" = "未知";
+"settings.ynh.docs.link.label" = "YNH 文档 →";
+"settings.ynh.outdated.badge" = "需要升级";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "清理已合并分支";
+"sidebar.prune.branches.confirm" = "删除分支";
+"sidebar.prune.branches.explanation" = "这些分支已完全合并到远程默认分支，且没有活跃的 worktree。删除操作是安全的，且无法撤销。";
+"sidebar.prune.branches.nothing.message" = "未找到已合并的分支。尚未合并到远程默认分支的分支将被保留。";
+"sidebar.prune.branches.nothing.title" = "无需清理";
+"sidebar.prune.branches.title" = "清理已合并分支";
+"sidebar.worktree.open.in" = "用…打开";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "打开终端";

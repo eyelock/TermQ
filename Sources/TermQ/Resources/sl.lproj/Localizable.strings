@@ -573,6 +573,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Izbriši vejo";
+"sidebar.branch.delete.title" = "Izbriši vejo";
+"sidebar.branch.delete.confirm" = "Izbriši";
+"sidebar.branch.delete.message %@" = "Izbrisati lokalno vejo \"%@\"? Te dejanje ni mogoče razveljaviti.";
+"sidebar.branch.destroy" = "Uniči vejo";
+"sidebar.branch.destroy.title" = "Uniči vejo";
+"sidebar.branch.destroy.confirm" = "Uniči";
+"sidebar.branch.destroy.message %@" = "Prisilno izbrisati lokalno vejo \"%@\"? Nespreiti commiti bodo zavrženi in tega ni mogoče razveljaviti.";
+"sidebar.branch.update.from.origin" = "Posodobi iz Origina";
 
 // Checkout branch as worktree sheet
 
@@ -717,6 +727,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Ta harness je povezan z %ld delovnim drevesom (drevesi) — te povezave bodo počiščene.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(ov) trenutno poganja ta harness.";
 "harnesses.uninstall.alert.confirm" = "Odstrani";
+"harnesses.delete.local.button" = "Izbriši harness";
+"harnesses.delete.local.title %@" = "Izbrisati \"%@\"?";
+"harnesses.delete.local.message" = "S tem boste odstranili harness iz YNH in trajno izbrisali njegove datoteke. Te dejanje ni mogoče razveljaviti.";
+"harnesses.delete.local.confirm" = "Izbriši harness";
 "harnesses.more.actions.help" = "Več dejanj";
 "harnesses.copy.run.command" = "Kopiraj ukaz za zagon";
 "harnesses.ynh.documentation" = "Dokumentacija YNH";
@@ -755,6 +769,15 @@
 "marketplace.row.never.fetched" = "Nikoli pridobljeno";
 "marketplace.add.sheet.title" = "Dodaj tržnico";
 "marketplace.add.tab.known" = "Znane";
+"marketplace.group.default" = "Privzeto";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokalno";
+"marketplace.add.tab.local" = "Lokalna mapa";
+"marketplace.add.section.local.path" = "Pot do mape";
+"marketplace.add.local.browse" = "Izberi mapo…";
+"marketplace.add.local.path.placeholder" = "/pot/do/marketplace";
+"marketplace.row.local" = "Lokalno";
+"marketplace.row.reveal" = "Prikaži v Finderju";
 "marketplace.add.tab.custom" = "URL po meri";
 "marketplace.add.section.git.url" = "URL repozitorija Git";
 "marketplace.add.section.display.name" = "Prikazno ime";
@@ -835,3 +858,64 @@
 "diagnostics.verbose.warning" = "Visok obseg — onemogočite, ko končate";
 "diagnostics.export.title" = "Poročilo diagnostike TermQ";
 "diagnostics.export.footer" = "Predloženo prek vgrajene diagnostike TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Podvoji";
+"harness.duplicate.installing" = "Nameščanje dvojnika…";
+"harness.duplicate.success %@" = "%@ uspešno nameščen.";
+"harness.duplicate.title" = "Podvoji harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Dodaj vzorec eyelock/assistants";
+"harnesses.create.harness.button" = "Ustvari nov harness";
+"harnesses.empty.no.registries.message" = "Ni nameščenih harness-ov ali registrov.";
+"harnesses.export.button" = "Izvozi kot marketplace…";
+"harnesses.group.default" = "Privzeta";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokalna";
+"harnesses.group.menu.settings" = "Nastavitve…";
+"harnesses.group.registry %@" = "Register: %@";
+"harnesses.install.browsing" = "Nalaganje razpoložljivih harness-ov…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Veja, oznaka ali commit SHA (neobvezno)";
+"harnesses.install.retry" = "Poskusi znova";
+"harnesses.install.section.available" = "Na voljo iz registrov";
+"harnesses.install.section.installed" = "Nameščeno";
+"harnesses.install.section.local" = "Na voljo lokalno";
+"harnesses.outdated.capabilities.unknown" = "neznano";
+"harnesses.outdated.detail %@ %@" = "YNH poroča o zmogljivostih %1$@, vendar TermQ zahteva %2$@ ali novejše. Posodobite YNH, da omogočite funkcije marketplace in urejanja harness.";
+"harnesses.outdated.headline" = "Potrebna posodobitev YNH";
+"harnesses.search.button" = "Poišči harness-e";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Veja, oznaka ali commit SHA (neobvezno)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Osveži vse marketplace-e";
+"marketplace.restore.defaults" = "Obnovi privzete";
+"marketplace.restore.defaults.help" = "Znova dodaj privzete marketplace-e";
+"marketplace.row.pinned.help %@" = "Pripeto na %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Omogoči varno lepljenje za nove terminale";
+"settings.default.safe.paste.help" = "Novi terminali bodo imeli varno lepljenje privzeto omogočeno. To lahko spremenite za posamezen terminal v urejevalniku kartice.";
+"settings.scrollback.invalid" = "Vnesite število med 500 in 100.000";
+"settings.scrollback.label" = "Zgodovina pomikanja";
+"settings.scrollback.lines.help" = "Vrstice shranjene v zgodovini pomikanja (500–100.000). Spremembe veljajo za nove terminale.";
+"settings.scrollback.unit" = "vrstic";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Zmogljivosti:";
+"settings.ynh.capabilities.unknown" = "neznano";
+"settings.ynh.docs.link.label" = "Dokumentacija YNH →";
+"settings.ynh.outdated.badge" = "Potrebna posodobitev";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Odstrani združene veje";
+"sidebar.prune.branches.confirm" = "Izbriši veje";
+"sidebar.prune.branches.explanation" = "Te veje so popolnoma združene v privzeto oddaljeno vejo in nimajo aktivnega worktree-ja. Brisanje je varno in ga ni mogoče razveljaviti.";
+"sidebar.prune.branches.nothing.message" = "Ni najdenih združenih vej. Veje, ki še niso bile združene v privzeto oddaljeno vejo, se ohranijo.";
+"sidebar.prune.branches.nothing.title" = "Ni ničesar za odstranitev";
+"sidebar.prune.branches.title" = "Odstrani združene veje";
+"sidebar.worktree.open.in" = "Odpri v…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Odpri terminale";

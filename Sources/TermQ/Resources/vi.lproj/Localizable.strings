@@ -573,6 +573,16 @@
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
+"sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Xóa nhánh";
+"sidebar.branch.delete.title" = "Xóa nhánh";
+"sidebar.branch.delete.confirm" = "Xóa";
+"sidebar.branch.delete.message %@" = "Xóa nhánh cục bộ \"%@\"? Không thể hoàn tác hành động này.";
+"sidebar.branch.destroy" = "Hủy nhánh";
+"sidebar.branch.destroy.title" = "Hủy nhánh";
+"sidebar.branch.destroy.confirm" = "Hủy";
+"sidebar.branch.destroy.message %@" = "Xóa buộc nhánh cục bộ \"%@\"? Các commit chưa merge sẽ bị xóa và không thể hoàn tác.";
+"sidebar.branch.update.from.origin" = "Cập nhật từ Origin";
 
 // Checkout branch as worktree sheet
 
@@ -717,6 +727,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Harness này được liên kết với %ld worktree — các liên kết đó sẽ bị xóa.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal đang chạy harness này.";
 "harnesses.uninstall.alert.confirm" = "Gỡ cài đặt";
+"harnesses.delete.local.button" = "Xóa Harness";
+"harnesses.delete.local.title %@" = "Xóa \"%@\"?";
+"harnesses.delete.local.message" = "Thao tác này sẽ gỡ cài đặt Harness khỏi YNH và xóa vĩnh viễn các tệp của nó. Không thể hoàn tác hành động này.";
+"harnesses.delete.local.confirm" = "Xóa Harness";
 "harnesses.more.actions.help" = "Thêm hành động";
 "harnesses.copy.run.command" = "Sao chép lệnh chạy";
 "harnesses.ynh.documentation" = "Tài liệu YNH";
@@ -755,6 +769,15 @@
 "marketplace.row.never.fetched" = "Chưa từng tải về";
 "marketplace.add.sheet.title" = "Thêm chợ";
 "marketplace.add.tab.known" = "Đã biết";
+"marketplace.group.default" = "Mặc định";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Cục bộ";
+"marketplace.add.tab.local" = "Thư mục cục bộ";
+"marketplace.add.section.local.path" = "Đường dẫn thư mục";
+"marketplace.add.local.browse" = "Chọn thư mục…";
+"marketplace.add.local.path.placeholder" = "/đường/dẫn/tới/marketplace";
+"marketplace.row.local" = "Cục bộ";
+"marketplace.row.reveal" = "Hiện trong Finder";
 "marketplace.add.tab.custom" = "URL tùy chỉnh";
 "marketplace.add.section.git.url" = "URL kho Git";
 "marketplace.add.section.display.name" = "Tên hiển thị";
@@ -835,3 +858,64 @@
 "diagnostics.verbose.warning" = "Khối lượng lớn — tắt khi hoàn thành";
 "diagnostics.export.title" = "Báo cáo chẩn đoán TermQ";
 "diagnostics.export.footer" = "Được nộp qua công cụ chẩn đoán tích hợp của TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Nhân bản";
+"harness.duplicate.installing" = "Đang cài đặt bản sao…";
+"harness.duplicate.success %@" = "%@ đã được cài đặt thành công.";
+"harness.duplicate.title" = "Nhân bản Harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Thêm mẫu eyelock/assistants";
+"harnesses.create.harness.button" = "Tạo harness mới";
+"harnesses.empty.no.registries.message" = "Chưa có harness hoặc registry nào được cài đặt.";
+"harnesses.export.button" = "Xuất dưới dạng Marketplace…";
+"harnesses.group.default" = "Mặc định";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Cục bộ";
+"harnesses.group.menu.settings" = "Cài đặt…";
+"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.install.browsing" = "Đang tải harness có sẵn…";
+"harnesses.install.git.ref" = "Tham chiếu";
+"harnesses.install.git.ref.placeholder" = "Nhánh, thẻ hoặc SHA commit (tuỳ chọn)";
+"harnesses.install.retry" = "Thử lại";
+"harnesses.install.section.available" = "Có sẵn từ registry";
+"harnesses.install.section.installed" = "Đã cài đặt";
+"harnesses.install.section.local" = "Có sẵn cục bộ";
+"harnesses.outdated.capabilities.unknown" = "không xác định";
+"harnesses.outdated.detail %@ %@" = "YNH báo cáo khả năng %1$@, nhưng TermQ yêu cầu %2$@ hoặc mới hơn. Cập nhật YNH để bật tính năng marketplace và chỉnh sửa harness.";
+"harnesses.outdated.headline" = "Yêu cầu nâng cấp YNH";
+"harnesses.search.button" = "Tìm kiếm harness";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Nhánh, thẻ hoặc SHA commit (tuỳ chọn)";
+"marketplace.add.section.ref" = "Tham chiếu";
+"marketplace.refresh.all.help" = "Làm mới tất cả marketplace";
+"marketplace.restore.defaults" = "Khôi phục mặc định";
+"marketplace.restore.defaults.help" = "Thêm lại marketplace mặc định";
+"marketplace.row.pinned.help %@" = "Đã ghim vào %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Bật dán an toàn cho terminal mới";
+"settings.default.safe.paste.help" = "Các terminal mới sẽ có dán an toàn được bật theo mặc định. Bạn có thể thay đổi điều này cho từng terminal trong trình chỉnh sửa thẻ.";
+"settings.scrollback.invalid" = "Nhập số từ 500 đến 100.000";
+"settings.scrollback.label" = "Lịch sử cuộn";
+"settings.scrollback.lines.help" = "Số dòng lưu trong lịch sử cuộn (500–100.000). Thay đổi áp dụng cho terminal mới.";
+"settings.scrollback.unit" = "dòng";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (tối thiểu %2$@)";
+"settings.ynh.capabilities.label" = "Khả năng:";
+"settings.ynh.capabilities.unknown" = "không xác định";
+"settings.ynh.docs.link.label" = "Tài liệu YNH →";
+"settings.ynh.outdated.badge" = "Yêu cầu nâng cấp";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Dọn dẹp nhánh đã merge";
+"sidebar.prune.branches.confirm" = "Xoá nhánh";
+"sidebar.prune.branches.explanation" = "Các nhánh này đã được merge đầy đủ vào nhánh mặc định từ xa và không có worktree nào đang hoạt động. Việc xoá là an toàn và không thể hoàn tác.";
+"sidebar.prune.branches.nothing.message" = "Không tìm thấy nhánh đã merge. Các nhánh chưa được merge vào nhánh mặc định từ xa sẽ được giữ lại.";
+"sidebar.prune.branches.nothing.title" = "Không có gì để dọn dẹp";
+"sidebar.prune.branches.title" = "Dọn dẹp nhánh đã merge";
+"sidebar.worktree.open.in" = "Mở bằng…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Mở terminal";
