@@ -424,6 +424,21 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
+    // MARK: - Context Menu
+
+    override func menu(for event: NSEvent) -> NSMenu? {
+        let menu = NSMenu()
+
+        menu.addItem(NSMenuItem(title: "Copy", action: #selector(copy(_:)), keyEquivalent: ""))
+
+        menu.addItem(.separator())
+
+        let pasteItem = NSMenuItem(title: "Paste", action: #selector(paste(_:)), keyEquivalent: "")
+        menu.addItem(pasteItem)
+
+        return menu
+    }
+
     // MARK: - Smart Paste
 
     /// Override paste to warn about potentially dangerous content
