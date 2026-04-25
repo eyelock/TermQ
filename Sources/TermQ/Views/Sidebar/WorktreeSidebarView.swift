@@ -746,33 +746,17 @@ extension WorktreeSidebarView {
     }
 
     fileprivate func openInTerminal(path: String) {
-        guard !path.contains("\n"), !path.contains("\r") else {
-            TermQLogger.ui.error("openInTerminal: path contains newline, aborting")
+        guard let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") else {
+            TermQLogger.ui.error("openInTerminal: Terminal.app not found")
             return
         }
-        let escaped = path.replacingOccurrences(of: "'", with: "'\\''")
-        let script = """
-            tell application "Terminal"
-                activate
-                do script "cd '\(escaped)'"
-            end tell
-            """
-        // Task.detached: NSAppleScript.executeAndReturnError is synchronous and blocks the calling
-        // thread. Detaching keeps it off the main actor without holding a cooperative thread.
-        Task.detached {
-            if let appleScript = NSAppleScript(source: script) {
-                var error: NSDictionary?
-                appleScript.executeAndReturnError(&error)
-                if let error = error {
-                    let code = (error[NSAppleScript.errorNumber] as? NSNumber)?.intValue ?? -1
-                    if TermQLogger.fileLoggingEnabled {
-                        TermQLogger.ui.error("openInTerminal AppleScript error=\(error)")
-                    } else {
-                        TermQLogger.ui.error("openInTerminal AppleScript failed code=\(code)")
-                    }
-                }
-            }
-        }
+        let config = NSWorkspace.OpenConfiguration()
+        config.addsToRecentItems = false
+        NSWorkspace.shared.open(
+            [URL(fileURLWithPath: path)],
+            withApplicationAt: terminalURL,
+            configuration: config
+        )
     }
 
     fileprivate func revealInFinder(path: String) {

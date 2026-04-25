@@ -165,7 +165,9 @@ struct MarketplaceSidebarTab: View {
             selectedMarketplace = MarketplaceSelection(id: marketplace.id, marketplace: marketplace)
         }
         .contextMenu {
-            Button(Strings.Marketplace.rowRefresh) { Task { await refresh(marketplace) } }
+            Button { Task { await refresh(marketplace) } } label: {
+                Label(Strings.Marketplace.rowRefresh, systemImage: "arrow.clockwise")
+            }
             if marketplace.isLocal {
                 Button {
                     let path =
@@ -175,6 +177,15 @@ struct MarketplaceSidebarTab: View {
                     NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
                 } label: {
                     Label(Strings.Marketplace.rowReveal, systemImage: "folder")
+                }
+                Button {
+                    let path =
+                        marketplace.url.hasPrefix("file:///")
+                        ? String(marketplace.url.dropFirst(7))
+                        : marketplace.url
+                    openInTerminal(path: path)
+                } label: {
+                    Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
                 }
             } else if let url = marketplaceBrowserURL(marketplace) {
                 Button {
@@ -282,6 +293,20 @@ struct MarketplaceSidebarTab: View {
         default:
             EmptyView()
         }
+    }
+
+    private func openInTerminal(path: String) {
+        guard let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") else {
+            TermQLogger.ui.error("openInTerminal: Terminal.app not found")
+            return
+        }
+        let config = NSWorkspace.OpenConfiguration()
+        config.addsToRecentItems = false
+        NSWorkspace.shared.open(
+            [URL(fileURLWithPath: path)],
+            withApplicationAt: terminalURL,
+            configuration: config
+        )
     }
 
     private func marketplaceBrowserURL(_ marketplace: Marketplace) -> URL? {
