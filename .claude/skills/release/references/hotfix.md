@@ -59,7 +59,9 @@ git push origin --delete hotfix/v0.6.4
 git branch -d hotfix/v0.6.4
 ```
 
-### 7. Forward-Port to Develop
+### 7. Forward-Port to Develop — MANDATORY
+
+**This step is not optional.** Every change that lands on `main` via hotfix MUST also land on `develop`. Skipping this causes divergence that creates merge conflicts on the next develop → main promotion.
 
 After the hotfix tag is pushed and the release is confirmed, open a PR to bring the fix to `develop`:
 
@@ -73,9 +75,12 @@ gh pr create --base develop --title "fix: forward-port hotfix v0.6.4" \
 
 Merge once CI passes. If the cherry-pick has conflicts (develop has diverged significantly), resolve them before pushing.
 
+**Auto-generated files (appcasts):** The `update-appcast.yml` workflow updates `Docs/appcast.xml` and `Docs/appcast-beta.xml` on main automatically after each release. These changes are never automatically forward-ported. After every release — stable or hotfix — create a forward-port PR that includes the updated appcast files.
+
 ## What NOT to Do
 
 - NEVER create releases manually with `gh release create`
 - NEVER bypass CI verification
 - NEVER work around failed automation — fix it instead
 - NEVER push unsigned/unnotarized builds
+- NEVER skip step 7 — every main change must flow back to develop

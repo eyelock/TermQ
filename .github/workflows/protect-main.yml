@@ -14,10 +14,10 @@ jobs:
           SOURCE="${{ github.head_ref }}"
           echo "PR source branch: $SOURCE"
 
-          if [[ "$SOURCE" == "develop" ]] || [[ "$SOURCE" == hotfix/* ]]; then
+          if [[ "$SOURCE" == "develop" ]] || [[ "$SOURCE" == hotfix/* ]] || [[ "$SOURCE" == release/* ]]; then
             echo "✅ Source branch '$SOURCE' is allowed to target main"
           else
-            echo "❌ PRs to main must come from 'develop' or 'hotfix/*'"
+            echo "❌ PRs to main must come from 'develop', 'hotfix/*', or 'release/*'"
             echo "   Source branch '$SOURCE' is not allowed."
             echo "   Open your PR against 'develop' instead."
             exit 1
