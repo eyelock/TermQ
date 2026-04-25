@@ -6,6 +6,52 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.9.0.b8</title>
+            <sparkle:version>0.9.0.b8</sparkle:version>
+            <sparkle:shortVersionString>0.9.0.b8</sparkle:shortVersionString>
+            <pubDate>Sat, 25 Apr 2026 10:17:09 +0000</pubDate>
+            <description><![CDATA[<h2 id="whats-new">What's New</h2>
+<ul>
+<li>right-click context menu in terminal with Copy and Paste (#221)</li>
+</ul>
+<h2 id="bug-fixes">Bug Fixes</h2>
+<ul>
+<li>fix upward scroll during text selection against streaming output (#224)</li>
+<li>restore Reveal in Terminal across sidebar tabs (#223)</li>
+<li>prevent SwiftUI from closing main window on URL events (#222)</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.0-beta.8.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.0-beta.8.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.9.0-beta.8/TermQ-0.9.0-beta.8.zip"
+                sparkle:edSignature="4bueF36QK5cQM0uiiSapRCya6XB6PXIk8r3wTJa1quUg/fQxFvY9MFkpwYAM35ZX/Hm054PQrLEljDvI7aKwDw=="
+                length="23443088"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.9.0.b7</title>
             <sparkle:version>0.9.0.b7</sparkle:version>
             <sparkle:shortVersionString>0.9.0.b7</sparkle:shortVersionString>
@@ -1317,49 +1363,6 @@
                 url="https://github.com/eyelock/TermQ/releases/download/v0.7.0-beta.11/TermQ-0.7.0-beta.11.zip"
                 sparkle:edSignature="lFq8rkmD99V8ibXQmWjOH8jdGNV9HJ5F2rdi5i9kvFVJV1jhvJDNM2Lt2X1OwoC0okyhXyV1ywsptpT9rhhoBw=="
                 length="19020136"
-                type="application/octet-stream"/>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-        </item>
-        <item>
-            <title>Version 0.7.0.b10</title>
-            <sparkle:version>0.7.0.b10</sparkle:version>
-            <sparkle:shortVersionString>0.7.0.b10</sparkle:shortVersionString>
-            <pubDate>Sun, 12 Apr 2026 21:48:17 +0000</pubDate>
-            <description><![CDATA[<h2 id="installation">Installation</h2>
-<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
-<ol type="1">
-<li>Download <code>TermQ-0.7.0-beta.10.dmg</code></li>
-<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
-<li>Double-click to launch</li>
-</ol>
-<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
-<ol type="1">
-<li>Download <code>TermQ-0.7.0-beta.10.zip</code></li>
-<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
-</ol>
-<h3 id="cli-tool">CLI Tool</h3>
-<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
-<ol type="1">
-<li>Open TermQ.app</li>
-<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
-<li>Click <strong>Install Command Line Tool</strong></li>
-</ol>
-<p>Or manually:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
-<h2 id="checksums">Checksums</h2>
-<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>
-<h2 id="whats-changed">What's Changed</h2>
-<ul>
-<li>fix: Add window lifecycle logging to diagnose release-only multi-window bug by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/114">https://github.com/eyelock/TermQ/pull/114</a></li>
-<li>fix(ui): Fix session recovery dialog appearing on every launch by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/116">https://github.com/eyelock/TermQ/pull/116</a></li>
-<li>ci: Bump softprops/action-gh-release from 2 to 3 by @dependabot[bot] in <a href="https://github.com/eyelock/TermQ/pull/113">https://github.com/eyelock/TermQ/pull/113</a></li>
-<li>fix(build): Use dot-notation version format for Sparkle comparator by @eyelock in <a href="https://github.com/eyelock/TermQ/pull/115">https://github.com/eyelock/TermQ/pull/115</a></li>
-</ul>
-<p><strong>Full Changelog</strong>: <a href="https://github.com/eyelock/TermQ/compare/v0.7.0-beta.9...v0.7.0-beta.10">https://github.com/eyelock/TermQ/compare/v0.7.0-beta.9...v0.7.0-beta.10</a></p>]]></description>
-            <enclosure
-                url="https://github.com/eyelock/TermQ/releases/download/v0.7.0-beta.10/TermQ-0.7.0-beta.10.zip"
-                sparkle:edSignature="6dOSEz3LBXMFzvpcvXqlOOKpzE+05OYOzfd6K/eXx5lZCOJ4cfu9XVQHnicHdVA5pDJge8k7Eex1vmTFn5jbCw=="
-                length="19019283"
                 type="application/octet-stream"/>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
         </item>
