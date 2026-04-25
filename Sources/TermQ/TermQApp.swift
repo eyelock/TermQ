@@ -192,8 +192,6 @@ struct TermQApp: App {
                 }
             #endif
         }
-        .handlesExternalEvents(matching: ["termq"])
-
         Settings {
             SettingsView()
                 .environmentObject(appDelegate.updaterViewModel)

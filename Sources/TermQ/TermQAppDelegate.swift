@@ -120,6 +120,14 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         return true
     }
 
+    /// Intercept URL opens so SwiftUI's AppWindowsController never sees them.
+    /// Without this, SwiftUI calls activateWindowForExternalEvent which closes the main window.
+    func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls {
+            URLHandler.shared.handleURL(url)
+        }
+    }
+
     /// Log when the app is about to hide (Cmd+H, "Hide TermQ" menu, or external caller).
     /// The call stack reveals whether this is user-initiated or driven by an external tool.
     func applicationWillHide(_ notification: Notification) {
