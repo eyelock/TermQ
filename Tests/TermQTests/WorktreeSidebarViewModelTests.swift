@@ -44,6 +44,8 @@ final class MockGitService: GitServiceProtocol {
         return listWorktreesResult
     }
 
+    func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws {}
+
     func addWorktree(repo: GitRepository, branch: String, path: String, baseBranch: String?) async throws {
         addWorktreeCalled = true
     }

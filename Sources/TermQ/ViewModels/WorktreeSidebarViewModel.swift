@@ -316,6 +316,16 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
+    func checkoutBranchAsWorktree(repo: ObservableRepository, branch: String, path: String) async throws {
+        try await gitService.checkoutBranchAsWorktree(
+            repo: repo.toGitRepository(),
+            branch: branch,
+            path: path
+        )
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
     func removeWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
         guard !worktree.isMainWorktree else {
             throw WorktreeOperationError.removingMainWorktree
