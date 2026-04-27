@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Chráněné větve";
+"settings.protected.branches.help" = "Větve, které nikdy nejsou nabízeny k odstranění při čištění. Oddělte názvy čárkami.";
+"settings.protected.branches.prompt" = "Názvy větví oddělené čárkami";
 
 // Settings - Language section
 "settings.section.language" = "Jazyk";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "Základní cesta worktree";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Chráněné větve";
+"sidebar.protected.branches.override.help" = "Větve vyloučené z čištění v tomto repozitáři. Přepisuje globální nastavení. Nechte prázdné pro použití globálního nastavení.";
+"sidebar.protected.branches.override.placeholder" = "(použít globální nastavení)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -575,13 +583,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Smazat větev";
+"sidebar.branch.delete.title" = "Smazat větev";
+"sidebar.branch.delete.confirm" = "Smazat";
+"sidebar.branch.delete.message %@" = "Smazat lokální větev \"%@\"? Tuto akci nelze vrátit.";
+"sidebar.branch.destroy" = "Zničit větev";
+"sidebar.branch.destroy.title" = "Zničit větev";
+"sidebar.branch.destroy.confirm" = "Zničit";
+"sidebar.branch.destroy.message %@" = "Vynuceně smazat lokální větev \"%@\"? Nemerglované commity budou zahozeny a tuto akci nelze vrátit.";
+"sidebar.branch.update.from.origin" = "Aktualizovat z Origin";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Postroje";
@@ -708,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Tento harness je propojen s %ld pracovním stromem (stromy) — tato propojení budou vymazána.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminál(ů) aktuálně spouští tento harness.";
 "harnesses.uninstall.alert.confirm" = "Odinstalovat";
+"harnesses.delete.local.button" = "Smazat harness";
+"harnesses.delete.local.title %@" = "Smazat \"%@\"?";
+"harnesses.delete.local.message" = "Tímto se harness odinstaluje z YNH a jeho soubory budou trvale smazány. Tuto akci nelze vrátit.";
+"harnesses.delete.local.confirm" = "Smazat harness";
 "harnesses.more.actions.help" = "Další akce";
 "harnesses.copy.run.command" = "Kopírovat příkaz spuštění";
 "harnesses.ynh.documentation" = "Dokumentace YNH";
@@ -746,6 +762,15 @@
 "marketplace.row.never.fetched" = "Nikdy nestaženo";
 "marketplace.add.sheet.title" = "Přidat tržiště";
 "marketplace.add.tab.known" = "Známá";
+"marketplace.group.default" = "Výchozí";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Místní";
+"marketplace.add.tab.local" = "Místní složka";
+"marketplace.add.section.local.path" = "Cesta ke složce";
+"marketplace.add.local.browse" = "Vybrat složku…";
+"marketplace.add.local.path.placeholder" = "/cesta/k/marketplace";
+"marketplace.row.local" = "Místní";
+"marketplace.row.reveal" = "Zobrazit ve Finderu";
 "marketplace.add.tab.custom" = "Vlastní URL";
 "marketplace.add.section.git.url" = "URL repozitáře Git";
 "marketplace.add.section.display.name" = "Zobrazovaný název";
@@ -804,3 +829,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Odebrat „%@“ z YNH? Nainstalované harnessy zůstanou.";
 "marketplace.add.custom.name.placeholder" = "Moje tržiště";
 "harness.wizard.success.created %@" = "Sada «%@» vytvořena";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Nástroje";
+"menu.utilities.logging" = "Protokolování…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostika TermQ";
+"diagnostics.filter.category" = "Kategorie";
+"diagnostics.filter.category.all" = "Vše";
+"diagnostics.filter.level" = "Úroveň";
+"diagnostics.search.placeholder" = "Hledat…";
+"diagnostics.clear" = "Vymazat";
+"diagnostics.export" = "Exportovat…";
+"diagnostics.jump.to.latest" = "Přejít na nejnovější";
+"diagnostics.status.live" = "Živě";
+"diagnostics.status.paused" = "Pozastaveno";
+"diagnostics.status.entries %lld %lld" = "%lld záznamů · %lld odpovídá filtru";
+"diagnostics.verbose.mode" = "Podrobný režim";
+"diagnostics.verbose.mode.help" = "Zachycuje zprávy debug a info navíc k notice/warning/error";
+"diagnostics.verbose.warning" = "Vysoký objem — po dokončení vypněte";
+"diagnostics.export.title" = "Diagnostická zpráva TermQ";
+"diagnostics.export.footer" = "Odesláno prostřednictvím vestavěné diagnostiky TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplikovat";
+"harness.duplicate.installing" = "Instaluji duplikát…";
+"harness.duplicate.success %@" = "%@ byl úspěšně nainstalován.";
+"harness.duplicate.title" = "Duplikovat harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Přidat ukázku eyelock/assistants";
+"harnesses.create.harness.button" = "Vytvořit nový harness";
+"harnesses.empty.no.registries.message" = "Zatím nejsou nainstalovány žádné harnessy ani registry.";
+"harnesses.export.button" = "Exportovat jako marketplace…";
+"harnesses.group.default" = "Výchozí";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Místní";
+"harnesses.group.menu.settings" = "Nastavení…";
+"harnesses.group.registry %@" = "Registr: %@";
+"harnesses.install.browsing" = "Načítání dostupných harnesů…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Větev, tag nebo SHA commitu (volitelné)";
+"harnesses.install.retry" = "Zkusit znovu";
+"harnesses.install.section.available" = "Dostupné z registrů";
+"harnesses.install.section.installed" = "Nainstalováno";
+"harnesses.install.section.local" = "Dostupné místně";
+"harnesses.outdated.capabilities.unknown" = "neznámý";
+"harnesses.outdated.detail %@ %@" = "YNH hlásí funkce %1$@, ale TermQ vyžaduje %2$@ nebo novější. Aktualizujte YNH pro zapnutí funkcí marketplace a úprav harnessu.";
+"harnesses.outdated.headline" = "Vyžadována aktualizace YNH";
+"harnesses.search.button" = "Hledat harnessy";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Větev, tag nebo SHA commitu (volitelné)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Obnovit všechny marketplace";
+"marketplace.restore.defaults" = "Obnovit výchozí";
+"marketplace.restore.defaults.help" = "Znovu přidat výchozí marketplace";
+"marketplace.row.pinned.help %@" = "Připnuto k %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Povolit bezpečné vkládání pro nové terminály";
+"settings.default.safe.paste.help" = "Nové terminály budou mít bezpečné vkládání povoleno ve výchozím nastavení. Můžete to změnit pro každý terminál v editoru karty.";
+"settings.scrollback.invalid" = "Zadejte číslo mezi 500 a 100 000";
+"settings.scrollback.label" = "Historie posouvání";
+"settings.scrollback.lines.help" = "Řádky uložené v historii posouvání (500–100 000). Změny se vztahují na nové terminály.";
+"settings.scrollback.unit" = "řádky";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Funkce:";
+"settings.ynh.capabilities.unknown" = "neznámý";
+"settings.ynh.docs.link.label" = "Dokumentace YNH →";
+"settings.ynh.outdated.badge" = "Vyžadována aktualizace";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Odstranit sloučené větve";
+"sidebar.prune.branches.confirm" = "Smazat větve";
+"sidebar.prune.branches.explanation" = "Tyto větve jsou zcela sloučeny do výchozí vzdálené větve a nemají aktivní worktree. Smazání je bezpečné a nelze ho vrátit zpět.";
+"sidebar.prune.branches.nothing.message" = "Nenalezeny žádné sloučené větve. Větve, které ještě nebyly sloučeny do výchozí vzdálené větve, jsou zachovány.";
+"sidebar.prune.branches.nothing.title" = "Nic k odstranění";
+"sidebar.prune.branches.title" = "Odstranit sloučené větve";
+"sidebar.worktree.open.in" = "Otevřít v…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Otevřít terminály";

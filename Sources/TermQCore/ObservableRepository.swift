@@ -10,6 +10,8 @@ public class ObservableRepository: ObservableObject, Identifiable {
     @Published public var name: String
     @Published public var path: String
     @Published public var worktreeBasePath: String?
+    /// Per-repository protected branch override. When nil, the global app setting is used.
+    @Published public var protectedBranches: [String]?
     public let addedAt: Date
 
     public init(
@@ -17,12 +19,14 @@ public class ObservableRepository: ObservableObject, Identifiable {
         name: String,
         path: String,
         worktreeBasePath: String? = nil,
+        protectedBranches: [String]? = nil,
         addedAt: Date = Date()
     ) {
         self.id = id
         self.name = name
         self.path = path
         self.worktreeBasePath = worktreeBasePath
+        self.protectedBranches = protectedBranches
         self.addedAt = addedAt
     }
 }

@@ -189,6 +189,10 @@ public enum BoardWriter {
         // Find the card to update (include deleted cards so we can update after soft-delete)
         let cardIndex = try findCardIndex(identifier: identifier, in: cards, includeDeleted: true)
 
+        // Capture the stable UUID before applying updates — the caller may be renaming
+        // the card (updating `title`), which would break a post-save name lookup.
+        let cardUUID = (cards[cardIndex]["id"] as? String).flatMap(UUID.init(uuidString:))
+
         // Apply updates
         for (key, value) in updates {
             cards[cardIndex][key] = value
@@ -202,14 +206,21 @@ public enum BoardWriter {
         // This is important for operations like soft-delete that set deletedAt
         let updatedBoard = try BoardLoader.loadBoard(dataDirectory: dataDirectory, debug: debug)
 
-        // Search in all cards, including deleted ones
+        // Prefer the captured UUID — survives title changes
+        if let uuid = cardUUID,
+            let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid })
+        {
+            return updatedCard
+        }
+
+        // Fallback: if identifier was a UUID string, try that
         if let uuid = UUID(uuidString: identifier),
             let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid })
         {
             return updatedCard
         }
 
-        // Fallback to name search in all cards
+        // Final fallback: name search (only reliable when title wasn't updated)
         let identifierLower = identifier.lowercased()
         if let updatedCard = updatedBoard.cards.first(where: {
             $0.title.lowercased() == identifierLower || $0.title.lowercased().contains(identifierLower)

@@ -261,6 +261,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Захищені гілки";
+"settings.protected.branches.help" = "Гілки, які ніколи не пропонуються для видалення під час очищення. Розділяйте імена комами.";
+"settings.protected.branches.prompt" = "Імена гілок через кому";
 
 // Settings - Language section
 "settings.section.language" = "Мова";
@@ -519,6 +524,9 @@
 "sidebar.worktree.base.path.label" = "Базовий шлях worktree";
 "sidebar.worktree.base.path.help" = "Нові worktrees створюються тут. За замовчуванням — батьківська папка директорії репозиторію.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Захищені гілки";
+"sidebar.protected.branches.override.help" = "Гілки, виключені з очищення в цьому репозиторії. Замінює глобальне налаштування. Залиште порожнім, щоб використовувати глобальне налаштування.";
+"sidebar.protected.branches.override.placeholder" = "(використовувати глобальне налаштування)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -566,13 +574,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Видалити гілку";
+"sidebar.branch.delete.title" = "Видалити гілку";
+"sidebar.branch.delete.confirm" = "Видалити";
+"sidebar.branch.delete.message %@" = "Видалити локальну гілку \"%@\"? Цю дію не можна скасувати.";
+"sidebar.branch.destroy" = "Знищити гілку";
+"sidebar.branch.destroy.title" = "Знищити гілку";
+"sidebar.branch.destroy.confirm" = "Знищити";
+"sidebar.branch.destroy.message %@" = "Примусово видалити локальну гілку \"%@\"? Незлиті коміти буде втрачено, і цю дію не можна скасувати.";
+"sidebar.branch.update.from.origin" = "Оновити з Origin";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Упряжки";
@@ -715,6 +727,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Цей harness пов'язаний з %ld робочим деревом (деревами) — ці зв'язки буде очищено.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld термінал(и) зараз виконують цей harness.";
 "harnesses.uninstall.alert.confirm" = "Видалити";
+"harnesses.delete.local.button" = "Видалити harness";
+"harnesses.delete.local.title %@" = "Видалити \"%@\"?";
+"harnesses.delete.local.message" = "Це видалить harness з YNH та назавжди видалить його файли. Цю дію не можна скасувати.";
+"harnesses.delete.local.confirm" = "Видалити harness";
 "harnesses.more.actions.help" = "Інші дії";
 "harnesses.copy.run.command" = "Копіювати команду запуску";
 "harnesses.ynh.documentation" = "Документація YNH";
@@ -753,6 +769,15 @@
 "marketplace.row.never.fetched" = "Ще не завантажувався";
 "marketplace.add.sheet.title" = "Додати маркетплейс";
 "marketplace.add.tab.known" = "Відомі";
+"marketplace.group.default" = "За замовчуванням";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Локальний";
+"marketplace.add.tab.local" = "Локальна папка";
+"marketplace.add.section.local.path" = "Шлях до папки";
+"marketplace.add.local.browse" = "Вибрати папку…";
+"marketplace.add.local.path.placeholder" = "/шлях/до/marketplace";
+"marketplace.row.local" = "Локальний";
+"marketplace.row.reveal" = "Показати у Finder";
 "marketplace.add.tab.custom" = "Власна URL";
 "marketplace.add.section.git.url" = "URL репозиторію Git";
 "marketplace.add.section.display.name" = "Відображувана назва";
@@ -811,3 +836,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Видалити «%@» з YNH? Встановлені harness-пакети залишаться.";
 "marketplace.add.custom.name.placeholder" = "Мій маркетплейс";
 "harness.wizard.success.created %@" = "Харнес «%@» створено";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Утиліти";
+"menu.utilities.logging" = "Протоколювання…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Діагностика TermQ";
+"diagnostics.filter.category" = "Категорія";
+"diagnostics.filter.category.all" = "Усі";
+"diagnostics.filter.level" = "Рівень";
+"diagnostics.search.placeholder" = "Пошук…";
+"diagnostics.clear" = "Очистити";
+"diagnostics.export" = "Експортувати…";
+"diagnostics.jump.to.latest" = "Перейти до останнього";
+"diagnostics.status.live" = "У реальному часі";
+"diagnostics.status.paused" = "На паузі";
+"diagnostics.status.entries %lld %lld" = "%lld записів · %lld збігається з фільтром";
+"diagnostics.verbose.mode" = "Докладний режим";
+"diagnostics.verbose.mode.help" = "Записує повідомлення debug і info на додаток до notice/warning/error";
+"diagnostics.verbose.warning" = "Великий обсяг — вимкніть після завершення";
+"diagnostics.export.title" = "Звіт діагностики TermQ";
+"diagnostics.export.footer" = "Надіслано через вбудовану діагностику TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Дублювати";
+"harness.duplicate.installing" = "Встановлення копії…";
+"harness.duplicate.success %@" = "%@ успішно встановлено.";
+"harness.duplicate.title" = "Дублювати harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Додати приклад eyelock/assistants";
+"harnesses.create.harness.button" = "Створити новий harness";
+"harnesses.empty.no.registries.message" = "Harness-ів та реєстрів ще не встановлено.";
+"harnesses.export.button" = "Експортувати як marketplace…";
+"harnesses.group.default" = "За замовчуванням";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Локальна";
+"harnesses.group.menu.settings" = "Налаштування…";
+"harnesses.group.registry %@" = "Реєстр: %@";
+"harnesses.install.browsing" = "Завантаження доступних harness-ів…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Гілка, тег або SHA коміту (необов'язково)";
+"harnesses.install.retry" = "Повторити";
+"harnesses.install.section.available" = "Доступно з реєстрів";
+"harnesses.install.section.installed" = "Встановлено";
+"harnesses.install.section.local" = "Доступно локально";
+"harnesses.outdated.capabilities.unknown" = "невідомо";
+"harnesses.outdated.detail %@ %@" = "YNH повідомляє про можливості %1$@, але TermQ потребує %2$@ або новіше. Оновіть YNH для ввімкнення функцій marketplace і редагування harness.";
+"harnesses.outdated.headline" = "Потрібне оновлення YNH";
+"harnesses.search.button" = "Знайти harness-и";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Гілка, тег або SHA коміту (необов'язково)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Оновити всі marketplace";
+"marketplace.restore.defaults" = "Відновити типові";
+"marketplace.restore.defaults.help" = "Знову додати типові marketplace";
+"marketplace.row.pinned.help %@" = "Закріплено до %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Увімкнути безпечне вставлення для нових терміналів";
+"settings.default.safe.paste.help" = "Нові термінали матимуть безпечне вставлення увімкненим за замовчуванням. Ви можете змінити це для кожного терміналу в редакторі картки.";
+"settings.scrollback.invalid" = "Введіть число від 500 до 100 000";
+"settings.scrollback.label" = "Історія прокрутки";
+"settings.scrollback.lines.help" = "Рядки, що зберігаються в історії прокрутки (500–100 000). Зміни застосовуються до нових терміналів.";
+"settings.scrollback.unit" = "рядки";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (мінімум %2$@)";
+"settings.ynh.capabilities.label" = "Можливості:";
+"settings.ynh.capabilities.unknown" = "невідомо";
+"settings.ynh.docs.link.label" = "Документація YNH →";
+"settings.ynh.outdated.badge" = "Потрібне оновлення";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Видалити злиті гілки";
+"sidebar.prune.branches.confirm" = "Видалити гілки";
+"sidebar.prune.branches.explanation" = "Ці гілки повністю злиті з типовою віддаленою гілкою і не мають активного worktree. Видалення безпечне і не може бути скасоване.";
+"sidebar.prune.branches.nothing.message" = "Злитих гілок не знайдено. Гілки, ще не злиті з типовою віддаленою гілкою, зберігаються.";
+"sidebar.prune.branches.nothing.title" = "Нічого видаляти";
+"sidebar.prune.branches.title" = "Видалити злиті гілки";
+"sidebar.worktree.open.in" = "Відкрити в…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Відкрити термінали";

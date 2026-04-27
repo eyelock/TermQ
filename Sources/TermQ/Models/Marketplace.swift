@@ -9,9 +9,24 @@ struct Marketplace: Codable, Identifiable, Sendable {
     var description: String?
     var vendor: MarketplaceVendor
     var url: String
+    /// Optional git ref (branch name, tag, or full/abbreviated SHA) to pin fetches to.
+    /// nil → always fetch latest HEAD.
+    var ref: String?
     var plugins: [MarketplacePlugin]
     var lastFetched: Date?
     var fetchError: String?
+
+    /// True when this marketplace points to a local folder rather than a remote Git repository.
+    var isLocal: Bool { url.hasPrefix("/") || url.hasPrefix("file:///") }
+
+    /// True when `ref` is a commit SHA (40 hex chars or a 7-40 char hex abbreviation).
+    /// Branch/tag refs are mutable; SHAs are immutable — truly pinned.
+    var isPinnedToSHA: Bool {
+        guard let ref else { return false }
+        let hex = CharacterSet(charactersIn: "0123456789abcdefABCDEF")
+        return ref.count >= 7 && ref.count <= 40
+            && ref.unicodeScalars.allSatisfy { hex.contains($0) }
+    }
 }
 
 enum MarketplaceVendor: String, Codable, Sendable, CaseIterable {
@@ -74,16 +89,21 @@ struct PluginSourceSpec: Codable, Sendable {
         // Object form from TermQ persistence: {"type": "github", "url": "..."}
 
         let container = try decoder.container(keyedBy: RawSourceCodingKeys.self)
-        let typeStr = (try? container.decode(String.self, forKey: .source))
+        let typeStr =
+            (try? container.decode(String.self, forKey: .source))
             ?? (try? container.decode(String.self, forKey: .type))
             ?? ""
         self.type = PluginSourceType(rawValue: typeStr) ?? .unknown
-        self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
+        if self.type == .github, let repo = try? container.decode(String.self, forKey: .repo) {
+            self.url = "https://github.com/\(repo)"
+        } else {
+            self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
+        }
         self.path = try? container.decode(String.self, forKey: .path)
     }
 
     private enum RawSourceCodingKeys: String, CodingKey {
-        case source, type, url, path
+        case source, type, url, path, repo
     }
 }
 
@@ -98,7 +118,12 @@ extension PluginSourceSpec {
         // the "source" vs "type" key mismatch in the old decoder.
         guard type.isRelative || url.hasPrefix("./") else {
             if type == .github {
-                let expanded = url.hasPrefix("github.com/") ? url : "github.com/\(url)"
+                let expanded: String
+                if url.hasPrefix("http") || url.hasPrefix("github.com/") {
+                    expanded = url
+                } else {
+                    expanded = "github.com/\(url)"
+                }
                 return (expanded, path)
             }
             return (url, path)

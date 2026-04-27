@@ -306,6 +306,12 @@
 "settings.data.directory" = "TermQ Data Folder";
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Protected Branches";
+"settings.protected.branches.help" = "Branches never offered for deletion when pruning. Separate names with commas.";
+"settings.protected.branches.prompt" = "Comma-separated branch names";
+
 // Settings - Language section
 "settings.section.language" = "Language";
 "settings.field.current" = "Current";
@@ -541,6 +547,9 @@
 "sidebar.worktree.base.path.label" = "Worktree Base Path";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Protected Branches";
+"sidebar.protected.branches.override.help" = "Branches excluded from pruning in this repository. Overrides the global setting. Leave empty to use the global setting.";
+"sidebar.protected.branches.override.placeholder" = "(use global setting)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -559,6 +568,7 @@
 "sidebar.worktree.open.in.terminal" = "Reveal in Terminal";
 "sidebar.worktree.reveal.in.finder" = "Reveal in Finder";
 "sidebar.worktree.copy.pathname" = "Copy as Pathname";
+"sidebar.worktree.open.in" = "Open in…";
 "sidebar.worktree.open.remote.branch" = "Open Branch on Remote";
 "sidebar.worktree.open.remote.commit" = "Open Commit on Remote";
 "sidebar.worktree.lock" = "Lock Worktree";
@@ -610,6 +620,15 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Delete Branch";
+"sidebar.branch.delete.title" = "Delete Branch";
+"sidebar.branch.delete.confirm" = "Delete";
+"sidebar.branch.delete.message %@" = "Delete the local branch \"%@\"? This cannot be undone.";
+"sidebar.branch.destroy" = "Destroy Branch";
+"sidebar.branch.destroy.title" = "Destroy Branch";
+"sidebar.branch.destroy.confirm" = "Destroy";
+"sidebar.branch.destroy.message %@" = "Force-delete the local branch \"%@\"? This discards any unmerged commits and cannot be undone.";
+"sidebar.branch.update.from.origin" = "Update from Origin";
 
 // Checkout branch as worktree sheet
 "sidebar.checkout.branch.title" = "New Worktree from Branch";
@@ -624,23 +643,33 @@
 "harnesses.not.installed" = "ynh is not installed.";
 "harnesses.init.required" = "ynh found but not initialised.\nRun `ynh init` to set up.";
 "harnesses.init.hint" = "Open a terminal and run:\nynh init";
+"harnesses.outdated.headline" = "YNH upgrade required";
+"harnesses.outdated.capabilities.unknown" = "unknown";
+"harnesses.outdated.detail %@ %@" = "YNH reports capabilities %1$@, but TermQ requires %2$@ or newer. Update YNH to enable marketplace and harness-editing features.";
 "harnesses.empty.message" = "No harnesses installed yet.";
-"harnesses.empty.no.registries.message" = "No harnesses or registries installed yet.";
+"harnesses.empty.no.registries.message" = "No harnesses or marketplaces installed yet.";
 "harnesses.search.button" = "Search for Harnesses";
 
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
-"harnesses.source.registry" = "Registry";
+"harnesses.source.registry" = "Marketplace";
 
 // Harnesses — sidebar groups
 "harnesses.group.default" = "Default";
 "harnesses.group.local" = "Local";
 "harnesses.group.github %@" = "GitHub: %@";
-"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.registry %@" = "Marketplace: %@";
 
 // Marketplace — sidebar groups
 "marketplace.group.default" = "Default";
 "marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Local Folder";
+"marketplace.add.section.local.path" = "Folder Path";
+"marketplace.add.local.browse" = "Choose Folder…";
+"marketplace.add.local.path.placeholder" = "/path/to/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Reveal in Finder";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Information";
@@ -705,8 +734,8 @@
 "harnesses.install.tab.search" = "Search";
 "harnesses.install.tab.git" = "From Git";
 "harnesses.install.tab.sources" = "Sources";
-"harnesses.install.search.placeholder" = "Search registries and sources…";
-"harnesses.install.search.prompt" = "Type to search registries and sources";
+"harnesses.install.search.placeholder" = "Search marketplaces and sources…";
+"harnesses.install.search.prompt" = "Type to search marketplaces and sources";
 "harnesses.install.search.empty" = "No results";
 "harnesses.install.section.installed" = "Installed";
 "harnesses.install.section.available" = "Available from Registries";
@@ -717,6 +746,8 @@
 "harnesses.install.git.url.placeholder" = "github.com/user/repo";
 "harnesses.install.git.subpath" = "Subpath";
 "harnesses.install.git.subpath.placeholder" = "Optional sub-directory";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
 "harnesses.install.command.preview" = "Command Preview";
 "harnesses.install.confirm" = "Install";
 "harnesses.install.cancel" = "Cancel";
@@ -737,16 +768,20 @@
 "harnesses.uninstall.alert.worktrees %ld" = "This harness is linked to %ld worktree(s) — those associations will be cleared.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) are currently running this harness.";
 "harnesses.uninstall.alert.confirm" = "Uninstall";
+"harnesses.delete.local.button" = "Delete Harness";
+"harnesses.delete.local.title %@" = "Delete \"%@\"?";
+"harnesses.delete.local.message" = "This will uninstall the harness from YNH and permanently delete its files. This action cannot be undone.";
+"harnesses.delete.local.confirm" = "Delete Harness";
 "harnesses.more.actions.help" = "More actions";
 "harnesses.copy.run.command" = "Copy Run Command";
 "harnesses.export.button" = "Export as Marketplace…";
 "harnesses.ynh.documentation" = "YNH Documentation";
-"harnesses.add.registry.title" = "Add YNH Registry";
-"harnesses.add.registry.url.label" = "Registry URL";
-"harnesses.add.registry.hint" = "Add a Git repository that contains a registry.json file. Once added, you can search and install harnesses from it.";
-"harnesses.add.registry.button" = "Add Registry";
-"harnesses.add.registry.success" = "Registry added successfully";
-"harnesses.add.registry.toolbar.help" = "Add a YNH registry";
+"harnesses.add.registry.title" = "Add YNH Marketplace";
+"harnesses.add.registry.url.label" = "Marketplace URL";
+"harnesses.add.registry.hint" = "Add a Git repository that contains a marketplace.json file. Once added, you can search and install harnesses from it.";
+"harnesses.add.registry.button" = "Add Marketplace";
+"harnesses.add.registry.success" = "Marketplace added successfully";
+"harnesses.add.registry.toolbar.help" = "Add a YNH marketplace";
 "harnesses.add.sample.button" = "Add sample eyelock/assistants";
 "harnesses.group.menu.settings" = "Settings…";
 "harnesses.create.harness.button" = "Create a new harness";
@@ -764,6 +799,10 @@
 "settings.ynh.redetect" = "Re-detect";
 "settings.ynh.init.required" = "Not initialised";
 "settings.ynh.ready" = "Ready";
+"settings.ynh.outdated.badge" = "Upgrade required";
+"settings.ynh.capabilities.label" = "Capabilities:";
+"settings.ynh.capabilities.unknown" = "unknown";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
 "settings.ynh.path.label" = "Path:";
 "settings.ynh.ynd.path.label" = "ynd Path:";
 "settings.ynh.status.label" = "Status:";
@@ -791,6 +830,9 @@
 "marketplace.add.section.git.url" = "Git Repository URL";
 "marketplace.add.section.display.name" = "Display Name";
 "marketplace.add.section.vendor" = "Vendor";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.add.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
+"marketplace.row.pinned.help %@" = "Pinned to %@";
 "marketplace.detail.last.fetched %@" = "Last fetched %@";
 "marketplace.detail.search.placeholder" = "Search plugins…";
 "marketplace.detail.search.empty %@" = "No plugins match \"%@\"";
@@ -849,11 +891,33 @@
 
 // MARK: - Settings — Marketplaces extras
 "settings.marketplaces.reset" = "Reset";
-"settings.marketplaces.section.ynh.registries" = "YNH Registries";
-"settings.marketplaces.ynh.registries.empty" = "No registries added";
-"settings.marketplaces.ynh.add.registry" = "Add Registry…";
-"settings.marketplaces.ynh.registry.remove.confirm.title" = "Remove Registry";
+"settings.marketplaces.section.ynh.registries" = "YNH Marketplaces";
+"settings.marketplaces.ynh.registries.empty" = "No marketplaces added";
+"settings.marketplaces.ynh.add.registry" = "Add Marketplace…";
+"settings.marketplaces.ynh.registry.remove.confirm.title" = "Remove Marketplace";
 "settings.marketplaces.ynh.registry.remove.confirm" = "Remove";
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Remove \"%@\" from YNH? Installed harnesses will remain.";
 "marketplace.add.custom.name.placeholder" = "My Marketplace";
 "harness.wizard.success.created %@" = "Harness \"%@\" created";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Utilities";
+"menu.utilities.logging" = "Logging…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ Diagnostics";
+"diagnostics.filter.category" = "Category";
+"diagnostics.filter.category.all" = "All";
+"diagnostics.filter.level" = "Level";
+"diagnostics.search.placeholder" = "Search…";
+"diagnostics.clear" = "Clear";
+"diagnostics.export" = "Export…";
+"diagnostics.jump.to.latest" = "Jump to Latest";
+"diagnostics.status.live" = "Live";
+"diagnostics.status.paused" = "Paused";
+"diagnostics.status.entries %lld %lld" = "%lld entries · %lld matching filter";
+"diagnostics.verbose.mode" = "Verbose Mode";
+"diagnostics.verbose.mode.help" = "Capture debug- and info-level messages in addition to notice/warning/error";
+"diagnostics.verbose.warning" = "High volume — disable when done";
+"diagnostics.export.title" = "TermQ Diagnostics Report";
+"diagnostics.export.footer" = "Filed via TermQ built-in diagnostics.";

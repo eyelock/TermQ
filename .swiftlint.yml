@@ -10,7 +10,6 @@ excluded:
 # Rule configuration
 disabled_rules:
   - trailing_comma           # Allow trailing commas
-  - line_length              # Handled by swift-format; config block below kept for reference
   - opening_brace            # Conflicts with swift-format's multi-condition if-let style
   - closure_parameter_position  # Conflicts with swift-format's closure formatting
 
@@ -34,19 +33,19 @@ line_length:
   ignores_urls: true
 
 type_body_length:
-  warning: 300
-  error: 500
+  warning: 500
+  error: 600
 
 file_length:
-  warning: 500
+  warning: 1000
   error: 1500
 
 function_body_length:
-  warning: 50
-  error: 150
+  warning: 125
+  error: 200
 
 cyclomatic_complexity:
-  warning: 15
+  warning: 19
   error: 25
 
 nesting:

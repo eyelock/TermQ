@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Branches protégées";
+"settings.protected.branches.help" = "Branches jamais proposées à la suppression lors de l'élagage. Séparez les noms par des virgules.";
+"settings.protected.branches.prompt" = "Noms de branches séparés par des virgules";
 
 // Settings - Language section
 "settings.section.language" = "Langue";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "Chemin de base du worktree";
 "sidebar.worktree.base.path.help" = "Les nouveaux worktrees sont créés ici. Par défaut, il s'agit du dossier parent du dépôt.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Branches protégées";
+"sidebar.protected.branches.override.help" = "Branches exclues de l'élagage dans ce dépôt. Remplace le paramètre global. Laisser vide pour utiliser le paramètre global.";
+"sidebar.protected.branches.override.placeholder" = "(utiliser le paramètre global)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -565,13 +573,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Supprimer la branche";
+"sidebar.branch.delete.title" = "Supprimer la branche";
+"sidebar.branch.delete.confirm" = "Supprimer";
+"sidebar.branch.delete.message %@" = "Supprimer la branche locale \"%@\" ? Cette action est irréversible.";
+"sidebar.branch.destroy" = "Détruire la branche";
+"sidebar.branch.destroy.title" = "Détruire la branche";
+"sidebar.branch.destroy.confirm" = "Détruire";
+"sidebar.branch.destroy.message %@" = "Forcer la suppression de la branche locale \"%@\" ? Les commits non fusionnés seront supprimés et cette action est irréversible.";
+"sidebar.branch.update.from.origin" = "Mettre à jour depuis Origin";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Harnais";
@@ -714,6 +726,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Ce harnais est lié à %ld arbre(s) de travail — ces associations seront supprimées.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) exécutent actuellement ce harnais.";
 "harnesses.uninstall.alert.confirm" = "Désinstaller";
+"harnesses.delete.local.button" = "Supprimer le harness";
+"harnesses.delete.local.title %@" = "Supprimer \"%@\" ?";
+"harnesses.delete.local.message" = "Cela désinstallera le harness de YNH et supprimera définitivement ses fichiers. Cette action est irréversible.";
+"harnesses.delete.local.confirm" = "Supprimer le harness";
 "harnesses.more.actions.help" = "Plus d'actions";
 "harnesses.copy.run.command" = "Copier la commande d'exécution";
 "harnesses.ynh.documentation" = "Documentation YNH";
@@ -752,6 +768,15 @@
 "marketplace.row.never.fetched" = "Jamais récupéré";
 "marketplace.add.sheet.title" = "Ajouter une place de marché";
 "marketplace.add.tab.known" = "Connues";
+"marketplace.group.default" = "Par défaut";
+"marketplace.group.github %@" = "GitHub : %@";
+"marketplace.group.local" = "Local";
+"marketplace.add.tab.local" = "Dossier local";
+"marketplace.add.section.local.path" = "Chemin du dossier";
+"marketplace.add.local.browse" = "Choisir un dossier…";
+"marketplace.add.local.path.placeholder" = "/chemin/vers/marketplace";
+"marketplace.row.local" = "Local";
+"marketplace.row.reveal" = "Afficher dans le Finder";
 "marketplace.add.tab.custom" = "URL personnalisée";
 "marketplace.add.section.git.url" = "URL du dépôt Git";
 "marketplace.add.section.display.name" = "Nom d'affichage";
@@ -810,3 +835,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Supprimer « %@ » de YNH ? Les harnais installés seront conservés.";
 "marketplace.add.custom.name.placeholder" = "Mon marché";
 "harness.wizard.success.created %@" = "Harnais « %@ » créé";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Utilitaires";
+"menu.utilities.logging" = "Journalisation…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostics TermQ";
+"diagnostics.filter.category" = "Catégorie";
+"diagnostics.filter.category.all" = "Tous";
+"diagnostics.filter.level" = "Niveau";
+"diagnostics.search.placeholder" = "Rechercher…";
+"diagnostics.clear" = "Effacer";
+"diagnostics.export" = "Exporter…";
+"diagnostics.jump.to.latest" = "Aller au plus récent";
+"diagnostics.status.live" = "En direct";
+"diagnostics.status.paused" = "En pause";
+"diagnostics.status.entries %lld %lld" = "%lld entrées · %lld correspondent au filtre";
+"diagnostics.verbose.mode" = "Mode détaillé";
+"diagnostics.verbose.mode.help" = "Capture les messages de debug et info en plus de notice/warning/error";
+"diagnostics.verbose.warning" = "Volume élevé — désactiver une fois terminé";
+"diagnostics.export.title" = "Rapport de diagnostics TermQ";
+"diagnostics.export.footer" = "Soumis via les diagnostics intégrés de TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Dupliquer";
+"harness.duplicate.installing" = "Installation du doublon…";
+"harness.duplicate.success %@" = "%@ installé avec succès.";
+"harness.duplicate.title" = "Dupliquer le harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Ajouter l'exemple eyelock/assistants";
+"harnesses.create.harness.button" = "Créer un nouveau harness";
+"harnesses.empty.no.registries.message" = "Aucun harness ou registre installé pour l'instant.";
+"harnesses.export.button" = "Exporter en marketplace…";
+"harnesses.group.default" = "Par défaut";
+"harnesses.group.github %@" = "GitHub : %@";
+"harnesses.group.local" = "Local";
+"harnesses.group.menu.settings" = "Réglages…";
+"harnesses.group.registry %@" = "Registre : %@";
+"harnesses.install.browsing" = "Chargement des harnesses disponibles…";
+"harnesses.install.git.ref" = "Référence";
+"harnesses.install.git.ref.placeholder" = "Branche, tag ou SHA de commit (optionnel)";
+"harnesses.install.retry" = "Réessayer";
+"harnesses.install.section.available" = "Disponible dans les registres";
+"harnesses.install.section.installed" = "Installé";
+"harnesses.install.section.local" = "Disponible localement";
+"harnesses.outdated.capabilities.unknown" = "inconnu";
+"harnesses.outdated.detail %@ %@" = "YNH signale les fonctionnalités %1$@, mais TermQ requiert %2$@ ou plus récent. Mettez à jour YNH pour activer les fonctionnalités de marketplace et d'édition de harness.";
+"harnesses.outdated.headline" = "Mise à jour YNH requise";
+"harnesses.search.button" = "Rechercher des harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branche, tag ou SHA de commit (optionnel)";
+"marketplace.add.section.ref" = "Référence";
+"marketplace.refresh.all.help" = "Actualiser tous les marketplaces";
+"marketplace.restore.defaults" = "Restaurer les valeurs par défaut";
+"marketplace.restore.defaults.help" = "Rajouter les marketplaces par défaut";
+"marketplace.row.pinned.help %@" = "Épinglé à %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Activer le collage sécurisé pour les nouveaux terminaux";
+"settings.default.safe.paste.help" = "Les nouveaux terminaux auront le collage sécurisé activé par défaut. Vous pouvez le modifier par terminal dans l'éditeur de carte.";
+"settings.scrollback.invalid" = "Saisissez un nombre entre 500 et 100 000";
+"settings.scrollback.label" = "Historique";
+"settings.scrollback.lines.help" = "Lignes conservées dans l'historique de défilement (500–100 000). Les modifications s'appliquent aux nouveaux terminaux.";
+"settings.scrollback.unit" = "lignes";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Fonctionnalités :";
+"settings.ynh.capabilities.unknown" = "inconnu";
+"settings.ynh.docs.link.label" = "Documentation YNH →";
+"settings.ynh.outdated.badge" = "Mise à jour requise";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Élaguer les branches fusionnées";
+"sidebar.prune.branches.confirm" = "Supprimer les branches";
+"sidebar.prune.branches.explanation" = "Ces branches sont entièrement fusionnées dans la branche distante par défaut et n'ont pas de worktree actif. La suppression est sans risque et ne peut pas être annulée.";
+"sidebar.prune.branches.nothing.message" = "Aucune branche fusionnée trouvée. Les branches pas encore fusionnées dans la branche distante par défaut sont conservées.";
+"sidebar.prune.branches.nothing.title" = "Rien à élaguer";
+"sidebar.prune.branches.title" = "Élaguer les branches fusionnées";
+"sidebar.worktree.open.in" = "Ouvrir dans…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Ouvrir les terminaux";

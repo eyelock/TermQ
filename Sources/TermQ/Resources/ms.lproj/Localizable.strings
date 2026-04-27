@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Cawangan yang dilindungi";
+"settings.protected.branches.help" = "Cawangan yang tidak pernah ditawarkan untuk dipadam semasa pemangkasan. Pisahkan nama dengan koma.";
+"settings.protected.branches.prompt" = "Nama cawangan dipisahkan koma";
 
 // Settings - Language section
 "settings.section.language" = "Bahasa";
@@ -516,6 +521,9 @@
 "sidebar.worktree.base.path.label" = "Laluan Asas Worktree";
 "sidebar.worktree.base.path.help" = "Worktrees baharu dicipta di sini. Laluan lalai ialah induk direktori repositori.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Cawangan yang dilindungi";
+"sidebar.protected.branches.override.help" = "Cawangan yang dikecualikan daripada pemangkasan dalam repositori ini. Mengatasi tetapan global. Biarkan kosong untuk menggunakan tetapan global.";
+"sidebar.protected.branches.override.placeholder" = "(guna tetapan global)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -564,13 +572,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Padam Cawangan";
+"sidebar.branch.delete.title" = "Padam Cawangan";
+"sidebar.branch.delete.confirm" = "Padam";
+"sidebar.branch.delete.message %@" = "Padamkan cawangan tempatan \"%@\"? Tindakan ini tidak boleh dibatalkan.";
+"sidebar.branch.destroy" = "Musnahkan Cawangan";
+"sidebar.branch.destroy.title" = "Musnahkan Cawangan";
+"sidebar.branch.destroy.confirm" = "Musnahkan";
+"sidebar.branch.destroy.message %@" = "Padamkan cawangan tempatan \"%@\" secara paksa? Commit yang belum digabung akan hilang dan tidak boleh dibatalkan.";
+"sidebar.branch.update.from.origin" = "Kemas kini dari Origin";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Harness";
@@ -713,6 +725,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Harness ini dikaitkan dengan %ld worktree — perkaitan tersebut akan dipadamkan.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
 "harnesses.uninstall.alert.confirm" = "Nyahpasang";
+"harnesses.delete.local.button" = "Padam Harness";
+"harnesses.delete.local.title %@" = "Padamkan \"%@\"?";
+"harnesses.delete.local.message" = "Ini akan menyahpasang harness dari YNH dan memadam failnya secara kekal. Tindakan ini tidak boleh dibatalkan.";
+"harnesses.delete.local.confirm" = "Padam Harness";
 "harnesses.more.actions.help" = "Tindakan lain";
 "harnesses.copy.run.command" = "Salin perintah jalankan";
 "harnesses.ynh.documentation" = "Dokumentasi YNH";
@@ -751,6 +767,15 @@
 "marketplace.row.never.fetched" = "Tidak pernah diambil";
 "marketplace.add.sheet.title" = "Tambah pasaran";
 "marketplace.add.tab.known" = "Dikenali";
+"marketplace.group.default" = "Lalai";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Tempatan";
+"marketplace.add.tab.local" = "Folder Tempatan";
+"marketplace.add.section.local.path" = "Laluan Folder";
+"marketplace.add.local.browse" = "Pilih Folder…";
+"marketplace.add.local.path.placeholder" = "/laluan/ke/marketplace";
+"marketplace.row.local" = "Tempatan";
+"marketplace.row.reveal" = "Dedah dalam Finder";
 "marketplace.add.tab.custom" = "URL Tersuai";
 "marketplace.add.section.git.url" = "URL Repositori Git";
 "marketplace.add.section.display.name" = "Nama Paparan";
@@ -809,3 +834,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Buang “%@” daripada YNH? Harness yang dipasang akan kekal.";
 "marketplace.add.custom.name.placeholder" = "Pasaran saya";
 "harness.wizard.success.created %@" = "Harness «%@» dicipta";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Utiliti";
+"menu.utilities.logging" = "Pengelogan…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Diagnostik TermQ";
+"diagnostics.filter.category" = "Kategori";
+"diagnostics.filter.category.all" = "Semua";
+"diagnostics.filter.level" = "Tahap";
+"diagnostics.search.placeholder" = "Cari…";
+"diagnostics.clear" = "Kosongkan";
+"diagnostics.export" = "Eksport…";
+"diagnostics.jump.to.latest" = "Pergi ke Terbaru";
+"diagnostics.status.live" = "Langsung";
+"diagnostics.status.paused" = "Dijeda";
+"diagnostics.status.entries %lld %lld" = "%lld entri · %lld sepadan penapis";
+"diagnostics.verbose.mode" = "Mod Terperinci";
+"diagnostics.verbose.mode.help" = "Merakam mesej debug dan info selain notice/warning/error";
+"diagnostics.verbose.warning" = "Jumlah tinggi — nyahaktifkan apabila selesai";
+"diagnostics.export.title" = "Laporan Diagnostik TermQ";
+"diagnostics.export.footer" = "Difailkan melalui diagnostik terbina dalam TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Duplikat";
+"harness.duplicate.installing" = "Memasang duplikat…";
+"harness.duplicate.success %@" = "%@ berjaya dipasang.";
+"harness.duplicate.title" = "Duplikat Harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Tambah contoh eyelock/assistants";
+"harnesses.create.harness.button" = "Buat harness baharu";
+"harnesses.empty.no.registries.message" = "Belum ada harness atau registry yang dipasang.";
+"harnesses.export.button" = "Eksport sebagai Marketplace…";
+"harnesses.group.default" = "Lalai";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Tempatan";
+"harnesses.group.menu.settings" = "Tetapan…";
+"harnesses.group.registry %@" = "Registry: %@";
+"harnesses.install.browsing" = "Memuatkan harness yang tersedia…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Cawangan, tag atau commit SHA (pilihan)";
+"harnesses.install.retry" = "Cuba semula";
+"harnesses.install.section.available" = "Tersedia dari registry";
+"harnesses.install.section.installed" = "Dipasang";
+"harnesses.install.section.local" = "Tersedia secara tempatan";
+"harnesses.outdated.capabilities.unknown" = "tidak diketahui";
+"harnesses.outdated.detail %@ %@" = "YNH melaporkan keupayaan %1$@, tetapi TermQ memerlukan %2$@ atau lebih baharu. Kemas kini YNH untuk mengaktifkan ciri marketplace dan penyuntingan harness.";
+"harnesses.outdated.headline" = "Naik taraf YNH diperlukan";
+"harnesses.search.button" = "Cari harness";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Cawangan, tag atau commit SHA (pilihan)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Muat semula semua marketplace";
+"marketplace.restore.defaults" = "Pulihkan lalai";
+"marketplace.restore.defaults.help" = "Tambah semula marketplace lalai";
+"marketplace.row.pinned.help %@" = "Disematkan ke %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Aktifkan tampal selamat untuk terminal baharu";
+"settings.default.safe.paste.help" = "Terminal baharu akan mempunyai tampal selamat diaktifkan secara lalai. Anda boleh mengubah ini bagi setiap terminal dalam editor kad.";
+"settings.scrollback.invalid" = "Masukkan nombor antara 500 dan 100,000";
+"settings.scrollback.label" = "Sejarah tatal";
+"settings.scrollback.lines.help" = "Baris yang disimpan dalam sejarah tatal (500–100,000). Perubahan terpakai pada terminal baharu.";
+"settings.scrollback.unit" = "baris";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Keupayaan:";
+"settings.ynh.capabilities.unknown" = "tidak diketahui";
+"settings.ynh.docs.link.label" = "Dokumentasi YNH →";
+"settings.ynh.outdated.badge" = "Naik taraf diperlukan";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Bersihkan cawangan yang digabung";
+"sidebar.prune.branches.confirm" = "Padam cawangan";
+"sidebar.prune.branches.explanation" = "Cawangan-cawangan ini telah digabungkan sepenuhnya ke dalam cawangan lalai jauh dan tiada worktree aktif. Pemadaman adalah selamat dan tidak boleh dibatalkan.";
+"sidebar.prune.branches.nothing.message" = "Tiada cawangan yang digabung ditemui. Cawangan yang belum digabung ke cawangan lalai jauh dikekalkan.";
+"sidebar.prune.branches.nothing.title" = "Tiada yang perlu dibersihkan";
+"sidebar.prune.branches.title" = "Bersihkan cawangan yang digabung";
+"sidebar.worktree.open.in" = "Buka dalam…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Buka terminal";

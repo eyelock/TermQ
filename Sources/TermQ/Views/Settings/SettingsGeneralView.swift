@@ -27,6 +27,9 @@ struct SettingsGeneralView: View {
     // Uninstall sheet
     @Binding var showUninstallSheet: Bool
 
+    // Git preferences
+    @Binding var protectedBranches: String
+
     var body: some View {
         // Terminal section
         Section {
@@ -65,6 +68,20 @@ struct SettingsGeneralView: View {
                 .help(Strings.Settings.scrollbackLinesHelp)
         } header: {
             Text(Strings.Settings.sectionTerminal)
+        }
+
+        // Git section
+        Section {
+            TextField(
+                Strings.Settings.protectedBranchesLabel,
+                text: $protectedBranches,
+                prompt: Text(Strings.Settings.protectedBranchesPrompt)
+            )
+            Text(Strings.Settings.protectedBranchesHelp)
+                .font(.caption)
+                .foregroundColor(.secondary)
+        } header: {
+            Text(Strings.Settings.sectionGit)
         }
 
         // Bin section

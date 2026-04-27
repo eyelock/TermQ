@@ -146,10 +146,6 @@ public enum GitServiceShared {
         return !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
-    /// Check out an existing local branch as a new worktree at `worktreePath`.
-    ///
-    /// Unlike `addWorktree`, this does not create a new branch — it checks out the
-    /// existing branch directly using `git worktree add <path> <branch>`.
     public static func checkoutBranchAsWorktree(
         repoPath: String,
         branch: String,

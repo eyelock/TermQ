@@ -47,14 +47,23 @@ final class WorktreeSidebarViewModel: ObservableObject {
     @Published var operationError: String?
     @Published var expandedRepoIDs: Set<UUID> = []
     @Published var expandedBranchSectionIDs: Set<UUID> = []
+    @Published private(set) var deletingWorktreeIDs: Set<String> = []
+    @Published private(set) var updatingWorktreeIDs: Set<String> = []
+    @Published private(set) var fetchingBranchNames: Set<String> = []
 
-    private let persistence = RepoPersistence()
+    private let gitService: any GitServiceProtocol
+    private let persistence: any RepoPersistenceProtocol
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     private var monitors: [UUID: GitRepositoryMonitor] = [:]
     private var dirtyPollTimer: Timer?
 
-    private init() {
+    init(
+        gitService: any GitServiceProtocol = GitService.shared,
+        persistence: any RepoPersistenceProtocol = RepoPersistence()
+    ) {
+        self.persistence = persistence
+        self.gitService = gitService
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
         let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
@@ -150,7 +159,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         worktreeBasePath: String? = nil,
         addToGitignore: Bool = false
     ) async throws {
-        guard try await GitService.shared.isGitRepo(path: path) else {
+        guard try await gitService.isGitRepo(path: path) else {
             throw WorktreeSidebarError.notAGitRepository(path: path)
         }
 
@@ -158,7 +167,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         if let provided = name, !provided.isEmpty {
             displayName = provided
         } else {
-            displayName = await GitService.shared.inferRepoName(repoPath: path)
+            displayName = await gitService.inferRepoName(repoPath: path)
         }
 
         let repo = ObservableRepository(name: displayName, path: path, worktreeBasePath: worktreeBasePath)
@@ -211,6 +220,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
         }
     }
 
+    func moveRepository(from source: IndexSet, to destination: Int) {
+        repositories.move(fromOffsets: source, toOffset: destination)
+        save()
+    }
+
     func removeRepository(_ repo: ObservableRepository) {
         stopMonitor(for: repo.id)
         repositories.removeAll { $0.id == repo.id }
@@ -218,9 +232,15 @@ final class WorktreeSidebarViewModel: ObservableObject {
         save()
     }
 
-    func updateRepository(_ repo: ObservableRepository, name: String, worktreeBasePath: String?) {
+    func updateRepository(
+        _ repo: ObservableRepository,
+        name: String,
+        worktreeBasePath: String?,
+        protectedBranches: [String]? = nil
+    ) {
         repo.name = name
         repo.worktreeBasePath = worktreeBasePath
+        repo.protectedBranches = protectedBranches
         save()
     }
 
@@ -229,7 +249,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
     /// Manual refresh triggered by the user — updates `origin/HEAD` before refreshing
     /// worktrees so that `defaultBranch` reflects the remote's current default.
     func refreshRepo(for repo: ObservableRepository) async {
-        await GitService.shared.updateRemoteHead(repoPath: repo.path)
+        await gitService.updateRemoteHead(repoPath: repo.path)
         await refreshWorktrees(for: repo)
     }
 
@@ -242,8 +262,14 @@ final class WorktreeSidebarViewModel: ObservableObject {
         if isInitialLoad { loadingRepos.insert(repo.id) }
         defer { if isInitialLoad { loadingRepos.remove(repo.id) } }
         do {
-            let trees = try await GitService.shared.listWorktrees(repoPath: repo.path)
-            worktrees[repo.id] = trees
+            let trees = try await gitService.listWorktrees(repoPath: repo.path)
+            worktrees[repo.id] = trees.sorted {
+                if $0.isMainWorktree { return true }
+                if $1.isMainWorktree { return false }
+                let lhs = $0.branch ?? ""
+                let rhs = $1.branch ?? ""
+                return lhs.localizedCaseInsensitiveCompare(rhs) == .orderedAscending
+            }
         } catch {
             if TermQLogger.fileLoggingEnabled {
                 TermQLogger.ui.error("WorktreeSidebarViewModel: refreshWorktrees failed error=\(error)")
@@ -261,9 +287,12 @@ final class WorktreeSidebarViewModel: ObservableObject {
     /// section always reflects the current worktree state.
     func refreshAvailableBranches(for repo: ObservableRepository) async {
         do {
-            let all = try await GitService.shared.listBranches(repoPath: repo.path)
+            let all = try await gitService.listBranches(repoPath: repo.path)
             let occupied = Set(worktrees[repo.id]?.compactMap(\.branch) ?? [])
-            availableBranches[repo.id] = all.filter { !occupied.contains($0) }
+            availableBranches[repo.id] =
+                all
+                .filter { !occupied.contains($0) }
+                .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         } catch {
             availableBranches[repo.id] = availableBranches[repo.id] ?? []
         }
@@ -277,7 +306,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         baseBranch: String?,
         path: String
     ) async throws {
-        try await GitService.shared.addWorktree(
+        try await gitService.addWorktree(
             repo: repo.toGitRepository(),
             branch: branchName,
             path: path,
@@ -287,18 +316,8 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
-    func removeWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
-        guard !worktree.isMainWorktree else {
-            throw WorktreeOperationError.removingMainWorktree
-        }
-        try await GitService.shared.removeWorktree(repo: repo.toGitRepository(), path: worktree.path)
-        monitors[repo.id]?.resetWatches()
-        await refreshWorktrees(for: repo)
-    }
-
-    /// Check out an existing local branch as a new worktree.
     func checkoutBranchAsWorktree(repo: ObservableRepository, branch: String, path: String) async throws {
-        try await GitService.shared.checkoutBranchAsWorktree(
+        try await gitService.checkoutBranchAsWorktree(
             repo: repo.toGitRepository(),
             branch: branch,
             path: path
@@ -307,53 +326,104 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
+    func removeWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
+        guard !worktree.isMainWorktree else {
+            throw WorktreeOperationError.removingMainWorktree
+        }
+        try await gitService.removeWorktree(repo: repo.toGitRepository(), path: worktree.path)
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
     func listBranches(for repo: ObservableRepository) async throws -> [String] {
-        try await GitService.shared.listBranches(repoPath: repo.path)
+        try await gitService.listBranches(repoPath: repo.path)
     }
 
     /// Return the default branch for a repo via `origin/HEAD` symref.
     func defaultBranch(for repo: ObservableRepository) async -> String {
-        await GitService.shared.defaultBranch(repoPath: repo.path)
+        await gitService.defaultBranch(repoPath: repo.path)
     }
 
     func forceDeleteWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
         guard !worktree.isMainWorktree else {
             throw WorktreeOperationError.removingMainWorktree
         }
-        try await GitService.shared.forceDeleteWorktree(repoPath: repo.path, worktreePath: worktree.path)
+        deletingWorktreeIDs.insert(worktree.id)
+        defer { deletingWorktreeIDs.remove(worktree.id) }
+        try await gitService.forceDeleteWorktree(repoPath: repo.path, worktreePath: worktree.path)
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
     }
 
     func lockWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
-        try await GitService.shared.lockWorktree(repoPath: repo.path, worktreePath: worktree.path)
+        try await gitService.lockWorktree(repoPath: repo.path, worktreePath: worktree.path)
         await refreshWorktrees(for: repo)
     }
 
     func unlockWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
-        try await GitService.shared.unlockWorktree(repoPath: repo.path, worktreePath: worktree.path)
+        try await gitService.unlockWorktree(repoPath: repo.path, worktreePath: worktree.path)
         await refreshWorktrees(for: repo)
     }
 
     func pruneWorktreesDryRun(repo: ObservableRepository) async throws -> [String] {
-        try await GitService.shared.pruneWorktreesDryRun(repoPath: repo.path)
+        try await gitService.pruneWorktreesDryRun(repoPath: repo.path)
     }
 
     func pruneWorktrees(repo: ObservableRepository) async throws {
-        try await GitService.shared.pruneWorktrees(repoPath: repo.path)
+        try await gitService.pruneWorktrees(repoPath: repo.path)
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
     }
 
     func mergedLocalBranches(repo: ObservableRepository) async throws -> [String] {
-        try await GitService.shared.mergedLocalBranches(repoPath: repo.path)
+        let branches = try await gitService.mergedLocalBranches(repoPath: repo.path)
+        let protected = Set(effectiveProtectedBranches(for: repo))
+        return branches.filter { !protected.contains($0) }
+    }
+
+    func isProtectedBranch(_ branch: String, for repo: ObservableRepository) -> Bool {
+        effectiveProtectedBranches(for: repo).contains(branch)
+    }
+
+    private func effectiveProtectedBranches(for repo: ObservableRepository) -> [String] {
+        if let override = repo.protectedBranches {
+            return override
+        }
+        let stored = UserDefaults.standard.string(forKey: "protectedBranches") ?? ""
+        return stored.split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
     }
 
     func deleteBranches(repo: ObservableRepository, branches: [String]) async throws {
         for branch in branches {
-            try await GitService.shared.deleteLocalBranch(repoPath: repo.path, branch: branch)
+            try await gitService.deleteLocalBranch(repoPath: repo.path, branch: branch)
         }
         await refreshAvailableBranches(for: repo)
+    }
+
+    func deleteBranch(repo: ObservableRepository, branch: String) async throws {
+        try await gitService.deleteLocalBranch(repoPath: repo.path, branch: branch)
+        await refreshAvailableBranches(for: repo)
+    }
+
+    func forceDeleteBranch(repo: ObservableRepository, branch: String) async throws {
+        try await gitService.forceDeleteLocalBranch(repoPath: repo.path, branch: branch)
+        await refreshAvailableBranches(for: repo)
+    }
+
+    func fetchBranchFromOrigin(repo: ObservableRepository, branch: String) async throws {
+        fetchingBranchNames.insert(branch)
+        defer { fetchingBranchNames.remove(branch) }
+        try await gitService.fetchBranchFromOrigin(repoPath: repo.path, branch: branch)
+        await refreshAvailableBranches(for: repo)
+    }
+
+    func pullBranch(worktree: GitWorktree, repo: ObservableRepository) async throws {
+        updatingWorktreeIDs.insert(worktree.id)
+        defer { updatingWorktreeIDs.remove(worktree.id) }
+        try await gitService.pullBranch(worktreePath: worktree.path)
+        await refreshWorktrees(for: repo)
     }
 
     /// Infer a worktree directory path based on the repo's base path convention.
@@ -402,6 +472,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
                 existing.name = gitRepo.name
                 existing.path = gitRepo.path
                 existing.worktreeBasePath = gitRepo.worktreeBasePath
+                existing.protectedBranches = gitRepo.protectedBranches
                 updated.append(existing)
             } else {
                 updated.append(ObservableRepository(from: gitRepo))
@@ -421,6 +492,7 @@ extension ObservableRepository {
             name: gitRepo.name,
             path: gitRepo.path,
             worktreeBasePath: gitRepo.worktreeBasePath,
+            protectedBranches: gitRepo.protectedBranches,
             addedAt: gitRepo.addedAt
         )
     }
@@ -432,6 +504,7 @@ extension ObservableRepository {
             name: name,
             path: path,
             worktreeBasePath: worktreeBasePath,
+            protectedBranches: protectedBranches,
             addedAt: addedAt
         )
     }

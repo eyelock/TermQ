@@ -62,3 +62,5 @@ final class RepoPersistence {
         }
     }
 }
+
+extension RepoPersistence: RepoPersistenceProtocol {}

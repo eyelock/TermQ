@@ -46,6 +46,10 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Last known mouse position during drag (for extending selection after scroll)
     private var lastDragPosition: NSPoint?
 
+    /// Target yDisp row for upward auto-scroll; nil when not active.
+    /// Persists the intended viewport position across linefeed resets.
+    private var selectionScrollTargetRow: Int?
+
     deinit {
         // Use MainActor.assumeIsolated since deinit is nonisolated in Swift 6
         // but we're always deallocated on the main thread for NSView subclasses
@@ -128,8 +132,9 @@ class TermQTerminalView: LocalProcessTerminalView {
         #if TERMQ_DEBUG_BUILD
             let sinceInput = Date().timeIntervalSince(lastUserInputTime)
             if sinceInput < 2.0 {
+                let sinceFmt = String(format: "%.2f", sinceInput)
                 TermQLogger.io.debug(
-                    "setNeedsDisplay sinceUserInput=\(String(format: "%.2f", sinceInput))s allowMouseReporting=\(self.allowMouseReporting)"
+                    "setNeedsDisplay sinceUserInput=\(sinceFmt)s allowMouseReporting=\(self.allowMouseReporting)"
                 )
             }
         #endif
@@ -357,21 +362,51 @@ class TermQTerminalView: LocalProcessTerminalView {
         autoScrollTimer?.invalidate()
         autoScrollTimer = nil
         autoScrollDelta = 0
+        selectionScrollTargetRow = nil
     }
 
     /// Called when auto-scroll timer fires
     private func autoScrollTimerFired() {
         guard autoScrollDelta != 0 else { return }
 
+        let currentYDisp = getTerminal().buffer.yDisp
+
         if autoScrollDelta < 0 {
-            // Scroll up (show earlier content)
-            scrollUp(lines: abs(autoScrollDelta))
+            // Scrolling up into history.
+            // Accumulate the intended position from the last known target (not from yDisp,
+            // which may have been reset to yBase by a linefeed since the last timer fire).
+            let currentEffective = selectionScrollTargetRow ?? currentYDisp
+            let newTarget = max(currentEffective - abs(autoScrollDelta), 0)
+            selectionScrollTargetRow = newTarget
+            if currentYDisp > newTarget {
+                scrollUp(lines: currentYDisp - newTarget)
+            }
         } else {
-            // Scroll down (show later content)
+            // Scrolling down toward live view. No need to fight linefeeds — they help.
+            selectionScrollTargetRow = nil
             scrollDown(lines: autoScrollDelta)
         }
 
         setNeedsDisplay(bounds)
+    }
+
+    /// Called by SwiftTerm when the terminal engine resets yDisp (e.g. on each linefeed).
+    /// Re-applies our scroll target so upward auto-scroll is not undone by streaming output.
+    override func scrolled(source: Terminal, yDisp: Int) {
+        super.scrolled(source: source, yDisp: yDisp)
+        guard let targetRow = selectionScrollTargetRow, yDisp > targetRow else { return }
+        scrollUp(lines: yDisp - targetRow)
+    }
+
+    /// Override linefeed to avoid flickering the selection on each new output line.
+    /// Position re-apply is handled in scrolled() which fires before linefeed().
+    override func linefeed(source: Terminal) {
+        // Only delegate to super (which calls selectNone()) when not in a drag-to-select.
+        // During a drag, clearing the selection on each linefeed causes visible flicker —
+        // the drag monitor re-extends it on the next event anyway.
+        if allowMouseReporting {
+            super.linefeed(source: source)
+        }
     }
 
     // MARK: - Copy on Select
@@ -421,6 +456,21 @@ class TermQTerminalView: LocalProcessTerminalView {
             guard let self = self else { return }
             self.copy(self)
         }
+    }
+
+    // MARK: - Context Menu
+
+    override func menu(for event: NSEvent) -> NSMenu? {
+        let menu = NSMenu()
+
+        menu.addItem(NSMenuItem(title: "Copy", action: #selector(copy(_:)), keyEquivalent: ""))
+
+        menu.addItem(.separator())
+
+        let pasteItem = NSMenuItem(title: "Paste", action: #selector(paste(_:)), keyEquivalent: "")
+        menu.addItem(pasteItem)
+
+        return menu
     }
 
     // MARK: - Smart Paste

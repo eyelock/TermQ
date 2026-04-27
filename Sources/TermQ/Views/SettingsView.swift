@@ -27,6 +27,9 @@ struct SettingsView: View {
     @State private var showAlert = false
     @State private var alertIsError = false
 
+    // Git preferences
+    @AppStorage("protectedBranches") private var protectedBranches = ""
+
     // Terminal preferences
     @AppStorage("copyOnSelect") private var copyOnSelect = false
     @AppStorage("binRetentionDays") private var binRetentionDays = 14
@@ -107,7 +110,8 @@ struct SettingsView: View {
                         boardViewModel: boardViewModel,
                         updaterViewModel: updaterViewModel,
                         selectedLanguage: $selectedLanguage,
-                        showUninstallSheet: $showUninstallSheet
+                        showUninstallSheet: $showUninstallSheet,
+                        protectedBranches: $protectedBranches
                     )
                 case .environment:
                     SettingsEnvironmentView()

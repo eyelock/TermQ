@@ -183,8 +183,9 @@ final class BackupManagerTests: XCTestCase {
             throw XCTSkip("Primary board exists on this machine — skipping sourceNotFound test")
         }
         let result = BackupManager.backup()
-        if case .failure(let error) = result, let backupError = error as? BackupError {
-            if case .sourceNotFound = backupError { /* expected */
+        if case .failure(let backupError) = result {
+            if case .sourceNotFound = backupError {
+                // expected
             } else {
                 XCTFail("Expected .sourceNotFound, got \(backupError)")
             }
@@ -197,8 +198,9 @@ final class BackupManagerTests: XCTestCase {
             throw XCTSkip("Backup file already exists — skipping noBackupFound test")
         }
         let result = BackupManager.restore()
-        if case .failure(let error) = result, let backupError = error as? BackupError {
-            if case .noBackupFound = backupError { /* expected */
+        if case .failure(let backupError) = result {
+            if case .noBackupFound = backupError {
+                // expected
             } else {
                 XCTFail("Expected .noBackupFound, got \(backupError)")
             }
@@ -215,8 +217,9 @@ final class BackupManagerTests: XCTestCase {
         try "not valid json at all".write(to: badFile, atomically: true, encoding: .utf8)
 
         let result = BackupManager.restore(from: badFile)
-        if case .failure(let error) = result, let backupError = error as? BackupError {
-            if case .invalidBackupData = backupError { /* expected */
+        if case .failure(let backupError) = result {
+            if case .invalidBackupData = backupError {
+                // expected
             } else {
                 XCTFail("Expected .invalidBackupData, got \(backupError)")
             }
@@ -236,8 +239,9 @@ final class BackupManagerTests: XCTestCase {
         try #"{"not":"a board"}"#.write(to: badFile, atomically: true, encoding: .utf8)
 
         let result = BackupManager.restore(from: badFile)
-        if case .failure(let error) = result, let backupError = error as? BackupError {
-            if case .invalidBackupData = backupError { /* expected */
+        if case .failure(let backupError) = result {
+            if case .invalidBackupData = backupError {
+                // expected
             } else {
                 XCTFail("Expected .invalidBackupData, got \(backupError)")
             }

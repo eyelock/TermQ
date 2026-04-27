@@ -47,8 +47,12 @@ class BoardViewModel: ObservableObject {
     /// Tabs that need attention - proxied from TabManager
     var needsAttention: Set<UUID> { tabManager.needsAttention }
 
-    init() {
-        self.persistence = BoardPersistence()
+    convenience init() {
+        self.init(persistence: BoardPersistence())
+    }
+
+    init(persistence: BoardPersistence) {
+        self.persistence = persistence
         self.tabManager = TabManager()
         self.board = persistence.loadBoard()
 
@@ -668,6 +672,10 @@ class BoardViewModel: ObservableObject {
     }
 }
 
+// MARK: - BoardViewModelProtocol Conformance
+
+extension BoardViewModel: BoardViewModelProtocol {}
+
 // MARK: - New Terminal Defaults
 
 private struct NewTerminalDefaults {
@@ -679,8 +687,8 @@ private struct NewTerminalDefaults {
     let confirmExternalModifications: Bool
 }
 
-private extension BoardViewModel {
-    func newTerminalDefaults() -> NewTerminalDefaults {
+extension BoardViewModel {
+    fileprivate func newTerminalDefaults() -> NewTerminalDefaults {
         let workingDirectory = UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
         let backendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
         let backend = TerminalBackend(rawValue: backendRaw) ?? .direct

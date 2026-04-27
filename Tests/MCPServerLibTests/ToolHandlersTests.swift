@@ -664,7 +664,7 @@ final class ToolHandlersTests: XCTestCase {
     // MARK: - handleCreate Tests
 
     func testHandleCreateWithDefaults() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "To Do", orderIndex: 0)],
@@ -685,7 +685,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleCreateWithCustomValues() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "In Progress", orderIndex: 0)],
@@ -728,7 +728,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleSetNoUpdates() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "To Do", orderIndex: 0)],
@@ -743,7 +743,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleSetUpdateDescription() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "To Do", orderIndex: 0)],
@@ -767,7 +767,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleSetUpdateLlmNextAction() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "To Do", orderIndex: 0)],
@@ -792,7 +792,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleSetUpdateBadge() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "To Do", orderIndex: 0)],
@@ -817,7 +817,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleSetUpdateFavourite() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let columnId = UUID()
         try createTestBoard(
             columns: [TestColumn(id: columnId, name: "To Do", orderIndex: 0)],
@@ -841,7 +841,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleSetWithColumnMove() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let column1 = UUID()
         let column2 = UUID()
         try createTestBoard(
@@ -897,7 +897,7 @@ final class ToolHandlersTests: XCTestCase {
     }
 
     func testHandleMoveSuccess() async throws {
-        throw XCTSkip("Requires GUI running - URL scheme mutations processed by TermQ app")
+        try XCTSkipIf(true, "Requires GUI running - URL scheme mutations processed by TermQ app")
         let column1 = UUID()
         let column2 = UUID()
         try createTestBoard(
@@ -995,5 +995,119 @@ final class ToolHandlersTests: XCTestCase {
         let terminal = try JSONDecoder().decode(TerminalOutput.self, from: json.data(using: .utf8)!)
         XCTAssertEqual(terminal.id, cardId.uuidString)
         XCTAssertEqual(terminal.name, "Test Card")
+    }
+
+    // MARK: - handleDelete Tests
+
+    func testHandleDeleteMissingIdentifier() async throws {
+        let columnId = UUID()
+        try createTestBoard(
+            columns: [TestColumn(id: columnId, name: "Active", orderIndex: 0)],
+            cards: []
+        )
+
+        let result = try await server.handleDelete(nil)
+
+        XCTAssertTrue(result.isError ?? false)
+        guard case .text(let message, _, _) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+        XCTAssertTrue(message.contains("Error"))
+    }
+
+    func testHandleDeleteEmptyIdentifier() async throws {
+        let columnId = UUID()
+        try createTestBoard(
+            columns: [TestColumn(id: columnId, name: "Active", orderIndex: 0)],
+            cards: []
+        )
+
+        let args: [String: Value] = ["identifier": .string("")]
+        let result = try await server.handleDelete(args)
+
+        XCTAssertTrue(result.isError ?? false)
+    }
+
+    func testHandleDeleteTerminalNotFound() async throws {
+        let columnId = UUID()
+        try createTestBoard(
+            columns: [TestColumn(id: columnId, name: "Active", orderIndex: 0)],
+            cards: []
+        )
+
+        let args: [String: Value] = ["identifier": .string("nonexistent")]
+        let result = try await server.handleDelete(args)
+
+        XCTAssertTrue(result.isError ?? false)
+        guard case .text(let message, _, _) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+        XCTAssertTrue(message.contains("Terminal not found"))
+    }
+
+    func testHandleDeleteHeadlessSoftDelete() async throws {
+        GUIDetector.testModeOverride = false
+        defer { GUIDetector.testModeOverride = nil }
+
+        let columnId = UUID()
+        let cardId = UUID()
+        try createTestBoard(
+            columns: [TestColumn(id: columnId, name: "Active", orderIndex: 0)],
+            cards: [TestCard(id: cardId, title: "My Terminal", columnId: columnId)]
+        )
+
+        let args: [String: Value] = [
+            "identifier": .string(cardId.uuidString),
+            "permanent": .bool(false),
+        ]
+        let result = try await server.handleDelete(args)
+
+        XCTAssertFalse(result.isError ?? false)
+        guard case .text(let json, _, _) = result.content[0] else {
+            XCTFail("Expected text content")
+            return
+        }
+        XCTAssertTrue(json.contains(cardId.uuidString))
+    }
+
+    func testHandleDeleteHeadlessPermanentDelete() async throws {
+        GUIDetector.testModeOverride = false
+        defer { GUIDetector.testModeOverride = nil }
+
+        let columnId = UUID()
+        let cardId = UUID()
+        try createTestBoard(
+            columns: [TestColumn(id: columnId, name: "Active", orderIndex: 0)],
+            cards: [TestCard(id: cardId, title: "Temp Terminal", columnId: columnId)]
+        )
+
+        let args: [String: Value] = [
+            "identifier": .string(cardId.uuidString),
+            "permanent": .bool(true),
+        ]
+        let result = try await server.handleDelete(args)
+
+        XCTAssertFalse(result.isError ?? false)
+    }
+
+    func testHandleDeleteByName() async throws {
+        GUIDetector.testModeOverride = false
+        defer { GUIDetector.testModeOverride = nil }
+
+        let columnId = UUID()
+        try createTestBoard(
+            columns: [TestColumn(id: columnId, name: "Active", orderIndex: 0)],
+            cards: [TestCard(title: "Findable Card", columnId: columnId)]
+        )
+
+        let args: [String: Value] = [
+            "identifier": .string("Findable Card"),
+            "permanent": .bool(false),
+        ]
+        let result = try await server.handleDelete(args)
+
+        XCTAssertFalse(result.isError ?? false)
     }
 }

@@ -32,6 +32,7 @@ struct HarnessInstallSheet: View {
     @State private var searchQuery = ""
     @State private var gitURL = ""
     @State private var gitSubpath = ""
+    @State private var gitRef = ""
 
     enum InstallTab: String, CaseIterable {
         case search
@@ -243,14 +244,6 @@ extension HarnessInstallSheet {
                         .background(isRegistry ? Color.blue.opacity(0.15) : Color.secondary.opacity(0.15))
                         .foregroundColor(isRegistry ? .blue : .secondary)
                         .clipShape(Capsule())
-                    ForEach(result.vendors ?? [], id: \.self) { vendor in
-                        Text(vendor)
-                            .font(.caption2)
-                            .padding(.horizontal, 5).padding(.vertical, 1)
-                            .background(Color.purple.opacity(0.15))
-                            .foregroundColor(.purple)
-                            .clipShape(Capsule())
-                    }
                 }
             }
             Spacer()
@@ -285,6 +278,14 @@ extension HarnessInstallSheet {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
+                    Text(Strings.Harnesses.installGitRef)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    TextField(Strings.Harnesses.installGitRefPlaceholder, text: $gitRef)
+                        .textFieldStyle(.roundedBorder)
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
                     Text(Strings.Harnesses.installGitSubpath)
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -315,7 +316,10 @@ extension HarnessInstallSheet {
                 Button(Strings.Harnesses.installConfirm) {
                     let trimmedURL = gitURL.trimmingCharacters(in: .whitespaces)
                     let trimmedSubpath = gitSubpath.trimmingCharacters(in: .whitespaces)
-                    let args = trimmedSubpath.isEmpty ? [trimmedURL] : [trimmedURL, "--path", trimmedSubpath]
+                    let trimmedRef = gitRef.trimmingCharacters(in: .whitespaces)
+                    var args = [trimmedURL]
+                    if !trimmedSubpath.isEmpty { args += ["--path", trimmedSubpath] }
+                    if !trimmedRef.isEmpty { args += ["--ref", trimmedRef] }
                     let name = trimmedURL.components(separatedBy: "/").last ?? trimmedURL
                     onInstall(HarnessInstallConfig(displayName: name, installArgs: args))
                     dismiss()
@@ -333,6 +337,8 @@ extension HarnessInstallSheet {
         var parts = ["ynh", "install", trimmedURL]
         let trimmedSubpath = gitSubpath.trimmingCharacters(in: .whitespaces)
         if !trimmedSubpath.isEmpty { parts.append(contentsOf: ["--path", trimmedSubpath]) }
+        let trimmedRef = gitRef.trimmingCharacters(in: .whitespaces)
+        if !trimmedRef.isEmpty { parts.append(contentsOf: ["--ref", trimmedRef]) }
         return parts.joined(separator: " ")
     }
 }

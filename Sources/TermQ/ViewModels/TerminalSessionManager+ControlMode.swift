@@ -80,7 +80,8 @@ class ControlModePaneDelegate: TerminalViewDelegate {
             // can't scale its size reliably.  Wait for the next render cycle.
             guard let parserPane = allPanes.first(where: { $0.id == capturedPaneId }) else {
                 TermQLogger.tmux.debug(
-                    "sizeChanged SKIP pane=\(capturedPaneId) swiftterm=\(capturedCols)x\(capturedRows) reason=not-in-parser"
+                    "sizeChanged SKIP pane=\(capturedPaneId)"
+                        + " swiftterm=\(capturedCols)x\(capturedRows) reason=not-in-parser"
                 )
                 return
             }
@@ -435,8 +436,9 @@ extension TerminalSessionManager {
                 // the prompt; a screen redraw after the size is stable clears it.
                 let newPaneIds = Set(session.parser.panes.map { $0.id }).subtracting(beforePaneIds)
                 if !newPaneIds.isEmpty {
+                    let paneList = newPaneIds.sorted().joined(separator: " ")
                     TermQLogger.tmux.info(
-                        "layoutChange new panes={\(newPaneIds.sorted().joined(separator: " "))} — scheduling Ctrl+L in 400ms"
+                        "layoutChange new panes={\(paneList)} — scheduling Ctrl+L in 400ms"
                     )
                     try? await Task.sleep(nanoseconds: 400_000_000)  // 400ms for resize to settle
                     for paneId in newPaneIds {

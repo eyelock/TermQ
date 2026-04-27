@@ -7,49 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0]
+
 ### Added
 
-- **Harnesses sidebar tab** (feature-flagged, opt-in via Settings → YNH Harness
-  Toolchain) — detects the `ynh` binary on launch and app-focus and surfaces
-  the full harness lifecycle inside TermQ:
+- **YNH Harness sidebar** (opt-in via Settings → YNH Harness Toolchain) — full
+  harness lifecycle inside TermQ, built across the 0.9 beta series:
+  - Detects the `ynh` binary on launch and app-focus
   - Installed harnesses list sourced from `ynh ls`
   - Detail pane with info, composition (`ynd compose`), dependencies, and the
     raw `.harness.json` manifest
   - Three-tab install sheet — registry search (`ynh search`), direct Git URL,
     and local source management (`ynh sources add/remove`)
   - Worktree ↔ harness linking — right-click a worktree to set, clear, or
-    launch its configured harness. Linkage stored in TermQ's `ynh.json`.
+    launch its configured harness; linkage stored in TermQ's `ynh.json`
   - Launch sheet with vendor, focus, prompt, working directory, and backend
     pickers, backed by `ynh run`
   - Update and uninstall from the detail pane's ⋯ menu or the sidebar
     context menu — confirmation alert warns about linked worktrees and open
-    terminals before uninstalling. Transient operation terminals auto-close
-    on success and stay open on failure so errors remain readable.
-  - YNH subprocess stderr now surfaces directly in the detail error banner
-    instead of a generic fallback
-- New tutorial: **[Tutorial 13 — Harnesses](docs/Help/tutorials/13-harness-sidebar.md)**
+    terminals before uninstalling; transient operation terminals auto-close
+    on success and stay open on failure so errors remain readable
+  - YNH subprocess stderr surfaces directly in the detail error banner
+  - Harness-launched cards persist and deduplicate on re-launch
+  - Tree layout with grouping for harness and marketplace sidebars
+  - Pin marketplace and harness registry to a git ref
+- **YNH 0.2 support** — namespace model, marketplace rename, capabilities gate
+- **Marketplace browser** — registry search, direct Git URL install, harness wizard
+- **Git worktree sidebar** — integrated worktree management with branch operations
+  and drag-and-drop ordering across sidebar tabs
+- **Open in Editor** submenu for worktree and harness context menus
+- **Right-click context menu** in terminal with Copy and Paste
+- **Protected branches deny-list** for Prune Merged Branches
+- **Auto-tags, terminal naming, and tag tooltip**
+- **In-app diagnostics log viewer**
+- **Release notes generation** from conventional commits
 
 ### Changed
 
-- **CLI renamed**: `termq` → `termqcli` to fix Swift Package Manager case-insensitivity issue
-  - On case-insensitive filesystems (macOS default), `termq` and `TermQ` resolve to the same file
-  - This caused build issues where the CLI binary would overwrite the GUI binary
-  - All CLI commands now use `termqcli` prefix: `termqcli list`, `termqcli open`, etc.
-
-## [0.8.2] - 2026-04-23
+- Worktree creation unified into a single sheet
+- Harness and marketplace sidebars adopt tree layout with grouping
+- Security settings inherited from global defaults when creating new terminals
+- TUI rendering corrected in tmux control mode terminals
 
 ### Fixed
 
-- **Spontaneous window hide on macOS Sequoia** — Guard `NSApp.unhide(nil)` in
-  `applicationShouldHandleReopen` with `if NSApp.isHidden`. Unconditional unhide
-  scheduled a deferred `_doOrderWindow orderOut` block that fired when the run loop
-  returned to `NSDefaultRunLoopMode`, producing a window hide seconds or minutes
-  after a dock click in a busy terminal.
-- **Worktree deletion spinner** — Show a `ProgressView` in the worktree left-slot
-  icon while deletion is in flight, replacing the static home/lock/empty icon.
-- **Marketplace GitHub shorthand expansion** — Expand bare `owner/repo` strings to
-  `github.com/owner/repo` in `resolved()` before passing to `ynh include add`,
-  which misinterpreted bare shorthand as an SSH host alias.
+- Fix upward scroll during text selection against streaming output
+- Restore Reveal in Terminal across sidebar tabs
+- Prevent SwiftUI from closing main window on URL events
+- Spontaneous window hide — guard `NSApp.unhide` against calling on visible app
+- Worktree row shows spinner during deletion
+- Text selection and scroll in terminals with mouse tracking
+- Restore tab drag-and-drop
+- GitHub install and `ynh include add` GitHub source shorthand expansion
+- Relative plugin paths in `ynh include add`
+- Scroll tab bar to reveal selected terminal on sidebar jump
+- Preserve tmux pane focus across SwiftUI re-renders
+- Use async `panel.begin()` for Browse button in path pickers
+
+### Security
+
+- Migrate SecureStorage to Data Protection Keychain
+- Use file-based key storage in debug builds
 
 ## [0.5.2] - 2026-01-14
 

@@ -32,7 +32,7 @@ RELEASE_BUILD_DIR := $(BUILD_DIR)/release
 # Installation paths (customize for different systems)
 INSTALL_APP_DIR := /Applications
 INSTALL_CLI_DIR := /usr/local/bin
-XCODE_DEVELOPER_DIR := /Applications/Xcode.app/Contents/Developer
+XCODE_DEVELOPER_DIR ?= $(shell xcode-select -p)
 
 # Version from git tags (single source of truth)
 # Gets the most recent tag, strips 'v' prefix
@@ -95,8 +95,8 @@ copy-help:
 	@echo "Help documentation copied to Resources"
 
 # Compile Swift binaries (incremental - only rebuilds if sources or dependencies changed)
-$(DEBUG_BUILD_DIR)/$(APP_NAME): $(SWIFT_SOURCES) Package.swift copy-help
-	set +o pipefail; swift build -Xswiftc -DDEBUG -Xswiftc -DTERMQ_DEBUG_BUILD 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
+$(DEBUG_BUILD_DIR)/$(APP_NAME): $(SWIFT_SOURCES) $(TEST_SOURCES) Package.swift copy-help
+	set +o pipefail; DEVELOPER_DIR=$(XCODE_DEVELOPER_DIR) swift build --build-tests -Xswiftc -DDEBUG -Xswiftc -DTERMQ_DEBUG_BUILD 2>&1 | $(FILTER_WARNINGS); exit $${PIPESTATUS[0]}
 
 # Build debug CLI binary with TERMQ_DEBUG_BUILD flag
 # Note: Built to separate output directory to avoid contaminating regular build

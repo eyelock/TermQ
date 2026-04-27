@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Προστατευμένοι κλάδοι";
+"settings.protected.branches.help" = "Κλάδοι που δεν προσφέρονται ποτέ για διαγραφή κατά την εκκαθάριση. Διαχωρίστε τα ονόματα με κόμματα.";
+"settings.protected.branches.prompt" = "Ονόματα κλάδων διαχωρισμένα με κόμματα";
 
 // Settings - Language section
 "settings.section.language" = "Γλώσσα";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "Βασική διαδρομή worktree";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Προστατευμένοι κλάδοι";
+"sidebar.protected.branches.override.help" = "Κλάδοι που εξαιρούνται από την εκκαθάριση σε αυτό το αποθετήριο. Παρακάμπτει την καθολική ρύθμιση. Αφήστε κενό για χρήση της καθολικής ρύθμισης.";
+"sidebar.protected.branches.override.placeholder" = "(χρήση καθολικής ρύθμισης)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -575,13 +583,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Διαγραφή κλάδου";
+"sidebar.branch.delete.title" = "Διαγραφή κλάδου";
+"sidebar.branch.delete.confirm" = "Διαγραφή";
+"sidebar.branch.delete.message %@" = "Διαγραφή του τοπικού κλάδου \"%@\"; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.";
+"sidebar.branch.destroy" = "Καταστροφή κλάδου";
+"sidebar.branch.destroy.title" = "Καταστροφή κλάδου";
+"sidebar.branch.destroy.confirm" = "Καταστροφή";
+"sidebar.branch.destroy.message %@" = "Αναγκαστική διαγραφή του τοπικού κλάδου \"%@\"; Οι μη συγχωνευμένες υποβολές θα χαθούν και δεν μπορεί να αναιρεθεί.";
+"sidebar.branch.update.from.origin" = "Ενημέρωση από Origin";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Harness";
@@ -708,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Αυτό το harness είναι συνδεδεμένο με %ld worktree(s) — αυτές οι συσχετίσεις θα διαγραφούν.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld τερματικό(ά) εκτελεί αυτήν τη στιγμή αυτό το harness.";
 "harnesses.uninstall.alert.confirm" = "Απεγκατάσταση";
+"harnesses.delete.local.button" = "Διαγραφή harness";
+"harnesses.delete.local.title %@" = "Διαγραφή \"%@\";";
+"harnesses.delete.local.message" = "Αυτό θα απεγκαταστήσει το harness από το YNH και θα διαγράψει μόνιμα τα αρχεία του. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.";
+"harnesses.delete.local.confirm" = "Διαγραφή harness";
 "harnesses.more.actions.help" = "Περισσότερες ενέργειες";
 "harnesses.copy.run.command" = "Αντιγραφή εντολής εκτέλεσης";
 "harnesses.ynh.documentation" = "Τεκμηρίωση YNH";
@@ -746,6 +762,15 @@
 "marketplace.row.never.fetched" = "Δεν έχει ληφθεί ποτέ";
 "marketplace.add.sheet.title" = "Προσθήκη αγοράς";
 "marketplace.add.tab.known" = "Γνωστές";
+"marketplace.group.default" = "Προεπιλογή";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Τοπικό";
+"marketplace.add.tab.local" = "Τοπικός φάκελος";
+"marketplace.add.section.local.path" = "Διαδρομή φακέλου";
+"marketplace.add.local.browse" = "Επιλογή φακέλου…";
+"marketplace.add.local.path.placeholder" = "/διαδρομή/προς/marketplace";
+"marketplace.row.local" = "Τοπικό";
+"marketplace.row.reveal" = "Εμφάνιση στο Finder";
 "marketplace.add.tab.custom" = "Προσαρμοσμένο URL";
 "marketplace.add.section.git.url" = "URL αποθετηρίου Git";
 "marketplace.add.section.display.name" = "Εμφανιζόμενο όνομα";
@@ -804,3 +829,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Αφαίρεση «%@» από το YNH; Τα εγκατεστημένα harnesses θα παραμείνουν.";
 "marketplace.add.custom.name.placeholder" = "Η αγορά μου";
 "harness.wizard.success.created %@" = "Το harness «%@» δημιουργήθηκε";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Βοηθητικά";
+"menu.utilities.logging" = "Καταγραφή…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "Διαγνωστικά TermQ";
+"diagnostics.filter.category" = "Κατηγορία";
+"diagnostics.filter.category.all" = "Όλα";
+"diagnostics.filter.level" = "Επίπεδο";
+"diagnostics.search.placeholder" = "Αναζήτηση…";
+"diagnostics.clear" = "Εκκαθάριση";
+"diagnostics.export" = "Εξαγωγή…";
+"diagnostics.jump.to.latest" = "Μετάβαση στο τελευταίο";
+"diagnostics.status.live" = "Ζωντανά";
+"diagnostics.status.paused" = "Σε παύση";
+"diagnostics.status.entries %lld %lld" = "%lld εγγραφές · %lld ταιριάζουν με το φίλτρο";
+"diagnostics.verbose.mode" = "Λεπτομερής λειτουργία";
+"diagnostics.verbose.mode.help" = "Καταγράφει μηνύματα debug και info πέρα από notice/warning/error";
+"diagnostics.verbose.warning" = "Υψηλός όγκος — απενεργοποιήστε όταν τελειώσετε";
+"diagnostics.export.title" = "Αναφορά διαγνωστικών TermQ";
+"diagnostics.export.footer" = "Υποβλήθηκε μέσω του ενσωματωμένου διαγνωστικού TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Αντιγραφή";
+"harness.duplicate.installing" = "Εγκατάσταση αντιγράφου…";
+"harness.duplicate.success %@" = "Το %@ εγκαταστάθηκε επιτυχώς.";
+"harness.duplicate.title" = "Αντιγραφή harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Προσθήκη δείγματος eyelock/assistants";
+"harnesses.create.harness.button" = "Δημιουργία νέου harness";
+"harnesses.empty.no.registries.message" = "Δεν έχουν εγκατασταθεί harness ή μητρώα ακόμα.";
+"harnesses.export.button" = "Εξαγωγή ως marketplace…";
+"harnesses.group.default" = "Προεπιλογή";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Τοπικό";
+"harnesses.group.menu.settings" = "Ρυθμίσεις…";
+"harnesses.group.registry %@" = "Μητρώο: %@";
+"harnesses.install.browsing" = "Φόρτωση διαθέσιμων harness…";
+"harnesses.install.git.ref" = "Αναφορά";
+"harnesses.install.git.ref.placeholder" = "Κλάδος, ετικέτα ή SHA commit (προαιρετικό)";
+"harnesses.install.retry" = "Επανάληψη";
+"harnesses.install.section.available" = "Διαθέσιμο από μητρώα";
+"harnesses.install.section.installed" = "Εγκατεστημένο";
+"harnesses.install.section.local" = "Διαθέσιμο τοπικά";
+"harnesses.outdated.capabilities.unknown" = "άγνωστο";
+"harnesses.outdated.detail %@ %@" = "Το YNH αναφέρει δυνατότητες %1$@, αλλά το TermQ απαιτεί %2$@ ή νεότερο. Ενημερώστε το YNH για να ενεργοποιήσετε τις λειτουργίες marketplace και επεξεργασίας harness.";
+"harnesses.outdated.headline" = "Απαιτείται αναβάθμιση YNH";
+"harnesses.search.button" = "Αναζήτηση harness";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Κλάδος, ετικέτα ή SHA commit (προαιρετικό)";
+"marketplace.add.section.ref" = "Αναφορά";
+"marketplace.refresh.all.help" = "Ανανέωση όλων των marketplace";
+"marketplace.restore.defaults" = "Επαναφορά προεπιλογών";
+"marketplace.restore.defaults.help" = "Επανάληψη προσθήκης προεπιλεγμένων marketplace";
+"marketplace.row.pinned.help %@" = "Καρφιτσωμένο στο %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Ενεργοποίηση ασφαλούς επικόλλησης για νέα τερματικά";
+"settings.default.safe.paste.help" = "Τα νέα τερματικά θα έχουν ενεργοποιημένη την ασφαλή επικόλληση από προεπιλογή. Μπορείτε να το αλλάξετε ανά τερματικό στον επεξεργαστή καρτέλας.";
+"settings.scrollback.invalid" = "Εισάγετε αριθμό μεταξύ 500 και 100.000";
+"settings.scrollback.label" = "Ιστορικό κύλισης";
+"settings.scrollback.lines.help" = "Γραμμές που διατηρούνται στο ιστορικό κύλισης (500–100.000). Οι αλλαγές εφαρμόζονται στα νέα τερματικά.";
+"settings.scrollback.unit" = "γραμμές";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (ελάχιστο %2$@)";
+"settings.ynh.capabilities.label" = "Δυνατότητες:";
+"settings.ynh.capabilities.unknown" = "άγνωστο";
+"settings.ynh.docs.link.label" = "Τεκμηρίωση YNH →";
+"settings.ynh.outdated.badge" = "Απαιτείται αναβάθμιση";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Αφαίρεση συγχωνευμένων κλάδων";
+"sidebar.prune.branches.confirm" = "Διαγραφή κλάδων";
+"sidebar.prune.branches.explanation" = "Αυτοί οι κλάδοι έχουν συγχωνευτεί πλήρως στον προεπιλεγμένο απομακρυσμένο κλάδο και δεν έχουν ενεργό worktree. Η διαγραφή είναι ασφαλής και δεν μπορεί να αναιρεθεί.";
+"sidebar.prune.branches.nothing.message" = "Δεν βρέθηκαν συγχωνευμένοι κλάδοι. Οι κλάδοι που δεν έχουν συγχωνευτεί στον προεπιλεγμένο απομακρυσμένο κλάδο διατηρούνται.";
+"sidebar.prune.branches.nothing.title" = "Τίποτα για αφαίρεση";
+"sidebar.prune.branches.title" = "Αφαίρεση συγχωνευμένων κλάδων";
+"sidebar.worktree.open.in" = "Άνοιγμα σε…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Άνοιγμα τερματικών";

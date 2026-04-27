@@ -37,6 +37,26 @@ struct AuthorStep: Identifiable, Sendable {
     }
 }
 
+struct HarnessCreationOptions {
+    let name: String
+    let description: String
+    let vendorID: String
+    let destination: String
+    let install: Bool
+}
+
+struct YNHBinaries {
+    let yndPath: String
+    let ynhPath: String
+}
+
+struct IncludeApplicationOptions {
+    let harness: String
+    let sourceURL: String
+    let path: String?
+    let pick: [String]
+}
+
 /// Sequences `ynd create harness <name>` + optional `ynh install <path>`.
 ///
 /// Streams combined stdout/stderr lines to `outputLines` and tracks per-step status.
@@ -50,24 +70,15 @@ final class HarnessAuthor: ObservableObject {
 
     private(set) var createdHarnessName: String?
 
-    func run(
-        name: String,
-        description: String,
-        vendorID: String,
-        destination: String,
-        install: Bool,
-        yndPath: String,
-        ynhPath: String,
-        environment: [String: String]
-    ) async {
-        var createCmd = "\(yndPath) create harness \(name)"
-        if !description.isEmpty { createCmd += " --description \"\(description)\"" }
-        if !vendorID.isEmpty { createCmd += " --vendor \(vendorID)" }
-        let installPath = (destination as NSString).appendingPathComponent(name)
-        let installCmd = "\(ynhPath) install \(installPath)"
+    func run(_ options: HarnessCreationOptions, binaries: YNHBinaries, environment: [String: String]) async {
+        var createCmd = "\(binaries.yndPath) create harness \(options.name)"
+        if !options.description.isEmpty { createCmd += " --description \"\(options.description)\"" }
+        if !options.vendorID.isEmpty { createCmd += " --vendor \(options.vendorID)" }
+        let installPath = (options.destination as NSString).appendingPathComponent(options.name)
+        let installCmd = "\(binaries.ynhPath) install \(installPath)"
 
         steps = [AuthorStep(label: "Create harness", command: createCmd)]
-        if install {
+        if options.install {
             steps.append(AuthorStep(label: "Install harness", command: installCmd))
         }
         outputLines = []
@@ -75,29 +86,29 @@ final class HarnessAuthor: ObservableObject {
         succeeded = false
 
         // Step 1: create
-        var createArgs = ["create", "harness", name]
-        if !description.isEmpty { createArgs += ["--description", description] }
-        if !vendorID.isEmpty { createArgs += ["--vendor", vendorID] }
+        var createArgs = ["create", "harness", options.name]
+        if !options.description.isEmpty { createArgs += ["--description", options.description] }
+        if !options.vendorID.isEmpty { createArgs += ["--vendor", options.vendorID] }
         let createOK = await runStep(
             index: 0,
-            executable: yndPath,
+            executable: binaries.yndPath,
             args: createArgs,
-            cwd: destination,
+            cwd: options.destination,
             environment: environment
         )
         guard createOK else {
             isRunning = false
             return
         }
-        createdHarnessName = name
+        createdHarnessName = options.name
 
         // Step 2: install (optional)
-        if install {
+        if options.install {
             let installOK = await runStep(
                 index: 1,
-                executable: ynhPath,
+                executable: binaries.ynhPath,
                 args: ["install", installPath],
-                cwd: destination,
+                cwd: options.destination,
                 environment: environment
             )
             guard installOK else {
@@ -203,11 +214,11 @@ final class HarnessAuthor: ObservableObject {
     }
 }
 
-// MARK: - Registry runner (used by AddRegistrySheet)
+// MARK: - Marketplace runner (used by AddYNHMarketplaceSheet)
 
 /// Runs `ynh registry add <url>` and streams output back.
 @MainActor
-final class RegistryAddRunner: ObservableObject {
+final class MarketplaceAddRunner: ObservableObject {
     @Published private(set) var outputLines: [String] = []
     @Published private(set) var isRunning = false
     @Published private(set) var succeeded = false
@@ -297,9 +308,9 @@ final class RegistryAddRunner: ObservableObject {
     }
 }
 
-// MARK: - Registry listing service (used by SettingsMarketplacesView)
+// MARK: - Marketplace listing service (used by SettingsMarketplacesView)
 
-struct YNHRegistry: Identifiable, Decodable {
+struct YNHMarketplace: Identifiable, Decodable {
     var id: String { url }
     let url: String
     let name: String
@@ -308,8 +319,8 @@ struct YNHRegistry: Identifiable, Decodable {
 }
 
 @MainActor
-final class YNHRegistryService: ObservableObject {
-    @Published private(set) var registries: [YNHRegistry] = []
+final class YNHMarketplaceService: ObservableObject {
+    @Published private(set) var marketplaces: [YNHMarketplace] = []
     @Published private(set) var isLoading = false
 
     func refresh(ynhPath: String, environment: [String: String]) async {
@@ -317,9 +328,9 @@ final class YNHRegistryService: ObservableObject {
         defer { isLoading = false }
         if let data = await fetch(
             executable: ynhPath, args: ["registry", "list", "--format", "json"], environment: environment),
-            let decoded = try? JSONDecoder().decode([YNHRegistry].self, from: data)
+            let decoded = try? JSONDecoder().decode([YNHMarketplace].self, from: data)
         {
-            registries = decoded
+            marketplaces = decoded
         }
     }
 
@@ -377,28 +388,13 @@ final class IncludeApplier: ObservableObject {
     @Published private(set) var succeeded = false
     @Published private(set) var errorMessage: String?
 
-    func apply(
-        harness: String,
-        sourceURL: String,
-        path: String?,
-        pick: [String],
-        ynhPath: String,
-        environment: [String: String]
-    ) async {
+    func apply(_ options: IncludeApplicationOptions, ynhPath: String, environment: [String: String]) async {
         isRunning = true
         outputLines = []
         succeeded = false
         errorMessage = nil
 
-        var args = ["include", "add", harness, sourceURL]
-        if let path, !path.isEmpty {
-            args += ["--path", path]
-        }
-        if !pick.isEmpty {
-            // YNH --pick expects bare artifact names; strip the type/ prefix (e.g. "skills/foo" → "foo")
-            let bareNames = pick.map { $0.components(separatedBy: "/").last ?? $0 }
-            args += ["--pick", bareNames.joined(separator: ",")]
-        }
+        let args = Self.buildIncludeAddArgs(options)
 
         let exitCode = await streamProcess(
             executable: ynhPath,
@@ -412,6 +408,19 @@ final class IncludeApplier: ObservableObject {
         } else {
             errorMessage = outputLines.last ?? "Command failed with exit code \(exitCode)"
         }
+    }
+
+    /// Builds the `ynh include add` argument vector. Pure function — exposed for testing.
+    /// YNH expects full `type/name[.md]` paths for `--pick`; do not strip the type prefix.
+    nonisolated static func buildIncludeAddArgs(_ options: IncludeApplicationOptions) -> [String] {
+        var args = ["include", "add", options.harness, options.sourceURL]
+        if let path = options.path, !path.isEmpty {
+            args += ["--path", path]
+        }
+        if !options.pick.isEmpty {
+            args += ["--pick", options.pick.joined(separator: ",")]
+        }
+        return args
     }
 
     private func streamProcess(

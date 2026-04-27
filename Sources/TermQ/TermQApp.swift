@@ -5,521 +5,6 @@ import SwiftUI
 import TermQCore
 import TermQShared
 
-/// Shared state for handling URL-based terminal creation and modification
-@MainActor
-class URLHandler: ObservableObject {
-    static let shared = URLHandler()
-
-    @Published var pendingTerminal: PendingTerminal?
-
-    /// User preference key for requiring confirmation on external LLM context modifications
-    private static let confirmExternalLLMModificationsKey = "confirmExternalLLMModifications"
-
-    /// Whether to require user confirmation when external processes modify LLM context
-    var confirmExternalLLMModifications: Bool {
-        get {
-            // Default to true for security
-            if UserDefaults.standard.object(forKey: Self.confirmExternalLLMModificationsKey) == nil {
-                return true
-            }
-            return UserDefaults.standard.bool(forKey: Self.confirmExternalLLMModificationsKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: Self.confirmExternalLLMModificationsKey)
-        }
-    }
-
-    struct PendingTerminal: Identifiable {
-        /// Internal ID for SwiftUI identity (not the card ID)
-        let id = UUID()
-        /// Optional pre-generated card ID (from CLI/MCP)
-        let cardId: UUID?
-        let path: String
-        let name: String?
-        let description: String?
-        let column: String?
-        let tags: [TermQCore.Tag]
-        let llmPrompt: String?
-        let llmNextAction: String?
-        let initCommand: String?
-    }
-
-    func handleURL(_ url: URL) {
-        guard url.scheme == "termq" else { return }
-
-        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        let queryItems = components?.queryItems ?? []
-
-        switch url.host {
-        case "open":
-            handleOpen(queryItems: queryItems)
-        case "update":
-            handleUpdate(queryItems: queryItems)
-        case "move":
-            handleMove(queryItems: queryItems)
-        case "focus":
-            handleFocus(queryItems: queryItems)
-        case "delete":
-            handleDelete(queryItems: queryItems)
-        default:
-            break
-        }
-    }
-
-    /// Show confirmation dialog for external LLM context modifications
-    /// Returns true if user approves the modification
-    private func confirmLLMModification(
-        terminalName: String,
-        llmPromptChange: String?,
-        llmNextActionChange: String?
-    ) -> Bool {
-        let alert = NSAlert()
-        alert.messageText = Strings.Security.externalModificationTitle
-        alert.alertStyle = .warning
-
-        var changes: [String] = []
-        if let prompt = llmPromptChange {
-            let preview = String(prompt.prefix(100))
-            changes.append("• LLM Prompt: \(preview)\(prompt.count > 100 ? "..." : "")")
-        }
-        if let action = llmNextActionChange {
-            let preview = String(action.prefix(100))
-            changes.append("• LLM Next Action: \(preview)\(action.count > 100 ? "..." : "")")
-        }
-
-        alert.informativeText = String(
-            format: Strings.Security.externalModificationMessage,
-            terminalName,
-            changes.joined(separator: "\n")
-        )
-
-        alert.addButton(withTitle: Strings.Security.allow)
-        alert.addButton(withTitle: Strings.Security.deny)
-        alert.addButton(withTitle: Strings.Security.allowAndDisablePrompt)
-
-        let response = alert.runModal()
-        switch response {
-        case .alertFirstButtonReturn:
-            return true
-        case .alertThirdButtonReturn:
-            // Allow and disable future prompts
-            confirmExternalLLMModifications = false
-            return true
-        default:
-            return false
-        }
-    }
-
-    private func handleOpen(queryItems: [URLQueryItem]) {
-        let path = queryItems.first { $0.name == "path" }?.value ?? NSHomeDirectory()
-        let name = queryItems.first { $0.name == "name" }?.value
-        let description = queryItems.first { $0.name == "description" }?.value
-        let column = queryItems.first { $0.name == "column" }?.value
-        let llmPrompt = queryItems.first { $0.name == "llmPrompt" }?.value
-        let llmNextAction = queryItems.first { $0.name == "llmNextAction" }?.value
-        let initCommand = queryItems.first { $0.name == "initCommand" }?.value
-
-        // Parse optional card ID (for MCP/CLI to track created terminals)
-        let cardId: UUID?
-        if let idString = queryItems.first(where: { $0.name == "id" })?.value {
-            cardId = UUID(uuidString: idString)
-        } else {
-            cardId = nil
-        }
-
-        // Parse tags
-        let tags: [TermQCore.Tag] =
-            queryItems
-            .filter { $0.name == "tag" }
-            .compactMap { item -> TermQCore.Tag? in
-                guard let value = item.value,
-                    let eqIndex = value.firstIndex(of: "=")
-                else { return nil }
-                let key = String(value[..<eqIndex])
-                let val = String(value[value.index(after: eqIndex)...])
-                return Tag(key: key, value: val)
-            }
-
-        pendingTerminal = PendingTerminal(
-            cardId: cardId,
-            path: path,
-            name: name,
-            description: description,
-            column: column,
-            tags: tags,
-            llmPrompt: llmPrompt,
-            llmNextAction: llmNextAction,
-            initCommand: initCommand
-        )
-    }
-
-    private func handleUpdate(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString)
-        else { return }
-
-        let viewModel = BoardViewModel.shared
-
-        guard let card = viewModel.card(for: cardId) else { return }
-
-        // Check for sensitive LLM context modifications that require user confirmation
-        let llmPromptChange = queryItems.first(where: { $0.name == "llmPrompt" })?.value
-        let llmNextActionChange = queryItems.first(where: { $0.name == "llmNextAction" })?.value
-
-        // If LLM fields are being modified and confirmation is enabled, ask user
-        if confirmExternalLLMModifications && (llmPromptChange != nil || llmNextActionChange != nil) {
-            let approved = confirmLLMModification(
-                terminalName: card.title,
-                llmPromptChange: llmPromptChange,
-                llmNextActionChange: llmNextActionChange
-            )
-            if !approved {
-                return  // User denied the modification
-            }
-        }
-
-        // Update name
-        if let name = queryItems.first(where: { $0.name == "name" })?.value {
-            card.title = name
-        }
-
-        // Update description
-        if let description = queryItems.first(where: { $0.name == "description" })?.value {
-            card.description = description
-        }
-
-        // Update badge
-        if let badge = queryItems.first(where: { $0.name == "badge" })?.value {
-            card.badge = badge
-        }
-
-        // Update LLM prompt (already confirmed if needed)
-        if let llmPrompt = llmPromptChange {
-            card.llmPrompt = llmPrompt
-        }
-
-        // Update LLM next action (already confirmed if needed)
-        if let llmNextAction = llmNextActionChange {
-            card.llmNextAction = llmNextAction
-        }
-
-        // Update init command
-        if let initCommand = queryItems.first(where: { $0.name == "initCommand" })?.value {
-            card.initCommand = initCommand
-        }
-
-        // Update favourite status
-        if let favouriteStr = queryItems.first(where: { $0.name == "favourite" })?.value {
-            let shouldBeFavourite = favouriteStr.lowercased() == "true"
-            if card.isFavourite != shouldBeFavourite {
-                viewModel.toggleFavourite(card)
-            }
-        }
-
-        // Check if we should replace tags or add to existing
-        let shouldReplaceTags =
-            queryItems.first(where: { $0.name == "replaceTags" })?.value?.lowercased() == "true"
-
-        // Parse tags
-        let newTags: [TermQCore.Tag] =
-            queryItems
-            .filter { $0.name == "tag" }
-            .compactMap { item -> TermQCore.Tag? in
-                guard let value = item.value,
-                    let eqIndex = value.firstIndex(of: "=")
-                else { return nil }
-                let key = String(value[..<eqIndex])
-                let val = String(value[value.index(after: eqIndex)...])
-                return Tag(key: key, value: val)
-            }
-        if !newTags.isEmpty {
-            if shouldReplaceTags {
-                card.tags = newTags
-            } else {
-                card.tags.append(contentsOf: newTags)
-            }
-        } else if shouldReplaceTags {
-            // replaceTags with no tags means clear all tags
-            card.tags = []
-        }
-
-        // Update column if specified
-        if let columnName = queryItems.first(where: { $0.name == "column" })?.value {
-            let columnLower = columnName.lowercased()
-            if let targetColumn = viewModel.board.columns.first(where: {
-                $0.name.lowercased() == columnLower
-            }) {
-                viewModel.moveCard(card, to: targetColumn)
-            }
-        }
-
-        viewModel.updateCard(card)
-    }
-
-    private func handleMove(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString),
-            let columnName = queryItems.first(where: { $0.name == "column" })?.value
-        else { return }
-
-        let viewModel = BoardViewModel.shared
-
-        guard let card = viewModel.card(for: cardId) else { return }
-
-        let columnLower = columnName.lowercased()
-        guard
-            let targetColumn = viewModel.board.columns.first(where: {
-                $0.name.lowercased() == columnLower
-            })
-        else { return }
-
-        viewModel.moveCard(card, to: targetColumn)
-    }
-
-    private func handleFocus(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString)
-        else { return }
-
-        let viewModel = BoardViewModel.shared
-
-        guard let card = viewModel.card(for: cardId) else { return }
-
-        viewModel.selectCard(card)
-    }
-
-    private func handleDelete(queryItems: [URLQueryItem]) {
-        guard let idString = queryItems.first(where: { $0.name == "id" })?.value,
-            let cardId = UUID(uuidString: idString)
-        else { return }
-
-        let viewModel = BoardViewModel.shared
-
-        guard let card = viewModel.card(for: cardId) else { return }
-
-        // Check for permanent deletion flag
-        let permanent =
-            queryItems.first(where: { $0.name == "permanent" })?.value?.lowercased() == "true"
-
-        if permanent {
-            viewModel.permanentlyDeleteCard(card)
-        } else {
-            viewModel.deleteCard(card)
-        }
-    }
-}
-
-/// Sparkle updater delegate to provide dynamic feed URL based on user preferences
-final class SparkleUpdaterDelegate: NSObject, SPUUpdaterDelegate {
-    /// Returns the appcast feed URL based on whether beta releases are enabled
-    func feedURLString(for updater: SPUUpdater) -> String? {
-        let includeBeta = UserDefaults.standard.bool(forKey: "SUIncludeBetaReleases")
-        let feedFile = includeBeta ? "appcast-beta.xml" : "appcast.xml"
-        return "https://eyelock.github.io/TermQ/\(feedFile)"
-    }
-}
-
-/// App delegate to handle quit confirmation, auto-updates, and enforce single window
-@MainActor
-class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
-    /// Sparkle updater delegate for dynamic feed URL
-    private let sparkleDelegate = SparkleUpdaterDelegate()
-
-    /// Sparkle updater controller for automatic updates
-    let updaterController: SPUStandardUpdaterController
-
-    /// Updater view model for SwiftUI
-    let updaterViewModel: UpdaterViewModel
-
-    /// Reference to the main window (first window created)
-    private var mainWindow: NSWindow?
-
-    override init() {
-        // Initialize Sparkle updater with delegate for dynamic feed URL
-        // SUPublicEDKey is read from Info.plist
-        // Debug builds must not start the updater — it hits the production appcast,
-        // finds a "newer" version, and can wake the release app via Launch Services.
-        #if TERMQ_DEBUG_BUILD
-            let startUpdater = false
-        #else
-            let startUpdater = true
-        #endif
-        updaterController = SPUStandardUpdaterController(
-            startingUpdater: startUpdater,
-            updaterDelegate: sparkleDelegate,
-            userDriverDelegate: nil
-        )
-        updaterViewModel = UpdaterViewModel(
-            updater: updaterController.updater,
-            controller: updaterController
-        )
-        super.init()
-        #if TERMQ_DEBUG_BUILD
-            TermQLogger.window.notice("TermQAppDelegate.init: Sparkle updater disabled (debug build)")
-        #else
-            TermQLogger.window.notice("TermQAppDelegate.init: Sparkle updater initialized")
-        #endif
-    }
-
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        // Prevent macOS from auto-tabbing windows (e.g. when "Prefer tabs" is set in System Settings)
-        NSWindow.allowsAutomaticWindowTabbing = false
-        // Log window state at launch to detect unexpected pre-existing windows
-        let windows = NSApplication.shared.windows
-        TermQLogger.window.notice("applicationDidFinishLaunching: \(windows.count) window(s)")
-        for (i, win) in windows.enumerated() {
-            let desc = "\(type(of: win)) visible=\(win.isVisible) frame=\(win.frame)"
-            TermQLogger.window.notice("  window[\(i)]: \(desc)")
-        }
-        // Store reference to the main window and set delegate
-        // In SwiftUI apps, the window might not be created yet, so we poll for it
-        setupMainWindowDelegate()
-    }
-
-    private func setupMainWindowDelegate() {
-        if let window = NSApplication.shared.windows.first(where: { $0.isVisible }) {
-            mainWindow = window
-            window.delegate = self
-            window.tabbingMode = .disallowed
-            let desc = "\(type(of: window)) frame=\(window.frame)"
-            TermQLogger.window.notice("setupMainWindowDelegate: delegate set on \(desc)")
-        } else {
-            let total = NSApplication.shared.windows.count
-            TermQLogger.window.notice("setupMainWindowDelegate: no visible window yet (total=\(total)), retrying")
-            // Window not ready yet, try again
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-                self?.setupMainWindowDelegate()
-            }
-        }
-
-        // Handle cards created headless that need tmux sessions
-        Task {
-            await BoardViewModel.shared.handleHeadlessCards()
-        }
-    }
-
-    /// Prevent creating new windows when user tries to open the app again
-    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        let windows = NSApplication.shared.windows
-        TermQLogger.window.notice("applicationShouldHandleReopen: hasVisibleWindows=\(flag) total=\(windows.count)")
-        for (i, win) in windows.enumerated() {
-            let desc = "\(type(of: win)) visible=\(win.isVisible) frame=\(win.frame)"
-            TermQLogger.window.notice("  window[\(i)]: \(desc)")
-        }
-        if let window = mainWindow {
-            // Only call unhide if the app is actually hidden (e.g. from windowShouldClose → NSApp.hide).
-            // Calling unhide on a non-hidden app schedules a deferred _doOrderWindow orderOut block that
-            // fires when the run loop returns to NSDefaultRunLoopMode — which a busy terminal defers for
-            // seconds or minutes, producing the "spontaneous" window hide.
-            if NSApp.isHidden {
-                NSApp.unhide(nil)
-            }
-            window.makeKeyAndOrderFront(nil)
-            return false
-        }
-        // No main window tracked yet — allow the system to open one
-        return true
-    }
-
-    /// Log when the window is about to miniaturize so we can diagnose spontaneous occurrences.
-    /// The call stack captured here will reveal whether it's Cmd+M, an external tool, or macOS.
-    func windowWillMiniaturize(_ notification: Notification) {
-        let stack = Thread.callStackSymbols.prefix(12).joined(separator: "\n  ")
-        TermQLogger.window.notice("windowWillMiniaturize triggered — stack:\n  \(stack)")
-    }
-
-    /// Keep app running even if last window closes (user can reopen from Dock)
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return false
-    }
-
-    /// Handle window close button - show confirmation if terminals are running
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        let desc = "\(type(of: sender)) frame=\(sender.frame)"
-        TermQLogger.window.notice("windowShouldClose: \(desc)")
-        // Check for running direct (non-tmux) sessions
-        let sessionManager = TerminalSessionManager.shared
-        let activeCards = sessionManager.activeSessionCardIds()
-
-        // Count direct and tmux sessions separately
-        let directSessionCount = activeCards.filter { cardId in
-            sessionManager.getBackend(for: cardId) == .direct
-        }.count
-
-        let tmuxSessionCount = activeCards.filter { cardId in
-            sessionManager.getBackend(for: cardId)?.usesTmux ?? false
-        }.count
-
-        if directSessionCount > 0 {
-            // Show confirmation alert (same as quit)
-            let alert = NSAlert()
-            alert.messageText = Strings.Alert.quitWithDirectSessions
-
-            // Only mention tmux persistence if there are tmux sessions
-            if tmuxSessionCount > 0 {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
-            } else {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
-            }
-
-            alert.addButton(withTitle: Strings.Common.closeWindow)
-            alert.addButton(withTitle: Strings.Common.cancel)
-            alert.alertStyle = .warning
-
-            let response = alert.runModal()
-            if response == .alertSecondButtonReturn {
-                return false  // Don't close
-            }
-        }
-
-        // Hide the app instead of closing — NSApp.hide(nil) preserves all state
-        // cleanly. Clicking the Dock icon unhides everything.
-        NSApp.hide(nil)
-        return false
-    }
-
-    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        // Check for running direct (non-tmux) sessions
-        let sessionManager = TerminalSessionManager.shared
-        let activeCards = sessionManager.activeSessionCardIds()
-
-        // Count direct and tmux sessions separately
-        let directSessionCount = activeCards.filter { cardId in
-            sessionManager.getBackend(for: cardId) == .direct
-        }.count
-
-        let tmuxSessionCount = activeCards.filter { cardId in
-            sessionManager.getBackend(for: cardId)?.usesTmux ?? false
-        }.count
-
-        if directSessionCount > 0 {
-            // Show confirmation alert
-            let alert = NSAlert()
-            alert.messageText = Strings.Alert.quitWithDirectSessions
-
-            // Only mention tmux persistence if there are tmux sessions
-            if tmuxSessionCount > 0 {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessageWithTmux(directSessionCount)
-            } else {
-                alert.informativeText = Strings.Alert.quitWithDirectSessionsMessage(directSessionCount)
-            }
-
-            alert.addButton(withTitle: Strings.Common.quit)
-            alert.addButton(withTitle: Strings.Common.cancel)
-            alert.alertStyle = .warning
-
-            let response = alert.runModal()
-            if response == .alertSecondButtonReturn {
-                return .terminateCancel
-            }
-        }
-
-        // Clean up all sessions before quitting
-        sessionManager.removeAllSessions()
-        return .terminateNow
-    }
-}
-
 @main
 struct TermQApp: App {
     @NSApplicationDelegateAdaptor(TermQAppDelegate.self) var appDelegate
@@ -569,6 +54,14 @@ struct TermQApp: App {
                     NSApp.keyWindow?.close()
                 }
                 .keyboardShortcut("w", modifiers: .command)
+            }
+
+            // Utilities menu — developer tools available in all builds
+            CommandMenu(Strings.Menu.utilities) {
+                Button(Strings.Menu.utilitiesLogging) {
+                    DiagnosticsWindowController.shared.show()
+                }
+                .keyboardShortcut("d", modifiers: [.command, .option])
             }
 
             // Help menu
@@ -699,8 +192,6 @@ struct TermQApp: App {
                 }
             #endif
         }
-        .handlesExternalEvents(matching: ["termq"])
-
         Settings {
             SettingsView()
                 .environmentObject(appDelegate.updaterViewModel)
@@ -715,6 +206,10 @@ struct TermQApp: App {
     }
 
     init() {
+        UserDefaults.standard.register(defaults: [
+            "protectedBranches": "main,master,develop"
+        ])
+
         // Register URL handler
         NSAppleEventManager.shared().setEventHandler(
             URLEventHandler.shared,
@@ -843,44 +338,36 @@ final class URLEventHandler: NSObject, @unchecked Sendable {
 
         // Check if production config exists
         guard fileManager.fileExists(atPath: productionBoard.path) else {
-            let alert = NSAlert()
-            alert.messageText = "No Production Config"
-            alert.informativeText = "Could not find board.json in the production folder."
-            alert.alertStyle = .warning
-            alert.runModal()
+            AlertBuilder.show(
+                title: "No Production Config",
+                message: "Could not find board.json in the production folder.",
+                style: .warning)
             return
         }
 
         // Confirm overwrite if debug config exists
         if fileManager.fileExists(atPath: debugBoard.path) {
-            let alert = NSAlert()
-            alert.messageText = "Replace Debug Config?"
-            alert.informativeText = "This will replace your current debug board.json with the production version."
-            alert.addButton(withTitle: "Replace")
-            alert.addButton(withTitle: "Cancel")
-            alert.alertStyle = .warning
-
-            if alert.runModal() != .alertFirstButtonReturn {
-                return
-            }
+            guard
+                AlertBuilder.confirm(
+                    title: "Replace Debug Config?",
+                    message: "This will replace your current debug board.json with the production version.",
+                    confirmButton: "Replace")
+            else { return }
 
             try? fileManager.removeItem(at: debugBoard)
         }
 
         do {
             try fileManager.copyItem(at: productionBoard, to: debugBoard)
-
-            let alert = NSAlert()
-            alert.messageText = "Config Copied"
-            alert.informativeText = "Production config has been copied to the debug folder. Restart TermQ to load it."
-            alert.alertStyle = .informational
-            alert.runModal()
+            AlertBuilder.show(
+                title: "Config Copied",
+                message: "Production config has been copied to the debug folder. Restart TermQ to load it.",
+                style: .informational)
         } catch {
-            let alert = NSAlert()
-            alert.messageText = "Copy Failed"
-            alert.informativeText = error.localizedDescription
-            alert.alertStyle = .critical
-            alert.runModal()
+            AlertBuilder.show(
+                title: "Copy Failed",
+                message: error.localizedDescription,
+                style: .critical)
         }
     }
 

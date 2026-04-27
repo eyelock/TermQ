@@ -69,13 +69,12 @@ final class HeadlessWriterTests: XCTestCase {
         try writeTestBoard(board)
 
         let created = try HeadlessWriter.createCard(
-            name: "Headless Card",
-            columnName: "To Do",
-            workingDirectory: "/tmp",
-            description: "Test",
-            llmPrompt: nil,
-            llmNextAction: nil,
-            tags: nil,
+            HeadlessWriter.CardCreationOptions(
+                workingDirectory: "/tmp",
+                name: "Headless Card",
+                column: "To Do",
+                description: "Test"
+            ),
             dataDirectory: tempDirectory
         )
 
@@ -95,13 +94,14 @@ final class HeadlessWriterTests: XCTestCase {
         try writeTestBoard(board)
 
         let created = try HeadlessWriter.createCard(
-            name: "LLM Card",
-            columnName: "To Do",
-            workingDirectory: "/tmp",
-            description: "Test",
-            llmPrompt: "This is a persistent prompt",
-            llmNextAction: "Do this next",
-            tags: nil,
+            HeadlessWriter.CardCreationOptions(
+                workingDirectory: "/tmp",
+                name: "LLM Card",
+                column: "To Do",
+                description: "Test",
+                llmPrompt: "This is a persistent prompt",
+                llmNextAction: "Do this next"
+            ),
             dataDirectory: tempDirectory
         )
 
@@ -113,19 +113,18 @@ final class HeadlessWriterTests: XCTestCase {
         let board = createTestBoard()
         try writeTestBoard(board)
 
-        let tags: [(String, String)] = [
-            ("project", "test"),
-            ("priority", "high"),
+        let tags: [(key: String, value: String)] = [
+            (key: "project", value: "test"),
+            (key: "priority", value: "high"),
         ]
 
         let created = try HeadlessWriter.createCard(
-            name: "Tagged Card",
-            columnName: "To Do",
-            workingDirectory: "/tmp",
-            description: nil,
-            llmPrompt: nil,
-            llmNextAction: nil,
-            tags: tags,
+            HeadlessWriter.CardCreationOptions(
+                workingDirectory: "/tmp",
+                name: "Tagged Card",
+                column: "To Do",
+                tags: tags
+            ),
             dataDirectory: tempDirectory
         )
 
@@ -365,14 +364,12 @@ final class HeadlessWriterTests: XCTestCase {
         let board = createTestBoard()
         try writeTestBoard(board)
 
+        // column defaults to nil, which uses the first column
         let created = try HeadlessWriter.createCard(
-            name: "Default Column Card",
-            columnName: nil,  // Should use first column
-            workingDirectory: "/tmp",
-            description: nil,
-            llmPrompt: nil,
-            llmNextAction: nil,
-            tags: nil,
+            HeadlessWriter.CardCreationOptions(
+                workingDirectory: "/tmp",
+                name: "Default Column Card"
+            ),
             dataDirectory: tempDirectory
         )
 

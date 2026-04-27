@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "Beskyttede grene";
+"settings.protected.branches.help" = "Grene der aldrig tilbydes til sletning ved beskæring. Adskil navne med kommaer.";
+"settings.protected.branches.prompt" = "Kommaseparerede grennavne";
 
 // Settings - Language section
 "settings.section.language" = "Sprog";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "Basis-sti for worktree";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "Beskyttede grene";
+"sidebar.protected.branches.override.help" = "Grene der er udelukket fra beskæring i dette arkiv. Tilsidesætter den globale indstilling. Lad være tomt for at bruge den globale indstilling.";
+"sidebar.protected.branches.override.placeholder" = "(brug global indstilling)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -575,13 +583,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "Slet gren";
+"sidebar.branch.delete.title" = "Slet gren";
+"sidebar.branch.delete.confirm" = "Slet";
+"sidebar.branch.delete.message %@" = "Slet den lokale gren \"%@\"? Dette kan ikke fortrydes.";
+"sidebar.branch.destroy" = "Ødelæg gren";
+"sidebar.branch.destroy.title" = "Ødelæg gren";
+"sidebar.branch.destroy.confirm" = "Ødelæg";
+"sidebar.branch.destroy.message %@" = "Tvangssletter den lokale gren \"%@\"? Ikke-sammenfletede commits slettes og det kan ikke fortrydes.";
+"sidebar.branch.update.from.origin" = "Opdater fra Origin";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Harnesses";
@@ -708,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "Denne harness er knyttet til %ld worktree(s) — disse tilknytninger ryddes.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kører i øjeblikket denne harness.";
 "harnesses.uninstall.alert.confirm" = "Afinstaller";
+"harnesses.delete.local.button" = "Slet harness";
+"harnesses.delete.local.title %@" = "Slet \"%@\"?";
+"harnesses.delete.local.message" = "Dette afinstallerer harness fra YNH og sletter filerne permanent. Handlingen kan ikke fortrydes.";
+"harnesses.delete.local.confirm" = "Slet harness";
 "harnesses.more.actions.help" = "Flere handlinger";
 "harnesses.copy.run.command" = "Kopiér kørselskommando";
 "harnesses.ynh.documentation" = "YNH-dokumentation";
@@ -746,6 +762,15 @@
 "marketplace.row.never.fetched" = "Aldrig hentet";
 "marketplace.add.sheet.title" = "Tilføj markedsplads";
 "marketplace.add.tab.known" = "Kendte";
+"marketplace.group.default" = "Standard";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "Lokal";
+"marketplace.add.tab.local" = "Lokal mappe";
+"marketplace.add.section.local.path" = "Mappesti";
+"marketplace.add.local.browse" = "Vælg mappe…";
+"marketplace.add.local.path.placeholder" = "/sti/til/markedsplads";
+"marketplace.row.local" = "Lokal";
+"marketplace.row.reveal" = "Vis i Finder";
 "marketplace.add.tab.custom" = "Brugerdefineret URL";
 "marketplace.add.section.git.url" = "Git-lager-URL";
 "marketplace.add.section.display.name" = "Vist navn";
@@ -804,3 +829,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "Fjern „%@“ fra YNH? Installerede harnesses forbliver.";
 "marketplace.add.custom.name.placeholder" = "Min markedsplads";
 "harness.wizard.success.created %@" = "Harness «%@» oprettet";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "Værktøjer";
+"menu.utilities.logging" = "Logning…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ Diagnostik";
+"diagnostics.filter.category" = "Kategori";
+"diagnostics.filter.category.all" = "Alle";
+"diagnostics.filter.level" = "Niveau";
+"diagnostics.search.placeholder" = "Søg…";
+"diagnostics.clear" = "Ryd";
+"diagnostics.export" = "Eksporter…";
+"diagnostics.jump.to.latest" = "Gå til nyeste";
+"diagnostics.status.live" = "Live";
+"diagnostics.status.paused" = "Sat på pause";
+"diagnostics.status.entries %lld %lld" = "%lld poster · %lld matcher filteret";
+"diagnostics.verbose.mode" = "Detaljeret tilstand";
+"diagnostics.verbose.mode.help" = "Opsamler debug- og info-meddelelser udover notice/warning/error";
+"diagnostics.verbose.warning" = "Højt volumen — deaktiver når færdig";
+"diagnostics.export.title" = "TermQ Diagnostikrapport";
+"diagnostics.export.footer" = "Indsendt via TermQs indbyggede diagnostik.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "Dupliker";
+"harness.duplicate.installing" = "Installerer duplikat…";
+"harness.duplicate.success %@" = "%@ installeret.";
+"harness.duplicate.title" = "Dupliker harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "Tilføj eksempel eyelock/assistants";
+"harnesses.create.harness.button" = "Opret ny harness";
+"harnesses.empty.no.registries.message" = "Ingen harnesses eller registre installeret endnu.";
+"harnesses.export.button" = "Eksportér som marketplace…";
+"harnesses.group.default" = "Standard";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "Lokal";
+"harnesses.group.menu.settings" = "Indstillinger…";
+"harnesses.group.registry %@" = "Register: %@";
+"harnesses.install.browsing" = "Indlæser tilgængelige harnesses…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "Branch, tag eller commit-SHA (valgfrit)";
+"harnesses.install.retry" = "Prøv igen";
+"harnesses.install.section.available" = "Tilgængelig fra registre";
+"harnesses.install.section.installed" = "Installeret";
+"harnesses.install.section.local" = "Tilgængelig lokalt";
+"harnesses.outdated.capabilities.unknown" = "ukendt";
+"harnesses.outdated.detail %@ %@" = "YNH rapporterer funktioner %1$@, men TermQ kræver %2$@ eller nyere. Opdatér YNH for at aktivere marketplace- og harness-redigeringsfunktioner.";
+"harnesses.outdated.headline" = "YNH-opdatering påkrævet";
+"harnesses.search.button" = "Søg efter harnesses";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "Branch, tag eller commit-SHA (valgfrit)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "Opdatér alle marketplaces";
+"marketplace.restore.defaults" = "Gendan standarder";
+"marketplace.restore.defaults.help" = "Tilføj standardmarketplaces igen";
+"marketplace.row.pinned.help %@" = "Fastgjort til %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "Aktivér sikker indsætning for nye terminaler";
+"settings.default.safe.paste.help" = "Nye terminaler har sikker indsætning aktiveret som standard. Du kan ændre dette per terminal i kortets redigeringsværktøj.";
+"settings.scrollback.invalid" = "Angiv et tal mellem 500 og 100.000";
+"settings.scrollback.label" = "Rullehistorik";
+"settings.scrollback.lines.help" = "Linjer gemt i rullehistorikken (500–100.000). Ændringer gælder for nye terminaler.";
+"settings.scrollback.unit" = "linjer";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (minimum %2$@)";
+"settings.ynh.capabilities.label" = "Funktioner:";
+"settings.ynh.capabilities.unknown" = "ukendt";
+"settings.ynh.docs.link.label" = "YNH-dokumentation →";
+"settings.ynh.outdated.badge" = "Opdatering påkrævet";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "Slet sammenflettede grene";
+"sidebar.prune.branches.confirm" = "Slet grene";
+"sidebar.prune.branches.explanation" = "Disse grene er fuldt sammenflettede med fjernstandard-grenen og har ingen aktiv worktree. Sletning er sikkert og kan ikke fortrydes.";
+"sidebar.prune.branches.nothing.message" = "Ingen sammenflettede grene fundet. Grene der endnu ikke er sammenflettede med fjernstandard-grenen bevares.";
+"sidebar.prune.branches.nothing.title" = "Intet at slette";
+"sidebar.prune.branches.title" = "Slet sammenflettede grene";
+"sidebar.worktree.open.in" = "Åbn i…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "Åbn terminaler";

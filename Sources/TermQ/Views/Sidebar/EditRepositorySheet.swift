@@ -9,12 +9,14 @@ struct EditRepositorySheet: View {
 
     @State private var name: String
     @State private var worktreeBasePath: String
+    @State private var protectedBranchesText: String
 
     init(repo: ObservableRepository, viewModel: WorktreeSidebarViewModel) {
         self.repo = repo
         self.viewModel = viewModel
         _name = State(initialValue: repo.name)
         _worktreeBasePath = State(initialValue: repo.worktreeBasePath ?? "")
+        _protectedBranchesText = State(initialValue: repo.protectedBranches?.joined(separator: ", ") ?? "")
     }
 
     var body: some View {
@@ -37,6 +39,16 @@ struct EditRepositorySheet: View {
                 validatePath: false
             )
 
+            VStack(alignment: .leading, spacing: 4) {
+                Text(Strings.Sidebar.protectedBranchesOverrideLabel)
+                    .foregroundColor(.primary)
+                TextField(Strings.Sidebar.protectedBranchesOverridePlaceholder, text: $protectedBranchesText)
+                    .textFieldStyle(.roundedBorder)
+                Text(Strings.Sidebar.protectedBranchesOverrideHelp)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
             HStack {
                 Spacer()
                 Button(Strings.Common.cancel) {
@@ -45,10 +57,17 @@ struct EditRepositorySheet: View {
                 .keyboardShortcut(.escape, modifiers: [])
 
                 Button(Strings.Common.save) {
+                    let parsed =
+                        protectedBranchesText
+                        .split(separator: ",")
+                        .map { $0.trimmingCharacters(in: .whitespaces) }
+                        .filter { !$0.isEmpty }
+                    let parsedOverride: [String]? = parsed.isEmpty ? nil : parsed
                     viewModel.updateRepository(
                         repo,
                         name: name,
-                        worktreeBasePath: worktreeBasePath.isEmpty ? nil : worktreeBasePath
+                        worktreeBasePath: worktreeBasePath.isEmpty ? nil : worktreeBasePath,
+                        protectedBranches: parsedOverride
                     )
                     dismiss()
                 }

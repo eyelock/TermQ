@@ -259,6 +259,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "受保護的分支";
+"settings.protected.branches.help" = "清理時永不提供刪除的分支。以逗號分隔名稱。";
+"settings.protected.branches.prompt" = "以逗號分隔的分支名稱";
 
 // Settings - Language section
 "settings.section.language" = "語言";
@@ -516,6 +521,9 @@
 "sidebar.worktree.base.path.label" = "worktree 基礎路徑";
 "sidebar.worktree.base.path.help" = "New worktrees are created here. Defaults to .worktrees/ inside the repo.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "受保護的分支";
+"sidebar.protected.branches.override.help" = "在此儲存庫中從清理中排除的分支。覆寫全域設定。留空以使用全域設定。";
+"sidebar.protected.branches.override.placeholder" = "(使用全域設定)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -575,13 +583,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "刪除分支";
+"sidebar.branch.delete.title" = "刪除分支";
+"sidebar.branch.delete.confirm" = "刪除";
+"sidebar.branch.delete.message %@" = "刪除本機分支 \"%@\"？此操作無法復原。";
+"sidebar.branch.destroy" = "強制刪除分支";
+"sidebar.branch.destroy.title" = "強制刪除分支";
+"sidebar.branch.destroy.confirm" = "強制刪除";
+"sidebar.branch.destroy.message %@" = "強制刪除本機分支 \"%@\"？這將捨棄所有未合併的提交，且無法復原。";
+"sidebar.branch.update.from.origin" = "從 Origin 更新";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Harness";
@@ -708,6 +720,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "此 harness 已連結 %ld 個工作樹——這些關聯將被清除。";
 "harnesses.uninstall.alert.terminals %ld" = "目前有 %ld 個終端機正在執行此 harness。";
 "harnesses.uninstall.alert.confirm" = "移除安裝";
+"harnesses.delete.local.button" = "刪除 Harness";
+"harnesses.delete.local.title %@" = "刪除 \"%@\"？";
+"harnesses.delete.local.message" = "這將從 YNH 解除安裝 Harness 並永久刪除其檔案。此操作無法復原。";
+"harnesses.delete.local.confirm" = "刪除 Harness";
 "harnesses.more.actions.help" = "更多動作";
 "harnesses.copy.run.command" = "複製執行指令";
 "harnesses.ynh.documentation" = "YNH 文件";
@@ -746,6 +762,15 @@
 "marketplace.row.never.fetched" = "從未擷取";
 "marketplace.add.sheet.title" = "新增市集";
 "marketplace.add.tab.known" = "已知";
+"marketplace.group.default" = "預設";
+"marketplace.group.github %@" = "GitHub：%@";
+"marketplace.group.local" = "本機";
+"marketplace.add.tab.local" = "本機資料夾";
+"marketplace.add.section.local.path" = "資料夾路徑";
+"marketplace.add.local.browse" = "選擇資料夾…";
+"marketplace.add.local.path.placeholder" = "/路徑/到/marketplace";
+"marketplace.row.local" = "本機";
+"marketplace.row.reveal" = "在 Finder 中顯示";
 "marketplace.add.tab.custom" = "自訂 URL";
 "marketplace.add.section.git.url" = "Git 儲存庫 URL";
 "marketplace.add.section.display.name" = "顯示名稱";
@@ -804,3 +829,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "將「%@」從 YNH 移除？已安裝的 harness 將保留。";
 "marketplace.add.custom.name.placeholder" = "我的市集";
 "harness.wizard.success.created %@" = "Harness「%@」已建立";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "工具程式";
+"menu.utilities.logging" = "記錄…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "TermQ 診斷";
+"diagnostics.filter.category" = "類別";
+"diagnostics.filter.category.all" = "全部";
+"diagnostics.filter.level" = "層級";
+"diagnostics.search.placeholder" = "搜尋…";
+"diagnostics.clear" = "清除";
+"diagnostics.export" = "匯出…";
+"diagnostics.jump.to.latest" = "跳到最新";
+"diagnostics.status.live" = "即時";
+"diagnostics.status.paused" = "已暫停";
+"diagnostics.status.entries %lld %lld" = "%lld 筆記錄 · %lld 筆符合篩選條件";
+"diagnostics.verbose.mode" = "詳細模式";
+"diagnostics.verbose.mode.help" = "除 notice/warning/error 外，額外擷取 debug 與 info 層級訊息";
+"diagnostics.verbose.warning" = "記錄量龐大 — 完成後請關閉";
+"diagnostics.export.title" = "TermQ 診斷報告";
+"diagnostics.export.footer" = "透過 TermQ 內建診斷工具提交。";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "複製";
+"harness.duplicate.installing" = "正在安裝副本…";
+"harness.duplicate.success %@" = "%@ 安裝成功。";
+"harness.duplicate.title" = "複製 Harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "新增範例 eyelock/assistants";
+"harnesses.create.harness.button" = "建立新 Harness";
+"harnesses.empty.no.registries.message" = "尚未安裝任何 Harness 或登錄檔。";
+"harnesses.export.button" = "匯出為 Marketplace…";
+"harnesses.group.default" = "預設";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "本機";
+"harnesses.group.menu.settings" = "設定…";
+"harnesses.group.registry %@" = "登錄檔: %@";
+"harnesses.install.browsing" = "正在載入可用 Harness…";
+"harnesses.install.git.ref" = "參照";
+"harnesses.install.git.ref.placeholder" = "分支、標籤或提交 SHA（選填）";
+"harnesses.install.retry" = "重試";
+"harnesses.install.section.available" = "可從登錄檔取得";
+"harnesses.install.section.installed" = "已安裝";
+"harnesses.install.section.local" = "本機可用";
+"harnesses.outdated.capabilities.unknown" = "未知";
+"harnesses.outdated.detail %@ %@" = "YNH 回報的功能為 %1$@，但 TermQ 需要 %2$@ 或更新版本。請更新 YNH 以啟用 Marketplace 和 Harness 編輯功能。";
+"harnesses.outdated.headline" = "需要升級 YNH";
+"harnesses.search.button" = "搜尋 Harness";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "分支、標籤或提交 SHA（選填）";
+"marketplace.add.section.ref" = "參照";
+"marketplace.refresh.all.help" = "重新整理所有 Marketplace";
+"marketplace.restore.defaults" = "還原預設值";
+"marketplace.restore.defaults.help" = "重新加入預設 Marketplace";
+"marketplace.row.pinned.help %@" = "已固定至 %@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "為新終端機啟用安全貼上";
+"settings.default.safe.paste.help" = "新終端機預設會啟用安全貼上。您可在卡片編輯器中針對每個終端機個別覆寫此設定。";
+"settings.scrollback.invalid" = "請輸入 500 到 100,000 之間的數字";
+"settings.scrollback.label" = "捲動歷程";
+"settings.scrollback.lines.help" = "捲動歷程中保留的行數（500–100,000）。變更適用於新終端機。";
+"settings.scrollback.unit" = "行";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@（最低 %2$@）";
+"settings.ynh.capabilities.label" = "功能：";
+"settings.ynh.capabilities.unknown" = "未知";
+"settings.ynh.docs.link.label" = "YNH 說明文件 →";
+"settings.ynh.outdated.badge" = "需要升級";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "清理已合併分支";
+"sidebar.prune.branches.confirm" = "刪除分支";
+"sidebar.prune.branches.explanation" = "這些分支已完全合併至遠端預設分支，且沒有使用中的 worktree。刪除操作是安全的，且無法復原。";
+"sidebar.prune.branches.nothing.message" = "未找到已合併的分支。尚未合併至遠端預設分支的分支將會保留。";
+"sidebar.prune.branches.nothing.title" = "無需清理";
+"sidebar.prune.branches.title" = "清理已合併分支";
+"sidebar.worktree.open.in" = "用…開啟";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "開啟終端機";

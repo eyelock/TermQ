@@ -20,13 +20,15 @@ struct HarnessesSidebarTab: View {
     var onExport: ((String, String) -> Void)?
     var onNewHarness: (() -> Void)?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
+    @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @State private var harnessToUninstall: Harness?
+    @State private var harnessToDelete: Harness?
     @State private var harnessToDuplicate: Harness?
     @State private var showWizard = false
-    @State private var showAddRegistry = false
+    @State private var showAddMarketplace = false
     @State private var collapsedGroups: Set<String> = []
-    @StateObject private var sampleRunner = RegistryAddRunner()
-    @StateObject private var registryService = YNHRegistryService()
+    @StateObject private var sampleRunner = MarketplaceAddRunner()
+    @StateObject private var marketplaceService = YNHMarketplaceService()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -44,6 +46,9 @@ struct HarnessesSidebarTab: View {
             case .binaryOnly:
                 initRequiredState
 
+            case .outdated(_, _, let capabilities):
+                outdatedState(reportedCapabilities: capabilities)
+
             case .ready:
                 harnessList
             }
@@ -53,8 +58,8 @@ struct HarnessesSidebarTab: View {
             onDismiss: { Task { await repository.refresh() } },
             content: { HarnessWizardSheet(detector: detector, harnessRepository: repository) }
         )
-        .sheet(isPresented: $showAddRegistry) {
-            AddRegistrySheet(detector: detector)
+        .sheet(isPresented: $showAddMarketplace) {
+            AddYNHMarketplaceSheet(detector: detector)
         }
         .sheet(item: $harnessToDuplicate) { harness in
             DuplicateHarnessSheet(harness: harness, detector: detector, repository: repository)
@@ -76,7 +81,7 @@ struct HarnessesSidebarTab: View {
         guard case .ready(let ynhPath, _, _) = detector.status else { return }
         var env = ProcessInfo.processInfo.environment
         if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
-        Task { await registryService.refresh(ynhPath: ynhPath, environment: env) }
+        Task { await marketplaceService.refresh(ynhPath: ynhPath, environment: env) }
     }
 
     // MARK: - Header
@@ -95,13 +100,13 @@ struct HarnessesSidebarTab: View {
             }
 
             Button {
-                showAddRegistry = true
+                showAddMarketplace = true
             } label: {
                 Image(systemName: "globe")
                     .imageScale(.medium)
             }
             .buttonStyle(.plain)
-            .help(Strings.Harnesses.addRegistryToolbarHelp)
+            .help(Strings.Harnesses.addMarketplaceToolbarHelp)
 
             if case .ready = detector.status {
                 Button {
@@ -193,6 +198,26 @@ struct HarnessesSidebarTab: View {
                     )
                 }
             }
+            .confirmationDialog(
+                harnessToDelete.map { Strings.Harnesses.deleteLocalTitle($0.name) } ?? "",
+                isPresented: Binding(
+                    get: { harnessToDelete != nil },
+                    set: { if !$0 { harnessToDelete = nil } }
+                ),
+                titleVisibility: .visible
+            ) {
+                if let harness = harnessToDelete {
+                    Button(Strings.Harnesses.deleteLocalConfirm, role: .destructive) {
+                        performDeleteLocalHarness(harness)
+                        harnessToDelete = nil
+                    }
+                    Button(Strings.Harnesses.installCancel, role: .cancel) {
+                        harnessToDelete = nil
+                    }
+                }
+            } message: {
+                Text(Strings.Harnesses.deleteLocalMessage)
+            }
         }
     }
 
@@ -211,6 +236,9 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
                 }
+
+                Divider()
+
                 Button {
                     NSWorkspace.shared.activateFileViewerSelecting(
                         [URL(fileURLWithPath: harness.path)]
@@ -218,18 +246,35 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
                 }
+                Button {
+                    openInTerminal(path: harness.path)
+                } label: {
+                    Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
+                }
+                if !editorRegistry.available.isEmpty {
+                    Menu(Strings.Sidebar.openIn) {
+                        ForEach(editorRegistry.available) { editor in
+                            Button(editor.displayName) {
+                                openIn(editor: editor, path: harness.path)
+                            }
+                        }
+                    }
+                }
+
                 if let source = harness.installedFrom?.source,
                     let url = GitURLHelper.browserURL(
                         for: source,
                         path: harness.installedFrom?.path
                     )
                 {
+                    Divider()
                     Button {
                         NSWorkspace.shared.open(url)
                     } label: {
                         Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
                     }
                 }
+
                 Divider()
                 Button {
                     onUpdate?(harness.name)
@@ -263,6 +308,13 @@ struct HarnessesSidebarTab: View {
                 } label: {
                     Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
                 }
+                if harness.installedFrom == nil || harness.installedFrom?.sourceType == "local" {
+                    Button(role: .destructive) {
+                        harnessToDelete = harness
+                    } label: {
+                        Label(Strings.Harnesses.deleteLocalButton, systemImage: "trash.fill")
+                    }
+                }
             }
     }
 
@@ -279,13 +331,18 @@ struct HarnessesSidebarTab: View {
     }
 
     private var groupedHarnesses: [HarnessGroup] {
+        let alphaSorted: ([Harness]) -> [Harness] = { harnesses in
+            harnesses.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        }
+
         let defaults = repository.harnesses.filter { KnownHarnesses.defaultNames.contains($0.name) }
         let remaining = repository.harnesses.filter { !KnownHarnesses.defaultNames.contains($0.name) }
 
         var groups: [HarnessGroup] = []
 
         if !defaults.isEmpty {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupDefault, harnesses: defaults, kind: .default))
+            groups.append(
+                HarnessGroup(title: Strings.Harnesses.groupDefault, harnesses: alphaSorted(defaults), kind: .default))
         }
 
         var byOrg: [String: [Harness]] = [:]
@@ -298,22 +355,29 @@ struct HarnessesSidebarTab: View {
                 let org = harness.installedFrom.flatMap { GitURLHelper.repoOwner($0.source) } ?? "Other"
                 byOrg[org, default: []].append(harness)
             case "registry":
-                let name = harness.installedFrom?.registryName ?? Strings.Harnesses.sourceRegistry
+                let name = harness.installedFrom?.registryName ?? Strings.Harnesses.sourceMarketplace
                 byRegistry[name, default: []].append(harness)
             default:
                 local.append(harness)
             }
         }
 
-        for (org, harnesses) in byOrg.sorted(by: { $0.key < $1.key }) {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupGitHub(org), harnesses: harnesses, kind: .github))
-        }
+        // Order: DEFAULT → REGISTRY (alpha) → GitHub (alpha) → LOCAL
         for (name, harnesses) in byRegistry.sorted(by: { $0.key < $1.key }) {
             groups.append(
-                HarnessGroup(title: Strings.Harnesses.groupRegistry(name), harnesses: harnesses, kind: .registry))
+                HarnessGroup(
+                    title: Strings.Harnesses.groupMarketplace(name),
+                    harnesses: alphaSorted(harnesses),
+                    kind: .registry))
+        }
+        for (org, harnesses) in byOrg.sorted(by: { $0.key < $1.key }) {
+            groups.append(
+                HarnessGroup(
+                    title: Strings.Harnesses.groupGitHub(org), harnesses: alphaSorted(harnesses), kind: .github))
         }
         if !local.isEmpty {
-            groups.append(HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: local, kind: .local))
+            groups.append(
+                HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: alphaSorted(local), kind: .local))
         }
 
         return groups
@@ -329,6 +393,31 @@ struct HarnessesSidebarTab: View {
     }
 
     // MARK: - States
+
+    private func outdatedState(reportedCapabilities: String?) -> some View {
+        VStack(spacing: 12) {
+            Image(systemName: "arrow.up.circle")
+                .font(.system(size: 32))
+                .foregroundColor(.secondary)
+
+            Text(Strings.Harnesses.outdatedHeadline)
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+
+            Text(
+                Strings.Harnesses.outdatedDetail(
+                    reported: reportedCapabilities ?? Strings.Harnesses.outdatedCapabilitiesUnknown,
+                    minimum: YNHDetector.minimumCapabilitiesVersion
+                )
+            )
+            .font(.caption)
+            .foregroundColor(Color(nsColor: .tertiaryLabelColor))
+            .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
 
     private var initRequiredState: some View {
         VStack(spacing: 12) {
@@ -350,10 +439,96 @@ struct HarnessesSidebarTab: View {
         .padding()
     }
 
-    private var hasRegistries: Bool {
-        !registryService.registries.isEmpty
+    private var harnessesEmptyState: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "puzzlepiece.extension")
+                .font(.system(size: 32))
+                .foregroundColor(.secondary)
+
+            if !marketplaceService.marketplaces.isEmpty {
+                Text(Strings.Harnesses.emptyMessage)
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+
+                Button(Strings.Harnesses.searchButton) {
+                    onInstall?()
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+            } else {
+                Text(Strings.Harnesses.emptyNoMarketplacesMessage)
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+
+                Button(Strings.Harnesses.addSampleButton) {
+                    Task { await addSampleRegistry() }
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+                .disabled(sampleRunner.isRunning || ynhPathFromDetector == nil)
+
+                Button(Strings.Harnesses.addMarketplaceButton) {
+                    showAddMarketplace = true
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+            }
+
+            Button(Strings.Harnesses.createHarnessButton) {
+                showWizard = true
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
     }
 
+    private var ynhPathFromDetector: String? {
+        guard case .ready(let ynhPath, _, _) = detector.status else { return nil }
+        return ynhPath
+    }
+
+    private func addSampleRegistry() async {
+        guard let ynhPath = ynhPathFromDetector else { return }
+        var env = ProcessInfo.processInfo.environment
+        if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
+        await sampleRunner.run(
+            ynhPath: ynhPath,
+            url: "https://github.com/eyelock/assistants",
+            environment: env
+        )
+        if sampleRunner.succeeded, let ynhPath = ynhPathFromDetector {
+            var env = ProcessInfo.processInfo.environment
+            if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
+            Task {
+                await repository.refresh()
+                await marketplaceService.refresh(ynhPath: ynhPath, environment: env)
+            }
+        }
+    }
+
+    private func emptyState(icon: String, message: String) -> some View {
+        VStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 32))
+                .foregroundColor(.secondary)
+
+            Text(message)
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
+}
+
+// MARK: - Helpers
+
+extension HarnessesSidebarTab {
     @ViewBuilder
     private func groupContextMenu(for group: HarnessGroup) -> some View {
         switch group.kind {
@@ -397,6 +572,11 @@ struct HarnessesSidebarTab: View {
         }
     }
 
+    fileprivate func performDeleteLocalHarness(_ harness: Harness) {
+        onUninstall?(harness.name)
+        try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
+    }
+
     private func revealLocalGroupInFinder(_ group: HarnessGroup) {
         let path =
             group.harnesses.first?.installedFrom?.source
@@ -405,89 +585,24 @@ struct HarnessesSidebarTab: View {
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 
-    private var harnessesEmptyState: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "puzzlepiece.extension")
-                .font(.system(size: 32))
-                .foregroundColor(.secondary)
-
-            if hasRegistries {
-                Text(Strings.Harnesses.emptyMessage)
-                    .font(.callout)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-
-                Button(Strings.Harnesses.searchButton) {
-                    onInstall?()
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.small)
-            } else {
-                Text(Strings.Harnesses.emptyNoRegistriesMessage)
-                    .font(.callout)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-
-                Button(Strings.Harnesses.addSampleButton) {
-                    Task { await addSampleRegistry() }
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.small)
-                .disabled(sampleRunner.isRunning || ynhPathFromDetector == nil)
-
-                Button(Strings.Harnesses.addRegistryButton) {
-                    showAddRegistry = true
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.small)
-            }
-
-            Button(Strings.Harnesses.createHarnessButton) {
-                showWizard = true
-            }
-            .buttonStyle(.bordered)
-            .controlSize(.small)
+    fileprivate func openInTerminal(path: String) {
+        guard let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") else {
+            TermQLogger.ui.error("openInTerminal: Terminal.app not found")
+            return
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
-    }
-
-    private var ynhPathFromDetector: String? {
-        if case .ready(let ynhPath, _, _) = detector.status { return ynhPath }
-        return nil
-    }
-
-    private func addSampleRegistry() async {
-        guard let ynhPath = ynhPathFromDetector else { return }
-        var env = ProcessInfo.processInfo.environment
-        if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
-        await sampleRunner.run(
-            ynhPath: ynhPath,
-            url: "https://github.com/eyelock/assistants",
-            environment: env
+        let config = NSWorkspace.OpenConfiguration()
+        config.addsToRecentItems = false
+        NSWorkspace.shared.open(
+            [URL(fileURLWithPath: path)],
+            withApplicationAt: terminalURL,
+            configuration: config
         )
-        if sampleRunner.succeeded, let ynhPath = ynhPathFromDetector {
-            var env = ProcessInfo.processInfo.environment
-            if let override = YNHDetector.shared.ynhHomeOverride { env["YNH_HOME"] = override }
-            Task {
-                await repository.refresh()
-                await registryService.refresh(ynhPath: ynhPath, environment: env)
-            }
-        }
     }
 
-    private func emptyState(icon: String, message: String) -> some View {
-        VStack(spacing: 10) {
-            Image(systemName: icon)
-                .font(.system(size: 32))
-                .foregroundColor(.secondary)
-
-            Text(message)
-                .font(.callout)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
+    fileprivate func openIn(editor: ExternalEditor, path: String) {
+        let url = URL(fileURLWithPath: path)
+        let config = NSWorkspace.OpenConfiguration()
+        config.addsToRecentItems = false
+        NSWorkspace.shared.open([url], withApplicationAt: editor.appURL, configuration: config)
     }
 }

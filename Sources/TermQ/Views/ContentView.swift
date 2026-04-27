@@ -34,7 +34,7 @@ struct ContentView: View {
                     detector: ynhDetector,
                     harnessRepository: harnessRepo,
                     onLaunchHarness: { harness in
-                        harnessRepo.selectedHarnessName = harness.name
+                        harnessRepo.selectedHarnessName = harness.id
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
                     },
@@ -702,7 +702,8 @@ extension ContentView {
         let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
         let defaultAllowAutorun = UserDefaults.standard.object(forKey: "enableTerminalAutorun") as? Bool ?? false
         let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        let defaultConfirmExternalModifications =
+            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = viewModel.board.addCard(
             to: targetColumn,
             title: pending.name ?? "Terminal",
@@ -754,7 +755,8 @@ extension ContentView {
         }
         let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
         let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        let defaultConfirmExternalModifications =
+            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynh install \(config.displayName)",
             tags: [],
@@ -795,7 +797,8 @@ extension ContentView {
         }
         let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
         let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        let defaultConfirmExternalModifications =
+            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynh uninstall \(name)",
             tags: [],
@@ -836,7 +839,8 @@ extension ContentView {
         }
         let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
         let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        let defaultConfirmExternalModifications =
+            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynh update \(name)",
             tags: [],
@@ -870,7 +874,8 @@ extension ContentView {
         else { return }
         let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
         let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        let defaultConfirmExternalModifications =
+            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             title: "ynd export \(name)",
             tags: [],
@@ -933,7 +938,8 @@ extension ContentView {
         }
         let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
         let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let defaultConfirmExternalModifications = UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        let defaultConfirmExternalModifications =
+            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
         let card = TerminalCard(
             id: cardID,
             title: config.branch ?? config.harnessName,

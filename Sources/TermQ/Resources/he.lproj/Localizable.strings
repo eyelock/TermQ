@@ -260,6 +260,11 @@
 "settings.data.directory.help" = "Location for backups and encrypted secrets. This folder survives app uninstall.";
 "settings.data.directory" = "TermQ Data Folder";
 "settings.section.data.directory" = "Data Storage";
+// Settings - Git section
+"settings.section.git" = "Git";
+"settings.protected.branches.label" = "ענפים מוגנים";
+"settings.protected.branches.help" = "ענפים שלעולם אינם מוצעים למחיקה בעת גיזום. הפרד שמות בפסיקים.";
+"settings.protected.branches.prompt" = "שמות ענפים מופרדים בפסיקים";
 
 // Settings - Language section
 "settings.section.language" = "שפה";
@@ -517,6 +522,9 @@
 "sidebar.worktree.base.path.label" = "נתיב בסיס worktree";
 "sidebar.worktree.base.path.help" = "כאן נוצרים worktrees חדשים. ברירת המחדל היא ספריית האב של תיקיית המאגר.";
 "sidebar.worktree.base.path.placeholder" = "{repository path}/.worktrees";
+"sidebar.protected.branches.override.label" = "ענפים מוגנים";
+"sidebar.protected.branches.override.help" = "ענפים המוחרגים מגיזום במאגר זה. דורס את ההגדרה הגלובלית. השאר ריק לשימוש בהגדרה הגלובלית.";
+"sidebar.protected.branches.override.placeholder" = "(השתמש בהגדרה הגלובלית)";
 "sidebar.base.path.equals.repo" = "Worktree base path cannot be the same as the repository root.";
 "sidebar.base.path.is.parent" = "Worktree base path cannot be a parent of the repository.";
 "sidebar.add.gitignore %@" = "Add \"%@\" to .gitignore";
@@ -565,13 +573,17 @@
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.delete" = "מחק ענף";
+"sidebar.branch.delete.title" = "מחק ענף";
+"sidebar.branch.delete.confirm" = "מחק";
+"sidebar.branch.delete.message %@" = "למחוק את הענף המקומי \"%@\"? לא ניתן לבטל פעולה זו.";
+"sidebar.branch.destroy" = "השמד ענף";
+"sidebar.branch.destroy.title" = "השמד ענף";
+"sidebar.branch.destroy.confirm" = "השמד";
+"sidebar.branch.destroy.message %@" = "לאלץ מחיקת הענף המקומי \"%@\"? קומיטים שלא מוזגו יאבדו ולא ניתן לבטל פעולה זו.";
+"sidebar.branch.update.from.origin" = "עדכן מ-Origin";
 
 // Checkout branch as worktree sheet
-"sidebar.checkout.branch.title" = "New Worktree from Branch";
-"sidebar.checkout.branch.label" = "Branch";
-"sidebar.checkout.branch.placeholder" = "Select a branch…";
-"sidebar.checkout.branch.required" = "Select a branch to continue.";
-"sidebar.checkout.branch.create" = "Create Worktree";
 
 // MARK: - Harnesses sidebar tab
 "harnesses.title" = "Harness";
@@ -714,6 +726,10 @@
 "harnesses.uninstall.alert.worktrees %ld" = "ה-harness הזה מקושר ל-%ld worktree(s) — הקשרים הללו יימחקו.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld מסוף(ים) מריצים כעת את ה-harness הזה.";
 "harnesses.uninstall.alert.confirm" = "הסר התקנה";
+"harnesses.delete.local.button" = "מחק harness";
+"harnesses.delete.local.title %@" = "למחוק \"%@\"?";
+"harnesses.delete.local.message" = "פעולה זו תסיר את ה-harness מ-YNH ותמחק לצמיתות את קבציו. לא ניתן לבטל פעולה זו.";
+"harnesses.delete.local.confirm" = "מחק harness";
 "harnesses.more.actions.help" = "פעולות נוספות";
 "harnesses.copy.run.command" = "העתק פקודת הפעלה";
 "harnesses.ynh.documentation" = "תיעוד YNH";
@@ -752,6 +768,15 @@
 "marketplace.row.never.fetched" = "לא הוטען מעולם";
 "marketplace.add.sheet.title" = "הוסף שוק";
 "marketplace.add.tab.known" = "ידועים";
+"marketplace.group.default" = "ברירת מחדל";
+"marketplace.group.github %@" = "GitHub: %@";
+"marketplace.group.local" = "מקומי";
+"marketplace.add.tab.local" = "תיקייה מקומית";
+"marketplace.add.section.local.path" = "נתיב תיקייה";
+"marketplace.add.local.browse" = "בחר תיקייה…";
+"marketplace.add.local.path.placeholder" = "/נתיב/ל/marketplace";
+"marketplace.row.local" = "מקומי";
+"marketplace.row.reveal" = "הצג ב-Finder";
 "marketplace.add.tab.custom" = "כתובת URL מותאמת";
 "marketplace.add.section.git.url" = "כתובת URL של מאגר Git";
 "marketplace.add.section.display.name" = "שם להצגה";
@@ -810,3 +835,86 @@
 "settings.marketplaces.ynh.registry.remove.confirm.message %@" = "להסיר את “%@” מין YNH? התשתיות המותקנות ישארו.";
 "marketplace.add.custom.name.placeholder" = "השוק שלי";
 "harness.wizard.success.created %@" = "Harness «%@» נוצר";
+
+// MARK: - Menu — Utilities
+"menu.utilities" = "כלי עזר";
+"menu.utilities.logging" = "רישום יומן…";
+
+// MARK: - Diagnostics
+"diagnostics.window.title" = "אבחון TermQ";
+"diagnostics.filter.category" = "קטגוריה";
+"diagnostics.filter.category.all" = "הכל";
+"diagnostics.filter.level" = "רמה";
+"diagnostics.search.placeholder" = "חיפוש…";
+"diagnostics.clear" = "נקה";
+"diagnostics.export" = "ייצוא…";
+"diagnostics.jump.to.latest" = "עבור לאחרון";
+"diagnostics.status.live" = "חי";
+"diagnostics.status.paused" = "מושהה";
+"diagnostics.status.entries %lld %lld" = "%lld רשומות · %lld תואמות לסינון";
+"diagnostics.verbose.mode" = "מצב מפורט";
+"diagnostics.verbose.mode.help" = "לוכד הודעות debug ו-info בנוסף ל-notice/warning/error";
+"diagnostics.verbose.warning" = "נפח גבוה — כבה בסיום";
+"diagnostics.export.title" = "דוח אבחון TermQ";
+"diagnostics.export.footer" = "הוגש דרך כלי האבחון המובנה של TermQ.";
+
+// MARK: - Harness Duplicate (added sync)
+"harness.duplicate.button" = "שכפל";
+"harness.duplicate.installing" = "מתקין עותק…";
+"harness.duplicate.success %@" = "%@ הותקן בהצלחה.";
+"harness.duplicate.title" = "שכפל harness";
+
+// MARK: - Harnesses (added sync)
+"harnesses.add.sample.button" = "הוסף דוגמה eyelock/assistants";
+"harnesses.create.harness.button" = "צור harness חדש";
+"harnesses.empty.no.registries.message" = "טרם הותקנו harness-ים או רשומות.";
+"harnesses.export.button" = "ייצא כ-marketplace…";
+"harnesses.group.default" = "ברירת מחדל";
+"harnesses.group.github %@" = "GitHub: %@";
+"harnesses.group.local" = "מקומי";
+"harnesses.group.menu.settings" = "הגדרות…";
+"harnesses.group.registry %@" = "רשומה: %@";
+"harnesses.install.browsing" = "טוען harness-ים זמינים…";
+"harnesses.install.git.ref" = "Ref";
+"harnesses.install.git.ref.placeholder" = "ענף, תג או commit SHA (אופציונלי)";
+"harnesses.install.retry" = "נסה שוב";
+"harnesses.install.section.available" = "זמין מרשומות";
+"harnesses.install.section.installed" = "מותקן";
+"harnesses.install.section.local" = "זמין מקומית";
+"harnesses.outdated.capabilities.unknown" = "לא ידוע";
+"harnesses.outdated.detail %@ %@" = "YNH מדווח על יכולות %1$@, אך TermQ דורש %2$@ או גרסה חדשה יותר. עדכן את YNH כדי להפעיל את תכונות ה-marketplace ועריכת ה-harness.";
+"harnesses.outdated.headline" = "נדרש שדרוג YNH";
+"harnesses.search.button" = "חפש harness-ים";
+
+// MARK: - Marketplace (added sync)
+"marketplace.add.ref.placeholder" = "ענף, תג או commit SHA (אופציונלי)";
+"marketplace.add.section.ref" = "Ref";
+"marketplace.refresh.all.help" = "רענן את כל ה-marketplace-ים";
+"marketplace.restore.defaults" = "שחזר ברירות מחדל";
+"marketplace.restore.defaults.help" = "הוסף מחדש את ה-marketplace-ים המוגדרים כברירת מחדל";
+"marketplace.row.pinned.help %@" = "מוצמד ל-%@";
+
+// MARK: - Settings (added sync)
+"settings.default.safe.paste" = "הפעל הדבקה בטוחה עבור טרמינלים חדשים";
+"settings.default.safe.paste.help" = "לטרמינלים חדשים תהיה הדבקה בטוחה מופעלת כברירת מחדל. ניתן לשנות זאת לכל טרמינל בעורך הכרטיס.";
+"settings.scrollback.invalid" = "הזן מספר בין 500 ל-100,000";
+"settings.scrollback.label" = "היסטוריית גלילה";
+"settings.scrollback.lines.help" = "שורות שנשמרות בהיסטוריית הגלילה (500–100,000). שינויים חלים על טרמינלים חדשים.";
+"settings.scrollback.unit" = "שורות";
+"settings.ynh.capabilities.below.minimum %@ %@" = "%1$@ (מינימום %2$@)";
+"settings.ynh.capabilities.label" = "יכולות:";
+"settings.ynh.capabilities.unknown" = "לא ידוע";
+"settings.ynh.docs.link.label" = "תיעוד YNH →";
+"settings.ynh.outdated.badge" = "נדרש עדכון";
+
+// MARK: - Sidebar (added sync)
+"sidebar.prune.branches" = "נקה ענפים ממוזגים";
+"sidebar.prune.branches.confirm" = "מחק ענפים";
+"sidebar.prune.branches.explanation" = "ענפים אלה ממוזגים לחלוטין לענף ברירת המחדל המרוחק ואין להם worktree פעיל. המחיקה בטוחה ולא ניתנת לביטול.";
+"sidebar.prune.branches.nothing.message" = "לא נמצאו ענפים ממוזגים. ענפים שטרם מוזגו לענף ברירת המחדל המרוחק נשמרים.";
+"sidebar.prune.branches.nothing.title" = "אין מה לנקות";
+"sidebar.prune.branches.title" = "נקה ענפים ממוזגים";
+"sidebar.worktree.open.in" = "פתח ב…";
+
+// MARK: - Toolbar (added sync)
+"toolbar.open.terminals.help" = "פתח טרמינלים";

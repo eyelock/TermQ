@@ -5,10 +5,15 @@ import SwiftTerm
 /// Manages terminal themes and applies them to terminal views
 @MainActor
 public final class TerminalThemeManager: ObservableObject {
-    /// Current theme ID (stored in UserDefaults)
+    private static let themeIdKey = "terminalTheme"
+    private static let defaultThemeId = "default-dark"
+
+    private let store: any KeyValueStore
+
+    /// Current theme ID (persisted via the injected `KeyValueStore`)
     @Published var themeId: String {
         didSet {
-            UserDefaults.standard.set(themeId, forKey: "terminalTheme")
+            store.set(themeId, forKey: Self.themeIdKey)
             onThemeChanged?()
         }
     }
@@ -21,8 +26,9 @@ public final class TerminalThemeManager: ObservableObject {
         TerminalTheme.theme(for: themeId)
     }
 
-    init() {
-        self.themeId = UserDefaults.standard.string(forKey: "terminalTheme") ?? "default-dark"
+    init(store: any KeyValueStore = UserDefaults.standard) {
+        self.store = store
+        self.themeId = store.string(forKey: Self.themeIdKey) ?? Self.defaultThemeId
     }
 
     /// Apply theme to a terminal view

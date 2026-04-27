@@ -47,7 +47,8 @@ extension TermQMCPServer {
                 inputSchema: Schema.objectSchema([
                     Schema.string(
                         "query",
-                        "Smart search: matches ANY word across name, description, path, tags. Best for natural language queries."
+                        "Smart search: matches ANY word across name, description, path, tags."
+                            + " Best for natural language queries."
                     ),
                     Schema.string("name", "Filter by name (word-based matching)"),
                     Schema.string("column", "Filter by column name"),
@@ -102,6 +103,7 @@ extension TermQMCPServer {
                     Schema.string(
                         "badge",
                         "Badge text (comma-separated for multiple, e.g. 'WIP,urgent'). Replaces existing badges."),
+                    Schema.string("tag", "A single tag in key=value format (e.g., 'project=my/repo')"),
                     Schema.stringArray("tags", "Tags in key=value format (e.g., ['status=reviewed'])"),
                     Schema.bool("replaceTags", "If true, replaces all tags; if false (default), adds to existing"),
                     Schema.string("llmPrompt", "Set persistent LLM context"),

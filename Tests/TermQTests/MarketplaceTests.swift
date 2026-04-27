@@ -144,6 +144,41 @@ final class MarketplaceModelTests: XCTestCase {
         XCTAssertNil(raw.plugins[1].version)
     }
 
+    // MARK: Marketplace.isPinnedToSHA
+
+    func test_isPinnedToSHA_nilRef_returnsFalse() {
+        let m = makeMarketplace(ref: nil)
+        XCTAssertFalse(m.isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_branchName_returnsFalse() {
+        XCTAssertFalse(makeMarketplace(ref: "main").isPinnedToSHA)
+        XCTAssertFalse(makeMarketplace(ref: "develop").isPinnedToSHA)
+        XCTAssertFalse(makeMarketplace(ref: "feature/foo").isPinnedToSHA)
+        XCTAssertFalse(makeMarketplace(ref: "v1.2.3").isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_fullSHA_returnsTrue() {
+        XCTAssertTrue(makeMarketplace(ref: "a0d08828b29a8ba267836d4b40a368b8a56b8b0a").isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_abbreviatedSHA_returnsTrue() {
+        XCTAssertTrue(makeMarketplace(ref: "a0d08828").isPinnedToSHA)
+        XCTAssertTrue(makeMarketplace(ref: "1cb524ac").isPinnedToSHA)
+    }
+
+    func test_isPinnedToSHA_tooShort_returnsFalse() {
+        XCTAssertFalse(makeMarketplace(ref: "abc123").isPinnedToSHA)  // 6 chars
+    }
+
+    private func makeMarketplace(ref: String?) -> Marketplace {
+        Marketplace(
+            id: UUID(), name: "test", owner: "owner", description: nil,
+            vendor: .claude, url: "https://github.com/owner/repo", ref: ref,
+            plugins: [], lastFetched: nil, fetchError: nil
+        )
+    }
+
     // MARK: - Helpers
 
     private func assertSkillsStateRoundTrip(_ state: SkillsLoadState) throws {
@@ -195,7 +230,7 @@ final class MarketplaceFetcherEnumerationTests: XCTestCase {
         try "# Agent".write(to: agentsDir.appendingPathComponent("my-agent.md"), atomically: true, encoding: .utf8)
 
         let results = MarketplaceFetcher.enumerateArtifacts(in: tmpDir)
-        XCTAssertEqual(results, ["agents/my-agent"])
+        XCTAssertEqual(results, ["agents/my-agent.md"])
     }
 
     func test_enumerate_commands_included() throws {
@@ -203,7 +238,7 @@ final class MarketplaceFetcherEnumerationTests: XCTestCase {
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         try "# Cmd".write(to: dir.appendingPathComponent("build.md"), atomically: true, encoding: .utf8)
 
-        XCTAssertEqual(MarketplaceFetcher.enumerateArtifacts(in: tmpDir), ["commands/build"])
+        XCTAssertEqual(MarketplaceFetcher.enumerateArtifacts(in: tmpDir), ["commands/build.md"])
     }
 
     func test_enumerate_rules_included() throws {
@@ -211,7 +246,7 @@ final class MarketplaceFetcherEnumerationTests: XCTestCase {
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         try "# Rule".write(to: dir.appendingPathComponent("style.md"), atomically: true, encoding: .utf8)
 
-        XCTAssertEqual(MarketplaceFetcher.enumerateArtifacts(in: tmpDir), ["rules/style"])
+        XCTAssertEqual(MarketplaceFetcher.enumerateArtifacts(in: tmpDir), ["rules/style.md"])
     }
 
     func test_enumerate_nonMdFilesInAgents_excluded() throws {
@@ -220,7 +255,7 @@ final class MarketplaceFetcherEnumerationTests: XCTestCase {
         try "data".write(to: dir.appendingPathComponent("config.json"), atomically: true, encoding: .utf8)
         try "# Agent".write(to: dir.appendingPathComponent("real.md"), atomically: true, encoding: .utf8)
 
-        XCTAssertEqual(MarketplaceFetcher.enumerateArtifacts(in: tmpDir), ["agents/real"])
+        XCTAssertEqual(MarketplaceFetcher.enumerateArtifacts(in: tmpDir), ["agents/real.md"])
     }
 
     func test_enumerate_resultsAreSorted() throws {
@@ -255,7 +290,7 @@ final class MarketplaceFetcherEnumerationTests: XCTestCase {
         try "".write(to: rulesDir.appendingPathComponent("lint.md"), atomically: true, encoding: .utf8)
 
         let results = MarketplaceFetcher.enumerateArtifacts(in: tmpDir)
-        XCTAssertEqual(results, ["agents/my-agent", "rules/lint", "skills/my-skill"])
+        XCTAssertEqual(results, ["agents/my-agent.md", "rules/lint.md", "skills/my-skill"])
     }
 }
 
@@ -422,6 +457,112 @@ final class PluginSourceSpecResolvedTests: XCTestCase {
         let (url, path) = decoded.resolved(marketplaceURL: marketplaceURL)
         XCTAssertEqual(url, marketplaceURL)
         XCTAssertEqual(path, "skills/infra")
+    }
+}
+
+// MARK: - PluginSourceSpec decoding tests (vendor JSON forms)
+
+final class PluginSourceSpecDecodingTests: XCTestCase {
+
+    func test_decode_githubSource_withRepoKey_buildsHttpsURL() throws {
+        // Canonical Claude Code marketplace form: {"source": "github", "repo": "org/repo"}
+        let json = #"{"source":"github","repo":"owner/repo"}"#
+        let spec = try JSONDecoder().decode(PluginSourceSpec.self, from: Data(json.utf8))
+        XCTAssertEqual(spec.type, .github)
+        XCTAssertEqual(spec.url, "https://github.com/owner/repo")
+    }
+
+    func test_decode_githubSource_withRepoKey_resolved_doesNotDoublePrependHost() {
+        let spec = PluginSourceSpec(type: .github, url: "https://github.com/owner/repo")
+        let (url, _) = spec.resolved(marketplaceURL: "https://github.com/eyelock/assistants")
+        XCTAssertEqual(url, "https://github.com/owner/repo")
+    }
+
+    func test_decode_githubSource_withUrlKey_fallbackStillWorks() throws {
+        // Legacy / alternate form: {"source": "github", "url": "owner/repo"}
+        let json = #"{"source":"github","url":"owner/repo"}"#
+        let spec = try JSONDecoder().decode(PluginSourceSpec.self, from: Data(json.utf8))
+        XCTAssertEqual(spec.type, .github)
+        XCTAssertEqual(spec.url, "owner/repo")
+    }
+
+    func test_decode_githubSource_repoKeyTakesPrecedenceOverUrl() throws {
+        // If both are present, repo is the canonical key per Claude Code schema.
+        let json = #"{"source":"github","repo":"canonical/repo","url":"legacy/repo"}"#
+        let spec = try JSONDecoder().decode(PluginSourceSpec.self, from: Data(json.utf8))
+        XCTAssertEqual(spec.url, "https://github.com/canonical/repo")
+    }
+
+    func test_decode_nonGithubSource_ignoresRepoKey() throws {
+        // `repo` is only meaningful for github sources; url decoder shouldn't pick it up for others.
+        let json = #"{"source":"url","url":"https://example.com/pkg.tgz","repo":"should/ignore"}"#
+        let spec = try JSONDecoder().decode(PluginSourceSpec.self, from: Data(json.utf8))
+        XCTAssertEqual(spec.type, .url)
+        XCTAssertEqual(spec.url, "https://example.com/pkg.tgz")
+    }
+
+    func test_decode_relativeSourceString_unchanged() throws {
+        let json = #""./plugins/foo""#
+        let spec = try JSONDecoder().decode(PluginSourceSpec.self, from: Data(json.utf8))
+        XCTAssertEqual(spec.type, .relative)
+        XCTAssertEqual(spec.url, "./plugins/foo")
+    }
+}
+
+// MARK: - IncludeApplier argument-building tests
+
+final class IncludeApplierArgsTests: XCTestCase {
+
+    func test_buildArgs_noPick_emitsBaseCommand() {
+        let opts = IncludeApplicationOptions(
+            harness: "my-harness", sourceURL: "https://github.com/owner/repo",
+            path: nil, pick: []
+        )
+        XCTAssertEqual(
+            IncludeApplier.buildIncludeAddArgs(opts),
+            ["include", "add", "my-harness", "https://github.com/owner/repo"]
+        )
+    }
+
+    func test_buildArgs_withPath_includesPathFlag() {
+        let opts = IncludeApplicationOptions(
+            harness: "h", sourceURL: "https://github.com/o/r",
+            path: "plugins/foo", pick: []
+        )
+        XCTAssertEqual(
+            IncludeApplier.buildIncludeAddArgs(opts),
+            ["include", "add", "h", "https://github.com/o/r", "--path", "plugins/foo"]
+        )
+    }
+
+    func test_buildArgs_emptyPathString_dropsPathFlag() {
+        let opts = IncludeApplicationOptions(
+            harness: "h", sourceURL: "s", path: "", pick: []
+        )
+        XCTAssertEqual(IncludeApplier.buildIncludeAddArgs(opts), ["include", "add", "h", "s"])
+    }
+
+    func test_buildArgs_pickPreservesFullTypeNamePaths() {
+        // Bug regression: earlier code stripped the type/ prefix from --pick values,
+        // causing `ynh run` to fail with "pick path must be in format 'type/name'".
+        let opts = IncludeApplicationOptions(
+            harness: "h", sourceURL: "s", path: nil,
+            pick: ["agents/claude-packager.md", "skills/my-skill"]
+        )
+        XCTAssertEqual(
+            IncludeApplier.buildIncludeAddArgs(opts),
+            ["include", "add", "h", "s", "--pick", "agents/claude-packager.md,skills/my-skill"]
+        )
+    }
+
+    func test_buildArgs_pickKeepsMdExtension() {
+        // Bug regression: enumerateArtifacts stripped .md, but CopyPicked resolves exact on-disk paths.
+        let opts = IncludeApplicationOptions(
+            harness: "h", sourceURL: "s", path: nil,
+            pick: ["agents/foo.md", "commands/build.md", "rules/style.md"]
+        )
+        let args = IncludeApplier.buildIncludeAddArgs(opts)
+        XCTAssertEqual(args.last, "agents/foo.md,commands/build.md,rules/style.md")
     }
 }
 

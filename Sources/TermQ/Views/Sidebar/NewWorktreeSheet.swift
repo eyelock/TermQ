@@ -7,6 +7,7 @@ import TermQCore
 /// text input that defaults to the repo's default branch and filters as you type.
 struct NewWorktreeSheet: View {
     let repo: ObservableRepository
+    let initialBaseBranch: String?
     @ObservedObject var viewModel: WorktreeSidebarViewModel
     @Environment(\.dismiss) private var dismiss
 
@@ -140,7 +141,11 @@ struct NewWorktreeSheet: View {
             errorMessage = error.localizedDescription
         }
         guard baseBranch.isEmpty else { return }
-        baseBranch = await viewModel.defaultBranch(for: repo)
+        if let initial = initialBaseBranch, !initial.isEmpty {
+            baseBranch = initial
+        } else {
+            baseBranch = await viewModel.defaultBranch(for: repo)
+        }
     }
 
     private func create() async {

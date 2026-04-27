@@ -65,23 +65,24 @@ curl -s https://eyelock.github.io/TermQ/appcast-beta.xml | grep "beta"
 
 ## Promoting Beta to Stable
 
-Once testing is complete, open a PR to promote `develop` → `main`:
+Once testing is complete, follow [stable.md](stable.md) in full.
+
+**NEVER promote by opening `develop → main` directly.** Always cut a `release/vX.Y.Z` branch
+first. `main` accumulates appcast commits after every beta — opening develop → main directly
+forces conflict resolution inside develop. The release branch absorbs it cleanly.
+
+The short version:
 
 ```bash
-gh pr create --base main --head develop --title "release: v0.7.0" \
-  --body "Promotes develop to main for stable release v0.7.0"
+git checkout -b release/v0.7.0 develop
+# Update CHANGELOG: rename [Unreleased] → [0.7.0], add new [Unreleased] above
+git add CHANGELOG.md && git commit -m "chore: update CHANGELOG for v0.7.0" && git push
+gh pr create --base main --head release/v0.7.0 --title "release: TermQ v0.7.0"
+# Resolve any conflicts on the release branch, not on develop
+# After merge to main: make check → make release-minor → back-merge → appcast sync
 ```
 
-Wait for CI to pass on the merge commit, then merge. After merge:
-
-```bash
-git checkout main
-git pull
-git tag -a "v0.7.0" -m "Release v0.7.0"
-git push origin v0.7.0
-```
-
-The stable release follows normal procedure: requires CI pass, marks as latest (not pre-release), updates both feeds.
+See `stable.md` for the complete step-by-step including back-merge and appcast sync.
 
 ## Version Progression
 
@@ -95,3 +96,4 @@ v1.0.0-alpha.1  →  v1.0.0-alpha.2  →  v1.0.0-beta.1  →  v1.0.0-beta.2  →
 - NEVER manually edit appcast files (they're auto-generated)
 - NEVER mark stable releases as pre-release
 - NEVER promote beta to stable without testing
+- NEVER open `develop → main` directly for promotion — always use a release branch

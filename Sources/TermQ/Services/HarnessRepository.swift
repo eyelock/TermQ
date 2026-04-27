@@ -17,6 +17,7 @@ final class HarnessRepository: ObservableObject {
 
     @Published private(set) var harnesses: [Harness] = []
     @Published private(set) var isLoading = false
+    /// The id of the selected harness (`Harness.id` — namespace-qualified when present).
     @Published var selectedHarnessName: String?
 
     /// Full detail for the selected harness (info + composition).
@@ -24,16 +25,24 @@ final class HarnessRepository: ObservableObject {
     @Published private(set) var isLoadingDetail = false
     @Published private(set) var detailError: String?
 
-    /// Per-session cache of fetched details keyed by harness name.
+    /// Per-session cache of fetched details keyed by `Harness.id`.
     private var detailCache: [String: HarnessDetail] = [:]
 
-    /// The currently selected harness, derived from `selectedHarnessName`.
+    private let ynhDetector: any YNHDetectorProtocol
+
+    /// The currently selected harness, matched by `Harness.id`.
     var selectedHarness: Harness? {
-        guard let name = selectedHarnessName else { return nil }
-        return harnesses.first { $0.name == name }
+        guard let id = selectedHarnessName else { return nil }
+        return harnesses.first { $0.id == id }
     }
 
-    private init() {}
+    private convenience init() {
+        self.init(ynhDetector: YNHDetector.shared)
+    }
+
+    init(ynhDetector: any YNHDetectorProtocol) {
+        self.ynhDetector = ynhDetector
+    }
 
     // MARK: - List
 
@@ -41,7 +50,7 @@ final class HarnessRepository: ObservableObject {
     ///
     /// Requires `YNHDetector.status` to be `.ready`; clears the list otherwise.
     func refresh() async {
-        guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else {
             harnesses = []
             selectedHarnessName = nil
             return
@@ -62,8 +71,8 @@ final class HarnessRepository: ObservableObject {
             harnesses = decoded
 
             // Clear selection if the selected harness was removed.
-            if let name = selectedHarnessName,
-                !decoded.contains(where: { $0.name == name })
+            if let id = selectedHarnessName,
+                !decoded.contains(where: { $0.id == id })
             {
                 selectedHarnessName = nil
             }
@@ -91,7 +100,7 @@ final class HarnessRepository: ObservableObject {
             return
         }
 
-        guard case .ready(let ynhPath, let yndPath, _) = YNHDetector.shared.status else {
+        guard case .ready(let ynhPath, let yndPath, _) = ynhDetector.status else {
             detailError = "YNH toolchain not ready"
             return
         }
@@ -153,10 +162,10 @@ final class HarnessRepository: ObservableObject {
         return HarnessDetail(info: info, composition: composition)
     }
 
-    /// Invalidate cached detail for a specific harness (call after mutations).
+    /// Invalidate cached detail for a specific harness (call after mutations). Pass `harness.name`.
     func invalidateDetail(for name: String) {
         detailCache.removeValue(forKey: name)
-        if selectedHarnessName == name {
+        if selectedHarness?.name == name {
             selectedDetail = nil
         }
     }
@@ -171,7 +180,7 @@ final class HarnessRepository: ObservableObject {
 
     private func ynhEnvironment() -> [String: String] {
         var env = ProcessInfo.processInfo.environment
-        if let override = YNHDetector.shared.ynhHomeOverride {
+        if let override = ynhDetector.ynhHomeOverride {
             env["YNH_HOME"] = override
         }
         return env

@@ -10,7 +10,7 @@ import TermQShared
 /// All methods delegate to `GitServiceShared` which contains the shared process-execution
 /// logic. Git commands are fast enough that main-actor isolation is not a concern.
 @MainActor
-public class GitService {
+public class GitService: GitServiceProtocol {
     public static let shared = GitService()
 
     private init() {}
@@ -51,7 +51,6 @@ public class GitService {
         }
     }
 
-    /// Check out an existing local branch as a new worktree at `path`.
     public func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws {
         try await GitServiceShared.checkoutBranchAsWorktree(
             repoPath: repo.path,
@@ -155,6 +154,27 @@ public class GitService {
     /// Safe-delete a local branch (`git branch -d`). Throws if not fully merged.
     public func deleteLocalBranch(repoPath: String, branch: String) async throws {
         _ = try await GitServiceShared.runGitCommand(repoPath: repoPath, args: ["branch", "-d", branch])
+    }
+
+    /// Force-delete a local branch (`git branch -D`). Discards any unmerged commits.
+    public func forceDeleteLocalBranch(repoPath: String, branch: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(repoPath: repoPath, args: ["branch", "-D", branch])
+    }
+
+    /// Fast-forward a local branch to match origin without checking it out.
+    ///
+    /// Runs `git fetch origin <branch>:<branch>` which updates the local ref only
+    /// when the fast-forward is clean. Throws if the branch has diverged.
+    public func fetchBranchFromOrigin(repoPath: String, branch: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["fetch", "origin", "\(branch):\(branch)"]
+        )
+    }
+
+    /// Pull the current branch in the given worktree directory (`git pull`).
+    public func pullBranch(worktreePath: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["pull"])
     }
 
     /// List local branches for the repository at `repoPath`.
