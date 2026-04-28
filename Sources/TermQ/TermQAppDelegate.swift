@@ -61,6 +61,15 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let desc = "\(type(of: win)) visible=\(win.isVisible) frame=\(win.frame)"
             TermQLogger.window.notice("  window[\(i)]: \(desc)")
         }
+        // Override SwiftUI's kAEGetURL handler, which SwiftUI registers during scene setup
+        // (after our App.init runs). Registering here ensures our handler wins and prevents
+        // SwiftUI's AppWindowsController from hiding the main window on every URL open.
+        NSAppleEventManager.shared().setEventHandler(
+            URLEventHandler.shared,
+            andSelector: #selector(URLEventHandler.handleURL(_:replyEvent:)),
+            forEventClass: AEEventClass(kInternetEventClass),
+            andEventID: AEEventID(kAEGetURL)
+        )
         // Store reference to the main window and set delegate
         // In SwiftUI apps, the window might not be created yet, so we poll for it
         setupMainWindowDelegate()

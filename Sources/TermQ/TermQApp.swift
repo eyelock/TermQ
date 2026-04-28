@@ -209,14 +209,6 @@ struct TermQApp: App {
         UserDefaults.standard.register(defaults: [
             "protectedBranches": "main,master,develop"
         ])
-
-        // Register URL handler
-        NSAppleEventManager.shared().setEventHandler(
-            URLEventHandler.shared,
-            andSelector: #selector(URLEventHandler.handleURL(_:replyEvent:)),
-            forEventClass: AEEventClass(kInternetEventClass),
-            andEventID: AEEventID(kAEGetURL)
-        )
     }
 
     /// Check if we should offer to restore from backup on startup
