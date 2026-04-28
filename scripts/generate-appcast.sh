@@ -48,26 +48,54 @@ check_dependencies() {
 fetch_releases() {
     log_info "Fetching releases from GitHub..."
 
-    local api_url="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases"
-    local tmpfile
-    tmpfile=$(mktemp)
+    local base_url="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases"
+    local all_releases="[]"
+    local page=1
 
-    # Fetch to temp file and sanitize JSON (remove control characters that break jq)
-    if ! curl -sS "$api_url" 2>/dev/null | tr -d '\000-\011\013-\037' > "$tmpfile"; then
-        log_error "Failed to fetch releases from $api_url"
-        rm -f "$tmpfile"
-        exit 1
+    # Use GH_TOKEN if available — authenticated requests bypass the API cache so a
+    # freshly published release is visible without waiting for cache expiry
+    local auth_header=()
+    if [ -n "${GH_TOKEN:-}" ]; then
+        auth_header=(-H "Authorization: Bearer $GH_TOKEN")
     fi
 
-    # Validate JSON
-    if ! jq empty "$tmpfile" 2>/dev/null; then
-        log_error "Invalid JSON response from GitHub API"
-        rm -f "$tmpfile"
-        exit 1
-    fi
+    while true; do
+        local tmpfile
+        tmpfile=$(mktemp)
+        local url="${base_url}?per_page=100&page=${page}"
 
-    cat "$tmpfile"
-    rm -f "$tmpfile"
+        if ! curl -sS "${auth_header[@]}" "$url" 2>/dev/null | tr -d '\000-\011\013-\037' > "$tmpfile"; then
+            log_error "Failed to fetch releases page $page"
+            rm -f "$tmpfile"
+            exit 1
+        fi
+
+        if ! jq empty "$tmpfile" 2>/dev/null; then
+            log_error "Invalid JSON from GitHub API (page $page)"
+            rm -f "$tmpfile"
+            exit 1
+        fi
+
+        local count
+        count=$(jq 'length' "$tmpfile")
+
+        if [[ "$count" -eq 0 ]]; then
+            rm -f "$tmpfile"
+            break
+        fi
+
+        local page_data
+        page_data=$(cat "$tmpfile")
+        rm -f "$tmpfile"
+
+        all_releases=$(printf '%s\n%s' "$all_releases" "$page_data" | jq -s 'add')
+
+        [[ "$count" -lt 100 ]] && break
+        page=$((page + 1))
+    done
+
+    log_info "Found $(echo "$all_releases" | jq 'length') release(s)"
+    echo "$all_releases"
 }
 
 # Convert GitHub release date to RFC 2822 format
