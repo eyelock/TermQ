@@ -6,6 +6,89 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.9.0</title>
+            <sparkle:version>0.9.0</sparkle:version>
+            <sparkle:shortVersionString>0.9.0</sparkle:shortVersionString>
+            <pubDate>Mon, 27 Apr 2026 21:09:42 +0000</pubDate>
+            <description><![CDATA[<h2 id="whats-new">What's New</h2>
+<ul>
+<li>right-click context menu in terminal with Copy and Paste (#221)</li>
+<li>YNH 0.2 support — namespace model, marketplace rename, fixture tests (#218)</li>
+<li>sidebar drag-and-drop, branch ops, harness/marketplace ordering (#217)</li>
+<li>add in-app diagnostics log viewer (#193)</li>
+<li>Protected branches deny-list for Prune Merged Branches (#178)</li>
+<li>Pin marketplace and harness registry to a git ref (#171)</li>
+<li>Open in editor submenu for worktree and harness context menus (#169)</li>
+<li>Generate release notes from conventional commits (#168)</li>
+<li>Auto-tags, terminal naming, and tag tooltip (#158)</li>
+<li>Harness sidebar quality-of-life improvements (#156)</li>
+<li>Harness and Marketplace sidebars adopt tree layout with grouping (#154)</li>
+<li>UX polish, marketplace improvements, and terminal enhancements (#151)</li>
+<li>Marketplace browser, harness wizard, and install/launch management (#148)</li>
+<li>YNH harness sidebar — detect, install, launch, manage (#142)</li>
+<li>Git worktree sidebar (#126)</li>
+</ul>
+<h2 id="bug-fixes">Bug Fixes</h2>
+<ul>
+<li>fix upward scroll during text selection against streaming output (#224)</li>
+<li>restore Reveal in Terminal across sidebar tabs (#223)</li>
+<li>prevent SwiftUI from closing main window on URL events (#222)</li>
+<li>github install + YNH 0.2.0 capabilities gate (#210)</li>
+<li>expand github source shorthand for ynh include add (#203)</li>
+<li>guard NSApp.unhide against calling on visible app to prevent spontaneous window hide (#199)</li>
+<li>show spinner in worktree row during deletion (#195)</li>
+<li>eliminate all build and lint warnings (#191)</li>
+<li>eliminate live file monitoring side effects in BoardViewModelDefaultsTests (#185)</li>
+<li>Persist harness-launched cards and deduplicate on re-launch (#179)</li>
+<li>Inherit all security settings from global defaults when creating terminals (#177)</li>
+<li>Restore tab drag-and-drop by replacing Button with onTapGesture (#176)</li>
+<li>resolve relative plugin paths in ynh include add (#175)</li>
+<li>fix printf treating triple-dash separator as flag on macOS (#173)</li>
+<li>use echo instead of printf for bullet list items in release notes (#172)</li>
+<li>Fix text selection and scroll in terminals with mouse tracking (#147)</li>
+<li>Correct TUI rendering in tmux control mode terminals (#138) (#141)</li>
+<li>Disable Sparkle auto-updater in debug builds (#137)</li>
+<li>Use file-based key storage in debug builds (#130)</li>
+<li>Debug build shows SHA in About panel; document debug behaviors (#131)</li>
+<li>Use async panel.begin() for Browse button in path pickers (#132)</li>
+<li>Preserve tmux pane focus across SwiftUI re-renders (#133)</li>
+<li>Migrate SecureStorage to Data Protection Keychain (#124) (#129)</li>
+<li>Scroll tab bar to reveal selected terminal on sidebar jump (#125) (#128)</li>
+<li>Scroll tab bar to reveal selected terminal on sidebar jump (#125)</li>
+<li>Migrate SecureStorage to Data Protection Keychain (#124)</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.9.0/TermQ-0.9.0.zip"
+                sparkle:edSignature="6abeUqq/Xq3V8XMyJA/PZjYgNmQOcarInlIZa3ZQ8xrUM1a57i3BQ0a42/cEscyWDzdZ653LJpQS5vsXgVscCQ=="
+                length="23444473"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.8.2</title>
             <sparkle:version>0.8.2</sparkle:version>
             <sparkle:shortVersionString>0.8.2</sparkle:shortVersionString>
