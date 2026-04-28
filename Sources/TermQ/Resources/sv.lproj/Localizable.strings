@@ -418,6 +418,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Inget program är inställt för att öppna den här filen.";
+"alert.file.open.no.handler.message %@" = "macOS har inget standardprogram registrerat för \"%@\".\n\nVisa filen i Finder för att välja ett?";
+"alert.file.open.failed.title" = "Det gick inte att öppna filen.";
+"alert.file.open.failed.message %@ %@" = "macOS rapporterade: %@\n\nVisa \"%@\" i Finder?";
+"alert.file.open.reveal.in.finder" = "Visa i Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

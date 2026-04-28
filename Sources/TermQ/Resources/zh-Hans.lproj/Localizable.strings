@@ -416,6 +416,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "没有设置用于打开此文件的应用程序。";
+"alert.file.open.no.handler.message %@" = "macOS 没有为\"%@\"注册默认应用程序。\n\n是否在 Finder 中显示文件以选择一个应用程序？";
+"alert.file.open.failed.title" = "无法打开该文件。";
+"alert.file.open.failed.message %@ %@" = "macOS 报告：%@\n\n是否在 Finder 中显示\"%@\"？";
+"alert.file.open.reveal.in.finder" = "在 Finder 中显示";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

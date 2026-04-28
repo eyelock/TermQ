@@ -135,6 +135,13 @@ class ControlModePaneDelegate: TerminalViewDelegate {
     func rangeChanged(source: TerminalView, startY: Int, endY: Int) {}
     func bell(source: TerminalView) {}
     func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {}
+
+    func requestOpenLink(source: TerminalView, link: String, params: [String: String]) {
+        // Control-mode panes don't track cwd via OSC 7 — pass nil.
+        Task { @MainActor in
+            TermQTerminalLink.open(link: link, cwd: nil)
+        }
+    }
 }
 
 // MARK: - Control Mode Integration
