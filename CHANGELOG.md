@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.2] — 2026-04-28
+
+### Fixed
+
+- Re-register URL Apple Event handler after SwiftUI scene setup (#239)
+- Replace -50 Finder dialog error with correct file/URL open handling (#240)
+
+## [0.9.1] — 2026-04-28
+
+### Fixed
+
+- Fix appcast not updating on stable release (#233)
+- Fix uninstall for local harnesses with no YNH install record (#234)
+
 ## [0.9.0]
 
 ### Added
