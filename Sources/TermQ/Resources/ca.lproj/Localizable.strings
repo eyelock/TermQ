@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "Desinstal·la aquest harness";
 "harnesses.uninstall.alert.title %@" = "Desinstal·lar \"%@\"?";
 "harnesses.uninstall.alert.message" = "Això eliminarà el harness del vostre sistema.";
+"harnesses.uninstall.alert.message.local" = "Això eliminarà el harness de YNH. Els vostres fitxers font locals no s'eliminaran.";
+"harnesses.uninstall.alert.message.untracked" = "Aquest harness no té cap registre d'instal·lació a YNH. S'eliminarà directament del disc.";
 "harnesses.uninstall.alert.worktrees %ld" = "Aquest harness està vinculat a %ld arbre(s) de treball — aquestes associacions s'esboraran.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) estan executant aquest harness ara mateix.";
 "harnesses.uninstall.alert.confirm" = "Desinstal·la";

@@ -724,6 +724,8 @@
 "harnesses.uninstall.help" = "Odstrani ta harness";
 "harnesses.uninstall.alert.title %@" = "Odstraniti \"%@\"?";
 "harnesses.uninstall.alert.message" = "S tem boste odstranili harness iz vašega sistema.";
+"harnesses.uninstall.alert.message.local" = "S tem boste odstranili harness iz YNH. Vaše lokalne izvorne datoteke ne bodo izbrisane.";
+"harnesses.uninstall.alert.message.untracked" = "Ta harness nima zapisa o namestitvi v YNH. Izbrisal se bo neposredno z diska.";
 "harnesses.uninstall.alert.worktrees %ld" = "Ta harness je povezan z %ld delovnim drevesom (drevesi) — te povezave bodo počiščene.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(ov) trenutno poganja ta harness.";
 "harnesses.uninstall.alert.confirm" = "Odstrani";

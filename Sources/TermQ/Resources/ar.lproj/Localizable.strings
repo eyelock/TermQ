@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "إلغاء تثبيت هذا الـ harness";
 "harnesses.uninstall.alert.title %@" = "إلغاء تثبيت \"%@\"؟";
 "harnesses.uninstall.alert.message" = "سيؤدي هذا إلى إزالة الـ harness من نظامك.";
+"harnesses.uninstall.alert.message.local" = "سيؤدي هذا إلى إزالة harness من YNH. لن يتم حذف ملفاتك المصدر المحلية.";
+"harnesses.uninstall.alert.message.untracked" = "لا يوجد لهذا harness أي سجل تثبيت في YNH. سيتم حذفه مباشرةً من القرص.";
 "harnesses.uninstall.alert.worktrees %ld" = "هذا الـ harness مرتبط بـ %ld مستودع(ات) عمل — ستُمسح تلك الارتباطات.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld محطة (محطات) طرفية تُشغّل هذا الـ harness حاليًا.";
 "harnesses.uninstall.alert.confirm" = "إلغاء التثبيت";

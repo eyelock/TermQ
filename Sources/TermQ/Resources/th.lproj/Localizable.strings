@@ -724,6 +724,8 @@
 "harnesses.uninstall.help" = "ถอนการติดตั้ง harness นี้";
 "harnesses.uninstall.alert.title %@" = "ถอนการติดตั้ง \"%@\" หรือไม่?";
 "harnesses.uninstall.alert.message" = "การดำเนินการนี้จะลบ harness ออกจากระบบของคุณ";
+"harnesses.uninstall.alert.message.local" = "การดำเนินการนี้จะลบ harness ออกจาก YNH ไฟล์ต้นฉบับในเครื่องของคุณจะไม่ถูกลบ";
+"harnesses.uninstall.alert.message.untracked" = "harness นี้ไม่มีบันทึกการติดตั้งใน YNH จะถูกลบออกจากดิสก์โดยตรง";
 "harnesses.uninstall.alert.worktrees %ld" = "harness นี้เชื่อมโยงกับ %ld worktree — การเชื่อมโยงเหล่านั้นจะถูกล้าง";
 "harnesses.uninstall.alert.terminals %ld" = "ขณะนี้มี %ld เทอร์มินัลที่กำลังรัน harness นี้";
 "harnesses.uninstall.alert.confirm" = "ถอนการติดตั้ง";

@@ -722,6 +722,8 @@
 "harnesses.uninstall.help" = "Desinstalar este harness";
 "harnesses.uninstall.alert.title %@" = "Desinstalar \"%@\"?";
 "harnesses.uninstall.alert.message" = "Isto irá remover o harness do seu sistema.";
+"harnesses.uninstall.alert.message.local" = "Isto irá remover o harness do YNH. Os seus ficheiros de origem locais não serão eliminados.";
+"harnesses.uninstall.alert.message.untracked" = "Este harness não tem registo de instalação no YNH. Será eliminado diretamente do disco.";
 "harnesses.uninstall.alert.worktrees %ld" = "Este harness está ligado a %ld worktree(s) — essas associações serão eliminadas.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(is) estão actualmente a executar este harness.";
 "harnesses.uninstall.alert.confirm" = "Desinstalar";

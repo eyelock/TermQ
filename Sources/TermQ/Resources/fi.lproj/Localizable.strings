@@ -723,6 +723,8 @@
 "harnesses.uninstall.help" = "Poista tämän harnessin asennus";
 "harnesses.uninstall.alert.title %@" = "Poistetaanko \"%@\"?";
 "harnesses.uninstall.alert.message" = "Tämä poistaa harnessin järjestelmästäsi.";
+"harnesses.uninstall.alert.message.local" = "Tämä poistaa harnessin YNH:sta. Paikallisia lähdetiedostojasi ei poisteta.";
+"harnesses.uninstall.alert.message.untracked" = "Tällä harnessilla ei ole YNH-asennustietuetta. Se poistetaan suoraan levyltä.";
 "harnesses.uninstall.alert.worktrees %ld" = "Tämä harness on linkitetty %ld työtree(hen/hin) — nämä yhteydet poistetaan.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld pääte(ttä) käyttää tällä hetkellä tätä harnessia.";
 "harnesses.uninstall.alert.confirm" = "Poista asennus";

@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "このHarnessをアンインストール";
 "harnesses.uninstall.alert.title %@" = "「%@」をアンインストールしますか？";
 "harnesses.uninstall.alert.message" = "Harnessがシステムから削除されます。";
+"harnesses.uninstall.alert.message.local" = "これにより YNH から harness が削除されます。ローカルのソースファイルは削除されません。";
+"harnesses.uninstall.alert.message.untracked" = "この harness には YNH のインストール記録がありません。ディスクから直接削除されます。";
 "harnesses.uninstall.alert.worktrees %ld" = "このHarnessは%ld個のWorktreeにリンクされています — それらの関連付けが解除されます。";
 "harnesses.uninstall.alert.terminals %ld" = "%ld個のターミナルが現在このHarnessを実行中です。";
 "harnesses.uninstall.alert.confirm" = "アンインストール";
