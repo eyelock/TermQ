@@ -194,7 +194,7 @@ struct HarnessesSidebarTab: View {
                     Text(
                         linked > 0
                             ? Strings.Harnesses.uninstallAlertWorktrees(linked)
-                            : Strings.Harnesses.uninstallAlertMessage
+                            : Strings.Harnesses.uninstallBaseMessage(for: harness)
                     )
                 }
             }
@@ -574,7 +574,6 @@ extension HarnessesSidebarTab {
 
     fileprivate func performDeleteLocalHarness(_ harness: Harness) {
         onUninstall?(harness.name)
-        try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
     }
 
     private func revealLocalGroupInFinder(_ group: HarnessGroup) {

@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "Odinštalovať tento harness";
 "harnesses.uninstall.alert.title %@" = "Odinštalovať \"%@\"?";
 "harnesses.uninstall.alert.message" = "Týmto sa harness odstráni z vášho systému.";
+"harnesses.uninstall.alert.message.local" = "Týmto sa harness odstráni z YNH. Vaše lokálne zdrojové súbory nebudú vymazané.";
+"harnesses.uninstall.alert.message.untracked" = "Tento harness nemá žiadny záznam o inštalácii v YNH. Bude odstránený priamo z disku.";
 "harnesses.uninstall.alert.worktrees %ld" = "Tento harness je prepojený s %ld pracovným stromom (stromami) — tieto prepojenia budú vymazané.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminál(ov) momentálne spúšťa tento harness.";
 "harnesses.uninstall.alert.confirm" = "Odinštalovať";

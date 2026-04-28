@@ -782,8 +782,22 @@ extension ContentView {
         viewModel.selectedCard = card
     }
 
-    /// Uninstall a harness in a transient terminal; clears associations when the shell exits.
+    /// Uninstall a harness. Harnesses with no YNH install record are deleted directly
+    /// from the filesystem; YNH-managed harnesses use a transient terminal and clear
+    /// associations when the shell exits.
     func uninstallHarness(name: String) {
+        let harness = harnessRepo.harnesses.first(where: { $0.name == name })
+
+        // Harnesses with no YNH install record can't be uninstalled via `ynh uninstall`.
+        // Delete them directly and clean up associations.
+        if let harness, harness.installedFrom == nil {
+            try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
+            YNHPersistence.shared.removeAllAssociations(for: name)
+            harnessRepo.selectedHarnessName = nil
+            Task { await harnessRepo.refresh() }
+            return
+        }
+
         guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
         let column: Column
         if let current = viewModel.selectedCard,

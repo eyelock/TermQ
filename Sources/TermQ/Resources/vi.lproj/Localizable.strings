@@ -724,6 +724,8 @@
 "harnesses.uninstall.help" = "Gỡ cài đặt harness này";
 "harnesses.uninstall.alert.title %@" = "Gỡ cài đặt \"%@\"?";
 "harnesses.uninstall.alert.message" = "Thao tác này sẽ xóa harness khỏi hệ thống của bạn.";
+"harnesses.uninstall.alert.message.local" = "Thao tác này sẽ xóa harness khỏi YNH. Các tệp nguồn cục bộ của bạn sẽ không bị xóa.";
+"harnesses.uninstall.alert.message.untracked" = "Harness này không có bản ghi cài đặt trong YNH. Nó sẽ bị xóa trực tiếp khỏi ổ đĩa.";
 "harnesses.uninstall.alert.worktrees %ld" = "Harness này được liên kết với %ld worktree — các liên kết đó sẽ bị xóa.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal đang chạy harness này.";
 "harnesses.uninstall.alert.confirm" = "Gỡ cài đặt";

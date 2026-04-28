@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "Afinstaller denne harness";
 "harnesses.uninstall.alert.title %@" = "Afinstaller \"%@\"?";
 "harnesses.uninstall.alert.message" = "Dette fjerner harness fra dit system.";
+"harnesses.uninstall.alert.message.local" = "Dette fjerner harness fra YNH. Dine lokale kildefiler slettes ikke.";
+"harnesses.uninstall.alert.message.untracked" = "Denne harness har ingen YNH-installationspost. Den slettes direkte fra disken.";
 "harnesses.uninstall.alert.worktrees %ld" = "Denne harness er knyttet til %ld worktree(s) — disse tilknytninger ryddes.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kører i øjeblikket denne harness.";
 "harnesses.uninstall.alert.confirm" = "Afinstaller";

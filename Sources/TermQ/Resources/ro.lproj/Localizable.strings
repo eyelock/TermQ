@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "Dezinstalați acest harness";
 "harnesses.uninstall.alert.title %@" = "Dezinstalați \"%@\"?";
 "harnesses.uninstall.alert.message" = "Aceasta va elimina harness-ul din sistemul dvs.";
+"harnesses.uninstall.alert.message.local" = "Aceasta va elimina harness din YNH. Fișierele sursă locale nu vor fi șterse.";
+"harnesses.uninstall.alert.message.untracked" = "Acest harness nu are niciun înregistrare de instalare YNH. Va fi șters direct de pe disc.";
 "harnesses.uninstall.alert.worktrees %ld" = "Acest harness este legat de %ld worktree(uri) — aceste asocieri vor fi șterse.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(e) rulează în prezent acest harness.";
 "harnesses.uninstall.alert.confirm" = "Dezinstalare";
