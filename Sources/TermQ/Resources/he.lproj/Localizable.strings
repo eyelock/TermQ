@@ -723,6 +723,8 @@
 "harnesses.uninstall.help" = "הסר את ה-harness הזה";
 "harnesses.uninstall.alert.title %@" = "להסיר את \"%@\"?";
 "harnesses.uninstall.alert.message" = "פעולה זו תסיר את ה-harness מהמערכת שלך.";
+"harnesses.uninstall.alert.message.local" = "פעולה זו תסיר את ה-harness מ-YNH. הקבצים המקומיים שלך לא יימחקו.";
+"harnesses.uninstall.alert.message.untracked" = "ל-harness זה אין רשומת התקנה ב-YNH. הוא יימחק ישירות מהדיסק.";
 "harnesses.uninstall.alert.worktrees %ld" = "ה-harness הזה מקושר ל-%ld worktree(s) — הקשרים הללו יימחקו.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld מסוף(ים) מריצים כעת את ה-harness הזה.";
 "harnesses.uninstall.alert.confirm" = "הסר התקנה";

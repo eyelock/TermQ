@@ -722,6 +722,8 @@
 "harnesses.uninstall.help" = "Avinstaller denne harness";
 "harnesses.uninstall.alert.title %@" = "Avinstaller \"%@\"?";
 "harnesses.uninstall.alert.message" = "Dette fjerner harness fra systemet ditt.";
+"harnesses.uninstall.alert.message.local" = "Dette vil fjerne harness fra YNH. Dine lokale kildefiler vil ikke bli slettet.";
+"harnesses.uninstall.alert.message.untracked" = "Denne harness har ingen YNH-installasjonspost. Den slettes direkte fra disken.";
 "harnesses.uninstall.alert.worktrees %ld" = "Denne harness er koblet til %ld worktree(r) — disse koblingene vil bli fjernet.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(er) kjører denne harness for øyeblikket.";
 "harnesses.uninstall.alert.confirm" = "Avinstaller";

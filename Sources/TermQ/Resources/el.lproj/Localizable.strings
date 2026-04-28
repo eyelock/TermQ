@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "Απεγκατάσταση αυτού του harness";
 "harnesses.uninstall.alert.title %@" = "Απεγκατάσταση \"%@\";";
 "harnesses.uninstall.alert.message" = "Αυτό θα αφαιρέσει το harness από το σύστημά σας.";
+"harnesses.uninstall.alert.message.local" = "Αυτό θα αφαιρέσει το harness από το YNH. Τα τοπικά αρχεία πηγαίου κώδικα δεν θα διαγραφούν.";
+"harnesses.uninstall.alert.message.untracked" = "Αυτό το harness δεν έχει εγγραφή εγκατάστασης στο YNH. Θα διαγραφεί απευθείας από τον δίσκο.";
 "harnesses.uninstall.alert.worktrees %ld" = "Αυτό το harness είναι συνδεδεμένο με %ld worktree(s) — αυτές οι συσχετίσεις θα διαγραφούν.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld τερματικό(ά) εκτελεί αυτήν τη στιγμή αυτό το harness.";
 "harnesses.uninstall.alert.confirm" = "Απεγκατάσταση";

@@ -723,6 +723,8 @@
 "harnesses.uninstall.help" = "इस harness को अनइंस्टॉल करें";
 "harnesses.uninstall.alert.title %@" = "\"%@\" को अनइंस्टॉल करें?";
 "harnesses.uninstall.alert.message" = "यह आपके सिस्टम से harness को हटा देगा।";
+"harnesses.uninstall.alert.message.local" = "यह YNH से harness को हटा देगा। आपकी स्थानीय स्रोत फ़ाइलें हटाई नहीं जाएंगी।";
+"harnesses.uninstall.alert.message.untracked" = "इस harness का YNH में कोई इंस्टॉल रिकॉर्ड नहीं है। इसे सीधे डिस्क से हटाया जाएगा।";
 "harnesses.uninstall.alert.worktrees %ld" = "यह harness %ld worktree(s) से जुड़ा है — वे संबद्धताएं साफ़ कर दी जाएंगी।";
 "harnesses.uninstall.alert.terminals %ld" = "%ld टर्मिनल वर्तमान में इस harness को चला रहे हैं।";
 "harnesses.uninstall.alert.confirm" = "अनइंस्टॉल करें";

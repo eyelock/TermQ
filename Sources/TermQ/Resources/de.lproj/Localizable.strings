@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "Diesen Harness deinstallieren";
 "harnesses.uninstall.alert.title %@" = "\"%@\" deinstallieren?";
 "harnesses.uninstall.alert.message" = "Dadurch wird der Harness von Ihrem System entfernt.";
+"harnesses.uninstall.alert.message.local" = "Dadurch wird der Harness aus YNH entfernt. Ihre lokalen Quelldateien werden nicht gelöscht.";
+"harnesses.uninstall.alert.message.untracked" = "Dieser Harness hat keinen YNH-Installationseintrag. Er wird direkt von der Festplatte gelöscht.";
 "harnesses.uninstall.alert.worktrees %ld" = "Dieser Harness ist mit %ld Worktree(s) verknüpft — diese Verknüpfungen werden aufgehoben.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld Terminal(s) führen diesen Harness gerade aus.";
 "harnesses.uninstall.alert.confirm" = "Deinstallieren";

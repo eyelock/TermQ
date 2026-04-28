@@ -724,6 +724,8 @@
 "harnesses.uninstall.help" = "Видалити цей harness";
 "harnesses.uninstall.alert.title %@" = "Видалити \"%@\"?";
 "harnesses.uninstall.alert.message" = "Це видалить harness з вашої системи.";
+"harnesses.uninstall.alert.message.local" = "Це видалить harness із YNH. Ваші локальні вихідні файли не буде видалено.";
+"harnesses.uninstall.alert.message.untracked" = "Цей harness не має запису про встановлення в YNH. Його буде видалено безпосередньо з диска.";
 "harnesses.uninstall.alert.worktrees %ld" = "Цей harness пов'язаний з %ld робочим деревом (деревами) — ці зв'язки буде очищено.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld термінал(и) зараз виконують цей harness.";
 "harnesses.uninstall.alert.confirm" = "Видалити";

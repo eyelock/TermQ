@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import TermQShared
 
 // MARK: - Sidebar
 
@@ -272,6 +273,17 @@ extension Strings {
             String(format: localized("harnesses.uninstall.alert.title %@"), name)
         }
         static var uninstallAlertMessage: String { localized("harnesses.uninstall.alert.message") }
+        static var uninstallAlertMessageLocal: String { localized("harnesses.uninstall.alert.message.local") }
+        static var uninstallAlertMessageUntracked: String { localized("harnesses.uninstall.alert.message.untracked") }
+        static func uninstallBaseMessage(for harness: Harness) -> String {
+            if harness.installedFrom == nil {
+                return uninstallAlertMessageUntracked
+            } else if harness.installedFrom?.sourceType == "local" {
+                return uninstallAlertMessageLocal
+            } else {
+                return uninstallAlertMessage
+            }
+        }
         static func uninstallAlertWorktrees(_ count: Int) -> String {
             String(format: localized("harnesses.uninstall.alert.worktrees %ld"), count)
         }
