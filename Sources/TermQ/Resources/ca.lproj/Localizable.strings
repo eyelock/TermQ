@@ -417,6 +417,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Cap aplicació està configurada per obrir aquest fitxer.";
+"alert.file.open.no.handler.message %@" = "macOS no té cap aplicació predeterminada registrada per a \"%@\".\n\nMostrar el fitxer al Finder per triar-ne una?";
+"alert.file.open.failed.title" = "No s’ha pogut obrir el fitxer.";
+"alert.file.open.failed.message %@ %@" = "macOS ha informat: %@\n\nMostrar \"%@\" al Finder?";
+"alert.file.open.reveal.in.finder" = "Mostra al Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

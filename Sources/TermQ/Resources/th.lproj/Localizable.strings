@@ -418,6 +418,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "ไม่มีแอปพลิเคชันที่ตั้งค่าให้เปิดไฟล์นี้";
+"alert.file.open.no.handler.message %@" = "macOS ไม่มีแอปพลิเคชันเริ่มต้นที่ลงทะเบียนสำหรับ \"%@\"\n\nเปิดเผยไฟล์ใน Finder เพื่อเลือกแอปพลิเคชัน?";
+"alert.file.open.failed.title" = "ไม่สามารถเปิดไฟล์ได้";
+"alert.file.open.failed.message %@ %@" = "macOS รายงาน: %@\n\nเปิดเผย \"%@\" ใน Finder?";
+"alert.file.open.reveal.in.finder" = "เปิดเผยใน Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

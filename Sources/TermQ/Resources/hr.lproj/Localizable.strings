@@ -417,6 +417,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Nijedna aplikacija nije postavljena za otvaranje ove datoteke.";
+"alert.file.open.no.handler.message %@" = "macOS nema registriranu zadanu aplikaciju za \"%@\".\n\nPrikazati datoteku u Finderu radi odabira aplikacije?";
+"alert.file.open.failed.title" = "Datoteka se nije mogla otvoriti.";
+"alert.file.open.failed.message %@ %@" = "macOS je prijavio: %@\n\nPrikazati \"%@\" u Finderu?";
+"alert.file.open.reveal.in.finder" = "Prikaži u Finderu";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

@@ -418,6 +418,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Жодна програма не встановлена для відкриття цього файлу.";
+"alert.file.open.no.handler.message %@" = "macOS не має зареєстрованої програми за замовчуванням для \"%@\".\n\nПоказати файл у Finder, щоб вибрати програму?";
+"alert.file.open.failed.title" = "Не вдалося відкрити файл.";
+"alert.file.open.failed.message %@ %@" = "macOS повідомив: %@\n\nПоказати \"%@\" у Finder?";
+"alert.file.open.reveal.in.finder" = "Показати у Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

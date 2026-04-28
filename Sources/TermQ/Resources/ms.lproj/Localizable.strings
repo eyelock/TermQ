@@ -417,6 +417,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Tiada aplikasi ditetapkan untuk membuka fail ini.";
+"alert.file.open.no.handler.message %@" = "macOS tidak mempunyai aplikasi lalai yang berdaftar untuk \"%@\".\n\nDedahkan fail dalam Finder untuk memilih satu?";
+"alert.file.open.failed.title" = "Fail tidak dapat dibuka.";
+"alert.file.open.failed.message %@ %@" = "macOS melaporkan: %@\n\nDedahkan \"%@\" dalam Finder?";
+"alert.file.open.reveal.in.finder" = "Dedahkan dalam Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)
