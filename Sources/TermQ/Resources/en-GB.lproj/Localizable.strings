@@ -417,6 +417,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "No application is set to open this file.";
+"alert.file.open.no.handler.message %@" = "macOS doesn't have a default application registered for \"%@\".\n\nReveal the file in Finder so you can choose one?";
+"alert.file.open.failed.title" = "Couldn't open the file.";
+"alert.file.open.failed.message %@ %@" = "macOS reported: %@\n\nReveal \"%@\" in Finder?";
+"alert.file.open.reveal.in.finder" = "Reveal in Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

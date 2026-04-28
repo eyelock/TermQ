@@ -416,6 +416,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Nessuna applicazione è impostata per aprire questo file.";
+"alert.file.open.no.handler.message %@" = "macOS non ha un’applicazione predefinita registrata per \"%@\".\n\nMostrare il file nel Finder per sceglierne una?";
+"alert.file.open.failed.title" = "Impossibile aprire il file.";
+"alert.file.open.failed.message %@ %@" = "macOS ha segnalato: %@\n\nMostrare \"%@\" nel Finder?";
+"alert.file.open.reveal.in.finder" = "Mostra nel Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

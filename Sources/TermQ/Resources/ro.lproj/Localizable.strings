@@ -416,6 +416,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Nicio aplicație nu este setată să deschidă acest fișier.";
+"alert.file.open.no.handler.message %@" = "macOS nu are o aplicație implicită înregistrată pentru \"%@\".\n\nAfișați fișierul în Finder pentru a alege una?";
+"alert.file.open.failed.title" = "Fișierul nu a putut fi deschis.";
+"alert.file.open.failed.message %@ %@" = "macOS a raportat: %@\n\nAfișați \"%@\" în Finder?";
+"alert.file.open.reveal.in.finder" = "Afișați în Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)
