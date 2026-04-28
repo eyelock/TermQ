@@ -417,6 +417,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Δεν έχει οριστεί εφαρμογή για το άνοιγμα αυτού του αρχείου.";
+"alert.file.open.no.handler.message %@" = "Το macOS δεν έχει καταχωρισμένη προεπιλεγμένη εφαρμογή για το \"%@\".\n\nΝα εμφανιστεί το αρχείο στο Finder για να επιλέξετε μία;";
+"alert.file.open.failed.title" = "Δεν ήταν δυνατό το άνοιγμα του αρχείου.";
+"alert.file.open.failed.message %@ %@" = "Το macOS ανέφερε: %@\n\nΝα εμφανιστεί το \"%@\" στο Finder;";
+"alert.file.open.reveal.in.finder" = "Εμφάνιση στο Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)

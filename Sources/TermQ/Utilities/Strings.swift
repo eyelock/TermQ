@@ -677,6 +677,18 @@ enum Strings {
         static func quitWithDirectSessionsMessageWithTmux(_ count: Int) -> String {
             localized("alert.quit.direct.sessions.message %lld", count)
         }
+
+        enum FileOpen {
+            static var noHandlerTitle: String { localized("alert.file.open.no.handler.title") }
+            static func noHandlerMessage(_ filename: String) -> String {
+                localized("alert.file.open.no.handler.message %@", filename)
+            }
+            static var failedTitle: String { localized("alert.file.open.failed.title") }
+            static func failedMessage(error: String, filename: String) -> String {
+                localized("alert.file.open.failed.message %@ %@", error, filename)
+            }
+            static var revealInFinder: String { localized("alert.file.open.reveal.in.finder") }
+        }
     }
 
     // MARK: - Backup

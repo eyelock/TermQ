@@ -10,6 +10,10 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// The card ID this terminal belongs to
     var cardId: UUID?
 
+    /// Retains the proxy delegate installed in init. `terminalDelegate` is `weak`
+    /// on `TerminalView`, so this strong reference keeps it alive.
+    private var linkDelegate: TermQLinkDelegate?
+
     /// Terminal title for notifications
     var terminalTitle: String = "Terminal"
 
@@ -49,6 +53,32 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Target yDisp row for upward auto-scroll; nil when not active.
     /// Persists the intended viewport position across linefeed resets.
     private var selectionScrollTargetRow: Int?
+
+    // MARK: - Init
+
+    /// Install `TermQLinkDelegate` so link clicks route through `TermQTerminalLink.open`.
+    ///
+    /// SwiftTerm's `LocalProcessTerminalView.init` sets `terminalDelegate = self`. The
+    /// `requestOpenLink` witness for that conformance was compiled into the SwiftTerm
+    /// binary and maps to the protocol-extension default (`URL(string:)` + `NSWorkspace.open`
+    /// → macOS "-50" dialog). Subclass overrides land in a separate vtable slot that the
+    /// inherited witness never consults. SwiftTerm's own docs say: "If you must change the
+    /// delegate make sure that you proxy the values." We follow that guidance here.
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        installLinkDelegate()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        installLinkDelegate()
+    }
+
+    private func installLinkDelegate() {
+        let delegate = TermQLinkDelegate(view: self)
+        linkDelegate = delegate
+        terminalDelegate = delegate
+    }
 
     deinit {
         // Use MainActor.assumeIsolated since deinit is nonisolated in Swift 6
@@ -617,6 +647,55 @@ class TermQTerminalView: LocalProcessTerminalView {
 
             try? await center.add(request)
         }
+    }
+}
+
+/// Full-proxy `TerminalViewDelegate` that intercepts `requestOpenLink` and forwards
+/// every other method to `LocalProcessTerminalView`'s own implementations.
+///
+/// `TerminalViewDelegate` isn't annotated `@MainActor`, but SwiftTerm only ever calls
+/// it from `TerminalView` (NSView → `@MainActor`). The class is marked `@MainActor`
+/// to reflect that reality; each protocol method is `nonisolated` to satisfy the
+/// conformance and uses `assumeIsolated` to re-enter the main actor for forwarded calls.
+///
+/// Per SwiftTerm's docs: "If you must change the delegate make sure that you proxy
+/// the values in your implementation to the values set after initializing this instance."
+///
+/// See `TerminalLinkRoutingTests` for the static guardrail that catches any future
+/// `requestOpenLink` definition that doesn't route through `TermQTerminalLink.open`.
+@MainActor
+private final class TermQLinkDelegate: TerminalViewDelegate {
+    private weak var view: TermQTerminalView?
+
+    init(view: TermQTerminalView) { self.view = view }
+
+    nonisolated func requestOpenLink(source: TerminalView, link: String, params: [String: String]) {
+        MainActor.assumeIsolated {
+            let cwd = view?.cardId.flatMap { TerminalSessionManager.shared.getCurrentDirectory(for: $0) }
+            TermQTerminalLink.open(link: link, cwd: cwd)
+        }
+    }
+
+    nonisolated func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {
+        MainActor.assumeIsolated { view?.sizeChanged(source: source, newCols: newCols, newRows: newRows) }
+    }
+    nonisolated func setTerminalTitle(source: TerminalView, title: String) {
+        MainActor.assumeIsolated { view?.setTerminalTitle(source: source, title: title) }
+    }
+    nonisolated func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {
+        MainActor.assumeIsolated { view?.hostCurrentDirectoryUpdate(source: source, directory: directory) }
+    }
+    nonisolated func send(source: TerminalView, data: ArraySlice<UInt8>) {
+        MainActor.assumeIsolated { view?.send(source: source, data: data) }
+    }
+    nonisolated func scrolled(source: TerminalView, position: Double) {
+        MainActor.assumeIsolated { view?.scrolled(source: source, position: position) }
+    }
+    nonisolated func clipboardCopy(source: TerminalView, content: Data) {
+        MainActor.assumeIsolated { view?.clipboardCopy(source: source, content: content) }
+    }
+    nonisolated func rangeChanged(source: TerminalView, startY: Int, endY: Int) {
+        MainActor.assumeIsolated { view?.rangeChanged(source: source, startY: startY, endY: endY) }
     }
 }
 

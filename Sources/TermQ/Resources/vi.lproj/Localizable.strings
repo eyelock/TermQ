@@ -418,6 +418,11 @@
 "alert.quit.direct.sessions" = "Running Terminal Sessions";
 "alert.quit.direct.sessions.message %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits. Terminals using tmux will persist.";
 "alert.quit.direct.sessions.message.simple %lld" = "You have %lld running terminal session(s) that will be terminated when TermQ quits.";
+"alert.file.open.no.handler.title" = "Không có ứng dụng nào được thiết lập để mở tệp này.";
+"alert.file.open.no.handler.message %@" = "macOS không có ứng dụng mặc định nào được đăng ký cho \"%@\".\n\nHiển thị tệp trong Finder để chọn một ứng dụng?";
+"alert.file.open.failed.title" = "Không thể mở tệp.";
+"alert.file.open.failed.message %@ %@" = "macOS báo cáo: %@\n\nHiển thị \"%@\" trong Finder?";
+"alert.file.open.reveal.in.finder" = "Hiển thị trong Finder";
 "common.quit" = "Quit";
 
 // Environment settings (auto-added)
