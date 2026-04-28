@@ -722,6 +722,8 @@
 "harnesses.uninstall.help" = "이 Harness 제거";
 "harnesses.uninstall.alert.title %@" = "\"%@\"을(를) 제거하시겠습니까?";
 "harnesses.uninstall.alert.message" = "이 Harness가 시스템에서 제거됩니다.";
+"harnesses.uninstall.alert.message.local" = "YNH에서 harness가 제거됩니다. 로컬 소스 파일은 삭제되지 않습니다.";
+"harnesses.uninstall.alert.message.untracked" = "이 harness는 YNH 설치 기록이 없습니다. 디스크에서 직접 삭제됩니다.";
 "harnesses.uninstall.alert.worktrees %ld" = "이 Harness는 %ld개의 Worktree에 연결되어 있습니다 — 해당 연결이 해제됩니다.";
 "harnesses.uninstall.alert.terminals %ld" = "현재 %ld개의 터미널이 이 Harness를 실행 중입니다.";
 "harnesses.uninstall.alert.confirm" = "제거";

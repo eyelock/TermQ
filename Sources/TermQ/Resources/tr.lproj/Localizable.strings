@@ -724,6 +724,8 @@
 "harnesses.uninstall.help" = "Bu harness'i kaldır";
 "harnesses.uninstall.alert.title %@" = "\"%@\" kaldırılsın mı?";
 "harnesses.uninstall.alert.message" = "Bu, harness'i sisteminizden kaldıracak.";
+"harnesses.uninstall.alert.message.local" = "Bu işlem harness'i YNH'dan kaldıracak. Yerel kaynak dosyalarınız silinmeyecek.";
+"harnesses.uninstall.alert.message.untracked" = "Bu harness'in YNH'da kurulum kaydı yok. Doğrudan diskten silinecek.";
 "harnesses.uninstall.alert.worktrees %ld" = "Bu harness %ld worktree ile bağlantılı — bu ilişkilendirmeler temizlenecek.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal şu anda bu harness'i çalıştırıyor.";
 "harnesses.uninstall.alert.confirm" = "Kaldır";

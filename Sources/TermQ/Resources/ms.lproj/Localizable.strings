@@ -722,6 +722,8 @@
 "harnesses.uninstall.help" = "Nyahpasang harness ini";
 "harnesses.uninstall.alert.title %@" = "Nyahpasang \"%@\"?";
 "harnesses.uninstall.alert.message" = "Ini akan membuang harness daripada sistem anda.";
+"harnesses.uninstall.alert.message.local" = "Ini akan mengalih keluar harness daripada YNH. Fail sumber tempatan anda tidak akan dipadam.";
+"harnesses.uninstall.alert.message.untracked" = "Harness ini tidak mempunyai rekod pemasangan YNH. Ia akan dipadam terus dari cakera.";
 "harnesses.uninstall.alert.worktrees %ld" = "Harness ini dikaitkan dengan %ld worktree — perkaitan tersebut akan dipadamkan.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal sedang menjalankan harness ini.";
 "harnesses.uninstall.alert.confirm" = "Nyahpasang";

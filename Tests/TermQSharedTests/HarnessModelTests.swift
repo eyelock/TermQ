@@ -199,6 +199,120 @@ final class HarnessModelTests: XCTestCase {
         XCTAssertNil(h.description)
     }
 
+    // MARK: - Harness uninstall provenance
+
+    /// A harness with no install record (e.g. a locally-authored harness that was never
+    /// `ynh install`ed) must have `installedFrom == nil`. The UI uses this to skip
+    /// `ynh uninstall` and delete the directory directly.
+    func testHarness_noInstallRecord_hasNilProvenance() throws {
+        let json = """
+            {
+                "name": "github-tester",
+                "version": "0.1.0",
+                "default_vendor": "claude",
+                "path": "/Users/dev/harnesses/github-tester",
+                "installed_from": null,
+                "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
+                "includes": [],
+                "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: json.data(using: .utf8)!)
+        XCTAssertNil(h.installedFrom)
+    }
+
+    /// A harness installed via `ynh install ./local-path` has `source_type == "local"`.
+    /// The UI routes these through `ynh uninstall`, which succeeds because ynh has an install record.
+    func testHarness_locallyInstalledViaYNH_hasLocalSourceType() throws {
+        let json = """
+            {
+                "name": "assistants-dev",
+                "version": "0.1.0",
+                "default_vendor": "claude",
+                "path": "/Users/dev/.ynh/harnesses/assistants-dev",
+                "installed_from": {
+                    "source_type": "local",
+                    "source": "/Users/dev/harnesses/assistants-dev",
+                    "path": null,
+                    "registry_name": null,
+                    "installed_at": "2026-01-01T00:00:00Z"
+                },
+                "artifacts": {"skills": 1, "agents": 0, "rules": 0, "commands": 0},
+                "includes": [],
+                "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: json.data(using: .utf8)!)
+        XCTAssertNotNil(h.installedFrom)
+        XCTAssertEqual(h.installedFrom?.sourceType, "local")
+    }
+
+    /// A harness with no install record uninstalled from HarnessDetailView shows the untracked
+    /// alert message, not the generic or local-specific one.
+    func testHarness_noInstallRecord_isDistinctFromLocalSourceType() throws {
+        let nilProvenanceJSON = """
+            {
+                "name": "untracked",
+                "version": "0.1.0",
+                "default_vendor": "claude",
+                "path": "/Users/dev/harnesses/untracked",
+                "installed_from": null,
+                "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
+                "includes": [],
+                "delegates_to": []
+            }
+            """
+        let localJSON = """
+            {
+                "name": "assistants-dev",
+                "version": "0.1.0",
+                "default_vendor": "claude",
+                "path": "/Users/dev/.ynh/harnesses/assistants-dev",
+                "installed_from": {
+                    "source_type": "local",
+                    "source": "/Users/dev/harnesses/assistants-dev",
+                    "path": null,
+                    "registry_name": null,
+                    "installed_at": "2026-01-01T00:00:00Z"
+                },
+                "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
+                "includes": [],
+                "delegates_to": []
+            }
+            """
+        let untracked = try JSONDecoder().decode(Harness.self, from: nilProvenanceJSON.data(using: .utf8)!)
+        let local = try JSONDecoder().decode(Harness.self, from: localJSON.data(using: .utf8)!)
+        XCTAssertNil(untracked.installedFrom)
+        XCTAssertNotNil(local.installedFrom)
+        XCTAssertEqual(local.installedFrom?.sourceType, "local")
+        XCTAssertNotEqual(untracked.installedFrom?.sourceType, local.installedFrom?.sourceType)
+    }
+
+    /// A registry harness has `source_type == "registry"` and is always uninstalled via ynh.
+    func testHarness_registryInstalled_hasRegistrySourceType() throws {
+        let json = """
+            {
+                "name": "david",
+                "version": "0.1.0",
+                "default_vendor": "claude",
+                "path": "/Users/dev/.ynh/harnesses/david",
+                "installed_from": {
+                    "source_type": "registry",
+                    "source": "https://github.com/eyelock/assistants",
+                    "path": null,
+                    "registry_name": "eyelock-assistants",
+                    "installed_at": "2026-01-01T00:00:00Z"
+                },
+                "artifacts": {"skills": 2, "agents": 1, "rules": 0, "commands": 0},
+                "includes": [],
+                "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: json.data(using: .utf8)!)
+        XCTAssertNotNil(h.installedFrom)
+        XCTAssertEqual(h.installedFrom?.sourceType, "registry")
+    }
+
     // MARK: - JSONFragment
 
     func testJSONFragment_decodesObject() throws {

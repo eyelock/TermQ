@@ -173,3 +173,57 @@ final class HarnessRepositoryInvalidationTests: XCTestCase {
         XCTAssertNil(repo.selectedDetail)
     }
 }
+
+// MARK: - Strings.Harnesses.uninstallBaseMessage
+
+@MainActor
+final class HarnessUninstallMessageTests: XCTestCase {
+
+    private func makeHarness(sourceType: String?) -> Harness {
+        let installedFrom: HarnessProvenance? = sourceType.map { type in
+            try! JSONDecoder().decode(
+                HarnessProvenance.self,
+                from: """
+                    {"source_type":"\(type)","source":"/tmp/h","path":null,"registry_name":null,"installed_at":"2026-01-01"}
+                    """.data(using: .utf8)!
+            )
+        }
+        return Harness(
+            name: "h", version: "1", defaultVendor: "claude", path: "/tmp/h",
+            installedFrom: installedFrom,
+            artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0)
+        )
+    }
+
+    func test_untrackedHarness_usesUntrackedMessage() {
+        let harness = makeHarness(sourceType: nil)
+        XCTAssertEqual(
+            Strings.Harnesses.uninstallBaseMessage(for: harness),
+            Strings.Harnesses.uninstallAlertMessageUntracked
+        )
+    }
+
+    func test_localInstalledHarness_usesLocalMessage() {
+        let harness = makeHarness(sourceType: "local")
+        XCTAssertEqual(
+            Strings.Harnesses.uninstallBaseMessage(for: harness),
+            Strings.Harnesses.uninstallAlertMessageLocal
+        )
+    }
+
+    func test_registryHarness_usesGenericMessage() {
+        let harness = makeHarness(sourceType: "registry")
+        XCTAssertEqual(
+            Strings.Harnesses.uninstallBaseMessage(for: harness),
+            Strings.Harnesses.uninstallAlertMessage
+        )
+    }
+
+    func test_gitHarness_usesGenericMessage() {
+        let harness = makeHarness(sourceType: "git")
+        XCTAssertEqual(
+            Strings.Harnesses.uninstallBaseMessage(for: harness),
+            Strings.Harnesses.uninstallAlertMessage
+        )
+    }
+}

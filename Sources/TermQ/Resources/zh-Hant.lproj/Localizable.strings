@@ -717,6 +717,8 @@
 "harnesses.uninstall.help" = "移除此 harness 的安裝";
 "harnesses.uninstall.alert.title %@" = "移除安裝「%@」？";
 "harnesses.uninstall.alert.message" = "這將從您的系統中移除該 harness。";
+"harnesses.uninstall.alert.message.local" = "這將從 YNH 中移除該 harness。您的本機原始碼檔案不會被刪除。";
+"harnesses.uninstall.alert.message.untracked" = "此 harness 在 YNH 中沒有安裝記錄，將直接從磁碟中刪除。";
 "harnesses.uninstall.alert.worktrees %ld" = "此 harness 已連結 %ld 個工作樹——這些關聯將被清除。";
 "harnesses.uninstall.alert.terminals %ld" = "目前有 %ld 個終端機正在執行此 harness。";
 "harnesses.uninstall.alert.confirm" = "移除安裝";

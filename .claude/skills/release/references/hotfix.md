@@ -18,21 +18,28 @@ Use for critical production bugs, security vulnerabilities, or data loss issues 
 git checkout -b hotfix/v0.6.4 v0.6.3
 ```
 
-### 2. Implement the Fix
+### 2. Implement the Fix and Update CHANGELOG
 
 Apply the fix directly on the hotfix branch. Keep it minimal — only the targeted change.
+
+**Always update `CHANGELOG.md`** in the same commit or as a follow-up commit on the hotfix branch — not as a separate PR afterwards. The changelog entry must be present before tagging.
 
 ```bash
 git add <files>
 git commit -m "fix: <description>"
+# Update CHANGELOG.md, then:
+git add CHANGELOG.md
+git commit -m "chore: update CHANGELOG for v0.6.4"
 git push -u origin hotfix/v0.6.4
 ```
 
-### 3. Wait for CI
+### 3. Open a PR to Main and Wait for CI
 
-**MANDATORY before tagging.** The CI workflow runs on `hotfix/*` branches.
+**Open a PR targeting `main` before tagging.** CI runs on the PR — do not tag until it passes.
 
 ```bash
+gh pr create --base main --title "fix: hotfix v0.6.4" \
+  --body "Hotfix release v0.6.4. Cherry-picks <description> onto v0.6.3."
 gh run list --branch hotfix/v0.6.4 --workflow=ci.yml --limit 1
 gh run watch <run-id>
 ```
@@ -75,7 +82,7 @@ gh pr create --base develop --title "fix: forward-port hotfix v0.6.4" \
 
 Merge once CI passes. If the cherry-pick has conflicts (develop has diverged significantly), resolve them before pushing.
 
-**Auto-generated files (appcasts):** The `update-appcast.yml` workflow updates `Docs/appcast.xml` and `Docs/appcast-beta.xml` on main automatically after each release. These changes are never automatically forward-ported. After every release — stable or hotfix — create a forward-port PR that includes the updated appcast files.
+**Auto-generated files (appcasts):** The `update-appcast.yml` workflow updates `Docs/appcast.xml` and `Docs/appcast-beta.xml` on main automatically after each release. These changes are never automatically forward-ported. After every release — stable or hotfix — create a forward-port PR that includes the updated appcast files AND any CHANGELOG changes from the hotfix branch.
 
 ## What NOT to Do
 

@@ -460,7 +460,7 @@ extension HarnessDetailView {
     }
 
     fileprivate var uninstallAlertMessage: String {
-        var parts = [Strings.Harnesses.uninstallAlertMessage]
+        var parts = [Strings.Harnesses.uninstallBaseMessage(for: harness)]
         let linkedCount = ynhPersistence.worktrees(for: harness.name).count
         if linkedCount > 0 {
             parts.append(Strings.Harnesses.uninstallAlertWorktrees(linkedCount))

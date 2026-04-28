@@ -765,6 +765,8 @@
 "harnesses.uninstall.help" = "Uninstall this harness";
 "harnesses.uninstall.alert.title %@" = "Uninstall \"%@\"?";
 "harnesses.uninstall.alert.message" = "This will remove the harness from your system.";
+"harnesses.uninstall.alert.message.local" = "This will remove the harness from YNH. Your local source files will not be deleted.";
+"harnesses.uninstall.alert.message.untracked" = "This harness has no YNH install record. It will be deleted directly from disk.";
 "harnesses.uninstall.alert.worktrees %ld" = "This harness is linked to %ld worktree(s) — those associations will be cleared.";
 "harnesses.uninstall.alert.terminals %ld" = "%ld terminal(s) are currently running this harness.";
 "harnesses.uninstall.alert.confirm" = "Uninstall";
