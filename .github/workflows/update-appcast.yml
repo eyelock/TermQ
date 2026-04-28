@@ -1,10 +1,14 @@
 name: Update Appcast
 
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: ["Release"]
+    types: [completed]
   workflow_dispatch:
     # Allow manual trigger to regenerate appcast
+
+# Only update appcast when the Release workflow succeeds
+# (workflow_dispatch always proceeds — used for manual regeneration)
 
 permissions:
   contents: write
@@ -14,6 +18,7 @@ jobs:
   update-appcast:
     name: Update Appcast
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
 
     steps:
       - name: Checkout
@@ -52,7 +57,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           BRANCH="hotfix/appcast-update"
-          RELEASE_TAG="${{ github.event.release.tag_name || 'manual' }}"
+          RELEASE_TAG="${{ github.event.workflow_run.head_branch || 'manual' }}"
 
           git checkout -B "$BRANCH"
           git add Docs/appcast.xml Docs/appcast-beta.xml
