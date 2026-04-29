@@ -68,8 +68,10 @@ public class TmuxControlModeSession: ObservableObject {
         proc.standardInput = input
         proc.standardError = Pipe()  // Suppress stderr
 
-        // Handle output asynchronously
-        output.fileHandleForReading.readabilityHandler = { [weak self] handle in
+        // Handle output asynchronously.
+        // @Sendable breaks @MainActor isolation inheritance — FileHandle calls this
+        // on a background queue, not the main actor.
+        output.fileHandleForReading.readabilityHandler = { @Sendable [weak self] handle in
             let data = handle.availableData
 
             guard !data.isEmpty else {
