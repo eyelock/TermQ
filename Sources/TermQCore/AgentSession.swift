@@ -94,6 +94,14 @@ public struct AgentConfig: Codable, Sendable, Equatable {
     public var budget: AgentBudget
     public var status: AgentStatus
 
+    /// Per-card override for the loop driver command. Empty string means
+    /// "inherit the global `agent.loopDriverCommand` UserDefault".
+    public var loopDriverCommand: String
+
+    enum CodingKeys: String, CodingKey {
+        case sessionId, harness, backend, mode, interactionMode, budget, status, loopDriverCommand
+    }
+
     public init(
         sessionId: UUID = UUID(),
         harness: String,
@@ -101,7 +109,8 @@ public struct AgentConfig: Codable, Sendable, Equatable {
         mode: AgentMode = .plan,
         interactionMode: AgentInteractionMode = .confirm,
         budget: AgentBudget = .default,
-        status: AgentStatus = .idle
+        status: AgentStatus = .idle,
+        loopDriverCommand: String = ""
     ) {
         self.sessionId = sessionId
         self.harness = harness
@@ -110,5 +119,20 @@ public struct AgentConfig: Codable, Sendable, Equatable {
         self.interactionMode = interactionMode
         self.budget = budget
         self.status = status
+        self.loopDriverCommand = loopDriverCommand
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        sessionId = try container.decode(UUID.self, forKey: .sessionId)
+        harness = try container.decode(String.self, forKey: .harness)
+        backend = try container.decode(AgentBackend.self, forKey: .backend)
+        mode = try container.decode(AgentMode.self, forKey: .mode)
+        interactionMode = try container.decode(AgentInteractionMode.self, forKey: .interactionMode)
+        budget = try container.decode(AgentBudget.self, forKey: .budget)
+        status = try container.decode(AgentStatus.self, forKey: .status)
+        // Backward compat: pre-slice-20 saved cards have no loopDriverCommand.
+        loopDriverCommand =
+            try container.decodeIfPresent(String.self, forKey: .loopDriverCommand) ?? ""
     }
 }

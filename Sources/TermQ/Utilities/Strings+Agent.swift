@@ -25,5 +25,12 @@ extension Strings.Editor {
         static var fieldMaxTurns: String { localized("editor.agent.field.max.turns") }
         static var fieldMaxTokens: String { localized("editor.agent.field.max.tokens") }
         static var fieldMaxWallMinutes: String { localized("editor.agent.field.max.wall.minutes") }
+        static var fieldLoopDriverCommand: String { localized("editor.agent.field.loop.driver.command") }
+        static var fieldLoopDriverCommandHelp: String {
+            localized("editor.agent.field.loop.driver.command.help")
+        }
+        static var fieldLoopDriverCommandPlaceholder: String {
+            localized("editor.agent.field.loop.driver.command.placeholder")
+        }
     }
 }
