@@ -134,6 +134,44 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertEqual(card.agentConfig?.status, .stuck)
     }
 
+    // MARK: - Trajectory persistence
+
+    @MainActor
+    func testStart_persistsEventsViaWriter() async throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("ControllerWriterTest-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let sessionId = card.agentConfig!.sessionId
+
+        let controller = AgentSessionController(
+            cardId: card.id,
+            cardLookup: { card },
+            writerFactory: { try? TrajectoryWriter(sessionId: $0, baseDirectory: tempDir) }
+        )
+
+        try await controller.start(
+            command: #"echo '{"type":"a"}'; echo '{"type":"b"}'"#)
+
+        // Wait for stream to drain.
+        try await waitUntil {
+            if case .exited = controller.status { return true }
+            return false
+        }
+
+        let path = tempDir.appendingPathComponent(sessionId.uuidString)
+            .appendingPathComponent("trajectory.jsonl")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: path.path))
+
+        let contents = try String(contentsOf: path, encoding: .utf8)
+        let lines = contents.split(separator: "\n", omittingEmptySubsequences: true)
+        XCTAssertEqual(lines.count, 2)
+        XCTAssertTrue(lines[0].contains(#""type":"a""#))
+        XCTAssertTrue(lines[1].contains(#""type":"b""#))
+    }
+
     @MainActor
     func testReset_clearsState() async throws {
         let controller = AgentSessionController(cardId: UUID())

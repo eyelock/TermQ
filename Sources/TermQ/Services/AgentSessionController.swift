@@ -22,15 +22,31 @@ public final class AgentSessionController: ObservableObject {
     /// `BoardViewModel.shared.card(for:)`; tests inject their own.
     public var cardLookup: () -> TerminalCard?
 
+    /// Builds a TrajectoryWriter for a session id when start() runs. Tests
+    /// inject a writer pointed at a temp directory. When `nil`, no
+    /// persistence happens — useful for tests that don't care about disk.
+    public var writerFactory: ((UUID) -> TrajectoryWriter?)?
+
     private var process: AgentLoopProcess?
     private var consumeTask: Task<Void, Never>?
+    private var writer: TrajectoryWriter?
 
     public init(
         cardId: UUID,
-        cardLookup: (() -> TerminalCard?)? = nil
+        cardLookup: (() -> TerminalCard?)? = nil,
+        writerFactory: ((UUID) -> TrajectoryWriter?)? = nil
     ) {
         self.cardId = cardId
         self.cardLookup = cardLookup ?? { BoardViewModel.shared.card(for: cardId) }
+        self.writerFactory = writerFactory
+    }
+
+    /// Default writer factory used by `AgentSessionRegistry`: opens
+    /// `<appSupport>/TermQ[-Debug]/agent-sessions/<sessionId>/trajectory.jsonl`
+    /// in append mode. Returns `nil` if the writer fails to open (silent —
+    /// in-memory events remain the source of truth).
+    public static func defaultWriterFactory(_ sessionId: UUID) -> TrajectoryWriter? {
+        try? TrajectoryWriter(sessionId: sessionId)
     }
 
     /// Spawn `/bin/sh -c "<command>"` and stream its NDJSON output into
@@ -48,15 +64,25 @@ public final class AgentSessionController: ObservableObject {
         events.removeAll()
         updateCardStatus(.running)
 
+        // Open per-session trajectory file. Falls back to nil if the
+        // factory returns nil or no card/session can be resolved — events
+        // still flow in-memory.
+        if let sessionId = cardLookup()?.agentConfig?.sessionId {
+            writer = writerFactory?(sessionId)
+        }
+
         consumeTask = Task { [weak self] in
             for await event in stream {
                 self?.events.append(event)
+                self?.writer?.append(event)
                 self?.handleEventForCardStatus(event)
             }
             // Stream finished — pull the final status off the actor.
             let finalStatus = await p.status
             self?.status = finalStatus
             self?.process = nil
+            self?.writer?.close()
+            self?.writer = nil
             self?.handleStreamEnd(finalStatus: finalStatus)
         }
     }
