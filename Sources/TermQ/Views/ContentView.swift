@@ -39,6 +39,15 @@ struct ContentView: View {
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
                     },
+                    onLaunchAsAgent: { harness in
+                        let created = viewModel.createAgentCard(
+                            harnessId: harness.id,
+                            title: harness.name,
+                            description: harness.description ?? ""
+                        )
+                        guard created != nil else { return }
+                        UserDefaults.standard.set("agents", forKey: "sidebar.selectedTab")
+                    },
                     onLaunchHarnessInWorktree: { harnessName, path, branch in
                         harnessRepo.selectedHarnessName = harnessName
                         launchWorkingDirectory = path
