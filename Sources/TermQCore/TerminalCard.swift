@@ -117,6 +117,10 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Terminal-specific environment variables (injected on launch, overrides global)
     @Published public var environmentVariables: [EnvironmentVariable] = []
 
+    /// Agent session configuration when this card is acting as an agent session.
+    /// `nil` for regular terminal cards.
+    @Published public var agentConfig: AgentConfig?
+
     // Runtime state (not persisted)
     public var isTransient: Bool = false
 
@@ -124,7 +128,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
         case allowAutorun, allowOscClipboard, confirmExternalModifications
-        case deletedAt, lastLLMGet, backend, needsTmuxSession, environmentVariables
+        case deletedAt, lastLLMGet, backend, needsTmuxSession, environmentVariables, agentConfig
     }
 
     public init(
@@ -152,7 +156,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         lastLLMGet: Date? = nil,
         backend: TerminalBackend = .direct,
         needsTmuxSession: Bool = false,
-        environmentVariables: [EnvironmentVariable] = []
+        environmentVariables: [EnvironmentVariable] = [],
+        agentConfig: AgentConfig? = nil
     ) {
         self.id = id
         self.title = title
@@ -179,6 +184,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.backend = backend
         self.needsTmuxSession = needsTmuxSession
         self.environmentVariables = environmentVariables
+        self.agentConfig = agentConfig
     }
 
     public required init(from decoder: Decoder) throws {
@@ -212,6 +218,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         environmentVariables =
             try container.decodeIfPresent([EnvironmentVariable].self, forKey: .environmentVariables)
             ?? []
+        agentConfig = try container.decodeIfPresent(AgentConfig.self, forKey: .agentConfig)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -241,6 +248,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(backend, forKey: .backend)
         try container.encode(needsTmuxSession, forKey: .needsTmuxSession)
         try container.encode(environmentVariables, forKey: .environmentVariables)
+        try container.encodeIfPresent(agentConfig, forKey: .agentConfig)
     }
 
     /// Whether this card is in the bin (soft-deleted)
