@@ -68,9 +68,13 @@ struct AgentSessionsSidebarTab: View {
 
     private var sessionList: some View {
         ScrollView {
-            LazyVStack(spacing: 4) {
+            LazyVStack(spacing: 2) {
                 ForEach(agentCards) { card in
-                    AgentSessionRow(card: card)
+                    AgentSessionRow(
+                        card: card,
+                        isSelected: boardViewModel.selectedCard?.id == card.id,
+                        onSelect: { boardViewModel.selectCard(card) }
+                    )
                 }
             }
             .padding(.vertical, 4)
@@ -81,27 +85,41 @@ struct AgentSessionsSidebarTab: View {
 /// One row in the Agent Sessions sidebar list.
 private struct AgentSessionRow: View {
     @ObservedObject var card: TerminalCard
+    let isSelected: Bool
+    let onSelect: () -> Void
 
     var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(card.title)
-                    .font(.body)
-                    .lineLimit(1)
-                if let harness = card.agentConfig?.harness, !harness.isEmpty {
-                    Text(harness)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+        Button(action: onSelect) {
+            HStack(alignment: .top, spacing: 8) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(card.title)
+                        .font(.body)
                         .lineLimit(1)
+                    if let harness = card.agentConfig?.harness, !harness.isEmpty {
+                        Text(harness)
+                            .font(.caption)
+                            .foregroundStyle(isSelected ? .primary : .secondary)
+                            .lineLimit(1)
+                    }
+                }
+                Spacer(minLength: 8)
+                if let status = card.agentConfig?.status {
+                    StatusBadge(status: status)
                 }
             }
-            Spacer(minLength: 8)
-            if let status = card.agentConfig?.status {
-                StatusBadge(status: status)
-            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .background(
+                isSelected
+                    ? Color.accentColor.opacity(0.18)
+                    : Color.clear
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 4))
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
+        .buttonStyle(.plain)
+        .padding(.horizontal, 4)
     }
 }
 
