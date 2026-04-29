@@ -172,6 +172,67 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertTrue(lines[1].contains(#""type":"b""#))
     }
 
+    // MARK: - Plan approval
+
+    @MainActor
+    func testEvent_planFlipsCardToAwaitingApproval() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // Long-running stub so the controller stays alive for the assertion.
+        try await controller.start(
+            command: ##"echo '{"type":"plan","content":"# do x"}'; sleep 0.5"##)
+
+        try await waitUntil { card.agentConfig?.status == .awaitingPlanApproval }
+        XCTAssertEqual(card.agentConfig?.status, .awaitingPlanApproval)
+
+        await controller.stop()
+    }
+
+    @MainActor
+    func testApprovePlan_returnsCardToRunning() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // Long-running stub keeps the subprocess alive so approvePlan has a
+        // real stdin to write to. Status is flipped manually to avoid
+        // shell-buffering races between echo and the next blocking command;
+        // the plan→awaitingPlanApproval transition itself is covered by
+        // testEvent_planFlipsCardToAwaitingApproval.
+        try await controller.start(command: "sleep 30")
+        forceCardStatus(.awaitingPlanApproval, on: card)
+
+        await controller.approvePlan()
+
+        XCTAssertEqual(card.agentConfig?.status, .running)
+        await controller.stop()
+    }
+
+    @MainActor
+    func testRejectPlan_terminatesAndFlipsToErrored() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        try await controller.start(command: "sleep 30")
+        forceCardStatus(.awaitingPlanApproval, on: card)
+
+        await controller.rejectPlan()
+
+        XCTAssertEqual(card.agentConfig?.status, .errored)
+    }
+
+    @MainActor
+    func testApprovePlan_noOp_whenNotAwaitingApproval() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // No process running; no plan event seen.
+        await controller.approvePlan()
+
+        // Nothing flipped — stays at .idle.
+        XCTAssertEqual(card.agentConfig?.status, .idle)
+    }
+
     // MARK: - Trajectory hydration
 
     @MainActor
@@ -281,6 +342,16 @@ final class AgentSessionControllerTests: XCTestCase {
     }
 
     // MARK: - Helpers
+
+    /// Set a card's agent status without going through the controller — used
+    /// by tests that need to exercise approval/reject paths without setting
+    /// up a real plan-emitting subprocess.
+    @MainActor
+    private func forceCardStatus(_ status: AgentStatus, on card: TerminalCard) {
+        guard var config = card.agentConfig else { return }
+        config.status = status
+        card.agentConfig = config
+    }
 
     /// Poll a condition every 10ms up to 2 seconds. XCTest async expectations
     /// are heavier than necessary for state we know flips quickly.

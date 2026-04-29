@@ -24,6 +24,9 @@ struct AgentInspectorView: View {
             Divider()
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    if let planContent = pendingPlanContent {
+                        planApprovalSection(content: planContent)
+                    }
                     configSection
                     trajectorySection
                 }
@@ -39,6 +42,17 @@ struct AgentInspectorView: View {
         .onChange(of: card.id) { _, _ in
             controller.loadPersistedEvents()
         }
+    }
+
+    /// The latest `plan` event's content, surfaced only while the card is
+    /// in the `.awaitingPlanApproval` state. Returns `nil` outside that
+    /// state — the section disappears once the user approves or rejects.
+    private var pendingPlanContent: String? {
+        guard card.agentConfig?.status == .awaitingPlanApproval else { return nil }
+        for event in controller.events.reversed() {
+            if case .plan(let content) = event.decoded() { return content }
+        }
+        return nil
     }
 
     private var canRun: Bool {
@@ -124,6 +138,57 @@ struct AgentInspectorView: View {
         if seconds >= 3600 { return "\(seconds / 3600)h" }
         if seconds >= 60 { return "\(seconds / 60)m" }
         return "\(seconds)s"
+    }
+
+    // MARK: - Plan approval
+
+    private func planApprovalSection(content: String) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
+                Image(systemName: "doc.text.magnifyingglass")
+                    .foregroundStyle(.orange)
+                Text("Plan ready for review")
+                    .font(.headline)
+                Spacer()
+            }
+
+            ScrollView {
+                Text(content)
+                    .font(.system(.callout, design: .monospaced))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .textSelection(.enabled)
+                    .padding(12)
+            }
+            .frame(maxHeight: 320)
+            .background(Color(NSColor.textBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .strokeBorder(Color.secondary.opacity(0.2), lineWidth: 1)
+            )
+
+            HStack(spacing: 8) {
+                Spacer()
+                Button {
+                    Task { await controller.rejectPlan() }
+                } label: {
+                    Label("Reject", systemImage: "xmark")
+                }
+                Button {
+                    Task { await controller.approvePlan() }
+                } label: {
+                    Label("Approve", systemImage: "checkmark")
+                }
+                .keyboardShortcut(.defaultAction)
+            }
+        }
+        .padding(16)
+        .background(Color.orange.opacity(0.08))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .strokeBorder(Color.orange.opacity(0.4), lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
     // MARK: - Trajectory
