@@ -903,6 +903,12 @@
 "harnesses.group.menu.settings" = "Settings…";
 "harnesses.create.harness.button" = "Create a new harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent Loop";
+"settings.agent.description" = "Run a YNH harness as an agent loop driven by sensors. Experimental.";
+"settings.agent.enable.tab" = "Show Agent Sessions sidebar tab";
+"settings.agent.enable.tab.help" = "Adds a sidebar tab listing in-progress and past agent sessions, and a 'Launch as Agent' action on harness rows.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
 "settings.ynh.title" = "ynh";
