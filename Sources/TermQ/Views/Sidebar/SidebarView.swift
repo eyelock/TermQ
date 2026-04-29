@@ -19,6 +19,7 @@ struct SidebarView: View {
     var onExport: ((String, String) -> Void)?
     var onNewHarness: (() -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
+    @AppStorage("feature.agentTab") private var agentTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
     private static var hasResetOnLaunch = false
 
@@ -26,12 +27,14 @@ struct SidebarView: View {
         case repositories
         case harnesses
         case marketplaces
+        case agents
 
         var icon: String {
             switch self {
             case .repositories: return "shippingbox"
             case .harnesses: return "puzzlepiece.extension"
             case .marketplaces: return "storefront"
+            case .agents: return "sparkles"
             }
         }
 
@@ -40,6 +43,7 @@ struct SidebarView: View {
             case .repositories: return "Repositories"
             case .harnesses: return "Harnesses"
             case .marketplaces: return "Marketplaces"
+            case .agents: return "Agent Sessions"
             }
         }
     }
@@ -49,9 +53,27 @@ struct SidebarView: View {
         return detector.status != .missing
     }
 
+    private var showAgentsTab: Bool {
+        agentTabEnabled
+    }
+
+    /// Tabs visible in the picker. `repositories` is always present;
+    /// optional tabs appear only when their feature flag is on.
+    private var visibleTabs: [SidebarTab] {
+        var tabs: [SidebarTab] = [.repositories]
+        if showHarnessesTab { tabs.append(.harnesses) }
+        if showHarnessesTab { tabs.append(.marketplaces) }
+        if showAgentsTab { tabs.append(.agents) }
+        return tabs
+    }
+
+    private var showTabPicker: Bool {
+        visibleTabs.count > 1
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            if showHarnessesTab {
+            if showTabPicker {
                 tabPicker
                 Divider()
             }
@@ -77,6 +99,8 @@ struct SidebarView: View {
                     detector: detector,
                     harnessRepository: harnessRepository
                 )
+            case .agents where showAgentsTab:
+                AgentSessionsSidebarTab()
             default:
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
@@ -95,7 +119,12 @@ struct SidebarView: View {
         .onChange(of: harnessTabEnabled) { _, enabled in
             if enabled {
                 Task { await detector.detect() }
-            } else {
+            } else if !visibleTabs.contains(selectedTab) {
+                selectedTab = .repositories
+            }
+        }
+        .onChange(of: agentTabEnabled) { _, _ in
+            if !visibleTabs.contains(selectedTab) {
                 selectedTab = .repositories
             }
         }
@@ -125,7 +154,7 @@ struct SidebarView: View {
 
     private var tabPicker: some View {
         HStack(spacing: 0) {
-            ForEach(SidebarTab.allCases, id: \.self) { tab in
+            ForEach(visibleTabs, id: \.self) { tab in
                 Button {
                     selectedTab = tab
                 } label: {
