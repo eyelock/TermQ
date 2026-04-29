@@ -23,6 +23,7 @@ struct CardEditorView: View {
         case general
         case terminal
         case environment
+        case agent
         case metadata
         case prompts
 
@@ -31,9 +32,18 @@ struct CardEditorView: View {
             case .general: return Strings.Editor.tabGeneral
             case .terminal: return Strings.Editor.sectionTerminal
             case .environment: return Strings.Settings.tabEnvironment
+            case .agent: return Strings.Editor.Agent.tab
             case .metadata: return Strings.Editor.sectionTags
             case .prompts: return Strings.Editor.sectionPrompts
             }
+        }
+    }
+
+    /// Tabs visible in the picker. The Agent tab appears only for cards
+    /// whose agentConfig is set.
+    private var visibleTabs: [EditorTab] {
+        EditorTab.allCases.filter { tab in
+            tab != .agent || viewModel.hasAgentConfig
         }
     }
 
@@ -121,7 +131,7 @@ struct CardEditorView: View {
 
             // Tab picker
             Picker("", selection: $selectedTab) {
-                ForEach(EditorTab.allCases, id: \.self) { tab in
+                ForEach(visibleTabs, id: \.self) { tab in
                     Text(tab.title).tag(tab)
                 }
             }
@@ -141,6 +151,8 @@ struct CardEditorView: View {
                         environmentVariables: $viewModel.environmentVariables,
                         cardId: card.id
                     )
+                case .agent:
+                    agentContent
                 case .metadata:
                     metadataContent
                 case .prompts:
@@ -426,6 +438,65 @@ struct CardEditorView: View {
                 }
             }
         }
+    }
+
+    // MARK: - Agent Tab Content
+
+    @ViewBuilder
+    private var agentContent: some View {
+        Section(Strings.Editor.Agent.sectionConfig) {
+            Picker(Strings.Editor.Agent.fieldBackend, selection: $viewModel.agentBackend) {
+                ForEach(AgentBackend.allCases, id: \.self) { backend in
+                    Text(backend.rawValue).tag(backend)
+                }
+            }
+            Picker(Strings.Editor.Agent.fieldMode, selection: $viewModel.agentMode) {
+                ForEach(AgentMode.allCases, id: \.self) { mode in
+                    Text(mode.rawValue).tag(mode)
+                }
+            }
+            Picker(Strings.Editor.Agent.fieldInteraction, selection: $viewModel.agentInteractionMode) {
+                ForEach(AgentInteractionMode.allCases, id: \.self) { mode in
+                    Text(mode.rawValue).tag(mode)
+                }
+            }
+        }
+
+        Section(Strings.Editor.Agent.sectionBudget) {
+            Stepper(
+                value: $viewModel.agentMaxTurns, in: 1...500, step: 5,
+                label: {
+                    HStack {
+                        Text(Strings.Editor.Agent.fieldMaxTurns)
+                        Spacer()
+                        Text("\(viewModel.agentMaxTurns)").monospacedDigit()
+                    }
+                })
+            Stepper(
+                value: $viewModel.agentMaxTokens, in: 10_000...10_000_000, step: 50_000,
+                label: {
+                    HStack {
+                        Text(Strings.Editor.Agent.fieldMaxTokens)
+                        Spacer()
+                        Text(formatTokens(viewModel.agentMaxTokens)).monospacedDigit()
+                    }
+                })
+            Stepper(
+                value: $viewModel.agentMaxWallMinutes, in: 1...720, step: 5,
+                label: {
+                    HStack {
+                        Text(Strings.Editor.Agent.fieldMaxWallMinutes)
+                        Spacer()
+                        Text("\(viewModel.agentMaxWallMinutes) min").monospacedDigit()
+                    }
+                })
+        }
+    }
+
+    private func formatTokens(_ tokens: Int) -> String {
+        if tokens >= 1_000_000 { return "\(tokens / 1_000_000)M" }
+        if tokens >= 1_000 { return "\(tokens / 1_000)k" }
+        return "\(tokens)"
     }
 
     // MARK: - Metadata Tab Content
