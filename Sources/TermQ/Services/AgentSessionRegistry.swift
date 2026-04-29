@@ -14,11 +14,15 @@ public final class AgentSessionRegistry: ObservableObject {
 
     /// Return the controller for the given card id, creating one on first
     /// access. The default controller resolves its card via
-    /// `BoardViewModel.shared`; tests can construct controllers directly
-    /// with their own `cardLookup` to avoid the singleton.
+    /// `BoardViewModel.shared` and persists trajectories to the standard
+    /// app-support location. Tests construct controllers directly to
+    /// inject `cardLookup` and `writerFactory`.
     public func controller(for cardId: UUID) -> AgentSessionController {
         if let existing = controllers[cardId] { return existing }
-        let new = AgentSessionController(cardId: cardId)
+        let new = AgentSessionController(
+            cardId: cardId,
+            writerFactory: AgentSessionController.defaultWriterFactory
+        )
         controllers[cardId] = new
         return new
     }
