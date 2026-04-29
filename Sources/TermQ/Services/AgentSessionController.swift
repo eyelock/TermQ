@@ -18,11 +18,19 @@ public final class AgentSessionController: ObservableObject {
     @Published public private(set) var events: [TrajectoryEvent] = []
     @Published public private(set) var status: AgentLoopProcessStatus = .notStarted
 
+    /// Resolves a `TerminalCard` for the controller's `cardId`. Defaults to
+    /// `BoardViewModel.shared.card(for:)`; tests inject their own.
+    public var cardLookup: () -> TerminalCard?
+
     private var process: AgentLoopProcess?
     private var consumeTask: Task<Void, Never>?
 
-    public init(cardId: UUID) {
+    public init(
+        cardId: UUID,
+        cardLookup: (() -> TerminalCard?)? = nil
+    ) {
         self.cardId = cardId
+        self.cardLookup = cardLookup ?? { BoardViewModel.shared.card(for: cardId) }
     }
 
     /// Spawn `/bin/sh -c "<command>"` and stream its NDJSON output into
@@ -38,15 +46,18 @@ public final class AgentSessionController: ObservableObject {
         process = p
         status = await p.status
         events.removeAll()
+        updateCardStatus(.running)
 
         consumeTask = Task { [weak self] in
             for await event in stream {
                 self?.events.append(event)
+                self?.handleEventForCardStatus(event)
             }
             // Stream finished — pull the final status off the actor.
             let finalStatus = await p.status
             self?.status = finalStatus
             self?.process = nil
+            self?.handleStreamEnd(finalStatus: finalStatus)
         }
     }
 
@@ -64,5 +75,48 @@ public final class AgentSessionController: ObservableObject {
         events.removeAll()
         status = .notStarted
         process = nil
+    }
+
+    // MARK: - Card status writeback
+
+    /// Decide whether an incoming event implies a new card status, and
+    /// apply it. Most events (turn_start, sensor_result, plan, etc.) leave
+    /// the status unchanged at `.running`; only terminal-shaped events
+    /// flip the card.
+    private func handleEventForCardStatus(_ event: TrajectoryEvent) {
+        switch event.decoded() {
+        case .converged:
+            updateCardStatus(.converged)
+        case .stuckDetected:
+            updateCardStatus(.stuck)
+        case .budgetExceeded:
+            updateCardStatus(.errored)
+        default:
+            break
+        }
+    }
+
+    /// Called once the subprocess has fully exited and the stream has
+    /// drained. If a terminal-state event already flipped the card, leave
+    /// that status alone — otherwise infer from the exit code.
+    private func handleStreamEnd(finalStatus: AgentLoopProcessStatus) {
+        guard let card = cardLookup(), let config = card.agentConfig else { return }
+        switch config.status {
+        case .converged, .stuck, .errored:
+            // Terminal already; don't downgrade.
+            return
+        default:
+            break
+        }
+        if case .exited(let code) = finalStatus {
+            updateCardStatus(code == 0 ? .converged : .errored)
+        }
+    }
+
+    private func updateCardStatus(_ newStatus: AgentStatus) {
+        guard let card = cardLookup(), var config = card.agentConfig else { return }
+        guard config.status != newStatus else { return }
+        config.status = newStatus
+        card.agentConfig = config
     }
 }

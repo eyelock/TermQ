@@ -44,6 +44,96 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertEqual(controller.events.first?.type, "b")
     }
 
+    // MARK: - Card status writeback
+
+    @MainActor
+    func testStart_setsCardStatusToRunning() async throws {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId, agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        try await controller.start(command: "sleep 0.5")
+
+        XCTAssertEqual(card.agentConfig?.status, .running)
+        await controller.stop()
+    }
+
+    @MainActor
+    func testEvent_convergedSetsCardStatusToConverged() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        try await controller.start(command: #"echo '{"type":"converged"}'"#)
+
+        try await waitUntil { card.agentConfig?.status == .converged }
+        XCTAssertEqual(card.agentConfig?.status, .converged)
+    }
+
+    @MainActor
+    func testEvent_stuckDetectedSetsCardStatusToStuck() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        try await controller.start(
+            command: #"echo '{"type":"stuck_detected","reason":"edit-loop"}'"#)
+
+        try await waitUntil { card.agentConfig?.status == .stuck }
+        XCTAssertEqual(card.agentConfig?.status, .stuck)
+    }
+
+    @MainActor
+    func testEvent_budgetExceededSetsCardStatusToErrored() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        try await controller.start(
+            command: #"echo '{"type":"budget_exceeded","budget":"turns"}'"#)
+
+        try await waitUntil { card.agentConfig?.status == .errored }
+        XCTAssertEqual(card.agentConfig?.status, .errored)
+    }
+
+    @MainActor
+    func testStreamEnd_nonZeroExitCode_setsErrored() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // Emit no terminal event; exit non-zero. Controller should infer .errored.
+        try await controller.start(command: "exit 1")
+
+        try await waitUntil { card.agentConfig?.status == .errored }
+        XCTAssertEqual(card.agentConfig?.status, .errored)
+    }
+
+    @MainActor
+    func testStreamEnd_zeroExitCode_setsConvergedWhenNoTerminalEvent() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // Emit no terminal event; exit clean. Controller should infer .converged.
+        try await controller.start(command: "true")
+
+        try await waitUntil { card.agentConfig?.status == .converged }
+        XCTAssertEqual(card.agentConfig?.status, .converged)
+    }
+
+    @MainActor
+    func testStreamEnd_doesNotDowngradeTerminalCardStatus() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // Stuck event flips card to .stuck; non-zero exit must NOT clobber that.
+        try await controller.start(
+            command: #"echo '{"type":"stuck_detected","reason":"oscillation"}'; exit 1"#)
+
+        // Wait for stream end (both stuck propagation and exit).
+        try await waitUntil {
+            if case .exited = controller.status { return true }
+            return false
+        }
+        XCTAssertEqual(card.agentConfig?.status, .stuck)
+    }
+
     @MainActor
     func testReset_clearsState() async throws {
         let controller = AgentSessionController(cardId: UUID())
