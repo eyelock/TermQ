@@ -127,13 +127,13 @@ enum TermQTerminalLink {
 
         let configuration = NSWorkspace.OpenConfiguration()
         NSWorkspace.shared.open([url], withApplicationAt: handler, configuration: configuration) {
-            _, error in
+            @Sendable [url] _, error in
             guard let error else { return }
             Task { @MainActor in
                 TermQLogger.ui.warning(
                     "TermQTerminalLink launch failed path=\(url.path) error=\(error.localizedDescription)"
                 )
-                presentOpenFailedAlert(for: url, error: error)
+                Self.presentOpenFailedAlert(for: url, error: error)
             }
         }
     }
