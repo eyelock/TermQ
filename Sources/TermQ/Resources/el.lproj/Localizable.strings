@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Δημιουργία νέου harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Ρυθμίσεις";
+"editor.agent.section.budget" = "Προϋπολογισμός";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Λειτουργία";
+"editor.agent.field.interaction" = "Αλληλεπίδραση";
+"editor.agent.field.max.turns" = "Μέγ. γύροι";
+"editor.agent.field.max.tokens" = "Μέγ. tokens";
+"editor.agent.field.max.wall.minutes" = "Μέγ. χρόνος (λεπτ.)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Βρόχος Agent";
 "settings.agent.description" = "Εκτέλεση ενός harness YNH ως βρόχου agent κατευθυνόμενου από αισθητήρες. Πειραματικό.";

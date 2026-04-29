@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Creare harness nou";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Configurare";
+"editor.agent.section.budget" = "Buget";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Mod";
+"editor.agent.field.interaction" = "Interacțiune";
+"editor.agent.field.max.turns" = "Ture max.";
+"editor.agent.field.max.tokens" = "Tokenuri max.";
+"editor.agent.field.max.wall.minutes" = "Timp max. (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Buclă Agent";
 "settings.agent.description" = "Rulează un harness YNH ca buclă agent condusă de senzori. Experimental.";

@@ -676,6 +676,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Tạo Harness mới";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Cấu hình";
+"editor.agent.section.budget" = "Ngân sách";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Chế độ";
+"editor.agent.field.interaction" = "Tương tác";
+"editor.agent.field.max.turns" = "Số lượt tối đa";
+"editor.agent.field.max.tokens" = "Token tối đa";
+"editor.agent.field.max.wall.minutes" = "Thời gian tối đa (phút)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Vòng lặp Agent";
 "settings.agent.description" = "Chạy harness YNH dưới dạng vòng lặp agent được điều khiển bởi các bộ cảm biến. Thử nghiệm.";

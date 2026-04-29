@@ -676,6 +676,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "สร้าง Harness ใหม่";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "การตั้งค่า";
+"editor.agent.section.budget" = "งบประมาณ";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "โหมด";
+"editor.agent.field.interaction" = "การโต้ตอบ";
+"editor.agent.field.max.turns" = "ขั้นสูงสุด (รอบ)";
+"editor.agent.field.max.tokens" = "ขั้นสูงสุด (tokens)";
+"editor.agent.field.max.wall.minutes" = "เวลาสูงสุด (นาที)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "วงรอบ Agent";
 "settings.agent.description" = "รัน YNH harness เป็นวงรอบ agent ที่ขับเคลื่อนด้วยเซ็นเซอร์ ทดลอง.";

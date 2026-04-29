@@ -675,6 +675,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "יצירת Harness חדש";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "הגדרות";
+"editor.agent.section.budget" = "תקציב";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "מצב";
+"editor.agent.field.interaction" = "אינטראקציה";
+"editor.agent.field.max.turns" = "מקס׳ תורות";
+"editor.agent.field.max.tokens" = "מקס׳ tokens";
+"editor.agent.field.max.wall.minutes" = "מקס׳ זמן (דק׳)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "לולאת Agent";
 "settings.agent.description" = "הפעל harness של YNH כלולאת agent מונעת על ידי חישנים. נִסיוני.";

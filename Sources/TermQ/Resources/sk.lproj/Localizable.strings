@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Vytvoriť novú sadu";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfigurácia";
+"editor.agent.section.budget" = "Rozpočet";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Režim";
+"editor.agent.field.interaction" = "Interakcia";
+"editor.agent.field.max.turns" = "Max. kôl";
+"editor.agent.field.max.tokens" = "Max. tokenov";
+"editor.agent.field.max.wall.minutes" = "Max. čas (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Slučka Agenta";
 "settings.agent.description" = "Spustite harness YNH ako slučku agenta riadenú senzormi. Experimentálne.";

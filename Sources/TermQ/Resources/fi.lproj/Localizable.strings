@@ -675,6 +675,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Luo uusi harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agentti";
+"editor.agent.section.config" = "Asetukset";
+"editor.agent.section.budget" = "Budjetti";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Tila";
+"editor.agent.field.interaction" = "Vuorovaikutus";
+"editor.agent.field.max.turns" = "Enint. kierroksia";
+"editor.agent.field.max.tokens" = "Enint. tokeneita";
+"editor.agent.field.max.wall.minutes" = "Enint. aika (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agenttisilmukka";
 "settings.agent.description" = "Suorita YNH-harness sensoriohjattuna agenttisilmukkana. Kokeellinen.";

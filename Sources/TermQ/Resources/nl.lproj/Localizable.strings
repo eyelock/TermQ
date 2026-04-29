@@ -674,6 +674,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Nieuw harness aanmaken";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Configuratie";
+"editor.agent.section.budget" = "Budget";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Modus";
+"editor.agent.field.interaction" = "Interactie";
+"editor.agent.field.max.turns" = "Max. beurten";
+"editor.agent.field.max.tokens" = "Max. tokens";
+"editor.agent.field.max.wall.minutes" = "Max. wandtijd (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agentlus";
 "settings.agent.description" = "Een YNH-harness uitvoeren als een sensorgestuurde agentlus. Experimenteel.";

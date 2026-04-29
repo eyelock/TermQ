@@ -676,6 +676,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Yeni harness oluştur";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Ajan";
+"editor.agent.section.config" = "Yapılandırma";
+"editor.agent.section.budget" = "Bütçe";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Mod";
+"editor.agent.field.interaction" = "Etkileşim";
+"editor.agent.field.max.turns" = "Maks. tur";
+"editor.agent.field.max.tokens" = "Maks. token";
+"editor.agent.field.max.wall.minutes" = "Maks. süre (dk)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent Döngüsü";
 "settings.agent.description" = "Bir YNH harness’ını sensörler tarafından yönetilen bir agent döngüsü olarak çalıştırın. Deneysel.";

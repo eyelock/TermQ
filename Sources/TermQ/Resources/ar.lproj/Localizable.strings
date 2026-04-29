@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "إنشاء حزمة جديدة";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "الإعدادات";
+"editor.agent.section.budget" = "الميزانية";
+"editor.agent.field.backend" = "الواجهة الخلفية";
+"editor.agent.field.mode" = "الوضع";
+"editor.agent.field.interaction" = "التفاعل";
+"editor.agent.field.max.turns" = "الحد الأقصى للأدوار";
+"editor.agent.field.max.tokens" = "الحد الأقصى للرموز";
+"editor.agent.field.max.wall.minutes" = "الحد الأقصى للوقت (د)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "حلقة Agent";
 "settings.agent.description" = "تشغيل harness YNH كحلقة agent مدفوعة بالمستشعرات. تجريبي.";

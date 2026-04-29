@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Buat Harness Baru";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agen";
+"editor.agent.section.config" = "Konfigurasi";
+"editor.agent.section.budget" = "Anggaran";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Mode";
+"editor.agent.field.interaction" = "Interaksi";
+"editor.agent.field.max.turns" = "Maks. giliran";
+"editor.agent.field.max.tokens" = "Maks. token";
+"editor.agent.field.max.wall.minutes" = "Maks. waktu (mnt)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agen Loop";
 "settings.agent.description" = "Jalankan harness YNH sebagai agen loop yang digerakkan oleh sensor. Eksperimental.";

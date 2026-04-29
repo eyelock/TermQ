@@ -674,6 +674,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Cipta Harness Baharu";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Ejen";
+"editor.agent.section.config" = "Konfigurasi";
+"editor.agent.section.budget" = "Belanjawan";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Mod";
+"editor.agent.field.interaction" = "Interaksi";
+"editor.agent.field.max.turns" = "Maks. giliran";
+"editor.agent.field.max.tokens" = "Maks. token";
+"editor.agent.field.max.wall.minutes" = "Maks. masa (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Gelung Ejen";
 "settings.agent.description" = "Jalankan harness YNH sebagai gelung ejen yang dipacu sensor. Eksperimental.";

@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Opret et nyt harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguration";
+"editor.agent.section.budget" = "Budget";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Tilstand";
+"editor.agent.field.interaction" = "Interaktion";
+"editor.agent.field.max.turns" = "Maks. ture";
+"editor.agent.field.max.tokens" = "Maks. tokens";
+"editor.agent.field.max.wall.minutes" = "Maks. tid (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agentløkke";
 "settings.agent.description" = "Kør et YNH-harness som en sensordriven agentløkke. Eksperimentel.";

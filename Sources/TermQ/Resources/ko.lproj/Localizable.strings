@@ -674,6 +674,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "새 하네스 만들기";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "에이전트";
+"editor.agent.section.config" = "구성";
+"editor.agent.section.budget" = "예산";
+"editor.agent.field.backend" = "백엔드";
+"editor.agent.field.mode" = "모드";
+"editor.agent.field.interaction" = "상호작용";
+"editor.agent.field.max.turns" = "최대 턴 수";
+"editor.agent.field.max.tokens" = "최대 토큰 수";
+"editor.agent.field.max.wall.minutes" = "최대 실행 시간(분)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent 루프";
 "settings.agent.description" = "YNH 하네스를 센서 기반 Agent 루프로 실행합니다. 실험적 기능입니다.";

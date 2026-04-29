@@ -675,6 +675,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "नई Harness बनाएं";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "कॉन्फ़िगरेशन";
+"editor.agent.section.budget" = "बजट";
+"editor.agent.field.backend" = "बैकएंड";
+"editor.agent.field.mode" = "मोड";
+"editor.agent.field.interaction" = "इंटरैक्शन";
+"editor.agent.field.max.turns" = "अधिकतम चक्र";
+"editor.agent.field.max.tokens" = "अधिकतम tokens";
+"editor.agent.field.max.wall.minutes" = "अधिकतम समय (मिनट)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent लूप";
 "settings.agent.description" = "YNH harness को सेंसर-संचालित agent लूप के रूप में चलाएं। प्रायोगिक.";

@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Crear un nuevo harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agente";
+"editor.agent.section.config" = "Configuración";
+"editor.agent.section.budget" = "Presupuesto";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Modo";
+"editor.agent.field.interaction" = "Interacción";
+"editor.agent.field.max.turns" = "Turnos máx.";
+"editor.agent.field.max.tokens" = "Tokens máx.";
+"editor.agent.field.max.wall.minutes" = "Tiempo máx. (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Bucle de Agente";
 "settings.agent.description" = "Ejecutar un harness de YNH como un bucle de agente guiado por sensores. Experimental.";

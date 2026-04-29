@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "新しいハーネスを作成";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "エージェント";
+"editor.agent.section.config" = "設定";
+"editor.agent.section.budget" = "バジェット";
+"editor.agent.field.backend" = "バックエンド";
+"editor.agent.field.mode" = "モード";
+"editor.agent.field.interaction" = "インタラクション";
+"editor.agent.field.max.turns" = "最大ターン数";
+"editor.agent.field.max.tokens" = "最大トークン数";
+"editor.agent.field.max.wall.minutes" = "最大実行時間（分）";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "エージェントループ";
 "settings.agent.description" = "YNH ハーネスをセンサー駆動のエージェントループとして実行します。実験的機能。";

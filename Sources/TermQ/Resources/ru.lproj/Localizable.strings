@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Создать новый харнесс";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Агент";
+"editor.agent.section.config" = "Конфигурация";
+"editor.agent.section.budget" = "Бюджет";
+"editor.agent.field.backend" = "Бэкенд";
+"editor.agent.field.mode" = "Режим";
+"editor.agent.field.interaction" = "Взаимодействие";
+"editor.agent.field.max.turns" = "Макс. шагов";
+"editor.agent.field.max.tokens" = "Макс. токенов";
+"editor.agent.field.max.wall.minutes" = "Макс. время (мин)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Цикл Agent";
 "settings.agent.description" = "Запуск harness YNH как цикл Agent, управляемый сенсорами. Экспериментально.";

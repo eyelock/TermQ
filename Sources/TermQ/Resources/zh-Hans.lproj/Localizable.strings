@@ -685,6 +685,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "新建 Harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "配置";
+"editor.agent.section.budget" = "预算";
+"editor.agent.field.backend" = "后端";
+"editor.agent.field.mode" = "模式";
+"editor.agent.field.interaction" = "交互方式";
+"editor.agent.field.max.turns" = "最大轮次";
+"editor.agent.field.max.tokens" = "最大 tokens";
+"editor.agent.field.max.wall.minutes" = "最长时间（分）";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent 循环";
 "settings.agent.description" = "将 YNH Harness 作为由传感器驱动的 Agent 循环运行。实验性功能。";

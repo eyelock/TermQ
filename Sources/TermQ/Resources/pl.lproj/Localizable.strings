@@ -674,6 +674,17 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Utwórz nową wiązkę";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguracja";
+"editor.agent.section.budget" = "Budżet";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Tryb";
+"editor.agent.field.interaction" = "Interakcja";
+"editor.agent.field.max.turns" = "Maks. rund";
+"editor.agent.field.max.tokens" = "Maks. tokenów";
+"editor.agent.field.max.wall.minutes" = "Maks. czas (min)";
+
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Pętla Agenta";
 "settings.agent.description" = "Uruchom harness YNH jako pętlę agenta sterowaną przez czujniki. Eksperymentalne.";
