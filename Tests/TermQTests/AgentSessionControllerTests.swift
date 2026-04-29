@@ -172,6 +172,99 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertTrue(lines[1].contains(#""type":"b""#))
     }
 
+    // MARK: - Trajectory hydration
+
+    @MainActor
+    func testLoadPersistedEvents_populatesEventsFromDisk() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("HydrationTest-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let sessionId = card.agentConfig!.sessionId
+
+        // Pre-populate a trajectory.jsonl file via the writer.
+        let writer = try TrajectoryWriter(sessionId: sessionId, baseDirectory: tempDir)
+        writer.append(
+            TrajectoryEvent(type: "a", timestamp: Date(), payloadJSON: #"{"type":"a"}"#))
+        writer.append(
+            TrajectoryEvent(type: "b", timestamp: Date(), payloadJSON: #"{"type":"b"}"#))
+        writer.close()
+
+        // Fresh controller sees no events until hydrated.
+        let controller = AgentSessionController(
+            cardId: card.id,
+            cardLookup: { card },
+            transcriptBaseURL: tempDir
+        )
+        XCTAssertTrue(controller.events.isEmpty)
+
+        controller.loadPersistedEvents()
+
+        XCTAssertEqual(controller.events.count, 2)
+        XCTAssertEqual(controller.events[0].type, "a")
+        XCTAssertEqual(controller.events[1].type, "b")
+    }
+
+    @MainActor
+    func testLoadPersistedEvents_noOp_whenEventsAlreadyPopulated() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("HydrationTest-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let writer = try TrajectoryWriter(
+            sessionId: card.agentConfig!.sessionId, baseDirectory: tempDir)
+        writer.append(
+            TrajectoryEvent(type: "disk", timestamp: Date(), payloadJSON: #"{"type":"disk"}"#))
+        writer.close()
+
+        let controller = AgentSessionController(
+            cardId: card.id,
+            cardLookup: { card },
+            transcriptBaseURL: tempDir
+        )
+
+        // Manually load once, then call again — second call must not double up.
+        controller.loadPersistedEvents()
+        XCTAssertEqual(controller.events.count, 1)
+
+        controller.loadPersistedEvents()
+        XCTAssertEqual(controller.events.count, 1)
+    }
+
+    @MainActor
+    func testLoadPersistedEvents_noOp_whenNoFileExists() {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("HydrationTest-\(UUID().uuidString)")
+        try? FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(
+            cardId: card.id,
+            cardLookup: { card },
+            transcriptBaseURL: tempDir
+        )
+
+        controller.loadPersistedEvents()
+        XCTAssertTrue(controller.events.isEmpty)
+    }
+
+    @MainActor
+    func testLoadPersistedEvents_noOp_whenCardHasNoAgentConfig() {
+        let cardWithoutAgent = TerminalCard(columnId: UUID())
+        let controller = AgentSessionController(
+            cardId: cardWithoutAgent.id,
+            cardLookup: { cardWithoutAgent }
+        )
+
+        controller.loadPersistedEvents()
+        XCTAssertTrue(controller.events.isEmpty)
+    }
+
     @MainActor
     func testReset_clearsState() async throws {
         let controller = AgentSessionController(cardId: UUID())

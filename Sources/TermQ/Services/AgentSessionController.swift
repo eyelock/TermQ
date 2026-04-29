@@ -27,6 +27,12 @@ public final class AgentSessionController: ObservableObject {
     /// persistence happens — useful for tests that don't care about disk.
     public var writerFactory: ((UUID) -> TrajectoryWriter?)?
 
+    /// Override the base directory used when reading a persisted trajectory
+    /// back via `loadPersistedEvents()`. `nil` resolves the default
+    /// `<appSupport>/TermQ[-Debug]/agent-sessions/` location used by
+    /// production. Tests inject a temp directory.
+    public var transcriptBaseURL: URL?
+
     private var process: AgentLoopProcess?
     private var consumeTask: Task<Void, Never>?
     private var writer: TrajectoryWriter?
@@ -34,11 +40,13 @@ public final class AgentSessionController: ObservableObject {
     public init(
         cardId: UUID,
         cardLookup: (() -> TerminalCard?)? = nil,
-        writerFactory: ((UUID) -> TrajectoryWriter?)? = nil
+        writerFactory: ((UUID) -> TrajectoryWriter?)? = nil,
+        transcriptBaseURL: URL? = nil
     ) {
         self.cardId = cardId
         self.cardLookup = cardLookup ?? { BoardViewModel.shared.card(for: cardId) }
         self.writerFactory = writerFactory
+        self.transcriptBaseURL = transcriptBaseURL
     }
 
     /// Default writer factory used by `AgentSessionRegistry`: opens
@@ -90,6 +98,23 @@ public final class AgentSessionController: ObservableObject {
     /// Send SIGTERM to the running subprocess, if any.
     public func stop() async {
         await process?.stop()
+    }
+
+    /// Read a previously-persisted trajectory.jsonl off disk and populate
+    /// `events` with its parsed contents. No-op if events already populated,
+    /// the session is currently running, the card has no agent config, or
+    /// no trajectory file exists for this session id.
+    public func loadPersistedEvents() {
+        guard events.isEmpty else { return }
+        if case .running = status { return }
+        guard let sessionId = cardLookup()?.agentConfig?.sessionId else { return }
+
+        let url = TrajectoryWriter.fileURL(for: sessionId, baseDirectory: transcriptBaseURL)
+        guard FileManager.default.fileExists(atPath: url.path) else { return }
+        guard let contents = try? String(contentsOf: url, encoding: .utf8) else { return }
+
+        events = contents.split(separator: "\n", omittingEmptySubsequences: true)
+            .compactMap { AgentLoopProcess.parseLine(String($0)) }
     }
 
     /// Reset the controller for a fresh run. Cancels any in-flight stream

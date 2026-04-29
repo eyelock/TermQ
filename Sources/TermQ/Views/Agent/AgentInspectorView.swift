@@ -33,6 +33,12 @@ struct AgentInspectorView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(NSColor.windowBackgroundColor))
+        .onAppear {
+            controller.loadPersistedEvents()
+        }
+        .onChange(of: card.id) { _, _ in
+            controller.loadPersistedEvents()
+        }
     }
 
     private var canRun: Bool {
