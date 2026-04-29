@@ -40,6 +40,15 @@ struct ContentView: View {
                         launchCoordinator.requestLaunch(
                             harnessId: harness.id, workingDirectory: nil, branch: nil)
                     },
+                    onLaunchAsAgent: { harness in
+                        let created = viewModel.createAgentCard(
+                            harnessId: harness.id,
+                            title: harness.name,
+                            description: harness.description ?? ""
+                        )
+                        guard created != nil else { return }
+                        SidebarState.shared.selectedTab = .agents
+                    },
                     onLaunchHarnessInWorktree: { harnessIdOrName, path, branch in
                         launchCoordinator.requestLaunch(
                             harnessId: harnessIdOrName, workingDirectory: path, branch: branch)

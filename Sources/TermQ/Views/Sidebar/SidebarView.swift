@@ -12,6 +12,7 @@ struct SidebarView: View {
     @ObservedObject var harnessRepository: HarnessRepository
     @ObservedObject var boardViewModel: BoardViewModel
     var onLaunchHarness: ((Harness) -> Void)?
+    var onLaunchAsAgent: ((Harness) -> Void)?
     var onLaunchHarnessInWorktree: ((String, String, String?) -> Void)?
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
     var onRunWithFocus: ((HarnessLaunchConfig) -> Void)?
@@ -71,6 +72,7 @@ struct SidebarView: View {
                     detector: detector,
                     repository: harnessRepository,
                     onLaunchHarness: onLaunchHarness,
+                    onLaunchAsAgent: showAgentsTab ? onLaunchAsAgent : nil,
                     onInstall: onInstall,
                     onUninstall: onUninstall,
                     onDeleteLocal: onDeleteLocal,

@@ -203,6 +203,51 @@ class BoardViewModel: ObservableObject {
         isEditingCard = card
     }
 
+    /// Create a new card configured as an agent session against the given
+    /// harness identifier.
+    ///
+    /// `harnessId` is the qualified harness name (e.g. `"eyelock/x/coding-agent"`)
+    /// stored in `agentConfig.harness`. `title` becomes the card title.
+    /// The card is created in the currently-selected card's column (or the
+    /// first column if none selected). Returns `nil` if the board has no
+    /// columns.
+    @discardableResult
+    func createAgentCard(harnessId: String, title: String, description: String = "") -> TerminalCard? {
+        let column: Column
+        if let current = selectedCard,
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+        } else {
+            return nil
+        }
+
+        let maxIndex = board.cards(for: column).map(\.orderIndex).max() ?? -1
+        let defaults = newTerminalDefaults()
+
+        let card = TerminalCard(
+            title: title,
+            description: description,
+            columnId: column.id,
+            orderIndex: maxIndex + 1,
+            workingDirectory: defaults.workingDirectory,
+            safePasteEnabled: defaults.safePaste,
+            allowAutorun: defaults.allowAutorun,
+            allowOscClipboard: defaults.allowOscClipboard,
+            confirmExternalModifications: defaults.confirmExternalModifications,
+            backend: defaults.backend,
+            agentConfig: AgentConfig(harness: harnessId)
+        )
+
+        board.cards.append(card)
+        objectWillChange.send()
+        save()
+
+        return card
+    }
+
     func duplicateTerminal(_ source: TerminalCard) {
         // Find the target column
         guard let column = board.columns.first(where: { $0.id == source.columnId }) else {

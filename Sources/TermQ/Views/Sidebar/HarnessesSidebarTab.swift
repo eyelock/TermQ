@@ -14,6 +14,7 @@ struct HarnessesSidebarTab: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var repository: HarnessRepository
     var onLaunchHarness: ((Harness) -> Void)?
+    var onLaunchAsAgent: ((Harness) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
     /// Destructive "Delete" action for local-source harnesses. Differs from
@@ -261,6 +262,13 @@ struct HarnessesSidebarTab: View {
                     onLaunchHarness?(harness)
                 } label: {
                     Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
+                }
+                if let onLaunchAsAgent {
+                    Button {
+                        onLaunchAsAgent(harness)
+                    } label: {
+                        Label("Launch as Agent", systemImage: "sparkles")
+                    }
                 }
                 Button {
                     NSPasteboard.general.clearContents()
