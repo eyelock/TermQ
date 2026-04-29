@@ -1,16 +1,30 @@
 import SwiftUI
+import TermQCore
 
 /// Sidebar content for the Agent Sessions tab.
 ///
-/// Placeholder for the v1 agent loop capability — see
-/// `.claude/plans/2026-04-29-feat-agent-loop.md`. Wiring to live agent-card
-/// data lands in a later slice.
+/// Lists cards on the current board that are acting as agent sessions
+/// (i.e. `agentConfig != nil` and not soft-deleted). Empty state shown when
+/// no agent sessions exist. Live launch UI lands in a later slice.
 struct AgentSessionsSidebarTab: View {
+    @ObservedObject var boardViewModel: BoardViewModel
+
+    private var agentCards: [TerminalCard] {
+        boardViewModel.board.cards
+            .filter { $0.agentConfig != nil && !$0.isDeleted }
+            .sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             header
             Divider()
-            emptyState
+
+            if agentCards.isEmpty {
+                emptyState
+            } else {
+                sessionList
+            }
         }
     }
 
@@ -19,6 +33,15 @@ struct AgentSessionsSidebarTab: View {
             Text("Agent Sessions")
                 .font(.headline)
             Spacer()
+            if !agentCards.isEmpty {
+                Text("\(agentCards.count)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.secondary.opacity(0.15))
+                    .clipShape(Capsule())
+            }
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -41,5 +64,81 @@ struct AgentSessionsSidebarTab: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var sessionList: some View {
+        ScrollView {
+            LazyVStack(spacing: 4) {
+                ForEach(agentCards) { card in
+                    AgentSessionRow(card: card)
+                }
+            }
+            .padding(.vertical, 4)
+        }
+    }
+}
+
+/// One row in the Agent Sessions sidebar list.
+private struct AgentSessionRow: View {
+    @ObservedObject var card: TerminalCard
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(card.title)
+                    .font(.body)
+                    .lineLimit(1)
+                if let harness = card.agentConfig?.harness, !harness.isEmpty {
+                    Text(harness)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+            }
+            Spacer(minLength: 8)
+            if let status = card.agentConfig?.status {
+                StatusBadge(status: status)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+    }
+}
+
+private struct StatusBadge: View {
+    let status: AgentStatus
+
+    var body: some View {
+        Text(label)
+            .font(.caption2.weight(.medium))
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(color.opacity(0.18))
+            .foregroundStyle(color)
+            .clipShape(Capsule())
+    }
+
+    private var label: String {
+        switch status {
+        case .idle: return "idle"
+        case .planning: return "planning"
+        case .awaitingPlanApproval: return "plan?"
+        case .running: return "running"
+        case .awaitingTurnApproval: return "turn?"
+        case .paused: return "paused"
+        case .converged: return "done"
+        case .stuck: return "stuck"
+        case .errored: return "error"
+        }
+    }
+
+    private var color: Color {
+        switch status {
+        case .idle: return .secondary
+        case .planning, .running: return .accentColor
+        case .awaitingPlanApproval, .awaitingTurnApproval, .paused: return .orange
+        case .converged: return .green
+        case .stuck, .errored: return .red
+        }
     }
 }
