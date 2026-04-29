@@ -19,6 +19,30 @@ final class AgentSessionTests: XCTestCase {
         XCTAssertEqual(config.interactionMode, .confirm)
         XCTAssertEqual(config.budget, .default)
         XCTAssertEqual(config.status, .idle)
+        XCTAssertEqual(config.loopDriverCommand, "")
+    }
+
+    /// Backward compat — pre-slice-20 saved JSON has no `loopDriverCommand`
+    /// field. Decoding must default it to "" rather than throw.
+    func testAgentConfigLegacyJSONBackwardCompat() throws {
+        let json = """
+            {
+                "sessionId": "\(UUID().uuidString)",
+                "harness": "x@y/z",
+                "backend": "claude-code",
+                "mode": "plan",
+                "interactionMode": "confirm",
+                "budget": {
+                    "maxTurns": 25,
+                    "maxTokens": 500000,
+                    "maxWallSeconds": 3600
+                },
+                "status": "idle"
+            }
+            """.data(using: .utf8)!
+
+        let decoded = try JSONDecoder().decode(AgentConfig.self, from: json)
+        XCTAssertEqual(decoded.loopDriverCommand, "")
     }
 
     func testAgentConfigCodableRoundTrip() throws {

@@ -12,10 +12,17 @@ import TermQCore
 struct AgentInspectorView: View {
     @ObservedObject var card: TerminalCard
     @StateObject private var registry = AgentSessionRegistry.shared
-    @AppStorage("agent.loopDriverCommand") private var loopDriverCommand: String = ""
+    @AppStorage("agent.loopDriverCommand") private var globalLoopDriverCommand: String = ""
 
     private var controller: AgentSessionController {
         registry.controller(for: card.id)
+    }
+
+    /// Per-card override wins; empty falls back to the global default.
+    private var effectiveCommand: String {
+        let perCard =
+            card.agentConfig?.loopDriverCommand.trimmingCharacters(in: .whitespaces) ?? ""
+        return perCard.isEmpty ? globalLoopDriverCommand : perCard
     }
 
     var body: some View {
@@ -56,7 +63,7 @@ struct AgentInspectorView: View {
     }
 
     private var canRun: Bool {
-        !loopDriverCommand.trimmingCharacters(in: .whitespaces).isEmpty
+        !effectiveCommand.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
     private var isRunning: Bool {
@@ -86,7 +93,7 @@ struct AgentInspectorView: View {
             }
             HStack(spacing: 8) {
                 Button {
-                    Task { try? await controller.start(command: loopDriverCommand) }
+                    Task { try? await controller.start(command: effectiveCommand) }
                 } label: {
                     Label("Run", systemImage: "play.fill")
                 }
@@ -94,7 +101,7 @@ struct AgentInspectorView: View {
                 .help(
                     canRun
                         ? "Spawn the configured loop driver"
-                        : "Set agent.loopDriverCommand in defaults to enable")
+                        : "Set agent.loopDriverCommand globally or override per-card in the editor")
                 Button {
                     Task { await controller.stop() }
                 } label: {

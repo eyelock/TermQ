@@ -462,6 +462,19 @@ struct CardEditorView: View {
             }
         }
 
+        Section {
+            TextField(
+                Strings.Editor.Agent.fieldLoopDriverCommandPlaceholder,
+                text: $viewModel.agentLoopDriverCommand,
+                axis: .vertical
+            )
+            .lineLimit(2...4)
+            .font(.system(.body, design: .monospaced))
+            .help(Strings.Editor.Agent.fieldLoopDriverCommandHelp)
+        } header: {
+            Text(Strings.Editor.Agent.fieldLoopDriverCommand)
+        }
+
         Section(Strings.Editor.Agent.sectionBudget) {
             Stepper(
                 value: $viewModel.agentMaxTurns, in: 1...500, step: 5,

@@ -51,6 +51,7 @@ final class CardEditorViewModel: ObservableObject {
     @Published var agentMaxTurns: Int = AgentBudget.default.maxTurns
     @Published var agentMaxTokens: Int = AgentBudget.default.maxTokens
     @Published var agentMaxWallMinutes: Int = AgentBudget.default.maxWallSeconds / 60
+    @Published var agentLoopDriverCommand: String = ""
 
     // MARK: - Validation
 
@@ -90,8 +91,10 @@ final class CardEditorViewModel: ObservableObject {
             agentMaxTurns = config.budget.maxTurns
             agentMaxTokens = config.budget.maxTokens
             agentMaxWallMinutes = max(1, config.budget.maxWallSeconds / 60)
+            agentLoopDriverCommand = config.loopDriverCommand
         } else {
             hasAgentConfig = false
+            agentLoopDriverCommand = ""
         }
     }
 
@@ -128,6 +131,7 @@ final class CardEditorViewModel: ObservableObject {
                 maxTokens: agentMaxTokens,
                 maxWallSeconds: agentMaxWallMinutes * 60
             )
+            config.loopDriverCommand = agentLoopDriverCommand
             card.agentConfig = config
         }
     }

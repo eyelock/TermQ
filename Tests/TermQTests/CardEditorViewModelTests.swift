@@ -308,6 +308,33 @@ final class CardEditorViewModelTests: XCTestCase {
         XCTAssertEqual(saved.backend, .codex)
     }
 
+    func testLoadSave_loopDriverCommand_roundTrips() {
+        let card = TerminalCard(
+            columnId: UUID(),
+            agentConfig: AgentConfig(harness: "x", loopDriverCommand: "/path/to/ynh-agent --task t.md")
+        )
+        let vm = CardEditorViewModel()
+
+        vm.load(from: card)
+        XCTAssertEqual(vm.agentLoopDriverCommand, "/path/to/ynh-agent --task t.md")
+
+        vm.title = card.title  // satisfy isValid
+        vm.agentLoopDriverCommand = "/different/path --flag"
+        vm.save(to: card)
+
+        XCTAssertEqual(card.agentConfig?.loopDriverCommand, "/different/path --flag")
+    }
+
+    func testLoad_loopDriverCommand_clearsForNonAgentCard() {
+        let card = TerminalCard(columnId: UUID())
+        let vm = CardEditorViewModel()
+        vm.agentLoopDriverCommand = "stale value"
+
+        vm.load(from: card)
+
+        XCTAssertEqual(vm.agentLoopDriverCommand, "")
+    }
+
     func testSave_nonAgentCard_doesNotInjectAgentConfig() {
         let card = TerminalCard(columnId: UUID())
         let vm = CardEditorViewModel()
