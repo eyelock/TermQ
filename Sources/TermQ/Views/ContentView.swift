@@ -33,6 +33,7 @@ struct ContentView: View {
                     worktreeViewModel: sidebarViewModel,
                     detector: ynhDetector,
                     harnessRepository: harnessRepo,
+                    boardViewModel: viewModel,
                     onLaunchHarness: { harness in
                         harnessRepo.selectedHarnessName = harness.id
                         Task { await vendorService.refresh() }

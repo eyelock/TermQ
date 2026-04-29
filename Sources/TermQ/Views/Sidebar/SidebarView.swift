@@ -10,6 +10,7 @@ struct SidebarView: View {
     @ObservedObject var worktreeViewModel: WorktreeSidebarViewModel
     @ObservedObject var detector: YNHDetector
     @ObservedObject var harnessRepository: HarnessRepository
+    @ObservedObject var boardViewModel: BoardViewModel
     var onLaunchHarness: ((Harness) -> Void)?
     var onLaunchHarnessInWorktree: ((String, String, String?) -> Void)?
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
@@ -100,7 +101,7 @@ struct SidebarView: View {
                     harnessRepository: harnessRepository
                 )
             case .agents where showAgentsTab:
-                AgentSessionsSidebarTab()
+                AgentSessionsSidebarTab(boardViewModel: boardViewModel)
             default:
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
