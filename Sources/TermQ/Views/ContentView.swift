@@ -102,6 +102,10 @@ struct ContentView: View {
                         onUpdate: { name in updateHarness(name: name) },
                         onUninstall: { name in uninstallHarness(name: name) }
                     )
+                } else if let selectedCard = viewModel.selectedCard,
+                    selectedCard.agentConfig != nil
+                {
+                    AgentInspectorView(card: selectedCard)
                 } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
