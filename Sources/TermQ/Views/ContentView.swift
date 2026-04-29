@@ -35,6 +35,7 @@ struct ContentView: View {
                     worktreeViewModel: sidebarViewModel,
                     detector: ynhDetector,
                     harnessRepository: harnessRepo,
+                    boardViewModel: viewModel,
                     onLaunchHarness: { harness in
                         launchCoordinator.requestLaunch(
                             harnessId: harness.id, workingDirectory: nil, branch: nil)
