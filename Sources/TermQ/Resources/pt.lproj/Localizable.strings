@@ -674,6 +674,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Criar um novo harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Loop de Agente";
+"settings.agent.description" = "Executar um harness YNH como um loop de agente orientado por sensores. Experimental.";
+"settings.agent.enable.tab" = "Mostrar aba Sessões de Agente na barra lateral";
+"settings.agent.enable.tab.help" = "Adiciona uma aba na barra lateral listando sessões de agente em andamento e passadas, e uma ação “Iniciar como Agente” nas linhas de harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";
 "settings.ynh.title" = "ynh";

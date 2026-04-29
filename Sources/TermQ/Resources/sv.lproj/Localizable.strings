@@ -676,6 +676,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Skapa ett nytt harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agentloop";
+"settings.agent.description" = "Kör ett YNH-harness som en sensordriven agentloop. Experimentell.";
+"settings.agent.enable.tab" = "Visa agentsessioner i sidofältets flik";
+"settings.agent.enable.tab.help" = "Lägger till en flik i sidofältet som visar pågående och tidigare agentsessioner, och en åtgärd „Starta som Agent“ på harnessrader.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-verktygskedja";
 "settings.ynh.title" = "ynh";

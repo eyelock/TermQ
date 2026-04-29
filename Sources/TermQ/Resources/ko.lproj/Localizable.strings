@@ -674,6 +674,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "새 하네스 만들기";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent 루프";
+"settings.agent.description" = "YNH 하네스를 센서 기반 Agent 루프로 실행합니다. 실험적 기능입니다.";
+"settings.agent.enable.tab" = "Agent 세션 사이드바 탭 표시";
+"settings.agent.enable.tab.help" = "사이드바에 진행 중 및 과거 Agent 세션 목록 탭을 추가하고, 하네스 행에 ‘Agent로 실행’ 액션을 제공합니다.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH 하네스 툴체인";
 "settings.ynh.title" = "ynh";

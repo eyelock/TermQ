@@ -675,6 +675,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Új harness létrehozása";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent hurok";
+"settings.agent.description" = "YNH harness futtatása érzékelők által vezérelt agent hurokban. Kísérleti.";
+"settings.agent.enable.tab" = "Agent munkamenetek oldalsáv-fül megjelenítése";
+"settings.agent.enable.tab.help" = "Hozzáad egy oldalsáv-fült, amely felsorolja a folyamatban lévő és múlt agent munkameneteket, és egy „Indítás Agent ként“ műveletet a harness sorokhoz.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH harness eszközlánc";
 "settings.ynh.title" = "ynh";

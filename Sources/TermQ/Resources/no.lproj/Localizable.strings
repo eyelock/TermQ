@@ -674,6 +674,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Opprett et nytt harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agentløkke";
+"settings.agent.description" = "Kjør et YNH-harness som en sensordriven agentløkke. Eksperimentell.";
+"settings.agent.enable.tab" = "Vis Agent Sesjoner-fane i sidepanelet";
+"settings.agent.enable.tab.help" = "Legger til en fane i sidepanelet med pågående og tidligere agentsesjoner, og en handling „Start som Agent“ på harness-rader.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-verktøykjede";
 "settings.ynh.title" = "ynh";

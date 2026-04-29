@@ -675,6 +675,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Luo uusi harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agenttisilmukka";
+"settings.agent.description" = "Suorita YNH-harness sensoriohjattuna agenttisilmukkana. Kokeellinen.";
+"settings.agent.enable.tab" = "Näytä Agenttiistunnot-välilehti sivupalkissa";
+"settings.agent.enable.tab.help" = "Lisää sivupalkkiin välilehden, jossa näkyvät käynnissä olevat ja aiemmat agenttiistunnot, sekä „Käynnistä Agentina“ -toiminto harness-riveille.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-työkaluketju";
 "settings.ynh.title" = "ynh";

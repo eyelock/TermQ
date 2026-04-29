@@ -685,6 +685,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Vytvořit novou sadu";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Smyčka Agenta";
+"settings.agent.description" = "Spusťte harness YNH jako smyčku agenta řízenou senzory. Experimentální.";
+"settings.agent.enable.tab" = "Zobrazit kartu Sezení Agenta na bočním panelu";
+"settings.agent.enable.tab.help" = "Přidá kartu do bočního panelu se seznamem probíhačjích a minulých sezení Agenta a akci „Spustit jako Agent“ na řádcích harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Nástrojový řetězec YNH";
 "settings.ynh.title" = "ynh";

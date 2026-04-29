@@ -676,6 +676,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Створити новий харнес";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Цикл Agent";
+"settings.agent.description" = "Запуск harness YNH як цикл Agent, керований сенсорами. Експериментально.";
+"settings.agent.enable.tab" = "Показати вкладку Сеанси Agent на бічній панелі";
+"settings.agent.enable.tab.help" = "Додає вкладку на бічній панелі зі списком поточних і завершених сеансів Agent, а також дію «Запустити як Agent» у рядках harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Інструментарій YNH";
 "settings.ynh.title" = "ynh";

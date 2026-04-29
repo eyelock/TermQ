@@ -675,6 +675,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Stvori novi harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Petlja Agenta";
+"settings.agent.description" = "Pokrenite YNH harness kao petlju agenta vođenu senzorima. Eksperimentalno.";
+"settings.agent.enable.tab" = "Prikaži karticu Sesije Agenta na bočnoj traci";
+"settings.agent.enable.tab.help" = "Dodaje karticu na bočnoj traci s popisom aktivnih i prošlih sesija agenta te akciju „Pokreni kao Agent“ na redovima harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH alatni lanac";
 "settings.ynh.title" = "ynh";

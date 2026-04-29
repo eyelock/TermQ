@@ -676,6 +676,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "สร้าง Harness ใหม่";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "วงรอบ Agent";
+"settings.agent.description" = "รัน YNH harness เป็นวงรอบ agent ที่ขับเคลื่อนด้วยเซ็นเซอร์ ทดลอง.";
+"settings.agent.enable.tab" = "แสดงแท็บ Agent เซสชันในแถบด้านข้าง";
+"settings.agent.enable.tab.help" = "เพิ่มแท็บในแถบด้านข้างที่แสดงรายการ agent เซสชันที่กำลังดำเนินการและที่ผ่านมาแล้ว และการกระทำ “เปิดใช้เป็น Agent” ในแถว harness";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
 "settings.ynh.title" = "ynh";

@@ -675,6 +675,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "नई Harness बनाएं";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent लूप";
+"settings.agent.description" = "YNH harness को सेंसर-संचालित agent लूप के रूप में चलाएं। प्रायोगिक.";
+"settings.agent.enable.tab" = "साइडबार में Agent सेशन टैब दिखाएं";
+"settings.agent.enable.tab.help" = "साइडबार में एक टैब जोड़ता है जो चल रहे और पिछले Agent सेशन सूचीबद्ध करता है। harness पंक्तियों पर “ Agent के रूप में लॉन्च करें” क्रिया भी डिस्प्ले की जाती है।";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness टूलचेन";
 "settings.ynh.title" = "ynh";

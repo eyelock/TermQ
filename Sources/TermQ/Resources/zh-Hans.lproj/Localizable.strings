@@ -685,6 +685,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "新建 Harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent 循环";
+"settings.agent.description" = "将 YNH Harness 作为由传感器驱动的 Agent 循环运行。实验性功能。";
+"settings.agent.enable.tab" = "显示 Agent 会话侧边栏选项卡";
+"settings.agent.enable.tab.help" = "在侧边栏添加选项卡，列出进行中和历史 Agent 会话，并在 Harness 行上提供“作为 Agent 启动”操作。";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness 工具链";
 "settings.ynh.title" = "ynh";

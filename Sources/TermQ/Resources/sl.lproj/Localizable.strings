@@ -676,6 +676,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Ustvari nov harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Zanka Agenta";
+"settings.agent.description" = "Zaženite harness YNH kot zanko agenta, ki jo poganjajo senzorji. Eksperimentalno.";
+"settings.agent.enable.tab" = "Prikaži zavihek Seje Agenta v stranski vrstici";
+"settings.agent.enable.tab.help" = "Doda zavihek v stransko vrstico s seznamom tekočih in preteklih sej agenta ter dejanje „Zaženi kot Agent“ v vrsticah harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Orodni verižnik YNH";
 "settings.ynh.title" = "ynh";

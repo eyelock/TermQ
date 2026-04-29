@@ -675,6 +675,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "יצירת Harness חדש";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "לולאת Agent";
+"settings.agent.description" = "הפעל harness של YNH כלולאת agent מונעת על ידי חישנים. נִסיוני.";
+"settings.agent.enable.tab" = "הצג כרטיסיית סשני Agent בסרגל הצד";
+"settings.agent.enable.tab.help" = "מוסיף כרטיסיית לסרגל הצד המרשימת את סשני Agent הפעילים והשלמים, ופעולה הפעל כ-Agent בשורות harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "שרשרת כלים YNH";
 "settings.ynh.title" = "ynh";

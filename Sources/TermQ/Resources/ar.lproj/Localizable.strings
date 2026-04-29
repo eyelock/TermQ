@@ -685,6 +685,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "إنشاء حزمة جديدة";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "حلقة Agent";
+"settings.agent.description" = "تشغيل harness YNH كحلقة agent مدفوعة بالمستشعرات. تجريبي.";
+"settings.agent.enable.tab" = "إظهار علامة تبويب جلسات Agent في الشريط الجانبي";
+"settings.agent.enable.tab.help" = "يضيف علامة تبويب في الشريط الجانبي تسرد جلسات Agent الجارية والماضية، وإجراء «تشغيل كـ Agent» على صفوف harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "سلسلة أدوات YNH";
 "settings.ynh.title" = "ynh";
