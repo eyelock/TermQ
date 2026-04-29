@@ -69,9 +69,18 @@ public final class TrajectoryWriter {
         try? handle?.close()
     }
 
+    /// Compute the trajectory file URL for a session id without opening
+    /// it. Used by readers (Transcript viewer, controller hydration) to
+    /// locate the persisted file written by an instance of this writer.
+    public static func fileURL(for sessionId: UUID, baseDirectory: URL? = nil) -> URL {
+        let base = baseDirectory ?? defaultAgentSessionsDirectory()
+        return base.appendingPathComponent(sessionId.uuidString, isDirectory: true)
+            .appendingPathComponent("trajectory.jsonl")
+    }
+
     /// Default directory: `<appSupport>/TermQ[-Debug]/agent-sessions/`.
     /// Mirrors the `#if DEBUG` switch used by BoardPersistence.
-    private static func defaultAgentSessionsDirectory() -> URL {
+    public static func defaultAgentSessionsDirectory() -> URL {
         let appSupport =
             FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.homeDirectoryForCurrentUser
