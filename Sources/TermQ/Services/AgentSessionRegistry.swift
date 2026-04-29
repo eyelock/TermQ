@@ -13,7 +13,9 @@ public final class AgentSessionRegistry: ObservableObject {
     public init() {}
 
     /// Return the controller for the given card id, creating one on first
-    /// access.
+    /// access. The default controller resolves its card via
+    /// `BoardViewModel.shared`; tests can construct controllers directly
+    /// with their own `cardLookup` to avoid the singleton.
     public func controller(for cardId: UUID) -> AgentSessionController {
         if let existing = controllers[cardId] { return existing }
         let new = AgentSessionController(cardId: cardId)
