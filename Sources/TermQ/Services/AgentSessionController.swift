@@ -134,7 +134,12 @@ public final class AgentSessionController: ObservableObject {
     /// apply it. Most events (turn_start, sensor_result, etc.) leave the
     /// status unchanged at `.running`; `.plan` flips the card into the
     /// approval-gated state; terminal-shaped events flip to a final state.
-    private func handleEventForCardStatus(_ event: TrajectoryEvent) {
+    ///
+    /// Internal (not private) so unit tests can inject synthetic events
+    /// without standing up a real subprocess — useful for the
+    /// `.awaitingPlanApproval` flip which races with handleStreamEnd in
+    /// short-lived stubs.
+    func handleEventForCardStatus(_ event: TrajectoryEvent) {
         switch event.decoded() {
         case .plan:
             updateCardStatus(.awaitingPlanApproval)

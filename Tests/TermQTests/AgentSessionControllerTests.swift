@@ -175,18 +175,23 @@ final class AgentSessionControllerTests: XCTestCase {
     // MARK: - Plan approval
 
     @MainActor
-    func testEvent_planFlipsCardToAwaitingApproval() async throws {
+    func testEvent_planFlipsCardToAwaitingApproval() {
+        // Direct unit test: a transient subprocess race made this flaky —
+        // the stub exits, handleStreamEnd fires, and status flips past
+        // .awaitingPlanApproval before any polling could observe it.
+        // In production the loop driver doesn't exit while awaiting, so
+        // this race is a test artefact only. Inject the event directly.
         let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
         let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
 
-        // Long-running stub so the controller stays alive for the assertion.
-        try await controller.start(
-            command: ##"echo '{"type":"plan","content":"# do x"}'; sleep 0.5"##)
+        let planEvent = TrajectoryEvent(
+            type: "plan",
+            timestamp: Date(),
+            payloadJSON: ##"{"type":"plan","content":"# do x"}"##
+        )
+        controller.handleEventForCardStatus(planEvent)
 
-        try await waitUntil { card.agentConfig?.status == .awaitingPlanApproval }
         XCTAssertEqual(card.agentConfig?.status, .awaitingPlanApproval)
-
-        await controller.stop()
     }
 
     @MainActor
