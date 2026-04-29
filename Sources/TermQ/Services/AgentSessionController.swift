@@ -131,11 +131,13 @@ public final class AgentSessionController: ObservableObject {
     // MARK: - Card status writeback
 
     /// Decide whether an incoming event implies a new card status, and
-    /// apply it. Most events (turn_start, sensor_result, plan, etc.) leave
-    /// the status unchanged at `.running`; only terminal-shaped events
-    /// flip the card.
+    /// apply it. Most events (turn_start, sensor_result, etc.) leave the
+    /// status unchanged at `.running`; `.plan` flips the card into the
+    /// approval-gated state; terminal-shaped events flip to a final state.
     private func handleEventForCardStatus(_ event: TrajectoryEvent) {
         switch event.decoded() {
+        case .plan:
+            updateCardStatus(.awaitingPlanApproval)
         case .converged:
             updateCardStatus(.converged)
         case .stuckDetected:
@@ -145,6 +147,32 @@ public final class AgentSessionController: ObservableObject {
         default:
             break
         }
+    }
+
+    // MARK: - Plan approval
+
+    /// Approve the pending plan. Writes a control message to the loop
+    /// driver's stdin and flips the card status back to `.running`.
+    ///
+    /// Wire format (TermQ ↔ ynh-agent contract): NDJSON. The loop driver
+    /// reads stdin line by line and acts on `action` strings. Today only
+    /// `approve_plan` and `reject_plan` are defined; future actions
+    /// (interrupt, edit-feedback, etc.) extend this surface.
+    public func approvePlan() async {
+        guard cardLookup()?.agentConfig?.status == .awaitingPlanApproval else { return }
+        try? await process?.send(line: #"{"action":"approve_plan"}"#)
+        updateCardStatus(.running)
+    }
+
+    /// Reject the pending plan. Sends `reject_plan` to stdin so the driver
+    /// can clean up gracefully, then SIGTERMs and flips the card to
+    /// `.errored`. The driver may exit before reading the message; either
+    /// outcome leaves the card in a terminal state.
+    public func rejectPlan() async {
+        guard cardLookup()?.agentConfig?.status == .awaitingPlanApproval else { return }
+        try? await process?.send(line: #"{"action":"reject_plan"}"#)
+        await process?.stop()
+        updateCardStatus(.errored)
     }
 
     /// Called once the subprocess has fully exited and the stream has
