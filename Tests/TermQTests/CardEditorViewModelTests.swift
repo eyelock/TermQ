@@ -223,4 +223,104 @@ final class CardEditorViewModelTests: XCTestCase {
 
         XCTAssertTrue(vm.tagItems.isEmpty)
     }
+
+    // MARK: - Agent fields
+
+    func testLoad_nonAgentCard_clearsHasAgentConfigFlag() {
+        let card = TerminalCard(columnId: UUID())
+        let vm = CardEditorViewModel()
+        vm.hasAgentConfig = true  // pretend it was set from a previous card
+
+        vm.load(from: card)
+
+        XCTAssertFalse(vm.hasAgentConfig)
+    }
+
+    func testLoad_agentCard_populatesAgentFields() {
+        let config = AgentConfig(
+            harness: "x",
+            backend: .codex,
+            mode: .act,
+            interactionMode: .tweak,
+            budget: AgentBudget(maxTurns: 50, maxTokens: 1_000_000, maxWallSeconds: 1800)
+        )
+        let card = TerminalCard(columnId: UUID(), agentConfig: config)
+        let vm = CardEditorViewModel()
+
+        vm.load(from: card)
+
+        XCTAssertTrue(vm.hasAgentConfig)
+        XCTAssertEqual(vm.agentBackend, .codex)
+        XCTAssertEqual(vm.agentMode, .act)
+        XCTAssertEqual(vm.agentInteractionMode, .tweak)
+        XCTAssertEqual(vm.agentMaxTurns, 50)
+        XCTAssertEqual(vm.agentMaxTokens, 1_000_000)
+        XCTAssertEqual(vm.agentMaxWallMinutes, 30)
+    }
+
+    func testSave_agentCard_writesEditableFields() {
+        let originalConfig = AgentConfig(harness: "x")
+        let card = TerminalCard(columnId: UUID(), agentConfig: originalConfig)
+        let vm = CardEditorViewModel()
+        vm.load(from: card)
+
+        // User edits.
+        vm.title = card.title
+        vm.agentBackend = .codex
+        vm.agentMode = .act
+        vm.agentInteractionMode = .auto
+        vm.agentMaxTurns = 10
+        vm.agentMaxTokens = 200_000
+        vm.agentMaxWallMinutes = 15
+
+        vm.save(to: card)
+
+        let saved = card.agentConfig!
+        XCTAssertEqual(saved.backend, .codex)
+        XCTAssertEqual(saved.mode, .act)
+        XCTAssertEqual(saved.interactionMode, .auto)
+        XCTAssertEqual(saved.budget.maxTurns, 10)
+        XCTAssertEqual(saved.budget.maxTokens, 200_000)
+        XCTAssertEqual(saved.budget.maxWallSeconds, 15 * 60)
+    }
+
+    func testSave_agentCard_preservesIdentityFields() {
+        // sessionId, harness, status are not user-editable; the editor must
+        // round-trip them unchanged on save.
+        let original = AgentConfig(
+            sessionId: UUID(),
+            harness: "kept-harness",
+            backend: .claudeCode,
+            status: .running
+        )
+        let card = TerminalCard(columnId: UUID(), agentConfig: original)
+        let vm = CardEditorViewModel()
+        vm.load(from: card)
+
+        vm.title = card.title
+        vm.agentBackend = .codex  // change a user-editable field
+        vm.save(to: card)
+
+        let saved = card.agentConfig!
+        XCTAssertEqual(saved.sessionId, original.sessionId)
+        XCTAssertEqual(saved.harness, "kept-harness")
+        XCTAssertEqual(saved.status, .running)
+        XCTAssertEqual(saved.backend, .codex)
+    }
+
+    func testSave_nonAgentCard_doesNotInjectAgentConfig() {
+        let card = TerminalCard(columnId: UUID())
+        let vm = CardEditorViewModel()
+        vm.load(from: card)
+        vm.title = card.title
+
+        // Even if the agent fields hold non-default values, save must not
+        // create an agentConfig on a card that didn't already have one.
+        vm.agentBackend = .codex
+        vm.agentMaxTurns = 99
+
+        vm.save(to: card)
+
+        XCTAssertNil(card.agentConfig)
+    }
 }
