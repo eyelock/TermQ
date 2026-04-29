@@ -58,6 +58,24 @@ public struct AgentBudget: Codable, Sendable, Equatable {
     }
 }
 
+/// One trajectory event emitted by an agent loop driver subprocess.
+///
+/// One event per NDJSON line on the subprocess's stdout. `type` is parsed
+/// from the line's top-level `"type"` field for routing; the original JSON
+/// string is preserved in `payloadJSON` so downstream consumers can decode
+/// the specific event variant they care about without re-parsing.
+public struct TrajectoryEvent: Sendable, Equatable {
+    public let type: String
+    public let timestamp: Date
+    public let payloadJSON: String
+
+    public init(type: String, timestamp: Date, payloadJSON: String) {
+        self.type = type
+        self.timestamp = timestamp
+        self.payloadJSON = payloadJSON
+    }
+}
+
 /// Per-card agent session configuration and state.
 ///
 /// Attached to a `TerminalCard` when the card is acting as an agent session.
