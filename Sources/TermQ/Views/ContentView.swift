@@ -94,6 +94,10 @@ struct ContentView: View {
             ZStack {
                 if harnessRepo.selectedHarness != nil {
                     harnessDetailView()
+                } else if let selectedCard = viewModel.selectedCard,
+                    selectedCard.agentConfig != nil
+                {
+                    AgentInspectorView(card: selectedCard)
                 } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
