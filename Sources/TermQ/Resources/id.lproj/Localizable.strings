@@ -670,6 +670,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Buat Harness Baru";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agen Loop";
+"settings.agent.description" = "Jalankan harness YNH sebagai agen loop yang digerakkan oleh sensor. Eksperimental.";
+"settings.agent.enable.tab" = "Tampilkan tab Sesi Agen di bilah samping";
+"settings.agent.enable.tab.help" = "Menambahkan tab di bilah samping yang menampilkan sesi agen yang sedang berjalan dan yang telah selesai, serta aksi “Jalankan sebagai Agen” pada baris harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";
 "settings.ynh.title" = "ynh";

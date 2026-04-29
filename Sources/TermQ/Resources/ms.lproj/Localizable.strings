@@ -659,6 +659,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Cipta Harness Baharu";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Gelung Ejen";
+"settings.agent.description" = "Jalankan harness YNH sebagai gelung ejen yang dipacu sensor. Eksperimental.";
+"settings.agent.enable.tab" = "Tunjukkan tab Sesi Ejen dalam bar sisi";
+"settings.agent.enable.tab.help" = "Menambah tab dalam bar sisi yang menyenaraikan sesi ejen yang sedang berjalan dan yang telah selesai, serta tindakan “Lancar sebagai Ejen” pada baris harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Rantaian Alat YNH";
 "settings.ynh.title" = "ynh";

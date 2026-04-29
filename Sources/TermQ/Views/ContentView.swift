@@ -33,10 +33,20 @@ struct ContentView: View {
                     worktreeViewModel: sidebarViewModel,
                     detector: ynhDetector,
                     harnessRepository: harnessRepo,
+                    boardViewModel: viewModel,
                     onLaunchHarness: { harness in
                         harnessRepo.selectedHarnessName = harness.id
                         Task { await vendorService.refresh() }
                         showLaunchSheet = true
+                    },
+                    onLaunchAsAgent: { harness in
+                        let created = viewModel.createAgentCard(
+                            harnessId: harness.id,
+                            title: harness.name,
+                            description: harness.description ?? ""
+                        )
+                        guard created != nil else { return }
+                        UserDefaults.standard.set("agents", forKey: "sidebar.selectedTab")
                     },
                     onLaunchHarnessInWorktree: { harnessName, path, branch in
                         harnessRepo.selectedHarnessName = harnessName
@@ -92,6 +102,10 @@ struct ContentView: View {
                         onUpdate: { name in updateHarness(name: name) },
                         onUninstall: { name in uninstallHarness(name: name) }
                     )
+                } else if let selectedCard = viewModel.selectedCard,
+                    selectedCard.agentConfig != nil
+                {
+                    AgentInspectorView(card: selectedCard)
                 } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
