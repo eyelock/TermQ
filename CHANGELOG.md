@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.3] — 2026-04-29
+
+### Fixed
+
+- Fix EXC_BREAKPOINT crash caused by @MainActor isolation inherited by system-dispatched closures in TerminalLinkResolver and TmuxControlModeSession
+
 ## [0.9.2] — 2026-04-28
 
 ### Fixed
