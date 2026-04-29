@@ -3,12 +3,20 @@ import TermQCore
 
 /// Main-pane Inspector for an agent session card.
 ///
-/// Skeleton view shown when the selected card has `agentConfig != nil`.
-/// Surfaces session config and a trajectory placeholder; real per-turn wire
-/// (sensor results, editable feedback, controls) lands in later slices once
-/// the loop driver subprocess plumbing exists.
+/// Shown when the selected card has `agentConfig != nil`. Surfaces session
+/// config and live trajectory events streamed from an `AgentSessionController`.
+/// The Run button spawns `/bin/sh -c "$cmd"` where `$cmd` is the value of the
+/// `agent.loopDriverCommand` UserDefaults key (typically the path to
+/// `ynh-agent` plus its arguments, but any command emitting NDJSON to stdout
+/// works — useful for development against a stub).
 struct AgentInspectorView: View {
     @ObservedObject var card: TerminalCard
+    @StateObject private var registry = AgentSessionRegistry.shared
+    @AppStorage("agent.loopDriverCommand") private var loopDriverCommand: String = ""
+
+    private var controller: AgentSessionController {
+        registry.controller(for: card.id)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -25,6 +33,15 @@ struct AgentInspectorView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(NSColor.windowBackgroundColor))
+    }
+
+    private var canRun: Bool {
+        !loopDriverCommand.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    private var isRunning: Bool {
+        if case .running = controller.status { return true }
+        return false
     }
 
     // MARK: - Header
@@ -48,15 +65,22 @@ struct AgentInspectorView: View {
                 StatusPill(status: status)
             }
             HStack(spacing: 8) {
-                Button(action: {}) {
+                Button {
+                    Task { try? await controller.start(command: loopDriverCommand) }
+                } label: {
                     Label("Run", systemImage: "play.fill")
                 }
-                .disabled(true)
-                .help("Loop driver not yet wired")
-                Button(action: {}) {
+                .disabled(!canRun || isRunning)
+                .help(
+                    canRun
+                        ? "Spawn the configured loop driver"
+                        : "Set agent.loopDriverCommand in defaults to enable")
+                Button {
+                    Task { await controller.stop() }
+                } label: {
                     Label("Stop", systemImage: "stop.fill")
                 }
-                .disabled(true)
+                .disabled(!isRunning)
             }
         }
         .padding(.horizontal, 16)
@@ -96,29 +120,115 @@ struct AgentInspectorView: View {
         return "\(seconds)s"
     }
 
-    // MARK: - Trajectory placeholder
+    // MARK: - Trajectory
 
     private var trajectorySection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Trajectory")
-                .font(.headline)
-
-            VStack(spacing: 12) {
-                Image(systemName: "circle.dashed")
-                    .font(.system(size: 32))
-                    .foregroundStyle(.secondary)
-                Text("No trajectory yet")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                Text("The loop driver will emit per-turn sensor runs and feedback here.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
+            HStack {
+                Text("Trajectory")
+                    .font(.headline)
+                Spacer()
+                if !controller.events.isEmpty {
+                    Text("\(controller.events.count) event\(controller.events.count == 1 ? "" : "s")")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 32)
-            .background(Color.secondary.opacity(0.05))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+
+            if controller.events.isEmpty {
+                trajectoryEmptyState
+            } else {
+                trajectoryEventList
+            }
+        }
+    }
+
+    private var trajectoryEmptyState: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "circle.dashed")
+                .font(.system(size: 32))
+                .foregroundStyle(.secondary)
+            Text("No trajectory yet")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            Text(
+                canRun
+                    ? "Press Run to spawn the configured loop driver."
+                    : "Configure agent.loopDriverCommand in defaults, then press Run."
+            )
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 32)
+        .background(Color.secondary.opacity(0.05))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var trajectoryEventList: some View {
+        VStack(spacing: 0) {
+            ForEach(Array(controller.events.enumerated()), id: \.offset) { _, event in
+                TrajectoryEventRow(event: event)
+                Divider()
+            }
+        }
+        .background(Color.secondary.opacity(0.05))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+// MARK: - Trajectory event row
+
+private struct TrajectoryEventRow: View {
+    let event: TrajectoryEvent
+
+    private static let timeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm:ss"
+        return f
+    }()
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(Self.timeFormatter.string(from: event.timestamp))
+                .font(.caption.monospaced())
+                .foregroundStyle(.secondary)
+                .frame(width: 64, alignment: .leading)
+            Text(event.type)
+                .font(.caption.monospaced().weight(.medium))
+                .frame(width: 140, alignment: .leading)
+            Text(summary(for: event))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+    }
+
+    private func summary(for event: TrajectoryEvent) -> String {
+        switch event.decoded() {
+        case .sessionStart(_, let harness):
+            return harness ?? ""
+        case .plan(let content):
+            return content.split(whereSeparator: \.isNewline).first.map(String.init) ?? ""
+        case .turnStart(let turn):
+            return "turn \(turn)"
+        case .sensorResult(let name, let exitCode, let durationMs, let summary):
+            let verdict = exitCode == 0 ? "✓" : "✗"
+            return "\(verdict) \(name) — \(durationMs)ms\(summary.map { " — \($0)" } ?? "")"
+        case .stuckDetected(let reason):
+            return reason
+        case .budgetExceeded(let kind):
+            return kind.rawValue
+        case .converged:
+            return "all sensors green"
+        case .sessionEnd(let exitCode, let totalTurns, _):
+            return "exit \(exitCode)\(totalTurns.map { " · \($0) turns" } ?? "")"
+        case .other:
+            return ""
         }
     }
 }
