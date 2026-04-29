@@ -659,6 +659,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Utwórz nową wiązkę";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Pętla Agenta";
+"settings.agent.description" = "Uruchom harness YNH jako pętlę agenta sterowaną przez czujniki. Eksperymentalne.";
+"settings.agent.enable.tab" = "Pokaż kartę Sesje Agenta na pasku bocznym";
+"settings.agent.enable.tab.help" = "Dodaje kartę na pasku bocznym z listą bieżących i przeszłych sesji agenta oraz akcją „Uruchom jako Agent“ w wierszach harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Łańcuch narzędzi YNH";
 "settings.ynh.title" = "ynh";

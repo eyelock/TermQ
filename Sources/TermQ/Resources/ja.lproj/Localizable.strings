@@ -670,6 +670,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "新しいハーネスを作成";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "エージェントループ";
+"settings.agent.description" = "YNH ハーネスをセンサー駆動のエージェントループとして実行します。実験的機能。";
+"settings.agent.enable.tab" = "エージェントセッションタブをサイドバーに表示";
+"settings.agent.enable.tab.help" = "サイドバーにタブを追加し、進行中および過去のエージェントセッションを一覧表示します。ハーネス行に「エージェントとして起動」アクションも追加されます。";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH ハーネスツールチェーン";
 "settings.ynh.title" = "ynh";

@@ -670,6 +670,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Δημιουργία νέου harness";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Βρόχος Agent";
+"settings.agent.description" = "Εκτέλεση ενός harness YNH ως βρόχου agent κατευθυνόμενου από αισθητήρες. Πειραματικό.";
+"settings.agent.enable.tab" = "Εμφάνιση καρτέλας Σεσιών Agent στο πλαϊνό πλαίσιο";
+"settings.agent.enable.tab.help" = "Προσθέτει καρτέλα στο πλαϊνό πλαίσιο με τη λίστα τρεχόντων και παρελθόντων σεσιών agent και μια ενέργεια «Εκκίνηση ως Agent» στις γραμμές harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Αλυσίδα εργαλείων YNH";
 "settings.ynh.title" = "ynh";

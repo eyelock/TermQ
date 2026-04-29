@@ -670,6 +670,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Creare harness nou";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Buclă Agent";
+"settings.agent.description" = "Rulează un harness YNH ca buclă agent condusă de senzori. Experimental.";
+"settings.agent.enable.tab" = "Afişează fila Sesiuni Agent în bara laterală";
+"settings.agent.enable.tab.help" = "Adaugă o filă în bara laterală cu sesiunile agent în curs şi anterioare şi o acțiune „Lansare ca Agent“ pe rândurile harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Lanț de instrumente YNH";
 "settings.ynh.title" = "ynh";

@@ -661,6 +661,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Yeni harness oluştur";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent Döngüsü";
+"settings.agent.description" = "Bir YNH harness’ını sensörler tarafından yönetilen bir agent döngüsü olarak çalıştırın. Deneysel.";
+"settings.agent.enable.tab" = "Yan Panelde Agent Oturumları sekmesini göster";
+"settings.agent.enable.tab.help" = "Yan panele devam eden ve geçmiş agent oturumlarını listeleyen bir sekme ve harness satırlarına „Agent Olarak Başlat“ eylemi ekler.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Araç Zinciri";
 "settings.ynh.title" = "ynh";

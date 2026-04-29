@@ -659,6 +659,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Nieuw harness aanmaken";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agentlus";
+"settings.agent.description" = "Een YNH-harness uitvoeren als een sensorgestuurde agentlus. Experimenteel.";
+"settings.agent.enable.tab" = "Agentsessies-zijbalktab weergeven";
+"settings.agent.enable.tab.help" = "Voegt een zijbalktab toe met lopende en afgelopen agentsessies, en een actie „Als Agent starten“ op harnessrijen.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-toolchain";
 "settings.ynh.title" = "ynh";

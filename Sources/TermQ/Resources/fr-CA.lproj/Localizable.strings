@@ -660,6 +660,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Créer un nouveau harnais";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Boucle d’agent";
+"settings.agent.description" = "Exécuter un harnais YNH comme boucle d’agent pilotée par des capteurs. Expérimental.";
+"settings.agent.enable.tab" = "Afficher l’onglet Sessions Agent dans la barre latérale";
+"settings.agent.enable.tab.help" = "Ajoute un onglet dans la barre latérale listant les sessions d’agent en cours et passées, et une action «Lancer comme Agent» sur les lignes de harnais.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Chaîne d'outils YNH";
 "settings.ynh.title" = "ynh";

@@ -661,6 +661,12 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Tạo Harness mới";
 
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Vòng lặp Agent";
+"settings.agent.description" = "Chạy harness YNH dưới dạng vòng lặp agent được điều khiển bởi các bộ cảm biến. Thử nghiệm.";
+"settings.agent.enable.tab" = "Hiển thị tab Phên Agent trong thanh bên";
+"settings.agent.enable.tab.help" = "Thêm tab vào thanh bên liệt kê các phiên agent đang chạy và đã qua, cùng hành động “Khởi chạy dưới dạng Agent” trên các hàng harness.";
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Chuỗi công cụ YNH";
 "settings.ynh.title" = "ynh";
