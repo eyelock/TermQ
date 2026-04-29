@@ -181,13 +181,22 @@ public final class AgentSessionController: ObservableObject {
     }
 
     /// Called once the subprocess has fully exited and the stream has
-    /// drained. If a terminal-state event already flipped the card, leave
-    /// that status alone — otherwise infer from the exit code.
+    /// drained. Behaviour is status-conditional:
+    ///
+    /// - Already terminal (`.converged` / `.stuck` / `.errored`) — leave
+    ///   alone (no-downgrade guard).
+    /// - `.awaitingPlanApproval` — the driver died before the user could
+    ///   approve or reject the plan. The session is effectively dead;
+    ///   flip to `.errored` regardless of exit code.
+    /// - Anything else — infer from exit code: 0 → `.converged`, non-zero
+    ///   → `.errored`.
     private func handleStreamEnd(finalStatus: AgentLoopProcessStatus) {
         guard let card = cardLookup(), let config = card.agentConfig else { return }
         switch config.status {
         case .converged, .stuck, .errored:
-            // Terminal already; don't downgrade.
+            return
+        case .awaitingPlanApproval:
+            updateCardStatus(.errored)
             return
         default:
             break

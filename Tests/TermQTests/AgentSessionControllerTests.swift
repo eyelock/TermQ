@@ -118,6 +118,24 @@ final class AgentSessionControllerTests: XCTestCase {
     }
 
     @MainActor
+    func testStreamEnd_whileAwaitingPlanApproval_flipsToErrored() async throws {
+        // If the loop driver dies while the user is still deciding on the
+        // plan, the session is effectively dead — must NOT be reported as
+        // .converged on exit 0. Verify the awaitingPlanApproval branch in
+        // handleStreamEnd.
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // Run-then-exit-0 stub. Force the status to awaiting before the
+        // stream ends so handleStreamEnd sees that branch.
+        try await controller.start(command: "true")
+        forceCardStatus(.awaitingPlanApproval, on: card)
+
+        try await waitUntil { card.agentConfig?.status == .errored }
+        XCTAssertEqual(card.agentConfig?.status, .errored)
+    }
+
+    @MainActor
     func testStreamEnd_doesNotDowngradeTerminalCardStatus() async throws {
         let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
         let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
