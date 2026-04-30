@@ -95,9 +95,22 @@ public final class AgentSessionController: ObservableObject {
         }
     }
 
-    /// Send SIGTERM to the running subprocess, if any.
-    public func stop() async {
-        await process?.stop()
+    /// Graceful stop: send an `interrupt` action to the loop driver's
+    /// stdin so it can flush trajectory state and exit cleanly, then
+    /// fall back to SIGTERM after a short grace period if the driver
+    /// hasn't died on its own.
+    ///
+    /// Wire format: NDJSON action message, same channel as approve_plan
+    /// (see plan §6.1 control protocol).
+    public func stop(graceSeconds: Double = 1.5) async {
+        guard let p = process else { return }
+        try? await p.send(line: #"{"action":"interrupt"}"#)
+        try? await Task.sleep(nanoseconds: UInt64(graceSeconds * 1_000_000_000))
+        // If the driver responded to interrupt and exited, process is nil now.
+        // Otherwise fall back to SIGTERM.
+        if process != nil {
+            await p.stop()
+        }
     }
 
     /// Read a previously-persisted trajectory.jsonl off disk and populate
