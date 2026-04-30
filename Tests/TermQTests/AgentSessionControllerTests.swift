@@ -55,7 +55,7 @@ final class AgentSessionControllerTests: XCTestCase {
         try await controller.start(command: "sleep 0.5")
 
         XCTAssertEqual(card.agentConfig?.status, .running)
-        await controller.stop()
+        await controller.stop(graceSeconds: 0)
     }
 
     @MainActor
@@ -190,6 +190,28 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertTrue(lines[1].contains(#""type":"b""#))
     }
 
+    // MARK: - Graceful stop
+
+    @MainActor
+    func testStop_interruptThenTerminate_driverSelfExitsOnInterrupt() async throws {
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        // Stub reads stdin and exits when it sees the interrupt action.
+        // Tests the graceful path: send action, driver exits cleanly,
+        // SIGTERM is never needed.
+        try await controller.start(
+            command: "while read line; do case \"$line\" in *interrupt*) exit 0;; esac; done; sleep 30")
+
+        await controller.stop(graceSeconds: 1.0)
+
+        if case .exited(let code) = controller.status {
+            XCTAssertEqual(code, 0)
+        } else {
+            XCTFail("Expected exited status, got \(controller.status)")
+        }
+    }
+
     // MARK: - Plan approval
 
     @MainActor
@@ -228,7 +250,7 @@ final class AgentSessionControllerTests: XCTestCase {
         await controller.approvePlan()
 
         XCTAssertEqual(card.agentConfig?.status, .running)
-        await controller.stop()
+        await controller.stop(graceSeconds: 0)
     }
 
     @MainActor
