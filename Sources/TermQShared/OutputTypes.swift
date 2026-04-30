@@ -2,6 +2,29 @@ import Foundation
 
 // MARK: - JSON Output Types (shared across CLI and MCP)
 
+/// Output format for an agent-session card. Used by the `termq_agents`
+/// MCP tool. Inherits the standard terminal fields plus an `agent` block
+/// surfacing the AgentConfigSummary; only emitted for cards whose
+/// `agentConfig` is non-nil.
+public struct AgentSessionOutput: Codable, Sendable {
+    public let id: String
+    public let name: String
+    public let column: String
+    public let columnId: String
+    public let path: String
+    public let agent: AgentConfigSummary
+
+    public init?(from card: Card, columnName: String) {
+        guard let config = card.agentConfig else { return nil }
+        self.id = card.id.uuidString
+        self.name = card.title
+        self.column = columnName
+        self.columnId = card.columnId.uuidString
+        self.path = card.workingDirectory
+        self.agent = config
+    }
+}
+
 /// Standard terminal output format
 public struct TerminalOutput: Codable, Sendable {
     public let id: String

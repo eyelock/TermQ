@@ -28,8 +28,35 @@ extension TermQMCPServer {
             return try await handleGet(params.arguments)
         case "termq_delete":
             return try await handleDelete(params.arguments)
+        case "termq_agents":
+            return try await handleAgents(params.arguments)
         default:
             throw MCPError.invalidRequest("Unknown tool: \(params.name)")
+        }
+    }
+
+    /// `termq_agents` — list cards whose `agentConfig` is set, optionally
+    /// filtered by AgentStatus raw value.
+    func handleAgents(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let statusFilter = InputValidator.optionalString("status", from: arguments)
+
+        do {
+            let board = try loadBoard()
+            var cards = board.activeCards.filter { $0.agentConfig != nil }
+            if let statusFilter, !statusFilter.isEmpty {
+                cards = cards.filter { $0.agentConfig?.status == statusFilter }
+            }
+            cards = CardFilterEngine.sortByColumnThenOrder(cards, columns: board.columns)
+
+            let output = cards.compactMap { card in
+                AgentSessionOutput(from: card, columnName: board.columnName(for: card.columnId))
+            }
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
         }
     }
 
