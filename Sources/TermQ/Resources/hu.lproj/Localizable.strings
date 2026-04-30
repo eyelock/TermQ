@@ -685,6 +685,9 @@
 "editor.agent.field.max.turns" = "Max. körök";
 "editor.agent.field.max.tokens" = "Max. tokenek";
 "editor.agent.field.max.wall.minutes" = "Max. idő (perc)";
+"editor.agent.field.loop.driver.command" = "Loop-meghajtó parancsa";
+"editor.agent.field.loop.driver.command.placeholder" = "Globális alapértelmezés öröklése";
+"editor.agent.field.loop.driver.command.help" = "Az ynh-agent (vagy bármely NDJSON-t kibocsátó bináris) elérési útja és argumentumai. Üres esetén a globális agent.loopDriverCommand beállítás érvényes.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent hurok";

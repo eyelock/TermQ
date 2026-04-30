@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Макс. шагов";
 "editor.agent.field.max.tokens" = "Макс. токенов";
 "editor.agent.field.max.wall.minutes" = "Макс. время (мин)";
+"editor.agent.field.loop.driver.command" = "Команда драйвера цикла";
+"editor.agent.field.loop.driver.command.placeholder" = "Наследовать глобальное значение по умолчанию";
+"editor.agent.field.loop.driver.command.help" = "Путь к ynh-agent (или любому бинарному файлу, выводящему NDJSON) и аргументы. Пустое поле наследует глобальную настройку agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Цикл Agent";

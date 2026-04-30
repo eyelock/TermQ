@@ -684,6 +684,9 @@
 "editor.agent.field.max.turns" = "Turnos máx.";
 "editor.agent.field.max.tokens" = "Tokens máx.";
 "editor.agent.field.max.wall.minutes" = "Tempo máx. (min)";
+"editor.agent.field.loop.driver.command" = "Comando do driver de loop";
+"editor.agent.field.loop.driver.command.placeholder" = "Herdar padrão global";
+"editor.agent.field.loop.driver.command.help" = "Caminho para ynh-agent (ou qualquer binário que emita NDJSON) mais argumentos. Vazio herda o padrão global agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Loop de Agente";

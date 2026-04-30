@@ -685,6 +685,9 @@
 "editor.agent.field.max.turns" = "Tours max";
 "editor.agent.field.max.tokens" = "Tokens max";
 "editor.agent.field.max.wall.minutes" = "Durée max (min)";
+"editor.agent.field.loop.driver.command" = "Commande du pilote de boucle";
+"editor.agent.field.loop.driver.command.placeholder" = "Hériter de la valeur par défaut globale";
+"editor.agent.field.loop.driver.command.help" = "Chemin vers ynh-agent (ou tout binaire émettant du NDJSON) suivi des arguments. Vide hérite du réglage global agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Boucle d’agent";

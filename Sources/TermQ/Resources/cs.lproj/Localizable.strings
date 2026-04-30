@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Max. kol";
 "editor.agent.field.max.tokens" = "Max. tokenů";
 "editor.agent.field.max.wall.minutes" = "Max. čas (min)";
+"editor.agent.field.loop.driver.command" = "Příkaz ovladače smyčky";
+"editor.agent.field.loop.driver.command.placeholder" = "Zdědit globální výchozí hodnotu";
+"editor.agent.field.loop.driver.command.help" = "Cesta k ynh-agent (nebo libovolnému binárnímu souboru generujícímu NDJSON) plus argumenty. Prázdné pole dědí globální nastavení agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Smyčka Agenta";

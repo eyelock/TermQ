@@ -684,6 +684,9 @@
 "editor.agent.field.max.turns" = "최대 턴 수";
 "editor.agent.field.max.tokens" = "최대 토큰 수";
 "editor.agent.field.max.wall.minutes" = "최대 실행 시간(분)";
+"editor.agent.field.loop.driver.command" = "루프 드라이버 명령";
+"editor.agent.field.loop.driver.command.placeholder" = "전역 기본값 상속";
+"editor.agent.field.loop.driver.command.help" = "ynh-agent(또는 NDJSON을 출력하는 임의의 바이너리)의 경로와 인수입니다. 비어 있으면 전역 설정 agent.loopDriverCommand를 상속합니다.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent 루프";

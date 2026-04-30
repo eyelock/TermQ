@@ -684,6 +684,9 @@
 "editor.agent.field.max.turns" = "Maks. rund";
 "editor.agent.field.max.tokens" = "Maks. tokenów";
 "editor.agent.field.max.wall.minutes" = "Maks. czas (min)";
+"editor.agent.field.loop.driver.command" = "Polecenie sterownika pętli";
+"editor.agent.field.loop.driver.command.placeholder" = "Dziedzicz globalną wartość domyślną";
+"editor.agent.field.loop.driver.command.help" = "Ścieżka do ynh-agent (lub dowolnego pliku binarnego emitującego NDJSON) wraz z argumentami. Puste pole dziedziczy globalną wartość agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Pętla Agenta";

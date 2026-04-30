@@ -686,6 +686,9 @@
 "editor.agent.field.max.turns" = "Maks. tur";
 "editor.agent.field.max.tokens" = "Maks. token";
 "editor.agent.field.max.wall.minutes" = "Maks. süre (dk)";
+"editor.agent.field.loop.driver.command" = "Döngü sürücüsü komutu";
+"editor.agent.field.loop.driver.command.placeholder" = "Genel varsayılanı devral";
+"editor.agent.field.loop.driver.command.help" = "ynh-agent (veya NDJSON çıkışı veren herhangi bir ikili) yolu ve argümanları. Boş bırakılırsa genel agent.loopDriverCommand ayarı devralınır.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent Döngüsü";

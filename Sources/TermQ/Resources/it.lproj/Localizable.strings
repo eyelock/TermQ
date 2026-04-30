@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Turni max";
 "editor.agent.field.max.tokens" = "Token max";
 "editor.agent.field.max.wall.minutes" = "Durata max (min)";
+"editor.agent.field.loop.driver.command" = "Comando del driver di ciclo";
+"editor.agent.field.loop.driver.command.placeholder" = "Eredita il valore predefinito globale";
+"editor.agent.field.loop.driver.command.help" = "Percorso di ynh-agent (o qualsiasi binario che emette NDJSON) più argomenti. Vuoto eredita il valore predefinito globale agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Loop Agente";

@@ -685,6 +685,9 @@
 "editor.agent.field.max.turns" = "Maks. poteza";
 "editor.agent.field.max.tokens" = "Maks. tokena";
 "editor.agent.field.max.wall.minutes" = "Maks. vrijeme (min)";
+"editor.agent.field.loop.driver.command" = "Naredba upravljačkog programa petlje";
+"editor.agent.field.loop.driver.command.placeholder" = "Naslijedi globalni zadani";
+"editor.agent.field.loop.driver.command.help" = "Putanja do ynh-agent (ili bilo kojeg binarnog programa koji emitira NDJSON) plus argumenti. Prazno nasljeđuje globalnu postavku agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Petlja Agenta";

@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "最大ターン数";
 "editor.agent.field.max.tokens" = "最大トークン数";
 "editor.agent.field.max.wall.minutes" = "最大実行時間（分）";
+"editor.agent.field.loop.driver.command" = "ループドライバーコマンド";
+"editor.agent.field.loop.driver.command.placeholder" = "グローバルデフォルトを使用";
+"editor.agent.field.loop.driver.command.help" = "ynh-agent（またはNDJSONを出力する任意のバイナリ）へのパスと引数。空の場合はグローバル設定 agent.loopDriverCommand を使用します。";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "エージェントループ";

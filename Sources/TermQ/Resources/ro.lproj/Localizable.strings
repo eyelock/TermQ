@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Ture max.";
 "editor.agent.field.max.tokens" = "Tokenuri max.";
 "editor.agent.field.max.wall.minutes" = "Timp max. (min)";
+"editor.agent.field.loop.driver.command" = "Comanda driverului de buclă";
+"editor.agent.field.loop.driver.command.placeholder" = "Moștenește valoarea implicită globală";
+"editor.agent.field.loop.driver.command.help" = "Calea către ynh-agent (sau orice binar care emite NDJSON) plus argumente. Gol moștenește setarea globală agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Buclă Agent";

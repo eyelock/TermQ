@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Μέγ. γύροι";
 "editor.agent.field.max.tokens" = "Μέγ. tokens";
 "editor.agent.field.max.wall.minutes" = "Μέγ. χρόνος (λεπτ.)";
+"editor.agent.field.loop.driver.command" = "Εντολή οδηγού βρόχου";
+"editor.agent.field.loop.driver.command.placeholder" = "Κληρονόμηση καθολικής προεπιλογής";
+"editor.agent.field.loop.driver.command.help" = "Διαδρομή προς ynh-agent (ή οποιοδήποτε δυαδικό αρχείο που εκπέμπει NDJSON) και ορίσματα. Κενό κληρονομεί την καθολική ρύθμιση agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Βρόχος Agent";

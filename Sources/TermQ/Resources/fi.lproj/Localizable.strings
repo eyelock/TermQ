@@ -685,6 +685,9 @@
 "editor.agent.field.max.turns" = "Enint. kierroksia";
 "editor.agent.field.max.tokens" = "Enint. tokeneita";
 "editor.agent.field.max.wall.minutes" = "Enint. aika (min)";
+"editor.agent.field.loop.driver.command" = "Loop-ajurin komento";
+"editor.agent.field.loop.driver.command.placeholder" = "Peri yleinen oletus";
+"editor.agent.field.loop.driver.command.help" = "Polku ynh-agent-ohjelmaan (tai mihin tahansa NDJSON-tulostetta tuottavaan binääriin) ja argumentit. Tyhjä perii yleisen asetuksen agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agenttisilmukka";

@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "الحد الأقصى للأدوار";
 "editor.agent.field.max.tokens" = "الحد الأقصى للرموز";
 "editor.agent.field.max.wall.minutes" = "الحد الأقصى للوقت (د)";
+"editor.agent.field.loop.driver.command" = "أمر مشغّل الحلقة";
+"editor.agent.field.loop.driver.command.placeholder" = "استخدام الإعداد الافتراضي العام";
+"editor.agent.field.loop.driver.command.help" = "مسار ynh-agent (أو أي ملف ثنائي يصدر NDJSON) مع الوسيطات. يؤدي الترك فارغاً إلى توارث الإعداد العام agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "حلقة Agent";

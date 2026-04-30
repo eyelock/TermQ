@@ -686,6 +686,9 @@
 "editor.agent.field.max.turns" = "ขั้นสูงสุด (รอบ)";
 "editor.agent.field.max.tokens" = "ขั้นสูงสุด (tokens)";
 "editor.agent.field.max.wall.minutes" = "เวลาสูงสุด (นาที)";
+"editor.agent.field.loop.driver.command" = "คำสั่งตัวขับเคลื่อนลูป";
+"editor.agent.field.loop.driver.command.placeholder" = "รับค่าเริ่มต้นส่วนกลาง";
+"editor.agent.field.loop.driver.command.help" = "พาธไปยัง ynh-agent (หรือไบนารีใดก็ได้ที่ส่งออก NDJSON) พร้อมอาร์กิวเมนต์ ว่างเปล่าจะรับค่าจากการตั้งค่า agent.loopDriverCommand ส่วนกลาง";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "วงรอบ Agent";

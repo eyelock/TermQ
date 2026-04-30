@@ -684,6 +684,9 @@
 "editor.agent.field.max.turns" = "Maks. runder";
 "editor.agent.field.max.tokens" = "Maks. tokens";
 "editor.agent.field.max.wall.minutes" = "Maks. tid (min)";
+"editor.agent.field.loop.driver.command" = "Kommando for loop-driver";
+"editor.agent.field.loop.driver.command.placeholder" = "Arv global standard";
+"editor.agent.field.loop.driver.command.help" = "Bane til ynh-agent (eller en hvilken som helst binær som sender NDJSON) pluss argumenter. Tom arver den globale innstillingen agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agentløkke";

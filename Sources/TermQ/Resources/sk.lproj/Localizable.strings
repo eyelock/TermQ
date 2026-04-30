@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Max. kôl";
 "editor.agent.field.max.tokens" = "Max. tokenov";
 "editor.agent.field.max.wall.minutes" = "Max. čas (min)";
+"editor.agent.field.loop.driver.command" = "Príkaz ovládača slučky";
+"editor.agent.field.loop.driver.command.placeholder" = "Zdediť globálnu predvolenú hodnotu";
+"editor.agent.field.loop.driver.command.help" = "Cesta k ynh-agent (alebo ľubovoľnému binárnemu súboru generujúcemu NDJSON) plus argumenty. Prázdne pole dedí globálne nastavenie agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Slučka Agenta";

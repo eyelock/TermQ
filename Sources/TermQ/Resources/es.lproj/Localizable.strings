@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Turnos máx.";
 "editor.agent.field.max.tokens" = "Tokens máx.";
 "editor.agent.field.max.wall.minutes" = "Tiempo máx. (min)";
+"editor.agent.field.loop.driver.command" = "Comando del controlador de bucle";
+"editor.agent.field.loop.driver.command.placeholder" = "Heredar valor global predeterminado";
+"editor.agent.field.loop.driver.command.help" = "Ruta a ynh-agent (o cualquier binario que emita NDJSON) más argumentos. Vacío hereda el valor predeterminado global agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Bucle de Agente";

@@ -684,6 +684,9 @@
 "editor.agent.field.max.turns" = "Max. beurten";
 "editor.agent.field.max.tokens" = "Max. tokens";
 "editor.agent.field.max.wall.minutes" = "Max. wandtijd (min)";
+"editor.agent.field.loop.driver.command" = "Opdracht voor loop-stuurprogramma";
+"editor.agent.field.loop.driver.command.placeholder" = "Globale standaard overnemen";
+"editor.agent.field.loop.driver.command.help" = "Pad naar ynh-agent (of een binair bestand dat NDJSON uitvoert) plus argumenten. Leeg neemt de globale agent.loopDriverCommand-instelling over.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agentlus";

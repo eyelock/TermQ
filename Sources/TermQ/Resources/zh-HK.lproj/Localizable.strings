@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "最大回合數";
 "editor.agent.field.max.tokens" = "最大 tokens";
 "editor.agent.field.max.wall.minutes" = "最長時間（分）";
+"editor.agent.field.loop.driver.command" = "迴圈驅動命令";
+"editor.agent.field.loop.driver.command.placeholder" = "繼承全域預設值";
+"editor.agent.field.loop.driver.command.help" = "ynh-agent（或任何輸出 NDJSON 的執行檔）的路徑及參數。留空則繼承全域 agent.loopDriverCommand 設定。";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent 循環";

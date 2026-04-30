@@ -685,6 +685,9 @@
 "editor.agent.field.max.turns" = "מקס׳ תורות";
 "editor.agent.field.max.tokens" = "מקס׳ tokens";
 "editor.agent.field.max.wall.minutes" = "מקס׳ זמן (דק׳)";
+"editor.agent.field.loop.driver.command" = "פקודת מנהל הלולאה";
+"editor.agent.field.loop.driver.command.placeholder" = "ירש ברירת מחדל גלובלית";
+"editor.agent.field.loop.driver.command.help" = "נתיב אל ynh-agent (או כל קובץ בינארי שפולט NDJSON) בתוספת ארגומנטים. ריק יורש את הגדרת agent.loopDriverCommand הגלובלית.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "לולאת Agent";

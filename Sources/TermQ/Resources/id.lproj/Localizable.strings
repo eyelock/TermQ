@@ -695,6 +695,9 @@
 "editor.agent.field.max.turns" = "Maks. giliran";
 "editor.agent.field.max.tokens" = "Maks. token";
 "editor.agent.field.max.wall.minutes" = "Maks. waktu (mnt)";
+"editor.agent.field.loop.driver.command" = "Perintah driver loop";
+"editor.agent.field.loop.driver.command.placeholder" = "Warisi default global";
+"editor.agent.field.loop.driver.command.help" = "Jalur ke ynh-agent (atau biner apa pun yang memancarkan NDJSON) beserta argumen. Kosong mewarisi pengaturan global agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agen Loop";

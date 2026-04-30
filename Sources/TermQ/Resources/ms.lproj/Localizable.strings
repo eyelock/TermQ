@@ -684,6 +684,9 @@
 "editor.agent.field.max.turns" = "Maks. giliran";
 "editor.agent.field.max.tokens" = "Maks. token";
 "editor.agent.field.max.wall.minutes" = "Maks. masa (min)";
+"editor.agent.field.loop.driver.command" = "Perintah pemacu gelung";
+"editor.agent.field.loop.driver.command.placeholder" = "Warisi lalai global";
+"editor.agent.field.loop.driver.command.help" = "Laluan ke ynh-agent (atau mana-mana binari yang mengeluarkan NDJSON) beserta hujah. Kosong mewarisi tetapan global agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Gelung Ejen";

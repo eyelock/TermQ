@@ -685,6 +685,9 @@
 "editor.agent.field.max.turns" = "अधिकतम चक्र";
 "editor.agent.field.max.tokens" = "अधिकतम tokens";
 "editor.agent.field.max.wall.minutes" = "अधिकतम समय (मिनट)";
+"editor.agent.field.loop.driver.command" = "लूप ड्राइवर कमांड";
+"editor.agent.field.loop.driver.command.placeholder" = "वैश्विक डिफ़ॉल्ट इनहेरिट करें";
+"editor.agent.field.loop.driver.command.help" = "ynh-agent (या कोई भी NDJSON उत्सर्जित करने वाला binary) का पथ और तर्क। खाली छोड़ने पर वैश्विक agent.loopDriverCommand सेटिंग इनहेरिट होती है।";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent लूप";

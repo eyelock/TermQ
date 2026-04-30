@@ -686,6 +686,9 @@
 "editor.agent.field.max.turns" = "Số lượt tối đa";
 "editor.agent.field.max.tokens" = "Token tối đa";
 "editor.agent.field.max.wall.minutes" = "Thời gian tối đa (phút)";
+"editor.agent.field.loop.driver.command" = "Lệnh trình điều khiển vòng lặp";
+"editor.agent.field.loop.driver.command.placeholder" = "Kế thừa giá trị mặc định toàn cục";
+"editor.agent.field.loop.driver.command.help" = "Đường dẫn đến ynh-agent (hoặc bất kỳ tệp nhị phân nào phát NDJSON) cộng với các đối số. Để trống sẽ kế thừa cài đặt toàn cục agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Vòng lặp Agent";

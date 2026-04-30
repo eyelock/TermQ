@@ -686,6 +686,9 @@
 "editor.agent.field.max.turns" = "Maks. krogov";
 "editor.agent.field.max.tokens" = "Maks. žetonov";
 "editor.agent.field.max.wall.minutes" = "Maks. čas (min)";
+"editor.agent.field.loop.driver.command" = "Ukaz gonilnika zanke";
+"editor.agent.field.loop.driver.command.placeholder" = "Podeduj globalno privzeto vrednost";
+"editor.agent.field.loop.driver.command.help" = "Pot do ynh-agent (ali katerega koli binarnega programa, ki oddaja NDJSON) ter argumenti. Prazno podeduje globalno nastavitev agent.loopDriverCommand.";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Zanka Agenta";
