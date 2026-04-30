@@ -19,6 +19,11 @@ public struct Card: Codable, Sendable, Identifiable {
     /// GUI will detect this flag and create sessions automatically
     public let needsTmuxSession: Bool
 
+    /// Agent session config when this card is acting as an agent session.
+    /// `nil` for normal terminal cards. Mirrors `TerminalCard.agentConfig`
+    /// in TermQCore via the shared wire format.
+    public let agentConfig: AgentConfigSummary?
+
     // Custom decoding to handle missing fields for backwards compatibility
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -36,12 +41,13 @@ public struct Card: Codable, Sendable, Identifiable {
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         needsTmuxSession = try container.decodeIfPresent(Bool.self, forKey: .needsTmuxSession) ?? false
+        agentConfig = try container.decodeIfPresent(AgentConfigSummary.self, forKey: .agentConfig)
     }
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex
         case workingDirectory, isFavourite, badge, llmPrompt, llmNextAction, allowAutorun, deletedAt
-        case needsTmuxSession
+        case needsTmuxSession, agentConfig
     }
 
     /// Memberwise initializer for programmatic creation and tests
@@ -59,7 +65,8 @@ public struct Card: Codable, Sendable, Identifiable {
         llmNextAction: String = "",
         allowAutorun: Bool = false,
         deletedAt: Date? = nil,
-        needsTmuxSession: Bool = false
+        needsTmuxSession: Bool = false,
+        agentConfig: AgentConfigSummary? = nil
     ) {
         self.id = id
         self.title = title
@@ -75,6 +82,7 @@ public struct Card: Codable, Sendable, Identifiable {
         self.allowAutorun = allowAutorun
         self.deletedAt = deletedAt
         self.needsTmuxSession = needsTmuxSession
+        self.agentConfig = agentConfig
     }
 
     /// Whether this card is in the bin (soft-deleted)

@@ -82,8 +82,35 @@ extension TermQMCPServer {
             return try await handleRemoveWorktree(params.arguments)
         case "harness_launch":
             return try await handleHarnessLaunch(params.arguments)
+        case "termq_agents":
+            return try await handleAgents(params.arguments)
         default:
             return nil
+        }
+    }
+
+    /// `termq_agents` — list cards whose `agentConfig` is set, optionally
+    /// filtered by AgentStatus raw value.
+    func handleAgents(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let statusFilter = InputValidator.optionalString("status", from: arguments)
+
+        do {
+            let board = try loadBoard()
+            var cards = board.activeCards.filter { $0.agentConfig != nil }
+            if let statusFilter, !statusFilter.isEmpty {
+                cards = cards.filter { $0.agentConfig?.status == statusFilter }
+            }
+            cards = CardFilterEngine.sortByColumnThenOrder(cards, columns: board.columns)
+
+            let output = cards.compactMap { card in
+                AgentSessionOutput(from: card, columnName: board.columnName(for: card.columnId))
+            }
+            let json = try JSONHelper.encode(output)
+            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
         }
     }
 
