@@ -952,3 +952,76 @@
 "command.runner.failed" = "Не виконано";
 "common.copy.output" = "Копіювати вивід";
 "common.rerun" = "Повторити";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Дії включення";
+"harnesses.include.edit.button" = "Редагувати включення…";
+"harnesses.include.remove.button" = "Видалити включення…";
+"harnesses.include.edit.title" = "Редагувати включення";
+"harnesses.include.edit.source" = "Джерело";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "гілка, тег або коміт";
+"harnesses.include.edit.path" = "Шлях";
+"harnesses.include.edit.path.placeholder" = "підшлях у вихідному репозиторії";
+"harnesses.include.edit.picks" = "Вибір";
+"harnesses.include.edit.picks.explainer" = "Позначені артефакти зараз знаходяться в цьому включенні. Перемикайте для додавання або видалення.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld з %ld вибрано";
+"harnesses.include.edit.picks.unknown.source" = "Це джерело не в ваших маркетплейсах — відображаються лише поточні артефакти.";
+"harnesses.include.edit.save" = "Зберегти зміни";
+"harnesses.include.remove.confirm.title" = "Видалити це включення?";
+"harnesses.include.remove.confirm.message %@" = "%@ буде видалено з цього набору. Вихідний репозиторій не зміниться.";
+"harnesses.include.remove.confirm" = "Видалити";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Додати включення…";
+"harnesses.include.add.step.source" = "Вибрати джерело";
+"harnesses.include.add.step.picks" = "Вибрати артефакти";
+"harnesses.include.add.step.review" = "Перевірити";
+"harnesses.include.add.step.running" = "Додавання включення…";
+"harnesses.include.add.source.marketplace" = "З маркетплейсу";
+"harnesses.include.add.source.giturl" = "З Git-URL";
+"harnesses.include.add.search.placeholder" = "Пошук плагінів…";
+"harnesses.include.add.no.marketplaces" = "Маркетплейси не налаштовані. Скористайтеся вкладкою «Маркетплейси», щоб додати один.";
+"harnesses.include.add.no.matches" = "Немає відповідних плагінів.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "гілка, тег або коміт (необов'язково)";
+"harnesses.include.add.gitpath.label" = "Шлях";
+"harnesses.include.add.gitpath.placeholder" = "підкаталог у вихідному репозиторії (необов'язково)";
+"harnesses.include.add.giturl.hint" = "За замовчуванням вибирається все, що надає джерело. Використовуйте «Редагувати включення» після додавання для уточнення.";
+"harnesses.include.add.picks.prompt" = "Виберіть артефакти для включення.";
+"harnesses.include.add.apply" = "Застосувати";
+"harnesses.include.add.already.installed" = "Вже додано";
+"harnesses.include.add.already.installed.help" = "Цей плагін вже є в цьому наборі — натисніть для редагування вибору або ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Редагувати маніфест…";
+"harnesses.manifest.edit.title" = "Редагувати маніфест";
+"harnesses.manifest.edit.name" = "Назва";
+"harnesses.manifest.edit.version" = "Версія";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Використовуйте semver: MAJOR.MINOR.PATCH (наприклад 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Постачальник за замовчуванням";
+"harnesses.manifest.edit.description" = "Опис";
+"harnesses.manifest.edit.description.hint" = "Відображається у списку наборів і в заголовку деталей. Залиште порожнім, щоб не вказувати.";
+"harnesses.manifest.edit.save" = "Зберегти зміни";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Коміт upstream змінився: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Нове робоче дерево з гілки";
+"sidebar.checkout.branch.label" = "Гілка";
+"sidebar.checkout.branch.placeholder" = "Виберіть гілку…";
+"sidebar.checkout.branch.required" = "Виберіть гілку для продовження.";
+"sidebar.checkout.branch.create" = "Створити робоче дерево";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Цей набір не має джерел Git для оновлення.";
+"harnesses.loading.help" = "Зв'язок з ynh…";
+"harnesses.unversioned.drift.help" = "Вміст upstream змінився без оновлення версії — перевірте перед оновленням";
+"harnesses.unversioned.drift.banner" = "Вміст upstream змінився без оновлення версії — перевірте перед оновленням";
+"harnesses.unversioned.drift.confirm.title" = "Перевірити зміни upstream";
+"harnesses.unversioned.drift.confirm.body" = "Вміст upstream змінився без оновлення версії. Оновлення завантажить новий вміст. Перевірте SHA нижче перед продовженням — відсутнє оновлення версії може приховати шкідливі зміни.";
+"harnesses.unversioned.drift.confirm.proceed" = "Все одно оновити";

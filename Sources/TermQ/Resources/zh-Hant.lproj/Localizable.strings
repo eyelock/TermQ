@@ -945,3 +945,76 @@
 "command.runner.failed" = "失敗";
 "common.copy.output" = "複製輸出";
 "common.rerun" = "重新執行";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "包含操作";
+"harnesses.include.edit.button" = "編輯包含…";
+"harnesses.include.remove.button" = "移除包含…";
+"harnesses.include.edit.title" = "編輯包含";
+"harnesses.include.edit.source" = "來源";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "分支、標籤或提交";
+"harnesses.include.edit.path" = "路徑";
+"harnesses.include.edit.path.placeholder" = "來源儲存庫中的子路徑";
+"harnesses.include.edit.picks" = "選擇";
+"harnesses.include.edit.picks.explainer" = "勾選的成品目前在此包含中。切換以新增或移除。";
+"harnesses.include.edit.picks.count %ld %ld" = "已選 %ld / %ld";
+"harnesses.include.edit.picks.unknown.source" = "此來源不在您的市集中 — 僅列出目前的成品。";
+"harnesses.include.edit.save" = "儲存變更";
+"harnesses.include.remove.confirm.title" = "移除此包含？";
+"harnesses.include.remove.confirm.message %@" = "%@ 將從此 harness 中移除。來源儲存庫不受影響。";
+"harnesses.include.remove.confirm" = "移除";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "新增包含…";
+"harnesses.include.add.step.source" = "選擇來源";
+"harnesses.include.add.step.picks" = "選擇成品";
+"harnesses.include.add.step.review" = "檢閱";
+"harnesses.include.add.step.running" = "正在新增包含…";
+"harnesses.include.add.source.marketplace" = "來自市集";
+"harnesses.include.add.source.giturl" = "來自 Git URL";
+"harnesses.include.add.search.placeholder" = "搜尋外掛程式…";
+"harnesses.include.add.no.marketplaces" = "未設定市集。請使用「市集」標籤頁新增一個。";
+"harnesses.include.add.no.matches" = "沒有符合的外掛程式。";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "分支、標籤或提交（可選）";
+"harnesses.include.add.gitpath.label" = "路徑";
+"harnesses.include.add.gitpath.placeholder" = "來源儲存庫中的子目錄（可選）";
+"harnesses.include.add.giturl.hint" = "選擇預設包含來源提供的所有內容。新增後使用「編輯包含」縮小範圍。";
+"harnesses.include.add.picks.prompt" = "選擇要包含的成品。";
+"harnesses.include.add.apply" = "套用";
+"harnesses.include.add.already.installed" = "已新增";
+"harnesses.include.add.already.installed.help" = "此外掛程式已在此 harness 中 — 點按以編輯選擇或 ref。";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "編輯清單…";
+"harnesses.manifest.edit.title" = "編輯清單";
+"harnesses.manifest.edit.name" = "名稱";
+"harnesses.manifest.edit.version" = "版本";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "請使用語義化版本：主版本.次版本.修訂版本（如 0.2.0）";
+"harnesses.manifest.edit.vendor" = "預設供應商";
+"harnesses.manifest.edit.description" = "描述";
+"harnesses.manifest.edit.description.hint" = "顯示在 harness 清單和詳情標題中。留空則省略。";
+"harnesses.manifest.edit.save" = "儲存變更";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "上游提交已變更：%@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "從分支建立新工作樹";
+"sidebar.checkout.branch.label" = "分支";
+"sidebar.checkout.branch.placeholder" = "選擇分支…";
+"sidebar.checkout.branch.required" = "請選擇分支以繼續。";
+"sidebar.checkout.branch.create" = "建立工作樹";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "此 harness 沒有可更新的 Git 來源。";
+"harnesses.loading.help" = "正在與 ynh 通訊…";
+"harnesses.unversioned.drift.help" = "上游內容已變更但未更新版本號 — 更新前請檢閱";
+"harnesses.unversioned.drift.banner" = "上游內容已變更但未更新版本號 — 更新前請檢閱";
+"harnesses.unversioned.drift.confirm.title" = "檢閱上游變更";
+"harnesses.unversioned.drift.confirm.body" = "上游內容已變更但未更新版本號。更新將拉取新內容。繼續操作前請檢閱下方的 SHA — 缺少版本號更新可能遮蔽惡意變更。";
+"harnesses.unversioned.drift.confirm.proceed" = "仍然更新";

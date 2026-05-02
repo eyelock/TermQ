@@ -945,3 +945,76 @@
 "command.runner.failed" = "Fallat";
 "common.copy.output" = "Copia la sortida";
 "common.rerun" = "Torna a executar";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Accions d'inclusió";
+"harnesses.include.edit.button" = "Edita la inclusió…";
+"harnesses.include.remove.button" = "Elimina la inclusió…";
+"harnesses.include.edit.title" = "Edita la inclusió";
+"harnesses.include.edit.source" = "Font";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "branca, etiqueta o commit";
+"harnesses.include.edit.path" = "Ruta";
+"harnesses.include.edit.path.placeholder" = "subruta al repositori font";
+"harnesses.include.edit.picks" = "Selecció";
+"harnesses.include.edit.picks.explainer" = "Els artefactes marcats estan en aquesta inclusió. Activa o desactiva per afegir o eliminar.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld de %ld seleccionats";
+"harnesses.include.edit.picks.unknown.source" = "Aquesta font no és als teus mercats — només es llisten els artefactes actuals.";
+"harnesses.include.edit.save" = "Desa els canvis";
+"harnesses.include.remove.confirm.title" = "Eliminar aquesta inclusió?";
+"harnesses.include.remove.confirm.message %@" = "%@ s'eliminarà d'aquest harness. El repositori font no es modifica.";
+"harnesses.include.remove.confirm" = "Elimina";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Afegeix inclusió…";
+"harnesses.include.add.step.source" = "Tria una font";
+"harnesses.include.add.step.picks" = "Tria artefactes";
+"harnesses.include.add.step.review" = "Revisa";
+"harnesses.include.add.step.running" = "Afegint inclusió…";
+"harnesses.include.add.source.marketplace" = "Des del mercat";
+"harnesses.include.add.source.giturl" = "Des d'URL Git";
+"harnesses.include.add.search.placeholder" = "Cerca connectors…";
+"harnesses.include.add.no.marketplaces" = "Cap mercat configurat. Utilitza la pestanya Mercats per afegir-ne un.";
+"harnesses.include.add.no.matches" = "Cap connector coincideix.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "branca, etiqueta o commit (opcional)";
+"harnesses.include.add.gitpath.label" = "Ruta";
+"harnesses.include.add.gitpath.placeholder" = "subdirectori al repositori font (opcional)";
+"harnesses.include.add.giturl.hint" = "La selecció inclou per defecte tot el que proporciona la font. Utilitza Edita la inclusió després d'afegir per restringir-la.";
+"harnesses.include.add.picks.prompt" = "Selecciona els artefactes a incloure.";
+"harnesses.include.add.apply" = "Aplica";
+"harnesses.include.add.already.installed" = "Ja afegit";
+"harnesses.include.add.already.installed.help" = "Aquest connector ja és en aquest harness — fes clic per editar la selecció o el ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Edita el manifest…";
+"harnesses.manifest.edit.title" = "Edita el manifest";
+"harnesses.manifest.edit.name" = "Nom";
+"harnesses.manifest.edit.version" = "Versió";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Usa semver: MAJOR.MENOR.PEDAÇ (p. ex. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Proveïdor predeterminat";
+"harnesses.manifest.edit.description" = "Descripció";
+"harnesses.manifest.edit.description.hint" = "Es mostra a la llista de harnesses i a la capçalera de detalls. Deixa en blanc per ometre.";
+"harnesses.manifest.edit.save" = "Desa els canvis";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nou worktree des de la branca";
+"sidebar.checkout.branch.label" = "Branca";
+"sidebar.checkout.branch.placeholder" = "Selecciona una branca…";
+"sidebar.checkout.branch.required" = "Selecciona una branca per continuar.";
+"sidebar.checkout.branch.create" = "Crea worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Aquest harness no té fonts Git per actualitzar.";
+"harnesses.loading.help" = "Comunicant amb ynh…";
+"harnesses.unversioned.drift.help" = "El contingut upstream ha canviat sense actualització de versió — revisa abans d'actualitzar";
+"harnesses.unversioned.drift.banner" = "El contingut upstream ha canviat sense actualització de versió — revisa abans d'actualitzar";
+"harnesses.unversioned.drift.confirm.title" = "Revisar els canvis upstream";
+"harnesses.unversioned.drift.confirm.body" = "El contingut upstream ha canviat sense una actualització de versió. Actualitzar descarregarà el nou contingut. Revisa els SHA a continuació abans de continuar — una actualització de versió absent pot emmascarar canvis maliciosos.";
+"harnesses.unversioned.drift.confirm.proceed" = "Actualitza de totes formes";

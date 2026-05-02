@@ -945,3 +945,76 @@
 "command.runner.failed" = "Fallido";
 "common.copy.output" = "Copiar salida";
 "common.rerun" = "Volver a ejecutar";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Acciones de inclusión";
+"harnesses.include.edit.button" = "Editar inclusión…";
+"harnesses.include.remove.button" = "Eliminar inclusión…";
+"harnesses.include.edit.title" = "Editar inclusión";
+"harnesses.include.edit.source" = "Fuente";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "rama, etiqueta o commit";
+"harnesses.include.edit.path" = "Ruta";
+"harnesses.include.edit.path.placeholder" = "subruta en el repositorio fuente";
+"harnesses.include.edit.picks" = "Selección";
+"harnesses.include.edit.picks.explainer" = "Los artefactos marcados están en esta inclusión. Activa o desactiva para añadir o eliminar.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld de %ld seleccionados";
+"harnesses.include.edit.picks.unknown.source" = "Esta fuente no está en tus marketplaces — solo se listan los artefactos actuales.";
+"harnesses.include.edit.save" = "Guardar cambios";
+"harnesses.include.remove.confirm.title" = "¿Eliminar esta inclusión?";
+"harnesses.include.remove.confirm.message %@" = "%@ se eliminará de este harness. El repositorio fuente no se modifica.";
+"harnesses.include.remove.confirm" = "Eliminar";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Añadir inclusión…";
+"harnesses.include.add.step.source" = "Elegir una fuente";
+"harnesses.include.add.step.picks" = "Elegir artefactos";
+"harnesses.include.add.step.review" = "Revisar";
+"harnesses.include.add.step.running" = "Añadiendo inclusión…";
+"harnesses.include.add.source.marketplace" = "Desde marketplace";
+"harnesses.include.add.source.giturl" = "Desde URL Git";
+"harnesses.include.add.search.placeholder" = "Buscar plugins…";
+"harnesses.include.add.no.marketplaces" = "No hay marketplaces configurados. Usa la pestaña Marketplaces para añadir uno.";
+"harnesses.include.add.no.matches" = "Ningún plugin coincide.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "rama, etiqueta o commit (opcional)";
+"harnesses.include.add.gitpath.label" = "Ruta";
+"harnesses.include.add.gitpath.placeholder" = "subdirectorio en el repositorio fuente (opcional)";
+"harnesses.include.add.giturl.hint" = "La selección incluye por defecto todo lo que provee la fuente. Usa Editar inclusión después de añadir para reducirla.";
+"harnesses.include.add.picks.prompt" = "Selecciona los artefactos a incluir.";
+"harnesses.include.add.apply" = "Aplicar";
+"harnesses.include.add.already.installed" = "Ya añadido";
+"harnesses.include.add.already.installed.help" = "Este plugin ya está en este harness — haz clic para editar la selección o el ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Editar manifiesto…";
+"harnesses.manifest.edit.title" = "Editar manifiesto";
+"harnesses.manifest.edit.name" = "Nombre";
+"harnesses.manifest.edit.version" = "Versión";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Usa semver: MAYOR.MENOR.PARCHE (p. ej. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Proveedor predeterminado";
+"harnesses.manifest.edit.description" = "Descripción";
+"harnesses.manifest.edit.description.hint" = "Se muestra en la lista de harnesses y en el encabezado de detalle. Dejar vacío para omitir.";
+"harnesses.manifest.edit.save" = "Guardar cambios";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificado: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nuevo worktree desde rama";
+"sidebar.checkout.branch.label" = "Rama";
+"sidebar.checkout.branch.placeholder" = "Seleccionar una rama…";
+"sidebar.checkout.branch.required" = "Selecciona una rama para continuar.";
+"sidebar.checkout.branch.create" = "Crear worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Este harness no tiene fuentes Git para actualizar.";
+"harnesses.loading.help" = "Comunicando con ynh…";
+"harnesses.unversioned.drift.help" = "El contenido upstream cambió sin actualización de versión — revisa antes de actualizar";
+"harnesses.unversioned.drift.banner" = "El contenido upstream cambió sin actualización de versión — revisa antes de actualizar";
+"harnesses.unversioned.drift.confirm.title" = "Revisar cambios upstream";
+"harnesses.unversioned.drift.confirm.body" = "El contenido upstream ha cambiado sin una actualización de versión. Actualizar descargará el nuevo contenido. Revisa los SHA a continuación antes de continuar — un salto de versión faltante puede enmascarar cambios maliciosos.";
+"harnesses.unversioned.drift.confirm.proceed" = "Actualizar de todas formas";

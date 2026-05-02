@@ -950,3 +950,76 @@
 "command.runner.failed" = "Gagal";
 "common.copy.output" = "Salin output";
 "common.rerun" = "Jalankan semula";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Tindakan sertaan";
+"harnesses.include.edit.button" = "Edit Sertaan…";
+"harnesses.include.remove.button" = "Buang Sertaan…";
+"harnesses.include.edit.title" = "Edit Sertaan";
+"harnesses.include.edit.source" = "Sumber";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "cawangan, tag atau commit";
+"harnesses.include.edit.path" = "Laluan";
+"harnesses.include.edit.path.placeholder" = "sublaluan dalam repositori sumber";
+"harnesses.include.edit.picks" = "Pilihan";
+"harnesses.include.edit.picks.explainer" = "Artifak yang ditandai sedang dalam sertaan ini. Togol untuk menambah atau mengalih keluar.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld daripada %ld dipilih";
+"harnesses.include.edit.picks.unknown.source" = "Sumber ini tidak ada dalam marketplace anda — hanya artifak semasa yang disenaraikan.";
+"harnesses.include.edit.save" = "Simpan Perubahan";
+"harnesses.include.remove.confirm.title" = "Buang sertaan ini?";
+"harnesses.include.remove.confirm.message %@" = "%@ akan dibuang daripada harness ini. Repositori sumber tidak diubah.";
+"harnesses.include.remove.confirm" = "Buang";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Tambah Sertaan…";
+"harnesses.include.add.step.source" = "Pilih sumber";
+"harnesses.include.add.step.picks" = "Pilih artifak";
+"harnesses.include.add.step.review" = "Semak";
+"harnesses.include.add.step.running" = "Menambah sertaan…";
+"harnesses.include.add.source.marketplace" = "Daripada Marketplace";
+"harnesses.include.add.source.giturl" = "Daripada Git URL";
+"harnesses.include.add.search.placeholder" = "Cari pemalam…";
+"harnesses.include.add.no.marketplaces" = "Tiada marketplace dikonfigurasi. Gunakan tab Marketplace untuk menambah satu.";
+"harnesses.include.add.no.matches" = "Tiada pemalam yang sepadan.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "cawangan, tag atau commit (pilihan)";
+"harnesses.include.add.gitpath.label" = "Laluan";
+"harnesses.include.add.gitpath.placeholder" = "subdirektori dalam repositori sumber (pilihan)";
+"harnesses.include.add.giturl.hint" = "Pilihan secara lalai merangkumi semua yang disediakan sumber. Gunakan Edit Sertaan selepas menambah untuk mempersempitkan.";
+"harnesses.include.add.picks.prompt" = "Pilih artifak yang hendak disertakan.";
+"harnesses.include.add.apply" = "Guna";
+"harnesses.include.add.already.installed" = "Telah ditambah";
+"harnesses.include.add.already.installed.help" = "Pemalam ini sudah ada dalam harness ini — klik untuk mengedit pilihan atau ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Edit Manifest…";
+"harnesses.manifest.edit.title" = "Edit Manifest";
+"harnesses.manifest.edit.name" = "Nama";
+"harnesses.manifest.edit.version" = "Versi";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Gunakan semver: MAJOR.MINOR.PATCH (cth. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Vendor Lalai";
+"harnesses.manifest.edit.description" = "Penerangan";
+"harnesses.manifest.edit.description.hint" = "Dipaparkan dalam senarai harness dan pengepala butiran. Biarkan kosong untuk ditinggalkan.";
+"harnesses.manifest.edit.save" = "Simpan Perubahan";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree Baharu dari Cawangan";
+"sidebar.checkout.branch.label" = "Cawangan";
+"sidebar.checkout.branch.placeholder" = "Pilih cawangan…";
+"sidebar.checkout.branch.required" = "Pilih cawangan untuk meneruskan.";
+"sidebar.checkout.branch.create" = "Cipta Worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Harness ini tidak mempunyai sumber Git untuk dikemas kini.";
+"harnesses.loading.help" = "Berkomunikasi dengan ynh…";
+"harnesses.unversioned.drift.help" = "Kandungan upstream berubah tanpa kemas kini versi — semak sebelum mengemas kini";
+"harnesses.unversioned.drift.banner" = "Kandungan upstream berubah tanpa kemas kini versi — semak sebelum mengemas kini";
+"harnesses.unversioned.drift.confirm.title" = "Semak perubahan upstream";
+"harnesses.unversioned.drift.confirm.body" = "Kandungan upstream berubah tanpa kemas kini versi. Mengemas kini akan menarik kandungan baharu. Semak SHA di bawah sebelum meneruskan — kemas kini versi yang hilang boleh menyembunyikan perubahan berbahaya.";
+"harnesses.unversioned.drift.confirm.proceed" = "Kemas kini Juga";

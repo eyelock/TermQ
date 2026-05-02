@@ -945,3 +945,76 @@
 "command.runner.failed" = "Zlyhalo";
 "common.copy.output" = "Kopírovať výstup";
 "common.rerun" = "Spustiť znova";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Akcie zahrnutia";
+"harnesses.include.edit.button" = "Upraviť zahrnutie…";
+"harnesses.include.remove.button" = "Odstrániť zahrnutie…";
+"harnesses.include.edit.title" = "Upraviť zahrnutie";
+"harnesses.include.edit.source" = "Zdroj";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "vetva, tag alebo commit";
+"harnesses.include.edit.path" = "Cesta";
+"harnesses.include.edit.path.placeholder" = "subcesta v zdrojovom repozitári";
+"harnesses.include.edit.picks" = "Výber";
+"harnesses.include.edit.picks.explainer" = "Zaškrtnuté artefakty sú aktuálne v tomto zahrnutí. Prepínajte pre pridanie alebo odobratie.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld z %ld vybraných";
+"harnesses.include.edit.picks.unknown.source" = "Tento zdroj nie je na vašich trhoch — zobrazujú sa len aktuálne artefakty.";
+"harnesses.include.edit.save" = "Uložiť zmeny";
+"harnesses.include.remove.confirm.title" = "Odstrániť toto zahrnutie?";
+"harnesses.include.remove.confirm.message %@" = "%@ bude odstránený z tohto setu. Zdrojový repozitár sa nezmení.";
+"harnesses.include.remove.confirm" = "Odstrániť";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Pridať zahrnutie…";
+"harnesses.include.add.step.source" = "Vybrať zdroj";
+"harnesses.include.add.step.picks" = "Vybrať artefakty";
+"harnesses.include.add.step.review" = "Skontrolovať";
+"harnesses.include.add.step.running" = "Pridávanie zahrnutia…";
+"harnesses.include.add.source.marketplace" = "Z trhu";
+"harnesses.include.add.source.giturl" = "Z Git URL";
+"harnesses.include.add.search.placeholder" = "Hľadať pluginy…";
+"harnesses.include.add.no.marketplaces" = "Žiadne trhy nie sú nakonfigurované. Pridajte jeden cez záložku Trhy.";
+"harnesses.include.add.no.matches" = "Žiadny plugin nezodpovedá.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "vetva, tag alebo commit (voliteľné)";
+"harnesses.include.add.gitpath.label" = "Cesta";
+"harnesses.include.add.gitpath.placeholder" = "podadresár v zdrojovom repozitári (voliteľné)";
+"harnesses.include.add.giturl.hint" = "Výber predvolene zahŕňa všetko, čo zdroj poskytuje. Po pridaní použite Upraviť zahrnutie na spresnenie.";
+"harnesses.include.add.picks.prompt" = "Vyberte artefakty na zahrnutie.";
+"harnesses.include.add.apply" = "Použiť";
+"harnesses.include.add.already.installed" = "Už pridané";
+"harnesses.include.add.already.installed.help" = "Tento plugin je už v tomto sete — kliknite pre úpravu výberu alebo ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Upraviť manifest…";
+"harnesses.manifest.edit.title" = "Upraviť manifest";
+"harnesses.manifest.edit.name" = "Názov";
+"harnesses.manifest.edit.version" = "Verzia";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Použite semver: MAJOR.MINOR.PATCH (napr. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Predvolený dodávateľ";
+"harnesses.manifest.edit.description" = "Popis";
+"harnesses.manifest.edit.description.hint" = "Zobrazené v zozname setov a v záhlaví detailov. Ponechajte prázdne pre vynechanie.";
+"harnesses.manifest.edit.save" = "Uložiť zmeny";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream sa zmenil: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nový worktree z vetvy";
+"sidebar.checkout.branch.label" = "Vetva";
+"sidebar.checkout.branch.placeholder" = "Vyberte vetvu…";
+"sidebar.checkout.branch.required" = "Vyberte vetvu pre pokračovanie.";
+"sidebar.checkout.branch.create" = "Vytvoriť worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Tento set nemá žiadne Git zdroje na aktualizáciu.";
+"harnesses.loading.help" = "Komunikácia s ynh…";
+"harnesses.unversioned.drift.help" = "Obsah upstream sa zmenil bez aktualizácie verzie — skontrolujte pred aktualizáciou";
+"harnesses.unversioned.drift.banner" = "Obsah upstream sa zmenil bez aktualizácie verzie — skontrolujte pred aktualizáciou";
+"harnesses.unversioned.drift.confirm.title" = "Skontrolovať zmeny upstream";
+"harnesses.unversioned.drift.confirm.body" = "Obsah upstream sa zmenil bez aktualizácie verzie. Aktualizácia stiahne nový obsah. Skontrolujte SHA nižšie pred pokračovaním — chýbajúca aktualizácia verzie môže maskovať škodlivé zmeny.";
+"harnesses.unversioned.drift.confirm.proceed" = "Aktualizovať aj tak";

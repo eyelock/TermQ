@@ -951,3 +951,76 @@
 "command.runner.failed" = "נכשל";
 "common.copy.output" = "העתק פלט";
 "common.rerun" = "הרץ שוב";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "פעולות הכללה";
+"harnesses.include.edit.button" = "ערוך הכללה…";
+"harnesses.include.remove.button" = "הסר הכללה…";
+"harnesses.include.edit.title" = "ערוך הכללה";
+"harnesses.include.edit.source" = "מקור";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "ענף, תגית או commit";
+"harnesses.include.edit.path" = "נתיב";
+"harnesses.include.edit.path.placeholder" = "נתיב משנה במאגר המקור";
+"harnesses.include.edit.picks" = "בחירה";
+"harnesses.include.edit.picks.explainer" = "פריטים מסומנים נמצאים כרגע בהכללה זו. הפעל/השבת כדי להוסיף או להסיר.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld מתוך %ld נבחרו";
+"harnesses.include.edit.picks.unknown.source" = "מקור זה אינו בשווקים שלך — מוצגים רק הפריטים הנוכחיים.";
+"harnesses.include.edit.save" = "שמור שינויים";
+"harnesses.include.remove.confirm.title" = "להסיר הכללה זו?";
+"harnesses.include.remove.confirm.message %@" = "%@ יוסר מ-harness זה. מאגר המקור לא ישתנה.";
+"harnesses.include.remove.confirm" = "הסר";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "הוסף הכללה…";
+"harnesses.include.add.step.source" = "בחר מקור";
+"harnesses.include.add.step.picks" = "בחר פריטים";
+"harnesses.include.add.step.review" = "סקירה";
+"harnesses.include.add.step.running" = "מוסיף הכללה…";
+"harnesses.include.add.source.marketplace" = "מהשוק";
+"harnesses.include.add.source.giturl" = "מכתובת Git";
+"harnesses.include.add.search.placeholder" = "חפש תוספים…";
+"harnesses.include.add.no.marketplaces" = "לא הוגדרו שווקים. השתמש בכרטיסיית שווקים כדי להוסיף אחד.";
+"harnesses.include.add.no.matches" = "לא נמצאו תוספים תואמים.";
+"harnesses.include.add.giturl.label" = "כתובת URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "ענף, תגית או commit (אופציונלי)";
+"harnesses.include.add.gitpath.label" = "נתיב";
+"harnesses.include.add.gitpath.placeholder" = "תת-תיקייה במאגר המקור (אופציונלי)";
+"harnesses.include.add.giturl.hint" = "הבחירה כוללת כברירת מחדל את כל מה שהמקור מספק. השתמש בערוך הכללה לאחר ההוספה כדי לצמצם.";
+"harnesses.include.add.picks.prompt" = "בחר את הפריטים לכלול.";
+"harnesses.include.add.apply" = "החל";
+"harnesses.include.add.already.installed" = "כבר נוסף";
+"harnesses.include.add.already.installed.help" = "תוסף זה כבר נמצא ב-harness זה — לחץ לעריכת הבחירה או ה-ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "ערוך מניפסט…";
+"harnesses.manifest.edit.title" = "ערוך מניפסט";
+"harnesses.manifest.edit.name" = "שם";
+"harnesses.manifest.edit.version" = "גרסה";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "השתמש בסמוור: MAJOR.MINOR.PATCH (לדוג' 0.2.0)";
+"harnesses.manifest.edit.vendor" = "ספק ברירת מחדל";
+"harnesses.manifest.edit.description" = "תיאור";
+"harnesses.manifest.edit.description.hint" = "מוצג ברשימת ה-harness ובכותרת הפרטים. השאר ריק להשמטה.";
+"harnesses.manifest.edit.save" = "שמור שינויים";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "ה-commit העולמי השתנה: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "עץ עבודה חדש מענף";
+"sidebar.checkout.branch.label" = "ענף";
+"sidebar.checkout.branch.placeholder" = "בחר ענף…";
+"sidebar.checkout.branch.required" = "בחר ענף להמשך.";
+"sidebar.checkout.branch.create" = "צור עץ עבודה";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "ל-harness זה אין מקורות Git לעדכון.";
+"harnesses.loading.help" = "תקשורת עם ynh…";
+"harnesses.unversioned.drift.help" = "התוכן העולמי השתנה ללא עדכון גרסה — בדוק לפני עדכון";
+"harnesses.unversioned.drift.banner" = "התוכן העולמי השתנה ללא עדכון גרסה — בדוק לפני עדכון";
+"harnesses.unversioned.drift.confirm.title" = "בדיקת שינויים עולמיים";
+"harnesses.unversioned.drift.confirm.body" = "התוכן העולמי השתנה ללא עדכון גרסה. העדכון יביא את התוכן החדש. בדוק את ה-SHA למטה לפני שתמשיך — עדכון גרסה חסר עשוי להסתיר שינויים זדוניים.";
+"harnesses.unversioned.drift.confirm.proceed" = "עדכן בכל מקרה";

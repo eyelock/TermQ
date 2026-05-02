@@ -945,3 +945,76 @@
 "command.runner.failed" = "失敗";
 "common.copy.output" = "出力をコピー";
 "common.rerun" = "再実行";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "インクルードのアクション";
+"harnesses.include.edit.button" = "インクルードを編集…";
+"harnesses.include.remove.button" = "インクルードを削除…";
+"harnesses.include.edit.title" = "インクルードを編集";
+"harnesses.include.edit.source" = "ソース";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "ブランチ、タグ、またはコミット";
+"harnesses.include.edit.path" = "パス";
+"harnesses.include.edit.path.placeholder" = "ソースリポジトリのサブパス";
+"harnesses.include.edit.picks" = "選択";
+"harnesses.include.edit.picks.explainer" = "チェックされたアーティファクトは現在このインクルードに含まれています。トグルして追加または削除します。";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld 選択済み";
+"harnesses.include.edit.picks.unknown.source" = "このソースはマーケットプレイスにありません — 現在のアーティファクトのみ表示されています。";
+"harnesses.include.edit.save" = "変更を保存";
+"harnesses.include.remove.confirm.title" = "このインクルードを削除しますか？";
+"harnesses.include.remove.confirm.message %@" = "%@ がこの harness から削除されます。ソースリポジトリは変更されません。";
+"harnesses.include.remove.confirm" = "削除";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "インクルードを追加…";
+"harnesses.include.add.step.source" = "ソースを選択";
+"harnesses.include.add.step.picks" = "アーティファクトを選択";
+"harnesses.include.add.step.review" = "確認";
+"harnesses.include.add.step.running" = "インクルードを追加中…";
+"harnesses.include.add.source.marketplace" = "マーケットプレイスから";
+"harnesses.include.add.source.giturl" = "Git URLから";
+"harnesses.include.add.search.placeholder" = "プラグインを検索…";
+"harnesses.include.add.no.marketplaces" = "マーケットプレイスが設定されていません。マーケットプレイスタブから追加してください。";
+"harnesses.include.add.no.matches" = "一致するプラグインがありません。";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "ブランチ、タグ、またはコミット（任意）";
+"harnesses.include.add.gitpath.label" = "パス";
+"harnesses.include.add.gitpath.placeholder" = "ソースリポジトリのサブディレクトリ（任意）";
+"harnesses.include.add.giturl.hint" = "選択はデフォルトでソースが提供するすべてを含みます。追加後に「インクルードを編集」で絞り込めます。";
+"harnesses.include.add.picks.prompt" = "含めるアーティファクトを選択してください。";
+"harnesses.include.add.apply" = "適用";
+"harnesses.include.add.already.installed" = "追加済み";
+"harnesses.include.add.already.installed.help" = "このプラグインはすでにこの harness にあります — クリックして選択または ref を編集できます。";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "マニフェストを編集…";
+"harnesses.manifest.edit.title" = "マニフェストを編集";
+"harnesses.manifest.edit.name" = "名前";
+"harnesses.manifest.edit.version" = "バージョン";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "semver を使用してください：MAJOR.MINOR.PATCH（例：0.2.0）";
+"harnesses.manifest.edit.vendor" = "デフォルトベンダー";
+"harnesses.manifest.edit.description" = "説明";
+"harnesses.manifest.edit.description.hint" = "harness リストとdetailヘッダーに表示されます。省略する場合は空のままにしてください。";
+"harnesses.manifest.edit.save" = "変更を保存";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "上流のコミットが変更されました：%@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "ブランチから新しいワークツリー";
+"sidebar.checkout.branch.label" = "ブランチ";
+"sidebar.checkout.branch.placeholder" = "ブランチを選択…";
+"sidebar.checkout.branch.required" = "続行するにはブランチを選択してください。";
+"sidebar.checkout.branch.create" = "ワークツリーを作成";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "この harness に更新する Git ソースがありません。";
+"harnesses.loading.help" = "ynh と通信中…";
+"harnesses.unversioned.drift.help" = "上流のコンテンツがバージョン更新なしに変更されました — 更新前に確認してください";
+"harnesses.unversioned.drift.banner" = "上流のコンテンツがバージョン更新なしに変更されました — 更新前に確認してください";
+"harnesses.unversioned.drift.confirm.title" = "上流の変更を確認";
+"harnesses.unversioned.drift.confirm.body" = "上流のコンテンツがバージョン更新なしに変更されました。更新すると新しいコンテンツが取得されます。続行前に以下の SHA を確認してください — バージョン更新の欠如は悪意ある変更を隠す可能性があります。";
+"harnesses.unversioned.drift.confirm.proceed" = "それでも更新";

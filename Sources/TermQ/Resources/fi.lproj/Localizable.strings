@@ -951,3 +951,76 @@
 "command.runner.failed" = "Epäonnistui";
 "common.copy.output" = "Kopioi tuloste";
 "common.rerun" = "Suorita uudelleen";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Sisällytystoiminnot";
+"harnesses.include.edit.button" = "Muokkaa sisällytystä…";
+"harnesses.include.remove.button" = "Poista sisällytys…";
+"harnesses.include.edit.title" = "Muokkaa sisällytystä";
+"harnesses.include.edit.source" = "Lähde";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "haara, tagi tai commit";
+"harnesses.include.edit.path" = "Polku";
+"harnesses.include.edit.path.placeholder" = "alihakemistopolku lähderepositoryssä";
+"harnesses.include.edit.picks" = "Valinta";
+"harnesses.include.edit.picks.explainer" = "Valitut artefaktit ovat tällä hetkellä tässä sisällytyksessä. Vaihda lisätäksesi tai poistaaksesi.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld valittu";
+"harnesses.include.edit.picks.unknown.source" = "Tämä lähde ei ole markkinapaikoissasi — vain nykyiset artefaktit näytetään.";
+"harnesses.include.edit.save" = "Tallenna muutokset";
+"harnesses.include.remove.confirm.title" = "Poistetaanko tämä sisällytys?";
+"harnesses.include.remove.confirm.message %@" = "%@ poistetaan tästä harnessista. Lähderepositoryä ei muuteta.";
+"harnesses.include.remove.confirm" = "Poista";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Lisää sisällytys…";
+"harnesses.include.add.step.source" = "Valitse lähde";
+"harnesses.include.add.step.picks" = "Valitse artefaktit";
+"harnesses.include.add.step.review" = "Tarkista";
+"harnesses.include.add.step.running" = "Lisätään sisällytystä…";
+"harnesses.include.add.source.marketplace" = "Markkinapaikalta";
+"harnesses.include.add.source.giturl" = "Git-URL:sta";
+"harnesses.include.add.search.placeholder" = "Hae lisäosia…";
+"harnesses.include.add.no.marketplaces" = "Ei markkinapaikkoja määritetty. Lisää yksi Markkinapaikat-välilehdeltä.";
+"harnesses.include.add.no.matches" = "Ei vastaavia lisäosia.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "haara, tagi tai commit (valinnainen)";
+"harnesses.include.add.gitpath.label" = "Polku";
+"harnesses.include.add.gitpath.placeholder" = "alihakemisto lähderepositoryssä (valinnainen)";
+"harnesses.include.add.giturl.hint" = "Valinta sisältää oletuksena kaiken, mitä lähde tarjoaa. Käytä Muokkaa sisällytystä lisäämisen jälkeen rajataksesi sitä.";
+"harnesses.include.add.picks.prompt" = "Valitse sisällytettävät artefaktit.";
+"harnesses.include.add.apply" = "Käytä";
+"harnesses.include.add.already.installed" = "Jo lisätty";
+"harnesses.include.add.already.installed.help" = "Tämä lisäosa on jo tässä harnessissa — napsauta muokataksesi valintaa tai refiä.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Muokkaa manifestia…";
+"harnesses.manifest.edit.title" = "Muokkaa manifestia";
+"harnesses.manifest.edit.name" = "Nimi";
+"harnesses.manifest.edit.version" = "Versio";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Käytä semveriä: MAJOR.MINOR.PATCH (esim. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Oletusvalmistaja";
+"harnesses.manifest.edit.description" = "Kuvaus";
+"harnesses.manifest.edit.description.hint" = "Näytetään harness-listassa ja yksityiskohtien otsikossa. Jätä tyhjäksi jättääksesi pois.";
+"harnesses.manifest.edit.save" = "Tallenna muutokset";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit muuttunut: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Uusi worktree haarasta";
+"sidebar.checkout.branch.label" = "Haara";
+"sidebar.checkout.branch.placeholder" = "Valitse haara…";
+"sidebar.checkout.branch.required" = "Valitse haara jatkaaksesi.";
+"sidebar.checkout.branch.create" = "Luo worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Tässä harnessissa ei ole Git-lähteitä päivitettäväksi.";
+"harnesses.loading.help" = "Kommunikoidaan ynh:n kanssa…";
+"harnesses.unversioned.drift.help" = "Upstream-sisältö muuttui ilman versiota — tarkista ennen päivittämistä";
+"harnesses.unversioned.drift.banner" = "Upstream-sisältö muuttui ilman versiota — tarkista ennen päivittämistä";
+"harnesses.unversioned.drift.confirm.title" = "Tarkista upstream-muutokset";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-sisältö on muuttunut ilman versionpäivitystä. Päivittäminen hakee uuden sisällön. Tarkista alla olevat SHA:t ennen jatkamista — puuttuva versionpäivitys voi peittää haitalliset muutokset.";
+"harnesses.unversioned.drift.confirm.proceed" = "Päivitä silti";

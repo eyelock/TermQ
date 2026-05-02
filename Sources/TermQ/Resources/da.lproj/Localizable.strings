@@ -945,3 +945,76 @@
 "command.runner.failed" = "Mislykkedes";
 "common.copy.output" = "Kopiér output";
 "common.rerun" = "Kør igen";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include-handlinger";
+"harnesses.include.edit.button" = "Rediger include…";
+"harnesses.include.remove.button" = "Fjern include…";
+"harnesses.include.edit.title" = "Rediger include";
+"harnesses.include.edit.source" = "Kilde";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "gren, tag eller commit";
+"harnesses.include.edit.path" = "Sti";
+"harnesses.include.edit.path.placeholder" = "understi i kilderepo";
+"harnesses.include.edit.picks" = "Udvalg";
+"harnesses.include.edit.picks.explainer" = "Markerede artefakter er i øjeblikket i denne include. Skift for at tilføje eller fjerne.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld af %ld valgt";
+"harnesses.include.edit.picks.unknown.source" = "Denne kilde er ikke i dine markedspladser — kun de aktuelle artefakter vises.";
+"harnesses.include.edit.save" = "Gem ændringer";
+"harnesses.include.remove.confirm.title" = "Fjern denne include?";
+"harnesses.include.remove.confirm.message %@" = "%@ fjernes fra dette harness. Kilderepository påvirkes ikke.";
+"harnesses.include.remove.confirm" = "Fjern";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Tilføj include…";
+"harnesses.include.add.step.source" = "Vælg en kilde";
+"harnesses.include.add.step.picks" = "Vælg artefakter";
+"harnesses.include.add.step.review" = "Gennemse";
+"harnesses.include.add.step.running" = "Tilføjer include…";
+"harnesses.include.add.source.marketplace" = "Fra markedsplads";
+"harnesses.include.add.source.giturl" = "Fra Git-URL";
+"harnesses.include.add.search.placeholder" = "Søg plugins…";
+"harnesses.include.add.no.marketplaces" = "Ingen markedspladser konfigureret. Brug fanen Markedspladser til at tilføje en.";
+"harnesses.include.add.no.matches" = "Ingen plugins matcher.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "gren, tag eller commit (valgfrit)";
+"harnesses.include.add.gitpath.label" = "Sti";
+"harnesses.include.add.gitpath.placeholder" = "undermappe i kilderepo (valgfrit)";
+"harnesses.include.add.giturl.hint" = "Udvalget inkluderer som standard alt, hvad kilden leverer. Brug Rediger include efter tilføjelse for at indsnævre det.";
+"harnesses.include.add.picks.prompt" = "Vælg de artefakter der skal inkluderes.";
+"harnesses.include.add.apply" = "Anvend";
+"harnesses.include.add.already.installed" = "Allerede tilføjet";
+"harnesses.include.add.already.installed.help" = "Dette plugin er allerede i dette harness — klik for at redigere udvalg eller ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Rediger manifest…";
+"harnesses.manifest.edit.title" = "Rediger manifest";
+"harnesses.manifest.edit.name" = "Navn";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Brug semver: MAJOR.MINOR.PATCH (f.eks. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Standardleverandør";
+"harnesses.manifest.edit.description" = "Beskrivelse";
+"harnesses.manifest.edit.description.hint" = "Vises i harness-listen og detailoverskriften. Lad stå tomt for at udelade.";
+"harnesses.manifest.edit.save" = "Gem ændringer";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit ændret: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nyt worktree fra gren";
+"sidebar.checkout.branch.label" = "Gren";
+"sidebar.checkout.branch.placeholder" = "Vælg en gren…";
+"sidebar.checkout.branch.required" = "Vælg en gren for at fortsætte.";
+"sidebar.checkout.branch.create" = "Opret worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Dette harness har ingen Git-kilder at opdatere.";
+"harnesses.loading.help" = "Kommunikerer med ynh…";
+"harnesses.unversioned.drift.help" = "Upstream-indhold ændret uden versionsopdatering — gennemgå inden opdatering";
+"harnesses.unversioned.drift.banner" = "Upstream-indhold ændret uden versionsopdatering — gennemgå inden opdatering";
+"harnesses.unversioned.drift.confirm.title" = "Gennemgå upstream-ændringer";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-indhold er ændret uden en versionsopdatering. Opdatering henter det nye indhold. Gennemgå SHA'erne nedenfor, inden du fortsætter — en manglende versionsopdatering kan skjule ondsindede ændringer.";
+"harnesses.unversioned.drift.confirm.proceed" = "Opdater alligevel";

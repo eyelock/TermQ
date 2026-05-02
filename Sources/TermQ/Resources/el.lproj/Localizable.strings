@@ -945,3 +945,76 @@
 "command.runner.failed" = "Αποτυχία";
 "common.copy.output" = "Αντιγραφή εξόδου";
 "common.rerun" = "Εκ νέου εκτέλεση";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Ενέργειες συμπερίληψης";
+"harnesses.include.edit.button" = "Επεξεργασία συμπερίληψης…";
+"harnesses.include.remove.button" = "Αφαίρεση συμπερίληψης…";
+"harnesses.include.edit.title" = "Επεξεργασία συμπερίληψης";
+"harnesses.include.edit.source" = "Πηγή";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "κλάδος, ετικέτα ή commit";
+"harnesses.include.edit.path" = "Διαδρομή";
+"harnesses.include.edit.path.placeholder" = "υποδιαδρομή στο αποθετήριο πηγής";
+"harnesses.include.edit.picks" = "Επιλογή";
+"harnesses.include.edit.picks.explainer" = "Τα επισημασμένα αντικείμενα βρίσκονται τώρα σε αυτή τη συμπερίληψη. Ενεργοποιήστε/απενεργοποιήστε για προσθήκη ή αφαίρεση.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld από %ld επιλεγμένα";
+"harnesses.include.edit.picks.unknown.source" = "Αυτή η πηγή δεν βρίσκεται στα marketplace σας — εμφανίζονται μόνο τα τρέχοντα αντικείμενα.";
+"harnesses.include.edit.save" = "Αποθήκευση αλλαγών";
+"harnesses.include.remove.confirm.title" = "Αφαίρεση αυτής της συμπερίληψης;";
+"harnesses.include.remove.confirm.message %@" = "Το %@ θα αφαιρεθεί από αυτό το harness. Το αποθετήριο πηγής δεν τροποποιείται.";
+"harnesses.include.remove.confirm" = "Αφαίρεση";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Προσθήκη συμπερίληψης…";
+"harnesses.include.add.step.source" = "Επιλογή πηγής";
+"harnesses.include.add.step.picks" = "Επιλογή αντικειμένων";
+"harnesses.include.add.step.review" = "Έλεγχος";
+"harnesses.include.add.step.running" = "Προσθήκη συμπερίληψης…";
+"harnesses.include.add.source.marketplace" = "Από marketplace";
+"harnesses.include.add.source.giturl" = "Από Git URL";
+"harnesses.include.add.search.placeholder" = "Αναζήτηση προσθέτων…";
+"harnesses.include.add.no.marketplaces" = "Δεν έχουν ρυθμιστεί marketplace. Χρησιμοποιήστε την καρτέλα Marketplace για να προσθέσετε ένα.";
+"harnesses.include.add.no.matches" = "Κανένα πρόσθετο δεν ταιριάζει.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "κλάδος, ετικέτα ή commit (προαιρετικό)";
+"harnesses.include.add.gitpath.label" = "Διαδρομή";
+"harnesses.include.add.gitpath.placeholder" = "υποκατάλογος στο αποθετήριο πηγής (προαιρετικό)";
+"harnesses.include.add.giturl.hint" = "Η επιλογή περιλαμβάνει από προεπιλογή όλα όσα παρέχει η πηγή. Χρησιμοποιήστε Επεξεργασία συμπερίληψης μετά την προσθήκη για περιορισμό.";
+"harnesses.include.add.picks.prompt" = "Επιλέξτε τα αντικείμενα για συμπερίληψη.";
+"harnesses.include.add.apply" = "Εφαρμογή";
+"harnesses.include.add.already.installed" = "Ήδη προστέθηκε";
+"harnesses.include.add.already.installed.help" = "Αυτό το πρόσθετο βρίσκεται ήδη σε αυτό το harness — κάντε κλικ για επεξεργασία επιλογής ή ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Επεξεργασία manifest…";
+"harnesses.manifest.edit.title" = "Επεξεργασία manifest";
+"harnesses.manifest.edit.name" = "Όνομα";
+"harnesses.manifest.edit.version" = "Έκδοση";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Χρησιμοποιήστε semver: MAJOR.MINOR.PATCH (π.χ. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Προεπιλεγμένος προμηθευτής";
+"harnesses.manifest.edit.description" = "Περιγραφή";
+"harnesses.manifest.edit.description.hint" = "Εμφανίζεται στη λίστα harness και στην κεφαλίδα λεπτομερειών. Αφήστε κενό για παράλειψη.";
+"harnesses.manifest.edit.save" = "Αποθήκευση αλλαγών";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Το upstream commit άλλαξε: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Νέο worktree από κλάδο";
+"sidebar.checkout.branch.label" = "Κλάδος";
+"sidebar.checkout.branch.placeholder" = "Επιλέξτε κλάδο…";
+"sidebar.checkout.branch.required" = "Επιλέξτε κλάδο για να συνεχίσετε.";
+"sidebar.checkout.branch.create" = "Δημιουργία worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Αυτό το harness δεν έχει πηγές Git για ενημέρωση.";
+"harnesses.loading.help" = "Επικοινωνία με το ynh…";
+"harnesses.unversioned.drift.help" = "Το upstream περιεχόμενο άλλαξε χωρίς ενημέρωση έκδοσης — ελέγξτε πριν την ενημέρωση";
+"harnesses.unversioned.drift.banner" = "Το upstream περιεχόμενο άλλαξε χωρίς ενημέρωση έκδοσης — ελέγξτε πριν την ενημέρωση";
+"harnesses.unversioned.drift.confirm.title" = "Έλεγχος upstream αλλαγών";
+"harnesses.unversioned.drift.confirm.body" = "Το upstream περιεχόμενο άλλαξε χωρίς ενημέρωση έκδοσης. Η ενημέρωση θα φέρει το νέο περιεχόμενο. Ελέγξτε τα SHA παρακάτω πριν συνεχίσετε — η έλλειψη ενημέρωσης έκδοσης μπορεί να αποκρύψει κακόβουλες αλλαγές.";
+"harnesses.unversioned.drift.confirm.proceed" = "Ενημέρωση ούτως ή άλλως";

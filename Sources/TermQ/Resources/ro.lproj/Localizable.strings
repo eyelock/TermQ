@@ -945,3 +945,76 @@
 "command.runner.failed" = "Eșuat";
 "common.copy.output" = "Copiați ieșirea";
 "common.rerun" = "Rulați din nou";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Acțiuni includere";
+"harnesses.include.edit.button" = "Editați includerea…";
+"harnesses.include.remove.button" = "Eliminați includerea…";
+"harnesses.include.edit.title" = "Editați includerea";
+"harnesses.include.edit.source" = "Sursă";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "ramură, etichetă sau commit";
+"harnesses.include.edit.path" = "Cale";
+"harnesses.include.edit.path.placeholder" = "subcale în depozitul sursă";
+"harnesses.include.edit.picks" = "Selecție";
+"harnesses.include.edit.picks.explainer" = "Artefactele bifate sunt în prezent în această includere. Comutați pentru a adăuga sau elimina.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld din %ld selectate";
+"harnesses.include.edit.picks.unknown.source" = "Această sursă nu este în piețele dvs. — sunt listate doar artefactele curente.";
+"harnesses.include.edit.save" = "Salvați modificările";
+"harnesses.include.remove.confirm.title" = "Eliminați această includere?";
+"harnesses.include.remove.confirm.message %@" = "%@ va fi eliminat din acest harness. Depozitul sursă nu este modificat.";
+"harnesses.include.remove.confirm" = "Eliminați";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Adăugați includere…";
+"harnesses.include.add.step.source" = "Alegeți o sursă";
+"harnesses.include.add.step.picks" = "Alegeți artefacte";
+"harnesses.include.add.step.review" = "Verificați";
+"harnesses.include.add.step.running" = "Se adaugă includerea…";
+"harnesses.include.add.source.marketplace" = "Din piață";
+"harnesses.include.add.source.giturl" = "Din URL Git";
+"harnesses.include.add.search.placeholder" = "Căutați pluginuri…";
+"harnesses.include.add.no.marketplaces" = "Nu există piețe configurate. Utilizați fila Piețe pentru a adăuga una.";
+"harnesses.include.add.no.matches" = "Niciun plugin nu corespunde.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "ramură, etichetă sau commit (opțional)";
+"harnesses.include.add.gitpath.label" = "Cale";
+"harnesses.include.add.gitpath.placeholder" = "subdirector în depozitul sursă (opțional)";
+"harnesses.include.add.giturl.hint" = "Selecția include implicit tot ceea ce oferă sursa. Utilizați Editați includerea după adăugare pentru a restrânge.";
+"harnesses.include.add.picks.prompt" = "Selectați artefactele de inclus.";
+"harnesses.include.add.apply" = "Aplicați";
+"harnesses.include.add.already.installed" = "Deja adăugat";
+"harnesses.include.add.already.installed.help" = "Acest plugin este deja în acest harness — faceți clic pentru a edita selecția sau ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Editați manifestul…";
+"harnesses.manifest.edit.title" = "Editați manifestul";
+"harnesses.manifest.edit.name" = "Nume";
+"harnesses.manifest.edit.version" = "Versiune";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Utilizați semver: MAJOR.MINOR.PATCH (ex. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Furnizor implicit";
+"harnesses.manifest.edit.description" = "Descriere";
+"harnesses.manifest.edit.description.hint" = "Afișat în lista de harness-uri și în antetul detaliilor. Lăsați gol pentru a omite.";
+"harnesses.manifest.edit.save" = "Salvați modificările";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree nou din ramură";
+"sidebar.checkout.branch.label" = "Ramură";
+"sidebar.checkout.branch.placeholder" = "Selectați o ramură…";
+"sidebar.checkout.branch.required" = "Selectați o ramură pentru a continua.";
+"sidebar.checkout.branch.create" = "Creați worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Acest harness nu are surse Git de actualizat.";
+"harnesses.loading.help" = "Comunicare cu ynh…";
+"harnesses.unversioned.drift.help" = "Conținutul upstream s-a modificat fără actualizare de versiune — verificați înainte de actualizare";
+"harnesses.unversioned.drift.banner" = "Conținutul upstream s-a modificat fără actualizare de versiune — verificați înainte de actualizare";
+"harnesses.unversioned.drift.confirm.title" = "Verificați modificările upstream";
+"harnesses.unversioned.drift.confirm.body" = "Conținutul upstream s-a modificat fără o actualizare de versiune. Actualizarea va descărca noul conținut. Verificați SHA-urile de mai jos înainte de a continua — o actualizare de versiune lipsă poate masca modificări malițioase.";
+"harnesses.unversioned.drift.confirm.proceed" = "Actualizați oricum";

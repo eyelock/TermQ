@@ -952,3 +952,76 @@
 "command.runner.failed" = "ล้มเหลว";
 "common.copy.output" = "คัดลอกผลลัพธ์";
 "common.rerun" = "เรียกใช้อีกครั้ง";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "การกระทำการรวมรายการ";
+"harnesses.include.edit.button" = "แก้ไขการรวมรายการ…";
+"harnesses.include.remove.button" = "นำการรวมรายการออก…";
+"harnesses.include.edit.title" = "แก้ไขการรวมรายการ";
+"harnesses.include.edit.source" = "แหล่งที่มา";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "สาขา แท็ก หรือ commit";
+"harnesses.include.edit.path" = "เส้นทาง";
+"harnesses.include.edit.path.placeholder" = "เส้นทางย่อยใน repository ต้นทาง";
+"harnesses.include.edit.picks" = "การเลือก";
+"harnesses.include.edit.picks.explainer" = "อาร์ติแฟกต์ที่ถูกเลือกอยู่ในการรวมรายการนี้อยู่แล้ว สลับเพื่อเพิ่มหรือนำออก";
+"harnesses.include.edit.picks.count %ld %ld" = "เลือกแล้ว %ld จาก %ld รายการ";
+"harnesses.include.edit.picks.unknown.source" = "แหล่งที่มานี้ไม่อยู่ใน marketplace ของคุณ — แสดงเฉพาะอาร์ติแฟกต์ปัจจุบัน";
+"harnesses.include.edit.save" = "บันทึกการเปลี่ยนแปลง";
+"harnesses.include.remove.confirm.title" = "นำการรวมรายการนี้ออก?";
+"harnesses.include.remove.confirm.message %@" = "%@ จะถูกนำออกจาก harness นี้ repository ต้นทางจะไม่ถูกแตะต้อง";
+"harnesses.include.remove.confirm" = "นำออก";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "เพิ่มการรวมรายการ…";
+"harnesses.include.add.step.source" = "เลือกแหล่งที่มา";
+"harnesses.include.add.step.picks" = "เลือกอาร์ติแฟกต์";
+"harnesses.include.add.step.review" = "ตรวจสอบ";
+"harnesses.include.add.step.running" = "กำลังเพิ่มการรวมรายการ…";
+"harnesses.include.add.source.marketplace" = "จาก Marketplace";
+"harnesses.include.add.source.giturl" = "จาก Git URL";
+"harnesses.include.add.search.placeholder" = "ค้นหาปลั๊กอิน…";
+"harnesses.include.add.no.marketplaces" = "ไม่มี marketplace ที่กำหนดค่าไว้ ใช้แท็บ Marketplaces เพื่อเพิ่ม";
+"harnesses.include.add.no.matches" = "ไม่พบปลั๊กอินที่ตรงกัน";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "สาขา แท็ก หรือ commit (ไม่บังคับ)";
+"harnesses.include.add.gitpath.label" = "เส้นทาง";
+"harnesses.include.add.gitpath.placeholder" = "ไดเรกทอรีย่อยใน repository ต้นทาง (ไม่บังคับ)";
+"harnesses.include.add.giturl.hint" = "การเลือกจะรวมทุกอย่างที่แหล่งที่มาจัดหาตามค่าเริ่มต้น ใช้แก้ไขการรวมรายการหลังจากเพิ่มเพื่อจำกัดขอบเขต";
+"harnesses.include.add.picks.prompt" = "เลือกอาร์ติแฟกต์ที่ต้องการรวม";
+"harnesses.include.add.apply" = "ใช้งาน";
+"harnesses.include.add.already.installed" = "เพิ่มแล้ว";
+"harnesses.include.add.already.installed.help" = "ปลั๊กอินนี้อยู่ใน harness นี้แล้ว — คลิกเพื่อแก้ไขการเลือกหรือ ref";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "แก้ไข Manifest…";
+"harnesses.manifest.edit.title" = "แก้ไข Manifest";
+"harnesses.manifest.edit.name" = "ชื่อ";
+"harnesses.manifest.edit.version" = "เวอร์ชัน";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "ใช้ semver: MAJOR.MINOR.PATCH (เช่น 0.2.0)";
+"harnesses.manifest.edit.vendor" = "ผู้ขายเริ่มต้น";
+"harnesses.manifest.edit.description" = "คำอธิบาย";
+"harnesses.manifest.edit.description.hint" = "แสดงในรายการ harness และส่วนหัวรายละเอียด เว้นว่างเพื่อละเว้น";
+"harnesses.manifest.edit.save" = "บันทึกการเปลี่ยนแปลง";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit เปลี่ยนแปลง: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree ใหม่จากสาขา";
+"sidebar.checkout.branch.label" = "สาขา";
+"sidebar.checkout.branch.placeholder" = "เลือกสาขา…";
+"sidebar.checkout.branch.required" = "เลือกสาขาเพื่อดำเนินการต่อ";
+"sidebar.checkout.branch.create" = "สร้าง Worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Harness นี้ไม่มีแหล่งที่มา Git ที่จะอัปเดต";
+"harnesses.loading.help" = "กำลังสื่อสารกับ ynh…";
+"harnesses.unversioned.drift.help" = "เนื้อหา upstream เปลี่ยนแปลงโดยไม่มีการอัปเดตเวอร์ชัน — ตรวจสอบก่อนอัปเดต";
+"harnesses.unversioned.drift.banner" = "เนื้อหา upstream เปลี่ยนแปลงโดยไม่มีการอัปเดตเวอร์ชัน — ตรวจสอบก่อนอัปเดต";
+"harnesses.unversioned.drift.confirm.title" = "ตรวจสอบการเปลี่ยนแปลง upstream";
+"harnesses.unversioned.drift.confirm.body" = "เนื้อหา upstream เปลี่ยนแปลงโดยไม่มีการอัปเดตเวอร์ชัน การอัปเดตจะดึงเนื้อหาใหม่ ตรวจสอบ SHA ด้านล่างก่อนดำเนินการ — การอัปเดตเวอร์ชันที่หายไปอาจซ่อนการเปลี่ยนแปลงที่เป็นอันตราย";
+"harnesses.unversioned.drift.confirm.proceed" = "อัปเดตต่อไป";
