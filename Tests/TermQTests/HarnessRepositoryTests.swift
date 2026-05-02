@@ -174,6 +174,43 @@ final class HarnessRepositoryInvalidationTests: XCTestCase {
     }
 }
 
+// MARK: - ynhErrorMessage
+
+final class YNHErrorMessageTests: XCTestCase {
+
+    func test_emptyStderr_returnsNil() {
+        XCTAssertNil(ynhErrorMessage(from: ""))
+    }
+
+    func test_whitespaceOnlyStderr_returnsNil() {
+        XCTAssertNil(ynhErrorMessage(from: "   \n  "))
+    }
+
+    func test_jsonWithMessage_returnsMessage() {
+        let json = #"{"error":{"code":"NOT_FOUND","message":"harness not found"}}"#
+        XCTAssertEqual(ynhErrorMessage(from: json), "harness not found")
+    }
+
+    func test_jsonWithCodeOnly_returnsCode() {
+        let json = #"{"error":{"code":"NOT_FOUND"}}"#
+        XCTAssertEqual(ynhErrorMessage(from: json), "NOT_FOUND")
+    }
+
+    func test_jsonWithEmptyMessageFallsBackToCode() {
+        let json = #"{"error":{"code":"ERR","message":""}}"#
+        XCTAssertEqual(ynhErrorMessage(from: json), "ERR")
+    }
+
+    func test_plainTextStderr_returnsRawString() {
+        XCTAssertEqual(
+            ynhErrorMessage(from: "error: unknown flag --check-updates"), "error: unknown flag --check-updates")
+    }
+
+    func test_trailingNewlineIsTrimmed() {
+        XCTAssertEqual(ynhErrorMessage(from: "something went wrong\n"), "something went wrong")
+    }
+}
+
 // MARK: - Strings.Harnesses.uninstallBaseMessage
 
 @MainActor

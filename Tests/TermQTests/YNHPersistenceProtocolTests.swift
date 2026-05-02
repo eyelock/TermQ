@@ -13,6 +13,7 @@ import XCTest
 final class MockYNHPersistence: YNHPersistenceProtocol {
     var worktreeHarness: [String: String] = [:]
     var repoHarness: [String: String] = [:]
+    var harnessVendor: [String: String] = [:]
 
     func harness(for worktreePath: String) -> String? {
         worktreeHarness[worktreePath]
@@ -26,6 +27,10 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
         worktreeHarness
             .compactMap { $0.value == harnessName ? $0.key : nil }
             .sorted()
+    }
+
+    func vendorOverride(for harnessId: String) -> String? {
+        harnessVendor[harnessId]
     }
 
     func setRepoDefaultHarness(_ harnessName: String?, for repoPath: String) {
@@ -44,11 +49,23 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
         }
     }
 
+    func setVendorOverride(_ vendorId: String?, for harnessId: String) {
+        if let vendorId, !vendorId.isEmpty {
+            harnessVendor[harnessId] = vendorId
+        } else {
+            harnessVendor.removeValue(forKey: harnessId)
+        }
+    }
+
     func removeAllAssociations(for harnessName: String) {
         let worktreePaths = worktreeHarness.compactMap { $0.value == harnessName ? $0.key : nil }
         for path in worktreePaths { worktreeHarness.removeValue(forKey: path) }
         let repoPaths = repoHarness.compactMap { $0.value == harnessName ? $0.key : nil }
         for path in repoPaths { repoHarness.removeValue(forKey: path) }
+        let vendorKeys = harnessVendor.keys.filter { id in
+            id == harnessName || id.hasSuffix("/\(harnessName)")
+        }
+        for key in vendorKeys { harnessVendor.removeValue(forKey: key) }
     }
 }
 
@@ -162,6 +179,54 @@ final class MockYNHPersistenceMutationTests: XCTestCase {
         mock.setRepoDefaultHarness("claude", for: "/repos/proj")
         mock.setRepoDefaultHarness("gpt4", for: "/repos/proj")
         XCTAssertEqual(mock.repoDefaultHarness(for: "/repos/proj"), "gpt4")
+    }
+
+    // MARK: - Vendor override
+
+    func test_vendorOverride_returnsNilWhenNotSet() {
+        let mock = MockYNHPersistence()
+        XCTAssertNil(mock.vendorOverride(for: "my-harness"))
+    }
+
+    func test_setVendorOverride_storesAndReadsBack() {
+        let mock = MockYNHPersistence()
+        mock.setVendorOverride("codex", for: "my-harness")
+        XCTAssertEqual(mock.vendorOverride(for: "my-harness"), "codex")
+    }
+
+    func test_setVendorOverride_nilClearsEntry() {
+        let mock = MockYNHPersistence()
+        mock.setVendorOverride("codex", for: "my-harness")
+        mock.setVendorOverride(nil, for: "my-harness")
+        XCTAssertNil(mock.vendorOverride(for: "my-harness"))
+    }
+
+    func test_setVendorOverride_emptyStringClearsEntry() {
+        let mock = MockYNHPersistence()
+        mock.setVendorOverride("codex", for: "my-harness")
+        mock.setVendorOverride("", for: "my-harness")
+        XCTAssertNil(mock.vendorOverride(for: "my-harness"))
+    }
+
+    func test_removeAllAssociations_clearsBareNameVendorOverride() {
+        let mock = MockYNHPersistence()
+        mock.setVendorOverride("codex", for: "my-harness")
+        mock.removeAllAssociations(for: "my-harness")
+        XCTAssertNil(mock.vendorOverride(for: "my-harness"))
+    }
+
+    func test_removeAllAssociations_clearsNamespaceQualifiedVendorOverride() {
+        let mock = MockYNHPersistence()
+        mock.setVendorOverride("codex", for: "eyelock/assistants/my-harness")
+        mock.removeAllAssociations(for: "my-harness")
+        XCTAssertNil(mock.vendorOverride(for: "eyelock/assistants/my-harness"))
+    }
+
+    func test_removeAllAssociations_doesNotClearUnrelatedVendorOverride() {
+        let mock = MockYNHPersistence()
+        mock.setVendorOverride("codex", for: "other-harness")
+        mock.removeAllAssociations(for: "my-harness")
+        XCTAssertEqual(mock.vendorOverride(for: "other-harness"), "codex")
     }
 }
 
