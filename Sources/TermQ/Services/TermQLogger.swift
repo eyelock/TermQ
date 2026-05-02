@@ -55,6 +55,11 @@ enum TermQLogger {
     /// Window lifecycle: creation, close, delegate assignment, count changes
     static let window = CategoryLogger(category: "window")
 
+    /// External subprocess invocation: command name, exit code, duration.
+    /// Argument lists, stdout, and stderr are user data — gate them behind
+    /// `fileLoggingEnabled`.
+    static let process = CategoryLogger(category: "process")
+
     // MARK: - File Logging
 
     /// True when TERMQ_DEBUG is set in the environment. Evaluated once at

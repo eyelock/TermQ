@@ -51,6 +51,10 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
             .sorted()
     }
 
+    func vendorOverride(for harnessId: String) -> String? {
+        config.harnessVendor[harnessId]
+    }
+
     // MARK: - Mutations
 
     func setRepoDefaultHarness(_ harnessName: String?, for repoPath: String) {
@@ -82,10 +86,36 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         for path in repoPaths {
             config.repoHarness.removeValue(forKey: path)
         }
+        // Vendor override is keyed by harness id, which may include a
+        // namespace; uninstall is by name, so drop any entry whose key
+        // matches the bare name or ends with "/<name>".
+        let vendorKeys = config.harnessVendor.keys.filter { id in
+            id == harnessName || id.hasSuffix("/\(harnessName)")
+        }
+        for key in vendorKeys {
+            config.harnessVendor.removeValue(forKey: key)
+        }
         do {
             try YNHConfigLoader.save(config, dataDirectory: saveURL.deletingLastPathComponent())
         } catch {
             TermQLogger.session.warning("YNHPersistence: save failed")
+        }
+    }
+
+    func setVendorOverride(_ vendorId: String?, for harnessId: String) {
+        if let vendorId, !vendorId.isEmpty {
+            config.harnessVendor[harnessId] = vendorId
+        } else {
+            config.harnessVendor.removeValue(forKey: harnessId)
+        }
+        do {
+            try YNHConfigLoader.save(config, dataDirectory: saveURL.deletingLastPathComponent())
+        } catch {
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.session.warning("YNHPersistence: save failed: \(error.localizedDescription)")
+            } else {
+                TermQLogger.session.warning("YNHPersistence: save failed")
+            }
         }
     }
 

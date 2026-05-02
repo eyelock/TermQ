@@ -34,13 +34,16 @@ final class HarnessSearchService: ObservableObject {
                 ? ["search", "--format", "json"]
                 : ["search", trimmed, "--format", "json"]
             do {
-                let output = try await YNHDetector.runCommand(
-                    ynhPath,
-                    args: args,
+                let result = try await CommandRunner.run(
+                    executable: ynhPath,
+                    arguments: args,
                     environment: env
                 )
                 guard !Task.isCancelled else { return }
-                results = try JSONDecoder().decode([SearchResult].self, from: Data(output.utf8))
+                guard result.didSucceed else {
+                    throw YNHDetectionError.commandFailed(exitCode: result.exitCode, stderr: result.stderr)
+                }
+                results = try JSONDecoder().decode([SearchResult].self, from: Data(result.stdout.utf8))
             } catch {
                 guard !Task.isCancelled else { return }
                 self.error = error.localizedDescription

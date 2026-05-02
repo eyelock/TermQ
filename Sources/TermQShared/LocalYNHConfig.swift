@@ -11,23 +11,32 @@ public struct LocalYNHConfig: Codable, Sendable {
     public var repoHarness: [String: String]
     /// Global preferred vendor ID for harness launches.
     public var preferredVendor: String?
+    /// Per-harness vendor override. Maps harness id (`Harness.id`, namespace-
+    /// qualified when present) to a vendor id (`claude` / `codex` / `cursor`).
+    /// When set, this overrides the harness's own `default_vendor` for both
+    /// the badge in the detail pane and the launch sheet's initial selection.
+    public var harnessVendor: [String: String]
 
     public init(
         worktreeHarness: [String: String] = [:],
         repoHarness: [String: String] = [:],
-        preferredVendor: String? = nil
+        preferredVendor: String? = nil,
+        harnessVendor: [String: String] = [:]
     ) {
         self.worktreeHarness = worktreeHarness
         self.repoHarness = repoHarness
         self.preferredVendor = preferredVendor
+        self.harnessVendor = harnessVendor
     }
 
-    // Custom decoder for backward compat: `repoHarness` may be absent in older ynh.json files.
+    // Custom decoder for backward compat: `repoHarness` and `harnessVendor`
+    // may be absent in older ynh.json files written by earlier TermQ versions.
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         worktreeHarness = (try? c.decode([String: String].self, forKey: .worktreeHarness)) ?? [:]
         repoHarness = (try? c.decode([String: String].self, forKey: .repoHarness)) ?? [:]
         preferredVendor = try? c.decode(String.self, forKey: .preferredVendor)
+        harnessVendor = (try? c.decode([String: String].self, forKey: .harnessVendor)) ?? [:]
     }
 }
 

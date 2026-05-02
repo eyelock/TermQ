@@ -34,12 +34,18 @@ final class VendorService: ObservableObject {
         }
 
         do {
-            let output = try await YNHDetector.runCommand(
-                ynhPath,
-                args: ["vendors", "--format", "json"],
+            let result = try await CommandRunner.run(
+                executable: ynhPath,
+                arguments: ["vendors", "--format", "json"],
                 environment: env
             )
-            let data = Data(output.utf8)
+            guard result.didSucceed else {
+                throw YNHDetectionError.commandFailed(
+                    exitCode: result.exitCode,
+                    stderr: result.stderr
+                )
+            }
+            let data = Data(result.stdout.utf8)
             vendors = try JSONDecoder().decode([Vendor].self, from: data)
         } catch {
             if TermQLogger.fileLoggingEnabled {

@@ -4,9 +4,15 @@ import TermQShared
 /// A single row in the harness sidebar list.
 ///
 /// Shows the harness name, version, description (truncated), default vendor
-/// badge, and artifact count badge.
+/// badge, artifact count badge, and an update dot when a newer version is
+/// available.
 struct HarnessRowView: View {
     let harness: Harness
+    @StateObject private var badgeStore = HarnessUpdateBadgeStore.shared
+    /// Observed so the row re-renders when the update-availability cache
+    /// populates after a `--check-updates` probe — the badge store reads
+    /// through this service but doesn't republish its changes itself.
+    @ObservedObject private var availability = LiveUpdateAvailabilityService.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
@@ -14,6 +20,25 @@ struct HarnessRowView: View {
                 Text(harness.name)
                     .font(.system(.body, weight: .medium))
                     .lineLimit(1)
+
+                switch badgeStore.signal(for: harness) {
+                case .versioned:
+                    Circle()
+                        .fill(Color.orange)
+                        .frame(width: 7, height: 7)
+                        .help(Strings.Harnesses.updateDotHelp)
+                case .unversionedDrift:
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.system(size: 9))
+                        .foregroundColor(.yellow)
+                        .help(Strings.Harnesses.unversionedDriftHelp)
+                case .none:
+                    if case .loading = badgeStore.state(for: harness) {
+                        Circle()
+                            .fill(Color.secondary.opacity(0.4))
+                            .frame(width: 7, height: 7)
+                    }
+                }
 
                 Spacer()
 

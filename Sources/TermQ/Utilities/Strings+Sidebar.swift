@@ -156,6 +156,10 @@ extension Strings {
         // Row badges
         static var sourceLocal: String { localized("harnesses.source.local") }
         static var sourceMarketplace: String { localized("harnesses.source.registry") }
+        static var sourceReadOnly: String { localized("harnesses.source.read.only") }
+        static func sourceForkedFrom(_ origin: String) -> String {
+            localized("harnesses.source.forked.from %@", origin)
+        }
 
         // Sidebar groups
         static var groupDefault: String { localized("harnesses.group.default") }
@@ -186,6 +190,7 @@ extension Strings {
             localized("harnesses.detail.picks %d", count)
         }
         static var revealInFinder: String { localized("harnesses.reveal.in.finder") }
+        static var copyPath: String { localized("harnesses.copy.path") }
         static var openInBrowser: String { localized("harnesses.open.in.browser") }
         static var closeDetail: String { localized("harnesses.close.detail") }
         static var configureFromMarketplaces: String { localized("harnesses.configure.from.marketplaces") }
@@ -267,6 +272,10 @@ extension Strings {
         // MARK: Update / Uninstall
         static var updateButton: String { localized("harnesses.update.button") }
         static var updateHelp: String { localized("harnesses.update.help") }
+        static var updateAvailable: String { localized("harnesses.update.available") }
+        static func updateAvailableVersion(_ version: String) -> String {
+            String(format: localized("harnesses.update.available.version %@"), version)
+        }
         static var uninstallButton: String { localized("harnesses.uninstall.button") }
         static var uninstallHelp: String { localized("harnesses.uninstall.help") }
         static func uninstallAlertTitle(_ name: String) -> String {
@@ -310,5 +319,64 @@ extension Strings {
         static var addSampleButton: String { localized("harnesses.add.sample.button") }
         static var groupMenuSettings: String { localized("harnesses.group.menu.settings") }
         static var createHarnessButton: String { localized("harnesses.create.harness.button") }
+
+        // Fork to local
+        static var forkToLocal: String { localized("harnesses.fork.to.local") }
+        static var forkToLocalHelp: String { localized("harnesses.fork.to.local.help") }
+
+        // Update dot (sidebar)
+        static var updateDotHelp: String { localized("harnesses.update.dot.help") }
+        static var updateNoSources: String { localized("harnesses.update.no.sources") }
+        static var loadingHelp: String { localized("harnesses.loading.help") }
+        static var unversionedDriftHelp: String { localized("harnesses.unversioned.drift.help") }
+        static var unversionedDriftBanner: String { localized("harnesses.unversioned.drift.banner") }
+        static var unversionedDriftConfirmTitle: String { localized("harnesses.unversioned.drift.confirm.title") }
+        static var unversionedDriftConfirmBody: String { localized("harnesses.unversioned.drift.confirm.body") }
+        static var unversionedDriftProceed: String { localized("harnesses.unversioned.drift.confirm.proceed") }
     }
+}
+
+// MARK: - HarnessFork
+
+extension Strings {
+    enum HarnessFork {
+        static func title(_ name: String) -> String {
+            String(format: localized("harness.fork.title %@"), name)
+        }
+        static var explanation: String { localized("harness.fork.explanation") }
+        static var forkButton: String { localized("harness.fork.button") }
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.fork.progress.title %@"), name)
+        }
+    }
+}
+
+// MARK: - HarnessUpdate
+
+extension Strings {
+    enum HarnessUpdate {
+        static func title(_ name: String) -> String {
+            String(format: localized("harness.update.title %@"), name)
+        }
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.update.progress.title %@"), name)
+        }
+        static var updateButton: String { localized("harness.update.button") }
+        static var ynhUnavailable: String { localized("harness.update.ynh.unavailable") }
+    }
+}
+
+// MARK: - CommandRunner
+
+extension Strings {
+    enum CommandRunner {
+        static var running: String { localized("command.runner.running") }
+        static var succeeded: String { localized("command.runner.succeeded") }
+        static var failed: String { localized("command.runner.failed") }
+    }
+}
+
+extension Strings.Common {
+    static var copyOutput: String { localized("common.copy.output") }
+    static var rerun: String { localized("common.rerun") }
 }

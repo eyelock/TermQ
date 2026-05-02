@@ -10,6 +10,37 @@ import TermQShared
 struct HarnessDetailDependencyView: View {
     let harness: Harness
     let detail: HarnessDetail?
+    var updateSignal: HarnessUpdateSignal = .none
+
+    /// True when this dependency row corresponds to upstream content that
+    /// drifted without a version bump. Matched by `path` against the
+    /// harness-level `unversionedDrift` list.
+    private func isDrifted(path: String?) -> Bool {
+        guard case .unversionedDrift(let drifted) = updateSignal,
+            let path, !path.isEmpty
+        else { return false }
+        return drifted.contains { $0.path == path }
+    }
+
+    @ViewBuilder
+    private func resolutionBadge(resolved: Bool, drifted: Bool) -> some View {
+        if drifted {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 11))
+                .foregroundColor(.yellow)
+                .help(Strings.Harnesses.unversionedDriftHelp)
+        } else if resolved {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 11))
+                .foregroundColor(.green)
+                .help(Strings.Harnesses.detailResolved)
+        } else {
+            Image(systemName: "exclamationmark.circle.fill")
+                .font(.system(size: 11))
+                .foregroundColor(.orange)
+                .help(Strings.Harnesses.detailUnresolved)
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -73,17 +104,10 @@ struct HarnessDetailDependencyView: View {
                         .foregroundColor(.secondary)
                 }
 
-                if include.resolved {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 11))
-                        .foregroundColor(.green)
-                        .help(Strings.Harnesses.detailResolved)
-                } else {
-                    Image(systemName: "exclamationmark.circle.fill")
-                        .font(.system(size: 11))
-                        .foregroundColor(.orange)
-                        .help(Strings.Harnesses.detailUnresolved)
-                }
+                resolutionBadge(
+                    resolved: include.resolved,
+                    drifted: isDrifted(path: include.path)
+                )
 
                 Spacer()
 

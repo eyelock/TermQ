@@ -29,7 +29,7 @@ struct AddYNHMarketplaceSheet: View {
             Divider()
             footer
         }
-        .frame(width: 480, height: 320)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var headerRow: some View {

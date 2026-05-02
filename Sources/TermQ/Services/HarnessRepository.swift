@@ -5,6 +5,32 @@ private enum HarnessDetailError: Error {
     case missingYnd
 }
 
+private struct YNHErrorResponse: Decodable {
+    struct Body: Decodable {
+        let code: String?
+        let message: String?
+    }
+    let error: Body
+}
+
+/// Extract a human-readable message from YNH stderr output.
+/// YNH emits `{"error":{"code":"...","message":"..."}}` on failure.
+/// Falls back to the raw trimmed string if the JSON shape doesn't match.
+/// Returns nil when stderr is empty.
+func ynhErrorMessage(from stderr: String) -> String? {
+    let trimmed = stderr.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmed.isEmpty else { return nil }
+    if let data = trimmed.data(using: .utf8),
+        let parsed = try? JSONDecoder().decode(YNHErrorResponse.self, from: data)
+    {
+        let msg = [parsed.error.message, parsed.error.code]
+            .compactMap { $0?.isEmpty == false ? $0 : nil }
+            .first
+        if let msg { return msg }
+    }
+    return trimmed
+}
+
 /// Repository for querying installed harnesses via `ynh ls --format json`
 /// and fetching full detail via `ynh info` + `ynd compose`.
 ///
@@ -16,6 +42,9 @@ final class HarnessRepository: ObservableObject {
     static let shared = HarnessRepository()
 
     @Published private(set) var harnesses: [Harness] = []
+    /// Capabilities string from the most recent `ynh ls` envelope.
+    /// Used by `HarnessDetailViewModel.phase1Capable` to gate Phase 1 affordances.
+    @Published private(set) var lastCapabilities: String?
     @Published private(set) var isLoading = false
     /// The id of the selected harness (`Harness.id` — namespace-qualified when present).
     @Published var selectedHarnessName: String?
@@ -62,13 +91,19 @@ final class HarnessRepository: ObservableObject {
         let env = ynhEnvironment()
 
         do {
-            let json = try await YNHDetector.runCommand(
-                ynhPath,
-                args: ["ls", "--format", "json"],
+            let result = try await CommandRunner.run(
+                executable: ynhPath,
+                arguments: ["ls", "--format", "json"],
                 environment: env
             )
-            let decoded = try JSONDecoder().decode([Harness].self, from: Data(json.utf8))
+            guard result.didSucceed else {
+                throw YNHDetectionError.commandFailed(exitCode: result.exitCode, stderr: result.stderr)
+            }
+            let response = try JSONDecoder().decode(
+                HarnessListResponse.self, from: Data(result.stdout.utf8))
+            let decoded = response.harnesses
             harnesses = decoded
+            lastCapabilities = response.capabilities
 
             // Clear selection if the selected harness was removed.
             if let id = selectedHarnessName,
@@ -77,11 +112,9 @@ final class HarnessRepository: ObservableObject {
                 selectedHarnessName = nil
             }
         } catch {
-            if TermQLogger.fileLoggingEnabled {
-                TermQLogger.ui.info("HarnessRepository: ynh ls failed error=\(error)")
-            } else {
-                TermQLogger.ui.info("HarnessRepository: ynh ls failed")
-            }
+            TermQLogger.ui.error(
+                "HarnessRepository: ynh ls failed type=\(type(of: error)) desc=\(String(describing: error).prefix(200))"
+            )
             harnesses = []
         }
     }
@@ -120,10 +153,8 @@ final class HarnessRepository: ObservableObject {
                 TermQLogger.ui.info("HarnessRepository: detail fetch failed")
             }
             selectedDetail = nil
-            if case .commandFailed(_, let stderr) = error,
-                !stderr.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            {
-                detailError = stderr.trimmingCharacters(in: .whitespacesAndNewlines)
+            if case .commandFailed(_, let stderr) = error {
+                detailError = ynhErrorMessage(from: stderr) ?? "Failed to load harness detail"
             } else {
                 detailError = "Failed to load harness detail"
             }
@@ -143,22 +174,30 @@ final class HarnessRepository: ObservableObject {
 
     private func buildDetail(name: String, ynhPath: String, yndPath: String?) async throws -> HarnessDetail {
         let env = ynhEnvironment()
-        let infoJSON = try await YNHDetector.runCommand(
-            ynhPath,
-            args: ["info", name, "--format", "json"],
+        let infoResult = try await CommandRunner.run(
+            executable: ynhPath,
+            arguments: ["info", name, "--format", "json"],
             environment: env
         )
-        let info = try JSONDecoder().decode(HarnessInfo.self, from: Data(infoJSON.utf8))
+        guard infoResult.didSucceed else {
+            throw YNHDetectionError.commandFailed(exitCode: infoResult.exitCode, stderr: infoResult.stderr)
+        }
+        let infoResponse = try JSONDecoder().decode(
+            HarnessInfoResponse.self, from: Data(infoResult.stdout.utf8))
+        let info = infoResponse.harness
 
         guard let yndBinary = yndPath else {
             throw HarnessDetailError.missingYnd
         }
-        let composeJSON = try await YNHDetector.runCommand(
-            yndBinary,
-            args: ["compose", info.path],
+        let composeResult = try await CommandRunner.run(
+            executable: yndBinary,
+            arguments: ["compose", info.path],
             environment: env
         )
-        let composition = try JSONDecoder().decode(HarnessComposition.self, from: Data(composeJSON.utf8))
+        guard composeResult.didSucceed else {
+            throw YNHDetectionError.commandFailed(exitCode: composeResult.exitCode, stderr: composeResult.stderr)
+        }
+        let composition = try JSONDecoder().decode(HarnessComposition.self, from: Data(composeResult.stdout.utf8))
         return HarnessDetail(info: info, composition: composition)
     }
 

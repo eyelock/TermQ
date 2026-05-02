@@ -109,7 +109,29 @@ The pane is split into sections:
 - **Artifacts** — summary counts from the harness's own configuration
 - **Composition** — resolved hooks, MCP servers, profiles, and focuses after `ynd compose` merges includes
 - **Dependencies** — other harnesses this one includes, delegates to, or picks from
-- **Manifest** — the raw `.harness.json`, collapsible, copyable
+- **Manifest** — the raw manifest (`plugin.json`), collapsible, copyable
+
+### Source badges
+
+Every harness row and the detail header shows a small provenance chip:
+
+| Chip | Meaning |
+|---|---|
+| Registry name (e.g. `eyelock`) | Installed from a YNH registry |
+| Short Git URL (e.g. `github.com/org/repo`) | Installed from a Git source |
+| `local` | Installed from a local directory |
+
+Forked harnesses inherit their fork origin in the chip. This tells you at a glance whether a harness is community-managed (registry), self-hosted (git), or locally owned (local/fork).
+
+### Update dots
+
+When TermQ detects that a newer version is available — either for the harness itself or for any of its includes — a small blue dot appears next to the harness name in the sidebar.
+
+![Update dot on sidebar row](../Images/harness-update-dot.png)
+
+A grey pulse appears while a check is in flight. No dot means either the harness is up to date or no check has run yet.
+
+Update checks are driven by `ynh ls --check-updates` and run in the background when the Harnesses tab is open.
 
 ---
 
@@ -206,9 +228,33 @@ The terminal stays open so you can read any output or errors. It auto-closes on 
 
 ---
 
-## 13.11 — Duplicating a harness
+## 13.11 — Forking a registry harness
 
-Duplicating creates a new locally-owned harness that starts from the same configuration as an existing one — same vendor, same includes, same hooks. Use it when you want to build a customised variant of a registry harness without modifying the original.
+**Requires:** YNH ≥ 0.3.0
+
+Registry harnesses are read-only — TermQ shows their content but hides edit controls, because changes would be overwritten the next time you update. Forking creates a locally-owned copy that you can modify freely.
+
+When a registry harness is selected and YNH 0.3.0 or later is installed, a **Fork to local** button appears in the detail pane header.
+
+![Fork button in detail pane header](../Images/harness-fork-button.png)
+
+Click **Fork to local**. The **Fork Harness** sheet opens:
+
+![Fork sheet](../Images/harness-fork-sheet.png)
+
+- **Destination** — where to put the forked copy (pre-filled from your default author directory)
+
+Click **Fork**. The sheet streams live output from `ynh fork <name> --to <destination>`, then automatically registers the fork with `ynh install`. The new harness appears in the **Local** group in the sidebar.
+
+The forked copy records where it came from (the registry source), so TermQ can show you the fork origin in its source badge even after the original is uninstalled.
+
+> **Forked vs. duplicate:** Fork creates a local copy of a read-only registry harness and is the intended upgrade path when you need to customise a community harness. Duplicate clones any harness — local, git, or registry — and is better for creating a variant of one of your own harnesses.
+
+---
+
+## 13.12 — Duplicating a harness
+
+Duplicating creates a new locally-owned harness that starts from the same configuration as an existing one — same vendor, same includes, same hooks.
 
 Right-click any harness row and choose **Duplicate**.
 
@@ -220,8 +266,8 @@ The **Duplicate Harness** sheet opens with a suggested name (`copy-of-<original>
 
 Change the name to whatever you want, adjust the destination if needed, then click **Duplicate**. TermQ:
 
-1. Reads the source harness manifest
-2. Writes a new `harness.json` with your chosen name at `<destination>/<name>/`
+1. Runs `ynh fork <original> --to <destination>/<name>/` to copy the harness files
+2. Renames the manifest (`plugin.json`) to use your chosen name
 3. Runs `ynh install <path>` to register it
 
 The new harness appears in the **Local** group of the sidebar immediately. From there you can add artifacts, modify includes, attach MCP servers, or link it to worktrees — the same as any other locally-authored harness.
@@ -230,9 +276,9 @@ The new harness appears in the **Local** group of the sidebar immediately. From 
 
 ---
 
-## 13.12 — What's next
+## 13.13 — What's next
 
-The Harnesses tab covers install, update, duplicate, uninstall, launching, worktree linkage, and export.
+The Harnesses tab covers install, update, fork, duplicate, uninstall, launching, worktree linkage, and export.
 
 To go further — creating a new harness from scratch and populating it with skills and agents from community marketplaces — continue to **[Tutorial 14: Marketplace Browser &amp; Harness Authoring](14-marketplace.md)**.
 
