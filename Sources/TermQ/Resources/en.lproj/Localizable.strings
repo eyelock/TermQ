@@ -764,7 +764,7 @@
 "harnesses.manifest.edit.version" = "Version";
 "harnesses.manifest.edit.version.placeholder" = "1.0.0";
 "harnesses.manifest.edit.version.invalid" = "Use semver: MAJOR.MINOR.PATCH (e.g. 0.2.0)";
-"harnesses.manifest.edit.vendor" = "Vendor";
+"harnesses.manifest.edit.vendor" = "Default Vendor";
 "harnesses.manifest.edit.description" = "Description";
 "harnesses.manifest.edit.description.hint" = "Shown in the harness list and detail header. Leave empty to omit.";
 "harnesses.manifest.edit.save" = "Save Changes";
@@ -832,6 +832,7 @@
 "harnesses.loading.help" = "Talking to ynh…";
 "harnesses.unversioned.drift.help" = "Upstream content changed without a version bump — review before updating";
 "harnesses.unversioned.drift.banner" = "Upstream content changed without a version bump — review before updating";
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit changed: %@ → %@";
 "harnesses.unversioned.drift.confirm.title" = "Review upstream changes";
 "harnesses.unversioned.drift.confirm.body" = "Upstream content has changed without a version bump. Updating will pull the new content. Review the SHAs below before proceeding — a missing version bump can mask malicious changes.";
 "harnesses.unversioned.drift.confirm.proceed" = "Update Anyway";

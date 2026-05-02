@@ -15,23 +15,39 @@ struct HarnessDetailDependencyView: View {
     /// by this coordinator. Registry harnesses receive `nil` here.
     var includeEditor: HarnessIncludeEditor?
 
-    /// True when this dependency row corresponds to upstream content that
-    /// drifted without a version bump. Matched by `path` against the
-    /// harness-level `unversionedDrift` list.
-    private func isDrifted(path: String?) -> Bool {
-        guard case .unversionedDrift(let drifted) = updateSignal,
-            let path, !path.isEmpty
-        else { return false }
-        return drifted.contains { $0.path == path }
+    /// Returns the drift entry for this row, if any. Matches on whichever
+    /// identifier the badge store recorded — `path` when the include has
+    /// one, otherwise the git URL — so includes that span the whole repo
+    /// (no subpath) still light up their row.
+    private func driftEntry(git: String, path: String?) -> HarnessUpdateSignal.DriftedInclude? {
+        guard case .unversionedDrift(let drifted) = updateSignal else { return nil }
+        if let path, !path.isEmpty,
+            let match = drifted.first(where: { $0.path == path })
+        {
+            return match
+        }
+        return drifted.first(where: { $0.path == git })
+    }
+
+    /// Tooltip body for the drift triangle — names the SHAs so the user can
+    /// see *which* commit drifted, not just *that* one did.
+    private func driftTooltip(for drift: HarnessUpdateSignal.DriftedInclude) -> String {
+        Strings.Harnesses.unversionedDriftIncludeTooltip(
+            String(drift.installedSHA.prefix(7)),
+            String(drift.availableSHA.prefix(7))
+        )
     }
 
     @ViewBuilder
-    private func resolutionBadge(resolved: Bool, drifted: Bool) -> some View {
-        if drifted {
+    private func resolutionBadge(
+        resolved: Bool,
+        drift: HarnessUpdateSignal.DriftedInclude?
+    ) -> some View {
+        if let drift {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 11))
                 .foregroundColor(.yellow)
-                .help(Strings.Harnesses.unversionedDriftHelp)
+                .help(driftTooltip(for: drift))
         } else if resolved {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 11))
@@ -117,7 +133,7 @@ struct HarnessDetailDependencyView: View {
 
                 resolutionBadge(
                     resolved: include.resolved,
-                    drifted: isDrifted(path: include.path)
+                    drift: driftEntry(git: include.git, path: include.path)
                 )
 
                 Spacer()

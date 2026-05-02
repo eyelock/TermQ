@@ -96,6 +96,10 @@ final class HarnessManifestEditor: ObservableObject {
         do {
             try Self.write(at: editablePath, fields: fields)
             repository.invalidateDetail(for: harnessName)
+            // refresh() reloads the harness list (ynh ls) so the sidebar
+            // picks up the new version/description. fetchDetail alone only
+            // updates the detail pane.
+            await repository.refresh()
             await repository.fetchDetail(for: harnessName)
             return true
         } catch let err as HarnessManifestEditorError {

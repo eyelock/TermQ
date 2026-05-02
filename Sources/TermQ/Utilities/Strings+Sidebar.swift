@@ -388,6 +388,9 @@ extension Strings {
         static var loadingHelp: String { localized("harnesses.loading.help") }
         static var unversionedDriftHelp: String { localized("harnesses.unversioned.drift.help") }
         static var unversionedDriftBanner: String { localized("harnesses.unversioned.drift.banner") }
+        static func unversionedDriftIncludeTooltip(_ installed: String, _ available: String) -> String {
+            String(format: localized("harnesses.unversioned.drift.include.tooltip %@ %@"), installed, available)
+        }
         static var unversionedDriftConfirmTitle: String { localized("harnesses.unversioned.drift.confirm.title") }
         static var unversionedDriftConfirmBody: String { localized("harnesses.unversioned.drift.confirm.body") }
         static var unversionedDriftProceed: String { localized("harnesses.unversioned.drift.confirm.proceed") }

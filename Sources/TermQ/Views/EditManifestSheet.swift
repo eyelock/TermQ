@@ -30,7 +30,7 @@ struct EditManifestSheet: View {
                 Text(Strings.Harnesses.editManifestName)
                     .font(.body)
                     .foregroundColor(.secondary)
-                    .frame(width: 80, alignment: .trailing)
+                    .frame(width: 100, alignment: .trailing)
                 Text(harness.name)
                     .font(.system(size: 12, design: .monospaced))
                     .textSelection(.enabled)
@@ -40,7 +40,7 @@ struct EditManifestSheet: View {
                 Text(Strings.Harnesses.editManifestVersion)
                     .font(.body)
                     .foregroundColor(.secondary)
-                    .frame(width: 80, alignment: .trailing)
+                    .frame(width: 100, alignment: .trailing)
                 VStack(alignment: .leading, spacing: 2) {
                     TextField(Strings.Harnesses.editManifestVersionPlaceholder, text: $versionText)
                         .textFieldStyle(.roundedBorder)
@@ -56,7 +56,7 @@ struct EditManifestSheet: View {
                 Text(Strings.Harnesses.editManifestVendor)
                     .font(.body)
                     .foregroundColor(.secondary)
-                    .frame(width: 80, alignment: .trailing)
+                    .frame(width: 100, alignment: .trailing)
                 Picker("", selection: $defaultVendor) {
                     ForEach(vendorOptions, id: \.self) { vendorID in
                         Text(vendorID).tag(vendorID)
@@ -71,7 +71,7 @@ struct EditManifestSheet: View {
                     Text(Strings.Harnesses.editManifestDescription)
                         .font(.body)
                         .foregroundColor(.secondary)
-                        .frame(width: 80, alignment: .trailing)
+                        .frame(width: 100, alignment: .trailing)
                     TextEditor(text: $descriptionText)
                         .font(.system(size: 12))
                         .frame(minHeight: 80, maxHeight: 140)
@@ -83,7 +83,7 @@ struct EditManifestSheet: View {
                 Text(Strings.Harnesses.editManifestDescriptionHint)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .padding(.leading, 88)
+                    .padding(.leading, 108)
             }
 
             if let error = loadError ?? manifestEditor.errorMessage {
