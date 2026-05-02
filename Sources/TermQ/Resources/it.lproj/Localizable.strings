@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Locale";
 "harnesses.source.registry" = "Registry";
+"harnesses.source.read.only" = "Sola lettura";
+"harnesses.source.forked.from %@" = "Derivato da %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informazioni";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Delega a (%d)";
 "harnesses.detail.picks %d" = "Seleziona (%d):";
 "harnesses.reveal.in.finder" = "Mostra nel Finder";
+"harnesses.copy.path" = "Copia come percorso";
 "harnesses.open.in.browser" = "Apri nel browser";
 "harnesses.close.detail" = "Chiudi";
 "harnesses.configure.from.marketplaces" = "Configura dai marketplace…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Aggiorna";
 "harnesses.update.help" = "Aggiorna all'ultima versione";
+"harnesses.update.available" = "Aggiornamento disponibile";
+"harnesses.update.available.version %@" = "La versione %@ è disponibile";
 "harnesses.uninstall.button" = "Disinstalla";
 "harnesses.uninstall.help" = "Disinstalla questo harness";
 "harnesses.uninstall.alert.title %@" = "Disinstallare \"%@\"?";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Apri terminali";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Biforca in locale";
+"harnesses.fork.to.local.help" = "Crea una copia locale modificabile di questo harness";
+"harnesses.update.dot.help" = "Aggiornamento disponibile";
+"harness.fork.title %@" = "Biforca \"%@\" in locale";
+"harness.fork.explanation" = "Crea una copia locale modificabile di questo harness. La copia tiene traccia della sua origine in modo che tu possa vedere cosa è cambiato a monte.";
+"harness.fork.button" = "Biforca";
+"harness.fork.progress.title %@" = "Biforcazione di \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Aggiorna \"%@\"";
+"harness.update.progress.title %@" = "Aggiornamento di \"%@\"…";
+"harness.update.button" = "Aggiorna";
+"harness.update.ynh.unavailable" = "ynh non è disponibile.";
+"command.runner.running" = "In esecuzione…";
+"command.runner.succeeded" = "Completato";
+"command.runner.failed" = "Non riuscito";
+"common.copy.output" = "Copia output";
+"common.rerun" = "Riesegui";

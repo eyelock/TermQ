@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Registre";
+"harnesses.source.read.only" = "Només lectura";
+"harnesses.source.forked.from %@" = "Bifurcat de %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informació";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Delega a (%d)";
 "harnesses.detail.picks %d" = "Selecciona (%d):";
 "harnesses.reveal.in.finder" = "Mostra al Finder";
+"harnesses.copy.path" = "Copia com a camí";
 "harnesses.open.in.browser" = "Obre al navegador";
 "harnesses.close.detail" = "Tanca";
 "harnesses.configure.from.marketplaces" = "Configura des dels mercats…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Actualitza";
 "harnesses.update.help" = "Actualitza a la versió més recent";
+"harnesses.update.available" = "Actualització disponible";
+"harnesses.update.available.version %@" = "La versió %@ està disponible";
 "harnesses.uninstall.button" = "Desinstal·la";
 "harnesses.uninstall.help" = "Desinstal·la aquest harness";
 "harnesses.uninstall.alert.title %@" = "Desinstal·lar \"%@\"?";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Obre els terminals";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Bifurca a local";
+"harnesses.fork.to.local.help" = "Crea una còpia local editable d'aquest harness";
+"harnesses.update.dot.help" = "Actualització disponible";
+"harness.fork.title %@" = "Bifurca \"%@\" a local";
+"harness.fork.explanation" = "Crea una còpia local editable d'aquest harness. La còpia rastreja el seu origen per tal que puguis veure què ha canviat aigues amunt.";
+"harness.fork.button" = "Bifurca";
+"harness.fork.progress.title %@" = "Bifurcant \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Actualitza \"%@\"";
+"harness.update.progress.title %@" = "S'està actualitzant \"%@\"…";
+"harness.update.button" = "Actualitza";
+"harness.update.ynh.unavailable" = "ynh no està disponible.";
+"command.runner.running" = "Executant…";
+"command.runner.succeeded" = "Correcte";
+"command.runner.failed" = "Fallat";
+"common.copy.output" = "Copia la sortida";
+"common.rerun" = "Torna a executar";

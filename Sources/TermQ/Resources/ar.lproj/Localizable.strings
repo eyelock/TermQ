@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "محلي";
 "harnesses.source.registry" = "السجل";
+"harnesses.source.read.only" = "للقراءة فقط";
+"harnesses.source.forked.from %@" = "متفرع من %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "معلومات";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "يفوّض إلى (%d)";
 "harnesses.detail.picks %d" = "يختار (%d):";
 "harnesses.reveal.in.finder" = "إظهار في Finder";
+"harnesses.copy.path" = "نسخ كمسار";
 "harnesses.open.in.browser" = "فتح في المتصفح";
 "harnesses.close.detail" = "إغلاق";
 "harnesses.configure.from.marketplaces" = "كوِّن من الأسواق…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "تحديث";
 "harnesses.update.help" = "تحديث إلى الإصدار الأحدث";
+"harnesses.update.available" = "تحديث متاح";
+"harnesses.update.available.version %@" = "الإصدار %@ متاح";
 "harnesses.uninstall.button" = "إلغاء التثبيت";
 "harnesses.uninstall.help" = "إلغاء تثبيت هذا الـ harness";
 "harnesses.uninstall.alert.title %@" = "إلغاء تثبيت \"%@\"؟";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "فتح الطرفيات";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "نسخ محلي";
+"harnesses.fork.to.local.help" = "إنشاء نسخة محلية قابلة للتحرير من هذا الـ harness";
+"harnesses.update.dot.help" = "تحديث متاح";
+"harness.fork.title %@" = "نسخ \"%@\" محلياً";
+"harness.fork.explanation" = "ينشئ نسخة محلية قابلة للتحرير من هذا الـ harness. تتتبع النسخة أصلها حتى تتمكن من رؤية ما تغيّر في المصدر.";
+"harness.fork.button" = "نسخ";
+"harness.fork.progress.title %@" = "جارٍ نسخ \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "تحديث \"%@\"";
+"harness.update.progress.title %@" = "جارٍ تحديث \"%@\"…";
+"harness.update.button" = "تحديث";
+"harness.update.ynh.unavailable" = "ynh غير متاح.";
+"command.runner.running" = "جارٍ التشغيل…";
+"command.runner.succeeded" = "نجح";
+"command.runner.failed" = "فشل";
+"common.copy.output" = "نسخ المخرجات";
+"common.rerun" = "إعادة التشغيل";

@@ -600,6 +600,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokal";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Skrivebeskyttet";
+"harnesses.source.forked.from %@" = "Forgrenet fra %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informasjon";
@@ -618,6 +620,7 @@
 "harnesses.detail.delegates %d" = "Delegerer til (%d)";
 "harnesses.detail.picks %d" = "Velger (%d):";
 "harnesses.reveal.in.finder" = "Vis i Finder";
+"harnesses.copy.path" = "Kopier som filsti";
 "harnesses.open.in.browser" = "Åpne i nettleser";
 "harnesses.close.detail" = "Lukk";
 "harnesses.configure.from.marketplaces" = "Konfigurer fra markedsplasser…";
@@ -723,6 +726,8 @@
 
 "harnesses.update.button" = "Oppdater";
 "harnesses.update.help" = "Oppdater til nyeste versjon";
+"harnesses.update.available" = "Oppdatering tilgjengelig";
+"harnesses.update.available.version %@" = "Versjon %@ er tilgjengelig";
 "harnesses.uninstall.button" = "Avinstaller";
 "harnesses.uninstall.help" = "Avinstaller denne harness";
 "harnesses.uninstall.alert.title %@" = "Avinstaller \"%@\"?";
@@ -924,3 +929,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Åpne terminaler";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork til lokalt";
+"harnesses.fork.to.local.help" = "Opprett en redigerbar lokal kopi av denne harness";
+"harnesses.update.dot.help" = "Oppdatering tilgjengelig";
+"harness.fork.title %@" = "Fork \"%@\" til lokalt";
+"harness.fork.explanation" = "Oppretter en redigerbar lokal kopi av denne harness. Kopien sporer sitt opphav slik at du kan se hva som er endret oppstrøms.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forker \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Oppdater \"%@\"";
+"harness.update.progress.title %@" = "Oppdaterer \"%@\"…";
+"harness.update.button" = "Oppdater";
+"harness.update.ynh.unavailable" = "ynh er ikke tilgjengelig.";
+"command.runner.running" = "Kjører…";
+"command.runner.succeeded" = "Vellykket";
+"command.runner.failed" = "Mislyktes";
+"common.copy.output" = "Kopier utdata";
+"common.rerun" = "Kjør på nytt";

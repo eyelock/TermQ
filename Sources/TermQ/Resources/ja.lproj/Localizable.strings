@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "ローカル";
 "harnesses.source.registry" = "レジストリ";
+"harnesses.source.read.only" = "読み取り専用";
+"harnesses.source.forked.from %@" = "%@ からフォーク";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "情報";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "委任先 (%d)";
 "harnesses.detail.picks %d" = "選択 (%d)：";
 "harnesses.reveal.in.finder" = "Finder で表示";
+"harnesses.copy.path" = "パスとしてコピー";
 "harnesses.open.in.browser" = "ブラウザで開く";
 "harnesses.close.detail" = "閉じる";
 "harnesses.configure.from.marketplaces" = "マーケットプレイスから設定…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "アップデート";
 "harnesses.update.help" = "最新バージョンにアップデート";
+"harnesses.update.available" = "アップデートあり";
+"harnesses.update.available.version %@" = "バージョン %@ が利用可能です";
 "harnesses.uninstall.button" = "アンインストール";
 "harnesses.uninstall.help" = "このHarnessをアンインストール";
 "harnesses.uninstall.alert.title %@" = "「%@」をアンインストールしますか？";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "ターミナルを開く";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "ローカルにフォーク";
+"harnesses.fork.to.local.help" = "このハーネスの編集可能なローカルコピーを作成";
+"harnesses.update.dot.help" = "アップデートあり";
+"harness.fork.title %@" = "\"%@\" をローカルにフォーク";
+"harness.fork.explanation" = "このハーネスの編集可能なローカルコピーを作成します。コピーは元のリポジトリを追跡するため、アップストリームの変更を確認できます。";
+"harness.fork.button" = "フォーク";
+"harness.fork.progress.title %@" = "\"%@\" をフォーク中…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "「%@」をアップデート";
+"harness.update.progress.title %@" = "「%@」をアップデート中…";
+"harness.update.button" = "アップデート";
+"harness.update.ynh.unavailable" = "ynh が利用できません。";
+"command.runner.running" = "実行中…";
+"command.runner.succeeded" = "成功";
+"command.runner.failed" = "失敗";
+"common.copy.output" = "出力をコピー";
+"common.rerun" = "再実行";

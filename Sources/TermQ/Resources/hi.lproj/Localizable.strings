@@ -601,6 +601,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "स्थानीय";
 "harnesses.source.registry" = "रजिस्ट्री";
+"harnesses.source.read.only" = "केवल पढ़ें";
+"harnesses.source.forked.from %@" = "%@ से फ़ोर्क किया";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "जानकारी";
@@ -619,6 +621,7 @@
 "harnesses.detail.delegates %d" = "प्रतिनिधित्व (%d) को";
 "harnesses.detail.picks %d" = "चुनता है (%d):";
 "harnesses.reveal.in.finder" = "Finder में दिखाएं";
+"harnesses.copy.path" = "पथनाम के रूप में कॉपी करें";
 "harnesses.open.in.browser" = "ब्राउज़र में खोलें";
 "harnesses.close.detail" = "बंद करें";
 "harnesses.configure.from.marketplaces" = "मार्केटप्लेस से कॉन्फ़िगर करें…";
@@ -724,6 +727,8 @@
 
 "harnesses.update.button" = "अपडेट करें";
 "harnesses.update.help" = "नवीनतम संस्करण में अपडेट करें";
+"harnesses.update.available" = "अपडेट उपलब्ध है";
+"harnesses.update.available.version %@" = "संस्करण %@ उपलब्ध है";
 "harnesses.uninstall.button" = "अनइंस्टॉल करें";
 "harnesses.uninstall.help" = "इस harness को अनइंस्टॉल करें";
 "harnesses.uninstall.alert.title %@" = "\"%@\" को अनइंस्टॉल करें?";
@@ -925,3 +930,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "टर्मिनल खोलें";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "स्थानीय रूप से फोर्क करें";
+"harnesses.fork.to.local.help" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाएं";
+"harnesses.update.dot.help" = "अपडेट उपलब्ध है";
+"harness.fork.title %@" = "\"%@\" को स्थानीय में फोर्क करें";
+"harness.fork.explanation" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाता है। प्रतिलिपि अपने मूल को ट्रैक करती है ताकि आप देख सकें कि upstream में क्या बदला।";
+"harness.fork.button" = "फोर्क";
+"harness.fork.progress.title %@" = "\"%@\" फोर्क हो रहा है…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "\"%@\" अपडेट करें";
+"harness.update.progress.title %@" = "\"%@\" अपडेट हो रहा है…";
+"harness.update.button" = "अपडेट करें";
+"harness.update.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+"command.runner.running" = "चल रहा है…";
+"command.runner.succeeded" = "सफल";
+"command.runner.failed" = "विफल";
+"common.copy.output" = "आउटपुट कॉपी करें";
+"common.rerun" = "पुनः चलाएं";

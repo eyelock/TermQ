@@ -609,6 +609,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Registry";
+"harnesses.source.read.only" = "Read-only";
+"harnesses.source.forked.from %@" = "Forked from %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Information";
@@ -627,6 +629,7 @@
 "harnesses.detail.delegates %d" = "Delegates to (%d)";
 "harnesses.detail.picks %d" = "Picks (%d):";
 "harnesses.reveal.in.finder" = "Reveal in Finder";
+"harnesses.copy.path" = "Copy as Pathname";
 "harnesses.open.in.browser" = "Open in browser";
 "harnesses.close.detail" = "Close";
 "harnesses.configure.from.marketplaces" = "Configure from Marketplaces…";
@@ -716,6 +719,8 @@
 
 "harnesses.update.button" = "Update";
 "harnesses.update.help" = "Update to the latest version";
+"harnesses.update.available" = "Update available";
+"harnesses.update.available.version %@" = "Version %@ is available";
 "harnesses.uninstall.button" = "Uninstall";
 "harnesses.uninstall.help" = "Uninstall this harness";
 "harnesses.uninstall.alert.title %@" = "Uninstall \"%@\"?";
@@ -917,3 +922,25 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Open Terminals";
+
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork to local";
+"harnesses.fork.to.local.help" = "Create an editable local copy of this harness";
+"harnesses.update.dot.help" = "Update available";
+"harness.fork.title %@" = "Fork \"%@\" to Local";
+"harness.fork.explanation" = "Creates an editable local copy of this harness. The copy tracks its origin so you can see what changed upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forking \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Update \"%@\"";
+"harness.update.progress.title %@" = "Updating \"%@\"…";
+"harness.update.button" = "Update";
+"harness.update.ynh.unavailable" = "ynh is not available.";
+"command.runner.running" = "Running…";
+"command.runner.succeeded" = "Succeeded";
+"command.runner.failed" = "Failed";
+"common.copy.output" = "Copy Output";
+"common.rerun" = "Re-run";

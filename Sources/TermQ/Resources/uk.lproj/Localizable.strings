@@ -602,6 +602,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Локальний";
 "harnesses.source.registry" = "Реєстр";
+"harnesses.source.read.only" = "Тільки для читання";
+"harnesses.source.forked.from %@" = "Відгалужено від %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Інформація";
@@ -620,6 +622,7 @@
 "harnesses.detail.delegates %d" = "Делегує (%d)";
 "harnesses.detail.picks %d" = "Вибирає (%d):";
 "harnesses.reveal.in.finder" = "Показати у Finder";
+"harnesses.copy.path" = "Копіювати як шлях";
 "harnesses.open.in.browser" = "Відкрити у браузері";
 "harnesses.close.detail" = "Закрити";
 "harnesses.configure.from.marketplaces" = "Налаштувати з маркетплейсів…";
@@ -725,6 +728,8 @@
 
 "harnesses.update.button" = "Оновити";
 "harnesses.update.help" = "Оновити до останньої версії";
+"harnesses.update.available" = "Доступне оновлення";
+"harnesses.update.available.version %@" = "Доступна версія %@";
 "harnesses.uninstall.button" = "Видалити";
 "harnesses.uninstall.help" = "Видалити цей harness";
 "harnesses.uninstall.alert.title %@" = "Видалити \"%@\"?";
@@ -926,3 +931,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Відкрити термінали";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Форк до локального";
+"harnesses.fork.to.local.help" = "Створити редаговану локальну копію цього harness";
+"harnesses.update.dot.help" = "Доступне оновлення";
+"harness.fork.title %@" = "Форк \"%@\" до локального";
+"harness.fork.explanation" = "Створює редаговану локальну копію цього harness. Копія відстежує своє походження, щоб ви могли бачити, що змінилося у джерелі.";
+"harness.fork.button" = "Форк";
+"harness.fork.progress.title %@" = "Форк \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Оновити «%@»";
+"harness.update.progress.title %@" = "Оновлення «%@»…";
+"harness.update.button" = "Оновити";
+"harness.update.ynh.unavailable" = "ynh недоступний.";
+"command.runner.running" = "Виконується…";
+"command.runner.succeeded" = "Виконано";
+"command.runner.failed" = "Не виконано";
+"common.copy.output" = "Копіювати вивід";
+"common.rerun" = "Повторити";

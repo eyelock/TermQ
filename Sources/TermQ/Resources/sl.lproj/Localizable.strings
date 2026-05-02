@@ -602,6 +602,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokalno";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Samo za branje";
+"harnesses.source.forked.from %@" = "Razvejano iz %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informacije";
@@ -620,6 +622,7 @@
 "harnesses.detail.delegates %d" = "Delegira na (%d)";
 "harnesses.detail.picks %d" = "Izbere (%d):";
 "harnesses.reveal.in.finder" = "Pokaži v Finderju";
+"harnesses.copy.path" = "Kopiraj kot pot";
 "harnesses.open.in.browser" = "Odpri v brskalniku";
 "harnesses.close.detail" = "Zapri";
 "harnesses.configure.from.marketplaces" = "Konfiguriraj iz tržnic…";
@@ -725,6 +728,8 @@
 
 "harnesses.update.button" = "Posodobi";
 "harnesses.update.help" = "Posodobi na najnovejšo različico";
+"harnesses.update.available" = "Na voljo je posodobitev";
+"harnesses.update.available.version %@" = "Različica %@ je na voljo";
 "harnesses.uninstall.button" = "Odstrani";
 "harnesses.uninstall.help" = "Odstrani ta harness";
 "harnesses.uninstall.alert.title %@" = "Odstraniti \"%@\"?";
@@ -926,3 +931,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Odpri terminale";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork na lokalno";
+"harnesses.fork.to.local.help" = "Ustvari urejljivo lokalno kopijo tega harness-a";
+"harnesses.update.dot.help" = "Na voljo posodobitev";
+"harness.fork.title %@" = "Fork \"%@\" na lokalno";
+"harness.fork.explanation" = "Ustvari urejljivo lokalno kopijo tega harness-a. Kopija sledi svojemu izvoru, da lahko vidite, kaj se je spremenilo upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forkanje \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Posodobi \"%@\"";
+"harness.update.progress.title %@" = "Posodabljanje \"%@\"…";
+"harness.update.button" = "Posodobi";
+"harness.update.ynh.unavailable" = "ynh ni na voljo.";
+"command.runner.running" = "Izvajanje…";
+"command.runner.succeeded" = "Uspelo";
+"command.runner.failed" = "Neuspešno";
+"common.copy.output" = "Kopiraj izhod";
+"common.rerun" = "Ponovi";

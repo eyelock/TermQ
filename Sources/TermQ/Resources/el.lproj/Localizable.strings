@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Τοπικό";
 "harnesses.source.registry" = "Μητρώο";
+"harnesses.source.read.only" = "Μόνο ανάγνωση";
+"harnesses.source.forked.from %@" = "Διακλάδωση από %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Πληροφορίες";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Εκχωρεί σε (%d)";
 "harnesses.detail.picks %d" = "Επιλέγει (%d):";
 "harnesses.reveal.in.finder" = "Εμφάνιση στο Finder";
+"harnesses.copy.path" = "Αντιγραφή ως διαδρομή";
 "harnesses.open.in.browser" = "Άνοιγμα στο πρόγραμμα περιήγησης";
 "harnesses.close.detail" = "Κλείσιμο";
 "harnesses.configure.from.marketplaces" = "Ρύθμιση από αγορές…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Ενημέρωση";
 "harnesses.update.help" = "Ενημέρωση στην τελευταία έκδοση";
+"harnesses.update.available" = "Διαθέσιμη ενημέρωση";
+"harnesses.update.available.version %@" = "Η έκδοση %@ είναι διαθέσιμη";
 "harnesses.uninstall.button" = "Απεγκατάσταση";
 "harnesses.uninstall.help" = "Απεγκατάσταση αυτού του harness";
 "harnesses.uninstall.alert.title %@" = "Απεγκατάσταση \"%@\";";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Άνοιγμα τερματικών";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Διακλάδωση σε τοπικό";
+"harnesses.fork.to.local.help" = "Δημιουργία επεξεργάσιμου τοπικού αντιγράφου αυτού του harness";
+"harnesses.update.dot.help" = "Διαθέσιμη ενημέρωση";
+"harness.fork.title %@" = "Διακλάδωση \"%@\" σε τοπικό";
+"harness.fork.explanation" = "Δημιουργεί ένα επεξεργάσιμο τοπικό αντίγραφο αυτού του harness. Το αντίγραφο παρακολουθεί την προέλευσή του ώστε να βλέπετε τι άλλαξε upstream.";
+"harness.fork.button" = "Διακλάδωση";
+"harness.fork.progress.title %@" = "Διακλάδωση του \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Ενημέρωση \"%@\"";
+"harness.update.progress.title %@" = "Ενημέρωση \"%@\"…";
+"harness.update.button" = "Ενημέρωση";
+"harness.update.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+"command.runner.running" = "Εκτελείται…";
+"command.runner.succeeded" = "Επιτυχία";
+"command.runner.failed" = "Αποτυχία";
+"common.copy.output" = "Αντιγραφή εξόδου";
+"common.rerun" = "Εκ νέου εκτέλεση";

@@ -602,6 +602,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Yerel";
 "harnesses.source.registry" = "Kayıt Defteri";
+"harnesses.source.read.only" = "Salt okunur";
+"harnesses.source.forked.from %@" = "%@ kaynağından çatallandı";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Bilgi";
@@ -620,6 +622,7 @@
 "harnesses.detail.delegates %d" = "Devredilen (%d)";
 "harnesses.detail.picks %d" = "Seçilen (%d):";
 "harnesses.reveal.in.finder" = "Finder'da Göster";
+"harnesses.copy.path" = "Yol Adı Olarak Kopyala";
 "harnesses.open.in.browser" = "Tarayıcıda Aç";
 "harnesses.close.detail" = "Kapat";
 "harnesses.configure.from.marketplaces" = "Pazaryerlerinden yapılandır…";
@@ -725,6 +728,8 @@
 
 "harnesses.update.button" = "Güncelle";
 "harnesses.update.help" = "En son sürüme güncelle";
+"harnesses.update.available" = "Güncelleme mevcut";
+"harnesses.update.available.version %@" = "%@ sürümü mevcut";
 "harnesses.uninstall.button" = "Kaldır";
 "harnesses.uninstall.help" = "Bu harness'i kaldır";
 "harnesses.uninstall.alert.title %@" = "\"%@\" kaldırılsın mı?";
@@ -926,3 +931,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Terminalleri aç";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Yerel olarak çatalla";
+"harnesses.fork.to.local.help" = "Bu harness'in düzenlenebilir yerel bir kopyasını oluştur";
+"harnesses.update.dot.help" = "Güncelleme mevcut";
+"harness.fork.title %@" = "\"%@\" öğesini yerel olarak çatalla";
+"harness.fork.explanation" = "Bu harness'in düzenlenebilir yerel bir kopyasını oluşturur. Kopya, kaynakta nelerin değiştiğini görebilmeniz için kökenini takip eder.";
+"harness.fork.button" = "Çatalla";
+"harness.fork.progress.title %@" = "\"%@\" çatallanıyor…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "\"%@\" Güncelle";
+"harness.update.progress.title %@" = "\"%@\" güncelleniyor…";
+"harness.update.button" = "Güncelle";
+"harness.update.ynh.unavailable" = "ynh kullanılamıyor.";
+"command.runner.running" = "Çalışıyor…";
+"command.runner.succeeded" = "Başarılı";
+"command.runner.failed" = "Başarısız";
+"common.copy.output" = "Çıktıyı kopyala";
+"common.rerun" = "Yeniden çalıştır";

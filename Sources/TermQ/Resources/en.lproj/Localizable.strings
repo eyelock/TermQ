@@ -658,6 +658,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Marketplace";
+"harnesses.source.read.only" = "Read-only";
+"harnesses.source.forked.from %@" = "Forked from %@";
 
 // Harnesses — sidebar groups
 "harnesses.group.default" = "Default";
@@ -693,6 +695,7 @@
 "harnesses.detail.delegates %d" = "Delegates to (%d)";
 "harnesses.detail.picks %d" = "Picks (%d):";
 "harnesses.reveal.in.finder" = "Reveal in Finder";
+"harnesses.copy.path" = "Copy as Pathname";
 "harnesses.open.in.browser" = "Open in browser";
 "harnesses.close.detail" = "Close";
 "harnesses.configure.from.marketplaces" = "Configure from Marketplaces…";
@@ -766,6 +769,18 @@
 
 "harnesses.update.button" = "Update";
 "harnesses.update.help" = "Update to the latest version";
+"harnesses.update.available" = "Update available";
+"harnesses.update.available.version %@" = "Version %@ is available";
+"harnesses.fork.to.local" = "Fork to local";
+"harnesses.fork.to.local.help" = "Create an editable local copy of this harness";
+"harnesses.update.dot.help" = "Update available";
+"harnesses.update.no.sources" = "This harness has no Git sources to update.";
+"harnesses.loading.help" = "Talking to ynh…";
+"harnesses.unversioned.drift.help" = "Upstream content changed without a version bump — review before updating";
+"harnesses.unversioned.drift.banner" = "Upstream content changed without a version bump — review before updating";
+"harnesses.unversioned.drift.confirm.title" = "Review upstream changes";
+"harnesses.unversioned.drift.confirm.body" = "Upstream content has changed without a version bump. Updating will pull the new content. Review the SHAs below before proceeding — a missing version bump can mask malicious changes.";
+"harnesses.unversioned.drift.confirm.proceed" = "Update Anyway";
 "harnesses.uninstall.button" = "Uninstall";
 "harnesses.uninstall.help" = "Uninstall this harness";
 "harnesses.uninstall.alert.title %@" = "Uninstall \"%@\"?";
@@ -879,6 +894,25 @@
 "harness.duplicate.button" = "Duplicate";
 "harness.duplicate.installing" = "Installing duplicate…";
 "harness.duplicate.success %@" = "%@ installed successfully.";
+
+// MARK: - Harness Fork
+"harness.fork.title %@" = "Fork \"%@\" to Local";
+"harness.fork.explanation" = "Creates an editable local copy of this harness. The copy tracks its origin so you can see what changed upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forking \"%@\"…";
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Update \"%@\"";
+"harness.update.progress.title %@" = "Updating \"%@\"…";
+"harness.update.button" = "Update";
+"harness.update.ynh.unavailable" = "ynh is not available.";
+
+// MARK: - Command Runner
+"command.runner.running" = "Running…";
+"command.runner.succeeded" = "Succeeded";
+"command.runner.failed" = "Failed";
+"common.copy.output" = "Copy Output";
+"common.rerun" = "Re-run";
 
 // MARK: - Harness Wizard
 "harness.wizard.title" = "New Harness";

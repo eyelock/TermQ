@@ -602,6 +602,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Cục bộ";
 "harnesses.source.registry" = "Registry";
+"harnesses.source.read.only" = "Chỉ đọc";
+"harnesses.source.forked.from %@" = "Tách nhánh từ %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Thông tin";
@@ -620,6 +622,7 @@
 "harnesses.detail.delegates %d" = "Ủy quyền cho (%d)";
 "harnesses.detail.picks %d" = "Chọn (%d):";
 "harnesses.reveal.in.finder" = "Hiển thị trong Finder";
+"harnesses.copy.path" = "Sao chép dưới dạng đường dẫn";
 "harnesses.open.in.browser" = "Mở trong trình duyệt";
 "harnesses.close.detail" = "Đóng";
 "harnesses.configure.from.marketplaces" = "Cấu hình từ Thị trường…";
@@ -725,6 +728,8 @@
 
 "harnesses.update.button" = "Cập nhật";
 "harnesses.update.help" = "Cập nhật lên phiên bản mới nhất";
+"harnesses.update.available" = "Có bản cập nhật";
+"harnesses.update.available.version %@" = "Phiên bản %@ đã có sẵn";
 "harnesses.uninstall.button" = "Gỡ cài đặt";
 "harnesses.uninstall.help" = "Gỡ cài đặt harness này";
 "harnesses.uninstall.alert.title %@" = "Gỡ cài đặt \"%@\"?";
@@ -926,3 +931,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Mở terminal";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork về máy cục bộ";
+"harnesses.fork.to.local.help" = "Tạo bản sao cục bộ có thể chỉnh sửa của harness này";
+"harnesses.update.dot.help" = "Có bản cập nhật";
+"harness.fork.title %@" = "Fork \"%@\" về cục bộ";
+"harness.fork.explanation" = "Tạo bản sao cục bộ có thể chỉnh sửa của harness này. Bản sao theo dõi nguồn gốc để bạn có thể xem những thay đổi ở upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Đang fork \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Cập nhật \"%@\"";
+"harness.update.progress.title %@" = "Đang cập nhật \"%@\"…";
+"harness.update.button" = "Cập nhật";
+"harness.update.ynh.unavailable" = "ynh không khả dụng.";
+"command.runner.running" = "Đang chạy…";
+"command.runner.succeeded" = "Thành công";
+"command.runner.failed" = "Thất bại";
+"common.copy.output" = "Sao chép đầu ra";
+"common.rerun" = "Chạy lại";

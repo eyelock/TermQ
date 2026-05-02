@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Registru";
+"harnesses.source.read.only" = "Doar citire";
+"harnesses.source.forked.from %@" = "Derivat din %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informații";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Delegă la (%d)";
 "harnesses.detail.picks %d" = "Selectează (%d):";
 "harnesses.reveal.in.finder" = "Afișare în Finder";
+"harnesses.copy.path" = "Copiați ca cale";
 "harnesses.open.in.browser" = "Deschide în browser";
 "harnesses.close.detail" = "Închide";
 "harnesses.configure.from.marketplaces" = "Configurați din piețe…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Actualizare";
 "harnesses.update.help" = "Actualizare la ultima versiune";
+"harnesses.update.available" = "Actualizare disponibilă";
+"harnesses.update.available.version %@" = "Versiunea %@ este disponibilă";
 "harnesses.uninstall.button" = "Dezinstalare";
 "harnesses.uninstall.help" = "Dezinstalați acest harness";
 "harnesses.uninstall.alert.title %@" = "Dezinstalați \"%@\"?";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Deschide terminale";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork la local";
+"harnesses.fork.to.local.help" = "Creați o copie locală editabilă a acestui harness";
+"harnesses.update.dot.help" = "Actualizare disponibilă";
+"harness.fork.title %@" = "Fork \"%@\" la local";
+"harness.fork.explanation" = "Creează o copie locală editabilă a acestui harness. Copia îi urmărește originea pentru a putea vedea ce s-a schimbat upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Se creează fork-ul \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Actualizează \"%@\"";
+"harness.update.progress.title %@" = "Se actualizează \"%@\"…";
+"harness.update.button" = "Actualizează";
+"harness.update.ynh.unavailable" = "ynh nu este disponibil.";
+"command.runner.running" = "Se execută…";
+"command.runner.succeeded" = "Reușit";
+"command.runner.failed" = "Eșuat";
+"common.copy.output" = "Copiați ieșirea";
+"common.rerun" = "Rulați din nou";

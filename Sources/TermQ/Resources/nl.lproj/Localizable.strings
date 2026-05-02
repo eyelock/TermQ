@@ -600,6 +600,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokaal";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Alleen-lezen";
+"harnesses.source.forked.from %@" = "Geforkt van %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informatie";
@@ -618,6 +620,7 @@
 "harnesses.detail.delegates %d" = "Delegeert naar (%d)";
 "harnesses.detail.picks %d" = "Selecteert (%d):";
 "harnesses.reveal.in.finder" = "Tonen in Finder";
+"harnesses.copy.path" = "Kopiëren als padnaam";
 "harnesses.open.in.browser" = "Openen in browser";
 "harnesses.close.detail" = "Sluiten";
 "harnesses.configure.from.marketplaces" = "Configureer vanuit marktplaatsen…";
@@ -723,6 +726,8 @@
 
 "harnesses.update.button" = "Bijwerken";
 "harnesses.update.help" = "Bijwerken naar de nieuwste versie";
+"harnesses.update.available" = "Update beschikbaar";
+"harnesses.update.available.version %@" = "Versie %@ is beschikbaar";
 "harnesses.uninstall.button" = "Verwijderen";
 "harnesses.uninstall.help" = "Deze harness verwijderen";
 "harnesses.uninstall.alert.title %@" = "\"%@\" verwijderen?";
@@ -924,3 +929,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Terminals openen";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork naar lokaal";
+"harnesses.fork.to.local.help" = "Een bewerkbare lokale kopie van deze harness maken";
+"harnesses.update.dot.help" = "Update beschikbaar";
+"harness.fork.title %@" = "Fork \"%@\" naar lokaal";
+"harness.fork.explanation" = "Maakt een bewerkbare lokale kopie van deze harness. De kopie volgt zijn oorsprong zodat je kunt zien wat er bovenstrooms is veranderd.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forken van \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Bijwerken \"%@\"";
+"harness.update.progress.title %@" = "Bezig met bijwerken van \"%@\"…";
+"harness.update.button" = "Bijwerken";
+"harness.update.ynh.unavailable" = "ynh is niet beschikbaar.";
+"command.runner.running" = "Wordt uitgevoerd…";
+"command.runner.succeeded" = "Geslaagd";
+"command.runner.failed" = "Mislukt";
+"common.copy.output" = "Uitvoer kopiëren";
+"common.rerun" = "Opnieuw uitvoeren";
