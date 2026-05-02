@@ -600,6 +600,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Tempatan";
 "harnesses.source.registry" = "Pendaftaran";
+"harnesses.source.read.only" = "Baca sahaja";
+"harnesses.source.forked.from %@" = "Dicabang dari %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Maklumat";
@@ -618,6 +620,7 @@
 "harnesses.detail.delegates %d" = "Mewakilkan kepada (%d)";
 "harnesses.detail.picks %d" = "Memilih (%d):";
 "harnesses.reveal.in.finder" = "Tunjuk dalam Finder";
+"harnesses.copy.path" = "Salin sebagai Laluan";
 "harnesses.open.in.browser" = "Buka dalam pelayar";
 "harnesses.close.detail" = "Tutup";
 "harnesses.configure.from.marketplaces" = "Konfigurasikan dari Pasaran…";
@@ -723,6 +726,8 @@
 
 "harnesses.update.button" = "Kemas Kini";
 "harnesses.update.help" = "Kemas kini ke versi terbaru";
+"harnesses.update.available" = "Kemas kini tersedia";
+"harnesses.update.available.version %@" = "Versi %@ tersedia";
 "harnesses.uninstall.button" = "Nyahpasang";
 "harnesses.uninstall.help" = "Nyahpasang harness ini";
 "harnesses.uninstall.alert.title %@" = "Nyahpasang \"%@\"?";
@@ -924,3 +929,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Buka terminal";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork ke lokal";
+"harnesses.fork.to.local.help" = "Cipta salinan tempatan yang boleh diedit bagi harness ini";
+"harnesses.update.dot.help" = "Kemas kini tersedia";
+"harness.fork.title %@" = "Fork \"%@\" ke lokal";
+"harness.fork.explanation" = "Mencipta salinan tempatan yang boleh diedit bagi harness ini. Salinan menjejak asalnya supaya anda boleh melihat apa yang berubah di upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Mem-fork \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Kemas Kini \"%@\"";
+"harness.update.progress.title %@" = "Mengemas kini \"%@\"…";
+"harness.update.button" = "Kemas Kini";
+"harness.update.ynh.unavailable" = "ynh tidak tersedia.";
+"command.runner.running" = "Sedang berjalan…";
+"command.runner.succeeded" = "Berjaya";
+"command.runner.failed" = "Gagal";
+"common.copy.output" = "Salin output";
+"common.rerun" = "Jalankan semula";

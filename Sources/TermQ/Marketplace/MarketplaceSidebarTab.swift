@@ -165,7 +165,9 @@ struct MarketplaceSidebarTab: View {
             selectedMarketplace = MarketplaceSelection(id: marketplace.id, marketplace: marketplace)
         }
         .contextMenu {
-            Button { Task { await refresh(marketplace) } } label: {
+            Button {
+                Task { await refresh(marketplace) }
+            } label: {
                 Label(Strings.Marketplace.rowRefresh, systemImage: "arrow.clockwise")
             }
             if marketplace.isLocal {

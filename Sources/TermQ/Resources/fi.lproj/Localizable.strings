@@ -601,6 +601,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Paikallinen";
 "harnesses.source.registry" = "Rekisteri";
+"harnesses.source.read.only" = "Vain luku";
+"harnesses.source.forked.from %@" = "Haaroitettu kohteesta %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Tiedot";
@@ -619,6 +621,7 @@
 "harnesses.detail.delegates %d" = "Delegoi kohteelle (%d)";
 "harnesses.detail.picks %d" = "Valitsee (%d):";
 "harnesses.reveal.in.finder" = "Näytä Finderissä";
+"harnesses.copy.path" = "Kopioi polkuna";
 "harnesses.open.in.browser" = "Avaa selaimessa";
 "harnesses.close.detail" = "Sulje";
 "harnesses.configure.from.marketplaces" = "Määritä markkinapaikoista…";
@@ -724,6 +727,8 @@
 
 "harnesses.update.button" = "Päivitä";
 "harnesses.update.help" = "Päivitä uusimpaan versioon";
+"harnesses.update.available" = "Päivitys saatavilla";
+"harnesses.update.available.version %@" = "Versio %@ on saatavilla";
 "harnesses.uninstall.button" = "Poista asennus";
 "harnesses.uninstall.help" = "Poista tämän harnessin asennus";
 "harnesses.uninstall.alert.title %@" = "Poistetaanko \"%@\"?";
@@ -925,3 +930,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Avaa terminaalit";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Haaruta paikalliseksi";
+"harnesses.fork.to.local.help" = "Luo muokattava paikallinen kopio tästä harness-ohjelmasta";
+"harnesses.update.dot.help" = "Päivitys saatavilla";
+"harness.fork.title %@" = "Haaruta \"%@\" paikalliseksi";
+"harness.fork.explanation" = "Luo muokattavan paikallisen kopion tästä harness-ohjelmasta. Kopio seuraa alkuperäänsä, joten näet mitä ylävirrassa on muuttunut.";
+"harness.fork.button" = "Haaruta";
+"harness.fork.progress.title %@" = "Haarutetaan \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Päivitä \"%@\"";
+"harness.update.progress.title %@" = "Päivitetään \"%@\"…";
+"harness.update.button" = "Päivitä";
+"harness.update.ynh.unavailable" = "ynh ei ole käytettävissä.";
+"command.runner.running" = "Suoritetaan…";
+"command.runner.succeeded" = "Onnistui";
+"command.runner.failed" = "Epäonnistui";
+"common.copy.output" = "Kopioi tuloste";
+"common.rerun" = "Suorita uudelleen";

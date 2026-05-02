@@ -601,6 +601,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Helyi";
 "harnesses.source.registry" = "Regiszter";
+"harnesses.source.read.only" = "Csak olvasható";
+"harnesses.source.forked.from %@" = "Elágaztatva innen: %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Információ";
@@ -619,6 +621,7 @@
 "harnesses.detail.delegates %d" = "Delegál (%d) felé";
 "harnesses.detail.picks %d" = "Kiválaszt (%d):";
 "harnesses.reveal.in.finder" = "Megjelenítés a Finderben";
+"harnesses.copy.path" = "Másolás elérési útként";
 "harnesses.open.in.browser" = "Megnyitás böngészőben";
 "harnesses.close.detail" = "Bezárás";
 "harnesses.configure.from.marketplaces" = "Konfigurálás piacterekről…";
@@ -724,6 +727,8 @@
 
 "harnesses.update.button" = "Frissítés";
 "harnesses.update.help" = "Frissítés a legújabb verzióra";
+"harnesses.update.available" = "Frissítés elérhető";
+"harnesses.update.available.version %@" = "A(z) %@ verzió elérhető";
 "harnesses.uninstall.button" = "Eltávolítás";
 "harnesses.uninstall.help" = "Ez a harness eltávolítása";
 "harnesses.uninstall.alert.title %@" = "Eltávolítja: \"%@\"?";
@@ -925,3 +930,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Terminálok megnyitása";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork helyire";
+"harnesses.fork.to.local.help" = "Szerkeszthető helyi másolat létrehozása erről a harness-ről";
+"harnesses.update.dot.help" = "Frissítés elérhető";
+"harness.fork.title %@" = "\"%@\" fork helyire";
+"harness.fork.explanation" = "Szerkeszthető helyi másolatot hoz létre erről a harness-ről. A másolat nyomkövetéssel rendelkezik, így láthatja, mi változott az upstream-ben.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "\"%@\" forkolása…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Frissítés: \"%@\"";
+"harness.update.progress.title %@" = "\"%@\" frissítése…";
+"harness.update.button" = "Frissítés";
+"harness.update.ynh.unavailable" = "ynh nem érhető el.";
+"command.runner.running" = "Fut…";
+"command.runner.succeeded" = "Sikeres";
+"command.runner.failed" = "Sikertelen";
+"common.copy.output" = "Kimenet másolása";
+"common.rerun" = "Újra futtatás";

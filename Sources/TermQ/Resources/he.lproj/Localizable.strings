@@ -601,6 +601,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "מקומי";
 "harnesses.source.registry" = "רשם";
+"harnesses.source.read.only" = "לקריאה בלבד";
+"harnesses.source.forked.from %@" = "מפוצל מ-%@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "מידע";
@@ -619,6 +621,7 @@
 "harnesses.detail.delegates %d" = "מאציל ל-(%d)";
 "harnesses.detail.picks %d" = "בוחר (%d):";
 "harnesses.reveal.in.finder" = "הצג ב-Finder";
+"harnesses.copy.path" = "העתק כנתיב";
 "harnesses.open.in.browser" = "פתח בדפדפן";
 "harnesses.close.detail" = "סגור";
 "harnesses.configure.from.marketplaces" = "הגדרה מהשווקים…";
@@ -724,6 +727,8 @@
 
 "harnesses.update.button" = "עדכן";
 "harnesses.update.help" = "עדכן לגרסה האחרונה";
+"harnesses.update.available" = "עדכון זמין";
+"harnesses.update.available.version %@" = "גרסה %@ זמינה";
 "harnesses.uninstall.button" = "הסר התקנה";
 "harnesses.uninstall.help" = "הסר את ה-harness הזה";
 "harnesses.uninstall.alert.title %@" = "להסיר את \"%@\"?";
@@ -925,3 +930,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "פתח טרמינלים";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "פיצול לקומפיוטר המקומי";
+"harnesses.fork.to.local.help" = "צור עותק מקומי ניתן לעריכה של ה-harness הזה";
+"harnesses.update.dot.help" = "עדכון זמין";
+"harness.fork.title %@" = "פיצול \"%@\" למקומי";
+"harness.fork.explanation" = "יוצר עותק מקומי ניתן לעריכה של ה-harness הזה. העותק עוקב אחר מקורו כך שתוכל לראות מה השתנה upstream.";
+"harness.fork.button" = "פיצול";
+"harness.fork.progress.title %@" = "מפצל את \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "עדכן את \"%@\"";
+"harness.update.progress.title %@" = "מעדכן את \"%@\"…";
+"harness.update.button" = "עדכן";
+"harness.update.ynh.unavailable" = "ynh אינו זמין.";
+"command.runner.running" = "מריץ…";
+"command.runner.succeeded" = "הצליח";
+"command.runner.failed" = "נכשל";
+"common.copy.output" = "העתק פלט";
+"common.rerun" = "הרץ שוב";

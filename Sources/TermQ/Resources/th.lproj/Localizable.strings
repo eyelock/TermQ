@@ -602,6 +602,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "ในเครื่อง";
 "harnesses.source.registry" = "Registry";
+"harnesses.source.read.only" = "อ่านอย่างเดียว";
+"harnesses.source.forked.from %@" = "แยกจาก %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "ข้อมูล";
@@ -620,6 +622,7 @@
 "harnesses.detail.delegates %d" = "มอบหมายไปยัง (%d)";
 "harnesses.detail.picks %d" = "เลือก (%d):";
 "harnesses.reveal.in.finder" = "แสดงใน Finder";
+"harnesses.copy.path" = "คัดลอกเป็นชื่อเส้นทาง";
 "harnesses.open.in.browser" = "เปิดในเบราว์เซอร์";
 "harnesses.close.detail" = "ปิด";
 "harnesses.configure.from.marketplaces" = "กำหนดค่าจากตลาด…";
@@ -725,6 +728,8 @@
 
 "harnesses.update.button" = "อัปเดต";
 "harnesses.update.help" = "อัปเดตเป็นเวอร์ชันล่าสุด";
+"harnesses.update.available" = "มีอัปเดตใหม่";
+"harnesses.update.available.version %@" = "เวอร์ชัน %@ พร้อมใช้งาน";
 "harnesses.uninstall.button" = "ถอนการติดตั้ง";
 "harnesses.uninstall.help" = "ถอนการติดตั้ง harness นี้";
 "harnesses.uninstall.alert.title %@" = "ถอนการติดตั้ง \"%@\" หรือไม่?";
@@ -926,3 +931,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "เปิดเทอร์มินัล";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "แยกสาขาไปยังเครื่องท้องถิ่น";
+"harnesses.fork.to.local.help" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้";
+"harnesses.update.dot.help" = "มีการอัปเดต";
+"harness.fork.title %@" = "แยกสาขา \"%@\" ไปยังท้องถิ่น";
+"harness.fork.explanation" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้ สำเนาจะติดตามต้นกำเนิดเพื่อให้คุณเห็นว่ามีการเปลี่ยนแปลงอะไร upstream";
+"harness.fork.button" = "แยกสาขา";
+"harness.fork.progress.title %@" = "กำลังแยกสาขา \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "อัปเดต \"%@\"";
+"harness.update.progress.title %@" = "กำลังอัปเดต \"%@\"…";
+"harness.update.button" = "อัปเดต";
+"harness.update.ynh.unavailable" = "ynh ไม่พร้อมใช้งาน";
+"command.runner.running" = "กำลังทำงาน…";
+"command.runner.succeeded" = "สำเร็จ";
+"command.runner.failed" = "ล้มเหลว";
+"common.copy.output" = "คัดลอกผลลัพธ์";
+"common.rerun" = "เรียกใช้อีกครั้ง";

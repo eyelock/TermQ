@@ -19,7 +19,7 @@ struct HarnessLaunchSheet: View {
     let onLaunch: (HarnessLaunchConfig) -> Void
     @Environment(\.dismiss) private var dismiss
 
-    @State private var selectedVendorID: String = defaultVendorTag
+    @State private var selectedVendorID: String
     @State private var selectedFocus: String = ""
     @State private var selectedBackend: TerminalBackend = .direct
     @State private var workingDirectory: String
@@ -32,6 +32,7 @@ struct HarnessLaunchSheet: View {
         vendors: [Vendor],
         initialWorkingDirectory: String?,
         initialBranch: String? = nil,
+        initialVendorOverride: String? = nil,
         onLaunch: @escaping (HarnessLaunchConfig) -> Void
     ) {
         self.harness = harness
@@ -41,6 +42,10 @@ struct HarnessLaunchSheet: View {
         self.initialBranch = initialBranch
         self.onLaunch = onLaunch
         self._workingDirectory = State(initialValue: initialWorkingDirectory ?? NSHomeDirectory())
+        // Pre-select the user's per-harness vendor override if one is set,
+        // otherwise fall back to the harness's manifest default.
+        self._selectedVendorID = State(
+            initialValue: initialVendorOverride ?? defaultVendorTag)
     }
 
     /// The effective vendor ID for the command — empty when using the default.

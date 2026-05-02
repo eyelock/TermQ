@@ -28,6 +28,11 @@ protocol YNHPersistenceProtocol: AnyObject {
     /// Returns the sorted list of worktree paths linked to a harness.
     func worktrees(for harnessName: String) -> [String]
 
+    /// Returns the per-harness vendor override, if the user has set one.
+    /// Falls back to the harness's manifest-declared `default_vendor` at the
+    /// call site when nil.
+    func vendorOverride(for harnessId: String) -> String?
+
     // MARK: - Mutations
 
     /// Sets or clears the repository-level default harness.
@@ -35,6 +40,10 @@ protocol YNHPersistenceProtocol: AnyObject {
 
     /// Sets or clears the harness override for a specific worktree path.
     func setHarness(_ harnessName: String?, for worktreePath: String)
+
+    /// Sets or clears the per-harness vendor override. Pass `nil` to clear and
+    /// fall back to the harness's manifest-declared `default_vendor`.
+    func setVendorOverride(_ vendorId: String?, for harnessId: String)
 
     /// Removes all worktree and repo-level associations for a harness (called after uninstall).
     func removeAllAssociations(for harnessName: String)

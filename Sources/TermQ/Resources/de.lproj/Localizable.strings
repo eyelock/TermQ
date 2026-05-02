@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokal";
 "harnesses.source.registry" = "Registry";
+"harnesses.source.read.only" = "Schreibgeschützt";
+"harnesses.source.forked.from %@" = "Geforkt von %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informationen";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Delegiert an (%d)";
 "harnesses.detail.picks %d" = "Wählt aus (%d):";
 "harnesses.reveal.in.finder" = "Im Finder zeigen";
+"harnesses.copy.path" = "Als Pfad kopieren";
 "harnesses.open.in.browser" = "Im Browser öffnen";
 "harnesses.close.detail" = "Schließen";
 "harnesses.configure.from.marketplaces" = "Aus Marktplätzen konfigurieren…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Aktualisieren";
 "harnesses.update.help" = "Auf die neueste Version aktualisieren";
+"harnesses.update.available" = "Update verfügbar";
+"harnesses.update.available.version %@" = "Version %@ ist verfügbar";
 "harnesses.uninstall.button" = "Deinstallieren";
 "harnesses.uninstall.help" = "Diesen Harness deinstallieren";
 "harnesses.uninstall.alert.title %@" = "\"%@\" deinstallieren?";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Terminals öffnen";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Lokal forken";
+"harnesses.fork.to.local.help" = "Eine bearbeitbare lokale Kopie dieses Harness erstellen";
+"harnesses.update.dot.help" = "Update verfügbar";
+"harness.fork.title %@" = "Fork \"%@\" auf Lokal";
+"harness.fork.explanation" = "Erstellt eine bearbeitbare lokale Kopie dieses Harness. Die Kopie verfolgt ihren Ursprung, sodass Sie sehen können, was sich stromaufwärts geändert hat.";
+"harness.fork.button" = "Forken";
+"harness.fork.progress.title %@" = "Fork von \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Aktualisieren von \"%@\"";
+"harness.update.progress.title %@" = "Wird aktualisiert: \"%@\"…";
+"harness.update.button" = "Aktualisieren";
+"harness.update.ynh.unavailable" = "ynh ist nicht verfügbar.";
+"command.runner.running" = "Wird ausgeführt…";
+"command.runner.succeeded" = "Erfolgreich";
+"command.runner.failed" = "Fehlgeschlagen";
+"common.copy.output" = "Ausgabe kopieren";
+"common.rerun" = "Erneut ausführen";

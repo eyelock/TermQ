@@ -600,6 +600,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "로컬";
 "harnesses.source.registry" = "레지스트리";
+"harnesses.source.read.only" = "읽기 전용";
+"harnesses.source.forked.from %@" = "%@에서 포크됨";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "정보";
@@ -618,6 +620,7 @@
 "harnesses.detail.delegates %d" = "위임 대상 (%d)";
 "harnesses.detail.picks %d" = "선택 (%d):";
 "harnesses.reveal.in.finder" = "Finder에서 보기";
+"harnesses.copy.path" = "경로명으로 복사";
 "harnesses.open.in.browser" = "브라우저에서 열기";
 "harnesses.close.detail" = "닫기";
 "harnesses.configure.from.marketplaces" = "마켓플레이스에서 구성…";
@@ -723,6 +726,8 @@
 
 "harnesses.update.button" = "업데이트";
 "harnesses.update.help" = "최신 버전으로 업데이트";
+"harnesses.update.available" = "업데이트 가능";
+"harnesses.update.available.version %@" = "%@ 버전을 사용할 수 있습니다";
 "harnesses.uninstall.button" = "제거";
 "harnesses.uninstall.help" = "이 Harness 제거";
 "harnesses.uninstall.alert.title %@" = "\"%@\"을(를) 제거하시겠습니까?";
@@ -924,3 +929,26 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "터미널 열기";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "로컬로 포크";
+"harnesses.fork.to.local.help" = "이 harness의 편집 가능한 로컬 사본 만들기";
+"harnesses.update.dot.help" = "업데이트 가능";
+"harness.fork.title %@" = "\"%@\" 을 로컬로 포크";
+"harness.fork.explanation" = "이 harness의 편집 가능한 로컬 사본을 만듭니다. 사본은 업스트림에서 무엇이 변경되었는지 확인할 수 있도록 원본을 추적합니다.";
+"harness.fork.button" = "포크";
+"harness.fork.progress.title %@" = "\"%@\" 포크 중…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "\"%@\" 업데이트";
+
+"harness.update.progress.title %@" = "\"%@\" 업데이트 중…";
+
+"harness.update.button" = "업데이트";
+"harness.update.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+"command.runner.running" = "실행 중…";
+"command.runner.succeeded" = "성공";
+"command.runner.failed" = "실패";
+"common.copy.output" = "출력 복사";
+"common.rerun" = "다시 실행";

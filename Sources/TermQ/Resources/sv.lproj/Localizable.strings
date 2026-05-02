@@ -602,6 +602,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokal";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Skrivskyddad";
+"harnesses.source.forked.from %@" = "Grenad från %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Information";
@@ -620,6 +622,7 @@
 "harnesses.detail.delegates %d" = "Delegerar till (%d)";
 "harnesses.detail.picks %d" = "Väljer (%d):";
 "harnesses.reveal.in.finder" = "Visa i Finder";
+"harnesses.copy.path" = "Kopiera som sökväg";
 "harnesses.open.in.browser" = "Öppna i webbläsare";
 "harnesses.close.detail" = "Stäng";
 "harnesses.configure.from.marketplaces" = "Konfigurera från marknadsplatser…";
@@ -725,6 +728,8 @@
 
 "harnesses.update.button" = "Uppdatera";
 "harnesses.update.help" = "Uppdatera till den senaste versionen";
+"harnesses.update.available" = "Uppdatering tillgänglig";
+"harnesses.update.available.version %@" = "Version %@ är tillgänglig";
 "harnesses.uninstall.button" = "Avinstallera";
 "harnesses.uninstall.help" = "Avinstallera denna harness";
 "harnesses.uninstall.alert.title %@" = "Avinstallera \"%@\"?";
@@ -926,3 +931,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Öppna terminaler";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Forka till lokalt";
+"harnesses.fork.to.local.help" = "Skapa en redigerbar lokal kopia av denna harness";
+"harnesses.update.dot.help" = "Uppdatering tillgänglig";
+"harness.fork.title %@" = "Forka \"%@\" till lokalt";
+"harness.fork.explanation" = "Skapar en redigerbar lokal kopia av denna harness. Kopian spårar sitt ursprung så att du kan se vad som ändrats uppströms.";
+"harness.fork.button" = "Forka";
+"harness.fork.progress.title %@" = "Forkar \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Uppdatera \"%@\"";
+"harness.update.progress.title %@" = "Uppdaterar \"%@\"…";
+"harness.update.button" = "Uppdatera";
+"harness.update.ynh.unavailable" = "ynh är inte tillgänglig.";
+"command.runner.running" = "Körs…";
+"command.runner.succeeded" = "Lyckades";
+"command.runner.failed" = "Misslyckades";
+"common.copy.output" = "Kopiera utdata";
+"common.rerun" = "Kör igen";

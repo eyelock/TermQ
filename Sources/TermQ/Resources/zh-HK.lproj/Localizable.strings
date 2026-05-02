@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "本地";
 "harnesses.source.registry" = "登錄冊";
+"harnesses.source.read.only" = "只讀";
+"harnesses.source.forked.from %@" = "從 %@ 派生";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "資訊";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "委派給 (%d)";
 "harnesses.detail.picks %d" = "選取 (%d)：";
 "harnesses.reveal.in.finder" = "在 Finder 中顯示";
+"harnesses.copy.path" = "複製路徑";
 "harnesses.open.in.browser" = "在瀏覽器中開啟";
 "harnesses.close.detail" = "關閉";
 "harnesses.configure.from.marketplaces" = "從市場設定…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "更新";
 "harnesses.update.help" = "更新至最新版本";
+"harnesses.update.available" = "有可用的更新";
+"harnesses.update.available.version %@" = "版本 %@ 已可使用";
 "harnesses.uninstall.button" = "解除安裝";
 "harnesses.uninstall.help" = "解除安裝此 harness";
 "harnesses.uninstall.alert.title %@" = "解除安裝「%@」？";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "開啟終端機";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork 到本機";
+"harnesses.fork.to.local.help" = "建立此 harness 的可編輯本機副本";
+"harnesses.update.dot.help" = "有可用更新";
+"harness.fork.title %@" = "將 \"%@\" Fork 到本機";
+"harness.fork.explanation" = "建立此 harness 的可編輯本機副本。此副本追蹤其來源，讓您可以查看上游的變更。";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "正在 Fork \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "更新「%@」";
+"harness.update.progress.title %@" = "正在更新「%@」…";
+"harness.update.button" = "更新";
+"harness.update.ynh.unavailable" = "ynh 無法使用。";
+"command.runner.running" = "執行中…";
+"command.runner.succeeded" = "成功";
+"command.runner.failed" = "失敗";
+"common.copy.output" = "複製輸出";
+"common.rerun" = "重新執行";

@@ -7,6 +7,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Harness Management Phase 1** — first slice of the harness-as-first-class-citizen
+  rework. Registry harnesses, local harnesses, and forks now have distinct
+  identities, editability rules, and provenance display in TermQ.
+- **Source badges** — sidebar rows and detail pane header show a provenance
+  chip: registry name (registry installs), short Git URL (git installs),
+  `Local` (path installs), or `Forked from <registry>` (forked-locals).
+- **Read-only indicator** — registry harnesses display a Read-only pill;
+  surfaces that direct edits will be overwritten by the next `ynh update`.
+- **Update detection with three-state drift signal**
+  - **Versioned** — manifest `version` bumped upstream → orange dot, info
+    banner, single-click Update.
+  - **Unversioned drift** — content changed upstream without a version bump
+    → amber warning triangle, warning banner, confirmation step in the
+    Update sheet listing each drifted include path with `installed → available`
+    SHAs. Surfaces the supply-chain signal explicitly.
+  - **None** — clean.
+- **Fork to local** — actions menu offers Fork to local on registry harnesses;
+  single-call flow against pointer-model YNH (`ynh fork --to <path>`); creates
+  one editable working tree, no copy under `~/.ynh/harnesses/`. Detail pane
+  shows ghost origin via `installed_from.forked_from`.
+- **Duplicate** — local-only renamed copy via `ynh fork --to <path> --name
+  <newname>` single call. Hidden for registry harnesses (Fork covers that
+  intent). Appears in sidebar context menu and detail action menu.
+- **Action menu parity** — sidebar context menu and detail action menu share
+  the same canonical layout in five groups (Run, Location, Actions, Help,
+  Destructive). Sidebar drops Help and advanced Actions; detail keeps
+  everything. "Open in…" submenu (VS Code, Cursor, Zed, etc.), Reveal in
+  Terminal, Open in browser (URL sources), Copy as Pathname all consistent.
+- **Editable path resolution** — for forked-locals, Reveal/Open/Copy actions
+  target the editable source tree (`installed_from.source`), not the YNH
+  install slot. Single canonical "where this lives on disk" location.
+- **Sidebar header spinner** — global probe in flight shows a spinner next
+  to the "Harnesses" title; per-harness operations show the spinner next to
+  the row.
+- **Vendor override picker** — per-harness vendor override (claude / codex /
+  cursor) persists across launches, surfaces as a picker badge in the detail
+  header.
+- **Update menu hidden for forks** — YNH explicitly refuses `ynh update` on
+  forks; menu reflects that rather than offering an action that always errors.
+
+### Changed
+
+- **Detail pane refactored** — extracted `HarnessDetailViewModel` from the view;
+  source classification, editability, and update signals live in pure types
+  with their own test coverage. Old feature-flagged badge retired.
+- **YNH JSON envelope** — TermQ now reads `capabilities` and `ynh_version`
+  from the structured-output envelope (YNH 0.3.0+) and gates Phase 1 features
+  behind a version probe.
+- **Tolerant decoder** — `Harness` decoder accepts `null` for `includes` and
+  `delegates_to` (which YNH emits for broken installs whose source path is
+  missing). A single bad row no longer collapses the whole sidebar.
+
+### Fixed
+
+- **Sheet first-paint pill** — Fork, Update, Duplicate, Install, Add
+  Marketplace, and Session Recovery sheets now apply their frame at the
+  `.sheet` content closure rather than inside the sheet body. Eliminates
+  the rounded-rect placeholder that flashed before content resolved.
+- **Phantom drift detection** — pre-pointer-model YNH builds (and migrated
+  installs) no longer surface false-positive drift dots. Drift is only
+  reported when both `installed` and `available` SHAs are present and differ.
+
 ## [0.9.3] — 2026-04-29
 
 ### Fixed

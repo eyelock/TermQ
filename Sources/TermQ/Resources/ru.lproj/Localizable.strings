@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Локальный";
 "harnesses.source.registry" = "Реестр";
+"harnesses.source.read.only" = "Только для чтения";
+"harnesses.source.forked.from %@" = "Ответвлён от %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Информация";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Делегирует (%d)";
 "harnesses.detail.picks %d" = "Выбирает (%d):";
 "harnesses.reveal.in.finder" = "Показать в Finder";
+"harnesses.copy.path" = "Копировать как путь";
 "harnesses.open.in.browser" = "Открыть в браузере";
 "harnesses.close.detail" = "Закрыть";
 "harnesses.configure.from.marketplaces" = "Настроить из маркетплейсов…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Обновить";
 "harnesses.update.help" = "Обновить до последней версии";
+"harnesses.update.available" = "Доступно обновление";
+"harnesses.update.available.version %@" = "Доступна версия %@";
 "harnesses.uninstall.button" = "Удалить";
 "harnesses.uninstall.help" = "Удалить этот harness";
 "harnesses.uninstall.alert.title %@" = "Удалить \"%@\"?";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Открыть терминалы";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Форк на локальный";
+"harnesses.fork.to.local.help" = "Создать редактируемую локальную копию этого harness";
+"harnesses.update.dot.help" = "Доступно обновление";
+"harness.fork.title %@" = "Форк \"%@\" на локальный";
+"harness.fork.explanation" = "Создаёт редактируемую локальную копию этого harness. Копия отслеживает своё происхождение, чтобы вы могли видеть, что изменилось в источнике.";
+"harness.fork.button" = "Форк";
+"harness.fork.progress.title %@" = "Форк \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Обновить «%@»";
+"harness.update.progress.title %@" = "Обновление «%@»…";
+"harness.update.button" = "Обновить";
+"harness.update.ynh.unavailable" = "ynh недоступен.";
+"command.runner.running" = "Выполняется…";
+"command.runner.succeeded" = "Выполнено";
+"command.runner.failed" = "Не выполнено";
+"common.copy.output" = "Копировать вывод";
+"common.rerun" = "Повторить";

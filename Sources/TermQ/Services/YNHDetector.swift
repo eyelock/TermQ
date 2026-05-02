@@ -105,12 +105,15 @@ final class YNHDetector: ObservableObject {
         }
 
         do {
-            let json = try await Self.runCommand(
-                ynhPath,
-                args: ["paths", "--format", "json"],
+            let result = try await CommandRunner.run(
+                executable: ynhPath,
+                arguments: ["paths", "--format", "json"],
                 environment: env
             )
-            let paths = try JSONDecoder().decode(YNHPaths.self, from: Data(json.utf8))
+            guard result.didSucceed else {
+                throw YNHDetectionError.commandFailed(exitCode: result.exitCode, stderr: result.stderr)
+            }
+            let paths = try JSONDecoder().decode(YNHPaths.self, from: Data(result.stdout.utf8))
             status = .ready(ynhPath: ynhPath, yndPath: yndPath, paths: paths)
         } catch {
             if TermQLogger.fileLoggingEnabled {
@@ -150,14 +153,20 @@ final class YNHDetector: ObservableObject {
     /// Falls back to plain `ynh version` for older binaries that don't support the flag;
     /// in that case `capabilities` comes back `nil`.
     static func fetchVersionInfo(ynhPath: String) async -> (version: String?, capabilities: String?) {
-        if let json = try? await runCommand(ynhPath, args: ["version", "--format", "json"]),
-            let info = try? JSONDecoder().decode(VersionInfo.self, from: Data(json.utf8))
+        if let result = try? await CommandRunner.run(
+            executable: ynhPath,
+            arguments: ["version", "--format", "json"]
+        ),
+            result.didSucceed,
+            let info = try? JSONDecoder().decode(VersionInfo.self, from: Data(result.stdout.utf8))
         {
             return (info.version, info.capabilities)
         }
         // Pre-capability binary: best-effort plain version, no capability claim.
-        if let raw = try? await runCommand(ynhPath, args: ["version"]) {
-            return (raw.trimmingCharacters(in: .whitespacesAndNewlines), nil)
+        if let result = try? await CommandRunner.run(executable: ynhPath, arguments: ["version"]),
+            result.didSucceed
+        {
+            return (result.stdout.trimmingCharacters(in: .whitespacesAndNewlines), nil)
         }
         return (nil, nil)
     }
@@ -214,54 +223,6 @@ final class YNHDetector: ObservableObject {
         ])
 
         return candidates.first { FileManager.default.isExecutableFile(atPath: $0) }
-    }
-
-    // MARK: - Subprocess
-
-    /// Run a command and return its stdout. Throws on non-zero exit.
-    static func runCommand(
-        _ executable: String,
-        args: [String],
-        environment: [String: String]? = nil
-    ) async throws -> String {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async {
-                let process = Process()
-                let stdout = Pipe()
-                let stderr = Pipe()
-
-                process.executableURL = URL(fileURLWithPath: executable)
-                process.arguments = args
-                process.standardOutput = stdout
-                process.standardError = stderr
-                if let environment {
-                    process.environment = environment
-                }
-
-                do {
-                    try process.run()
-                    process.waitUntilExit()
-
-                    let data = stdout.fileHandleForReading.readDataToEndOfFile()
-                    let output = String(data: data, encoding: .utf8) ?? ""
-
-                    if process.terminationStatus == 0 {
-                        continuation.resume(returning: output)
-                    } else {
-                        let stderrData = stderr.fileHandleForReading.readDataToEndOfFile()
-                        let stderrStr = String(data: stderrData, encoding: .utf8) ?? ""
-                        continuation.resume(
-                            throwing: YNHDetectionError.commandFailed(
-                                exitCode: process.terminationStatus,
-                                stderr: stderrStr
-                            )
-                        )
-                    }
-                } catch {
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
     }
 }
 

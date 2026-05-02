@@ -78,7 +78,7 @@ struct SessionRecoveryView: View {
             }
             .padding()
         }
-        .frame(width: 500, height: 400)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     /// Find a matching card for a session based on the card ID prefix

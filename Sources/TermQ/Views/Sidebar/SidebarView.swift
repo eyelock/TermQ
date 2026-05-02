@@ -17,6 +17,7 @@ struct SidebarView: View {
     var onUninstall: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
     var onExport: ((String, String) -> Void)?
+    var onFork: ((String) -> Void)?
     var onNewHarness: (() -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
@@ -70,6 +71,7 @@ struct SidebarView: View {
                     onUninstall: onUninstall,
                     onUpdate: onUpdate,
                     onExport: onExport,
+                    onFork: onFork,
                     onNewHarness: onNewHarness
                 )
             case .marketplaces where showHarnessesTab:

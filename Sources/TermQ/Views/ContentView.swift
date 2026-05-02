@@ -4,11 +4,12 @@ import TermQCore
 import UniformTypeIdentifiers
 
 struct ContentView: View {
-    @StateObject private var viewModel = BoardViewModel.shared
+    @StateObject var viewModel = BoardViewModel.shared
     @StateObject private var sidebarViewModel = WorktreeSidebarViewModel.shared
-    @StateObject private var ynhDetector = YNHDetector.shared
-    @StateObject private var harnessRepo = HarnessRepository.shared
-    @StateObject private var vendorService = VendorService.shared
+    @StateObject var ynhDetector = YNHDetector.shared
+    @StateObject var harnessRepo = HarnessRepository.shared
+    @StateObject var vendorService = VendorService.shared
+    @StateObject var updateAvailabilityService = LiveUpdateAvailabilityService.shared
     @EnvironmentObject var urlHandler: URLHandler
     @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
     @State private var isZoomed = false
@@ -16,15 +17,22 @@ struct ContentView: View {
     @State private var showCommandPalette = false
     @State private var showBin = false
     @State private var showColumnPicker = false
-    @State private var showLaunchSheet = false
+    @State var showLaunchSheet = false
     @State private var showInstallSheet = false
     @State private var installCardIDs: Set<UUID> = []
     @State private var uninstallCardNames: [UUID: String] = [:]
-    @State private var updateCardNames: [UUID: String] = [:]
-    @State private var launchWorkingDirectory: String?
+    @State var launchWorkingDirectory: String?
     @State private var launchWorktreeBranch: String?
     /// Card that was selected before navigating to a harness detail, restored on dismiss.
-    @State private var cardBeforeHarness: TerminalCard?
+    @State var cardBeforeHarness: TerminalCard?
+    /// Name of the harness pending a fork-to-local operation.
+    @State var harnessNameToFork: String?
+    /// Controls `ForkHarnessSheet` visibility.
+    @State var showForkSheet = false
+    /// Name of the harness pending an update.
+    @State var harnessNameToUpdate: String?
+    /// Controls `UpdateHarnessSheet` visibility.
+    @State var showUpdateSheet = false
 
     var body: some View {
         HSplitView {
@@ -65,33 +73,15 @@ struct ContentView: View {
                     onUninstall: { name in uninstallHarness(name: name) },
                     onUpdate: { name in updateHarness(name: name) },
                     onExport: { name, dir in exportHarness(name: name, outputDir: dir) },
+                    onFork: { name in forkHarness(name: name) },
                     onNewHarness: {}
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
 
             ZStack {
-                if let harness = harnessRepo.selectedHarness {
-                    HarnessDetailView(
-                        harness: harness,
-                        detail: harnessRepo.selectedDetail,
-                        isLoadingDetail: harnessRepo.isLoadingDetail,
-                        detailError: harnessRepo.detailError,
-                        onDismiss: {
-                            harnessRepo.selectedHarnessName = nil
-                            if let card = cardBeforeHarness {
-                                viewModel.selectCard(card)
-                                cardBeforeHarness = nil
-                            }
-                        },
-                        onLaunch: { path in
-                            launchWorkingDirectory = path
-                            Task { await vendorService.refresh() }
-                            showLaunchSheet = true
-                        },
-                        onUpdate: { name in updateHarness(name: name) },
-                        onUninstall: { name in uninstallHarness(name: name) }
-                    )
+                if harnessRepo.selectedHarness != nil {
+                    harnessDetailView()
                 } else if let selectedCard = viewModel.selectedCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
@@ -179,6 +169,10 @@ struct ContentView: View {
                     Task { await harnessRepo.fetchDetail(for: name) }
                 }
             }
+            .onChange(of: harnessRepo.harnesses.count) { _, count in
+                guard count > 0 else { return }
+                Task { await updateAvailabilityService.refreshAll() }
+            }
             .sheet(item: $viewModel.isEditingCard) { card in
                 CardEditorView(
                     card: card,
@@ -242,7 +236,9 @@ struct ContentView: View {
                             detail: harnessRepo.selectedDetail,
                             vendors: vendorService.vendors,
                             initialWorkingDirectory: launchWorkingDirectory,
-                            initialBranch: launchWorktreeBranch
+                            initialBranch: launchWorktreeBranch,
+                            initialVendorOverride: YNHPersistence.shared.vendorOverride(
+                                for: harness.id)
                         ) { config in
                             launchHarness(config, reuseExisting: false)
                         }
@@ -256,6 +252,7 @@ struct ContentView: View {
                 ) { config in
                     installHarness(config)
                 }
+                .frame(width: 520, height: 540)
             }
             .onReceive(
                 NotificationCenter.default.publisher(for: .termqDirectSessionExited)
@@ -274,16 +271,28 @@ struct ContentView: View {
                         Task { await harnessRepo.refresh() }
                     }
                     if succeeded { closeHarnessCard(cardId) }
-                } else if let name = updateCardNames.removeValue(forKey: cardId) {
-                    harnessRepo.invalidateDetail(for: name)
-                    if case .ready = ynhDetector.status {
-                        Task { await harnessRepo.refresh() }
-                    }
-                    if succeeded { closeHarnessCard(cardId) }
                 }
+            }
+            .sheet(isPresented: $showForkSheet) {
+                // Frame applied at the .sheet content closure (the absolute
+                // outermost view NSWindow sees) so the window has a definitive
+                // intrinsic size at first paint. Frame inside the sheet view's
+                // body races against SwiftUI's layout pass and produces a
+                // small placeholder until resolved.
+                Group {
+                    if let name = harnessNameToFork { forkSheet(for: name) }
+                }
+                .frame(width: 560, height: 420)
+            }
+            .sheet(isPresented: $showUpdateSheet) {
+                Group {
+                    if let name = harnessNameToUpdate { updateSheet(for: name) }
+                }
+                .frame(width: 560, height: 420)
             }
             .sheet(isPresented: $viewModel.showSessionRecovery) {
                 SessionRecoveryView(viewModel: viewModel)
+                    .frame(width: 500, height: 400)
             }
             .toolbar {
                 ToolbarItem(placement: .navigation) {
@@ -838,45 +847,12 @@ extension ContentView {
         viewModel.selectedCard = card
     }
 
-    /// Update a harness in a transient terminal; invalidates the detail cache when done.
+    /// Update a harness via `UpdateHarnessSheet` (CommandRunner-based progress
+    /// sheet — no transient terminal in the user's board).
     func updateHarness(name: String) {
-        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
-        let column: Column
-        if let current = viewModel.selectedCard,
-            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
-        {
-            column = currentColumn
-        } else if let firstColumn = viewModel.board.columns.first {
-            column = firstColumn
-        } else {
-            return
-        }
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
-        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let defaultConfirmExternalModifications =
-            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
-        let card = TerminalCard(
-            title: "ynh update \(name)",
-            tags: [],
-            columnId: column.id,
-            workingDirectory: NSHomeDirectory(),
-            initCommand: "\(ynhPath) update \(shellQuote(name)) && exit",
-            safePasteEnabled: defaultSafePaste,
-            allowOscClipboard: defaultAllowOscClipboard,
-            confirmExternalModifications: defaultConfirmExternalModifications,
-            backend: .direct
-        )
-        card.isTransient = true
-        card.allowAutorun = true
-        updateCardNames[card.id] = name
-        viewModel.tabManager.addTransientCard(card)
-        if let current = viewModel.selectedCard {
-            viewModel.tabManager.insertTab(card.id, after: current.id)
-        } else {
-            viewModel.tabManager.addTab(card.id)
-        }
-        viewModel.objectWillChange.send()
-        viewModel.selectedCard = card
+        guard case .ready = ynhDetector.status else { return }
+        harnessNameToUpdate = name
+        showUpdateSheet = true
     }
 
     func exportHarness(name: String, outputDir: String) {

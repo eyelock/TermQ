@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Miestne";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Len na čítanie";
+"harnesses.source.forked.from %@" = "Vetva z %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informácie";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Deleguje na (%d)";
 "harnesses.detail.picks %d" = "Vyberá (%d):";
 "harnesses.reveal.in.finder" = "Zobraziť vo Finderi";
+"harnesses.copy.path" = "Kopírovať ako cestu";
 "harnesses.open.in.browser" = "Otvoriť v prehliadači";
 "harnesses.close.detail" = "Zavrieť";
 "harnesses.configure.from.marketplaces" = "Konfigurovať z trhov…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Aktualizovať";
 "harnesses.update.help" = "Aktualizovať na najnovšiu verziu";
+"harnesses.update.available" = "Dostupná aktualizácia";
+"harnesses.update.available.version %@" = "Verzia %@ je k dispozícii";
 "harnesses.uninstall.button" = "Odinštalovať";
 "harnesses.uninstall.help" = "Odinštalovať tento harness";
 "harnesses.uninstall.alert.title %@" = "Odinštalovať \"%@\"?";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Otvoriť terminály";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Vytvoriť fork lokálne";
+"harnesses.fork.to.local.help" = "Vytvoriť upraviteľnú lokálnu kópiu tohto harness";
+"harnesses.update.dot.help" = "Dostupná aktualizácia";
+"harness.fork.title %@" = "Fork \"%@\" do lokálneho";
+"harness.fork.explanation" = "Vytvorí upraviteľnú lokálnu kópiu tohto harness. Kópia sleduje svoj pôvod, aby ste mohli vidieť, čo sa zmenilo upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Vytváranie forku \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Aktualizovať \"%@\"";
+"harness.update.progress.title %@" = "Aktualizácia \"%@\"…";
+"harness.update.button" = "Aktualizovať";
+"harness.update.ynh.unavailable" = "ynh nie je k dispozícii.";
+"command.runner.running" = "Spúšťanie…";
+"command.runner.succeeded" = "Úspešne dokončené";
+"command.runner.failed" = "Zlyhalo";
+"common.copy.output" = "Kopírovať výstup";
+"common.rerun" = "Spustiť znova";

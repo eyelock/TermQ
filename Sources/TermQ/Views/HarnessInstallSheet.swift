@@ -72,7 +72,7 @@ struct HarnessInstallSheet: View {
             }
             .padding()
         }
-        .frame(width: 520, height: 540)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             Task { await sourcesService.refresh() }
             searchService.search("")

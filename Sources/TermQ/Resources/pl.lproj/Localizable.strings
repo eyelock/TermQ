@@ -600,6 +600,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokalne";
 "harnesses.source.registry" = "Rejestr";
+"harnesses.source.read.only" = "Tylko do odczytu";
+"harnesses.source.forked.from %@" = "Rozwidlony z %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informacje";
@@ -618,6 +620,7 @@
 "harnesses.detail.delegates %d" = "Deleguje do (%d)";
 "harnesses.detail.picks %d" = "Wybiera (%d):";
 "harnesses.reveal.in.finder" = "Pokaż w Finderze";
+"harnesses.copy.path" = "Kopiuj jako ścieżkę";
 "harnesses.open.in.browser" = "Otwórz w przeglądarce";
 "harnesses.close.detail" = "Zamknij";
 "harnesses.configure.from.marketplaces" = "Konfiguruj z rynków…";
@@ -723,6 +726,8 @@
 
 "harnesses.update.button" = "Aktualizuj";
 "harnesses.update.help" = "Aktualizuj do najnowszej wersji";
+"harnesses.update.available" = "Dostępna aktualizacja";
+"harnesses.update.available.version %@" = "Wersja %@ jest dostępna";
 "harnesses.uninstall.button" = "Odinstaluj";
 "harnesses.uninstall.help" = "Odinstaluj ten harness";
 "harnesses.uninstall.alert.title %@" = "Odinstalować \"%@\"?";
@@ -924,3 +929,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Otwórz terminale";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Utwórz fork lokalny";
+"harnesses.fork.to.local.help" = "Utwórz edytowalną kopię lokalną tego harness";
+"harnesses.update.dot.help" = "Dostępna aktualizacja";
+"harness.fork.title %@" = "Fork \"%@\" do lokalnego";
+"harness.fork.explanation" = "Tworzy edytowalną kopię lokalną tego harness. Kopia śledzi swoje źródło, dzięki czemu możesz zobaczyć, co zmieniło się upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Tworzenie forka \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Aktualizuj \"%@\"";
+"harness.update.progress.title %@" = "Aktualizowanie \"%@\"…";
+"harness.update.button" = "Aktualizuj";
+"harness.update.ynh.unavailable" = "ynh jest niedostępny.";
+"command.runner.running" = "Uruchamianie…";
+"command.runner.succeeded" = "Powiodło się";
+"command.runner.failed" = "Nie powiodło się";
+"common.copy.output" = "Kopiuj wyjście";
+"common.rerun" = "Uruchom ponownie";

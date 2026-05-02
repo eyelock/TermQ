@@ -611,6 +611,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokal";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Skrivebeskyttet";
+"harnesses.source.forked.from %@" = "Forgrenet fra %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Oplysninger";
@@ -629,6 +631,7 @@
 "harnesses.detail.delegates %d" = "Delegerer til (%d)";
 "harnesses.detail.picks %d" = "Vælger (%d):";
 "harnesses.reveal.in.finder" = "Vis i Finder";
+"harnesses.copy.path" = "Kopiér som sti";
 "harnesses.open.in.browser" = "Åbn i browser";
 "harnesses.close.detail" = "Luk";
 "harnesses.configure.from.marketplaces" = "Konfigurer fra markedspladser…";
@@ -718,6 +721,8 @@
 
 "harnesses.update.button" = "Opdater";
 "harnesses.update.help" = "Opdater til den nyeste version";
+"harnesses.update.available" = "Opdatering tilgængelig";
+"harnesses.update.available.version %@" = "Version %@ er tilgængelig";
 "harnesses.uninstall.button" = "Afinstaller";
 "harnesses.uninstall.help" = "Afinstaller denne harness";
 "harnesses.uninstall.alert.title %@" = "Afinstaller \"%@\"?";
@@ -919,3 +924,24 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Åbn terminaler";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork til lokal";
+"harnesses.fork.to.local.help" = "Opret en redigerbar lokal kopi af denne harness";
+"harnesses.update.dot.help" = "Opdatering tilgængelig";
+"harness.fork.title %@" = "Fork \"%@\" til lokal";
+"harness.fork.explanation" = "Opretter en redigerbar lokal kopi af denne harness. Kopien sporer sin oprindelse, så du kan se, hvad der er ændret opstrøms.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forker \"%@\"…";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Opdater \"%@\"";
+"harness.update.progress.title %@" = "Opdaterer \"%@\"…";
+"harness.update.button" = "Opdater";
+"harness.update.ynh.unavailable" = "ynh er ikke tilgængelig.";
+"command.runner.running" = "Kører…";
+"command.runner.succeeded" = "Lykkedes";
+"command.runner.failed" = "Mislykkedes";
+"common.copy.output" = "Kopiér output";
+"common.rerun" = "Kør igen";
