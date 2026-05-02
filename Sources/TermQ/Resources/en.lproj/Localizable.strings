@@ -757,6 +757,18 @@
 "harnesses.include.add.already.installed" = "Already added";
 "harnesses.include.add.already.installed.help" = "This plugin is already on this harness — click to edit picks or ref.";
 
+// Harnesses — manifest editor
+"harnesses.manifest.edit.menu" = "Edit Manifest…";
+"harnesses.manifest.edit.title" = "Edit Manifest";
+"harnesses.manifest.edit.name" = "Name";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Use semver: MAJOR.MINOR.PATCH (e.g. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Vendor";
+"harnesses.manifest.edit.description" = "Description";
+"harnesses.manifest.edit.description.hint" = "Shown in the harness list and detail header. Leave empty to omit.";
+"harnesses.manifest.edit.save" = "Save Changes";
+
 // Harnesses — launch
 "harnesses.launch.title" = "Launch Harness";
 "harnesses.launch.vendor" = "Vendor";

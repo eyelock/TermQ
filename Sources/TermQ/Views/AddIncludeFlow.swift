@@ -601,10 +601,12 @@ struct AddIncludeFlow: View {
             }
         } label: {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Image(systemName: alreadyInstalled
-                    ? "pencil.circle"
-                    : (isSelected ? "largecircle.fill.circle" : "circle"))
-                    .foregroundColor(alreadyInstalled ? .secondary : (isSelected ? .accentColor : .secondary))
+                Image(
+                    systemName: alreadyInstalled
+                        ? "pencil.circle"
+                        : (isSelected ? "largecircle.fill.circle" : "circle")
+                )
+                .foregroundColor(alreadyInstalled ? .secondary : (isSelected ? .accentColor : .secondary))
                 VStack(alignment: .leading, spacing: 1) {
                     HStack(spacing: 6) {
                         Text(entry.plugin.name)

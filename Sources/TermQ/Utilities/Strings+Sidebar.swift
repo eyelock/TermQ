@@ -258,6 +258,18 @@ extension Strings {
         static var addIncludeAlreadyInstalled: String { localized("harnesses.include.add.already.installed") }
         static var addIncludeAlreadyInstalledHelp: String { localized("harnesses.include.add.already.installed.help") }
 
+        // Manifest editor
+        static var editManifestMenu: String { localized("harnesses.manifest.edit.menu") }
+        static var editManifestTitle: String { localized("harnesses.manifest.edit.title") }
+        static var editManifestName: String { localized("harnesses.manifest.edit.name") }
+        static var editManifestVersion: String { localized("harnesses.manifest.edit.version") }
+        static var editManifestVersionPlaceholder: String { localized("harnesses.manifest.edit.version.placeholder") }
+        static var editManifestVersionInvalid: String { localized("harnesses.manifest.edit.version.invalid") }
+        static var editManifestVendor: String { localized("harnesses.manifest.edit.vendor") }
+        static var editManifestDescription: String { localized("harnesses.manifest.edit.description") }
+        static var editManifestDescriptionHint: String { localized("harnesses.manifest.edit.description.hint") }
+        static var editManifestSave: String { localized("harnesses.manifest.edit.save") }
+
         // Launch
         static var launchTitle: String { localized("harnesses.launch.title") }
         static var launchVendor: String { localized("harnesses.launch.vendor") }
