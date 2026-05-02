@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "Ja afegit";
 "harnesses.include.add.already.installed.help" = "Aquest connector ja és en aquest harness — fes clic per editar la selecció o el ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Accions del delegat";
+"harnesses.delegate.edit.button" = "Edita el delegat…";
+"harnesses.delegate.remove.button" = "Elimina el delegat…";
+"harnesses.delegate.edit.title" = "Edita el delegat";
+"harnesses.delegate.remove.confirm.title" = "Eliminar aquest delegat?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ ja no es fusionarà en aquest harness. El dipòsit font no es modifica.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Edita el manifest…";
 "harnesses.manifest.edit.title" = "Edita el manifest";

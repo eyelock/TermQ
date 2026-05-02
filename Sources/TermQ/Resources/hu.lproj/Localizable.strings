@@ -994,6 +994,14 @@
 "harnesses.include.add.already.installed" = "Már hozzáadva";
 "harnesses.include.add.already.installed.help" = "Ez a bővítmény már ebben a harnessben van — kattintson a kiválasztás vagy a ref szerkesztéséhez.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegált műveletek";
+"harnesses.delegate.edit.button" = "Delegált szerkesztése…";
+"harnesses.delegate.remove.button" = "Delegált eltávolítása…";
+"harnesses.delegate.edit.title" = "Delegált szerkesztése";
+"harnesses.delegate.remove.confirm.title" = "Eltávolítja ezt a delegáltat?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ nem lesz többé beolvasztva ebbe a harness-be. A forrásrepository nem módosul.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Manifest szerkesztése…";
 "harnesses.manifest.edit.title" = "Manifest szerkesztése";

@@ -995,6 +995,14 @@
 "harnesses.include.add.already.installed" = "Đã thêm";
 "harnesses.include.add.already.installed.help" = "Plugin này đã có trong harness này — nhấp để sửa lựa chọn hoặc ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Hành động đại diện";
+"harnesses.delegate.edit.button" = "Sửa đại diện…";
+"harnesses.delegate.remove.button" = "Xóa đại diện…";
+"harnesses.delegate.edit.title" = "Sửa đại diện";
+"harnesses.delegate.remove.confirm.title" = "Xóa đại diện này?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ sẽ không còn được hợp nhất vào harness này nữa. Kho lưu trữ nguồn không bị thay đổi.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Sửa Manifest…";
 "harnesses.manifest.edit.title" = "Sửa Manifest";

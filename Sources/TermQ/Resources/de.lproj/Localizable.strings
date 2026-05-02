@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "Bereits hinzugefügt";
 "harnesses.include.add.already.installed.help" = "Dieses Plugin ist bereits in diesem Harness – klicken Sie zum Bearbeiten der Auswahl oder des Refs.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegieren-Aktionen";
+"harnesses.delegate.edit.button" = "Delegate bearbeiten…";
+"harnesses.delegate.remove.button" = "Delegate entfernen…";
+"harnesses.delegate.edit.title" = "Delegate bearbeiten";
+"harnesses.delegate.remove.confirm.title" = "Diesen Delegate entfernen?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ wird nicht mehr in diesen Harness zusammengeführt. Das Quell-Repository wird nicht berührt.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Manifest bearbeiten…";
 "harnesses.manifest.edit.title" = "Manifest bearbeiten";

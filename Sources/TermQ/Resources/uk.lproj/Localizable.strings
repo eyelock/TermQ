@@ -995,6 +995,14 @@
 "harnesses.include.add.already.installed" = "Вже додано";
 "harnesses.include.add.already.installed.help" = "Цей плагін вже є в цьому наборі — натисніть для редагування вибору або ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Дії делегата";
+"harnesses.delegate.edit.button" = "Редагувати делегата…";
+"harnesses.delegate.remove.button" = "Видалити делегата…";
+"harnesses.delegate.edit.title" = "Редагувати делегата";
+"harnesses.delegate.remove.confirm.title" = "Видалити цього делегата?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ більше не зливатиметься з цим harness. Репозиторій джерела не змінюється.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Редагувати маніфест…";
 "harnesses.manifest.edit.title" = "Редагувати маніфест";

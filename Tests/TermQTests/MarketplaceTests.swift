@@ -668,6 +668,103 @@ final class IncludeMutatorArgsTests: XCTestCase {
     }
 }
 
+// MARK: - DelegateMutator argument-building tests
+
+final class DelegateMutatorArgsTests: XCTestCase {
+
+    // MARK: add
+
+    func test_buildAddArgs_basic_emitsBaseCommand() {
+        let opts = DelegateAddOptions(
+            harness: "h", sourceURL: "https://example.com/repo.git",
+            ref: nil, path: nil
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateAddArgs(opts),
+            ["delegate", "add", "h", "https://example.com/repo.git"]
+        )
+    }
+
+    func test_buildAddArgs_withRefAndPath() {
+        let opts = DelegateAddOptions(
+            harness: "h", sourceURL: "u",
+            ref: "main", path: "sub"
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateAddArgs(opts),
+            ["delegate", "add", "h", "u", "--ref", "main", "--path", "sub"]
+        )
+    }
+
+    func test_buildAddArgs_emptyRefAndPath_dropFlags() {
+        let opts = DelegateAddOptions(
+            harness: "h", sourceURL: "u", ref: "", path: ""
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateAddArgs(opts),
+            ["delegate", "add", "h", "u"]
+        )
+    }
+
+    // MARK: remove
+
+    func test_buildRemoveArgs_noPath_emitsBaseCommand() {
+        let opts = DelegateRemoveOptions(harness: "h", sourceURL: "u", path: nil)
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateRemoveArgs(opts),
+            ["delegate", "remove", "h", "u"]
+        )
+    }
+
+    func test_buildRemoveArgs_withPath_includesPathFlag() {
+        let opts = DelegateRemoveOptions(harness: "h", sourceURL: "u", path: "sub")
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateRemoveArgs(opts),
+            ["delegate", "remove", "h", "u", "--path", "sub"]
+        )
+    }
+
+    // MARK: update
+
+    func test_buildUpdateArgs_emitsBaseWhenNoOptions() {
+        let opts = DelegateUpdateOptions(
+            harness: "h", sourceURL: "u",
+            fromPath: nil, path: nil, ref: nil
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateUpdateArgs(opts),
+            ["delegate", "update", "h", "u"]
+        )
+    }
+
+    func test_buildUpdateArgs_allFields() {
+        let opts = DelegateUpdateOptions(
+            harness: "h", sourceURL: "u",
+            fromPath: "old", path: "new", ref: "main"
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateUpdateArgs(opts),
+            [
+                "delegate", "update", "h", "u",
+                "--from-path", "old",
+                "--path", "new",
+                "--ref", "main",
+            ]
+        )
+    }
+
+    func test_buildUpdateArgs_emptyStringsDropFlags() {
+        let opts = DelegateUpdateOptions(
+            harness: "h", sourceURL: "u",
+            fromPath: "", path: "", ref: ""
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateUpdateArgs(opts),
+            ["delegate", "update", "h", "u"]
+        )
+    }
+}
+
 // MARK: - AuthorStepStatus tests
 
 final class AuthorStepStatusTests: XCTestCase {

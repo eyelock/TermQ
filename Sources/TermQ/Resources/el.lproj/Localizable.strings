@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "Ήδη προστέθηκε";
 "harnesses.include.add.already.installed.help" = "Αυτό το πρόσθετο βρίσκεται ήδη σε αυτό το harness — κάντε κλικ για επεξεργασία επιλογής ή ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Ενέργειες αντιπροσώπου";
+"harnesses.delegate.edit.button" = "Επεξεργασία αντιπροσώπου…";
+"harnesses.delegate.remove.button" = "Αφαίρεση αντιπροσώπου…";
+"harnesses.delegate.edit.title" = "Επεξεργασία αντιπροσώπου";
+"harnesses.delegate.remove.confirm.title" = "Αφαίρεση αυτού του αντιπροσώπου;";
+"harnesses.delegate.remove.confirm.message %@" = "Το %@ δεν θα συγχωνεύεται πλέον σε αυτό το harness. Το αποθετήριο πηγής δεν αλλάζει.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Επεξεργασία manifest…";
 "harnesses.manifest.edit.title" = "Επεξεργασία manifest";

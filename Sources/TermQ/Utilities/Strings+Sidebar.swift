@@ -258,6 +258,15 @@ extension Strings {
         static var addIncludeAlreadyInstalled: String { localized("harnesses.include.add.already.installed") }
         static var addIncludeAlreadyInstalledHelp: String { localized("harnesses.include.add.already.installed.help") }
 
+        // Delegate editor (parallels include editor)
+        static var delegateActionsHelp: String { localized("harnesses.delegate.actions.help") }
+        static var editDelegateButton: String { localized("harnesses.delegate.edit.button") }
+        static var removeDelegateButton: String { localized("harnesses.delegate.remove.button") }
+        static var editDelegateTitle: String { localized("harnesses.delegate.edit.title") }
+        static var removeDelegateConfirmTitle: String { localized("harnesses.delegate.remove.confirm.title") }
+        static func removeDelegateConfirmMessage(_ source: String) -> String {
+            String(format: localized("harnesses.delegate.remove.confirm.message %@"), source)
+        }
         // Manifest editor
         static var editManifestMenu: String { localized("harnesses.manifest.edit.menu") }
         static var editManifestTitle: String { localized("harnesses.manifest.edit.title") }

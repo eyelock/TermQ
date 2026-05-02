@@ -994,6 +994,14 @@
 "harnesses.include.add.already.installed" = "Jo lisätty";
 "harnesses.include.add.already.installed.help" = "Tämä lisäosa on jo tässä harnessissa — napsauta muokataksesi valintaa tai refiä.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegaattitoiminnot";
+"harnesses.delegate.edit.button" = "Muokkaa delegaattia…";
+"harnesses.delegate.remove.button" = "Poista delegaatti…";
+"harnesses.delegate.edit.title" = "Muokkaa delegaattia";
+"harnesses.delegate.remove.confirm.title" = "Poista tämä delegaatti?";
+"harnesses.delegate.remove.confirm.message %@" = "%@:ta ei enää yhdistetä tähän harness-kokonaisuuteen. Lähdevarastoon ei kosketa.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Muokkaa manifestia…";
 "harnesses.manifest.edit.title" = "Muokkaa manifestia";

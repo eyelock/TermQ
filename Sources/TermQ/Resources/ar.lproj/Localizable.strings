@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "مضاف مسبقًا";
 "harnesses.include.add.already.installed.help" = "هذه الإضافة موجودة بالفعل في هذا الـ harness — انقر لتعديل التحديد أو الـ ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "إجراءات المفوض";
+"harnesses.delegate.edit.button" = "تحرير المفوض…";
+"harnesses.delegate.remove.button" = "إزالة المفوض…";
+"harnesses.delegate.edit.title" = "تحرير المفوض";
+"harnesses.delegate.remove.confirm.title" = "إزالة هذا المفوض؟";
+"harnesses.delegate.remove.confirm.message %@" = "لن يتم دمج %@ في هذا التسخير بعد الآن. لن يتأثر مستودع المصدر.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "تعديل البيان…";
 "harnesses.manifest.edit.title" = "تعديل البيان";

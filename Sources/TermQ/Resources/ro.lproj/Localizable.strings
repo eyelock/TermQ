@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "Deja adăugat";
 "harnesses.include.add.already.installed.help" = "Acest plugin este deja în acest harness — faceți clic pentru a edita selecția sau ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Acțiuni delegat";
+"harnesses.delegate.edit.button" = "Editează delegatul…";
+"harnesses.delegate.remove.button" = "Elimină delegatul…";
+"harnesses.delegate.edit.title" = "Editează delegatul";
+"harnesses.delegate.remove.confirm.title" = "Eliminați acest delegat?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ nu va mai fi integrat în acest harness. Depozitul sursă nu este modificat.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Editați manifestul…";
 "harnesses.manifest.edit.title" = "Editați manifestul";

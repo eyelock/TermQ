@@ -994,6 +994,14 @@
 "harnesses.include.add.already.installed" = "כבר נוסף";
 "harnesses.include.add.already.installed.help" = "תוסף זה כבר נמצא ב-harness זה — לחץ לעריכת הבחירה או ה-ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "פעולות נציג";
+"harnesses.delegate.edit.button" = "עריכת נציג…";
+"harnesses.delegate.remove.button" = "הסרת נציג…";
+"harnesses.delegate.edit.title" = "עריכת נציג";
+"harnesses.delegate.remove.confirm.title" = "להסיר את הנציג הזה?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ לא ימוזג עוד ל-harness זה. מאגר המקור לא ישתנה.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "ערוך מניפסט…";
 "harnesses.manifest.edit.title" = "ערוך מניפסט";

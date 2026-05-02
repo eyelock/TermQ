@@ -995,6 +995,14 @@
 "harnesses.include.add.already.installed" = "Redan tillagd";
 "harnesses.include.add.already.installed.help" = "Denna plugin finns redan i detta harness — klicka för att redigera urval eller ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegatåtgärder";
+"harnesses.delegate.edit.button" = "Redigera delegat…";
+"harnesses.delegate.remove.button" = "Ta bort delegat…";
+"harnesses.delegate.edit.title" = "Redigera delegat";
+"harnesses.delegate.remove.confirm.title" = "Ta bort den här delegaten?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ kommer inte längre att sammanfogas i det här harness. Källdatabasen rörs inte.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Redigera manifest…";
 "harnesses.manifest.edit.title" = "Redigera manifest";
