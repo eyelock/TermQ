@@ -30,10 +30,14 @@ final class HarnessRepository: ObservableObject {
 
     private let ynhDetector: any YNHDetectorProtocol
 
-    /// The currently selected harness, matched by `Harness.id`.
+    /// The currently selected harness. Matches by `Harness.id` first, falling
+    /// back to `Harness.name`. The fallback covers callers that pass a bare
+    /// name (e.g. values stored by `YNHPersistence`, which keys associations
+    /// by `name` not `id`) — for namespaced installs `id` is `"namespace/name"`
+    /// and a name-only key would otherwise miss.
     var selectedHarness: Harness? {
-        guard let id = selectedHarnessName else { return nil }
-        return harnesses.first { $0.id == id }
+        guard let key = selectedHarnessName else { return nil }
+        return harnesses.first { $0.id == key } ?? harnesses.first { $0.name == key }
     }
 
     private convenience init() {
@@ -70,9 +74,11 @@ final class HarnessRepository: ObservableObject {
             let decoded = try JSONDecoder().decode([Harness].self, from: Data(json.utf8))
             harnesses = decoded
 
-            // Clear selection if the selected harness was removed.
-            if let id = selectedHarnessName,
-                !decoded.contains(where: { $0.id == id })
+            // Clear selection if the selected harness was removed. Match by
+            // `id` or `name` to mirror `selectedHarness` — `selectedHarnessName`
+            // can hold either form depending on the caller.
+            if let key = selectedHarnessName,
+                !decoded.contains(where: { $0.id == key || $0.name == key })
             {
                 selectedHarnessName = nil
             }
