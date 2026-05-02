@@ -715,6 +715,48 @@
 "harnesses.detail.no.profiles" = "This harness has no profiles.";
 "harnesses.detail.no.focuses" = "This harness has no focuses.";
 
+// Harnesses — include row editor
+"harnesses.include.actions.help" = "Include actions";
+"harnesses.include.edit.button" = "Edit Include…";
+"harnesses.include.remove.button" = "Remove Include…";
+"harnesses.include.edit.title" = "Edit Include";
+"harnesses.include.edit.source" = "Source";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "branch, tag, or commit";
+"harnesses.include.edit.path" = "Path";
+"harnesses.include.edit.path.placeholder" = "subpath in source repo";
+"harnesses.include.edit.picks" = "Picks";
+"harnesses.include.edit.picks.explainer" = "Checked artifacts are currently in this include. Toggle to add or remove.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld of %ld selected";
+"harnesses.include.edit.picks.unknown.source" = "This source isn't in your marketplaces — only the current artifacts are listed.";
+"harnesses.include.edit.save" = "Save Changes";
+"harnesses.include.remove.confirm.title" = "Remove this include?";
+"harnesses.include.remove.confirm.message %@" = "%@ will be removed from this harness. The source repository is not touched.";
+"harnesses.include.remove.confirm" = "Remove";
+
+// Harnesses — add include flow
+"harnesses.include.add.button" = "Add Include…";
+"harnesses.include.add.step.source" = "Choose a source";
+"harnesses.include.add.step.picks" = "Choose artifacts";
+"harnesses.include.add.step.review" = "Review";
+"harnesses.include.add.step.running" = "Adding include…";
+"harnesses.include.add.source.marketplace" = "From Marketplace";
+"harnesses.include.add.source.giturl" = "From Git URL";
+"harnesses.include.add.search.placeholder" = "Search plugins…";
+"harnesses.include.add.no.marketplaces" = "No marketplaces configured. Use the Marketplaces tab to add one.";
+"harnesses.include.add.no.matches" = "No plugins match.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "branch, tag, or commit (optional)";
+"harnesses.include.add.gitpath.label" = "Path";
+"harnesses.include.add.gitpath.placeholder" = "subdirectory in source repo (optional)";
+"harnesses.include.add.giturl.hint" = "Picks default to everything the source provides. Use Edit Include after adding to narrow them.";
+"harnesses.include.add.picks.prompt" = "Select the artifacts to include.";
+"harnesses.include.add.apply" = "Apply";
+"harnesses.include.add.already.installed" = "Already added";
+"harnesses.include.add.already.installed.help" = "This plugin is already on this harness — click to edit picks or ref.";
+
 // Harnesses — launch
 "harnesses.launch.title" = "Launch Harness";
 "harnesses.launch.vendor" = "Vendor";

@@ -212,6 +212,52 @@ extension Strings {
         static var detailNoProfiles: String { localized("harnesses.detail.no.profiles") }
         static var detailNoFocuses: String { localized("harnesses.detail.no.focuses") }
 
+        // Include row editor
+        static var includeActionsHelp: String { localized("harnesses.include.actions.help") }
+        static var editIncludeButton: String { localized("harnesses.include.edit.button") }
+        static var removeIncludeButton: String { localized("harnesses.include.remove.button") }
+        static var editIncludeTitle: String { localized("harnesses.include.edit.title") }
+        static var editIncludeSource: String { localized("harnesses.include.edit.source") }
+        static var editIncludeRef: String { localized("harnesses.include.edit.ref") }
+        static var editIncludeRefPlaceholder: String { localized("harnesses.include.edit.ref.placeholder") }
+        static var editIncludePath: String { localized("harnesses.include.edit.path") }
+        static var editIncludePathPlaceholder: String { localized("harnesses.include.edit.path.placeholder") }
+        static var editIncludePicks: String { localized("harnesses.include.edit.picks") }
+        static var editIncludePicksExplainer: String { localized("harnesses.include.edit.picks.explainer") }
+        static func editIncludePicksCount(_ selected: Int, _ total: Int) -> String {
+            String(format: localized("harnesses.include.edit.picks.count %ld %ld"), selected, total)
+        }
+        static var editIncludePicksUnknownSource: String { localized("harnesses.include.edit.picks.unknown.source") }
+        static var editIncludeSave: String { localized("harnesses.include.edit.save") }
+        static var removeIncludeConfirmTitle: String { localized("harnesses.include.remove.confirm.title") }
+        static func removeIncludeConfirmMessage(_ source: String) -> String {
+            String(format: localized("harnesses.include.remove.confirm.message %@"), source)
+        }
+        static var removeIncludeConfirm: String { localized("harnesses.include.remove.confirm") }
+
+        // Add Include flow
+        static var addIncludeButton: String { localized("harnesses.include.add.button") }
+        static var addIncludeStepSourceTitle: String { localized("harnesses.include.add.step.source") }
+        static var addIncludeStepPicksTitle: String { localized("harnesses.include.add.step.picks") }
+        static var addIncludeStepReviewTitle: String { localized("harnesses.include.add.step.review") }
+        static var addIncludeStepRunningTitle: String { localized("harnesses.include.add.step.running") }
+        static var addIncludeSourceMarketplace: String { localized("harnesses.include.add.source.marketplace") }
+        static var addIncludeSourceGitURL: String { localized("harnesses.include.add.source.giturl") }
+        static var addIncludeSearchPlaceholder: String { localized("harnesses.include.add.search.placeholder") }
+        static var addIncludeNoMarketplaces: String { localized("harnesses.include.add.no.marketplaces") }
+        static var addIncludeNoPluginMatches: String { localized("harnesses.include.add.no.matches") }
+        static var addIncludeGitURLLabel: String { localized("harnesses.include.add.giturl.label") }
+        static var addIncludeGitURLPlaceholder: String { localized("harnesses.include.add.giturl.placeholder") }
+        static var addIncludeGitRefLabel: String { localized("harnesses.include.add.gitref.label") }
+        static var addIncludeGitRefPlaceholder: String { localized("harnesses.include.add.gitref.placeholder") }
+        static var addIncludeGitPathLabel: String { localized("harnesses.include.add.gitpath.label") }
+        static var addIncludeGitPathPlaceholder: String { localized("harnesses.include.add.gitpath.placeholder") }
+        static var addIncludeGitURLHint: String { localized("harnesses.include.add.giturl.hint") }
+        static var addIncludePicksPrompt: String { localized("harnesses.include.add.picks.prompt") }
+        static var addIncludeApplyButton: String { localized("harnesses.include.add.apply") }
+        static var addIncludeAlreadyInstalled: String { localized("harnesses.include.add.already.installed") }
+        static var addIncludeAlreadyInstalledHelp: String { localized("harnesses.include.add.already.installed.help") }
+
         // Launch
         static var launchTitle: String { localized("harnesses.launch.title") }
         static var launchVendor: String { localized("harnesses.launch.vendor") }
