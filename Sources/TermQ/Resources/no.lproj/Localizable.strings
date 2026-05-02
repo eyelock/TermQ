@@ -993,6 +993,14 @@
 "harnesses.include.add.already.installed" = "Allerede lagt til";
 "harnesses.include.add.already.installed.help" = "Denne plugin er allerede i dette harness — klikk for å redigere utvalg eller ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegathandlinger";
+"harnesses.delegate.edit.button" = "Rediger delegat…";
+"harnesses.delegate.remove.button" = "Fjern delegat…";
+"harnesses.delegate.edit.title" = "Rediger delegat";
+"harnesses.delegate.remove.confirm.title" = "Fjerne denne delegaten?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ vil ikke lenger bli sammenslått i dette harness. Kildelageret berøres ikke.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Rediger manifest…";
 "harnesses.manifest.edit.title" = "Rediger manifest";

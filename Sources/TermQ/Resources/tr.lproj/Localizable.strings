@@ -995,6 +995,14 @@
 "harnesses.include.add.already.installed" = "Zaten eklendi";
 "harnesses.include.add.already.installed.help" = "Bu eklenti zaten bu harnesste — seçimi veya ref'i düzenlemek için tıklayın.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Temsilci eylemleri";
+"harnesses.delegate.edit.button" = "Temsilciyi düzenle…";
+"harnesses.delegate.remove.button" = "Temsilciyi kaldır…";
+"harnesses.delegate.edit.title" = "Temsilciyi düzenle";
+"harnesses.delegate.remove.confirm.title" = "Bu temsilci kaldırılsın mı?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ artık bu harness ile birleştirilmeyecek. Kaynak depo değiştirilmez.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Manifest Düzenle…";
 "harnesses.manifest.edit.title" = "Manifest Düzenle";

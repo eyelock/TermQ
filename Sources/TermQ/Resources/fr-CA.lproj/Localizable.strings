@@ -994,6 +994,14 @@
 "harnesses.include.add.already.installed" = "Déjà ajouté";
 "harnesses.include.add.already.installed.help" = "Ce plugiciel est déjà dans ce harnais — cliquez pour modifier la sélection ou le ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Actions du délégué";
+"harnesses.delegate.edit.button" = "Modifier le délégué…";
+"harnesses.delegate.remove.button" = "Supprimer le délégué…";
+"harnesses.delegate.edit.title" = "Modifier le délégué";
+"harnesses.delegate.remove.confirm.title" = "Supprimer ce délégué ?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ ne sera plus fusionné dans ce harnais. Le dépôt source n’est pas modifié.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Modifier le manifeste…";
 "harnesses.manifest.edit.title" = "Modifier le manifeste";

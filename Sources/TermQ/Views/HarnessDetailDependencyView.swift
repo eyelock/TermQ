@@ -14,6 +14,8 @@ struct HarnessDetailDependencyView: View {
     /// When non-nil, each include row shows Edit / Remove affordances backed
     /// by this coordinator. Registry harnesses receive `nil` here.
     var includeEditor: HarnessIncludeEditor?
+    /// Same shape as `includeEditor` but for delegate cards.
+    var delegateEditor: HarnessDelegateEditor?
 
     /// Returns the drift entry for this row, if any. Matches on whichever
     /// identifier the badge store recorded — `path` when the include has
@@ -77,13 +79,14 @@ struct HarnessDetailDependencyView: View {
             }
         }
         .modifier(IncludeEditorOverlay(editor: includeEditor, harnessName: harness.name))
+        .modifier(DelegateEditorOverlay(editor: delegateEditor, harnessName: harness.name))
     }
 
     /// Whether the dependencies section should render at all.
     /// When an editor is provided, we always render so the Add Include entry
     /// point is reachable even on a harness with no current dependencies.
     var hasDependencies: Bool {
-        if includeEditor != nil { return true }
+        if includeEditor != nil || delegateEditor != nil { return true }
         if let detail {
             return !detail.composition.includes.isEmpty || !detail.composition.delegatesTo.isEmpty
         }
@@ -178,6 +181,9 @@ struct HarnessDetailDependencyView: View {
                 Spacer()
 
                 GitActionButtons(source: delegate.git, path: delegate.path)
+                delegateEditMenu(
+                    sourceURL: delegate.git, path: delegate.path, ref: delegate.ref
+                )
             }
 
             if let path = delegate.path, !path.isEmpty {
@@ -272,6 +278,9 @@ struct HarnessDetailDependencyView: View {
                 Spacer()
 
                 GitActionButtons(source: delegate.git, path: delegate.path)
+                delegateEditMenu(
+                    sourceURL: delegate.git, path: delegate.path, ref: delegate.ref
+                )
             }
 
             if let path = delegate.path, !path.isEmpty {
@@ -343,6 +352,38 @@ struct HarnessDetailDependencyView: View {
             .menuIndicator(.hidden)
             .fixedSize()
             .help(Strings.Harnesses.includeActionsHelp)
+        }
+    }
+
+    // MARK: - Delegate Edit Menu (only shown when an editor is provided)
+
+    @ViewBuilder
+    private func delegateEditMenu(
+        sourceURL: String, path: String?, ref: String?
+    ) -> some View {
+        if let editor = delegateEditor {
+            let target = DelegateEditTarget(sourceURL: sourceURL, path: path, ref: ref)
+            Menu {
+                Button {
+                    editor.requestEdit(target)
+                } label: {
+                    Label(Strings.Harnesses.editDelegateButton, systemImage: "pencil")
+                }
+                Divider()
+                Button(role: .destructive) {
+                    editor.requestRemove(target)
+                } label: {
+                    Label(Strings.Harnesses.removeDelegateButton, systemImage: "trash")
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.system(size: 11))
+                    .foregroundColor(.secondary)
+            }
+            .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .fixedSize()
+            .help(Strings.Harnesses.delegateActionsHelp)
         }
     }
 
@@ -553,6 +594,62 @@ private struct IncludeEditorActiveOverlay: ViewModifier {
             .sheet(item: $editor.editingTarget) { target in
                 EditIncludeSheet(editor: editor, harnessName: harnessName, target: target)
                     .frame(width: 540, height: 620)
+            }
+    }
+
+    private var removeBinding: Binding<Bool> {
+        Binding(
+            get: { editor.removalTarget != nil },
+            set: { if !$0 { editor.removalTarget = nil } }
+        )
+    }
+}
+
+// MARK: - Delegate Editor Overlay
+
+private struct DelegateEditorOverlay: ViewModifier {
+    let editor: HarnessDelegateEditor?
+    let harnessName: String
+
+    func body(content: Content) -> some View {
+        if let editor {
+            content.modifier(
+                DelegateEditorActiveOverlay(editor: editor, harnessName: harnessName)
+            )
+        } else {
+            content
+        }
+    }
+}
+
+private struct DelegateEditorActiveOverlay: ViewModifier {
+    @ObservedObject var editor: HarnessDelegateEditor
+    let harnessName: String
+
+    func body(content: Content) -> some View {
+        content
+            .confirmationDialog(
+                Strings.Harnesses.removeDelegateConfirmTitle,
+                isPresented: removeBinding,
+                titleVisibility: .visible,
+                presenting: editor.removalTarget
+            ) { target in
+                Button(Strings.Harnesses.removeIncludeConfirm, role: .destructive) {
+                    Task {
+                        await editor.confirmRemove(target: target, harnessName: harnessName)
+                    }
+                }
+                Button(Strings.Harnesses.installCancel, role: .cancel) {
+                    editor.removalTarget = nil
+                }
+            } message: { target in
+                Text(
+                    Strings.Harnesses.removeDelegateConfirmMessage(GitURLHelper.shortURL(target.sourceURL))
+                )
+            }
+            .sheet(item: $editor.editingTarget) { target in
+                EditDelegateSheet(editor: editor, harnessName: harnessName, target: target)
+                    .frame(width: 540, height: 360)
             }
     }
 

@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "Sudah ditambahkan";
 "harnesses.include.add.already.installed.help" = "Plugin ini sudah ada di harness ini — klik untuk mengedit pilihan atau ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Tindakan delegat";
+"harnesses.delegate.edit.button" = "Edit delegat…";
+"harnesses.delegate.remove.button" = "Hapus delegat…";
+"harnesses.delegate.edit.title" = "Edit delegat";
+"harnesses.delegate.remove.confirm.title" = "Hapus delegat ini?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ tidak akan lagi digabungkan ke harness ini. Repositori sumber tidak diubah.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Edit Manifest…";
 "harnesses.manifest.edit.title" = "Edit Manifest";

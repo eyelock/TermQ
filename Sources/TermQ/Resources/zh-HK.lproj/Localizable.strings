@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "已新增";
 "harnesses.include.add.already.installed.help" = "此外掛程式已在此 harness 中 — 點按以編輯選擇或 ref。";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "委托操作";
+"harnesses.delegate.edit.button" = "編輯委托…";
+"harnesses.delegate.remove.button" = "移除委托…";
+"harnesses.delegate.edit.title" = "編輯委托";
+"harnesses.delegate.remove.confirm.title" = "移除此委托？";
+"harnesses.delegate.remove.confirm.message %@" = "%@ 將不再被合並入此 harness。來源儲存庫不會改變。";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "編輯清單…";
 "harnesses.manifest.edit.title" = "編輯清單";

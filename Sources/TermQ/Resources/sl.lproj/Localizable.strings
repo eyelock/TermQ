@@ -995,6 +995,14 @@
 "harnesses.include.add.already.installed" = "Že dodano";
 "harnesses.include.add.already.installed.help" = "Ta vtičnik je že v tem harnessu — kliknite za urejanje izbora ali refa.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Dejanja delegata";
+"harnesses.delegate.edit.button" = "Uredi delegata…";
+"harnesses.delegate.remove.button" = "Odstrani delegata…";
+"harnesses.delegate.edit.title" = "Uredi delegata";
+"harnesses.delegate.remove.confirm.title" = "Odstraniti tega delegata?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ ne bo več združen v ta harness. Izvorno skladišče ni prizadeto.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Uredi manifest…";
 "harnesses.manifest.edit.title" = "Uredi manifest";

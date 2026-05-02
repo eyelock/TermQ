@@ -43,6 +43,7 @@ struct HarnessDetailView: View {
     @ObservedObject private var vendorService: VendorService = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @StateObject private var includeEditor = HarnessIncludeEditor()
+    @StateObject private var delegateEditor = HarnessDelegateEditor()
     @State private var popoverForPath: String?
     @State private var showUninstallAlert = false
     @State private var harnessToDuplicate: Harness?
@@ -90,7 +91,8 @@ struct HarnessDetailView: View {
                 let depView = HarnessDetailDependencyView(
                     harness: harness, detail: detail,
                     updateSignal: viewModel.updateSignal,
-                    includeEditor: viewModel.editability == .fullyEditable ? includeEditor : nil)
+                    includeEditor: viewModel.editability == .fullyEditable ? includeEditor : nil,
+                    delegateEditor: viewModel.editability == .fullyEditable ? delegateEditor : nil)
                 if depView.hasDependencies {
                     Divider()
                     depView

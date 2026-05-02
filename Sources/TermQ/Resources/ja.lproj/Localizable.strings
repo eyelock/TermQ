@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "追加済み";
 "harnesses.include.add.already.installed.help" = "このプラグインはすでにこの harness にあります — クリックして選択または ref を編集できます。";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "デリゲートの操作";
+"harnesses.delegate.edit.button" = "デリゲートを編集…";
+"harnesses.delegate.remove.button" = "デリゲートを削除…";
+"harnesses.delegate.edit.title" = "デリゲートを編集";
+"harnesses.delegate.remove.confirm.title" = "このデリゲートを削除しますか？";
+"harnesses.delegate.remove.confirm.message %@" = "%@ はこの harness にマージされなくなります。ソースリポジトリは変更されません。";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "マニフェストを編集…";
 "harnesses.manifest.edit.title" = "マニフェストを編集";

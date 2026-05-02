@@ -988,6 +988,14 @@
 "harnesses.include.add.already.installed" = "Už pridané";
 "harnesses.include.add.already.installed.help" = "Tento plugin je už v tomto sete — kliknite pre úpravu výberu alebo ref.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Akcie delegáta";
+"harnesses.delegate.edit.button" = "Upraviť delegáta…";
+"harnesses.delegate.remove.button" = "Odstrániť delegáta…";
+"harnesses.delegate.edit.title" = "Upraviť delegáta";
+"harnesses.delegate.remove.confirm.title" = "Odstrániť tohto delegáta?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ sa už nebude zlučovať do tohto harness. Zdrojové úložisko sa nemení.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "Upraviť manifest…";
 "harnesses.manifest.edit.title" = "Upraviť manifest";

@@ -990,6 +990,14 @@
 "harnesses.include.add.already.installed" = "已添加";
 "harnesses.include.add.already.installed.help" = "此插件已在此 harness 中 — 点击以编辑选择或 ref。";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "委托操作";
+"harnesses.delegate.edit.button" = "编辑委托…";
+"harnesses.delegate.remove.button" = "移除委托…";
+"harnesses.delegate.edit.title" = "编辑委托";
+"harnesses.delegate.remove.confirm.title" = "移除此委托？";
+"harnesses.delegate.remove.confirm.message %@" = "%@ 将不再被合并到此 harness。源仓库不会受影响。";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "编辑清单…";
 "harnesses.manifest.edit.title" = "编辑清单";

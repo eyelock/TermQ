@@ -995,6 +995,14 @@
 "harnesses.include.add.already.installed" = "이미 추가됨";
 "harnesses.include.add.already.installed.help" = "이 플러그인은 이미 이 harness에 있습니다 — 선택 또는 ref를 편집하려면 클릭하세요.";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "대리자 작업";
+"harnesses.delegate.edit.button" = "대리자 편집…";
+"harnesses.delegate.remove.button" = "대리자 제거…";
+"harnesses.delegate.edit.title" = "대리자 편집";
+"harnesses.delegate.remove.confirm.title" = "이 대리자를 제거하시겠습니까?";
+"harnesses.delegate.remove.confirm.message %@" = "%@이(가) 이 harness에 더 이상 병합되지 않습니다. 소스 저장소는 변경되지 않습니다.";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "매니페스트 편집…";
 "harnesses.manifest.edit.title" = "매니페스트 편집";

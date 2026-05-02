@@ -995,6 +995,14 @@
 "harnesses.include.add.already.installed" = "เพิ่มแล้ว";
 "harnesses.include.add.already.installed.help" = "ปลั๊กอินนี้อยู่ใน harness นี้แล้ว — คลิกเพื่อแก้ไขการเลือกหรือ ref";
 
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "การดำเนินการผู้แทน";
+"harnesses.delegate.edit.button" = "แก้ไขผู้แทน…";
+"harnesses.delegate.remove.button" = "นำผู้แทนออก…";
+"harnesses.delegate.edit.title" = "แก้ไขผู้แทน";
+"harnesses.delegate.remove.confirm.title" = "นำผู้แทนนี้ออก?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ จะไม่ถูกรวมเข้าใน harness นี้อีกต่อไป ต้นฉบับชิงไม่ถูกสัมผัส";
+
 // MARK: - Harnesses — manifest editor (added sync)
 "harnesses.manifest.edit.menu" = "แก้ไข Manifest…";
 "harnesses.manifest.edit.title" = "แก้ไข Manifest";
