@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.4] — 2026-05-02
+
+### Fixed
+
+- **Launch-from-worktree blank sheet** — Launch <harness> from a worktree
+  row (or a repo's default-harness context menu) now resolves the harness
+  correctly when the install is namespaced. `HarnessRepository` previously
+  matched `selectedHarnessName` against `Harness.id` only — for namespaced
+  installs `id` is `"namespace/name"` while `YNHPersistence` keys
+  associations by bare `name`, so the lookup missed and the launch sheet
+  rendered with no content (a blank rounded sheet that never populated and
+  could only be dismissed with Esc). Lookup is now tolerant of either
+  form, and the stale-selection eviction in `refresh()` matches the same
+  rule.
+
 ## [0.9.3] — 2026-04-29
 
 ### Fixed
