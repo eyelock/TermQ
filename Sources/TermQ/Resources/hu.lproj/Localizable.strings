@@ -951,3 +951,76 @@
 "command.runner.failed" = "Sikertelen";
 "common.copy.output" = "Kimenet másolása";
 "common.rerun" = "Újra futtatás";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Belefoglalás műveletek";
+"harnesses.include.edit.button" = "Belefoglalás szerkesztése…";
+"harnesses.include.remove.button" = "Belefoglalás eltávolítása…";
+"harnesses.include.edit.title" = "Belefoglalás szerkesztése";
+"harnesses.include.edit.source" = "Forrás";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "ág, tag vagy commit";
+"harnesses.include.edit.path" = "Útvonal";
+"harnesses.include.edit.path.placeholder" = "alárendelt útvonal a forrás adattárban";
+"harnesses.include.edit.picks" = "Kiválasztás";
+"harnesses.include.edit.picks.explainer" = "A bejelölt összetevők jelenleg ebben a belefoglalásban szerepelnek. Kapcsolja be vagy ki az hozzáadáshoz vagy eltávolításhoz.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld kiválasztva";
+"harnesses.include.edit.picks.unknown.source" = "Ez a forrás nem szerepel a piacterein — csak az aktuális összetevők vannak felsorolva.";
+"harnesses.include.edit.save" = "Változtatások mentése";
+"harnesses.include.remove.confirm.title" = "Eltávolítja ezt a belefoglalást?";
+"harnesses.include.remove.confirm.message %@" = "%@ el lesz távolítva ebből a harnessből. A forrás adattár nem módosul.";
+"harnesses.include.remove.confirm" = "Eltávolítás";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Belefoglalás hozzáadása…";
+"harnesses.include.add.step.source" = "Forrás kiválasztása";
+"harnesses.include.add.step.picks" = "Összetevők kiválasztása";
+"harnesses.include.add.step.review" = "Áttekintés";
+"harnesses.include.add.step.running" = "Belefoglalás hozzáadása…";
+"harnesses.include.add.source.marketplace" = "Piactérről";
+"harnesses.include.add.source.giturl" = "Git URL-ről";
+"harnesses.include.add.search.placeholder" = "Bővítmények keresése…";
+"harnesses.include.add.no.marketplaces" = "Nincs beállított piactér. Adjon hozzá egyet a Piacterek lapfülön.";
+"harnesses.include.add.no.matches" = "Nincs egyező bővítmény.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "ág, tag vagy commit (nem kötelező)";
+"harnesses.include.add.gitpath.label" = "Útvonal";
+"harnesses.include.add.gitpath.placeholder" = "alkönyvtár a forrás adattárban (nem kötelező)";
+"harnesses.include.add.giturl.hint" = "A kiválasztás alapértelmezés szerint mindent tartalmaz, amit a forrás biztosít. A szűkítéshez hozzáadás után használja a Belefoglalás szerkesztése lehetőséget.";
+"harnesses.include.add.picks.prompt" = "Válassza ki a belefoglalandó összetevőket.";
+"harnesses.include.add.apply" = "Alkalmaz";
+"harnesses.include.add.already.installed" = "Már hozzáadva";
+"harnesses.include.add.already.installed.help" = "Ez a bővítmény már ebben a harnessben van — kattintson a kiválasztás vagy a ref szerkesztéséhez.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Manifest szerkesztése…";
+"harnesses.manifest.edit.title" = "Manifest szerkesztése";
+"harnesses.manifest.edit.name" = "Név";
+"harnesses.manifest.edit.version" = "Verzió";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Használjon semver-t: MAJOR.MINOR.PATCH (pl. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Alapértelmezett szállító";
+"harnesses.manifest.edit.description" = "Leírás";
+"harnesses.manifest.edit.description.hint" = "Megjelenik a harness listában és a részletek fejlécében. Hagyja üresen az elhagyáshoz.";
+"harnesses.manifest.edit.save" = "Változtatások mentése";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit megváltozott: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Új worktree ágból";
+"sidebar.checkout.branch.label" = "Ág";
+"sidebar.checkout.branch.placeholder" = "Ág kiválasztása…";
+"sidebar.checkout.branch.required" = "Válasszon egy ágat a folytatáshoz.";
+"sidebar.checkout.branch.create" = "Worktree létrehozása";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Ennek a harnessnek nincsenek frissíthető Git-forrásai.";
+"harnesses.loading.help" = "Kapcsolódás a ynh-hoz…";
+"harnesses.unversioned.drift.help" = "Az upstream tartalom verziónövekedés nélkül változott — ellenőrizze frissítés előtt";
+"harnesses.unversioned.drift.banner" = "Az upstream tartalom verziónövekedés nélkül változott — ellenőrizze frissítés előtt";
+"harnesses.unversioned.drift.confirm.title" = "Upstream-változások ellenőrzése";
+"harnesses.unversioned.drift.confirm.body" = "Az upstream tartalom verziónövekedés nélkül változott. A frissítés letölti az új tartalmat. Ellenőrizze az alábbi SHA-kat a folytatás előtt — a hiányzó verziónövekedés rosszindulatú változásokat leplezhet.";
+"harnesses.unversioned.drift.confirm.proceed" = "Frissítés mindenképpen";

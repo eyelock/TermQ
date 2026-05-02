@@ -952,3 +952,76 @@
 "command.runner.failed" = "Neuspešno";
 "common.copy.output" = "Kopiraj izhod";
 "common.rerun" = "Ponovi";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Dejanja vključitve";
+"harnesses.include.edit.button" = "Uredi vključitev…";
+"harnesses.include.remove.button" = "Odstrani vključitev…";
+"harnesses.include.edit.title" = "Uredi vključitev";
+"harnesses.include.edit.source" = "Vir";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "veja, oznaka ali commit";
+"harnesses.include.edit.path" = "Pot";
+"harnesses.include.edit.path.placeholder" = "podpot v izvornem repozitoriju";
+"harnesses.include.edit.picks" = "Izbor";
+"harnesses.include.edit.picks.explainer" = "Označeni artefakti so trenutno v tej vključitvi. Preklopite za dodajanje ali odstranitev.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld od %ld izbranih";
+"harnesses.include.edit.picks.unknown.source" = "Ta vir ni na vaših trgih — prikazani so samo trenutni artefakti.";
+"harnesses.include.edit.save" = "Shrani spremembe";
+"harnesses.include.remove.confirm.title" = "Odstraniti to vključitev?";
+"harnesses.include.remove.confirm.message %@" = "%@ bo odstranjen iz tega harnessa. Izvorni repozitorij ne bo spremenjen.";
+"harnesses.include.remove.confirm" = "Odstrani";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Dodaj vključitev…";
+"harnesses.include.add.step.source" = "Izberite vir";
+"harnesses.include.add.step.picks" = "Izberite artefakte";
+"harnesses.include.add.step.review" = "Pregled";
+"harnesses.include.add.step.running" = "Dodajanje vključitve…";
+"harnesses.include.add.source.marketplace" = "S tržišča";
+"harnesses.include.add.source.giturl" = "Z Git URL";
+"harnesses.include.add.search.placeholder" = "Išči vtičnike…";
+"harnesses.include.add.no.marketplaces" = "Ni konfiguriranih tržišč. Dodajte eno prek zavihka Tržišča.";
+"harnesses.include.add.no.matches" = "Ni ujemajočih vtičnikov.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "veja, oznaka ali commit (neobvezno)";
+"harnesses.include.add.gitpath.label" = "Pot";
+"harnesses.include.add.gitpath.placeholder" = "podmapa v izvornem repozitoriju (neobvezno)";
+"harnesses.include.add.giturl.hint" = "Izbor privzeto vključuje vse, kar vir zagotavlja. Po dodajanju uporabite Uredi vključitev za zoženje.";
+"harnesses.include.add.picks.prompt" = "Izberite artefakte za vključitev.";
+"harnesses.include.add.apply" = "Uporabi";
+"harnesses.include.add.already.installed" = "Že dodano";
+"harnesses.include.add.already.installed.help" = "Ta vtičnik je že v tem harnessu — kliknite za urejanje izbora ali refa.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Uredi manifest…";
+"harnesses.manifest.edit.title" = "Uredi manifest";
+"harnesses.manifest.edit.name" = "Ime";
+"harnesses.manifest.edit.version" = "Različica";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Uporabite semver: MAJOR.MINOR.PATCH (npr. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Privzeti ponudnik";
+"harnesses.manifest.edit.description" = "Opis";
+"harnesses.manifest.edit.description.hint" = "Prikazano na seznamu harnessov in v glavi podrobnosti. Pustite prazno za izpustitev.";
+"harnesses.manifest.edit.save" = "Shrani spremembe";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit spremenjen: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nova delovna drevesa iz veje";
+"sidebar.checkout.branch.label" = "Veja";
+"sidebar.checkout.branch.placeholder" = "Izberite vejo…";
+"sidebar.checkout.branch.required" = "Za nadaljevanje izberite vejo.";
+"sidebar.checkout.branch.create" = "Ustvari delovno drevo";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Ta harness nima Git virov za posodobitev.";
+"harnesses.loading.help" = "Komunikacija z ynh…";
+"harnesses.unversioned.drift.help" = "Vsebina upstream se je spremenila brez posodobitve različice — preglejte pred posodobitvijo";
+"harnesses.unversioned.drift.banner" = "Vsebina upstream se je spremenila brez posodobitve različice — preglejte pred posodobitvijo";
+"harnesses.unversioned.drift.confirm.title" = "Pregled sprememb upstream";
+"harnesses.unversioned.drift.confirm.body" = "Vsebina upstream se je spremenila brez posodobitve različice. Posodobitev bo potegnila novo vsebino. Preglejte SHA spodaj, preden nadaljujete — manjkajoča posodobitev različice lahko prikriva zlonamerne spremembe.";
+"harnesses.unversioned.drift.confirm.proceed" = "Posodobi vseeno";

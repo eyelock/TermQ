@@ -57,6 +57,25 @@ struct IncludeApplicationOptions {
     let pick: [String]
 }
 
+struct IncludeRemoveOptions {
+    let harness: String
+    let sourceURL: String
+    let path: String?
+}
+
+struct IncludeUpdateOptions {
+    let harness: String
+    let sourceURL: String
+    /// Identifies the existing include when multiple share the same URL.
+    let fromPath: String?
+    /// Optional new path (rename in place).
+    let path: String?
+    /// Replacement picks. Empty array means "do not pass --pick".
+    let pick: [String]
+    /// Optional new ref.
+    let ref: String?
+}
+
 /// Sequences `ynd create harness <name>` + optional `ynh install <path>`.
 ///
 /// Streams combined stdout/stderr lines to `outputLines` and tracks per-step status.
@@ -235,6 +254,134 @@ final class MarketplaceAddRunner: ObservableObject {
             args: ["registry", "add", url],
             environment: environment
         )
+
+        isRunning = false
+        if exitCode == 0 {
+            succeeded = true
+        } else {
+            errorMessage = outputLines.last ?? "Command failed with exit code \(exitCode)"
+        }
+    }
+
+    private func streamProcess(
+        executable: String,
+        args: [String],
+        environment: [String: String]
+    ) async -> Int32 {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let process = Process()
+                let pipe = Pipe()
+
+                process.executableURL = URL(fileURLWithPath: executable)
+                process.arguments = args
+                process.standardOutput = pipe
+                process.standardError = pipe
+                process.environment = environment
+
+                let handle = pipe.fileHandleForReading
+                let lineBuffer = LineBuffer()
+
+                handle.readabilityHandler = { fh in
+                    let chunk = fh.availableData
+                    guard !chunk.isEmpty else { return }
+                    lineBuffer.data.append(chunk)
+                    if let text = String(data: lineBuffer.data, encoding: .utf8) {
+                        let lines = text.components(separatedBy: "\n")
+                        let complete = lines.dropLast()
+                        let partial = lines.last ?? ""
+                        if !complete.isEmpty {
+                            let toEmit = complete.filter { !$0.isEmpty }
+                            lineBuffer.data = Data(partial.utf8)
+                            DispatchQueue.main.async { [weak self] in
+                                self?.outputLines.append(contentsOf: toEmit)
+                            }
+                        }
+                    }
+                }
+
+                do {
+                    try process.run()
+                } catch {
+                    handle.readabilityHandler = nil
+                    DispatchQueue.main.async { [weak self] in
+                        self?.outputLines.append("Error: \(error.localizedDescription)")
+                    }
+                    continuation.resume(returning: 1)
+                    return
+                }
+
+                process.terminationHandler = { terminatedProc in
+                    handle.readabilityHandler = nil
+                    let remaining = handle.readDataToEndOfFile()
+                    if let tail = String(data: remaining, encoding: .utf8), !tail.isEmpty {
+                        let lines = tail.components(separatedBy: "\n").filter { !$0.isEmpty }
+                        DispatchQueue.main.async { [weak self] in
+                            self?.outputLines.append(contentsOf: lines)
+                        }
+                    }
+                    continuation.resume(returning: terminatedProc.terminationStatus)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Include mutator (used by harness detail editor)
+
+/// Runs `ynh include remove` / `ynh include update` and streams output back.
+///
+/// Sibling to `IncludeApplier` (which handles `add`). Kept separate so the picker
+/// flow doesn't need to know about update/remove.
+@MainActor
+final class IncludeMutator: ObservableObject {
+    @Published private(set) var outputLines: [String] = []
+    @Published private(set) var isRunning = false
+    @Published private(set) var succeeded = false
+    @Published private(set) var errorMessage: String?
+
+    func remove(_ options: IncludeRemoveOptions, ynhPath: String, environment: [String: String]) async {
+        await run(args: Self.buildIncludeRemoveArgs(options), ynhPath: ynhPath, environment: environment)
+    }
+
+    func update(_ options: IncludeUpdateOptions, ynhPath: String, environment: [String: String]) async {
+        await run(args: Self.buildIncludeUpdateArgs(options), ynhPath: ynhPath, environment: environment)
+    }
+
+    /// Builds the `ynh include remove` argument vector. Pure — exposed for testing.
+    nonisolated static func buildIncludeRemoveArgs(_ options: IncludeRemoveOptions) -> [String] {
+        var args = ["include", "remove", options.harness, options.sourceURL]
+        if let path = options.path, !path.isEmpty {
+            args += ["--path", path]
+        }
+        return args
+    }
+
+    /// Builds the `ynh include update` argument vector. Pure — exposed for testing.
+    nonisolated static func buildIncludeUpdateArgs(_ options: IncludeUpdateOptions) -> [String] {
+        var args = ["include", "update", options.harness, options.sourceURL]
+        if let fromPath = options.fromPath, !fromPath.isEmpty {
+            args += ["--from-path", fromPath]
+        }
+        if let path = options.path, !path.isEmpty {
+            args += ["--path", path]
+        }
+        if !options.pick.isEmpty {
+            args += ["--pick", options.pick.joined(separator: ",")]
+        }
+        if let ref = options.ref, !ref.isEmpty {
+            args += ["--ref", ref]
+        }
+        return args
+    }
+
+    private func run(args: [String], ynhPath: String, environment: [String: String]) async {
+        isRunning = true
+        outputLines = []
+        succeeded = false
+        errorMessage = nil
+
+        let exitCode = await streamProcess(executable: ynhPath, args: args, environment: environment)
 
         isRunning = false
         if exitCode == 0 {

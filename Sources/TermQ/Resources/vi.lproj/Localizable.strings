@@ -952,3 +952,76 @@
 "command.runner.failed" = "Thất bại";
 "common.copy.output" = "Sao chép đầu ra";
 "common.rerun" = "Chạy lại";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Hành động bao gồm";
+"harnesses.include.edit.button" = "Sửa mục bao gồm…";
+"harnesses.include.remove.button" = "Xóa mục bao gồm…";
+"harnesses.include.edit.title" = "Sửa mục bao gồm";
+"harnesses.include.edit.source" = "Nguồn";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "nhánh, thẻ hoặc commit";
+"harnesses.include.edit.path" = "Đường dẫn";
+"harnesses.include.edit.path.placeholder" = "đường dẫn con trong kho nguồn";
+"harnesses.include.edit.picks" = "Lựa chọn";
+"harnesses.include.edit.picks.explainer" = "Các tạo phẩm được đánh dấu hiện có trong mục bao gồm này. Chuyển đổi để thêm hoặc xóa.";
+"harnesses.include.edit.picks.count %ld %ld" = "Đã chọn %ld / %ld";
+"harnesses.include.edit.picks.unknown.source" = "Nguồn này không có trong marketplace của bạn — chỉ liệt kê các tạo phẩm hiện tại.";
+"harnesses.include.edit.save" = "Lưu thay đổi";
+"harnesses.include.remove.confirm.title" = "Xóa mục bao gồm này?";
+"harnesses.include.remove.confirm.message %@" = "%@ sẽ bị xóa khỏi harness này. Kho nguồn không bị ảnh hưởng.";
+"harnesses.include.remove.confirm" = "Xóa";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Thêm mục bao gồm…";
+"harnesses.include.add.step.source" = "Chọn nguồn";
+"harnesses.include.add.step.picks" = "Chọn tạo phẩm";
+"harnesses.include.add.step.review" = "Xem lại";
+"harnesses.include.add.step.running" = "Đang thêm mục bao gồm…";
+"harnesses.include.add.source.marketplace" = "Từ Marketplace";
+"harnesses.include.add.source.giturl" = "Từ Git URL";
+"harnesses.include.add.search.placeholder" = "Tìm kiếm plugin…";
+"harnesses.include.add.no.marketplaces" = "Chưa có marketplace nào được cấu hình. Dùng tab Marketplaces để thêm một cái.";
+"harnesses.include.add.no.matches" = "Không có plugin nào phù hợp.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "nhánh, thẻ hoặc commit (tùy chọn)";
+"harnesses.include.add.gitpath.label" = "Đường dẫn";
+"harnesses.include.add.gitpath.placeholder" = "thư mục con trong kho nguồn (tùy chọn)";
+"harnesses.include.add.giturl.hint" = "Lựa chọn mặc định bao gồm tất cả những gì nguồn cung cấp. Dùng Sửa mục bao gồm sau khi thêm để thu hẹp phạm vi.";
+"harnesses.include.add.picks.prompt" = "Chọn các tạo phẩm để bao gồm.";
+"harnesses.include.add.apply" = "Áp dụng";
+"harnesses.include.add.already.installed" = "Đã thêm";
+"harnesses.include.add.already.installed.help" = "Plugin này đã có trong harness này — nhấp để sửa lựa chọn hoặc ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Sửa Manifest…";
+"harnesses.manifest.edit.title" = "Sửa Manifest";
+"harnesses.manifest.edit.name" = "Tên";
+"harnesses.manifest.edit.version" = "Phiên bản";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Dùng semver: MAJOR.MINOR.PATCH (vd. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Nhà cung cấp mặc định";
+"harnesses.manifest.edit.description" = "Mô tả";
+"harnesses.manifest.edit.description.hint" = "Hiển thị trong danh sách harness và tiêu đề chi tiết. Để trống để bỏ qua.";
+"harnesses.manifest.edit.save" = "Lưu thay đổi";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit đã thay đổi: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree mới từ nhánh";
+"sidebar.checkout.branch.label" = "Nhánh";
+"sidebar.checkout.branch.placeholder" = "Chọn một nhánh…";
+"sidebar.checkout.branch.required" = "Chọn một nhánh để tiếp tục.";
+"sidebar.checkout.branch.create" = "Tạo worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Harness này không có nguồn Git nào để cập nhật.";
+"harnesses.loading.help" = "Đang kết nối với ynh…";
+"harnesses.unversioned.drift.help" = "Nội dung upstream đã thay đổi mà không có cập nhật phiên bản — xem xét trước khi cập nhật";
+"harnesses.unversioned.drift.banner" = "Nội dung upstream đã thay đổi mà không có cập nhật phiên bản — xem xét trước khi cập nhật";
+"harnesses.unversioned.drift.confirm.title" = "Xem xét các thay đổi upstream";
+"harnesses.unversioned.drift.confirm.body" = "Nội dung upstream đã thay đổi mà không có cập nhật phiên bản. Cập nhật sẽ kéo nội dung mới. Xem xét các SHA bên dưới trước khi tiếp tục — thiếu cập nhật phiên bản có thể che giấu các thay đổi độc hại.";
+"harnesses.unversioned.drift.confirm.proceed" = "Cập nhật dù sao";

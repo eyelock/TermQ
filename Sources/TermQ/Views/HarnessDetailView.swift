@@ -42,10 +42,12 @@ struct HarnessDetailView: View {
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var vendorService: VendorService = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
+    @StateObject private var includeEditor = HarnessIncludeEditor()
     @State private var popoverForPath: String?
     @State private var showUninstallAlert = false
     @State private var harnessToDuplicate: Harness?
     @State private var showDeleteAlert = false
+    @State private var showEditManifestSheet = false
 
     // Convenience accessors so the body and section helpers below keep their
     // existing call sites unchanged. Pure forwarding to the view-model.
@@ -87,7 +89,8 @@ struct HarnessDetailView: View {
 
                 let depView = HarnessDetailDependencyView(
                     harness: harness, detail: detail,
-                    updateSignal: viewModel.updateSignal)
+                    updateSignal: viewModel.updateSignal,
+                    includeEditor: viewModel.editability == .fullyEditable ? includeEditor : nil)
                 if depView.hasDependencies {
                     Divider()
                     depView
@@ -133,6 +136,13 @@ struct HarnessDetailView: View {
                 repository: HarnessRepository.shared
             )
             .frame(width: 480, height: 360)
+        }
+        .sheet(isPresented: $showEditManifestSheet) {
+            EditManifestSheet(
+                harness: harness,
+                onDismiss: { showEditManifestSheet = false }
+            )
+            .frame(width: 520, height: 440)
         }
     }
 
@@ -607,6 +617,13 @@ extension HarnessDetailView {
                 onUpdate(harness.name)
             } label: {
                 Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
+            }
+        }
+        if viewModel.editability == .fullyEditable {
+            Button {
+                showEditManifestSheet = true
+            } label: {
+                Label(Strings.Harnesses.editManifestMenu, systemImage: "pencil")
             }
         }
         if case .readOnly(canFork: true) = viewModel.editability, viewModel.phase1Capable {

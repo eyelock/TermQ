@@ -566,6 +566,108 @@ final class IncludeApplierArgsTests: XCTestCase {
     }
 }
 
+// MARK: - IncludeMutator argument-building tests
+
+final class IncludeMutatorArgsTests: XCTestCase {
+
+    // MARK: remove
+
+    func test_buildRemoveArgs_noPath_emitsBaseCommand() {
+        let opts = IncludeRemoveOptions(
+            harness: "my-harness", sourceURL: "https://github.com/o/r", path: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeRemoveArgs(opts),
+            ["include", "remove", "my-harness", "https://github.com/o/r"]
+        )
+    }
+
+    func test_buildRemoveArgs_withPath_includesPathFlag() {
+        let opts = IncludeRemoveOptions(
+            harness: "h", sourceURL: "s", path: "plugins/foo"
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeRemoveArgs(opts),
+            ["include", "remove", "h", "s", "--path", "plugins/foo"]
+        )
+    }
+
+    func test_buildRemoveArgs_emptyPathString_dropsPathFlag() {
+        let opts = IncludeRemoveOptions(harness: "h", sourceURL: "s", path: "")
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeRemoveArgs(opts),
+            ["include", "remove", "h", "s"]
+        )
+    }
+
+    // MARK: update
+
+    func test_buildUpdateArgs_noOptionalFields_emitsBaseCommand() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: nil, path: nil, pick: [], ref: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s"]
+        )
+    }
+
+    func test_buildUpdateArgs_fromPath_emittedFirst() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: "old/path", path: nil, pick: [], ref: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s", "--from-path", "old/path"]
+        )
+    }
+
+    func test_buildUpdateArgs_allFields_emitsCompleteCommand() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: "old", path: "new",
+            pick: ["agents/a.md", "skills/b"],
+            ref: "main"
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            [
+                "include", "update", "h", "s",
+                "--from-path", "old",
+                "--path", "new",
+                "--pick", "agents/a.md,skills/b",
+                "--ref", "main",
+            ]
+        )
+    }
+
+    func test_buildUpdateArgs_emptyStrings_dropOptionalFlags() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: "", path: "", pick: [], ref: ""
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s"]
+        )
+    }
+
+    func test_buildUpdateArgs_pickPreservesFullTypeNamePaths() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: nil, path: nil,
+            pick: ["agents/claude-packager.md", "skills/my-skill"],
+            ref: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s", "--pick", "agents/claude-packager.md,skills/my-skill"]
+        )
+    }
+}
+
 // MARK: - AuthorStepStatus tests
 
 final class AuthorStepStatusTests: XCTestCase {

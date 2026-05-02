@@ -952,3 +952,76 @@
 "command.runner.failed" = "Misslyckades";
 "common.copy.output" = "Kopiera utdata";
 "common.rerun" = "Kör igen";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include-åtgärder";
+"harnesses.include.edit.button" = "Redigera include…";
+"harnesses.include.remove.button" = "Ta bort include…";
+"harnesses.include.edit.title" = "Redigera include";
+"harnesses.include.edit.source" = "Källa";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "gren, tagg eller commit";
+"harnesses.include.edit.path" = "Sökväg";
+"harnesses.include.edit.path.placeholder" = "undersökväg i källrepository";
+"harnesses.include.edit.picks" = "Urval";
+"harnesses.include.edit.picks.explainer" = "Markerade artefakter finns för närvarande i denna include. Växla för att lägga till eller ta bort.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld av %ld valda";
+"harnesses.include.edit.picks.unknown.source" = "Den här källan finns inte i dina marknadsplatser — endast aktuella artefakter visas.";
+"harnesses.include.edit.save" = "Spara ändringar";
+"harnesses.include.remove.confirm.title" = "Ta bort denna include?";
+"harnesses.include.remove.confirm.message %@" = "%@ tas bort från detta harness. Källrepository påverkas inte.";
+"harnesses.include.remove.confirm" = "Ta bort";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Lägg till include…";
+"harnesses.include.add.step.source" = "Välj källa";
+"harnesses.include.add.step.picks" = "Välj artefakter";
+"harnesses.include.add.step.review" = "Granska";
+"harnesses.include.add.step.running" = "Lägger till include…";
+"harnesses.include.add.source.marketplace" = "Från marknadsplats";
+"harnesses.include.add.source.giturl" = "Från Git-URL";
+"harnesses.include.add.search.placeholder" = "Sök plugins…";
+"harnesses.include.add.no.marketplaces" = "Inga marknadsplatser konfigurerade. Använd fliken Marknadsplatser för att lägga till en.";
+"harnesses.include.add.no.matches" = "Inga plugins matchar.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "gren, tagg eller commit (valfritt)";
+"harnesses.include.add.gitpath.label" = "Sökväg";
+"harnesses.include.add.gitpath.placeholder" = "underkatalog i källrepository (valfritt)";
+"harnesses.include.add.giturl.hint" = "Urvalet inkluderar som standard allt källan tillhandahåller. Använd Redigera include efter tillägg för att begränsa det.";
+"harnesses.include.add.picks.prompt" = "Välj de artefakter som ska inkluderas.";
+"harnesses.include.add.apply" = "Tillämpa";
+"harnesses.include.add.already.installed" = "Redan tillagd";
+"harnesses.include.add.already.installed.help" = "Denna plugin finns redan i detta harness — klicka för att redigera urval eller ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Redigera manifest…";
+"harnesses.manifest.edit.title" = "Redigera manifest";
+"harnesses.manifest.edit.name" = "Namn";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Använd semver: MAJOR.MINOR.PATCH (t.ex. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Standardleverantör";
+"harnesses.manifest.edit.description" = "Beskrivning";
+"harnesses.manifest.edit.description.hint" = "Visas i harness-listan och detaljrubriken. Lämna tomt för att utelämna.";
+"harnesses.manifest.edit.save" = "Spara ändringar";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit ändrad: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Ny worktree från gren";
+"sidebar.checkout.branch.label" = "Gren";
+"sidebar.checkout.branch.placeholder" = "Välj en gren…";
+"sidebar.checkout.branch.required" = "Välj en gren för att fortsätta.";
+"sidebar.checkout.branch.create" = "Skapa worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Det här harness har inga Git-källor att uppdatera.";
+"harnesses.loading.help" = "Kommunicerar med ynh…";
+"harnesses.unversioned.drift.help" = "Upstream-innehåll ändrades utan versionsökning — granska innan uppdatering";
+"harnesses.unversioned.drift.banner" = "Upstream-innehåll ändrades utan versionsökning — granska innan uppdatering";
+"harnesses.unversioned.drift.confirm.title" = "Granska upstream-ändringar";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-innehåll har ändrats utan versionsökning. Uppdatering hämtar det nya innehållet. Granska SHA:erna nedan innan du fortsätter — en saknad versionsökning kan maskera skadliga ändringar.";
+"harnesses.unversioned.drift.confirm.proceed" = "Uppdatera ändå";

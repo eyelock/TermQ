@@ -945,3 +945,76 @@
 "command.runner.failed" = "فشل";
 "common.copy.output" = "نسخ المخرجات";
 "common.rerun" = "إعادة التشغيل";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "إجراءات التضمين";
+"harnesses.include.edit.button" = "تعديل التضمين…";
+"harnesses.include.remove.button" = "إزالة التضمين…";
+"harnesses.include.edit.title" = "تعديل التضمين";
+"harnesses.include.edit.source" = "المصدر";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "فرع أو علامة أو commit";
+"harnesses.include.edit.path" = "المسار";
+"harnesses.include.edit.path.placeholder" = "المسار الفرعي في مستودع المصدر";
+"harnesses.include.edit.picks" = "التحديد";
+"harnesses.include.edit.picks.explainer" = "العناصر المحددة موجودة حاليًا في هذا التضمين. بدّل لإضافة أو إزالة.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld من أصل %ld محدد";
+"harnesses.include.edit.picks.unknown.source" = "هذا المصدر غير موجود في أسواقك — يتم سرد العناصر الحالية فقط.";
+"harnesses.include.edit.save" = "حفظ التغييرات";
+"harnesses.include.remove.confirm.title" = "إزالة هذا التضمين؟";
+"harnesses.include.remove.confirm.message %@" = "سيتم إزالة %@ من هذا الـ harness. لن يُمسّ مستودع المصدر.";
+"harnesses.include.remove.confirm" = "إزالة";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "إضافة تضمين…";
+"harnesses.include.add.step.source" = "اختر مصدرًا";
+"harnesses.include.add.step.picks" = "اختر العناصر";
+"harnesses.include.add.step.review" = "مراجعة";
+"harnesses.include.add.step.running" = "جارٍ إضافة التضمين…";
+"harnesses.include.add.source.marketplace" = "من السوق";
+"harnesses.include.add.source.giturl" = "من رابط Git";
+"harnesses.include.add.search.placeholder" = "البحث في الإضافات…";
+"harnesses.include.add.no.marketplaces" = "لا توجد أسواق مُهيّأة. استخدم تبويب الأسواق لإضافة واحد.";
+"harnesses.include.add.no.matches" = "لا توجد إضافات مطابقة.";
+"harnesses.include.add.giturl.label" = "رابط URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "فرع أو علامة أو commit (اختياري)";
+"harnesses.include.add.gitpath.label" = "المسار";
+"harnesses.include.add.gitpath.placeholder" = "المجلد الفرعي في مستودع المصدر (اختياري)";
+"harnesses.include.add.giturl.hint" = "يشمل التحديد افتراضيًا كل ما يوفره المصدر. استخدم تعديل التضمين بعد الإضافة لتضييق النطاق.";
+"harnesses.include.add.picks.prompt" = "حدد العناصر التي تريد تضمينها.";
+"harnesses.include.add.apply" = "تطبيق";
+"harnesses.include.add.already.installed" = "مضاف مسبقًا";
+"harnesses.include.add.already.installed.help" = "هذه الإضافة موجودة بالفعل في هذا الـ harness — انقر لتعديل التحديد أو الـ ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "تعديل البيان…";
+"harnesses.manifest.edit.title" = "تعديل البيان";
+"harnesses.manifest.edit.name" = "الاسم";
+"harnesses.manifest.edit.version" = "الإصدار";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "استخدم semver: الرئيسي.الثانوي.التصحيح (مثلًا 0.2.0)";
+"harnesses.manifest.edit.vendor" = "المورّد الافتراضي";
+"harnesses.manifest.edit.description" = "الوصف";
+"harnesses.manifest.edit.description.hint" = "يظهر في قائمة الـ harness وفي رأس التفاصيل. اتركه فارغًا للتخطي.";
+"harnesses.manifest.edit.save" = "حفظ التغييرات";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "تغيّر الـ commit الأولي: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "منطقة عمل جديدة من فرع";
+"sidebar.checkout.branch.label" = "الفرع";
+"sidebar.checkout.branch.placeholder" = "اختر فرعًا…";
+"sidebar.checkout.branch.required" = "اختر فرعًا للمتابعة.";
+"sidebar.checkout.branch.create" = "إنشاء منطقة عمل";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "لا توجد مصادر Git لتحديثها في هذا الـ harness.";
+"harnesses.loading.help" = "جارٍ الاتصال بـ ynh…";
+"harnesses.unversioned.drift.help" = "تغيّر المحتوى الأولي دون تحديث للإصدار — راجع قبل التحديث";
+"harnesses.unversioned.drift.banner" = "تغيّر المحتوى الأولي دون تحديث للإصدار — راجع قبل التحديث";
+"harnesses.unversioned.drift.confirm.title" = "مراجعة التغييرات الأولية";
+"harnesses.unversioned.drift.confirm.body" = "تغيّر المحتوى الأولي دون تحديث للإصدار. سيجلب التحديث المحتوى الجديد. راجع الـ SHA أدناه قبل المتابعة — قد يُخفي غياب تحديث الإصدار تغييرات ضارة.";
+"harnesses.unversioned.drift.confirm.proceed" = "تحديث على أي حال";

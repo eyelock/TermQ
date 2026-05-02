@@ -944,3 +944,76 @@
 "command.runner.failed" = "Failed";
 "common.copy.output" = "Copy Output";
 "common.rerun" = "Re-run";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include actions";
+"harnesses.include.edit.button" = "Edit Include…";
+"harnesses.include.remove.button" = "Remove Include…";
+"harnesses.include.edit.title" = "Edit Include";
+"harnesses.include.edit.source" = "Source";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "branch, tag, or commit";
+"harnesses.include.edit.path" = "Path";
+"harnesses.include.edit.path.placeholder" = "subpath in source repo";
+"harnesses.include.edit.picks" = "Picks";
+"harnesses.include.edit.picks.explainer" = "Checked artefacts are currently in this include. Toggle to add or remove.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld of %ld selected";
+"harnesses.include.edit.picks.unknown.source" = "This source isn't in your marketplaces — only the current artefacts are listed.";
+"harnesses.include.edit.save" = "Save Changes";
+"harnesses.include.remove.confirm.title" = "Remove this include?";
+"harnesses.include.remove.confirm.message %@" = "%@ will be removed from this harness. The source repository is not touched.";
+"harnesses.include.remove.confirm" = "Remove";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Add Include…";
+"harnesses.include.add.step.source" = "Choose a source";
+"harnesses.include.add.step.picks" = "Choose artefacts";
+"harnesses.include.add.step.review" = "Review";
+"harnesses.include.add.step.running" = "Adding include…";
+"harnesses.include.add.source.marketplace" = "From Marketplace";
+"harnesses.include.add.source.giturl" = "From Git URL";
+"harnesses.include.add.search.placeholder" = "Search plugins…";
+"harnesses.include.add.no.marketplaces" = "No marketplaces configured. Use the Marketplaces tab to add one.";
+"harnesses.include.add.no.matches" = "No plugins match.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "branch, tag, or commit (optional)";
+"harnesses.include.add.gitpath.label" = "Path";
+"harnesses.include.add.gitpath.placeholder" = "subdirectory in source repo (optional)";
+"harnesses.include.add.giturl.hint" = "Picks default to everything the source provides. Use Edit Include after adding to narrow them.";
+"harnesses.include.add.picks.prompt" = "Select the artefacts to include.";
+"harnesses.include.add.apply" = "Apply";
+"harnesses.include.add.already.installed" = "Already added";
+"harnesses.include.add.already.installed.help" = "This plugin is already on this harness — click to edit picks or ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Edit Manifest…";
+"harnesses.manifest.edit.title" = "Edit Manifest";
+"harnesses.manifest.edit.name" = "Name";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Use semver: MAJOR.MINOR.PATCH (e.g. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Default Vendor";
+"harnesses.manifest.edit.description" = "Description";
+"harnesses.manifest.edit.description.hint" = "Shown in the harness list and detail header. Leave empty to omit.";
+"harnesses.manifest.edit.save" = "Save Changes";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit changed: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "New Worktree from Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Select a branch…";
+"sidebar.checkout.branch.required" = "Select a branch to continue.";
+"sidebar.checkout.branch.create" = "Create Worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "This harness has no Git sources to update.";
+"harnesses.loading.help" = "Talking to ynh…";
+"harnesses.unversioned.drift.help" = "Upstream content changed without a version bump — review before updating";
+"harnesses.unversioned.drift.banner" = "Upstream content changed without a version bump — review before updating";
+"harnesses.unversioned.drift.confirm.title" = "Review upstream changes";
+"harnesses.unversioned.drift.confirm.body" = "Upstream content has changed without a version bump. Updating will pull the new content. Review the SHAs below before proceeding — a missing version bump can mask malicious changes.";
+"harnesses.unversioned.drift.confirm.proceed" = "Update Anyway";

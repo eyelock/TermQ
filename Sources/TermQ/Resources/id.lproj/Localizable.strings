@@ -945,3 +945,76 @@
 "command.runner.failed" = "Gagal";
 "common.copy.output" = "Salin keluaran";
 "common.rerun" = "Jalankan ulang";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Tindakan sertaan";
+"harnesses.include.edit.button" = "Edit Sertaan…";
+"harnesses.include.remove.button" = "Hapus Sertaan…";
+"harnesses.include.edit.title" = "Edit Sertaan";
+"harnesses.include.edit.source" = "Sumber";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "cabang, tag, atau commit";
+"harnesses.include.edit.path" = "Jalur";
+"harnesses.include.edit.path.placeholder" = "subjalur di repositori sumber";
+"harnesses.include.edit.picks" = "Pilihan";
+"harnesses.include.edit.picks.explainer" = "Artefak yang dicentang saat ini ada dalam sertaan ini. Beralih untuk menambah atau menghapus.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld dari %ld dipilih";
+"harnesses.include.edit.picks.unknown.source" = "Sumber ini tidak ada di marketplace Anda — hanya artefak saat ini yang tercantum.";
+"harnesses.include.edit.save" = "Simpan Perubahan";
+"harnesses.include.remove.confirm.title" = "Hapus sertaan ini?";
+"harnesses.include.remove.confirm.message %@" = "%@ akan dihapus dari harness ini. Repositori sumber tidak diubah.";
+"harnesses.include.remove.confirm" = "Hapus";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Tambah Sertaan…";
+"harnesses.include.add.step.source" = "Pilih sumber";
+"harnesses.include.add.step.picks" = "Pilih artefak";
+"harnesses.include.add.step.review" = "Tinjau";
+"harnesses.include.add.step.running" = "Menambahkan sertaan…";
+"harnesses.include.add.source.marketplace" = "Dari Marketplace";
+"harnesses.include.add.source.giturl" = "Dari Git URL";
+"harnesses.include.add.search.placeholder" = "Cari plugin…";
+"harnesses.include.add.no.marketplaces" = "Tidak ada marketplace yang dikonfigurasi. Gunakan tab Marketplace untuk menambahkan satu.";
+"harnesses.include.add.no.matches" = "Tidak ada plugin yang cocok.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "cabang, tag, atau commit (opsional)";
+"harnesses.include.add.gitpath.label" = "Jalur";
+"harnesses.include.add.gitpath.placeholder" = "subdirektori di repositori sumber (opsional)";
+"harnesses.include.add.giturl.hint" = "Pilihan secara default mencakup semua yang disediakan sumber. Gunakan Edit Sertaan setelah menambahkan untuk mempersempit.";
+"harnesses.include.add.picks.prompt" = "Pilih artefak yang akan disertakan.";
+"harnesses.include.add.apply" = "Terapkan";
+"harnesses.include.add.already.installed" = "Sudah ditambahkan";
+"harnesses.include.add.already.installed.help" = "Plugin ini sudah ada di harness ini — klik untuk mengedit pilihan atau ref.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Edit Manifest…";
+"harnesses.manifest.edit.title" = "Edit Manifest";
+"harnesses.manifest.edit.name" = "Nama";
+"harnesses.manifest.edit.version" = "Versi";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Gunakan semver: MAJOR.MINOR.PATCH (mis. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Vendor Default";
+"harnesses.manifest.edit.description" = "Deskripsi";
+"harnesses.manifest.edit.description.hint" = "Ditampilkan dalam daftar harness dan header detail. Kosongkan untuk dihilangkan.";
+"harnesses.manifest.edit.save" = "Simpan Perubahan";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree Baru dari Cabang";
+"sidebar.checkout.branch.label" = "Cabang";
+"sidebar.checkout.branch.placeholder" = "Pilih cabang…";
+"sidebar.checkout.branch.required" = "Pilih cabang untuk melanjutkan.";
+"sidebar.checkout.branch.create" = "Buat Worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Harness ini tidak memiliki sumber Git untuk diperbarui.";
+"harnesses.loading.help" = "Berkomunikasi dengan ynh…";
+"harnesses.unversioned.drift.help" = "Konten upstream berubah tanpa pembaruan versi — tinjau sebelum memperbarui";
+"harnesses.unversioned.drift.banner" = "Konten upstream berubah tanpa pembaruan versi — tinjau sebelum memperbarui";
+"harnesses.unversioned.drift.confirm.title" = "Tinjau perubahan upstream";
+"harnesses.unversioned.drift.confirm.body" = "Konten upstream berubah tanpa pembaruan versi. Memperbarui akan menarik konten baru. Tinjau SHA di bawah sebelum melanjutkan — pembaruan versi yang hilang dapat menutupi perubahan berbahaya.";
+"harnesses.unversioned.drift.confirm.proceed" = "Perbarui Tetap";

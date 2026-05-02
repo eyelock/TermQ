@@ -945,3 +945,76 @@
 "command.runner.failed" = "Fehlgeschlagen";
 "common.copy.output" = "Ausgabe kopieren";
 "common.rerun" = "Erneut ausführen";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include-Aktionen";
+"harnesses.include.edit.button" = "Include bearbeiten…";
+"harnesses.include.remove.button" = "Include entfernen…";
+"harnesses.include.edit.title" = "Include bearbeiten";
+"harnesses.include.edit.source" = "Quelle";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "Branch, Tag oder Commit";
+"harnesses.include.edit.path" = "Pfad";
+"harnesses.include.edit.path.placeholder" = "Unterpfad im Quell-Repository";
+"harnesses.include.edit.picks" = "Auswahl";
+"harnesses.include.edit.picks.explainer" = "Markierte Artefakte sind in diesem Include enthalten. Umschalten, um hinzuzufügen oder zu entfernen.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld von %ld ausgewählt";
+"harnesses.include.edit.picks.unknown.source" = "Diese Quelle ist nicht in Ihren Marktplätzen – nur die aktuellen Artefakte werden aufgelistet.";
+"harnesses.include.edit.save" = "Änderungen speichern";
+"harnesses.include.remove.confirm.title" = "Diesen Include entfernen?";
+"harnesses.include.remove.confirm.message %@" = "%@ wird aus diesem Harness entfernt. Das Quell-Repository wird nicht berührt.";
+"harnesses.include.remove.confirm" = "Entfernen";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Include hinzufügen…";
+"harnesses.include.add.step.source" = "Quelle auswählen";
+"harnesses.include.add.step.picks" = "Artefakte auswählen";
+"harnesses.include.add.step.review" = "Überprüfen";
+"harnesses.include.add.step.running" = "Include wird hinzugefügt…";
+"harnesses.include.add.source.marketplace" = "Aus Marktplatz";
+"harnesses.include.add.source.giturl" = "Aus Git-URL";
+"harnesses.include.add.search.placeholder" = "Plugins suchen…";
+"harnesses.include.add.no.marketplaces" = "Keine Marktplätze konfiguriert. Fügen Sie einen über den Tab „Marktplätze" hinzu.";
+"harnesses.include.add.no.matches" = "Keine Plugins gefunden.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "Branch, Tag oder Commit (optional)";
+"harnesses.include.add.gitpath.label" = "Pfad";
+"harnesses.include.add.gitpath.placeholder" = "Unterverzeichnis im Quell-Repository (optional)";
+"harnesses.include.add.giturl.hint" = "Die Auswahl umfasst standardmäßig alles, was die Quelle bereitstellt. Verwenden Sie „Include bearbeiten" nach dem Hinzufügen, um sie einzugrenzen.";
+"harnesses.include.add.picks.prompt" = "Wählen Sie die einzuschließenden Artefakte aus.";
+"harnesses.include.add.apply" = "Anwenden";
+"harnesses.include.add.already.installed" = "Bereits hinzugefügt";
+"harnesses.include.add.already.installed.help" = "Dieses Plugin ist bereits in diesem Harness – klicken Sie zum Bearbeiten der Auswahl oder des Refs.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Manifest bearbeiten…";
+"harnesses.manifest.edit.title" = "Manifest bearbeiten";
+"harnesses.manifest.edit.name" = "Name";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Semver verwenden: MAJOR.MINOR.PATCH (z. B. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Standardanbieter";
+"harnesses.manifest.edit.description" = "Beschreibung";
+"harnesses.manifest.edit.description.hint" = "Wird in der Harness-Liste und dem Detailheader angezeigt. Leer lassen, um es wegzulassen.";
+"harnesses.manifest.edit.save" = "Änderungen speichern";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream-Commit geändert: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Neuer Worktree aus Branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Branch auswählen…";
+"sidebar.checkout.branch.required" = "Wählen Sie einen Branch aus, um fortzufahren.";
+"sidebar.checkout.branch.create" = "Worktree erstellen";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Dieses Harness hat keine Git-Quellen zum Aktualisieren.";
+"harnesses.loading.help" = "Kommuniziere mit ynh…";
+"harnesses.unversioned.drift.help" = "Upstream-Inhalte wurden ohne Versionserhöhung geändert — vor dem Aktualisieren prüfen";
+"harnesses.unversioned.drift.banner" = "Upstream-Inhalte wurden ohne Versionserhöhung geändert — vor dem Aktualisieren prüfen";
+"harnesses.unversioned.drift.confirm.title" = "Upstream-Änderungen überprüfen";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-Inhalte haben sich ohne Versionserhöhung geändert. Das Aktualisieren holt die neuen Inhalte. Überprüfen Sie die SHA-Werte unten, bevor Sie fortfahren — eine fehlende Versionserhöhung kann böswillige Änderungen verschleiern.";
+"harnesses.unversioned.drift.confirm.proceed" = "Trotzdem aktualisieren";

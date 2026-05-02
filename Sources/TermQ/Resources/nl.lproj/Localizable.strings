@@ -950,3 +950,76 @@
 "command.runner.failed" = "Mislukt";
 "common.copy.output" = "Uitvoer kopiëren";
 "common.rerun" = "Opnieuw uitvoeren";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include-acties";
+"harnesses.include.edit.button" = "Include bewerken…";
+"harnesses.include.remove.button" = "Include verwijderen…";
+"harnesses.include.edit.title" = "Include bewerken";
+"harnesses.include.edit.source" = "Bron";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "branch, tag of commit";
+"harnesses.include.edit.path" = "Pad";
+"harnesses.include.edit.path.placeholder" = "subpad in de bronrepository";
+"harnesses.include.edit.picks" = "Selectie";
+"harnesses.include.edit.picks.explainer" = "Aangevinkte artefacten zijn momenteel in deze include. Schakel in of uit om toe te voegen of te verwijderen.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld van %ld geselecteerd";
+"harnesses.include.edit.picks.unknown.source" = "Deze bron staat niet in je marketplaces — alleen de huidige artefacten worden weergegeven.";
+"harnesses.include.edit.save" = "Wijzigingen opslaan";
+"harnesses.include.remove.confirm.title" = "Deze include verwijderen?";
+"harnesses.include.remove.confirm.message %@" = "%@ wordt verwijderd uit dit harness. De bronrepository wordt niet gewijzigd.";
+"harnesses.include.remove.confirm" = "Verwijderen";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Include toevoegen…";
+"harnesses.include.add.step.source" = "Kies een bron";
+"harnesses.include.add.step.picks" = "Kies artefacten";
+"harnesses.include.add.step.review" = "Controleren";
+"harnesses.include.add.step.running" = "Include wordt toegevoegd…";
+"harnesses.include.add.source.marketplace" = "Vanuit marketplace";
+"harnesses.include.add.source.giturl" = "Vanuit Git-URL";
+"harnesses.include.add.search.placeholder" = "Plugins zoeken…";
+"harnesses.include.add.no.marketplaces" = "Geen marketplaces geconfigureerd. Gebruik het tabblad Marketplaces om er een toe te voegen.";
+"harnesses.include.add.no.matches" = "Geen plugins gevonden.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "branch, tag of commit (optioneel)";
+"harnesses.include.add.gitpath.label" = "Pad";
+"harnesses.include.add.gitpath.placeholder" = "submap in de bronrepository (optioneel)";
+"harnesses.include.add.giturl.hint" = "De selectie omvat standaard alles wat de bron biedt. Gebruik Include bewerken na het toevoegen om te verfijnen.";
+"harnesses.include.add.picks.prompt" = "Selecteer de artefacten die je wilt opnemen.";
+"harnesses.include.add.apply" = "Toepassen";
+"harnesses.include.add.already.installed" = "Al toegevoegd";
+"harnesses.include.add.already.installed.help" = "Deze plugin is al in dit harness — klik om de selectie of ref te bewerken.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Manifest bewerken…";
+"harnesses.manifest.edit.title" = "Manifest bewerken";
+"harnesses.manifest.edit.name" = "Naam";
+"harnesses.manifest.edit.version" = "Versie";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Gebruik semver: MAJOR.MINOR.PATCH (bijv. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Standaard leverancier";
+"harnesses.manifest.edit.description" = "Beschrijving";
+"harnesses.manifest.edit.description.hint" = "Wordt weergegeven in de harness-lijst en de detailkoptekst. Leeg laten om weg te laten.";
+"harnesses.manifest.edit.save" = "Wijzigingen opslaan";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit gewijzigd: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nieuwe worktree vanuit branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Selecteer een branch…";
+"sidebar.checkout.branch.required" = "Selecteer een branch om door te gaan.";
+"sidebar.checkout.branch.create" = "Worktree aanmaken";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Dit harness heeft geen Git-bronnen om bij te werken.";
+"harnesses.loading.help" = "Communicatie met ynh…";
+"harnesses.unversioned.drift.help" = "Upstream-inhoud is gewijzigd zonder versie-update — controleer voor bijwerken";
+"harnesses.unversioned.drift.banner" = "Upstream-inhoud is gewijzigd zonder versie-update — controleer voor bijwerken";
+"harnesses.unversioned.drift.confirm.title" = "Upstream-wijzigingen controleren";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-inhoud is gewijzigd zonder versie-update. Bijwerken haalt de nieuwe inhoud op. Controleer de SHA's hieronder voordat u doorgaat — een ontbrekende versie-update kan kwaadaardige wijzigingen maskeren.";
+"harnesses.unversioned.drift.confirm.proceed" = "Toch bijwerken";

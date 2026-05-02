@@ -952,3 +952,76 @@
 "command.runner.failed" = "Başarısız";
 "common.copy.output" = "Çıktıyı kopyala";
 "common.rerun" = "Yeniden çalıştır";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Ekleme eylemleri";
+"harnesses.include.edit.button" = "Eklemeyi Düzenle…";
+"harnesses.include.remove.button" = "Eklemeyi Kaldır…";
+"harnesses.include.edit.title" = "Eklemeyi Düzenle";
+"harnesses.include.edit.source" = "Kaynak";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "dal, etiket veya commit";
+"harnesses.include.edit.path" = "Yol";
+"harnesses.include.edit.path.placeholder" = "kaynak deposundaki alt yol";
+"harnesses.include.edit.picks" = "Seçim";
+"harnesses.include.edit.picks.explainer" = "İşaretli yapıtlar şu anda bu eklemede. Eklemek veya kaldırmak için geçiş yapın.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld seçili";
+"harnesses.include.edit.picks.unknown.source" = "Bu kaynak pazarlarınızda değil — yalnızca mevcut yapıtlar listeleniyor.";
+"harnesses.include.edit.save" = "Değişiklikleri Kaydet";
+"harnesses.include.remove.confirm.title" = "Bu ekleme kaldırılsın mı?";
+"harnesses.include.remove.confirm.message %@" = "%@ bu harnessten kaldırılacak. Kaynak depo değiştirilmez.";
+"harnesses.include.remove.confirm" = "Kaldır";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Ekleme Ekle…";
+"harnesses.include.add.step.source" = "Kaynak seçin";
+"harnesses.include.add.step.picks" = "Yapıtları seçin";
+"harnesses.include.add.step.review" = "İncele";
+"harnesses.include.add.step.running" = "Ekleme ekleniyor…";
+"harnesses.include.add.source.marketplace" = "Pazardan";
+"harnesses.include.add.source.giturl" = "Git URL'den";
+"harnesses.include.add.search.placeholder" = "Eklentileri ara…";
+"harnesses.include.add.no.marketplaces" = "Yapılandırılmış pazar yok. Bir tane eklemek için Pazarlar sekmesini kullanın.";
+"harnesses.include.add.no.matches" = "Eşleşen eklenti yok.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "dal, etiket veya commit (isteğe bağlı)";
+"harnesses.include.add.gitpath.label" = "Yol";
+"harnesses.include.add.gitpath.placeholder" = "kaynak deposundaki alt dizin (isteğe bağlı)";
+"harnesses.include.add.giturl.hint" = "Seçim varsayılan olarak kaynağın sağladığı her şeyi içerir. Daraltmak için ekledikten sonra Eklemeyi Düzenle'yi kullanın.";
+"harnesses.include.add.picks.prompt" = "Dahil edilecek yapıtları seçin.";
+"harnesses.include.add.apply" = "Uygula";
+"harnesses.include.add.already.installed" = "Zaten eklendi";
+"harnesses.include.add.already.installed.help" = "Bu eklenti zaten bu harnesste — seçimi veya ref'i düzenlemek için tıklayın.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Manifest Düzenle…";
+"harnesses.manifest.edit.title" = "Manifest Düzenle";
+"harnesses.manifest.edit.name" = "Ad";
+"harnesses.manifest.edit.version" = "Sürüm";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Semver kullanın: ANA.ALT.YAMA (ör. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Varsayılan Sağlayıcı";
+"harnesses.manifest.edit.description" = "Açıklama";
+"harnesses.manifest.edit.description.hint" = "Harness listesinde ve ayrıntı başlığında gösterilir. Atlamak için boş bırakın.";
+"harnesses.manifest.edit.save" = "Değişiklikleri Kaydet";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit değişti: %@ → %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Daldan Yeni Worktree";
+"sidebar.checkout.branch.label" = "Dal";
+"sidebar.checkout.branch.placeholder" = "Dal seçin…";
+"sidebar.checkout.branch.required" = "Devam etmek için dal seçin.";
+"sidebar.checkout.branch.create" = "Worktree Oluştur";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Bu harnessin güncellenecek Git kaynağı yok.";
+"harnesses.loading.help" = "ynh ile iletişim…";
+"harnesses.unversioned.drift.help" = "Upstream içerik sürüm artışı olmadan değişti — güncellemeden önce inceleyin";
+"harnesses.unversioned.drift.banner" = "Upstream içerik sürüm artışı olmadan değişti — güncellemeden önce inceleyin";
+"harnesses.unversioned.drift.confirm.title" = "Upstream değişikliklerini incele";
+"harnesses.unversioned.drift.confirm.body" = "Upstream içerik sürüm artışı olmadan değişti. Güncelleme yeni içeriği çekecek. Devam etmeden önce aşağıdaki SHA'ları inceleyin — eksik sürüm artışı kötü amaçlı değişiklikleri gizleyebilir.";
+"harnesses.unversioned.drift.confirm.proceed" = "Yine de güncelle";
