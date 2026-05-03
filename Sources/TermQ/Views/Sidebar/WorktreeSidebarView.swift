@@ -284,16 +284,16 @@ struct WorktreeSidebarView: View {
 
             Spacer()
 
-            if let harnessName = ynhPersistence.repoDefaultHarness(for: repo.path) {
+            if let harnessId = ynhPersistence.repoDefaultHarness(for: repo.path) {
                 Button {
-                    harnessRepository.selectedHarnessName = harnessName
+                    harnessRepository.selectedHarnessId = harnessId
                 } label: {
                     Image(systemName: "puzzlepiece.extension")
                         .imageScale(.small)
                         .foregroundColor(.green)
                 }
                 .buttonStyle(.plain)
-                .help(Strings.Sidebar.linkedHarness(harnessName))
+                .help(Strings.Sidebar.linkedHarness(harnessId))
             }
 
             Button {
@@ -780,19 +780,19 @@ extension WorktreeSidebarView {
     /// The repo header separately shows a green badge when a default is configured.
     @ViewBuilder
     fileprivate func harnessRowBadge(for worktree: GitWorktree, repo: ObservableRepository) -> some View {
-        if let harnessName = ynhPersistence.harness(for: worktree.path) {
+        if let harnessId = ynhPersistence.harness(for: worktree.path) {
             Button {
-                harnessRepository.selectedHarnessName = harnessName
+                harnessRepository.selectedHarnessId = harnessId
             } label: {
                 Image(systemName: "puzzlepiece.extension")
                     .imageScale(.small)
                     .foregroundColor(.orange)
             }
             .buttonStyle(.plain)
-            .help(harnessName)
+            .help(harnessId)
         } else if let inherited = ynhPersistence.repoDefaultHarness(for: repo.path) {
             Button {
-                harnessRepository.selectedHarnessName = inherited
+                harnessRepository.selectedHarnessId = inherited
             } label: {
                 Image(systemName: "puzzlepiece.extension")
                     .imageScale(.small)
@@ -815,7 +815,7 @@ extension WorktreeSidebarView {
             }
             ForEach(harnessRepository.harnesses) { harness in
                 Button(harness.name) {
-                    ynhPersistence.setHarness(harness.name, for: path)
+                    ynhPersistence.setHarness(harness.id, for: path)
                 }
             }
         } label: {
@@ -841,7 +841,7 @@ extension WorktreeSidebarView {
             }
             ForEach(harnessRepository.harnesses) { harness in
                 Button(harness.name) {
-                    ynhPersistence.setRepoDefaultHarness(harness.name, for: repo.path)
+                    ynhPersistence.setRepoDefaultHarness(harness.id, for: repo.path)
                 }
             }
         } label: {

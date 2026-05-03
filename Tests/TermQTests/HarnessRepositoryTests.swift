@@ -50,9 +50,9 @@ final class HarnessRepositoryRefreshTests: XCTestCase {
     func test_refresh_whenStatusIsMissing_clearsSelectedHarnessName() async {
         let detector = MockYNHDetector(status: .missing)
         let repo = HarnessRepository(ynhDetector: detector)
-        repo.selectedHarnessName = "my-harness"
+        repo.selectedHarnessId = "my-harness"
         await repo.refresh()
-        XCTAssertNil(repo.selectedHarnessName)
+        XCTAssertNil(repo.selectedHarnessId)
     }
 
     func test_refresh_whenStatusIsBinaryOnly_clearsHarnesses() async {
@@ -65,9 +65,9 @@ final class HarnessRepositoryRefreshTests: XCTestCase {
     func test_refresh_whenStatusIsBinaryOnly_clearsSelectedHarnessName() async {
         let detector = MockYNHDetector(status: .binaryOnly(ynhPath: "/usr/local/bin/ynh"))
         let repo = HarnessRepository(ynhDetector: detector)
-        repo.selectedHarnessName = "some-harness"
+        repo.selectedHarnessId = "some-harness"
         await repo.refresh()
-        XCTAssertNil(repo.selectedHarnessName)
+        XCTAssertNil(repo.selectedHarnessId)
     }
 
     func test_refresh_whenNotReady_doesNotSetLoadingTrue() async {
@@ -130,12 +130,12 @@ final class HarnessRepositoryEnvironmentTests: XCTestCase {
 
         // Switch to missing
         detector.status = .missing
-        repo.selectedHarnessName = "stale"
+        repo.selectedHarnessId = "stale"
         await repo.refresh()
 
         // Should still clear state with the updated status
         XCTAssertTrue(repo.harnesses.isEmpty)
-        XCTAssertNil(repo.selectedHarnessName)
+        XCTAssertNil(repo.selectedHarnessId)
     }
 
     /// fetchDetail must read status from the injected detector on each call.
@@ -161,7 +161,7 @@ final class HarnessRepositoryInvalidationTests: XCTestCase {
     func test_invalidateDetail_clearsSelectedDetailForMatchingName() {
         let detector = MockYNHDetector(status: .missing)
         let repo = HarnessRepository(ynhDetector: detector)
-        repo.selectedHarnessName = "target"
+        repo.selectedHarnessId = "target"
         repo.invalidateDetail(for: "target")
         XCTAssertNil(repo.selectedDetail)
     }

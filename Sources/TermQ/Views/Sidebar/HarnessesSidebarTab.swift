@@ -159,7 +159,7 @@ struct HarnessesSidebarTab: View {
         if repository.harnesses.isEmpty && !repository.isLoading {
             harnessesEmptyState
         } else {
-            List(selection: $repository.selectedHarnessName) {
+            List(selection: $repository.selectedHarnessId) {
                 ForEach(groupedHarnesses, id: \.title) { group in
                     DisclosureGroup(
                         isExpanded: expandedBinding(for: group.title)
@@ -197,7 +197,7 @@ struct HarnessesSidebarTab: View {
                 }
             } message: {
                 if let harness = harnessToUninstall {
-                    let linked = ynhPersistence.worktrees(for: harness.name).count
+                    let linked = ynhPersistence.worktrees(forHarnessId: harness.id).count
                     Text(
                         linked > 0
                             ? Strings.Harnesses.uninstallAlertWorktrees(linked)
@@ -230,7 +230,7 @@ struct HarnessesSidebarTab: View {
 
     private func harnessRow(_ harness: Harness) -> some View {
         HarnessRowView(harness: harness)
-            .tag(harness.name)
+            .tag(harness.id)
             .contextMenu {
                 // Group 1 — Run.
                 Button {

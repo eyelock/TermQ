@@ -23,9 +23,9 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
         repoHarness[repoPath]
     }
 
-    func worktrees(for harnessName: String) -> [String] {
+    func worktrees(forHarnessId harnessId: String) -> [String] {
         worktreeHarness
-            .compactMap { $0.value == harnessName ? $0.key : nil }
+            .compactMap { $0.value == harnessId ? $0.key : nil }
             .sorted()
     }
 
@@ -112,7 +112,7 @@ final class MockYNHPersistenceQueryTests: XCTestCase {
 
     func test_worktrees_returnsEmptyWhenNoneLinked() {
         let mock = MockYNHPersistence()
-        XCTAssertTrue(mock.worktrees(for: "claude").isEmpty)
+        XCTAssertTrue(mock.worktrees(forHarnessId: "claude").isEmpty)
     }
 
     func test_worktrees_returnsOnlyMatchingPaths() {
@@ -120,7 +120,7 @@ final class MockYNHPersistenceQueryTests: XCTestCase {
         mock.setHarness("claude", for: "/repo/a")
         mock.setHarness("gpt4", for: "/repo/b")
         mock.setHarness("claude", for: "/repo/c")
-        let result = mock.worktrees(for: "claude")
+        let result = mock.worktrees(forHarnessId: "claude")
         XCTAssertEqual(result, ["/repo/a", "/repo/c"])
     }
 
@@ -129,7 +129,7 @@ final class MockYNHPersistenceQueryTests: XCTestCase {
         mock.setHarness("claude", for: "/repo/z")
         mock.setHarness("claude", for: "/repo/a")
         mock.setHarness("claude", for: "/repo/m")
-        XCTAssertEqual(mock.worktrees(for: "claude"), ["/repo/a", "/repo/m", "/repo/z"])
+        XCTAssertEqual(mock.worktrees(forHarnessId: "claude"), ["/repo/a", "/repo/m", "/repo/z"])
     }
 }
 

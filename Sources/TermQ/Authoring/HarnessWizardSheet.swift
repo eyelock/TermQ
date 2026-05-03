@@ -230,7 +230,7 @@ struct HarnessWizardSheet: View {
                 HStack(spacing: 12) {
                     if let harnessName = author.createdHarnessName {
                         Button(Strings.HarnessWizard.successOpen) {
-                            harnessRepository.selectedHarnessName = harnessName
+                            harnessRepository.selectedHarnessId = harnessName
                             dismiss()
                         }
                         .buttonStyle(.bordered)

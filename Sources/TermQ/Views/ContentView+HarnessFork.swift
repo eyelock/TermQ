@@ -20,16 +20,14 @@ extension ContentView {
             HarnessDetailView(
                 viewModel: vm,
                 onDismiss: {
-                    harnessRepo.selectedHarnessName = nil
+                    harnessRepo.selectedHarnessId = nil
                     if let card = cardBeforeHarness {
                         viewModel.selectCard(card)
                         cardBeforeHarness = nil
                     }
                 },
                 onLaunch: { path in
-                    launchWorkingDirectory = path
-                    Task { await vendorService.refresh() }
-                    showLaunchSheet = true
+                    requestLaunch(harnessId: harness.id, workingDirectory: path, branch: nil)
                 },
                 onUpdate: { name in updateHarness(name: name) },
                 onUninstall: { name in uninstallHarness(name: name) },
@@ -58,7 +56,7 @@ extension ContentView {
                 onForkCompleted: { newName in
                     showForkSheet = false
                     harnessNameToFork = nil
-                    harnessRepo.selectedHarnessName = newName
+                    harnessRepo.selectedHarnessId = newName
                 }
             )
         }

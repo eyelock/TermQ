@@ -17,12 +17,21 @@ struct ContentView: View {
     @State private var showCommandPalette = false
     @State private var showBin = false
     @State private var showColumnPicker = false
-    @State var showLaunchSheet = false
     @State private var showInstallSheet = false
     @State private var installCardIDs: Set<UUID> = []
     @State private var uninstallCardNames: [UUID: String] = [:]
     @State var launchWorkingDirectory: String?
-    @State private var launchWorktreeBranch: String?
+    @State var launchWorktreeBranch: String?
+    /// Pending launch request — set by every launch entry point. Held until
+    /// the harness id resolves against `harnessRepo.harnesses`, at which
+    /// point it materializes into `launchSheetTarget` and the sheet
+    /// presents. This is the cold-start race fix for the white-pill bug:
+    /// presentation is gated on actual data, not just a Bool.
+    @State var pendingLaunch: PendingLaunch?
+    /// Resolved data backing the launch sheet. The sheet uses `.sheet(item:)`
+    /// against this — when nil, no sheet is presented (so an unsized empty
+    /// content closure can never be presented).
+    @State var launchSheetTarget: LaunchSheetTarget?
     /// Card that was selected before navigating to a harness detail, restored on dismiss.
     @State var cardBeforeHarness: TerminalCard?
     /// Name of the harness pending a fork-to-local operation.
@@ -42,21 +51,19 @@ struct ContentView: View {
                     detector: ynhDetector,
                     harnessRepository: harnessRepo,
                     onLaunchHarness: { harness in
-                        harnessRepo.selectedHarnessName = harness.id
-                        Task { await vendorService.refresh() }
-                        showLaunchSheet = true
+                        requestLaunch(harnessId: harness.id, workingDirectory: nil, branch: nil)
                     },
-                    onLaunchHarnessInWorktree: { harnessName, path, branch in
-                        harnessRepo.selectedHarnessName = harnessName
-                        launchWorkingDirectory = path
-                        launchWorktreeBranch = branch
-                        Task { await vendorService.refresh() }
-                        showLaunchSheet = true
+                    onLaunchHarnessInWorktree: { harnessIdOrName, path, branch in
+                        requestLaunch(
+                            harnessId: harnessIdOrName, workingDirectory: path, branch: branch)
                     },
-                    onAutoLaunchHarness: { harnessName, path, branch in
-                        let harness = harnessRepo.harnesses.first { $0.name == harnessName }
+                    onAutoLaunchHarness: { harnessIdOrName, path, branch in
+                        let harness = harnessRepo.harnesses.first {
+                            $0.id == harnessIdOrName || $0.name == harnessIdOrName
+                        }
+                        let bareName = harness?.name ?? harnessIdOrName
                         let config = HarnessLaunchConfig(
-                            harnessName: harnessName,
+                            harnessName: bareName,
                             vendorID: "",
                             defaultVendor: harness?.defaultVendor ?? "",
                             focus: nil,
@@ -159,10 +166,10 @@ struct ContentView: View {
             }
             .onChange(of: viewModel.selectedCard?.id) { _, newValue in
                 if newValue != nil {
-                    harnessRepo.selectedHarnessName = nil
+                    harnessRepo.selectedHarnessId = nil
                 }
             }
-            .onChange(of: harnessRepo.selectedHarnessName) { _, newValue in
+            .onChange(of: harnessRepo.selectedHarnessId) { _, newValue in
                 if let name = newValue {
                     cardBeforeHarness = viewModel.selectedCard
                     viewModel.deselectCard()
@@ -224,27 +231,28 @@ struct ContentView: View {
                 BinView(viewModel: viewModel)
             }
             .sheet(
-                isPresented: $showLaunchSheet,
+                item: $launchSheetTarget,
                 onDismiss: {
                     launchWorkingDirectory = nil
                     launchWorktreeBranch = nil
+                    pendingLaunch = nil
                 },
-                content: {
-                    if let harness = harnessRepo.selectedHarness {
-                        HarnessLaunchSheet(
-                            harness: harness,
-                            detail: harnessRepo.selectedDetail,
-                            vendors: vendorService.vendors,
-                            initialWorkingDirectory: launchWorkingDirectory,
-                            initialBranch: launchWorktreeBranch,
-                            initialVendorOverride: YNHPersistence.shared.vendorOverride(
-                                for: harness.id)
-                        ) { config in
-                            launchHarness(config, reuseExisting: false)
-                        }
+                content: { target in
+                    HarnessLaunchSheet(
+                        harness: target.harness,
+                        detail: harnessRepo.selectedDetail,
+                        vendors: vendorService.vendors,
+                        initialWorkingDirectory: target.workingDirectory,
+                        initialBranch: target.branch,
+                        initialVendorOverride: target.vendorOverride
+                    ) { config in
+                        launchHarness(config, reuseExisting: false)
                     }
                 }
             )
+            .onChange(of: harnessRepo.listState) { _, _ in
+                tryResolvePendingLaunch()
+            }
             .sheet(isPresented: $showInstallSheet) {
                 HarnessInstallSheet(
                     installedNames: Set(harnessRepo.harnesses.map(\.name)),
@@ -308,7 +316,7 @@ struct ContentView: View {
                     if viewModel.selectedCard != nil || harnessRepo.selectedHarness != nil {
                         Button {
                             cardBeforeHarness = nil
-                            harnessRepo.selectedHarnessName = nil
+                            harnessRepo.selectedHarnessId = nil
                             viewModel.deselectCard()
                         } label: {
                             Image(systemName: "rectangle.grid.2x2")
@@ -786,7 +794,7 @@ extension ContentView {
         } else {
             viewModel.tabManager.addTab(card.id)
         }
-        harnessRepo.selectedHarnessName = nil
+        harnessRepo.selectedHarnessId = nil
         viewModel.objectWillChange.send()
         viewModel.selectedCard = card
     }
@@ -802,7 +810,7 @@ extension ContentView {
         if let harness, harness.installedFrom == nil {
             try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
             YNHPersistence.shared.removeAllAssociations(for: name)
-            harnessRepo.selectedHarnessName = nil
+            harnessRepo.selectedHarnessId = nil
             Task { await harnessRepo.refresh() }
             return
         }
@@ -842,7 +850,7 @@ extension ContentView {
         } else {
             viewModel.tabManager.addTab(card.id)
         }
-        harnessRepo.selectedHarnessName = nil
+        harnessRepo.selectedHarnessId = nil
         viewModel.objectWillChange.send()
         viewModel.selectedCard = card
     }
@@ -896,7 +904,7 @@ extension ContentView {
             })
         {
             cardBeforeHarness = nil
-            harnessRepo.selectedHarnessName = nil
+            harnessRepo.selectedHarnessId = nil
             viewModel.tabManager.addTab(existing.id)
             viewModel.objectWillChange.send()
             viewModel.selectedCard = existing
@@ -955,7 +963,7 @@ extension ContentView {
 
         // Clear harness selection and switch to the new Card.
         cardBeforeHarness = nil
-        harnessRepo.selectedHarnessName = nil
+        harnessRepo.selectedHarnessId = nil
         viewModel.objectWillChange.send()
         viewModel.selectedCard = card
     }

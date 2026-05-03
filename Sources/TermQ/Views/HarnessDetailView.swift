@@ -62,7 +62,7 @@ struct HarnessDetailView: View {
             VStack(alignment: .leading, spacing: 16) {
                 headerSection
 
-                let linkedPaths = ynhPersistence.worktrees(for: harness.name)
+                let linkedPaths = ynhPersistence.worktrees(forHarnessId: harness.id)
                 if !linkedPaths.isEmpty {
                     Divider()
                     linkedWorktreesSection(linkedPaths)
@@ -759,7 +759,7 @@ extension HarnessDetailView {
 
     fileprivate var uninstallAlertMessage: String {
         var parts = [Strings.Harnesses.uninstallBaseMessage(for: harness)]
-        let linkedCount = ynhPersistence.worktrees(for: harness.name).count
+        let linkedCount = ynhPersistence.worktrees(forHarnessId: harness.id).count
         if linkedCount > 0 {
             parts.append(Strings.Harnesses.uninstallAlertWorktrees(linkedCount))
         }

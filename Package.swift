@@ -1,6 +1,17 @@
 // swift-tools-version:6.0
 import PackageDescription
 
+// Strict-concurrency=complete is applied to every target as an explicit
+// guard rail. Swift 6 language mode (the default for swift-tools 6.0)
+// enables it implicitly, but stating it here documents intent and ensures
+// the project still gates concurrency violations if a future migration
+// loosens the language mode for any target. Adopted in
+// `refactor/loadstate-and-identity` to lock in the discipline that
+// prevented the 0.9.3 actor-isolation crash class.
+let strictConcurrencySettings: [SwiftSetting] = [
+    .unsafeFlags(["-strict-concurrency=complete"])
+]
+
 let package = Package(
     name: "TermQ",
     defaultLocalization: "en",
@@ -30,13 +41,15 @@ let package = Package(
         .target(
             name: "TermQCore",
             dependencies: [],
-            path: "Sources/TermQCore"
+            path: "Sources/TermQCore",
+            swiftSettings: strictConcurrencySettings
         ),
         // Shared models and utilities for CLI and MCP (no SwiftUI dependencies)
         .target(
             name: "TermQShared",
             dependencies: [],
-            path: "Sources/TermQShared"
+            path: "Sources/TermQShared",
+            swiftSettings: strictConcurrencySettings
         ),
         // Main app
         .executableTarget(
@@ -91,7 +104,8 @@ let package = Package(
                 .process("Resources/zh-Hans.lproj"),
                 .process("Resources/zh-Hant.lproj"),
                 .process("Resources/zh-HK.lproj")
-            ]
+            ],
+            swiftSettings: strictConcurrencySettings
         ),
         // CLI command library (testable — logic separated from executable entry point)
         .target(
@@ -101,13 +115,15 @@ let package = Package(
                 "MCPServerLib",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
-            path: "Sources/TermQCLICore"
+            path: "Sources/TermQCLICore",
+            swiftSettings: strictConcurrencySettings
         ),
         // CLI tool entry point (thin wrapper over TermQCLICore)
         .executableTarget(
             name: "termq-cli",
             dependencies: ["TermQCLICore"],
-            path: "Sources/termq-cli"
+            path: "Sources/termq-cli",
+            swiftSettings: strictConcurrencySettings
         ),
         // MCP Server library (shared logic)
         .target(
@@ -116,7 +132,8 @@ let package = Package(
                 "TermQShared",
                 .product(name: "MCP", package: "swift-sdk")
             ],
-            path: "Sources/MCPServerLib"
+            path: "Sources/MCPServerLib",
+            swiftSettings: strictConcurrencySettings
         ),
         // MCP Server CLI binary
         .executableTarget(
@@ -125,7 +142,8 @@ let package = Package(
                 "MCPServerLib",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ],
-            path: "Sources/MCPServer-CLI"
+            path: "Sources/MCPServer-CLI",
+            swiftSettings: strictConcurrencySettings
         ),
         // Tests
         .testTarget(
@@ -135,27 +153,32 @@ let package = Package(
                 "TermQCore",
                 .product(name: "Sparkle", package: "Sparkle")
             ],
-            path: "Tests/TermQTests"
+            path: "Tests/TermQTests",
+            swiftSettings: strictConcurrencySettings
         ),
         .testTarget(
             name: "MCPServerLibTests",
             dependencies: ["MCPServerLib", "TermQShared"],
-            path: "Tests/MCPServerLibTests"
+            path: "Tests/MCPServerLibTests",
+            swiftSettings: strictConcurrencySettings
         ),
         .testTarget(
             name: "TermQSharedTests",
             dependencies: ["TermQShared"],
-            path: "Tests/TermQSharedTests"
+            path: "Tests/TermQSharedTests",
+            swiftSettings: strictConcurrencySettings
         ),
         .testTarget(
             name: "TermQCLITests",
             dependencies: ["TermQCLICore", "TermQShared", "MCPServerLib"],
-            path: "Tests/TermQCLITests"
+            path: "Tests/TermQCLITests",
+            swiftSettings: strictConcurrencySettings
         ),
         .testTarget(
             name: "IntegrationTests",
             dependencies: ["MCPServerLib", "TermQCLICore", "TermQShared"],
-            path: "Tests/IntegrationTests"
+            path: "Tests/IntegrationTests",
+            swiftSettings: strictConcurrencySettings
         )
     ]
 )
