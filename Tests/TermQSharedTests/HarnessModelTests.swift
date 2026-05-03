@@ -120,7 +120,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "my-harness",
-                "version": "1.2.3",
+                "version_installed": "1.2.3",
                 "description": "A test harness",
                 "default_vendor": "claude",
                 "path": "/home/user/.ynh/harnesses/my-harness",
@@ -145,7 +145,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "test",
-                "version": "0.1",
+                "version_installed": "0.1",
                 "default_vendor": "claude",
                 "path": "/path",
                 "installed_from": {
@@ -169,7 +169,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "test",
-                "version": "0.1",
+                "version_installed": "0.1",
                 "default_vendor": "claude",
                 "path": "/path",
                 "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
@@ -187,7 +187,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "x",
-                "version": "1",
+                "version_installed": "1",
                 "default_vendor": "c",
                 "path": "/p",
                 "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
@@ -208,7 +208,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "github-tester",
-                "version": "0.1.0",
+                "version_installed": "0.1.0",
                 "default_vendor": "claude",
                 "path": "/Users/dev/harnesses/github-tester",
                 "installed_from": null,
@@ -227,7 +227,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "assistants-dev",
-                "version": "0.1.0",
+                "version_installed": "0.1.0",
                 "default_vendor": "claude",
                 "path": "/Users/dev/.ynh/harnesses/assistants-dev",
                 "installed_from": {
@@ -253,7 +253,7 @@ final class HarnessModelTests: XCTestCase {
         let nilProvenanceJSON = """
             {
                 "name": "untracked",
-                "version": "0.1.0",
+                "version_installed": "0.1.0",
                 "default_vendor": "claude",
                 "path": "/Users/dev/harnesses/untracked",
                 "installed_from": null,
@@ -265,7 +265,7 @@ final class HarnessModelTests: XCTestCase {
         let localJSON = """
             {
                 "name": "assistants-dev",
-                "version": "0.1.0",
+                "version_installed": "0.1.0",
                 "default_vendor": "claude",
                 "path": "/Users/dev/.ynh/harnesses/assistants-dev",
                 "installed_from": {
@@ -293,7 +293,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "david",
-                "version": "0.1.0",
+                "version_installed": "0.1.0",
                 "default_vendor": "claude",
                 "path": "/Users/dev/.ynh/harnesses/david",
                 "installed_from": {
@@ -379,7 +379,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "test-harness",
-                "version": "1.0",
+                "version_installed": "1.0",
                 "description": null,
                 "default_vendor": "claude",
                 "path": "/path/to/harness"
@@ -398,7 +398,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "test",
-                "version": "2.0",
+                "version_installed": "2.0",
                 "default_vendor": "codex",
                 "path": "/path",
                 "manifest": {"tool": "termq", "version": "1"}
@@ -413,7 +413,7 @@ final class HarnessModelTests: XCTestCase {
         let json = """
             {
                 "name": "test",
-                "version": "1.0",
+                "version_installed": "1.0",
                 "default_vendor": "claude",
                 "path": "/p",
                 "installed_from": {
@@ -432,7 +432,7 @@ final class HarnessModelTests: XCTestCase {
 
     func testHarnessInfo_customCodingKeys() throws {
         let json = """
-            {"name":"h","version":"v","default_vendor":"claude","path":"/p"}
+            {"name":"h","version_installed":"v","default_vendor":"claude","path":"/p"}
             """
         let info = try JSONDecoder().decode(HarnessInfo.self, from: json.data(using: .utf8)!)
         XCTAssertEqual(info.defaultVendor, "claude")
@@ -442,7 +442,7 @@ final class HarnessModelTests: XCTestCase {
 
     func testHarnessDetail_init() throws {
         let infoJSON = """
-            {"name":"h","version":"1","default_vendor":"claude","path":"/p"}
+            {"name":"h","version_installed":"1","default_vendor":"claude","path":"/p"}
             """
         let compositionJSON = """
             {

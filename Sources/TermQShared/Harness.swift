@@ -27,7 +27,8 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     public let delegatesTo: [HarnessDelegate]
 
     enum CodingKeys: String, CodingKey {
-        case name, version, description, path, artifacts, includes, namespace
+        case name, description, path, artifacts, includes, namespace
+        case version = "version_installed"
         case defaultVendor = "default_vendor"
         case installedFrom = "installed_from"
         case delegatesTo = "delegates_to"

@@ -5,6 +5,18 @@ private enum HarnessDetailError: Error {
     case missingYnd
 }
 
+/// Envelope shape returned by `ynh ls --format json` (ynh 0.3+).
+/// Wraps the harness list alongside capability and version metadata.
+private struct YNHListEnvelope: Decodable {
+    let harnesses: [Harness]
+}
+
+/// Envelope shape returned by `ynh info <name> --format json` (ynh 0.3+).
+/// Wraps a single harness payload alongside capability and version metadata.
+private struct YNHInfoEnvelope: Decodable {
+    let harness: HarnessInfo
+}
+
 /// Repository for querying installed harnesses via `ynh ls --format json`
 /// and fetching full detail via `ynh info` + `ynd compose`.
 ///
@@ -71,7 +83,8 @@ final class HarnessRepository: ObservableObject {
                 args: ["ls", "--format", "json"],
                 environment: env
             )
-            let decoded = try JSONDecoder().decode([Harness].self, from: Data(json.utf8))
+            let envelope = try JSONDecoder().decode(YNHListEnvelope.self, from: Data(json.utf8))
+            let decoded = envelope.harnesses
             harnesses = decoded
 
             // Clear selection if the selected harness was removed. Match by
@@ -154,7 +167,8 @@ final class HarnessRepository: ObservableObject {
             args: ["info", name, "--format", "json"],
             environment: env
         )
-        let info = try JSONDecoder().decode(HarnessInfo.self, from: Data(infoJSON.utf8))
+        let infoEnvelope = try JSONDecoder().decode(YNHInfoEnvelope.self, from: Data(infoJSON.utf8))
+        let info = infoEnvelope.harness
 
         guard let yndBinary = yndPath else {
             throw HarnessDetailError.missingYnd
