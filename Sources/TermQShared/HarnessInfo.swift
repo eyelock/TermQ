@@ -19,7 +19,8 @@ public struct HarnessInfo: Codable, Sendable {
     public let manifest: JSONFragment?
 
     enum CodingKeys: String, CodingKey {
-        case name, version, description, path, manifest
+        case name, description, path, manifest
+        case version = "version_installed"
         case defaultVendor = "default_vendor"
         case installedFrom = "installed_from"
     }

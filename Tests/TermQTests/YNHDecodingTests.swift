@@ -17,7 +17,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
             [
               {
                 "name": "assistants-dev",
-                "version": "0.1.0",
+                "version_installed": "0.1.0",
                 "description": "A harness for adding to eyelock-assistants",
                 "default_vendor": "claude",
                 "path": "/Users/test/.ynh/harnesses/assistants-dev",
@@ -51,7 +51,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
             [
               {
                 "name": "my-harness",
-                "version": "0.1.0",
+                "version_installed": "0.1.0",
                 "default_vendor": "claude",
                 "path": "/Users/test/.ynh/harnesses/my-harness",
                 "installed_from": {
@@ -83,7 +83,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
             [
               {
                 "name": "tester",
-                "version": "0.2.0",
+                "version_installed": "0.2.0",
                 "default_vendor": "claude",
                 "namespace": "eyelock/assistants",
                 "path": "/Users/test/.ynh/harnesses/eyelock--assistants/tester",

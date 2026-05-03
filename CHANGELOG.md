@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.5] — 2026-05-03
+
+### Fixed
+
+- **Harness list and detail never load (ynh 0.3+ JSON shape change)** —
+  Three breaking changes in ynh 0.3.0's structured-output format
+  combined to leave TermQ with an empty harness list and unreadable
+  detail responses:
+  1. `ynh ls --format json` switched from emitting a bare harness
+     array to an envelope object `{capabilities, harnesses,
+     ynh_version}`.
+  2. `ynh info <name> --format json` likewise switched to an envelope
+     `{capabilities, harness, ynh_version}`.
+  3. The `version` field on each harness row was renamed to
+     `version_installed` in both `ynh ls` and `ynh info` payloads.
+  The combined effect on v0.9.4 was every dependent surface — the
+  Harnesses sidebar tab, harness detail view, the launch sheet
+  (rendered as a blank rounded pill or did nothing at all when invoked
+  from a worktree row), install/uninstall/update flows — silently
+  no-op'd. Decoders updated to the envelope shapes and the
+  `version_installed` JSON key. The blank-sheet symptom reported
+  against v0.9.4 was a downstream consequence; the v0.9.4 identifier
+  fallback remains in place.
+
 ## [0.9.4] — 2026-05-02
 
 ### Fixed
