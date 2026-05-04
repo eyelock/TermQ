@@ -107,7 +107,7 @@ struct SidebarView: View {
                     Task { await harnessRepository.refresh() }
                 }
             } else {
-                harnessRepository.selectedHarnessName = nil
+                harnessRepository.selectedHarnessId = nil
             }
         }
         .onReceive(

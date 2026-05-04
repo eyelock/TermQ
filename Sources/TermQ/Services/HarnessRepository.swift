@@ -37,17 +37,25 @@ func ynhErrorMessage(from stderr: String) -> String? {
 /// Modelled as a `@MainActor` singleton (same pattern as `YNHDetector`).
 /// The harness list is refreshed on explicit user action, after detection
 /// status changes to `.ready`, and when the app regains focus.
+///
+/// Readiness model: `listState` is the canonical source of truth and uses
+/// `LoadState` to distinguish "never loaded" from "loading" from "loaded
+/// (possibly empty)" from "errored". Consumers that need to gate UI on
+/// actually-having-data must check `listState.isLoaded` rather than looking
+/// at `harnesses.isEmpty`.
 @MainActor
 final class HarnessRepository: ObservableObject {
     static let shared = HarnessRepository()
 
-    @Published private(set) var harnesses: [Harness] = []
+    /// Canonical readiness/value state for the harness list.
+    @Published private(set) var listState: LoadState<[Harness]> = .idle
     /// Capabilities string from the most recent `ynh ls` envelope.
     /// Used by `HarnessDetailViewModel.phase1Capable` to gate Phase 1 affordances.
     @Published private(set) var lastCapabilities: String?
-    @Published private(set) var isLoading = false
-    /// The id of the selected harness (`Harness.id` — namespace-qualified when present).
-    @Published var selectedHarnessName: String?
+    /// The id of the selected harness — `Harness.id` (namespace-qualified
+    /// when present, bare name otherwise). Identity is canonical: writers
+    /// always pass `harness.id`, never `harness.name`.
+    @Published var selectedHarnessId: String?
 
     /// Full detail for the selected harness (info + composition).
     @Published private(set) var selectedDetail: HarnessDetail?
@@ -59,14 +67,25 @@ final class HarnessRepository: ObservableObject {
 
     private let ynhDetector: any YNHDetectorProtocol
 
-    /// The currently selected harness. Matches by `Harness.id` first, falling
-    /// back to `Harness.name`. The fallback covers callers that pass a bare
-    /// name (e.g. values stored by `YNHPersistence`, which keys associations
-    /// by `name` not `id`) — for namespaced installs `id` is `"namespace/name"`
-    /// and a name-only key would otherwise miss.
+    /// Whether `YNHPersistence`'s legacy bare-name → id migration has been
+    /// run for this session. Runs at most once after a successful refresh.
+    private var didRunIdentityMigration = false
+
+    // MARK: - Convenience accessors
+
+    /// The harnesses currently held in `.loaded`. Empty in any other state.
+    /// Use `listState` directly when readiness vs. emptiness matters.
+    var harnesses: [Harness] { listState.value ?? [] }
+
+    /// True while a `refresh()` is in flight.
+    var isLoading: Bool { listState.isLoading }
+
+    /// The currently selected harness. Resolved by canonical `Harness.id`.
+    /// Returns `nil` when the list is not yet loaded, when no selection is
+    /// set, or when the selection does not match an installed harness.
     var selectedHarness: Harness? {
-        guard let key = selectedHarnessName else { return nil }
-        return harnesses.first { $0.id == key } ?? harnesses.first { $0.name == key }
+        guard let key = selectedHarnessId else { return nil }
+        return harnesses.first { $0.id == key }
     }
 
     private convenience init() {
@@ -84,13 +103,12 @@ final class HarnessRepository: ObservableObject {
     /// Requires `YNHDetector.status` to be `.ready`; clears the list otherwise.
     func refresh() async {
         guard case .ready(let ynhPath, _, _) = ynhDetector.status else {
-            harnesses = []
-            selectedHarnessName = nil
+            listState = .loaded([])
+            selectedHarnessId = nil
             return
         }
 
-        isLoading = true
-        defer { isLoading = false }
+        listState = .loading
 
         let env = ynhEnvironment()
 
@@ -106,22 +124,37 @@ final class HarnessRepository: ObservableObject {
             let response = try JSONDecoder().decode(
                 HarnessListResponse.self, from: Data(result.stdout.utf8))
             let decoded = response.harnesses
-            harnesses = decoded
+            listState = .loaded(decoded)
             lastCapabilities = response.capabilities
 
-            // Clear selection if the selected harness was removed. Match by
-            // `id` or `name` to mirror `selectedHarness` — `selectedHarnessName`
-            // can hold either form depending on the caller.
-            if let key = selectedHarnessName,
-                !decoded.contains(where: { $0.id == key || $0.name == key })
-            {
-                selectedHarnessName = nil
+            // One-shot migration: rewrite any persisted association whose
+            // value is a bare `name` for a now-namespaced harness so that
+            // future reads see the canonical `id` form. Safe to run on every
+            // session (idempotent); gate to once per session to avoid churn.
+            if !didRunIdentityMigration {
+                YNHPersistence.shared.migrateLegacyHarnessKeys(using: decoded)
+                didRunIdentityMigration = true
+            }
+
+            // Clear or normalize selection. If the selection matches a
+            // canonical id, keep it. Tolerate bare-name selections set by
+            // legacy worktree associations between persistence read and
+            // migration completion — promote to canonical id rather than
+            // dropping the user's intent.
+            if let key = selectedHarnessId {
+                if decoded.contains(where: { $0.id == key }) {
+                    // Already canonical — no-op.
+                } else if let match = decoded.first(where: { $0.name == key }) {
+                    selectedHarnessId = match.id
+                } else {
+                    selectedHarnessId = nil
+                }
             }
         } catch {
             TermQLogger.ui.error(
                 "HarnessRepository: ynh ls failed type=\(type(of: error)) desc=\(String(describing: error).prefix(200))"
             )
-            harnesses = []
+            listState = .error("Failed to list harnesses")
         }
     }
 

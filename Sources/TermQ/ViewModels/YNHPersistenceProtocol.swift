@@ -25,8 +25,8 @@ protocol YNHPersistenceProtocol: AnyObject {
     /// Returns the repository-level default harness, independent from worktree overrides.
     func repoDefaultHarness(for repoPath: String) -> String?
 
-    /// Returns the sorted list of worktree paths linked to a harness.
-    func worktrees(for harnessName: String) -> [String]
+    /// Returns the sorted list of worktree paths linked to a harness id.
+    func worktrees(forHarnessId harnessId: String) -> [String]
 
     /// Returns the per-harness vendor override, if the user has set one.
     /// Falls back to the harness's manifest-declared `default_vendor` at the

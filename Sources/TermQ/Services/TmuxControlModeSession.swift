@@ -1,6 +1,28 @@
 import Foundation
 import TermQCore
 
+// MARK: - Cleanup handle
+
+/// Holds the tmux Process and pipes so cleanup can run from any actor.
+///
+/// `TmuxControlModeSession` is `@MainActor`-isolated, but `deinit` is not —
+/// when the session's last reference drops on a background thread, the deinit
+/// runs there. Nesting the resources inside a separate `@unchecked Sendable`
+/// holder keeps the session's stored state main-actor-safe while allowing the
+/// holder's own deinit to terminate the process and detach the pipe handler
+/// from whichever queue ARC happened to release on. This is the structured
+/// alternative to `nonisolated(unsafe)` storage on the session itself.
+private final class TmuxProcessHolder: @unchecked Sendable {
+    var process: Process?
+    var outputPipe: Pipe?
+    var inputPipe: Pipe?
+
+    deinit {
+        outputPipe?.fileHandleForReading.readabilityHandler = nil
+        process?.terminate()
+    }
+}
+
 // MARK: - Control Mode Session
 
 /// Manages a tmux control mode connection
@@ -10,10 +32,21 @@ public class TmuxControlModeSession: ObservableObject {
     public let parser = TmuxControlModeParser()
     private let sessionName: String
 
-    /// Process and pipes are nonisolated(unsafe) for deinit access
-    nonisolated(unsafe) private var process: Process?
-    nonisolated(unsafe) private var outputPipe: Pipe?
-    nonisolated(unsafe) private var inputPipe: Pipe?
+    /// All Process/Pipe state lives in a separate holder so its deinit can
+    /// run off-main without touching `@MainActor`-isolated session state.
+    private let holder = TmuxProcessHolder()
+    private var process: Process? {
+        get { holder.process }
+        set { holder.process = newValue }
+    }
+    private var outputPipe: Pipe? {
+        get { holder.outputPipe }
+        set { holder.outputPipe = newValue }
+    }
+    private var inputPipe: Pipe? {
+        get { holder.inputPipe }
+        set { holder.inputPipe = newValue }
+    }
 
     /// Current panes in the session
     @Published public private(set) var panes: [TmuxPane] = []
@@ -32,10 +65,9 @@ public class TmuxControlModeSession: ObservableObject {
         setupParserCallbacks()
     }
 
-    deinit {
-        outputPipe?.fileHandleForReading.readabilityHandler = nil
-        process?.terminate()
-    }
+    // Cleanup is delegated to `TmuxProcessHolder.deinit` — the holder
+    // outlives nothing else, so dropping the session releases the holder
+    // and its deinit terminates the process and detaches the pipe handler.
 
     // MARK: - Connection
 
