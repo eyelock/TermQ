@@ -727,6 +727,17 @@
 "harnesses.install.sources.remove" = "Eliminar";
 "harnesses.install.sources.count %ld" = "%ld arneses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Añadir delegado";
+"harnesses.add.delegate.button" = "Añadir delegado…";
+"harnesses.add.delegate.library.search.placeholder" = "Buscar en los arneses instalados…";
+"harnesses.add.delegate.library.empty" = "No hay otros arneses instalados a los que delegar.";
+"source.picker.browse.local" = "Examinar localmente…";
+"source.picker.browse.local.help" = "Seleccionar un directorio local";
+"harnesses.add.delegate.pick" = "Seleccionar";
+"harnesses.add.delegate.back" = "Atrás";
+"harnesses.add.delegate.apply" = "Añadir delegado";
+
 "harnesses.update.button" = "Actualizar";
 "harnesses.update.help" = "Actualizar a la última versión";
 "harnesses.update.available" = "Actualización disponible";

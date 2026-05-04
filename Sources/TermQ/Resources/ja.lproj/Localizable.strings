@@ -727,6 +727,17 @@
 "harnesses.install.sources.remove" = "削除";
 "harnesses.install.sources.count %ld" = "%ld 個のharness";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "デリゲートを追加";
+"harnesses.add.delegate.button" = "デリゲートを追加…";
+"harnesses.add.delegate.library.search.placeholder" = "インストール済みのharnessを検索…";
+"harnesses.add.delegate.library.empty" = "委任できる他のインストール済みharnessはありません。";
+"source.picker.browse.local" = "ローカルを参照…";
+"source.picker.browse.local.help" = "ローカルディレクトリを選択";
+"harnesses.add.delegate.pick" = "選択";
+"harnesses.add.delegate.back" = "戻る";
+"harnesses.add.delegate.apply" = "デリゲートを追加";
+
 "harnesses.update.button" = "アップデート";
 "harnesses.update.help" = "最新バージョンにアップデート";
 "harnesses.update.available" = "アップデートあり";

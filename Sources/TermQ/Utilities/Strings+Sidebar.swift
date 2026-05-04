@@ -341,6 +341,21 @@ extension Strings {
             String(format: localized("harnesses.install.sources.count %ld"), count)
         }
 
+        // Add Delegate sheet
+        static var addDelegateTitle: String { localized("harnesses.add.delegate.title") }
+        static var addDelegateLibrarySearchPlaceholder: String {
+            localized("harnesses.add.delegate.library.search.placeholder")
+        }
+        static var addDelegateLibraryEmpty: String {
+            localized("harnesses.add.delegate.library.empty")
+        }
+        static var browseLocal: String { localized("source.picker.browse.local") }
+        static var browseLocalHelp: String { localized("source.picker.browse.local.help") }
+        static var addDelegatePick: String { localized("harnesses.add.delegate.pick") }
+        static var addDelegateBack: String { localized("harnesses.add.delegate.back") }
+        static var addDelegateApply: String { localized("harnesses.add.delegate.apply") }
+        static var addDelegateButton: String { localized("harnesses.add.delegate.button") }
+
         // MARK: Update / Uninstall
         static var updateButton: String { localized("harnesses.update.button") }
         static var updateHelp: String { localized("harnesses.update.help") }

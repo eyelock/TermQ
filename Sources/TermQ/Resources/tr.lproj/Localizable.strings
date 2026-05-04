@@ -734,6 +734,17 @@
 "harnesses.install.sources.remove" = "Kaldır";
 "harnesses.install.sources.count %ld" = "%ld harness";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Temsilci Ekle";
+"harnesses.add.delegate.button" = "Temsilci Ekle…";
+"harnesses.add.delegate.library.search.placeholder" = "Yüklü harness'lerde ara…";
+"harnesses.add.delegate.library.empty" = "Devredilecek başka yüklü harness yok.";
+"source.picker.browse.local" = "Yerel Göz At…";
+"source.picker.browse.local.help" = "Yerel bir dizin seçin";
+"harnesses.add.delegate.pick" = "Seç";
+"harnesses.add.delegate.back" = "Geri";
+"harnesses.add.delegate.apply" = "Temsilci Ekle";
+
 "harnesses.update.button" = "Güncelle";
 "harnesses.update.help" = "En son sürüme güncelle";
 "harnesses.update.available" = "Güncelleme mevcut";

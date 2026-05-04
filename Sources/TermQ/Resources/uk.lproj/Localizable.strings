@@ -734,6 +734,17 @@
 "harnesses.install.sources.remove" = "Видалити";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Додати делегат";
+"harnesses.add.delegate.button" = "Додати делегат…";
+"harnesses.add.delegate.library.search.placeholder" = "Пошук встановлених harness…";
+"harnesses.add.delegate.library.empty" = "Немає інших встановлених harness для делегування.";
+"source.picker.browse.local" = "Переглянути локально…";
+"source.picker.browse.local.help" = "Вибрати локальний каталог";
+"harnesses.add.delegate.pick" = "Вибрати";
+"harnesses.add.delegate.back" = "Назад";
+"harnesses.add.delegate.apply" = "Додати делегат";
+
 "harnesses.update.button" = "Оновити";
 "harnesses.update.help" = "Оновити до останньої версії";
 "harnesses.update.available" = "Доступне оновлення";

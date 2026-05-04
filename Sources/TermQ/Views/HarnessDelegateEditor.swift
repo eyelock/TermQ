@@ -19,11 +19,15 @@ struct DelegateEditTarget: Equatable, Identifiable {
 final class HarnessDelegateEditor: ObservableObject {
     @Published var editingTarget: DelegateEditTarget?
     @Published var removalTarget: DelegateEditTarget?
+    /// When `true`, the detail pane presents the unified `SourcePicker` for
+    /// adding a delegate. The flow itself lives in `AddDelegateContext`;
+    /// this editor only owns the lifecycle flag and the post-apply reload.
+    @Published var isAddingDelegate: Bool = false
     @Published private(set) var isMutating = false
     @Published var errorMessage: String?
 
-    private let detector: any YNHDetectorProtocol
     private let repository: HarnessRepository
+    private let detector: any YNHDetectorProtocol
     private let mutator: DelegateMutator
 
     init(
@@ -36,9 +40,20 @@ final class HarnessDelegateEditor: ObservableObject {
         self.mutator = mutator
     }
 
+    func requestAdd() {
+        errorMessage = nil
+        isAddingDelegate = true
+    }
+
     func requestEdit(_ target: DelegateEditTarget) {
         errorMessage = nil
         editingTarget = target
+    }
+
+    /// Refresh detail after an externally-driven add (the unified picker
+    /// owns the mutation; we own the reload).
+    func reloadAfterAdd(harnessName: String) async {
+        await reloadDetail(harnessName: harnessName)
     }
 
     func requestRemove(_ target: DelegateEditTarget) {

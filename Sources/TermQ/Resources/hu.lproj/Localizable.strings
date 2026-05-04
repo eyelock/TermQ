@@ -733,6 +733,17 @@
 "harnesses.install.sources.remove" = "Eltávolítás";
 "harnesses.install.sources.count %ld" = "%ld harness";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Delegált hozzáadása";
+"harnesses.add.delegate.button" = "Delegált hozzáadása…";
+"harnesses.add.delegate.library.search.placeholder" = "Telepített harness-ek keresése…";
+"harnesses.add.delegate.library.empty" = "Nincs más telepített harness, amelyre delegálni lehetne.";
+"source.picker.browse.local" = "Helyi tallózás…";
+"source.picker.browse.local.help" = "Helyi könyvtár kiválasztása";
+"harnesses.add.delegate.pick" = "Kiválasztás";
+"harnesses.add.delegate.back" = "Vissza";
+"harnesses.add.delegate.apply" = "Delegált hozzáadása";
+
 "harnesses.update.button" = "Frissítés";
 "harnesses.update.help" = "Frissítés a legújabb verzióra";
 "harnesses.update.available" = "Frissítés elérhető";

@@ -727,6 +727,17 @@
 "harnesses.install.sources.remove" = "移除";
 "harnesses.install.sources.count %ld" = "%ld 個 harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "新增委派";
+"harnesses.add.delegate.button" = "新增委派…";
+"harnesses.add.delegate.library.search.placeholder" = "搜尋已安裝嘅 harness…";
+"harnesses.add.delegate.library.empty" = "冇其他已安裝嘅 harness 可以委派。";
+"source.picker.browse.local" = "瀏覽本機…";
+"source.picker.browse.local.help" = "選取本機目錄";
+"harnesses.add.delegate.pick" = "選取";
+"harnesses.add.delegate.back" = "返回";
+"harnesses.add.delegate.apply" = "新增委派";
+
 "harnesses.update.button" = "更新";
 "harnesses.update.help" = "更新至最新版本";
 "harnesses.update.available" = "有可用的更新";

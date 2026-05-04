@@ -732,6 +732,17 @@
 "harnesses.install.sources.remove" = "Usuń";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Dodaj delegata";
+"harnesses.add.delegate.button" = "Dodaj delegata…";
+"harnesses.add.delegate.library.search.placeholder" = "Szukaj zainstalowanych harnesów…";
+"harnesses.add.delegate.library.empty" = "Brak innych zainstalowanych harnesów do delegowania.";
+"source.picker.browse.local" = "Przeglądaj lokalnie…";
+"source.picker.browse.local.help" = "Wybierz lokalny katalog";
+"harnesses.add.delegate.pick" = "Wybierz";
+"harnesses.add.delegate.back" = "Wstecz";
+"harnesses.add.delegate.apply" = "Dodaj delegata";
+
 "harnesses.update.button" = "Aktualizuj";
 "harnesses.update.help" = "Aktualizuj do najnowszej wersji";
 "harnesses.update.available" = "Dostępna aktualizacja";

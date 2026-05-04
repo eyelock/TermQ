@@ -733,6 +733,17 @@
 "harnesses.install.sources.remove" = "हटाएं";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "प्रतिनिधि जोड़ें";
+"harnesses.add.delegate.button" = "प्रतिनिधि जोड़ें…";
+"harnesses.add.delegate.library.search.placeholder" = "स्थापित harness खोजें…";
+"harnesses.add.delegate.library.empty" = "प्रतिनिधित्व करने के लिए कोई अन्य स्थापित harness नहीं है।";
+"source.picker.browse.local" = "स्थानीय ब्राउज़ करें…";
+"source.picker.browse.local.help" = "स्थानीय निर्देशिका चुनें";
+"harnesses.add.delegate.pick" = "चुनें";
+"harnesses.add.delegate.back" = "वापस";
+"harnesses.add.delegate.apply" = "प्रतिनिधि जोड़ें";
+
 "harnesses.update.button" = "अपडेट करें";
 "harnesses.update.help" = "नवीनतम संस्करण में अपडेट करें";
 "harnesses.update.available" = "अपडेट उपलब्ध है";

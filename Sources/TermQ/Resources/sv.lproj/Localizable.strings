@@ -734,6 +734,17 @@
 "harnesses.install.sources.remove" = "Ta bort";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Lägg till delegat";
+"harnesses.add.delegate.button" = "Lägg till delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Sök i installerade harnesses…";
+"harnesses.add.delegate.library.empty" = "Inga andra installerade harnesses att delegera till.";
+"source.picker.browse.local" = "Bläddra lokalt…";
+"source.picker.browse.local.help" = "Välj en lokal mapp";
+"harnesses.add.delegate.pick" = "Välj";
+"harnesses.add.delegate.back" = "Tillbaka";
+"harnesses.add.delegate.apply" = "Lägg till delegat";
+
 "harnesses.update.button" = "Uppdatera";
 "harnesses.update.help" = "Uppdatera till den senaste versionen";
 "harnesses.update.available" = "Uppdatering tillgänglig";

@@ -77,6 +77,9 @@ struct HarnessDetailDependencyView: View {
             if let includeEditor {
                 addIncludeSection(editor: includeEditor)
             }
+            if let delegateEditor {
+                addDelegateSection(editor: delegateEditor)
+            }
         }
         .modifier(IncludeEditorOverlay(editor: includeEditor, harnessName: harness.name))
         .modifier(DelegateEditorOverlay(editor: delegateEditor, harnessName: harness.name))
@@ -300,6 +303,17 @@ struct HarnessDetailDependencyView: View {
             editor: editor,
             existingIncludes: existingIncludeTargets
         )
+    }
+
+    private func addDelegateSection(editor: HarnessDelegateEditor) -> some View {
+        Button {
+            editor.requestAdd()
+        } label: {
+            Label(Strings.Harnesses.addDelegateButton, systemImage: "plus.circle")
+                .font(.system(size: 12))
+        }
+        .buttonStyle(.borderless)
+        .foregroundColor(.accentColor)
     }
 
     /// Edit targets for already-installed includes. Used by AddIncludeFlow
@@ -624,6 +638,7 @@ private struct DelegateEditorOverlay: ViewModifier {
 
 private struct DelegateEditorActiveOverlay: ViewModifier {
     @ObservedObject var editor: HarnessDelegateEditor
+    @ObservedObject private var harnessRepo = HarnessRepository.shared
     let harnessName: String
 
     func body(content: Content) -> some View {
@@ -651,6 +666,16 @@ private struct DelegateEditorActiveOverlay: ViewModifier {
                 EditDelegateSheet(editor: editor, harnessName: harnessName, target: target)
                     .frame(width: 540, height: 360)
             }
+            .sheet(isPresented: $editor.isAddingDelegate) {
+                AddDelegateSheetHost(
+                    targetHarnessName: harnessName,
+                    installedHarnesses: harnessRepo.harnesses,
+                    onApplied: {
+                        Task { await editor.reloadAfterAdd(harnessName: harnessName) }
+                    }
+                )
+                .frame(width: 520, height: 540)
+            }
     }
 
     private var removeBinding: Binding<Bool> {
@@ -658,5 +683,38 @@ private struct DelegateEditorActiveOverlay: ViewModifier {
             get: { editor.removalTarget != nil },
             set: { if !$0 { editor.removalTarget = nil } }
         )
+    }
+}
+
+// MARK: - Add Delegate sheet host
+
+/// Thin host that constructs an `AddDelegateContext` and presents the
+/// unified `SourcePicker`. Mirrors `HarnessInstallSheet`.
+private struct AddDelegateSheetHost: View {
+    let targetHarnessName: String
+    let installedHarnesses: [Harness]
+    let onApplied: () -> Void
+
+    @StateObject private var context: AddDelegateContext
+
+    init(
+        targetHarnessName: String,
+        installedHarnesses: [Harness],
+        onApplied: @escaping () -> Void
+    ) {
+        self.targetHarnessName = targetHarnessName
+        self.installedHarnesses = installedHarnesses
+        self.onApplied = onApplied
+        _context = StateObject(
+            wrappedValue: AddDelegateContext(
+                targetHarnessName: targetHarnessName,
+                installedHarnesses: installedHarnesses,
+                onApplied: onApplied
+            )
+        )
+    }
+
+    var body: some View {
+        SourcePicker(context: context)
     }
 }

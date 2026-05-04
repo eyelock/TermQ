@@ -734,6 +734,17 @@
 "harnesses.install.sources.remove" = "Xóa";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Thêm đại diện";
+"harnesses.add.delegate.button" = "Thêm đại diện…";
+"harnesses.add.delegate.library.search.placeholder" = "Tìm kiếm harness đã cài đặt…";
+"harnesses.add.delegate.library.empty" = "Không có harness đã cài đặt nào khác để ủy quyền.";
+"source.picker.browse.local" = "Duyệt cục bộ…";
+"source.picker.browse.local.help" = "Chọn thư mục cục bộ";
+"harnesses.add.delegate.pick" = "Chọn";
+"harnesses.add.delegate.back" = "Quay lại";
+"harnesses.add.delegate.apply" = "Thêm đại diện";
+
 "harnesses.update.button" = "Cập nhật";
 "harnesses.update.help" = "Cập nhật lên phiên bản mới nhất";
 "harnesses.update.available" = "Có bản cập nhật";

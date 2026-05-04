@@ -733,6 +733,17 @@
 "harnesses.install.sources.remove" = "Poista";
 "harnesses.install.sources.count %ld" = "%ld harnessia";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Lisää valtuutettu";
+"harnesses.add.delegate.button" = "Lisää valtuutettu…";
+"harnesses.add.delegate.library.search.placeholder" = "Hae asennetuista harnesseista…";
+"harnesses.add.delegate.library.empty" = "Ei muita asennettuja harnesseja, joille delegoida.";
+"source.picker.browse.local" = "Selaa paikallisesti…";
+"source.picker.browse.local.help" = "Valitse paikallinen hakemisto";
+"harnesses.add.delegate.pick" = "Valitse";
+"harnesses.add.delegate.back" = "Takaisin";
+"harnesses.add.delegate.apply" = "Lisää valtuutettu";
+
 "harnesses.update.button" = "Päivitä";
 "harnesses.update.help" = "Päivitä uusimpaan versioon";
 "harnesses.update.available" = "Päivitys saatavilla";

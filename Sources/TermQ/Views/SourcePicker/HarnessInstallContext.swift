@@ -100,7 +100,7 @@ private struct HarnessInstallLibraryView: View {
                 .buttonStyle(.borderless)
                 .help(Strings.Harnesses.installManageSourcesHelp)
                 .sheet(isPresented: $context.showManageSources) {
-                    HarnessInstallSourcesSheet(sourcesService: context.sourcesService)
+                    SourcePickerManageSourcesSheet(sourcesService: context.sourcesService)
                         .frame(width: 420, height: 320)
                 }
             }
@@ -110,6 +110,20 @@ private struct HarnessInstallLibraryView: View {
             Divider()
 
             content
+
+            Divider()
+
+            HStack {
+                Button {
+                    chooseLocalDirectory()
+                } label: {
+                    Label(Strings.Harnesses.browseLocal, systemImage: "folder.badge.plus")
+                }
+                .help(Strings.Harnesses.browseLocalHelp)
+                Spacer()
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
         }
         .onAppear {
             Task { await context.sourcesService.refresh() }
@@ -117,6 +131,24 @@ private struct HarnessInstallLibraryView: View {
         }
         .onChange(of: context.searchQuery) { _, query in
             context.searchService.search(query)
+        }
+    }
+
+    private func chooseLocalDirectory() {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = false
+        Task {
+            let response = await panel.begin()
+            if response == .OK, let url = panel.url {
+                await context.sourcesService.addSource(
+                    path: url.path(percentEncoded: false),
+                    name: nil
+                )
+                // Re-run search so newly-registered source's harnesses surface.
+                context.searchService.search(context.searchQuery)
+            }
         }
     }
 
@@ -332,108 +364,6 @@ private struct HarnessInstallLibraryView: View {
                 .padding(.horizontal)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-// MARK: - Sources management sheet
-
-private struct HarnessInstallSourcesSheet: View {
-    @ObservedObject var sourcesService: SourcesService
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Text(Strings.Harnesses.installManageSources)
-                    .font(.headline)
-                Spacer()
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
-            .padding(.bottom, 8)
-
-            Divider()
-
-            if sourcesService.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if sourcesService.sources.isEmpty {
-                Text(Strings.Harnesses.installSourcesEmpty)
-                    .font(.callout)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                List(sourcesService.sources) { source in
-                    sourceRow(source)
-                        .listRowInsets(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
-                }
-                .listStyle(.plain)
-            }
-
-            Divider()
-
-            HStack {
-                Button {
-                    chooseSourceDirectory()
-                } label: {
-                    Label(Strings.Harnesses.installSourcesAdd, systemImage: "plus")
-                }
-                .help(Strings.Harnesses.installSourcesAddHelp)
-                Spacer()
-                Button(Strings.Harnesses.installManageSourcesDone) { dismiss() }
-                    .keyboardShortcut(.defaultAction)
-            }
-            .padding(12)
-        }
-        .onAppear {
-            Task { await sourcesService.refresh() }
-        }
-    }
-
-    @ViewBuilder
-    private func sourceRow(_ source: YNHSource) -> some View {
-        HStack(spacing: 8) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(source.name)
-                    .font(.body)
-                    .fontWeight(.medium)
-                Text(source.path)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                    .textSelection(.enabled)
-                Text(Strings.Harnesses.installSourcesCount(source.harnesses))
-                    .font(.caption2)
-                    .foregroundColor(source.harnesses == 0 ? .orange : .secondary)
-            }
-            Spacer()
-            Button(Strings.Harnesses.installSourcesRemove) {
-                Task { await sourcesService.removeSource(name: source.name) }
-            }
-            .buttonStyle(.plain)
-            .foregroundColor(.red)
-            .font(.caption)
-        }
-        .padding(.vertical, 2)
-    }
-
-    private func chooseSourceDirectory() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
-        Task {
-            let response = await panel.begin()
-            if response == .OK, let url = panel.url {
-                await sourcesService.addSource(
-                    path: url.path(percentEncoded: false),
-                    name: nil
-                )
-            }
-        }
     }
 }
 

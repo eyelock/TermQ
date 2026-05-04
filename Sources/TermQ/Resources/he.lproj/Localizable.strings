@@ -733,6 +733,17 @@
 "harnesses.install.sources.remove" = "הסר";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "הוסף מואצל";
+"harnesses.add.delegate.button" = "הוסף מואצל…";
+"harnesses.add.delegate.library.search.placeholder" = "חפש ב-harness מותקנים…";
+"harnesses.add.delegate.library.empty" = "אין harness מותקנים אחרים להאצלה.";
+"source.picker.browse.local" = "עיון מקומי…";
+"source.picker.browse.local.help" = "בחר ספרייה מקומית";
+"harnesses.add.delegate.pick" = "בחר";
+"harnesses.add.delegate.back" = "חזרה";
+"harnesses.add.delegate.apply" = "הוסף מואצל";
+
 "harnesses.update.button" = "עדכן";
 "harnesses.update.help" = "עדכן לגרסה האחרונה";
 "harnesses.update.available" = "עדכון זמין";

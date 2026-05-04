@@ -727,6 +727,17 @@
 "harnesses.install.sources.remove" = "Odebrat";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Přidat delegáta";
+"harnesses.add.delegate.button" = "Přidat delegáta…";
+"harnesses.add.delegate.library.search.placeholder" = "Hledat nainstalované harnessy…";
+"harnesses.add.delegate.library.empty" = "Žádné jiné nainstalované harnessy k delegování.";
+"source.picker.browse.local" = "Procházet lokálně…";
+"source.picker.browse.local.help" = "Vyberte místní adresář";
+"harnesses.add.delegate.pick" = "Vybrat";
+"harnesses.add.delegate.back" = "Zpět";
+"harnesses.add.delegate.apply" = "Přidat delegáta";
+
 "harnesses.update.button" = "Aktualizovat";
 "harnesses.update.help" = "Aktualizovat na nejnovější verzi";
 "harnesses.update.available" = "Dostupná aktualizace";

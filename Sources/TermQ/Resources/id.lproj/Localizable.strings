@@ -727,6 +727,17 @@
 "harnesses.install.sources.remove" = "Hapus";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Tambah Delegat";
+"harnesses.add.delegate.button" = "Tambah Delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Cari harness yang terinstal…";
+"harnesses.add.delegate.library.empty" = "Tidak ada harness terinstal lain untuk didelegasikan.";
+"source.picker.browse.local" = "Telusuri Lokal…";
+"source.picker.browse.local.help" = "Pilih direktori lokal";
+"harnesses.add.delegate.pick" = "Pilih";
+"harnesses.add.delegate.back" = "Kembali";
+"harnesses.add.delegate.apply" = "Tambah Delegat";
+
 "harnesses.update.button" = "Perbarui";
 "harnesses.update.help" = "Perbarui ke versi terbaru";
 "harnesses.update.available" = "Pembaruan tersedia";

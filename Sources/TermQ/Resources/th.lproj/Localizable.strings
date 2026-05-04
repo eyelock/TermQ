@@ -734,6 +734,17 @@
 "harnesses.install.sources.remove" = "ลบออก";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "เพิ่มตัวแทน";
+"harnesses.add.delegate.button" = "เพิ่มตัวแทน…";
+"harnesses.add.delegate.library.search.placeholder" = "ค้นหา harness ที่ติดตั้งแล้ว…";
+"harnesses.add.delegate.library.empty" = "ไม่มี harness ที่ติดตั้งอื่นให้มอบหมาย";
+"source.picker.browse.local" = "เรียกดูในเครื่อง…";
+"source.picker.browse.local.help" = "เลือกไดเรกทอรีในเครื่อง";
+"harnesses.add.delegate.pick" = "เลือก";
+"harnesses.add.delegate.back" = "ย้อนกลับ";
+"harnesses.add.delegate.apply" = "เพิ่มตัวแทน";
+
 "harnesses.update.button" = "อัปเดต";
 "harnesses.update.help" = "อัปเดตเป็นเวอร์ชันล่าสุด";
 "harnesses.update.available" = "มีอัปเดตใหม่";
