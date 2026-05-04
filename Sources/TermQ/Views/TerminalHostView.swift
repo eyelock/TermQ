@@ -185,31 +185,18 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
-    /// User preference key for allowing OSC 52 clipboard access
-    private static let allowOscClipboardKey = "allowOscClipboard"
-
-    /// Whether OSC 52 clipboard access is allowed (default: true for compatibility)
-    static var allowOscClipboard: Bool {
-        get {
-            // Default to true for backwards compatibility
-            if UserDefaults.standard.object(forKey: allowOscClipboardKey) == nil {
-                return true
-            }
-            return UserDefaults.standard.bool(forKey: allowOscClipboardKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: allowOscClipboardKey)
-        }
-    }
-
     /// Set up custom OSC handlers after the terminal is initialized
     func setupOscHandlers() {
         let terminal = getTerminal()
 
         // OSC 52 - Clipboard: ESC ] 52 ; c ; <base64> BEL
-        // Only register if user has allowed OSC 52 clipboard access
-        // This is a security feature to prevent terminal programs from silently copying to clipboard
-        if Self.allowOscClipboard {
+        // Only register if user has allowed OSC 52 clipboard access.
+        // The runtime gate now reads through `SettingsStore.shared` so it
+        // matches what Settings → Data & Security displays. Previously
+        // these two paths disagreed: the runtime defaulted to `true` on
+        // unset, the Settings UI defaulted to `false`, so a never-touched
+        // user saw "Off" in Settings while OSC 52 silently worked.
+        if SettingsStore.shared.allowOscClipboard {
             terminal.registerOscHandler(code: 52) { [weak self] data in
                 self?.handleClipboardOsc(data)
             }
