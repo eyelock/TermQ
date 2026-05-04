@@ -168,13 +168,14 @@ class BoardViewModel: ObservableObject {
             to: column,
             title: branch ?? "New Terminal",
             workingDirectory: workingDirectory,
-            safePasteEnabled: defaults.safePaste,
+            safePasteEnabled: nil,
             allowAutorun: defaults.allowAutorun,
             allowOscClipboard: defaults.allowOscClipboard,
             confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: defaults.backend
+            backend: nil
         )
-        card.tags = autoTags(source: "card", backend: defaults.backend, branch: branch, repoName: repoName)
+        let userBackend = SettingsStore.shared.backend
+        card.tags = autoTags(source: "card", backend: userBackend, branch: branch, repoName: repoName)
 
         objectWillChange.send()
         save()
@@ -189,11 +190,11 @@ class BoardViewModel: ObservableObject {
         let card = board.addCard(
             to: column,
             workingDirectory: defaults.workingDirectory,
-            safePasteEnabled: defaults.safePaste,
+            safePasteEnabled: nil,
             allowAutorun: defaults.allowAutorun,
             allowOscClipboard: defaults.allowOscClipboard,
             confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: defaults.backend
+            backend: nil
         )
         objectWillChange.send()
         save()
@@ -487,14 +488,15 @@ class BoardViewModel: ObservableObject {
 
         let card = TerminalCard(
             title: nextTransientTitle(base: branch, existing: existingTitles),
-            tags: autoTags(source: "worktree", backend: defaults.backend, branch: branch, repoName: repoName),
+            tags: autoTags(
+                source: "worktree", backend: SettingsStore.shared.backend, branch: branch, repoName: repoName),
             columnId: column.id,
             workingDirectory: path,
-            safePasteEnabled: defaults.safePaste,
+            safePasteEnabled: nil,
             allowAutorun: defaults.allowAutorun,
             allowOscClipboard: defaults.allowOscClipboard,
             confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: defaults.backend
+            backend: nil
         )
         card.isTransient = true
         tabManager.addTransientCard(card)
@@ -532,14 +534,14 @@ class BoardViewModel: ObservableObject {
 
         let card = TerminalCard(
             title: nextTransientTitle(base: nil, existing: existingTitles),
-            tags: autoTags(source: "quick", backend: defaults.backend),
+            tags: autoTags(source: "quick", backend: SettingsStore.shared.backend),
             columnId: column.id,
             workingDirectory: workingDirectory,
-            safePasteEnabled: defaults.safePaste,
+            safePasteEnabled: nil,
             allowAutorun: defaults.allowAutorun,
             allowOscClipboard: defaults.allowOscClipboard,
             confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: defaults.backend
+            backend: nil
         )
         card.isTransient = true
         tabManager.addTransientCard(card)
@@ -634,10 +636,8 @@ class BoardViewModel: ObservableObject {
     }
 
     private func purgeExpiredCards() {
-        let retentionDays = UserDefaults.standard.integer(forKey: "binRetentionDays")
-        let effectiveRetentionDays = retentionDays > 0 ? retentionDays : 14
-
-        let cutoffDate = Calendar.current.date(byAdding: .day, value: -effectiveRetentionDays, to: Date()) ?? Date()
+        let retentionDays = SettingsStore.shared.binRetentionDays
+        let cutoffDate = Calendar.current.date(byAdding: .day, value: -retentionDays, to: Date()) ?? Date()
 
         var purged = false
         for card in board.deletedCards {
@@ -680,8 +680,6 @@ extension BoardViewModel: BoardViewModelProtocol {}
 
 private struct NewTerminalDefaults {
     let workingDirectory: String
-    let backend: TerminalBackend
-    let safePaste: Bool
     let allowAutorun: Bool
     let allowOscClipboard: Bool
     let confirmExternalModifications: Bool
@@ -689,21 +687,20 @@ private struct NewTerminalDefaults {
 
 extension BoardViewModel {
     fileprivate func newTerminalDefaults() -> NewTerminalDefaults {
-        let workingDirectory = UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
-        let backendRaw = UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct"
-        let backend = TerminalBackend(rawValue: backendRaw) ?? .direct
-        let safePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
-        let allowAutorun = UserDefaults.standard.object(forKey: "enableTerminalAutorun") as? Bool ?? false
-        let allowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
-        let confirmExternalModifications =
-            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+        // `defaultWorkingDirectory` stays as a direct UserDefaults read
+        // — it isn't owned by `SettingsStore` (see
+        // feat-settingsstore-followups.md). The three security flags
+        // route through the store so a Settings-panel toggle takes
+        // effect immediately for newly-created cards without an app
+        // restart.
+        let workingDirectory =
+            UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
+        let store = SettingsStore.shared
         return NewTerminalDefaults(
             workingDirectory: workingDirectory,
-            backend: backend,
-            safePaste: safePaste,
-            allowAutorun: allowAutorun,
-            allowOscClipboard: allowOscClipboard,
-            confirmExternalModifications: confirmExternalModifications
+            allowAutorun: store.enableTerminalAutorun,
+            allowOscClipboard: store.allowOscClipboard,
+            confirmExternalModifications: store.confirmExternalLLMModifications
         )
     }
 }

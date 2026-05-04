@@ -148,7 +148,9 @@
 "editor.section.appearance" = "Görünüm";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Varsayılan";
+"editor.field.theme.override" = "Varsayılan temayı geçersiz kıl";
 "editor.field.font.size" = "Yazı Tipi Boyutu";
+"editor.field.font.size.override" = "Varsayılan yazı tipi boyutunu geçersiz kıl";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "Terminal başladığında çalıştırılacak komut";
 "editor.field.safe.paste" = "Güvenli Yapıştırma";
 "editor.field.safe.paste.help" = "Çok satırlı metin yapıştırmadan önce onay göster";
+"editor.field.safe.paste.override" = "Varsayılan güvenli yapıştırmayı geçersiz kıl";
+"editor.field.safe.paste.inherited.on" = "Açık (devralındı)";
+"editor.field.safe.paste.inherited.off" = "Kapalı (devralındı)";
 "editor.field.allow.autorun" = "Otomatik Çalıştırmaya İzin Ver";
 "editor.field.allow.autorun.help" = "CLI'nin komutları otomatik çalıştırmasına izin ver";
 "editor.field.autorun.disabled.globally" = "Otomatik çalıştırma genel olarak devre dışı";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Varsayılan backend'i geçersiz kıl";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Oturum aktifken backend değiştirilemez. Backend'leri değiştirmek için oturumu yeniden başlatın.";

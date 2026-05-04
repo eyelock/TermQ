@@ -60,6 +60,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tolerant decoder** — `Harness` decoder accepts `null` for `includes` and
   `delegates_to` (which YNH emits for broken installs whose source path is
   missing). A single bad row no longer collapses the whole sidebar.
+- **Settings layering** — introduced `SettingsStore` as the single owner for
+  user preferences, with explicit defaults → user → per-card override
+  resolution. The four per-terminal fields the audit named — safe paste,
+  font size, theme, and backend — now carry an Optional override on the card
+  rather than being snapshotted from `UserDefaults` at create time. New
+  cards inherit the global default and track future changes to it; the card
+  editor exposes an "Override default" toggle for each field.
+
+  **Upgrade behaviour for existing cards:** cards persisted before this
+  release keep their concrete values as explicit overrides. They will
+  *not* track future changes to the matching global default. To opt back
+  into the global, open the card editor and turn the "Override default"
+  toggle off. This is intentional — it preserves "what users had" through
+  the upgrade.
+
 ## [0.9.5] — 2026-05-03
 
 ### Fixed

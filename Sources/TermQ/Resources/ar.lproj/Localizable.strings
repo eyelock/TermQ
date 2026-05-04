@@ -147,7 +147,9 @@
 "editor.section.appearance" = "المظهر";
 "editor.field.theme" = "السمة";
 "editor.field.theme.default" = "الافتراضي";
+"editor.field.theme.override" = "تجاوز المظهر الافتراضي";
 "editor.field.font.size" = "حجم الخط";
+"editor.field.font.size.override" = "تجاوز حجم الخط الافتراضي";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "أمر للتشغيل عند بدء الطرفية";
 "editor.field.safe.paste" = "لصق آمن";
 "editor.field.safe.paste.help" = "إظهار تأكيد قبل لصق نص متعدد الأسطر";
+"editor.field.safe.paste.override" = "تجاوز اللصق الآمن الافتراضي";
+"editor.field.safe.paste.inherited.on" = "تشغيل (موروث)";
+"editor.field.safe.paste.inherited.off" = "إيقاف (موروث)";
 "editor.field.allow.autorun" = "السماح بالتشغيل التلقائي";
 "editor.field.allow.autorun.help" = "السماح لـ CLI بتشغيل الأوامر تلقائيًا";
 "editor.field.autorun.disabled.globally" = "التشغيل التلقائي معطل عالميًا";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "تجاوز الخلفية الافتراضية";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "لا يمكن تغيير الواجهة الخلفية أثناء نشاط الجلسة. أعد تشغيل الجلسة لتغيير الواجهات الخلفية.";

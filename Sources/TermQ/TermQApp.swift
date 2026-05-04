@@ -20,6 +20,7 @@ struct TermQApp: App {
             ContentView()
                 .frame(minWidth: 800, minHeight: 600)
                 .environmentObject(urlHandler)
+                .environment(SettingsStore.shared)
                 .onAppear {
                     // Validate AppProfile matches actual bundle (debug builds only)
                     AppProfileValidator.validateAtStartup()
@@ -195,6 +196,7 @@ struct TermQApp: App {
         Settings {
             SettingsView()
                 .environmentObject(appDelegate.updaterViewModel)
+                .environment(SettingsStore.shared)
         }
 
         Window("TermQ Help", id: "help") {

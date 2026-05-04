@@ -13,9 +13,7 @@ struct ToolsTabContent: View {
     @Binding var cliInstallPath: String
     @Binding var cliInstalled: Bool
 
-    // Use @AppStorage directly instead of @Binding to ensure persistence
-    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
-    @AppStorage("tmuxAutoReattach") private var tmuxAutoReattach = true
+    @Environment(SettingsStore.self) private var settings
 
     let installMCPServer: () -> Void
     let uninstallMCPServer: () -> Void
@@ -71,12 +69,13 @@ extension ToolsTabContent {
             StatusIndicator(
                 icon: "rectangle.split.3x3",
                 label: "tmux",
-                status: tmuxManager.isAvailable ? (tmuxEnabled ? .ready : .disabled) : .inactive,
+                status: tmuxManager.isAvailable
+                    ? (settings.tmuxEnabled ? .ready : .disabled) : .inactive,
                 message: {
                     if !tmuxManager.isAvailable {
                         return Strings.Settings.notInstalled
                     }
-                    if tmuxEnabled {
+                    if settings.tmuxEnabled {
                         return "\(tmuxManager.version ?? "") · \(activeTmuxSessionCount) active"
                     }
                     return Strings.Settings.statusDisabled
@@ -374,13 +373,14 @@ extension ToolsTabContent {
 
     @ViewBuilder
     var tmuxAvailableContent: some View {
+        @Bindable var settings = settings
         VStack(alignment: .leading, spacing: 8) {
-            Toggle(Strings.Settings.tmuxEnabled, isOn: $tmuxEnabled)
+            Toggle(Strings.Settings.tmuxEnabled, isOn: $settings.tmuxEnabled)
                 .help(Strings.Settings.tmuxEnabledHelp)
 
-            Toggle(Strings.Settings.tmuxAutoReattach, isOn: $tmuxAutoReattach)
+            Toggle(Strings.Settings.tmuxAutoReattach, isOn: $settings.tmuxAutoReattach)
                 .help(Strings.Settings.tmuxAutoReattachHelp)
-                .disabled(!tmuxEnabled)
+                .disabled(!settings.tmuxEnabled)
 
             Divider()
 

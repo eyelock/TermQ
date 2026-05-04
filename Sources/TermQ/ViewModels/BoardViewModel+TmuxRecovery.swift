@@ -17,9 +17,7 @@ extension BoardViewModel {
             return
         }
 
-        // Check if tmux is enabled globally (default true to match @AppStorage)
-        let tmuxEnabled = UserDefaults.standard.object(forKey: "tmuxEnabled") as? Bool ?? true
-        guard tmuxEnabled else {
+        guard SettingsStore.shared.tmuxEnabled else {
             recoverableSessions = []
             return
         }
@@ -54,10 +52,7 @@ extension BoardViewModel {
                 && !dismissedSessions.contains($0.name)
         }
 
-        // Check auto-reattach setting
-        let autoReattach = UserDefaults.standard.object(forKey: "tmuxAutoReattach") as? Bool ?? true
-
-        if autoReattach {
+        if SettingsStore.shared.tmuxAutoReattach {
             // Silently reattach sessions that have matching cards
             var orphanSessions: [TmuxSessionInfo] = []
 

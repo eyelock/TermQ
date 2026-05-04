@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Appearance";
 "editor.field.theme" = "Theme";
 "editor.field.theme.default" = "Default";
+"editor.field.theme.override" = "Override default theme";
 "editor.field.font.size" = "Font Size";
+"editor.field.font.size.override" = "Override default font size";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Command to run when terminal starts";
 "editor.field.safe.paste" = "Safe Paste";
 "editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
+"editor.field.safe.paste.override" = "Override default safe paste";
+"editor.field.safe.paste.inherited.on" = "On (inherited)";
+"editor.field.safe.paste.inherited.off" = "Off (inherited)";
 "editor.field.allow.autorun" = "Allow Autorun";
 "editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
 "editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Override default backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend cannot be changed whilst session is active. Restart the session to change backends.";

@@ -7,8 +7,13 @@ import Foundation
 public protocol KeyValueStore: AnyObject {
     func string(forKey key: String) -> String?
     func bool(forKey key: String) -> Bool
+    func integer(forKey key: String) -> Int
+    func double(forKey key: String) -> Double
+    func object(forKey key: String) -> Any?
     func set(_ value: Any?, forKey key: String)
     func set(_ value: Bool, forKey key: String)
+    func set(_ value: Int, forKey key: String)
+    func set(_ value: Double, forKey key: String)
 }
 
 extension UserDefaults: KeyValueStore {}

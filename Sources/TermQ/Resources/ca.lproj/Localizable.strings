@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Aparença";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Per defecte";
+"editor.field.theme.override" = "Substituir el tema per defecte";
 "editor.field.font.size" = "Mida de la lletra";
+"editor.field.font.size.override" = "Substituir la mida de lletra per defecte";
 "editor.font.preview" = "AaBbCc Català 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Comanda a executar quan s'inicia el terminal";
 "editor.field.safe.paste" = "Enganxar segur";
 "editor.field.safe.paste.help" = "Mostrar confirmació abans d'enganxar text multilínia";
+"editor.field.safe.paste.override" = "Substituir l'enganxament segur per defecte";
+"editor.field.safe.paste.inherited.on" = "Activat (heretat)";
+"editor.field.safe.paste.inherited.off" = "Desactivat (heretat)";
 "editor.field.allow.autorun" = "Permetre execució automàtica";
 "editor.field.allow.autorun.help" = "Permetre que CLI executi comandes automàticament";
 "editor.field.autorun.disabled.globally" = "L'execució automàtica està desactivada globalment";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Substituir el backend per defecte";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "El backend no es pot canviar mentre la sessió està activa. Reinicieu la sessió per canviar els backends.";

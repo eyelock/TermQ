@@ -92,8 +92,9 @@ struct TerminalCardView: View {
             .frame(maxHeight: 22)
 
             // Special badges + User badges (special badges appear first)
+            let resolvedBackend = SettingsStore.shared.effectiveBackend(card: card.backend)
             if isOpenAsTab || card.isWired || (hasActiveSession && !isOpenAsTab)
-                || (card.backend.usesTmux && tmuxManager.isAvailable) || !badges.isEmpty
+                || (resolvedBackend.usesTmux && tmuxManager.isAvailable) || !badges.isEmpty
             {
                 FlowLayout(spacing: 4) {
                     // Open as tab indicator
@@ -145,7 +146,7 @@ struct TerminalCardView: View {
 
                     // TMUX badge - shows when terminal uses tmux backend AND tmux is available
                     // (cards with tmux backend fall back to direct if tmux is unavailable)
-                    if card.backend.usesTmux && tmuxManager.isAvailable {
+                    if SettingsStore.shared.effectiveBackend(card: card.backend).usesTmux && tmuxManager.isAvailable {
                         Text(Strings.Card.tmux)
                             .font(.caption2)
                             .fontWeight(.bold)

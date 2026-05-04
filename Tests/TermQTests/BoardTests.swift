@@ -504,13 +504,16 @@ final class BoardTests: XCTestCase {
         XCTAssertEqual(card.workingDirectory, NSHomeDirectory())
     }
 
-    func testAddCardWithDefaultBackend() {
+    func testAddCardWithoutBackendArgumentInheritsDefault() {
+        // addCard(backend: nil) leaves the card override nil — resolution
+        // happens later via SettingsStore. This is the contract change
+        // that fixes the audit's override-drift complaint.
         let column = Column(name: "Test", orderIndex: 0)
         let board = Board(columns: [column], cards: [])
 
         let card = board.addCard(to: column, title: "Default Backend")
 
-        XCTAssertEqual(card.backend, .direct)
+        XCTAssertNil(card.backend)
     }
 
     func testAddCardWithCustomWorkingDirectoryAndBackend() {

@@ -24,7 +24,7 @@ struct HarnessLaunchSheet: View {
     @State private var selectedBackend: TerminalBackend = .direct
     @State private var workingDirectory: String
     @State private var prompt: String = ""
-    @AppStorage("defaultBackend") private var defaultBackendRaw: String = "direct"
+    @Environment(SettingsStore.self) private var settings
 
     init(
         harness: Harness,
@@ -190,7 +190,7 @@ struct HarnessLaunchSheet: View {
         }
         .frame(width: 480, height: 520)
         .onAppear {
-            selectedBackend = TerminalBackend(rawValue: defaultBackendRaw) ?? .direct
+            selectedBackend = settings.backend
         }
     }
 

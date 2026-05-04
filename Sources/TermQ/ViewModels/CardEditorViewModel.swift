@@ -23,16 +23,20 @@ final class CardEditorViewModel: ObservableObject {
     @Published var llmNextAction: String = ""
     @Published var badge: String = ""
     @Published var fontName: String = ""
-    @Published var fontSize: CGFloat = 13
-    @Published var safePasteEnabled: Bool = true
-    @Published var themeId: String = ""
+    /// Optional override over the user-layer default. `nil` = inherit.
+    @Published var fontSize: CGFloat?
+    /// Optional override over the user-layer default. `nil` = inherit.
+    @Published var safePasteEnabled: Bool?
+    /// Optional override over the user-layer default. `nil` = inherit.
+    @Published var themeId: String?
     @Published var mcpInstalled: Bool = false
     @Published var allowAutorun: Bool = false
     @Published var allowOscClipboard: Bool = true
     @Published var confirmExternalModifications: Bool = true
     @Published var selectedLLMVendor: LLMVendor = .claudeCode
     @Published var interactiveMode: Bool = true
-    @Published var backend: TerminalBackend = .direct
+    /// Optional override over the user-layer default. `nil` = inherit.
+    @Published var backend: TerminalBackend?
     @Published var environmentVariables: [EnvironmentVariable] = []
 
     // MARK: - Validation
@@ -56,7 +60,7 @@ final class CardEditorViewModel: ObservableObject {
         llmNextAction = card.llmNextAction
         badge = card.badge
         fontName = card.fontName
-        fontSize = card.fontSize > 0 ? card.fontSize : 13
+        fontSize = card.fontSize
         safePasteEnabled = card.safePasteEnabled
         themeId = card.themeId
         allowAutorun = card.allowAutorun

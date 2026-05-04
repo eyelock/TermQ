@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Vzhled";
 "editor.field.theme" = "Motiv";
 "editor.field.theme.default" = "Výchozí";
+"editor.field.theme.override" = "Přepsat výchozí motiv";
 "editor.field.font.size" = "Velikost písma";
+"editor.field.font.size.override" = "Přepsat výchozí velikost písma";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Příkaz ke spuštění při startu terminálu";
 "editor.field.safe.paste" = "Bezpečné vkládání";
 "editor.field.safe.paste.help" = "Zobrazit potvrzení před vložením víceřádkového textu";
+"editor.field.safe.paste.override" = "Přepsat výchozí bezpečné vkládání";
+"editor.field.safe.paste.inherited.on" = "Zapnuto (zděděno)";
+"editor.field.safe.paste.inherited.off" = "Vypnuto (zděděno)";
 "editor.field.allow.autorun" = "Povolit automatické spuštění";
 "editor.field.allow.autorun.help" = "Povolit CLI automaticky spouštět příkazy";
 "editor.field.autorun.disabled.globally" = "Automatické spuštění globálně vypnuto";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Přepsat výchozí backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend nelze změnit, když je relace aktivní. Restartujte relaci pro změnu backendu.";

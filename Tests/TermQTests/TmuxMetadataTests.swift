@@ -10,11 +10,12 @@ final class TmuxMetadataTests: XCTestCase {
 
     // MARK: - TerminalCard Backend Tests
 
-    func testBackendDefaultsToDirect() {
+    func testBackendDefaultsToInherit() {
+        // Post-migration default is `nil` (inherit from SettingsStore).
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId)
 
-        XCTAssertEqual(card.backend, .direct)
+        XCTAssertNil(card.backend)
     }
 
     func testBackendCanBeSetToDirect() {
@@ -51,8 +52,11 @@ final class TmuxMetadataTests: XCTestCase {
         XCTAssertEqual(decoded.backend, .direct)
     }
 
-    func testBackendDefaultsToDirectWhenMissingInJSON() throws {
-        // Simulate loading old data without backend field (pre-tmux feature cards)
+    func testBackendMissingFromJSONDecodesAsInherit() throws {
+        // Pre-tmux cards never had a backend field. Under the Optional
+        // contract those cards inherit the user-layer default; the
+        // resolution happens at session-create time via SettingsStore,
+        // so the persisted shape stays absent.
         let columnId = UUID()
         let json = """
             {
@@ -80,8 +84,7 @@ final class TmuxMetadataTests: XCTestCase {
         let decoder = JSONDecoder()
         let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
 
-        // Should default to direct when missing (pre-tmux cards were direct mode)
-        XCTAssertEqual(decoded.backend, .direct)
+        XCTAssertNil(decoded.backend)
     }
 
     // MARK: - tmux Session Name Tests
@@ -138,7 +141,7 @@ final class TmuxMetadataTests: XCTestCase {
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId)
 
-        XCTAssertEqual(card.backend, .direct)
+        XCTAssertNil(card.backend)
 
         card.backend = .tmuxAttach
         XCTAssertEqual(card.backend, .tmuxAttach)
@@ -148,6 +151,9 @@ final class TmuxMetadataTests: XCTestCase {
 
         card.backend = .direct
         XCTAssertEqual(card.backend, .direct)
+
+        card.backend = nil
+        XCTAssertNil(card.backend)
     }
 
     // MARK: - isWired Tests (LLM awareness tracking)
@@ -322,7 +328,7 @@ final class TmuxMetadataTests: XCTestCase {
         XCTAssertEqual(card.badge, "dev,v2,urgent")
         XCTAssertEqual(card.fontName, "Menlo")
         XCTAssertEqual(card.fontSize, 14)
-        XCTAssertFalse(card.safePasteEnabled)
+        XCTAssertEqual(card.safePasteEnabled, false)
         XCTAssertEqual(card.themeId, "dracula")
         XCTAssertEqual(card.backend, .tmuxAttach)
         XCTAssertTrue(card.allowAutorun)

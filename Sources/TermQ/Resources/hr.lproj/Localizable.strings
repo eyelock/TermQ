@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Izgled";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Zadano";
+"editor.field.theme.override" = "Zamijeni zadanu temu";
 "editor.field.font.size" = "Veličina fonta";
+"editor.field.font.size.override" = "Zamijeni zadanu veličinu fonta";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Naredba za pokretanje pri pokretanju terminala";
 "editor.field.safe.paste" = "Sigurno lijepljenje";
 "editor.field.safe.paste.help" = "Prikaži potvrdu prije lijepljenja višelinijskog teksta";
+"editor.field.safe.paste.override" = "Zamijeni zadano sigurno lijepljenje";
+"editor.field.safe.paste.inherited.on" = "Uključeno (naslijeđeno)";
+"editor.field.safe.paste.inherited.off" = "Isključeno (naslijeđeno)";
 "editor.field.allow.autorun" = "Dopusti automatsko pokretanje";
 "editor.field.allow.autorun.help" = "Dopusti CLI-ju automatsko pokretanje naredbi";
 "editor.field.autorun.disabled.globally" = "Automatsko pokretanje globalno onemogućeno";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Zamijeni zadani backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend se ne može promijeniti dok je sesija aktivna. Ponovno pokrenite sesiju za promjenu backenda.";

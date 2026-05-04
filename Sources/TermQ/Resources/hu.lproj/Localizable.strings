@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Megjelenés";
 "editor.field.theme" = "Téma";
 "editor.field.theme.default" = "Alapértelmezett";
+"editor.field.theme.override" = "Alapértelmezett téma felülbírálása";
 "editor.field.font.size" = "Betűméret";
+"editor.field.font.size.override" = "Alapértelmezett betűméret felülbírálása";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Parancs futtatása a terminál indításakor";
 "editor.field.safe.paste" = "Biztonságos beillesztés";
 "editor.field.safe.paste.help" = "Megerősítés kérése többsoros szöveg beillesztése előtt";
+"editor.field.safe.paste.override" = "Alapértelmezett biztonságos beillesztés felülbírálása";
+"editor.field.safe.paste.inherited.on" = "Be (örökölt)";
+"editor.field.safe.paste.inherited.off" = "Ki (örökölt)";
 "editor.field.allow.autorun" = "Automatikus futtatás engedélyezése";
 "editor.field.allow.autorun.help" = "CLI automatikus parancsfuttatásának engedélyezése";
 "editor.field.autorun.disabled.globally" = "Automatikus futtatás globálisan letiltva";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Alapértelmezett háttérrendszer felülbírálása";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "A backend nem módosítható, amíg a munkamenet aktív. Indítsa újra a munkamenetet a backend módosításához.";
