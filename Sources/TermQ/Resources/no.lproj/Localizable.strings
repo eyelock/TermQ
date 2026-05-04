@@ -732,6 +732,17 @@
 "harnesses.install.sources.remove" = "Fjern";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Legg til delegat";
+"harnesses.add.delegate.button" = "Legg til delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Søk i installerte harnesses…";
+"harnesses.add.delegate.library.empty" = "Ingen andre installerte harnesses å delegere til.";
+"source.picker.browse.local" = "Bla gjennom lokalt…";
+"source.picker.browse.local.help" = "Velg en lokal mappe";
+"harnesses.add.delegate.pick" = "Velg";
+"harnesses.add.delegate.back" = "Tilbake";
+"harnesses.add.delegate.apply" = "Legg til delegat";
+
 "harnesses.update.button" = "Oppdater";
 "harnesses.update.help" = "Oppdater til nyeste versjon";
 "harnesses.update.available" = "Oppdatering tilgjengelig";

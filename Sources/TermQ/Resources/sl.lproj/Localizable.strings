@@ -734,6 +734,17 @@
 "harnesses.install.sources.remove" = "Odstrani";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Dodaj delegata";
+"harnesses.add.delegate.button" = "Dodaj delegata…";
+"harnesses.add.delegate.library.search.placeholder" = "Poišči nameščene harness-e…";
+"harnesses.add.delegate.library.empty" = "Ni drugih nameščenih harness-ov za delegiranje.";
+"source.picker.browse.local" = "Prebrskaj lokalno…";
+"source.picker.browse.local.help" = "Izberite lokalni imenik";
+"harnesses.add.delegate.pick" = "Izberi";
+"harnesses.add.delegate.back" = "Nazaj";
+"harnesses.add.delegate.apply" = "Dodaj delegata";
+
 "harnesses.update.button" = "Posodobi";
 "harnesses.update.help" = "Posodobi na najnovejšo različico";
 "harnesses.update.available" = "Na voljo je posodobitev";

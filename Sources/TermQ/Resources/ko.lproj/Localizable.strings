@@ -732,6 +732,17 @@
 "harnesses.install.sources.remove" = "제거";
 "harnesses.install.sources.count %ld" = "harness %ld개";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "델리게이트 추가";
+"harnesses.add.delegate.button" = "델리게이트 추가…";
+"harnesses.add.delegate.library.search.placeholder" = "설치된 harness 검색…";
+"harnesses.add.delegate.library.empty" = "위임할 다른 설치된 harness가 없습니다.";
+"source.picker.browse.local" = "로컬 탐색…";
+"source.picker.browse.local.help" = "로컬 디렉토리 선택";
+"harnesses.add.delegate.pick" = "선택";
+"harnesses.add.delegate.back" = "뒤로";
+"harnesses.add.delegate.apply" = "델리게이트 추가";
+
 "harnesses.update.button" = "업데이트";
 "harnesses.update.help" = "최신 버전으로 업데이트";
 "harnesses.update.available" = "업데이트 가능";

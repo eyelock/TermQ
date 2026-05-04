@@ -727,6 +727,17 @@
 "harnesses.install.sources.remove" = "Αφαίρεση";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Προσθήκη αντιπροσώπου";
+"harnesses.add.delegate.button" = "Προσθήκη αντιπροσώπου…";
+"harnesses.add.delegate.library.search.placeholder" = "Αναζήτηση εγκατεστημένων harness…";
+"harnesses.add.delegate.library.empty" = "Δεν υπάρχουν άλλα εγκατεστημένα harness για ανάθεση.";
+"source.picker.browse.local" = "Αναζήτηση τοπικά…";
+"source.picker.browse.local.help" = "Επιλέξτε τοπικό κατάλογο";
+"harnesses.add.delegate.pick" = "Επιλογή";
+"harnesses.add.delegate.back" = "Πίσω";
+"harnesses.add.delegate.apply" = "Προσθήκη αντιπροσώπου";
+
 "harnesses.update.button" = "Ενημέρωση";
 "harnesses.update.help" = "Ενημέρωση στην τελευταία έκδοση";
 "harnesses.update.available" = "Διαθέσιμη ενημέρωση";

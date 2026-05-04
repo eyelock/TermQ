@@ -727,6 +727,17 @@
 "harnesses.install.sources.remove" = "Elimină";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Adaugă delegat";
+"harnesses.add.delegate.button" = "Adaugă delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Caută harness-uri instalate…";
+"harnesses.add.delegate.library.empty" = "Nu există alte harness-uri instalate la care să delegați.";
+"source.picker.browse.local" = "Răsfoire locală…";
+"source.picker.browse.local.help" = "Selectați un director local";
+"harnesses.add.delegate.pick" = "Selectați";
+"harnesses.add.delegate.back" = "Înapoi";
+"harnesses.add.delegate.apply" = "Adaugă delegat";
+
 "harnesses.update.button" = "Actualizare";
 "harnesses.update.help" = "Actualizare la ultima versiune";
 "harnesses.update.available" = "Actualizare disponibilă";

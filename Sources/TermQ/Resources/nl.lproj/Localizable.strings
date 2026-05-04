@@ -732,6 +732,17 @@
 "harnesses.install.sources.remove" = "Verwijderen";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Afgevaardigde toevoegen";
+"harnesses.add.delegate.button" = "Afgevaardigde toevoegen…";
+"harnesses.add.delegate.library.search.placeholder" = "Zoek in geïnstalleerde harnesses…";
+"harnesses.add.delegate.library.empty" = "Geen andere geïnstalleerde harnesses om aan te delegeren.";
+"source.picker.browse.local" = "Lokaal bladeren…";
+"source.picker.browse.local.help" = "Selecteer een lokale map";
+"harnesses.add.delegate.pick" = "Selecteren";
+"harnesses.add.delegate.back" = "Terug";
+"harnesses.add.delegate.apply" = "Afgevaardigde toevoegen";
+
 "harnesses.update.button" = "Bijwerken";
 "harnesses.update.help" = "Bijwerken naar de nieuwste versie";
 "harnesses.update.available" = "Update beschikbaar";
