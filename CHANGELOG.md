@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **OSC 52 clipboard access default-mismatch.** The runtime gate in
+  `TerminalHostView` defaulted to `true` when the user had never touched
+  the setting, while Settings → Data & Security displayed `false`. So a
+  never-touched user saw "Off" in Settings but terminal programs could
+  silently copy to the clipboard. Both paths now read through
+  `SettingsStore`, defaulting to `false`. Existing users who had relied
+  on the implicit-on behavior should re-enable it explicitly in
+  Settings → Data & Security if they need it.
+
 ### Added
 
 - **Harness Management Phase 1** — first slice of the harness-as-first-class-citizen
