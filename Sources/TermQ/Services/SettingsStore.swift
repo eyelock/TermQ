@@ -38,6 +38,9 @@ public final class SettingsStore {
         public static let tmuxAutoReattach = true
         public static let binRetentionDays = 14
         public static let terminalScrollbackLines = 5000
+        public static let copyOnSelect = false
+        public static let diagnosticsVerboseMode = false
+        public static var defaultWorkingDirectory: String { NSHomeDirectory() }
     }
 
     private enum Keys {
@@ -53,6 +56,9 @@ public final class SettingsStore {
         static let tmuxAutoReattach = "tmuxAutoReattach"
         static let binRetentionDays = "binRetentionDays"
         static let terminalScrollbackLines = "terminalScrollbackLines"
+        static let copyOnSelect = "copyOnSelect"
+        static let diagnosticsVerboseMode = "diagnosticsVerboseMode"
+        static let defaultWorkingDirectory = "defaultWorkingDirectory"
     }
 
     @ObservationIgnored
@@ -142,6 +148,27 @@ public final class SettingsStore {
         }
     }
 
+    public var copyOnSelect: Bool {
+        didSet {
+            guard !isSyncingFromStore else { return }
+            store.set(copyOnSelect, forKey: Keys.copyOnSelect)
+        }
+    }
+
+    public var diagnosticsVerboseMode: Bool {
+        didSet {
+            guard !isSyncingFromStore else { return }
+            store.set(diagnosticsVerboseMode, forKey: Keys.diagnosticsVerboseMode)
+        }
+    }
+
+    public var defaultWorkingDirectory: String {
+        didSet {
+            guard !isSyncingFromStore else { return }
+            store.set(defaultWorkingDirectory, forKey: Keys.defaultWorkingDirectory)
+        }
+    }
+
     public var terminalScrollbackLines: Int {
         didSet {
             guard !isSyncingFromStore else { return }
@@ -184,6 +211,17 @@ public final class SettingsStore {
         let storedScrollback = store.integer(forKey: Keys.terminalScrollbackLines)
         self.terminalScrollbackLines =
             storedScrollback > 0 ? storedScrollback : Defaults.terminalScrollbackLines
+
+        self.copyOnSelect =
+            (store.object(forKey: Keys.copyOnSelect) as? Bool) ?? Defaults.copyOnSelect
+        self.diagnosticsVerboseMode =
+            (store.object(forKey: Keys.diagnosticsVerboseMode) as? Bool)
+            ?? Defaults.diagnosticsVerboseMode
+
+        let storedWorkingDirectory = store.string(forKey: Keys.defaultWorkingDirectory)
+        self.defaultWorkingDirectory =
+            (storedWorkingDirectory?.isEmpty == false ? storedWorkingDirectory : nil)
+            ?? Defaults.defaultWorkingDirectory
 
         // Bridge external writes (e.g. existing `@AppStorage` Settings UI,
         // CLI/MCP, Sparkle) into the store's @Observable graph. Without
@@ -281,6 +319,25 @@ public final class SettingsStore {
         let newScrollback =
             storedScrollback > 0 ? storedScrollback : Defaults.terminalScrollbackLines
         if terminalScrollbackLines != newScrollback { terminalScrollbackLines = newScrollback }
+
+        let newCopyOnSelect =
+            (store.object(forKey: Keys.copyOnSelect) as? Bool) ?? Defaults.copyOnSelect
+        if copyOnSelect != newCopyOnSelect { copyOnSelect = newCopyOnSelect }
+
+        let newDiagnosticsVerbose =
+            (store.object(forKey: Keys.diagnosticsVerboseMode) as? Bool)
+            ?? Defaults.diagnosticsVerboseMode
+        if diagnosticsVerboseMode != newDiagnosticsVerbose {
+            diagnosticsVerboseMode = newDiagnosticsVerbose
+        }
+
+        let storedWorkingDirectory = store.string(forKey: Keys.defaultWorkingDirectory)
+        let newWorkingDirectory =
+            (storedWorkingDirectory?.isEmpty == false ? storedWorkingDirectory : nil)
+            ?? Defaults.defaultWorkingDirectory
+        if defaultWorkingDirectory != newWorkingDirectory {
+            defaultWorkingDirectory = newWorkingDirectory
+        }
     }
 
     // MARK: - Override resolution
