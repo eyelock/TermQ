@@ -99,16 +99,19 @@ struct SettingsMarketplacesView: View {
         .confirmationDialog(
             Strings.Settings.Marketplaces.removeConfirmTitle,
             isPresented: $showRemoveConfirmation,
-            titleVisibility: .visible
-        ) {
+            titleVisibility: .visible,
+            presenting: marketplaceToRemove
+        ) { marketplace in
+            // Capture by value — dialog dismissal can clear @State before
+            // the destructive action's body runs, so reading marketplaceToRemove
+            // after dismissal is racy. See HarnessDetailDependencyView for the
+            // same pattern.
             Button(Strings.Marketplace.rowRemove, role: .destructive) {
-                if let marketplace = marketplaceToRemove { store.remove(id: marketplace.id) }
+                store.remove(id: marketplace.id)
             }
             Button(Strings.Common.cancel, role: .cancel) {}
-        } message: {
-            if let marketplace = marketplaceToRemove {
-                Text(Strings.Settings.Marketplaces.removeConfirmMessage(marketplace.vendor.displayName))
-            }
+        } message: { marketplace in
+            Text(Strings.Settings.Marketplaces.removeConfirmMessage(marketplace.vendor.displayName))
         }
         .confirmationDialog(
             Strings.Settings.Marketplaces.removeYNHMarketplaceConfirmTitle,

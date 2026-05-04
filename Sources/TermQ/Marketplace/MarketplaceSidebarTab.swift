@@ -115,7 +115,7 @@ struct MarketplaceSidebarTab: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             Button(Strings.Marketplace.restoreDefaults) {
-                store.restoreDefaults()
+                store.restoreDefaults(force: true)
                 Task {
                     for marketplace in store.marketplaces {
                         await refresh(marketplace)
