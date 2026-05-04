@@ -687,17 +687,9 @@ private struct NewTerminalDefaults {
 
 extension BoardViewModel {
     fileprivate func newTerminalDefaults() -> NewTerminalDefaults {
-        // `defaultWorkingDirectory` stays as a direct UserDefaults read
-        // — it isn't owned by `SettingsStore` (see
-        // feat-settingsstore-followups.md). The three security flags
-        // route through the store so a Settings-panel toggle takes
-        // effect immediately for newly-created cards without an app
-        // restart.
-        let workingDirectory =
-            UserDefaults.standard.string(forKey: "defaultWorkingDirectory") ?? NSHomeDirectory()
         let store = SettingsStore.shared
         return NewTerminalDefaults(
-            workingDirectory: workingDirectory,
+            workingDirectory: store.defaultWorkingDirectory,
             allowAutorun: store.enableTerminalAutorun,
             allowOscClipboard: store.allowOscClipboard,
             confirmExternalModifications: store.confirmExternalLLMModifications

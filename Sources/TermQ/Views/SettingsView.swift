@@ -30,15 +30,6 @@ struct SettingsView: View {
     // Git preferences
     @AppStorage("protectedBranches") private var protectedBranches = ""
 
-    // Terminal preferences. The four audit-named globals (safePaste,
-    // backend, theme, fontSize) plus the Tier B globals (autorun,
-    // OSC clipboard, confirm-external-LLM, scrollback, bin retention)
-    // are owned by `SettingsStore`. `copyOnSelect` and
-    // `defaultWorkingDirectory` remain ad-hoc @AppStorage pending
-    // their dispositions in feat-settingsstore-followups.md.
-    @AppStorage("copyOnSelect") private var copyOnSelect = false
-    @AppStorage("defaultWorkingDirectory") private var defaultWorkingDirectory = NSHomeDirectory()
-
     @Environment(SettingsStore.self) private var settings
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
@@ -92,8 +83,8 @@ struct SettingsView: View {
                 case .general:
                     SettingsGeneralView(
                         sessionManager: sessionManager,
-                        copyOnSelect: $copyOnSelect,
-                        defaultWorkingDirectory: $defaultWorkingDirectory,
+                        copyOnSelect: $settings.copyOnSelect,
+                        defaultWorkingDirectory: $settings.defaultWorkingDirectory,
                         defaultBackend: $settings.backend,
                         scrollbackLines: $settings.terminalScrollbackLines,
                         binRetentionDays: $settings.binRetentionDays,

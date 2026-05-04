@@ -469,7 +469,7 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Handle mouse up for copy-on-select
     private func handleMouseUpForCopyOnSelect(_ event: NSEvent) {
         // Check if copy-on-select is enabled
-        let copyOnSelect = UserDefaults.standard.bool(forKey: "copyOnSelect")
+        let copyOnSelect = SettingsStore.shared.copyOnSelect
         guard copyOnSelect else { return }
 
         // Check if the mouse up was in our view

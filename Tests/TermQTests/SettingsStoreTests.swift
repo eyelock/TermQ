@@ -131,6 +131,53 @@ final class SettingsStoreTests: XCTestCase {
         XCTAssertEqual(store.effectiveSafePaste(card: nil), false)
     }
 
+    // MARK: - Tier C quick wins
+
+    func testInit_emptyStore_returnsBuiltInDefaults_tierC() {
+        let kvs = InMemoryKeyValueStore()
+        let store = SettingsStore(store: kvs)
+
+        XCTAssertEqual(store.copyOnSelect, SettingsStore.Defaults.copyOnSelect)
+        XCTAssertEqual(store.diagnosticsVerboseMode, SettingsStore.Defaults.diagnosticsVerboseMode)
+        XCTAssertEqual(
+            store.defaultWorkingDirectory, SettingsStore.Defaults.defaultWorkingDirectory)
+    }
+
+    func testInit_storedCopyOnSelectTrue_isReturned() {
+        let kvs = InMemoryKeyValueStore()
+        kvs.set(true, forKey: "copyOnSelect")
+        let store = SettingsStore(store: kvs)
+        XCTAssertEqual(store.copyOnSelect, true)
+    }
+
+    func testSetCopyOnSelect_persistsToStore() {
+        let kvs = InMemoryKeyValueStore()
+        let store = SettingsStore(store: kvs)
+        store.copyOnSelect = true
+        XCTAssertEqual(kvs.object(forKey: "copyOnSelect") as? Bool, true)
+    }
+
+    func testInit_storedDefaultWorkingDirectory_isReturned() {
+        let kvs = InMemoryKeyValueStore()
+        kvs.set("/Users/test/projects", forKey: "defaultWorkingDirectory")
+        let store = SettingsStore(store: kvs)
+        XCTAssertEqual(store.defaultWorkingDirectory, "/Users/test/projects")
+    }
+
+    func testInit_emptyStringWorkingDirectory_fallsBackToHomeDir() {
+        let kvs = InMemoryKeyValueStore()
+        kvs.set("", forKey: "defaultWorkingDirectory")
+        let store = SettingsStore(store: kvs)
+        XCTAssertEqual(store.defaultWorkingDirectory, NSHomeDirectory())
+    }
+
+    func testSetDiagnosticsVerboseMode_persistsToStore() {
+        let kvs = InMemoryKeyValueStore()
+        let store = SettingsStore(store: kvs)
+        store.diagnosticsVerboseMode = true
+        XCTAssertEqual(kvs.object(forKey: "diagnosticsVerboseMode") as? Bool, true)
+    }
+
     // MARK: - External write reconciliation
 
     func testExternalWriteToStore_syncsIntoStoreProperty() {
