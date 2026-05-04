@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "安裝 Harness";
 "harnesses.install.toolbar.help" = "安裝一個 harness";
-"harnesses.install.tab.search" = "搜尋";
+"harnesses.install.tab.library" = "標準庫";
+"harnesses.install.manage.sources" = "管理來源…";
+"harnesses.install.manage.sources.help" = "新增或移除本地 Harness 來源";
+"harnesses.install.manage.sources.done" = "完成";
 "harnesses.install.tab.git" = "從 Git";
-"harnesses.install.tab.sources" = "來源";
 "harnesses.install.search.placeholder" = "搜尋登錄檔和來源…";
 "harnesses.install.search.prompt" = "輸入以搜尋登錄檔和來源";
 "harnesses.install.search.empty" = "無結果";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "分支、標籤或提交 SHA（選填）";
 "harnesses.install.retry" = "重試";
 "harnesses.install.section.available" = "可從登錄檔取得";
+"harnesses.install.section.available.empty" = "尚未設定任何市集。請在設定 → 外部來源中新增一個。";
 "harnesses.install.section.installed" = "已安裝";
 "harnesses.install.section.local" = "本機可用";
 "harnesses.outdated.capabilities.unknown" = "未知";

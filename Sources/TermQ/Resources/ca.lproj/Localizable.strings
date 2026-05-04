@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "Instal·la Harness";
 "harnesses.install.toolbar.help" = "Instal·la un harness";
-"harnesses.install.tab.search" = "Cerca";
+"harnesses.install.tab.library" = "Biblioteca";
+"harnesses.install.manage.sources" = "Gestiona les fonts…";
+"harnesses.install.manage.sources.help" = "Afegeix o elimina fonts de harness locals";
+"harnesses.install.manage.sources.done" = "Fet";
 "harnesses.install.tab.git" = "Des de Git";
-"harnesses.install.tab.sources" = "Fonts";
 "harnesses.install.search.placeholder" = "Cerca als registres i fonts…";
 "harnesses.install.search.prompt" = "Escriu per cercar als registres i fonts";
 "harnesses.install.search.empty" = "Sense resultats";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "Branca, etiqueta o SHA de commit (opcional)";
 "harnesses.install.retry" = "Torna-ho a intentar";
 "harnesses.install.section.available" = "Disponible als registres";
+"harnesses.install.section.available.empty" = "No hi ha mercats configurats. Afegiu-ne un a Configuració → Fonts externes.";
 "harnesses.install.section.installed" = "Instal·lat";
 "harnesses.install.section.local" = "Disponible localment";
 "harnesses.outdated.capabilities.unknown" = "desconegut";

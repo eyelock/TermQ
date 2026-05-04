@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "Harnessをインストール";
 "harnesses.install.toolbar.help" = "Harnessをインストール";
-"harnesses.install.tab.search" = "検索";
+"harnesses.install.tab.library" = "ライブラリ";
+"harnesses.install.manage.sources" = "ソースを管理…";
+"harnesses.install.manage.sources.help" = "ローカルハーネスソースの追加または削除";
+"harnesses.install.manage.sources.done" = "完了";
 "harnesses.install.tab.git" = "Gitから";
-"harnesses.install.tab.sources" = "ソース";
 "harnesses.install.search.placeholder" = "レジストリとソースを検索…";
 "harnesses.install.search.prompt" = "レジストリとソースを検索するには入力してください";
 "harnesses.install.search.empty" = "結果なし";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "ブランチ、タグ、またはコミットSHA（任意）";
 "harnesses.install.retry" = "再試行";
 "harnesses.install.section.available" = "レジストリから利用可能";
+"harnesses.install.section.available.empty" = "マーケットプレイスが設定されていません。設定 → 外部ソースで追加してください。";
 "harnesses.install.section.installed" = "インストール済み";
 "harnesses.install.section.local" = "ローカルで利用可能";
 "harnesses.outdated.capabilities.unknown" = "不明";

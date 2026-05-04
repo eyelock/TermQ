@@ -703,9 +703,11 @@
 // Install sheet
 "harnesses.install.title" = "Pasang Harness";
 "harnesses.install.toolbar.help" = "Pasang harness";
-"harnesses.install.tab.search" = "Cari";
+"harnesses.install.tab.library" = "Pustaka";
+"harnesses.install.manage.sources" = "Urus Sumber…";
+"harnesses.install.manage.sources.help" = "Tambah atau buang sumber harness tempatan";
+"harnesses.install.manage.sources.done" = "Selesai";
 "harnesses.install.tab.git" = "Daripada Git";
-"harnesses.install.tab.sources" = "Sumber";
 "harnesses.install.search.placeholder" = "Cari dalam registry dan sumber…";
 "harnesses.install.search.prompt" = "Taip untuk mencari dalam registry dan sumber";
 "harnesses.install.search.empty" = "Tiada hasil";
@@ -890,6 +892,7 @@
 "harnesses.install.git.ref.placeholder" = "Cawangan, tag atau commit SHA (pilihan)";
 "harnesses.install.retry" = "Cuba semula";
 "harnesses.install.section.available" = "Tersedia dari registry";
+"harnesses.install.section.available.empty" = "Tiada marketplace dikonfigurasikan. Tambah satu dalam Tetapan → Sumber Luaran.";
 "harnesses.install.section.installed" = "Dipasang";
 "harnesses.install.section.local" = "Tersedia secara tempatan";
 "harnesses.outdated.capabilities.unknown" = "tidak diketahui";

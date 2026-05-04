@@ -705,9 +705,11 @@
 // Install sheet
 "harnesses.install.title" = "Встановити harness";
 "harnesses.install.toolbar.help" = "Встановити harness";
-"harnesses.install.tab.search" = "Пошук";
+"harnesses.install.tab.library" = "Бібліотека";
+"harnesses.install.manage.sources" = "Керувати джерелами…";
+"harnesses.install.manage.sources.help" = "Додати або видалити локальні джерела harness";
+"harnesses.install.manage.sources.done" = "Готово";
 "harnesses.install.tab.git" = "З Git";
-"harnesses.install.tab.sources" = "Джерела";
 "harnesses.install.search.placeholder" = "Пошук у реєстрах та джерелах…";
 "harnesses.install.search.prompt" = "Введіть текст для пошуку в реєстрах і джерелах";
 "harnesses.install.search.empty" = "Немає результатів";
@@ -892,6 +894,7 @@
 "harnesses.install.git.ref.placeholder" = "Гілка, тег або SHA коміту (необов'язково)";
 "harnesses.install.retry" = "Повторити";
 "harnesses.install.section.available" = "Доступно з реєстрів";
+"harnesses.install.section.available.empty" = "Торгові майданчики не налаштовано. Додайте один у Налаштування → Зовнішні джерела.";
 "harnesses.install.section.installed" = "Встановлено";
 "harnesses.install.section.local" = "Доступно локально";
 "harnesses.outdated.capabilities.unknown" = "невідомо";

@@ -705,9 +705,11 @@
 // Install sheet
 "harnesses.install.title" = "Namestitev harness";
 "harnesses.install.toolbar.help" = "Namesti harness";
-"harnesses.install.tab.search" = "Išči";
+"harnesses.install.tab.library" = "Knjižnica";
+"harnesses.install.manage.sources" = "Upravljaj z viri…";
+"harnesses.install.manage.sources.help" = "Dodaj ali odstrani lokalne vire harness";
+"harnesses.install.manage.sources.done" = "Končano";
 "harnesses.install.tab.git" = "Iz Gita";
-"harnesses.install.tab.sources" = "Viri";
 "harnesses.install.search.placeholder" = "Išči v registrih in virih…";
 "harnesses.install.search.prompt" = "Vpišite besedilo za iskanje v registrih in virih";
 "harnesses.install.search.empty" = "Ni rezultatov";
@@ -892,6 +894,7 @@
 "harnesses.install.git.ref.placeholder" = "Veja, oznaka ali commit SHA (neobvezno)";
 "harnesses.install.retry" = "Poskusi znova";
 "harnesses.install.section.available" = "Na voljo iz registrov";
+"harnesses.install.section.available.empty" = "Ni konfiguriranih tržnic. Dodajte eno v Nastavitve → Zunanji viri.";
 "harnesses.install.section.installed" = "Nameščeno";
 "harnesses.install.section.local" = "Na voljo lokalno";
 "harnesses.outdated.capabilities.unknown" = "neznano";

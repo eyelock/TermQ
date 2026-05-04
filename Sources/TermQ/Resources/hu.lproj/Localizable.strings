@@ -704,9 +704,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness telepítése";
 "harnesses.install.toolbar.help" = "Harness telepítése";
-"harnesses.install.tab.search" = "Keresés";
+"harnesses.install.tab.library" = "Könyvtár";
+"harnesses.install.manage.sources" = "Források kezelése…";
+"harnesses.install.manage.sources.help" = "Helyi harness-források hozzáadása vagy eltávolítása";
+"harnesses.install.manage.sources.done" = "Kész";
 "harnesses.install.tab.git" = "Gitről";
-"harnesses.install.tab.sources" = "Források";
 "harnesses.install.search.placeholder" = "Keresés a registrykben és forrásokban…";
 "harnesses.install.search.prompt" = "Írjon be szöveget a registrykben és forrásokban való kereséshez";
 "harnesses.install.search.empty" = "Nincs találat";
@@ -891,6 +893,7 @@
 "harnesses.install.git.ref.placeholder" = "Branch, tag vagy commit SHA (opcionális)";
 "harnesses.install.retry" = "Újrapróbálás";
 "harnesses.install.section.available" = "Elérhető a registry-kből";
+"harnesses.install.section.available.empty" = "Nincs konfigurált piactér. Adjon hozzá egyet a Beállítások → Külső források menüpontban.";
 "harnesses.install.section.installed" = "Telepítve";
 "harnesses.install.section.local" = "Helyileg elérhető";
 "harnesses.outdated.capabilities.unknown" = "ismeretlen";

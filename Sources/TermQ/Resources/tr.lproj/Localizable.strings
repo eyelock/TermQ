@@ -705,9 +705,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness Kur";
 "harnesses.install.toolbar.help" = "Bir harness kur";
-"harnesses.install.tab.search" = "Ara";
+"harnesses.install.tab.library" = "Kütüphane";
+"harnesses.install.manage.sources" = "Kaynakları yönet…";
+"harnesses.install.manage.sources.help" = "Yerel harness kaynakları ekle veya kaldır";
+"harnesses.install.manage.sources.done" = "Tamam";
 "harnesses.install.tab.git" = "Git'ten";
-"harnesses.install.tab.sources" = "Kaynaklar";
 "harnesses.install.search.placeholder" = "Kayıt defterlerinde ve kaynaklarda ara…";
 "harnesses.install.search.prompt" = "Kayıt defterlerinde ve kaynaklarda aramak için yazın";
 "harnesses.install.search.empty" = "Sonuç bulunamadı";
@@ -892,6 +894,7 @@
 "harnesses.install.git.ref.placeholder" = "Dal, etiket veya commit SHA (isteğe bağlı)";
 "harnesses.install.retry" = "Yeniden dene";
 "harnesses.install.section.available" = "Kayıt defterlerinden mevcut";
+"harnesses.install.section.available.empty" = "Hiçbir market yapılandırılmamış. Ayarlar → Harici Kaynaklar bölümünden bir tane ekleyin.";
 "harnesses.install.section.installed" = "Yüklü";
 "harnesses.install.section.local" = "Yerel olarak mevcut";
 "harnesses.outdated.capabilities.unknown" = "bilinmiyor";

@@ -705,9 +705,11 @@
 // Install sheet
 "harnesses.install.title" = "Cài đặt Harness";
 "harnesses.install.toolbar.help" = "Cài đặt một harness";
-"harnesses.install.tab.search" = "Tìm kiếm";
+"harnesses.install.tab.library" = "Thư viện";
+"harnesses.install.manage.sources" = "Quản lý nguồn…";
+"harnesses.install.manage.sources.help" = "Thêm hoặc xóa nguồn harness cục bộ";
+"harnesses.install.manage.sources.done" = "Xong";
 "harnesses.install.tab.git" = "Từ Git";
-"harnesses.install.tab.sources" = "Nguồn";
 "harnesses.install.search.placeholder" = "Tìm kiếm trong các registry và nguồn…";
 "harnesses.install.search.prompt" = "Nhập để tìm kiếm trong các registry và nguồn";
 "harnesses.install.search.empty" = "Không có kết quả";
@@ -892,6 +894,7 @@
 "harnesses.install.git.ref.placeholder" = "Nhánh, thẻ hoặc SHA commit (tuỳ chọn)";
 "harnesses.install.retry" = "Thử lại";
 "harnesses.install.section.available" = "Có sẵn từ registry";
+"harnesses.install.section.available.empty" = "Chưa có marketplace nào được cấu hình. Thêm một cái trong Cài đặt → Nguồn bên ngoài.";
 "harnesses.install.section.installed" = "Đã cài đặt";
 "harnesses.install.section.local" = "Có sẵn cục bộ";
 "harnesses.outdated.capabilities.unknown" = "không xác định";

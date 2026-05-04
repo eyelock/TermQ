@@ -703,9 +703,11 @@
 // Install sheet
 "harnesses.install.title" = "Installer harness";
 "harnesses.install.toolbar.help" = "Installer et harness";
-"harnesses.install.tab.search" = "Søk";
+"harnesses.install.tab.library" = "Bibliotek";
+"harnesses.install.manage.sources" = "Administrer kilder…";
+"harnesses.install.manage.sources.help" = "Legg til eller fjern lokale harness-kilder";
+"harnesses.install.manage.sources.done" = "Ferdig";
 "harnesses.install.tab.git" = "Fra Git";
-"harnesses.install.tab.sources" = "Kilder";
 "harnesses.install.search.placeholder" = "Søk i registre og kilder…";
 "harnesses.install.search.prompt" = "Skriv for å søke i registre og kilder";
 "harnesses.install.search.empty" = "Ingen resultater";
@@ -890,6 +892,7 @@
 "harnesses.install.git.ref.placeholder" = "Branch, tag eller commit-SHA (valgfritt)";
 "harnesses.install.retry" = "Prøv igjen";
 "harnesses.install.section.available" = "Tilgjengelig fra registre";
+"harnesses.install.section.available.empty" = "Ingen markedsplasser konfigurert. Legg til en i Innstillinger → Eksterne kilder.";
 "harnesses.install.section.installed" = "Installert";
 "harnesses.install.section.local" = "Tilgjengelig lokalt";
 "harnesses.outdated.capabilities.unknown" = "ukjent";

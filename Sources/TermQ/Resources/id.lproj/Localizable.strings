@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "Pasang Harness";
 "harnesses.install.toolbar.help" = "Pasang harness";
-"harnesses.install.tab.search" = "Cari";
+"harnesses.install.tab.library" = "Pustaka";
+"harnesses.install.manage.sources" = "Kelola Sumber…";
+"harnesses.install.manage.sources.help" = "Tambah atau hapus sumber harness lokal";
+"harnesses.install.manage.sources.done" = "Selesai";
 "harnesses.install.tab.git" = "Dari Git";
-"harnesses.install.tab.sources" = "Sumber";
 "harnesses.install.search.placeholder" = "Cari registry dan sumber…";
 "harnesses.install.search.prompt" = "Ketik untuk mencari di registry dan sumber";
 "harnesses.install.search.empty" = "Tidak ada hasil";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "Cabang, tag, atau commit SHA (opsional)";
 "harnesses.install.retry" = "Coba lagi";
 "harnesses.install.section.available" = "Tersedia dari registri";
+"harnesses.install.section.available.empty" = "Tidak ada marketplace yang dikonfigurasi. Tambahkan satu di Pengaturan → Sumber Eksternal.";
 "harnesses.install.section.installed" = "Terinstal";
 "harnesses.install.section.local" = "Tersedia secara lokal";
 "harnesses.outdated.capabilities.unknown" = "tidak diketahui";

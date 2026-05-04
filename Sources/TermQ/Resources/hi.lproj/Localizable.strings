@@ -704,9 +704,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness इंस्टॉल करें";
 "harnesses.install.toolbar.help" = "एक harness इंस्टॉल करें";
-"harnesses.install.tab.search" = "खोजें";
+"harnesses.install.tab.library" = "लाइब्रेरी";
+"harnesses.install.manage.sources" = "स्रोत प्रबंधित करें…";
+"harnesses.install.manage.sources.help" = "स्थानीय harness स्रोत जोड़ें या हटाएं";
+"harnesses.install.manage.sources.done" = "हो गया";
 "harnesses.install.tab.git" = "Git से";
-"harnesses.install.tab.sources" = "स्रोत";
 "harnesses.install.search.placeholder" = "रजिस्ट्रियों और स्रोतों में खोजें…";
 "harnesses.install.search.prompt" = "रजिस्ट्रियों और स्रोतों में खोजने के लिए टाइप करें";
 "harnesses.install.search.empty" = "कोई परिणाम नहीं";
@@ -891,6 +893,7 @@
 "harnesses.install.git.ref.placeholder" = "शाखा, टैग या commit SHA (वैकल्पिक)";
 "harnesses.install.retry" = "पुनः प्रयास करें";
 "harnesses.install.section.available" = "Registries से उपलब्ध";
+"harnesses.install.section.available.empty" = "कोई मार्केटप्लेस कॉन्फ़िगर नहीं है। सेटिंग्ज़ → बाहरी स्रोत में एक जोड़ें।";
 "harnesses.install.section.installed" = "इंस्टॉल है";
 "harnesses.install.section.local" = "स्थानीय रूप से उपलब्ध";
 "harnesses.outdated.capabilities.unknown" = "अज्ञात";

@@ -705,9 +705,11 @@
 // Install sheet
 "harnesses.install.title" = "ติดตั้ง Harness";
 "harnesses.install.toolbar.help" = "ติดตั้ง harness";
-"harnesses.install.tab.search" = "ค้นหา";
+"harnesses.install.tab.library" = "ไลบรารี";
+"harnesses.install.manage.sources" = "จัดการแหล่งที่มา…";
+"harnesses.install.manage.sources.help" = "เพิ่มหรือลบแหล่ง harness ในเครื่อง";
+"harnesses.install.manage.sources.done" = "เสร็จ";
 "harnesses.install.tab.git" = "จาก Git";
-"harnesses.install.tab.sources" = "แหล่งข้อมูล";
 "harnesses.install.search.placeholder" = "ค้นหาในรีจิสทรีและแหล่งข้อมูล…";
 "harnesses.install.search.prompt" = "พิมพ์เพื่อค้นหาในรีจิสทรีและแหล่งข้อมูล";
 "harnesses.install.search.empty" = "ไม่พบผลลัพธ์";
@@ -892,6 +894,7 @@
 "harnesses.install.git.ref.placeholder" = "สาขา แท็ก หรือ commit SHA (ไม่บังคับ)";
 "harnesses.install.retry" = "ลองอีกครั้ง";
 "harnesses.install.section.available" = "มีจาก Registry";
+"harnesses.install.section.available.empty" = "ไม่มีมาร์เก็ตเพลสที่กำหนดค่า เพิ่มหนึ่งในการตั้งค่า → แหล่งที่มาภายนอก";
 "harnesses.install.section.installed" = "ติดตั้งแล้ว";
 "harnesses.install.section.local" = "มีในเครื่อง";
 "harnesses.outdated.capabilities.unknown" = "ไม่ทราบ";

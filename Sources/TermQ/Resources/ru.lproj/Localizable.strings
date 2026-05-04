@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "Установить harness";
 "harnesses.install.toolbar.help" = "Установить harness";
-"harnesses.install.tab.search" = "Поиск";
+"harnesses.install.tab.library" = "Библиотека";
+"harnesses.install.manage.sources" = "Управление источниками…";
+"harnesses.install.manage.sources.help" = "Добавление или удаление локальных источников harness";
+"harnesses.install.manage.sources.done" = "Готово";
 "harnesses.install.tab.git" = "Из Git";
-"harnesses.install.tab.sources" = "Источники";
 "harnesses.install.search.placeholder" = "Поиск в реестрах и источниках…";
 "harnesses.install.search.prompt" = "Введите текст для поиска в реестрах и источниках";
 "harnesses.install.search.empty" = "Нет результатов";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "Ветка, тег или SHA коммита (необязательно)";
 "harnesses.install.retry" = "Повторить";
 "harnesses.install.section.available" = "Доступно из реестров";
+"harnesses.install.section.available.empty" = "Торговые площадки не настроены. Добавьте одну в Настройки → Внешние источники.";
 "harnesses.install.section.installed" = "Установлено";
 "harnesses.install.section.local" = "Доступно локально";
 "harnesses.outdated.capabilities.unknown" = "неизвестно";
