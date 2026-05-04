@@ -228,7 +228,8 @@ extension LiveUpdateAvailabilityService {
     /// should fall back to `UnknownUpdateAvailabilityService.shared` in
     /// that window so the UI stays responsive.
     static func production(
-        ynhDetector: any YNHDetectorProtocol = YNHDetector.shared
+        ynhDetector: any YNHDetectorProtocol = YNHDetector.shared,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
     )
         -> LiveUpdateAvailabilityService?
     {
@@ -241,7 +242,7 @@ extension LiveUpdateAvailabilityService {
         }()
 
         let listFetcher: ListFetcher = {
-            let result = try await CommandRunner.run(
+            let result = try await commandRunner.run(
                 executable: ynhPath,
                 arguments: ["ls", "--check-updates", "--format", "json"],
                 environment: env
@@ -254,7 +255,7 @@ extension LiveUpdateAvailabilityService {
         }
 
         let infoFetcher: InfoFetcher = { name in
-            let result = try await CommandRunner.run(
+            let result = try await commandRunner.run(
                 executable: ynhPath,
                 arguments: ["info", name, "--check-updates", "--format", "json"],
                 environment: env

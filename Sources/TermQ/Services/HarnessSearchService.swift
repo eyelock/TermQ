@@ -9,6 +9,16 @@ final class HarnessSearchService: ObservableObject {
     @Published private(set) var error: String?
 
     private var searchTask: Task<Void, Never>?
+    private let ynhDetector: any YNHDetectorProtocol
+    private let commandRunner: any YNHCommandRunner
+
+    init(
+        ynhDetector: any YNHDetectorProtocol = YNHDetector.shared,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
+    ) {
+        self.ynhDetector = ynhDetector
+        self.commandRunner = commandRunner
+    }
 
     /// Search registries and sources. An empty query browses all available harnesses.
     func search(_ query: String) {
@@ -18,7 +28,7 @@ final class HarnessSearchService: ObservableObject {
         searchTask = Task {
             if debounce > 0 { try? await Task.sleep(for: .milliseconds(debounce)) }
             guard !Task.isCancelled else { return }
-            guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else {
+            guard case .ready(let ynhPath, _, _) = ynhDetector.status else {
                 results = []
                 return
             }
@@ -26,7 +36,7 @@ final class HarnessSearchService: ObservableObject {
             error = nil
             defer { isSearching = false }
             var env = ProcessInfo.processInfo.environment
-            if let override = YNHDetector.shared.ynhHomeOverride {
+            if let override = ynhDetector.ynhHomeOverride {
                 env["YNH_HOME"] = override
             }
             let args: [String] =
@@ -34,7 +44,7 @@ final class HarnessSearchService: ObservableObject {
                 ? ["search", "--format", "json"]
                 : ["search", trimmed, "--format", "json"]
             do {
-                let result = try await CommandRunner.run(
+                let result = try await commandRunner.run(
                     executable: ynhPath,
                     arguments: args,
                     environment: env

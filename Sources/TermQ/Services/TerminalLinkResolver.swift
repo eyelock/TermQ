@@ -82,28 +82,46 @@ enum TerminalLinkResolver {
 /// produces the macOS "-50" Finder dialog for absolute paths. Skipping this
 /// step silently regresses to that default — see `TerminalLinkRoutingTests`.
 @MainActor
-enum TermQTerminalLink {
+struct TermQTerminalLink {
+    let workspace: any WorkspaceProvider
+    let fileExists: (String) -> Bool
+    let directoryCheck: (String) -> Bool
+
+    /// Default-wired instance used by the static facade `open(link:cwd:)`.
+    static let `default` = TermQTerminalLink(
+        workspace: LiveWorkspaceProvider(),
+        fileExists: { FileManager.default.fileExists(atPath: $0) },
+        directoryCheck: { path in
+            var isDir: ObjCBool = false
+            return FileManager.default.fileExists(atPath: path, isDirectory: &isDir) && isDir.boolValue
+        }
+    )
+
+    /// Static entry point used by `TerminalViewDelegate` implementations.
+    static func open(link: String, cwd: String?) {
+        Self.default.open(link: link, cwd: cwd)
+    }
 
     /// Resolves a terminal-detected link via `TerminalLinkResolver` and
-    /// applies the resulting action through `NSWorkspace`.
-    static func open(link: String, cwd: String?) {
+    /// applies the resulting action through the injected workspace.
+    func open(link: String, cwd: String?) {
         TermQLogger.ui.debug("TermQTerminalLink.open raw=\(link) cwd=\(cwd ?? "<nil>")")
         let action = TerminalLinkResolver.resolve(
             link: link,
             cwd: cwd,
-            fileExists: { FileManager.default.fileExists(atPath: $0) }
+            fileExists: fileExists
         )
         switch action {
         case .noop:
             return
         case .openURL(let url):
-            NSWorkspace.shared.open(url)
+            workspace.open(url)
         case .fallbackString(let string):
-            if let url = URL(string: string) { NSWorkspace.shared.open(url) }
+            if let url = URL(string: string) { workspace.open(url) }
         case .revealInFinder(_, let root):
             // file doesn't exist; selectFile silently fails for missing paths.
             // Open the nearest existing parent instead so Finder shows something useful.
-            NSWorkspace.shared.open(root)
+            workspace.open(root)
         case .openFile(let url):
             openFileWithDefaultApp(url)
         }
@@ -112,33 +130,28 @@ enum TermQTerminalLink {
     /// Opens `url` with its registered default application, surfacing a
     /// friendly alert instead of the macOS "-50" Finder dialog when
     /// LaunchServices has no handler or the launch attempt fails.
-    private static func openFileWithDefaultApp(_ url: URL) {
-        var isDir: ObjCBool = false
-        if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir), isDir.boolValue {
-            NSWorkspace.shared.open(url)
+    private func openFileWithDefaultApp(_ url: URL) {
+        if directoryCheck(url.path) {
+            workspace.open(url)
             return
         }
 
-        guard let handler = NSWorkspace.shared.urlForApplication(toOpen: url) else {
+        guard let handler = workspace.urlForApplication(toOpen: url) else {
             TermQLogger.ui.info("TermQTerminalLink no default handler path=\(url.path)")
             presentNoHandlerAlert(for: url)
             return
         }
 
-        let configuration = NSWorkspace.OpenConfiguration()
-        NSWorkspace.shared.open([url], withApplicationAt: handler, configuration: configuration) {
-            @Sendable [url] _, error in
+        workspace.openFile(url, withApplicationAt: handler) { [workspace] error in
             guard let error else { return }
-            Task { @MainActor in
-                TermQLogger.ui.warning(
-                    "TermQTerminalLink launch failed path=\(url.path) error=\(error.localizedDescription)"
-                )
-                Self.presentOpenFailedAlert(for: url, error: error)
-            }
+            TermQLogger.ui.warning(
+                "TermQTerminalLink launch failed path=\(url.path) error=\(error.localizedDescription)"
+            )
+            Self.presentOpenFailedAlert(for: url, error: error, workspace: workspace)
         }
     }
 
-    private static func presentNoHandlerAlert(for url: URL) {
+    private func presentNoHandlerAlert(for url: URL) {
         let revealed = AlertBuilder.confirm(
             title: Strings.Alert.FileOpen.noHandlerTitle,
             message: Strings.Alert.FileOpen.noHandlerMessage(url.lastPathComponent),
@@ -146,11 +159,13 @@ enum TermQTerminalLink {
             style: .informational
         )
         if revealed {
-            NSWorkspace.shared.activateFileViewerSelecting([url])
+            workspace.activateFileViewerSelecting([url])
         }
     }
 
-    private static func presentOpenFailedAlert(for url: URL, error: Error) {
+    private static func presentOpenFailedAlert(
+        for url: URL, error: Error, workspace: any WorkspaceProvider
+    ) {
         let revealed = AlertBuilder.confirm(
             title: Strings.Alert.FileOpen.failedTitle,
             message: Strings.Alert.FileOpen.failedMessage(
@@ -160,7 +175,7 @@ enum TermQTerminalLink {
             style: .warning
         )
         if revealed {
-            NSWorkspace.shared.activateFileViewerSelecting([url])
+            workspace.activateFileViewerSelecting([url])
         }
     }
 }

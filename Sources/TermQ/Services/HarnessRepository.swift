@@ -66,6 +66,7 @@ final class HarnessRepository: ObservableObject {
     private var detailCache: [String: HarnessDetail] = [:]
 
     private let ynhDetector: any YNHDetectorProtocol
+    private let commandRunner: any YNHCommandRunner
 
     /// Whether `YNHPersistence`'s legacy bare-name → id migration has been
     /// run for this session. Runs at most once after a successful refresh.
@@ -92,8 +93,12 @@ final class HarnessRepository: ObservableObject {
         self.init(ynhDetector: YNHDetector.shared)
     }
 
-    init(ynhDetector: any YNHDetectorProtocol) {
+    init(
+        ynhDetector: any YNHDetectorProtocol,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
+    ) {
         self.ynhDetector = ynhDetector
+        self.commandRunner = commandRunner
     }
 
     // MARK: - List
@@ -113,7 +118,7 @@ final class HarnessRepository: ObservableObject {
         let env = ynhEnvironment()
 
         do {
-            let result = try await CommandRunner.run(
+            let result = try await commandRunner.run(
                 executable: ynhPath,
                 arguments: ["ls", "--format", "json"],
                 environment: env
@@ -213,7 +218,7 @@ final class HarnessRepository: ObservableObject {
 
     private func buildDetail(name: String, ynhPath: String, yndPath: String?) async throws -> HarnessDetail {
         let env = ynhEnvironment()
-        let infoResult = try await CommandRunner.run(
+        let infoResult = try await commandRunner.run(
             executable: ynhPath,
             arguments: ["info", name, "--format", "json"],
             environment: env
@@ -228,7 +233,7 @@ final class HarnessRepository: ObservableObject {
         guard let yndBinary = yndPath else {
             throw HarnessDetailError.missingYnd
         }
-        let composeResult = try await CommandRunner.run(
+        let composeResult = try await commandRunner.run(
             executable: yndBinary,
             arguments: ["compose", info.path],
             environment: env

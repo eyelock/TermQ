@@ -7,7 +7,15 @@ final class EditorRegistry: ObservableObject {
 
     @Published private(set) var available: [ExternalEditor] = []
 
-    private init() {}
+    private let workspace: any WorkspaceProvider
+
+    private convenience init() {
+        self.init(workspace: LiveWorkspaceProvider())
+    }
+
+    init(workspace: any WorkspaceProvider) {
+        self.workspace = workspace
+    }
 
     func start() {
         available = detect()
@@ -32,10 +40,9 @@ final class EditorRegistry: ObservableObject {
         ]
 
         var result: [ExternalEditor] = []
-        let ws = NSWorkspace.shared
 
         for candidate in candidates {
-            if let url = ws.urlForApplication(withBundleIdentifier: candidate.bundleID) {
+            if let url = workspace.urlForApplication(withBundleIdentifier: candidate.bundleID) {
                 result.append(ExternalEditor(kind: candidate.kind, displayName: candidate.displayName, appURL: url))
             } else if let cli = candidate.cli, let url = which(cli) {
                 result.append(ExternalEditor(kind: candidate.kind, displayName: candidate.displayName, appURL: url))
