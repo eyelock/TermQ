@@ -17,31 +17,15 @@ struct ContentView: View {
     @State private var showCommandPalette = false
     @State private var showBin = false
     @State private var showColumnPicker = false
-    @State private var showInstallSheet = false
-    @State private var installCardIDs: Set<UUID> = []
-    @State private var uninstallCardNames: [UUID: String] = [:]
-    @State var launchWorkingDirectory: String?
-    @State var launchWorktreeBranch: String?
-    /// Pending launch request — set by every launch entry point. Held until
-    /// the harness id resolves against `harnessRepo.harnesses`, at which
-    /// point it materializes into `launchSheetTarget` and the sheet
-    /// presents. This is the cold-start race fix for the white-pill bug:
-    /// presentation is gated on actual data, not just a Bool.
-    @State var pendingLaunch: PendingLaunch?
-    /// Resolved data backing the launch sheet. The sheet uses `.sheet(item:)`
-    /// against this — when nil, no sheet is presented (so an unsized empty
-    /// content closure can never be presented).
-    @State var launchSheetTarget: LaunchSheetTarget?
-    /// Card that was selected before navigating to a harness detail, restored on dismiss.
-    @State var cardBeforeHarness: TerminalCard?
-    /// Name of the harness pending a fork-to-local operation.
-    @State var harnessNameToFork: String?
-    /// Controls `ForkHarnessSheet` visibility.
-    @State var showForkSheet = false
-    /// Name of the harness pending an update.
-    @State var harnessNameToUpdate: String?
-    /// Controls `UpdateHarnessSheet` visibility.
-    @State var showUpdateSheet = false
+
+    /// Owns harness launch flow: pending request, resolved sheet target,
+    /// before-harness card capture/restore. Extracted from ContentView so
+    /// the view's body stays focused on layout.
+    @State private var launchCoordinator = HarnessLaunchCoordinator()
+
+    /// Owns harness install/uninstall/update/export/fork flows and the
+    /// transient card tracking sets they spawn.
+    @State private var lifecycleCoordinator = HarnessLifecycleCoordinator()
 
     var body: some View {
         HSplitView {
@@ -51,10 +35,11 @@ struct ContentView: View {
                     detector: ynhDetector,
                     harnessRepository: harnessRepo,
                     onLaunchHarness: { harness in
-                        requestLaunch(harnessId: harness.id, workingDirectory: nil, branch: nil)
+                        launchCoordinator.requestLaunch(
+                            harnessId: harness.id, workingDirectory: nil, branch: nil)
                     },
                     onLaunchHarnessInWorktree: { harnessIdOrName, path, branch in
-                        requestLaunch(
+                        launchCoordinator.requestLaunch(
                             harnessId: harnessIdOrName, workingDirectory: path, branch: branch)
                     },
                     onAutoLaunchHarness: { harnessIdOrName, path, branch in
@@ -72,13 +57,15 @@ struct ContentView: View {
                             backend: SettingsStore.shared.backend,
                             branch: branch
                         )
-                        launchHarness(config)
+                        launchCoordinator.launchHarness(config)
                     },
-                    onInstall: { showInstallSheet = true },
-                    onUninstall: { name in uninstallHarness(name: name) },
-                    onUpdate: { name in updateHarness(name: name) },
-                    onExport: { name, dir in exportHarness(name: name, outputDir: dir) },
-                    onFork: { name in forkHarness(name: name) },
+                    onInstall: { lifecycleCoordinator.showInstallSheet = true },
+                    onUninstall: { name in lifecycleCoordinator.uninstallHarness(name: name) },
+                    onUpdate: { name in lifecycleCoordinator.updateHarness(name: name) },
+                    onExport: { name, dir in
+                        lifecycleCoordinator.exportHarness(name: name, outputDir: dir)
+                    },
+                    onFork: { name in lifecycleCoordinator.forkHarness(name: name) },
                     onNewHarness: {}
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
@@ -169,7 +156,7 @@ struct ContentView: View {
             }
             .onChange(of: harnessRepo.selectedHarnessId) { _, newValue in
                 if let name = newValue {
-                    cardBeforeHarness = viewModel.selectedCard
+                    launchCoordinator.captureCardBeforeHarness()
                     viewModel.deselectCard()
                     Task { await harnessRepo.fetchDetail(for: name) }
                 }
@@ -229,12 +216,8 @@ struct ContentView: View {
                 BinView(viewModel: viewModel)
             }
             .sheet(
-                item: $launchSheetTarget,
-                onDismiss: {
-                    launchWorkingDirectory = nil
-                    launchWorktreeBranch = nil
-                    pendingLaunch = nil
-                },
+                item: $launchCoordinator.launchSheetTarget,
+                onDismiss: { launchCoordinator.dismissLaunchSheet() },
                 content: { target in
                     HarnessLaunchSheet(
                         harness: target.harness,
@@ -244,19 +227,19 @@ struct ContentView: View {
                         initialBranch: target.branch,
                         initialVendorOverride: target.vendorOverride
                     ) { config in
-                        launchHarness(config, reuseExisting: false)
+                        launchCoordinator.launchHarness(config, reuseExisting: false)
                     }
                 }
             )
             .onChange(of: harnessRepo.listState) { _, _ in
-                tryResolvePendingLaunch()
+                launchCoordinator.tryResolvePendingLaunch()
             }
-            .sheet(isPresented: $showInstallSheet) {
+            .sheet(isPresented: $lifecycleCoordinator.showInstallSheet) {
                 HarnessInstallSheet(
                     installedNames: Set(harnessRepo.harnesses.map(\.name)),
                     harnesses: harnessRepo.harnesses
                 ) { config in
-                    installHarness(config)
+                    lifecycleCoordinator.installHarness(config)
                 }
                 .frame(width: 520, height: 540)
             }
@@ -265,34 +248,30 @@ struct ContentView: View {
             ) { notif in
                 guard let cardId = notif.userInfo?["cardId"] as? UUID else { return }
                 let succeeded = (notif.userInfo?["exitCode"] as? Int) == 0
-
-                if installCardIDs.remove(cardId) != nil {
-                    if case .ready = ynhDetector.status {
-                        Task { await harnessRepo.refresh() }
-                    }
-                    if succeeded { closeHarnessCard(cardId) }
-                } else if let name = uninstallCardNames.removeValue(forKey: cardId) {
-                    YNHPersistence.shared.removeAllAssociations(for: name)
-                    if case .ready = ynhDetector.status {
-                        Task { await harnessRepo.refresh() }
-                    }
-                    if succeeded { closeHarnessCard(cardId) }
+                if let shouldClose = lifecycleCoordinator.handleTransientSessionExit(
+                    cardId: cardId, succeeded: succeeded), shouldClose
+                {
+                    closeHarnessCard(cardId)
                 }
             }
-            .sheet(isPresented: $showForkSheet) {
+            .sheet(isPresented: $lifecycleCoordinator.showForkSheet) {
                 // Frame applied at the .sheet content closure (the absolute
                 // outermost view NSWindow sees) so the window has a definitive
                 // intrinsic size at first paint. Frame inside the sheet view's
                 // body races against SwiftUI's layout pass and produces a
                 // small placeholder until resolved.
                 Group {
-                    if let name = harnessNameToFork { forkSheet(for: name) }
+                    if let name = lifecycleCoordinator.harnessNameToFork {
+                        forkSheet(for: name)
+                    }
                 }
                 .frame(width: 560, height: 420)
             }
-            .sheet(isPresented: $showUpdateSheet) {
+            .sheet(isPresented: $lifecycleCoordinator.showUpdateSheet) {
                 Group {
-                    if let name = harnessNameToUpdate { updateSheet(for: name) }
+                    if let name = lifecycleCoordinator.harnessNameToUpdate {
+                        updateSheet(for: name)
+                    }
                 }
                 .frame(width: 560, height: 420)
             }
@@ -313,8 +292,7 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigation) {
                     if viewModel.selectedCard != nil || harnessRepo.selectedHarness != nil {
                         Button {
-                            cardBeforeHarness = nil
-                            harnessRepo.selectedHarnessId = nil
+                            launchCoordinator.clearAllSelection()
                             viewModel.deselectCard()
                         } label: {
                             Image(systemName: "rectangle.grid.2x2")
@@ -756,219 +734,59 @@ extension ContentView {
         viewModel.selectCard(card)
     }
 
-    /// Install a harness by creating a transient Card running `ynh install` so the user sees output.
-    func installHarness(_ config: HarnessInstallConfig) {
-        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
-        let column: Column
-        if let current = viewModel.selectedCard,
-            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
-        {
-            column = currentColumn
-        } else if let firstColumn = viewModel.board.columns.first {
-            column = firstColumn
-        } else {
-            return
-        }
+}
 
-        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
-        let defaultConfirmExternalModifications =
-            SettingsStore.shared.confirmExternalLLMModifications
-        let card = TerminalCard(
-            title: "ynh install \(config.displayName)",
-            tags: [],
-            columnId: column.id,
-            workingDirectory: NSHomeDirectory(),
-            initCommand: config.command(ynhPath: ynhPath) + " && exit",
-            safePasteEnabled: nil,
-            allowOscClipboard: defaultAllowOscClipboard,
-            confirmExternalModifications: defaultConfirmExternalModifications,
-            // Forced direct: ynh install runs synchronously and exits;
-            // not a user backend preference, so we override here rather
-            // than inherit from SettingsStore.
-            backend: .direct
-        )
-        card.isTransient = true
-        card.allowAutorun = true
-        installCardIDs.insert(card.id)
-        viewModel.tabManager.addTransientCard(card)
-        if let current = viewModel.selectedCard {
-            viewModel.tabManager.insertTab(card.id, after: current.id)
-        } else {
-            viewModel.tabManager.addTab(card.id)
+// MARK: - Harness sub-views
+
+extension ContentView {
+    @ViewBuilder
+    func harnessDetailView() -> some View {
+        if let harness = harnessRepo.selectedHarness {
+            let vm = HarnessDetailViewModel(
+                harness: harness,
+                detail: harnessRepo.selectedDetail,
+                isLoadingDetail: harnessRepo.isLoadingDetail,
+                detailError: harnessRepo.detailError,
+                updateAvailability: updateAvailabilityService,
+                capabilities: harnessRepo.lastCapabilities
+            )
+            HarnessDetailView(
+                viewModel: vm,
+                onDismiss: { launchCoordinator.dismissHarnessDetail() },
+                onLaunch: { path in
+                    launchCoordinator.requestLaunch(
+                        harnessId: harness.id, workingDirectory: path, branch: nil)
+                },
+                onUpdate: { name in lifecycleCoordinator.updateHarness(name: name) },
+                onUninstall: { name in lifecycleCoordinator.uninstallHarness(name: name) },
+                onFork: { name in lifecycleCoordinator.forkHarness(name: name) },
+                onExport: { name, dir in
+                    lifecycleCoordinator.exportHarness(name: name, outputDir: dir)
+                }
+            )
         }
-        harnessRepo.selectedHarnessId = nil
-        viewModel.objectWillChange.send()
-        viewModel.selectedCard = card
     }
 
-    /// Uninstall a harness. Harnesses with no YNH install record are deleted directly
-    /// from the filesystem; YNH-managed harnesses use a transient terminal and clear
-    /// associations when the shell exits.
-    func uninstallHarness(name: String) {
-        let harness = harnessRepo.harnesses.first(where: { $0.name == name })
-
-        // Harnesses with no YNH install record can't be uninstalled via `ynh uninstall`.
-        // Delete them directly and clean up associations.
-        if let harness, harness.installedFrom == nil {
-            try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
-            YNHPersistence.shared.removeAllAssociations(for: name)
-            harnessRepo.selectedHarnessId = nil
-            Task { await harnessRepo.refresh() }
-            return
-        }
-
-        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
-        let column: Column
-        if let current = viewModel.selectedCard,
-            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
-        {
-            column = currentColumn
-        } else if let firstColumn = viewModel.board.columns.first {
-            column = firstColumn
-        } else {
-            return
-        }
-
-        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
-        let defaultConfirmExternalModifications =
-            SettingsStore.shared.confirmExternalLLMModifications
-        let card = TerminalCard(
-            title: "ynh uninstall \(name)",
-            tags: [],
-            columnId: column.id,
-            workingDirectory: NSHomeDirectory(),
-            initCommand: "\(ynhPath) uninstall \(shellQuote(name)) && exit",
-            safePasteEnabled: nil,
-            allowOscClipboard: defaultAllowOscClipboard,
-            confirmExternalModifications: defaultConfirmExternalModifications,
-            // Forced direct: ynh uninstall is a one-shot; not a user choice.
-            backend: .direct
+    @ViewBuilder
+    func updateSheet(for name: String) -> some View {
+        UpdateHarnessSheet(
+            harnessName: name,
+            detector: ynhDetector,
+            repository: harnessRepo
         )
-        card.isTransient = true
-        card.allowAutorun = true
-        uninstallCardNames[card.id] = name
-        viewModel.tabManager.addTransientCard(card)
-        if let current = viewModel.selectedCard {
-            viewModel.tabManager.insertTab(card.id, after: current.id)
-        } else {
-            viewModel.tabManager.addTab(card.id)
-        }
-        harnessRepo.selectedHarnessId = nil
-        viewModel.objectWillChange.send()
-        viewModel.selectedCard = card
     }
 
-    /// Update a harness via `UpdateHarnessSheet` (CommandRunner-based progress
-    /// sheet — no transient terminal in the user's board).
-    func updateHarness(name: String) {
-        guard case .ready = ynhDetector.status else { return }
-        harnessNameToUpdate = name
-        showUpdateSheet = true
-    }
-
-    func exportHarness(name: String, outputDir: String) {
-        guard case .ready(_, let yndPath?, _) = ynhDetector.status,
-            let harness = harnessRepo.harnesses.first(where: { $0.name == name }),
-            let column = viewModel.selectedCard.flatMap({ c in
-                viewModel.board.columns.first { $0.id == c.columnId }
-            }) ?? viewModel.board.columns.first
-        else { return }
-
-        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
-        let defaultConfirmExternalModifications =
-            SettingsStore.shared.confirmExternalLLMModifications
-        let card = TerminalCard(
-            title: "ynd export \(name)",
-            tags: [],
-            columnId: column.id,
-            workingDirectory: harness.path,
-            initCommand: "\(yndPath) export \(shellQuote(harness.path)) -o \(shellQuote(outputDir)) && exit",
-            safePasteEnabled: nil,
-            allowOscClipboard: defaultAllowOscClipboard,
-            confirmExternalModifications: defaultConfirmExternalModifications,
-            // Forced direct: ynd export is a one-shot; not a user choice.
-            backend: .direct
-        )
-        card.isTransient = true
-        card.allowAutorun = true
-        viewModel.tabManager.addTransientCard(card)
-        viewModel.tabManager.addTab(card.id)
-        viewModel.objectWillChange.send()
-        viewModel.selectedCard = card
-    }
-
-    /// Launch a harness by creating a persistent Card with `ynh run` as the init command.
-    /// If `reuseExisting` is true and a matching card already exists (same harness + working
-    /// directory), switches to it instead of creating a duplicate.
-    func launchHarness(_ config: HarnessLaunchConfig, reuseExisting: Bool = true) {
-        if reuseExisting,
-            let existing = viewModel.allTerminals.first(where: { card in
-                card.workingDirectory == config.workingDirectory
-                    && card.tags.contains(where: { $0.key == "harness" && $0.value == config.harnessName })
-            })
-        {
-            cardBeforeHarness = nil
-            harnessRepo.selectedHarnessId = nil
-            viewModel.tabManager.addTab(existing.id)
-            viewModel.objectWillChange.send()
-            viewModel.selectedCard = existing
-            return
+    @ViewBuilder
+    func forkSheet(for name: String) -> some View {
+        if let harness = harnessRepo.harnesses.first(where: { $0.name == name }) {
+            ForkHarnessSheet(
+                harness: harness,
+                detector: ynhDetector,
+                repository: harnessRepo,
+                onForkCompleted: { newName in
+                    lifecycleCoordinator.handleForkCompleted(newName: newName)
+                }
+            )
         }
-
-        let column: Column
-        if let current = viewModel.selectedCard,
-            let currentColumn = viewModel.board.columns.first(where: { $0.id == current.columnId })
-        {
-            column = currentColumn
-        } else if let firstColumn = viewModel.board.columns.first {
-            column = firstColumn
-        } else {
-            return
-        }
-
-        let cardID = UUID()
-        let sessionName = "termq-\(cardID.uuidString.prefix(8).lowercased())"
-        let shell =
-            ProcessInfo.processInfo.environment["SHELL"]
-            .map { URL(fileURLWithPath: $0).lastPathComponent } ?? "sh"
-        var allTags = config.tags.map { Tag(key: $0.key, value: $0.value) }
-        allTags.append(Tag(key: "backend", value: config.backend.tagValue))
-        allTags.append(Tag(key: "shell", value: shell))
-        if config.backend.usesTmux {
-            allTags.append(Tag(key: "session", value: sessionName))
-            allTags.append(Tag(key: "window", value: "0"))
-        }
-
-        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
-        let defaultConfirmExternalModifications =
-            SettingsStore.shared.confirmExternalLLMModifications
-        let card = TerminalCard(
-            id: cardID,
-            title: config.branch ?? config.harnessName,
-            tags: allTags,
-            columnId: column.id,
-            workingDirectory: config.workingDirectory,
-            initCommand: config.command(sessionName: sessionName),
-            safePasteEnabled: nil,
-            allowOscClipboard: defaultAllowOscClipboard,
-            confirmExternalModifications: defaultConfirmExternalModifications,
-            backend: config.backend
-        )
-        card.allowAutorun = true
-
-        viewModel.board.cards.append(card)
-        viewModel.save()
-
-        if let current = viewModel.selectedCard {
-            viewModel.tabManager.insertTab(card.id, after: current.id)
-        } else {
-            viewModel.tabManager.addTab(card.id)
-        }
-
-        // Clear harness selection and switch to the new Card.
-        cardBeforeHarness = nil
-        harnessRepo.selectedHarnessId = nil
-        viewModel.objectWillChange.send()
-        viewModel.selectedCard = card
     }
 }
