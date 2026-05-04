@@ -704,9 +704,11 @@
 // Install sheet
 "harnesses.install.title" = "התקנת harness";
 "harnesses.install.toolbar.help" = "התקנת harness";
-"harnesses.install.tab.search" = "חיפוש";
+"harnesses.install.tab.library" = "ספרייה";
+"harnesses.install.manage.sources" = "נהל מקורות…";
+"harnesses.install.manage.sources.help" = "הוסף או הסר מקורות harness מקומיים";
+"harnesses.install.manage.sources.done" = "סיום";
 "harnesses.install.tab.git" = "מ-Git";
-"harnesses.install.tab.sources" = "מקורות";
 "harnesses.install.search.placeholder" = "חיפוש ב-registries ובמקורות…";
 "harnesses.install.search.prompt" = "הקלד לחיפוש ב-registries ובמקורות";
 "harnesses.install.search.empty" = "אין תוצאות";
@@ -891,6 +893,7 @@
 "harnesses.install.git.ref.placeholder" = "ענף, תג או commit SHA (אופציונלי)";
 "harnesses.install.retry" = "נסה שוב";
 "harnesses.install.section.available" = "זמין מרשומות";
+"harnesses.install.section.available.empty" = "אין שווקים מוגדרים. הוסף אחד בהגדרות → מקורות חיצוניים.";
 "harnesses.install.section.installed" = "מותקן";
 "harnesses.install.section.local" = "זמין מקומית";
 "harnesses.outdated.capabilities.unknown" = "לא ידוע";

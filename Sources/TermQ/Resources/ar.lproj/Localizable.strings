@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "تثبيت Harness";
 "harnesses.install.toolbar.help" = "تثبيت harness";
-"harnesses.install.tab.search" = "بحث";
+"harnesses.install.tab.library" = "المكتبة";
+"harnesses.install.manage.sources" = "إدارة المصادر…";
+"harnesses.install.manage.sources.help" = "إضافة مصادر harness المحلية أو إزالتها";
+"harnesses.install.manage.sources.done" = "تم";
 "harnesses.install.tab.git" = "من Git";
-"harnesses.install.tab.sources" = "المصادر";
 "harnesses.install.search.placeholder" = "البحث في السجلات والمصادر…";
 "harnesses.install.search.prompt" = "اكتب للبحث في السجلات والمصادر";
 "harnesses.install.search.empty" = "لا توجد نتائج";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "فرع أو وسم أو SHA الإيداع (اختياري)";
 "harnesses.install.retry" = "إعادة المحاولة";
 "harnesses.install.section.available" = "متاح من السجلات";
+"harnesses.install.section.available.empty" = "لا توجد أسواق مُهيَّأة. أضف واحدًا في الإعدادات ← المصادر الخارجية.";
 "harnesses.install.section.installed" = "مثبَّت";
 "harnesses.install.section.local" = "متاح محلياً";
 "harnesses.outdated.capabilities.unknown" = "غير معروف";

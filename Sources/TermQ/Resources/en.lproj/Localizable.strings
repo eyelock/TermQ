@@ -801,14 +801,17 @@
 // Install sheet
 "harnesses.install.title" = "Install Harness";
 "harnesses.install.toolbar.help" = "Install a harness";
-"harnesses.install.tab.search" = "Search";
+"harnesses.install.tab.library" = "Library";
 "harnesses.install.tab.git" = "From Git";
-"harnesses.install.tab.sources" = "Sources";
+"harnesses.install.manage.sources" = "Manage Sources…";
+"harnesses.install.manage.sources.help" = "Add or remove local harness sources";
+"harnesses.install.manage.sources.done" = "Done";
 "harnesses.install.search.placeholder" = "Search marketplaces and sources…";
 "harnesses.install.search.prompt" = "Type to search marketplaces and sources";
 "harnesses.install.search.empty" = "No results";
 "harnesses.install.section.installed" = "Installed";
 "harnesses.install.section.available" = "Available from Registries";
+"harnesses.install.section.available.empty" = "No marketplaces configured. Add one in Settings → External Sources.";
 "harnesses.install.section.local" = "Available Locally";
 "harnesses.install.browsing" = "Loading available harnesses…";
 "harnesses.install.retry" = "Retry";

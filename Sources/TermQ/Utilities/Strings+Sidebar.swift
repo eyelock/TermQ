@@ -304,14 +304,19 @@ extension Strings {
         // Install sheet
         static var installTitle: String { localized("harnesses.install.title") }
         static var installToolbarHelp: String { localized("harnesses.install.toolbar.help") }
-        static var installTabSearch: String { localized("harnesses.install.tab.search") }
+        static var installTabLibrary: String { localized("harnesses.install.tab.library") }
         static var installTabGit: String { localized("harnesses.install.tab.git") }
-        static var installTabSources: String { localized("harnesses.install.tab.sources") }
+        static var installManageSources: String { localized("harnesses.install.manage.sources") }
+        static var installManageSourcesHelp: String { localized("harnesses.install.manage.sources.help") }
+        static var installManageSourcesDone: String { localized("harnesses.install.manage.sources.done") }
         static var installSearchPlaceholder: String { localized("harnesses.install.search.placeholder") }
         static var installSearchPrompt: String { localized("harnesses.install.search.prompt") }
         static var installSearchEmpty: String { localized("harnesses.install.search.empty") }
         static var installSectionInstalled: String { localized("harnesses.install.section.installed") }
         static var installSectionAvailable: String { localized("harnesses.install.section.available") }
+        static var installSectionAvailableEmpty: String {
+            localized("harnesses.install.section.available.empty")
+        }
         static var installSectionLocal: String { localized("harnesses.install.section.local") }
         static var installBrowsing: String { localized("harnesses.install.browsing") }
         static var installRetry: String { localized("harnesses.install.retry") }

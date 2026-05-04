@@ -704,9 +704,11 @@
 // Install sheet
 "harnesses.install.title" = "Asenna harness";
 "harnesses.install.toolbar.help" = "Asenna harness";
-"harnesses.install.tab.search" = "Haku";
+"harnesses.install.tab.library" = "Kirjasto";
+"harnesses.install.manage.sources" = "Hallitse lähteitä…";
+"harnesses.install.manage.sources.help" = "Lisää tai poista paikallisia harness-lähteitä";
+"harnesses.install.manage.sources.done" = "Valmis";
 "harnesses.install.tab.git" = "Gitistä";
-"harnesses.install.tab.sources" = "Lähteet";
 "harnesses.install.search.placeholder" = "Hae rekistereistä ja lähteistä…";
 "harnesses.install.search.prompt" = "Kirjoita etsiäksesi rekistereistä ja lähteistä";
 "harnesses.install.search.empty" = "Ei tuloksia";
@@ -891,6 +893,7 @@
 "harnesses.install.git.ref.placeholder" = "Haara, tagi tai commit-SHA (valinnainen)";
 "harnesses.install.retry" = "Yritä uudelleen";
 "harnesses.install.section.available" = "Saatavilla rekistereistä";
+"harnesses.install.section.available.empty" = "Ei markkinapaikkoja määritetty. Lisää yksi Asetuksissa → Ulkoiset lähteet.";
 "harnesses.install.section.installed" = "Asennettu";
 "harnesses.install.section.local" = "Saatavilla paikallisesti";
 "harnesses.outdated.capabilities.unknown" = "tuntematon";

@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "Nainstalovat harness";
 "harnesses.install.toolbar.help" = "Nainstalovat harness";
-"harnesses.install.tab.search" = "Hledat";
+"harnesses.install.tab.library" = "Knihovna";
+"harnesses.install.manage.sources" = "Spravovat zdroje…";
+"harnesses.install.manage.sources.help" = "Přidat nebo odebrat lokální zdroje harness";
+"harnesses.install.manage.sources.done" = "Hotovo";
 "harnesses.install.tab.git" = "Z Gitu";
-"harnesses.install.tab.sources" = "Zdroje";
 "harnesses.install.search.placeholder" = "Hledat v registrech a zdrojích…";
 "harnesses.install.search.prompt" = "Zadejte text pro vyhledávání v registrech a zdrojích";
 "harnesses.install.search.empty" = "Žádné výsledky";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "Větev, tag nebo SHA commitu (volitelné)";
 "harnesses.install.retry" = "Zkusit znovu";
 "harnesses.install.section.available" = "Dostupné z registrů";
+"harnesses.install.section.available.empty" = "Nejsou nakonfigurovány žádné tržiště. Přidejte jedno v Nastavení → Externí zdroje.";
 "harnesses.install.section.installed" = "Nainstalováno";
 "harnesses.install.section.local" = "Dostupné místně";
 "harnesses.outdated.capabilities.unknown" = "neznámý";

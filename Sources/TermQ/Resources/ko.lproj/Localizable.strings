@@ -703,9 +703,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness 설치";
 "harnesses.install.toolbar.help" = "Harness 설치";
-"harnesses.install.tab.search" = "검색";
+"harnesses.install.tab.library" = "라이브러리";
+"harnesses.install.manage.sources" = "소스 관리…";
+"harnesses.install.manage.sources.help" = "로컈 하네스 소스 추가 또는 제거";
+"harnesses.install.manage.sources.done" = "완료";
 "harnesses.install.tab.git" = "Git에서";
-"harnesses.install.tab.sources" = "소스";
 "harnesses.install.search.placeholder" = "레지스트리와 소스 검색…";
 "harnesses.install.search.prompt" = "레지스트리와 소스를 검색하려면 입력하세요";
 "harnesses.install.search.empty" = "결과 없음";
@@ -890,6 +892,7 @@
 "harnesses.install.git.ref.placeholder" = "브랜치, 태그 또는 커밋 SHA (선택 사항)";
 "harnesses.install.retry" = "다시 시도";
 "harnesses.install.section.available" = "레지스트리에서 사용 가능";
+"harnesses.install.section.available.empty" = "구성된 마켓플레이스가 없습니다. 설정 → 외부 소스에서 추가하세요.";
 "harnesses.install.section.installed" = "설치됨";
 "harnesses.install.section.local" = "로컬에서 사용 가능";
 "harnesses.outdated.capabilities.unknown" = "알 수 없음";

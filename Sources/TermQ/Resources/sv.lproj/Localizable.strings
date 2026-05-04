@@ -705,9 +705,11 @@
 // Install sheet
 "harnesses.install.title" = "Installera harness";
 "harnesses.install.toolbar.help" = "Installera en harness";
-"harnesses.install.tab.search" = "Sök";
+"harnesses.install.tab.library" = "Bibliotek";
+"harnesses.install.manage.sources" = "Hantera källor…";
+"harnesses.install.manage.sources.help" = "Lägg till eller ta bort lokala harnessskällor";
+"harnesses.install.manage.sources.done" = "Klar";
 "harnesses.install.tab.git" = "Från Git";
-"harnesses.install.tab.sources" = "Källor";
 "harnesses.install.search.placeholder" = "Sök i register och källor…";
 "harnesses.install.search.prompt" = "Skriv för att söka i register och källor";
 "harnesses.install.search.empty" = "Inga resultat";
@@ -892,6 +894,7 @@
 "harnesses.install.git.ref.placeholder" = "Branch, tagg eller commit-SHA (valfritt)";
 "harnesses.install.retry" = "Försök igen";
 "harnesses.install.section.available" = "Tillgänglig från register";
+"harnesses.install.section.available.empty" = "Inga marknadsplatser konfigurerade. Lägg till en i Inställningar → Externa källor.";
 "harnesses.install.section.installed" = "Installerad";
 "harnesses.install.section.local" = "Tillgänglig lokalt";
 "harnesses.outdated.capabilities.unknown" = "okänd";

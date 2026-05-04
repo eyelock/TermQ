@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "Instalar arnés";
 "harnesses.install.toolbar.help" = "Instalar un arnés";
-"harnesses.install.tab.search" = "Buscar";
+"harnesses.install.tab.library" = "Biblioteca";
+"harnesses.install.manage.sources" = "Administrar fuentes…";
+"harnesses.install.manage.sources.help" = "Agregar o eliminar fuentes de arneses locales";
+"harnesses.install.manage.sources.done" = "Listo";
 "harnesses.install.tab.git" = "Desde Git";
-"harnesses.install.tab.sources" = "Fuentes";
 "harnesses.install.search.placeholder" = "Buscar en registros y fuentes…";
 "harnesses.install.search.prompt" = "Escribe para buscar en registros y fuentes";
 "harnesses.install.search.empty" = "Sin resultados";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "Rama, etiqueta o SHA de commit (opcional)";
 "harnesses.install.retry" = "Reintentar";
 "harnesses.install.section.available" = "Disponible en registros";
+"harnesses.install.section.available.empty" = "No hay mercados configurados. Añade uno en Configuración → Fuentes externas.";
 "harnesses.install.section.installed" = "Instalado";
 "harnesses.install.section.local" = "Disponible localmente";
 "harnesses.outdated.capabilities.unknown" = "desconocido";

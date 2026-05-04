@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "安装 Harness";
 "harnesses.install.toolbar.help" = "安装一个 harness";
-"harnesses.install.tab.search" = "搜索";
+"harnesses.install.tab.library" = "库";
+"harnesses.install.manage.sources" = "管理来源…";
+"harnesses.install.manage.sources.help" = "添加或删除本地 Harness 来源";
+"harnesses.install.manage.sources.done" = "完成";
 "harnesses.install.tab.git" = "从 Git";
-"harnesses.install.tab.sources" = "来源";
 "harnesses.install.search.placeholder" = "搜索注册表和来源…";
 "harnesses.install.search.prompt" = "输入以搜索注册表和来源";
 "harnesses.install.search.empty" = "无结果";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "分支、标签或提交 SHA（可选）";
 "harnesses.install.retry" = "重试";
 "harnesses.install.section.available" = "可从注册表获取";
+"harnesses.install.section.available.empty" = "未配置任何市场。请在设置 → 外部来源中添加一个。";
 "harnesses.install.section.installed" = "已安装";
 "harnesses.install.section.local" = "本地可用";
 "harnesses.outdated.capabilities.unknown" = "未知";

@@ -698,9 +698,11 @@
 // Install sheet
 "harnesses.install.title" = "Εγκατάσταση harness";
 "harnesses.install.toolbar.help" = "Εγκατάσταση ενός harness";
-"harnesses.install.tab.search" = "Αναζήτηση";
+"harnesses.install.tab.library" = "Βιβλιοθήκη";
+"harnesses.install.manage.sources" = "Διαχείριση πηγών…";
+"harnesses.install.manage.sources.help" = "Προσθήκη ή αφαίρεση τοπικών πηγών harness";
+"harnesses.install.manage.sources.done" = "Τέλος";
 "harnesses.install.tab.git" = "Από Git";
-"harnesses.install.tab.sources" = "Πηγές";
 "harnesses.install.search.placeholder" = "Αναζήτηση σε μητρώα και πηγές…";
 "harnesses.install.search.prompt" = "Πληκτρολογήστε για αναζήτηση σε μητρώα και πηγές";
 "harnesses.install.search.empty" = "Δεν βρέθηκαν αποτελέσματα";
@@ -885,6 +887,7 @@
 "harnesses.install.git.ref.placeholder" = "Κλάδος, ετικέτα ή SHA commit (προαιρετικό)";
 "harnesses.install.retry" = "Επανάληψη";
 "harnesses.install.section.available" = "Διαθέσιμο από μητρώα";
+"harnesses.install.section.available.empty" = "Δεν υπάρχουν ρυθμισμένα marketplace. Προσθέστε ένα στις Ρυθμίσεις → Εξωτερικές πηγές.";
 "harnesses.install.section.installed" = "Εγκατεστημένο";
 "harnesses.install.section.local" = "Διαθέσιμο τοπικά";
 "harnesses.outdated.capabilities.unknown" = "άγνωστο";

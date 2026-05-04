@@ -703,9 +703,11 @@
 // Install sheet
 "harnesses.install.title" = "Instalar harness";
 "harnesses.install.toolbar.help" = "Instalar um harness";
-"harnesses.install.tab.search" = "Pesquisar";
+"harnesses.install.tab.library" = "Biblioteca";
+"harnesses.install.manage.sources" = "Gerir fontes…";
+"harnesses.install.manage.sources.help" = "Adicionar ou remover fontes de harness locais";
+"harnesses.install.manage.sources.done" = "Concluído";
 "harnesses.install.tab.git" = "Do Git";
-"harnesses.install.tab.sources" = "Fontes";
 "harnesses.install.search.placeholder" = "Pesquisar em registros e fontes…";
 "harnesses.install.search.prompt" = "Digite para pesquisar em registros e fontes";
 "harnesses.install.search.empty" = "Nenhum resultado";
@@ -890,6 +892,7 @@
 "harnesses.install.git.ref.placeholder" = "Branch, tag ou SHA de commit (opcional)";
 "harnesses.install.retry" = "Tentar novamente";
 "harnesses.install.section.available" = "Disponível nos registros";
+"harnesses.install.section.available.empty" = "Nenhum marketplace configurado. Adicione um em Configurações → Fontes externas.";
 "harnesses.install.section.installed" = "Instalado";
 "harnesses.install.section.local" = "Disponível localmente";
 "harnesses.outdated.capabilities.unknown" = "desconhecido";
