@@ -115,14 +115,19 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             TermQLogger.window.notice("  window[\(i)]: \(desc)")
         }
         if let window = mainWindow {
-            // Only call unhide if the app is actually hidden (e.g. from windowShouldClose → NSApp.hide).
-            // Calling unhide on a non-hidden app schedules a deferred _doOrderWindow orderOut block that
-            // fires when the run loop returns to NSDefaultRunLoopMode — which a busy terminal defers for
-            // seconds or minutes, producing the "spontaneous" window hide.
+            // Reopen events fire not just on Dock clicks but on every AppleEvent URL
+            // delivery (e.g. MCP-driven `termq://` opens with activates:false). Activating
+            // the window unconditionally here causes TermQ to steal focus on every
+            // background MCP operation. Only bring the window forward when there's
+            // actually something to surface.
             if NSApp.isHidden {
                 NSApp.unhide(nil)
+                window.makeKeyAndOrderFront(nil)
+            } else if window.isMiniaturized {
+                window.deminiaturize(nil)
+            } else if !flag {
+                window.makeKeyAndOrderFront(nil)
             }
-            window.makeKeyAndOrderFront(nil)
             return false
         }
         // No main window tracked yet — allow the system to open one
