@@ -238,14 +238,13 @@ final class UpdaterViewModel: ObservableObject {
         return appDelegate.updaterViewModel
     }
 
-    private let updater: SPUUpdater
-    private let controller: SPUStandardUpdaterController?
+    private let provider: any UpdaterProviding
     private var cancellables = Set<AnyCancellable>()
 
     /// Whether automatic update checks are enabled (defaults to true)
     @Published var automaticallyChecksForUpdates: Bool {
         didSet {
-            updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
+            provider.automaticallyChecksForUpdates = automaticallyChecksForUpdates
         }
     }
 
@@ -260,21 +259,23 @@ final class UpdaterViewModel: ObservableObject {
         }
     }
 
-    init(updater: SPUUpdater, controller: SPUStandardUpdaterController? = nil) {
-        self.updater = updater
-        self.controller = controller
+    convenience init(updater: SPUUpdater, controller: SPUStandardUpdaterController? = nil) {
+        self.init(provider: LiveUpdaterProvider(updater: updater, controller: controller))
+    }
+
+    init(provider: any UpdaterProviding) {
+        self.provider = provider
         // Default to true for automatic checks if not previously set
         let hasExistingPreference = UserDefaults.standard.object(forKey: "SUAutomaticallyChecksForUpdates") != nil
         if !hasExistingPreference {
-            updater.automaticallyChecksForUpdates = true
+            provider.automaticallyChecksForUpdates = true
         }
-        self.automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
+        self.automaticallyChecksForUpdates = provider.automaticallyChecksForUpdates
         self.includeBetaReleases = UserDefaults.standard.bool(forKey: "SUIncludeBetaReleases")
-        self.canCheckForUpdates = updater.canCheckForUpdates
+        self.canCheckForUpdates = provider.canCheckForUpdates
 
         // Observe changes to canCheckForUpdates
-        updater.publisher(for: \.canCheckForUpdates)
-            .receive(on: RunLoop.main)
+        provider.canCheckForUpdatesPublisher
             .sink { [weak self] canCheck in
                 self?.canCheckForUpdates = canCheck
             }
@@ -283,12 +284,7 @@ final class UpdaterViewModel: ObservableObject {
 
     /// Manually check for updates
     func checkForUpdates() {
-        // Use the controller's action method if available (same path as Menu Bar)
-        if let controller = controller {
-            controller.checkForUpdates(nil)
-        } else {
-            updater.checkForUpdates()
-        }
+        provider.checkForUpdates()
     }
 }
 
