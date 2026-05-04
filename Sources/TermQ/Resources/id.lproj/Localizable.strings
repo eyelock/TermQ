@@ -146,7 +146,9 @@
 "editor.section.appearance" = "Tampilan";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Default";
+"editor.field.theme.override" = "Ganti tema bawaan";
 "editor.field.font.size" = "Ukuran Font";
+"editor.field.font.size.override" = "Ganti ukuran font bawaan";
 "editor.font.preview" = "AaBbCc Indo 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "Perintah yang dijalankan saat terminal dimulai";
 "editor.field.safe.paste" = "Tempel Aman";
 "editor.field.safe.paste.help" = "Tampilkan konfirmasi sebelum menempel teks multi-baris";
+"editor.field.safe.paste.override" = "Ganti tempel aman bawaan";
+"editor.field.safe.paste.inherited.on" = "Aktif (diwarisi)";
+"editor.field.safe.paste.inherited.off" = "Nonaktif (diwarisi)";
 "editor.field.allow.autorun" = "Izinkan Autorun";
 "editor.field.allow.autorun.help" = "Izinkan CLI menjalankan perintah secara otomatis";
 "editor.field.autorun.disabled.globally" = "Autorun dinonaktifkan secara global";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Ganti backend bawaan";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend tidak dapat diubah saat sesi aktif. Mulai ulang sesi untuk mengubah backend.";

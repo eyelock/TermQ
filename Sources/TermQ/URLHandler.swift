@@ -17,21 +17,11 @@ class URLHandler: ObservableObject {
 
     @Published var pendingTerminal: PendingTerminal?
 
-    /// User preference key for requiring confirmation on external LLM context modifications
-    private static let confirmExternalLLMModificationsKey = "confirmExternalLLMModifications"
-
-    /// Whether to require user confirmation when external processes modify LLM context
+    /// Whether to require user confirmation when external processes modify LLM context.
+    /// Routes through `SettingsStore` so a Settings-panel toggle takes effect immediately.
     var confirmExternalLLMModifications: Bool {
-        get {
-            // Default to true for security
-            if UserDefaults.standard.object(forKey: Self.confirmExternalLLMModificationsKey) == nil {
-                return true
-            }
-            return UserDefaults.standard.bool(forKey: Self.confirmExternalLLMModificationsKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: Self.confirmExternalLLMModificationsKey)
-        }
+        get { SettingsStore.shared.confirmExternalLLMModifications }
+        set { SettingsStore.shared.confirmExternalLLMModifications = newValue }
     }
 
     struct PendingTerminal: Identifiable {

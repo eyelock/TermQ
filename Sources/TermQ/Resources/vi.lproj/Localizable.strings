@@ -148,7 +148,9 @@
 "editor.section.appearance" = "Giao diện";
 "editor.field.theme" = "Chủ đề";
 "editor.field.theme.default" = "Mặc định";
+"editor.field.theme.override" = "Ghi đè chủ đề mặc định";
 "editor.field.font.size" = "Cỡ chữ";
+"editor.field.font.size.override" = "Ghi đè cỡ chữ mặc định";
 "editor.font.preview" = "AaBbCc Việt 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "Lệnh chạy khi terminal bắt đầu";
 "editor.field.safe.paste" = "Dán an toàn";
 "editor.field.safe.paste.help" = "Hiển thị xác nhận trước khi dán văn bản nhiều dòng";
+"editor.field.safe.paste.override" = "Ghi đè dán an toàn mặc định";
+"editor.field.safe.paste.inherited.on" = "Bật (kế thừa)";
+"editor.field.safe.paste.inherited.off" = "Tắt (kế thừa)";
 "editor.field.allow.autorun" = "Cho phép tự động chạy";
 "editor.field.allow.autorun.help" = "Cho phép CLI tự động chạy lệnh";
 "editor.field.autorun.disabled.globally" = "Tự động chạy bị tắt toàn cục";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Ghi đè backend mặc định";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Không thể thay đổi backend khi phiên đang hoạt động. Khởi động lại phiên để thay đổi backend.";

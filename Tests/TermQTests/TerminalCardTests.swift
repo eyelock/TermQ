@@ -104,18 +104,18 @@ final class TerminalCardTests: XCTestCase {
 
     // MARK: - Safe Paste Tests
 
-    func testSafePasteEnabledDefaultsToTrue() {
+    func testSafePasteEnabledDefaultsToInherit() {
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId)
 
-        XCTAssertTrue(card.safePasteEnabled)
+        XCTAssertNil(card.safePasteEnabled, "new cards should inherit from SettingsStore")
     }
 
     func testSafePasteEnabledCustomValue() {
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId, safePasteEnabled: false)
 
-        XCTAssertFalse(card.safePasteEnabled)
+        XCTAssertEqual(card.safePasteEnabled, false)
     }
 
     func testSafePasteEnabledCodableRoundTrip() throws {
@@ -129,11 +129,13 @@ final class TerminalCardTests: XCTestCase {
         let decoded = try decoder.decode(TerminalCard.self, from: data)
 
         XCTAssertEqual(decoded.safePasteEnabled, original.safePasteEnabled)
-        XCTAssertFalse(decoded.safePasteEnabled)
+        XCTAssertEqual(decoded.safePasteEnabled, false)
     }
 
-    func testSafePasteEnabledDefaultsToTrueWhenMissingInJSON() throws {
-        // Simulate loading old data without safePasteEnabled field
+    func testSafePasteEnabledMissingFromJSONIsInherit() throws {
+        // Cards persisted without safePasteEnabled should decode to nil
+        // (inherit), not silently to true. The user-layer fallback now
+        // lives on SettingsStore.
         let columnId = UUID()
         let json = """
             {
@@ -157,17 +159,70 @@ final class TerminalCardTests: XCTestCase {
         let decoder = JSONDecoder()
         let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
 
-        // Should default to true when missing
-        XCTAssertTrue(decoded.safePasteEnabled)
+        XCTAssertNil(decoded.safePasteEnabled)
+    }
+
+    func testNewCardWithAllInheritFields_survivesEncodeDecode_asNil() throws {
+        // The new contract: a card created with `nil` overrides on the
+        // four drift fields encodes via `encodeIfPresent` (no key
+        // emitted) and decodes back as `nil`. This guards against a
+        // regression where the encoder writes a sentinel value that the
+        // decoder then re-interprets as an explicit override on the
+        // next load — silently turning new cards into legacy cards.
+        let card = TerminalCard(columnId: UUID())
+        XCTAssertNil(card.safePasteEnabled)
+        XCTAssertNil(card.fontSize)
+        XCTAssertNil(card.themeId)
+        XCTAssertNil(card.backend)
+
+        let data = try JSONEncoder().encode(card)
+        let decoded = try JSONDecoder().decode(TerminalCard.self, from: data)
+
+        XCTAssertNil(decoded.safePasteEnabled)
+        XCTAssertNil(decoded.fontSize)
+        XCTAssertNil(decoded.themeId)
+        XCTAssertNil(decoded.backend)
+    }
+
+    func testSafePasteEnabledConcretePreUpgradeDecodesAsOverride() throws {
+        // Drift-field migration contract: cards persisted with a concrete
+        // value continue to round-trip as an explicit override. This
+        // preserves "what they had" on upgrade — those cards do not
+        // suddenly start tracking the global default.
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test",
+                "description": "",
+                "tags": [],
+                "columnId": "\(columnId.uuidString)",
+                "orderIndex": 0,
+                "shellPath": "/bin/zsh",
+                "workingDirectory": "/tmp",
+                "isFavourite": false,
+                "initCommand": "",
+                "llmPrompt": "",
+                "badge": "",
+                "fontName": "",
+                "fontSize": 0,
+                "safePasteEnabled": true
+            }
+            """
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
+
+        XCTAssertEqual(decoded.safePasteEnabled, true)
     }
 
     // MARK: - Theme ID Tests
 
-    func testThemeIdDefaultsToEmpty() {
+    func testThemeIdDefaultsToInherit() {
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId)
 
-        XCTAssertEqual(card.themeId, "")
+        XCTAssertNil(card.themeId, "new cards should inherit from SettingsStore")
     }
 
     func testThemeIdCustomValue() {
@@ -191,7 +246,39 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertEqual(decoded.themeId, "monokai")
     }
 
-    func testThemeIdDefaultsToEmptyWhenMissingInJSON() throws {
+    func testThemeIdEmptyStringFromOldJSONDecodesAsInherit() throws {
+        // Pre-migration the empty-string was a sentinel for "use default."
+        // The Optional contract treats it as `nil` (inherit) so the user's
+        // intent ("I never set this") survives.
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Test",
+                "description": "",
+                "tags": [],
+                "columnId": "\(columnId.uuidString)",
+                "orderIndex": 0,
+                "shellPath": "/bin/zsh",
+                "workingDirectory": "/tmp",
+                "isFavourite": false,
+                "initCommand": "",
+                "llmPrompt": "",
+                "badge": "",
+                "fontName": "",
+                "fontSize": 0,
+                "safePasteEnabled": true,
+                "themeId": ""
+            }
+            """
+
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
+
+        XCTAssertNil(decoded.themeId)
+    }
+
+    func testThemeIdMissingFromJSONIsInherit() throws {
         // Simulate loading old data without themeId field
         let columnId = UUID()
         let json = """
@@ -217,21 +304,20 @@ final class TerminalCardTests: XCTestCase {
         let decoder = JSONDecoder()
         let decoded = try decoder.decode(TerminalCard.self, from: json.data(using: .utf8)!)
 
-        // Should default to empty when missing
-        XCTAssertEqual(decoded.themeId, "")
+        XCTAssertNil(decoded.themeId)
     }
 
     func testThemeIdObservable() {
         let columnId = UUID()
         let card = TerminalCard(columnId: columnId)
 
-        XCTAssertEqual(card.themeId, "")
+        XCTAssertNil(card.themeId)
 
         card.themeId = "nord"
         XCTAssertEqual(card.themeId, "nord")
 
-        card.themeId = ""
-        XCTAssertEqual(card.themeId, "")
+        card.themeId = nil
+        XCTAssertNil(card.themeId)
     }
 
     // MARK: - LLM Next Action Tests
@@ -455,7 +541,7 @@ final class TerminalCardTests: XCTestCase {
         XCTAssertEqual(decoded.badge, "dev,main")
         XCTAssertEqual(decoded.fontName, "Monaco")
         XCTAssertEqual(decoded.fontSize, 14)
-        XCTAssertFalse(decoded.safePasteEnabled)
+        XCTAssertEqual(decoded.safePasteEnabled, false)
         XCTAssertEqual(decoded.themeId, "dracula")
         XCTAssertTrue(decoded.allowAutorun)
         XCTAssertNotNil(decoded.deletedAt)

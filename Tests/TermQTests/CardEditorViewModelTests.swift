@@ -71,7 +71,7 @@ final class CardEditorViewModelTests: XCTestCase {
         XCTAssertEqual(vm.badge, "urgent")
         XCTAssertEqual(vm.fontName, "Menlo")
         XCTAssertEqual(vm.fontSize, 14)
-        XCTAssertFalse(vm.safePasteEnabled)
+        XCTAssertEqual(vm.safePasteEnabled, false)
         XCTAssertEqual(vm.themeId, "dark")
         XCTAssertTrue(vm.allowAutorun)
         XCTAssertFalse(vm.allowOscClipboard)
@@ -79,14 +79,18 @@ final class CardEditorViewModelTests: XCTestCase {
         XCTAssertEqual(vm.backend, .tmuxAttach)
     }
 
-    func testLoad_fontSizeZero_defaultsTo13() {
+    func testLoad_fontSizeNil_loadsAsInherit() {
+        // Pre-Optional behavior: fontSize=0 sentinel was treated as
+        // "default 13pt" at load time. The Optional contract surfaces
+        // "inherit" explicitly so the editor's override toggle has
+        // something honest to bind to.
         let card = TerminalCard(columnId: UUID())
-        card.fontSize = 0
+        card.fontSize = nil
 
         let vm = CardEditorViewModel()
         vm.load(from: card)
 
-        XCTAssertEqual(vm.fontSize, 13)
+        XCTAssertNil(vm.fontSize)
     }
 
     func testLoad_sortsTags() {
@@ -142,7 +146,7 @@ final class CardEditorViewModelTests: XCTestCase {
         XCTAssertEqual(card.badge, "prod")
         XCTAssertEqual(card.fontName, "Monaco")
         XCTAssertEqual(card.fontSize, 16)
-        XCTAssertFalse(card.safePasteEnabled)
+        XCTAssertEqual(card.safePasteEnabled, false)
         XCTAssertEqual(card.themeId, "light")
         XCTAssertTrue(card.allowAutorun)
         XCTAssertFalse(card.allowOscClipboard)

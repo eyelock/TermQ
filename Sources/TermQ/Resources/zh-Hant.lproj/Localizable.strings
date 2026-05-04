@@ -146,7 +146,9 @@
 "editor.section.appearance" = "外觀";
 "editor.field.theme" = "佈景主題";
 "editor.field.theme.default" = "預設";
+"editor.field.theme.override" = "覆寫預設主題";
 "editor.field.font.size" = "字體大小";
+"editor.field.font.size.override" = "覆寫預設字體大小";
 "editor.font.preview" = "AaBbCc 中文 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "終端機啟動時執行的指令";
 "editor.field.safe.paste" = "安全貼上";
 "editor.field.safe.paste.help" = "貼上多行文字前顯示確認";
+"editor.field.safe.paste.override" = "覆寫預設安全貼上";
+"editor.field.safe.paste.inherited.on" = "開啟（繼承）";
+"editor.field.safe.paste.inherited.off" = "關閉（繼承）";
 "editor.field.allow.autorun" = "允許自動執行";
 "editor.field.allow.autorun.help" = "允許 CLI 自動執行指令";
 "editor.field.autorun.disabled.globally" = "自動執行已全域停用";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "覆寫預設後端";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "工作階段處於活動狀態時無法變更後端。重新啟動工作階段以變更後端。";

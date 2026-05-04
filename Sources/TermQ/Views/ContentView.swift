@@ -69,9 +69,7 @@ struct ContentView: View {
                             focus: nil,
                             workingDirectory: path,
                             prompt: nil,
-                            backend: TerminalBackend(
-                                rawValue: UserDefaults.standard.string(forKey: "defaultBackend") ?? "direct")
-                                ?? .direct,
+                            backend: SettingsStore.shared.backend,
                             branch: branch
                         )
                         launchHarness(config)
@@ -715,17 +713,18 @@ extension ContentView {
             targetColumn = viewModel.board.columns.first ?? Column(name: Constants.Columns.fallbackName, orderIndex: 0)
         }
 
-        // Create the card with optional pre-generated ID (from CLI/MCP)
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
-        let defaultAllowAutorun = UserDefaults.standard.object(forKey: "enableTerminalAutorun") as? Bool ?? false
-        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+        // Create the card with optional pre-generated ID (from CLI/MCP).
+        // safePaste/backend stay `nil` (inherit on use); the three security
+        // flags are snapshotted at create time from SettingsStore.
+        let defaultAllowAutorun = SettingsStore.shared.enableTerminalAutorun
+        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
         let defaultConfirmExternalModifications =
-            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+            SettingsStore.shared.confirmExternalLLMModifications
         let card = viewModel.board.addCard(
             to: targetColumn,
             title: pending.name ?? "Terminal",
             id: pending.cardId,
-            safePasteEnabled: defaultSafePaste,
+            safePasteEnabled: nil,
             allowAutorun: defaultAllowAutorun,
             allowOscClipboard: defaultAllowOscClipboard,
             confirmExternalModifications: defaultConfirmExternalModifications
@@ -770,19 +769,22 @@ extension ContentView {
         } else {
             return
         }
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
-        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+
+        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
         let defaultConfirmExternalModifications =
-            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+            SettingsStore.shared.confirmExternalLLMModifications
         let card = TerminalCard(
             title: "ynh install \(config.displayName)",
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
             initCommand: config.command(ynhPath: ynhPath) + " && exit",
-            safePasteEnabled: defaultSafePaste,
+            safePasteEnabled: nil,
             allowOscClipboard: defaultAllowOscClipboard,
             confirmExternalModifications: defaultConfirmExternalModifications,
+            // Forced direct: ynh install runs synchronously and exits;
+            // not a user backend preference, so we override here rather
+            // than inherit from SettingsStore.
             backend: .direct
         )
         card.isTransient = true
@@ -826,19 +828,20 @@ extension ContentView {
         } else {
             return
         }
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
-        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+
+        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
         let defaultConfirmExternalModifications =
-            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+            SettingsStore.shared.confirmExternalLLMModifications
         let card = TerminalCard(
             title: "ynh uninstall \(name)",
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
             initCommand: "\(ynhPath) uninstall \(shellQuote(name)) && exit",
-            safePasteEnabled: defaultSafePaste,
+            safePasteEnabled: nil,
             allowOscClipboard: defaultAllowOscClipboard,
             confirmExternalModifications: defaultConfirmExternalModifications,
+            // Forced direct: ynh uninstall is a one-shot; not a user choice.
             backend: .direct
         )
         card.isTransient = true
@@ -870,19 +873,20 @@ extension ContentView {
                 viewModel.board.columns.first { $0.id == c.columnId }
             }) ?? viewModel.board.columns.first
         else { return }
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
-        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+
+        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
         let defaultConfirmExternalModifications =
-            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+            SettingsStore.shared.confirmExternalLLMModifications
         let card = TerminalCard(
             title: "ynd export \(name)",
             tags: [],
             columnId: column.id,
             workingDirectory: harness.path,
             initCommand: "\(yndPath) export \(shellQuote(harness.path)) -o \(shellQuote(outputDir)) && exit",
-            safePasteEnabled: defaultSafePaste,
+            safePasteEnabled: nil,
             allowOscClipboard: defaultAllowOscClipboard,
             confirmExternalModifications: defaultConfirmExternalModifications,
+            // Forced direct: ynd export is a one-shot; not a user choice.
             backend: .direct
         )
         card.isTransient = true
@@ -934,10 +938,10 @@ extension ContentView {
             allTags.append(Tag(key: "session", value: sessionName))
             allTags.append(Tag(key: "window", value: "0"))
         }
-        let defaultSafePaste = UserDefaults.standard.object(forKey: "defaultSafePaste") as? Bool ?? true
-        let defaultAllowOscClipboard = UserDefaults.standard.object(forKey: "allowOscClipboard") as? Bool ?? false
+
+        let defaultAllowOscClipboard = SettingsStore.shared.allowOscClipboard
         let defaultConfirmExternalModifications =
-            UserDefaults.standard.object(forKey: "confirmExternalLLMModifications") as? Bool ?? true
+            SettingsStore.shared.confirmExternalLLMModifications
         let card = TerminalCard(
             id: cardID,
             title: config.branch ?? config.harnessName,
@@ -945,7 +949,7 @@ extension ContentView {
             columnId: column.id,
             workingDirectory: config.workingDirectory,
             initCommand: config.command(sessionName: sessionName),
-            safePasteEnabled: defaultSafePaste,
+            safePasteEnabled: nil,
             allowOscClipboard: defaultAllowOscClipboard,
             confirmExternalModifications: defaultConfirmExternalModifications,
             backend: config.backend

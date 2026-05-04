@@ -147,7 +147,9 @@
 "editor.section.appearance" = "מראה";
 "editor.field.theme" = "ערכת נושא";
 "editor.field.theme.default" = "ברירת מחדל";
+"editor.field.theme.override" = "עקוף ערכת נושא ברירת מחדל";
 "editor.field.font.size" = "גודל גופן";
+"editor.field.font.size.override" = "עקוף גודל גופן ברירת מחדל";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "פקודה להרצה בעת הפעלת המסוף";
 "editor.field.safe.paste" = "הדבקה בטוחה";
 "editor.field.safe.paste.help" = "הצג אישור לפני הדבקת טקסט מרובה שורות";
+"editor.field.safe.paste.override" = "עקוף הדבקה בטוחה ברירת מחדל";
+"editor.field.safe.paste.inherited.on" = "פועל (בירושה)";
+"editor.field.safe.paste.inherited.off" = "כבוי (בירושה)";
 "editor.field.allow.autorun" = "אפשר הרצה אוטומטית";
 "editor.field.allow.autorun.help" = "אפשר ל-CLI להריץ פקודות אוטומטית";
 "editor.field.autorun.disabled.globally" = "הרצה אוטומטית מושבתת גלובלית";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "עקוף backend ברירת מחדל";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "לא ניתן לשנות את ה-backend כאשר ההפעלה פעילה. הפעל מחדש את ההפעלה כדי לשנות backends.";

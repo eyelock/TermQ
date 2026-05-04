@@ -148,7 +148,9 @@
 "editor.section.appearance" = "Utseende";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Standard";
+"editor.field.theme.override" = "Åsidosätt standardtema";
 "editor.field.font.size" = "Teckenstorlek";
+"editor.field.font.size.override" = "Åsidosätt standardteckenstorlek";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "Kommando att köra när terminalen startar";
 "editor.field.safe.paste" = "Säker inklistring";
 "editor.field.safe.paste.help" = "Visa bekräftelse innan flerradigt text klistras in";
+"editor.field.safe.paste.override" = "Åsidosätt standardinställning för säker inklistring";
+"editor.field.safe.paste.inherited.on" = "På (ärvt)";
+"editor.field.safe.paste.inherited.off" = "Av (ärvt)";
 "editor.field.allow.autorun" = "Tillåt autokörning";
 "editor.field.allow.autorun.help" = "Tillåt CLI att köra kommandon automatiskt";
 "editor.field.autorun.disabled.globally" = "Autokörning inaktiverad globalt";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Åsidosätt standard-backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend kan inte ändras medan sessionen är aktiv. Starta om sessionen för att ändra backends.";

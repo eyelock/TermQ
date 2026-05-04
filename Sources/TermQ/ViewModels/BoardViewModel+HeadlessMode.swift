@@ -22,9 +22,7 @@ extension BoardViewModel {
             return
         }
 
-        // Check if tmux is enabled globally (default true)
-        let tmuxEnabled = UserDefaults.standard.object(forKey: "tmuxEnabled") as? Bool ?? true
-        guard tmuxEnabled else {
+        guard SettingsStore.shared.tmuxEnabled else {
             // If tmux is disabled, don't create sessions
             return
         }

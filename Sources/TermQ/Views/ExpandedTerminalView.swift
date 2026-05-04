@@ -103,7 +103,7 @@ struct ExpandedTerminalView: View {
                     }
             } else {
                 // Show multi-pane view only for tmux control mode backend
-                let backend = card.backend
+                let backend = SettingsStore.shared.effectiveBackend(card: card.backend)
                 let hasControlSession = sessionManager.getControlModeSession(for: card.id) != nil
                 let paneCount = sessionManager.getControlModeSession(for: card.id)?.parser.panes.count ?? 0
 

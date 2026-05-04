@@ -146,7 +146,9 @@
 "editor.section.appearance" = "外观";
 "editor.field.theme" = "主题";
 "editor.field.theme.default" = "默认";
+"editor.field.theme.override" = "覆盖默认主题";
 "editor.field.font.size" = "字体大小";
+"editor.field.font.size.override" = "覆盖默认字体大小";
 "editor.font.preview" = "AaBbCc 中文 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "终端启动时运行的命令";
 "editor.field.safe.paste" = "安全粘贴";
 "editor.field.safe.paste.help" = "粘贴多行文本前显示确认";
+"editor.field.safe.paste.override" = "覆盖默认安全粘贴";
+"editor.field.safe.paste.inherited.on" = "开启（继承）";
+"editor.field.safe.paste.inherited.off" = "关闭（继承）";
 "editor.field.allow.autorun" = "允许自动运行";
 "editor.field.allow.autorun.help" = "允许 CLI 自动运行命令";
 "editor.field.autorun.disabled.globally" = "自动运行已全局禁用";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "覆盖默认后端";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "会话活动时无法更改后端。重新启动会话以更改后端。";

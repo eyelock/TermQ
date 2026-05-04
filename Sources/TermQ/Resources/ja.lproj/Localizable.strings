@@ -146,7 +146,9 @@
 "editor.section.appearance" = "外観";
 "editor.field.theme" = "テーマ";
 "editor.field.theme.default" = "デフォルト";
+"editor.field.theme.override" = "デフォルトテーマを上書き";
 "editor.field.font.size" = "フォントサイズ";
+"editor.field.font.size.override" = "デフォルトフォントサイズを上書き";
 "editor.font.preview" = "AaBbCc あいう 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "ターミナル起動時に実行するコマンド";
 "editor.field.safe.paste" = "安全な貼り付け";
 "editor.field.safe.paste.help" = "複数行テキストの貼り付け前に確認を表示";
+"editor.field.safe.paste.override" = "デフォルトの安全な貼り付けを上書き";
+"editor.field.safe.paste.inherited.on" = "オン（継承）";
+"editor.field.safe.paste.inherited.off" = "オフ（継承）";
 "editor.field.allow.autorun" = "自動実行を許可";
 "editor.field.allow.autorun.help" = "CLIによるコマンドの自動実行を許可";
 "editor.field.autorun.disabled.globally" = "自動実行はグローバルで無効です";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "デフォルトバックエンドを上書き";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "セッションがアクティブな間はバックエンドを変更できません。バックエンドを変更するにはセッションを再起動してください。";

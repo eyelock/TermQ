@@ -147,7 +147,9 @@
 "editor.section.appearance" = "दिखावट";
 "editor.field.theme" = "थीम";
 "editor.field.theme.default" = "डिफ़ॉल्ट";
+"editor.field.theme.override" = "डिफ़ॉल्ट थीम ओवरराइड करें";
 "editor.field.font.size" = "फ़ॉन्ट आकार";
+"editor.field.font.size.override" = "डिफ़ॉल्ट फ़ॉन्ट आकार ओवरराइड करें";
 "editor.font.preview" = "AaBbCc हिंदी 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "टर्मिनल शुरू होने पर चलाने के लिए कमांड";
 "editor.field.safe.paste" = "सुरक्षित पेस्ट";
 "editor.field.safe.paste.help" = "बहु-पंक्ति टेक्स्ट पेस्ट करने से पहले पुष्टि दिखाएं";
+"editor.field.safe.paste.override" = "डिफ़ॉल्ट सुरक्षित पेस्ट ओवरराइड करें";
+"editor.field.safe.paste.inherited.on" = "चालू (विरासत में)";
+"editor.field.safe.paste.inherited.off" = "बंद (विरासत में)";
 "editor.field.allow.autorun" = "ऑटोरन की अनुमति दें";
 "editor.field.allow.autorun.help" = "CLI को स्वचालित रूप से कमांड चलाने की अनुमति दें";
 "editor.field.autorun.disabled.globally" = "ऑटोरन वैश्विक रूप से अक्षम है";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "डिफ़ॉल्ट बैकएंड ओवरराइड करें";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "सत्र सक्रिय होने पर बैकएंड नहीं बदला जा सकता। बैकएंड बदलने के लिए सत्र पुनः आरंभ करें।";

@@ -146,7 +146,9 @@
 "editor.section.appearance" = "Aspect";
 "editor.field.theme" = "Temă";
 "editor.field.theme.default" = "Implicit";
+"editor.field.theme.override" = "Suprascriere temă implicită";
 "editor.field.font.size" = "Dimensiune font";
+"editor.field.font.size.override" = "Suprascriere dimensiune font implicită";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "Comandă de rulat la pornirea terminalului";
 "editor.field.safe.paste" = "Lipire sigură";
 "editor.field.safe.paste.help" = "Afișare confirmare înainte de lipirea textului multilinie";
+"editor.field.safe.paste.override" = "Suprascriere lipire sigură implicită";
+"editor.field.safe.paste.inherited.on" = "Activat (moștenit)";
+"editor.field.safe.paste.inherited.off" = "Dezactivat (moștenit)";
 "editor.field.allow.autorun" = "Permitere rulare automată";
 "editor.field.allow.autorun.help" = "Permitere CLI să ruleze comenzi automat";
 "editor.field.autorun.disabled.globally" = "Rulare automată dezactivată global";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Suprascriere backend implicit";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend-ul nu poate fi modificat în timp ce sesiunea este activă. Reporniți sesiunea pentru a schimba backend-urile.";
