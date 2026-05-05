@@ -7,17 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-
-- **OSC 52 clipboard access default-mismatch.** The runtime gate in
-  `TerminalHostView` defaulted to `true` when the user had never touched
-  the setting, while Settings → Data & Security displayed `false`. So a
-  never-touched user saw "Off" in Settings but terminal programs could
-  silently copy to the clipboard. Both paths now read through
-  `SettingsStore`, defaulting to `false`. Existing users who had relied
-  on the implicit-on behavior should re-enable it explicitly in
-  Settings → Data & Security if they need it.
-
 ### Added
 
 - **Harness Management Phase 1** — first slice of the harness-as-first-class-citizen
@@ -85,6 +74,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   into the global, open the card editor and turn the "Override default"
   toggle off. This is intentional — it preserves "what users had" through
   the upgrade.
+
+## [0.9.6] — 2026-05-05
+
+### Fixed
+
+- **Focus stealing on MCP-driven URL deliveries** — Background `termq://`
+  URL deliveries via `NSWorkspace.open(activates: false)` were triggering
+  AppleEvent Reopen, and `applicationShouldHandleReopen` unconditionally
+  called `makeKeyAndOrderFront`, stealing focus from whatever app the
+  user was working in. The handler now only activates the window on
+  genuine user-initiated reopen (unhide on Cmd+H, deminiaturize on
+  Cmd+M, or bring forward when no windows are visible).
+- **Marketplace removals not persisted** — Removing a marketplace from
+  Settings → External Sources didn't survive relaunch. Three concurrent
+  issues fixed: the confirmation dialog read state after dismissal
+  (racy), `save()` swallowed errors with `try?`, and a re-seed could
+  re-add a default the user had removed. Tombstones now track removed
+  defaults (`marketplaces.removedDefaultURLs.v1`); Restore Defaults
+  bypasses tombstones explicitly.
+- **OSC 52 clipboard default mismatched Settings UI** — The runtime gate
+  defaulted to `true` on unset while Settings → Data & Security
+  displayed `false`, so a never-touched user saw "Off" but terminal
+  programs could silently copy to the clipboard. The runtime now
+  defaults to `false` to match the Settings UI. Behavior change:
+  existing users who relied on the implicit-on default will need to
+  enable OSC 52 explicitly.
 
 ## [0.9.5] — 2026-05-03
 
