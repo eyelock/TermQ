@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "インクルードを追加…";
-"harnesses.include.add.step.source" = "ソースを選択";
-"harnesses.include.add.step.picks" = "アーティファクトを選択";
-"harnesses.include.add.step.review" = "確認";
-"harnesses.include.add.step.running" = "インクルードを追加中…";
-"harnesses.include.add.source.marketplace" = "マーケットプレイスから";
-"harnesses.include.add.source.giturl" = "Git URLから";
+"harnesses.include.add.edit.existing" = "編集";
 "harnesses.include.add.search.placeholder" = "プラグインを検索…";
 "harnesses.include.add.no.marketplaces" = "マーケットプレイスが設定されていません。マーケットプレイスタブから追加してください。";
 "harnesses.include.add.no.matches" = "一致するプラグインがありません。";

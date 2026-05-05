@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "إضافة تضمين…";
-"harnesses.include.add.step.source" = "اختر مصدرًا";
-"harnesses.include.add.step.picks" = "اختر العناصر";
-"harnesses.include.add.step.review" = "مراجعة";
-"harnesses.include.add.step.running" = "جارٍ إضافة التضمين…";
-"harnesses.include.add.source.marketplace" = "من السوق";
-"harnesses.include.add.source.giturl" = "من رابط Git";
+"harnesses.include.add.edit.existing" = "تعديل";
 "harnesses.include.add.search.placeholder" = "البحث في الإضافات…";
 "harnesses.include.add.no.marketplaces" = "لا توجد أسواق مُهيّأة. استخدم تبويب الأسواق لإضافة واحد.";
 "harnesses.include.add.no.matches" = "لا توجد إضافات مطابقة.";

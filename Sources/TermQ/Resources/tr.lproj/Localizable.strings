@@ -994,12 +994,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Ekleme Ekle…";
-"harnesses.include.add.step.source" = "Kaynak seçin";
-"harnesses.include.add.step.picks" = "Yapıtları seçin";
-"harnesses.include.add.step.review" = "İncele";
-"harnesses.include.add.step.running" = "Ekleme ekleniyor…";
-"harnesses.include.add.source.marketplace" = "Pazardan";
-"harnesses.include.add.source.giturl" = "Git URL'den";
+"harnesses.include.add.edit.existing" = "Düzenle";
 "harnesses.include.add.search.placeholder" = "Eklentileri ara…";
 "harnesses.include.add.no.marketplaces" = "Yapılandırılmış pazar yok. Bir tane eklemek için Pazarlar sekmesini kullanın.";
 "harnesses.include.add.no.matches" = "Eşleşen eklenti yok.";

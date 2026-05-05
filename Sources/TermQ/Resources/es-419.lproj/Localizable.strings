@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Agregar inclusión…";
-"harnesses.include.add.step.source" = "Elegir una fuente";
-"harnesses.include.add.step.picks" = "Elegir artefactos";
-"harnesses.include.add.step.review" = "Revisar";
-"harnesses.include.add.step.running" = "Agregando inclusión…";
-"harnesses.include.add.source.marketplace" = "Desde marketplace";
-"harnesses.include.add.source.giturl" = "Desde URL Git";
+"harnesses.include.add.edit.existing" = "Editar";
 "harnesses.include.add.search.placeholder" = "Buscar plugins…";
 "harnesses.include.add.no.marketplaces" = "No hay marketplaces configurados. Usa la pestaña Marketplaces para agregar uno.";
 "harnesses.include.add.no.matches" = "Ningún plugin coincide.";

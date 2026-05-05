@@ -993,12 +993,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Belefoglalás hozzáadása…";
-"harnesses.include.add.step.source" = "Forrás kiválasztása";
-"harnesses.include.add.step.picks" = "Összetevők kiválasztása";
-"harnesses.include.add.step.review" = "Áttekintés";
-"harnesses.include.add.step.running" = "Belefoglalás hozzáadása…";
-"harnesses.include.add.source.marketplace" = "Piactérről";
-"harnesses.include.add.source.giturl" = "Git URL-ről";
+"harnesses.include.add.edit.existing" = "Szerkesztés";
 "harnesses.include.add.search.placeholder" = "Bővítmények keresése…";
 "harnesses.include.add.no.marketplaces" = "Nincs beállított piactér. Adjon hozzá egyet a Piacterek lapfülön.";
 "harnesses.include.add.no.matches" = "Nincs egyező bővítmény.";

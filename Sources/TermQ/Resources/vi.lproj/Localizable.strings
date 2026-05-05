@@ -994,12 +994,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Thêm mục bao gồm…";
-"harnesses.include.add.step.source" = "Chọn nguồn";
-"harnesses.include.add.step.picks" = "Chọn tạo phẩm";
-"harnesses.include.add.step.review" = "Xem lại";
-"harnesses.include.add.step.running" = "Đang thêm mục bao gồm…";
-"harnesses.include.add.source.marketplace" = "Từ Marketplace";
-"harnesses.include.add.source.giturl" = "Từ Git URL";
+"harnesses.include.add.edit.existing" = "Chỉnh sửa";
 "harnesses.include.add.search.placeholder" = "Tìm kiếm plugin…";
 "harnesses.include.add.no.marketplaces" = "Chưa có marketplace nào được cấu hình. Dùng tab Marketplaces để thêm một cái.";
 "harnesses.include.add.no.matches" = "Không có plugin nào phù hợp.";

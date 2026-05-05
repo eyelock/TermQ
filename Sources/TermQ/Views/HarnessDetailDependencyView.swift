@@ -81,7 +81,13 @@ struct HarnessDetailDependencyView: View {
                 addDelegateSection(editor: delegateEditor)
             }
         }
-        .modifier(IncludeEditorOverlay(editor: includeEditor, harnessName: harness.name))
+        .modifier(
+            IncludeEditorOverlay(
+                editor: includeEditor,
+                harnessName: harness.name,
+                existingIncludes: existingIncludeTargets
+            )
+        )
         .modifier(DelegateEditorOverlay(editor: delegateEditor, harnessName: harness.name))
     }
 
@@ -298,11 +304,14 @@ struct HarnessDetailDependencyView: View {
     // MARK: - Add Include section (only shown when an editor is provided)
 
     private func addIncludeSection(editor: HarnessIncludeEditor) -> some View {
-        AddIncludeSectionView(
-            harnessName: harness.name,
-            editor: editor,
-            existingIncludes: existingIncludeTargets
-        )
+        Button {
+            editor.startAddingInclude()
+        } label: {
+            Label(Strings.Harnesses.addIncludeButton, systemImage: "plus.circle")
+                .font(.system(size: 12))
+        }
+        .buttonStyle(.borderless)
+        .foregroundColor(.accentColor)
     }
 
     private func addDelegateSection(editor: HarnessDelegateEditor) -> some View {
@@ -529,39 +538,6 @@ struct GitPickPill: View {
     }
 }
 
-// MARK: - Add Include Section
-
-/// Inline section rendered when an editor is provided. Shows the Add Include
-/// button by default; expands into the full `AddIncludeFlow` panel when
-/// the user clicks it. Wrapped as a small @ObservedObject view so SwiftUI
-/// re-renders on `editor.isAddingInclude` changes.
-private struct AddIncludeSectionView: View {
-    let harnessName: String
-    @ObservedObject var editor: HarnessIncludeEditor
-    let existingIncludes: [IncludeEditTarget]
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if editor.isAddingInclude {
-                AddIncludeFlow(
-                    harnessName: harnessName,
-                    editor: editor,
-                    existingIncludes: existingIncludes
-                )
-            } else {
-                Button {
-                    editor.startAddingInclude()
-                } label: {
-                    Label(Strings.Harnesses.addIncludeButton, systemImage: "plus.circle")
-                        .font(.system(size: 12))
-                }
-                .buttonStyle(.borderless)
-                .foregroundColor(.accentColor)
-            }
-        }
-    }
-}
-
 // MARK: - Include Editor Overlay
 
 /// Hosts the remove-confirmation dialog and edit sheet driven by
@@ -570,11 +546,17 @@ private struct AddIncludeSectionView: View {
 private struct IncludeEditorOverlay: ViewModifier {
     let editor: HarnessIncludeEditor?
     let harnessName: String
+    let existingIncludes: [IncludeEditTarget]
 
     func body(content: Content) -> some View {
         if let editor {
-            content
-                .modifier(IncludeEditorActiveOverlay(editor: editor, harnessName: harnessName))
+            content.modifier(
+                IncludeEditorActiveOverlay(
+                    editor: editor,
+                    harnessName: harnessName,
+                    existingIncludes: existingIncludes
+                )
+            )
         } else {
             content
         }
@@ -584,6 +566,7 @@ private struct IncludeEditorOverlay: ViewModifier {
 private struct IncludeEditorActiveOverlay: ViewModifier {
     @ObservedObject var editor: HarnessIncludeEditor
     let harnessName: String
+    let existingIncludes: [IncludeEditTarget]
 
     func body(content: Content) -> some View {
         content
@@ -608,6 +591,14 @@ private struct IncludeEditorActiveOverlay: ViewModifier {
             .sheet(item: $editor.editingTarget) { target in
                 EditIncludeSheet(editor: editor, harnessName: harnessName, target: target)
                     .frame(width: 540, height: 620)
+            }
+            .sheet(isPresented: $editor.isAddingInclude) {
+                AddIncludeSheetHost(
+                    harnessName: harnessName,
+                    editor: editor,
+                    existingIncludes: existingIncludes
+                )
+                .frame(width: 520, height: 620)
             }
     }
 
@@ -683,6 +674,39 @@ private struct DelegateEditorActiveOverlay: ViewModifier {
             get: { editor.removalTarget != nil },
             set: { if !$0 { editor.removalTarget = nil } }
         )
+    }
+}
+
+// MARK: - Add Include sheet host
+
+/// Thin host that constructs an `AddIncludeContext` and presents the
+/// unified `SourcePicker`. Mirrors `AddDelegateSheetHost`.
+private struct AddIncludeSheetHost: View {
+    let harnessName: String
+    let editor: HarnessIncludeEditor
+    let existingIncludes: [IncludeEditTarget]
+
+    @StateObject private var context: AddIncludeContext
+
+    init(
+        harnessName: String,
+        editor: HarnessIncludeEditor,
+        existingIncludes: [IncludeEditTarget]
+    ) {
+        self.harnessName = harnessName
+        self.editor = editor
+        self.existingIncludes = existingIncludes
+        _context = StateObject(
+            wrappedValue: AddIncludeContext(
+                harnessName: harnessName,
+                existingIncludes: existingIncludes,
+                editor: editor
+            )
+        )
+    }
+
+    var body: some View {
+        SourcePicker(context: context)
     }
 }
 

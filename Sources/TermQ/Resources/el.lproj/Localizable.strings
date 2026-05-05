@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Προσθήκη συμπερίληψης…";
-"harnesses.include.add.step.source" = "Επιλογή πηγής";
-"harnesses.include.add.step.picks" = "Επιλογή αντικειμένων";
-"harnesses.include.add.step.review" = "Έλεγχος";
-"harnesses.include.add.step.running" = "Προσθήκη συμπερίληψης…";
-"harnesses.include.add.source.marketplace" = "Από marketplace";
-"harnesses.include.add.source.giturl" = "Από Git URL";
+"harnesses.include.add.edit.existing" = "Επεξεργασία";
 "harnesses.include.add.search.placeholder" = "Αναζήτηση προσθέτων…";
 "harnesses.include.add.no.marketplaces" = "Δεν έχουν ρυθμιστεί marketplace. Χρησιμοποιήστε την καρτέλα Marketplace για να προσθέσετε ένα.";
 "harnesses.include.add.no.matches" = "Κανένα πρόσθετο δεν ταιριάζει.";

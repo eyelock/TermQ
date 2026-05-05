@@ -993,12 +993,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Ajouter une inclusion…";
-"harnesses.include.add.step.source" = "Choisir une source";
-"harnesses.include.add.step.picks" = "Choisir les artefacts";
-"harnesses.include.add.step.review" = "Vérifier";
-"harnesses.include.add.step.running" = "Ajout de l'inclusion…";
-"harnesses.include.add.source.marketplace" = "Depuis le marché";
-"harnesses.include.add.source.giturl" = "Depuis une URL Git";
+"harnesses.include.add.edit.existing" = "Modifier";
 "harnesses.include.add.search.placeholder" = "Rechercher des plugins…";
 "harnesses.include.add.no.marketplaces" = "Aucun marché configuré. Utilisez l'onglet Marchés pour en ajouter un.";
 "harnesses.include.add.no.matches" = "Aucun plugin ne correspond.";

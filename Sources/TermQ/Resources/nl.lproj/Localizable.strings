@@ -992,12 +992,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Include toevoegen…";
-"harnesses.include.add.step.source" = "Kies een bron";
-"harnesses.include.add.step.picks" = "Kies artefacten";
-"harnesses.include.add.step.review" = "Controleren";
-"harnesses.include.add.step.running" = "Include wordt toegevoegd…";
-"harnesses.include.add.source.marketplace" = "Vanuit marketplace";
-"harnesses.include.add.source.giturl" = "Vanuit Git-URL";
+"harnesses.include.add.edit.existing" = "Bewerken";
 "harnesses.include.add.search.placeholder" = "Plugins zoeken…";
 "harnesses.include.add.no.marketplaces" = "Geen marketplaces geconfigureerd. Gebruik het tabblad Marketplaces om er een toe te voegen.";
 "harnesses.include.add.no.matches" = "Geen plugins gevonden.";

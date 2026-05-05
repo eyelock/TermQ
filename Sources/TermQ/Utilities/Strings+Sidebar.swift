@@ -237,12 +237,7 @@ extension Strings {
 
         // Add Include flow
         static var addIncludeButton: String { localized("harnesses.include.add.button") }
-        static var addIncludeStepSourceTitle: String { localized("harnesses.include.add.step.source") }
-        static var addIncludeStepPicksTitle: String { localized("harnesses.include.add.step.picks") }
-        static var addIncludeStepReviewTitle: String { localized("harnesses.include.add.step.review") }
-        static var addIncludeStepRunningTitle: String { localized("harnesses.include.add.step.running") }
-        static var addIncludeSourceMarketplace: String { localized("harnesses.include.add.source.marketplace") }
-        static var addIncludeSourceGitURL: String { localized("harnesses.include.add.source.giturl") }
+        static var addIncludeEditExisting: String { localized("harnesses.include.add.edit.existing") }
         static var addIncludeSearchPlaceholder: String { localized("harnesses.include.add.search.placeholder") }
         static var addIncludeNoMarketplaces: String { localized("harnesses.include.add.no.marketplaces") }
         static var addIncludeNoPluginMatches: String { localized("harnesses.include.add.no.matches") }

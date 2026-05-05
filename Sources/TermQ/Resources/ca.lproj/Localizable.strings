@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Afegeix inclusió…";
-"harnesses.include.add.step.source" = "Tria una font";
-"harnesses.include.add.step.picks" = "Tria artefactes";
-"harnesses.include.add.step.review" = "Revisa";
-"harnesses.include.add.step.running" = "Afegint inclusió…";
-"harnesses.include.add.source.marketplace" = "Des del mercat";
-"harnesses.include.add.source.giturl" = "Des d'URL Git";
+"harnesses.include.add.edit.existing" = "Edita";
 "harnesses.include.add.search.placeholder" = "Cerca connectors…";
 "harnesses.include.add.no.marketplaces" = "Cap mercat configurat. Utilitza la pestanya Mercats per afegir-ne un.";
 "harnesses.include.add.no.matches" = "Cap connector coincideix.";

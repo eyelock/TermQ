@@ -994,12 +994,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Lägg till include…";
-"harnesses.include.add.step.source" = "Välj källa";
-"harnesses.include.add.step.picks" = "Välj artefakter";
-"harnesses.include.add.step.review" = "Granska";
-"harnesses.include.add.step.running" = "Lägger till include…";
-"harnesses.include.add.source.marketplace" = "Från marknadsplats";
-"harnesses.include.add.source.giturl" = "Från Git-URL";
+"harnesses.include.add.edit.existing" = "Redigera";
 "harnesses.include.add.search.placeholder" = "Sök plugins…";
 "harnesses.include.add.no.marketplaces" = "Inga marknadsplatser konfigurerade. Använd fliken Marknadsplatser för att lägga till en.";
 "harnesses.include.add.no.matches" = "Inga plugins matchar.";

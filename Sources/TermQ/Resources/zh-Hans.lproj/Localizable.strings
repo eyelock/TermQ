@@ -989,12 +989,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "添加包含…";
-"harnesses.include.add.step.source" = "选择来源";
-"harnesses.include.add.step.picks" = "选择构件";
-"harnesses.include.add.step.review" = "审核";
-"harnesses.include.add.step.running" = "正在添加包含…";
-"harnesses.include.add.source.marketplace" = "来自应用市场";
-"harnesses.include.add.source.giturl" = "来自 Git URL";
+"harnesses.include.add.edit.existing" = "编辑";
 "harnesses.include.add.search.placeholder" = "搜索插件…";
 "harnesses.include.add.no.marketplaces" = "未配置应用市场。请使用"应用市场"标签页添加一个。";
 "harnesses.include.add.no.matches" = "没有匹配的插件。";

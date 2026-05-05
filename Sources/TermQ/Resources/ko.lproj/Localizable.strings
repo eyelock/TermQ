@@ -994,12 +994,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "포함 추가…";
-"harnesses.include.add.step.source" = "소스 선택";
-"harnesses.include.add.step.picks" = "아티팩트 선택";
-"harnesses.include.add.step.review" = "검토";
-"harnesses.include.add.step.running" = "포함 추가 중…";
-"harnesses.include.add.source.marketplace" = "마켓플레이스에서";
-"harnesses.include.add.source.giturl" = "Git URL에서";
+"harnesses.include.add.edit.existing" = "편집";
 "harnesses.include.add.search.placeholder" = "플러그인 검색…";
 "harnesses.include.add.no.marketplaces" = "마켓플레이스가 설정되지 않았습니다. 마켓플레이스 탭을 사용하여 추가하세요.";
 "harnesses.include.add.no.matches" = "일치하는 플러그인이 없습니다.";

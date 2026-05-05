@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Pridať zahrnutie…";
-"harnesses.include.add.step.source" = "Vybrať zdroj";
-"harnesses.include.add.step.picks" = "Vybrať artefakty";
-"harnesses.include.add.step.review" = "Skontrolovať";
-"harnesses.include.add.step.running" = "Pridávanie zahrnutia…";
-"harnesses.include.add.source.marketplace" = "Z trhu";
-"harnesses.include.add.source.giturl" = "Z Git URL";
+"harnesses.include.add.edit.existing" = "Upraviť";
 "harnesses.include.add.search.placeholder" = "Hľadať pluginy…";
 "harnesses.include.add.no.marketplaces" = "Žiadne trhy nie sú nakonfigurované. Pridajte jeden cez záložku Trhy.";
 "harnesses.include.add.no.matches" = "Žiadny plugin nezodpovedá.";
