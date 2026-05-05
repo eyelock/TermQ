@@ -992,12 +992,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Legg til inkludering…";
-"harnesses.include.add.step.source" = "Velg en kilde";
-"harnesses.include.add.step.picks" = "Velg artefakter";
-"harnesses.include.add.step.review" = "Gjennomgå";
-"harnesses.include.add.step.running" = "Legger til inkludering…";
-"harnesses.include.add.source.marketplace" = "Fra markedsplass";
-"harnesses.include.add.source.giturl" = "Fra Git-URL";
+"harnesses.include.add.edit.existing" = "Rediger";
 "harnesses.include.add.search.placeholder" = "Søk i plugins…";
 "harnesses.include.add.no.marketplaces" = "Ingen markedsplasser konfigurert. Bruk fanen Markedsplasser for å legge til en.";
 "harnesses.include.add.no.matches" = "Ingen plugins stemmer.";

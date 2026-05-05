@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Tambah Sertaan…";
-"harnesses.include.add.step.source" = "Pilih sumber";
-"harnesses.include.add.step.picks" = "Pilih artefak";
-"harnesses.include.add.step.review" = "Tinjau";
-"harnesses.include.add.step.running" = "Menambahkan sertaan…";
-"harnesses.include.add.source.marketplace" = "Dari Marketplace";
-"harnesses.include.add.source.giturl" = "Dari Git URL";
+"harnesses.include.add.edit.existing" = "Edit";
 "harnesses.include.add.search.placeholder" = "Cari plugin…";
 "harnesses.include.add.no.marketplaces" = "Tidak ada marketplace yang dikonfigurasi. Gunakan tab Marketplace untuk menambahkan satu.";
 "harnesses.include.add.no.matches" = "Tidak ada plugin yang cocok.";

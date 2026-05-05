@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Добавить включение…";
-"harnesses.include.add.step.source" = "Выбрать источник";
-"harnesses.include.add.step.picks" = "Выбрать артефакты";
-"harnesses.include.add.step.review" = "Проверить";
-"harnesses.include.add.step.running" = "Добавление включения…";
-"harnesses.include.add.source.marketplace" = "Из магазина";
-"harnesses.include.add.source.giturl" = "Из Git-URL";
+"harnesses.include.add.edit.existing" = "Изменить";
 "harnesses.include.add.search.placeholder" = "Поиск плагинов…";
 "harnesses.include.add.no.marketplaces" = "Магазины не настроены. Используйте вкладку «Магазины», чтобы добавить один.";
 "harnesses.include.add.no.matches" = "Нет подходящих плагинов.";

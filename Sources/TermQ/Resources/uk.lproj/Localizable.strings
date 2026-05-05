@@ -994,12 +994,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Додати включення…";
-"harnesses.include.add.step.source" = "Вибрати джерело";
-"harnesses.include.add.step.picks" = "Вибрати артефакти";
-"harnesses.include.add.step.review" = "Перевірити";
-"harnesses.include.add.step.running" = "Додавання включення…";
-"harnesses.include.add.source.marketplace" = "З маркетплейсу";
-"harnesses.include.add.source.giturl" = "З Git-URL";
+"harnesses.include.add.edit.existing" = "Редагувати";
 "harnesses.include.add.search.placeholder" = "Пошук плагінів…";
 "harnesses.include.add.no.marketplaces" = "Маркетплейси не налаштовані. Скористайтеся вкладкою «Маркетплейси», щоб додати один.";
 "harnesses.include.add.no.matches" = "Немає відповідних плагінів.";

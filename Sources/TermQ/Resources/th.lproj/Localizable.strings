@@ -994,12 +994,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "เพิ่มการรวมรายการ…";
-"harnesses.include.add.step.source" = "เลือกแหล่งที่มา";
-"harnesses.include.add.step.picks" = "เลือกอาร์ติแฟกต์";
-"harnesses.include.add.step.review" = "ตรวจสอบ";
-"harnesses.include.add.step.running" = "กำลังเพิ่มการรวมรายการ…";
-"harnesses.include.add.source.marketplace" = "จาก Marketplace";
-"harnesses.include.add.source.giturl" = "จาก Git URL";
+"harnesses.include.add.edit.existing" = "แก้ไข";
 "harnesses.include.add.search.placeholder" = "ค้นหาปลั๊กอิน…";
 "harnesses.include.add.no.marketplaces" = "ไม่มี marketplace ที่กำหนดค่าไว้ ใช้แท็บ Marketplaces เพื่อเพิ่ม";
 "harnesses.include.add.no.matches" = "ไม่พบปลั๊กอินที่ตรงกัน";

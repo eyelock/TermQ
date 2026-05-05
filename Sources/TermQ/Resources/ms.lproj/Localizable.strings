@@ -992,12 +992,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Tambah Sertaan…";
-"harnesses.include.add.step.source" = "Pilih sumber";
-"harnesses.include.add.step.picks" = "Pilih artifak";
-"harnesses.include.add.step.review" = "Semak";
-"harnesses.include.add.step.running" = "Menambah sertaan…";
-"harnesses.include.add.source.marketplace" = "Daripada Marketplace";
-"harnesses.include.add.source.giturl" = "Daripada Git URL";
+"harnesses.include.add.edit.existing" = "Edit";
 "harnesses.include.add.search.placeholder" = "Cari pemalam…";
 "harnesses.include.add.no.marketplaces" = "Tiada marketplace dikonfigurasi. Gunakan tab Marketplace untuk menambah satu.";
 "harnesses.include.add.no.matches" = "Tiada pemalam yang sepadan.";

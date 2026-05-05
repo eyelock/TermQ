@@ -993,12 +993,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "समाविष्ट जोड़ें…";
-"harnesses.include.add.step.source" = "स्रोत चुनें";
-"harnesses.include.add.step.picks" = "कलाकृतियाँ चुनें";
-"harnesses.include.add.step.review" = "समीक्षा करें";
-"harnesses.include.add.step.running" = "समाविष्ट जोड़ा जा रहा है…";
-"harnesses.include.add.source.marketplace" = "Marketplace से";
-"harnesses.include.add.source.giturl" = "Git URL से";
+"harnesses.include.add.edit.existing" = "संपादित करें";
 "harnesses.include.add.search.placeholder" = "प्लगइन खोजें…";
 "harnesses.include.add.no.marketplaces" = "कोई marketplace कॉन्फ़िगर नहीं किया गया। एक जोड़ने के लिए Marketplaces टैब का उपयोग करें।";
 "harnesses.include.add.no.matches" = "कोई प्लगइन मेल नहीं खाता।";

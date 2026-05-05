@@ -994,12 +994,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Dodaj vključitev…";
-"harnesses.include.add.step.source" = "Izberite vir";
-"harnesses.include.add.step.picks" = "Izberite artefakte";
-"harnesses.include.add.step.review" = "Pregled";
-"harnesses.include.add.step.running" = "Dodajanje vključitve…";
-"harnesses.include.add.source.marketplace" = "S tržišča";
-"harnesses.include.add.source.giturl" = "Z Git URL";
+"harnesses.include.add.edit.existing" = "Uredi";
 "harnesses.include.add.search.placeholder" = "Išči vtičnike…";
 "harnesses.include.add.no.marketplaces" = "Ni konfiguriranih tržišč. Dodajte eno prek zavihka Tržišča.";
 "harnesses.include.add.no.matches" = "Ni ujemajočih vtičnikov.";

@@ -993,12 +993,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "Lisää sisällytys…";
-"harnesses.include.add.step.source" = "Valitse lähde";
-"harnesses.include.add.step.picks" = "Valitse artefaktit";
-"harnesses.include.add.step.review" = "Tarkista";
-"harnesses.include.add.step.running" = "Lisätään sisällytystä…";
-"harnesses.include.add.source.marketplace" = "Markkinapaikalta";
-"harnesses.include.add.source.giturl" = "Git-URL:sta";
+"harnesses.include.add.edit.existing" = "Muokkaa";
 "harnesses.include.add.search.placeholder" = "Hae lisäosia…";
 "harnesses.include.add.no.marketplaces" = "Ei markkinapaikkoja määritetty. Lisää yksi Markkinapaikat-välilehdeltä.";
 "harnesses.include.add.no.matches" = "Ei vastaavia lisäosia.";

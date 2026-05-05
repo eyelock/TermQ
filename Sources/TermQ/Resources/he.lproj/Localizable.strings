@@ -993,12 +993,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "הוסף הכללה…";
-"harnesses.include.add.step.source" = "בחר מקור";
-"harnesses.include.add.step.picks" = "בחר פריטים";
-"harnesses.include.add.step.review" = "סקירה";
-"harnesses.include.add.step.running" = "מוסיף הכללה…";
-"harnesses.include.add.source.marketplace" = "מהשוק";
-"harnesses.include.add.source.giturl" = "מכתובת Git";
+"harnesses.include.add.edit.existing" = "ערוך";
 "harnesses.include.add.search.placeholder" = "חפש תוספים…";
 "harnesses.include.add.no.marketplaces" = "לא הוגדרו שווקים. השתמש בכרטיסיית שווקים כדי להוסיף אחד.";
 "harnesses.include.add.no.matches" = "לא נמצאו תוספים תואמים.";

@@ -987,12 +987,7 @@
 
 // MARK: - Harnesses — add include flow (added sync)
 "harnesses.include.add.button" = "新增包含…";
-"harnesses.include.add.step.source" = "選擇來源";
-"harnesses.include.add.step.picks" = "選擇成品";
-"harnesses.include.add.step.review" = "審閱";
-"harnesses.include.add.step.running" = "正在新增包含…";
-"harnesses.include.add.source.marketplace" = "來自市集";
-"harnesses.include.add.source.giturl" = "來自 Git URL";
+"harnesses.include.add.edit.existing" = "編輯";
 "harnesses.include.add.search.placeholder" = "搜尋外掛程式…";
 "harnesses.include.add.no.marketplaces" = "未設定市集。請使用「市集」標籤頁新增一個。";
 "harnesses.include.add.no.matches" = "沒有符合的外掛程式。";
