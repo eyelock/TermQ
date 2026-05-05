@@ -68,14 +68,18 @@ class TerminalSessionManager: ObservableObject {
         var activePaneId: String?  // Currently active pane ID for input routing
     }
 
+    private let commandRunner: any YNHCommandRunner
+
     init(
         tmuxManager: any TmuxManagerProtocol = TmuxManager.shared,
         boardViewModel: @escaping @MainActor () -> any BoardViewModelProtocol = { BoardViewModel.shared },
-        settings: SettingsStore = .shared
+        settings: SettingsStore = .shared,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
     ) {
         self.tmuxManager = tmuxManager
         self.boardViewModelProvider = boardViewModel
         self.settings = settings
+        self.commandRunner = commandRunner
         // Set up theme change callback
         themeManager.onThemeChanged = { [weak self] in
             self?.applyThemeToAllSessions()
@@ -666,12 +670,13 @@ class TerminalSessionManager: ObservableObject {
         let sessionName = tmuxManager.sessionName(for: cardId)
         guard let tmuxPath = tmuxManager.tmuxPath else { return }
 
+        let runner = commandRunner
         Task {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: tmuxPath)
-            process.arguments = [command] + ["-t", sessionName]
-            try? process.run()
-            process.waitUntilExit()
+            _ = try? await runner.run(
+                executable: tmuxPath,
+                arguments: [command, "-t", sessionName],
+                environment: nil
+            )
         }
     }
 
