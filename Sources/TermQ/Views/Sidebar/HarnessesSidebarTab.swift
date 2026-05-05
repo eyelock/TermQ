@@ -593,8 +593,8 @@ extension HarnessesSidebarTab {
     private func revealLocalGroupInFinder(_ group: HarnessGroup) {
         let path =
             group.harnesses.first?.installedFrom?.source
-            ?? UserDefaults.standard.string(forKey: "defaultHarnessAuthorDirectory")
-        guard let path, !path.isEmpty else { return }
+            ?? HarnessAuthorPreferences.shared.defaultDirectory
+        guard !path.isEmpty else { return }
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 

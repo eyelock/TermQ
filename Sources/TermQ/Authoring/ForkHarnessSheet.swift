@@ -14,7 +14,7 @@ struct ForkHarnessSheet: View {
     let onForkCompleted: (String) -> Void
     @Environment(\.dismiss) private var dismiss
 
-    @AppStorage("defaultHarnessAuthorDirectory") private var defaultHarnessAuthorDirectory = ""
+    @ObservedObject private var authorPreferences = HarnessAuthorPreferences.shared
 
     @State private var destination = ""
     @State private var phase: Phase = .form
@@ -153,8 +153,8 @@ struct ForkHarnessSheet: View {
     }
 
     private func loadDefaultDestination() {
-        if !defaultHarnessAuthorDirectory.isEmpty {
-            destination = defaultHarnessAuthorDirectory
+        if !authorPreferences.defaultDirectory.isEmpty {
+            destination = authorPreferences.defaultDirectory
             return
         }
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first

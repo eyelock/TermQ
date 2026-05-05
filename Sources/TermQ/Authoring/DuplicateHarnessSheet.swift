@@ -16,7 +16,7 @@ struct DuplicateHarnessSheet: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var repository: HarnessRepository
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("defaultHarnessAuthorDirectory") private var defaultHarnessAuthorDirectory = ""
+    @ObservedObject private var authorPreferences = HarnessAuthorPreferences.shared
 
     @State private var name = ""
     @State private var destination = ""
@@ -171,8 +171,8 @@ struct DuplicateHarnessSheet: View {
 
     private func loadDefaultDestination() {
         name = "copy-of-\(harness.name)"
-        if !defaultHarnessAuthorDirectory.isEmpty {
-            destination = defaultHarnessAuthorDirectory
+        if !authorPreferences.defaultDirectory.isEmpty {
+            destination = authorPreferences.defaultDirectory
             return
         }
         // Fall back to ~/Documents — never default to the ynh-managed harnesses

@@ -36,7 +36,7 @@ struct HarnessDetailView: View {
     let onFork: (String) -> Void
     let onExport: (String, String) -> Void
 
-    @AppStorage("sidebar.selectedTab") private var sidebarTab = "repositories"
+    @ObservedObject private var sidebarState = SidebarState.shared
     @ObservedObject private var marketplaceStore: MarketplaceStore = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
@@ -75,7 +75,7 @@ struct HarnessDetailView: View {
 
                 Button {
                     marketplaceStore.preselectedHarnessTarget = harness.name
-                    sidebarTab = "marketplaces"  // matches SidebarView.SidebarTab.marketplaces.rawValue
+                    sidebarState.selectedTab = .marketplaces
                 } label: {
                     Label(Strings.Harnesses.configureFromMarketplaces, systemImage: "storefront")
                         .frame(maxWidth: .infinity)

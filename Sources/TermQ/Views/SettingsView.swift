@@ -28,7 +28,7 @@ struct SettingsView: View {
     @State private var alertIsError = false
 
     // Git preferences
-    @AppStorage("protectedBranches") private var protectedBranches = ""
+    @ObservedObject private var gitConfig = GitConfigStore.shared
 
     @Environment(SettingsStore.self) private var settings
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
@@ -92,7 +92,7 @@ struct SettingsView: View {
                         updaterViewModel: updaterViewModel,
                         selectedLanguage: $selectedLanguage,
                         showUninstallSheet: $showUninstallSheet,
-                        protectedBranches: $protectedBranches
+                        protectedBranches: $gitConfig.globalProtectedBranches
                     )
                 case .environment:
                     SettingsEnvironmentView()

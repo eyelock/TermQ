@@ -5,8 +5,7 @@ struct SettingsMarketplacesView: View {
     @ObservedObject private var store = MarketplaceStore.shared
     @ObservedObject private var ynhDetector: YNHDetector = .shared
     @StateObject private var marketplaceService = YNHMarketplaceService()
-    @AppStorage("marketplaceAutoRefresh") private var autoRefresh = true
-    @AppStorage("defaultHarnessAuthorDirectory") private var defaultHarnessAuthorDirectory = ""
+    @ObservedObject private var authorPreferences = HarnessAuthorPreferences.shared
 
     @State private var showAddSheet = false
     @State private var marketplaceToRemove: Marketplace?
@@ -50,7 +49,7 @@ struct SettingsMarketplacesView: View {
             }
 
             Section {
-                Toggle(Strings.Settings.Marketplaces.autoRefresh, isOn: $autoRefresh)
+                Toggle(Strings.Settings.Marketplaces.autoRefresh, isOn: $store.autoRefresh)
             } header: {
                 Text(Strings.Settings.Marketplaces.sectionBehaviour)
             } footer: {
@@ -70,8 +69,8 @@ struct SettingsMarketplacesView: View {
                     }
                     Spacer()
                     Button(Strings.Common.browse) { browseForAuthorDirectory() }
-                    if !defaultHarnessAuthorDirectory.isEmpty {
-                        Button(Strings.Settings.Marketplaces.reset) { defaultHarnessAuthorDirectory = "" }
+                    if !authorPreferences.defaultDirectory.isEmpty {
+                        Button(Strings.Settings.Marketplaces.reset) { authorPreferences.defaultDirectory = "" }
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -184,9 +183,9 @@ struct SettingsMarketplacesView: View {
     }
 
     private var effectiveAuthorDirectory: String {
-        defaultHarnessAuthorDirectory.isEmpty
+        authorPreferences.defaultDirectory.isEmpty
             ? Strings.Settings.Marketplaces.authorDirectoryDetectedHint
-            : defaultHarnessAuthorDirectory
+            : authorPreferences.defaultDirectory
     }
 
     private var ynhEnvironment: [String: String] {
@@ -204,7 +203,7 @@ struct SettingsMarketplacesView: View {
         Task {
             let response = await panel.begin()
             if response == .OK, let url = panel.url {
-                defaultHarnessAuthorDirectory = url.path(percentEncoded: false)
+                authorPreferences.defaultDirectory = url.path(percentEncoded: false)
             }
         }
     }

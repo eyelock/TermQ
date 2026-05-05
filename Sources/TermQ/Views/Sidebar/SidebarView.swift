@@ -20,30 +20,8 @@ struct SidebarView: View {
     var onFork: ((String) -> Void)?
     var onNewHarness: (() -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
-    @AppStorage("sidebar.selectedTab") private var selectedTab = SidebarTab.repositories
+    @ObservedObject private var sidebarState = SidebarState.shared
     private static var hasResetOnLaunch = false
-
-    enum SidebarTab: String, CaseIterable {
-        case repositories
-        case harnesses
-        case marketplaces
-
-        var icon: String {
-            switch self {
-            case .repositories: return "shippingbox"
-            case .harnesses: return "puzzlepiece.extension"
-            case .marketplaces: return "storefront"
-            }
-        }
-
-        var label: String {
-            switch self {
-            case .repositories: return "Repositories"
-            case .harnesses: return "Harnesses"
-            case .marketplaces: return "Marketplaces"
-            }
-        }
-    }
 
     private var showHarnessesTab: Bool {
         guard harnessTabEnabled else { return false }
@@ -57,7 +35,7 @@ struct SidebarView: View {
                 Divider()
             }
 
-            switch selectedTab {
+            switch sidebarState.selectedTab {
             case .repositories:
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
@@ -87,7 +65,7 @@ struct SidebarView: View {
         }
         .onAppear {
             if !SidebarView.hasResetOnLaunch {
-                selectedTab = .repositories
+                sidebarState.selectedTab = .repositories
                 SidebarView.hasResetOnLaunch = true
             }
             if harnessTabEnabled {
@@ -98,10 +76,10 @@ struct SidebarView: View {
             if enabled {
                 Task { await detector.detect() }
             } else {
-                selectedTab = .repositories
+                sidebarState.selectedTab = .repositories
             }
         }
-        .onChange(of: selectedTab) { _, newTab in
+        .onChange(of: sidebarState.selectedTab) { _, newTab in
             if newTab == .harnesses {
                 if case .ready = detector.status {
                     Task { await harnessRepository.refresh() }
@@ -129,7 +107,7 @@ struct SidebarView: View {
         HStack(spacing: 0) {
             ForEach(SidebarTab.allCases, id: \.self) { tab in
                 Button {
-                    selectedTab = tab
+                    sidebarState.selectedTab = tab
                 } label: {
                     Image(systemName: tab.icon)
                         .imageScale(.medium)
@@ -138,10 +116,10 @@ struct SidebarView: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .foregroundColor(selectedTab == tab ? .accentColor : .secondary)
+                .foregroundColor(sidebarState.selectedTab == tab ? .accentColor : .secondary)
                 .help(tab.label)
                 .background(
-                    selectedTab == tab
+                    sidebarState.selectedTab == tab
                         ? Color.accentColor.opacity(0.12)
                         : Color.clear
                 )
