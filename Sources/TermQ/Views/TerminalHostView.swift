@@ -185,17 +185,11 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
-    /// User preference key for allowing OSC 52 clipboard access
     private static let allowOscClipboardKey = "allowOscClipboard"
 
-    /// Whether OSC 52 clipboard access is allowed (default: true for compatibility)
     static var allowOscClipboard: Bool {
         get {
-            // Default to true for backwards compatibility
-            if UserDefaults.standard.object(forKey: allowOscClipboardKey) == nil {
-                return true
-            }
-            return UserDefaults.standard.bool(forKey: allowOscClipboardKey)
+            UserDefaults.standard.bool(forKey: allowOscClipboardKey)
         }
         set {
             UserDefaults.standard.set(newValue, forKey: allowOscClipboardKey)

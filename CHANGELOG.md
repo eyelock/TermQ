@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.6] — 2026-05-04
+
+### Fixed
+
+- **Focus stealing on MCP-driven URL deliveries** — Background `termq://`
+  URL deliveries via `NSWorkspace.open(activates: false)` were triggering
+  AppleEvent Reopen, and `applicationShouldHandleReopen` unconditionally
+  called `makeKeyAndOrderFront`, stealing focus from whatever app the
+  user was working in. The handler now only activates the window on
+  genuine user-initiated reopen (unhide on Cmd+H, deminiaturize on
+  Cmd+M, or bring forward when no windows are visible). Backport of
+  #268.
+- **Marketplace removals not persisted** — Removing a marketplace from
+  Settings → External Sources didn't survive relaunch. Three concurrent
+  issues fixed: the confirmation dialog read state after dismissal
+  (racy), `save()` swallowed errors with `try?`, and a re-seed could
+  re-add a default the user had removed. Tombstones now track removed
+  defaults (`marketplaces.removedDefaultURLs.v1`); Restore Defaults
+  bypasses tombstones explicitly. Backport of #264.
+- **OSC 52 clipboard default mismatched Settings UI** — The runtime gate
+  defaulted to `true` on unset while Settings → Data & Security
+  displayed `false`, so a never-touched user saw "Off" but terminal
+  programs could silently copy to the clipboard. The runtime now
+  defaults to `false` to match the Settings UI. Behavior change:
+  existing users who relied on the implicit-on default will need to
+  enable OSC 52 explicitly. Aligned with #270.
+
 ## [0.9.5] — 2026-05-03
 
 ### Fixed
