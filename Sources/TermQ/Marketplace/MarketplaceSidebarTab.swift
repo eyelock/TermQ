@@ -115,7 +115,7 @@ struct MarketplaceSidebarTab: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             Button(Strings.Marketplace.restoreDefaults) {
-                store.restoreDefaults()
+                store.restoreDefaults(force: true)
                 Task {
                     for marketplace in store.marketplaces {
                         await refresh(marketplace)
@@ -165,7 +165,9 @@ struct MarketplaceSidebarTab: View {
             selectedMarketplace = MarketplaceSelection(id: marketplace.id, marketplace: marketplace)
         }
         .contextMenu {
-            Button { Task { await refresh(marketplace) } } label: {
+            Button {
+                Task { await refresh(marketplace) }
+            } label: {
                 Label(Strings.Marketplace.rowRefresh, systemImage: "arrow.clockwise")
             }
             if marketplace.isLocal {
