@@ -37,8 +37,45 @@ enum BackupFrequency: String, CaseIterable, Identifiable {
     }
 }
 
+/// Filesystem roots used by `BackupManager`. Tests inject this to point both
+/// the primary (board/repos/ynh source) and the backup destination at temp
+/// directories instead of the user's real Application Support dir.
+struct BackupRoots: Sendable {
+    /// Directory where the primary `board.json`, `repos.json`, `ynh.json` live.
+    var primaryDir: URL
+    /// Directory where backup files are written/read.
+    var backupDir: URL
+
+    static var live: BackupRoots {
+        guard
+            let appSupport = FileManager.default.urls(
+                for: .applicationSupportDirectory, in: .userDomainMask
+            ).first
+        else { fatalError("Unable to access Application Support directory") }
+        #if DEBUG
+            let primary = appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
+        #else
+            let primary = appSupport.appendingPathComponent("TermQ", isDirectory: true)
+        #endif
+        let backup = URL(
+            fileURLWithPath: NSString(string: DataDirectoryManager.dataDirectory).expandingTildeInPath
+        )
+        return BackupRoots(primaryDir: primary, backupDir: backup)
+    }
+}
+
 /// Handles backup and restore of board data to a location that survives app uninstall
 enum BackupManager {
+    // MARK: - Test Seam
+
+    /// When set, overrides the live primary/backup directories. Tests assign in
+    /// `setUp` and clear in `tearDown` so file operations land in temp dirs
+    /// instead of the user's real Application Support directory. Mutation is
+    /// expected only from test setup/teardown; production reads never write.
+    nonisolated(unsafe) static var rootsOverride: BackupRoots?
+
+    private static var roots: BackupRoots { rootsOverride ?? .live }
+
     // MARK: - Constants
 
     static let backupFileName = "board-backup.json"
@@ -56,9 +93,9 @@ enum BackupManager {
 
     // MARK: - Settings
 
-    /// The backup location (uses central DataDirectoryManager)
+    /// The backup location (path string).
     static var backupLocation: String {
-        DataDirectoryManager.dataDirectory
+        roots.backupDir.path
     }
 
     /// The backup frequency (default: daily)
@@ -106,6 +143,9 @@ enum BackupManager {
 
     /// Expanded backup directory path
     static var expandedBackupPath: String {
+        // `backupLocation` already returns an expanded URL path under both
+        // `live` (DataDirectoryManager paths get expanded in `BackupRoots.live`)
+        // and `rootsOverride`. Re-expanding is a no-op for absolute paths.
         NSString(string: backupLocation).expandingTildeInPath
     }
 
@@ -149,15 +189,10 @@ enum BackupManager {
         URL(fileURLWithPath: ynhBackupFilePath)
     }
 
-    /// App Support directory for TermQ (DEBUG-aware)
+    /// App Support directory for TermQ — primary source of `board.json`,
+    /// `repos.json`, `ynh.json`. Routes through `roots` so tests can redirect.
     private static var termqAppSupportDir: URL {
-        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-        else { fatalError("Unable to access Application Support directory") }
-        #if DEBUG
-            return appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
-        #else
-            return appSupport.appendingPathComponent("TermQ", isDirectory: true)
-        #endif
+        roots.primaryDir
     }
 
     /// Path to the primary board.json file

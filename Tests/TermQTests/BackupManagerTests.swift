@@ -1,4 +1,5 @@
 import Foundation
+import TermQCore
 import XCTest
 
 @testable import TermQ
@@ -260,5 +261,172 @@ final class BackupManagerTests: XCTestCase {
         XCTAssertFalse(info.exists)
         XCTAssertNil(info.date)
         XCTAssertEqual(info.size, 0)
+    }
+}
+
+// MARK: - BackupRoots Injection
+
+/// Exercises the real backup/restore flow against temp directories injected
+/// via `BackupManager.rootsOverride`. Each test gets fresh primary + backup
+/// dirs, eliminating the prior "skip if real file exists" pattern.
+final class BackupManagerRootsInjectionTests: XCTestCase {
+    private var primaryDir: URL!
+    private var backupDir: URL!
+
+    override func setUpWithError() throws {
+        let base = FileManager.default.temporaryDirectory
+            .appendingPathComponent("BackupManagerTests-\(UUID().uuidString)", isDirectory: true)
+        primaryDir = base.appendingPathComponent("primary", isDirectory: true)
+        backupDir = base.appendingPathComponent("backup", isDirectory: true)
+        try FileManager.default.createDirectory(at: primaryDir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: backupDir, withIntermediateDirectories: true)
+        BackupManager.rootsOverride = BackupRoots(primaryDir: primaryDir, backupDir: backupDir)
+    }
+
+    override func tearDownWithError() throws {
+        BackupManager.rootsOverride = nil
+        if let primary = primaryDir {
+            try? FileManager.default.removeItem(at: primary.deletingLastPathComponent())
+        }
+    }
+
+    private func writeBoard(cards: Int = 0) throws {
+        let column = Column(name: "To Do", orderIndex: 0)
+        let testCards = (0..<cards).map { i in
+            TerminalCard(
+                title: "Card \(i)",
+                columnId: column.id,
+                orderIndex: i,
+                workingDirectory: "/tmp"
+            )
+        }
+        let board = Board(columns: [column], cards: testCards)
+        let data = try JSONEncoder().encode(board)
+        try data.write(to: primaryDir.appendingPathComponent("board.json"))
+    }
+
+    // MARK: - backup()
+
+    func test_backup_sourceMissing_returnsSourceNotFound() {
+        let result = BackupManager.backup()
+        guard case .failure(let err) = result, case .sourceNotFound = err else {
+            XCTFail("Expected .sourceNotFound, got \(result)")
+            return
+        }
+    }
+
+    func test_backup_writesBackupFile() throws {
+        try writeBoard(cards: 1)
+        let result = BackupManager.backup()
+        guard case .success = result else {
+            XCTFail("Expected success, got \(result)")
+            return
+        }
+        XCTAssertTrue(FileManager.default.fileExists(atPath: BackupManager.backupFilePath))
+    }
+
+    func test_backup_overwritesExistingBackup() throws {
+        try writeBoard(cards: 1)
+        _ = BackupManager.backup()
+        // Mutate primary then re-backup; backup should reflect the new content.
+        try writeBoard(cards: 0)
+        _ = BackupManager.backup()
+
+        let backupData = try Data(contentsOf: BackupManager.backupFileURL)
+        let str = String(data: backupData, encoding: .utf8) ?? ""
+        XCTAssertFalse(str.contains("00000000-0000-0000-0000-000000000001"))
+    }
+
+    func test_backup_copiesReposJsonWhenPresent() throws {
+        try writeBoard(cards: 1)
+        try #"{"repositories":[]}"#.write(
+            to: primaryDir.appendingPathComponent("repos.json"),
+            atomically: true, encoding: .utf8)
+
+        _ = BackupManager.backup()
+
+        XCTAssertTrue(FileManager.default.fileExists(atPath: BackupManager.reposBackupFilePath))
+    }
+
+    // MARK: - restore()
+
+    func test_restore_noBackupFile_returnsNoBackupFound() {
+        let result = BackupManager.restore()
+        guard case .failure(let err) = result, case .noBackupFound = err else {
+            XCTFail("Expected .noBackupFound, got \(result)")
+            return
+        }
+    }
+
+    func test_restore_invalidBackupContent_returnsInvalidBackupData() throws {
+        try "not json".write(
+            to: backupDir.appendingPathComponent(BackupManager.backupFileName),
+            atomically: true, encoding: .utf8)
+        let result = BackupManager.restore()
+        guard case .failure(let err) = result, case .invalidBackupData = err else {
+            XCTFail("Expected .invalidBackupData, got \(result)")
+            return
+        }
+    }
+
+    func test_restore_copiesBackupOverPrimary() throws {
+        try writeBoard(cards: 1)
+        _ = BackupManager.backup()
+
+        // Wipe primary, then restore from backup.
+        try FileManager.default.removeItem(at: primaryDir.appendingPathComponent("board.json"))
+        let result = BackupManager.restore()
+
+        guard case .success = result else {
+            XCTFail("Expected success, got \(result)")
+            return
+        }
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath: primaryDir.appendingPathComponent("board.json").path))
+    }
+
+    // MARK: - hasBackup / backupInfo
+
+    func test_hasBackup_falseInitially() {
+        XCTAssertFalse(BackupManager.hasBackup)
+    }
+
+    func test_hasBackup_trueAfterSuccessfulBackup() throws {
+        try writeBoard(cards: 1)
+        _ = BackupManager.backup()
+        XCTAssertTrue(BackupManager.hasBackup)
+    }
+
+    func test_backupInfo_existsAndHasSize_afterBackup() throws {
+        try writeBoard(cards: 1)
+        _ = BackupManager.backup()
+        let info = BackupManager.backupInfo
+        XCTAssertTrue(info.exists)
+        XCTAssertNotNil(info.date)
+        XCTAssertGreaterThan(info.size, 0)
+    }
+
+    // MARK: - checkAndOfferRestore
+
+    func test_checkAndOfferRestore_returnsBackupURL_whenPrimaryEmptyAndBackupHasContent() throws {
+        try writeBoard(cards: 1)
+        _ = BackupManager.backup()
+        // Wipe primary so the restore offer is triggered
+        try FileManager.default.removeItem(at: primaryDir.appendingPathComponent("board.json"))
+
+        let url = BackupManager.checkAndOfferRestore()
+        XCTAssertEqual(url, BackupManager.backupFileURL)
+    }
+
+    func test_checkAndOfferRestore_returnsNil_whenBackupAbsent() {
+        XCTAssertNil(BackupManager.checkAndOfferRestore())
+    }
+
+    func test_checkAndOfferRestore_returnsNil_whenPrimaryHasContent() throws {
+        try writeBoard(cards: 1)
+        _ = BackupManager.backup()
+        // Primary still has content — no offer
+        XCTAssertNil(BackupManager.checkAndOfferRestore())
     }
 }
