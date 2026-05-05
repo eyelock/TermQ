@@ -373,47 +373,32 @@ jobs:
       - name: Generate release notes
         id: release-notes
         run: |
-          TAG="${{ needs.verify-ci.outputs.tag }}"
+          VERSION="${{ steps.version.outputs.VERSION }}"
 
-          # Stable: find previous stable tag. Pre-release: find previous tag of any kind.
-          if [[ "$TAG" =~ -(alpha|beta|rc)\. ]]; then
-            PREV_TAG=$(git tag --sort=-version:refname | grep -v "^${TAG}$" | head -1)
-          else
-            PREV_TAG=$(git tag --sort=-version:refname | grep -v "^${TAG}$" | grep -vE '\-(alpha|beta|rc)\.' | head -1)
-          fi
+          # Source of truth is CHANGELOG.md — extract the [$VERSION] section.
+          # This is correct for every release type (stable, beta, hotfix), unlike
+          # ranging over `develop`, which over-reports for hotfixes (develop
+          # contains commits that weren't backported) and misses CHANGELOG-only
+          # forward-ports.
+          awk -v ver="$VERSION" '
+            /^## \[/ {
+              if (printing) { exit }
+              if (index($0, "## [" ver "]") == 1) { printing = 1; next }
+            }
+            printing { print }
+          ' CHANGELOG.md \
+            | sed -e '/./,$!d' \
+            | awk 'BEGIN { blank=0 } /^$/ { blank++; next } { for (i=0;i<blank;i++) print ""; blank=0; print }' \
+            > /tmp/changelog-section.md
 
-          echo "Release notes: $TAG since $PREV_TAG"
-
-          # Features always land on develop. Fetch it so stable tags (on main) can
-          # still see the full commit history.
-          git fetch origin develop 2>/dev/null || true
-
-          RANGE="${PREV_TAG}..origin/develop"
-
-          git log "$RANGE" --no-merges --format="%s" \
-            | grep -E '^feat(\([^)]+\))?!?:' \
-            | sed -E 's/^[^:]+: //' \
-            > /tmp/features.txt
-
-          git log "$RANGE" --no-merges --format="%s" \
-            | grep -E '^fix(\([^)]+\))?!?:' \
-            | sed -E 's/^[^:]+: //' \
-            > /tmp/fixes.txt
-
-          echo "  feat: $(wc -l < /tmp/features.txt | tr -d ' ') entries"
-          echo "  fix:  $(wc -l < /tmp/fixes.txt | tr -d ' ') entries"
+          echo "CHANGELOG section for $VERSION: $(wc -l < /tmp/changelog-section.md | tr -d ' ') lines"
 
           {
-            if [ -s /tmp/features.txt ]; then
-              printf "## What's New\n\n"
-              while IFS= read -r line; do echo "- $line"; done < /tmp/features.txt
+            if [ -s /tmp/changelog-section.md ]; then
+              cat /tmp/changelog-section.md
               printf "\n"
-            fi
-
-            if [ -s /tmp/fixes.txt ]; then
-              printf "## Bug Fixes\n\n"
-              while IFS= read -r line; do echo "- $line"; done < /tmp/fixes.txt
-              printf "\n"
+            else
+              printf "_See \`CHANGELOG.md\` for changes in this release._\n\n"
             fi
 
             printf '%s\n\n' '---'
