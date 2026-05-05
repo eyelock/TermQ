@@ -389,8 +389,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         if let override = repo.protectedBranches {
             return override
         }
-        let stored = UserDefaults.standard.string(forKey: "protectedBranches") ?? ""
-        return stored.split(separator: ",")
+        return GitConfigStore.shared.globalProtectedBranches.split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
     }
