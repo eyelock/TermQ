@@ -8,17 +8,25 @@ final class EditorRegistry: ObservableObject {
     @Published private(set) var available: [ExternalEditor] = []
 
     private let workspace: any WorkspaceProvider
+    private let commandRunner: any YNHCommandRunner
 
     private convenience init() {
-        self.init(workspace: LiveWorkspaceProvider())
+        self.init(workspace: LiveWorkspaceProvider(), commandRunner: LiveYNHCommandRunner())
     }
 
-    init(workspace: any WorkspaceProvider) {
+    init(
+        workspace: any WorkspaceProvider,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
+    ) {
         self.workspace = workspace
+        self.commandRunner = commandRunner
     }
 
     func start() {
-        available = detect()
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            self.available = await self.detect()
+        }
     }
 
     private struct Candidate {
@@ -28,7 +36,7 @@ final class EditorRegistry: ObservableObject {
         let cli: String?
     }
 
-    private func detect() -> [ExternalEditor] {
+    private func detect() async -> [ExternalEditor] {
         let candidates: [Candidate] = [
             Candidate(kind: .xcode, displayName: "Xcode", bundleID: "com.apple.dt.Xcode", cli: "xed"),
             Candidate(kind: .vscode, displayName: "VS Code", bundleID: "com.microsoft.VSCode", cli: "code"),
@@ -44,7 +52,7 @@ final class EditorRegistry: ObservableObject {
         for candidate in candidates {
             if let url = workspace.urlForApplication(withBundleIdentifier: candidate.bundleID) {
                 result.append(ExternalEditor(kind: candidate.kind, displayName: candidate.displayName, appURL: url))
-            } else if let cli = candidate.cli, let url = which(cli) {
+            } else if let cli = candidate.cli, let url = await which(cli) {
                 result.append(ExternalEditor(kind: candidate.kind, displayName: candidate.displayName, appURL: url))
             }
         }
@@ -52,20 +60,17 @@ final class EditorRegistry: ObservableObject {
         return result
     }
 
-    private func which(_ binary: String) -> URL? {
-        let proc = Process()
-        proc.executableURL = URL(fileURLWithPath: "/usr/bin/which")
-        proc.arguments = [binary]
-        let pipe = Pipe()
-        proc.standardOutput = pipe
-        proc.standardError = Pipe()
-        try? proc.run()
-        proc.waitUntilExit()
-        guard proc.terminationStatus == 0 else { return nil }
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let raw = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        guard let path = raw, !path.isEmpty else { return nil }
-        return URL(fileURLWithPath: path)
+    private func which(_ binary: String) async -> URL? {
+        guard
+            let result = try? await commandRunner.run(
+                executable: "/usr/bin/which",
+                arguments: [binary],
+                environment: nil
+            ),
+            result.didSucceed
+        else { return nil }
+        let trimmed = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return nil }
+        return URL(fileURLWithPath: trimmed)
     }
 }
