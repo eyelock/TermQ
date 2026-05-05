@@ -410,4 +410,108 @@ final class HeadlessWriterTests: XCTestCase {
         let deletedCard = reloaded.cards.first { $0.title == "Test Card 1" }
         XCTAssertTrue(deletedCard!.isDeleted)
     }
+
+    // MARK: - Tag Merge Replacement
+
+    func testUpdateCardTagMergeReplacesExistingKey() throws {
+        let board = createTestBoard()
+        try writeTestBoard(board)
+
+        var card = board.cards[0]
+        card = try BoardWriter.updateCard(
+            identifier: card.id.uuidString,
+            updates: ["tags": [["id": UUID().uuidString, "key": "env", "value": "dev"]]],
+            dataDirectory: tempDirectory
+        )
+
+        // Merge with same key but different value — should replace, not duplicate
+        let params = HeadlessWriter.UpdateParameters(
+            tags: [("env", "prod")],
+            replaceTags: false
+        )
+        let updated = try HeadlessWriter.updateCard(
+            identifier: card.id.uuidString,
+            params: params,
+            dataDirectory: tempDirectory
+        )
+
+        XCTAssertEqual(updated.tags.count, 1)
+        XCTAssertEqual(updated.tags[0].key, "env")
+        XCTAssertEqual(updated.tags[0].value, "prod")
+    }
+
+    // MARK: - Replace Tags With Nil Clears All
+
+    func testUpdateCardReplaceTagsWithNilClearsAll() throws {
+        let board = createTestBoard()
+        try writeTestBoard(board)
+
+        var card = board.cards[0]
+        card = try BoardWriter.updateCard(
+            identifier: card.id.uuidString,
+            updates: [
+                "tags": [
+                    ["id": UUID().uuidString, "key": "env", "value": "dev"],
+                    ["id": UUID().uuidString, "key": "team", "value": "platform"],
+                ]
+            ],
+            dataDirectory: tempDirectory
+        )
+        XCTAssertEqual(card.tags.count, 2)
+
+        // tags=nil + replaceTags=true => clear all
+        let params = HeadlessWriter.UpdateParameters(tags: nil, replaceTags: true)
+        let updated = try HeadlessWriter.updateCard(
+            identifier: card.id.uuidString,
+            params: params,
+            dataDirectory: tempDirectory
+        )
+
+        XCTAssertEqual(updated.tags.count, 0)
+    }
+
+    // MARK: - Permanent Delete Identifier Lookup
+
+    func testPermanentDeleteByExactName() throws {
+        let board = createTestBoard()
+        try writeTestBoard(board)
+
+        try HeadlessWriter.deleteCard(
+            identifier: "Test Card 1",
+            permanent: true,
+            dataDirectory: tempDirectory
+        )
+
+        let reloaded = try BoardLoader.loadBoard(dataDirectory: tempDirectory)
+        XCTAssertNil(reloaded.cards.first { $0.title == "Test Card 1" })
+    }
+
+    func testPermanentDeleteByPartialName() throws {
+        let board = createTestBoard()
+        try writeTestBoard(board)
+
+        // "Card 2" partially matches "Test Card 2"
+        try HeadlessWriter.deleteCard(
+            identifier: "card 2",
+            permanent: true,
+            dataDirectory: tempDirectory
+        )
+
+        let reloaded = try BoardLoader.loadBoard(dataDirectory: tempDirectory)
+        XCTAssertNil(reloaded.cards.first { $0.title == "Test Card 2" })
+        XCTAssertNotNil(reloaded.cards.first { $0.title == "Test Card 1" })
+    }
+
+    func testPermanentDeleteUnknownIdentifierThrows() throws {
+        let board = createTestBoard()
+        try writeTestBoard(board)
+
+        XCTAssertThrowsError(
+            try HeadlessWriter.deleteCard(
+                identifier: "no-such-card",
+                permanent: true,
+                dataDirectory: tempDirectory
+            )
+        )
+    }
 }

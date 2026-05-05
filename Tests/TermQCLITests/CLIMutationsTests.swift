@@ -231,4 +231,57 @@ final class CLIMutationsTests: CLITestCase {
                 try cmd.run()
             })
     }
+
+    // MARK: - Set: --init-command warning in headless mode
+
+    func test_set_initCommand_emitsWarningInHeadlessMode() throws {
+        let output = try captureOutput {
+            let cmd = try Set.parse([
+                "My Card", "--init-command", "echo hi",
+                "--data-directory", tempDirectory.path,
+            ])
+            try cmd.run()
+        }
+        XCTAssertTrue(
+            output.contains("initCommand"),
+            "Expected initCommand warning in headless mode, got: \(output)"
+        )
+    }
+
+    // MARK: - Set: replace tags
+
+    func test_set_replaceTags_clearsExistingTags() throws {
+        // Seed an existing tag
+        try captureOutput {
+            let cmd = try Set.parse([
+                "My Card", "--tag", "env=dev", "--data-directory", tempDirectory.path,
+            ])
+            try cmd.run()
+        }
+        // Replace with a new single tag
+        try captureOutput {
+            let cmd = try Set.parse([
+                "My Card", "--tag", "env=prod", "--replace-tags",
+                "--data-directory", tempDirectory.path,
+            ])
+            try cmd.run()
+        }
+        let board = try loadBoard()
+        let tags = board.activeCards[0].tags
+        XCTAssertEqual(tags.count, 1)
+        XCTAssertEqual(tags[0].value, "prod")
+    }
+
+    // MARK: - Set: invalid column move surfaces failure
+
+    func test_set_invalidColumn_throwsFailure() {
+        XCTAssertThrowsError(
+            try captureOutput {
+                let cmd = try Set.parse([
+                    "My Card", "--column", "Nonexistent",
+                    "--data-directory", tempDirectory.path,
+                ])
+                try cmd.run()
+            })
+    }
 }

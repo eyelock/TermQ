@@ -77,10 +77,22 @@ final class HarnessSearchServiceTests: XCTestCase {
         )
     }
 
-    /// Wait long enough for the 350ms debounce + the stub's synchronous
-    /// completion. Tests that drive non-empty queries must wait this out.
-    private func waitForDebouncedSearch() async {
-        try? await Task.sleep(for: .milliseconds(450))
+    /// Poll `predicate` on the main actor until it returns `true` or the
+    /// timeout expires. Replaces fixed-sleep waits, which were flaky on
+    /// slow CI runners where the 350ms debounce + Task scheduling overhead
+    /// can exceed a single fixed sleep.
+    private func wait(
+        timeout: Duration = .seconds(3),
+        until predicate: @MainActor () -> Bool,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        let deadline = ContinuousClock.now.advanced(by: timeout)
+        while ContinuousClock.now < deadline {
+            if predicate() { return }
+            try? await Task.sleep(for: .milliseconds(20))
+        }
+        XCTFail("Timed out waiting for predicate", file: file, line: line)
     }
 
     // MARK: - reset()
@@ -183,9 +195,8 @@ final class HarnessSearchServiceTests: XCTestCase {
         let service = makeService(runner: runner)
 
         service.search("claude")
-        await waitForDebouncedSearch()
+        await wait { service.results.count == 1 }
 
-        XCTAssertEqual(service.results.count, 1)
         XCTAssertEqual(service.results.first?.name, "claude-flow")
         XCTAssertNil(service.error)
         XCTAssertFalse(service.isSearching)
@@ -225,9 +236,8 @@ final class HarnessSearchServiceTests: XCTestCase {
         let service = makeService(runner: runner)
 
         service.search("foo")
-        await waitForDebouncedSearch()
+        await wait { service.error != nil }
 
-        XCTAssertNotNil(service.error)
         XCTAssertTrue(service.results.isEmpty)
         XCTAssertFalse(service.isSearching)
     }
@@ -237,9 +247,8 @@ final class HarnessSearchServiceTests: XCTestCase {
         let service = makeService(runner: runner)
 
         service.search("foo")
-        await waitForDebouncedSearch()
+        await wait { service.error != nil }
 
-        XCTAssertNotNil(service.error)
         XCTAssertTrue(service.results.isEmpty)
     }
 
@@ -249,9 +258,8 @@ final class HarnessSearchServiceTests: XCTestCase {
         let service = makeService(runner: runner)
 
         service.search("foo")
-        await waitForDebouncedSearch()
+        await wait { service.error != nil }
 
-        XCTAssertNotNil(service.error)
         XCTAssertTrue(service.results.isEmpty)
     }
 
@@ -267,7 +275,7 @@ final class HarnessSearchServiceTests: XCTestCase {
         )
 
         service.search("foo")
-        await waitForDebouncedSearch()
+        await wait { runner.capturedEnvironment != nil }
 
         XCTAssertEqual(runner.capturedEnvironment?["YNH_HOME"], "/tmp/custom-ynh-home")
     }
@@ -282,7 +290,7 @@ final class HarnessSearchServiceTests: XCTestCase {
         // Issue the second call before debounce elapses for the first.
         try? await Task.sleep(for: .milliseconds(100))
         service.search("second")
-        await waitForDebouncedSearch()
+        await wait { runner.capturedArguments.count >= 1 }
 
         // Only the second call's args should reach the runner — the first
         // is cancelled during its sleep.
