@@ -6,6 +6,56 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.9.5</title>
+            <sparkle:version>0.9.5</sparkle:version>
+            <sparkle:shortVersionString>0.9.5</sparkle:shortVersionString>
+            <pubDate>Sun, 03 May 2026 10:29:15 +0000</pubDate>
+            <description><![CDATA[<h2 id="whats-new">What's New</h2>
+<ul>
+<li>per-row delegate Edit and Remove in detail pane (#251)</li>
+<li>inline include editing &amp; manifest editor in detail pane (#250)</li>
+<li>Phase 1 — management foundation, fork &amp; duplicate, drift detection (#249)</li>
+</ul>
+<h2 id="bug-fixes">Bug Fixes</h2>
+<ul>
+<li>tolerate name/id mismatch when resolving selected harness (#252)</li>
+<li>replace -50 Finder dialog with correct file/URL handling (#240)</li>
+<li>re-register URL Apple Event handler after SwiftUI scene setup (#239)</li>
+<li>fix uninstall for local harnesses with no YNH install record (#234)</li>
+<li>fix appcast not updating on stable release (#233)</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.5.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.5.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.9.5/TermQ-0.9.5.zip"
+                sparkle:edSignature="O8rLaDX+Hh10BZ7sr5kMYr9qO+5Q0RRgLXM/0HD7hJJI9tVvaLgGDyJVPo2FvjGQGKiZi7Def8GeOjafENz0CA=="
+                length="23469174"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.9.4</title>
             <sparkle:version>0.9.4</sparkle:version>
             <sparkle:shortVersionString>0.9.4</sparkle:shortVersionString>
