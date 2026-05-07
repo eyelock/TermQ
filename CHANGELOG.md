@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.7] — 2026-05-07
+
+### Fixed
+
+- **Harness loading broken against YNH 0.2.x** — v0.9.5/0.9.6 hard-coded
+  the YNH 0.3 structured-output shape (`{harnesses: [...]}` envelope,
+  `version_installed` field), but YNH 0.3 was never published to the
+  Homebrew tap. Every user running `brew install ynh` is on YNH 0.2.3,
+  which emits a bare `[Harness]` array with `version`. The mismatch
+  left the Harnesses sidebar empty and produced a blank Launch card on
+  worktree rows that already had a harness associated. Decoding is now
+  tolerant: `YNHListEnvelope` / `YNHInfoEnvelope` accept either the 0.3
+  envelope or the 0.2 bare shape, and `Harness` / `HarnessInfo` accept
+  either `version_installed` or `version`. The compat layer can be
+  removed once YNH 0.3 ships to the tap and a capability gate is in
+  place.
+
 ## [0.9.6] — 2026-05-04
 
 ### Fixed

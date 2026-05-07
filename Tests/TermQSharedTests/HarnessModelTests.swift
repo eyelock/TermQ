@@ -116,6 +116,33 @@ final class HarnessModelTests: XCTestCase {
         XCTAssertNotEqual(h1, h2)
     }
 
+    /// YNH 0.2.x emits `version` (not `version_installed`) on `ynh ls`/`ynh info`
+    /// payloads. TermQ must accept that legacy key so 0.9.7 does not regress users
+    /// still on Homebrew-shipped YNH 0.2.3.
+    func testHarness_codable_acceptsLegacyVersionKey() throws {
+        let json = """
+            {
+                "name": "legacy",
+                "version": "0.1.0",
+                "default_vendor": "claude",
+                "path": "/p",
+                "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
+                "includes": [],
+                "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: json.data(using: .utf8)!)
+        XCTAssertEqual(h.version, "0.1.0")
+    }
+
+    func testHarnessInfo_codable_acceptsLegacyVersionKey() throws {
+        let json = """
+            {"name":"h","version":"v","default_vendor":"claude","path":"/p"}
+            """
+        let info = try JSONDecoder().decode(HarnessInfo.self, from: json.data(using: .utf8)!)
+        XCTAssertEqual(info.version, "v")
+    }
+
     func testHarness_codable_minimal() throws {
         let json = """
             {
