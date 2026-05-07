@@ -5,16 +5,44 @@ private enum HarnessDetailError: Error {
     case missingYnd
 }
 
-/// Envelope shape returned by `ynh ls --format json` (ynh 0.3+).
-/// Wraps the harness list alongside capability and version metadata.
-private struct YNHListEnvelope: Decodable {
+/// Envelope shape returned by `ynh ls --format json`.
+///
+/// YNH 0.3+ wraps the harness list as `{harnesses: [...], capabilities, ynh_version}`.
+/// YNH 0.2.x emits a bare `[Harness]` array. This decoder accepts either shape.
+struct YNHListEnvelope: Decodable {
     let harnesses: [Harness]
+
+    private enum CodingKeys: String, CodingKey { case harnesses }
+
+    init(from decoder: Decoder) throws {
+        if let keyed = try? decoder.container(keyedBy: CodingKeys.self),
+            keyed.contains(.harnesses)
+        {
+            harnesses = try keyed.decode([Harness].self, forKey: .harnesses)
+        } else {
+            harnesses = try [Harness](from: decoder)
+        }
+    }
 }
 
-/// Envelope shape returned by `ynh info <name> --format json` (ynh 0.3+).
-/// Wraps a single harness payload alongside capability and version metadata.
-private struct YNHInfoEnvelope: Decodable {
+/// Envelope shape returned by `ynh info <name> --format json`.
+///
+/// YNH 0.3+ wraps the payload as `{harness: {...}, capabilities, ynh_version}`.
+/// YNH 0.2.x emits a bare `HarnessInfo` object. This decoder accepts either shape.
+struct YNHInfoEnvelope: Decodable {
     let harness: HarnessInfo
+
+    private enum CodingKeys: String, CodingKey { case harness }
+
+    init(from decoder: Decoder) throws {
+        if let keyed = try? decoder.container(keyedBy: CodingKeys.self),
+            keyed.contains(.harness)
+        {
+            harness = try keyed.decode(HarnessInfo.self, forKey: .harness)
+        } else {
+            harness = try HarnessInfo(from: decoder)
+        }
+    }
 }
 
 /// Repository for querying installed harnesses via `ynh ls --format json`

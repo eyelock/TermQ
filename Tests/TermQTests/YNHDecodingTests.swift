@@ -154,6 +154,75 @@ final class YNHHarnessDecodingTests: XCTestCase {
         XCTAssertNotEqual(a.id, b.id)
     }
 
+    // MARK: - ynh ls envelope tolerance (0.2 bare array vs 0.3+ envelope)
+
+    func test_ynh_ls_envelope_acceptsBareArray_ynh02() throws {
+        // YNH 0.2.x ships a bare array with `version` (not `version_installed`).
+        let json = """
+            [
+              {
+                "name": "david",
+                "version": "0.1.0",
+                "default_vendor": "claude",
+                "path": "/Users/test/.ynh/harnesses/david",
+                "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
+                "includes": [],
+                "delegates_to": []
+              }
+            ]
+            """
+        let envelope = try JSONDecoder().decode(YNHListEnvelope.self, from: Data(json.utf8))
+        XCTAssertEqual(envelope.harnesses.count, 1)
+        XCTAssertEqual(envelope.harnesses[0].version, "0.1.0")
+    }
+
+    func test_ynh_ls_envelope_acceptsEnvelope_ynh03() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": [
+                {
+                  "name": "david",
+                  "version_installed": "0.1.0",
+                  "default_vendor": "claude",
+                  "path": "/Users/test/.ynh/harnesses/david",
+                  "artifacts": {"skills": 0, "agents": 0, "rules": 0, "commands": 0},
+                  "includes": [],
+                  "delegates_to": []
+                }
+              ]
+            }
+            """
+        let envelope = try JSONDecoder().decode(YNHListEnvelope.self, from: Data(json.utf8))
+        XCTAssertEqual(envelope.harnesses.count, 1)
+        XCTAssertEqual(envelope.harnesses[0].version, "0.1.0")
+    }
+
+    // MARK: - ynh info envelope tolerance
+
+    func test_ynh_info_envelope_acceptsBareObject_ynh02() throws {
+        let json = """
+            {"name":"h","version":"1","default_vendor":"claude","path":"/p"}
+            """
+        let envelope = try JSONDecoder().decode(YNHInfoEnvelope.self, from: Data(json.utf8))
+        XCTAssertEqual(envelope.harness.name, "h")
+        XCTAssertEqual(envelope.harness.version, "1")
+    }
+
+    func test_ynh_info_envelope_acceptsEnvelope_ynh03() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harness": {"name":"h","version_installed":"1","default_vendor":"claude","path":"/p"}
+            }
+            """
+        let envelope = try JSONDecoder().decode(YNHInfoEnvelope.self, from: Data(json.utf8))
+        XCTAssertEqual(envelope.harness.name, "h")
+        XCTAssertEqual(envelope.harness.version, "1")
+    }
+
     // MARK: - ynh search --format json
 
     func test_ynh_search_decodesSearchResultArray() throws {

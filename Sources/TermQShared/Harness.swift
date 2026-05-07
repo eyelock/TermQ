@@ -29,9 +29,43 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case name, description, path, artifacts, includes, namespace
         case version = "version_installed"
+        case versionLegacy = "version"
         case defaultVendor = "default_vendor"
         case installedFrom = "installed_from"
         case delegatesTo = "delegates_to"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        name = try c.decode(String.self, forKey: .name)
+        // YNH 0.3+ emits `version_installed`; 0.2.x emits `version`. Accept either.
+        if let modern = try c.decodeIfPresent(String.self, forKey: .version) {
+            version = modern
+        } else {
+            version = try c.decode(String.self, forKey: .versionLegacy)
+        }
+        description = try c.decodeIfPresent(String.self, forKey: .description)
+        defaultVendor = try c.decode(String.self, forKey: .defaultVendor)
+        namespace = try c.decodeIfPresent(String.self, forKey: .namespace)
+        path = try c.decode(String.self, forKey: .path)
+        installedFrom = try c.decodeIfPresent(HarnessProvenance.self, forKey: .installedFrom)
+        artifacts = try c.decode(HarnessArtifactCounts.self, forKey: .artifacts)
+        includes = try c.decodeIfPresent([HarnessInclude].self, forKey: .includes) ?? []
+        delegatesTo = try c.decodeIfPresent([HarnessDelegate].self, forKey: .delegatesTo) ?? []
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(name, forKey: .name)
+        try c.encode(version, forKey: .version)
+        try c.encodeIfPresent(description, forKey: .description)
+        try c.encode(defaultVendor, forKey: .defaultVendor)
+        try c.encodeIfPresent(namespace, forKey: .namespace)
+        try c.encode(path, forKey: .path)
+        try c.encodeIfPresent(installedFrom, forKey: .installedFrom)
+        try c.encode(artifacts, forKey: .artifacts)
+        try c.encode(includes, forKey: .includes)
+        try c.encode(delegatesTo, forKey: .delegatesTo)
     }
 
     public init(
