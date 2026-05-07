@@ -93,6 +93,7 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case name, description, path, artifacts, includes, namespace
         case version = "version_installed"
+        case versionLegacy = "version"
         case versionAvailable = "version_available"
         case defaultVendor = "default_vendor"
         case installedFrom = "installed_from"
@@ -107,10 +108,19 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     /// manifest format) so they show up in `ynh ls` as error rows. Without
     /// this tolerance, a single bad row would fail the whole list decode and
     /// empty the sidebar.
+    ///
+    /// Also tolerates YNH 0.2.x JSON shapes: 0.2.x emits `version` instead of
+    /// `version_installed`. Accepts either key so users on YNH 0.2.x (the
+    /// current Homebrew tap version) see their harnesses correctly.
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try c.decode(String.self, forKey: .name)
-        self.version = try c.decode(String.self, forKey: .version)
+        // YNH 0.3+ emits `version_installed`; 0.2.x emits `version`. Accept either.
+        if let modern = try c.decodeIfPresent(String.self, forKey: .version) {
+            self.version = modern
+        } else {
+            self.version = try c.decode(String.self, forKey: .versionLegacy)
+        }
         self.versionAvailable = try c.decodeIfPresent(String.self, forKey: .versionAvailable)
         self.description = try c.decodeIfPresent(String.self, forKey: .description)
         self.defaultVendor = try c.decode(String.self, forKey: .defaultVendor)
@@ -122,6 +132,23 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         self.delegatesTo = (try? c.decodeIfPresent([HarnessDelegate].self, forKey: .delegatesTo)) ?? []
         self.isPinned = try c.decodeIfPresent(Bool.self, forKey: .isPinned)
         self.shaAvailable = try c.decodeIfPresent(String.self, forKey: .shaAvailable)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(name, forKey: .name)
+        try c.encode(version, forKey: .version)
+        try c.encodeIfPresent(versionAvailable, forKey: .versionAvailable)
+        try c.encodeIfPresent(description, forKey: .description)
+        try c.encode(defaultVendor, forKey: .defaultVendor)
+        try c.encodeIfPresent(namespace, forKey: .namespace)
+        try c.encode(path, forKey: .path)
+        try c.encodeIfPresent(installedFrom, forKey: .installedFrom)
+        try c.encode(artifacts, forKey: .artifacts)
+        try c.encode(includes, forKey: .includes)
+        try c.encode(delegatesTo, forKey: .delegatesTo)
+        try c.encodeIfPresent(isPinned, forKey: .isPinned)
+        try c.encodeIfPresent(shaAvailable, forKey: .shaAvailable)
     }
 
     public init(
@@ -290,30 +317,67 @@ public struct HarnessDelegate: Codable, Equatable, Sendable {
 
 // MARK: - YNH structured-output envelope
 
-/// Top-level envelope returned by `ynh ls --format json` (YNH 0.3.0+).
+/// Top-level envelope returned by `ynh ls --format json`.
 ///
-/// YNH wraps array-returning commands in an envelope so it can attach
-/// `capabilities` and `ynh_version` metadata. Callers should decode this and
-/// read `harnesses` rather than decoding `[Harness]` directly.
-public struct HarnessListResponse: Codable, Sendable {
+/// YNH 0.3+ wraps the harness list as `{harnesses: [...], capabilities, ynh_version}`.
+/// YNH 0.2.x emits a bare `[Harness]` array. This decoder accepts either shape.
+/// Callers read `harnesses`; `capabilities` and `ynhVersion` are nil on 0.2.x.
+public struct HarnessListResponse: Sendable {
     public let capabilities: String?
     public let ynhVersion: String?
     public let harnesses: [Harness]
+}
 
-    enum CodingKeys: String, CodingKey {
+extension HarnessListResponse: Decodable {
+    private enum CodingKeys: String, CodingKey {
         case capabilities, harnesses
         case ynhVersion = "ynh_version"
     }
+
+    public init(from decoder: Decoder) throws {
+        if let keyed = try? decoder.container(keyedBy: CodingKeys.self),
+            keyed.contains(.harnesses)
+        {
+            harnesses = try keyed.decode([Harness].self, forKey: .harnesses)
+            capabilities = try keyed.decodeIfPresent(String.self, forKey: .capabilities)
+            ynhVersion = try keyed.decodeIfPresent(String.self, forKey: .ynhVersion)
+        } else {
+            // YNH 0.2.x bare array shape
+            harnesses = try [Harness](from: decoder)
+            capabilities = nil
+            ynhVersion = nil
+        }
+    }
 }
 
-/// Top-level envelope returned by `ynh info <name> --format json` (YNH 0.3.0+).
-public struct HarnessInfoResponse: Codable, Sendable {
+/// Top-level envelope returned by `ynh info <name> --format json`.
+///
+/// YNH 0.3+ wraps the payload as `{harness: {...}, capabilities, ynh_version}`.
+/// YNH 0.2.x emits a bare `HarnessInfo` object. This decoder accepts either shape.
+public struct HarnessInfoResponse: Sendable {
     public let capabilities: String?
     public let ynhVersion: String?
     public let harness: HarnessInfo
+}
 
-    enum CodingKeys: String, CodingKey {
+extension HarnessInfoResponse: Decodable {
+    private enum CodingKeys: String, CodingKey {
         case capabilities, harness
         case ynhVersion = "ynh_version"
+    }
+
+    public init(from decoder: Decoder) throws {
+        if let keyed = try? decoder.container(keyedBy: CodingKeys.self),
+            keyed.contains(.harness)
+        {
+            harness = try keyed.decode(HarnessInfo.self, forKey: .harness)
+            capabilities = try keyed.decodeIfPresent(String.self, forKey: .capabilities)
+            ynhVersion = try keyed.decodeIfPresent(String.self, forKey: .ynhVersion)
+        } else {
+            // YNH 0.2.x bare object shape
+            harness = try HarnessInfo(from: decoder)
+            capabilities = nil
+            ynhVersion = nil
+        }
     }
 }
