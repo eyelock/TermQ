@@ -6,12 +6,13 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
-            <title>Version 0.9.6</title>
-            <sparkle:version>0.9.6</sparkle:version>
-            <sparkle:shortVersionString>0.9.6</sparkle:shortVersionString>
-            <pubDate>Tue, 05 May 2026 06:17:38 +0000</pubDate>
+            <title>Version 0.9.7</title>
+            <sparkle:version>0.9.7</sparkle:version>
+            <sparkle:shortVersionString>0.9.7</sparkle:shortVersionString>
+            <pubDate>Thu, 07 May 2026 19:43:26 +0000</pubDate>
             <description><![CDATA[<h2 id="whats-new">What's New</h2>
 <ul>
+<li>SourcePicker Add Include context (Phase 3) (#294)</li>
 <li>SourcePicker Add Delegate context (Phase 2) (#267)</li>
 <li>unified SourcePicker for Install Harness (Phase 1) (#262)</li>
 <li>per-row delegate Edit and Remove in detail pane (#251)</li>
@@ -20,6 +21,7 @@
 </ul>
 <h2 id="bug-fixes">Bug Fixes</h2>
 <ul>
+<li>generate release notes from CHANGELOG.md instead of develop range (#283)</li>
 <li>align OSC 52 clipboard gate with Settings UI default (#270)</li>
 <li>stop stealing focus on AppleEvent reopen (#268)</li>
 <li>persist removals and harden against silent save failures (#264)</li>
@@ -29,6 +31,48 @@
 <li>re-register URL Apple Event handler after SwiftUI scene setup (#239)</li>
 <li>fix uninstall for local harnesses with no YNH install record (#234)</li>
 <li>fix appcast not updating on stable release (#233)</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.7.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.9.7.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.9.7/TermQ-0.9.7.zip"
+                sparkle:edSignature="xya2Uet2N8r2iseds0TCx9v+B0MdTrHWElnTxHOY6e+UU1LhNAa4VeZ+BAuB91C34p2zIN+dTGDRWG90Aj2zCg=="
+                length="23497734"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.9.6</title>
+            <sparkle:version>0.9.6</sparkle:version>
+            <sparkle:shortVersionString>0.9.6</sparkle:shortVersionString>
+            <pubDate>Tue, 05 May 2026 06:17:38 +0000</pubDate>
+            <description><![CDATA[<h2 id="bug-fixes">Bug Fixes</h2>
+<ul>
+<li><strong>align OSC 52 clipboard gate with Settings UI default</strong> — runtime gate previously defaulted to ON while Settings showed OFF; never-touched users could have terminal programs silently copy to the clipboard. Behavior change: existing users who relied on the implicit-on default will need to enable OSC 52 explicitly. (#270 / #272)</li>
+<li><strong>stop stealing focus on AppleEvent reopen</strong> — MCP-driven <code>termq://</code> URL deliveries no longer activate the TermQ window when the user is working in another app. (#268)</li>
+<li><strong>persist marketplace removals and harden against silent save failures</strong> — removed marketplaces survive relaunch; tombstones prevent re-seed from resurrecting them; persistence errors are now surfaced instead of swallowed. (#264)</li>
 </ul>
 <hr />
 <h2 id="installation">Installation</h2>
