@@ -590,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Εισαγάγετε μια διαδρομή worktree για να συνεχίσετε.";
 "sidebar.new.worktree.create" = "Δημιουργία";
 "sidebar.new.worktree.loading.branches" = "Φόρτωση κλάδων...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Μετατροπή σε worktree";
+"sidebar.convert.worktree.branch.label" = "Όνομα κλάδου";
+"sidebar.convert.worktree.button" = "Μετατροπή";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Μετατροπή σε worktree…";
 "sidebar.branch.delete" = "Διαγραφή κλάδου";
 "sidebar.branch.delete.title" = "Διαγραφή κλάδου";
 "sidebar.branch.delete.confirm" = "Διαγραφή";

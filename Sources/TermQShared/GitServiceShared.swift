@@ -154,6 +154,15 @@ public enum GitServiceShared {
         _ = try await runGitCommand(repoPath: repoPath, args: ["worktree", "add", worktreePath, branch])
     }
 
+    /// Rename a local branch (`git branch -m <old> <new>`).
+    public static func renameBranch(
+        repoPath: String,
+        oldName: String,
+        newName: String
+    ) async throws {
+        _ = try await runGitCommand(repoPath: repoPath, args: ["branch", "-m", oldName, newName])
+    }
+
     /// Add a new worktree at `worktreePath` checked out to a new branch `branch`.
     /// Pass `baseBranch` to start from a specific branch instead of HEAD.
     public static func addWorktree(

@@ -588,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "Введите путь рабочего дерева для продолжения.";
 "sidebar.new.worktree.create" = "Создать";
 "sidebar.new.worktree.loading.branches" = "Загрузка веток...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Преобразовать в рабочее дерево";
+"sidebar.convert.worktree.branch.label" = "Имя ветки";
+"sidebar.convert.worktree.button" = "Преобразовать";
+
 "common.close.window" = "Закрыть окно";
 "menu.toggle.sidebar" = "Показать/скрыть боковую панель";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Преобразовать в рабочее дерево…";
 "sidebar.branch.delete" = "Удалить ветку";
 "sidebar.branch.delete.title" = "Удалить ветку";
 "sidebar.branch.delete.confirm" = "Удалить";

@@ -15,6 +15,7 @@ struct WorktreeSidebarView: View {
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @State private var showAddRepo = false
     @State private var newWorktreeContext: NewWorktreeContext?
+    @State private var convertWorktreeContext: ConvertWorktreeContext?
     @State private var showEditRepoFor: ObservableRepository?
     @State private var pendingRemoval: (ObservableRepository, GitWorktree)?
     @State private var isShowingRemoveAlert = false
@@ -49,6 +50,13 @@ struct WorktreeSidebarView: View {
             NewWorktreeSheet(
                 repo: ctx.repo,
                 initialBaseBranch: ctx.initialBaseBranch,
+                viewModel: viewModel
+            )
+        }
+        .sheet(item: $convertWorktreeContext) { ctx in
+            ConvertToWorktreeSheet(
+                repo: ctx.repo,
+                originalBranch: ctx.branch,
                 viewModel: viewModel
             )
         }
@@ -460,6 +468,12 @@ extension WorktreeSidebarView {
                 newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: branch)
             } label: {
                 Label(Strings.Sidebar.newWorktreeFromBranch, systemImage: "arrow.triangle.branch")
+            }
+
+            Button {
+                convertWorktreeContext = ConvertWorktreeContext(repo: repo, branch: branch)
+            } label: {
+                Label(Strings.Sidebar.convertToWorktree, systemImage: "arrow.right.square")
             }
 
             Divider()

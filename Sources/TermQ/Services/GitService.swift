@@ -151,6 +151,11 @@ public class GitService: GitServiceProtocol {
         return candidates.filter { !occupied.contains($0) }
     }
 
+    /// Rename a local branch (`git branch -m`).
+    public func renameBranch(repoPath: String, oldName: String, newName: String) async throws {
+        try await GitServiceShared.renameBranch(repoPath: repoPath, oldName: oldName, newName: newName)
+    }
+
     /// Safe-delete a local branch (`git branch -d`). Throws if not fully merged.
     public func deleteLocalBranch(repoPath: String, branch: String) async throws {
         _ = try await GitServiceShared.runGitCommand(repoPath: repoPath, args: ["branch", "-d", branch])

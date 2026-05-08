@@ -579,10 +579,16 @@
 "sidebar.new.worktree.path.required" = "Voer een worktree-pad in om door te gaan.";
 "sidebar.new.worktree.create" = "Aanmaken";
 "sidebar.new.worktree.loading.branches" = "Branches laden...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Omzetten naar worktree";
+"sidebar.convert.worktree.branch.label" = "Branch-naam";
+"sidebar.convert.worktree.button" = "Omzetten";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Omzetten naar worktree…";
 "sidebar.branch.delete" = "Branch verwijderen";
 "sidebar.branch.delete.title" = "Branch verwijderen";
 "sidebar.branch.delete.confirm" = "Verwijderen";

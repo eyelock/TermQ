@@ -15,6 +15,18 @@ struct NewWorktreeContext: Identifiable {
     let initialBaseBranch: String?
 }
 
+// MARK: - Convert Worktree Context
+
+/// Carries the target repository and the branch being converted into
+/// `ConvertToWorktreeSheet`. Used by the "Convert to Worktree" branch action,
+/// which checks the existing branch out as a worktree (optionally renaming it
+/// first), without creating a new branch.
+struct ConvertWorktreeContext: Identifiable {
+    let id = UUID()
+    let repo: ObservableRepository
+    let branch: String
+}
+
 // MARK: - Repo Disclosure Wrapper
 
 /// Owns the `@State` for a repo's expanded/collapsed state so the `DisclosureGroup`

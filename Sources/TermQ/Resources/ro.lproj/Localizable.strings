@@ -588,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "Introduceți o cale de worktree pentru a continua.";
 "sidebar.new.worktree.create" = "Creează";
 "sidebar.new.worktree.loading.branches" = "Se încarcă branch-urile...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Convertire în arbore de lucru";
+"sidebar.convert.worktree.branch.label" = "Numele branch-ului";
+"sidebar.convert.worktree.button" = "Convertire";
+
 "common.close.window" = "Închide fereastra";
 "menu.toggle.sidebar" = "Comută bara laterală";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Convertire în arbore de lucru…";
 "sidebar.branch.delete" = "Șterge ramura";
 "sidebar.branch.delete.title" = "Șterge ramura";
 "sidebar.branch.delete.confirm" = "Șterge";

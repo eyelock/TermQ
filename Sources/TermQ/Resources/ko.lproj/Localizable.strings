@@ -579,10 +579,16 @@
 "sidebar.new.worktree.path.required" = "계속하려면 Worktree 경로를 입력하세요.";
 "sidebar.new.worktree.create" = "생성";
 "sidebar.new.worktree.loading.branches" = "브랜치 로딩 중...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "워크트리로 변환";
+"sidebar.convert.worktree.branch.label" = "브랜치 이름";
+"sidebar.convert.worktree.button" = "변환";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "워크트리로 변환…";
 "sidebar.branch.delete" = "브랜치 삭제";
 "sidebar.branch.delete.title" = "브랜치 삭제";
 "sidebar.branch.delete.confirm" = "삭제";

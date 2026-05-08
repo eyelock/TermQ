@@ -581,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Nhập đường dẫn worktree để tiếp tục.";
 "sidebar.new.worktree.create" = "Tạo";
 "sidebar.new.worktree.loading.branches" = "Đang tải nhánh...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Chuyển đổi thành Worktree";
+"sidebar.convert.worktree.branch.label" = "Tên nhánh";
+"sidebar.convert.worktree.button" = "Chuyển đổi";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Chuyển đổi thành Worktree…";
 "sidebar.branch.delete" = "Xóa nhánh";
 "sidebar.branch.delete.title" = "Xóa nhánh";
 "sidebar.branch.delete.confirm" = "Xóa";

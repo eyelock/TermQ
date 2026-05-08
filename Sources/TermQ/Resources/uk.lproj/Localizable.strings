@@ -581,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Введіть шлях робочого дерева для продовження.";
 "sidebar.new.worktree.create" = "Створити";
 "sidebar.new.worktree.loading.branches" = "Завантаження гілок...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Перетворити на робоче дерево";
+"sidebar.convert.worktree.branch.label" = "Назва гілки";
+"sidebar.convert.worktree.button" = "Перетворити";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Перетворити на робоче дерево…";
 "sidebar.branch.delete" = "Видалити гілку";
 "sidebar.branch.delete.title" = "Видалити гілку";
 "sidebar.branch.delete.confirm" = "Видалити";

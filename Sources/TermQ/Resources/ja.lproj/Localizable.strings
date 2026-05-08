@@ -588,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "続行するには Worktree のパスを入力してください。";
 "sidebar.new.worktree.create" = "作成";
 "sidebar.new.worktree.loading.branches" = "ブランチを読み込み中...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "ワークツリーに変換";
+"sidebar.convert.worktree.branch.label" = "ブランチ名";
+"sidebar.convert.worktree.button" = "変換";
+
 "common.close.window" = "ウィンドウを閉じる";
 "menu.toggle.sidebar" = "サイドバーの切り替え";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "ワークツリーに変換…";
 "sidebar.branch.delete" = "ブランチを削除";
 "sidebar.branch.delete.title" = "ブランチを削除";
 "sidebar.branch.delete.confirm" = "削除";

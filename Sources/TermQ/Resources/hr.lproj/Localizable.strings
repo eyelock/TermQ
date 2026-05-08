@@ -580,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "Unesite putanju worktree-a za nastavak.";
 "sidebar.new.worktree.create" = "Stvori";
 "sidebar.new.worktree.loading.branches" = "Učitavanje grana...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Pretvori u radno stablo";
+"sidebar.convert.worktree.branch.label" = "Naziv grane";
+"sidebar.convert.worktree.button" = "Pretvori";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Pretvori u radno stablo…";
 "sidebar.branch.delete" = "Obriši granu";
 "sidebar.branch.delete.title" = "Obriši granu";
 "sidebar.branch.delete.confirm" = "Obriši";

@@ -580,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "Syötä worktree-polku jatkaaksesi.";
 "sidebar.new.worktree.create" = "Luo";
 "sidebar.new.worktree.loading.branches" = "Ladataan haaroja...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Muunna työskentelypuuksi";
+"sidebar.convert.worktree.branch.label" = "Haaran nimi";
+"sidebar.convert.worktree.button" = "Muunna";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Muunna työskentelypuuksi…";
 "sidebar.branch.delete" = "Poista haara";
 "sidebar.branch.delete.title" = "Poista haara";
 "sidebar.branch.delete.confirm" = "Poista";
