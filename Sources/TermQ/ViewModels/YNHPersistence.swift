@@ -63,6 +63,16 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         config.harnessVendor[harnessId]
     }
 
+    /// Last-used review harness id for a repository (Review with Focus sheet).
+    func reviewHarness(for repoPath: String) -> String? {
+        config.repoReviewHarness[repoPath]
+    }
+
+    /// Last-used focus name for a repository. Empty string means no focus.
+    func reviewFocus(for repoPath: String) -> String? {
+        config.repoReviewFocus[repoPath]
+    }
+
     // MARK: - Mutations
 
     func setRepoDefaultHarness(_ harnessId: String?, for repoPath: String) {
@@ -96,6 +106,24 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         let vendorKeys = config.harnessVendor.keys.filter(matches)
         for key in vendorKeys {
             config.harnessVendor.removeValue(forKey: key)
+        }
+        save()
+    }
+
+    func setReviewHarness(_ harnessId: String?, for repoPath: String) {
+        if let id = harnessId {
+            config.repoReviewHarness[repoPath] = id
+        } else {
+            config.repoReviewHarness.removeValue(forKey: repoPath)
+        }
+        save()
+    }
+
+    func setReviewFocus(_ focus: String?, for repoPath: String) {
+        if let focus {
+            config.repoReviewFocus[repoPath] = focus
+        } else {
+            config.repoReviewFocus.removeValue(forKey: repoPath)
         }
         save()
     }

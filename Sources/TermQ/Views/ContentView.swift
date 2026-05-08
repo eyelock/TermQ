@@ -59,6 +59,9 @@ struct ContentView: View {
                         )
                         launchCoordinator.launchHarness(config)
                     },
+                    onReviewWithFocus: { config in
+                        launchCoordinator.launchHarness(config, reuseExisting: false)
+                    },
                     onInstall: { lifecycleCoordinator.showInstallSheet = true },
                     onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
                     onDeleteLocal: { id in lifecycleCoordinator.deleteLocalHarness(id: id) },

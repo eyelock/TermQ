@@ -16,27 +16,39 @@ public struct LocalYNHConfig: Codable, Sendable {
     /// When set, this overrides the harness's own `default_vendor` for both
     /// the badge in the detail pane and the launch sheet's initial selection.
     public var harnessVendor: [String: String]
+    /// Last-used harness id for "Review with Focus" per repo path.
+    /// Independent from `repoHarness` — a review harness can differ from the
+    /// default terminal-launch harness.
+    public var repoReviewHarness: [String: String]
+    /// Last-used focus name for "Review with Focus" per repo path.
+    /// Empty string means no focus selected (ad-hoc prompt).
+    public var repoReviewFocus: [String: String]
 
     public init(
         worktreeHarness: [String: String] = [:],
         repoHarness: [String: String] = [:],
         preferredVendor: String? = nil,
-        harnessVendor: [String: String] = [:]
+        harnessVendor: [String: String] = [:],
+        repoReviewHarness: [String: String] = [:],
+        repoReviewFocus: [String: String] = [:]
     ) {
         self.worktreeHarness = worktreeHarness
         self.repoHarness = repoHarness
         self.preferredVendor = preferredVendor
         self.harnessVendor = harnessVendor
+        self.repoReviewHarness = repoReviewHarness
+        self.repoReviewFocus = repoReviewFocus
     }
 
-    // Custom decoder for backward compat: `repoHarness` and `harnessVendor`
-    // may be absent in older ynh.json files written by earlier TermQ versions.
+    // Custom decoder for backward compat: all optional dicts default to empty.
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         worktreeHarness = (try? c.decode([String: String].self, forKey: .worktreeHarness)) ?? [:]
         repoHarness = (try? c.decode([String: String].self, forKey: .repoHarness)) ?? [:]
         preferredVendor = try? c.decode(String.self, forKey: .preferredVendor)
         harnessVendor = (try? c.decode([String: String].self, forKey: .harnessVendor)) ?? [:]
+        repoReviewHarness = (try? c.decode([String: String].self, forKey: .repoReviewHarness)) ?? [:]
+        repoReviewFocus = (try? c.decode([String: String].self, forKey: .repoReviewFocus)) ?? [:]
     }
 }
 

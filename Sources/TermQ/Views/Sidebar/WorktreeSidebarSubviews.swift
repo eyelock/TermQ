@@ -27,6 +27,51 @@ struct ConvertWorktreeContext: Identifiable {
     let branch: String
 }
 
+// MARK: - Sidebar Mode
+
+/// Whether the Repositories panel is showing local worktrees or remote PRs.
+enum SidebarMode {
+    case local
+    case remote
+}
+
+// MARK: - Checkout PR Context
+
+struct CheckoutPRContext: Identifiable {
+    let id = UUID()
+    let pr: GitHubPR
+    let repo: ObservableRepository
+    let ghPath: String
+}
+
+// MARK: - Force Update PR Context
+
+struct ForceUpdatePRContext: Identifiable {
+    let id = UUID()
+    let worktree: GitWorktree
+    let repo: ObservableRepository
+    let prNumber: Int
+    let ghPath: String
+}
+
+// MARK: - Review With Focus Context
+
+struct ReviewWithFocusContext: Identifiable {
+    let id = UUID()
+    let worktree: GitWorktree
+    let repo: ObservableRepository
+    let prNumber: Int
+}
+
+// MARK: - Sidebar Toast
+
+struct SidebarToast: Identifiable {
+    let id = UUID()
+    let message: String
+    let actionLabel: String?
+    let action: (() -> Void)?
+}
+
 // MARK: - Repo Disclosure Wrapper
 
 /// Owns the `@State` for a repo's expanded/collapsed state so the `DisclosureGroup`

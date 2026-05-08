@@ -8,11 +8,23 @@ struct WorktreeSidebarView: View {
     @ObservedObject var viewModel: WorktreeSidebarViewModel
     var onLaunchHarness: ((String, String, String?) -> Void)?
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
+    var onReviewWithFocus: ((HarnessLaunchConfig) -> Void)?
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
+    @ObservedObject var prService: GitHubPRService = .shared
+    @ObservedObject var ghProbe: GhCliProbe = .shared
+    // Per-window mode (Local vs Remote). Transient — not persisted.
+    @State var sidebarMode: SidebarMode = .local
+    // Sheets and alerts for PR operations.
+    @State private var checkoutPRContext: CheckoutPRContext?
+    @State private var forceUpdatePRContext: ForceUpdatePRContext?
+    @State var isShowingPruneClosedPRsFor: ObservableRepository?
+    @State var pruneClosedPRsCandidates: [PRPruneCandidate] = []
+    @State var pendingToast: SidebarToast?
+    @State var reviewWithFocusContext: ReviewWithFocusContext?
     @State private var showAddRepo = false
     @State private var newWorktreeContext: NewWorktreeContext?
     @State private var convertWorktreeContext: ConvertWorktreeContext?
@@ -34,41 +46,39 @@ struct WorktreeSidebarView: View {
     var body: some View {
         VStack(spacing: 0) {
             header
-
             Divider()
-
-            if viewModel.repositories.isEmpty {
-                emptyState
-            } else {
-                repoList
+            if viewModel.repositories.isEmpty { emptyState } else { repoList }
+        }
+        .overlay(alignment: .bottom) {
+            if let toast = pendingToast {
+                SidebarToastBanner(toast: toast, onDismiss: { pendingToast = nil })
+                    .padding(.horizontal, 12).padding(.bottom, 12)
             }
         }
-        .sheet(isPresented: $showAddRepo) {
-            AddRepositorySheet(viewModel: viewModel)
-        }
+        .sheet(isPresented: $showAddRepo) { AddRepositorySheet(viewModel: viewModel) }
         .sheet(item: $newWorktreeContext) { ctx in
-            NewWorktreeSheet(
-                repo: ctx.repo,
-                initialBaseBranch: ctx.initialBaseBranch,
-                viewModel: viewModel
-            )
+            NewWorktreeSheet(repo: ctx.repo, initialBaseBranch: ctx.initialBaseBranch, viewModel: viewModel)
         }
         .sheet(item: $convertWorktreeContext) { ctx in
-            ConvertToWorktreeSheet(
-                repo: ctx.repo,
-                originalBranch: ctx.branch,
-                viewModel: viewModel
-            )
+            ConvertToWorktreeSheet(repo: ctx.repo, originalBranch: ctx.branch, viewModel: viewModel)
         }
-        .sheet(item: $showEditRepoFor) { repo in
-            EditRepositorySheet(repo: repo, viewModel: viewModel)
-        }
+        .sheet(item: $showEditRepoFor) { repo in EditRepositorySheet(repo: repo, viewModel: viewModel) }
         .sheet(item: $pruneSheetFor) { repo in
             PruneWorktreesSheet(repo: repo, staleEntries: pruneStaleEntries, viewModel: viewModel)
         }
-        .sheet(item: $pruneBranchesSheetFor) { repo in
-            PruneBranchesSheet(repo: repo, viewModel: viewModel)
+        .sheet(item: $pruneBranchesSheetFor) { repo in PruneBranchesSheet(repo: repo, viewModel: viewModel) }
+        .sheet(item: $forceUpdatePRContext) { ctx in ForceUpdatePRSheet(context: ctx, viewModel: viewModel) }
+        .sheet(item: $reviewWithFocusContext) { ctx in
+            ReviewWithFocusSheet(
+                context: ctx,
+                onLaunch: { cfg in
+                    onReviewWithFocus?(cfg)
+                    reviewWithFocusContext = nil
+                },
+                onCancel: { reviewWithFocusContext = nil }
+            )
         }
+        .sheet(item: $isShowingPruneClosedPRsFor) { makePruneClosedPRsSheet(repo: $0) }
         .alert(Strings.Sidebar.pruneWorktreesNothingTitle, isPresented: $isShowingPruneNothingAlert) {
             Button(Strings.Common.ok) {}
         } message: {
@@ -78,51 +88,37 @@ struct WorktreeSidebarView: View {
             Button(Strings.Sidebar.removeWorktreeConfirm, role: .destructive) {
                 if let (repo, worktree) = pendingRemoval {
                     Task {
-                        do {
-                            try await viewModel.removeWorktree(repo: repo, worktree: worktree)
-                        } catch {
+                        do { try await viewModel.removeWorktree(repo: repo, worktree: worktree) } catch {
                             viewModel.operationError = error.localizedDescription
                         }
                     }
                     pendingRemoval = nil
                 }
             }
-            Button(Strings.Sidebar.cancelButton, role: .cancel) {
-                pendingRemoval = nil
-            }
+            Button(Strings.Sidebar.cancelButton, role: .cancel) { pendingRemoval = nil }
         } message: {
-            if let (_, worktree) = pendingRemoval {
-                Text(Strings.Sidebar.removeWorktreeMessage(worktree.path))
-            }
+            if let (_, worktree) = pendingRemoval { Text(Strings.Sidebar.removeWorktreeMessage(worktree.path)) }
         }
         .alert(Strings.Sidebar.deleteWorktreeTitle, isPresented: $isShowingDeleteAlert) {
             Button(Strings.Sidebar.deleteWorktreeConfirm, role: .destructive) {
                 if let (repo, worktree) = pendingForceDelete {
                     Task {
-                        do {
-                            try await viewModel.forceDeleteWorktree(repo: repo, worktree: worktree)
-                        } catch {
+                        do { try await viewModel.forceDeleteWorktree(repo: repo, worktree: worktree) } catch {
                             viewModel.operationError = error.localizedDescription
                         }
                     }
                     pendingForceDelete = nil
                 }
             }
-            Button(Strings.Sidebar.cancelButton, role: .cancel) {
-                pendingForceDelete = nil
-            }
+            Button(Strings.Sidebar.cancelButton, role: .cancel) { pendingForceDelete = nil }
         } message: {
-            if let (_, worktree) = pendingForceDelete {
-                Text(Strings.Sidebar.deleteWorktreeMessage(worktree.path))
-            }
+            if let (_, worktree) = pendingForceDelete { Text(Strings.Sidebar.deleteWorktreeMessage(worktree.path)) }
         }
         .alert(Strings.Sidebar.deleteBranchTitle, isPresented: $isShowingDeleteBranchAlert) {
             Button(Strings.Sidebar.deleteBranchConfirm, role: .destructive) {
                 if let (repo, branch) = branchToDelete {
                     Task {
-                        do {
-                            try await viewModel.deleteBranch(repo: repo, branch: branch)
-                        } catch {
+                        do { try await viewModel.deleteBranch(repo: repo, branch: branch) } catch {
                             viewModel.operationError = error.localizedDescription
                         }
                     }
@@ -131,17 +127,13 @@ struct WorktreeSidebarView: View {
             }
             Button(Strings.Sidebar.cancelButton, role: .cancel) { branchToDelete = nil }
         } message: {
-            if let (_, branch) = branchToDelete {
-                Text(Strings.Sidebar.deleteBranchMessage(branch))
-            }
+            if let (_, branch) = branchToDelete { Text(Strings.Sidebar.deleteBranchMessage(branch)) }
         }
         .alert(Strings.Sidebar.destroyBranchTitle, isPresented: $isShowingDestroyBranchAlert) {
             Button(Strings.Sidebar.destroyBranchConfirm, role: .destructive) {
                 if let (repo, branch) = branchToDestroy {
                     Task {
-                        do {
-                            try await viewModel.forceDeleteBranch(repo: repo, branch: branch)
-                        } catch {
+                        do { try await viewModel.forceDeleteBranch(repo: repo, branch: branch) } catch {
                             viewModel.operationError = error.localizedDescription
                         }
                     }
@@ -150,9 +142,7 @@ struct WorktreeSidebarView: View {
             }
             Button(Strings.Sidebar.cancelButton, role: .cancel) { branchToDestroy = nil }
         } message: {
-            if let (_, branch) = branchToDestroy {
-                Text(Strings.Sidebar.destroyBranchMessage(branch))
-            }
+            if let (_, branch) = branchToDestroy { Text(Strings.Sidebar.destroyBranchMessage(branch)) }
         }
         .alert(
             Strings.Alert.error,
@@ -163,42 +153,72 @@ struct WorktreeSidebarView: View {
         ) {
             Button(Strings.Common.ok) { viewModel.operationError = nil }
         } message: {
-            if let msg = viewModel.operationError {
-                Text(msg)
-            }
+            if let msg = viewModel.operationError { Text(msg) }
         }
+    }
+
+    private func makePruneClosedPRsSheet(repo: ObservableRepository) -> PruneClosedPRsSheet {
+        PruneClosedPRsSheet(
+            repo: repo,
+            candidates: pruneClosedPRsCandidates,
+            viewModel: viewModel,
+            prService: prService,
+            onDismiss: { isShowingPruneClosedPRsFor = nil }
+        )
     }
 
     // MARK: - Header
 
     private var header: some View {
-        HStack {
-            Text(Strings.Sidebar.title)
-                .font(.headline)
-                .foregroundColor(.primary)
+        VStack(spacing: 0) {
+            HStack {
+                Text(Strings.Sidebar.title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
 
-            Spacer()
+                Spacer()
 
-            Button {
-                showAddRepo = true
-            } label: {
-                Image(systemName: "plus")
-                    .imageScale(.medium)
+                Button {
+                    showAddRepo = true
+                } label: {
+                    Image(systemName: "plus")
+                        .imageScale(.medium)
+                }
+                .buttonStyle(.plain)
+                .help(Strings.Sidebar.addButtonHelp)
+
+                Button {
+                    viewModel.refresh()
+                    if sidebarMode == .remote {
+                        Task { await prService.refreshAll(force: true) }
+                    }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .imageScale(.medium)
+                }
+                .buttonStyle(.plain)
+                .help(Strings.Sidebar.refreshWorktrees)
             }
-            .buttonStyle(.plain)
-            .help(Strings.Sidebar.addButtonHelp)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
 
-            Button {
-                viewModel.refresh()
-            } label: {
-                Image(systemName: "arrow.clockwise")
-                    .imageScale(.medium)
+            if ghProbe.status != .missing {
+                Picker("", selection: $sidebarMode) {
+                    Text(Strings.RemotePRs.modeLocal).tag(SidebarMode.local)
+                    Text(Strings.RemotePRs.modeRemote).tag(SidebarMode.remote)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 12)
+                .padding(.bottom, 8)
+                .onChange(of: sidebarMode) { _, newMode in
+                    if newMode == .remote {
+                        for repo in viewModel.repositories {
+                            Task { await prService.refresh(repoPath: repo.path) }
+                        }
+                    }
+                }
             }
-            .buttonStyle(.plain)
-            .help(Strings.Sidebar.refreshWorktrees)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
     }
 
     // MARK: - Empty State
@@ -320,6 +340,16 @@ struct WorktreeSidebarView: View {
 
     @ViewBuilder
     private func worktreeContent(for repo: ObservableRepository) -> some View {
+        switch sidebarMode {
+        case .local:
+            localWorktreeContent(for: repo)
+        case .remote:
+            remoteWorktreeContent(for: repo)
+        }
+    }
+
+    @ViewBuilder
+    private func localWorktreeContent(for repo: ObservableRepository) -> some View {
         if viewModel.loadingRepos.contains(repo.id) {
             ProgressView()
                 .scaleEffect(0.7)
@@ -370,8 +400,13 @@ struct WorktreeSidebarView: View {
         }
     }
 
+}
+
+// MARK: - Worktree Row
+
+extension WorktreeSidebarView {
     @ViewBuilder
-    private func worktreeRow(
+    fileprivate func worktreeRow(
         _ worktree: GitWorktree, repo: ObservableRepository, allWorktrees: [GitWorktree]
     ) -> some View {
         HStack(spacing: 6) {
@@ -413,6 +448,19 @@ struct WorktreeSidebarView: View {
             }
 
             Spacer()
+
+            // PR link badge: shown when this worktree's head matches an open PR.
+            if let prNumber = linkedPRNumber(for: worktree, repo: repo) {
+                Text(Strings.RemotePRs.linkedPR(prNumber))
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 1)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.secondary.opacity(0.15))
+                    )
+            }
 
             harnessRowBadge(for: worktree, repo: repo)
 
@@ -586,14 +634,53 @@ extension WorktreeSidebarView {
             Label(Strings.Sidebar.openRemoteCommit, systemImage: "chevron.left.forwardslash.chevron.right")
         }
         if worktree.branch != nil {
+            let linkedPR = linkedPRNumber(for: worktree, repo: repo).flatMap { prNum in
+                (prService.prsByRepo[repo.path] ?? []).first(where: { $0.number == prNum })
+            }
+            let isForcePushed =
+                linkedPR.map {
+                    prService.forcePushedPRs[repo.path]?.contains($0.number) ?? false
+                } ?? false
+
             Button {
-                Task {
-                    do { try await viewModel.pullBranch(worktree: worktree, repo: repo) } catch {
-                        viewModel.operationError = error.localizedDescription
+                if let pr = linkedPR, case .ready(let ghPath, _) = ghProbe.status {
+                    if isForcePushed || worktree.isDirty {
+                        forceUpdatePRContext = ForceUpdatePRContext(
+                            worktree: worktree,
+                            repo: repo,
+                            prNumber: pr.number,
+                            ghPath: ghPath
+                        )
+                    } else {
+                        Task {
+                            do {
+                                try await viewModel.updateFromOriginForPR(
+                                    worktree: worktree,
+                                    repo: repo,
+                                    prNumber: pr.number,
+                                    ghPath: ghPath
+                                )
+                            } catch {
+                                viewModel.operationError = error.localizedDescription
+                            }
+                        }
+                    }
+                } else {
+                    Task {
+                        do { try await viewModel.pullBranch(worktree: worktree, repo: repo) } catch {
+                            viewModel.operationError = error.localizedDescription
+                        }
                     }
                 }
             } label: {
-                Label(Strings.Sidebar.updateFromOrigin, systemImage: "arrow.down.circle")
+                HStack(spacing: 4) {
+                    if isForcePushed {
+                        Text(Strings.RemotePRs.forcePushIndicator)
+                            .font(.caption2)
+                            .foregroundColor(.orange)
+                    }
+                    Label(Strings.Sidebar.updateFromOrigin, systemImage: "arrow.down.circle")
+                }
             }
         }
 
@@ -646,6 +733,30 @@ extension WorktreeSidebarView {
         if !harnessRepository.harnesses.isEmpty {
             Divider()
             harnessContextItems(forPath: worktree.path)
+        }
+
+        // PR-linked actions (appended only when this worktree is linked to a PR)
+        if let prNumber = linkedPRNumber(for: worktree, repo: repo) {
+            Divider()
+
+            Button {
+                reviewWithFocusContext = ReviewWithFocusContext(
+                    worktree: worktree, repo: repo, prNumber: prNumber)
+            } label: {
+                Label(Strings.RemotePRs.reviewWithFocus, systemImage: "eye")
+            }
+
+            Button {
+                openPROnRemote(prNumber: prNumber, repo: repo)
+            } label: {
+                Label(Strings.RemotePRs.openPROnRemote, systemImage: "network")
+            }
+
+            Button {
+                sidebarMode = .remote
+            } label: {
+                Label(Strings.RemotePRs.showInRemote, systemImage: "arrow.turn.up.right")
+            }
         }
 
         Divider()
@@ -724,7 +835,7 @@ extension WorktreeSidebarView {
         }
     }
 
-    fileprivate func remoteWebURL(from remoteURL: String) -> URL? {
+    func remoteWebURL(from remoteURL: String) -> URL? {
         var urlString = remoteURL.trimmingCharacters(in: .whitespacesAndNewlines)
         // SSH: git@github.com:user/repo.git → https://github.com/user/repo
         if urlString.hasPrefix("git@") {

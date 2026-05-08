@@ -13,6 +13,7 @@ struct SidebarView: View {
     var onLaunchHarness: ((Harness) -> Void)?
     var onLaunchHarnessInWorktree: ((String, String, String?) -> Void)?
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
+    var onReviewWithFocus: ((HarnessLaunchConfig) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
     var onDeleteLocal: ((String) -> Void)?
@@ -43,7 +44,8 @@ struct SidebarView: View {
             case .repositories:
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
-                    onAutoLaunchHarness: onAutoLaunchHarness)
+                    onAutoLaunchHarness: onAutoLaunchHarness,
+                    onReviewWithFocus: onReviewWithFocus)
             case .harnesses where showHarnessesTab:
                 HarnessesSidebarTab(
                     detector: detector,
@@ -68,7 +70,8 @@ struct SidebarView: View {
             default:
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
-                    onAutoLaunchHarness: onAutoLaunchHarness)
+                    onAutoLaunchHarness: onAutoLaunchHarness,
+                    onReviewWithFocus: onReviewWithFocus)
             }
         }
         .onAppear {
@@ -79,6 +82,7 @@ struct SidebarView: View {
             if harnessTabEnabled {
                 Task { await detector.detect() }
             }
+            Task { await GhCliProbe.shared.probe() }
         }
         .onChange(of: harnessTabEnabled) { _, enabled in
             if enabled {
@@ -99,6 +103,7 @@ struct SidebarView: View {
         .onReceive(
             NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)
         ) { _ in
+            Task { await GhCliProbe.shared.probe() }
             guard harnessTabEnabled else { return }
             Task {
                 await detector.detect()

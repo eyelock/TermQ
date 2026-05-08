@@ -14,6 +14,8 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
     var worktreeHarness: [String: String] = [:]
     var repoHarness: [String: String] = [:]
     var harnessVendor: [String: String] = [:]
+    var reviewHarnessMap: [String: String] = [:]
+    var reviewFocusMap: [String: String] = [:]
 
     func harness(for worktreePath: String) -> String? {
         worktreeHarness[worktreePath]
@@ -31,6 +33,14 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
 
     func vendorOverride(for harnessId: String) -> String? {
         harnessVendor[harnessId]
+    }
+
+    func reviewHarness(for repoPath: String) -> String? {
+        reviewHarnessMap[repoPath]
+    }
+
+    func reviewFocus(for repoPath: String) -> String? {
+        reviewFocusMap[repoPath]
     }
 
     func setRepoDefaultHarness(_ harnessName: String?, for repoPath: String) {
@@ -55,6 +65,18 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
         } else {
             harnessVendor.removeValue(forKey: harnessId)
         }
+    }
+
+    func setReviewHarness(_ harnessId: String?, for repoPath: String) {
+        if let id = harnessId {
+            reviewHarnessMap[repoPath] = id
+        } else {
+            reviewHarnessMap.removeValue(forKey: repoPath)
+        }
+    }
+
+    func setReviewFocus(_ focus: String?, for repoPath: String) {
+        if let f = focus { reviewFocusMap[repoPath] = f } else { reviewFocusMap.removeValue(forKey: repoPath) }
     }
 
     func removeAllAssociations(for harnessName: String) {
