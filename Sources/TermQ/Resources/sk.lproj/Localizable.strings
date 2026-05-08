@@ -588,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "Zadajte cestu pracovného stromu pre pokračovanie.";
 "sidebar.new.worktree.create" = "Vytvoriť";
 "sidebar.new.worktree.loading.branches" = "Načítavanie vetiev...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Previesť na pracovný strom";
+"sidebar.convert.worktree.branch.label" = "Názov vetvy";
+"sidebar.convert.worktree.button" = "Previesť";
+
 "common.close.window" = "Zavrieť okno";
 "menu.toggle.sidebar" = "Prepnúť bočný panel";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Previesť na pracovný strom…";
 "sidebar.branch.delete" = "Vymazať vetvu";
 "sidebar.branch.delete.title" = "Vymazať vetvu";
 "sidebar.branch.delete.confirm" = "Vymazať";

@@ -326,6 +326,32 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
+    /// Convert an existing local branch into a worktree, optionally renaming it first.
+    ///
+    /// If `newBranch` differs from `originalBranch`, the branch is renamed via `git branch -m`
+    /// before being checked out at `path`. Used by the "Convert to Worktree" sidebar action.
+    func convertBranchToWorktree(
+        repo: ObservableRepository,
+        originalBranch: String,
+        newBranch: String,
+        path: String
+    ) async throws {
+        if newBranch != originalBranch {
+            try await gitService.renameBranch(
+                repoPath: repo.path,
+                oldName: originalBranch,
+                newName: newBranch
+            )
+        }
+        try await gitService.checkoutBranchAsWorktree(
+            repo: repo.toGitRepository(),
+            branch: newBranch,
+            path: path
+        )
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
     func removeWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
         guard !worktree.isMainWorktree else {
             throw WorktreeOperationError.removingMainWorktree

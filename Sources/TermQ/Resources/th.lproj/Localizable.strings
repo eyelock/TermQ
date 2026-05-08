@@ -581,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "ป้อนเส้นทาง Worktree เพื่อดำเนินการต่อ";
 "sidebar.new.worktree.create" = "สร้าง";
 "sidebar.new.worktree.loading.branches" = "กำลังโหลดสาขา...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "แปลงเป็น Worktree";
+"sidebar.convert.worktree.branch.label" = "ชื่อสาขา";
+"sidebar.convert.worktree.button" = "แปลง";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "แปลงเป็น Worktree…";
 "sidebar.branch.delete" = "ลบ Branch";
 "sidebar.branch.delete.title" = "ลบ Branch";
 "sidebar.branch.delete.confirm" = "ลบ";

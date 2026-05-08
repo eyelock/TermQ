@@ -579,10 +579,16 @@
 "sidebar.new.worktree.path.required" = "Skriv inn en worktree-bane for å fortsette.";
 "sidebar.new.worktree.create" = "Opprett";
 "sidebar.new.worktree.loading.branches" = "Laster branches...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Konverter til worktree";
+"sidebar.convert.worktree.branch.label" = "Branch-navn";
+"sidebar.convert.worktree.button" = "Konverter";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Konverter til worktree…";
 "sidebar.branch.delete" = "Slett gren";
 "sidebar.branch.delete.title" = "Slett gren";
 "sidebar.branch.delete.confirm" = "Slett";

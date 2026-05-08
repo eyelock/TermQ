@@ -590,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Angiv en worktree-sti for at fortsætte.";
 "sidebar.new.worktree.create" = "Opret";
 "sidebar.new.worktree.loading.branches" = "Indlæser grene...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Konverter til worktree";
+"sidebar.convert.worktree.branch.label" = "Grensnavn";
+"sidebar.convert.worktree.button" = "Konverter";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Konverter til worktree…";
 "sidebar.branch.delete" = "Slet gren";
 "sidebar.branch.delete.title" = "Slet gren";
 "sidebar.branch.delete.confirm" = "Slet";

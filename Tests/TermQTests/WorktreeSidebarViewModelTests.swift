@@ -31,6 +31,7 @@ final class MockGitService: GitServiceProtocol {
     private(set) var lockWorktreeCalled = false
     private(set) var unlockWorktreeCalled = false
     private(set) var deleteLocalBranchCalls: [String] = []
+    private(set) var renameBranchCalls: [(String, String)] = []
     private(set) var updateRemoteHeadCalled = false
 
     func isGitRepo(path: String) async throws -> Bool {
@@ -83,6 +84,10 @@ final class MockGitService: GitServiceProtocol {
 
     func mergedLocalBranches(repoPath: String) async throws -> [String] {
         mergedLocalBranchesResult
+    }
+
+    func renameBranch(repoPath: String, oldName: String, newName: String) async throws {
+        renameBranchCalls.append((oldName, newName))
     }
 
     func deleteLocalBranch(repoPath: String, branch: String) async throws {

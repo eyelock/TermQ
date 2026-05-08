@@ -109,9 +109,15 @@ extension Strings {
         static var createButton: String { localized("sidebar.new.worktree.create") }
         static var loadingBranches: String { localized("sidebar.new.worktree.loading.branches") }
 
+        // Convert to worktree sheet
+        static var convertWorktreeTitle: String { localized("sidebar.convert.worktree.title") }
+        static var convertWorktreeBranchLabel: String { localized("sidebar.convert.worktree.branch.label") }
+        static var convertWorktreeButton: String { localized("sidebar.convert.worktree.button") }
+
         // Local branches section
         static var localBranches: String { localized("sidebar.local.branches") }
         static var newWorktreeFromBranch: String { localized("sidebar.branch.new.worktree.from.branch") }
+        static var convertToWorktree: String { localized("sidebar.branch.convert.to.worktree") }
         static var deleteBranch: String { localized("sidebar.branch.delete") }
         static var deleteBranchTitle: String { localized("sidebar.branch.delete.title") }
         static var deleteBranchConfirm: String { localized("sidebar.branch.delete.confirm") }

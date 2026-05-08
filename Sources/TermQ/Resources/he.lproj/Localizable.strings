@@ -580,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "הזן נתיב worktree כדי להמשיך.";
 "sidebar.new.worktree.create" = "צור";
 "sidebar.new.worktree.loading.branches" = "טוען ענפים...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "המרה לעץ עבודה";
+"sidebar.convert.worktree.branch.label" = "שם ענף";
+"sidebar.convert.worktree.button" = "המר";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "המרה לעץ עבודה…";
 "sidebar.branch.delete" = "מחק ענף";
 "sidebar.branch.delete.title" = "מחק ענף";
 "sidebar.branch.delete.confirm" = "מחק";

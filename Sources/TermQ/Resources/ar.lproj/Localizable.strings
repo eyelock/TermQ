@@ -590,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "أدخل مسار worktree للمتابعة.";
 "sidebar.new.worktree.create" = "إنشاء";
 "sidebar.new.worktree.loading.branches" = "جارٍ تحميل الفروع...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "تحويل إلى بيئة عمل";
+"sidebar.convert.worktree.branch.label" = "اسم الفرع";
+"sidebar.convert.worktree.button" = "تحويل";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "تحويل إلى بيئة عمل…";
 "sidebar.branch.delete" = "حذف الفرع";
 "sidebar.branch.delete.title" = "حذف الفرع";
 "sidebar.branch.delete.confirm" = "حذف";

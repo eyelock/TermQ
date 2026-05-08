@@ -580,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "A folytatáshoz adjon meg egy worktree elérési utat.";
 "sidebar.new.worktree.create" = "Létrehozás";
 "sidebar.new.worktree.loading.branches" = "Ágak betöltése...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Átalakítás munkakönyvtárrá";
+"sidebar.convert.worktree.branch.label" = "Ág neve";
+"sidebar.convert.worktree.button" = "Átalakítás";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Átalakítás munkakönyvtárrá…";
 "sidebar.branch.delete" = "Ág törlése";
 "sidebar.branch.delete.title" = "Ág törlése";
 "sidebar.branch.delete.confirm" = "Törlés";

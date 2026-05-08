@@ -590,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Geben Sie einen Worktree-Pfad ein, um fortzufahren.";
 "sidebar.new.worktree.create" = "Erstellen";
 "sidebar.new.worktree.loading.branches" = "Branches werden geladen ...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "In Worktree umwandeln";
+"sidebar.convert.worktree.branch.label" = "Branch-Name";
+"sidebar.convert.worktree.button" = "Umwandeln";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "In Worktree umwandeln…";
 "sidebar.branch.delete" = "Branch löschen";
 "sidebar.branch.delete.title" = "Branch löschen";
 "sidebar.branch.delete.confirm" = "Löschen";

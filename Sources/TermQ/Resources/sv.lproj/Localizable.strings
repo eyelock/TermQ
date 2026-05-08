@@ -581,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Ange en worktree-sökväg för att fortsätta.";
 "sidebar.new.worktree.create" = "Skapa";
 "sidebar.new.worktree.loading.branches" = "Laddar grenar...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Konvertera till arbetstråd";
+"sidebar.convert.worktree.branch.label" = "Grennamn";
+"sidebar.convert.worktree.button" = "Konvertera";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Konvertera till arbetstråd…";
 "sidebar.branch.delete" = "Ta bort gren";
 "sidebar.branch.delete.title" = "Ta bort gren";
 "sidebar.branch.delete.confirm" = "Ta bort";

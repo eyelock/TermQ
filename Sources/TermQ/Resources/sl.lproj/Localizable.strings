@@ -581,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Vnesite pot do delovnega drevesa za nadaljevanje.";
 "sidebar.new.worktree.create" = "Ustvari";
 "sidebar.new.worktree.loading.branches" = "Nalaganje vej...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Pretvori v delovno kopijo";
+"sidebar.convert.worktree.branch.label" = "Ime veje";
+"sidebar.convert.worktree.button" = "Pretvori";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Pretvori v delovno kopijo…";
 "sidebar.branch.delete" = "Izbriši vejo";
 "sidebar.branch.delete.title" = "Izbriši vejo";
 "sidebar.branch.delete.confirm" = "Izbriši";

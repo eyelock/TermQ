@@ -588,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "Masukkan jalur worktree untuk melanjutkan.";
 "sidebar.new.worktree.create" = "Buat";
 "sidebar.new.worktree.loading.branches" = "Memuat branch...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Ubah menjadi Worktree";
+"sidebar.convert.worktree.branch.label" = "Nama Branch";
+"sidebar.convert.worktree.button" = "Ubah";
+
 "common.close.window" = "Tutup Jendela";
 "menu.toggle.sidebar" = "Tampilkan/Sembunyikan Bilah Sisi";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Ubah menjadi Worktree…";
 "sidebar.branch.delete" = "Hapus Branch";
 "sidebar.branch.delete.title" = "Hapus Branch";
 "sidebar.branch.delete.confirm" = "Hapus";

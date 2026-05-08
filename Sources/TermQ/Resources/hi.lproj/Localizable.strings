@@ -580,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "जारी रखने के लिए एक Worktree पथ दर्ज करें।";
 "sidebar.new.worktree.create" = "बनाएं";
 "sidebar.new.worktree.loading.branches" = "ब्रांचें लोड हो रही हैं...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Worktree में बदलें";
+"sidebar.convert.worktree.branch.label" = "ब्रांच का नाम";
+"sidebar.convert.worktree.button" = "बदलें";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Worktree में बदलें…";
 "sidebar.branch.delete" = "शाखा हटाएं";
 "sidebar.branch.delete.title" = "शाखा हटाएं";
 "sidebar.branch.delete.confirm" = "हटाएं";

@@ -590,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Zadejte cestu pracovního stromu pro pokračování.";
 "sidebar.new.worktree.create" = "Vytvořit";
 "sidebar.new.worktree.loading.branches" = "Načítání větví...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Převést na pracovní strom";
+"sidebar.convert.worktree.branch.label" = "Název větve";
+"sidebar.convert.worktree.button" = "Převést";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Převést na pracovní strom…";
 "sidebar.branch.delete" = "Smazat větev";
 "sidebar.branch.delete.title" = "Smazat větev";
 "sidebar.branch.delete.confirm" = "Smazat";

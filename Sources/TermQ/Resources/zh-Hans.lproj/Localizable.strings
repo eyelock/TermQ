@@ -588,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "请输入 Worktree 路径以继续。";
 "sidebar.new.worktree.create" = "创建";
 "sidebar.new.worktree.loading.branches" = "正在加载分支…";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "转换为工作树";
+"sidebar.convert.worktree.branch.label" = "分支名称";
+"sidebar.convert.worktree.button" = "转换";
+
 "common.close.window" = "关闭窗口";
 "menu.toggle.sidebar" = "切换侧边栏";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "转换为工作树…";
 "sidebar.branch.delete" = "删除分支";
 "sidebar.branch.delete.title" = "删除分支";
 "sidebar.branch.delete.confirm" = "删除";

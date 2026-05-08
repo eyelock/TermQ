@@ -581,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Devam etmek için bir worktree yolu girin.";
 "sidebar.new.worktree.create" = "Oluştur";
 "sidebar.new.worktree.loading.branches" = "Dallar yükleniyor...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Çalışma Ağacına Dönüştür";
+"sidebar.convert.worktree.branch.label" = "Dal Adı";
+"sidebar.convert.worktree.button" = "Dönüştür";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Çalışma Ağacına Dönüştür…";
 "sidebar.branch.delete" = "Dalı sil";
 "sidebar.branch.delete.title" = "Dalı sil";
 "sidebar.branch.delete.confirm" = "Sil";
