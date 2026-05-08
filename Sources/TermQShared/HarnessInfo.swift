@@ -44,6 +44,7 @@ public struct HarnessInfo: Codable, Sendable {
         defaultVendor = try c.decode(String.self, forKey: .defaultVendor)
         path = try c.decode(String.self, forKey: .path)
         installedFrom = try c.decodeIfPresent(HarnessProvenance.self, forKey: .installedFrom)
+        isPinned = try c.decodeIfPresent(Bool.self, forKey: .isPinned)
         manifest = try c.decodeIfPresent(JSONFragment.self, forKey: .manifest)
     }
 
@@ -55,6 +56,7 @@ public struct HarnessInfo: Codable, Sendable {
         try c.encode(defaultVendor, forKey: .defaultVendor)
         try c.encode(path, forKey: .path)
         try c.encodeIfPresent(installedFrom, forKey: .installedFrom)
+        try c.encodeIfPresent(isPinned, forKey: .isPinned)
         try c.encodeIfPresent(manifest, forKey: .manifest)
     }
 }

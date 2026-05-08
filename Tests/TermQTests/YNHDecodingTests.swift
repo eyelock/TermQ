@@ -327,7 +327,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
               }
             ]
             """
-        let envelope = try JSONDecoder().decode(YNHListEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessListResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harnesses.count, 1)
         XCTAssertEqual(envelope.harnesses[0].version, "0.1.0")
     }
@@ -350,7 +350,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
               ]
             }
             """
-        let envelope = try JSONDecoder().decode(YNHListEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessListResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harnesses.count, 1)
         XCTAssertEqual(envelope.harnesses[0].version, "0.1.0")
     }
@@ -361,7 +361,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
         let json = """
             {"name":"h","version":"1","default_vendor":"claude","path":"/p"}
             """
-        let envelope = try JSONDecoder().decode(YNHInfoEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessInfoResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harness.name, "h")
         XCTAssertEqual(envelope.harness.version, "1")
     }
@@ -374,7 +374,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
               "harness": {"name":"h","version_installed":"1","default_vendor":"claude","path":"/p"}
             }
             """
-        let envelope = try JSONDecoder().decode(YNHInfoEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessInfoResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harness.name, "h")
         XCTAssertEqual(envelope.harness.version, "1")
     }
