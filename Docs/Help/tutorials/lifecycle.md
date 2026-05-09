@@ -76,4 +76,4 @@ The bin retention setting means you have a configurable safety net. Use it.
 
 ## Next
 
-[Tutorial 8: CLI Automation](tutorials/08-cli.md) — Control your board from the shell with `termqcli`.
+[Tutorial 8: CLI Automation](tutorials/cli.md) — Control your board from the shell with `termqcli`.

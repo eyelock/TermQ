@@ -4,7 +4,7 @@ A card with just a name is better than a nameless window — but a card with a w
 
 In this tutorial you'll learn what metadata a terminal card carries, how to add it, and why it matters.
 
-**Requires:** [Tutorial 1](tutorials/01-first-board.md) completed, or a board with a few terminals on it.
+**Requires:** [Tutorial 1](tutorials/first-board.md) completed, or a board with a few terminals on it.
 
 ---
 
@@ -41,7 +41,7 @@ The lower section covers terminal behaviour:
 | **Working Directory** | Where the shell starts — leave empty to use the app default |
 | **Shell** | Override the default shell for this terminal |
 | **Init Command** | A command that runs automatically when the terminal opens |
-| **Backend** | Direct (default) or tmux — see [Tutorial 5](tutorials/05-persistent-sessions.md) |
+| **Backend** | Direct (default) or tmux — see [Tutorial 5](tutorials/persistent-sessions.md) |
 
 ---
 
@@ -102,4 +102,4 @@ This is the information that lets you make decisions from the board view — wit
 
 ## Next
 
-[Tutorial 3: Find Anything Fast](tutorials/03-find-anything-fast.md) — Zoom mode, search, and the command palette.
+[Tutorial 3: Find Anything Fast](tutorials/find-anything-fast.md) — Zoom mode, search, and the command palette.

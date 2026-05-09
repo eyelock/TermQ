@@ -33,13 +33,13 @@ Token injection substitutes `{{PROMPT}}` and `{{NEXT_ACTION}}` in the terminal's
 
 This means you can enable queued actions for your AI workflow terminals while keeping sensitive terminals (production, databases) permanently protected.
 
-See [Tutorial 11: Queued Actions](tutorials/11-queued-actions.md) for the full model.
+See [Tutorial 11: Queued Actions](tutorials/queued-actions.md) for the full model.
 
 ## Data storage
 
 `board.json` stores all terminal metadata — names, descriptions, tags, LLM prompts, and queued actions — as plain JSON. If you store sensitive project context in LLM prompts, consider enabling FileVault for full-disk encryption at the macOS level.
 
-**Secrets** (environment variables marked as secrets) are stored in your macOS Keychain with encryption, not in `board.json`. See [Tutorial 6](tutorials/06-terminal-context.md).
+**Secrets** (environment variables marked as secrets) are stored in your macOS Keychain with encryption, not in `board.json`. See [Tutorial 6](tutorials/terminal-context.md).
 
 ## Input validation
 

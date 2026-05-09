@@ -2,24 +2,24 @@
 - [Why TermQ](why.md)
 
 - **Tutorials: The Board**
-  - [1. Your First Board](tutorials/01-first-board.md)
-  - [2. Richer Cards](tutorials/02-richer-cards.md)
-  - [3. Find Anything Fast](tutorials/03-find-anything-fast.md)
-  - [4. Organise Your Space](tutorials/04-organise-your-space.md)
+  - [1. Your First Board](tutorials/first-board.md)
+  - [2. Richer Cards](tutorials/richer-cards.md)
+  - [3. Find Anything Fast](tutorials/find-anything-fast.md)
+  - [4. Organise Your Space](tutorials/organise-your-space.md)
 
 - **Tutorials: Power Workflows**
-  - [5. Persistent Sessions](tutorials/05-persistent-sessions.md)
-  - [6. Terminal Context](tutorials/06-terminal-context.md)
-  - [7. Lifecycle](tutorials/07-lifecycle.md)
-  - [8. Git Worktrees](tutorials/12-worktree-sidebar.md)
-  - [9. Harnesses](tutorials/13-harness-sidebar.md)
-  - [10. Marketplaces & Authoring](tutorials/14-marketplace.md)
+  - [5. Persistent Sessions](tutorials/persistent-sessions.md)
+  - [6. Terminal Context](tutorials/terminal-context.md)
+  - [7. Lifecycle](tutorials/lifecycle.md)
+  - [8. Git Worktrees](tutorials/worktree-sidebar.md)
+  - [9. Marketplace Browser](tutorials/marketplace-browser.md)
+  - [10. Harnesses](tutorials/harnesses.md)
 
 - **Tutorials: Automation & AI**
-  - [11. CLI Automation](tutorials/08-cli.md)
-  - [12. Persistent AI Context](tutorials/09-ai-context.md)
-  - [13. MCP Integration](tutorials/10-mcp.md)
-  - [14. Queued Actions](tutorials/11-queued-actions.md)
+  - [11. CLI Automation](tutorials/cli.md)
+  - [12. Persistent AI Context](tutorials/ai-context.md)
+  - [13. MCP Integration](tutorials/mcp.md)
+  - [14. Queued Actions](tutorials/queued-actions.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)
