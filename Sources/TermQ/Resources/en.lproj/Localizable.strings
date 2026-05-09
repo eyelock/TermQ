@@ -1089,6 +1089,7 @@
 "remote.prs.force.update.message %lld %lld" = "Your local worktree has %lld modified file(s) and %lld commit(s) ahead of origin. Force-updating will reset to the new PR head and lose this work.";
 "remote.prs.force.update.confirm" = "Force Update Anyway";
 "remote.prs.force.update.cancel" = "Cancel";
+"remote.prs.run.loading.detail" = "Loading harness details…";
 "remote.prs.run.sheet.title" = "Run with Focus";
 "remote.prs.run.harness.label" = "Harness";
 "remote.prs.run.focus.label" = "Focus";

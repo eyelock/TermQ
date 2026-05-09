@@ -61,6 +61,7 @@ extension Strings {
         static var forceUpdateCancel: String { localized("remote.prs.force.update.cancel") }
 
         // MARK: - Run with Focus sheet
+        static var runLoadingDetail: String { localized("remote.prs.run.loading.detail") }
         static var runSheetTitle: String { localized("remote.prs.run.sheet.title") }
         static var runHarnessLabel: String { localized("remote.prs.run.harness.label") }
         static var runFocusLabel: String { localized("remote.prs.run.focus.label") }

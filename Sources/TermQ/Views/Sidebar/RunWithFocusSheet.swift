@@ -93,37 +93,49 @@ struct RunWithFocusSheet: View {
                     }
                 }
 
-                // Focus picker (only if harness has focuses)
-                if !focuses.isEmpty {
+                if isLoadingDetail {
                     Section {
-                        Picker(Strings.RemotePRs.runFocusLabel, selection: $selectedFocus) {
-                            Text(Strings.RemotePRs.runFocusNone).tag("")
-                            ForEach(focuses.keys.sorted(), id: \.self) { name in
-                                Text(name).tag(name)
-                            }
-                        }
-                        .onChange(of: selectedFocus) { _, _ in
-                            isCustomizing = false
-                            customPrompt = ""
+                        HStack {
+                            ProgressView()
+                                .scaleEffect(0.7)
+                            Text(Strings.RemotePRs.runLoadingDetail)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
                     }
-                }
+                } else {
+                    // Focus picker (only if harness has focuses)
+                    if !focuses.isEmpty {
+                        Section {
+                            Picker(Strings.RemotePRs.runFocusLabel, selection: $selectedFocus) {
+                                Text(Strings.RemotePRs.runFocusNone).tag("")
+                                ForEach(focuses.keys.sorted(), id: \.self) { name in
+                                    Text(name).tag(name)
+                                }
+                            }
+                            .onChange(of: selectedFocus) { _, _ in
+                                isCustomizing = false
+                                customPrompt = ""
+                            }
+                        }
+                    }
 
-                // Profile — interactive in ad-hoc mode; locked (derived) when focus is set
-                Section {
-                    if selectedFocus.isEmpty {
-                        // Ad-hoc: user picks freely
-                        Picker(Strings.RemotePRs.runProfileLabel, selection: $selectedProfile) {
-                            Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
-                            ForEach(profiles, id: \.self) { Text($0).tag($0) }
+                    // Profile — interactive in ad-hoc mode; locked (derived) when focus is set
+                    Section {
+                        if selectedFocus.isEmpty {
+                            // Ad-hoc: user picks freely
+                            Picker(Strings.RemotePRs.runProfileLabel, selection: $selectedProfile) {
+                                Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
+                                ForEach(profiles, id: \.self) { Text($0).tag($0) }
+                            }
+                        } else {
+                            // Focus selected: profile is derived, read-only
+                            Picker(Strings.RemotePRs.runProfileLabel, selection: .constant(resolvedProfile)) {
+                                Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
+                                ForEach(profiles, id: \.self) { Text($0).tag($0) }
+                            }
+                            .disabled(true)
                         }
-                    } else {
-                        // Focus selected: profile is derived, read-only
-                        Picker(Strings.RemotePRs.runProfileLabel, selection: .constant(resolvedProfile)) {
-                            Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
-                            ForEach(profiles, id: \.self) { Text($0).tag($0) }
-                        }
-                        .disabled(true)
                     }
                 }
 
