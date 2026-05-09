@@ -54,9 +54,9 @@ struct ForceUpdatePRContext: Identifiable {
     let ghPath: String
 }
 
-// MARK: - Review With Focus Context
+// MARK: - Run With Focus Context
 
-struct ReviewWithFocusContext: Identifiable {
+struct RunWithFocusContext: Identifiable {
     let id = UUID()
     let worktree: GitWorktree
     let repo: ObservableRepository

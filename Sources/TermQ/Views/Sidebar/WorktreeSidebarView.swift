@@ -8,7 +8,7 @@ struct WorktreeSidebarView: View {
     @ObservedObject var viewModel: WorktreeSidebarViewModel
     var onLaunchHarness: ((String, String, String?) -> Void)?
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
-    var onReviewWithFocus: ((HarnessLaunchConfig) -> Void)?
+    var onRunWithFocus: ((HarnessLaunchConfig) -> Void)?
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
@@ -24,7 +24,7 @@ struct WorktreeSidebarView: View {
     @State var isShowingPruneClosedPRsFor: ObservableRepository?
     @State var pruneClosedPRsCandidates: [PRPruneCandidate] = []
     @State var pendingToast: SidebarToast?
-    @State var reviewWithFocusContext: ReviewWithFocusContext?
+    @State var runWithFocusContext: RunWithFocusContext?
     @State private var showAddRepo = false
     @State private var newWorktreeContext: NewWorktreeContext?
     @State private var convertWorktreeContext: ConvertWorktreeContext?
@@ -68,14 +68,14 @@ struct WorktreeSidebarView: View {
         }
         .sheet(item: $pruneBranchesSheetFor) { repo in PruneBranchesSheet(repo: repo, viewModel: viewModel) }
         .sheet(item: $forceUpdatePRContext) { ctx in ForceUpdatePRSheet(context: ctx, viewModel: viewModel) }
-        .sheet(item: $reviewWithFocusContext) { ctx in
-            ReviewWithFocusSheet(
+        .sheet(item: $runWithFocusContext) { ctx in
+            RunWithFocusSheet(
                 context: ctx,
                 onLaunch: { cfg in
-                    onReviewWithFocus?(cfg)
-                    reviewWithFocusContext = nil
+                    onRunWithFocus?(cfg)
+                    runWithFocusContext = nil
                 },
-                onCancel: { reviewWithFocusContext = nil }
+                onCancel: { runWithFocusContext = nil }
             )
         }
         .sheet(item: $isShowingPruneClosedPRsFor) { makePruneClosedPRsSheet(repo: $0) }
@@ -740,10 +740,10 @@ extension WorktreeSidebarView {
             Divider()
 
             Button {
-                reviewWithFocusContext = ReviewWithFocusContext(
+                runWithFocusContext = RunWithFocusContext(
                     worktree: worktree, repo: repo, prNumber: prNumber)
             } label: {
-                Label(Strings.RemotePRs.reviewWithFocus, systemImage: "eye")
+                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
             }
 
             Button {

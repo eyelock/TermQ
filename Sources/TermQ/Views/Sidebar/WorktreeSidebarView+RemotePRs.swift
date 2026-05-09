@@ -182,10 +182,10 @@ extension WorktreeSidebarView {
         if let worktreePath {
             if let worktree = (viewModel.worktrees[repo.id] ?? []).first(where: { $0.path == worktreePath }) {
                 Button {
-                    reviewWithFocusContext = ReviewWithFocusContext(
+                    runWithFocusContext = RunWithFocusContext(
                         worktree: worktree, repo: repo, prNumber: pr.number)
                 } label: {
-                    Label(Strings.RemotePRs.reviewWithFocus, systemImage: "eye")
+                    Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
                 }
             }
             Button {

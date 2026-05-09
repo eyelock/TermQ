@@ -13,7 +13,7 @@ struct SidebarView: View {
     var onLaunchHarness: ((Harness) -> Void)?
     var onLaunchHarnessInWorktree: ((String, String, String?) -> Void)?
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
-    var onReviewWithFocus: ((HarnessLaunchConfig) -> Void)?
+    var onRunWithFocus: ((HarnessLaunchConfig) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
     var onDeleteLocal: ((String) -> Void)?
@@ -45,7 +45,7 @@ struct SidebarView: View {
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
                     onAutoLaunchHarness: onAutoLaunchHarness,
-                    onReviewWithFocus: onReviewWithFocus)
+                    onRunWithFocus: onRunWithFocus)
             case .harnesses where showHarnessesTab:
                 HarnessesSidebarTab(
                     detector: detector,
@@ -71,7 +71,7 @@ struct SidebarView: View {
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
                     onAutoLaunchHarness: onAutoLaunchHarness,
-                    onReviewWithFocus: onReviewWithFocus)
+                    onRunWithFocus: onRunWithFocus)
             }
         }
         .onAppear {

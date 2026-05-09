@@ -11,8 +11,8 @@ import TermQShared
 /// - Focus selected + no Customize → `ynh run <h> --focus <name>`
 /// - Focus selected + Customize pressed → `ynh run <h> [--profile <p>] "<prompt>"`
 /// - No focus selected → `ynh run <h> [--profile <p>] "<prompt>"`
-struct ReviewWithFocusSheet: View {
-    let context: ReviewWithFocusContext
+struct RunWithFocusSheet: View {
+    let context: RunWithFocusContext
     let onLaunch: (HarnessLaunchConfig) -> Void
     let onCancel: () -> Void
 
@@ -55,7 +55,7 @@ struct ReviewWithFocusSheet: View {
             // Header
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(Strings.RemotePRs.reviewSheetTitle)
+                    Text(Strings.RemotePRs.runSheetTitle)
                         .font(.headline)
                     Text("#\(context.prNumber)")
                         .font(.subheadline)
@@ -70,7 +70,7 @@ struct ReviewWithFocusSheet: View {
             Form {
                 // Harness picker
                 Section {
-                    Picker(Strings.RemotePRs.reviewHarnessLabel, selection: $selectedHarnessId) {
+                    Picker(Strings.RemotePRs.runHarnessLabel, selection: $selectedHarnessId) {
                         ForEach(harnessRepository.harnesses) { harness in
                             Text(harness.name).tag(harness.id)
                         }
@@ -86,8 +86,8 @@ struct ReviewWithFocusSheet: View {
                 // Focus picker (only if harness has focuses)
                 if !focuses.isEmpty {
                     Section {
-                        Picker(Strings.RemotePRs.reviewFocusLabel, selection: $selectedFocus) {
-                            Text(Strings.RemotePRs.reviewFocusNone).tag("")
+                        Picker(Strings.RemotePRs.runFocusLabel, selection: $selectedFocus) {
+                            Text(Strings.RemotePRs.runFocusNone).tag("")
                             ForEach(focuses.keys.sorted(), id: \.self) { name in
                                 Text(name).tag(name)
                             }
@@ -103,11 +103,11 @@ struct ReviewWithFocusSheet: View {
                 if !profiles.isEmpty {
                     Section {
                         HStack {
-                            Text(Strings.RemotePRs.reviewProfileLabel)
+                            Text(Strings.RemotePRs.runProfileLabel)
                             Spacer()
                             Text(
                                 resolvedProfile.isEmpty
-                                    ? Strings.RemotePRs.reviewProfileHarnessDefault
+                                    ? Strings.RemotePRs.runProfileHarnessDefault
                                     : resolvedProfile
                             )
                             .foregroundColor(.secondary)
@@ -131,7 +131,7 @@ struct ReviewWithFocusSheet: View {
                             }
                         }
                         if !selectedFocus.isEmpty {
-                            Button(Strings.RemotePRs.reviewCustomize) {
+                            Button(Strings.RemotePRs.runCustomize) {
                                 if !isCustomizing {
                                     customPrompt = focusPrompt
                                 }
@@ -142,7 +142,7 @@ struct ReviewWithFocusSheet: View {
                         }
                     }
                 } header: {
-                    Text(Strings.RemotePRs.reviewPromptLabel)
+                    Text(Strings.RemotePRs.runPromptLabel)
                 }
             }
             .formStyle(.grouped)
@@ -161,12 +161,12 @@ struct ReviewWithFocusSheet: View {
                 }
 
                 HStack {
-                    Button(Strings.RemotePRs.reviewCancel) { onCancel() }
+                    Button(Strings.RemotePRs.runCancel) { onCancel() }
                         .keyboardShortcut(.cancelAction)
 
                     Spacer()
 
-                    Button(Strings.RemotePRs.reviewRun) { run() }
+                    Button(Strings.RemotePRs.runRun) { run() }
                         .keyboardShortcut(.defaultAction)
                         .disabled(selectedHarnessId.isEmpty)
                 }
@@ -183,7 +183,7 @@ struct ReviewWithFocusSheet: View {
         let repoPath = context.repo.path
         // Restore per-repo last-used harness, falling back to worktree then repo default
         let savedHarness =
-            ynhPersistence.reviewHarness(for: repoPath)
+            ynhPersistence.runHarness(for: repoPath)
             ?? ynhPersistence.harness(for: context.worktree.path)
             ?? ynhPersistence.repoDefaultHarness(for: repoPath)
 
@@ -195,7 +195,7 @@ struct ReviewWithFocusSheet: View {
             selectedHarnessId = first.id
         }
 
-        let savedFocus = ynhPersistence.reviewFocus(for: repoPath) ?? ""
+        let savedFocus = ynhPersistence.runFocus(for: repoPath) ?? ""
         selectedFocus = savedFocus
 
         loadDetail(for: selectedHarnessId)
@@ -213,7 +213,7 @@ struct ReviewWithFocusSheet: View {
 
     private func commandPreview() -> String {
         guard let harness = selectedHarness else { return "ynh run …" }
-        var parts = ["ynh", "run", harness.name]
+        var parts = ["ynh", "run", harness.id]
         if !selectedFocus.isEmpty && !isCustomizing {
             parts.append(contentsOf: ["--focus", selectedFocus])
         } else {
@@ -246,13 +246,13 @@ struct ReviewWithFocusSheet: View {
         }
 
         // Persist per-repo choice
-        ynhPersistence.setReviewHarness(harness.id, for: context.repo.path)
+        ynhPersistence.setRunHarness(harness.id, for: context.repo.path)
         if !selectedFocus.isEmpty {
-            ynhPersistence.setReviewFocus(selectedFocus, for: context.repo.path)
+            ynhPersistence.setRunFocus(selectedFocus, for: context.repo.path)
         }
 
         let config = HarnessLaunchConfig(
-            harnessName: harness.name,
+            harnessID: harness.id,
             vendorID: "",
             defaultVendor: harness.defaultVendor,
             focus: effectiveFocus,

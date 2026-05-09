@@ -12,7 +12,7 @@ extension Strings {
         }
 
         // MARK: - Worktree context menu additions
-        static var reviewWithFocus: String { localized("remote.prs.review.with.focus") }
+        static var runWithFocus: String { localized("remote.prs.run.with.focus") }
         static var openPROnRemote: String { localized("remote.prs.open.pr.on.remote") }
         static var showInRemote: String { localized("remote.prs.show.in.remote") }
         static var showInLocal: String { localized("remote.prs.show.in.local") }
@@ -60,17 +60,17 @@ extension Strings {
         static var forceUpdateConfirm: String { localized("remote.prs.force.update.confirm") }
         static var forceUpdateCancel: String { localized("remote.prs.force.update.cancel") }
 
-        // MARK: - Review with Focus sheet
-        static var reviewSheetTitle: String { localized("remote.prs.review.sheet.title") }
-        static var reviewHarnessLabel: String { localized("remote.prs.review.harness.label") }
-        static var reviewFocusLabel: String { localized("remote.prs.review.focus.label") }
-        static var reviewFocusNone: String { localized("remote.prs.review.focus.none") }
-        static var reviewProfileLabel: String { localized("remote.prs.review.profile.label") }
-        static var reviewProfileHarnessDefault: String { localized("remote.prs.review.profile.default") }
-        static var reviewPromptLabel: String { localized("remote.prs.review.prompt.label") }
-        static var reviewCustomize: String { localized("remote.prs.review.customize") }
-        static var reviewRun: String { localized("remote.prs.review.run") }
-        static var reviewCancel: String { localized("remote.prs.review.cancel") }
+        // MARK: - Run with Focus sheet
+        static var runSheetTitle: String { localized("remote.prs.run.sheet.title") }
+        static var runHarnessLabel: String { localized("remote.prs.run.harness.label") }
+        static var runFocusLabel: String { localized("remote.prs.run.focus.label") }
+        static var runFocusNone: String { localized("remote.prs.run.focus.none") }
+        static var runProfileLabel: String { localized("remote.prs.run.profile.label") }
+        static var runProfileHarnessDefault: String { localized("remote.prs.run.profile.default") }
+        static var runPromptLabel: String { localized("remote.prs.run.prompt.label") }
+        static var runCustomize: String { localized("remote.prs.run.customize") }
+        static var runRun: String { localized("remote.prs.run.run") }
+        static var runCancel: String { localized("remote.prs.run.cancel") }
 
         // MARK: - Prune Closed PRs
         static var pruneClosedPRs: String { localized("remote.prs.prune.closed") }

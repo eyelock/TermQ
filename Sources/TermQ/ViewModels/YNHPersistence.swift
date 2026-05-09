@@ -63,14 +63,14 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         config.harnessVendor[harnessId]
     }
 
-    /// Last-used review harness id for a repository (Review with Focus sheet).
-    func reviewHarness(for repoPath: String) -> String? {
-        config.repoReviewHarness[repoPath]
+    /// Last-used review harness id for a repository (Run with Focus sheet).
+    func runHarness(for repoPath: String) -> String? {
+        config.repoRunHarness[repoPath]
     }
 
     /// Last-used focus name for a repository. Empty string means no focus.
-    func reviewFocus(for repoPath: String) -> String? {
-        config.repoReviewFocus[repoPath]
+    func runFocus(for repoPath: String) -> String? {
+        config.repoRunFocus[repoPath]
     }
 
     // MARK: - Mutations
@@ -110,20 +110,20 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         save()
     }
 
-    func setReviewHarness(_ harnessId: String?, for repoPath: String) {
+    func setRunHarness(_ harnessId: String?, for repoPath: String) {
         if let id = harnessId {
-            config.repoReviewHarness[repoPath] = id
+            config.repoRunHarness[repoPath] = id
         } else {
-            config.repoReviewHarness.removeValue(forKey: repoPath)
+            config.repoRunHarness.removeValue(forKey: repoPath)
         }
         save()
     }
 
-    func setReviewFocus(_ focus: String?, for repoPath: String) {
+    func setRunFocus(_ focus: String?, for repoPath: String) {
         if let focus {
-            config.repoReviewFocus[repoPath] = focus
+            config.repoRunFocus[repoPath] = focus
         } else {
-            config.repoReviewFocus.removeValue(forKey: repoPath)
+            config.repoRunFocus.removeValue(forKey: repoPath)
         }
         save()
     }

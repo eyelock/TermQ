@@ -59,7 +59,7 @@ struct ContentView: View {
                         )
                         launchCoordinator.launchHarness(config)
                     },
-                    onReviewWithFocus: { config in
+                    onRunWithFocus: { config in
                         launchCoordinator.launchHarness(config, reuseExisting: false)
                     },
                     onInstall: { lifecycleCoordinator.showInstallSheet = true },
