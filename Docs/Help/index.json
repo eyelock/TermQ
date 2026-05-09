@@ -15,25 +15,25 @@
       "title": "Tutorials: The Board",
       "topics": [
         {
-          "id": "tutorials/01-first-board",
+          "id": "tutorials/first-board",
           "title": "Your First Board",
           "icon": "star",
           "keywords": ["start", "begin", "intro", "overview", "welcome", "first", "board", "create", "column"]
         },
         {
-          "id": "tutorials/02-richer-cards",
+          "id": "tutorials/richer-cards",
           "title": "Richer Cards",
           "icon": "terminal",
           "keywords": ["terminal", "card", "create", "title", "color", "environment", "tag", "badge"]
         },
         {
-          "id": "tutorials/03-find-anything-fast",
+          "id": "tutorials/find-anything-fast",
           "title": "Find Anything Fast",
           "icon": "magnifyingglass",
           "keywords": ["command", "palette", "search", "quick", "switch", "navigate", "find", "zoom"]
         },
         {
-          "id": "tutorials/04-organise-your-space",
+          "id": "tutorials/organise-your-space",
           "title": "Organise Your Space",
           "icon": "rectangle.split.3x1",
           "keywords": ["column", "organize", "drag", "drop", "move", "workflow", "kanban", "board", "stage"]
@@ -44,37 +44,37 @@
       "title": "Tutorials: Power Workflows",
       "topics": [
         {
-          "id": "tutorials/05-persistent-sessions",
+          "id": "tutorials/persistent-sessions",
           "title": "Persistent Sessions",
           "icon": "rectangle.split.2x2",
           "keywords": ["tmux", "session", "persist", "restore", "recovery", "backend", "multiplexer", "pin", "tab"]
         },
         {
-          "id": "tutorials/06-terminal-context",
+          "id": "tutorials/terminal-context",
           "title": "Terminal Context",
           "icon": "key",
           "keywords": ["environment", "variable", "secret", "keychain", "api", "token", "password", "context"]
         },
         {
-          "id": "tutorials/07-lifecycle",
+          "id": "tutorials/lifecycle",
           "title": "Lifecycle",
           "icon": "arrow.clockwise",
           "keywords": ["lifecycle", "bin", "trash", "delete", "recover", "restore", "retention", "theme"]
         },
         {
-          "id": "tutorials/12-worktree-sidebar",
+          "id": "tutorials/worktree-sidebar",
           "title": "Git Worktrees",
           "icon": "shippingbox",
           "keywords": ["git", "worktree", "repository", "branch", "sidebar", "checkout", "harness"]
         },
         {
-          "id": "tutorials/13-harness-sidebar",
+          "id": "tutorials/harness-sidebar",
           "title": "Harnesses",
           "icon": "puzzlepiece.extension",
           "keywords": ["harness", "ynh", "ai", "agent", "install", "launch", "registry", "sidebar"]
         },
         {
-          "id": "tutorials/14-marketplace",
+          "id": "tutorials/marketplace",
           "title": "Marketplaces & Authoring",
           "icon": "storefront",
           "keywords": ["marketplace", "plugin", "artifact", "skill", "install", "browse", "configure", "authoring"]
@@ -85,25 +85,25 @@
       "title": "Tutorials: Automation & AI",
       "topics": [
         {
-          "id": "tutorials/08-cli",
+          "id": "tutorials/cli",
           "title": "CLI Automation",
           "icon": "apple.terminal",
           "keywords": ["cli", "command", "line", "automation", "script", "termq", "install"]
         },
         {
-          "id": "tutorials/09-ai-context",
+          "id": "tutorials/ai-context",
           "title": "Persistent AI Context",
           "icon": "sparkles",
           "keywords": ["ai", "context", "persistent", "claude", "llm", "assistant", "prompt"]
         },
         {
-          "id": "tutorials/10-mcp",
+          "id": "tutorials/mcp",
           "title": "MCP Integration",
           "icon": "server.rack",
           "keywords": ["mcp", "model", "context", "protocol", "server", "ai", "claude", "integration"]
         },
         {
-          "id": "tutorials/11-queued-actions",
+          "id": "tutorials/queued-actions",
           "title": "Queued Actions",
           "icon": "list.bullet",
           "keywords": ["queue", "action", "batch", "autorun", "sequence", "automation"]

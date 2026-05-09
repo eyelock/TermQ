@@ -1,6 +1,6 @@
 # Tutorial 11: Queued Actions
 
-In [Tutorial 9](tutorials/09-ai-context.md) you learned about the **Next Action** field — a queued instruction an AI assistant can set on a terminal for the next session. Queued Actions takes that one step further: instead of waiting for you to open the terminal and manually start an AI session, the action executes automatically the moment the terminal opens.
+In [Tutorial 9](tutorials/ai-context.md) you learned about the **Next Action** field — a queued instruction an AI assistant can set on a terminal for the next session. Queued Actions takes that one step further: instead of waiting for you to open the terminal and manually start an AI session, the action executes automatically the moment the terminal opens.
 
 This is an opt-in feature that requires two deliberate permissions — both off by default.
 

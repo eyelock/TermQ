@@ -91,7 +91,7 @@ Click **Add**. TermQ runs the command in a transient terminal pane at the bottom
 
 Before creating a harness, tell TermQ where to scaffold new harnesses by default. Open **Settings → Marketplaces → Default Author Directory** and click **Browse…**.
 
-![Default author directory setting](../Images/marketplace-author-directory.png)
+![Default author directory setting](../Images/harnesses-author-directory.png)
 
 This is the directory where `ynd create harness <name>` will run. It's also pre-filled as the **Destination** in the harness wizard. You can override it per-harness in the wizard.
 

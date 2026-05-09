@@ -104,4 +104,4 @@ This is the core workflow: cards move through stages as your work progresses. Wh
 
 ## Next
 
-[Tutorial 2: Richer Cards](tutorials/02-richer-cards.md) — Add tags, badges, and working directories to make your cards carry real context.
+[Tutorial 2: Richer Cards](tutorials/richer-cards.md) — Add tags, badges, and working directories to make your cards carry real context.
