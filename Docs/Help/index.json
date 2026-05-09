@@ -78,6 +78,12 @@
           "title": "Harnesses",
           "icon": "puzzlepiece.extension",
           "keywords": ["harness", "ynh", "ai", "agent", "install", "launch", "fork", "wizard", "authoring", "include", "delegate"]
+        },
+        {
+          "id": "tutorials/remote-prs",
+          "title": "Remote PRs",
+          "icon": "arrow.triangle.pull",
+          "keywords": ["github", "pr", "pull request", "remote", "review", "focus", "run", "feed", "worktree"]
         }
       ]
     },

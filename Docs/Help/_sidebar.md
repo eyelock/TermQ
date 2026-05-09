@@ -14,12 +14,13 @@
   - [8. Git Worktrees](tutorials/worktree-sidebar.md)
   - [9. Marketplace Browser](tutorials/marketplace-browser.md)
   - [10. Harnesses](tutorials/harnesses.md)
+  - [11. Remote PRs](tutorials/remote-prs.md)
 
 - **Tutorials: Automation & AI**
-  - [11. CLI Automation](tutorials/cli.md)
-  - [12. Persistent AI Context](tutorials/ai-context.md)
-  - [13. MCP Integration](tutorials/mcp.md)
-  - [14. Queued Actions](tutorials/queued-actions.md)
+  - [12. CLI Automation](tutorials/cli.md)
+  - [13. Persistent AI Context](tutorials/ai-context.md)
+  - [14. MCP Integration](tutorials/mcp.md)
+  - [15. Queued Actions](tutorials/queued-actions.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)

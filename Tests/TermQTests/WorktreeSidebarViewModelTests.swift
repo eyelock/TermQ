@@ -104,6 +104,10 @@ final class MockGitService: GitServiceProtocol {
         if let error = pullBranchError { throw error }
     }
 
+    func addDetachedWorktree(repoPath: String, path: String) async throws {}
+
+    func aheadCount(worktreePath: String) async -> Int { 0 }
+
     func defaultBranch(repoPath: String) async -> String { defaultBranchResult }
 
     func updateRemoteHead(repoPath: String) async {

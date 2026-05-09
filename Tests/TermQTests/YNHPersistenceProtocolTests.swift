@@ -14,6 +14,8 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
     var worktreeHarness: [String: String] = [:]
     var repoHarness: [String: String] = [:]
     var harnessVendor: [String: String] = [:]
+    var runHarnessMap: [String: String] = [:]
+    var runFocusMap: [String: String] = [:]
 
     func harness(for worktreePath: String) -> String? {
         worktreeHarness[worktreePath]
@@ -31,6 +33,14 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
 
     func vendorOverride(for harnessId: String) -> String? {
         harnessVendor[harnessId]
+    }
+
+    func runHarness(for repoPath: String) -> String? {
+        runHarnessMap[repoPath]
+    }
+
+    func runFocus(for repoPath: String) -> String? {
+        runFocusMap[repoPath]
     }
 
     func setRepoDefaultHarness(_ harnessName: String?, for repoPath: String) {
@@ -55,6 +65,26 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
         } else {
             harnessVendor.removeValue(forKey: harnessId)
         }
+    }
+
+    func setRunHarness(_ harnessId: String?, for repoPath: String) {
+        if let id = harnessId {
+            runHarnessMap[repoPath] = id
+        } else {
+            runHarnessMap.removeValue(forKey: repoPath)
+        }
+    }
+
+    func setRunFocus(_ focus: String?, for repoPath: String) {
+        if let f = focus { runFocusMap[repoPath] = f } else { runFocusMap.removeValue(forKey: repoPath) }
+    }
+
+    var remotePRFeedCapMap: [String: Int] = [:]
+
+    func remotePRFeedCap(for repoPath: String) -> Int? { remotePRFeedCapMap[repoPath] }
+
+    func setRemotePRFeedCap(_ cap: Int?, for repoPath: String) {
+        if let c = cap { remotePRFeedCapMap[repoPath] = c } else { remotePRFeedCapMap.removeValue(forKey: repoPath) }
     }
 
     func removeAllAssociations(for harnessName: String) {

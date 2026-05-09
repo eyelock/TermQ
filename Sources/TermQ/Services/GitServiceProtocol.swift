@@ -19,6 +19,8 @@ protocol GitServiceProtocol: AnyObject {
     func forceDeleteLocalBranch(repoPath: String, branch: String) async throws
     func fetchBranchFromOrigin(repoPath: String, branch: String) async throws
     func pullBranch(worktreePath: String) async throws
+    func addDetachedWorktree(repoPath: String, path: String) async throws
+    func aheadCount(worktreePath: String) async -> Int
     func defaultBranch(repoPath: String) async -> String
     func updateRemoteHead(repoPath: String) async
     func inferRepoName(repoPath: String) async -> String

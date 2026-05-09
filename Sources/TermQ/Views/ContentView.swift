@@ -52,12 +52,18 @@ struct ContentView: View {
                             vendorID: "",
                             defaultVendor: harness?.defaultVendor ?? "",
                             focus: nil,
+                            profile: nil,
                             workingDirectory: path,
                             prompt: nil,
                             backend: SettingsStore.shared.backend,
-                            branch: branch
+                            branch: branch,
+                            interactive: false,
+                            cardTitle: nil
                         )
                         launchCoordinator.launchHarness(config)
+                    },
+                    onRunWithFocus: { config in
+                        launchCoordinator.launchHarness(config, reuseExisting: false)
                     },
                     onInstall: { lifecycleCoordinator.showInstallSheet = true },
                     onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },

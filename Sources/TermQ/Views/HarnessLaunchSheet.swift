@@ -175,10 +175,13 @@ struct HarnessLaunchSheet: View {
                             vendorID: effectiveVendorID,
                             defaultVendor: harness.defaultVendor,
                             focus: selectedFocus.isEmpty ? nil : selectedFocus,
+                            profile: nil,
                             workingDirectory: workingDirectory,
                             prompt: prompt.isEmpty ? nil : prompt,
                             backend: selectedBackend,
-                            branch: initialBranch
+                            branch: initialBranch,
+                            interactive: false,
+                            cardTitle: nil
                         )
                         onLaunch(config)
                         dismiss()
@@ -244,11 +247,19 @@ struct HarnessLaunchConfig {
     /// The harness's declared default vendor (for tagging).
     let defaultVendor: String
     let focus: String?
+    /// Explicit profile override. Mutually exclusive with `focus` (YNH rejects both).
+    /// Empty / nil means use the harness default profile.
+    let profile: String?
     let workingDirectory: String
     let prompt: String?
     let backend: TerminalBackend
     /// Branch name of the worktree this harness was launched from, if any.
     let branch: String?
+    /// When true, passes `--interactive` to `ynh run` so the session stays open
+    /// after the LLM responds to the initial prompt.
+    let interactive: Bool
+    /// Optional override for the terminal card title. Falls back to branch ?? harnessID when nil.
+    let cardTitle: String?
 
     /// Build the `ynh run` command string.
     /// Pass `sessionName` to bind the session to a specific tmux session name.
@@ -259,6 +270,11 @@ struct HarnessLaunchConfig {
         }
         if let focus, !focus.isEmpty {
             parts.append(contentsOf: ["--focus", focus])
+        } else if let profile, !profile.isEmpty {
+            parts.append(contentsOf: ["--profile", profile])
+        }
+        if interactive {
+            parts.append("--interactive")
         }
         if let sessionName {
             parts.append(contentsOf: ["--session-name", sessionName])

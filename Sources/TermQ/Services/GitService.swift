@@ -177,6 +177,28 @@ public class GitService: GitServiceProtocol {
         )
     }
 
+    // MARK: - PR checkout support
+
+    /// Add a worktree in detached HEAD state.
+    /// Used as step 1 of the PR checkout sequence before `gh pr checkout` runs inside it.
+    public func addDetachedWorktree(repoPath: String, path: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["worktree", "add", "--detach", path]
+        )
+    }
+
+    /// Count commits ahead of the tracking branch in the worktree at `path`.
+    /// Returns 0 when there is no tracking branch or the count cannot be determined.
+    public func aheadCount(worktreePath: String) async -> Int {
+        let output =
+            (try? await GitServiceShared.runGitCommand(
+                repoPath: worktreePath,
+                args: ["rev-list", "--count", "@{u}..HEAD"]
+            )) ?? ""
+        return Int(output.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
+    }
+
     /// Pull the current branch in the given worktree directory (`git pull`).
     public func pullBranch(worktreePath: String) async throws {
         _ = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["pull"])

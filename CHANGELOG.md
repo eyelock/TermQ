@@ -9,6 +9,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Remote PR feed** — the Repositories sidebar gains a **Local / Remote** toggle.
+  Remote mode lists open pull requests for each registered GitHub repository,
+  fetched via the `gh` CLI. The feed is priority-ordered: checked-out PRs pin to
+  the top, then review-requested, then open non-draft with no reviewers, then
+  everything else. Within each tier, PRs are sorted by `updatedAt` descending.
+  - **Per-host identity** — login is resolved per-repository by calling `gh api user`
+    with the repo's working directory, so orgs on github.com, GHEC, and on-prem GHE
+    each resolve the correct account automatically.
+  - **Configurable feed cap** — defaults to 20 PRs per repo; adjustable globally in
+    **Settings → GitHub** or per-repo via `YNHPersistence`. Tier-1 (checked-out) PRs
+    always appear regardless of the cap.
+  - **Overflow indicator** — when the full list exceeds the cap, a `+ N more` footer
+    shows the count of hidden PRs.
+  - **Priority badges** — each PR row carries role badges: **you** (author),
+    **review** (review requested), **assigned**, **draft**, and **checked out** (green).
+- **Run with Focus sheet** — right-clicking any PR row with a checked-out worktree
+  exposes **Run with Focus…**, a sheet for launching a `ynh run` harness session
+  against that PR's worktree:
+  - Harness picker pre-selects the last-used harness for the repo.
+  - Focus picker pre-selects the repo's saved default focus (if set).
+  - Vendor picker lets you override the harness default vendor; shows availability.
+  - Profile picker is interactive in ad-hoc mode, locked to the focus's profile when
+    a focus is selected.
+  - Prompt textarea shows the focus prompt read-only; a **Customize** button unlocks
+    it for editing.
+  - **Stay interactive** toggle (gated on vendor capability) appends `--interactive`
+    so the agent stays open after the initial focus response.
+  - **Harness detail caching** — focuses and profiles are cached in-process after the
+    first load; re-opening the sheet is instant. A **⟳** refresh button forces a
+    re-read from disk when the harness YAML has changed.
+  - Terminal cards created from the sheet are titled `focus: org/repo#N`, with the
+    repo slug middle-truncated if the total would exceed 40 characters.
+- **Remote PR context menu** — the PR row right-click menu now matches the local
+  worktree menu structure (when the PR is checked out):
+  - **Run with Focus…** and **Quick Launch Focus ▶** submenu (per-focus quick launch
+    without opening the full sheet; populated automatically when harness detail is
+    cached).
+  - **Quick Terminal** / **Create Terminal…** — open a terminal at the worktree path.
+  - **Reveal in Finder** / **Reveal in Terminal** / **Copy Branch Name**.
+  - **Open PR on Remote** / **Copy PR URL** / **Update from Origin**.
+  - **Show in Local** — jump to Local mode, focused on the worktree.
+  - **Set Default Focus ▶** — change or clear the default focus for the repo (used as
+    the pre-selection next time the Run with Focus sheet opens).
+- **Prune Closed PRs** — a **⊘ Prune Closed PRs** action appears in Remote mode for
+  repos with checked-out worktrees whose PRs have since been closed or merged. A
+  confirmation sheet lists candidates with dirty/ahead flags; safe-to-prune rows are
+  checked by default.
+- **GitHub Settings tab** — new **Settings → GitHub** tab with a stepper for the
+  global PR feed cap (5–100, step 5).
+- **Convert to Worktree** — local branch rows gain a **Convert to Worktree** context
+  menu action that creates a linked worktree for the branch without switching the main
+  checkout.
+
 - **Inline include and manifest editing** — the detail pane now exposes
   per-row edit and remove on every include of an editable harness, plus
   a manifest-level editor for free-form fields. Mutations stream through

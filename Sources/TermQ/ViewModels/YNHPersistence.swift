@@ -63,6 +63,16 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         config.harnessVendor[harnessId]
     }
 
+    /// Last-used review harness id for a repository (Run with Focus sheet).
+    func runHarness(for repoPath: String) -> String? {
+        config.repoRunHarness[repoPath]
+    }
+
+    /// Last-used focus name for a repository. Empty string means no focus.
+    func runFocus(for repoPath: String) -> String? {
+        config.repoRunFocus[repoPath]
+    }
+
     // MARK: - Mutations
 
     func setRepoDefaultHarness(_ harnessId: String?, for repoPath: String) {
@@ -96,6 +106,37 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         let vendorKeys = config.harnessVendor.keys.filter(matches)
         for key in vendorKeys {
             config.harnessVendor.removeValue(forKey: key)
+        }
+        save()
+    }
+
+    func setRunHarness(_ harnessId: String?, for repoPath: String) {
+        if let id = harnessId {
+            config.repoRunHarness[repoPath] = id
+        } else {
+            config.repoRunHarness.removeValue(forKey: repoPath)
+        }
+        save()
+    }
+
+    func setRunFocus(_ focus: String?, for repoPath: String) {
+        if let focus {
+            config.repoRunFocus[repoPath] = focus
+        } else {
+            config.repoRunFocus.removeValue(forKey: repoPath)
+        }
+        save()
+    }
+
+    func remotePRFeedCap(for repoPath: String) -> Int? {
+        config.repoRemotePRFeedCap[repoPath]
+    }
+
+    func setRemotePRFeedCap(_ cap: Int?, for repoPath: String) {
+        if let cap {
+            config.repoRemotePRFeedCap[repoPath] = cap
+        } else {
+            config.repoRemotePRFeedCap.removeValue(forKey: repoPath)
         }
         save()
     }
