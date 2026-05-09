@@ -35,9 +35,9 @@ Run `make test` to verify changes.
 
 This prompt is there every session. There are two ways it reaches an LLM assistant:
 
-**Automatically** — via the `{{PROMPT}}` token in the terminal's init command (see [Tutorial 11](tutorials/11-queued-actions.md)). When the terminal opens, the token is replaced with this field's content before the command runs — e.g. `claude "{{PROMPT}} {{NEXT_ACTION}}"` becomes a single prompt combining standing context and the queued task.
+**Automatically** — via the `{{PROMPT}}` token in the terminal's init command (see [Tutorial 11](tutorials/queued-actions.md)). When the terminal opens, the token is replaced with this field's content before the command runs — e.g. `claude "{{PROMPT}} {{NEXT_ACTION}}"` becomes a single prompt combining standing context and the queued task.
 
-**On demand** — when an LLM assistant calls `termq_open` or `termq_get` via the MCP server, the response includes this field. The assistant reads it and orients itself. See [Tutorial 10](tutorials/10-mcp.md).
+**On demand** — when an LLM assistant calls `termq_open` or `termq_get` via the MCP server, the response includes this field. The assistant reads it and orients itself. See [Tutorial 10](tutorials/mcp.md).
 
 **When to update it:** When the nature of the work changes substantially. After finishing the auth refactor, update it to reflect what the terminal is for now.
 
@@ -54,7 +54,7 @@ If tests pass, open a PR against main.
 
 Like the LLM Prompt, there are two ways this reaches an LLM assistant:
 
-**Automatically** — via the `{{NEXT_ACTION}}` token in the init command. When the terminal opens and queued actions are enabled, the token is replaced with this field's content, the command runs, and the field is cleared. It fires once and is gone. See [Tutorial 11](tutorials/11-queued-actions.md).
+**Automatically** — via the `{{NEXT_ACTION}}` token in the init command. When the terminal opens and queued actions are enabled, the token is replaced with this field's content, the command runs, and the field is cleared. It fires once and is gone. See [Tutorial 11](tutorials/queued-actions.md).
 
 **On demand** — `termqcli pending` and `termq_pending` (MCP) surface terminals that have a Next Action set. The LLM reads it and acts on it, then clears it when done.
 
@@ -111,4 +111,4 @@ This discipline means the next session — whether it's you tomorrow or an AI as
 
 ## Next
 
-[Tutorial 10: MCP Integration](tutorials/10-mcp.md) — Wire up Claude Code to your TermQ board directly via the Model Context Protocol.
+[Tutorial 10: MCP Integration](tutorials/mcp.md) — Wire up Claude Code to your TermQ board directly via the Model Context Protocol.

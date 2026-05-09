@@ -98,7 +98,7 @@ npm run dev
 
 For tmux terminals, the init command runs each time the session is attached (not each time the underlying process restarts).
 
-> **LLM use:** The init command is also where you place the `{{NEXT_ACTION}}` token for queued actions. See [Tutorial 11](tutorials/11-queued-actions.md).
+> **LLM use:** The init command is also where you place the `{{NEXT_ACTION}}` token for queued actions. See [Tutorial 11](tutorials/queued-actions.md).
 
 ---
 
@@ -113,4 +113,4 @@ For tmux terminals, the init command runs each time the session is attached (not
 
 ## Next
 
-[Tutorial 7: Lifecycle](tutorials/07-lifecycle.md) — Pinned terminals, the bin, session export, and keeping your board clean.
+[Tutorial 7: Lifecycle](tutorials/lifecycle.md) — Pinned terminals, the bin, session export, and keeping your board clean.

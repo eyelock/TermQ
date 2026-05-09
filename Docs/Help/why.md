@@ -42,6 +42,6 @@ It's also not a project management tool. The board is for your current work — 
 
 ## Where to go from here
 
-**Ready to try it?** → [Tutorial 1: Your First Board](tutorials/01-first-board.md)
+**Ready to try it?** → [Tutorial 1: Your First Board](tutorials/first-board.md)
 
 **Just want to see what it can do?** → [Overview](README.md)

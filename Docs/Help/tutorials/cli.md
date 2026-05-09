@@ -46,7 +46,7 @@ termqcli list | jq '.[].name'
 termqcli open "Dev Server"
 ```
 
-Opens the terminal in TermQ and returns its full details as JSON — including its LLM context fields (more on those in [Tutorial 9](tutorials/09-ai-context.md)).
+Opens the terminal in TermQ and returns its full details as JSON — including its LLM context fields (more on those in [Tutorial 9](tutorials/ai-context.md)).
 
 Partial name matching works:
 
@@ -172,4 +172,4 @@ Call it from inside any git repo: `tq-new "Feature Work"`.
 
 ## Next
 
-[Tutorial 9: Persistent AI Context](tutorials/09-ai-context.md) — Give your LLM assistant a memory that survives between sessions.
+[Tutorial 9: Persistent AI Context](tutorials/ai-context.md) — Give your LLM assistant a memory that survives between sessions.

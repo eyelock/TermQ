@@ -67,4 +67,4 @@ The new terminal inherits the working directory, so you land in the right place 
 
 ## Next
 
-[Tutorial 4: Organise Your Space](tutorials/04-organise-your-space.md) — Columns, themes, and defaults.
+[Tutorial 4: Organise Your Space](tutorials/organise-your-space.md) — Columns, themes, and defaults.
