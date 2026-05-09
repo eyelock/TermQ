@@ -172,9 +172,19 @@ final class HarnessRepository: ObservableObject {
                 selectedHarnessId = nil
             }
         } catch {
-            TermQLogger.ui.error(
-                "HarnessRepository: ynh ls failed type=\(type(of: error)) desc=\(String(describing: error).prefix(200))"
-            )
+            // The caught error may be `YNHDetectionError.commandFailed`
+            // carrying stderr (terminal output, treated as user data).
+            // Default to type-only logging; full description gated to
+            // file-logging mode where the developer is in the loop.
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.ui.error(
+                    "HarnessRepository: ynh ls failed type=\(type(of: error)) desc=\(String(describing: error).prefix(200))"
+                )
+            } else {
+                TermQLogger.ui.error(
+                    "HarnessRepository: ynh ls failed type=\(type(of: error))"
+                )
+            }
             listState = .error("Failed to list harnesses")
         }
     }
