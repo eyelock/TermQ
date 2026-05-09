@@ -147,19 +147,28 @@ final class AddIncludeContext: SourcePickerContext {
 
     func libraryCommandPreview() -> String {
         guard let source = libraryResolvedSource else { return "" }
-        return commandPreview(sourceURL: source.url, path: source.path, picks: pickArgument())
+        return commandPreview(
+            sourceURL: source.url,
+            path: source.path,
+            ref: libraryResolvedRef,
+            picks: pickArgument()
+        )
     }
 
     func gitURLCommandPreview() -> String {
         let trimmed = gitURL.trimmingCharacters(in: .whitespaces)
         let url = trimmed.isEmpty ? "<url>" : trimmed
         let path = gitPath.trimmingCharacters(in: .whitespaces).nilIfEmpty
-        return commandPreview(sourceURL: url, path: path, picks: nil)
+        let ref = gitRef.trimmingCharacters(in: .whitespaces).nilIfEmpty
+        return commandPreview(sourceURL: url, path: path, ref: ref, picks: nil)
     }
 
-    private func commandPreview(sourceURL: String, path: String?, picks: [String]?) -> String {
+    private func commandPreview(sourceURL: String, path: String?, ref: String?, picks: [String]?)
+        -> String
+    {
         var parts = ["ynh", "include", "add", harnessID, sourceURL]
         if let path = path { parts += ["--path", path] }
+        if let ref = ref, !ref.isEmpty { parts += ["--ref", ref] }
         if let picks = picks, !picks.isEmpty {
             parts += ["--pick", picks.joined(separator: ",")]
         }
@@ -183,6 +192,7 @@ final class AddIncludeContext: SourcePickerContext {
             harness: harnessID,
             sourceURL: source.url,
             path: source.path,
+            ref: libraryResolvedRef?.nilIfEmpty,
             pick: picks
         )
         await runApply(opts: opts, ynhPath: ynhPath)
@@ -195,6 +205,7 @@ final class AddIncludeContext: SourcePickerContext {
             harness: harnessID,
             sourceURL: trimmedURL,
             path: gitPath.trimmingCharacters(in: .whitespaces).nilIfEmpty,
+            ref: gitRef.trimmingCharacters(in: .whitespaces).nilIfEmpty,
             pick: []
         )
         await runApply(opts: opts, ynhPath: ynhPath)
@@ -390,49 +401,107 @@ private struct AddIncludeLibraryConfigureView: View {
     let marketplace: Marketplace
     @Environment(\.dismiss) private var dismiss
 
+    private enum Step { case artifacts, apply }
+    @State private var step: Step = .artifacts
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 8) {
-                Button {
-                    context.backToBrowsing()
-                } label: {
-                    Label(
-                        Strings.Harnesses.addDelegateBack,
-                        systemImage: "chevron.left"
+        VStack(alignment: .leading, spacing: 0) {
+            stepHeader
+                .padding(.bottom, 12)
+
+            switch step {
+            case .artifacts:
+                artifactsStep
+            case .apply:
+                applyStep
+            }
+        }
+        .padding(16)
+    }
+
+    // MARK: - Step header
+
+    private var stepHeader: some View {
+        HStack(spacing: 16) {
+            Button {
+                context.backToBrowsing()
+            } label: {
+                Label(
+                    Strings.Harnesses.addDelegateBack,
+                    systemImage: "chevron.left"
+                )
+            }
+            .buttonStyle(.borderless)
+
+            Spacer()
+
+            stepIndicator(index: 0, label: "Artifacts", isCurrent: step == .artifacts, isDone: step == .apply)
+            stepDivider
+            stepIndicator(index: 1, label: "Apply", isCurrent: step == .apply, isDone: false)
+        }
+    }
+
+    private func stepIndicator(index: Int, label: String, isCurrent: Bool, isDone: Bool) -> some View {
+        HStack(spacing: 4) {
+            ZStack {
+                Circle()
+                    .fill(
+                        isCurrent
+                            ? Color.accentColor
+                            : (isDone ? Color.green : Color.secondary.opacity(0.3))
                     )
+                    .frame(width: 20, height: 20)
+                if isDone {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundColor(.white)
+                } else {
+                    Text("\(index + 1)")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.white)
                 }
-                .buttonStyle(.borderless)
-                Spacer()
             }
+            Text(label)
+                .font(.caption)
+                .foregroundColor(isCurrent ? .primary : .secondary)
+        }
+    }
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(plugin.name)
-                    .font(.body)
-                    .fontWeight(.medium)
-                if let desc = plugin.description, !desc.isEmpty {
-                    Text(desc)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                Text(marketplace.name)
-                    .font(.caption2)
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 1)
-                    .background(Color.blue.opacity(0.15))
-                    .foregroundColor(.blue)
-                    .clipShape(Capsule())
-            }
-            .padding(10)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.secondary.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 6))
+    private var stepDivider: some View {
+        Rectangle()
+            .fill(Color.secondary.opacity(0.3))
+            .frame(width: 24, height: 1)
+    }
 
+    // MARK: - Step 1: Artifacts
+
+    private var artifactsStep: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            pluginHeaderCard
             IncludePicksSelector(
                 availablePicks: context.resolvedPicks,
                 selected: $context.selectedPicks,
                 isLoading: context.isLoadingPicks,
                 loadError: context.picksLoadError
             )
+            Spacer()
+            HStack {
+                Spacer()
+                Button("Next") { step = .apply }
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(
+                        context.isLoadingPicks
+                            || (!context.resolvedPicks.isEmpty && context.selectedPicks.isEmpty)
+                    )
+            }
+        }
+    }
+
+    // MARK: - Step 2: Apply
+
+    private var applyStep: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            pluginHeaderCard
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(Strings.Marketplace.Picker.commandPreview)
@@ -457,19 +526,61 @@ private struct AddIncludeLibraryConfigureView: View {
             Spacer()
 
             HStack {
+                Button("Back") { step = .artifacts }
+                    .buttonStyle(.bordered)
                 Spacer()
                 Button(Strings.Harnesses.addIncludeApplyButton) {
                     Task { await context.applyLibrary() }
                 }
                 .keyboardShortcut(.defaultAction)
-                .disabled(
-                    context.isApplying
-                        || context.isLoadingPicks
-                        || (!context.resolvedPicks.isEmpty && context.selectedPicks.isEmpty)
-                )
+                .disabled(context.isApplying)
             }
         }
-        .padding(16)
+    }
+
+    // MARK: - Shared plugin header
+
+    private var pluginHeaderCard: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(plugin.name)
+                .font(.body)
+                .fontWeight(.medium)
+            if let desc = plugin.description, !desc.isEmpty {
+                Text(desc)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Text(marketplace.name)
+                .font(.caption2)
+                .padding(.horizontal, 5)
+                .padding(.vertical, 1)
+                .background(Color.blue.opacity(0.15))
+                .foregroundColor(.blue)
+                .clipShape(Capsule())
+            if let inheritedRef = marketplace.ref, !inheritedRef.isEmpty {
+                HStack(spacing: 6) {
+                    Image(systemName: "pin.fill").imageScale(.small)
+                    Text("Pinned to ")
+                        .font(.caption)
+                    Text(inheritedRef)
+                        .font(.system(size: 11, design: .monospaced))
+                    Text("(inherited from marketplace)")
+                        .font(.caption2)
+                }
+                .foregroundColor(.secondary)
+            } else {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.triangle.2.circlepath").imageScale(.small)
+                    Text("Tracks marketplace HEAD (unpinned)")
+                        .font(.caption)
+                }
+                .foregroundColor(.secondary)
+            }
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.secondary.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 }
 
