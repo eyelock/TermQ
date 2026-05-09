@@ -74,7 +74,7 @@ struct HarnessDetailView: View {
                 artifactSection
 
                 Button {
-                    marketplaceStore.preselectedHarnessTarget = harness.name
+                    marketplaceStore.preselectedHarnessTarget = harness.id
                     sidebarState.selectedTab = .marketplaces
                 } label: {
                     Label(Strings.Harnesses.configureFromMarketplaces, systemImage: "storefront")
@@ -113,7 +113,7 @@ struct HarnessDetailView: View {
             isPresented: $showUninstallAlert
         ) {
             Button(Strings.Harnesses.uninstallAlertConfirm, role: .destructive) {
-                onUninstall(harness.name)
+                onUninstall(harness.id)
             }
             Button(Strings.Harnesses.installCancel, role: .cancel) {}
         } message: {
@@ -125,7 +125,7 @@ struct HarnessDetailView: View {
             titleVisibility: .visible
         ) {
             Button(Strings.Harnesses.deleteLocalConfirm, role: .destructive) {
-                onUninstall(harness.name)
+                onUninstall(harness.id)
             }
             Button(Strings.Harnesses.installCancel, role: .cancel) {}
         } message: {
@@ -382,7 +382,7 @@ struct HarnessDetailView: View {
                 .font(.caption)
             Spacer()
             Button {
-                onUpdate(harness.name)
+                onUpdate(harness.id)
             } label: {
                 Text(Strings.Harnesses.updateButton)
                     .font(.caption)
@@ -564,7 +564,7 @@ extension HarnessDetailView {
         // Group 1 — Run (Launch is its own button beside the menu).
         Button {
             NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString("ynh run \(harness.name)", forType: .string)
+            NSPasteboard.general.setString("ynh run \(harness.id)", forType: .string)
         } label: {
             Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
         }
@@ -616,7 +616,7 @@ extension HarnessDetailView {
         // Group 3 — Actions.
         if !harness.isFork {
             Button {
-                onUpdate(harness.name)
+                onUpdate(harness.id)
             } label: {
                 Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
             }
@@ -630,7 +630,7 @@ extension HarnessDetailView {
         }
         if case .readOnly(canFork: true) = viewModel.editability, viewModel.phase1Capable {
             Button {
-                onFork(harness.name)
+                onFork(harness.id)
             } label: {
                 Label(Strings.Harnesses.forkToLocal, systemImage: "tuningfork")
             }
@@ -653,7 +653,7 @@ extension HarnessDetailView {
                 panel.prompt = Strings.Harnesses.exportButton
                 let response = await panel.begin()
                 if response == .OK, let url = panel.url {
-                    onExport(harness.name, url.path)
+                    onExport(harness.id, url.path)
                 }
             }
         } label: {
@@ -772,14 +772,14 @@ extension HarnessDetailView {
 
     fileprivate func allHarnessTerminals() -> [TerminalCard] {
         (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
-            .filter { $0.tags.contains { tag in tag.key == "harness" && tag.value == harness.name } }
+            .filter { $0.tags.contains { tag in tag.key == "harness" && tag.value == harness.id } }
     }
 
     fileprivate func harnessTerminals(path: String) -> [TerminalCard] {
         (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
             .filter {
                 ($0.workingDirectory == path || $0.workingDirectory.hasPrefix(path + "/"))
-                    && $0.tags.contains { tag in tag.key == "harness" && tag.value == harness.name }
+                    && $0.tags.contains { tag in tag.key == "harness" && tag.value == harness.id }
             }
     }
 

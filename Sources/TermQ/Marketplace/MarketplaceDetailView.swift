@@ -55,7 +55,7 @@ struct MarketplaceDetailView: View {
                     marketplace: marketplace,
                     harnessRepository: harnessRepository,
                     detector: detector,
-                    mode: targetHarness.map { .wizard(harnessName: $0) } ?? .standalone,
+                    mode: targetHarness.map { .wizard(harnessID: $0) } ?? .standalone,
                     onDone: {
                         store.preselectedHarnessTarget = nil
                         pickerPlugin = nil

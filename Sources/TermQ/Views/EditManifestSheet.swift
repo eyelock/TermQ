@@ -173,7 +173,7 @@ struct EditManifestSheet: View {
     private func save() async {
         let ok = await manifestEditor.apply(
             at: harness.editablePath,
-            harnessName: harness.name,
+            harnessID: harness.id,
             fields: current,
             repository: harnessRepo
         )

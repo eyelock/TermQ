@@ -19,18 +19,18 @@ final class HarnessLifecycleCoordinator {
     var installCardIDs: Set<UUID> = []
 
     /// Map from in-flight `ynh uninstall` transient card IDs to the
-    /// harness name being uninstalled. Used to clear YNHPersistence
+    /// harness id being uninstalled. Used to clear YNHPersistence
     /// associations on success.
-    var uninstallCardNames: [UUID: String] = [:]
+    var uninstallCardIDs: [UUID: String] = [:]
 
-    /// Name of the harness pending a fork-to-local operation.
-    var harnessNameToFork: String?
+    /// Canonical id of the harness pending a fork-to-local operation.
+    var harnessIDToFork: String?
 
     /// Controls `ForkHarnessSheet` visibility.
     var showForkSheet = false
 
-    /// Name of the harness pending an update.
-    var harnessNameToUpdate: String?
+    /// Canonical id of the harness pending an update.
+    var harnessIDToUpdate: String?
 
     /// Controls `UpdateHarnessSheet` visibility.
     var showUpdateSheet = false
@@ -97,14 +97,14 @@ final class HarnessLifecycleCoordinator {
     /// Uninstall a harness. Harnesses with no YNH install record are
     /// deleted directly from the filesystem; YNH-managed harnesses use
     /// a transient terminal and clear associations when the shell exits.
-    func uninstallHarness(name: String) {
-        let harness = harnessRepo.harnesses.first(where: { $0.name == name })
+    func uninstallHarness(id: String) {
+        let harness = harnessRepo.harnesses.first(where: { $0.id == id })
 
         // Harnesses with no YNH install record can't be uninstalled via
         // `ynh uninstall`. Delete them directly and clean up associations.
         if let harness, harness.installedFrom == nil {
             try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
-            ynhPersistence.removeAllAssociations(for: name)
+            ynhPersistence.removeAllAssociations(for: id)
             harnessRepo.selectedHarnessId = nil
             Task { await harnessRepo.refresh() }
             return
@@ -115,11 +115,11 @@ final class HarnessLifecycleCoordinator {
 
         let store = SettingsStore.shared
         let card = TerminalCard(
-            title: "ynh uninstall \(name)",
+            title: "ynh uninstall \(id)",
             tags: [],
             columnId: column.id,
             workingDirectory: NSHomeDirectory(),
-            initCommand: "\(ynhPath) uninstall \(Self.shellQuote(name)) && exit",
+            initCommand: "\(ynhPath) uninstall \(Self.shellQuote(id)) && exit",
             safePasteEnabled: nil,
             allowOscClipboard: store.allowOscClipboard,
             confirmExternalModifications: store.confirmExternalLLMModifications,
@@ -128,7 +128,70 @@ final class HarnessLifecycleCoordinator {
         )
         card.isTransient = true
         card.allowAutorun = true
-        uninstallCardNames[card.id] = name
+        uninstallCardIDs[card.id] = id
+        boardViewModel.tabManager.addTransientCard(card)
+        if let current = boardViewModel.selectedCard {
+            boardViewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            boardViewModel.tabManager.addTab(card.id)
+        }
+        harnessRepo.selectedHarnessId = nil
+        boardViewModel.objectWillChange.send()
+        boardViewModel.selectedCard = card
+    }
+
+    /// Uninstall a local harness AND remove its editable source tree from disk.
+    /// Used by the sidebar's destructive "Delete" action — the dialog promises
+    /// "permanently delete its files", so we honour that. Plain Uninstall leaves
+    /// the source tree alone (per YNH's "Source tree left in place" contract).
+    func deleteLocalHarness(id: String) {
+        let harness = harnessRepo.harnesses.first(where: { $0.id == id })
+
+        // No YNH install record — same path as Uninstall: just remove the
+        // tree and clear associations. No `ynh uninstall` to run.
+        if let harness, harness.installedFrom == nil {
+            try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
+            ynhPersistence.removeAllAssociations(for: id)
+            harnessRepo.selectedHarnessId = nil
+            Task { await harnessRepo.refresh() }
+            return
+        }
+
+        guard let harness = harness else { return }
+        // Defense in depth: the sidebar gates Delete to local-source only,
+        // but the coordinator refuses to fall through to `rm -rf` for any
+        // harness whose source isn't local. A registry- or git-installed
+        // harness's editable path would point at the YNH-managed cache dir
+        // or a checked-out repo — never appropriate to nuke from the UI.
+        guard harness.installedFrom?.sourceType == "local" else {
+            TermQLogger.session.warning(
+                "deleteLocalHarness refused: harness \(id) is not local-sourced"
+            )
+            return
+        }
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        guard let column = pickColumn() else { return }
+
+        // The path to remove. `editablePath` resolves to the fork's
+        // user-chosen destination for forks, the install dir otherwise.
+        let pathToRemove = harness.editablePath
+
+        let store = SettingsStore.shared
+        let card = TerminalCard(
+            title: "ynh uninstall \(id) && rm -rf",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: Self.buildDeleteLocalCommand(
+                ynhPath: ynhPath, id: id, pathToRemove: pathToRemove),
+            safePasteEnabled: nil,
+            allowOscClipboard: store.allowOscClipboard,
+            confirmExternalModifications: store.confirmExternalLLMModifications,
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        uninstallCardIDs[card.id] = id
         boardViewModel.tabManager.addTransientCard(card)
         if let current = boardViewModel.selectedCard {
             boardViewModel.tabManager.insertTab(card.id, after: current.id)
@@ -144,17 +207,17 @@ final class HarnessLifecycleCoordinator {
 
     /// Update a harness via `UpdateHarnessSheet` — a CommandRunner-based
     /// progress sheet, no transient terminal in the user's board.
-    func updateHarness(name: String) {
+    func updateHarness(id: String) {
         guard case .ready = ynhDetector.status else { return }
-        harnessNameToUpdate = name
+        harnessIDToUpdate = id
         showUpdateSheet = true
     }
 
     // MARK: - Export
 
-    func exportHarness(name: String, outputDir: String) {
+    func exportHarness(id: String, outputDir: String) {
         guard case .ready(_, let yndPath?, _) = ynhDetector.status,
-            let harness = harnessRepo.harnesses.first(where: { $0.name == name }),
+            let harness = harnessRepo.harnesses.first(where: { $0.id == id }),
             let column = boardViewModel.selectedCard.flatMap({ c in
                 boardViewModel.board.columns.first { $0.id == c.columnId }
             }) ?? boardViewModel.board.columns.first
@@ -162,7 +225,7 @@ final class HarnessLifecycleCoordinator {
 
         let store = SettingsStore.shared
         let card = TerminalCard(
-            title: "ynd export \(name)",
+            title: "ynd export \(harness.name)",
             tags: [],
             columnId: column.id,
             workingDirectory: harness.path,
@@ -184,8 +247,8 @@ final class HarnessLifecycleCoordinator {
 
     // MARK: - Fork
 
-    func forkHarness(name: String) {
-        harnessNameToFork = name
+    func forkHarness(id: String) {
+        harnessIDToFork = id
         showForkSheet = true
     }
 
@@ -206,8 +269,8 @@ final class HarnessLifecycleCoordinator {
             }
             return succeeded
         }
-        if let name = uninstallCardNames.removeValue(forKey: cardId) {
-            ynhPersistence.removeAllAssociations(for: name)
+        if let id = uninstallCardIDs.removeValue(forKey: cardId) {
+            ynhPersistence.removeAllAssociations(for: id)
             if case .ready = ynhDetector.status {
                 Task { await harnessRepo.refresh() }
             }
@@ -217,11 +280,11 @@ final class HarnessLifecycleCoordinator {
     }
 
     /// Called from the fork sheet's completion handler. Closes the sheet,
-    /// clears the pending name, and selects the newly-forked harness.
-    func handleForkCompleted(newName: String) {
+    /// clears the pending id, and selects the newly-forked harness.
+    func handleForkCompleted(newID: String) {
         showForkSheet = false
-        harnessNameToFork = nil
-        harnessRepo.selectedHarnessId = newName
+        harnessIDToFork = nil
+        harnessRepo.selectedHarnessId = newID
     }
 
     // MARK: - Helpers
@@ -240,5 +303,14 @@ final class HarnessLifecycleCoordinator {
     /// Wrap a string in single quotes for safe shell argument passing.
     private static func shellQuote(_ str: String) -> String {
         "'" + str.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    }
+
+    /// Pure shell-command builder for the destructive Delete flow. Exposed
+    /// for testing — both halves matter (uninstall must run first; rm
+    /// must run only on success of the first), and the path quoting must
+    /// survive paths with spaces or single quotes.
+    static func buildDeleteLocalCommand(ynhPath: String, id: String, pathToRemove: String) -> String {
+        "\(ynhPath) uninstall \(shellQuote(id)) "
+            + "&& rm -rf \(shellQuote(pathToRemove)) && exit"
     }
 }

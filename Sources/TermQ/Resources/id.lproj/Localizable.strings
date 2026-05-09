@@ -903,6 +903,9 @@
 "harnesses.group.default" = "Default";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokal";
+"harnesses.group.quarantined" = "Dikarantina";
+"harnesses.quarantine.restore" = "Pulihkan";
+"harnesses.quarantine.drop" = "Hapus…";
 "harnesses.group.menu.settings" = "Pengaturan…";
 "harnesses.group.registry %@" = "Registri: %@";
 "harnesses.install.browsing" = "Memuat harness yang tersedia…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "Membuat salinan lokal yang dapat diedit dari harness ini. Salinan melacak asalnya sehingga Anda dapat melihat apa yang berubah di upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Mem-fork \"%@\"…";
+"harness.fork.rename.label" = "Nama (opsional)";
+"harness.fork.rename.hint" = "Biarkan kosong untuk mempertahankan nama sumber. Id kanonik fork baru akan menjadi local/<nama>.";
+"harness.fork.identity.collision" = "Harness yang sudah terpasang sudah memiliki identitas ini.";
 
 
 // MARK: - Harness Update
@@ -1031,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";
+"harnesses.broken.fork.help" = "Fork lokal ini tidak memiliki manifest harness. Klik kanan dan pilih Hapus Instalasi untuk menghapusnya.";
+"harnesses.broken.fork.badge" = "Rusak";
+"harnesses.fork.of %@" = "Cabang dari %@";
+"harnesses.fork.help %@" = "Dicabangkan dari %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Worktree Baru dari Cabang";

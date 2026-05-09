@@ -676,6 +676,9 @@
 // Harnesses — sidebar groups
 "harnesses.group.default" = "Default";
 "harnesses.group.local" = "Local";
+"harnesses.group.quarantined" = "Quarantined";
+"harnesses.quarantine.restore" = "Restore";
+"harnesses.quarantine.drop" = "Drop…";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.registry %@" = "Marketplace: %@";
 
@@ -862,6 +865,10 @@
 "harnesses.unversioned.drift.help" = "Upstream content changed without a version bump — review before updating";
 "harnesses.unversioned.drift.banner" = "Upstream content changed without a version bump — review before updating";
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit changed: %@ → %@";
+"harnesses.broken.fork.help" = "This local fork is missing its harness manifest. Right-click and Uninstall to remove it.";
+"harnesses.broken.fork.badge" = "Broken";
+"harnesses.fork.of %@" = "Fork of %@";
+"harnesses.fork.help %@" = "Forked from %@";
 "harnesses.unversioned.drift.confirm.title" = "Review upstream changes";
 "harnesses.unversioned.drift.confirm.body" = "Upstream content has changed without a version bump. Updating will pull the new content. Review the SHAs below before proceeding — a missing version bump can mask malicious changes.";
 "harnesses.unversioned.drift.confirm.proceed" = "Update Anyway";
@@ -984,6 +991,9 @@
 "harness.fork.explanation" = "Creates an editable local copy of this harness. The copy tracks its origin so you can see what changed upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Forking \"%@\"…";
+"harness.fork.rename.label" = "Name (optional)";
+"harness.fork.rename.hint" = "Leave empty to keep the source name. The new fork's canonical id will be local/<name>.";
+"harness.fork.identity.collision" = "An installed harness already has this identity.";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Update \"%@\"";

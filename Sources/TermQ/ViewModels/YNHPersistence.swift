@@ -162,6 +162,63 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         if dirty { save() }
     }
 
+    /// Rewrite persisted ids using a deterministic `oldId → newId`
+    /// mapping from `ynh migrate --json`. Used during the YNH 0.2 → 0.3
+    /// canonical-id migration window: TermQ persists `Harness.id` values
+    /// keyed in the old shape (e.g. `"eyelock-assistants/planner"`), and
+    /// YNH's migration manifest provides the rewrite map to the new
+    /// shape (`"github.com/eyelock/assistants/planner"`).
+    ///
+    /// Idempotent — re-applying the same map after writes is a no-op.
+    /// Caller is responsible for not double-applying a manifest (track
+    /// `lastAppliedManifestTimestamp` UserDefault).
+    func migrateCanonicalIds(using oldToNew: [String: String]) {
+        guard !oldToNew.isEmpty else { return }
+        var dirty = false
+        var rewriteCount = 0
+
+        // Match by exact id first (the manifest's `old_id` for harnesses
+        // YNH already tracked by canonical id), then fall back to leaf-name
+        // matching for entries TermQ persisted as `<old-namespace>/<name>`
+        // while YNH only tracked them as `<name>` — the persistence-shape
+        // mismatch we hit in practice on first cutover migration.
+        func resolve(_ value: String) -> String? {
+            if let direct = oldToNew[value] { return direct }
+            let leaf = value.split(separator: "/").last.map(String.init) ?? value
+            if leaf != value, let leafMatch = oldToNew[leaf] { return leafMatch }
+            return nil
+        }
+
+        for (path, value) in config.worktreeHarness {
+            if let canonical = resolve(value), canonical != value {
+                config.worktreeHarness[path] = canonical
+                dirty = true
+                rewriteCount += 1
+            }
+        }
+        for (path, value) in config.repoHarness {
+            if let canonical = resolve(value), canonical != value {
+                config.repoHarness[path] = canonical
+                dirty = true
+                rewriteCount += 1
+            }
+        }
+        for (key, _) in config.harnessVendor {
+            if let canonical = resolve(key), canonical != key {
+                let vendorValue = config.harnessVendor[key]
+                config.harnessVendor.removeValue(forKey: key)
+                config.harnessVendor[canonical] = vendorValue
+                dirty = true
+                rewriteCount += 1
+            }
+        }
+
+        TermQLogger.session.info(
+            "YNHPersistence.migrateCanonicalIds: rewrote \(rewriteCount) entries"
+        )
+        if dirty { save() }
+    }
+
     private func save() {
         do {
             try YNHConfigLoader.save(config, dataDirectory: saveURL.deletingLastPathComponent())

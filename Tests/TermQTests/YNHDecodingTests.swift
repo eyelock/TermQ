@@ -260,11 +260,11 @@ final class YNHHarnessDecodingTests: XCTestCase {
             name: "my-harness",
             version: "1.0.0",
             defaultVendor: "claude",
-            namespace: "acme/tools",
+            namespace: "github.com/acme/tools",
             path: "/tmp/my-harness",
             artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0)
         )
-        XCTAssertEqual(h.id, "acme/tools/my-harness")
+        XCTAssertEqual(h.id, "github.com/acme/tools/my-harness")
     }
 
     func test_harness_id_isFlatNameWhenNamespaceIsNil() {
@@ -295,7 +295,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
             name: "tools",
             version: "1.0.0",
             defaultVendor: "claude",
-            namespace: "acme/tools",
+            namespace: "github.com/acme/tools",
             path: "/tmp/a",
             artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0)
         )
@@ -303,11 +303,86 @@ final class YNHHarnessDecodingTests: XCTestCase {
             name: "tools",
             version: "1.0.0",
             defaultVendor: "claude",
-            namespace: "eyelock/tools",
+            namespace: "github.com/eyelock/tools",
             path: "/tmp/b",
             artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0)
         )
         XCTAssertNotEqual(a.id, b.id)
+    }
+
+    // MARK: - Harness.id decoded from envelope (YNH 0.4+ canonical-id field)
+
+    /// YNH 0.4+ envelopes carry an authoritative `id` field that may not be
+    /// reconstructible from `namespace + "/" + name` (host-prefixed canonical).
+    /// The decoder must trust the envelope's `id` verbatim.
+    func test_harness_id_isReadFromEnvelopeWhenPresent() throws {
+        let json = """
+            {
+              "id": "github.com/eyelock/assistants/planner",
+              "name": "planner",
+              "version_installed": "0.2.0",
+              "default_vendor": "claude",
+              "namespace": "github.com/eyelock/assistants",
+              "path": "/Users/test/.ynh/installed/github.com--eyelock--assistants--planner",
+              "is_pinned": false,
+              "artifacts": { "skills": 1, "agents": 0, "rules": 0, "commands": 0 },
+              "includes": [],
+              "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: Data(json.utf8))
+        XCTAssertEqual(h.id, "github.com/eyelock/assistants/planner")
+    }
+
+    /// Forks emit `id: "local/<name>"` regardless of the source's namespace.
+    /// The envelope's `id` wins over any composition.
+    func test_harness_id_acceptsLocalPrefixForForks() throws {
+        let json = """
+            {
+              "id": "local/researcher-experiment",
+              "name": "researcher-experiment",
+              "version_installed": "0.1.0",
+              "default_vendor": "claude",
+              "path": "/Users/test/Documents/researcher-experiment",
+              "is_pinned": false,
+              "artifacts": { "skills": 0, "agents": 0, "rules": 0, "commands": 0 },
+              "includes": [],
+              "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: Data(json.utf8))
+        XCTAssertEqual(h.id, "local/researcher-experiment")
+    }
+
+    /// `HarnessListResponse` round-trips the envelope's `schema_version` so
+    /// callers (the migration coordinator) can detect a pre-migration store.
+    func test_ynh_ls_envelope_decodesSchemaVersion() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "schema_version": 2,
+              "harnesses": []
+            }
+            """
+        let envelope = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        XCTAssertEqual(envelope.schemaVersion, 2)
+    }
+
+    /// Older envelopes that omit `schema_version` decode it as nil — the
+    /// migration coordinator treats nil as pre-migration (`< 2`).
+    func test_ynh_ls_envelope_schemaVersionAbsentDecodesAsNil() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": []
+            }
+            """
+        let envelope = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        XCTAssertNil(envelope.schemaVersion)
     }
 
     // MARK: - ynh ls envelope tolerance (0.2 bare array vs 0.3+ envelope)

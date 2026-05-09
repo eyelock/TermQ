@@ -6,12 +6,11 @@ import Foundation
 /// contract defined in YNH's `docs/cli-structured.md`. Uses `snake_case` JSON
 /// keys per the YNH convention.
 public struct Harness: Codable, Equatable, Sendable, Identifiable {
-    /// Unique identifier. Includes namespace when present: `"org/repo/name"`.
-    /// Falls back to plain `name` for flat/local installs.
-    public var id: String {
-        guard let ns = namespace, !ns.isEmpty else { return name }
-        return "\(ns)/\(name)"
-    }
+    /// Canonical identifier emitted by YNH. For YNH 0.4+ envelopes this is
+    /// the `id` field (`local/<name>`, `<host>/<org>/<repo>/<name>`, etc.).
+    /// For older YNH builds without an `id` field, falls back to composing
+    /// `namespace + "/" + name` or just `name` if neither is present.
+    public let id: String
 
     public let name: String
     /// The currently installed version. Maps from YNH's `version_installed` key.
@@ -40,6 +39,22 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     /// `installedFrom.sha` to detect drift on the harness's own source —
     /// the path that catches self-contained plugins (no includes).
     public let shaAvailable: String?
+
+    /// Coarse classification from YNH: "local-fork", "registry", "git", or
+    /// "local-fork-broken" for pointer-installed forks whose on-disk
+    /// `.ynh-plugin/plugin.json` is missing or unreadable. Optional —
+    /// older YNH envelopes don't emit it.
+    public let kind: String?
+
+    /// Human-readable reason a `local-fork-broken` row is broken (e.g.
+    /// "no harness manifest found in <path>"). Optional, only populated
+    /// for broken entries.
+    public let brokenReason: String?
+
+    /// True when YNH flagged this entry as a broken pointer-installed fork.
+    /// The sidebar surfaces these distinctly so the user can see why a row
+    /// looks empty and remove it without confusion.
+    public var isBrokenLocalFork: Bool { kind == "local-fork-broken" }
 
     /// True when an update is available from upstream — populated only after a
     /// `--check-updates` probe and only when the harness has registry
@@ -91,7 +106,7 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case name, description, path, artifacts, includes, namespace
+        case id, name, description, path, artifacts, includes, namespace, kind
         case version = "version_installed"
         case versionLegacy = "version"
         case versionAvailable = "version_available"
@@ -100,6 +115,7 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         case delegatesTo = "delegates_to"
         case isPinned = "is_pinned"
         case shaAvailable = "sha_available"
+        case brokenReason = "broken_reason"
     }
 
     /// Custom decoder that tolerates `null` arrays for `includes` and
@@ -132,6 +148,17 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         self.delegatesTo = (try? c.decodeIfPresent([HarnessDelegate].self, forKey: .delegatesTo)) ?? []
         self.isPinned = try c.decodeIfPresent(Bool.self, forKey: .isPinned)
         self.shaAvailable = try c.decodeIfPresent(String.self, forKey: .shaAvailable)
+        self.kind = try c.decodeIfPresent(String.self, forKey: .kind)
+        self.brokenReason = try c.decodeIfPresent(String.self, forKey: .brokenReason)
+        // Prefer YNH's authoritative id when present (YNH 0.4+). For older
+        // envelopes that don't emit `id`, compose from namespace + name.
+        if let envelopeID = try c.decodeIfPresent(String.self, forKey: .id), !envelopeID.isEmpty {
+            self.id = envelopeID
+        } else if let ns = self.namespace, !ns.isEmpty {
+            self.id = "\(ns)/\(self.name)"
+        } else {
+            self.id = self.name
+        }
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -149,9 +176,12 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         try c.encode(delegatesTo, forKey: .delegatesTo)
         try c.encodeIfPresent(isPinned, forKey: .isPinned)
         try c.encodeIfPresent(shaAvailable, forKey: .shaAvailable)
+        try c.encodeIfPresent(kind, forKey: .kind)
+        try c.encodeIfPresent(brokenReason, forKey: .brokenReason)
     }
 
     public init(
+        id: String? = nil,
         name: String,
         version: String,
         versionAvailable: String? = nil,
@@ -164,7 +194,9 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         includes: [HarnessInclude] = [],
         delegatesTo: [HarnessDelegate] = [],
         isPinned: Bool? = nil,
-        shaAvailable: String? = nil
+        shaAvailable: String? = nil,
+        kind: String? = nil,
+        brokenReason: String? = nil
     ) {
         self.name = name
         self.version = version
@@ -176,9 +208,18 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         self.installedFrom = installedFrom
         self.artifacts = artifacts
         self.includes = includes
+        if let id, !id.isEmpty {
+            self.id = id
+        } else if let ns = namespace, !ns.isEmpty {
+            self.id = "\(ns)/\(name)"
+        } else {
+            self.id = name
+        }
         self.delegatesTo = delegatesTo
         self.isPinned = isPinned
         self.shaAvailable = shaAvailable
+        self.kind = kind
+        self.brokenReason = brokenReason
     }
 }
 
@@ -325,6 +366,11 @@ public struct HarnessDelegate: Codable, Equatable, Sendable {
 public struct HarnessListResponse: Sendable {
     public let capabilities: String?
     public let ynhVersion: String?
+    /// On-disk YNH schema version. `2` means migration to canonical-id
+    /// shape has run; `1` (or absent) means TermQ should call
+    /// `ynh migrate --json --skip-broken` and consume the resulting
+    /// manifest before relying on the new id shape.
+    public let schemaVersion: Int?
     public let harnesses: [Harness]
 }
 
@@ -332,6 +378,7 @@ extension HarnessListResponse: Decodable {
     private enum CodingKeys: String, CodingKey {
         case capabilities, harnesses
         case ynhVersion = "ynh_version"
+        case schemaVersion = "schema_version"
     }
 
     public init(from decoder: Decoder) throws {
@@ -341,11 +388,13 @@ extension HarnessListResponse: Decodable {
             harnesses = try keyed.decode([Harness].self, forKey: .harnesses)
             capabilities = try keyed.decodeIfPresent(String.self, forKey: .capabilities)
             ynhVersion = try keyed.decodeIfPresent(String.self, forKey: .ynhVersion)
+            schemaVersion = try keyed.decodeIfPresent(Int.self, forKey: .schemaVersion)
         } else {
             // YNH 0.2.x bare array shape
             harnesses = try [Harness](from: decoder)
             capabilities = nil
             ynhVersion = nil
+            schemaVersion = nil
         }
     }
 }

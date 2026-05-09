@@ -903,6 +903,9 @@
 "harnesses.group.default" = "預設";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "本機";
+"harnesses.group.quarantined" = "已隔離";
+"harnesses.quarantine.restore" = "還原";
+"harnesses.quarantine.drop" = "捨棄…";
 "harnesses.group.menu.settings" = "設定…";
 "harnesses.group.registry %@" = "登錄檔: %@";
 "harnesses.install.browsing" = "正在載入可用 Harness…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "建立此 harness 的可編輯本機副本。此副本追蹤其來源，讓您可以查看上游的變更。";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "正在 Fork \"%@\"…";
+"harness.fork.rename.label" = "名稱（選填）";
+"harness.fork.rename.hint" = "留空以保留來源名稱。新 fork 嘅標準 id 將為 local/<名稱>。";
+"harness.fork.identity.collision" = "已有已安裝嘅 harness 使用呢個識別碼。";
 
 
 // MARK: - Harness Update
@@ -1031,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上游提交已變更：%@ → %@";
+"harnesses.broken.fork.help" = "此本地 fork 缺少 harness 清單檔案。右鍵點選並選擇解除安裝以將其移除。";
+"harnesses.broken.fork.badge" = "損壞";
+"harnesses.fork.of %@" = "從 %@ 派生的副本";
+"harnesses.fork.help %@" = "從 %@ 派生";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "從分支建立新工作樹";

@@ -15,10 +15,14 @@ struct SidebarView: View {
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
+    var onDeleteLocal: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
     var onExport: ((String, String) -> Void)?
     var onFork: ((String) -> Void)?
     var onNewHarness: (() -> Void)?
+    var quarantinedEntries: [QuarantineEntry] = []
+    var onRestoreQuarantine: ((String) -> Void)?
+    var onDropQuarantine: ((String) -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @ObservedObject private var sidebarState = SidebarState.shared
     private static var hasResetOnLaunch = false
@@ -47,10 +51,14 @@ struct SidebarView: View {
                     onLaunchHarness: onLaunchHarness,
                     onInstall: onInstall,
                     onUninstall: onUninstall,
+                    onDeleteLocal: onDeleteLocal,
                     onUpdate: onUpdate,
                     onExport: onExport,
                     onFork: onFork,
-                    onNewHarness: onNewHarness
+                    onNewHarness: onNewHarness,
+                    quarantinedEntries: quarantinedEntries,
+                    onRestoreQuarantine: onRestoreQuarantine,
+                    onDropQuarantine: onDropQuarantine
                 )
             case .marketplaces where showHarnessesTab:
                 MarketplaceSidebarTab(

@@ -14,7 +14,7 @@ import TermQShared
 /// running. Versioned bumps (or harnesses with no drift signal at all) skip
 /// the confirm step and run immediately.
 struct UpdateHarnessSheet: View {
-    let harnessName: String
+    let harnessID: String
     @ObservedObject var detector: YNHDetector
     @ObservedObject var repository: HarnessRepository
     var availabilityService: any UpdateAvailabilityService = LiveUpdateAvailabilityService.shared
@@ -25,19 +25,19 @@ struct UpdateHarnessSheet: View {
     private let initialDriftedIncludes: [HarnessUpdateSignal.DriftedInclude]
 
     init(
-        harnessName: String,
+        harnessID: String,
         detector: YNHDetector,
         repository: HarnessRepository,
         availabilityService: any UpdateAvailabilityService = LiveUpdateAvailabilityService.shared
     ) {
-        self.harnessName = harnessName
+        self.harnessID = harnessID
         self.detector = detector
         self.repository = repository
         self.availabilityService = availabilityService
 
         // Resolve initial signal at sheet open: if it's unversioned drift,
         // start in the confirm phase. Otherwise run immediately.
-        if let snapshot = availabilityService.snapshot(forHarness: harnessName) {
+        if let snapshot = availabilityService.snapshot(forHarness: harnessID) {
             let store = HarnessUpdateBadgeStore(service: availabilityService)
             switch store.signal(for: snapshot) {
             case .unversionedDrift(let drifted):
@@ -76,7 +76,7 @@ struct UpdateHarnessSheet: View {
                 confirmView
             case .running, .succeeded, .failed:
                 CommandRunnerSheet(
-                    title: Strings.HarnessUpdate.title(harnessName),
+                    title: Strings.HarnessUpdate.title(harnessID),
                     state: runnerState,
                     onRerun: phase == .failed ? { Task { await runUpdate() } } : nil,
                     onDismiss: { dismiss() }
@@ -192,7 +192,7 @@ struct UpdateHarnessSheet: View {
         do {
             let result = try await CommandRunner.run(
                 executable: ynhBin,
-                arguments: ["update", harnessName],
+                arguments: ["update", harnessID],
                 environment: ynhEnvironment,
                 onStdoutLine: { line in Task { @MainActor in runnerState.append(line: line) } },
                 onStderrLine: { line in Task { @MainActor in runnerState.append(line: line) } }
@@ -203,12 +203,12 @@ struct UpdateHarnessSheet: View {
                 phase = .succeeded
                 await repository.refresh()
                 TermQLogger.ui.notice(
-                    "HarnessUpdate: \(harnessName) ynh update succeeded, re-probing availability"
+                    "HarnessUpdate: \(harnessID) ynh update succeeded, re-probing availability"
                 )
                 await availabilityService.refreshAll()
             } else {
                 TermQLogger.ui.error(
-                    "HarnessUpdate: \(harnessName) ynh update failed exitCode=\(result.exitCode)"
+                    "HarnessUpdate: \(harnessID) ynh update failed exitCode=\(result.exitCode)"
                 )
                 phase = .failed
             }

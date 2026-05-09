@@ -19,7 +19,7 @@ import TermQShared
 @MainActor
 final class AddDelegateContext: SourcePickerContext {
     let title: String
-    let targetHarnessName: String
+    let targetHarnessID: String
     let installedHarnesses: [Harness]
     let onApplied: () -> Void
 
@@ -48,17 +48,22 @@ final class AddDelegateContext: SourcePickerContext {
         let sourceType: String
         var ref: String
         var path: String
+        /// Resolved SHA from the picked harness's install-time provenance,
+        /// surfaced below the ref field so the user can see the exact bytes
+        /// that the symbolic ref currently points at — and switch to
+        /// SHA-pinning via the "Pin to exact commit" toggle.
+        var resolvedSHA: String
     }
 
     init(
-        targetHarnessName: String,
+        targetHarnessID: String,
         installedHarnesses: [Harness],
         detector: any YNHDetectorProtocol = YNHDetector.shared,
         mutator: DelegateMutator = DelegateMutator(),
         onApplied: @escaping () -> Void
     ) {
         self.title = Strings.Harnesses.addDelegateTitle
-        self.targetHarnessName = targetHarnessName
+        self.targetHarnessID = targetHarnessID
         self.installedHarnesses = installedHarnesses
         self.detector = detector
         self.mutator = mutator
@@ -80,7 +85,14 @@ final class AddDelegateContext: SourcePickerContext {
             .lowercased()
         return
             installedHarnesses
-            .filter { $0.name != targetHarnessName }
+            .filter { $0.id != targetHarnessID }
+            // Local-only harnesses cannot be delegate targets — there's no
+            // shareable identity (no remote URL or canonical id YNH can
+            // resolve), and persisting a local path in plugin.json baked
+            // into one user's filesystem layout would silently break for
+            // anyone else who clones the harness. Hide them from the
+            // picker rather than surface a command that always errors.
+            .filter { ($0.installedFrom?.sourceType ?? "") != "local" }
             .filter {
                 guard !query.isEmpty else { return true }
                 if $0.name.lowercased().contains(query) { return true }
@@ -94,28 +106,31 @@ final class AddDelegateContext: SourcePickerContext {
     }
 
     func pickHarness(_ harness: Harness) {
-        let source = harness.installedFrom?.source ?? harness.name
+        let source = harness.installedFrom?.source ?? harness.id
         let sourceType = harness.installedFrom?.sourceType ?? "local"
+        // Pre-fill `path` from the harness's path-within-source-repo so
+        // YNH receives a fully-qualified delegate target. Without this
+        // we'd issue `ynh delegate add <host> <repo>` and YNH would
+        // silently write an ambiguous delegate (no harness leaf).
+        let pathInSourceRepo = harness.installedFrom?.path ?? ""
+        // Pre-fill `ref` from the user's stated install-time intent
+        // (`installedFrom.ref` — could be a tag, branch, or SHA). Per
+        // YNH's marketplace model, ref is the primary identifier and
+        // SHA is an optional integrity pin layered on top. Defaulting
+        // to ref preserves the user's symbolic tracking intent (e.g.
+        // "give me 1.0, including future patches"); the configure form
+        // exposes a "Pin to exact commit" toggle for users who want
+        // SHA-as-ref immutability instead.
+        let symbolicRef = harness.installedFrom?.ref ?? ""
+        let resolvedSHA = harness.installedFrom?.sha ?? ""
         libraryStage = .configuring(
             PickedSource(
                 displayName: harness.name,
                 sourceURL: source,
                 sourceType: sourceType,
-                ref: "",
-                path: ""
-            )
-        )
-    }
-
-    func pickLocalPath(_ path: String) {
-        let displayName = (path as NSString).lastPathComponent
-        libraryStage = .configuring(
-            PickedSource(
-                displayName: displayName,
-                sourceURL: path,
-                sourceType: "local",
-                ref: "",
-                path: ""
+                ref: symbolicRef,
+                path: pathInSourceRepo,
+                resolvedSHA: resolvedSHA
             )
         )
     }
@@ -159,7 +174,7 @@ final class AddDelegateContext: SourcePickerContext {
 
     private func commandPreview(sourceURL: String, ref: String, path: String) -> String {
         let opts = DelegateAddOptions(
-            harness: targetHarnessName,
+            harness: targetHarnessID,
             sourceURL: sourceURL,
             ref: ref.trimmingCharacters(in: .whitespaces).nilIfEmpty,
             path: path.trimmingCharacters(in: .whitespaces).nilIfEmpty
@@ -178,7 +193,7 @@ final class AddDelegateContext: SourcePickerContext {
             return
         }
         let opts = DelegateAddOptions(
-            harness: targetHarnessName,
+            harness: targetHarnessID,
             sourceURL: sourceURL,
             ref: ref.trimmingCharacters(in: .whitespaces).nilIfEmpty,
             path: path.trimmingCharacters(in: .whitespaces).nilIfEmpty
@@ -263,23 +278,9 @@ private struct AddDelegateLibraryBrowseView: View {
                 }
                 .listStyle(.plain)
             }
-
-            Divider()
-
-            HStack {
-                Button {
-                    chooseLocalDirectory()
-                } label: {
-                    Label(
-                        Strings.Harnesses.browseLocal,
-                        systemImage: "folder.badge.plus"
-                    )
-                }
-                .help(Strings.Harnesses.browseLocalHelp)
-                Spacer()
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
+            // Browse-Local affordance intentionally omitted: local-only
+            // sources are not valid delegate targets (no shareable identity,
+            // bakes user's filesystem layout into the harness manifest).
         }
         .onAppear {
             Task { await context.sourcesService.refresh() }
@@ -333,19 +334,6 @@ private struct AddDelegateLibraryBrowseView: View {
         }
         .contentShape(Rectangle())
     }
-
-    private func chooseLocalDirectory() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
-        Task {
-            let response = await panel.begin()
-            if response == .OK, let url = panel.url {
-                context.pickLocalPath(url.path(percentEncoded: false))
-            }
-        }
-    }
 }
 
 private struct AddDelegateLibraryConfigureView: View {
@@ -353,8 +341,30 @@ private struct AddDelegateLibraryConfigureView: View {
     let pick: AddDelegateContext.PickedSource
     @Environment(\.dismiss) private var dismiss
 
-    @State private var ref: String = ""
-    @State private var path: String = ""
+    @State private var ref: String
+    @State private var path: String
+    @State private var pinToCommit: Bool
+
+    init(context: AddDelegateContext, pick: AddDelegateContext.PickedSource) {
+        self.context = context
+        self.pick = pick
+        // Seed the text fields from the picked source so the ref + path
+        // pre-filled by `pickHarness` show up in the form (and in the
+        // command preview) instead of being silently overridden by empty
+        // `@State` defaults.
+        _ref = State(initialValue: pick.ref)
+        _path = State(initialValue: pick.path)
+        // If the user already installed via SHA-as-ref, treat the toggle
+        // as pre-pinned so the UI matches the user's existing choice.
+        let refIsAlreadySHA =
+            !pick.ref.isEmpty && pick.ref == pick.resolvedSHA
+        _pinToCommit = State(initialValue: refIsAlreadySHA)
+    }
+
+    /// What the form will actually submit as the `--ref` argument.
+    private var effectiveRef: String {
+        pinToCommit && !pick.resolvedSHA.isEmpty ? pick.resolvedSHA : ref
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -396,6 +406,23 @@ private struct AddDelegateLibraryConfigureView: View {
                     text: $ref
                 )
                 .textFieldStyle(.roundedBorder)
+                .disabled(pinToCommit)
+                if !pick.resolvedSHA.isEmpty {
+                    HStack(spacing: 6) {
+                        Image(systemName: "circle.dotted").imageScale(.small)
+                        Text("Currently resolves to ")
+                            .font(.caption)
+                        Text(pick.resolvedSHA.prefix(12))
+                            .font(.system(size: 11, design: .monospaced))
+                    }
+                    .foregroundColor(.secondary)
+                    Toggle(isOn: $pinToCommit) {
+                        Text("Pin to exact commit (integrity check)")
+                            .font(.caption)
+                    }
+                    .toggleStyle(.checkbox)
+                    .controlSize(.small)
+                }
             }
 
             VStack(alignment: .leading, spacing: 4) {
@@ -419,8 +446,9 @@ private struct AddDelegateLibraryConfigureView: View {
                             displayName: pick.displayName,
                             sourceURL: pick.sourceURL,
                             sourceType: pick.sourceType,
-                            ref: ref,
-                            path: path
+                            ref: effectiveRef,
+                            path: path,
+                            resolvedSHA: pick.resolvedSHA
                         )
                     )
                 )
@@ -446,7 +474,7 @@ private struct AddDelegateLibraryConfigureView: View {
                 Button(Strings.Harnesses.addDelegateApply) {
                     Task {
                         var configured = pick
-                        configured.ref = ref
+                        configured.ref = effectiveRef
                         configured.path = path
                         await context.applyLibrary(configured, dismiss: { dismiss() })
                     }

@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Inline include and manifest editing** — the detail pane now exposes
+  per-row edit and remove on every include of an editable harness, plus
+  a manifest-level editor for free-form fields. Mutations stream through
+  `IncludeMutator` / `HarnessManifestEditor` against YNH and refresh the
+  detail in place.
+- **Per-row delegate management** — delegates added by the host harness
+  show as their own rows with edit + remove affordances, parallel to the
+  include UX. Backed by `DelegateMutator` with the same source-aware
+  apply path.
+- **Unified Source Picker** — Install Harness, Add Include, and Add
+  Delegate now flow through a single Library / Git / Path picker
+  surface. Library tab pulls from `ynh marketplace` results; Git accepts
+  any URL with optional ref/sha pin; Path lets you point at a local
+  source directory. Replaces the previous bespoke install + add-include
+  sheets.
+- **Schema-1 → 2 migration coordinator** — on first launch against a YNH
+  binary that has migrated `~/.ynh` to canonical-id schema 2, TermQ
+  consumes the migration manifest and rewrites its persisted
+  worktree↔harness associations from the old `<namespace>/<name>`
+  shape to the new host-prefixed canonical id (`<host>/<org>/<repo>/<name>`).
+  Idempotent — re-applying the same manifest is a no-op.
+- **Quarantine sidebar group** — quarantined harnesses (entries YNH could
+  not load due to a broken manifest) appear in a dedicated QUARANTINED
+  group below LOCAL with per-row Restore and Drop actions. Drop is
+  confirmation-gated and permanently removes the entry from
+  `~/.ynh/.quarantine/broken/`.
 - **Harness Management Phase 1** — first slice of the harness-as-first-class-citizen
   rework. Registry harnesses, local harnesses, and forks now have distinct
   identities, editability rules, and provenance display in TermQ.
@@ -51,9 +77,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Canonical-id at the YNH CLI boundary** — every TermQ→YNH command now
+  passes `harness.id` (the canonical id YNH stamps on each harness) rather
+  than the bare name. Eliminates the duplicate-name bug class where a
+  registry install and a local fork sharing a name could resolve to the
+  wrong target. The `id || name` fallback in `HarnessRepository` is gone
+  and `Harness.id` is sourced verbatim from the YNH envelope (with a
+  `namespace + "/" + name` fallback for older binaries that don't emit
+  the field).
+- **Fork sheet aligned with `ynh fork --name`** — the fork sheet's free-form
+  Identity field is replaced with an optional Name field. The new fork's
+  canonical id is always `local/<name>`; submitting with no name keeps the
+  source's name. Matches what the YNH binary actually exposes.
 - **Detail pane refactored** — extracted `HarnessDetailViewModel` from the view;
   source classification, editability, and update signals live in pure types
   with their own test coverage. Old feature-flagged badge retired.
+- **YNH command runner is injectable** — `YNHCommandRunner` protocol
+  replaces direct `CommandRunner.run` calls in repository, vendor, search,
+  update-availability, harness author runners, editor registry, and
+  terminal session manager. Production paths use the live runner; tests
+  inject stubs to exercise success and failure branches without spawning
+  real YNH subprocesses.
 - **YNH JSON envelope** — TermQ now reads `capabilities` and `ynh_version`
   from the structured-output envelope (YNH 0.3.0+) and gates Phase 1 features
   behind a version probe.

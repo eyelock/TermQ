@@ -217,7 +217,9 @@ private struct HarnessInstallLibraryView: View {
 
     @ViewBuilder
     private func registryRows(fromRegistry: [SearchResult], isFiltering: Bool) -> some View {
-        if context.searchService.isSearching {
+        // Treat "haven't searched yet" the same as "actively searching" so
+        // the empty-state copy doesn't flash before the initial search lands.
+        if context.searchService.isSearching || !context.searchService.hasSearched {
             HStack {
                 ProgressView().controlSize(.small)
                 Text(Strings.Harnesses.installBrowsing)

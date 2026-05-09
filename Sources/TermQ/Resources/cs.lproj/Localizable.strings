@@ -903,6 +903,9 @@
 "harnesses.group.default" = "Výchozí";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Místní";
+"harnesses.group.quarantined" = "V karanténě";
+"harnesses.quarantine.restore" = "Obnovit";
+"harnesses.quarantine.drop" = "Odebrat…";
 "harnesses.group.menu.settings" = "Nastavení…";
 "harnesses.group.registry %@" = "Registr: %@";
 "harnesses.install.browsing" = "Načítání dostupných harnesů…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "Vytvoří upravitelnou lokální kopii tohoto harness. Kopie sleduje svůj původ, takže můžete vidět, co se změnilo upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Vytváření forku \"%@\"…";
+"harness.fork.rename.label" = "Název (volitelné)";
+"harness.fork.rename.hint" = "Nechte prázdné pro zachování zdrojového názvu. Kanonické id nového forku bude local/<název>.";
+"harness.fork.identity.collision" = "Nainstalovaný harness již tuto identitu má.";
 
 
 // MARK: - Harness Update
@@ -1031,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream se změnil: %@ → %@";
+"harnesses.broken.fork.help" = "Tomuto lokálnímu forku chybí manifest harness. Klikněte pravým tlačítkem a vyberte Odinstalovat, chcete-li ho odstranit.";
+"harnesses.broken.fork.badge" = "Poškozený";
+"harnesses.fork.of %@" = "Větev z %@";
+"harnesses.fork.help %@" = "Větev z %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Nový worktree z větve";

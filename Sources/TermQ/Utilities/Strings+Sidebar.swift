@@ -170,6 +170,9 @@ extension Strings {
         // Sidebar groups
         static var groupDefault: String { localized("harnesses.group.default") }
         static var groupLocal: String { localized("harnesses.group.local") }
+        static var groupQuarantined: String { localized("harnesses.group.quarantined") }
+        static var quarantineRestore: String { localized("harnesses.quarantine.restore") }
+        static var quarantineDrop: String { localized("harnesses.quarantine.drop") }
         static func groupGitHub(_ org: String) -> String { localized("harnesses.group.github %@", org) }
         static func groupMarketplace(_ name: String) -> String { localized("harnesses.group.registry %@", name) }
 
@@ -424,6 +427,18 @@ extension Strings {
         static var unversionedDriftConfirmTitle: String { localized("harnesses.unversioned.drift.confirm.title") }
         static var unversionedDriftConfirmBody: String { localized("harnesses.unversioned.drift.confirm.body") }
         static var unversionedDriftProceed: String { localized("harnesses.unversioned.drift.confirm.proceed") }
+
+        // Broken local fork (sidebar)
+        static var brokenForkHelp: String { localized("harnesses.broken.fork.help") }
+        static var brokenForkBadge: String { localized("harnesses.broken.fork.badge") }
+
+        // Forked-to-local indicator (sidebar)
+        static func forkOf(_ upstream: String) -> String {
+            String(format: localized("harnesses.fork.of %@"), upstream)
+        }
+        static func forkedFromHelp(_ origin: String) -> String {
+            String(format: localized("harnesses.fork.help %@"), origin)
+        }
     }
 }
 
@@ -439,6 +454,9 @@ extension Strings {
         static func progressTitle(_ name: String) -> String {
             String(format: localized("harness.fork.progress.title %@"), name)
         }
+        static var renameLabel: String { localized("harness.fork.rename.label") }
+        static var renameHint: String { localized("harness.fork.rename.hint") }
+        static var identityCollision: String { localized("harness.fork.identity.collision") }
     }
 }
 

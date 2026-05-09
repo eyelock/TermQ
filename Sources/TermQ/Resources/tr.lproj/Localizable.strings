@@ -910,6 +910,9 @@
 "harnesses.group.default" = "Varsayılan";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Yerel";
+"harnesses.group.quarantined" = "Karantinada";
+"harnesses.quarantine.restore" = "Geri Yükle";
+"harnesses.quarantine.drop" = "Kaldır…";
 "harnesses.group.menu.settings" = "Ayarlar…";
 "harnesses.group.registry %@" = "Kayıt Defteri: %@";
 "harnesses.install.browsing" = "Mevcut harness'ler yükleniyor…";
@@ -966,6 +969,9 @@
 "harness.fork.explanation" = "Bu harness'in düzenlenebilir yerel bir kopyasını oluşturur. Kopya, kaynakta nelerin değiştiğini görebilmeniz için kökenini takip eder.";
 "harness.fork.button" = "Çatalla";
 "harness.fork.progress.title %@" = "\"%@\" çatallanıyor…";
+"harness.fork.rename.label" = "Ad (isteğe bağlı)";
+"harness.fork.rename.hint" = "Kaynak adını korumak için boş bırakın. Yeni fork'un kanonik id'si local/<ad> olacak.";
+"harness.fork.identity.collision" = "Yüklü bir harness zaten bu kimliğe sahip.";
 
 
 // MARK: - Harness Update
@@ -1038,6 +1044,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit değişti: %@ → %@";
+"harnesses.broken.fork.help" = "Bu yerel fork'ta harness bildirimi eksik. Kaldırmak için sağ tıklayın ve Kaldır'ı seçin.";
+"harnesses.broken.fork.badge" = "Bozuk";
+"harnesses.fork.of %@" = "%@ kaynağından çatal";
+"harnesses.fork.help %@" = "%@ kaynağından çatallandı";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Daldan Yeni Worktree";

@@ -78,18 +78,18 @@ final class HarnessIncludeEditor: ObservableObject {
     }
 
     /// Called by the add flow on successful apply. Reloads detail and dismisses.
-    func didFinishAddingInclude(harnessName: String) async {
+    func didFinishAddingInclude(harnessID: String) async {
         isAddingInclude = false
-        await reloadDetail(harnessName: harnessName)
+        await reloadDetail(harnessID: harnessID)
     }
 
     /// Apply a remove for the given target. Caller is responsible for passing
     /// the target captured *before* the confirmation dialog dismisses — the
     /// dismissal nils out `removalTarget` faster than the button action fires.
-    func confirmRemove(target: IncludeEditTarget, harnessName: String) async {
+    func confirmRemove(target: IncludeEditTarget, harnessID: String) async {
         guard let ynhPath = readyYnhPath() else { return }
         let opts = IncludeRemoveOptions(
-            harness: harnessName, sourceURL: target.sourceURL, path: target.path
+            harness: harnessID, sourceURL: target.sourceURL, path: target.path
         )
         isMutating = true
         await mutator.remove(opts, ynhPath: ynhPath, environment: ynhEnvironment())
@@ -97,7 +97,7 @@ final class HarnessIncludeEditor: ObservableObject {
 
         if mutator.succeeded {
             removalTarget = nil
-            await reloadDetail(harnessName: harnessName)
+            await reloadDetail(harnessID: harnessID)
         } else {
             errorMessage = mutator.errorMessage
         }
@@ -106,14 +106,14 @@ final class HarnessIncludeEditor: ObservableObject {
     /// Apply an update for the currently-pending `editingTarget` with the given
     /// new values. Empty strings/arrays are treated as "no change to that field".
     func confirmEdit(
-        harnessName: String,
+        harnessID: String,
         newPath: String?,
         newRef: String?,
         newPicks: [String]?
     ) async {
         guard let target = editingTarget, let ynhPath = readyYnhPath() else { return }
         let opts = IncludeUpdateOptions(
-            harness: harnessName,
+            harness: harnessID,
             sourceURL: target.sourceURL,
             fromPath: target.path,
             path: newPath,
@@ -126,7 +126,7 @@ final class HarnessIncludeEditor: ObservableObject {
 
         if mutator.succeeded {
             editingTarget = nil
-            await reloadDetail(harnessName: harnessName)
+            await reloadDetail(harnessID: harnessID)
         } else {
             errorMessage = mutator.errorMessage
         }
@@ -146,9 +146,9 @@ final class HarnessIncludeEditor: ObservableObject {
         return env
     }
 
-    private func reloadDetail(harnessName: String) async {
-        repository.invalidateDetail(for: harnessName)
-        await repository.fetchDetail(for: harnessName)
+    private func reloadDetail(harnessID: String) async {
+        repository.invalidateDetail(for: harnessID)
+        await repository.fetchDetail(for: harnessID)
     }
 }
 
@@ -164,7 +164,7 @@ final class HarnessIncludeEditor: ObservableObject {
 /// the include — the user can deselect but cannot add new ones from the UI.
 struct EditIncludeSheet: View {
     @ObservedObject var editor: HarnessIncludeEditor
-    let harnessName: String
+    let harnessID: String
     let target: IncludeEditTarget
 
     @State private var refText: String = ""
@@ -273,7 +273,7 @@ struct EditIncludeSheet: View {
                 Button(Strings.Harnesses.editIncludeSave) {
                     Task {
                         await editor.confirmEdit(
-                            harnessName: harnessName,
+                            harnessID: harnessID,
                             newPath: pathText,
                             newRef: refText,
                             newPicks: picksArgument()
@@ -342,7 +342,7 @@ struct EditIncludeSheet: View {
     /// Lets the user see exactly what's about to happen before clicking Save.
     private var commandPreview: String {
         let opts = IncludeUpdateOptions(
-            harness: harnessName,
+            harness: harnessID,
             sourceURL: target.sourceURL,
             fromPath: target.path,
             path: pathText,

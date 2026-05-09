@@ -25,10 +25,10 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
     func testInit_hasEmptyTrackingSetsAndHiddenSheets() {
         let coord = makeCoordinator()
         XCTAssertTrue(coord.installCardIDs.isEmpty)
-        XCTAssertTrue(coord.uninstallCardNames.isEmpty)
-        XCTAssertNil(coord.harnessNameToFork)
+        XCTAssertTrue(coord.uninstallCardIDs.isEmpty)
+        XCTAssertNil(coord.harnessIDToFork)
         XCTAssertFalse(coord.showForkSheet)
-        XCTAssertNil(coord.harnessNameToUpdate)
+        XCTAssertNil(coord.harnessIDToUpdate)
         XCTAssertFalse(coord.showUpdateSheet)
         XCTAssertFalse(coord.showInstallSheet)
     }
@@ -37,19 +37,19 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
 
     func testForkHarness_setsSheetState() {
         let coord = makeCoordinator()
-        coord.forkHarness(name: "foo")
-        XCTAssertEqual(coord.harnessNameToFork, "foo")
+        coord.forkHarness(id: "foo")
+        XCTAssertEqual(coord.harnessIDToFork, "foo")
         XCTAssertTrue(coord.showForkSheet)
     }
 
     func testHandleForkCompleted_clearsForkSheetState() {
         let coord = makeCoordinator()
-        coord.forkHarness(name: "foo")
+        coord.forkHarness(id: "foo")
 
-        coord.handleForkCompleted(newName: "foo-fork")
+        coord.handleForkCompleted(newID: "foo-fork")
 
         XCTAssertFalse(coord.showForkSheet)
-        XCTAssertNil(coord.harnessNameToFork)
+        XCTAssertNil(coord.harnessIDToFork)
     }
 
     // MARK: - Update sheet
@@ -57,8 +57,8 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
     func testUpdateHarness_whenDetectorNotReady_isNoop() {
         // Coordinator's detector is `.missing`; `.ready` guard fails.
         let coord = makeCoordinator()
-        coord.updateHarness(name: "foo")
-        XCTAssertNil(coord.harnessNameToUpdate)
+        coord.updateHarness(id: "foo")
+        XCTAssertNil(coord.harnessIDToUpdate)
         XCTAssertFalse(coord.showUpdateSheet)
     }
 
@@ -83,14 +83,69 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
             "Tracked id should be removed from the set after handling")
     }
 
+    // MARK: - Delete (uninstall + remove on-disk source)
+
+    func testDeleteLocalHarness_whenDetectorNotReady_andHarnessIsTracked_isNoop() {
+        // Detector is `.missing`; the YNH-managed branch's `.ready` guard
+        // fails, so no transient card is added. We can't easily inject
+        // an in-repo harness without a stubbed command runner, but the
+        // guard exits cleanly without crashing — that's the contract
+        // exercised here.
+        let coord = makeCoordinator()
+        coord.deleteLocalHarness(id: "nonexistent-id")
+        XCTAssertTrue(coord.uninstallCardIDs.isEmpty)
+    }
+
+    func testDeleteLocalHarness_whenHarnessNotInRepo_isSafeNoop() {
+        // The untracked branch (`installedFrom == nil`) requires the
+        // harness to exist in the repo. When the id doesn't match
+        // anything, the method should fall through to the `.ready`
+        // guard and exit without effect — no crash, no side effect.
+        let coord = makeCoordinator()
+        coord.deleteLocalHarness(id: "nope")
+        XCTAssertTrue(coord.uninstallCardIDs.isEmpty)
+    }
+
+    func testBuildDeleteLocalCommand_chainsUninstallThenRm() {
+        // Both halves must appear and be ordered: uninstall first,
+        // rm -rf second, gated by `&&`. The `exit` at the tail closes
+        // the transient terminal once both succeed.
+        let cmd = HarnessLifecycleCoordinator.buildDeleteLocalCommand(
+            ynhPath: "/usr/local/bin/ynh",
+            id: "local/my-fork",
+            pathToRemove: "/Users/test/forks/my-fork"
+        )
+        XCTAssertEqual(
+            cmd,
+            "/usr/local/bin/ynh uninstall 'local/my-fork' "
+                + "&& rm -rf '/Users/test/forks/my-fork' && exit"
+        )
+    }
+
+    func testBuildDeleteLocalCommand_quotesPathsContainingSpacesOrQuotes() {
+        // A path with a space must remain a single shell argument; a path
+        // with a single quote must escape correctly. Both are common on
+        // macOS user directories.
+        let cmd = HarnessLifecycleCoordinator.buildDeleteLocalCommand(
+            ynhPath: "/usr/local/bin/ynh",
+            id: "local/x",
+            pathToRemove: "/Users/test/My Forks/it's-mine"
+        )
+        XCTAssertTrue(cmd.contains(#"'/Users/test/My Forks/it'\''s-mine'"#))
+        XCTAssertTrue(cmd.contains("&& rm -rf"))
+        XCTAssertTrue(cmd.contains("&& exit"))
+    }
+
+    // MARK: - Transient session exit handling
+
     func testHandleTransientSessionExit_trackedUninstallCard_returnsSuccess() {
         let coord = makeCoordinator()
         let cardId = UUID()
-        coord.uninstallCardNames[cardId] = "foo"
+        coord.uninstallCardIDs[cardId] = "foo"
 
         let shouldClose = coord.handleTransientSessionExit(cardId: cardId, succeeded: false)
 
         XCTAssertEqual(shouldClose, false)
-        XCTAssertNil(coord.uninstallCardNames[cardId])
+        XCTAssertNil(coord.uninstallCardIDs[cardId])
     }
 }

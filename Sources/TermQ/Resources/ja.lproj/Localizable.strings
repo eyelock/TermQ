@@ -903,6 +903,9 @@
 "harnesses.group.default" = "デフォルト";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "ローカル";
+"harnesses.group.quarantined" = "検疫済み";
+"harnesses.quarantine.restore" = "復元";
+"harnesses.quarantine.drop" = "削除…";
 "harnesses.group.menu.settings" = "設定…";
 "harnesses.group.registry %@" = "レジストリ: %@";
 "harnesses.install.browsing" = "利用可能なハーネスを読み込み中…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "このハーネスの編集可能なローカルコピーを作成します。コピーは元のリポジトリを追跡するため、アップストリームの変更を確認できます。";
 "harness.fork.button" = "フォーク";
 "harness.fork.progress.title %@" = "\"%@\" をフォーク中…";
+"harness.fork.rename.label" = "名前（省略可）";
+"harness.fork.rename.hint" = "空のままにするとソース名を引き継ぎます。新しいフォークの正規 id は local/<名前> になります。";
+"harness.fork.identity.collision" = "この ID を持つハーネスがすでにインストールされています。";
 
 
 // MARK: - Harness Update
@@ -1031,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上流のコミットが変更されました：%@ → %@";
+"harnesses.broken.fork.help" = "このローカル fork には harness マニフェストがありません。右クリックして「アンインストール」を選択して削除してください。";
+"harnesses.broken.fork.badge" = "破損";
+"harnesses.fork.of %@" = "%@ のフォーク";
+"harnesses.fork.help %@" = "%@ からフォーク";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "ブランチから新しいワークツリー";

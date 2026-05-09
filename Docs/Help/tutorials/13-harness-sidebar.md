@@ -243,12 +243,63 @@ Click **Fork to local**. The **Fork Harness** sheet opens:
 ![Fork sheet](../Images/harness-fork-sheet.png)
 
 - **Destination** — where to put the forked copy (pre-filled from your default author directory)
+- **Name (optional)** — leave empty to keep the source's name, or type a new name. The new fork's canonical id will be `local/<name>`.
 
-Click **Fork**. The sheet streams live output from `ynh fork <name> --to <destination>`, then automatically registers the fork with `ynh install`. The new harness appears in the **Local** group in the sidebar.
+Click **Fork**. The sheet streams live output from `ynh fork <id> --to <destination> [--name <new-name>] --format json`. YNH self-registers the fork via its pointer model — no follow-up `ynh install` is needed. The new harness appears in the **Local** group in the sidebar.
 
 The forked copy records where it came from (the registry source), so TermQ can show you the fork origin in its source badge even after the original is uninstalled.
 
 > **Forked vs. duplicate:** Fork creates a local copy of a read-only registry harness and is the intended upgrade path when you need to customise a community harness. Duplicate clones any harness — local, git, or registry — and is better for creating a variant of one of your own harnesses.
+
+---
+
+## 13.11.1 — Editing a harness in place
+
+Once a harness is editable — local, git-cloned, or forked — the detail pane gains inline editing affordances.
+
+**Includes** — the Includes section lists every include the harness pulls in. Each row carries Edit and Remove buttons. Edit opens a sheet that lets you change the source, ref pin, or path; Remove drops the include after a confirmation. Add a new include via the **+** button at the top of the section, which opens the unified Source Picker (Library / Git / Path).
+
+![Include editor row](../Images/harness-include-editor.png)
+
+**Delegates** — harnesses that delegate to other harnesses get a parallel Delegates section. Same row affordances: Edit, Remove, plus an Add button that opens the Source Picker scoped to delegate-shaped sources.
+
+![Delegate editor row](../Images/harness-delegate-editor.png)
+
+> **Local harnesses cannot be delegate targets.** The Add Delegate library only lists harnesses with a shareable remote source (registry or Git). A delegate's identity is its source URL — persisting a local filesystem path in `plugin.json` would bake one machine's directory layout into the harness manifest, breaking silently for anyone else who clones it. Use a Git URL instead, or push the local harness to a registry first.
+
+**Manifest** — the manifest editor opens from the detail action menu. It exposes the harness-level fields (name, version, default vendor, description) without making you hand-edit `plugin.json`. Submit reflects in the detail pane immediately.
+
+All edits stream their YNH command output through the same progress sheet you see during install — so you can watch what TermQ is asking YNH to do.
+
+---
+
+## 13.11.2 — Quarantined harnesses
+
+If YNH cannot load a harness — for example, the manifest is missing required fields, or a recent migration moved the install away from a still-referenced path — YNH places the offending entry into `~/.ynh/.quarantine/broken/` rather than dropping it silently.
+
+TermQ surfaces these in a **QUARANTINED** group below LOCAL in the sidebar. Each quarantined row shows the harness name and the reason YNH couldn't load it.
+
+![Quarantine group in sidebar](../Images/harness-quarantine-group.png)
+
+Two actions per row:
+
+- **Restore** — runs `ynh quarantine restore <name>`. If YNH can re-load the entry, it moves back into LOCAL or MARKETPLACE depending on its install origin. If the underlying problem hasn't been fixed, the entry stays in QUARANTINED with an updated reason.
+- **Drop** — permanent delete with confirmation. Removes the entry from `~/.ynh/.quarantine/broken/` entirely; this cannot be undone.
+
+This group only appears when there are quarantined entries. A clean install has no QUARANTINED group at all.
+
+---
+
+## 13.11.3 — Automatic schema migration
+
+If your YNH installation predates the canonical-id schema (anything that wrote to `~/.ynh` before YNH adopted host-prefixed canonical ids), TermQ runs a one-shot migration on first launch:
+
+1. Calls `ynh migrate --json --skip-broken`.
+2. Reads the migration manifest YNH emits.
+3. Rewrites TermQ-side persisted ids — your worktree↔harness associations, repo defaults, vendor overrides — from the old shape (`<namespace>/<name>`) to the new canonical id shape (`<host>/<org>/<repo>/<name>`).
+4. Surfaces any entries YNH could not migrate in the QUARANTINED group described above.
+
+This runs once and is idempotent — relaunching after a successful migration is silent. If migration fails, the sidebar shows an inline error; rerunning TermQ retries.
 
 ---
 

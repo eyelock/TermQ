@@ -909,6 +909,9 @@
 "harnesses.group.default" = "Alapértelmezett";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Helyi";
+"harnesses.group.quarantined" = "Karanténban";
+"harnesses.quarantine.restore" = "Visszaállítás";
+"harnesses.quarantine.drop" = "Eltávolítás…";
 "harnesses.group.menu.settings" = "Beállítások…";
 "harnesses.group.registry %@" = "Registry: %@";
 "harnesses.install.browsing" = "Elérhető harness-ek betöltése…";
@@ -965,6 +968,9 @@
 "harness.fork.explanation" = "Szerkeszthető helyi másolatot hoz létre erről a harness-ről. A másolat nyomkövetéssel rendelkezik, így láthatja, mi változott az upstream-ben.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "\"%@\" forkolása…";
+"harness.fork.rename.label" = "Név (nem kötelező)";
+"harness.fork.rename.hint" = "Hagyja üresen a forrásnév megtartásához. Az új fork kanonikus id-je local/<név> lesz.";
+"harness.fork.identity.collision" = "Egy telepített harness már rendelkezik ezzel az azonosítóval.";
 
 
 // MARK: - Harness Update
@@ -1037,6 +1043,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit megváltozott: %@ → %@";
+"harnesses.broken.fork.help" = "Ebből a helyi forkból hiányzik a harness-manifest. Kattintson jobb gombbal, és válassza az Eltávolítás lehetőséget a törléshez.";
+"harnesses.broken.fork.badge" = "Sérült";
+"harnesses.fork.of %@" = "Elágazás innen: %@";
+"harnesses.fork.help %@" = "Elágaztatva innen: %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Új worktree ágból";

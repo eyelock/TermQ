@@ -63,7 +63,7 @@ final class HarnessIncludeEditorTests: XCTestCase {
         )
         let target = makeTarget()
         editor.requestRemove(target)
-        await editor.confirmRemove(target: target, harnessName: "my-harness")
+        await editor.confirmRemove(target: target, harnessID: "my-harness")
         // No toolchain → guard fires before mutator runs; nothing changes.
         XCTAssertNotNil(editor.removalTarget)
     }
@@ -75,7 +75,7 @@ final class HarnessIncludeEditorTests: XCTestCase {
         )
         editor.requestEdit(makeTarget())
         await editor.confirmEdit(
-            harnessName: "my-harness",
+            harnessID: "my-harness",
             newPath: "new-path",
             newRef: "feature-branch",
             newPicks: nil

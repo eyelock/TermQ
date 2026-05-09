@@ -9,7 +9,7 @@ final class AddIncludeContextTests: XCTestCase {
 
     private func makeContext(status: YNHStatus = .missing) -> AddIncludeContext {
         AddIncludeContext(
-            harnessName: "test-harness",
+            harnessID: "test-harness",
             existingIncludes: [],
             editor: HarnessIncludeEditor(detector: MockYNHDetector(status: status)),
             detector: MockYNHDetector(status: status)

@@ -4,6 +4,7 @@ struct IncludeApplicationOptions {
     let harness: String
     let sourceURL: String
     let path: String?
+    let ref: String?
     let pick: [String]
 }
 
@@ -49,6 +50,9 @@ final class IncludeApplier: ObservableObject {
         var args = ["include", "add", options.harness, options.sourceURL]
         if let path = options.path, !path.isEmpty {
             args += ["--path", path]
+        }
+        if let ref = options.ref, !ref.isEmpty {
+            args += ["--ref", ref]
         }
         if !options.pick.isEmpty {
             args += ["--pick", options.pick.joined(separator: ",")]

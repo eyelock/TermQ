@@ -243,7 +243,7 @@ final class HarnessAuthorRunnerTests: XCTestCase {
 
     func test_includeApplier_buildIncludeAddArgs_omitsEmptyPickAndPath() {
         let args = IncludeApplier.buildIncludeAddArgs(
-            IncludeApplicationOptions(harness: "h", sourceURL: "u", path: nil, pick: [])
+            IncludeApplicationOptions(harness: "h", sourceURL: "u", path: nil, ref: nil, pick: [])
         )
         XCTAssertEqual(args, ["include", "add", "h", "u"])
     }
@@ -251,7 +251,7 @@ final class HarnessAuthorRunnerTests: XCTestCase {
     func test_includeApplier_buildIncludeAddArgs_includesPickJoinedWithComma() {
         let args = IncludeApplier.buildIncludeAddArgs(
             IncludeApplicationOptions(
-                harness: "h", sourceURL: "u", path: "p",
+                harness: "h", sourceURL: "u", path: "p", ref: nil,
                 pick: ["skills/foo", "agents/bar.md"]
             )
         )
@@ -267,7 +267,7 @@ final class HarnessAuthorRunnerTests: XCTestCase {
 
         let applier = IncludeApplier(commandRunner: runner)
         await applier.apply(
-            IncludeApplicationOptions(harness: "h", sourceURL: "u", path: nil, pick: []),
+            IncludeApplicationOptions(harness: "h", sourceURL: "u", path: nil, ref: nil, pick: []),
             ynhPath: "/bin/ynh", environment: [:]
         )
 
@@ -280,7 +280,7 @@ final class HarnessAuthorRunnerTests: XCTestCase {
 
         let applier = IncludeApplier(commandRunner: runner)
         await applier.apply(
-            IncludeApplicationOptions(harness: "h", sourceURL: "u", path: nil, pick: []),
+            IncludeApplicationOptions(harness: "h", sourceURL: "u", path: nil, ref: nil, pick: []),
             ynhPath: "/bin/ynh", environment: [:]
         )
 

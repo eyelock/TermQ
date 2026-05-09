@@ -86,7 +86,7 @@ final class HarnessManifestEditor: ObservableObject {
     /// via `errorMessage` for the form to render.
     func apply(
         at editablePath: String,
-        harnessName: String,
+        harnessID: String,
         fields: HarnessManifestFields,
         repository: HarnessRepository
     ) async -> Bool {
@@ -95,12 +95,12 @@ final class HarnessManifestEditor: ObservableObject {
         defer { isWriting = false }
         do {
             try Self.write(at: editablePath, fields: fields)
-            repository.invalidateDetail(for: harnessName)
+            repository.invalidateDetail(for: harnessID)
             // refresh() reloads the harness list (ynh ls) so the sidebar
             // picks up the new version/description. fetchDetail alone only
             // updates the detail pane.
             await repository.refresh()
-            await repository.fetchDetail(for: harnessName)
+            await repository.fetchDetail(for: harnessID)
             return true
         } catch let err as HarnessManifestEditorError {
             errorMessage = Self.message(for: err)

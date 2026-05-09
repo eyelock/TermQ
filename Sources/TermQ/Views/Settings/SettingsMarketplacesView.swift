@@ -147,7 +147,8 @@ struct SettingsMarketplacesView: View {
                 name: name,
                 shortURL: GitURLHelper.shortURL(marketplace.url),
                 description: marketplace.description,
-                browserURL: browserURL
+                browserURL: browserURL,
+                ref: marketplace.ref
             )
             Spacer()
             Button(role: .destructive) {
@@ -168,7 +169,8 @@ struct SettingsMarketplacesView: View {
                 name: ynhMarketplace.name,
                 shortURL: GitURLHelper.shortURL(ynhMarketplace.url),
                 description: ynhMarketplace.description,
-                browserURL: GitURLHelper.browserURL(for: ynhMarketplace.url)
+                browserURL: GitURLHelper.browserURL(for: ynhMarketplace.url),
+                ref: ynhMarketplace.ref
             )
             Spacer()
             Button(role: .destructive) {
@@ -209,12 +211,13 @@ struct SettingsMarketplacesView: View {
     }
 }
 
-/// Standardised label for marketplace and registry rows: name (clickable link) + org/repo + description.
+/// Standardised label for marketplace and registry rows: name (clickable link) + org/repo + description + ref pin.
 private struct ExternalSourceRowLabel: View {
     let name: String
     let shortURL: String
     let description: String?
     let browserURL: URL?
+    let ref: String?
 
     @State private var isHovering = false
 
@@ -244,6 +247,23 @@ private struct ExternalSourceRowLabel: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
+            }
+            // Pin signal — useful when debugging which version of a registry
+            // the app is reading. nil ref means "latest HEAD on default branch".
+            if let pin = ref, !pin.isEmpty {
+                HStack(spacing: 4) {
+                    Image(systemName: "pin.fill").imageScale(.small)
+                    Text(pin)
+                        .font(.system(size: 11, design: .monospaced))
+                }
+                .foregroundStyle(.secondary)
+            } else {
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.triangle.2.circlepath").imageScale(.small)
+                    Text("latest (unpinned)")
+                        .font(.caption)
+                }
+                .foregroundStyle(.secondary)
             }
         }
     }

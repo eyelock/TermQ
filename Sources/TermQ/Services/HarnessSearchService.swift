@@ -7,6 +7,11 @@ final class HarnessSearchService: ObservableObject {
     @Published private(set) var results: [SearchResult] = []
     @Published private(set) var isSearching = false
     @Published private(set) var error: String?
+    /// True after the first `search()` task has run to completion (success
+    /// or failure). Distinguishes "haven't searched yet" from "searched
+    /// and got nothing" — consumers showing an empty-state should gate on
+    /// this so the empty copy doesn't flash before the first search lands.
+    @Published private(set) var hasSearched = false
 
     private var searchTask: Task<Void, Never>?
     private let ynhDetector: any YNHDetectorProtocol
@@ -34,7 +39,10 @@ final class HarnessSearchService: ObservableObject {
             }
             isSearching = true
             error = nil
-            defer { isSearching = false }
+            defer {
+                isSearching = false
+                hasSearched = true
+            }
             var env = ProcessInfo.processInfo.environment
             if let override = ynhDetector.ynhHomeOverride {
                 env["YNH_HOME"] = override
@@ -68,5 +76,6 @@ final class HarnessSearchService: ObservableObject {
         results = []
         isSearching = false
         error = nil
+        hasSearched = false
     }
 }

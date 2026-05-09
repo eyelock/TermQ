@@ -908,6 +908,9 @@
 "harnesses.group.default" = "Padrão";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Local";
+"harnesses.group.quarantined" = "Em quarentena";
+"harnesses.quarantine.restore" = "Restaurar";
+"harnesses.quarantine.drop" = "Remover…";
 "harnesses.group.menu.settings" = "Configurações…";
 "harnesses.group.registry %@" = "Registro: %@";
 "harnesses.install.browsing" = "Carregando harnesses disponíveis…";
@@ -964,6 +967,9 @@
 "harness.fork.explanation" = "Cria uma cópia local editável deste harness. A cópia rastreia sua origem para que você possa ver o que mudou no upstream.";
 "harness.fork.button" = "Bifurcar";
 "harness.fork.progress.title %@" = "Bifurcando \"%@\"…";
+"harness.fork.rename.label" = "Nome (opcional)";
+"harness.fork.rename.hint" = "Deixe em branco para manter o nome de origem. O id canônico do novo fork será local/<nome>.";
+"harness.fork.identity.collision" = "Já existe um harness instalado com esta identidade.";
 
 
 // MARK: - Harness Update
@@ -1036,6 +1042,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream alterado: %@ → %@";
+"harnesses.broken.fork.help" = "Este fork local está sem o manifesto do harness. Clique com o botão direito e selecione Desinstalar para removê-lo.";
+"harnesses.broken.fork.badge" = "Corrompido";
+"harnesses.fork.of %@" = "Bifurcação de %@";
+"harnesses.fork.help %@" = "Bifurcado de %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Nova worktree a partir do branch";
