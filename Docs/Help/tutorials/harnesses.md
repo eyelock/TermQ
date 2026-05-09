@@ -1,15 +1,15 @@
-# Tutorial 13: Harnesses
+# Harnesses
 
-In this tutorial you'll connect TermQ to [YNH](https://github.com/eyelock/ynh), browse and install AI harnesses from registries, Git URLs, and local sources, then launch them in dedicated terminal sessions — all without leaving the app.
+In this tutorial you'll connect TermQ to [YNH](https://github.com/eyelock/ynh), browse and install AI harnesses from registries, Git URLs, and local sources, populate them with marketplace plugins, fork registry harnesses to customise them, and create new harnesses from scratch.
 
-By the end you'll know how to enable the Harnesses tab, run through the YNH detection and setup flow, install your first harness, link it to a git worktree, and manage the full lifecycle including updates and uninstalls.
+By the end you'll know how to enable the Harnesses tab, run through the YNH detection and setup flow, install your first harness, add marketplace plugins to it, link it to a git worktree, and manage the full lifecycle including updates, forks, uninstalls, and authoring new harnesses.
 
-**Time:** about 20 minutes
-**Requires:** TermQ 0.8 or later, [YNH CLI](https://github.com/eyelock/ynh) installed
+**Time:** about 25 minutes
+**Requires:** TermQ 0.8 or later, [YNH CLI](https://github.com/eyelock/ynh) installed. We assume you've already added at least one marketplace per the [Marketplace Browser tutorial](marketplace-browser.md) — without one, the Library tab in Add Include / Install Harness will be empty.
 
 ---
 
-## 13.1 — What the Harnesses tab is for
+## 1 — What the Harnesses tab is for
 
 A **harness** is a reusable bundle of AI configuration — skills, rules, MCP servers, prompt profiles — that you can apply to any directory. Instead of re-configuring Claude, Cursor, or your other AI tools per project, you install a harness once and tell TermQ which worktrees should use it.
 
@@ -27,7 +27,7 @@ The tab sits alongside **Repositories** as a segmented picker at the top of the 
 
 ---
 
-## 13.2 — Enabling the Harnesses tab
+## 2 — Enabling the Harnesses tab
 
 The Harnesses tab is **opt-in** for 0.8. Open Settings (**⌘,**) and find the **YNH Harness Toolchain** section.
 
@@ -39,7 +39,7 @@ Switching tabs in the sidebar persists across launches — if you end a session 
 
 ---
 
-## 13.3 — YNH detection
+## 3 — YNH detection
 
 TermQ auto-detects the `ynh` binary on launch and on app focus. If it's not found, the tab shows an install prompt:
 
@@ -53,49 +53,45 @@ When YNH is installed and ready, the harness list appears.
 
 ---
 
-## 13.4 — Installing a harness
+## 4 — Installing a harness
 
-Click the **+** button in the Harnesses tab header. The **Install Harness** sheet opens with three tabs: **Search**, **From Git**, and **Sources**.
+Click the **+** button in the Harnesses tab header. The **Install Harness** sheet opens with two tabs: **Library** and **Git URL**.
 
-### Search tab — browse and discover
+### Library tab — browse and discover
 
 ![Install Sheet — browse mode](../Images/harness-install-browse.png)
 
-The Search tab opens in **browse mode** immediately — no typing required. TermQ queries all configured registries and local sources in the background and organises results into three sections:
+The Library tab opens in **browse mode** immediately — no typing required. TermQ queries all configured marketplaces and YNH registries in the background and organises results into three sections:
 
 - **Installed** — harnesses you already have, shown for reference
 - **Available from Registries** — harnesses in your configured YNH registries that aren't yet installed. Each row shows a coloured registry pill (blue) alongside the vendor chips.
-- **Available Locally** — harnesses found in configured local sources that aren't installed. These show a grey source pill and are typically your own forks or experiments.
+- **Available from Marketplaces** — plugins from your TermQ-side marketplaces, ready to add as harnesses or includes.
 
 ![Install Sheet — search results](../Images/harness-install-search-results.png)
 
-Type in the search field to filter. Results update live across all configured registries and sources as you type. Clear the field to return to browse mode.
+Type in the search field to filter. Results update live across all configured marketplaces and registries as you type. Clear the field to return to browse mode.
 
-Click **Install** on any row. TermQ opens a transient terminal running `ynh install <name>`, streams the output, and auto-closes on success. The harness appears in the sidebar immediately.
+Click **Install** on any row. TermQ opens a transient terminal running `ynh install <id>`, streams the output, and auto-closes on success. The harness appears in the sidebar immediately.
 
-> **Empty registries section?** Add a registry first — click the **globe** button in the Harnesses sidebar header. See §13.3 for a walk-through.
+> **Empty registries section?** Add a registry first — click the **globe** button in the Harnesses sidebar header. See §3 for a walk-through.
 
-> **No locally available section?** Local sources aren't configured yet — use the **Sources** tab to add one.
+> **Manage your sources without leaving the picker:** click the **gear** icon next to the search field to open the Manage Sources sheet — a quick alternative to Settings → External Sources.
 
-### From Git
+### Git URL tab
 
-![Install Sheet — From Git](../Images/harness-install-sheet-git.png)
+![Install Sheet — Git URL](../Images/harness-install-sheet-git.png)
 
-Install directly from any Git URL. The Subpath field is optional — use it when a monorepo has a harness at `ynh/my-harness` rather than the repo root.
+Install directly from any Git URL. Three fields:
+
+- **URL** — the base repo URL (e.g. `https://github.com/eyelock/assistants`). Don't paste a `tree/branch/path` URL from the GitHub web UI; use the bare repo URL plus the **Subpath** field for the path.
+- **Ref** — optional branch, tag, or commit SHA. Leave empty to track the default branch.
+- **Subpath** — optional. Use it when a monorepo holds a harness at `ynh/my-harness` rather than the repo root.
 
 A live command preview shows the exact `ynh install` invocation TermQ will run, so you can verify before clicking **Install**.
 
-### Sources
-
-![Install Sheet — Sources](../Images/harness-install-sheet-sources.png)
-
-Local source directories are places YNH searches when you run `ynh search` or `ynh install <name>`. They're ideal for harnesses you're authoring locally and iterating on — changes you make on disk are picked up immediately without reinstalling.
-
-Click **Add Source…** to pick a directory. The row shows the source name, path, and harness count — the count renders in orange when zero, which usually means the directory doesn't contain any `.harness.json` files yet.
-
 ---
 
-## 13.5 — Reading the detail pane
+## 5 — Reading the detail pane
 
 Click a harness in the list to open its detail pane on the right.
 
@@ -135,7 +131,7 @@ Update checks are driven by `ynh ls --check-updates` and run in the background w
 
 ---
 
-## 13.6 — Linking a worktree to a harness
+## 6 — Linking a worktree to a harness
 
 This is the connective tissue that makes harnesses useful: tell TermQ which harness a worktree should use, and clicking the worktree row will launch it automatically.
 
@@ -159,7 +155,7 @@ The context menu also gains a **Launch `<harness>`** item as the first entry, fo
 
 ---
 
-## 13.7 — Launching a harness
+## 7 — Launching a harness
 
 Click **Launch** on any harness row in the sidebar (or the Launch button in the detail header). The launch sheet opens.
 
@@ -177,7 +173,7 @@ Click **Launch**. TermQ creates a new transient terminal card running `ynh run \
 
 ---
 
-## 13.8 — Updating a harness
+## 8 — Updating a harness
 
 Open the harness detail pane and click the **⋯** menu next to Launch.
 
@@ -189,7 +185,7 @@ If the update fails (non-zero exit), the terminal stays open so you can read the
 
 ---
 
-## 13.9 — Uninstalling a harness
+## 9 — Uninstalling a harness
 
 From the same **⋯** menu, click **Uninstall**. A confirmation alert appears.
 
@@ -206,7 +202,7 @@ The same action is also in the right-click menu on any harness row, if you prefe
 
 ---
 
-## 13.10 — Exporting a harness as a marketplace package
+## 10 — Exporting a harness as a marketplace package
 
 If you author harnesses and want to share them — or turn a private harness into a marketplace that other TermQ users can browse — you can export it directly from the sidebar.
 
@@ -228,7 +224,7 @@ The terminal stays open so you can read any output or errors. It auto-closes on 
 
 ---
 
-## 13.11 — Forking a registry harness
+## 11 — Forking a registry harness
 
 **Requires:** YNH ≥ 0.3.0
 
@@ -253,11 +249,11 @@ The forked copy records where it came from (the registry source), so TermQ can s
 
 ---
 
-## 13.11.1 — Editing a harness in place
+## 12 — Editing a harness in place
 
 Once a harness is editable — local, git-cloned, or forked — the detail pane gains inline editing affordances.
 
-**Includes** — the Includes section lists every include the harness pulls in. Each row carries Edit and Remove buttons. Edit opens a sheet that lets you change the source, ref pin, or path; Remove drops the include after a confirmation. Add a new include via the **+** button at the top of the section, which opens the unified Source Picker (Library / Git / Path).
+**Includes** — the Includes section lists every include the harness pulls in. Each row carries Edit and Remove buttons. Edit opens a sheet that lets you change the source, ref pin, or path; Remove drops the include after a confirmation. Add a new include via the **+** button at the top of the section, which opens the unified Source Picker (Library / Git URL).
 
 ![Include editor row](../Images/harness-include-editor.png)
 
@@ -273,7 +269,7 @@ All edits stream their YNH command output through the same progress sheet you se
 
 ---
 
-## 13.11.2 — Quarantined harnesses
+## 13 — Quarantined harnesses
 
 If YNH cannot load a harness — for example, the manifest is missing required fields, or a recent migration moved the install away from a still-referenced path — YNH places the offending entry into `~/.ynh/.quarantine/broken/` rather than dropping it silently.
 
@@ -290,7 +286,7 @@ This group only appears when there are quarantined entries. A clean install has 
 
 ---
 
-## 13.11.3 — Automatic schema migration
+## 14 — Automatic schema migration
 
 If your YNH installation predates the canonical-id schema (anything that wrote to `~/.ynh` before YNH adopted host-prefixed canonical ids), TermQ runs a one-shot migration on first launch:
 
@@ -303,7 +299,7 @@ This runs once and is idempotent — relaunching after a successful migration is
 
 ---
 
-## 13.12 — Duplicating a harness
+## 15 — Duplicating a harness
 
 Duplicating creates a new locally-owned harness that starts from the same configuration as an existing one — same vendor, same includes, same hooks.
 
@@ -327,10 +323,97 @@ The new harness appears in the **Local** group of the sidebar immediately. From 
 
 ---
 
-## 13.13 — What's next
+## 16 — Adding marketplace plugins to a harness
 
-The Harnesses tab covers install, update, fork, duplicate, uninstall, launching, worktree linkage, and export.
+Once a harness is installed, you populate it with content from your configured marketplaces.
 
-To go further — creating a new harness from scratch and populating it with skills and agents from community marketplaces — continue to **[Tutorial 14: Marketplace Browser &amp; Harness Authoring](14-marketplace.md)**.
+There are two paths into the same flow, suited to different starting contexts:
+
+**From the marketplace browser.** When you're discovering plugins and want to bring one into a harness, open the marketplace, click a plugin, and click **Add to Harness…**. The HarnessIncludePicker sheet opens.
+
+![Harness Include Picker](../Images/marketplace-include-picker.png)
+
+The picker has two sections:
+
+- **Target harness** — choose which of your installed harnesses should receive the plugin. The picker pre-selects the last-used harness.
+- **Artifacts to pick** — the plugin's skills, agents, commands, and rules are listed as a checklist. All are checked by default; untick anything you don't want. The preview at the bottom shows the exact `ynh include add` command TermQ will run.
+
+Click **Add**. TermQ runs the command in a transient terminal pane at the bottom of the sheet, streams the output, and reports success or failure inline. On success, the harness immediately reflects the new includes — no restart needed.
+
+> **Picking vs. including the whole plugin:** picking individual artifacts (`--pick skills/foo,agents/bar`) is the default because it gives you only what you need. Unchecking *all* artifacts and clicking Add includes the entire plugin source without a pick filter — useful when you want everything and want future updates to pick up new additions automatically.
+
+**From the harness detail pane.** When you already know which harness you're editing, the **Add Include…** affordance in the harness detail's Includes section opens the unified Source Picker (Library / Git URL). The Library tab covers the same marketplace catalogue. The Configure step has a dedicated Artifacts → Apply two-step wizard for picking what to include. See §12 above for the inline editing surface.
+
+---
+
+## 17 — Default author directory
+
+Before creating a harness, tell TermQ where to scaffold new harnesses by default. Open **Settings → External Sources → Default Author Directory** and click **Browse…**.
+
+![Default author directory setting](../Images/harnesses-author-directory.png)
+
+This is the directory where `ynd create harness <name>` will run. It's also pre-filled as the **Destination** in the harness wizard, in fork sheets, and in duplicate sheets. You can override it per-harness from any of those sheets.
+
+If you don't set a default, the wizard falls back to the harnesses directory YNH reported during detection.
+
+---
+
+## 18 — Creating a harness with the wizard
+
+Click the **wand** button (✦) in the Harnesses sidebar header. The **New Harness** wizard opens.
+
+![Harness Wizard — Identity step](../Images/harness-wizard-identity.png)
+
+**Step 1 — Identity & Destination:**
+
+- **Name** — a slug for the harness (`my-project-harness`). Becomes the leaf segment of the canonical id (`local/my-project-harness`). Only alphanumerics, hyphens, and underscores are allowed; TermQ validates this before letting you proceed.
+- **Description** — optional free-text summary.
+- **Vendor** — which AI client this harness targets (Claude, Cursor, etc.). Affects which default profile and hook templates `ynd` scaffolds.
+- **Destination** — where the harness directory will be created. Pre-filled from Settings → External Sources → Default Author Directory or the YNH-detected path.
+- **Install after create** — when checked, TermQ runs `ynh install <path>` immediately after scaffolding. Requires YNH to be installed and ready.
+
+Click **Create**. The wizard moves to Step 2.
+
+**Step 2 — Progress:**
+
+TermQ runs:
+1. `ynd create harness <name>` — scaffolds the harness directory
+2. `ynh install <destination>/<name>` — installs it into YNH (if *Install after create* was checked)
+
+Each step shows a status icon (pending → spinning → checkmark or X) and streams live output below.
+
+![Harness Wizard — Progress step](../Images/harness-wizard-progress.png)
+
+If any step fails, a **Retry** button appears so you can re-attempt without starting over.
+
+On success, the wizard shows a completion overlay with three options:
+
+- **Browse Marketplaces** — opens the marketplace browser with this harness pre-selected as the target in the include picker, ready for you to add content
+- **Open Harness** — switches the Harnesses tab to this harness's detail view
+- **Reveal in Finder** — opens the scaffolded directory in Finder
+
+---
+
+## 19 — The typical authoring loop
+
+A complete session — from idea to populated harness — looks like this:
+
+1. **Create** the harness with the wizard (§18). Check *Install after create*.
+2. Click **Browse Marketplaces** in the success overlay.
+3. **Browse** marketplace plugins and use **Add to Harness** (§16) to pull in the content you want.
+4. The harness is now installed and populated. **Launch** it from the Harnesses tab (§7).
+
+For iterative authoring (adding more plugins later), open the harness detail and use **Add Include…** directly — the Library tab is the same catalogue.
+
+---
+
+## 20 — What's next
+
+You've covered the complete harness lifecycle: install, link to worktrees, launch, update, uninstall, fork, duplicate, edit in place, manage quarantined entries, populate from marketplaces, create new harnesses with the wizard, and the typical authoring loop.
+
+The next tutorials cover automation and AI integration:
+
+- [CLI Automation](cli.md) — drive TermQ from the command line
+- [Persistent AI Context](ai-context.md) — feed project context to your AI sessions automatically
 
 > **Feedback:** the Harnesses tab is deliberately feature-flagged for 0.8 so we can iterate on the rough edges. If something feels wrong, please [open an issue](https://github.com/eyelock/termq/issues).

@@ -12,8 +12,8 @@
   - [6. Terminal Context](tutorials/terminal-context.md)
   - [7. Lifecycle](tutorials/lifecycle.md)
   - [8. Git Worktrees](tutorials/worktree-sidebar.md)
-  - [9. Harnesses](tutorials/harness-sidebar.md)
-  - [10. Marketplaces & Authoring](tutorials/marketplace.md)
+  - [9. Marketplace Browser](tutorials/marketplace-browser.md)
+  - [10. Harnesses](tutorials/harnesses.md)
 
 - **Tutorials: Automation & AI**
   - [11. CLI Automation](tutorials/cli.md)

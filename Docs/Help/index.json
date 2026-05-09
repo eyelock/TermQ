@@ -68,16 +68,16 @@
           "keywords": ["git", "worktree", "repository", "branch", "sidebar", "checkout", "harness"]
         },
         {
-          "id": "tutorials/harness-sidebar",
-          "title": "Harnesses",
-          "icon": "puzzlepiece.extension",
-          "keywords": ["harness", "ynh", "ai", "agent", "install", "launch", "registry", "sidebar"]
+          "id": "tutorials/marketplace-browser",
+          "title": "Marketplace Browser",
+          "icon": "storefront",
+          "keywords": ["marketplace", "plugin", "artifact", "skill", "browse", "catalogue", "registry"]
         },
         {
-          "id": "tutorials/marketplace",
-          "title": "Marketplaces & Authoring",
-          "icon": "storefront",
-          "keywords": ["marketplace", "plugin", "artifact", "skill", "install", "browse", "configure", "authoring"]
+          "id": "tutorials/harnesses",
+          "title": "Harnesses",
+          "icon": "puzzlepiece.extension",
+          "keywords": ["harness", "ynh", "ai", "agent", "install", "launch", "fork", "wizard", "authoring", "include", "delegate"]
         }
       ]
     },

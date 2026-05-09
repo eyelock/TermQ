@@ -23,12 +23,14 @@ Start with [Why TermQ](why.md) to understand the mental model, then work through
 6. [Terminal Context](tutorials/terminal-context.md)
 7. [Lifecycle](tutorials/lifecycle.md)
 8. [Git Worktrees](tutorials/worktree-sidebar.md)
+9. [Marketplace Browser](tutorials/marketplace-browser.md)
+10. [Harnesses](tutorials/harnesses.md)
 
 ### Automation & AI
-9. [CLI Automation](tutorials/cli.md)
-10. [Persistent AI Context](tutorials/ai-context.md)
-11. [MCP Integration](tutorials/mcp.md)
-12. [Queued Actions](tutorials/queued-actions.md)
+11. [CLI Automation](tutorials/cli.md)
+12. [Persistent AI Context](tutorials/ai-context.md)
+13. [MCP Integration](tutorials/mcp.md)
+14. [Queued Actions](tutorials/queued-actions.md)
 
 ## Reference
 
