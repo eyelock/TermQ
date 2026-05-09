@@ -82,8 +82,15 @@ final class HarnessRepository: ObservableObject {
     /// Use `listState` directly when readiness vs. emptiness matters.
     var harnesses: [Harness] { listState.value ?? [] }
 
-    /// True while a `refresh()` is in flight.
-    var isLoading: Bool { listState.isLoading }
+    /// True while a `refresh()` is in flight, regardless of whether a
+    /// previously-loaded list is being kept visible (stale-while-revalidate).
+    @Published private(set) var isRefreshing = false
+
+    /// True while a `refresh()` is in flight or the list has never loaded.
+    /// Consumers showing a "loading..." state should use this; consumers
+    /// rendering the harness list itself should use `harnesses` directly,
+    /// which keeps the previously-loaded value visible during refresh.
+    var isLoading: Bool { isRefreshing || listState.isLoading }
 
     /// The currently selected harness. Resolved by canonical `Harness.id`.
     /// Returns `nil` when the list is not yet loaded, when no selection is
@@ -117,7 +124,17 @@ final class HarnessRepository: ObservableObject {
             return
         }
 
-        listState = .loading
+        // Stale-while-revalidate: only show the .loading state when there
+        // is no previously-loaded list to display. Once we have data, we
+        // keep it visible across refreshes — the `isRefreshing` flag
+        // surfaces the in-flight signal to consumers that want a spinner.
+        // Without this, every focus-driven refresh would empty the list,
+        // unmount the detail pane, and dismiss any open sheet.
+        if !listState.isLoaded {
+            listState = .loading
+        }
+        isRefreshing = true
+        defer { isRefreshing = false }
 
         let env = ynhEnvironment()
 
