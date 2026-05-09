@@ -910,6 +910,9 @@
 "harnesses.group.default" = "ค่าเริ่มต้น";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "ในเครื่อง";
+"harnesses.group.quarantined" = "ถูกกักกัน";
+"harnesses.quarantine.restore" = "กู้คืน";
+"harnesses.quarantine.drop" = "ลบ…";
 "harnesses.group.menu.settings" = "การตั้งค่า…";
 "harnesses.group.registry %@" = "Registry: %@";
 "harnesses.install.browsing" = "กำลังโหลด Harness ที่มีอยู่…";
@@ -966,6 +969,9 @@
 "harness.fork.explanation" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้ สำเนาจะติดตามต้นกำเนิดเพื่อให้คุณเห็นว่ามีการเปลี่ยนแปลงอะไร upstream";
 "harness.fork.button" = "แยกสาขา";
 "harness.fork.progress.title %@" = "กำลังแยกสาขา \"%@\"…";
+"harness.fork.rename.label" = "ชื่อ (ไม่บังคับ)";
+"harness.fork.rename.hint" = "เว้นว่างเพื่อเก็บชื่อต้นทาง id หลักของ fork ใหม่จะเป็น local/<ชื่อ>";
+"harness.fork.identity.collision" = "มี harness ที่ติดตั้งแล้วใช้ตัวตนนี้อยู่";
 
 
 // MARK: - Harness Update

@@ -14,13 +14,13 @@ import TermQShared
 /// review preview.
 ///
 /// Apply invokes `IncludeApplier` (`ynh include add`) and on success
-/// hands off to `HarnessIncludeEditor.didFinishAddingInclude(harnessName:)`
+/// hands off to `HarnessIncludeEditor.didFinishAddingInclude(harnessID:)`
 /// which dismisses the sheet and reloads detail.
 @MainActor
 final class AddIncludeContext: SourcePickerContext {
     let title: String
 
-    let harnessName: String
+    let harnessID: String
     var existingIncludes: [IncludeEditTarget]
     let editor: HarnessIncludeEditor
 
@@ -53,14 +53,14 @@ final class AddIncludeContext: SourcePickerContext {
     @Published var errorMessage: String?
 
     init(
-        harnessName: String,
+        harnessID: String,
         existingIncludes: [IncludeEditTarget],
         editor: HarnessIncludeEditor,
         detector: any YNHDetectorProtocol = YNHDetector.shared,
         applier: IncludeApplier = IncludeApplier()
     ) {
         self.title = Strings.Harnesses.addIncludeButton
-        self.harnessName = harnessName
+        self.harnessID = harnessID
         self.existingIncludes = existingIncludes
         self.editor = editor
         self.detector = detector
@@ -158,7 +158,7 @@ final class AddIncludeContext: SourcePickerContext {
     }
 
     private func commandPreview(sourceURL: String, path: String?, picks: [String]?) -> String {
-        var parts = ["ynh", "include", "add", harnessName, sourceURL]
+        var parts = ["ynh", "include", "add", harnessID, sourceURL]
         if let path = path { parts += ["--path", path] }
         if let picks = picks, !picks.isEmpty {
             parts += ["--pick", picks.joined(separator: ",")]
@@ -180,7 +180,7 @@ final class AddIncludeContext: SourcePickerContext {
         guard let source = libraryResolvedSource, let ynhPath = readyYnhPath() else { return }
         let picks = pickArgument() ?? []
         let opts = IncludeApplicationOptions(
-            harness: harnessName,
+            harness: harnessID,
             sourceURL: source.url,
             path: source.path,
             pick: picks
@@ -192,7 +192,7 @@ final class AddIncludeContext: SourcePickerContext {
         let trimmedURL = gitURL.trimmingCharacters(in: .whitespaces)
         guard !trimmedURL.isEmpty, let ynhPath = readyYnhPath() else { return }
         let opts = IncludeApplicationOptions(
-            harness: harnessName,
+            harness: harnessID,
             sourceURL: trimmedURL,
             path: gitPath.trimmingCharacters(in: .whitespaces).nilIfEmpty,
             pick: []
@@ -208,7 +208,7 @@ final class AddIncludeContext: SourcePickerContext {
         isApplying = false
         if applier.succeeded {
             TermQLogger.session.info("AddInclude: apply succeeded; dismissing")
-            await editor.didFinishAddingInclude(harnessName: harnessName)
+            await editor.didFinishAddingInclude(harnessID: harnessID)
         } else {
             // applier.errorMessage may contain user-visible command output;
             // log presence only, not content (logging-rules: terminal output

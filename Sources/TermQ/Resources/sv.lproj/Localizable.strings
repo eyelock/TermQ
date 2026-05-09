@@ -910,6 +910,9 @@
 "harnesses.group.default" = "Standard";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokal";
+"harnesses.group.quarantined" = "Karantäniserad";
+"harnesses.quarantine.restore" = "Återställ";
+"harnesses.quarantine.drop" = "Ta bort…";
 "harnesses.group.menu.settings" = "Inställningar…";
 "harnesses.group.registry %@" = "Register: %@";
 "harnesses.install.browsing" = "Laddar tillgängliga harnesses…";
@@ -966,6 +969,9 @@
 "harness.fork.explanation" = "Skapar en redigerbar lokal kopia av denna harness. Kopian spårar sitt ursprung så att du kan se vad som ändrats uppströms.";
 "harness.fork.button" = "Forka";
 "harness.fork.progress.title %@" = "Forkar \"%@\"…";
+"harness.fork.rename.label" = "Namn (valfritt)";
+"harness.fork.rename.hint" = "Lämna tomt för att behålla källnamnet. Det nya forkens kanoniska id blir local/<namn>.";
+"harness.fork.identity.collision" = "Ett installerat harness har redan den här identiteten.";
 
 
 // MARK: - Harness Update

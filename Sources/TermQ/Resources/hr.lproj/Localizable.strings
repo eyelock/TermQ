@@ -909,6 +909,9 @@
 "harnesses.group.default" = "Zadana";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokalna";
+"harnesses.group.quarantined" = "U karanteni";
+"harnesses.quarantine.restore" = "Obnovi";
+"harnesses.quarantine.drop" = "Ukloni…";
 "harnesses.group.menu.settings" = "Postavke…";
 "harnesses.group.registry %@" = "Registar: %@";
 "harnesses.install.browsing" = "Učitavanje dostupnih harness-a…";
@@ -965,6 +968,9 @@
 "harness.fork.explanation" = "Stvara uređivu lokalnu kopiju ovog harness-a. Kopija prati svoje podrijetlo kako biste mogli vidjeti što se promijenilo upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Forkanje \"%@\"…";
+"harness.fork.rename.label" = "Naziv (neobavezno)";
+"harness.fork.rename.hint" = "Ostavite prazno kako biste zadržali izvorno ime. Kanonički id novog forka bit će local/<naziv>.";
+"harness.fork.identity.collision" = "Instalirani harness već ima ovaj identitet.";
 
 
 // MARK: - Harness Update

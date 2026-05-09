@@ -903,6 +903,9 @@
 "harnesses.group.default" = "По умолчанию";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Локальная";
+"harnesses.group.quarantined" = "На карантине";
+"harnesses.quarantine.restore" = "Восстановить";
+"harnesses.quarantine.drop" = "Удалить…";
 "harnesses.group.menu.settings" = "Настройки…";
 "harnesses.group.registry %@" = "Реестр: %@";
 "harnesses.install.browsing" = "Загрузка доступных harness-ов…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "Создаёт редактируемую локальную копию этого harness. Копия отслеживает своё происхождение, чтобы вы могли видеть, что изменилось в источнике.";
 "harness.fork.button" = "Форк";
 "harness.fork.progress.title %@" = "Форк \"%@\"…";
+"harness.fork.rename.label" = "Имя (необязательно)";
+"harness.fork.rename.hint" = "Оставьте пустым, чтобы сохранить исходное имя. Канонический id нового форка будет local/<имя>.";
+"harness.fork.identity.collision" = "Установленный харнесс уже имеет этот идентификатор.";
 
 
 // MARK: - Harness Update

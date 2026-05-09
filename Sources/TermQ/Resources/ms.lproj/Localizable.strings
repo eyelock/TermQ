@@ -908,6 +908,9 @@
 "harnesses.group.default" = "Lalai";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Tempatan";
+"harnesses.group.quarantined" = "Dikuarantin";
+"harnesses.quarantine.restore" = "Pulihkan";
+"harnesses.quarantine.drop" = "Buang…";
 "harnesses.group.menu.settings" = "Tetapan…";
 "harnesses.group.registry %@" = "Registry: %@";
 "harnesses.install.browsing" = "Memuatkan harness yang tersedia…";
@@ -964,6 +967,9 @@
 "harness.fork.explanation" = "Mencipta salinan tempatan yang boleh diedit bagi harness ini. Salinan menjejak asalnya supaya anda boleh melihat apa yang berubah di upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Mem-fork \"%@\"…";
+"harness.fork.rename.label" = "Nama (pilihan)";
+"harness.fork.rename.hint" = "Biarkan kosong untuk mengekalkan nama sumber. Id kanonik fork baharu ialah local/<nama>.";
+"harness.fork.identity.collision" = "Harness yang dipasang sudah mempunyai identiti ini.";
 
 
 // MARK: - Harness Update

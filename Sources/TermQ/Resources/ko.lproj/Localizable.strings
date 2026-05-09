@@ -908,6 +908,9 @@
 "harnesses.group.default" = "기본값";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "로컬";
+"harnesses.group.quarantined" = "격리됨";
+"harnesses.quarantine.restore" = "복원";
+"harnesses.quarantine.drop" = "제거…";
 "harnesses.group.menu.settings" = "설정…";
 "harnesses.group.registry %@" = "레지스트리: %@";
 "harnesses.install.browsing" = "사용 가능한 harness 로딩 중…";
@@ -964,6 +967,9 @@
 "harness.fork.explanation" = "이 harness의 편집 가능한 로컬 사본을 만듭니다. 사본은 업스트림에서 무엇이 변경되었는지 확인할 수 있도록 원본을 추적합니다.";
 "harness.fork.button" = "포크";
 "harness.fork.progress.title %@" = "\"%@\" 포크 중…";
+"harness.fork.rename.label" = "이름 (선택사항)";
+"harness.fork.rename.hint" = "비워 두면 소스 이름을 유지합니다. 새 포크의 정식 id는 local/<이름>이 됩니다.";
+"harness.fork.identity.collision" = "이미 이 ID를 가진 하네스가 설치되어 있습니다.";
 
 
 // MARK: - Harness Update

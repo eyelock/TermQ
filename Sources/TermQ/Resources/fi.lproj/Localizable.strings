@@ -909,6 +909,9 @@
 "harnesses.group.default" = "Oletus";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Paikallinen";
+"harnesses.group.quarantined" = "Karanteenissa";
+"harnesses.quarantine.restore" = "Palauta";
+"harnesses.quarantine.drop" = "Poista…";
 "harnesses.group.menu.settings" = "Asetukset…";
 "harnesses.group.registry %@" = "Rekisteri: %@";
 "harnesses.install.browsing" = "Ladataan saatavilla olevia harnessia…";
@@ -965,6 +968,9 @@
 "harness.fork.explanation" = "Luo muokattavan paikallisen kopion tästä harness-ohjelmasta. Kopio seuraa alkuperäänsä, joten näet mitä ylävirrassa on muuttunut.";
 "harness.fork.button" = "Haaruta";
 "harness.fork.progress.title %@" = "Haarutetaan \"%@\"…";
+"harness.fork.rename.label" = "Nimi (valinnainen)";
+"harness.fork.rename.hint" = "Jätä tyhjäksi säilyttääksesi lähteen nimen. Uuden forkin kanoninen id on local/<nimi>.";
+"harness.fork.identity.collision" = "Asennetulla harnessilla on jo tämä identiteetti.";
 
 
 // MARK: - Harness Update

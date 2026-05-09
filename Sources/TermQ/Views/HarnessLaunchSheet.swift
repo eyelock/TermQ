@@ -171,7 +171,7 @@ struct HarnessLaunchSheet: View {
 
                     Button(Strings.Harnesses.launchButton) {
                         let config = HarnessLaunchConfig(
-                            harnessName: harness.name,
+                            harnessID: harness.id,
                             vendorID: effectiveVendorID,
                             defaultVendor: harness.defaultVendor,
                             focus: selectedFocus.isEmpty ? nil : selectedFocus,
@@ -207,7 +207,7 @@ struct HarnessLaunchSheet: View {
     // Intentionally mirrors HarnessLaunchConfig.command — the sheet needs a live
     // preview before HarnessLaunchConfig is created on confirm.
     private func buildCommand() -> String {
-        var parts = ["ynh", "run", harness.name]
+        var parts = ["ynh", "run", harness.id]
         if !effectiveVendorID.isEmpty {
             parts.append(contentsOf: ["-v", effectiveVendorID])
         }
@@ -238,7 +238,7 @@ struct HarnessLaunchSheet: View {
 
 /// Configuration for launching a harness, passed from the sheet to the launcher.
 struct HarnessLaunchConfig {
-    let harnessName: String
+    let harnessID: String
     /// Explicit vendor override. Empty means "use harness default".
     let vendorID: String
     /// The harness's declared default vendor (for tagging).
@@ -253,7 +253,7 @@ struct HarnessLaunchConfig {
     /// Build the `ynh run` command string.
     /// Pass `sessionName` to bind the session to a specific tmux session name.
     func command(sessionName: String? = nil) -> String {
-        var parts = ["ynh", "run", harnessName]
+        var parts = ["ynh", "run", harnessID]
         if !vendorID.isEmpty {
             parts.append(contentsOf: ["-v", vendorID])
         }
@@ -279,7 +279,7 @@ struct HarnessLaunchConfig {
         let vendorTag = vendorID.isEmpty ? defaultVendor : vendorID
         var result: [(key: String, value: String)] = [
             ("source", "harness"),
-            ("harness", harnessName),
+            ("harness", harnessID),
         ]
         if !vendorTag.isEmpty {
             result.append(("vendor", vendorTag))

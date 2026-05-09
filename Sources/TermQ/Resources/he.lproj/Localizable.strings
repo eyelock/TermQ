@@ -909,6 +909,9 @@
 "harnesses.group.default" = "ברירת מחדל";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "מקומי";
+"harnesses.group.quarantined" = "בהסגר";
+"harnesses.quarantine.restore" = "שחזר";
+"harnesses.quarantine.drop" = "הסר…";
 "harnesses.group.menu.settings" = "הגדרות…";
 "harnesses.group.registry %@" = "רשומה: %@";
 "harnesses.install.browsing" = "טוען harness-ים זמינים…";
@@ -965,6 +968,9 @@
 "harness.fork.explanation" = "יוצר עותק מקומי ניתן לעריכה של ה-harness הזה. העותק עוקב אחר מקורו כך שתוכל לראות מה השתנה upstream.";
 "harness.fork.button" = "פיצול";
 "harness.fork.progress.title %@" = "מפצל את \"%@\"…";
+"harness.fork.rename.label" = "שם (אופציונלי)";
+"harness.fork.rename.hint" = "השאר ריק כדי לשמור על שם המקור. ה-id הקנוני של ה-fork החדש יהיה local/<שם>.";
+"harness.fork.identity.collision" = "ל-harness מותקן כבר יש זהות זו.";
 
 
 // MARK: - Harness Update

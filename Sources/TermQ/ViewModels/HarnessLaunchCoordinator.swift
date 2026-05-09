@@ -138,7 +138,7 @@ final class HarnessLaunchCoordinator {
             let existing = boardViewModel.allTerminals.first(where: { card in
                 card.workingDirectory == config.workingDirectory
                     && card.tags.contains(where: { tag in
-                        tag.key == "harness" && tag.value == config.harnessName
+                        tag.key == "harness" && tag.value == config.harnessID
                     })
             })
         {
@@ -179,7 +179,7 @@ final class HarnessLaunchCoordinator {
         let store = SettingsStore.shared
         let card = TerminalCard(
             id: cardID,
-            title: config.branch ?? config.harnessName,
+            title: config.branch ?? config.harnessID,
             tags: allTags,
             columnId: column.id,
             workingDirectory: config.workingDirectory,

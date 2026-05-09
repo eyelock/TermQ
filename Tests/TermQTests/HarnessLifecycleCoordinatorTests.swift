@@ -25,10 +25,10 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
     func testInit_hasEmptyTrackingSetsAndHiddenSheets() {
         let coord = makeCoordinator()
         XCTAssertTrue(coord.installCardIDs.isEmpty)
-        XCTAssertTrue(coord.uninstallCardNames.isEmpty)
-        XCTAssertNil(coord.harnessNameToFork)
+        XCTAssertTrue(coord.uninstallCardIDs.isEmpty)
+        XCTAssertNil(coord.harnessIDToFork)
         XCTAssertFalse(coord.showForkSheet)
-        XCTAssertNil(coord.harnessNameToUpdate)
+        XCTAssertNil(coord.harnessIDToUpdate)
         XCTAssertFalse(coord.showUpdateSheet)
         XCTAssertFalse(coord.showInstallSheet)
     }
@@ -37,19 +37,19 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
 
     func testForkHarness_setsSheetState() {
         let coord = makeCoordinator()
-        coord.forkHarness(name: "foo")
-        XCTAssertEqual(coord.harnessNameToFork, "foo")
+        coord.forkHarness(id: "foo")
+        XCTAssertEqual(coord.harnessIDToFork, "foo")
         XCTAssertTrue(coord.showForkSheet)
     }
 
     func testHandleForkCompleted_clearsForkSheetState() {
         let coord = makeCoordinator()
-        coord.forkHarness(name: "foo")
+        coord.forkHarness(id: "foo")
 
-        coord.handleForkCompleted(newName: "foo-fork")
+        coord.handleForkCompleted(newID: "foo-fork")
 
         XCTAssertFalse(coord.showForkSheet)
-        XCTAssertNil(coord.harnessNameToFork)
+        XCTAssertNil(coord.harnessIDToFork)
     }
 
     // MARK: - Update sheet
@@ -57,8 +57,8 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
     func testUpdateHarness_whenDetectorNotReady_isNoop() {
         // Coordinator's detector is `.missing`; `.ready` guard fails.
         let coord = makeCoordinator()
-        coord.updateHarness(name: "foo")
-        XCTAssertNil(coord.harnessNameToUpdate)
+        coord.updateHarness(id: "foo")
+        XCTAssertNil(coord.harnessIDToUpdate)
         XCTAssertFalse(coord.showUpdateSheet)
     }
 
@@ -86,11 +86,11 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
     func testHandleTransientSessionExit_trackedUninstallCard_returnsSuccess() {
         let coord = makeCoordinator()
         let cardId = UUID()
-        coord.uninstallCardNames[cardId] = "foo"
+        coord.uninstallCardIDs[cardId] = "foo"
 
         let shouldClose = coord.handleTransientSessionExit(cardId: cardId, succeeded: false)
 
         XCTAssertEqual(shouldClose, false)
-        XCTAssertNil(coord.uninstallCardNames[cardId])
+        XCTAssertNil(coord.uninstallCardIDs[cardId])
     }
 }

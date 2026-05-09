@@ -33,6 +33,8 @@ For TermQLogger usage, log streaming, and `TERMQ_DEBUG` mode, see [debugging.md]
 
 For test structure, what is/isn't testable, and the rule that tests are not optional, see [testing.md](references/testing.md).
 
+For migration code (one-shot upgrades that consume legacy state), see [migrations.md](references/migrations.md). Migrations belong in their own module — not embedded in main code paths.
+
 ## Session Start
 
 See [session-start.md](references/session-start.md) for the session initialization checklist.

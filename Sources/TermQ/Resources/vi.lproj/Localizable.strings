@@ -910,6 +910,9 @@
 "harnesses.group.default" = "Mặc định";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Cục bộ";
+"harnesses.group.quarantined" = "Đã cách ly";
+"harnesses.quarantine.restore" = "Khôi phục";
+"harnesses.quarantine.drop" = "Xóa…";
 "harnesses.group.menu.settings" = "Cài đặt…";
 "harnesses.group.registry %@" = "Registry: %@";
 "harnesses.install.browsing" = "Đang tải harness có sẵn…";
@@ -966,6 +969,9 @@
 "harness.fork.explanation" = "Tạo bản sao cục bộ có thể chỉnh sửa của harness này. Bản sao theo dõi nguồn gốc để bạn có thể xem những thay đổi ở upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Đang fork \"%@\"…";
+"harness.fork.rename.label" = "Tên (không bắt buộc)";
+"harness.fork.rename.hint" = "Để trống để giữ nguyên tên nguồn. Id chính thức của fork mới sẽ là local/<tên>.";
+"harness.fork.identity.collision" = "Đã có một harness được cài đặt với danh tính này.";
 
 
 // MARK: - Harness Update

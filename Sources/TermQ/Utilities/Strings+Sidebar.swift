@@ -170,6 +170,9 @@ extension Strings {
         // Sidebar groups
         static var groupDefault: String { localized("harnesses.group.default") }
         static var groupLocal: String { localized("harnesses.group.local") }
+        static var groupQuarantined: String { localized("harnesses.group.quarantined") }
+        static var quarantineRestore: String { localized("harnesses.quarantine.restore") }
+        static var quarantineDrop: String { localized("harnesses.quarantine.drop") }
         static func groupGitHub(_ org: String) -> String { localized("harnesses.group.github %@", org) }
         static func groupMarketplace(_ name: String) -> String { localized("harnesses.group.registry %@", name) }
 
@@ -439,6 +442,9 @@ extension Strings {
         static func progressTitle(_ name: String) -> String {
             String(format: localized("harness.fork.progress.title %@"), name)
         }
+        static var renameLabel: String { localized("harness.fork.rename.label") }
+        static var renameHint: String { localized("harness.fork.rename.hint") }
+        static var identityCollision: String { localized("harness.fork.identity.collision") }
     }
 }
 

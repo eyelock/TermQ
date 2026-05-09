@@ -20,6 +20,9 @@ struct HarnessesSidebarTab: View {
     var onExport: ((String, String) -> Void)?
     var onFork: ((String) -> Void)?
     var onNewHarness: (() -> Void)?
+    var quarantinedEntries: [QuarantineEntry] = []
+    var onRestoreQuarantine: ((String) -> Void)?
+    var onDropQuarantine: ((String) -> Void)?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     /// Observed so the header spinner reflects in-flight `--check-updates`
@@ -156,7 +159,7 @@ struct HarnessesSidebarTab: View {
 
     @ViewBuilder
     private var harnessList: some View {
-        if repository.harnesses.isEmpty && !repository.isLoading {
+        if repository.harnesses.isEmpty && !repository.isLoading && quarantinedEntries.isEmpty {
             harnessesEmptyState
         } else {
             List(selection: $repository.selectedHarnessId) {
@@ -176,6 +179,22 @@ struct HarnessesSidebarTab: View {
                             .contextMenu { groupContextMenu(for: group) }
                     }
                 }
+
+                if !quarantinedEntries.isEmpty {
+                    DisclosureGroup(
+                        isExpanded: expandedBinding(for: Strings.Harnesses.groupQuarantined)
+                    ) {
+                        ForEach(quarantinedEntries) { entry in
+                            quarantineRow(entry)
+                        }
+                    } label: {
+                        Label(Strings.Harnesses.groupQuarantined, systemImage: "exclamationmark.triangle")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.orange)
+                            .textCase(.uppercase)
+                    }
+                }
             }
             .listStyle(.sidebar)
             .confirmationDialog(
@@ -188,7 +207,7 @@ struct HarnessesSidebarTab: View {
             ) {
                 if let harness = harnessToUninstall {
                     Button(Strings.Harnesses.uninstallAlertConfirm, role: .destructive) {
-                        onUninstall?(harness.name)
+                        onUninstall?(harness.id)
                         harnessToUninstall = nil
                     }
                     Button(Strings.Harnesses.installCancel, role: .cancel) {
@@ -240,7 +259,7 @@ struct HarnessesSidebarTab: View {
                 }
                 Button {
                     NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString("ynh run \(harness.name)", forType: .string)
+                    NSPasteboard.general.setString("ynh run \(harness.id)", forType: .string)
                 } label: {
                     Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
                 }
@@ -294,14 +313,14 @@ struct HarnessesSidebarTab: View {
                 // (advanced, detail-pane only).
                 if !harness.isFork {
                     Button {
-                        onUpdate?(harness.name)
+                        onUpdate?(harness.id)
                     } label: {
                         Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
                     }
                 }
                 if harness.installedFrom?.sourceType == "registry" {
                     Button {
-                        onFork?(harness.name)
+                        onFork?(harness.id)
                     } label: {
                         Label(Strings.Harnesses.forkToLocal, systemImage: "tuningfork")
                     }
@@ -587,7 +606,33 @@ extension HarnessesSidebarTab {
     }
 
     fileprivate func performDeleteLocalHarness(_ harness: Harness) {
-        onUninstall?(harness.name)
+        onUninstall?(harness.id)
+    }
+
+    @ViewBuilder
+    private func quarantineRow(_ entry: QuarantineEntry) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(entry.name)
+                .font(.caption)
+                .fontWeight(.medium)
+            Text(entry.reason)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+                .lineLimit(2)
+        }
+        .padding(.vertical, 2)
+        .contextMenu {
+            Button {
+                onRestoreQuarantine?(entry.name)
+            } label: {
+                Label(Strings.Harnesses.quarantineRestore, systemImage: "arrow.uturn.backward")
+            }
+            Button(role: .destructive) {
+                onDropQuarantine?(entry.name)
+            } label: {
+                Label(Strings.Harnesses.quarantineDrop, systemImage: "trash")
+            }
+        }
     }
 
     private func revealLocalGroupInFinder(_ group: HarnessGroup) {

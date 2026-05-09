@@ -903,6 +903,9 @@
 "harnesses.group.default" = "Προεπιλογή";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Τοπικό";
+"harnesses.group.quarantined" = "Σε καραντίνα";
+"harnesses.quarantine.restore" = "Επαναφορά";
+"harnesses.quarantine.drop" = "Κατάργηση…";
 "harnesses.group.menu.settings" = "Ρυθμίσεις…";
 "harnesses.group.registry %@" = "Μητρώο: %@";
 "harnesses.install.browsing" = "Φόρτωση διαθέσιμων harness…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "Δημιουργεί ένα επεξεργάσιμο τοπικό αντίγραφο αυτού του harness. Το αντίγραφο παρακολουθεί την προέλευσή του ώστε να βλέπετε τι άλλαξε upstream.";
 "harness.fork.button" = "Διακλάδωση";
 "harness.fork.progress.title %@" = "Διακλάδωση του \"%@\"…";
+"harness.fork.rename.label" = "Όνομα (προαιρετικό)";
+"harness.fork.rename.hint" = "Αφήστε κενό για να διατηρηθεί το όνομα πηγής. Το κανονικό id του νέου fork θα είναι local/<όνομα>.";
+"harness.fork.identity.collision" = "Ένα εγκατεστημένο harness έχει ήδη αυτήν την ταυτότητα.";
 
 
 // MARK: - Harness Update

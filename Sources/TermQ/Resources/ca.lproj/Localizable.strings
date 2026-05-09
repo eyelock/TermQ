@@ -903,6 +903,9 @@
 "harnesses.group.default" = "Per defecte";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Local";
+"harnesses.group.quarantined" = "En quarantena";
+"harnesses.quarantine.restore" = "Restaura";
+"harnesses.quarantine.drop" = "Elimina…";
 "harnesses.group.menu.settings" = "Configuració…";
 "harnesses.group.registry %@" = "Registre: %@";
 "harnesses.install.browsing" = "Carregant harnesses disponibles…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "Crea una còpia local editable d'aquest harness. La còpia rastreja el seu origen per tal que puguis veure què ha canviat aigues amunt.";
 "harness.fork.button" = "Bifurca";
 "harness.fork.progress.title %@" = "Bifurcant \"%@\"…";
+"harness.fork.rename.label" = "Nom (opcional)";
+"harness.fork.rename.hint" = "Deixeu-ho buit per conservar el nom de la font. L'id canònic del nou fork serà local/<nom>.";
+"harness.fork.identity.collision" = "Ja hi ha un harness instal·lat amb aquesta identitat.";
 
 
 // MARK: - Harness Update

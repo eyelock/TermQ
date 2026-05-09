@@ -10,6 +10,7 @@ struct ContentView: View {
     @StateObject var harnessRepo = HarnessRepository.shared
     @StateObject var vendorService = VendorService.shared
     @StateObject var updateAvailabilityService = LiveUpdateAvailabilityService.shared
+    @StateObject var migrationCoordinator = HarnessMigrationCoordinator()
     @EnvironmentObject var urlHandler: URLHandler
     @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
     @State private var isZoomed = false
@@ -46,9 +47,8 @@ struct ContentView: View {
                         let harness = harnessRepo.harnesses.first {
                             $0.id == harnessIdOrName || $0.name == harnessIdOrName
                         }
-                        let bareName = harness?.name ?? harnessIdOrName
                         let config = HarnessLaunchConfig(
-                            harnessName: bareName,
+                            harnessID: harness?.id ?? harnessIdOrName,
                             vendorID: "",
                             defaultVendor: harness?.defaultVendor ?? "",
                             focus: nil,
@@ -60,13 +60,16 @@ struct ContentView: View {
                         launchCoordinator.launchHarness(config)
                     },
                     onInstall: { lifecycleCoordinator.showInstallSheet = true },
-                    onUninstall: { name in lifecycleCoordinator.uninstallHarness(name: name) },
-                    onUpdate: { name in lifecycleCoordinator.updateHarness(name: name) },
-                    onExport: { name, dir in
-                        lifecycleCoordinator.exportHarness(name: name, outputDir: dir)
+                    onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
+                    onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
+                    onExport: { id, dir in
+                        lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
                     },
-                    onFork: { name in lifecycleCoordinator.forkHarness(name: name) },
-                    onNewHarness: {}
+                    onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
+                    onNewHarness: {},
+                    quarantinedEntries: migrationCoordinator.quarantinedEntries,
+                    onRestoreQuarantine: { name in restoreQuarantine(name: name) },
+                    onDropQuarantine: { name in dropQuarantine(name: name) }
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
@@ -165,6 +168,20 @@ struct ContentView: View {
                 guard count > 0 else { return }
                 Task { await updateAvailabilityService.refreshAll() }
             }
+            .onChange(of: harnessRepo.lastSchemaVersion) { _, _ in
+                runMigrationIfNeeded()
+            }
+            .onChange(of: ynhDetector.status) { _, _ in
+                runMigrationIfNeeded()
+            }
+            .task {
+                // Redundant trigger: cold-launch initial-state changes can
+                // miss `onChange` semantics. Wait briefly for the detector
+                // to settle, then evaluate. Safe to call repeatedly — the
+                // coordinator's `hasApplied` check makes it idempotent.
+                try? await Task.sleep(nanoseconds: 1_500_000_000)
+                runMigrationIfNeeded()
+            }
             .sheet(item: $viewModel.isEditingCard) { card in
                 CardEditorView(
                     card: card,
@@ -261,16 +278,16 @@ struct ContentView: View {
                 // body races against SwiftUI's layout pass and produces a
                 // small placeholder until resolved.
                 Group {
-                    if let name = lifecycleCoordinator.harnessNameToFork {
-                        forkSheet(for: name)
+                    if let id = lifecycleCoordinator.harnessIDToFork {
+                        forkSheet(for: id)
                     }
                 }
                 .frame(width: 560, height: 420)
             }
             .sheet(isPresented: $lifecycleCoordinator.showUpdateSheet) {
                 Group {
-                    if let name = lifecycleCoordinator.harnessNameToUpdate {
-                        updateSheet(for: name)
+                    if let id = lifecycleCoordinator.harnessIDToUpdate {
+                        updateSheet(for: id)
                     }
                 }
                 .frame(width: 560, height: 420)
@@ -617,6 +634,65 @@ extension ContentView {
         "'" + str.replacingOccurrences(of: "'", with: "'\\''") + "'"
     }
 
+    /// Run the canonical-id migration coordinator at most once per
+    /// session. Called from `onChange` of detector status and harness
+    /// list state so it fires whenever the relevant inputs settle.
+    private func runMigrationIfNeeded() {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else {
+            TermQLogger.session.debug(
+                "HarnessMigration: skipped — detector not ready"
+            )
+            return
+        }
+        let schema = harnessRepo.lastSchemaVersion
+        if migrationCoordinator.hasApplied(forSchema: schema ?? 1) {
+            TermQLogger.session.debug(
+                "HarnessMigration: skipped — already applied for schema \(schema ?? 1)"
+            )
+            return
+        }
+        TermQLogger.session.debug(
+            "HarnessMigration: dispatching runIfNeeded(schema: \(schema.map(String.init) ?? "nil"))"
+        )
+        Task {
+            var env = ProcessInfo.processInfo.environment
+            if let override = ynhDetector.ynhHomeOverride {
+                env["YNH_HOME"] = override
+            }
+            await migrationCoordinator.runIfNeeded(
+                schemaVersion: schema,
+                ynhPath: ynhPath,
+                environment: env
+            )
+            // Refresh the harness list after migration so the sidebar
+            // picks up renamed/quarantined entries.
+            await harnessRepo.refresh()
+        }
+    }
+
+    private func restoreQuarantine(name: String) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        Task {
+            var env = ProcessInfo.processInfo.environment
+            if let override = ynhDetector.ynhHomeOverride { env["YNH_HOME"] = override }
+            await migrationCoordinator.restoreQuarantine(
+                name: name, ynhPath: ynhPath, environment: env
+            )
+            await harnessRepo.refresh()
+        }
+    }
+
+    private func dropQuarantine(name: String) {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        Task {
+            var env = ProcessInfo.processInfo.environment
+            if let override = ynhDetector.ynhHomeOverride { env["YNH_HOME"] = override }
+            await migrationCoordinator.dropQuarantine(
+                name: name, ynhPath: ynhPath, environment: env
+            )
+        }
+    }
+
     /// Close a transient harness operation card once its shell has exited.
     private func closeHarnessCard(_ cardId: UUID) {
         guard let card = viewModel.tabManager.card(for: cardId) else { return }
@@ -757,34 +833,34 @@ extension ContentView {
                     launchCoordinator.requestLaunch(
                         harnessId: harness.id, workingDirectory: path, branch: nil)
                 },
-                onUpdate: { name in lifecycleCoordinator.updateHarness(name: name) },
-                onUninstall: { name in lifecycleCoordinator.uninstallHarness(name: name) },
-                onFork: { name in lifecycleCoordinator.forkHarness(name: name) },
-                onExport: { name, dir in
-                    lifecycleCoordinator.exportHarness(name: name, outputDir: dir)
+                onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
+                onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
+                onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
+                onExport: { id, dir in
+                    lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
                 }
             )
         }
     }
 
     @ViewBuilder
-    func updateSheet(for name: String) -> some View {
+    func updateSheet(for id: String) -> some View {
         UpdateHarnessSheet(
-            harnessName: name,
+            harnessID: id,
             detector: ynhDetector,
             repository: harnessRepo
         )
     }
 
     @ViewBuilder
-    func forkSheet(for name: String) -> some View {
-        if let harness = harnessRepo.harnesses.first(where: { $0.name == name }) {
+    func forkSheet(for id: String) -> some View {
+        if let harness = harnessRepo.harnesses.first(where: { $0.id == id }) {
             ForkHarnessSheet(
                 harness: harness,
                 detector: ynhDetector,
                 repository: harnessRepo,
-                onForkCompleted: { newName in
-                    lifecycleCoordinator.handleForkCompleted(newName: newName)
+                onForkCompleted: { newID in
+                    lifecycleCoordinator.handleForkCompleted(newID: newID)
                 }
             )
         }

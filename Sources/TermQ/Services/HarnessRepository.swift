@@ -52,6 +52,10 @@ final class HarnessRepository: ObservableObject {
     /// Capabilities string from the most recent `ynh ls` envelope.
     /// Used by `HarnessDetailViewModel.phase1Capable` to gate Phase 1 affordances.
     @Published private(set) var lastCapabilities: String?
+    /// On-disk schema version from the most recent `ynh ls` envelope.
+    /// `2` means YNH has migrated to canonical-id shape. Lower values
+    /// (or `nil`) signal the migration coordinator should run.
+    @Published private(set) var lastSchemaVersion: Int?
     /// The id of the selected harness — `Harness.id` (namespace-qualified
     /// when present, bare name otherwise). Identity is canonical: writers
     /// always pass `harness.id`, never `harness.name`.
@@ -131,6 +135,7 @@ final class HarnessRepository: ObservableObject {
             let decoded = response.harnesses
             listState = .loaded(decoded)
             lastCapabilities = response.capabilities
+            lastSchemaVersion = response.schemaVersion
 
             // One-shot migration: rewrite any persisted association whose
             // value is a bare `name` for a now-namespaced harness so that
@@ -141,19 +146,13 @@ final class HarnessRepository: ObservableObject {
                 didRunIdentityMigration = true
             }
 
-            // Clear or normalize selection. If the selection matches a
-            // canonical id, keep it. Tolerate bare-name selections set by
-            // legacy worktree associations between persistence read and
-            // migration completion — promote to canonical id rather than
-            // dropping the user's intent.
-            if let key = selectedHarnessId {
-                if decoded.contains(where: { $0.id == key }) {
-                    // Already canonical — no-op.
-                } else if let match = decoded.first(where: { $0.name == key }) {
-                    selectedHarnessId = match.id
-                } else {
-                    selectedHarnessId = nil
-                }
+            // Clear selection if it does not match a canonical id. Post
+            // canonical-id cutover, `selectedHarnessId` is always canonical;
+            // anything else is stale state from before migration.
+            if let key = selectedHarnessId,
+                !decoded.contains(where: { $0.id == key })
+            {
+                selectedHarnessId = nil
             }
         } catch {
             TermQLogger.ui.error(
@@ -170,8 +169,8 @@ final class HarnessRepository: ObservableObject {
     /// Runs `ynh info <name> --format json` then `ynd compose <info.path>`.
     /// Results are cached per session; call ``invalidateDetail(for:)`` after
     /// mutations to force a refetch.
-    func fetchDetail(for name: String) async {
-        if let cached = detailCache[name] {
+    func fetchDetail(for id: String) async {
+        if let cached = detailCache[id] {
             selectedDetail = cached
             detailError = nil
             return
@@ -187,8 +186,8 @@ final class HarnessRepository: ObservableObject {
         defer { isLoadingDetail = false }
 
         do {
-            let detail = try await buildDetail(name: name, ynhPath: ynhPath, yndPath: yndPath)
-            detailCache[name] = detail
+            let detail = try await buildDetail(id: id, ynhPath: ynhPath, yndPath: yndPath)
+            detailCache[id] = detail
             selectedDetail = detail
         } catch let error as YNHDetectionError {
             if TermQLogger.fileLoggingEnabled {
@@ -216,11 +215,11 @@ final class HarnessRepository: ObservableObject {
         }
     }
 
-    private func buildDetail(name: String, ynhPath: String, yndPath: String?) async throws -> HarnessDetail {
+    private func buildDetail(id: String, ynhPath: String, yndPath: String?) async throws -> HarnessDetail {
         let env = ynhEnvironment()
         let infoResult = try await commandRunner.run(
             executable: ynhPath,
-            arguments: ["info", name, "--format", "json"],
+            arguments: ["info", id, "--format", "json"],
             environment: env
         )
         guard infoResult.didSucceed else {
@@ -245,10 +244,10 @@ final class HarnessRepository: ObservableObject {
         return HarnessDetail(info: info, composition: composition)
     }
 
-    /// Invalidate cached detail for a specific harness (call after mutations). Pass `harness.name`.
-    func invalidateDetail(for name: String) {
-        detailCache.removeValue(forKey: name)
-        if selectedHarness?.name == name {
+    /// Invalidate cached detail for a specific harness (call after mutations). Pass `harness.id`.
+    func invalidateDetail(for id: String) {
+        detailCache.removeValue(forKey: id)
+        if selectedHarness?.id == id {
             selectedDetail = nil
         }
     }

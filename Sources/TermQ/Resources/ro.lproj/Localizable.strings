@@ -903,6 +903,9 @@
 "harnesses.group.default" = "Implicit";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Local";
+"harnesses.group.quarantined" = "În carantină";
+"harnesses.quarantine.restore" = "Restaurare";
+"harnesses.quarantine.drop" = "Eliminare…";
 "harnesses.group.menu.settings" = "Setări…";
 "harnesses.group.registry %@" = "Registru: %@";
 "harnesses.install.browsing" = "Se încarcă harness-urile disponibile…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "Creează o copie locală editabilă a acestui harness. Copia îi urmărește originea pentru a putea vedea ce s-a schimbat upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Se creează fork-ul \"%@\"…";
+"harness.fork.rename.label" = "Nume (opțional)";
+"harness.fork.rename.hint" = "Lasă gol pentru a păstra numele sursei. Id-ul canonic al noului fork va fi local/<nume>.";
+"harness.fork.identity.collision" = "Un harness instalat are deja această identitate.";
 
 
 // MARK: - Harness Update

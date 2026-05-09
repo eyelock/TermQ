@@ -908,6 +908,9 @@
 "harnesses.group.default" = "Domyślna";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokalna";
+"harnesses.group.quarantined" = "Poddany kwarantannie";
+"harnesses.quarantine.restore" = "Przywróć";
+"harnesses.quarantine.drop" = "Usuń…";
 "harnesses.group.menu.settings" = "Ustawienia…";
 "harnesses.group.registry %@" = "Rejestr: %@";
 "harnesses.install.browsing" = "Wczytywanie dostępnych harnessy…";
@@ -964,6 +967,9 @@
 "harness.fork.explanation" = "Tworzy edytowalną kopię lokalną tego harness. Kopia śledzi swoje źródło, dzięki czemu możesz zobaczyć, co zmieniło się upstream.";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "Tworzenie forka \"%@\"…";
+"harness.fork.rename.label" = "Nazwa (opcjonalne)";
+"harness.fork.rename.hint" = "Zostaw puste, aby zachować nazwę źródłową. Kanoniczny id nowego forka to local/<nazwa>.";
+"harness.fork.identity.collision" = "Zainstalowany harness ma już tę tożsamość.";
 
 
 // MARK: - Harness Update

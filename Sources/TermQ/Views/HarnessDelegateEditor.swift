@@ -52,8 +52,8 @@ final class HarnessDelegateEditor: ObservableObject {
 
     /// Refresh detail after an externally-driven add (the unified picker
     /// owns the mutation; we own the reload).
-    func reloadAfterAdd(harnessName: String) async {
-        await reloadDetail(harnessName: harnessName)
+    func reloadAfterAdd(harnessID: String) async {
+        await reloadDetail(harnessID: harnessID)
     }
 
     func requestRemove(_ target: DelegateEditTarget) {
@@ -65,10 +65,10 @@ final class HarnessDelegateEditor: ObservableObject {
     /// passing the target captured *before* the confirmation dialog
     /// dismisses — the dismissal nils `removalTarget` faster than the
     /// destructive button's action runs.
-    func confirmRemove(target: DelegateEditTarget, harnessName: String) async {
+    func confirmRemove(target: DelegateEditTarget, harnessID: String) async {
         guard let ynhPath = readyYnhPath() else { return }
         let opts = DelegateRemoveOptions(
-            harness: harnessName, sourceURL: target.sourceURL, path: target.path
+            harness: harnessID, sourceURL: target.sourceURL, path: target.path
         )
         isMutating = true
         await mutator.remove(opts, ynhPath: ynhPath, environment: ynhEnvironment())
@@ -76,20 +76,20 @@ final class HarnessDelegateEditor: ObservableObject {
 
         if mutator.succeeded {
             removalTarget = nil
-            await reloadDetail(harnessName: harnessName)
+            await reloadDetail(harnessID: harnessID)
         } else {
             errorMessage = mutator.errorMessage
         }
     }
 
     func confirmEdit(
-        harnessName: String,
+        harnessID: String,
         newPath: String?,
         newRef: String?
     ) async {
         guard let target = editingTarget, let ynhPath = readyYnhPath() else { return }
         let opts = DelegateUpdateOptions(
-            harness: harnessName,
+            harness: harnessID,
             sourceURL: target.sourceURL,
             fromPath: target.path,
             path: newPath,
@@ -101,7 +101,7 @@ final class HarnessDelegateEditor: ObservableObject {
 
         if mutator.succeeded {
             editingTarget = nil
-            await reloadDetail(harnessName: harnessName)
+            await reloadDetail(harnessID: harnessID)
         } else {
             errorMessage = mutator.errorMessage
         }
@@ -121,9 +121,9 @@ final class HarnessDelegateEditor: ObservableObject {
         return env
     }
 
-    private func reloadDetail(harnessName: String) async {
-        repository.invalidateDetail(for: harnessName)
-        await repository.fetchDetail(for: harnessName)
+    private func reloadDetail(harnessID: String) async {
+        repository.invalidateDetail(for: harnessID)
+        await repository.fetchDetail(for: harnessID)
     }
 }
 
@@ -132,7 +132,7 @@ final class HarnessDelegateEditor: ObservableObject {
 /// Sheet presented when the user clicks Edit on a delegate. Edits ref + path.
 struct EditDelegateSheet: View {
     @ObservedObject var editor: HarnessDelegateEditor
-    let harnessName: String
+    let harnessID: String
     let target: DelegateEditTarget
 
     @State private var refText: String = ""
@@ -208,7 +208,7 @@ struct EditDelegateSheet: View {
                 Button(Strings.Harnesses.editIncludeSave) {
                     Task {
                         await editor.confirmEdit(
-                            harnessName: harnessName,
+                            harnessID: harnessID,
                             newPath: pathText,
                             newRef: refText
                         )
@@ -231,7 +231,7 @@ struct EditDelegateSheet: View {
 
     private var commandPreview: String {
         let opts = DelegateUpdateOptions(
-            harness: harnessName,
+            harness: harnessID,
             sourceURL: target.sourceURL,
             fromPath: target.path,
             path: pathText,

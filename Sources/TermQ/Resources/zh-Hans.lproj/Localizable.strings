@@ -903,6 +903,9 @@
 "harnesses.group.default" = "默认";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "本地";
+"harnesses.group.quarantined" = "已隔离";
+"harnesses.quarantine.restore" = "恢复";
+"harnesses.quarantine.drop" = "丢弃…";
 "harnesses.group.menu.settings" = "设置…";
 "harnesses.group.registry %@" = "注册表: %@";
 "harnesses.install.browsing" = "正在加载可用 Harness…";
@@ -959,6 +962,9 @@
 "harness.fork.explanation" = "创建此 harness 的可编辑本地副本。该副本跟踪其来源，以便您查看上游的变更。";
 "harness.fork.button" = "Fork";
 "harness.fork.progress.title %@" = "正在 Fork \"%@\"…";
+"harness.fork.rename.label" = "名称（可选）";
+"harness.fork.rename.hint" = "留空以保留源名称。新 fork 的规范 id 将为 local/<名称>。";
+"harness.fork.identity.collision" = "已有安装的 harness 使用此标识。";
 
 
 // MARK: - Harness Update

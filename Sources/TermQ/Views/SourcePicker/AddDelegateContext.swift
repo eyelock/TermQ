@@ -19,7 +19,7 @@ import TermQShared
 @MainActor
 final class AddDelegateContext: SourcePickerContext {
     let title: String
-    let targetHarnessName: String
+    let targetHarnessID: String
     let installedHarnesses: [Harness]
     let onApplied: () -> Void
 
@@ -51,14 +51,14 @@ final class AddDelegateContext: SourcePickerContext {
     }
 
     init(
-        targetHarnessName: String,
+        targetHarnessID: String,
         installedHarnesses: [Harness],
         detector: any YNHDetectorProtocol = YNHDetector.shared,
         mutator: DelegateMutator = DelegateMutator(),
         onApplied: @escaping () -> Void
     ) {
         self.title = Strings.Harnesses.addDelegateTitle
-        self.targetHarnessName = targetHarnessName
+        self.targetHarnessID = targetHarnessID
         self.installedHarnesses = installedHarnesses
         self.detector = detector
         self.mutator = mutator
@@ -80,7 +80,7 @@ final class AddDelegateContext: SourcePickerContext {
             .lowercased()
         return
             installedHarnesses
-            .filter { $0.name != targetHarnessName }
+            .filter { $0.id != targetHarnessID }
             .filter {
                 guard !query.isEmpty else { return true }
                 if $0.name.lowercased().contains(query) { return true }
@@ -94,7 +94,7 @@ final class AddDelegateContext: SourcePickerContext {
     }
 
     func pickHarness(_ harness: Harness) {
-        let source = harness.installedFrom?.source ?? harness.name
+        let source = harness.installedFrom?.source ?? harness.id
         let sourceType = harness.installedFrom?.sourceType ?? "local"
         libraryStage = .configuring(
             PickedSource(
@@ -159,7 +159,7 @@ final class AddDelegateContext: SourcePickerContext {
 
     private func commandPreview(sourceURL: String, ref: String, path: String) -> String {
         let opts = DelegateAddOptions(
-            harness: targetHarnessName,
+            harness: targetHarnessID,
             sourceURL: sourceURL,
             ref: ref.trimmingCharacters(in: .whitespaces).nilIfEmpty,
             path: path.trimmingCharacters(in: .whitespaces).nilIfEmpty
@@ -178,7 +178,7 @@ final class AddDelegateContext: SourcePickerContext {
             return
         }
         let opts = DelegateAddOptions(
-            harness: targetHarnessName,
+            harness: targetHarnessID,
             sourceURL: sourceURL,
             ref: ref.trimmingCharacters(in: .whitespaces).nilIfEmpty,
             path: path.trimmingCharacters(in: .whitespaces).nilIfEmpty

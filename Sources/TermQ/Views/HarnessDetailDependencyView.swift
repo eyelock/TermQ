@@ -84,11 +84,11 @@ struct HarnessDetailDependencyView: View {
         .modifier(
             IncludeEditorOverlay(
                 editor: includeEditor,
-                harnessName: harness.name,
+                harnessID: harness.id,
                 existingIncludes: existingIncludeTargets
             )
         )
-        .modifier(DelegateEditorOverlay(editor: delegateEditor, harnessName: harness.name))
+        .modifier(DelegateEditorOverlay(editor: delegateEditor, harnessID: harness.id))
     }
 
     /// Whether the dependencies section should render at all.
@@ -545,7 +545,7 @@ struct GitPickPill: View {
 /// (no extra view in the hierarchy) when no editor is provided.
 private struct IncludeEditorOverlay: ViewModifier {
     let editor: HarnessIncludeEditor?
-    let harnessName: String
+    let harnessID: String
     let existingIncludes: [IncludeEditTarget]
 
     func body(content: Content) -> some View {
@@ -553,7 +553,7 @@ private struct IncludeEditorOverlay: ViewModifier {
             content.modifier(
                 IncludeEditorActiveOverlay(
                     editor: editor,
-                    harnessName: harnessName,
+                    harnessID: harnessID,
                     existingIncludes: existingIncludes
                 )
             )
@@ -565,7 +565,7 @@ private struct IncludeEditorOverlay: ViewModifier {
 
 private struct IncludeEditorActiveOverlay: ViewModifier {
     @ObservedObject var editor: HarnessIncludeEditor
-    let harnessName: String
+    let harnessID: String
     let existingIncludes: [IncludeEditTarget]
 
     func body(content: Content) -> some View {
@@ -580,7 +580,7 @@ private struct IncludeEditorActiveOverlay: ViewModifier {
                 // editor.removalTarget before the destructive action's body
                 // runs, so reading from the editor after dismissal is too late.
                 Button(Strings.Harnesses.removeIncludeConfirm, role: .destructive) {
-                    Task { await editor.confirmRemove(target: target, harnessName: harnessName) }
+                    Task { await editor.confirmRemove(target: target, harnessID: harnessID) }
                 }
                 Button(Strings.Harnesses.installCancel, role: .cancel) {
                     editor.removalTarget = nil
@@ -589,12 +589,12 @@ private struct IncludeEditorActiveOverlay: ViewModifier {
                 Text(Strings.Harnesses.removeIncludeConfirmMessage(GitURLHelper.shortURL(target.sourceURL)))
             }
             .sheet(item: $editor.editingTarget) { target in
-                EditIncludeSheet(editor: editor, harnessName: harnessName, target: target)
+                EditIncludeSheet(editor: editor, harnessID: harnessID, target: target)
                     .frame(width: 540, height: 620)
             }
             .sheet(isPresented: $editor.isAddingInclude) {
                 AddIncludeSheetHost(
-                    harnessName: harnessName,
+                    harnessID: harnessID,
                     editor: editor,
                     existingIncludes: existingIncludes
                 )
@@ -614,12 +614,12 @@ private struct IncludeEditorActiveOverlay: ViewModifier {
 
 private struct DelegateEditorOverlay: ViewModifier {
     let editor: HarnessDelegateEditor?
-    let harnessName: String
+    let harnessID: String
 
     func body(content: Content) -> some View {
         if let editor {
             content.modifier(
-                DelegateEditorActiveOverlay(editor: editor, harnessName: harnessName)
+                DelegateEditorActiveOverlay(editor: editor, harnessID: harnessID)
             )
         } else {
             content
@@ -630,7 +630,7 @@ private struct DelegateEditorOverlay: ViewModifier {
 private struct DelegateEditorActiveOverlay: ViewModifier {
     @ObservedObject var editor: HarnessDelegateEditor
     @ObservedObject private var harnessRepo = HarnessRepository.shared
-    let harnessName: String
+    let harnessID: String
 
     func body(content: Content) -> some View {
         content
@@ -642,7 +642,7 @@ private struct DelegateEditorActiveOverlay: ViewModifier {
             ) { target in
                 Button(Strings.Harnesses.removeIncludeConfirm, role: .destructive) {
                     Task {
-                        await editor.confirmRemove(target: target, harnessName: harnessName)
+                        await editor.confirmRemove(target: target, harnessID: harnessID)
                     }
                 }
                 Button(Strings.Harnesses.installCancel, role: .cancel) {
@@ -654,15 +654,15 @@ private struct DelegateEditorActiveOverlay: ViewModifier {
                 )
             }
             .sheet(item: $editor.editingTarget) { target in
-                EditDelegateSheet(editor: editor, harnessName: harnessName, target: target)
+                EditDelegateSheet(editor: editor, harnessID: harnessID, target: target)
                     .frame(width: 540, height: 360)
             }
             .sheet(isPresented: $editor.isAddingDelegate) {
                 AddDelegateSheetHost(
-                    targetHarnessName: harnessName,
+                    targetHarnessID: harnessID,
                     installedHarnesses: harnessRepo.harnesses,
                     onApplied: {
-                        Task { await editor.reloadAfterAdd(harnessName: harnessName) }
+                        Task { await editor.reloadAfterAdd(harnessID: harnessID) }
                     }
                 )
                 .frame(width: 520, height: 540)
@@ -682,23 +682,23 @@ private struct DelegateEditorActiveOverlay: ViewModifier {
 /// Thin host that constructs an `AddIncludeContext` and presents the
 /// unified `SourcePicker`. Mirrors `AddDelegateSheetHost`.
 private struct AddIncludeSheetHost: View {
-    let harnessName: String
+    let harnessID: String
     let editor: HarnessIncludeEditor
     let existingIncludes: [IncludeEditTarget]
 
     @StateObject private var context: AddIncludeContext
 
     init(
-        harnessName: String,
+        harnessID: String,
         editor: HarnessIncludeEditor,
         existingIncludes: [IncludeEditTarget]
     ) {
-        self.harnessName = harnessName
+        self.harnessID = harnessID
         self.editor = editor
         self.existingIncludes = existingIncludes
         _context = StateObject(
             wrappedValue: AddIncludeContext(
-                harnessName: harnessName,
+                harnessID: harnessID,
                 existingIncludes: existingIncludes,
                 editor: editor
             )
@@ -715,23 +715,23 @@ private struct AddIncludeSheetHost: View {
 /// Thin host that constructs an `AddDelegateContext` and presents the
 /// unified `SourcePicker`. Mirrors `HarnessInstallSheet`.
 private struct AddDelegateSheetHost: View {
-    let targetHarnessName: String
+    let targetHarnessID: String
     let installedHarnesses: [Harness]
     let onApplied: () -> Void
 
     @StateObject private var context: AddDelegateContext
 
     init(
-        targetHarnessName: String,
+        targetHarnessID: String,
         installedHarnesses: [Harness],
         onApplied: @escaping () -> Void
     ) {
-        self.targetHarnessName = targetHarnessName
+        self.targetHarnessID = targetHarnessID
         self.installedHarnesses = installedHarnesses
         self.onApplied = onApplied
         _context = StateObject(
             wrappedValue: AddDelegateContext(
-                targetHarnessName: targetHarnessName,
+                targetHarnessID: targetHarnessID,
                 installedHarnesses: installedHarnesses,
                 onApplied: onApplied
             )

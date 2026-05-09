@@ -16,14 +16,14 @@ struct HarnessIncludePicker: View {
 
     enum PickerMode {
         case standalone
-        case wizard(harnessName: String)
+        case wizard(harnessID: String)
     }
 
     enum Step { case skills, chooseHarness, review }
 
     @State private var step: Step = .skills
     @State private var selectedPicks: Set<String> = []
-    @State private var targetHarnessName: String?
+    @State private var targetHarnessID: String?
     @StateObject private var applier = IncludeApplier()
     @State private var applied = false
     @State private var isLoadingPicks = false
@@ -54,8 +54,8 @@ struct HarnessIncludePicker: View {
         .onAppear {
             resolvedPicks = plugin.picks
             selectedPicks = Set(plugin.picks)
-            if case .wizard(let name) = mode {
-                targetHarnessName = name
+            if case .wizard(let id) = mode {
+                targetHarnessID = id
             }
             let needsLoad =
                 plugin.skillsState == .pending
@@ -205,7 +205,7 @@ struct HarnessIncludePicker: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
             } else {
-                List(harnessRepository.harnesses, selection: $targetHarnessName) {
+                List(harnessRepository.harnesses, selection: $targetHarnessID) {
                     harness in
                     VStack(alignment: .leading, spacing: 2) {
                         Text(harness.name).font(.body)
@@ -213,7 +213,7 @@ struct HarnessIncludePicker: View {
                             Text(desc).font(.caption).foregroundColor(.secondary).lineLimit(1)
                         }
                     }
-                    .tag(harness.name)
+                    .tag(harness.id)
                     .padding(.vertical, 2)
                 }
                 .listStyle(.sidebar)
@@ -227,7 +227,7 @@ struct HarnessIncludePicker: View {
         VStack(alignment: .leading, spacing: 16) {
             Group {
                 LabeledContent(Strings.Marketplace.Picker.reviewPlugin, value: plugin.name)
-                LabeledContent(Strings.Marketplace.Picker.reviewHarness, value: targetHarnessName ?? "—")
+                LabeledContent(Strings.Marketplace.Picker.reviewHarness, value: targetHarnessID ?? "—")
                 if !resolvedPicks.isEmpty {
                     LabeledContent(Strings.Marketplace.Picker.reviewArtifacts) {
                         if selectedPicks.count == resolvedPicks.count {
@@ -262,7 +262,7 @@ struct HarnessIncludePicker: View {
     }
 
     private var commandPreview: String {
-        var parts = ["ynh", "include", "add", targetHarnessName ?? "<harness>"]
+        var parts = ["ynh", "include", "add", targetHarnessID ?? "<harness>"]
         let (resolvedURL, resolvedPath) = resolvedSource
         parts.append(resolvedURL)
         if let path = resolvedPath { parts += ["--path", path] }
@@ -305,7 +305,7 @@ struct HarnessIncludePicker: View {
         VStack(spacing: 12) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 44)).foregroundColor(.green)
-            Text(Strings.Marketplace.Picker.success(targetHarnessName ?? "harness"))
+            Text(Strings.Marketplace.Picker.success(targetHarnessID ?? "harness"))
                 .font(.headline)
             Text(plugin.name).font(.subheadline).foregroundColor(.secondary)
             Button(Strings.Marketplace.Picker.done) { onDone() }
@@ -347,8 +347,8 @@ struct HarnessIncludePicker: View {
     private var canAdvance: Bool {
         switch step {
         case .skills: return !isLoadingPicks
-        case .chooseHarness: return targetHarnessName != nil
-        case .review: return ynhPath != nil && targetHarnessName != nil
+        case .chooseHarness: return targetHarnessID != nil
+        case .review: return ynhPath != nil && targetHarnessID != nil
         }
     }
 
@@ -401,7 +401,7 @@ struct HarnessIncludePicker: View {
     }
 
     private func applyInclude() async {
-        guard let ynhPath, let harness = targetHarnessName else { return }
+        guard let ynhPath, let harness = targetHarnessID else { return }
         let pick: [String]
         if selectedPicks.isEmpty || selectedPicks.count == resolvedPicks.count {
             pick = []
