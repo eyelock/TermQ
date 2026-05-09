@@ -203,6 +203,9 @@ struct RunWithFocusSheet: View {
 
     private func loadDetail(for harnessId: String) {
         guard !harnessId.isEmpty else { return }
+        // Always bypass the session cache — the sheet needs live composition data
+        // since the user may have edited the harness's plugin.json since last open.
+        harnessRepository.invalidateDetail(for: harnessId)
         isLoadingDetail = true
         Task {
             await harnessRepository.fetchDetail(for: harnessId)
