@@ -1,4 +1,4 @@
-# Tutorial 15: Remote PRs
+# Remote PRs
 
 In this tutorial you'll use TermQ's Remote PR feed to monitor open pull requests for your repositories, launch harness sessions directly against a PR's checked-out worktree, and keep the list tidy with automatic prioritisation and pruning.
 
