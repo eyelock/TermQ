@@ -57,6 +57,12 @@ protocol YNHPersistenceProtocol: AnyObject {
     /// Sets or clears the last-used review focus for a repo.
     func setRunFocus(_ focus: String?, for repoPath: String)
 
+    /// Returns the per-repo Remote PR feed cap override, if set. `nil` means use the global setting.
+    func remotePRFeedCap(for repoPath: String) -> Int?
+
+    /// Sets or clears the per-repo Remote PR feed cap override. Pass `nil` to revert to global.
+    func setRemotePRFeedCap(_ cap: Int?, for repoPath: String)
+
     /// Removes all worktree and repo-level associations for a harness (called after uninstall).
     func removeAllAssociations(for harnessName: String)
 }

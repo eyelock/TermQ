@@ -69,28 +69,46 @@ extension WorktreeSidebarView {
         } else if let prs = prService.prsByRepo[repo.path] {
             let worktrees = viewModel.worktrees[repo.id] ?? []
             let matches = GitHubPRService.matchPRsToWorktrees(prs: prs, worktrees: worktrees)
+            let cap = ynhPersistence.remotePRFeedCap(for: repo.path) ?? settings.remotePRFeedCap
+            let (feed, overflow) = GitHubPRService.prioritisedFeed(
+                prs: prs, login: prService.login(for: repo.path), matches: matches, cap: cap)
+            let hasClosedPRWorktrees = hasClosedPRWorktrees(worktrees: worktrees, openPRs: prs)
 
-            if prs.isEmpty {
+            if feed.isEmpty {
                 Text(Strings.Sidebar.worktreesEmpty)
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .padding(.leading, 4)
             } else {
-                ForEach(prs) { pr in
+                ForEach(feed) { pr in
                     prRow(pr, repo: repo, worktreePath: matches[pr.number])
+                }
+                if overflow > 0 {
+                    Button {
+                        // TODO: open Repository Detail sheet
+                    } label: {
+                        Text(Strings.RemotePRs.overflowMore(overflow))
+                            .font(.caption)
+                            .foregroundColor(.accentColor)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.leading, 4)
+                    .padding(.top, 2)
                 }
             }
 
-            Button {
-                Task { await analysePruneClosedPRs(repo: repo) }
-            } label: {
-                Label(Strings.RemotePRs.pruneClosedPRs, systemImage: "xmark.circle")
-                    .font(.caption)
-                    .foregroundColor(.accentColor)
+            if hasClosedPRWorktrees {
+                Button {
+                    Task { await analysePruneClosedPRs(repo: repo) }
+                } label: {
+                    Label(Strings.RemotePRs.pruneClosedPRs, systemImage: "xmark.circle")
+                        .font(.caption)
+                        .foregroundColor(.accentColor)
+                }
+                .buttonStyle(.plain)
+                .padding(.leading, 4)
+                .padding(.top, 2)
             }
-            .buttonStyle(.plain)
-            .padding(.leading, 4)
-            .padding(.top, 2)
         } else {
             Text(Strings.Sidebar.worktreesPlaceholder)
                 .font(.caption)
@@ -102,13 +120,25 @@ extension WorktreeSidebarView {
         }
     }
 
+    /// Returns true if any local `pr-NNN` worktree is for a closed PR (not in the open list).
+    private func hasClosedPRWorktrees(
+        worktrees: [GitWorktree], openPRs: [GitHubPR]
+    ) -> Bool {
+        let openNumbers = Set(openPRs.map(\.number))
+        return worktrees.contains { wt in
+            let last = URL(fileURLWithPath: wt.path).lastPathComponent
+            guard last.hasPrefix("pr-"), let n = Int(last.dropFirst(3)) else { return false }
+            return !openNumbers.contains(n)
+        }
+    }
+
     // MARK: - PR Row (Phase 4)
 
     @ViewBuilder
     private func prRow(
         _ pr: GitHubPR, repo: ObservableRepository, worktreePath: String?
     ) -> some View {
-        let login = ghProbe.status.login
+        let login = prService.login(for: repo.path) ?? ghProbe.status.login
         let badges = PRRoleBadges(
             isAuthor: login.map { pr.author.login == $0 } ?? false,
             isReviewRequested: login.map { viewer in pr.reviewRequests.contains { $0.login == viewer } } ?? false,

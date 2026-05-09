@@ -11,11 +11,12 @@ struct WorktreeSidebarView: View {
     var onRunWithFocus: ((HarnessLaunchConfig) -> Void)?
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
-    @ObservedObject private var ynhPersistence: YNHPersistence = .shared
+    @ObservedObject var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @ObservedObject var prService: GitHubPRService = .shared
     @ObservedObject var ghProbe: GhCliProbe = .shared
+    @Environment(SettingsStore.self) var settings
     // Per-window mode (Local vs Remote). Transient — not persisted.
     @State var sidebarMode: SidebarMode = .local
     // Sheets and alerts for PR operations.
@@ -435,6 +436,7 @@ extension WorktreeSidebarView {
                     }
                 }
                 .buttonStyle(.plain)
+                .help(worktree.branch ?? "")
                 Button {
                     openRemoteCommit(worktree: worktree, repo: repo)
                 } label: {
@@ -450,16 +452,25 @@ extension WorktreeSidebarView {
             Spacer()
 
             // PR link badge: shown when this worktree's head matches an open PR.
+            // Tapping launches the Run with Focus sheet for that PR.
             if let prNumber = linkedPRNumber(for: worktree, repo: repo) {
-                Text(Strings.RemotePRs.linkedPR(prNumber))
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal, 4)
-                    .padding(.vertical, 1)
-                    .background(
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(Color.secondary.opacity(0.15))
-                    )
+                let pr = (prService.prsByRepo[repo.path] ?? []).first { $0.number == prNumber }
+                Button {
+                    runWithFocusContext = RunWithFocusContext(
+                        worktree: worktree, repo: repo, prNumber: prNumber)
+                } label: {
+                    Text(Strings.RemotePRs.linkedPR(prNumber))
+                        .font(.caption2)
+                        .foregroundColor(.accentColor)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 1)
+                        .background(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color.accentColor.opacity(0.1))
+                        )
+                }
+                .buttonStyle(.plain)
+                .help(pr.map { "#\($0.number) \($0.title)" } ?? Strings.RemotePRs.linkedPR(prNumber))
             }
 
             harnessRowBadge(for: worktree, repo: repo)

@@ -73,6 +73,11 @@ extension Strings {
         static var runRun: String { localized("remote.prs.run.run") }
         static var runCancel: String { localized("remote.prs.run.cancel") }
 
+        // MARK: - Feed overflow
+        static func overflowMore(_ count: Int) -> String {
+            String(format: localized("remote.prs.overflow.more %lld"), count)
+        }
+
         // MARK: - Prune Closed PRs
         static var pruneClosedPRs: String { localized("remote.prs.prune.closed") }
         static func pruneClosedPRsTitle(_ count: Int) -> String {

@@ -160,9 +160,11 @@ final class GitHubPRServiceRefreshTests: XCTestCase {
         let service = GitHubPRService(ghProbe: probe, commandRunner: runner)
 
         await service.refresh(repoPath: "/tmp/repo")
+        // First refresh: 2 calls (gh api user + gh pr list). Login is now cached.
+        let countAfterFirst = callCount
         await service.refresh(repoPath: "/tmp/repo")  // should be a no-op (within TTL)
 
-        XCTAssertEqual(callCount, 1)
+        XCTAssertEqual(callCount, countAfterFirst)
     }
 
     func test_refresh_forceBypassesTTL() async {
@@ -173,9 +175,11 @@ final class GitHubPRServiceRefreshTests: XCTestCase {
         let service = GitHubPRService(ghProbe: probe, commandRunner: runner)
 
         await service.refresh(repoPath: "/tmp/repo")
+        // First refresh: 2 calls (gh api user + gh pr list). Login is cached.
+        let countAfterFirst = callCount
         await service.refresh(repoPath: "/tmp/repo", force: true)
-
-        XCTAssertEqual(callCount, 2)
+        // Force refresh: login already cached → only 1 call (gh pr list).
+        XCTAssertEqual(callCount, countAfterFirst + 1)
     }
 
     func test_evict_removesAllState() async {

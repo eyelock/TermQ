@@ -79,6 +79,14 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
         if let f = focus { runFocusMap[repoPath] = f } else { runFocusMap.removeValue(forKey: repoPath) }
     }
 
+    var remotePRFeedCapMap: [String: Int] = [:]
+
+    func remotePRFeedCap(for repoPath: String) -> Int? { remotePRFeedCapMap[repoPath] }
+
+    func setRemotePRFeedCap(_ cap: Int?, for repoPath: String) {
+        if let c = cap { remotePRFeedCapMap[repoPath] = c } else { remotePRFeedCapMap.removeValue(forKey: repoPath) }
+    }
+
     func removeAllAssociations(for harnessName: String) {
         let worktreePaths = worktreeHarness.compactMap { $0.value == harnessName ? $0.key : nil }
         for path in worktreePaths { worktreeHarness.removeValue(forKey: path) }

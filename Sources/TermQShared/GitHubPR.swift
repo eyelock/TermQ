@@ -16,6 +16,8 @@ public struct GitHubPR: Sendable, Codable, Identifiable {
     /// Users from whom a review has been requested.
     public let reviewRequests: [GitHubReviewRequest]
     public let assignees: [GitHubUser]
+    /// When the PR was last updated. Used for recency ordering within priority tiers.
+    public let updatedAt: Date
 
     public var id: Int { number }
 
@@ -27,11 +29,28 @@ public struct GitHubPR: Sendable, Codable, Identifiable {
 
     enum CodingKeys: String, CodingKey {
         case number, title, author, assignees
-        case headRefName
-        case headRefOid
-        case isCrossRepository
-        case isDraft
-        case reviewRequests
+        case headRefName, headRefOid, isCrossRepository, isDraft, reviewRequests, updatedAt
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        number = try c.decode(Int.self, forKey: .number)
+        title = try c.decode(String.self, forKey: .title)
+        headRefName = try c.decode(String.self, forKey: .headRefName)
+        headRefOid = try c.decode(String.self, forKey: .headRefOid)
+        author = try c.decode(GitHubUser.self, forKey: .author)
+        isCrossRepository = try c.decode(Bool.self, forKey: .isCrossRepository)
+        isDraft = try c.decode(Bool.self, forKey: .isDraft)
+        reviewRequests = (try? c.decode([GitHubReviewRequest].self, forKey: .reviewRequests)) ?? []
+        assignees = (try? c.decode([GitHubUser].self, forKey: .assignees)) ?? []
+        // gh emits ISO 8601 with Z suffix; fall back to epoch so sorting degrades gracefully.
+        if let raw = try? c.decode(String.self, forKey: .updatedAt),
+            let date = ISO8601DateFormatter().date(from: raw)
+        {
+            updatedAt = date
+        } else {
+            updatedAt = Date(timeIntervalSince1970: 0)
+        }
     }
 }
 

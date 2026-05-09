@@ -41,6 +41,7 @@ public final class SettingsStore {
         public static let copyOnSelect = false
         public static let diagnosticsVerboseMode = false
         public static var defaultWorkingDirectory: String { NSHomeDirectory() }
+        public static let remotePRFeedCap = 20
     }
 
     private enum Keys {
@@ -59,6 +60,7 @@ public final class SettingsStore {
         static let copyOnSelect = "copyOnSelect"
         static let diagnosticsVerboseMode = "diagnosticsVerboseMode"
         static let defaultWorkingDirectory = "defaultWorkingDirectory"
+        static let remotePRFeedCap = "remotePRFeedCap"
     }
 
     @ObservationIgnored
@@ -176,6 +178,15 @@ public final class SettingsStore {
         }
     }
 
+    /// Maximum number of PRs shown per repo in the Remote sidebar feed.
+    /// Checked-out PRs are always included regardless of this cap.
+    public var remotePRFeedCap: Int {
+        didSet {
+            guard !isSyncingFromStore else { return }
+            store.set(remotePRFeedCap, forKey: Keys.remotePRFeedCap)
+        }
+    }
+
     public init(store: any KeyValueStore = UserDefaults.standard) {
         self.store = store
 
@@ -211,6 +222,10 @@ public final class SettingsStore {
         let storedScrollback = store.integer(forKey: Keys.terminalScrollbackLines)
         self.terminalScrollbackLines =
             storedScrollback > 0 ? storedScrollback : Defaults.terminalScrollbackLines
+
+        let storedPRFeedCap = store.integer(forKey: Keys.remotePRFeedCap)
+        self.remotePRFeedCap =
+            storedPRFeedCap > 0 ? storedPRFeedCap : Defaults.remotePRFeedCap
 
         self.copyOnSelect =
             (store.object(forKey: Keys.copyOnSelect) as? Bool) ?? Defaults.copyOnSelect
@@ -319,6 +334,10 @@ public final class SettingsStore {
         let newScrollback =
             storedScrollback > 0 ? storedScrollback : Defaults.terminalScrollbackLines
         if terminalScrollbackLines != newScrollback { terminalScrollbackLines = newScrollback }
+
+        let storedPRCap = store.integer(forKey: Keys.remotePRFeedCap)
+        let newPRCap = storedPRCap > 0 ? storedPRCap : Defaults.remotePRFeedCap
+        if remotePRFeedCap != newPRCap { remotePRFeedCap = newPRCap }
 
         let newCopyOnSelect =
             (store.object(forKey: Keys.copyOnSelect) as? Bool) ?? Defaults.copyOnSelect

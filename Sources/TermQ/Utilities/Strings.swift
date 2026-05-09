@@ -471,6 +471,12 @@ enum Strings {
         static var tabTools: String { localized("settings.tab.tools") }
         static var tabDataAndSecurity: String { localized("settings.tab.data.and.security") }
         static var tabMarketplaces: String { localized("settings.tab.marketplaces") }
+        static var tabGitHub: String { localized("settings.tab.github") }
+
+        // GitHub tab
+        static var githubSectionFeed: String { localized("settings.github.section.feed") }
+        static var githubFeedCapLabel: String { localized("settings.github.feed.cap.label") }
+        static var githubFeedCapHelp: String { localized("settings.github.feed.cap.help") }
 
         // General - Terminal section
         static var sectionTerminal: String { localized("settings.section.terminal") }

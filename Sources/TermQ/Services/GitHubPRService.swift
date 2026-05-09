@@ -54,6 +54,8 @@ final class GitHubPRService: ObservableObject {
     private var inflightTasks: [String: Task<[GitHubPR], Error>] = [:]
     /// Previous head SHAs — keyed by repoPath, then PR number.
     private var previousHeadOids: [String: [Int: String]] = [:]
+    /// GitHub login for each repo path (resolved per-host via `gh api user`).
+    private var loginsByRepo: [String: String] = [:]
 
     private let ghProbe: GhCliProbe
     private let commandRunner: any YNHCommandRunner
@@ -118,6 +120,58 @@ final class GitHubPRService: ObservableObject {
         }
     }
 
+    /// The GitHub login for the authenticated user in the context of `repoPath`'s host.
+    /// Returns `nil` while the login is still being resolved.
+    func login(for repoPath: String) -> String? {
+        loginsByRepo[repoPath]
+    }
+
+    /// Priority-ordered PR feed capped at `cap`.
+    ///
+    /// Tiers (filled in order, `updatedAt` desc within each):
+    ///   1. Checked-out worktrees — always included, pinned first
+    ///   2. Review requested from `login`
+    ///   3. Open, non-draft, no reviewers assigned yet
+    ///   4. Everything else
+    static func prioritisedFeed(
+        prs: [GitHubPR],
+        login: String?,
+        matches: [Int: String],
+        cap: Int
+    ) -> (feed: [GitHubPR], overflow: Int) {
+        func byDate(_ a: GitHubPR, _ b: GitHubPR) -> Bool { a.updatedAt > b.updatedAt }
+
+        var tier1: [GitHubPR] = []  // checked out
+        var tier2: [GitHubPR] = []  // review requested
+        var tier3: [GitHubPR] = []  // open, non-draft, no reviewers
+        var tier4: [GitHubPR] = []  // everything else
+
+        for pr in prs {
+            if matches[pr.number] != nil {
+                tier1.append(pr)
+            } else if let login, pr.reviewRequests.contains(where: { $0.login == login }) {
+                tier2.append(pr)
+            } else if !pr.isDraft && pr.reviewRequests.isEmpty {
+                tier3.append(pr)
+            } else {
+                tier4.append(pr)
+            }
+        }
+
+        tier1.sort(by: byDate)
+        tier2.sort(by: byDate)
+        tier3.sort(by: byDate)
+        tier4.sort(by: byDate)
+
+        var feed: [GitHubPR] = tier1  // tier1 always included regardless of cap
+        let remaining = max(0, cap - feed.count)
+        let candidates = (tier2 + tier3 + tier4).prefix(remaining)
+        feed.append(contentsOf: candidates)
+
+        let overflow = max(0, prs.count - feed.count)
+        return (feed, overflow)
+    }
+
     /// Remove all cached state for a repo (e.g. after it is removed from the sidebar).
     func evict(repoPath: String) {
         prsByRepo.removeValue(forKey: repoPath)
@@ -128,6 +182,7 @@ final class GitHubPRService: ObservableObject {
         inflightTasks[repoPath]?.cancel()
         inflightTasks.removeValue(forKey: repoPath)
         loadingRepos.remove(repoPath)
+        loginsByRepo.removeValue(forKey: repoPath)
     }
 
     /// Clear the force-push flag for a PR (called after Update from Origin completes).
@@ -167,20 +222,28 @@ final class GitHubPRService: ObservableObject {
     // MARK: - Private
 
     private func fetchPRs(repoPath: String, ghPath: String) async throws -> [GitHubPR] {
-        let result = try await commandRunner.run(
+        // Resolve the per-host login only if not already cached (once per session per repo).
+        async let loginResult: String? =
+            loginsByRepo[repoPath] != nil
+            ? nil
+            : fetchRepoLogin(repoPath: repoPath, ghPath: ghPath)
+        async let prResult = commandRunner.run(
             executable: ghPath,
             arguments: [
                 "pr", "list",
-                "--limit", "200",
+                "--limit", "100",
                 "--state", "open",
                 "--json",
-                "number,title,headRefName,headRefOid,author,isCrossRepository,isDraft,reviewRequests,assignees",
+                "number,title,headRefName,headRefOid,author,isCrossRepository,isDraft,reviewRequests,assignees,updatedAt",
             ],
             environment: nil,
             currentDirectory: repoPath,
             onStdoutLine: nil,
             onStderrLine: nil
         )
+
+        let (login, result) = try await (loginResult, prResult)
+        if let login { loginsByRepo[repoPath] = login }
 
         guard result.didSucceed else {
             let msg = result.stderr.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -189,6 +252,25 @@ final class GitHubPRService: ObservableObject {
 
         let data = Data(result.stdout.utf8)
         return try JSONDecoder().decode([GitHubPR].self, from: data)
+    }
+
+    private func fetchRepoLogin(repoPath: String, ghPath: String) async -> String? {
+        // Use currentDirectory so gh picks up the repo's remote host automatically
+        // (handles github.com, GHEC, and on-prem GHE with different SSH credentials).
+        guard
+            let result = try? await commandRunner.run(
+                executable: ghPath,
+                arguments: ["api", "user", "--jq", ".login"],
+                environment: nil,
+                currentDirectory: repoPath,
+                onStdoutLine: nil,
+                onStderrLine: nil
+            ),
+            result.didSucceed
+        else { return nil }
+        return result.stdout
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: .newlines).first
     }
 
     private func detectForcePushes(repoPath: String, newPRs: [GitHubPR]) {

@@ -437,6 +437,10 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "External Sources";
+"settings.tab.github" = "GitHub";
+"settings.github.section.feed" = "Remote PR Feed";
+"settings.github.feed.cap.label" = "PRs per repository";
+"settings.github.feed.cap.help" = "Maximum number of pull requests shown per repository in the Remote sidebar. Checked-out PRs are always included.";
 "settings.marketplaces.section.list" = "Configured Marketplaces";
 "settings.marketplaces.empty" = "No marketplaces added yet.";
 "settings.marketplaces.add" = "Add Marketplace…";
@@ -1100,6 +1104,7 @@
 "remote.prs.run.customize" = "Customize";
 "remote.prs.run.run" = "Run";
 "remote.prs.run.cancel" = "Cancel";
+"remote.prs.overflow.more %lld" = "+ %lld more — Open Repository Detail";
 "remote.prs.prune.closed" = "⊘ Prune Closed PRs";
 "remote.prs.prune.closed.title %lld" = "%lld PRs Closed or Merged";
 "remote.prs.prune.closed.confirm" = "Prune";

@@ -23,6 +23,8 @@ public struct LocalYNHConfig: Codable, Sendable {
     /// Last-used focus name for "Run with Focus" per repo path.
     /// Empty string means no focus selected (ad-hoc prompt).
     public var repoRunFocus: [String: String]
+    /// Per-repo override for the Remote PR feed cap. `nil` means use the global setting.
+    public var repoRemotePRFeedCap: [String: Int]
 
     public init(
         worktreeHarness: [String: String] = [:],
@@ -30,7 +32,8 @@ public struct LocalYNHConfig: Codable, Sendable {
         preferredVendor: String? = nil,
         harnessVendor: [String: String] = [:],
         repoRunHarness: [String: String] = [:],
-        repoRunFocus: [String: String] = [:]
+        repoRunFocus: [String: String] = [:],
+        repoRemotePRFeedCap: [String: Int] = [:]
     ) {
         self.worktreeHarness = worktreeHarness
         self.repoHarness = repoHarness
@@ -38,6 +41,7 @@ public struct LocalYNHConfig: Codable, Sendable {
         self.harnessVendor = harnessVendor
         self.repoRunHarness = repoRunHarness
         self.repoRunFocus = repoRunFocus
+        self.repoRemotePRFeedCap = repoRemotePRFeedCap
     }
 
     // Custom decoder for backward compat: all optional dicts default to empty.
@@ -49,6 +53,8 @@ public struct LocalYNHConfig: Codable, Sendable {
         harnessVendor = (try? c.decode([String: String].self, forKey: .harnessVendor)) ?? [:]
         repoRunHarness = (try? c.decode([String: String].self, forKey: .repoRunHarness)) ?? [:]
         repoRunFocus = (try? c.decode([String: String].self, forKey: .repoRunFocus)) ?? [:]
+        repoRemotePRFeedCap =
+            (try? c.decode([String: Int].self, forKey: .repoRemotePRFeedCap)) ?? [:]
     }
 }
 

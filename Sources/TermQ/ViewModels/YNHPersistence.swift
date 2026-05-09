@@ -128,6 +128,19 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         save()
     }
 
+    func remotePRFeedCap(for repoPath: String) -> Int? {
+        config.repoRemotePRFeedCap[repoPath]
+    }
+
+    func setRemotePRFeedCap(_ cap: Int?, for repoPath: String) {
+        if let cap {
+            config.repoRemotePRFeedCap[repoPath] = cap
+        } else {
+            config.repoRemotePRFeedCap.removeValue(forKey: repoPath)
+        }
+        save()
+    }
+
     func setVendorOverride(_ vendorId: String?, for harnessId: String) {
         if let vendorId, !vendorId.isEmpty {
             config.harnessVendor[harnessId] = vendorId
