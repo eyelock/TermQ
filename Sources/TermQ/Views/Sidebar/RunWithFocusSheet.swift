@@ -260,7 +260,12 @@ struct RunWithFocusSheet: View {
             .padding()
         }
         .frame(width: 480, height: 560)
-        .onAppear { applyDefaults() }
+        .onAppear {
+            applyDefaults()
+            if vendorService.vendors.isEmpty {
+                Task { await vendorService.refresh() }
+            }
+        }
     }
 
     // MARK: - Helpers
