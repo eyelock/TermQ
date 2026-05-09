@@ -56,7 +56,8 @@ struct ContentView: View {
                             workingDirectory: path,
                             prompt: nil,
                             backend: SettingsStore.shared.backend,
-                            branch: branch
+                            branch: branch,
+                            interactive: false
                         )
                         launchCoordinator.launchHarness(config)
                     },

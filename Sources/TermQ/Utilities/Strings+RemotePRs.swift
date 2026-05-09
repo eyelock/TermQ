@@ -64,6 +64,8 @@ extension Strings {
         static var runLoadingDetail: String { localized("remote.prs.run.loading.detail") }
         static var runSheetTitle: String { localized("remote.prs.run.sheet.title") }
         static var runHarnessLabel: String { localized("remote.prs.run.harness.label") }
+        static var runVendorLabel: String { localized("remote.prs.run.vendor.label") }
+        static var runVendorDefault: String { localized("remote.prs.run.vendor.default") }
         static var runFocusLabel: String { localized("remote.prs.run.focus.label") }
         static var runFocusNone: String { localized("remote.prs.run.focus.none") }
         static var runProfileLabel: String { localized("remote.prs.run.profile.label") }
@@ -72,6 +74,8 @@ extension Strings {
         static var runCustomize: String { localized("remote.prs.run.customize") }
         static var runRun: String { localized("remote.prs.run.run") }
         static var runCancel: String { localized("remote.prs.run.cancel") }
+        static var runInteractiveLabel: String { localized("remote.prs.run.interactive.label") }
+        static var runInteractiveHelp: String { localized("remote.prs.run.interactive.help") }
 
         // MARK: - Feed overflow
         static func overflowMore(_ count: Int) -> String {

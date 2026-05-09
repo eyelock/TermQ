@@ -179,7 +179,8 @@ struct HarnessLaunchSheet: View {
                             workingDirectory: workingDirectory,
                             prompt: prompt.isEmpty ? nil : prompt,
                             backend: selectedBackend,
-                            branch: initialBranch
+                            branch: initialBranch,
+                            interactive: false
                         )
                         onLaunch(config)
                         dismiss()
@@ -253,6 +254,9 @@ struct HarnessLaunchConfig {
     let backend: TerminalBackend
     /// Branch name of the worktree this harness was launched from, if any.
     let branch: String?
+    /// When true, passes `--interactive` to `ynh run` so the session stays open
+    /// after the LLM responds to the initial prompt.
+    let interactive: Bool
 
     /// Build the `ynh run` command string.
     /// Pass `sessionName` to bind the session to a specific tmux session name.
@@ -265,6 +269,9 @@ struct HarnessLaunchConfig {
             parts.append(contentsOf: ["--focus", focus])
         } else if let profile, !profile.isEmpty {
             parts.append(contentsOf: ["--profile", profile])
+        }
+        if interactive {
+            parts.append("--interactive")
         }
         if let sessionName {
             parts.append(contentsOf: ["--session-name", sessionName])

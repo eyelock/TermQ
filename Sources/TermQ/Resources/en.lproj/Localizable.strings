@@ -1102,6 +1102,10 @@
 "remote.prs.run.profile.default" = "(harness defaults)";
 "remote.prs.run.prompt.label" = "Focus prompt";
 "remote.prs.run.customize" = "Customize";
+"remote.prs.run.vendor.label" = "Vendor";
+"remote.prs.run.vendor.default" = "Harness default";
+"remote.prs.run.interactive.label" = "Stay interactive after run";
+"remote.prs.run.interactive.help" = "The agent will respond to the initial focus, then remain open for follow-up questions.";
 "remote.prs.run.run" = "Run";
 "remote.prs.run.cancel" = "Cancel";
 "remote.prs.overflow.more %lld" = "+ %lld more — Open Repository Detail";
