@@ -6,6 +6,43 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.10.0.b1</title>
+            <sparkle:version>0.10.0.b1</sparkle:version>
+            <sparkle:shortVersionString>0.10.0.b1</sparkle:shortVersionString>
+            <pubDate>Sat, 09 May 2026 11:47:27 +0000</pubDate>
+            <description><![CDATA[<p><em>See <code>CHANGELOG.md</code> for changes in this release.</em></p>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0-beta.1.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0-beta.1.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.10.0-beta.1/TermQ-0.10.0-beta.1.zip"
+                sparkle:edSignature="fo/u/IVR46BPHpUdemrCfmQyDrLFypBORY6Dtf3ibT8NzixcqpiqE5WTY/4JVaoRsGlVjTZ5pKlCP+nOg4DXDw=="
+                length="24393053"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.9.7</title>
             <sparkle:version>0.9.7</sparkle:version>
             <sparkle:shortVersionString>0.9.7</sparkle:shortVersionString>
