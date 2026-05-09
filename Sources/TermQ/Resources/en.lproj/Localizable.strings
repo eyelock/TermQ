@@ -1095,7 +1095,7 @@
 "remote.prs.run.focus.none" = "(none — ad-hoc prompt)";
 "remote.prs.run.profile.label" = "Profile";
 "remote.prs.run.profile.default" = "(harness defaults)";
-"remote.prs.run.prompt.label" = "Prompt";
+"remote.prs.run.prompt.label" = "Focus prompt";
 "remote.prs.run.customize" = "Customize";
 "remote.prs.run.run" = "Run";
 "remote.prs.run.cancel" = "Cancel";

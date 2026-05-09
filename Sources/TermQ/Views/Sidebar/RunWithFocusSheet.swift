@@ -99,19 +99,19 @@ struct RunWithFocusSheet: View {
                     }
                 }
 
-                // Profile (read-only label derived from focus)
-                if !profiles.isEmpty {
-                    Section {
-                        HStack {
-                            Text(Strings.RemotePRs.runProfileLabel)
-                            Spacer()
-                            Text(
-                                resolvedProfile.isEmpty
-                                    ? Strings.RemotePRs.runProfileHarnessDefault
-                                    : resolvedProfile
-                            )
-                            .foregroundColor(.secondary)
+                // Profile — always shown; single "Default" entry when harness has none
+                Section {
+                    if profiles.isEmpty {
+                        Picker(Strings.RemotePRs.runProfileLabel, selection: .constant("")) {
+                            Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
                         }
+                        .disabled(true)
+                    } else {
+                        Picker(Strings.RemotePRs.runProfileLabel, selection: .constant(resolvedProfile)) {
+                            Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
+                            ForEach(profiles, id: \.self) { Text($0).tag($0) }
+                        }
+                        .disabled(true)
                     }
                 }
 
