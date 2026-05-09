@@ -646,12 +646,13 @@ extension ContentView {
             return
         }
         let schema = harnessRepo.lastSchemaVersion
-        if migrationCoordinator.hasApplied(forSchema: schema ?? 1) {
-            TermQLogger.session.debug(
-                "HarnessMigration: skipped — already applied for schema \(schema ?? 1)"
-            )
-            return
-        }
+        // Delegate to the coordinator unconditionally. When migration is
+        // already applied for the live schema, the coordinator's
+        // `runIfNeeded` short-circuits to a quarantine-list refresh —
+        // which is exactly the work we'd otherwise skip. Doing the
+        // hasApplied check here too means the quarantine surface goes
+        // stale on every focus / status transition until a real
+        // migration is triggered.
         TermQLogger.session.debug(
             "HarnessMigration: dispatching runIfNeeded(schema: \(schema.map(String.init) ?? "nil"))"
         )
