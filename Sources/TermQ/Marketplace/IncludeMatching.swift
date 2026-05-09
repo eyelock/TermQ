@@ -64,30 +64,28 @@ enum IncludePluginLookup {
 ///   - `git@github.com:eyelock/assistants.git`
 enum GitURLNormalizer {
     static func normalize(_ url: String) -> String {
-        var s = url.lowercased()
-        for prefix in ["https://", "http://", "git+ssh://", "ssh://"] {
-            if s.hasPrefix(prefix) {
-                s.removeFirst(prefix.count)
-                break
-            }
+        var normalized = url.lowercased()
+        for prefix in ["https://", "http://", "git+ssh://", "ssh://"]
+        where normalized.hasPrefix(prefix) {
+            normalized.removeFirst(prefix.count)
+            break
         }
         // SSH alt form: git@host:owner/repo → host/owner/repo
-        if s.hasPrefix("git@") {
-            s.removeFirst(4)
-            if let colon = s.firstIndex(of: ":") {
-                s.replaceSubrange(colon...colon, with: "/")
+        if normalized.hasPrefix("git@") {
+            normalized.removeFirst(4)
+            if let colon = normalized.firstIndex(of: ":") {
+                normalized.replaceSubrange(colon...colon, with: "/")
             }
         }
-        if s.hasSuffix(".git") { s.removeLast(4) }
-        if s.hasSuffix("/") { s.removeLast() }
+        if normalized.hasSuffix(".git") { normalized.removeLast(4) }
+        if normalized.hasSuffix("/") { normalized.removeLast() }
         // Drop well-known host so short URLs (post host-strip from registry)
         // match host-prefixed URLs (from YNH ls).
-        for host in ["github.com/", "gitlab.com/", "bitbucket.org/"] {
-            if s.hasPrefix(host) {
-                s.removeFirst(host.count)
-                break
-            }
+        for host in ["github.com/", "gitlab.com/", "bitbucket.org/"]
+        where normalized.hasPrefix(host) {
+            normalized.removeFirst(host.count)
+            break
         }
-        return s
+        return normalized
     }
 }

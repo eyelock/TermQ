@@ -163,7 +163,9 @@ final class AddIncludeContext: SourcePickerContext {
         return commandPreview(sourceURL: url, path: path, ref: ref, picks: nil)
     }
 
-    private func commandPreview(sourceURL: String, path: String?, ref: String?, picks: [String]?)
+    private func commandPreview(
+        sourceURL: String, path: String?, ref: String?, picks: [String]?
+    )
         -> String
     {
         var parts = ["ynh", "include", "add", harnessID, sourceURL]
