@@ -15,6 +15,7 @@ struct SidebarView: View {
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
+    var onDeleteLocal: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
     var onExport: ((String, String) -> Void)?
     var onFork: ((String) -> Void)?
@@ -50,6 +51,7 @@ struct SidebarView: View {
                     onLaunchHarness: onLaunchHarness,
                     onInstall: onInstall,
                     onUninstall: onUninstall,
+                    onDeleteLocal: onDeleteLocal,
                     onUpdate: onUpdate,
                     onExport: onExport,
                     onFork: onFork,

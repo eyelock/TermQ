@@ -1037,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream se změnil: %@ → %@";
+"harnesses.broken.fork.help" = "Tomuto lokálnímu forku chybí manifest harness. Klikněte pravým tlačítkem a vyberte Odinstalovat, chcete-li ho odstranit.";
+"harnesses.broken.fork.badge" = "Poškozený";
+"harnesses.fork.of %@" = "Větev z %@";
+"harnesses.fork.help %@" = "Větev z %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Nový worktree z větve";

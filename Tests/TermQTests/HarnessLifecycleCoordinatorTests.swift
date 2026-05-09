@@ -83,6 +83,61 @@ final class HarnessLifecycleCoordinatorTests: XCTestCase {
             "Tracked id should be removed from the set after handling")
     }
 
+    // MARK: - Delete (uninstall + remove on-disk source)
+
+    func testDeleteLocalHarness_whenDetectorNotReady_andHarnessIsTracked_isNoop() {
+        // Detector is `.missing`; the YNH-managed branch's `.ready` guard
+        // fails, so no transient card is added. We can't easily inject
+        // an in-repo harness without a stubbed command runner, but the
+        // guard exits cleanly without crashing — that's the contract
+        // exercised here.
+        let coord = makeCoordinator()
+        coord.deleteLocalHarness(id: "nonexistent-id")
+        XCTAssertTrue(coord.uninstallCardIDs.isEmpty)
+    }
+
+    func testDeleteLocalHarness_whenHarnessNotInRepo_isSafeNoop() {
+        // The untracked branch (`installedFrom == nil`) requires the
+        // harness to exist in the repo. When the id doesn't match
+        // anything, the method should fall through to the `.ready`
+        // guard and exit without effect — no crash, no side effect.
+        let coord = makeCoordinator()
+        coord.deleteLocalHarness(id: "nope")
+        XCTAssertTrue(coord.uninstallCardIDs.isEmpty)
+    }
+
+    func testBuildDeleteLocalCommand_chainsUninstallThenRm() {
+        // Both halves must appear and be ordered: uninstall first,
+        // rm -rf second, gated by `&&`. The `exit` at the tail closes
+        // the transient terminal once both succeed.
+        let cmd = HarnessLifecycleCoordinator.buildDeleteLocalCommand(
+            ynhPath: "/usr/local/bin/ynh",
+            id: "local/my-fork",
+            pathToRemove: "/Users/test/forks/my-fork"
+        )
+        XCTAssertEqual(
+            cmd,
+            "/usr/local/bin/ynh uninstall 'local/my-fork' "
+                + "&& rm -rf '/Users/test/forks/my-fork' && exit"
+        )
+    }
+
+    func testBuildDeleteLocalCommand_quotesPathsContainingSpacesOrQuotes() {
+        // A path with a space must remain a single shell argument; a path
+        // with a single quote must escape correctly. Both are common on
+        // macOS user directories.
+        let cmd = HarnessLifecycleCoordinator.buildDeleteLocalCommand(
+            ynhPath: "/usr/local/bin/ynh",
+            id: "local/x",
+            pathToRemove: "/Users/test/My Forks/it's-mine"
+        )
+        XCTAssertTrue(cmd.contains(#"'/Users/test/My Forks/it'\''s-mine'"#))
+        XCTAssertTrue(cmd.contains("&& rm -rf"))
+        XCTAssertTrue(cmd.contains("&& exit"))
+    }
+
+    // MARK: - Transient session exit handling
+
     func testHandleTransientSessionExit_trackedUninstallCard_returnsSuccess() {
         let coord = makeCoordinator()
         let cardId = UUID()

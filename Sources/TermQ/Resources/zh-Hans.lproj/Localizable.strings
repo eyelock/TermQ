@@ -1039,6 +1039,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上游提交已更改：%@ → %@";
+"harnesses.broken.fork.help" = "此本地 fork 缺少 harness 清单文件。右键单击并选择卸载以将其移除。";
+"harnesses.broken.fork.badge" = "损坏";
+"harnesses.fork.of %@" = "派生自 %@";
+"harnesses.fork.help %@" = "从 %@ 派生";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "从分支新建工作树";

@@ -1037,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "تغيّر الـ commit الأولي: %@ → %@";
+"harnesses.broken.fork.help" = "هذه النسخة المحلية تفتقر إلى ملف manifest الخاص بالحزمة. انقر بزر الماوس الأيمن واختر إلغاء التثبيت لإزالتها.";
+"harnesses.broken.fork.badge" = "معطوب";
+"harnesses.fork.of %@" = "تفرع من %@";
+"harnesses.fork.help %@" = "متفرع من %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "منطقة عمل جديدة من فرع";

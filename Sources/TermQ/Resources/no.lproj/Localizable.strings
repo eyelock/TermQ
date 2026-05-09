@@ -1042,6 +1042,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit endret: %@ → %@";
+"harnesses.broken.fork.help" = "Denne lokale forken mangler harness-manifestet. Høyreklikk og velg Avinstaller for å fjerne den.";
+"harnesses.broken.fork.badge" = "Ødelagt";
+"harnesses.fork.of %@" = "Forgrening av %@";
+"harnesses.fork.help %@" = "Forgrenet fra %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Ny arbeidstre fra gren";

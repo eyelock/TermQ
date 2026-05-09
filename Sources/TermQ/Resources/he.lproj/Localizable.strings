@@ -1043,6 +1043,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "ה-commit העולמי השתנה: %@ → %@";
+"harnesses.broken.fork.help" = "בפיצול המקומי הזה חסר קובץ המניפסט של ה-harness. לחץ לחיצה ימנית ובחר הסרת התקנה כדי להסיר אותו.";
+"harnesses.broken.fork.badge" = "פגום";
+"harnesses.fork.of %@" = "פיצול מ-%@";
+"harnesses.fork.help %@" = "מפוצל מ-%@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "עץ עבודה חדש מענף";

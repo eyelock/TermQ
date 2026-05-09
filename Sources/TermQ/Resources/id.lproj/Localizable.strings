@@ -1037,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";
+"harnesses.broken.fork.help" = "Fork lokal ini tidak memiliki manifest harness. Klik kanan dan pilih Hapus Instalasi untuk menghapusnya.";
+"harnesses.broken.fork.badge" = "Rusak";
+"harnesses.fork.of %@" = "Cabang dari %@";
+"harnesses.fork.help %@" = "Dicabangkan dari %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Worktree Baru dari Cabang";

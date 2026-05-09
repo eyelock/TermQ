@@ -61,6 +61,7 @@ struct ContentView: View {
                     },
                     onInstall: { lifecycleCoordinator.showInstallSheet = true },
                     onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
+                    onDeleteLocal: { id in lifecycleCoordinator.deleteLocalHarness(id: id) },
                     onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
                     onExport: { id, dir in
                         lifecycleCoordinator.exportHarness(id: id, outputDir: dir)

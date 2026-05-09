@@ -1044,6 +1044,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "업스트림 커밋 변경됨: %@ → %@";
+"harnesses.broken.fork.help" = "이 로컬 fork에 harness 매니페스트가 없습니다. 마우스 오른쪽 버튼을 클릭하고 제거를 선택하여 삭제하세요.";
+"harnesses.broken.fork.badge" = "손상됨";
+"harnesses.fork.of %@" = "%@의 포크";
+"harnesses.fork.help %@" = "%@에서 포크됨";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "브랜치에서 새 워크트리";

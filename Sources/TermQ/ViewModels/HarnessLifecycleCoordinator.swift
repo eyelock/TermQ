@@ -140,6 +140,69 @@ final class HarnessLifecycleCoordinator {
         boardViewModel.selectedCard = card
     }
 
+    /// Uninstall a local harness AND remove its editable source tree from disk.
+    /// Used by the sidebar's destructive "Delete" action — the dialog promises
+    /// "permanently delete its files", so we honour that. Plain Uninstall leaves
+    /// the source tree alone (per YNH's "Source tree left in place" contract).
+    func deleteLocalHarness(id: String) {
+        let harness = harnessRepo.harnesses.first(where: { $0.id == id })
+
+        // No YNH install record — same path as Uninstall: just remove the
+        // tree and clear associations. No `ynh uninstall` to run.
+        if let harness, harness.installedFrom == nil {
+            try? FileManager.default.removeItem(at: URL(fileURLWithPath: harness.path))
+            ynhPersistence.removeAllAssociations(for: id)
+            harnessRepo.selectedHarnessId = nil
+            Task { await harnessRepo.refresh() }
+            return
+        }
+
+        guard let harness = harness else { return }
+        // Defense in depth: the sidebar gates Delete to local-source only,
+        // but the coordinator refuses to fall through to `rm -rf` for any
+        // harness whose source isn't local. A registry- or git-installed
+        // harness's editable path would point at the YNH-managed cache dir
+        // or a checked-out repo — never appropriate to nuke from the UI.
+        guard harness.installedFrom?.sourceType == "local" else {
+            TermQLogger.session.warning(
+                "deleteLocalHarness refused: harness \(id) is not local-sourced"
+            )
+            return
+        }
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
+        guard let column = pickColumn() else { return }
+
+        // The path to remove. `editablePath` resolves to the fork's
+        // user-chosen destination for forks, the install dir otherwise.
+        let pathToRemove = harness.editablePath
+
+        let store = SettingsStore.shared
+        let card = TerminalCard(
+            title: "ynh uninstall \(id) && rm -rf",
+            tags: [],
+            columnId: column.id,
+            workingDirectory: NSHomeDirectory(),
+            initCommand: Self.buildDeleteLocalCommand(
+                ynhPath: ynhPath, id: id, pathToRemove: pathToRemove),
+            safePasteEnabled: nil,
+            allowOscClipboard: store.allowOscClipboard,
+            confirmExternalModifications: store.confirmExternalLLMModifications,
+            backend: .direct
+        )
+        card.isTransient = true
+        card.allowAutorun = true
+        uninstallCardIDs[card.id] = id
+        boardViewModel.tabManager.addTransientCard(card)
+        if let current = boardViewModel.selectedCard {
+            boardViewModel.tabManager.insertTab(card.id, after: current.id)
+        } else {
+            boardViewModel.tabManager.addTab(card.id)
+        }
+        harnessRepo.selectedHarnessId = nil
+        boardViewModel.objectWillChange.send()
+        boardViewModel.selectedCard = card
+    }
+
     // MARK: - Update
 
     /// Update a harness via `UpdateHarnessSheet` — a CommandRunner-based
@@ -240,5 +303,14 @@ final class HarnessLifecycleCoordinator {
     /// Wrap a string in single quotes for safe shell argument passing.
     private static func shellQuote(_ str: String) -> String {
         "'" + str.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    }
+
+    /// Pure shell-command builder for the destructive Delete flow. Exposed
+    /// for testing — both halves matter (uninstall must run first; rm
+    /// must run only on success of the first), and the path quoting must
+    /// survive paths with spaces or single quotes.
+    static func buildDeleteLocalCommand(ynhPath: String, id: String, pathToRemove: String) -> String {
+        "\(ynhPath) uninstall \(shellQuote(id)) "
+            + "&& rm -rf \(shellQuote(pathToRemove)) && exit"
     }
 }

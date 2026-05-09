@@ -1037,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Το upstream commit άλλαξε: %@ → %@";
+"harnesses.broken.fork.help" = "Αυτό το τοπικό fork δεν έχει αρχείο manifest harness. Κάντε δεξί κλικ και επιλέξτε Κατάργηση εγκατάστασης για να το αφαιρέσετε.";
+"harnesses.broken.fork.badge" = "Κατεστραμμένο";
+"harnesses.fork.of %@" = "Διακλάδωση από %@";
+"harnesses.fork.help %@" = "Διακλάδωση από %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Νέο worktree από κλάδο";

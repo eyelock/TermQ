@@ -1043,6 +1043,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit megváltozott: %@ → %@";
+"harnesses.broken.fork.help" = "Ebből a helyi forkból hiányzik a harness-manifest. Kattintson jobb gombbal, és válassza az Eltávolítás lehetőséget a törléshez.";
+"harnesses.broken.fork.badge" = "Sérült";
+"harnesses.fork.of %@" = "Elágazás innen: %@";
+"harnesses.fork.help %@" = "Elágaztatva innen: %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Új worktree ágból";

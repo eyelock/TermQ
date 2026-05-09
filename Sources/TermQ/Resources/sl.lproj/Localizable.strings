@@ -1044,6 +1044,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit spremenjen: %@ → %@";
+"harnesses.broken.fork.help" = "Temu lokalnemu forku manjka manifest harness. Z desnim klikom izberite Odstrani, da ga izbrišete.";
+"harnesses.broken.fork.badge" = "Poškodovan";
+"harnesses.fork.of %@" = "Razvejitev od %@";
+"harnesses.fork.help %@" = "Razvejano iz %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Nova delovna drevesa iz veje";

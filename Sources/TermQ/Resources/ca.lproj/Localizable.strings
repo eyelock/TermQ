@@ -1037,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";
+"harnesses.broken.fork.help" = "A aquest fork local li falta el manifest del harness. Feu clic dret i seleccioneu Desinstal·la per eliminar-lo.";
+"harnesses.broken.fork.badge" = "Defectuós";
+"harnesses.fork.of %@" = "Bifurcació de %@";
+"harnesses.fork.help %@" = "Bifurcat de %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Nou worktree des de la branca";

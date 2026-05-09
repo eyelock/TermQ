@@ -1037,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上流のコミットが変更されました：%@ → %@";
+"harnesses.broken.fork.help" = "このローカル fork には harness マニフェストがありません。右クリックして「アンインストール」を選択して削除してください。";
+"harnesses.broken.fork.badge" = "破損";
+"harnesses.fork.of %@" = "%@ のフォーク";
+"harnesses.fork.help %@" = "%@ からフォーク";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "ブランチから新しいワークツリー";

@@ -427,6 +427,18 @@ extension Strings {
         static var unversionedDriftConfirmTitle: String { localized("harnesses.unversioned.drift.confirm.title") }
         static var unversionedDriftConfirmBody: String { localized("harnesses.unversioned.drift.confirm.body") }
         static var unversionedDriftProceed: String { localized("harnesses.unversioned.drift.confirm.proceed") }
+
+        // Broken local fork (sidebar)
+        static var brokenForkHelp: String { localized("harnesses.broken.fork.help") }
+        static var brokenForkBadge: String { localized("harnesses.broken.fork.badge") }
+
+        // Forked-to-local indicator (sidebar)
+        static func forkOf(_ upstream: String) -> String {
+            String(format: localized("harnesses.fork.of %@"), upstream)
+        }
+        static func forkedFromHelp(_ origin: String) -> String {
+            String(format: localized("harnesses.fork.help %@"), origin)
+        }
     }
 }
 

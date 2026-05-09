@@ -1042,6 +1042,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream alterado: %@ → %@";
+"harnesses.broken.fork.help" = "Este fork local não tem o manifesto do harness. Clique com o botão direito e seleccione Desinstalar para o remover.";
+"harnesses.broken.fork.badge" = "Corrompido";
+"harnesses.fork.of %@" = "Bifurcação de %@";
+"harnesses.fork.help %@" = "Bifurcado de %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Nova área de trabalho a partir do ramo";

@@ -1043,6 +1043,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit amont modifié : %@ → %@";
+"harnesses.broken.fork.help" = "Ce fork local n'a pas de manifeste de harnais. Faites un clic droit et choisissez Désinstaller pour le supprimer.";
+"harnesses.broken.fork.badge" = "Défectueux";
+"harnesses.fork.of %@" = "Dérivé de %@";
+"harnesses.fork.help %@" = "Dérivé de %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Nouvel espace de travail depuis la branche";

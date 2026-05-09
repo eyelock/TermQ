@@ -1044,6 +1044,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit değişti: %@ → %@";
+"harnesses.broken.fork.help" = "Bu yerel fork'ta harness bildirimi eksik. Kaldırmak için sağ tıklayın ve Kaldır'ı seçin.";
+"harnesses.broken.fork.badge" = "Bozuk";
+"harnesses.fork.of %@" = "%@ kaynağından çatal";
+"harnesses.fork.help %@" = "%@ kaynağından çatallandı";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Daldan Yeni Worktree";

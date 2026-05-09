@@ -1044,6 +1044,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Коміт upstream змінився: %@ → %@";
+"harnesses.broken.fork.help" = "У цьому локальному форку відсутній маніфест harness. Натисніть правою кнопкою миші та виберіть «Видалити», щоб прибрати його.";
+"harnesses.broken.fork.badge" = "Пошкоджено";
+"harnesses.fork.of %@" = "Відгалуження від %@";
+"harnesses.fork.help %@" = "Відгалужено від %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Нове робоче дерево з гілки";

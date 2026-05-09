@@ -1043,6 +1043,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit बदल गया: %@ → %@";
+"harnesses.broken.fork.help" = "इस स्थानीय fork में harness manifest नहीं है। इसे हटाने के लिए राइट-क्लिक करें और अनइंस्टॉल चुनें।";
+"harnesses.broken.fork.badge" = "टूटा हुआ";
+"harnesses.fork.of %@" = "%@ का फ़ोर्क";
+"harnesses.fork.help %@" = "%@ से फ़ोर्क किया";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "शाखा से नया वर्कट्री";

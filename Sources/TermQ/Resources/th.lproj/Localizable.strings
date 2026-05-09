@@ -1044,6 +1044,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit เปลี่ยนแปลง: %@ → %@";
+"harnesses.broken.fork.help" = "fork ในเครื่องนี้ไม่มีไฟล์ manifest ของ harness คลิกขวาแล้วเลือกถอนการติดตั้งเพื่อลบออก";
+"harnesses.broken.fork.badge" = "เสียหาย";
+"harnesses.fork.of %@" = "แยกจาก %@";
+"harnesses.fork.help %@" = "แยกจาก %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Worktree ใหม่จากสาขา";

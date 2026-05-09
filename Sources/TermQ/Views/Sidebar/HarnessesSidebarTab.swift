@@ -16,6 +16,11 @@ struct HarnessesSidebarTab: View {
     var onLaunchHarness: ((Harness) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
+    /// Destructive "Delete" action for local-source harnesses. Differs from
+    /// `onUninstall`: the parent should also remove the editable source tree
+    /// from disk. The dialog copy promises file deletion, so this is the
+    /// path that honours that promise.
+    var onDeleteLocal: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
     var onExport: ((String, String) -> Void)?
     var onFork: ((String) -> Void)?
@@ -368,8 +373,16 @@ struct HarnessesSidebarTab: View {
             harnesses.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         }
 
-        let defaults = repository.harnesses.filter { KnownHarnesses.defaultNames.contains($0.name) }
-        let remaining = repository.harnesses.filter { !KnownHarnesses.defaultNames.contains($0.name) }
+        // DEFAULT membership is name-based, but local-sourced harnesses
+        // (forks, hand-built) always belong in LOCAL even when they share
+        // a name with a known default. Without this gate a fork of
+        // `ynh-dev` would appear in DEFAULT and never surface in LOCAL.
+        let isDefault: (Harness) -> Bool = { harness in
+            guard KnownHarnesses.defaultNames.contains(harness.name) else { return false }
+            return (harness.installedFrom?.sourceType ?? "") != "local"
+        }
+        let defaults = repository.harnesses.filter(isDefault)
+        let remaining = repository.harnesses.filter { !isDefault($0) }
 
         var groups: [HarnessGroup] = []
 
@@ -606,7 +619,13 @@ extension HarnessesSidebarTab {
     }
 
     fileprivate func performDeleteLocalHarness(_ harness: Harness) {
-        onUninstall?(harness.id)
+        // Delete = uninstall + remove editable source tree. Falls back to
+        // plain uninstall when the parent didn't wire the delete callback.
+        if let onDeleteLocal {
+            onDeleteLocal(harness.id)
+        } else {
+            onUninstall?(harness.id)
+        }
     }
 
     @ViewBuilder

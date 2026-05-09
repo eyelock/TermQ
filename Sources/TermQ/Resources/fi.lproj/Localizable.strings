@@ -1043,6 +1043,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit muuttunut: %@ → %@";
+"harnesses.broken.fork.help" = "Tästä paikallisesta haarautumasta puuttuu harness-manifesti. Napsauta hiiren kakkospainikkeella ja valitse Poista asentaminen.";
+"harnesses.broken.fork.badge" = "Rikkinäinen";
+"harnesses.fork.of %@" = "Haara kohteesta %@";
+"harnesses.fork.help %@" = "Haaroitettu kohteesta %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Uusi worktree haarasta";

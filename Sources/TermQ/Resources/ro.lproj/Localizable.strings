@@ -1037,6 +1037,10 @@
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";
+"harnesses.broken.fork.help" = "Acestui fork local îi lipsește manifestul harness. Faceți clic dreapta și selectați Dezinstalare pentru a-l elimina.";
+"harnesses.broken.fork.badge" = "Defect";
+"harnesses.fork.of %@" = "Derivat din %@";
+"harnesses.fork.help %@" = "Derivat din %@";
 
 // MARK: - Sidebar — checkout branch (added sync)
 "sidebar.checkout.branch.title" = "Worktree nou din ramură";
