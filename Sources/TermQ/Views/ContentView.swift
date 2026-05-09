@@ -52,6 +52,7 @@ struct ContentView: View {
                             vendorID: "",
                             defaultVendor: harness?.defaultVendor ?? "",
                             focus: nil,
+                            profile: nil,
                             workingDirectory: path,
                             prompt: nil,
                             backend: SettingsStore.shared.backend,

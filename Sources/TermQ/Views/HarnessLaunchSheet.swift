@@ -175,6 +175,7 @@ struct HarnessLaunchSheet: View {
                             vendorID: effectiveVendorID,
                             defaultVendor: harness.defaultVendor,
                             focus: selectedFocus.isEmpty ? nil : selectedFocus,
+                            profile: nil,
                             workingDirectory: workingDirectory,
                             prompt: prompt.isEmpty ? nil : prompt,
                             backend: selectedBackend,
@@ -244,6 +245,9 @@ struct HarnessLaunchConfig {
     /// The harness's declared default vendor (for tagging).
     let defaultVendor: String
     let focus: String?
+    /// Explicit profile override. Mutually exclusive with `focus` (YNH rejects both).
+    /// Empty / nil means use the harness default profile.
+    let profile: String?
     let workingDirectory: String
     let prompt: String?
     let backend: TerminalBackend
@@ -259,6 +263,8 @@ struct HarnessLaunchConfig {
         }
         if let focus, !focus.isEmpty {
             parts.append(contentsOf: ["--focus", focus])
+        } else if let profile, !profile.isEmpty {
+            parts.append(contentsOf: ["--profile", profile])
         }
         if let sessionName {
             parts.append(contentsOf: ["--session-name", sessionName])

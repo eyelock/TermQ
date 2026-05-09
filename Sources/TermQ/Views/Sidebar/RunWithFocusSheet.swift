@@ -22,6 +22,7 @@ struct RunWithFocusSheet: View {
 
     @State private var selectedHarnessId: String = ""
     @State private var selectedFocus: String = ""
+    @State private var selectedProfile: String = ""
     @State private var isCustomizing: Bool = false
     @State private var customPrompt: String = ""
     @State private var detail: HarnessDetail?
@@ -43,6 +44,14 @@ struct RunWithFocusSheet: View {
     /// The prompt text to display — from focus or blank.
     private var focusPrompt: String {
         focuses[selectedFocus]?.prompt ?? ""
+    }
+
+    /// The profile to pass to ynh run:
+    /// - Focus selected (no customize): N/A — using --focus flag instead
+    /// - Focus selected + customize: profile derived from that focus
+    /// - No focus (ad-hoc): user's explicit picker choice
+    private var effectiveProfile: String {
+        selectedFocus.isEmpty ? selectedProfile : resolvedProfile
     }
 
     /// The harness to launch with.
@@ -77,6 +86,7 @@ struct RunWithFocusSheet: View {
                     }
                     .onChange(of: selectedHarnessId) { _, newId in
                         selectedFocus = ""
+                        selectedProfile = ""
                         isCustomizing = false
                         customPrompt = ""
                         loadDetail(for: newId)
@@ -99,14 +109,16 @@ struct RunWithFocusSheet: View {
                     }
                 }
 
-                // Profile — always shown; single "Default" entry when harness has none
+                // Profile — interactive in ad-hoc mode; locked (derived) when focus is set
                 Section {
-                    if profiles.isEmpty {
-                        Picker(Strings.RemotePRs.runProfileLabel, selection: .constant("")) {
+                    if selectedFocus.isEmpty {
+                        // Ad-hoc: user picks freely
+                        Picker(Strings.RemotePRs.runProfileLabel, selection: $selectedProfile) {
                             Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
+                            ForEach(profiles, id: \.self) { Text($0).tag($0) }
                         }
-                        .disabled(true)
                     } else {
+                        // Focus selected: profile is derived, read-only
                         Picker(Strings.RemotePRs.runProfileLabel, selection: .constant(resolvedProfile)) {
                             Text(Strings.RemotePRs.runProfileHarnessDefault).tag("")
                             ForEach(profiles, id: \.self) { Text($0).tag($0) }
@@ -220,8 +232,8 @@ struct RunWithFocusSheet: View {
         if !selectedFocus.isEmpty && !isCustomizing {
             parts.append(contentsOf: ["--focus", selectedFocus])
         } else {
-            if !resolvedProfile.isEmpty {
-                parts.append(contentsOf: ["--profile", resolvedProfile])
+            if !effectiveProfile.isEmpty {
+                parts.append(contentsOf: ["--profile", effectiveProfile])
             }
             let prompt = isCustomizing ? customPrompt : focusPrompt
             if !prompt.isEmpty {
@@ -259,6 +271,7 @@ struct RunWithFocusSheet: View {
             vendorID: "",
             defaultVendor: harness.defaultVendor,
             focus: effectiveFocus,
+            profile: effectiveFocus == nil ? (effectiveProfile.isEmpty ? nil : effectiveProfile) : nil,
             workingDirectory: context.worktree.path,
             prompt: effectivePrompt,
             backend: settings.backend,
