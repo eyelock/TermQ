@@ -180,7 +180,8 @@ struct HarnessLaunchSheet: View {
                             prompt: prompt.isEmpty ? nil : prompt,
                             backend: selectedBackend,
                             branch: initialBranch,
-                            interactive: false
+                            interactive: false,
+                            cardTitle: nil
                         )
                         onLaunch(config)
                         dismiss()
@@ -257,6 +258,8 @@ struct HarnessLaunchConfig {
     /// When true, passes `--interactive` to `ynh run` so the session stays open
     /// after the LLM responds to the initial prompt.
     let interactive: Bool
+    /// Optional override for the terminal card title. Falls back to branch ?? harnessID when nil.
+    let cardTitle: String?
 
     /// Build the `ynh run` command string.
     /// Pass `sessionName` to bind the session to a specific tmux session name.

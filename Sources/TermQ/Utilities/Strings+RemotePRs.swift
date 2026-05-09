@@ -76,6 +76,19 @@ extension Strings {
         static var runCancel: String { localized("remote.prs.run.cancel") }
         static var runInteractiveLabel: String { localized("remote.prs.run.interactive.label") }
         static var runInteractiveHelp: String { localized("remote.prs.run.interactive.help") }
+        static var runRefreshDetail: String { localized("remote.prs.run.refresh.detail") }
+
+        // MARK: - PR row context menu additions
+        static var copyBranchName: String { localized("remote.prs.copy.branch.name") }
+        static var quickLaunchFocus: String { localized("remote.prs.quick.launch.focus") }
+        static func runFocusItem(_ name: String) -> String {
+            String(format: localized("remote.prs.run.focus.item %@"), name)
+        }
+        static var setDefaultFocus: String { localized("remote.prs.set.default.focus") }
+        static func defaultFocusSet(_ name: String) -> String {
+            String(format: localized("remote.prs.default.focus.set %@"), name)
+        }
+        static var clearDefaultFocus: String { localized("remote.prs.clear.default.focus") }
 
         // MARK: - Feed overflow
         static func overflowMore(_ count: Int) -> String {

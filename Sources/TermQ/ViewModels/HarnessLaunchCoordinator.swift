@@ -179,7 +179,7 @@ final class HarnessLaunchCoordinator {
         let store = SettingsStore.shared
         let card = TerminalCard(
             id: cardID,
-            title: config.branch ?? config.harnessID,
+            title: config.cardTitle ?? config.branch ?? config.harnessID,
             tags: allTags,
             columnId: column.id,
             workingDirectory: config.workingDirectory,

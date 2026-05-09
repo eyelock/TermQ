@@ -67,7 +67,8 @@ struct RunWithFocusSheet: View {
 
     /// Whether the currently selected vendor (or harness default) supports --interactive.
     private var selectedVendorSupportsInteractive: Bool {
-        let lookupID = selectedVendorID == defaultVendorTag
+        let lookupID =
+            selectedVendorID == defaultVendorTag
             ? (selectedHarness?.defaultVendor ?? "")
             : selectedVendorID
         return vendorService.vendors.first { $0.vendorID == lookupID }?.supportsInitialPrompt ?? false
@@ -94,6 +95,15 @@ struct RunWithFocusSheet: View {
                         .foregroundColor(.secondary)
                 }
                 Spacer()
+                Button {
+                    loadDetail(for: selectedHarnessId, force: true)
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .imageScale(.small)
+                }
+                .buttonStyle(.borderless)
+                .disabled(isLoadingDetail)
+                .help(Strings.RemotePRs.runRefreshDetail)
             }
             .padding()
 
@@ -285,12 +295,23 @@ struct RunWithFocusSheet: View {
             selectedHarnessId = first.id
         }
 
-        selectedFocus = ynhPersistence.runFocus(for: repoPath) ?? ""
         loadDetail(for: selectedHarnessId)
+
+        // Defer focus restore: onChange(of: selectedHarnessId) fires after this returns
+        // and unconditionally clears selectedFocus. Scheduling on the next main-actor
+        // iteration ensures we restore after the clear.
+        let savedFocus = ynhPersistence.runFocus(for: repoPath) ?? ""
+        Task { @MainActor in
+            selectedFocus = savedFocus
+        }
     }
 
-    private func loadDetail(for harnessId: String) {
+    private func loadDetail(for harnessId: String, force: Bool = false) {
         guard !harnessId.isEmpty else { return }
+        if !force, let cached = harnessRepository.cachedDetail(for: harnessId) {
+            detail = cached
+            return
+        }
         harnessRepository.invalidateDetail(for: harnessId)
         isLoadingDetail = true
         Task {
@@ -355,8 +376,66 @@ struct RunWithFocusSheet: View {
             prompt: effectivePrompt,
             backend: settings.backend,
             branch: context.worktree.branch,
-            interactive: isInteractive
+            interactive: isInteractive,
+            cardTitle: makeCardTitle(focus: effectiveFocus, profile: effectiveProfile)
         )
         onLaunch(config)
+    }
+
+    /// Builds a card title: `focus: org/repo#N`, truncating the repo slug when long.
+    private func makeCardTitle(focus: String?, profile: String) -> String {
+        let label: String
+        if let focusName = focus, !focusName.isEmpty {
+            label = focusName
+        } else if !profile.isEmpty {
+            label = profile
+        } else {
+            label = selectedHarness?.id ?? selectedHarnessId
+        }
+        return Self.buildTitle(label: label, repoPath: context.repo.path, prNumber: context.prNumber)
+    }
+
+    /// Static entry point for building a card title outside the sheet (e.g. quick-launch).
+    static func makeCardTitleStatic(
+        focus: String?, profile: String, harnessId: String, repoPath: String, prNumber: Int
+    ) -> String {
+        let label: String
+        if let focusName = focus, !focusName.isEmpty {
+            label = focusName
+        } else if !profile.isEmpty {
+            label = profile
+        } else {
+            label = harnessId
+        }
+        return buildTitle(label: label, repoPath: repoPath, prNumber: prNumber)
+    }
+
+    private static func buildTitle(label: String, repoPath: String, prNumber: Int) -> String {
+        let slug = repoSlug(from: repoPath)
+        let prSuffix = "#\(prNumber)"
+        let repoAndPR = "\(slug)\(prSuffix)"
+        let budget = 40 - label.count - 2
+        let truncated =
+            budget > prSuffix.count + 1
+            ? truncateMiddle(repoAndPR, to: budget)
+            : prSuffix
+        return "\(label): \(truncated)"
+    }
+
+    /// Extracts `org/repo` from a filesystem path (last two path components).
+    private static func repoSlug(from path: String) -> String {
+        let components = path.split(separator: "/", omittingEmptySubsequences: true)
+        guard components.count >= 2 else { return components.last.map(String.init) ?? path }
+        return "\(components[components.count - 2])/\(components[components.count - 1])"
+    }
+
+    /// Truncates `str` to `max` chars, replacing the middle with `…`.
+    private static func truncateMiddle(_ str: String, to max: Int) -> String {
+        guard str.count > max else { return str }
+        guard max > 1 else { return "…" }
+        let half = (max - 1) / 2
+        let head = str.prefix(half)
+        let tail = str.suffix(max - 1 - half)
+        return "\(head)…\(tail)"
     }
 }

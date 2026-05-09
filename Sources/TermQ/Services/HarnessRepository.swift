@@ -177,8 +177,9 @@ final class HarnessRepository: ObservableObject {
             // Default to type-only logging; full description gated to
             // file-logging mode where the developer is in the loop.
             if TermQLogger.fileLoggingEnabled {
+                let desc = String(describing: error).prefix(200)
                 TermQLogger.ui.error(
-                    "HarnessRepository: ynh ls failed type=\(type(of: error)) desc=\(String(describing: error).prefix(200))"
+                    "HarnessRepository: ynh ls failed type=\(type(of: error)) desc=\(desc)"
                 )
             } else {
                 TermQLogger.ui.error(
@@ -283,6 +284,11 @@ final class HarnessRepository: ObservableObject {
     func invalidateAllDetails() {
         detailCache.removeAll()
         selectedDetail = nil
+    }
+
+    /// Returns a previously-fetched detail from the cache, or nil if not yet loaded.
+    func cachedDetail(for id: String) -> HarnessDetail? {
+        detailCache[id]
     }
 
     // MARK: - Helpers

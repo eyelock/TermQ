@@ -9,8 +9,8 @@ struct WorktreeSidebarView: View {
     var onLaunchHarness: ((String, String, String?) -> Void)?
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
     var onRunWithFocus: ((HarnessLaunchConfig) -> Void)?
-    @ObservedObject private var boardVM: BoardViewModel = .shared
-    @ObservedObject private var harnessRepository: HarnessRepository = .shared
+    @ObservedObject var boardVM: BoardViewModel = .shared
+    @ObservedObject var harnessRepository: HarnessRepository = .shared
     @ObservedObject var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
@@ -874,14 +874,14 @@ extension WorktreeSidebarView {
         }
     }
 
-    fileprivate func orgRepoName(repoPath: String) -> String {
+    func orgRepoName(repoPath: String) -> String {
         let url = URL(fileURLWithPath: repoPath)
         let repo = url.lastPathComponent
         let org = url.deletingLastPathComponent().lastPathComponent
         return "\(org)/\(repo)"
     }
 
-    fileprivate func openInTerminal(path: String) {
+    func openInTerminal(path: String) {
         guard let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") else {
             TermQLogger.ui.error("openInTerminal: Terminal.app not found")
             return
@@ -895,7 +895,7 @@ extension WorktreeSidebarView {
         )
     }
 
-    fileprivate func revealInFinder(path: String) {
+    func revealInFinder(path: String) {
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 

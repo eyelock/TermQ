@@ -85,7 +85,6 @@ extension WorktreeSidebarView {
                 }
                 if overflow > 0 {
                     Button {
-                        // TODO: open Repository Detail sheet
                     } label: {
                         Text(Strings.RemotePRs.overflowMore(overflow))
                             .font(.caption)
@@ -127,8 +126,8 @@ extension WorktreeSidebarView {
         let openNumbers = Set(openPRs.map(\.number))
         return worktrees.contains { wt in
             let last = URL(fileURLWithPath: wt.path).lastPathComponent
-            guard last.hasPrefix("pr-"), let n = Int(last.dropFirst(3)) else { return false }
-            return !openNumbers.contains(n)
+            guard last.hasPrefix("pr-"), let prNumber = Int(last.dropFirst(3)) else { return false }
+            return !openNumbers.contains(prNumber)
         }
     }
 
@@ -189,35 +188,122 @@ extension WorktreeSidebarView {
         .contextMenu {
             prRowContextMenu(pr, repo: repo, worktreePath: worktreePath)
         }
+        .task(id: repo.path) {
+            // Pre-fetch harness detail so the focuses submenu is ready when the user right-clicks.
+            let harnessId =
+                ynhPersistence.runHarness(for: repo.path)
+                ?? ynhPersistence.repoDefaultHarness(for: repo.path)
+            if let id = harnessId, harnessRepository.cachedDetail(for: id) == nil {
+                await harnessRepository.fetchDetail(for: id)
+            }
+        }
     }
 
     @ViewBuilder
     private func prRowContextMenu(
         _ pr: GitHubPR, repo: ObservableRepository, worktreePath: String?
     ) -> some View {
+        let worktree = worktreePath.flatMap { path in
+            (viewModel.worktrees[repo.id] ?? []).first(where: { $0.path == path })
+        }
+        let harnessId =
+            ynhPersistence.runHarness(for: repo.path)
+            ?? ynhPersistence.repoDefaultHarness(for: repo.path)
+        let cachedFocuses: [String] =
+            harnessId.flatMap { id in
+                harnessRepository.cachedDetail(for: id)?.composition.focuses
+            }.map { $0.keys.sorted() } ?? []
+
+        // ─── Group 1: Primary harness action ───
+        if let worktree {
+            Button {
+                runWithFocusContext = RunWithFocusContext(
+                    worktree: worktree, repo: repo, prNumber: pr.number)
+            } label: {
+                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
+            }
+
+            if let harnessId, !cachedFocuses.isEmpty {
+                Menu(Strings.RemotePRs.quickLaunchFocus) {
+                    ForEach(cachedFocuses, id: \.self) { focusName in
+                        Button(Strings.RemotePRs.runFocusItem(focusName)) {
+                            quickLaunchFocus(
+                                focusName, worktree: worktree, repo: repo,
+                                prNumber: pr.number, harnessId: harnessId)
+                        }
+                    }
+                }
+            }
+
+            Divider()
+
+            // ─── Group 2: Terminal ───
+            Button {
+                boardVM.newTerminal(
+                    at: worktree.path, branch: worktree.branch,
+                    repoName: orgRepoName(repoPath: repo.path))
+            } label: {
+                Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
+            }
+            Button {
+                boardVM.addTerminal(
+                    workingDirectory: worktree.path, branch: worktree.branch,
+                    repoName: orgRepoName(repoPath: repo.path))
+            } label: {
+                Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+            }
+
+            Divider()
+
+            // ─── Group 3: Reveal / copy ───
+            Button {
+                revealInFinder(path: worktree.path)
+            } label: {
+                Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
+            }
+            Button {
+                openInTerminal(path: worktree.path)
+            } label: {
+                Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
+            }
+            Button {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(pr.headRefName, forType: .string)
+            } label: {
+                Label(Strings.RemotePRs.copyBranchName, systemImage: "doc.on.clipboard")
+            }
+
+            Divider()
+        }
+
+        // ─── Group 4: Remote links ───
         Button {
             openPROnRemote(prNumber: pr.number, repo: repo)
         } label: {
             Label(Strings.RemotePRs.openPROnRemote, systemImage: "network")
         }
-
         Button {
             copyPRURL(prNumber: pr.number, repo: repo)
         } label: {
             Label(Strings.RemotePRs.copyPRURL, systemImage: "doc.on.clipboard")
         }
 
+        if let worktree {
+            Button {
+                Task {
+                    do { try await viewModel.pullBranch(worktree: worktree, repo: repo) } catch {
+                        viewModel.operationError = error.localizedDescription
+                    }
+                }
+            } label: {
+                Label(Strings.Sidebar.updateFromOrigin, systemImage: "arrow.down.circle")
+            }
+        }
+
         Divider()
 
-        if let worktreePath {
-            if let worktree = (viewModel.worktrees[repo.id] ?? []).first(where: { $0.path == worktreePath }) {
-                Button {
-                    runWithFocusContext = RunWithFocusContext(
-                        worktree: worktree, repo: repo, prNumber: pr.number)
-                } label: {
-                    Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-                }
-            }
+        // ─── Group 5: Navigation / checkout ───
+        if worktree != nil {
             Button {
                 sidebarMode = .local
             } label: {
@@ -227,12 +313,10 @@ extension WorktreeSidebarView {
             if case .ready(let ghPath, _) = ghProbe.status {
                 let localBranch = pr.localBranchName()
                 let existingPath = viewModel.existingWorktreePath(for: localBranch, repoID: repo.id)
-                if let existing = existingPath {
-                    Text(Strings.RemotePRs.worktreeExists)
-                        .foregroundColor(.secondary)
+                if existingPath != nil {
+                    Text(Strings.RemotePRs.worktreeExists).foregroundColor(.secondary)
                     Button {
                         sidebarMode = .local
-                        _ = existing
                     } label: {
                         Label(Strings.RemotePRs.switchToExisting, systemImage: "arrow.turn.up.left")
                     }
@@ -245,6 +329,58 @@ extension WorktreeSidebarView {
                 }
             }
         }
+
+        // ─── Group 6: Focus default (only when focuses are available) ───
+        if !cachedFocuses.isEmpty {
+            Divider()
+            prFocusDefaultItems(for: repo, focuses: cachedFocuses)
+        }
+    }
+
+    @ViewBuilder
+    private func prFocusDefaultItems(for repo: ObservableRepository, focuses: [String]) -> some View {
+        let currentFocus = ynhPersistence.runFocus(for: repo.path) ?? ""
+        Menu {
+            if !currentFocus.isEmpty {
+                Button(Strings.RemotePRs.clearDefaultFocus) {
+                    ynhPersistence.setRunFocus(nil, for: repo.path)
+                }
+                Divider()
+            }
+            ForEach(focuses, id: \.self) { name in
+                Button(name) { ynhPersistence.setRunFocus(name, for: repo.path) }
+            }
+        } label: {
+            if currentFocus.isEmpty {
+                Label(Strings.RemotePRs.setDefaultFocus, systemImage: "scope")
+            } else {
+                Label(Strings.RemotePRs.defaultFocusSet(currentFocus), systemImage: "scope")
+            }
+        }
+    }
+
+    private func quickLaunchFocus(
+        _ focusName: String, worktree: GitWorktree, repo: ObservableRepository,
+        prNumber: Int, harnessId: String
+    ) {
+        let harness = harnessRepository.harnesses.first { $0.id == harnessId || $0.name == harnessId }
+        let title = RunWithFocusSheet.makeCardTitleStatic(
+            focus: focusName, profile: "", harnessId: harnessId,
+            repoPath: repo.path, prNumber: prNumber)
+        let config = HarnessLaunchConfig(
+            harnessID: harnessId,
+            vendorID: "",
+            defaultVendor: harness?.defaultVendor ?? "",
+            focus: focusName,
+            profile: nil,
+            workingDirectory: worktree.path,
+            prompt: nil,
+            backend: settings.backend,
+            branch: worktree.branch,
+            interactive: false,
+            cardTitle: title
+        )
+        onRunWithFocus?(config)
     }
 }
 

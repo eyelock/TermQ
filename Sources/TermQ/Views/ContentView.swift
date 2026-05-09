@@ -57,7 +57,8 @@ struct ContentView: View {
                             prompt: nil,
                             backend: SettingsStore.shared.backend,
                             branch: branch,
-                            interactive: false
+                            interactive: false,
+                            cardTitle: nil
                         )
                         launchCoordinator.launchHarness(config)
                     },

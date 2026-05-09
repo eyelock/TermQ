@@ -1106,8 +1106,15 @@
 "remote.prs.run.vendor.default" = "Harness default";
 "remote.prs.run.interactive.label" = "Stay interactive after run";
 "remote.prs.run.interactive.help" = "The agent will respond to the initial focus, then remain open for follow-up questions.";
+"remote.prs.run.refresh.detail" = "Reload harness focuses and profiles from disk";
 "remote.prs.run.run" = "Run";
 "remote.prs.run.cancel" = "Cancel";
+"remote.prs.copy.branch.name" = "Copy Branch Name";
+"remote.prs.quick.launch.focus" = "Quick Launch Focus";
+"remote.prs.run.focus.item %@" = "Run %@";
+"remote.prs.set.default.focus" = "Set Default Focus…";
+"remote.prs.default.focus.set %@" = "Default Focus: %@";
+"remote.prs.clear.default.focus" = "Clear Default Focus";
 "remote.prs.overflow.more %lld" = "+ %lld more — Open Repository Detail";
 "remote.prs.prune.closed" = "⊘ Prune Closed PRs";
 "remote.prs.prune.closed.title %lld" = "%lld PRs Closed or Merged";

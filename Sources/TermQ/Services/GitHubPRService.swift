@@ -139,7 +139,7 @@ final class GitHubPRService: ObservableObject {
         matches: [Int: String],
         cap: Int
     ) -> (feed: [GitHubPR], overflow: Int) {
-        func byDate(_ a: GitHubPR, _ b: GitHubPR) -> Bool { a.updatedAt > b.updatedAt }
+        func byDate(_ lhs: GitHubPR, _ rhs: GitHubPR) -> Bool { lhs.updatedAt > rhs.updatedAt }
 
         var tier1: [GitHubPR] = []  // checked out
         var tier2: [GitHubPR] = []  // review requested
@@ -234,7 +234,8 @@ final class GitHubPRService: ObservableObject {
                 "--limit", "100",
                 "--state", "open",
                 "--json",
-                "number,title,headRefName,headRefOid,author,isCrossRepository,isDraft,reviewRequests,assignees,updatedAt",
+                "number,title,headRefName,headRefOid,author,"
+                    + "isCrossRepository,isDraft,reviewRequests,assignees,updatedAt",
             ],
             environment: nil,
             currentDirectory: repoPath,
