@@ -265,6 +265,8 @@ Once a harness is editable — local, git-cloned, or forked — the detail pane 
 
 ![Delegate editor row](../Images/harness-delegate-editor.png)
 
+> **Local harnesses cannot be delegate targets.** The Add Delegate library only lists harnesses with a shareable remote source (registry or Git). A delegate's identity is its source URL — persisting a local filesystem path in `plugin.json` would bake one machine's directory layout into the harness manifest, breaking silently for anyone else who clones it. Use a Git URL instead, or push the local harness to a registry first.
+
 **Manifest** — the manifest editor opens from the detail action menu. It exposes the harness-level fields (name, version, default vendor, description) without making you hand-edit `plugin.json`. Submit reflects in the detail pane immediately.
 
 All edits stream their YNH command output through the same progress sheet you see during install — so you can watch what TermQ is asking YNH to do.
