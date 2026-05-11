@@ -30,6 +30,11 @@ extension Strings {
                 String(format: localized("inspector.agent.sensors.failed"), n)
             }
             static var editSensors: String { localized("inspector.agent.edit.sensors") }
+            static func turnApprovalTitle(_ n: Int) -> String {
+                String(format: localized("inspector.agent.turn.approval.title"), n)
+            }
+            static var turnApprovalSend: String { localized("inspector.agent.turn.approval.send") }
+            static var turnApprovalReset: String { localized("inspector.agent.turn.approval.reset") }
         }
     }
 }
