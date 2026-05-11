@@ -1116,6 +1116,10 @@
 "remote.prs.default.focus.set %@" = "Default Focus: %@";
 "remote.prs.clear.default.focus" = "Clear Default Focus";
 "remote.prs.overflow.more %lld" = "+ %lld more — Open Repository Detail";
+"remote.prs.prune.all" = "⊘ Prune…";
+"remote.prs.prune.closed.header" = "Closed PR Worktrees";
+"remote.prs.prune.focus.header" = "Focus Worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld Focus Worktrees";
 "remote.prs.prune.closed" = "⊘ Prune Closed PRs";
 "remote.prs.prune.closed.title %lld" = "%lld PRs Closed or Merged";
 "remote.prs.prune.closed.confirm" = "Prune";

@@ -95,6 +95,14 @@ extension Strings {
             String(format: localized("remote.prs.overflow.more %lld"), count)
         }
 
+        // MARK: - Prune
+        static var pruneAll: String { localized("remote.prs.prune.all") }
+        static var pruneClosedHeader: String { localized("remote.prs.prune.closed.header") }
+        static var pruneFocusHeader: String { localized("remote.prs.prune.focus.header") }
+        static func pruneFocusTitle(_ count: Int) -> String {
+            String(format: localized("remote.prs.prune.focus.title %lld"), count)
+        }
+
         // MARK: - Prune Closed PRs
         static var pruneClosedPRs: String { localized("remote.prs.prune.closed") }
         static func pruneClosedPRsTitle(_ count: Int) -> String {

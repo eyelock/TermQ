@@ -41,6 +41,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     @Published var repositories: [ObservableRepository] = []
     @Published var worktrees: [UUID: [GitWorktree]] = [:]
+    @Published var focusWorktrees: [UUID: [GitWorktree]] = [:]
     @Published var availableBranches: [UUID: [String]] = [:]
     @Published private(set) var loadingRepos: Set<UUID> = []
     @Published var isLoading: Bool = false
@@ -51,12 +52,12 @@ final class WorktreeSidebarViewModel: ObservableObject {
     @Published private(set) var updatingWorktreeIDs: Set<String> = []
     @Published private(set) var fetchingBranchNames: Set<String> = []
 
-    private let gitService: any GitServiceProtocol
+    let gitService: any GitServiceProtocol
     private let persistence: any RepoPersistenceProtocol
     private let prService: GitHubPRService
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
-    private var monitors: [UUID: GitRepositoryMonitor] = [:]
+    var monitors: [UUID: GitRepositoryMonitor] = [:]
     private var dirtyPollTimer: Timer?
 
     init(
@@ -266,13 +267,23 @@ final class WorktreeSidebarViewModel: ObservableObject {
         defer { if isInitialLoad { loadingRepos.remove(repo.id) } }
         do {
             let trees = try await gitService.listWorktrees(repoPath: repo.path)
-            worktrees[repo.id] = trees.sorted {
+            var regular: [GitWorktree] = []
+            var focus: [GitWorktree] = []
+            for tree in trees {
+                if URL(fileURLWithPath: tree.path).lastPathComponent.hasPrefix("termq-focus-") {
+                    focus.append(tree)
+                } else {
+                    regular.append(tree)
+                }
+            }
+            worktrees[repo.id] = regular.sorted {
                 if $0.isMainWorktree { return true }
                 if $1.isMainWorktree { return false }
                 let lhs = $0.branch ?? ""
                 let rhs = $1.branch ?? ""
                 return lhs.localizedCaseInsensitiveCompare(rhs) == .orderedAscending
             }
+            focusWorktrees[repo.id] = focus
         } catch {
             if TermQLogger.fileLoggingEnabled {
                 TermQLogger.ui.error("WorktreeSidebarViewModel: refreshWorktrees failed error=\(error)")
