@@ -156,6 +156,8 @@ public final class AgentSessionController: ObservableObject {
         switch event.decoded() {
         case .plan:
             updateCardStatus(.awaitingPlanApproval)
+        case .turnApprovalRequired:
+            updateCardStatus(.awaitingTurnApproval)
         case .converged:
             updateCardStatus(.converged)
         case .stuckDetected:
@@ -173,14 +175,34 @@ public final class AgentSessionController: ObservableObject {
     /// driver's stdin and flips the card status back to `.running`.
     ///
     /// Wire format (TermQ ↔ ynh-agent contract): NDJSON. The loop driver
-    /// reads stdin line by line and acts on `action` strings. Today only
-    /// `approve_plan` and `reject_plan` are defined; future actions
-    /// (interrupt, edit-feedback, etc.) extend this surface.
+    /// reads stdin line by line and acts on `action` strings. Unknown
+    /// actions are ignored (forward-compat), so pre-registering
+    /// `replace_feedback` here is safe against older loop driver builds.
     public func approvePlan() async {
         guard cardLookup()?.agentConfig?.status == .awaitingPlanApproval else { return }
         try? await process?.send(line: #"{"action":"approve_plan"}"#)
         updateCardStatus(.running)
     }
+
+    // MARK: - Turn approval
+
+    /// Approve the pending turn. If `feedback` differs from the loop driver's
+    /// synthesized text, a `replace_feedback` message is sent first so the
+    /// driver injects the user's version instead. Unknown actions are silently
+    /// ignored by older drivers, so this is safe to send today.
+    public func approveTurn(feedback: String? = nil) async {
+        guard cardLookup()?.agentConfig?.status == .awaitingTurnApproval else { return }
+        if let feedback,
+           let data = try? JSONSerialization.data(
+               withJSONObject: ["action": "replace_feedback", "content": feedback]),
+           let line = String(data: data, encoding: .utf8) {
+            try? await process?.send(line: line)
+        }
+        try? await process?.send(line: #"{"action":"approve_turn"}"#)
+        updateCardStatus(.running)
+    }
+
+    // MARK: -
 
     /// Reject the pending plan. Sends `reject_plan` to stdin so the driver
     /// can clean up gracefully, then SIGTERMs and flips the card to
@@ -208,7 +230,7 @@ public final class AgentSessionController: ObservableObject {
         switch config.status {
         case .converged, .stuck, .errored:
             return
-        case .awaitingPlanApproval:
+        case .awaitingPlanApproval, .awaitingTurnApproval:
             updateCardStatus(.errored)
             return
         default:

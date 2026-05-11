@@ -24,6 +24,12 @@ public enum TrajectoryEventPayload: Sendable, Equatable {
     /// `sensor_result` — one sensor's mechanical run completed.
     case sensorResult(name: String, exitCode: Int, durationMs: Int, summary: String?)
 
+    /// `turn_approval_required` — loop driver is paused awaiting user review of
+    /// synthesized feedback before injecting it as the next worker turn.
+    /// The driver accepts `approve_turn` (proceed with existing feedback) and
+    /// `replace_feedback` (replace content before proceeding) on stdin.
+    case turnApprovalRequired(turn: Int, synthesizedFeedback: String)
+
     /// `stuck_detected` — watchdog fired (edit-loop, oscillation, etc.).
     case stuckDetected(reason: String)
 
@@ -80,6 +86,10 @@ extension TrajectoryEvent {
                     summary: p.summary
                 )
             }
+        case "turn_approval_required":
+            if let p = try? decoder.decode(TurnApprovalRequiredWire.self, from: data) {
+                return .turnApprovalRequired(turn: p.turn, synthesizedFeedback: p.synthesizedFeedback)
+            }
         case "stuck_detected":
             if let p = try? decoder.decode(StuckDetectedWire.self, from: data) {
                 return .stuckDetected(reason: p.reason)
@@ -135,6 +145,16 @@ private struct SensorResultWire: Decodable {
         case name, summary
         case exitCode = "exit_code"
         case durationMs = "duration_ms"
+    }
+}
+
+private struct TurnApprovalRequiredWire: Decodable {
+    let turn: Int
+    let synthesizedFeedback: String
+
+    enum CodingKeys: String, CodingKey {
+        case turn
+        case synthesizedFeedback = "synthesized_feedback"
     }
 }
 

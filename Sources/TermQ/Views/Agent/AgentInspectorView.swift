@@ -35,6 +35,14 @@ struct AgentInspectorView: View {
                     if let planContent = pendingPlanContent {
                         planApprovalSection(content: planContent)
                     }
+                    if let approval = pendingTurnApproval {
+                        TurnApprovalSection(
+                            turn: approval.turn,
+                            feedback: approval.feedback
+                        ) { edited in
+                            await controller.approveTurn(feedback: edited)
+                        }
+                    }
                     configSection
                     if !lastSensorResults.isEmpty {
                         lastSensorsSection
@@ -70,6 +78,18 @@ struct AgentInspectorView: View {
         guard card.agentConfig?.status == .awaitingPlanApproval else { return nil }
         for event in controller.events.reversed() {
             if case .plan(let content) = event.decoded() { return content }
+        }
+        return nil
+    }
+
+    /// The latest `turn_approval_required` event, surfaced only while the
+    /// card is in `.awaitingTurnApproval`. Returns `nil` otherwise.
+    private var pendingTurnApproval: (turn: Int, feedback: String)? {
+        guard card.agentConfig?.status == .awaitingTurnApproval else { return nil }
+        for event in controller.events.reversed() {
+            if case .turnApprovalRequired(let turn, let feedback) = event.decoded() {
+                return (turn, feedback)
+            }
         }
         return nil
     }
@@ -332,6 +352,67 @@ struct AgentInspectorView: View {
     }
 }
 
+// MARK: - Turn approval section
+
+private struct TurnApprovalSection: View {
+    let turn: Int
+    let feedback: String
+    let onSend: (String) async -> Void
+
+    @State private var editedFeedback: String
+
+    init(turn: Int, feedback: String, onSend: @escaping (String) async -> Void) {
+        self.turn = turn
+        self.feedback = feedback
+        self.onSend = onSend
+        _editedFeedback = State(initialValue: feedback)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
+                Image(systemName: "text.bubble")
+                    .foregroundStyle(.blue)
+                Text(Strings.Inspector.Agent.turnApprovalTitle(turn))
+                    .font(.headline)
+                Spacer()
+            }
+
+            TextEditor(text: $editedFeedback)
+                .font(.system(.callout, design: .monospaced))
+                .frame(minHeight: 100, maxHeight: 220)
+                .scrollContentBackground(.hidden)
+                .padding(6)
+                .background(Color(NSColor.textBackgroundColor))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .strokeBorder(Color.secondary.opacity(0.2), lineWidth: 1)
+                )
+
+            HStack(spacing: 8) {
+                if editedFeedback != feedback {
+                    Button(Strings.Inspector.Agent.turnApprovalReset) {
+                        editedFeedback = feedback
+                    }
+                }
+                Spacer()
+                Button(Strings.Inspector.Agent.turnApprovalSend) {
+                    Task { await onSend(editedFeedback) }
+                }
+                .keyboardShortcut(.defaultAction)
+            }
+        }
+        .padding(16)
+        .background(Color.blue.opacity(0.06))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .strokeBorder(Color.blue.opacity(0.3), lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+}
+
 // MARK: - Turn grouping model
 
 private struct SensorRunSummary {
@@ -493,6 +574,8 @@ private struct TrajectoryEventRow: View {
         case .sensorResult(let name, let exitCode, let durationMs, let summary):
             let verdict = exitCode == 0 ? "✓" : "✗"
             return "\(verdict) \(name) — \(durationMs)ms\(summary.map { " — \($0)" } ?? "")"
+        case .turnApprovalRequired(let turn, _):
+            return "turn \(turn) — awaiting approval"
         case .stuckDetected(let reason):
             return reason
         case .budgetExceeded(let kind):
