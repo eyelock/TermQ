@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Εμφάνιση καρτέλας Σεσιών Agent στο πλαϊνό πλαίσιο";
 "settings.agent.enable.tab.help" = "Προσθέτει καρτέλα στο πλαϊνό πλαίσιο με τη λίστα τρεχόντων και παρελθόντων σεσιών agent και μια ενέργεια «Εκκίνηση ως Agent» στις γραμμές harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Τελευταίοι αισθητήρες";
+"inspector.agent.trajectory" = "Τροχιά";
+"inspector.agent.trajectory.empty" = "Δεν υπάρχει τροχιά ακόμα";
+"inspector.agent.trajectory.empty.configure" = "Ρυθμίστε το agent.loopDriverCommand στις προτιμήσεις και μετά πατήστε Εκτέλεση.";
+"inspector.agent.trajectory.empty.run" = "Πατήστε Εκτέλεση για να εκκινήσετε τον διαμορφωμένο οδηγό βρόχου.";
+"inspector.agent.turn" = "Γύρος %d";
+"inspector.agent.sensors.all.passed" = "όλοι πέρασαν";
+"inspector.agent.sensors.failed" = "%d απέτυχαν";
+"inspector.agent.edit.sensors" = "Επεξεργασία αισθητήρων";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Επικαλύψεις αισθητήρων";
+"overlay.editor.loading" = "Φόρτωση αισθητήρων…";
+"overlay.editor.no.sensors" = "Δεν υπάρχουν δηλωμένοι αισθητήρες σε αυτό το harness.";
+"overlay.editor.role.label" = "Ρόλος";
+"overlay.editor.role.inherited" = "Κληρονομημένος";
+"overlay.editor.prompt.harness.label" = "Προτροπή harness";
+"overlay.editor.prompt.override.label" = "Παράκαμψη";
+"overlay.editor.prompt.override.placeholder" = "Αφήστε κενό για να κληρονομηθεί η προτροπή harness";
+"overlay.editor.source.kind.command" = "εντολή";
+"overlay.editor.source.kind.files" = "αρχεία";
+"overlay.editor.source.kind.focus" = "εστίαση";
+"overlay.editor.save" = "Αποθήκευση";
+"overlay.editor.cancel" = "Ακύρωση";
+"overlay.editor.error.ynh.not.ready" = "Το ynh δεν είναι έτοιμο. Ελέγξτε την αλυσίδα εργαλείων YNH στις Ρυθμίσεις.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Αλυσίδα εργαλείων YNH";
 "settings.ynh.title" = "ynh";

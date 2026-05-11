@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "エージェントセッションタブをサイドバーに表示";
 "settings.agent.enable.tab.help" = "サイドバーにタブを追加し、進行中および過去のエージェントセッションを一覧表示します。ハーネス行に「エージェントとして起動」アクションも追加されます。";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "最後のセンサー";
+"inspector.agent.trajectory" = "実行履歴";
+"inspector.agent.trajectory.empty" = "まだ実行履歴がありません";
+"inspector.agent.trajectory.empty.configure" = "defaults で agent.loopDriverCommand を設定してから、実行を押してください。";
+"inspector.agent.trajectory.empty.run" = "実行を押して、設定済みのループドライバーを起動してください。";
+"inspector.agent.turn" = "ターン %d";
+"inspector.agent.sensors.all.passed" = "すべて合格";
+"inspector.agent.sensors.failed" = "%d 件失敗";
+"inspector.agent.edit.sensors" = "センサーを編集";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "センサーオーバーレイ";
+"overlay.editor.loading" = "センサーを読み込み中…";
+"overlay.editor.no.sensors" = "このハーネスにはセンサーが宣言されていません。";
+"overlay.editor.role.label" = "役割";
+"overlay.editor.role.inherited" = "継承";
+"overlay.editor.prompt.harness.label" = "ハーネスプロンプト";
+"overlay.editor.prompt.override.label" = "上書き";
+"overlay.editor.prompt.override.placeholder" = "空のままにするとハーネスプロンプトを継承します";
+"overlay.editor.source.kind.command" = "コマンド";
+"overlay.editor.source.kind.files" = "ファイル";
+"overlay.editor.source.kind.focus" = "フォーカス";
+"overlay.editor.save" = "保存";
+"overlay.editor.cancel" = "キャンセル";
+"overlay.editor.error.ynh.not.ready" = "ynh の準備ができていません。設定で YNH ツールチェーンを確認してください。";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH ハーネスツールチェーン";
 "settings.ynh.title" = "ynh";

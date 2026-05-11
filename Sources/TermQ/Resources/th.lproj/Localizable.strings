@@ -696,6 +696,36 @@
 "settings.agent.enable.tab" = "แสดงแท็บ Agent เซสชันในแถบด้านข้าง";
 "settings.agent.enable.tab.help" = "เพิ่มแท็บในแถบด้านข้างที่แสดงรายการ agent เซสชันที่กำลังดำเนินการและที่ผ่านมาแล้ว และการกระทำ “เปิดใช้เป็น Agent” ในแถว harness";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "เซ็นเซอร์ล่าสุด";
+"inspector.agent.trajectory" = "วิถี";
+"inspector.agent.trajectory.empty" = "ยังไม่มีวิถี";
+"inspector.agent.trajectory.empty.configure" = "ตั้งค่า agent.loopDriverCommand ใน defaults แล้วกดเรียกใช้";
+"inspector.agent.trajectory.empty.run" = "กดเรียกใช้เพื่อเริ่มตัวขับเคลื่อนลูปที่กำหนดค่าไว้";
+"inspector.agent.turn" = "รอบที่ %d";
+"inspector.agent.sensors.all.passed" = "ผ่านทั้งหมด";
+"inspector.agent.sensors.failed" = "%d ล้มเหลว";
+"inspector.agent.edit.sensors" = "แก้ไขเซ็นเซอร์";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "เลเยอร์ทับซ้อนของเซ็นเซอร์";
+"overlay.editor.loading" = "กำลังโหลดเซ็นเซอร์…";
+"overlay.editor.no.sensors" = "ไม่มีเซ็นเซอร์ที่ประกาศในฮาร์เนสนี้";
+"overlay.editor.role.label" = "บทบาท";
+"overlay.editor.role.inherited" = "รับมา";
+"overlay.editor.prompt.harness.label" = "Prompt ของ harness";
+"overlay.editor.prompt.override.label" = "แทนที่";
+"overlay.editor.prompt.override.placeholder" = "ปล่อยว่างเพื่อรับค่า prompt จาก harness";
+"overlay.editor.source.kind.command" = "คำสั่ง";
+"overlay.editor.source.kind.files" = "ไฟล์";
+"overlay.editor.source.kind.focus" = "โฟกัส";
+"overlay.editor.save" = "บันทึก";
+"overlay.editor.cancel" = "ยกเลิก";
+"overlay.editor.error.ynh.not.ready" = "ynh ยังไม่พร้อม ตรวจสอบ YNH toolchain ในการตั้งค่า";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
 "settings.ynh.title" = "ynh";

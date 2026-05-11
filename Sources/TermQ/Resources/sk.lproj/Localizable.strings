@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Zobrazť kartu Relácie Agenta na bočnom paneli";
 "settings.agent.enable.tab.help" = "Pridá kartu na bočnom paneli so zoznamom prebiehajúcich a minulých relácií Agenta a akciu „Spustiť ako Agent“ na riadkoch harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Posledné senzory";
+"inspector.agent.trajectory" = "Priebeh";
+"inspector.agent.trajectory.empty" = "Zatiaľ žiadny priebeh";
+"inspector.agent.trajectory.empty.configure" = "Nakonfigurujte agent.loopDriverCommand v nastaveniach a potom stlačte Spustiť.";
+"inspector.agent.trajectory.empty.run" = "Stlačte Spustiť na spustenie nakonfigurovaného ovládača slučky.";
+"inspector.agent.turn" = "Ťah %d";
+"inspector.agent.sensors.all.passed" = "všetko prešlo";
+"inspector.agent.sensors.failed" = "%d zlyhalo";
+"inspector.agent.edit.sensors" = "Upraviť senzory";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Prekryvy senzorov";
+"overlay.editor.loading" = "Načítavanie senzorov…";
+"overlay.editor.no.sensors" = "V tomto harnessei nie sú deklarované žiadne senzory.";
+"overlay.editor.role.label" = "Rola";
+"overlay.editor.role.inherited" = "Zdedená";
+"overlay.editor.prompt.harness.label" = "Výzva harnessu";
+"overlay.editor.prompt.override.label" = "Prepísať";
+"overlay.editor.prompt.override.placeholder" = "Ponechajte prázdne pre zdedenie výzvy harnessu";
+"overlay.editor.source.kind.command" = "príkaz";
+"overlay.editor.source.kind.files" = "súbory";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Uložiť";
+"overlay.editor.cancel" = "Zrušiť";
+"overlay.editor.error.ynh.not.ready" = "ynh nie je pripravené. Skontrolujte sadu nástrojov YNH v Nastaveniach.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Nástrojový reťazec YNH";
 "settings.ynh.title" = "ynh";

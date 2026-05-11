@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Показать вкладку Сеансы Agent на боковой панели";
 "settings.agent.enable.tab.help" = "Добавляет вкладку на боковой панели со списком текущих и завершённых сеансов Agent, а также действие «Запустить как Agent» в строках harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Последние сенсоры";
+"inspector.agent.trajectory" = "Ход выполнения";
+"inspector.agent.trajectory.empty" = "История пока пуста";
+"inspector.agent.trajectory.empty.configure" = "Настройте agent.loopDriverCommand в параметрах, затем нажмите «Запустить».";
+"inspector.agent.trajectory.empty.run" = "Нажмите «Запустить», чтобы запустить настроенный драйвер цикла.";
+"inspector.agent.turn" = "Ход %d";
+"inspector.agent.sensors.all.passed" = "все прошли";
+"inspector.agent.sensors.failed" = "%d не прошло";
+"inspector.agent.edit.sensors" = "Изменить сенсоры";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Наложения сенсоров";
+"overlay.editor.loading" = "Загрузка сенсоров…";
+"overlay.editor.no.sensors" = "В этом harness нет объявленных сенсоров.";
+"overlay.editor.role.label" = "Роль";
+"overlay.editor.role.inherited" = "Унаследована";
+"overlay.editor.prompt.harness.label" = "Промпт harness";
+"overlay.editor.prompt.override.label" = "Переопределить";
+"overlay.editor.prompt.override.placeholder" = "Оставьте пустым, чтобы унаследовать промпт harness";
+"overlay.editor.source.kind.command" = "команда";
+"overlay.editor.source.kind.files" = "файлы";
+"overlay.editor.source.kind.focus" = "фокус";
+"overlay.editor.save" = "Сохранить";
+"overlay.editor.cancel" = "Отмена";
+"overlay.editor.error.ynh.not.ready" = "ynh не готов. Проверьте инструментарий YNH в Настройках.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Инструментарий YNH";
 "settings.ynh.title" = "ynh";

@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "显示 Agent 会话侧边栏选项卡";
 "settings.agent.enable.tab.help" = "在侧边栏添加选项卡，列出进行中和历史 Agent 会话，并在 Harness 行上提供“作为 Agent 启动”操作。";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "最近传感器";
+"inspector.agent.trajectory" = "轨迹";
+"inspector.agent.trajectory.empty" = "暂无轨迹";
+"inspector.agent.trajectory.empty.configure" = "在 defaults 中配置 agent.loopDriverCommand，然后点击运行。";
+"inspector.agent.trajectory.empty.run" = "点击运行以启动已配置的循环驱动器。";
+"inspector.agent.turn" = "第 %d 轮";
+"inspector.agent.sensors.all.passed" = "全部通过";
+"inspector.agent.sensors.failed" = "%d 个失败";
+"inspector.agent.edit.sensors" = "编辑传感器";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "传感器叠加层";
+"overlay.editor.loading" = "正在加载传感器…";
+"overlay.editor.no.sensors" = "此 harness 中未声明任何传感器。";
+"overlay.editor.role.label" = "角色";
+"overlay.editor.role.inherited" = "已继承";
+"overlay.editor.prompt.harness.label" = "Harness 提示词";
+"overlay.editor.prompt.override.label" = "覆盖";
+"overlay.editor.prompt.override.placeholder" = "留空以继承 harness 提示词";
+"overlay.editor.source.kind.command" = "命令";
+"overlay.editor.source.kind.files" = "文件";
+"overlay.editor.source.kind.focus" = "聚焦";
+"overlay.editor.save" = "保存";
+"overlay.editor.cancel" = "取消";
+"overlay.editor.error.ynh.not.ready" = "ynh 未就绪。请在设置中检查 YNH 工具链。";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness 工具链";
 "settings.ynh.title" = "ynh";

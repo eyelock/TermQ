@@ -695,6 +695,36 @@
 "settings.agent.enable.tab" = "साइडबार में Agent सेशन टैब दिखाएं";
 "settings.agent.enable.tab.help" = "साइडबार में एक टैब जोड़ता है जो चल रहे और पिछले Agent सेशन सूचीबद्ध करता है। harness पंक्तियों पर “ Agent के रूप में लॉन्च करें” क्रिया भी डिस्प्ले की जाती है।";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "अंतिम सेंसर";
+"inspector.agent.trajectory" = "पथ";
+"inspector.agent.trajectory.empty" = "अभी तक कोई पथ नहीं";
+"inspector.agent.trajectory.empty.configure" = "सेटिंग में agent.loopDriverCommand कॉन्फ़िगर करें, फिर चलाएं दबाएं।";
+"inspector.agent.trajectory.empty.run" = "कॉन्फ़िगर किए गए लूप ड्राइवर को शुरू करने के लिए चलाएं दबाएं।";
+"inspector.agent.turn" = "चाल %d";
+"inspector.agent.sensors.all.passed" = "सभी पास हुए";
+"inspector.agent.sensors.failed" = "%d विफल";
+"inspector.agent.edit.sensors" = "सेंसर संपादित करें";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "सेंसर ओवरले";
+"overlay.editor.loading" = "सेंसर लोड हो रहे हैं…";
+"overlay.editor.no.sensors" = "इस harness में कोई सेंसर घोषित नहीं है।";
+"overlay.editor.role.label" = "भूमिका";
+"overlay.editor.role.inherited" = "विरासत";
+"overlay.editor.prompt.harness.label" = "Harness प्रॉम्प्ट";
+"overlay.editor.prompt.override.label" = "ओवरराइड";
+"overlay.editor.prompt.override.placeholder" = "harness प्रॉम्प्ट इनहेरिट करने के लिए खाली छोड़ें";
+"overlay.editor.source.kind.command" = "कमांड";
+"overlay.editor.source.kind.files" = "फ़ाइलें";
+"overlay.editor.source.kind.focus" = "फ़ोकस";
+"overlay.editor.save" = "सहेजें";
+"overlay.editor.cancel" = "रद्द करें";
+"overlay.editor.error.ynh.not.ready" = "ynh तैयार नहीं है। सेटिंग में YNH टूलचेन जाँचें।";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness टूलचेन";
 "settings.ynh.title" = "ynh";

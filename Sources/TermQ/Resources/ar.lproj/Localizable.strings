@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "إظهار علامة تبويب جلسات Agent في الشريط الجانبي";
 "settings.agent.enable.tab.help" = "يضيف علامة تبويب في الشريط الجانبي تسرد جلسات Agent الجارية والماضية، وإجراء «تشغيل كـ Agent» على صفوف harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "آخر المستشعرات";
+"inspector.agent.trajectory" = "المسار";
+"inspector.agent.trajectory.empty" = "لا يوجد مسار بعد";
+"inspector.agent.trajectory.empty.configure" = "اضبط agent.loopDriverCommand في الإعدادات، ثم اضغط تشغيل.";
+"inspector.agent.trajectory.empty.run" = "اضغط تشغيل لبدء مشغّل الحلقة المُهيَّأ.";
+"inspector.agent.turn" = "الدور %d";
+"inspector.agent.sensors.all.passed" = "اجتاز الكل";
+"inspector.agent.sensors.failed" = "%d فشلت";
+"inspector.agent.edit.sensors" = "تعديل المستشعرات";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "طبقات المستشعرات";
+"overlay.editor.loading" = "جارٍ تحميل المستشعرات…";
+"overlay.editor.no.sensors" = "لا توجد مستشعرات معلنة في هذا الـ harness.";
+"overlay.editor.role.label" = "الدور";
+"overlay.editor.role.inherited" = "موروث";
+"overlay.editor.prompt.harness.label" = "موجّه harness";
+"overlay.editor.prompt.override.label" = "تجاوز";
+"overlay.editor.prompt.override.placeholder" = "اتركه فارغاً لتوارث موجّه harness";
+"overlay.editor.source.kind.command" = "أمر";
+"overlay.editor.source.kind.files" = "ملفات";
+"overlay.editor.source.kind.focus" = "تركيز";
+"overlay.editor.save" = "حفظ";
+"overlay.editor.cancel" = "إلغاء";
+"overlay.editor.error.ynh.not.ready" = "ynh غير جاهز. تحقق من سلسلة أدوات YNH في الإعدادات.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "سلسلة أدوات YNH";
 "settings.ynh.title" = "ynh";

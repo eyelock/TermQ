@@ -696,6 +696,36 @@
 "settings.agent.enable.tab" = "Hiển thị tab Phên Agent trong thanh bên";
 "settings.agent.enable.tab.help" = "Thêm tab vào thanh bên liệt kê các phiên agent đang chạy và đã qua, cùng hành động “Khởi chạy dưới dạng Agent” trên các hàng harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Cảm biến cuối";
+"inspector.agent.trajectory" = "Quỹ đạo";
+"inspector.agent.trajectory.empty" = "Chưa có quỹ đạo";
+"inspector.agent.trajectory.empty.configure" = "Cấu hình agent.loopDriverCommand trong defaults, sau đó nhấn Chạy.";
+"inspector.agent.trajectory.empty.run" = "Nhấn Chạy để khởi động trình điều khiển vòng lặp đã cấu hình.";
+"inspector.agent.turn" = "Lượt %d";
+"inspector.agent.sensors.all.passed" = "tất cả đã vượt";
+"inspector.agent.sensors.failed" = "%d thất bại";
+"inspector.agent.edit.sensors" = "Chỉnh sửa cảm biến";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Lớp phủ cảm biến";
+"overlay.editor.loading" = "Đang tải cảm biến…";
+"overlay.editor.no.sensors" = "Không có cảm biến nào được khai báo trong harness này.";
+"overlay.editor.role.label" = "Vai trò";
+"overlay.editor.role.inherited" = "Kế thừa";
+"overlay.editor.prompt.harness.label" = "Prompt của harness";
+"overlay.editor.prompt.override.label" = "Ghi đè";
+"overlay.editor.prompt.override.placeholder" = "Để trống để kế thừa prompt của harness";
+"overlay.editor.source.kind.command" = "lệnh";
+"overlay.editor.source.kind.files" = "tệp";
+"overlay.editor.source.kind.focus" = "tiêu điểm";
+"overlay.editor.save" = "Lưu";
+"overlay.editor.cancel" = "Hủy";
+"overlay.editor.error.ynh.not.ready" = "ynh chưa sẵn sàng. Kiểm tra chuỗi công cụ YNH trong Cài đặt.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Chuỗi công cụ YNH";
 "settings.ynh.title" = "ynh";

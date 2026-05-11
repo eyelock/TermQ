@@ -696,6 +696,36 @@
 "settings.agent.enable.tab" = "Показати вкладку Сеанси Agent на бічній панелі";
 "settings.agent.enable.tab.help" = "Додає вкладку на бічній панелі зі списком поточних і завершених сеансів Agent, а також дію «Запустити як Agent» у рядках harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Останні сенсори";
+"inspector.agent.trajectory" = "Перебіг";
+"inspector.agent.trajectory.empty" = "Поки немає перебігу";
+"inspector.agent.trajectory.empty.configure" = "Налаштуйте agent.loopDriverCommand у параметрах, потім натисніть «Запустити».";
+"inspector.agent.trajectory.empty.run" = "Натисніть «Запустити», щоб запустити налаштований драйвер циклу.";
+"inspector.agent.turn" = "Хід %d";
+"inspector.agent.sensors.all.passed" = "всі пройшли";
+"inspector.agent.sensors.failed" = "%d не пройшло";
+"inspector.agent.edit.sensors" = "Редагувати сенсори";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Накладення сенсорів";
+"overlay.editor.loading" = "Завантаження сенсорів…";
+"overlay.editor.no.sensors" = "У цьому harness не оголошено жодних сенсорів.";
+"overlay.editor.role.label" = "Роль";
+"overlay.editor.role.inherited" = "Успадкована";
+"overlay.editor.prompt.harness.label" = "Промпт harness";
+"overlay.editor.prompt.override.label" = "Перевизначити";
+"overlay.editor.prompt.override.placeholder" = "Залиште порожнім, щоб успадкувати промпт harness";
+"overlay.editor.source.kind.command" = "команда";
+"overlay.editor.source.kind.files" = "файли";
+"overlay.editor.source.kind.focus" = "фокус";
+"overlay.editor.save" = "Зберегти";
+"overlay.editor.cancel" = "Скасувати";
+"overlay.editor.error.ynh.not.ready" = "ynh не готовий. Перевірте інструментарій YNH у Налаштуваннях.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Інструментарій YNH";
 "settings.ynh.title" = "ynh";

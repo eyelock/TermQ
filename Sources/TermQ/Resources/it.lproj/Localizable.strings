@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Mostra scheda Sessioni Agente nella barra laterale";
 "settings.agent.enable.tab.help" = "Aggiunge una scheda nella barra laterale che elenca le sessioni agente in corso e passate, e un’azione “Avvia come Agente” nelle righe harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Ultimi sensori";
+"inspector.agent.trajectory" = "Traiettoria";
+"inspector.agent.trajectory.empty" = "Nessuna traiettoria ancora";
+"inspector.agent.trajectory.empty.configure" = "Configura agent.loopDriverCommand nelle impostazioni, poi premi Esegui.";
+"inspector.agent.trajectory.empty.run" = "Premi Esegui per avviare il driver del ciclo configurato.";
+"inspector.agent.turn" = "Turno %d";
+"inspector.agent.sensors.all.passed" = "tutti superati";
+"inspector.agent.sensors.failed" = "%d non superati";
+"inspector.agent.edit.sensors" = "Modifica sensori";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Overlay sensori";
+"overlay.editor.loading" = "Caricamento sensori…";
+"overlay.editor.no.sensors" = "Nessun sensore dichiarato in questo harness.";
+"overlay.editor.role.label" = "Ruolo";
+"overlay.editor.role.inherited" = "Ereditato";
+"overlay.editor.prompt.harness.label" = "Prompt harness";
+"overlay.editor.prompt.override.label" = "Sovrascrittura";
+"overlay.editor.prompt.override.placeholder" = "Lascia vuoto per ereditare il prompt del harness";
+"overlay.editor.source.kind.command" = "comando";
+"overlay.editor.source.kind.files" = "file";
+"overlay.editor.source.kind.focus" = "focus";
+"overlay.editor.save" = "Salva";
+"overlay.editor.cancel" = "Annulla";
+"overlay.editor.error.ynh.not.ready" = "ynh non è pronto. Verifica la toolchain YNH nelle Impostazioni.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";
 "settings.ynh.title" = "ynh";

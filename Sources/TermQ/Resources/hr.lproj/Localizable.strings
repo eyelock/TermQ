@@ -695,6 +695,36 @@
 "settings.agent.enable.tab" = "Prikaži karticu Sesije Agenta na bočnoj traci";
 "settings.agent.enable.tab.help" = "Dodaje karticu na bočnoj traci s popisom aktivnih i prošlih sesija agenta te akciju „Pokreni kao Agent“ na redovima harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Posljednji senzori";
+"inspector.agent.trajectory" = "Tijek";
+"inspector.agent.trajectory.empty" = "Još nema tijeka";
+"inspector.agent.trajectory.empty.configure" = "Konfigurirajte agent.loopDriverCommand u postavkama, a zatim pritisnite Pokreni.";
+"inspector.agent.trajectory.empty.run" = "Pritisnite Pokreni za pokretanje konfiguriranog upravljačkog programa petlje.";
+"inspector.agent.turn" = "Potez %d";
+"inspector.agent.sensors.all.passed" = "sve prošlo";
+"inspector.agent.sensors.failed" = "%d nije prošlo";
+"inspector.agent.edit.sensors" = "Uredi senzore";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Senzorski overlays";
+"overlay.editor.loading" = "Učitavanje senzora…";
+"overlay.editor.no.sensors" = "U ovom harnessu nisu deklarirani nikakvi senzori.";
+"overlay.editor.role.label" = "Uloga";
+"overlay.editor.role.inherited" = "Naslijeđena";
+"overlay.editor.prompt.harness.label" = "Harness upit";
+"overlay.editor.prompt.override.label" = "Nadjači";
+"overlay.editor.prompt.override.placeholder" = "Ostavite prazno za nasljeđivanje harness upita";
+"overlay.editor.source.kind.command" = "naredba";
+"overlay.editor.source.kind.files" = "datoteke";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Spremi";
+"overlay.editor.cancel" = "Odustani";
+"overlay.editor.error.ynh.not.ready" = "ynh nije spreman. Provjerite YNH alate u Postavkama.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH alatni lanac";
 "settings.ynh.title" = "ynh";

@@ -694,6 +694,36 @@
 "settings.agent.enable.tab" = "Vis Agent Sesjoner-fane i sidepanelet";
 "settings.agent.enable.tab.help" = "Legger til en fane i sidepanelet med pågående og tidligere agentsesjoner, og en handling „Start som Agent“ på harness-rader.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Siste sensorer";
+"inspector.agent.trajectory" = "Forløp";
+"inspector.agent.trajectory.empty" = "Ingen forløp ennå";
+"inspector.agent.trajectory.empty.configure" = "Konfigurer agent.loopDriverCommand i innstillingene, og trykk deretter på Kjør.";
+"inspector.agent.trajectory.empty.run" = "Trykk på Kjør for å starte den konfigurerte løkkedriveren.";
+"inspector.agent.turn" = "Tur %d";
+"inspector.agent.sensors.all.passed" = "alle bestått";
+"inspector.agent.sensors.failed" = "%d mislyktes";
+"inspector.agent.edit.sensors" = "Rediger sensorer";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensoroverlegg";
+"overlay.editor.loading" = "Laster sensorer…";
+"overlay.editor.no.sensors" = "Ingen sensorer deklarert i dette harnesset.";
+"overlay.editor.role.label" = "Rolle";
+"overlay.editor.role.inherited" = "Arvet";
+"overlay.editor.prompt.harness.label" = "Harness-forespørsel";
+"overlay.editor.prompt.override.label" = "Overstyr";
+"overlay.editor.prompt.override.placeholder" = "La stå tomt for å arve harness-forespørselen";
+"overlay.editor.source.kind.command" = "kommando";
+"overlay.editor.source.kind.files" = "filer";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Lagre";
+"overlay.editor.cancel" = "Avbryt";
+"overlay.editor.error.ynh.not.ready" = "ynh er ikke klar. Sjekk YNH-verktøykjeden i Innstillinger.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-verktøykjede";
 "settings.ynh.title" = "ynh";

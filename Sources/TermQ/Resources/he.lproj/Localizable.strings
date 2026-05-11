@@ -695,6 +695,36 @@
 "settings.agent.enable.tab" = "הצג כרטיסיית סשני Agent בסרגל הצד";
 "settings.agent.enable.tab.help" = "מוסיף כרטיסיית לסרגל הצד המרשימת את סשני Agent הפעילים והשלמים, ופעולה הפעל כ-Agent בשורות harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "חישנים אחרונים";
+"inspector.agent.trajectory" = "מסלול";
+"inspector.agent.trajectory.empty" = "אין מסלול עדיין";
+"inspector.agent.trajectory.empty.configure" = "הגדר את agent.loopDriverCommand בהגדרות ואז לחץ על הפעל.";
+"inspector.agent.trajectory.empty.run" = "לחץ על הפעל כדי להפעיל את מנהל הלולאה המוגדר.";
+"inspector.agent.turn" = "תור %d";
+"inspector.agent.sensors.all.passed" = "הכל עבר";
+"inspector.agent.sensors.failed" = "%d נכשלו";
+"inspector.agent.edit.sensors" = "עריכת חישנים";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "שכבות-על של חישנים";
+"overlay.editor.loading" = "טוען חישנים…";
+"overlay.editor.no.sensors" = "לא הוכרזו חישנים ב-harness זה.";
+"overlay.editor.role.label" = "תפקיד";
+"overlay.editor.role.inherited" = "עוּבַּר";
+"overlay.editor.prompt.harness.label" = "הנחיית harness";
+"overlay.editor.prompt.override.label" = "דרוס";
+"overlay.editor.prompt.override.placeholder" = "השאר ריק לירושת הנחיית harness";
+"overlay.editor.source.kind.command" = "פקודה";
+"overlay.editor.source.kind.files" = "קבצים";
+"overlay.editor.source.kind.focus" = "מיקוד";
+"overlay.editor.save" = "שמור";
+"overlay.editor.cancel" = "ביטול";
+"overlay.editor.error.ynh.not.ready" = "ynh אינו מוכן. בדוק את שרשרת הכלים YNH בהגדרות.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "שרשרת כלים YNH";
 "settings.ynh.title" = "ynh";

@@ -696,6 +696,36 @@
 "settings.agent.enable.tab" = "Visa agentsessioner i sidofältets flik";
 "settings.agent.enable.tab.help" = "Lägger till en flik i sidofältet som visar pågående och tidigare agentsessioner, och en åtgärd „Starta som Agent“ på harnessrader.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Senaste sensorer";
+"inspector.agent.trajectory" = "Förlopp";
+"inspector.agent.trajectory.empty" = "Inget förlopp ännu";
+"inspector.agent.trajectory.empty.configure" = "Konfigurera agent.loopDriverCommand i inställningarna och tryck sedan på Kör.";
+"inspector.agent.trajectory.empty.run" = "Tryck på Kör för att starta den konfigurerade loop-drivrutinen.";
+"inspector.agent.turn" = "Tur %d";
+"inspector.agent.sensors.all.passed" = "alla godkända";
+"inspector.agent.sensors.failed" = "%d misslyckades";
+"inspector.agent.edit.sensors" = "Redigera sensorer";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensoröverlägg";
+"overlay.editor.loading" = "Läser in sensorer…";
+"overlay.editor.no.sensors" = "Inga sensorer deklarerade i det här harnesset.";
+"overlay.editor.role.label" = "Roll";
+"overlay.editor.role.inherited" = "Ärvd";
+"overlay.editor.prompt.harness.label" = "Harness-prompt";
+"overlay.editor.prompt.override.label" = "Åsidosätt";
+"overlay.editor.prompt.override.placeholder" = "Lämna tomt för att ärva harness-prompten";
+"overlay.editor.source.kind.command" = "kommando";
+"overlay.editor.source.kind.files" = "filer";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Spara";
+"overlay.editor.cancel" = "Avbryt";
+"overlay.editor.error.ynh.not.ready" = "ynh är inte redo. Kontrollera YNH-verktygskedjan i Inställningar.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-verktygskedja";
 "settings.ynh.title" = "ynh";

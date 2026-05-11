@@ -695,6 +695,36 @@
 "settings.agent.enable.tab" = "Näytä Agenttiistunnot-välilehti sivupalkissa";
 "settings.agent.enable.tab.help" = "Lisää sivupalkkiin välilehden, jossa näkyvät käynnissä olevat ja aiemmat agenttiistunnot, sekä „Käynnistä Agentina“ -toiminto harness-riveille.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Viimeisimmät anturit";
+"inspector.agent.trajectory" = "Kulku";
+"inspector.agent.trajectory.empty" = "Ei kulkua vielä";
+"inspector.agent.trajectory.empty.configure" = "Määritä agent.loopDriverCommand asetuksissa ja paina sitten Suorita.";
+"inspector.agent.trajectory.empty.run" = "Paina Suorita käynnistääksesi määritetyn silmukkaohjain.";
+"inspector.agent.turn" = "Vuoro %d";
+"inspector.agent.sensors.all.passed" = "kaikki hyväksytty";
+"inspector.agent.sensors.failed" = "%d epäonnistui";
+"inspector.agent.edit.sensors" = "Muokkaa antureita";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Anturin peittokuvat";
+"overlay.editor.loading" = "Ladataan antureita…";
+"overlay.editor.no.sensors" = "Tässä harnessissa ei ole määriteltyjä antureita.";
+"overlay.editor.role.label" = "Rooli";
+"overlay.editor.role.inherited" = "Peritty";
+"overlay.editor.prompt.harness.label" = "Harnessin kehote";
+"overlay.editor.prompt.override.label" = "Ohita";
+"overlay.editor.prompt.override.placeholder" = "Jätä tyhjäksi periäksesi harnessin kehote";
+"overlay.editor.source.kind.command" = "komento";
+"overlay.editor.source.kind.files" = "tiedostot";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Tallenna";
+"overlay.editor.cancel" = "Peruuta";
+"overlay.editor.error.ynh.not.ready" = "ynh ei ole valmis. Tarkista YNH-työkaluketju asetuksista.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-työkaluketju";
 "settings.ynh.title" = "ynh";

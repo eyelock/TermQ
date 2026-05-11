@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Mostra la pestanya Sessions d’Agent a la barra lateral";
 "settings.agent.enable.tab.help" = "Afegeix una pestanya a la barra lateral que llista les sessions d’agent en curs i passades, i una acció “Inicia com a Agent” a les files de harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Últims sensors";
+"inspector.agent.trajectory" = "Trajectòria";
+"inspector.agent.trajectory.empty" = "Cap trajectòria encara";
+"inspector.agent.trajectory.empty.configure" = "Configura agent.loopDriverCommand a la configuració i prem Executa.";
+"inspector.agent.trajectory.empty.run" = "Prem Executa per iniciar el controlador de bucle configurat.";
+"inspector.agent.turn" = "Torn %d";
+"inspector.agent.sensors.all.passed" = "tots passats";
+"inspector.agent.sensors.failed" = "%d fallits";
+"inspector.agent.edit.sensors" = "Edita sensors";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Superposicions de sensors";
+"overlay.editor.loading" = "S'estan carregant els sensors…";
+"overlay.editor.no.sensors" = "No hi ha sensors declarats en aquest harness.";
+"overlay.editor.role.label" = "Rol";
+"overlay.editor.role.inherited" = "Heretat";
+"overlay.editor.prompt.harness.label" = "Indicació del harness";
+"overlay.editor.prompt.override.label" = "Sobreescriu";
+"overlay.editor.prompt.override.placeholder" = "Deixa-ho buit per heretar la indicació del harness";
+"overlay.editor.source.kind.command" = "ordre";
+"overlay.editor.source.kind.files" = "fitxers";
+"overlay.editor.source.kind.focus" = "focus";
+"overlay.editor.save" = "Desa";
+"overlay.editor.cancel" = "Cancel·la";
+"overlay.editor.error.ynh.not.ready" = "ynh no està a punt. Comprova la cadena d'eines YNH a la Configuració.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Cadena d'eines YNH";
 "settings.ynh.title" = "ynh";

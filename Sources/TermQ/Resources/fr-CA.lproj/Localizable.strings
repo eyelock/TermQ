@@ -695,6 +695,36 @@
 "settings.agent.enable.tab" = "Afficher l’onglet Sessions Agent dans la barre latérale";
 "settings.agent.enable.tab.help" = "Ajoute un onglet dans la barre latérale listant les sessions d’agent en cours et passées, et une action «Lancer comme Agent» sur les lignes de harnais.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Derniers capteurs";
+"inspector.agent.trajectory" = "Trajectoire";
+"inspector.agent.trajectory.empty" = "Aucune trajectoire pour l'instant";
+"inspector.agent.trajectory.empty.configure" = "Configurez agent.loopDriverCommand dans les réglages, puis appuyez sur Exécuter.";
+"inspector.agent.trajectory.empty.run" = "Appuyez sur Exécuter pour démarrer le pilote de boucle configuré.";
+"inspector.agent.turn" = "Tour %d";
+"inspector.agent.sensors.all.passed" = "tous réussis";
+"inspector.agent.sensors.failed" = "%d échoués";
+"inspector.agent.edit.sensors" = "Modifier les capteurs";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Superpositions de capteurs";
+"overlay.editor.loading" = "Chargement des capteurs…";
+"overlay.editor.no.sensors" = "Aucun capteur déclaré dans ce harness.";
+"overlay.editor.role.label" = "Rôle";
+"overlay.editor.role.inherited" = "Hérité";
+"overlay.editor.prompt.harness.label" = "Invite du harness";
+"overlay.editor.prompt.override.label" = "Remplacer";
+"overlay.editor.prompt.override.placeholder" = "Laisser vide pour hériter de l'invite du harness";
+"overlay.editor.source.kind.command" = "commande";
+"overlay.editor.source.kind.files" = "fichiers";
+"overlay.editor.source.kind.focus" = "focus";
+"overlay.editor.save" = "Enregistrer";
+"overlay.editor.cancel" = "Annuler";
+"overlay.editor.error.ynh.not.ready" = "ynh n'est pas prêt. Vérifiez la chaîne d'outils YNH dans les Réglages.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Chaîne d'outils YNH";
 "settings.ynh.title" = "ynh";

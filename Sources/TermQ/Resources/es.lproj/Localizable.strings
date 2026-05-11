@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Mostrar pestaña Sesiones de Agente en la barra lateral";
 "settings.agent.enable.tab.help" = "Añade una pestaña en la barra lateral que lista las sesiones de agente en curso y pasadas, y una acción “Iniciar como Agente” en las filas de harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Últimos sensores";
+"inspector.agent.trajectory" = "Trayectoria";
+"inspector.agent.trajectory.empty" = "Sin trayectoria aún";
+"inspector.agent.trajectory.empty.configure" = "Configura agent.loopDriverCommand en los ajustes y pulsa Ejecutar.";
+"inspector.agent.trajectory.empty.run" = "Pulsa Ejecutar para iniciar el controlador de bucle configurado.";
+"inspector.agent.turn" = "Turno %d";
+"inspector.agent.sensors.all.passed" = "todos pasaron";
+"inspector.agent.sensors.failed" = "%d fallaron";
+"inspector.agent.edit.sensors" = "Editar sensores";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Superposiciones de sensores";
+"overlay.editor.loading" = "Cargando sensores…";
+"overlay.editor.no.sensors" = "No hay sensores declarados en este harness.";
+"overlay.editor.role.label" = "Rol";
+"overlay.editor.role.inherited" = "Heredado";
+"overlay.editor.prompt.harness.label" = "Prompt del harness";
+"overlay.editor.prompt.override.label" = "Anular";
+"overlay.editor.prompt.override.placeholder" = "Dejar vacío para heredar el prompt del harness";
+"overlay.editor.source.kind.command" = "comando";
+"overlay.editor.source.kind.files" = "archivos";
+"overlay.editor.source.kind.focus" = "foco";
+"overlay.editor.save" = "Guardar";
+"overlay.editor.cancel" = "Cancelar";
+"overlay.editor.error.ynh.not.ready" = "ynh no está listo. Comprueba la cadena de herramientas YNH en Ajustes.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Cadena de herramientas YNH";
 "settings.ynh.title" = "ynh";

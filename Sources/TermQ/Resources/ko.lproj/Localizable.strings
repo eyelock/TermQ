@@ -694,6 +694,36 @@
 "settings.agent.enable.tab" = "Agent 세션 사이드바 탭 표시";
 "settings.agent.enable.tab.help" = "사이드바에 진행 중 및 과거 Agent 세션 목록 탭을 추가하고, 하네스 행에 ‘Agent로 실행’ 액션을 제공합니다.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "마지막 센서";
+"inspector.agent.trajectory" = "실행 궤적";
+"inspector.agent.trajectory.empty" = "아직 궤적이 없습니다";
+"inspector.agent.trajectory.empty.configure" = "defaults에서 agent.loopDriverCommand를 설정하고 실행을 누르세요.";
+"inspector.agent.trajectory.empty.run" = "실행을 눌러 설정된 루프 드라이버를 시작하세요.";
+"inspector.agent.turn" = "턴 %d";
+"inspector.agent.sensors.all.passed" = "모두 통과";
+"inspector.agent.sensors.failed" = "%d개 실패";
+"inspector.agent.edit.sensors" = "센서 편집";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "센서 오버레이";
+"overlay.editor.loading" = "센서 불러오는 중…";
+"overlay.editor.no.sensors" = "이 harness에 선언된 센서가 없습니다.";
+"overlay.editor.role.label" = "역할";
+"overlay.editor.role.inherited" = "상속됨";
+"overlay.editor.prompt.harness.label" = "Harness 프롬프트";
+"overlay.editor.prompt.override.label" = "재정의";
+"overlay.editor.prompt.override.placeholder" = "harness 프롬프트를 상속하려면 비워 두세요";
+"overlay.editor.source.kind.command" = "명령";
+"overlay.editor.source.kind.files" = "파일";
+"overlay.editor.source.kind.focus" = "포커스";
+"overlay.editor.save" = "저장";
+"overlay.editor.cancel" = "취소";
+"overlay.editor.error.ynh.not.ready" = "ynh가 준비되지 않았습니다. 설정에서 YNH 툴체인을 확인하세요.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH 하네스 툴체인";
 "settings.ynh.title" = "ynh";

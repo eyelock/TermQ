@@ -696,6 +696,36 @@
 "settings.agent.enable.tab" = "Yan Panelde Agent Oturumları sekmesini göster";
 "settings.agent.enable.tab.help" = "Yan panele devam eden ve geçmiş agent oturumlarını listeleyen bir sekme ve harness satırlarına „Agent Olarak Başlat“ eylemi ekler.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Son Sensörler";
+"inspector.agent.trajectory" = "Yörünge";
+"inspector.agent.trajectory.empty" = "Henüz yörünge yok";
+"inspector.agent.trajectory.empty.configure" = "Ayarlarda agent.loopDriverCommand'ı yapılandırın, ardından Çalıştır'a basın.";
+"inspector.agent.trajectory.empty.run" = "Yapılandırılmış döngü sürücüsünü başlatmak için Çalıştır'a basın.";
+"inspector.agent.turn" = "Tur %d";
+"inspector.agent.sensors.all.passed" = "tümü geçti";
+"inspector.agent.sensors.failed" = "%d başarısız";
+"inspector.agent.edit.sensors" = "Sensörleri Düzenle";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensör Katmanları";
+"overlay.editor.loading" = "Sensörler yükleniyor…";
+"overlay.editor.no.sensors" = "Bu harness'de sensör tanımlanmamış.";
+"overlay.editor.role.label" = "Rol";
+"overlay.editor.role.inherited" = "Miras alındı";
+"overlay.editor.prompt.harness.label" = "Harness istemi";
+"overlay.editor.prompt.override.label" = "Geçersiz Kıl";
+"overlay.editor.prompt.override.placeholder" = "Harness istemine devam etmek için boş bırakın";
+"overlay.editor.source.kind.command" = "komut";
+"overlay.editor.source.kind.files" = "dosyalar";
+"overlay.editor.source.kind.focus" = "odak";
+"overlay.editor.save" = "Kaydet";
+"overlay.editor.cancel" = "İptal";
+"overlay.editor.error.ynh.not.ready" = "ynh hazır değil. Ayarlar'da YNH araç zincirini kontrol edin.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Araç Zinciri";
 "settings.ynh.title" = "ynh";

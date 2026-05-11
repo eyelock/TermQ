@@ -703,6 +703,36 @@
 "settings.agent.enable.tab" = "Show Agent Sessions sidebar tab";
 "settings.agent.enable.tab.help" = "Adds a sidebar tab listing in-progress and past agent sessions, and a 'Launch as Agent' action on harness rows.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Last Sensors";
+"inspector.agent.trajectory" = "Trajectory";
+"inspector.agent.trajectory.empty" = "No trajectory yet";
+"inspector.agent.trajectory.empty.configure" = "Configure agent.loopDriverCommand in defaults, then press Run.";
+"inspector.agent.trajectory.empty.run" = "Press Run to spawn the configured loop driver.";
+"inspector.agent.turn" = "Turn %d";
+"inspector.agent.sensors.all.passed" = "all passed";
+"inspector.agent.sensors.failed" = "%d failed";
+"inspector.agent.edit.sensors" = "Edit Sensors";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensor Overlays";
+"overlay.editor.loading" = "Loading sensors…";
+"overlay.editor.no.sensors" = "No sensors declared in this harness.";
+"overlay.editor.role.label" = "Role";
+"overlay.editor.role.inherited" = "Inherited";
+"overlay.editor.prompt.harness.label" = "Harness prompt";
+"overlay.editor.prompt.override.label" = "Override";
+"overlay.editor.prompt.override.placeholder" = "Leave empty to inherit the harness prompt";
+"overlay.editor.source.kind.command" = "command";
+"overlay.editor.source.kind.files" = "files";
+"overlay.editor.source.kind.focus" = "focus";
+"overlay.editor.save" = "Save";
+"overlay.editor.cancel" = "Cancel";
+"overlay.editor.error.ynh.not.ready" = "ynh is not ready. Check the YNH toolchain in Settings.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness Toolchain";
 "settings.ynh.title" = "ynh";

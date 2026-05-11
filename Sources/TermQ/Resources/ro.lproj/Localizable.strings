@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Afişează fila Sesiuni Agent în bara laterală";
 "settings.agent.enable.tab.help" = "Adaugă o filă în bara laterală cu sesiunile agent în curs şi anterioare şi o acțiune „Lansare ca Agent“ pe rândurile harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Ultimii senzori";
+"inspector.agent.trajectory" = "Traiectorie";
+"inspector.agent.trajectory.empty" = "Nicio traiectorie încă";
+"inspector.agent.trajectory.empty.configure" = "Configurați agent.loopDriverCommand în preferințe, apoi apăsați Rulare.";
+"inspector.agent.trajectory.empty.run" = "Apăsați Rulare pentru a porni driverul de buclă configurat.";
+"inspector.agent.turn" = "Tur %d";
+"inspector.agent.sensors.all.passed" = "toate trecute";
+"inspector.agent.sensors.failed" = "%d eșuate";
+"inspector.agent.edit.sensors" = "Editare senzori";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Suprapuneri senzori";
+"overlay.editor.loading" = "Se încarcă senzorii…";
+"overlay.editor.no.sensors" = "Nu sunt senzori declarați în acest harness.";
+"overlay.editor.role.label" = "Rol";
+"overlay.editor.role.inherited" = "Moștenit";
+"overlay.editor.prompt.harness.label" = "Prompt harness";
+"overlay.editor.prompt.override.label" = "Suprascriere";
+"overlay.editor.prompt.override.placeholder" = "Lăsați gol pentru a moșteni promptul harness";
+"overlay.editor.source.kind.command" = "comandă";
+"overlay.editor.source.kind.files" = "fișiere";
+"overlay.editor.source.kind.focus" = "focus";
+"overlay.editor.save" = "Salvare";
+"overlay.editor.cancel" = "Anulare";
+"overlay.editor.error.ynh.not.ready" = "ynh nu este pregătit. Verificați lanțul de instrumente YNH în Preferințe.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Lanț de instrumente YNH";
 "settings.ynh.title" = "ynh";

@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Zobrazit kartu Sezení Agenta na bočním panelu";
 "settings.agent.enable.tab.help" = "Přidá kartu do bočního panelu se seznamem probíhačjích a minulých sezení Agenta a akci „Spustit jako Agent“ na řádcích harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Poslední senzory";
+"inspector.agent.trajectory" = "Průběh";
+"inspector.agent.trajectory.empty" = "Zatím žádný průběh";
+"inspector.agent.trajectory.empty.configure" = "Nakonfigurujte agent.loopDriverCommand v nastavení a poté stiskněte Spustit.";
+"inspector.agent.trajectory.empty.run" = "Stiskněte Spustit pro spuštění nakonfigurovaného ovladače smyčky.";
+"inspector.agent.turn" = "Tah %d";
+"inspector.agent.sensors.all.passed" = "vše prošlo";
+"inspector.agent.sensors.failed" = "%d selhalo";
+"inspector.agent.edit.sensors" = "Upravit senzory";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Překryvy senzorů";
+"overlay.editor.loading" = "Načítání senzorů…";
+"overlay.editor.no.sensors" = "V tomto harnessu nejsou deklarovány žádné senzory.";
+"overlay.editor.role.label" = "Role";
+"overlay.editor.role.inherited" = "Zděděný";
+"overlay.editor.prompt.harness.label" = "Výzva harnessu";
+"overlay.editor.prompt.override.label" = "Přepsat";
+"overlay.editor.prompt.override.placeholder" = "Ponechte prázdné pro zdědění výzvy harnessu";
+"overlay.editor.source.kind.command" = "příkaz";
+"overlay.editor.source.kind.files" = "soubory";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Uložit";
+"overlay.editor.cancel" = "Zrušit";
+"overlay.editor.error.ynh.not.ready" = "ynh není připraveno. Zkontrolujte sadu nástrojů YNH v Nastavení.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Nástrojový řetězec YNH";
 "settings.ynh.title" = "ynh";

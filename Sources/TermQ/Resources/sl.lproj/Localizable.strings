@@ -696,6 +696,36 @@
 "settings.agent.enable.tab" = "Prikaži zavihek Seje Agenta v stranski vrstici";
 "settings.agent.enable.tab.help" = "Doda zavihek v stransko vrstico s seznamom tekočih in preteklih sej agenta ter dejanje „Zaženi kot Agent“ v vrsticah harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Zadnji senzorji";
+"inspector.agent.trajectory" = "Potek";
+"inspector.agent.trajectory.empty" = "Še ni poteka";
+"inspector.agent.trajectory.empty.configure" = "Konfigurirajte agent.loopDriverCommand v nastavitvah in nato pritisnite Zaženi.";
+"inspector.agent.trajectory.empty.run" = "Pritisnite Zaženi za zagon konfiguriranega gonilnika zanke.";
+"inspector.agent.turn" = "Poteza %d";
+"inspector.agent.sensors.all.passed" = "vse opravljeno";
+"inspector.agent.sensors.failed" = "%d neuspešnih";
+"inspector.agent.edit.sensors" = "Uredi senzorje";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Prekrivniki senzorjev";
+"overlay.editor.loading" = "Nalaganje senzorjev…";
+"overlay.editor.no.sensors" = "V tem harnessu ni deklariranih senzorjev.";
+"overlay.editor.role.label" = "Vloga";
+"overlay.editor.role.inherited" = "Podedovana";
+"overlay.editor.prompt.harness.label" = "Poziv harness";
+"overlay.editor.prompt.override.label" = "Prepiši";
+"overlay.editor.prompt.override.placeholder" = "Pustite prazno za podedovanje poziva harness";
+"overlay.editor.source.kind.command" = "ukaz";
+"overlay.editor.source.kind.files" = "datoteke";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Shrani";
+"overlay.editor.cancel" = "Prekliči";
+"overlay.editor.error.ynh.not.ready" = "ynh ni pripravljen. Preverite orodja YNH v Nastavitvah.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Orodni verižnik YNH";
 "settings.ynh.title" = "ynh";

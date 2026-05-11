@@ -694,6 +694,36 @@
 "settings.agent.enable.tab" = "Agentsessies-zijbalktab weergeven";
 "settings.agent.enable.tab.help" = "Voegt een zijbalktab toe met lopende en afgelopen agentsessies, en een actie „Als Agent starten“ op harnessrijen.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Laatste sensoren";
+"inspector.agent.trajectory" = "Verloop";
+"inspector.agent.trajectory.empty" = "Nog geen verloop";
+"inspector.agent.trajectory.empty.configure" = "Configureer agent.loopDriverCommand in de instellingen en druk op Uitvoeren.";
+"inspector.agent.trajectory.empty.run" = "Druk op Uitvoeren om het geconfigureerde lusstuurprogramma te starten.";
+"inspector.agent.turn" = "Beurt %d";
+"inspector.agent.sensors.all.passed" = "alles geslaagd";
+"inspector.agent.sensors.failed" = "%d mislukt";
+"inspector.agent.edit.sensors" = "Sensoren bewerken";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensoroverlays";
+"overlay.editor.loading" = "Sensoren laden…";
+"overlay.editor.no.sensors" = "Geen sensoren gedeclareerd in dit harness.";
+"overlay.editor.role.label" = "Rol";
+"overlay.editor.role.inherited" = "Geërfd";
+"overlay.editor.prompt.harness.label" = "Harness-prompt";
+"overlay.editor.prompt.override.label" = "Overschrijven";
+"overlay.editor.prompt.override.placeholder" = "Leeg laten om de harness-prompt over te nemen";
+"overlay.editor.source.kind.command" = "commando";
+"overlay.editor.source.kind.files" = "bestanden";
+"overlay.editor.source.kind.focus" = "focus";
+"overlay.editor.save" = "Bewaar";
+"overlay.editor.cancel" = "Annuleer";
+"overlay.editor.error.ynh.not.ready" = "ynh is niet gereed. Controleer de YNH-toolchain in de Instellingen.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-toolchain";
 "settings.ynh.title" = "ynh";

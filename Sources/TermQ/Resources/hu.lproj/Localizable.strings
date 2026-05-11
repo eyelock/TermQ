@@ -695,6 +695,36 @@
 "settings.agent.enable.tab" = "Agent munkamenetek oldalsáv-fül megjelenítése";
 "settings.agent.enable.tab.help" = "Hozzáad egy oldalsáv-fült, amely felsorolja a folyamatban lévő és múlt agent munkameneteket, és egy „Indítás Agent ként“ műveletet a harness sorokhoz.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Legutóbbi érzékelők";
+"inspector.agent.trajectory" = "Pálya";
+"inspector.agent.trajectory.empty" = "Még nincs pálya";
+"inspector.agent.trajectory.empty.configure" = "Állítsd be az agent.loopDriverCommand értéket a beállításokban, majd nyomd meg a Futtatás gombot.";
+"inspector.agent.trajectory.empty.run" = "Nyomd meg a Futtatás gombot a konfigurált hurokillesztő elindításához.";
+"inspector.agent.turn" = "%d. kör";
+"inspector.agent.sensors.all.passed" = "mind megfelelt";
+"inspector.agent.sensors.failed" = "%d meghiúsult";
+"inspector.agent.edit.sensors" = "Érzékelők szerkesztése";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Érzékelő átfedések";
+"overlay.editor.loading" = "Érzékelők betöltése…";
+"overlay.editor.no.sensors" = "Ebben a harness-ben nincsenek érzékelők deklarálva.";
+"overlay.editor.role.label" = "Szerepkör";
+"overlay.editor.role.inherited" = "Örökölt";
+"overlay.editor.prompt.harness.label" = "Harness prompt";
+"overlay.editor.prompt.override.label" = "Felülírás";
+"overlay.editor.prompt.override.placeholder" = "Hagyd üresen a harness prompt örökléséhez";
+"overlay.editor.source.kind.command" = "parancs";
+"overlay.editor.source.kind.files" = "fájlok";
+"overlay.editor.source.kind.focus" = "fókusz";
+"overlay.editor.save" = "Mentés";
+"overlay.editor.cancel" = "Mégse";
+"overlay.editor.error.ynh.not.ready" = "ynh nem áll készen. Ellenőrizd a YNH eszközláncot a Beállításokban.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH harness eszközlánc";
 "settings.ynh.title" = "ynh";

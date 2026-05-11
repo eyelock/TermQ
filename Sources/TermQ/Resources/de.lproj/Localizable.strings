@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Agent-Sitzungen-Tab in der Seitenleiste anzeigen";
 "settings.agent.enable.tab.help" = "Fügt der Seitenleiste einen Tab hinzu, der laufende und vergangene Agent-Sitzungen auflistet, und eine Aktion „Als Agent starten“ bei Harness-Zeilen.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Letzte Sensoren";
+"inspector.agent.trajectory" = "Verlauf";
+"inspector.agent.trajectory.empty" = "Noch kein Verlauf";
+"inspector.agent.trajectory.empty.configure" = "agent.loopDriverCommand in den Einstellungen konfigurieren, dann auf Ausführen drücken.";
+"inspector.agent.trajectory.empty.run" = "Auf Ausführen drücken, um den konfigurierten Loop-Treiber zu starten.";
+"inspector.agent.turn" = "Runde %d";
+"inspector.agent.sensors.all.passed" = "alle bestanden";
+"inspector.agent.sensors.failed" = "%d fehlgeschlagen";
+"inspector.agent.edit.sensors" = "Sensoren bearbeiten";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensor-Overlays";
+"overlay.editor.loading" = "Sensoren werden geladen…";
+"overlay.editor.no.sensors" = "Keine Sensoren in diesem Harness deklariert.";
+"overlay.editor.role.label" = "Rolle";
+"overlay.editor.role.inherited" = "Geerbt";
+"overlay.editor.prompt.harness.label" = "Harness-Prompt";
+"overlay.editor.prompt.override.label" = "Überschreiben";
+"overlay.editor.prompt.override.placeholder" = "Leer lassen, um den Harness-Prompt zu verwenden";
+"overlay.editor.source.kind.command" = "Befehl";
+"overlay.editor.source.kind.files" = "Dateien";
+"overlay.editor.source.kind.focus" = "Fokus";
+"overlay.editor.save" = "Sichern";
+"overlay.editor.cancel" = "Abbrechen";
+"overlay.editor.error.ynh.not.ready" = "ynh ist nicht bereit. Überprüfe die YNH-Toolchain in den Einstellungen.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-Harness-Toolchain";
 "settings.ynh.title" = "ynh";

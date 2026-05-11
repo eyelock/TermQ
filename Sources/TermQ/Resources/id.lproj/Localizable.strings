@@ -705,6 +705,36 @@
 "settings.agent.enable.tab" = "Tampilkan tab Sesi Agen di bilah samping";
 "settings.agent.enable.tab.help" = "Menambahkan tab di bilah samping yang menampilkan sesi agen yang sedang berjalan dan yang telah selesai, serta aksi “Jalankan sebagai Agen” pada baris harness.";
 
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Sensor Terakhir";
+"inspector.agent.trajectory" = "Lintasan";
+"inspector.agent.trajectory.empty" = "Belum ada lintasan";
+"inspector.agent.trajectory.empty.configure" = "Konfigurasikan agent.loopDriverCommand di pengaturan, lalu tekan Jalankan.";
+"inspector.agent.trajectory.empty.run" = "Tekan Jalankan untuk memulai driver loop yang dikonfigurasi.";
+"inspector.agent.turn" = "Giliran %d";
+"inspector.agent.sensors.all.passed" = "semua lulus";
+"inspector.agent.sensors.failed" = "%d gagal";
+"inspector.agent.edit.sensors" = "Edit Sensor";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Lapisan Sensor";
+"overlay.editor.loading" = "Memuat sensor…";
+"overlay.editor.no.sensors" = "Tidak ada sensor yang dideklarasikan dalam harness ini.";
+"overlay.editor.role.label" = "Peran";
+"overlay.editor.role.inherited" = "Diwarisi";
+"overlay.editor.prompt.harness.label" = "Prompt harness";
+"overlay.editor.prompt.override.label" = "Timpa";
+"overlay.editor.prompt.override.placeholder" = "Kosongkan untuk mewarisi prompt harness";
+"overlay.editor.source.kind.command" = "perintah";
+"overlay.editor.source.kind.files" = "berkas";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Simpan";
+"overlay.editor.cancel" = "Batal";
+"overlay.editor.error.ynh.not.ready" = "ynh belum siap. Periksa rantai alat YNH di Pengaturan.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";
 "settings.ynh.title" = "ynh";
