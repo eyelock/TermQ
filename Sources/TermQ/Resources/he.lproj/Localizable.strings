@@ -706,6 +706,9 @@
 "inspector.agent.sensors.all.passed" = "הכל עבר";
 "inspector.agent.sensors.failed" = "%d נכשלו";
 "inspector.agent.edit.sensors" = "עריכת חישנים";
+"inspector.agent.turn.approval.title" = "סבב %d — סקירת משוב";
+"inspector.agent.turn.approval.send" = "שלח";
+"inspector.agent.turn.approval.reset" = "אפס";
 
 // MARK: - Overlay Editor
 

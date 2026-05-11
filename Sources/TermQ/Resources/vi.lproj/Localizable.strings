@@ -707,6 +707,9 @@
 "inspector.agent.sensors.all.passed" = "tất cả đã vượt";
 "inspector.agent.sensors.failed" = "%d thất bại";
 "inspector.agent.edit.sensors" = "Chỉnh sửa cảm biến";
+"inspector.agent.turn.approval.title" = "Lượt %d — Xem lại phản hồi";
+"inspector.agent.turn.approval.send" = "Gửi";
+"inspector.agent.turn.approval.reset" = "Đặt lại";
 
 // MARK: - Overlay Editor
 

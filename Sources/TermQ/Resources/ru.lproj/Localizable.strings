@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "все прошли";
 "inspector.agent.sensors.failed" = "%d не прошло";
 "inspector.agent.edit.sensors" = "Изменить сенсоры";
+"inspector.agent.turn.approval.title" = "Ход %d — Просмотреть отзыв";
+"inspector.agent.turn.approval.send" = "Отправить";
+"inspector.agent.turn.approval.reset" = "Сбросить";
 
 // MARK: - Overlay Editor
 

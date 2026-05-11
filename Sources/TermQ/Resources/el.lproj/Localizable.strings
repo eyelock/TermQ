@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "όλοι πέρασαν";
 "inspector.agent.sensors.failed" = "%d απέτυχαν";
 "inspector.agent.edit.sensors" = "Επεξεργασία αισθητήρων";
+"inspector.agent.turn.approval.title" = "Γύρος %d — Επισκόπηση ανατροδοότησης";
+"inspector.agent.turn.approval.send" = "Αποστολή";
+"inspector.agent.turn.approval.reset" = "Επαναφορά";
 
 // MARK: - Overlay Editor
 

@@ -706,6 +706,9 @@
 "inspector.agent.sensors.all.passed" = "kaikki hyväksytty";
 "inspector.agent.sensors.failed" = "%d epäonnistui";
 "inspector.agent.edit.sensors" = "Muokkaa antureita";
+"inspector.agent.turn.approval.title" = "Vuoro %d — Tarkista palaute";
+"inspector.agent.turn.approval.send" = "Lähetä";
+"inspector.agent.turn.approval.reset" = "Palauta";
 
 // MARK: - Overlay Editor
 

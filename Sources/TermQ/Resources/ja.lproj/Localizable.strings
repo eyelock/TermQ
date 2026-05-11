@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "すべて合格";
 "inspector.agent.sensors.failed" = "%d 件失敗";
 "inspector.agent.edit.sensors" = "センサーを編集";
+"inspector.agent.turn.approval.title" = "ターン %d — フィードバックを確認";
+"inspector.agent.turn.approval.send" = "送信";
+"inspector.agent.turn.approval.reset" = "リセット";
 
 // MARK: - Overlay Editor
 

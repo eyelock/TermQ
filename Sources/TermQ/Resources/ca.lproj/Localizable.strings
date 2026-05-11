@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "tots passats";
 "inspector.agent.sensors.failed" = "%d fallits";
 "inspector.agent.edit.sensors" = "Edita sensors";
+"inspector.agent.turn.approval.title" = "Torn %d — Reviseu els comentaris";
+"inspector.agent.turn.approval.send" = "Envia";
+"inspector.agent.turn.approval.reset" = "Reinicia";
 
 // MARK: - Overlay Editor
 

@@ -706,6 +706,9 @@
 "inspector.agent.sensors.all.passed" = "sve prošlo";
 "inspector.agent.sensors.failed" = "%d nije prošlo";
 "inspector.agent.edit.sensors" = "Uredi senzore";
+"inspector.agent.turn.approval.title" = "Potez %d — Pregledaj povratne informacije";
+"inspector.agent.turn.approval.send" = "Pošalji";
+"inspector.agent.turn.approval.reset" = "Ponovo postavi";
 
 // MARK: - Overlay Editor
 

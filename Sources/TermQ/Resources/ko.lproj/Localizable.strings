@@ -705,6 +705,9 @@
 "inspector.agent.sensors.all.passed" = "모두 통과";
 "inspector.agent.sensors.failed" = "%d개 실패";
 "inspector.agent.edit.sensors" = "센서 편집";
+"inspector.agent.turn.approval.title" = "%d번째 턴 — 피드백 검토";
+"inspector.agent.turn.approval.send" = "전송";
+"inspector.agent.turn.approval.reset" = "초기화";
 
 // MARK: - Overlay Editor
 

@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "全部通過";
 "inspector.agent.sensors.failed" = "%d 個失敗";
 "inspector.agent.edit.sensors" = "編輯感測器";
+"inspector.agent.turn.approval.title" = "第 %d 輪 — 審閱回饋";
+"inspector.agent.turn.approval.send" = "傳送";
+"inspector.agent.turn.approval.reset" = "重設";
 
 // MARK: - Overlay Editor
 

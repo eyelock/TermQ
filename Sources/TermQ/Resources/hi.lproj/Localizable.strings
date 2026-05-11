@@ -706,6 +706,9 @@
 "inspector.agent.sensors.all.passed" = "सभी पास हुए";
 "inspector.agent.sensors.failed" = "%d विफल";
 "inspector.agent.edit.sensors" = "सेंसर संपादित करें";
+"inspector.agent.turn.approval.title" = "टर्न %d — फ़ीडबैक की समीक्षा करें";
+"inspector.agent.turn.approval.send" = "भेजें";
+"inspector.agent.turn.approval.reset" = "रीसेट करें";
 
 // MARK: - Overlay Editor
 

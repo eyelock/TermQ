@@ -705,6 +705,9 @@
 "inspector.agent.sensors.all.passed" = "semua lulus";
 "inspector.agent.sensors.failed" = "%d gagal";
 "inspector.agent.edit.sensors" = "Edit Penderia";
+"inspector.agent.turn.approval.title" = "Giliran %d — Semak maklum balas";
+"inspector.agent.turn.approval.send" = "Hantar";
+"inspector.agent.turn.approval.reset" = "Tetapkan semula";
 
 // MARK: - Overlay Editor
 

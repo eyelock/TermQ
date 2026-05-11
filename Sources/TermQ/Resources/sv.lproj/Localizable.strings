@@ -707,6 +707,9 @@
 "inspector.agent.sensors.all.passed" = "alla godkända";
 "inspector.agent.sensors.failed" = "%d misslyckades";
 "inspector.agent.edit.sensors" = "Redigera sensorer";
+"inspector.agent.turn.approval.title" = "Tur %d — Granska återkoppling";
+"inspector.agent.turn.approval.send" = "Skicka";
+"inspector.agent.turn.approval.reset" = "Återställ";
 
 // MARK: - Overlay Editor
 

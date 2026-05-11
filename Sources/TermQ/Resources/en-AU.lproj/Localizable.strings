@@ -714,6 +714,9 @@
 "inspector.agent.sensors.all.passed" = "all passed";
 "inspector.agent.sensors.failed" = "%d failed";
 "inspector.agent.edit.sensors" = "Edit Sensors";
+"inspector.agent.turn.approval.title" = "Turn %d — Review feedback";
+"inspector.agent.turn.approval.send" = "Send";
+"inspector.agent.turn.approval.reset" = "Reset";
 
 // MARK: - Overlay Editor
 

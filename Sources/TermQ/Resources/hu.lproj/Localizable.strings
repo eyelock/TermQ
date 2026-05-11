@@ -706,6 +706,9 @@
 "inspector.agent.sensors.all.passed" = "mind megfelelt";
 "inspector.agent.sensors.failed" = "%d meghiúsult";
 "inspector.agent.edit.sensors" = "Érzékelők szerkesztése";
+"inspector.agent.turn.approval.title" = "%d. kör — Visszajelzés áttekintése";
+"inspector.agent.turn.approval.send" = "Küldés";
+"inspector.agent.turn.approval.reset" = "Visszaállítás";
 
 // MARK: - Overlay Editor
 

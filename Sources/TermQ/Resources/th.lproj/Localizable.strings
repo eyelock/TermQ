@@ -707,6 +707,9 @@
 "inspector.agent.sensors.all.passed" = "ผ่านทั้งหมด";
 "inspector.agent.sensors.failed" = "%d ล้มเหลว";
 "inspector.agent.edit.sensors" = "แก้ไขเซ็นเซอร์";
+"inspector.agent.turn.approval.title" = "เทิร์น %d — ตรวจสอบข้อเสนอแนะ";
+"inspector.agent.turn.approval.send" = "ส่ง";
+"inspector.agent.turn.approval.reset" = "รีเซ็ต";
 
 // MARK: - Overlay Editor
 

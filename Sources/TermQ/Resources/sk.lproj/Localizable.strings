@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "všetko prešlo";
 "inspector.agent.sensors.failed" = "%d zlyhalo";
 "inspector.agent.edit.sensors" = "Upraviť senzory";
+"inspector.agent.turn.approval.title" = "Ťah %d — Skontrolovať spätnú väzbu";
+"inspector.agent.turn.approval.send" = "Odoslať";
+"inspector.agent.turn.approval.reset" = "Obnoviť";
 
 // MARK: - Overlay Editor
 

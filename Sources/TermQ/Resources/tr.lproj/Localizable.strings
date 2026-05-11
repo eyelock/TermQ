@@ -707,6 +707,9 @@
 "inspector.agent.sensors.all.passed" = "tümü geçti";
 "inspector.agent.sensors.failed" = "%d başarısız";
 "inspector.agent.edit.sensors" = "Sensörleri Düzenle";
+"inspector.agent.turn.approval.title" = "Tur %d — Geri bildirimi incele";
+"inspector.agent.turn.approval.send" = "Gönder";
+"inspector.agent.turn.approval.reset" = "Sıfırla";
 
 // MARK: - Overlay Editor
 

@@ -707,6 +707,9 @@
 "inspector.agent.sensors.all.passed" = "всі пройшли";
 "inspector.agent.sensors.failed" = "%d не пройшло";
 "inspector.agent.edit.sensors" = "Редагувати сенсори";
+"inspector.agent.turn.approval.title" = "Хід %d — Переглянути відгук";
+"inspector.agent.turn.approval.send" = "Надіслати";
+"inspector.agent.turn.approval.reset" = "Скинути";
 
 // MARK: - Overlay Editor
 

@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "toate trecute";
 "inspector.agent.sensors.failed" = "%d eșuate";
 "inspector.agent.edit.sensors" = "Editare senzori";
+"inspector.agent.turn.approval.title" = "Tur %d — Revizuire feedback";
+"inspector.agent.turn.approval.send" = "Trimite";
+"inspector.agent.turn.approval.reset" = "Resetare";
 
 // MARK: - Overlay Editor
 

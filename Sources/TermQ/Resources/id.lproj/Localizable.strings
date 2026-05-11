@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "semua lulus";
 "inspector.agent.sensors.failed" = "%d gagal";
 "inspector.agent.edit.sensors" = "Edit Sensor";
+"inspector.agent.turn.approval.title" = "Giliran %d — Tinjau umpan balik";
+"inspector.agent.turn.approval.send" = "Kirim";
+"inspector.agent.turn.approval.reset" = "Setel ulang";
 
 // MARK: - Overlay Editor
 

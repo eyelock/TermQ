@@ -716,6 +716,9 @@
 "inspector.agent.sensors.all.passed" = "اجتاز الكل";
 "inspector.agent.sensors.failed" = "%d فشلت";
 "inspector.agent.edit.sensors" = "تعديل المستشعرات";
+"inspector.agent.turn.approval.title" = "الدور %d — مراجعة التغذية الراجعة";
+"inspector.agent.turn.approval.send" = "إرسال";
+"inspector.agent.turn.approval.reset" = "إعادة تعيين";
 
 // MARK: - Overlay Editor
 

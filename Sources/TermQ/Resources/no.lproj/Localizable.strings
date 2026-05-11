@@ -705,6 +705,9 @@
 "inspector.agent.sensors.all.passed" = "alle bestått";
 "inspector.agent.sensors.failed" = "%d mislyktes";
 "inspector.agent.edit.sensors" = "Rediger sensorer";
+"inspector.agent.turn.approval.title" = "Tur %d — Se gjennom tilbakemelding";
+"inspector.agent.turn.approval.send" = "Send";
+"inspector.agent.turn.approval.reset" = "Tilbakestill";
 
 // MARK: - Overlay Editor
 
