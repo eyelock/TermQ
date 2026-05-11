@@ -8,6 +8,7 @@ import TermQShared
 /// available.
 struct HarnessRowView: View {
     let harness: Harness
+    var isActiveTerminal: Bool = false
     @StateObject private var badgeStore = HarnessUpdateBadgeStore.shared
     /// Observed so the row re-renders when the update-availability cache
     /// populates after a `--check-updates` probe — the badge store reads
@@ -18,7 +19,7 @@ struct HarnessRowView: View {
         VStack(alignment: .leading, spacing: 3) {
             HStack(alignment: .firstTextBaseline) {
                 Text(harness.name)
-                    .font(.system(.body, weight: .medium))
+                    .font(.system(.body, weight: isActiveTerminal ? .semibold : .medium))
                     .lineLimit(1)
                     .foregroundColor(harness.isBrokenLocalFork ? .secondary : .primary)
 
