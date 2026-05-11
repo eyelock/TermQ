@@ -117,7 +117,11 @@ Right-click any PR row to see available actions. The menu adapts depending on wh
 
 ![Context menu — PR not checked out](../Images/remote-prs-context-menu-not-checked-out.png)
 
-- **Checkout as Worktree** — runs `gh pr checkout --worktree` to create a linked worktree for the PR's branch.
+**Harness actions:**
+- **Run with Focus…** — launches a harness session against this PR without a permanent checkout. TermQ automatically creates an ephemeral focus worktree the first time, then reuses it on subsequent runs (see §15.5).
+
+**Remote actions:**
+- **Checkout as Worktree** — runs `gh pr checkout` to create a permanent linked worktree for the PR's branch.
 - **Open PR on Remote** / **Copy PR URL** — as above.
 
 If a local worktree already exists for the branch (e.g. you checked it out manually), the menu shows **Worktree exists** and a **Switch to Existing** button instead.
@@ -126,9 +130,11 @@ If a local worktree already exists for the branch (e.g. you checked it out manua
 
 ## 15.5 — Run with Focus
 
-**Run with Focus** launches a `ynh run` session against a PR's checked-out worktree, pre-configured with a focus (a named task template defined in your harness).
+**Run with Focus** launches a `ynh run` session against a PR, pre-configured with a focus (a named task template defined in your harness).
 
-Open it by right-clicking a checked-out PR row and choosing **Run with Focus…**
+Open it by right-clicking any PR row — checked out or not — and choosing **Run with Focus…**
+
+> **No checkout required:** For PRs that are not checked out locally, TermQ creates an ephemeral *focus worktree* under `~/.termq/focus-worktrees/` and checks out the PR's branch into it automatically. The worktree name is derived from the PR's remote coordinates, so the same worktree is reused on subsequent runs against the same PR. The harness is always told which PR it is reviewing via a `--instructions` context injection, regardless of which focus or prompt mode is used.
 
 ![Run with Focus sheet](../Images/remote-prs-run-with-focus-sheet.png)
 
@@ -196,11 +202,13 @@ Clicking a focus name launches a `ynh run` session immediately — no sheet, no 
 
 ---
 
-## 15.8 — Prune Closed PRs
+## 15.8 — Pruning worktrees
 
-Checked-out worktrees whose PRs have since been closed or merged accumulate over time. The **⊘ Prune Closed PRs** action (visible in the repo header area when there are candidates) opens a confirmation sheet.
+Over time two kinds of worktrees accumulate: checked-out worktrees whose PRs have since closed, and focus worktrees created for "Run with Focus" sessions. A single **⊘ Prune…** action (visible in the repo header when either type exists) opens a confirmation sheet that handles both.
 
-The sheet lists each closed PR worktree with:
+The sheet may show one or two sections:
+
+**Closed PR worktrees** lists each local worktree whose PR is now closed or merged, with:
 - The PR number and title
 - A **dirty** warning if the worktree has uncommitted changes
 - An **ahead** warning if the worktree has commits not pushed to origin
@@ -208,6 +216,8 @@ The sheet lists each closed PR worktree with:
 Worktrees that are safe to remove (not dirty, not ahead) are checked by default. Review the list, uncheck anything you want to keep, then click **Prune**.
 
 TermQ removes each selected worktree using `git worktree remove`. Dirty or ahead worktrees must be unchecked — use **Force Delete** from Local mode if you genuinely want to discard them.
+
+**Focus worktrees** lists the ephemeral worktrees created for non-checked-out PR sessions. These are safe to remove at any time — they contain no user commits. All focus worktrees are checked by default.
 
 ---
 
@@ -217,11 +227,11 @@ TermQ removes each selected worktree using `git worktree remove`. Dirty or ahead
 - The feed is **priority-ordered**: checked-out → review-requested → open non-draft → rest; recency breaks ties within each tier
 - The **feed cap** (default 20) limits how many PRs are shown per repo; tier-1 (checked-out) PRs always appear regardless of the cap
 - **Login is per-repository**: TermQ calls `gh api user` per repo so github.com, GHEC, and on-prem GHE accounts all work simultaneously
-- **Run with Focus** is a full sheet for launching a `ynh run` session against a PR's worktree, with harness, vendor, focus, profile, and prompt pickers
+- **Run with Focus** works on any PR — checked out or not. For non-checked-out PRs, TermQ creates a reusable ephemeral focus worktree and always injects PR context so the harness knows which PR it is reviewing
 - **Quick Launch Focus** lets you skip the sheet and launch with a single click once the harness detail is cached
 - The **⟳ refresh button** in the Run with Focus sheet header reloads harness focuses and profiles from disk
 - **Set Default Focus** pre-selects a focus for a repo so it appears ready each time the sheet opens
-- **Prune Closed PRs** removes worktrees for PRs that have been closed or merged, with dirty and ahead safeguards
+- **Prune…** removes both closed-PR worktrees and ephemeral focus worktrees in a single confirmation sheet
 
 ## Next
 
