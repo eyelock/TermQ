@@ -66,14 +66,12 @@ final class LiveUpdateAvailabilityService: UpdateAvailabilityService, Observable
     }
 
     func refresh(harness id: String) async {
-        // Use ynh info <name> --check-updates so we only re-probe the one
-        // harness. The id may be namespace-qualified ("ns/repo/name") but
-        // ynh info wants the bare harness name; strip any namespace.
-        let name = id.split(separator: "/").last.map(String.init) ?? id
+        // ynh info requires the canonical id (e.g. "github.com/org/repo/name").
+        // Bare names are hard-rejected by LoadQualified in YNH 0.4+.
         cache[id, default: Entry(state: .idle, snapshot: nil)].state = .loading
 
         do {
-            let data = try await infoFetcher(name)
+            let data = try await infoFetcher(id)
             let response = try JSONDecoder().decode(HarnessInfoResponse.self, from: data)
             let info = response.harness
             // ynh info returns HarnessInfo (no artifacts, no nested includes
