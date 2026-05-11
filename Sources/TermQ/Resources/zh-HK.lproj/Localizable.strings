@@ -146,7 +146,9 @@
 "editor.section.appearance" = "外觀";
 "editor.field.theme" = "主題";
 "editor.field.theme.default" = "預設";
+"editor.field.theme.override" = "覆寫預設主題";
 "editor.field.font.size" = "字體大小";
+"editor.field.font.size.override" = "覆寫預設字體大小";
 "editor.font.preview" = "AaBbCc 中文 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "終端機啟動時執行嘅指令";
 "editor.field.safe.paste" = "安全貼上";
 "editor.field.safe.paste.help" = "貼上多行文字前顯示確認";
+"editor.field.safe.paste.override" = "覆寫預設安全貼上";
+"editor.field.safe.paste.inherited.on" = "開啟（繼承）";
+"editor.field.safe.paste.inherited.off" = "關閉（繼承）";
 "editor.field.allow.autorun" = "允許自動執行";
 "editor.field.allow.autorun.help" = "允許 CLI 自動執行指令";
 "editor.field.autorun.disabled.globally" = "自動執行已全域停用";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "覆寫預設後端";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "工作階段處於活動狀態時無法變更後端。重新啟動工作階段以變更後端。";
@@ -582,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "請輸入 Worktree 路徑以繼續。";
 "sidebar.new.worktree.create" = "建立";
 "sidebar.new.worktree.loading.branches" = "正在載入分支…";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "轉換為工作樹";
+"sidebar.convert.worktree.branch.label" = "分支名稱";
+"sidebar.convert.worktree.button" = "轉換";
+
 "common.close.window" = "關閉視窗";
 "menu.toggle.sidebar" = "切換側邊欄";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "轉換為工作樹…";
 "sidebar.branch.delete" = "刪除分支";
 "sidebar.branch.delete.title" = "刪除分支";
 "sidebar.branch.delete.confirm" = "刪除";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "本地";
 "harnesses.source.registry" = "登錄冊";
+"harnesses.source.read.only" = "只讀";
+"harnesses.source.forked.from %@" = "從 %@ 派生";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "資訊";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "委派給 (%d)";
 "harnesses.detail.picks %d" = "選取 (%d)：";
 "harnesses.reveal.in.finder" = "在 Finder 中顯示";
+"harnesses.copy.path" = "複製路徑";
 "harnesses.open.in.browser" = "在瀏覽器中開啟";
 "harnesses.close.detail" = "關閉";
 "harnesses.configure.from.marketplaces" = "從市場設定…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "安裝 Harness";
 "harnesses.install.toolbar.help" = "安裝一個 harness";
-"harnesses.install.tab.search" = "搜尋";
+"harnesses.install.tab.library" = "標準庫";
+"harnesses.install.manage.sources" = "管理來源…";
+"harnesses.install.manage.sources.help" = "新增或移除本地 Harness 來源";
+"harnesses.install.manage.sources.done" = "完成";
 "harnesses.install.tab.git" = "從 Git";
-"harnesses.install.tab.sources" = "來源";
 "harnesses.install.search.placeholder" = "搜尋登錄表和來源…";
 "harnesses.install.search.prompt" = "輸入以搜尋登錄表和來源";
 "harnesses.install.search.empty" = "沒有結果";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "移除";
 "harnesses.install.sources.count %ld" = "%ld 個 harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "新增委派";
+"harnesses.add.delegate.button" = "新增委派…";
+"harnesses.add.delegate.library.search.placeholder" = "搜尋已安裝嘅 harness…";
+"harnesses.add.delegate.library.empty" = "冇其他已安裝嘅 harness 可以委派。";
+"source.picker.browse.local" = "瀏覽本機…";
+"source.picker.browse.local.help" = "選取本機目錄";
+"harnesses.add.delegate.pick" = "選取";
+"harnesses.add.delegate.back" = "返回";
+"harnesses.add.delegate.apply" = "新增委派";
+
 "harnesses.update.button" = "更新";
 "harnesses.update.help" = "更新至最新版本";
+"harnesses.update.available" = "有可用的更新";
+"harnesses.update.available.version %@" = "版本 %@ 已可使用";
 "harnesses.uninstall.button" = "解除安裝";
 "harnesses.uninstall.help" = "解除安裝此 harness";
 "harnesses.uninstall.alert.title %@" = "解除安裝「%@」？";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "預設";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "本機";
+"harnesses.group.quarantined" = "已隔離";
+"harnesses.quarantine.restore" = "還原";
+"harnesses.quarantine.drop" = "捨棄…";
 "harnesses.group.menu.settings" = "設定…";
 "harnesses.group.registry %@" = "登錄檔: %@";
 "harnesses.install.browsing" = "正在載入可用 Harness…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "分支、標籤或提交 SHA（選填）";
 "harnesses.install.retry" = "重試";
 "harnesses.install.section.available" = "可從登錄檔取得";
+"harnesses.install.section.available.empty" = "尚未設定任何市集。請在設定 → 外部來源中新增一個。";
 "harnesses.install.section.installed" = "已安裝";
 "harnesses.install.section.local" = "本機可用";
 "harnesses.outdated.capabilities.unknown" = "未知";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "開啟終端機";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork 到本機";
+"harnesses.fork.to.local.help" = "建立此 harness 的可編輯本機副本";
+"harnesses.update.dot.help" = "有可用更新";
+"harness.fork.title %@" = "將 \"%@\" Fork 到本機";
+"harness.fork.explanation" = "建立此 harness 的可編輯本機副本。此副本追蹤其來源，讓您可以查看上游的變更。";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "正在 Fork \"%@\"…";
+"harness.fork.rename.label" = "名稱（選填）";
+"harness.fork.rename.hint" = "留空以保留來源名稱。新 fork 嘅標準 id 將為 local/<名稱>。";
+"harness.fork.identity.collision" = "已有已安裝嘅 harness 使用呢個識別碼。";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "更新「%@」";
+"harness.update.progress.title %@" = "正在更新「%@」…";
+"harness.update.button" = "更新";
+"harness.update.ynh.unavailable" = "ynh 無法使用。";
+"command.runner.running" = "執行中…";
+"command.runner.succeeded" = "成功";
+"command.runner.failed" = "失敗";
+"common.copy.output" = "複製輸出";
+"common.rerun" = "重新執行";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "包含操作";
+"harnesses.include.edit.button" = "編輯包含…";
+"harnesses.include.remove.button" = "移除包含…";
+"harnesses.include.edit.title" = "編輯包含";
+"harnesses.include.edit.source" = "來源";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "分支、標籤或提交";
+"harnesses.include.edit.path" = "路徑";
+"harnesses.include.edit.path.placeholder" = "來源儲存庫中的子路徑";
+"harnesses.include.edit.picks" = "選擇";
+"harnesses.include.edit.picks.explainer" = "已勾選的成品目前在此包含中。切換以新增或移除。";
+"harnesses.include.edit.picks.count %ld %ld" = "已選 %ld / %ld";
+"harnesses.include.edit.picks.unknown.source" = "此來源不在您的市集中 — 僅列出目前的成品。";
+"harnesses.include.edit.save" = "儲存變更";
+"harnesses.include.remove.confirm.title" = "移除此包含？";
+"harnesses.include.remove.confirm.message %@" = "%@ 將從此 harness 中移除。來源儲存庫不受影響。";
+"harnesses.include.remove.confirm" = "移除";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "新增包含…";
+"harnesses.include.add.edit.existing" = "編輯";
+"harnesses.include.add.search.placeholder" = "搜尋外掛程式…";
+"harnesses.include.add.no.marketplaces" = "未設定市集。請使用「市集」標籤頁新增一個。";
+"harnesses.include.add.no.matches" = "沒有符合的外掛程式。";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "分支、標籤或提交（可選）";
+"harnesses.include.add.gitpath.label" = "路徑";
+"harnesses.include.add.gitpath.placeholder" = "來源儲存庫中的子目錄（可選）";
+"harnesses.include.add.giturl.hint" = "選擇預設包含來源提供的所有內容。新增後使用「編輯包含」縮小範圍。";
+"harnesses.include.add.picks.prompt" = "選擇要包含的成品。";
+"harnesses.include.add.apply" = "套用";
+"harnesses.include.add.already.installed" = "已新增";
+"harnesses.include.add.already.installed.help" = "此外掛程式已在此 harness 中 — 點按以編輯選擇或 ref。";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "委托操作";
+"harnesses.delegate.edit.button" = "編輯委托…";
+"harnesses.delegate.remove.button" = "移除委托…";
+"harnesses.delegate.edit.title" = "編輯委托";
+"harnesses.delegate.remove.confirm.title" = "移除此委托？";
+"harnesses.delegate.remove.confirm.message %@" = "%@ 將不再被合並入此 harness。來源儲存庫不會改變。";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "編輯清單…";
+"harnesses.manifest.edit.title" = "編輯清單";
+"harnesses.manifest.edit.name" = "名稱";
+"harnesses.manifest.edit.version" = "版本";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "請使用語義化版本：主版本.次版本.修訂版本（如 0.2.0）";
+"harnesses.manifest.edit.vendor" = "預設供應商";
+"harnesses.manifest.edit.description" = "描述";
+"harnesses.manifest.edit.description.hint" = "顯示在 harness 清單和詳情標題中。留空則省略。";
+"harnesses.manifest.edit.save" = "儲存變更";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "上游提交已變更：%@ → %@";
+"harnesses.broken.fork.help" = "此本地 fork 缺少 harness 清單檔案。右鍵點選並選擇解除安裝以將其移除。";
+"harnesses.broken.fork.badge" = "損壞";
+"harnesses.fork.of %@" = "從 %@ 派生的副本";
+"harnesses.fork.help %@" = "從 %@ 派生";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "從分支建立新工作樹";
+"sidebar.checkout.branch.label" = "分支";
+"sidebar.checkout.branch.placeholder" = "選擇分支…";
+"sidebar.checkout.branch.required" = "請選擇分支以繼續。";
+"sidebar.checkout.branch.create" = "建立工作樹";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "此 harness 沒有可更新的 Git 來源。";
+"harnesses.loading.help" = "正在與 ynh 通訊…";
+"harnesses.unversioned.drift.help" = "上游內容已變更但未更新版本號 — 更新前請檢閱";
+"harnesses.unversioned.drift.banner" = "上游內容已變更但未更新版本號 — 更新前請檢閱";
+"harnesses.unversioned.drift.confirm.title" = "檢閱上游變更";
+"harnesses.unversioned.drift.confirm.body" = "上游內容已變更但未更新版本號。更新將拉取新內容。繼續前請檢閱下方的 SHA — 缺少版本號更新可能遮蔽惡意變更。";
+"harnesses.unversioned.drift.confirm.proceed" = "仍然更新";

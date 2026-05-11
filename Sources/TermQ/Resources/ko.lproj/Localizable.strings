@@ -147,7 +147,9 @@
 "editor.section.appearance" = "모양";
 "editor.field.theme" = "테마";
 "editor.field.theme.default" = "기본값";
+"editor.field.theme.override" = "기본 테마 재정의";
 "editor.field.font.size" = "글꼴 크기";
+"editor.field.font.size.override" = "기본 글꼴 크기 재정의";
 "editor.font.preview" = "AaBbCc 가나다 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "터미널 시작 시 실행할 명령";
 "editor.field.safe.paste" = "안전 붙여넣기";
 "editor.field.safe.paste.help" = "여러 줄 텍스트 붙여넣기 전 확인 표시";
+"editor.field.safe.paste.override" = "기본 안전 붙여넣기 재정의";
+"editor.field.safe.paste.inherited.on" = "켜짐 (상속됨)";
+"editor.field.safe.paste.inherited.off" = "꺼짐 (상속됨)";
 "editor.field.allow.autorun" = "자동 실행 허용";
 "editor.field.allow.autorun.help" = "CLI의 자동 명령 실행 허용";
 "editor.field.autorun.disabled.globally" = "자동 실행이 전역적으로 비활성화됨";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "기본 백엔드 재정의";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "세션이 활성화되어 있는 동안에는 백엔드를 변경할 수 없습니다. 백엔드를 변경하려면 세션을 다시 시작하세요.";
@@ -573,10 +579,16 @@
 "sidebar.new.worktree.path.required" = "계속하려면 Worktree 경로를 입력하세요.";
 "sidebar.new.worktree.create" = "생성";
 "sidebar.new.worktree.loading.branches" = "브랜치 로딩 중...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "워크트리로 변환";
+"sidebar.convert.worktree.branch.label" = "브랜치 이름";
+"sidebar.convert.worktree.button" = "변환";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "워크트리로 변환…";
 "sidebar.branch.delete" = "브랜치 삭제";
 "sidebar.branch.delete.title" = "브랜치 삭제";
 "sidebar.branch.delete.confirm" = "삭제";
@@ -600,6 +612,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "로컬";
 "harnesses.source.registry" = "레지스트리";
+"harnesses.source.read.only" = "읽기 전용";
+"harnesses.source.forked.from %@" = "%@에서 포크됨";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "정보";
@@ -618,6 +632,7 @@
 "harnesses.detail.delegates %d" = "위임 대상 (%d)";
 "harnesses.detail.picks %d" = "선택 (%d):";
 "harnesses.reveal.in.finder" = "Finder에서 보기";
+"harnesses.copy.path" = "경로명으로 복사";
 "harnesses.open.in.browser" = "브라우저에서 열기";
 "harnesses.close.detail" = "닫기";
 "harnesses.configure.from.marketplaces" = "마켓플레이스에서 구성…";
@@ -700,9 +715,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness 설치";
 "harnesses.install.toolbar.help" = "Harness 설치";
-"harnesses.install.tab.search" = "검색";
+"harnesses.install.tab.library" = "라이브러리";
+"harnesses.install.manage.sources" = "소스 관리…";
+"harnesses.install.manage.sources.help" = "로컈 하네스 소스 추가 또는 제거";
+"harnesses.install.manage.sources.done" = "완료";
 "harnesses.install.tab.git" = "Git에서";
-"harnesses.install.tab.sources" = "소스";
 "harnesses.install.search.placeholder" = "레지스트리와 소스 검색…";
 "harnesses.install.search.prompt" = "레지스트리와 소스를 검색하려면 입력하세요";
 "harnesses.install.search.empty" = "결과 없음";
@@ -721,8 +738,21 @@
 "harnesses.install.sources.remove" = "제거";
 "harnesses.install.sources.count %ld" = "harness %ld개";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "델리게이트 추가";
+"harnesses.add.delegate.button" = "델리게이트 추가…";
+"harnesses.add.delegate.library.search.placeholder" = "설치된 harness 검색…";
+"harnesses.add.delegate.library.empty" = "위임할 다른 설치된 harness가 없습니다.";
+"source.picker.browse.local" = "로컬 탐색…";
+"source.picker.browse.local.help" = "로컬 디렉토리 선택";
+"harnesses.add.delegate.pick" = "선택";
+"harnesses.add.delegate.back" = "뒤로";
+"harnesses.add.delegate.apply" = "델리게이트 추가";
+
 "harnesses.update.button" = "업데이트";
 "harnesses.update.help" = "최신 버전으로 업데이트";
+"harnesses.update.available" = "업데이트 가능";
+"harnesses.update.available.version %@" = "%@ 버전을 사용할 수 있습니다";
 "harnesses.uninstall.button" = "제거";
 "harnesses.uninstall.help" = "이 Harness 제거";
 "harnesses.uninstall.alert.title %@" = "\"%@\"을(를) 제거하시겠습니까?";
@@ -878,6 +908,9 @@
 "harnesses.group.default" = "기본값";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "로컬";
+"harnesses.group.quarantined" = "격리됨";
+"harnesses.quarantine.restore" = "복원";
+"harnesses.quarantine.drop" = "제거…";
 "harnesses.group.menu.settings" = "설정…";
 "harnesses.group.registry %@" = "레지스트리: %@";
 "harnesses.install.browsing" = "사용 가능한 harness 로딩 중…";
@@ -885,6 +918,7 @@
 "harnesses.install.git.ref.placeholder" = "브랜치, 태그 또는 커밋 SHA (선택 사항)";
 "harnesses.install.retry" = "다시 시도";
 "harnesses.install.section.available" = "레지스트리에서 사용 가능";
+"harnesses.install.section.available.empty" = "구성된 마켓플레이스가 없습니다. 설정 → 외부 소스에서 추가하세요.";
 "harnesses.install.section.installed" = "설치됨";
 "harnesses.install.section.local" = "로컬에서 사용 가능";
 "harnesses.outdated.capabilities.unknown" = "알 수 없음";
@@ -924,3 +958,109 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "터미널 열기";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "로컬로 포크";
+"harnesses.fork.to.local.help" = "이 harness의 편집 가능한 로컬 사본 만들기";
+"harnesses.update.dot.help" = "업데이트 가능";
+"harness.fork.title %@" = "\"%@\" 을 로컬로 포크";
+"harness.fork.explanation" = "이 harness의 편집 가능한 로컬 사본을 만듭니다. 사본은 업스트림에서 무엇이 변경되었는지 확인할 수 있도록 원본을 추적합니다.";
+"harness.fork.button" = "포크";
+"harness.fork.progress.title %@" = "\"%@\" 포크 중…";
+"harness.fork.rename.label" = "이름 (선택사항)";
+"harness.fork.rename.hint" = "비워 두면 소스 이름을 유지합니다. 새 포크의 정식 id는 local/<이름>이 됩니다.";
+"harness.fork.identity.collision" = "이미 이 ID를 가진 하네스가 설치되어 있습니다.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "\"%@\" 업데이트";
+
+"harness.update.progress.title %@" = "\"%@\" 업데이트 중…";
+
+"harness.update.button" = "업데이트";
+"harness.update.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+"command.runner.running" = "실행 중…";
+"command.runner.succeeded" = "성공";
+"command.runner.failed" = "실패";
+"common.copy.output" = "출력 복사";
+"common.rerun" = "다시 실행";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "포함 작업";
+"harnesses.include.edit.button" = "포함 편집…";
+"harnesses.include.remove.button" = "포함 제거…";
+"harnesses.include.edit.title" = "포함 편집";
+"harnesses.include.edit.source" = "소스";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "브랜치, 태그 또는 커밋";
+"harnesses.include.edit.path" = "경로";
+"harnesses.include.edit.path.placeholder" = "소스 저장소의 하위 경로";
+"harnesses.include.edit.picks" = "선택";
+"harnesses.include.edit.picks.explainer" = "체크된 아티팩트가 현재 이 포함에 있습니다. 추가하거나 제거하려면 토글하세요.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld 선택됨";
+"harnesses.include.edit.picks.unknown.source" = "이 소스는 마켓플레이스에 없습니다 — 현재 아티팩트만 나열됩니다.";
+"harnesses.include.edit.save" = "변경사항 저장";
+"harnesses.include.remove.confirm.title" = "이 포함을 제거할까요?";
+"harnesses.include.remove.confirm.message %@" = "%@이(가) 이 harness에서 제거됩니다. 소스 저장소는 변경되지 않습니다.";
+"harnesses.include.remove.confirm" = "제거";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "포함 추가…";
+"harnesses.include.add.edit.existing" = "편집";
+"harnesses.include.add.search.placeholder" = "플러그인 검색…";
+"harnesses.include.add.no.marketplaces" = "마켓플레이스가 설정되지 않았습니다. 마켓플레이스 탭을 사용하여 추가하세요.";
+"harnesses.include.add.no.matches" = "일치하는 플러그인이 없습니다.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "브랜치, 태그 또는 커밋 (선택 사항)";
+"harnesses.include.add.gitpath.label" = "경로";
+"harnesses.include.add.gitpath.placeholder" = "소스 저장소의 하위 디렉터리 (선택 사항)";
+"harnesses.include.add.giturl.hint" = "선택은 기본적으로 소스가 제공하는 모든 것을 포함합니다. 추가 후 포함 편집으로 범위를 좁히세요.";
+"harnesses.include.add.picks.prompt" = "포함할 아티팩트를 선택하세요.";
+"harnesses.include.add.apply" = "적용";
+"harnesses.include.add.already.installed" = "이미 추가됨";
+"harnesses.include.add.already.installed.help" = "이 플러그인은 이미 이 harness에 있습니다 — 선택 또는 ref를 편집하려면 클릭하세요.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "대리자 작업";
+"harnesses.delegate.edit.button" = "대리자 편집…";
+"harnesses.delegate.remove.button" = "대리자 제거…";
+"harnesses.delegate.edit.title" = "대리자 편집";
+"harnesses.delegate.remove.confirm.title" = "이 대리자를 제거하시겠습니까?";
+"harnesses.delegate.remove.confirm.message %@" = "%@이(가) 이 harness에 더 이상 병합되지 않습니다. 소스 저장소는 변경되지 않습니다.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "매니페스트 편집…";
+"harnesses.manifest.edit.title" = "매니페스트 편집";
+"harnesses.manifest.edit.name" = "이름";
+"harnesses.manifest.edit.version" = "버전";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "semver 사용: 주버전.부버전.수정버전 (예: 0.2.0)";
+"harnesses.manifest.edit.vendor" = "기본 공급업체";
+"harnesses.manifest.edit.description" = "설명";
+"harnesses.manifest.edit.description.hint" = "harness 목록과 상세 헤더에 표시됩니다. 생략하려면 비워 두세요.";
+"harnesses.manifest.edit.save" = "변경사항 저장";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "업스트림 커밋 변경됨: %@ → %@";
+"harnesses.broken.fork.help" = "이 로컬 fork에 harness 매니페스트가 없습니다. 마우스 오른쪽 버튼을 클릭하고 제거를 선택하여 삭제하세요.";
+"harnesses.broken.fork.badge" = "손상됨";
+"harnesses.fork.of %@" = "%@의 포크";
+"harnesses.fork.help %@" = "%@에서 포크됨";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "브랜치에서 새 워크트리";
+"sidebar.checkout.branch.label" = "브랜치";
+"sidebar.checkout.branch.placeholder" = "브랜치 선택…";
+"sidebar.checkout.branch.required" = "계속하려면 브랜치를 선택하세요.";
+"sidebar.checkout.branch.create" = "워크트리 생성";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "이 harness에는 업데이트할 Git 소스가 없습니다.";
+"harnesses.loading.help" = "ynh와 통신 중…";
+"harnesses.unversioned.drift.help" = "버전 업데이트 없이 업스트림 콘텐츠가 변경됨 — 업데이트 전 검토 필요";
+"harnesses.unversioned.drift.banner" = "버전 업데이트 없이 업스트림 콘텐츠가 변경됨 — 업데이트 전 검토 필요";
+"harnesses.unversioned.drift.confirm.title" = "업스트림 변경사항 검토";
+"harnesses.unversioned.drift.confirm.body" = "업스트림 콘텐츠가 버전 업데이트 없이 변경되었습니다. 업데이트하면 새 콘텐츠를 가져옵니다. 계속하기 전에 아래 SHA를 검토하세요 — 버전 업데이트 누락은 악의적인 변경을 숨길 수 있습니다.";
+"harnesses.unversioned.drift.confirm.proceed" = "어쨌든 업데이트";

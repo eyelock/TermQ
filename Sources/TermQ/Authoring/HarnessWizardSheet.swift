@@ -14,6 +14,8 @@ struct HarnessWizardSheet: View {
 
     @ObservedObject private var vendorService: VendorService = .shared
     @ObservedObject private var store: MarketplaceStore = .shared
+    @ObservedObject private var authorPreferences = HarnessAuthorPreferences.shared
+    @ObservedObject private var sidebarState = SidebarState.shared
     @StateObject private var author = HarnessAuthor()
 
     // Step 1 state
@@ -222,7 +224,7 @@ struct HarnessWizardSheet: View {
                     if let harnessName = author.createdHarnessName {
                         store.preselectedHarnessTarget = harnessName
                     }
-                    sidebarTab = "marketplaces"  // matches SidebarView.SidebarTab.marketplaces.rawValue
+                    sidebarState.selectedTab = .marketplaces
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -230,7 +232,7 @@ struct HarnessWizardSheet: View {
                 HStack(spacing: 12) {
                     if let harnessName = author.createdHarnessName {
                         Button(Strings.HarnessWizard.successOpen) {
-                            harnessRepository.selectedHarnessName = harnessName
+                            harnessRepository.selectedHarnessId = harnessName
                             dismiss()
                         }
                         .buttonStyle(.bordered)
@@ -344,12 +346,9 @@ struct HarnessWizardSheet: View {
         }
     }
 
-    @AppStorage("defaultHarnessAuthorDirectory") private var defaultHarnessAuthorDirectory = ""
-    @AppStorage("sidebar.selectedTab") private var sidebarTab = "repositories"
-
     private func loadDefaultDestination() {
-        if !defaultHarnessAuthorDirectory.isEmpty {
-            destination = defaultHarnessAuthorDirectory
+        if !authorPreferences.defaultDirectory.isEmpty {
+            destination = authorPreferences.defaultDirectory
             return
         }
         if case .ready(_, _, let paths) = detector.status {

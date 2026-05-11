@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Vzhled";
 "editor.field.theme" = "Motiv";
 "editor.field.theme.default" = "Výchozí";
+"editor.field.theme.override" = "Přepsat výchozí motiv";
 "editor.field.font.size" = "Velikost písma";
+"editor.field.font.size.override" = "Přepsat výchozí velikost písma";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Příkaz ke spuštění při startu terminálu";
 "editor.field.safe.paste" = "Bezpečné vkládání";
 "editor.field.safe.paste.help" = "Zobrazit potvrzení před vložením víceřádkového textu";
+"editor.field.safe.paste.override" = "Přepsat výchozí bezpečné vkládání";
+"editor.field.safe.paste.inherited.on" = "Zapnuto (zděděno)";
+"editor.field.safe.paste.inherited.off" = "Vypnuto (zděděno)";
 "editor.field.allow.autorun" = "Povolit automatické spuštění";
 "editor.field.allow.autorun.help" = "Povolit CLI automaticky spouštět příkazy";
 "editor.field.autorun.disabled.globally" = "Automatické spuštění globálně vypnuto";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Přepsat výchozí backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend nelze změnit, když je relace aktivní. Restartujte relaci pro změnu backendu.";
@@ -584,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Zadejte cestu pracovního stromu pro pokračování.";
 "sidebar.new.worktree.create" = "Vytvořit";
 "sidebar.new.worktree.loading.branches" = "Načítání větví...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Převést na pracovní strom";
+"sidebar.convert.worktree.branch.label" = "Název větve";
+"sidebar.convert.worktree.button" = "Převést";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Převést na pracovní strom…";
 "sidebar.branch.delete" = "Smazat větev";
 "sidebar.branch.delete.title" = "Smazat větev";
 "sidebar.branch.delete.confirm" = "Smazat";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Místní";
 "harnesses.source.registry" = "Registr";
+"harnesses.source.read.only" = "Pouze pro čtení";
+"harnesses.source.forked.from %@" = "Větev z %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informace";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "Deleguje na (%d)";
 "harnesses.detail.picks %d" = "Vybírá (%d):";
 "harnesses.reveal.in.finder" = "Zobrazit ve Finderu";
+"harnesses.copy.path" = "Kopírovat jako cestu";
 "harnesses.open.in.browser" = "Otevřít v prohlížeči";
 "harnesses.close.detail" = "Zavřít";
 "harnesses.configure.from.marketplaces" = "Konfigurovat z tržišť…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "Nainstalovat harness";
 "harnesses.install.toolbar.help" = "Nainstalovat harness";
-"harnesses.install.tab.search" = "Hledat";
+"harnesses.install.tab.library" = "Knihovna";
+"harnesses.install.manage.sources" = "Spravovat zdroje…";
+"harnesses.install.manage.sources.help" = "Přidat nebo odebrat lokální zdroje harness";
+"harnesses.install.manage.sources.done" = "Hotovo";
 "harnesses.install.tab.git" = "Z Gitu";
-"harnesses.install.tab.sources" = "Zdroje";
 "harnesses.install.search.placeholder" = "Hledat v registrech a zdrojích…";
 "harnesses.install.search.prompt" = "Zadejte text pro vyhledávání v registrech a zdrojích";
 "harnesses.install.search.empty" = "Žádné výsledky";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "Odebrat";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Přidat delegáta";
+"harnesses.add.delegate.button" = "Přidat delegáta…";
+"harnesses.add.delegate.library.search.placeholder" = "Hledat nainstalované harnessy…";
+"harnesses.add.delegate.library.empty" = "Žádné jiné nainstalované harnessy k delegování.";
+"source.picker.browse.local" = "Procházet lokálně…";
+"source.picker.browse.local.help" = "Vyberte místní adresář";
+"harnesses.add.delegate.pick" = "Vybrat";
+"harnesses.add.delegate.back" = "Zpět";
+"harnesses.add.delegate.apply" = "Přidat delegáta";
+
 "harnesses.update.button" = "Aktualizovat";
 "harnesses.update.help" = "Aktualizovat na nejnovější verzi";
+"harnesses.update.available" = "Dostupná aktualizace";
+"harnesses.update.available.version %@" = "Verze %@ je k dispozici";
 "harnesses.uninstall.button" = "Odinstalovat";
 "harnesses.uninstall.help" = "Odinstalovat tento harness";
 "harnesses.uninstall.alert.title %@" = "Odinstalovat \"%@\"?";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "Výchozí";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Místní";
+"harnesses.group.quarantined" = "V karanténě";
+"harnesses.quarantine.restore" = "Obnovit";
+"harnesses.quarantine.drop" = "Odebrat…";
 "harnesses.group.menu.settings" = "Nastavení…";
 "harnesses.group.registry %@" = "Registr: %@";
 "harnesses.install.browsing" = "Načítání dostupných harnesů…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "Větev, tag nebo SHA commitu (volitelné)";
 "harnesses.install.retry" = "Zkusit znovu";
 "harnesses.install.section.available" = "Dostupné z registrů";
+"harnesses.install.section.available.empty" = "Nejsou nakonfigurovány žádné tržiště. Přidejte jedno v Nastavení → Externí zdroje.";
 "harnesses.install.section.installed" = "Nainstalováno";
 "harnesses.install.section.local" = "Dostupné místně";
 "harnesses.outdated.capabilities.unknown" = "neznámý";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Otevřít terminály";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Vytvořit fork lokálně";
+"harnesses.fork.to.local.help" = "Vytvořit upravitelnou lokální kopii tohoto harness";
+"harnesses.update.dot.help" = "Dostupná aktualizace";
+"harness.fork.title %@" = "Fork \"%@\" do místního";
+"harness.fork.explanation" = "Vytvoří upravitelnou lokální kopii tohoto harness. Kopie sleduje svůj původ, takže můžete vidět, co se změnilo upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Vytváření forku \"%@\"…";
+"harness.fork.rename.label" = "Název (volitelné)";
+"harness.fork.rename.hint" = "Nechte prázdné pro zachování zdrojového názvu. Kanonické id nového forku bude local/<název>.";
+"harness.fork.identity.collision" = "Nainstalovaný harness již tuto identitu má.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Aktualizovat \"%@\"";
+"harness.update.progress.title %@" = "Aktualizace \"%@\"…";
+"harness.update.button" = "Aktualizovat";
+"harness.update.ynh.unavailable" = "ynh není k dispozici.";
+"command.runner.running" = "Spouštění…";
+"command.runner.succeeded" = "Úspěšně dokončeno";
+"command.runner.failed" = "Selhalo";
+"common.copy.output" = "Kopírovat výstup";
+"common.rerun" = "Spustit znovu";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Akce zahrnutí";
+"harnesses.include.edit.button" = "Upravit zahrnutí…";
+"harnesses.include.remove.button" = "Odebrat zahrnutí…";
+"harnesses.include.edit.title" = "Upravit zahrnutí";
+"harnesses.include.edit.source" = "Zdroj";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "větev, tag nebo commit";
+"harnesses.include.edit.path" = "Cesta";
+"harnesses.include.edit.path.placeholder" = "subcesta ve zdrojovém repozitáři";
+"harnesses.include.edit.picks" = "Výběr";
+"harnesses.include.edit.picks.explainer" = "Zaškrtnuté artefakty jsou aktuálně v tomto zahrnutí. Přepínáním přidáváte nebo odebíráte.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld z %ld vybráno";
+"harnesses.include.edit.picks.unknown.source" = "Tento zdroj není ve vašich tržištích — jsou zobrazeny pouze aktuální artefakty.";
+"harnesses.include.edit.save" = "Uložit změny";
+"harnesses.include.remove.confirm.title" = "Odebrat toto zahrnutí?";
+"harnesses.include.remove.confirm.message %@" = "%@ bude odebráno z tohoto setu. Zdrojový repozitář se nezmění.";
+"harnesses.include.remove.confirm" = "Odebrat";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Přidat zahrnutí…";
+"harnesses.include.add.edit.existing" = "Upravit";
+"harnesses.include.add.search.placeholder" = "Hledat pluginy…";
+"harnesses.include.add.no.marketplaces" = "Žádná tržiště nejsou nakonfigurována. Přidejte jedno přes záložku Tržiště.";
+"harnesses.include.add.no.matches" = "Žádný plugin neodpovídá.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "větev, tag nebo commit (volitelné)";
+"harnesses.include.add.gitpath.label" = "Cesta";
+"harnesses.include.add.gitpath.placeholder" = "podadresář ve zdrojovém repozitáři (volitelné)";
+"harnesses.include.add.giturl.hint" = "Výběr ve výchozím nastavení zahrnuje vše, co zdroj poskytuje. Po přidání použijte Upravit zahrnutí pro upřesnění.";
+"harnesses.include.add.picks.prompt" = "Vyberte artefakty k zahrnutí.";
+"harnesses.include.add.apply" = "Použít";
+"harnesses.include.add.already.installed" = "Již přidáno";
+"harnesses.include.add.already.installed.help" = "Tento plugin je již v tomto setu — kliknutím upravte výběr nebo ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Akce delegáta";
+"harnesses.delegate.edit.button" = "Upravit delegáta…";
+"harnesses.delegate.remove.button" = "Odebrat delegáta…";
+"harnesses.delegate.edit.title" = "Upravit delegáta";
+"harnesses.delegate.remove.confirm.title" = "Odebrat tohoto delegáta?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ již nebude sloučen do tohoto harness. Zdrojové úložiště se nemění.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Upravit manifest…";
+"harnesses.manifest.edit.title" = "Upravit manifest";
+"harnesses.manifest.edit.name" = "Název";
+"harnesses.manifest.edit.version" = "Verze";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Použijte semver: MAJOR.MINOR.PATCH (např. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Výchozí dodavatel";
+"harnesses.manifest.edit.description" = "Popis";
+"harnesses.manifest.edit.description.hint" = "Zobrazeno v seznamu setů a v záhlaví detailů. Ponechte prázdné pro vynechání.";
+"harnesses.manifest.edit.save" = "Uložit změny";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream se změnil: %@ → %@";
+"harnesses.broken.fork.help" = "Tomuto lokálnímu forku chybí manifest harness. Klikněte pravým tlačítkem a vyberte Odinstalovat, chcete-li ho odstranit.";
+"harnesses.broken.fork.badge" = "Poškozený";
+"harnesses.fork.of %@" = "Větev z %@";
+"harnesses.fork.help %@" = "Větev z %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nový worktree z větve";
+"sidebar.checkout.branch.label" = "Větev";
+"sidebar.checkout.branch.placeholder" = "Vyberte větev…";
+"sidebar.checkout.branch.required" = "Vyberte větev pro pokračování.";
+"sidebar.checkout.branch.create" = "Vytvořit worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Tento set nemá žádné Git zdroje k aktualizaci.";
+"harnesses.loading.help" = "Komunikace s ynh…";
+"harnesses.unversioned.drift.help" = "Obsah upstream se změnil bez aktualizace verze — zkontrolujte před aktualizací";
+"harnesses.unversioned.drift.banner" = "Obsah upstream se změnil bez aktualizace verze — zkontrolujte před aktualizací";
+"harnesses.unversioned.drift.confirm.title" = "Zkontrolovat změny upstream";
+"harnesses.unversioned.drift.confirm.body" = "Obsah upstream se změnil bez aktualizace verze. Aktualizace stáhne nový obsah. Zkontrolujte SHA níže před pokračováním — chybějící aktualizace verze může maskovat škodlivé změny.";
+"harnesses.unversioned.drift.confirm.proceed" = "Aktualizovat i tak";

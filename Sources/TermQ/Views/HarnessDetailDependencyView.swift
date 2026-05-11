@@ -10,6 +10,58 @@ import TermQShared
 struct HarnessDetailDependencyView: View {
     let harness: Harness
     let detail: HarnessDetail?
+    var updateSignal: HarnessUpdateSignal = .none
+    /// When non-nil, each include row shows Edit / Remove affordances backed
+    /// by this coordinator. Registry harnesses receive `nil` here.
+    var includeEditor: HarnessIncludeEditor?
+    /// Same shape as `includeEditor` but for delegate cards.
+    var delegateEditor: HarnessDelegateEditor?
+
+    /// Returns the drift entry for this row, if any. Matches on whichever
+    /// identifier the badge store recorded — `path` when the include has
+    /// one, otherwise the git URL — so includes that span the whole repo
+    /// (no subpath) still light up their row.
+    private func driftEntry(git: String, path: String?) -> HarnessUpdateSignal.DriftedInclude? {
+        guard case .unversionedDrift(let drifted) = updateSignal else { return nil }
+        if let path, !path.isEmpty,
+            let match = drifted.first(where: { $0.path == path })
+        {
+            return match
+        }
+        return drifted.first(where: { $0.path == git })
+    }
+
+    /// Tooltip body for the drift triangle — names the SHAs so the user can
+    /// see *which* commit drifted, not just *that* one did.
+    private func driftTooltip(for drift: HarnessUpdateSignal.DriftedInclude) -> String {
+        Strings.Harnesses.unversionedDriftIncludeTooltip(
+            String(drift.installedSHA.prefix(7)),
+            String(drift.availableSHA.prefix(7))
+        )
+    }
+
+    @ViewBuilder
+    private func resolutionBadge(
+        resolved: Bool,
+        drift: HarnessUpdateSignal.DriftedInclude?
+    ) -> some View {
+        if let drift {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 11))
+                .foregroundColor(.yellow)
+                .help(driftTooltip(for: drift))
+        } else if resolved {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 11))
+                .foregroundColor(.green)
+                .help(Strings.Harnesses.detailResolved)
+        } else {
+            Image(systemName: "exclamationmark.circle.fill")
+                .font(.system(size: 11))
+                .foregroundColor(.orange)
+                .help(Strings.Harnesses.detailUnresolved)
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -21,11 +73,29 @@ struct HarnessDetailDependencyView: View {
             } else {
                 basicDependencies
             }
+
+            if let includeEditor {
+                addIncludeSection(editor: includeEditor)
+            }
+            if let delegateEditor {
+                addDelegateSection(editor: delegateEditor)
+            }
         }
+        .modifier(
+            IncludeEditorOverlay(
+                editor: includeEditor,
+                harnessID: harness.id,
+                existingIncludes: existingIncludeTargets
+            )
+        )
+        .modifier(DelegateEditorOverlay(editor: delegateEditor, harnessID: harness.id))
     }
 
-    /// Whether there are any dependencies to show.
+    /// Whether the dependencies section should render at all.
+    /// When an editor is provided, we always render so the Add Include entry
+    /// point is reachable even on a harness with no current dependencies.
     var hasDependencies: Bool {
+        if includeEditor != nil || delegateEditor != nil { return true }
         if let detail {
             return !detail.composition.includes.isEmpty || !detail.composition.delegatesTo.isEmpty
         }
@@ -73,21 +143,20 @@ struct HarnessDetailDependencyView: View {
                         .foregroundColor(.secondary)
                 }
 
-                if include.resolved {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 11))
-                        .foregroundColor(.green)
-                        .help(Strings.Harnesses.detailResolved)
-                } else {
-                    Image(systemName: "exclamationmark.circle.fill")
-                        .font(.system(size: 11))
-                        .foregroundColor(.orange)
-                        .help(Strings.Harnesses.detailUnresolved)
-                }
+                resolutionBadge(
+                    resolved: include.resolved,
+                    drift: driftEntry(git: include.git, path: include.path)
+                )
 
                 Spacer()
 
                 GitActionButtons(source: include.git, path: include.path)
+                includeEditMenu(
+                    sourceURL: include.git,
+                    path: include.path,
+                    ref: include.ref,
+                    picks: include.pick ?? []
+                )
             }
 
             if let path = include.path, !path.isEmpty {
@@ -121,6 +190,9 @@ struct HarnessDetailDependencyView: View {
                 Spacer()
 
                 GitActionButtons(source: delegate.git, path: delegate.path)
+                delegateEditMenu(
+                    sourceURL: delegate.git, path: delegate.path, ref: delegate.ref
+                )
             }
 
             if let path = delegate.path, !path.isEmpty {
@@ -176,6 +248,12 @@ struct HarnessDetailDependencyView: View {
                 Spacer()
 
                 GitActionButtons(source: include.git, path: include.path)
+                includeEditMenu(
+                    sourceURL: include.git,
+                    path: include.path,
+                    ref: include.ref,
+                    picks: include.pick ?? []
+                )
             }
 
             if let path = include.path, !path.isEmpty {
@@ -209,6 +287,9 @@ struct HarnessDetailDependencyView: View {
                 Spacer()
 
                 GitActionButtons(source: delegate.git, path: delegate.path)
+                delegateEditMenu(
+                    sourceURL: delegate.git, path: delegate.path, ref: delegate.ref
+                )
             }
 
             if let path = delegate.path, !path.isEmpty {
@@ -218,6 +299,115 @@ struct HarnessDetailDependencyView: View {
         .padding(10)
         .background(Color(nsColor: .controlBackgroundColor))
         .clipShape(RoundedRectangle(cornerRadius: 6))
+    }
+
+    // MARK: - Add Include section (only shown when an editor is provided)
+
+    private func addIncludeSection(editor: HarnessIncludeEditor) -> some View {
+        Button {
+            editor.startAddingInclude()
+        } label: {
+            Label(Strings.Harnesses.addIncludeButton, systemImage: "plus.circle")
+                .font(.system(size: 12))
+        }
+        .buttonStyle(.borderless)
+        .foregroundColor(.accentColor)
+    }
+
+    private func addDelegateSection(editor: HarnessDelegateEditor) -> some View {
+        Button {
+            editor.requestAdd()
+        } label: {
+            Label(Strings.Harnesses.addDelegateButton, systemImage: "plus.circle")
+                .font(.system(size: 12))
+        }
+        .buttonStyle(.borderless)
+        .foregroundColor(.accentColor)
+    }
+
+    /// Edit targets for already-installed includes. Used by AddIncludeFlow
+    /// to mark matching plugins and to drive the "click to edit" jump.
+    private var existingIncludeTargets: [IncludeEditTarget] {
+        if let detail {
+            return detail.composition.includes.map {
+                IncludeEditTarget(
+                    sourceURL: $0.git, path: $0.path,
+                    ref: $0.ref, picks: $0.pick ?? []
+                )
+            }
+        }
+        return harness.includes.map {
+            IncludeEditTarget(
+                sourceURL: $0.git, path: $0.path,
+                ref: $0.ref, picks: $0.pick ?? []
+            )
+        }
+    }
+
+    // MARK: - Include Edit Menu (only shown when an editor is provided)
+
+    @ViewBuilder
+    private func includeEditMenu(
+        sourceURL: String, path: String?, ref: String?, picks: [String]
+    ) -> some View {
+        if let editor = includeEditor {
+            let target = IncludeEditTarget(
+                sourceURL: sourceURL, path: path, ref: ref, picks: picks
+            )
+            Menu {
+                Button {
+                    editor.requestEdit(target)
+                } label: {
+                    Label(Strings.Harnesses.editIncludeButton, systemImage: "pencil")
+                }
+                Divider()
+                Button(role: .destructive) {
+                    editor.requestRemove(target)
+                } label: {
+                    Label(Strings.Harnesses.removeIncludeButton, systemImage: "trash")
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.system(size: 11))
+                    .foregroundColor(.secondary)
+            }
+            .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .fixedSize()
+            .help(Strings.Harnesses.includeActionsHelp)
+        }
+    }
+
+    // MARK: - Delegate Edit Menu (only shown when an editor is provided)
+
+    @ViewBuilder
+    private func delegateEditMenu(
+        sourceURL: String, path: String?, ref: String?
+    ) -> some View {
+        if let editor = delegateEditor {
+            let target = DelegateEditTarget(sourceURL: sourceURL, path: path, ref: ref)
+            Menu {
+                Button {
+                    editor.requestEdit(target)
+                } label: {
+                    Label(Strings.Harnesses.editDelegateButton, systemImage: "pencil")
+                }
+                Divider()
+                Button(role: .destructive) {
+                    editor.requestRemove(target)
+                } label: {
+                    Label(Strings.Harnesses.removeDelegateButton, systemImage: "trash")
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.system(size: 11))
+                    .foregroundColor(.secondary)
+            }
+            .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .fixedSize()
+            .help(Strings.Harnesses.delegateActionsHelp)
+        }
     }
 
     // MARK: - Shared Card Components
@@ -345,5 +535,210 @@ struct GitPickPill: View {
             .background(Color.accentColor.opacity(0.1))
             .foregroundColor(.accentColor)
             .clipShape(RoundedRectangle(cornerRadius: 4))
+    }
+}
+
+// MARK: - Include Editor Overlay
+
+/// Hosts the remove-confirmation dialog and edit sheet driven by
+/// `HarnessIncludeEditor`. Applied as a modifier so it can vanish entirely
+/// (no extra view in the hierarchy) when no editor is provided.
+private struct IncludeEditorOverlay: ViewModifier {
+    let editor: HarnessIncludeEditor?
+    let harnessID: String
+    let existingIncludes: [IncludeEditTarget]
+
+    func body(content: Content) -> some View {
+        if let editor {
+            content.modifier(
+                IncludeEditorActiveOverlay(
+                    editor: editor,
+                    harnessID: harnessID,
+                    existingIncludes: existingIncludes
+                )
+            )
+        } else {
+            content
+        }
+    }
+}
+
+private struct IncludeEditorActiveOverlay: ViewModifier {
+    @ObservedObject var editor: HarnessIncludeEditor
+    let harnessID: String
+    let existingIncludes: [IncludeEditTarget]
+
+    func body(content: Content) -> some View {
+        content
+            .confirmationDialog(
+                Strings.Harnesses.removeIncludeConfirmTitle,
+                isPresented: removeBinding,
+                titleVisibility: .visible,
+                presenting: editor.removalTarget
+            ) { target in
+                // Capture target by value here — the dialog dismissal nils
+                // editor.removalTarget before the destructive action's body
+                // runs, so reading from the editor after dismissal is too late.
+                Button(Strings.Harnesses.removeIncludeConfirm, role: .destructive) {
+                    Task { await editor.confirmRemove(target: target, harnessID: harnessID) }
+                }
+                Button(Strings.Harnesses.installCancel, role: .cancel) {
+                    editor.removalTarget = nil
+                }
+            } message: { target in
+                Text(Strings.Harnesses.removeIncludeConfirmMessage(GitURLHelper.shortURL(target.sourceURL)))
+            }
+            .sheet(item: $editor.editingTarget) { target in
+                EditIncludeSheet(editor: editor, harnessID: harnessID, target: target)
+                    .frame(width: 540, height: 620)
+            }
+            .sheet(isPresented: $editor.isAddingInclude) {
+                AddIncludeSheetHost(
+                    harnessID: harnessID,
+                    editor: editor,
+                    existingIncludes: existingIncludes
+                )
+                .frame(width: 520, height: 620)
+            }
+    }
+
+    private var removeBinding: Binding<Bool> {
+        Binding(
+            get: { editor.removalTarget != nil },
+            set: { if !$0 { editor.removalTarget = nil } }
+        )
+    }
+}
+
+// MARK: - Delegate Editor Overlay
+
+private struct DelegateEditorOverlay: ViewModifier {
+    let editor: HarnessDelegateEditor?
+    let harnessID: String
+
+    func body(content: Content) -> some View {
+        if let editor {
+            content.modifier(
+                DelegateEditorActiveOverlay(editor: editor, harnessID: harnessID)
+            )
+        } else {
+            content
+        }
+    }
+}
+
+private struct DelegateEditorActiveOverlay: ViewModifier {
+    @ObservedObject var editor: HarnessDelegateEditor
+    @ObservedObject private var harnessRepo = HarnessRepository.shared
+    let harnessID: String
+
+    func body(content: Content) -> some View {
+        content
+            .confirmationDialog(
+                Strings.Harnesses.removeDelegateConfirmTitle,
+                isPresented: removeBinding,
+                titleVisibility: .visible,
+                presenting: editor.removalTarget
+            ) { target in
+                Button(Strings.Harnesses.removeIncludeConfirm, role: .destructive) {
+                    Task {
+                        await editor.confirmRemove(target: target, harnessID: harnessID)
+                    }
+                }
+                Button(Strings.Harnesses.installCancel, role: .cancel) {
+                    editor.removalTarget = nil
+                }
+            } message: { target in
+                Text(
+                    Strings.Harnesses.removeDelegateConfirmMessage(GitURLHelper.shortURL(target.sourceURL))
+                )
+            }
+            .sheet(item: $editor.editingTarget) { target in
+                EditDelegateSheet(editor: editor, harnessID: harnessID, target: target)
+                    .frame(width: 540, height: 360)
+            }
+            .sheet(isPresented: $editor.isAddingDelegate) {
+                AddDelegateSheetHost(
+                    targetHarnessID: harnessID,
+                    installedHarnesses: harnessRepo.harnesses,
+                    onApplied: {
+                        Task { await editor.reloadAfterAdd(harnessID: harnessID) }
+                    }
+                )
+                .frame(width: 520, height: 540)
+            }
+    }
+
+    private var removeBinding: Binding<Bool> {
+        Binding(
+            get: { editor.removalTarget != nil },
+            set: { if !$0 { editor.removalTarget = nil } }
+        )
+    }
+}
+
+// MARK: - Add Include sheet host
+
+/// Thin host that constructs an `AddIncludeContext` and presents the
+/// unified `SourcePicker`. Mirrors `AddDelegateSheetHost`.
+private struct AddIncludeSheetHost: View {
+    let harnessID: String
+    let editor: HarnessIncludeEditor
+    let existingIncludes: [IncludeEditTarget]
+
+    @StateObject private var context: AddIncludeContext
+
+    init(
+        harnessID: String,
+        editor: HarnessIncludeEditor,
+        existingIncludes: [IncludeEditTarget]
+    ) {
+        self.harnessID = harnessID
+        self.editor = editor
+        self.existingIncludes = existingIncludes
+        _context = StateObject(
+            wrappedValue: AddIncludeContext(
+                harnessID: harnessID,
+                existingIncludes: existingIncludes,
+                editor: editor
+            )
+        )
+    }
+
+    var body: some View {
+        SourcePicker(context: context)
+    }
+}
+
+// MARK: - Add Delegate sheet host
+
+/// Thin host that constructs an `AddDelegateContext` and presents the
+/// unified `SourcePicker`. Mirrors `HarnessInstallSheet`.
+private struct AddDelegateSheetHost: View {
+    let targetHarnessID: String
+    let installedHarnesses: [Harness]
+    let onApplied: () -> Void
+
+    @StateObject private var context: AddDelegateContext
+
+    init(
+        targetHarnessID: String,
+        installedHarnesses: [Harness],
+        onApplied: @escaping () -> Void
+    ) {
+        self.targetHarnessID = targetHarnessID
+        self.installedHarnesses = installedHarnesses
+        self.onApplied = onApplied
+        _context = StateObject(
+            wrappedValue: AddDelegateContext(
+                targetHarnessID: targetHarnessID,
+                installedHarnesses: installedHarnesses,
+                onApplied: onApplied
+            )
+        )
+    }
+
+    var body: some View {
+        SourcePicker(context: context)
     }
 }

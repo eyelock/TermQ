@@ -146,7 +146,9 @@
 "editor.section.appearance" = "外観";
 "editor.field.theme" = "テーマ";
 "editor.field.theme.default" = "デフォルト";
+"editor.field.theme.override" = "デフォルトテーマを上書き";
 "editor.field.font.size" = "フォントサイズ";
+"editor.field.font.size.override" = "デフォルトフォントサイズを上書き";
 "editor.font.preview" = "AaBbCc あいう 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "ターミナル起動時に実行するコマンド";
 "editor.field.safe.paste" = "安全な貼り付け";
 "editor.field.safe.paste.help" = "複数行テキストの貼り付け前に確認を表示";
+"editor.field.safe.paste.override" = "デフォルトの安全な貼り付けを上書き";
+"editor.field.safe.paste.inherited.on" = "オン（継承）";
+"editor.field.safe.paste.inherited.off" = "オフ（継承）";
 "editor.field.allow.autorun" = "自動実行を許可";
 "editor.field.allow.autorun.help" = "CLIによるコマンドの自動実行を許可";
 "editor.field.autorun.disabled.globally" = "自動実行はグローバルで無効です";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "デフォルトバックエンドを上書き";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "セッションがアクティブな間はバックエンドを変更できません。バックエンドを変更するにはセッションを再起動してください。";
@@ -582,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "続行するには Worktree のパスを入力してください。";
 "sidebar.new.worktree.create" = "作成";
 "sidebar.new.worktree.loading.branches" = "ブランチを読み込み中...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "ワークツリーに変換";
+"sidebar.convert.worktree.branch.label" = "ブランチ名";
+"sidebar.convert.worktree.button" = "変換";
+
 "common.close.window" = "ウィンドウを閉じる";
 "menu.toggle.sidebar" = "サイドバーの切り替え";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "ワークツリーに変換…";
 "sidebar.branch.delete" = "ブランチを削除";
 "sidebar.branch.delete.title" = "ブランチを削除";
 "sidebar.branch.delete.confirm" = "削除";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "ローカル";
 "harnesses.source.registry" = "レジストリ";
+"harnesses.source.read.only" = "読み取り専用";
+"harnesses.source.forked.from %@" = "%@ からフォーク";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "情報";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "委任先 (%d)";
 "harnesses.detail.picks %d" = "選択 (%d)：";
 "harnesses.reveal.in.finder" = "Finder で表示";
+"harnesses.copy.path" = "パスとしてコピー";
 "harnesses.open.in.browser" = "ブラウザで開く";
 "harnesses.close.detail" = "閉じる";
 "harnesses.configure.from.marketplaces" = "マーケットプレイスから設定…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "Harnessをインストール";
 "harnesses.install.toolbar.help" = "Harnessをインストール";
-"harnesses.install.tab.search" = "検索";
+"harnesses.install.tab.library" = "ライブラリ";
+"harnesses.install.manage.sources" = "ソースを管理…";
+"harnesses.install.manage.sources.help" = "ローカルハーネスソースの追加または削除";
+"harnesses.install.manage.sources.done" = "完了";
 "harnesses.install.tab.git" = "Gitから";
-"harnesses.install.tab.sources" = "ソース";
 "harnesses.install.search.placeholder" = "レジストリとソースを検索…";
 "harnesses.install.search.prompt" = "レジストリとソースを検索するには入力してください";
 "harnesses.install.search.empty" = "結果なし";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "削除";
 "harnesses.install.sources.count %ld" = "%ld 個のharness";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "デリゲートを追加";
+"harnesses.add.delegate.button" = "デリゲートを追加…";
+"harnesses.add.delegate.library.search.placeholder" = "インストール済みのharnessを検索…";
+"harnesses.add.delegate.library.empty" = "委任できる他のインストール済みharnessはありません。";
+"source.picker.browse.local" = "ローカルを参照…";
+"source.picker.browse.local.help" = "ローカルディレクトリを選択";
+"harnesses.add.delegate.pick" = "選択";
+"harnesses.add.delegate.back" = "戻る";
+"harnesses.add.delegate.apply" = "デリゲートを追加";
+
 "harnesses.update.button" = "アップデート";
 "harnesses.update.help" = "最新バージョンにアップデート";
+"harnesses.update.available" = "アップデートあり";
+"harnesses.update.available.version %@" = "バージョン %@ が利用可能です";
 "harnesses.uninstall.button" = "アンインストール";
 "harnesses.uninstall.help" = "このHarnessをアンインストール";
 "harnesses.uninstall.alert.title %@" = "「%@」をアンインストールしますか？";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "デフォルト";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "ローカル";
+"harnesses.group.quarantined" = "検疫済み";
+"harnesses.quarantine.restore" = "復元";
+"harnesses.quarantine.drop" = "削除…";
 "harnesses.group.menu.settings" = "設定…";
 "harnesses.group.registry %@" = "レジストリ: %@";
 "harnesses.install.browsing" = "利用可能なハーネスを読み込み中…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "ブランチ、タグ、またはコミットSHA（任意）";
 "harnesses.install.retry" = "再試行";
 "harnesses.install.section.available" = "レジストリから利用可能";
+"harnesses.install.section.available.empty" = "マーケットプレイスが設定されていません。設定 → 外部ソースで追加してください。";
 "harnesses.install.section.installed" = "インストール済み";
 "harnesses.install.section.local" = "ローカルで利用可能";
 "harnesses.outdated.capabilities.unknown" = "不明";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "ターミナルを開く";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "ローカルにフォーク";
+"harnesses.fork.to.local.help" = "このハーネスの編集可能なローカルコピーを作成";
+"harnesses.update.dot.help" = "アップデートあり";
+"harness.fork.title %@" = "\"%@\" をローカルにフォーク";
+"harness.fork.explanation" = "このハーネスの編集可能なローカルコピーを作成します。コピーは元のリポジトリを追跡するため、アップストリームの変更を確認できます。";
+"harness.fork.button" = "フォーク";
+"harness.fork.progress.title %@" = "\"%@\" をフォーク中…";
+"harness.fork.rename.label" = "名前（省略可）";
+"harness.fork.rename.hint" = "空のままにするとソース名を引き継ぎます。新しいフォークの正規 id は local/<名前> になります。";
+"harness.fork.identity.collision" = "この ID を持つハーネスがすでにインストールされています。";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "「%@」をアップデート";
+"harness.update.progress.title %@" = "「%@」をアップデート中…";
+"harness.update.button" = "アップデート";
+"harness.update.ynh.unavailable" = "ynh が利用できません。";
+"command.runner.running" = "実行中…";
+"command.runner.succeeded" = "成功";
+"command.runner.failed" = "失敗";
+"common.copy.output" = "出力をコピー";
+"common.rerun" = "再実行";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "インクルードのアクション";
+"harnesses.include.edit.button" = "インクルードを編集…";
+"harnesses.include.remove.button" = "インクルードを削除…";
+"harnesses.include.edit.title" = "インクルードを編集";
+"harnesses.include.edit.source" = "ソース";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "ブランチ、タグ、またはコミット";
+"harnesses.include.edit.path" = "パス";
+"harnesses.include.edit.path.placeholder" = "ソースリポジトリのサブパス";
+"harnesses.include.edit.picks" = "選択";
+"harnesses.include.edit.picks.explainer" = "チェックされたアーティファクトは現在このインクルードに含まれています。トグルして追加または削除します。";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld 選択済み";
+"harnesses.include.edit.picks.unknown.source" = "このソースはマーケットプレイスにありません — 現在のアーティファクトのみ表示されています。";
+"harnesses.include.edit.save" = "変更を保存";
+"harnesses.include.remove.confirm.title" = "このインクルードを削除しますか？";
+"harnesses.include.remove.confirm.message %@" = "%@ がこの harness から削除されます。ソースリポジトリは変更されません。";
+"harnesses.include.remove.confirm" = "削除";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "インクルードを追加…";
+"harnesses.include.add.edit.existing" = "編集";
+"harnesses.include.add.search.placeholder" = "プラグインを検索…";
+"harnesses.include.add.no.marketplaces" = "マーケットプレイスが設定されていません。マーケットプレイスタブから追加してください。";
+"harnesses.include.add.no.matches" = "一致するプラグインがありません。";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "ブランチ、タグ、またはコミット（任意）";
+"harnesses.include.add.gitpath.label" = "パス";
+"harnesses.include.add.gitpath.placeholder" = "ソースリポジトリのサブディレクトリ（任意）";
+"harnesses.include.add.giturl.hint" = "選択はデフォルトでソースが提供するすべてを含みます。追加後に「インクルードを編集」で絞り込めます。";
+"harnesses.include.add.picks.prompt" = "含めるアーティファクトを選択してください。";
+"harnesses.include.add.apply" = "適用";
+"harnesses.include.add.already.installed" = "追加済み";
+"harnesses.include.add.already.installed.help" = "このプラグインはすでにこの harness にあります — クリックして選択または ref を編集できます。";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "デリゲートの操作";
+"harnesses.delegate.edit.button" = "デリゲートを編集…";
+"harnesses.delegate.remove.button" = "デリゲートを削除…";
+"harnesses.delegate.edit.title" = "デリゲートを編集";
+"harnesses.delegate.remove.confirm.title" = "このデリゲートを削除しますか？";
+"harnesses.delegate.remove.confirm.message %@" = "%@ はこの harness にマージされなくなります。ソースリポジトリは変更されません。";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "マニフェストを編集…";
+"harnesses.manifest.edit.title" = "マニフェストを編集";
+"harnesses.manifest.edit.name" = "名前";
+"harnesses.manifest.edit.version" = "バージョン";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "semver を使用してください：MAJOR.MINOR.PATCH（例：0.2.0）";
+"harnesses.manifest.edit.vendor" = "デフォルトベンダー";
+"harnesses.manifest.edit.description" = "説明";
+"harnesses.manifest.edit.description.hint" = "harness リストとdetailヘッダーに表示されます。省略する場合は空のままにしてください。";
+"harnesses.manifest.edit.save" = "変更を保存";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "上流のコミットが変更されました：%@ → %@";
+"harnesses.broken.fork.help" = "このローカル fork には harness マニフェストがありません。右クリックして「アンインストール」を選択して削除してください。";
+"harnesses.broken.fork.badge" = "破損";
+"harnesses.fork.of %@" = "%@ のフォーク";
+"harnesses.fork.help %@" = "%@ からフォーク";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "ブランチから新しいワークツリー";
+"sidebar.checkout.branch.label" = "ブランチ";
+"sidebar.checkout.branch.placeholder" = "ブランチを選択…";
+"sidebar.checkout.branch.required" = "続行するにはブランチを選択してください。";
+"sidebar.checkout.branch.create" = "ワークツリーを作成";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "この harness に更新する Git ソースがありません。";
+"harnesses.loading.help" = "ynh と通信中…";
+"harnesses.unversioned.drift.help" = "上流のコンテンツがバージョン更新なしに変更されました — 更新前に確認してください";
+"harnesses.unversioned.drift.banner" = "上流のコンテンツがバージョン更新なしに変更されました — 更新前に確認してください";
+"harnesses.unversioned.drift.confirm.title" = "上流の変更を確認";
+"harnesses.unversioned.drift.confirm.body" = "上流のコンテンツがバージョン更新なしに変更されました。更新すると新しいコンテンツが取得されます。続行前に以下の SHA を確認してください — バージョン更新の欠如は悪意ある変更を隠す可能性があります。";
+"harnesses.unversioned.drift.confirm.proceed" = "それでも更新";

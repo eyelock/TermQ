@@ -54,7 +54,7 @@ public class Board: ObservableObject, Codable {
         title: String = "New Terminal",
         id: UUID? = nil,
         workingDirectory: String? = nil,
-        safePasteEnabled: Bool = true,
+        safePasteEnabled: Bool? = nil,
         allowAutorun: Bool = false,
         allowOscClipboard: Bool = true,
         confirmExternalModifications: Bool = true,
@@ -71,7 +71,7 @@ public class Board: ObservableObject, Codable {
             allowAutorun: allowAutorun,
             allowOscClipboard: allowOscClipboard,
             confirmExternalModifications: confirmExternalModifications,
-            backend: backend ?? .direct
+            backend: backend
         )
         cards.append(card)
         return card

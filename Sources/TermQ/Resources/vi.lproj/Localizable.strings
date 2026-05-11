@@ -148,7 +148,9 @@
 "editor.section.appearance" = "Giao diện";
 "editor.field.theme" = "Chủ đề";
 "editor.field.theme.default" = "Mặc định";
+"editor.field.theme.override" = "Ghi đè chủ đề mặc định";
 "editor.field.font.size" = "Cỡ chữ";
+"editor.field.font.size.override" = "Ghi đè cỡ chữ mặc định";
 "editor.font.preview" = "AaBbCc Việt 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "Lệnh chạy khi terminal bắt đầu";
 "editor.field.safe.paste" = "Dán an toàn";
 "editor.field.safe.paste.help" = "Hiển thị xác nhận trước khi dán văn bản nhiều dòng";
+"editor.field.safe.paste.override" = "Ghi đè dán an toàn mặc định";
+"editor.field.safe.paste.inherited.on" = "Bật (kế thừa)";
+"editor.field.safe.paste.inherited.off" = "Tắt (kế thừa)";
 "editor.field.allow.autorun" = "Cho phép tự động chạy";
 "editor.field.allow.autorun.help" = "Cho phép CLI tự động chạy lệnh";
 "editor.field.autorun.disabled.globally" = "Tự động chạy bị tắt toàn cục";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Ghi đè backend mặc định";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Không thể thay đổi backend khi phiên đang hoạt động. Khởi động lại phiên để thay đổi backend.";
@@ -575,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Nhập đường dẫn worktree để tiếp tục.";
 "sidebar.new.worktree.create" = "Tạo";
 "sidebar.new.worktree.loading.branches" = "Đang tải nhánh...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Chuyển đổi thành Worktree";
+"sidebar.convert.worktree.branch.label" = "Tên nhánh";
+"sidebar.convert.worktree.button" = "Chuyển đổi";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Chuyển đổi thành Worktree…";
 "sidebar.branch.delete" = "Xóa nhánh";
 "sidebar.branch.delete.title" = "Xóa nhánh";
 "sidebar.branch.delete.confirm" = "Xóa";
@@ -602,6 +614,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Cục bộ";
 "harnesses.source.registry" = "Registry";
+"harnesses.source.read.only" = "Chỉ đọc";
+"harnesses.source.forked.from %@" = "Tách nhánh từ %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Thông tin";
@@ -620,6 +634,7 @@
 "harnesses.detail.delegates %d" = "Ủy quyền cho (%d)";
 "harnesses.detail.picks %d" = "Chọn (%d):";
 "harnesses.reveal.in.finder" = "Hiển thị trong Finder";
+"harnesses.copy.path" = "Sao chép dưới dạng đường dẫn";
 "harnesses.open.in.browser" = "Mở trong trình duyệt";
 "harnesses.close.detail" = "Đóng";
 "harnesses.configure.from.marketplaces" = "Cấu hình từ Thị trường…";
@@ -702,9 +717,11 @@
 // Install sheet
 "harnesses.install.title" = "Cài đặt Harness";
 "harnesses.install.toolbar.help" = "Cài đặt một harness";
-"harnesses.install.tab.search" = "Tìm kiếm";
+"harnesses.install.tab.library" = "Thư viện";
+"harnesses.install.manage.sources" = "Quản lý nguồn…";
+"harnesses.install.manage.sources.help" = "Thêm hoặc xóa nguồn harness cục bộ";
+"harnesses.install.manage.sources.done" = "Xong";
 "harnesses.install.tab.git" = "Từ Git";
-"harnesses.install.tab.sources" = "Nguồn";
 "harnesses.install.search.placeholder" = "Tìm kiếm trong các registry và nguồn…";
 "harnesses.install.search.prompt" = "Nhập để tìm kiếm trong các registry và nguồn";
 "harnesses.install.search.empty" = "Không có kết quả";
@@ -723,8 +740,21 @@
 "harnesses.install.sources.remove" = "Xóa";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Thêm đại diện";
+"harnesses.add.delegate.button" = "Thêm đại diện…";
+"harnesses.add.delegate.library.search.placeholder" = "Tìm kiếm harness đã cài đặt…";
+"harnesses.add.delegate.library.empty" = "Không có harness đã cài đặt nào khác để ủy quyền.";
+"source.picker.browse.local" = "Duyệt cục bộ…";
+"source.picker.browse.local.help" = "Chọn thư mục cục bộ";
+"harnesses.add.delegate.pick" = "Chọn";
+"harnesses.add.delegate.back" = "Quay lại";
+"harnesses.add.delegate.apply" = "Thêm đại diện";
+
 "harnesses.update.button" = "Cập nhật";
 "harnesses.update.help" = "Cập nhật lên phiên bản mới nhất";
+"harnesses.update.available" = "Có bản cập nhật";
+"harnesses.update.available.version %@" = "Phiên bản %@ đã có sẵn";
 "harnesses.uninstall.button" = "Gỡ cài đặt";
 "harnesses.uninstall.help" = "Gỡ cài đặt harness này";
 "harnesses.uninstall.alert.title %@" = "Gỡ cài đặt \"%@\"?";
@@ -880,6 +910,9 @@
 "harnesses.group.default" = "Mặc định";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Cục bộ";
+"harnesses.group.quarantined" = "Đã cách ly";
+"harnesses.quarantine.restore" = "Khôi phục";
+"harnesses.quarantine.drop" = "Xóa…";
 "harnesses.group.menu.settings" = "Cài đặt…";
 "harnesses.group.registry %@" = "Registry: %@";
 "harnesses.install.browsing" = "Đang tải harness có sẵn…";
@@ -887,6 +920,7 @@
 "harnesses.install.git.ref.placeholder" = "Nhánh, thẻ hoặc SHA commit (tuỳ chọn)";
 "harnesses.install.retry" = "Thử lại";
 "harnesses.install.section.available" = "Có sẵn từ registry";
+"harnesses.install.section.available.empty" = "Chưa có marketplace nào được cấu hình. Thêm một cái trong Cài đặt → Nguồn bên ngoài.";
 "harnesses.install.section.installed" = "Đã cài đặt";
 "harnesses.install.section.local" = "Có sẵn cục bộ";
 "harnesses.outdated.capabilities.unknown" = "không xác định";
@@ -926,3 +960,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Mở terminal";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork về máy cục bộ";
+"harnesses.fork.to.local.help" = "Tạo bản sao cục bộ có thể chỉnh sửa của harness này";
+"harnesses.update.dot.help" = "Có bản cập nhật";
+"harness.fork.title %@" = "Fork \"%@\" về cục bộ";
+"harness.fork.explanation" = "Tạo bản sao cục bộ có thể chỉnh sửa của harness này. Bản sao theo dõi nguồn gốc để bạn có thể xem những thay đổi ở upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Đang fork \"%@\"…";
+"harness.fork.rename.label" = "Tên (không bắt buộc)";
+"harness.fork.rename.hint" = "Để trống để giữ nguyên tên nguồn. Id chính thức của fork mới sẽ là local/<tên>.";
+"harness.fork.identity.collision" = "Đã có một harness được cài đặt với danh tính này.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Cập nhật \"%@\"";
+"harness.update.progress.title %@" = "Đang cập nhật \"%@\"…";
+"harness.update.button" = "Cập nhật";
+"harness.update.ynh.unavailable" = "ynh không khả dụng.";
+"command.runner.running" = "Đang chạy…";
+"command.runner.succeeded" = "Thành công";
+"command.runner.failed" = "Thất bại";
+"common.copy.output" = "Sao chép đầu ra";
+"common.rerun" = "Chạy lại";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Hành động bao gồm";
+"harnesses.include.edit.button" = "Sửa mục bao gồm…";
+"harnesses.include.remove.button" = "Xóa mục bao gồm…";
+"harnesses.include.edit.title" = "Sửa mục bao gồm";
+"harnesses.include.edit.source" = "Nguồn";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "nhánh, thẻ hoặc commit";
+"harnesses.include.edit.path" = "Đường dẫn";
+"harnesses.include.edit.path.placeholder" = "đường dẫn con trong kho nguồn";
+"harnesses.include.edit.picks" = "Lựa chọn";
+"harnesses.include.edit.picks.explainer" = "Các tạo phẩm được đánh dấu hiện có trong mục bao gồm này. Chuyển đổi để thêm hoặc xóa.";
+"harnesses.include.edit.picks.count %ld %ld" = "Đã chọn %ld / %ld";
+"harnesses.include.edit.picks.unknown.source" = "Nguồn này không có trong marketplace của bạn — chỉ liệt kê các tạo phẩm hiện tại.";
+"harnesses.include.edit.save" = "Lưu thay đổi";
+"harnesses.include.remove.confirm.title" = "Xóa mục bao gồm này?";
+"harnesses.include.remove.confirm.message %@" = "%@ sẽ bị xóa khỏi harness này. Kho nguồn không bị ảnh hưởng.";
+"harnesses.include.remove.confirm" = "Xóa";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Thêm mục bao gồm…";
+"harnesses.include.add.edit.existing" = "Chỉnh sửa";
+"harnesses.include.add.search.placeholder" = "Tìm kiếm plugin…";
+"harnesses.include.add.no.marketplaces" = "Chưa có marketplace nào được cấu hình. Dùng tab Marketplaces để thêm một cái.";
+"harnesses.include.add.no.matches" = "Không có plugin nào phù hợp.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "nhánh, thẻ hoặc commit (tùy chọn)";
+"harnesses.include.add.gitpath.label" = "Đường dẫn";
+"harnesses.include.add.gitpath.placeholder" = "thư mục con trong kho nguồn (tùy chọn)";
+"harnesses.include.add.giturl.hint" = "Lựa chọn mặc định bao gồm tất cả những gì nguồn cung cấp. Dùng Sửa mục bao gồm sau khi thêm để thu hẹp phạm vi.";
+"harnesses.include.add.picks.prompt" = "Chọn các tạo phẩm để bao gồm.";
+"harnesses.include.add.apply" = "Áp dụng";
+"harnesses.include.add.already.installed" = "Đã thêm";
+"harnesses.include.add.already.installed.help" = "Plugin này đã có trong harness này — nhấp để sửa lựa chọn hoặc ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Hành động đại diện";
+"harnesses.delegate.edit.button" = "Sửa đại diện…";
+"harnesses.delegate.remove.button" = "Xóa đại diện…";
+"harnesses.delegate.edit.title" = "Sửa đại diện";
+"harnesses.delegate.remove.confirm.title" = "Xóa đại diện này?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ sẽ không còn được hợp nhất vào harness này nữa. Kho lưu trữ nguồn không bị thay đổi.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Sửa Manifest…";
+"harnesses.manifest.edit.title" = "Sửa Manifest";
+"harnesses.manifest.edit.name" = "Tên";
+"harnesses.manifest.edit.version" = "Phiên bản";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Dùng semver: MAJOR.MINOR.PATCH (vd. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Nhà cung cấp mặc định";
+"harnesses.manifest.edit.description" = "Mô tả";
+"harnesses.manifest.edit.description.hint" = "Hiển thị trong danh sách harness và tiêu đề chi tiết. Để trống để bỏ qua.";
+"harnesses.manifest.edit.save" = "Lưu thay đổi";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit đã thay đổi: %@ → %@";
+"harnesses.broken.fork.help" = "Fork cục bộ này thiếu tệp manifest của harness. Nhấp chuột phải và chọn Gỡ cài đặt để xóa nó.";
+"harnesses.broken.fork.badge" = "Bị hỏng";
+"harnesses.fork.of %@" = "Nhánh từ %@";
+"harnesses.fork.help %@" = "Tách nhánh từ %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree mới từ nhánh";
+"sidebar.checkout.branch.label" = "Nhánh";
+"sidebar.checkout.branch.placeholder" = "Chọn một nhánh…";
+"sidebar.checkout.branch.required" = "Chọn một nhánh để tiếp tục.";
+"sidebar.checkout.branch.create" = "Tạo worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Harness này không có nguồn Git nào để cập nhật.";
+"harnesses.loading.help" = "Đang kết nối với ynh…";
+"harnesses.unversioned.drift.help" = "Nội dung upstream đã thay đổi mà không có cập nhật phiên bản — xem xét trước khi cập nhật";
+"harnesses.unversioned.drift.banner" = "Nội dung upstream đã thay đổi mà không có cập nhật phiên bản — xem xét trước khi cập nhật";
+"harnesses.unversioned.drift.confirm.title" = "Xem xét các thay đổi upstream";
+"harnesses.unversioned.drift.confirm.body" = "Nội dung upstream đã thay đổi mà không có cập nhật phiên bản. Cập nhật sẽ kéo nội dung mới. Xem xét các SHA bên dưới trước khi tiếp tục — thiếu cập nhật phiên bản có thể che giấu các thay đổi độc hại.";
+"harnesses.unversioned.drift.confirm.proceed" = "Cập nhật dù sao";

@@ -53,6 +53,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     private let gitService: any GitServiceProtocol
     private let persistence: any RepoPersistenceProtocol
+    private let prService: GitHubPRService
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     private var monitors: [UUID: GitRepositoryMonitor] = [:]
@@ -60,10 +61,12 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     init(
         gitService: any GitServiceProtocol = GitService.shared,
-        persistence: any RepoPersistenceProtocol = RepoPersistence()
+        persistence: any RepoPersistenceProtocol = RepoPersistence(),
+        prService: GitHubPRService = .shared
     ) {
         self.persistence = persistence
         self.gitService = gitService
+        self.prService = prService
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
         let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
@@ -326,6 +329,32 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
+    /// Convert an existing local branch into a worktree, optionally renaming it first.
+    ///
+    /// If `newBranch` differs from `originalBranch`, the branch is renamed via `git branch -m`
+    /// before being checked out at `path`. Used by the "Convert to Worktree" sidebar action.
+    func convertBranchToWorktree(
+        repo: ObservableRepository,
+        originalBranch: String,
+        newBranch: String,
+        path: String
+    ) async throws {
+        if newBranch != originalBranch {
+            try await gitService.renameBranch(
+                repoPath: repo.path,
+                oldName: originalBranch,
+                newName: newBranch
+            )
+        }
+        try await gitService.checkoutBranchAsWorktree(
+            repo: repo.toGitRepository(),
+            branch: newBranch,
+            path: path
+        )
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
     func removeWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
         guard !worktree.isMainWorktree else {
             throw WorktreeOperationError.removingMainWorktree
@@ -389,8 +418,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         if let override = repo.protectedBranches {
             return override
         }
-        let stored = UserDefaults.standard.string(forKey: "protectedBranches") ?? ""
-        return stored.split(separator: ",")
+        return GitConfigStore.shared.globalProtectedBranches.split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
     }
@@ -436,6 +464,124 @@ final class WorktreeSidebarViewModel: ObservableObject {
             repo.worktreeBasePath.flatMap { $0.isEmpty ? nil : $0 }
             ?? (repo.path + "/.worktrees")
         return URL(fileURLWithPath: base).appendingPathComponent(branchName).path
+    }
+
+    // MARK: - PR Operations
+
+    /// Check whether a branch name (as `gh pr checkout` would create it) is already
+    /// occupied by an existing worktree. Returns the worktree path if it exists.
+    func existingWorktreePath(for branchName: String, repoID: UUID) -> String? {
+        worktrees[repoID]?.first(where: { $0.branch == branchName })?.path
+    }
+
+    /// Three-step PR checkout:
+    /// 1. `git worktree add --detach <path>`
+    /// 2. `gh pr checkout <n>` from inside the worktree
+    ///
+    /// Returns the path of the created worktree.
+    func checkoutPR(
+        _ pr: GitHubPR,
+        repo: ObservableRepository,
+        ghPath: String
+    ) async throws -> String {
+        let worktreePath = inferPRWorktreePath(for: repo, prNumber: pr.number)
+        try await gitService.addDetachedWorktree(repoPath: repo.path, path: worktreePath)
+        let result = try await CommandRunner.run(
+            executable: ghPath,
+            arguments: ["pr", "checkout", "\(pr.number)"],
+            currentDirectory: worktreePath
+        )
+        guard result.didSucceed else {
+            // Clean up the detached worktree if gh checkout failed.
+            try? await gitService.removeWorktree(
+                repo: repo.toGitRepository(), path: worktreePath)
+            throw GitHubPRError.commandFailed(result.stderr.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+        return worktreePath
+    }
+
+    /// Update a PR-linked worktree from the PR head, using `gh pr checkout --force`.
+    /// Callers must confirm before calling this when the worktree is dirty or ahead.
+    func updateFromOriginForPR(
+        worktree: GitWorktree,
+        repo: ObservableRepository,
+        prNumber: Int,
+        ghPath: String
+    ) async throws {
+        updatingWorktreeIDs.insert(worktree.id)
+        defer { updatingWorktreeIDs.remove(worktree.id) }
+        let result = try await CommandRunner.run(
+            executable: ghPath,
+            arguments: ["pr", "checkout", "--force", "\(prNumber)"],
+            currentDirectory: worktree.path
+        )
+        guard result.didSucceed else {
+            throw GitHubPRError.commandFailed(result.stderr.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        prService.clearForcePush(repoPath: repo.path, prNumber: prNumber)
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
+    /// Analyse closed/merged PRs that are tracked locally for potential pruning.
+    /// Returns a list of prunable candidates with their dirty/ahead state.
+    func pruneClosedPRsDryRun(
+        repo: ObservableRepository,
+        closedPRNumbers: Set<Int>,
+        prService: GitHubPRService
+    ) async -> [PRPruneCandidate] {
+        let wts = worktrees[repo.id] ?? []
+        let openPRs = prService.prsByRepo[repo.path] ?? []
+        let openNumbers = Set(openPRs.map(\.number))
+        let matches = GitHubPRService.matchPRsToWorktrees(prs: openPRs, worktrees: wts)
+
+        // Find PR rows tracked locally but no longer open.
+        // "Tracked locally" = they appear in the service's previousHeadOids (fetched before).
+        var candidates: [PRPruneCandidate] = []
+
+        for prNumber in closedPRNumbers {
+            guard !openNumbers.contains(prNumber) else { continue }
+            let worktreePath = matches[prNumber]
+            var isDirty = false
+            var aheadCount = 0
+            if let path = worktreePath {
+                isDirty = await GitServiceShared.isWorktreeDirty(worktreePath: path)
+                aheadCount = await gitService.aheadCount(worktreePath: path)
+            }
+            candidates.append(
+                PRPruneCandidate(
+                    prNumber: prNumber,
+                    worktreePath: worktreePath,
+                    isDirty: isDirty,
+                    aheadCount: aheadCount
+                ))
+        }
+        return candidates
+    }
+
+    /// Execute pruning: remove clean PR rows and their worktrees.
+    /// Dirty/ahead worktrees are silently skipped.
+    func pruneClosedPRs(
+        repo: ObservableRepository,
+        candidates: [PRPruneCandidate]
+    ) async {
+        for candidate in candidates where !candidate.isDirty && candidate.aheadCount == 0 {
+            if let path = candidate.worktreePath {
+                try? await gitService.removeWorktree(repo: repo.toGitRepository(), path: path)
+            }
+        }
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
+    /// Derive a PR worktree path: `<worktreeBasePath>/pr-<n>`
+    func inferPRWorktreePath(for repo: ObservableRepository, prNumber: Int) -> String {
+        let base =
+            repo.worktreeBasePath.flatMap { $0.isEmpty ? nil : $0 }
+            ?? (repo.path + "/.worktrees")
+        return URL(fileURLWithPath: base).appendingPathComponent("pr-\(prNumber)").path
     }
 
     // MARK: - Persistence

@@ -4,7 +4,8 @@ import TermQCore
 struct BinView: View {
     @ObservedObject var viewModel: BoardViewModel
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("binRetentionDays") private var binRetentionDays = 14
+    @Environment(SettingsStore.self) private var settings
+    private var binRetentionDays: Int { settings.binRetentionDays }
 
     var body: some View {
         VStack(spacing: 0) {

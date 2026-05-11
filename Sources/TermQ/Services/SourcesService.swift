@@ -8,8 +8,19 @@ final class SourcesService: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var error: String?
 
+    private let ynhDetector: any YNHDetectorProtocol
+    private let commandRunner: any YNHCommandRunner
+
+    init(
+        ynhDetector: any YNHDetectorProtocol = YNHDetector.shared,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
+    ) {
+        self.ynhDetector = ynhDetector
+        self.commandRunner = commandRunner
+    }
+
     func refresh() async {
-        guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else {
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else {
             sources = []
             return
         }
@@ -17,12 +28,15 @@ final class SourcesService: ObservableObject {
         error = nil
         defer { isLoading = false }
         do {
-            let output = try await YNHDetector.runCommand(
-                ynhPath,
-                args: ["sources", "list", "--format", "json"],
+            let result = try await commandRunner.run(
+                executable: ynhPath,
+                arguments: ["sources", "list", "--format", "json"],
                 environment: ynhEnvironment()
             )
-            sources = try JSONDecoder().decode([YNHSource].self, from: Data(output.utf8))
+            guard result.didSucceed else {
+                throw YNHDetectionError.commandFailed(exitCode: result.exitCode, stderr: result.stderr)
+            }
+            sources = try JSONDecoder().decode([YNHSource].self, from: Data(result.stdout.utf8))
         } catch {
             self.error = error.localizedDescription
             if TermQLogger.fileLoggingEnabled {
@@ -35,11 +49,18 @@ final class SourcesService: ObservableObject {
     }
 
     func addSource(path: String, name: String?) async {
-        guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else { return }
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
         var args = ["sources", "add", path]
         if let name, !name.isEmpty { args.append(contentsOf: ["--name", name]) }
         do {
-            _ = try await YNHDetector.runCommand(ynhPath, args: args, environment: ynhEnvironment())
+            let result = try await commandRunner.run(
+                executable: ynhPath,
+                arguments: args,
+                environment: ynhEnvironment()
+            )
+            guard result.didSucceed else {
+                throw YNHDetectionError.commandFailed(exitCode: result.exitCode, stderr: result.stderr)
+            }
             await refresh()
         } catch {
             self.error = error.localizedDescription
@@ -52,13 +73,16 @@ final class SourcesService: ObservableObject {
     }
 
     func removeSource(name: String) async {
-        guard case .ready(let ynhPath, _, _) = YNHDetector.shared.status else { return }
+        guard case .ready(let ynhPath, _, _) = ynhDetector.status else { return }
         do {
-            _ = try await YNHDetector.runCommand(
-                ynhPath,
-                args: ["sources", "remove", name],
+            let result = try await commandRunner.run(
+                executable: ynhPath,
+                arguments: ["sources", "remove", name],
                 environment: ynhEnvironment()
             )
+            guard result.didSucceed else {
+                throw YNHDetectionError.commandFailed(exitCode: result.exitCode, stderr: result.stderr)
+            }
             await refresh()
         } catch {
             self.error = error.localizedDescription
@@ -72,7 +96,7 @@ final class SourcesService: ObservableObject {
 
     private func ynhEnvironment() -> [String: String] {
         var env = ProcessInfo.processInfo.environment
-        if let override = YNHDetector.shared.ynhHomeOverride {
+        if let override = ynhDetector.ynhHomeOverride {
             env["YNH_HOME"] = override
         }
         return env

@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Wygląd";
 "editor.field.theme" = "Motyw";
 "editor.field.theme.default" = "Domyślny";
+"editor.field.theme.override" = "Zastąp domyślny motyw";
 "editor.field.font.size" = "Rozmiar czcionki";
+"editor.field.font.size.override" = "Zastąp domyślny rozmiar czcionki";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Polecenie do uruchomienia przy starcie terminala";
 "editor.field.safe.paste" = "Bezpieczne wklejanie";
 "editor.field.safe.paste.help" = "Pokaż potwierdzenie przed wklejeniem tekstu wieloliniowego";
+"editor.field.safe.paste.override" = "Zastąp domyślne bezpieczne wklejanie";
+"editor.field.safe.paste.inherited.on" = "Włączone (odziedziczone)";
+"editor.field.safe.paste.inherited.off" = "Wyłączone (odziedziczone)";
 "editor.field.allow.autorun" = "Zezwól na autorun";
 "editor.field.allow.autorun.help" = "Zezwól CLI na automatyczne uruchamianie poleceń";
 "editor.field.autorun.disabled.globally" = "Autorun wyłączony globalnie";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Zastąp domyślny backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend nie może być zmieniony, gdy sesja jest aktywna. Uruchom ponownie sesję, aby zmienić backend.";
@@ -573,10 +579,16 @@
 "sidebar.new.worktree.path.required" = "Wprowadź ścieżkę drzewa roboczego, aby kontynuować.";
 "sidebar.new.worktree.create" = "Utwórz";
 "sidebar.new.worktree.loading.branches" = "Ładowanie gałęzi...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Przekształć w drzewo robocze";
+"sidebar.convert.worktree.branch.label" = "Nazwa gałęzi";
+"sidebar.convert.worktree.button" = "Przekształć";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Przekształć w drzewo robocze…";
 "sidebar.branch.delete" = "Usuń gałąź";
 "sidebar.branch.delete.title" = "Usuń gałąź";
 "sidebar.branch.delete.confirm" = "Usuń";
@@ -600,6 +612,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokalne";
 "harnesses.source.registry" = "Rejestr";
+"harnesses.source.read.only" = "Tylko do odczytu";
+"harnesses.source.forked.from %@" = "Rozwidlony z %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informacje";
@@ -618,6 +632,7 @@
 "harnesses.detail.delegates %d" = "Deleguje do (%d)";
 "harnesses.detail.picks %d" = "Wybiera (%d):";
 "harnesses.reveal.in.finder" = "Pokaż w Finderze";
+"harnesses.copy.path" = "Kopiuj jako ścieżkę";
 "harnesses.open.in.browser" = "Otwórz w przeglądarce";
 "harnesses.close.detail" = "Zamknij";
 "harnesses.configure.from.marketplaces" = "Konfiguruj z rynków…";
@@ -700,9 +715,11 @@
 // Install sheet
 "harnesses.install.title" = "Zainstaluj harness";
 "harnesses.install.toolbar.help" = "Zainstaluj harness";
-"harnesses.install.tab.search" = "Szukaj";
+"harnesses.install.tab.library" = "Biblioteka";
+"harnesses.install.manage.sources" = "Zarządzaj źródłami…";
+"harnesses.install.manage.sources.help" = "Dodaj lub usuń lokalne źródła harness";
+"harnesses.install.manage.sources.done" = "Gotowe";
 "harnesses.install.tab.git" = "Z Git";
-"harnesses.install.tab.sources" = "Źródła";
 "harnesses.install.search.placeholder" = "Szukaj w rejestrach i źródłach…";
 "harnesses.install.search.prompt" = "Wpisz, aby przeszukać rejestry i źródła";
 "harnesses.install.search.empty" = "Brak wyników";
@@ -721,8 +738,21 @@
 "harnesses.install.sources.remove" = "Usuń";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Dodaj delegata";
+"harnesses.add.delegate.button" = "Dodaj delegata…";
+"harnesses.add.delegate.library.search.placeholder" = "Szukaj zainstalowanych harnesów…";
+"harnesses.add.delegate.library.empty" = "Brak innych zainstalowanych harnesów do delegowania.";
+"source.picker.browse.local" = "Przeglądaj lokalnie…";
+"source.picker.browse.local.help" = "Wybierz lokalny katalog";
+"harnesses.add.delegate.pick" = "Wybierz";
+"harnesses.add.delegate.back" = "Wstecz";
+"harnesses.add.delegate.apply" = "Dodaj delegata";
+
 "harnesses.update.button" = "Aktualizuj";
 "harnesses.update.help" = "Aktualizuj do najnowszej wersji";
+"harnesses.update.available" = "Dostępna aktualizacja";
+"harnesses.update.available.version %@" = "Wersja %@ jest dostępna";
 "harnesses.uninstall.button" = "Odinstaluj";
 "harnesses.uninstall.help" = "Odinstaluj ten harness";
 "harnesses.uninstall.alert.title %@" = "Odinstalować \"%@\"?";
@@ -878,6 +908,9 @@
 "harnesses.group.default" = "Domyślna";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokalna";
+"harnesses.group.quarantined" = "Poddany kwarantannie";
+"harnesses.quarantine.restore" = "Przywróć";
+"harnesses.quarantine.drop" = "Usuń…";
 "harnesses.group.menu.settings" = "Ustawienia…";
 "harnesses.group.registry %@" = "Rejestr: %@";
 "harnesses.install.browsing" = "Wczytywanie dostępnych harnessy…";
@@ -885,6 +918,7 @@
 "harnesses.install.git.ref.placeholder" = "Gałąź, tag lub SHA commita (opcjonalnie)";
 "harnesses.install.retry" = "Spróbuj ponownie";
 "harnesses.install.section.available" = "Dostępne z rejestrów";
+"harnesses.install.section.available.empty" = "Nie skonfigurowano żadnych rynków. Dodaj jeden w Ustawienia → Zewnętrzne źródła.";
 "harnesses.install.section.installed" = "Zainstalowane";
 "harnesses.install.section.local" = "Dostępne lokalnie";
 "harnesses.outdated.capabilities.unknown" = "nieznany";
@@ -924,3 +958,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Otwórz terminale";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Utwórz fork lokalny";
+"harnesses.fork.to.local.help" = "Utwórz edytowalną kopię lokalną tego harness";
+"harnesses.update.dot.help" = "Dostępna aktualizacja";
+"harness.fork.title %@" = "Fork \"%@\" do lokalnego";
+"harness.fork.explanation" = "Tworzy edytowalną kopię lokalną tego harness. Kopia śledzi swoje źródło, dzięki czemu możesz zobaczyć, co zmieniło się upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Tworzenie forka \"%@\"…";
+"harness.fork.rename.label" = "Nazwa (opcjonalne)";
+"harness.fork.rename.hint" = "Zostaw puste, aby zachować nazwę źródłową. Kanoniczny id nowego forka to local/<nazwa>.";
+"harness.fork.identity.collision" = "Zainstalowany harness ma już tę tożsamość.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Aktualizuj \"%@\"";
+"harness.update.progress.title %@" = "Aktualizowanie \"%@\"…";
+"harness.update.button" = "Aktualizuj";
+"harness.update.ynh.unavailable" = "ynh jest niedostępny.";
+"command.runner.running" = "Uruchamianie…";
+"command.runner.succeeded" = "Powiodło się";
+"command.runner.failed" = "Nie powiodło się";
+"common.copy.output" = "Kopiuj wyjście";
+"common.rerun" = "Uruchom ponownie";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Akcje dołączenia";
+"harnesses.include.edit.button" = "Edytuj dołączenie…";
+"harnesses.include.remove.button" = "Usuń dołączenie…";
+"harnesses.include.edit.title" = "Edytuj dołączenie";
+"harnesses.include.edit.source" = "Źródło";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "gałąź, tag lub commit";
+"harnesses.include.edit.path" = "Ścieżka";
+"harnesses.include.edit.path.placeholder" = "podścieżka w repozytorium źródłowym";
+"harnesses.include.edit.picks" = "Wybór";
+"harnesses.include.edit.picks.explainer" = "Zaznaczone artefakty są aktualnie w tym dołączeniu. Przełącz, aby dodać lub usunąć.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld z %ld wybranych";
+"harnesses.include.edit.picks.unknown.source" = "To źródło nie jest na Twoich rynkach — wyświetlane są tylko bieżące artefakty.";
+"harnesses.include.edit.save" = "Zapisz zmiany";
+"harnesses.include.remove.confirm.title" = "Usunąć to dołączenie?";
+"harnesses.include.remove.confirm.message %@" = "%@ zostanie usunięty z tego zestawu. Repozytorium źródłowe nie zostanie zmienione.";
+"harnesses.include.remove.confirm" = "Usuń";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Dodaj dołączenie…";
+"harnesses.include.add.edit.existing" = "Edytuj";
+"harnesses.include.add.search.placeholder" = "Szukaj wtyczek…";
+"harnesses.include.add.no.marketplaces" = "Brak skonfigurowanych rynków. Użyj karty Rynki, aby dodać jeden.";
+"harnesses.include.add.no.matches" = "Brak pasujących wtyczek.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "gałąź, tag lub commit (opcjonalne)";
+"harnesses.include.add.gitpath.label" = "Ścieżka";
+"harnesses.include.add.gitpath.placeholder" = "podkatalog w repozytorium źródłowym (opcjonalne)";
+"harnesses.include.add.giturl.hint" = "Wybór domyślnie obejmuje wszystko, co dostarcza źródło. Użyj Edytuj dołączenie po dodaniu, aby go zawęzić.";
+"harnesses.include.add.picks.prompt" = "Wybierz artefakty do dołączenia.";
+"harnesses.include.add.apply" = "Zastosuj";
+"harnesses.include.add.already.installed" = "Już dodano";
+"harnesses.include.add.already.installed.help" = "Ta wtyczka jest już w tym zestawie — kliknij, aby edytować wybór lub ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Akcje delegata";
+"harnesses.delegate.edit.button" = "Edytuj delegata…";
+"harnesses.delegate.remove.button" = "Usuń delegata…";
+"harnesses.delegate.edit.title" = "Edytuj delegata";
+"harnesses.delegate.remove.confirm.title" = "Usunąć tego delegata?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ nie będzie już scalany z tym harness. Repozytorium źródłowe nie jest modyfikowane.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Edytuj manifest…";
+"harnesses.manifest.edit.title" = "Edytuj manifest";
+"harnesses.manifest.edit.name" = "Nazwa";
+"harnesses.manifest.edit.version" = "Wersja";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Użyj semver: MAJOR.MINOR.PATCH (np. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Domyślny dostawca";
+"harnesses.manifest.edit.description" = "Opis";
+"harnesses.manifest.edit.description.hint" = "Wyświetlane na liście zestawów i w nagłówku szczegółów. Pozostaw puste, aby pominąć.";
+"harnesses.manifest.edit.save" = "Zapisz zmiany";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream zmieniony: %@ → %@";
+"harnesses.broken.fork.help" = "Ten lokalny fork nie ma manifestu harness. Kliknij prawym przyciskiem myszy i wybierz Odinstaluj, aby go usunąć.";
+"harnesses.broken.fork.badge" = "Uszkodzony";
+"harnesses.fork.of %@" = "Rozwidlenie z %@";
+"harnesses.fork.help %@" = "Rozwidlony z %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nowy worktree z gałęzi";
+"sidebar.checkout.branch.label" = "Gałąź";
+"sidebar.checkout.branch.placeholder" = "Wybierz gałąź…";
+"sidebar.checkout.branch.required" = "Wybierz gałąź, aby kontynuować.";
+"sidebar.checkout.branch.create" = "Utwórz worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Ten zestaw nie ma źródeł Git do aktualizacji.";
+"harnesses.loading.help" = "Komunikacja z ynh…";
+"harnesses.unversioned.drift.help" = "Zawartość upstream zmieniła się bez aktualizacji wersji — sprawdź przed aktualizacją";
+"harnesses.unversioned.drift.banner" = "Zawartość upstream zmieniła się bez aktualizacji wersji — sprawdź przed aktualizacją";
+"harnesses.unversioned.drift.confirm.title" = "Sprawdź zmiany upstream";
+"harnesses.unversioned.drift.confirm.body" = "Zawartość upstream zmieniła się bez aktualizacji wersji. Aktualizacja pobierze nową zawartość. Sprawdź SHA poniżej przed kontynuowaniem — brakująca aktualizacja wersji może maskować złośliwe zmiany.";
+"harnesses.unversioned.drift.confirm.proceed" = "Aktualizuj mimo to";

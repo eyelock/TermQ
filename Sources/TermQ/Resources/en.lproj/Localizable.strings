@@ -146,7 +146,9 @@
 "editor.section.appearance" = "Appearance";
 "editor.field.theme" = "Theme";
 "editor.field.theme.default" = "Default";
+"editor.field.theme.override" = "Override default theme";
 "editor.field.font.size" = "Font Size";
+"editor.field.font.size.override" = "Override default font size";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "Command to run when terminal starts";
 "editor.field.safe.paste" = "Safe Paste";
 "editor.field.safe.paste.help" = "Show confirmation before pasting multi-line text";
+"editor.field.safe.paste.override" = "Override default safe paste";
+"editor.field.safe.paste.inherited.on" = "On (inherited)";
+"editor.field.safe.paste.inherited.off" = "Off (inherited)";
 "editor.field.allow.autorun" = "Allow Autorun";
 "editor.field.allow.autorun.help" = "Allow CLI to run commands automatically";
 "editor.field.autorun.disabled.globally" = "Autorun is disabled globally";
@@ -211,6 +216,7 @@
 // Editor - Backend section
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Override default backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend cannot be changed while session is active. Restart the session to change backends.";
@@ -431,6 +437,10 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "External Sources";
+"settings.tab.github" = "GitHub";
+"settings.github.section.feed" = "Remote PR Feed";
+"settings.github.feed.cap.label" = "PRs per repository";
+"settings.github.feed.cap.help" = "Maximum number of pull requests shown per repository in the Remote sidebar. Checked-out PRs are always included.";
 "settings.marketplaces.section.list" = "Configured Marketplaces";
 "settings.marketplaces.empty" = "No marketplaces added yet.";
 "settings.marketplaces.add" = "Add Marketplace…";
@@ -622,9 +632,15 @@
 "sidebar.new.worktree.create" = "Create";
 "sidebar.new.worktree.loading.branches" = "Loading branches...";
 
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Convert to Worktree";
+"sidebar.convert.worktree.branch.label" = "Branch Name";
+"sidebar.convert.worktree.button" = "Convert";
+
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Convert to Worktree…";
 "sidebar.branch.delete" = "Delete Branch";
 "sidebar.branch.delete.title" = "Delete Branch";
 "sidebar.branch.delete.confirm" = "Delete";
@@ -658,10 +674,15 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Marketplace";
+"harnesses.source.read.only" = "Read-only";
+"harnesses.source.forked.from %@" = "Forked from %@";
 
 // Harnesses — sidebar groups
 "harnesses.group.default" = "Default";
 "harnesses.group.local" = "Local";
+"harnesses.group.quarantined" = "Quarantined";
+"harnesses.quarantine.restore" = "Restore";
+"harnesses.quarantine.drop" = "Drop…";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.registry %@" = "Marketplace: %@";
 
@@ -693,6 +714,7 @@
 "harnesses.detail.delegates %d" = "Delegates to (%d)";
 "harnesses.detail.picks %d" = "Picks (%d):";
 "harnesses.reveal.in.finder" = "Reveal in Finder";
+"harnesses.copy.path" = "Copy as Pathname";
 "harnesses.open.in.browser" = "Open in browser";
 "harnesses.close.detail" = "Close";
 "harnesses.configure.from.marketplaces" = "Configure from Marketplaces…";
@@ -711,6 +733,63 @@
 "harnesses.detail.no.mcp.servers" = "This harness has no MCP servers.";
 "harnesses.detail.no.profiles" = "This harness has no profiles.";
 "harnesses.detail.no.focuses" = "This harness has no focuses.";
+
+// Harnesses — include row editor
+"harnesses.include.actions.help" = "Include actions";
+"harnesses.include.edit.button" = "Edit Include…";
+"harnesses.include.remove.button" = "Remove Include…";
+"harnesses.include.edit.title" = "Edit Include";
+"harnesses.include.edit.source" = "Source";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "branch, tag, or commit";
+"harnesses.include.edit.path" = "Path";
+"harnesses.include.edit.path.placeholder" = "subpath in source repo";
+"harnesses.include.edit.picks" = "Picks";
+"harnesses.include.edit.picks.explainer" = "Checked artifacts are currently in this include. Toggle to add or remove.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld of %ld selected";
+"harnesses.include.edit.picks.unknown.source" = "This source isn't in your marketplaces — only the current artifacts are listed.";
+"harnesses.include.edit.save" = "Save Changes";
+"harnesses.include.remove.confirm.title" = "Remove this include?";
+"harnesses.include.remove.confirm.message %@" = "%@ will be removed from this harness. The source repository is not touched.";
+"harnesses.include.remove.confirm" = "Remove";
+
+// Harnesses — add include flow
+"harnesses.include.add.button" = "Add Include…";
+"harnesses.include.add.edit.existing" = "Edit";
+"harnesses.include.add.search.placeholder" = "Search plugins…";
+"harnesses.include.add.no.marketplaces" = "No marketplaces configured. Use the Marketplaces tab to add one.";
+"harnesses.include.add.no.matches" = "No plugins match.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "branch, tag, or commit (optional)";
+"harnesses.include.add.gitpath.label" = "Path";
+"harnesses.include.add.gitpath.placeholder" = "subdirectory in source repo (optional)";
+"harnesses.include.add.giturl.hint" = "Picks default to everything the source provides. Use Edit Include after adding to narrow them.";
+"harnesses.include.add.picks.prompt" = "Select the artifacts to include.";
+"harnesses.include.add.apply" = "Apply";
+"harnesses.include.add.already.installed" = "Already added";
+"harnesses.include.add.already.installed.help" = "This plugin is already on this harness — click to edit picks or ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegate actions";
+"harnesses.delegate.edit.button" = "Edit Delegate…";
+"harnesses.delegate.remove.button" = "Remove Delegate…";
+"harnesses.delegate.edit.title" = "Edit Delegate";
+"harnesses.delegate.remove.confirm.title" = "Remove this delegate?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ will no longer be merged into this harness. The source repository is not touched.";
+
+// Harnesses — manifest editor
+"harnesses.manifest.edit.menu" = "Edit Manifest…";
+"harnesses.manifest.edit.title" = "Edit Manifest";
+"harnesses.manifest.edit.name" = "Name";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Use semver: MAJOR.MINOR.PATCH (e.g. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Default Vendor";
+"harnesses.manifest.edit.description" = "Description";
+"harnesses.manifest.edit.description.hint" = "Shown in the harness list and detail header. Leave empty to omit.";
+"harnesses.manifest.edit.save" = "Save Changes";
 
 // Harnesses — launch
 "harnesses.launch.title" = "Launch Harness";
@@ -736,14 +815,17 @@
 // Install sheet
 "harnesses.install.title" = "Install Harness";
 "harnesses.install.toolbar.help" = "Install a harness";
-"harnesses.install.tab.search" = "Search";
+"harnesses.install.tab.library" = "Library";
 "harnesses.install.tab.git" = "From Git";
-"harnesses.install.tab.sources" = "Sources";
+"harnesses.install.manage.sources" = "Manage Sources…";
+"harnesses.install.manage.sources.help" = "Add or remove local harness sources";
+"harnesses.install.manage.sources.done" = "Done";
 "harnesses.install.search.placeholder" = "Search marketplaces and sources…";
 "harnesses.install.search.prompt" = "Type to search marketplaces and sources";
 "harnesses.install.search.empty" = "No results";
 "harnesses.install.section.installed" = "Installed";
 "harnesses.install.section.available" = "Available from Registries";
+"harnesses.install.section.available.empty" = "No marketplaces configured. Add one in Settings → External Sources.";
 "harnesses.install.section.local" = "Available Locally";
 "harnesses.install.browsing" = "Loading available harnesses…";
 "harnesses.install.retry" = "Retry";
@@ -764,8 +846,36 @@
 "harnesses.install.sources.remove" = "Remove";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Add Delegate";
+"harnesses.add.delegate.button" = "Add Delegate…";
+"harnesses.add.delegate.library.search.placeholder" = "Search installed harnesses…";
+"harnesses.add.delegate.library.empty" = "No other installed harnesses to delegate to.";
+"source.picker.browse.local" = "Browse Local…";
+"source.picker.browse.local.help" = "Pick a local directory";
+"harnesses.add.delegate.pick" = "Pick";
+"harnesses.add.delegate.back" = "Back";
+"harnesses.add.delegate.apply" = "Add Delegate";
+
 "harnesses.update.button" = "Update";
 "harnesses.update.help" = "Update to the latest version";
+"harnesses.update.available" = "Update available";
+"harnesses.update.available.version %@" = "Version %@ is available";
+"harnesses.fork.to.local" = "Fork to local";
+"harnesses.fork.to.local.help" = "Create an editable local copy of this harness";
+"harnesses.update.dot.help" = "Update available";
+"harnesses.update.no.sources" = "This harness has no Git sources to update.";
+"harnesses.loading.help" = "Talking to ynh…";
+"harnesses.unversioned.drift.help" = "Upstream content changed without a version bump — review before updating";
+"harnesses.unversioned.drift.banner" = "Upstream content changed without a version bump — review before updating";
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit changed: %@ → %@";
+"harnesses.broken.fork.help" = "This local fork is missing its harness manifest. Right-click and Uninstall to remove it.";
+"harnesses.broken.fork.badge" = "Broken";
+"harnesses.fork.of %@" = "Fork of %@";
+"harnesses.fork.help %@" = "Forked from %@";
+"harnesses.unversioned.drift.confirm.title" = "Review upstream changes";
+"harnesses.unversioned.drift.confirm.body" = "Upstream content has changed without a version bump. Updating will pull the new content. Review the SHAs below before proceeding — a missing version bump can mask malicious changes.";
+"harnesses.unversioned.drift.confirm.proceed" = "Update Anyway";
 "harnesses.uninstall.button" = "Uninstall";
 "harnesses.uninstall.help" = "Uninstall this harness";
 "harnesses.uninstall.alert.title %@" = "Uninstall \"%@\"?";
@@ -880,6 +990,28 @@
 "harness.duplicate.installing" = "Installing duplicate…";
 "harness.duplicate.success %@" = "%@ installed successfully.";
 
+// MARK: - Harness Fork
+"harness.fork.title %@" = "Fork \"%@\" to Local";
+"harness.fork.explanation" = "Creates an editable local copy of this harness. The copy tracks its origin so you can see what changed upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forking \"%@\"…";
+"harness.fork.rename.label" = "Name (optional)";
+"harness.fork.rename.hint" = "Leave empty to keep the source name. The new fork's canonical id will be local/<name>.";
+"harness.fork.identity.collision" = "An installed harness already has this identity.";
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Update \"%@\"";
+"harness.update.progress.title %@" = "Updating \"%@\"…";
+"harness.update.button" = "Update";
+"harness.update.ynh.unavailable" = "ynh is not available.";
+
+// MARK: - Command Runner
+"command.runner.running" = "Running…";
+"command.runner.succeeded" = "Succeeded";
+"command.runner.failed" = "Failed";
+"common.copy.output" = "Copy Output";
+"common.rerun" = "Re-run";
+
 // MARK: - Harness Wizard
 "harness.wizard.title" = "New Harness";
 "harness.wizard.name.label" = "Name (required)";
@@ -928,3 +1060,68 @@
 "diagnostics.verbose.warning" = "High volume — disable when done";
 "diagnostics.export.title" = "TermQ Diagnostics Report";
 "diagnostics.export.footer" = "Filed via TermQ built-in diagnostics.";
+
+// MARK: - Remote PRs
+"remote.prs.mode.local" = "Local";
+"remote.prs.mode.remote" = "Remote";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.run.with.focus" = "Run with Focus…";
+"remote.prs.open.pr.on.remote" = "Open PR on Remote";
+"remote.prs.show.in.remote" = "Show in Remote";
+"remote.prs.show.in.local" = "Show in Local";
+"remote.prs.badge.author" = "you";
+"remote.prs.badge.review" = "review";
+"remote.prs.badge.assigned" = "assigned";
+"remote.prs.badge.draft" = "draft";
+"remote.prs.badge.checked.out" = "checked out";
+"remote.prs.copy.url" = "Copy PR URL";
+"remote.prs.checkout.as.worktree" = "Checkout as Worktree";
+"remote.prs.no.github.remote" = "— no GitHub remote —";
+"remote.prs.gh.missing.title" = "gh CLI not found";
+"remote.prs.gh.missing.message" = "Install the GitHub CLI to use Remote mode.";
+"remote.prs.gh.unauth.title" = "Not signed in to GitHub";
+"remote.prs.gh.unauth.message" = "Run `gh auth login` to sign in.";
+"remote.prs.gh.auth.failed" = "Couldn't verify gh authentication — retry?";
+"remote.prs.gh.recheck" = "Re-check";
+"remote.prs.checkout.toast %@" = "Checked out as %@.";
+"remote.prs.switch.to.local" = "Switch to Local";
+"remote.prs.worktree.exists" = "Worktree already exists";
+"remote.prs.switch.to.existing" = "Switch to Existing";
+"remote.prs.checking.out %lld" = "Checking out PR #%lld…";
+"remote.prs.force.push.indicator" = "↑ updated";
+"remote.prs.force.update.title" = "PR Head Was Force-Pushed";
+"remote.prs.force.update.message %lld %lld" = "Your local worktree has %lld modified file(s) and %lld commit(s) ahead of origin. Force-updating will reset to the new PR head and lose this work.";
+"remote.prs.force.update.confirm" = "Force Update Anyway";
+"remote.prs.force.update.cancel" = "Cancel";
+"remote.prs.run.loading.detail" = "Loading harness details…";
+"remote.prs.run.sheet.title" = "Run with Focus";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.focus.label" = "Focus";
+"remote.prs.run.focus.none" = "(none — ad-hoc prompt)";
+"remote.prs.run.profile.label" = "Profile";
+"remote.prs.run.profile.default" = "(harness defaults)";
+"remote.prs.run.prompt.label" = "Focus prompt";
+"remote.prs.run.customize" = "Customize";
+"remote.prs.run.vendor.label" = "Vendor";
+"remote.prs.run.vendor.default" = "Harness default";
+"remote.prs.run.interactive.label" = "Stay interactive after run";
+"remote.prs.run.interactive.help" = "The agent will respond to the initial focus, then remain open for follow-up questions.";
+"remote.prs.run.refresh.detail" = "Reload harness focuses and profiles from disk";
+"remote.prs.run.run" = "Run";
+"remote.prs.run.cancel" = "Cancel";
+"remote.prs.copy.branch.name" = "Copy Branch Name";
+"remote.prs.quick.launch.focus" = "Quick Launch Focus";
+"remote.prs.run.focus.item %@" = "Run %@";
+"remote.prs.set.default.focus" = "Set Default Focus…";
+"remote.prs.default.focus.set %@" = "Default Focus: %@";
+"remote.prs.clear.default.focus" = "Clear Default Focus";
+"remote.prs.overflow.more %lld" = "+ %lld more — Open Repository Detail";
+"remote.prs.prune.closed" = "⊘ Prune Closed PRs";
+"remote.prs.prune.closed.title %lld" = "%lld PRs Closed or Merged";
+"remote.prs.prune.closed.confirm" = "Prune";
+"remote.prs.prune.closed.nothing.title" = "Nothing to Prune";
+"remote.prs.prune.closed.nothing.message" = "All tracked PR rows are still open.";
+"remote.prs.prune.keep" = "Keep";
+"remote.prs.prune.remove" = "Remove";
+"remote.prs.prune.reason.dirty" = "uncommitted changes";
+"remote.prs.prune.reason.ahead" = "unpushed commits";

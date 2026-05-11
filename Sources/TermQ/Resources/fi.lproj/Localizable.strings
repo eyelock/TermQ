@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Ulkoasu";
 "editor.field.theme" = "Teema";
 "editor.field.theme.default" = "Oletus";
+"editor.field.theme.override" = "Ohita oletusvärimaailma";
 "editor.field.font.size" = "Fonttikoko";
+"editor.field.font.size.override" = "Ohita oletusfonttikoko";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Komento suoritettavaksi terminaalin käynnistyessä";
 "editor.field.safe.paste" = "Turvallinen liittäminen";
 "editor.field.safe.paste.help" = "Näytä vahvistus ennen moniriviisen tekstin liittämistä";
+"editor.field.safe.paste.override" = "Ohita oletus turvallinen liittäminen";
+"editor.field.safe.paste.inherited.on" = "Päällä (peritty)";
+"editor.field.safe.paste.inherited.off" = "Pois (peritty)";
 "editor.field.allow.autorun" = "Salli automaattiajo";
 "editor.field.allow.autorun.help" = "Salli CLI:n suorittaa komentoja automaattisesti";
 "editor.field.autorun.disabled.globally" = "Automaattiajo poistettu käytöstä";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Ohita oletustaustaohjelma";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Taustajärjestelmää ei voi vaihtaa istunnon ollessa aktiivinen. Käynnistä istunto uudelleen vaihtaaksesi taustajärjestelmiä.";
@@ -574,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "Syötä worktree-polku jatkaaksesi.";
 "sidebar.new.worktree.create" = "Luo";
 "sidebar.new.worktree.loading.branches" = "Ladataan haaroja...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Muunna työskentelypuuksi";
+"sidebar.convert.worktree.branch.label" = "Haaran nimi";
+"sidebar.convert.worktree.button" = "Muunna";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Muunna työskentelypuuksi…";
 "sidebar.branch.delete" = "Poista haara";
 "sidebar.branch.delete.title" = "Poista haara";
 "sidebar.branch.delete.confirm" = "Poista";
@@ -601,6 +613,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Paikallinen";
 "harnesses.source.registry" = "Rekisteri";
+"harnesses.source.read.only" = "Vain luku";
+"harnesses.source.forked.from %@" = "Haaroitettu kohteesta %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Tiedot";
@@ -619,6 +633,7 @@
 "harnesses.detail.delegates %d" = "Delegoi kohteelle (%d)";
 "harnesses.detail.picks %d" = "Valitsee (%d):";
 "harnesses.reveal.in.finder" = "Näytä Finderissä";
+"harnesses.copy.path" = "Kopioi polkuna";
 "harnesses.open.in.browser" = "Avaa selaimessa";
 "harnesses.close.detail" = "Sulje";
 "harnesses.configure.from.marketplaces" = "Määritä markkinapaikoista…";
@@ -701,9 +716,11 @@
 // Install sheet
 "harnesses.install.title" = "Asenna harness";
 "harnesses.install.toolbar.help" = "Asenna harness";
-"harnesses.install.tab.search" = "Haku";
+"harnesses.install.tab.library" = "Kirjasto";
+"harnesses.install.manage.sources" = "Hallitse lähteitä…";
+"harnesses.install.manage.sources.help" = "Lisää tai poista paikallisia harness-lähteitä";
+"harnesses.install.manage.sources.done" = "Valmis";
 "harnesses.install.tab.git" = "Gitistä";
-"harnesses.install.tab.sources" = "Lähteet";
 "harnesses.install.search.placeholder" = "Hae rekistereistä ja lähteistä…";
 "harnesses.install.search.prompt" = "Kirjoita etsiäksesi rekistereistä ja lähteistä";
 "harnesses.install.search.empty" = "Ei tuloksia";
@@ -722,8 +739,21 @@
 "harnesses.install.sources.remove" = "Poista";
 "harnesses.install.sources.count %ld" = "%ld harnessia";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Lisää valtuutettu";
+"harnesses.add.delegate.button" = "Lisää valtuutettu…";
+"harnesses.add.delegate.library.search.placeholder" = "Hae asennetuista harnesseista…";
+"harnesses.add.delegate.library.empty" = "Ei muita asennettuja harnesseja, joille delegoida.";
+"source.picker.browse.local" = "Selaa paikallisesti…";
+"source.picker.browse.local.help" = "Valitse paikallinen hakemisto";
+"harnesses.add.delegate.pick" = "Valitse";
+"harnesses.add.delegate.back" = "Takaisin";
+"harnesses.add.delegate.apply" = "Lisää valtuutettu";
+
 "harnesses.update.button" = "Päivitä";
 "harnesses.update.help" = "Päivitä uusimpaan versioon";
+"harnesses.update.available" = "Päivitys saatavilla";
+"harnesses.update.available.version %@" = "Versio %@ on saatavilla";
 "harnesses.uninstall.button" = "Poista asennus";
 "harnesses.uninstall.help" = "Poista tämän harnessin asennus";
 "harnesses.uninstall.alert.title %@" = "Poistetaanko \"%@\"?";
@@ -879,6 +909,9 @@
 "harnesses.group.default" = "Oletus";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Paikallinen";
+"harnesses.group.quarantined" = "Karanteenissa";
+"harnesses.quarantine.restore" = "Palauta";
+"harnesses.quarantine.drop" = "Poista…";
 "harnesses.group.menu.settings" = "Asetukset…";
 "harnesses.group.registry %@" = "Rekisteri: %@";
 "harnesses.install.browsing" = "Ladataan saatavilla olevia harnessia…";
@@ -886,6 +919,7 @@
 "harnesses.install.git.ref.placeholder" = "Haara, tagi tai commit-SHA (valinnainen)";
 "harnesses.install.retry" = "Yritä uudelleen";
 "harnesses.install.section.available" = "Saatavilla rekistereistä";
+"harnesses.install.section.available.empty" = "Ei markkinapaikkoja määritetty. Lisää yksi Asetuksissa → Ulkoiset lähteet.";
 "harnesses.install.section.installed" = "Asennettu";
 "harnesses.install.section.local" = "Saatavilla paikallisesti";
 "harnesses.outdated.capabilities.unknown" = "tuntematon";
@@ -925,3 +959,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Avaa terminaalit";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Haaruta paikalliseksi";
+"harnesses.fork.to.local.help" = "Luo muokattava paikallinen kopio tästä harness-ohjelmasta";
+"harnesses.update.dot.help" = "Päivitys saatavilla";
+"harness.fork.title %@" = "Haaruta \"%@\" paikalliseksi";
+"harness.fork.explanation" = "Luo muokattavan paikallisen kopion tästä harness-ohjelmasta. Kopio seuraa alkuperäänsä, joten näet mitä ylävirrassa on muuttunut.";
+"harness.fork.button" = "Haaruta";
+"harness.fork.progress.title %@" = "Haarutetaan \"%@\"…";
+"harness.fork.rename.label" = "Nimi (valinnainen)";
+"harness.fork.rename.hint" = "Jätä tyhjäksi säilyttääksesi lähteen nimen. Uuden forkin kanoninen id on local/<nimi>.";
+"harness.fork.identity.collision" = "Asennetulla harnessilla on jo tämä identiteetti.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Päivitä \"%@\"";
+"harness.update.progress.title %@" = "Päivitetään \"%@\"…";
+"harness.update.button" = "Päivitä";
+"harness.update.ynh.unavailable" = "ynh ei ole käytettävissä.";
+"command.runner.running" = "Suoritetaan…";
+"command.runner.succeeded" = "Onnistui";
+"command.runner.failed" = "Epäonnistui";
+"common.copy.output" = "Kopioi tuloste";
+"common.rerun" = "Suorita uudelleen";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Sisällytystoiminnot";
+"harnesses.include.edit.button" = "Muokkaa sisällytystä…";
+"harnesses.include.remove.button" = "Poista sisällytys…";
+"harnesses.include.edit.title" = "Muokkaa sisällytystä";
+"harnesses.include.edit.source" = "Lähde";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "haara, tagi tai commit";
+"harnesses.include.edit.path" = "Polku";
+"harnesses.include.edit.path.placeholder" = "alihakemistopolku lähderepositoryssä";
+"harnesses.include.edit.picks" = "Valinta";
+"harnesses.include.edit.picks.explainer" = "Valitut artefaktit ovat tällä hetkellä tässä sisällytyksessä. Vaihda lisätäksesi tai poistaaksesi.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld valittu";
+"harnesses.include.edit.picks.unknown.source" = "Tämä lähde ei ole markkinapaikoissasi — vain nykyiset artefaktit näytetään.";
+"harnesses.include.edit.save" = "Tallenna muutokset";
+"harnesses.include.remove.confirm.title" = "Poistetaanko tämä sisällytys?";
+"harnesses.include.remove.confirm.message %@" = "%@ poistetaan tästä harnessista. Lähderepositoryä ei muuteta.";
+"harnesses.include.remove.confirm" = "Poista";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Lisää sisällytys…";
+"harnesses.include.add.edit.existing" = "Muokkaa";
+"harnesses.include.add.search.placeholder" = "Hae lisäosia…";
+"harnesses.include.add.no.marketplaces" = "Ei markkinapaikkoja määritetty. Lisää yksi Markkinapaikat-välilehdeltä.";
+"harnesses.include.add.no.matches" = "Ei vastaavia lisäosia.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "haara, tagi tai commit (valinnainen)";
+"harnesses.include.add.gitpath.label" = "Polku";
+"harnesses.include.add.gitpath.placeholder" = "alihakemisto lähderepositoryssä (valinnainen)";
+"harnesses.include.add.giturl.hint" = "Valinta sisältää oletuksena kaiken, mitä lähde tarjoaa. Käytä Muokkaa sisällytystä lisäämisen jälkeen rajataksesi sitä.";
+"harnesses.include.add.picks.prompt" = "Valitse sisällytettävät artefaktit.";
+"harnesses.include.add.apply" = "Käytä";
+"harnesses.include.add.already.installed" = "Jo lisätty";
+"harnesses.include.add.already.installed.help" = "Tämä lisäosa on jo tässä harnessissa — napsauta muokataksesi valintaa tai refiä.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegaattitoiminnot";
+"harnesses.delegate.edit.button" = "Muokkaa delegaattia…";
+"harnesses.delegate.remove.button" = "Poista delegaatti…";
+"harnesses.delegate.edit.title" = "Muokkaa delegaattia";
+"harnesses.delegate.remove.confirm.title" = "Poista tämä delegaatti?";
+"harnesses.delegate.remove.confirm.message %@" = "%@:ta ei enää yhdistetä tähän harness-kokonaisuuteen. Lähdevarastoon ei kosketa.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Muokkaa manifestia…";
+"harnesses.manifest.edit.title" = "Muokkaa manifestia";
+"harnesses.manifest.edit.name" = "Nimi";
+"harnesses.manifest.edit.version" = "Versio";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Käytä semveriä: MAJOR.MINOR.PATCH (esim. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Oletusvalmistaja";
+"harnesses.manifest.edit.description" = "Kuvaus";
+"harnesses.manifest.edit.description.hint" = "Näytetään harness-listassa ja yksityiskohtien otsikossa. Jätä tyhjäksi jättääksesi pois.";
+"harnesses.manifest.edit.save" = "Tallenna muutokset";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit muuttunut: %@ → %@";
+"harnesses.broken.fork.help" = "Tästä paikallisesta haarautumasta puuttuu harness-manifesti. Napsauta hiiren kakkospainikkeella ja valitse Poista asentaminen.";
+"harnesses.broken.fork.badge" = "Rikkinäinen";
+"harnesses.fork.of %@" = "Haara kohteesta %@";
+"harnesses.fork.help %@" = "Haaroitettu kohteesta %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Uusi worktree haarasta";
+"sidebar.checkout.branch.label" = "Haara";
+"sidebar.checkout.branch.placeholder" = "Valitse haara…";
+"sidebar.checkout.branch.required" = "Valitse haara jatkaaksesi.";
+"sidebar.checkout.branch.create" = "Luo worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Tässä harnessissa ei ole Git-lähteitä päivitettäväksi.";
+"harnesses.loading.help" = "Kommunikoidaan ynh:n kanssa…";
+"harnesses.unversioned.drift.help" = "Upstream-sisältö muuttui ilman versiota — tarkista ennen päivittämistä";
+"harnesses.unversioned.drift.banner" = "Upstream-sisältö muuttui ilman versiota — tarkista ennen päivittämistä";
+"harnesses.unversioned.drift.confirm.title" = "Tarkista upstream-muutokset";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-sisältö on muuttunut ilman versionpäivitystä. Päivittäminen hakee uuden sisällön. Tarkista alla olevat SHA:t ennen jatkamista — puuttuva versionpäivitys voi peittää haitalliset muutokset.";
+"harnesses.unversioned.drift.confirm.proceed" = "Päivitä silti";

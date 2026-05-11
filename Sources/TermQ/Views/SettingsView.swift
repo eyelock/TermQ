@@ -28,26 +28,9 @@ struct SettingsView: View {
     @State private var alertIsError = false
 
     // Git preferences
-    @AppStorage("protectedBranches") private var protectedBranches = ""
+    @ObservedObject private var gitConfig = GitConfigStore.shared
 
-    // Terminal preferences
-    @AppStorage("copyOnSelect") private var copyOnSelect = false
-    @AppStorage("binRetentionDays") private var binRetentionDays = 14
-    @AppStorage("defaultWorkingDirectory") private var defaultWorkingDirectory = NSHomeDirectory()
-    @AppStorage("defaultBackend") private var defaultBackendRawValue: String = "direct"
-    @AppStorage("terminalScrollbackLines") private var scrollbackLines = 5000
-
-    // Computed property to convert between String and TerminalBackend
-    private var defaultBackend: TerminalBackend {
-        get { TerminalBackend(rawValue: defaultBackendRawValue) ?? .direct }
-        set { defaultBackendRawValue = newValue.rawValue }
-    }
-
-    // Security preferences
-    @AppStorage("enableTerminalAutorun") private var enableTerminalAutorun = false
-    @AppStorage("confirmExternalLLMModifications") private var confirmExternalLLMModifications = true
-    @AppStorage("allowOscClipboard") private var allowOscClipboard = false
-    @AppStorage("defaultSafePaste") private var defaultSafePaste = true
+    @Environment(SettingsStore.self) private var settings
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
@@ -68,6 +51,7 @@ struct SettingsView: View {
         case tools
         case dataAndSecurity
         case marketplaces
+        case gitHub
 
         var title: String {
             switch self {
@@ -76,6 +60,7 @@ struct SettingsView: View {
             case .tools: return Strings.Settings.tabTools
             case .dataAndSecurity: return Strings.Settings.tabDataAndSecurity
             case .marketplaces: return Strings.Settings.tabMarketplaces
+            case .gitHub: return Strings.Settings.tabGitHub
             }
         }
     }
@@ -84,7 +69,8 @@ struct SettingsView: View {
     @State private var showUninstallSheet = false
 
     var body: some View {
-        VStack(spacing: 0) {
+        @Bindable var settings = settings
+        return VStack(spacing: 0) {
             // Tab picker
             Picker("", selection: $selectedTab) {
                 ForEach(SettingsTab.allCases, id: \.self) { tab in
@@ -99,19 +85,16 @@ struct SettingsView: View {
                 case .general:
                     SettingsGeneralView(
                         sessionManager: sessionManager,
-                        copyOnSelect: $copyOnSelect,
-                        defaultWorkingDirectory: $defaultWorkingDirectory,
-                        defaultBackend: Binding(
-                            get: { defaultBackend },
-                            set: { newValue in defaultBackendRawValue = newValue.rawValue }
-                        ),
-                        scrollbackLines: $scrollbackLines,
-                        binRetentionDays: $binRetentionDays,
+                        copyOnSelect: $settings.copyOnSelect,
+                        defaultWorkingDirectory: $settings.defaultWorkingDirectory,
+                        defaultBackend: $settings.backend,
+                        scrollbackLines: $settings.terminalScrollbackLines,
+                        binRetentionDays: $settings.binRetentionDays,
                         boardViewModel: boardViewModel,
                         updaterViewModel: updaterViewModel,
                         selectedLanguage: $selectedLanguage,
                         showUninstallSheet: $showUninstallSheet,
-                        protectedBranches: $protectedBranches
+                        protectedBranches: $gitConfig.globalProtectedBranches
                     )
                 case .environment:
                     SettingsEnvironmentView()
@@ -119,14 +102,16 @@ struct SettingsView: View {
                     toolsContent
                 case .dataAndSecurity:
                     SettingsDataSecurityView(
-                        enableTerminalAutorun: $enableTerminalAutorun,
-                        confirmExternalLLMModifications: $confirmExternalLLMModifications,
-                        allowOscClipboard: $allowOscClipboard,
-                        defaultSafePaste: $defaultSafePaste,
+                        enableTerminalAutorun: $settings.enableTerminalAutorun,
+                        confirmExternalLLMModifications: $settings.confirmExternalLLMModifications,
+                        allowOscClipboard: $settings.allowOscClipboard,
+                        defaultSafePaste: $settings.safePaste,
                         dataDirectory: $dataDirectory
                     )
                 case .marketplaces:
                     SettingsMarketplacesView()
+                case .gitHub:
+                    SettingsGitHubView(remotePRFeedCap: $settings.remotePRFeedCap)
                 }
             }
             .formStyle(.grouped)

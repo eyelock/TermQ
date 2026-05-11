@@ -147,7 +147,9 @@
 "editor.section.appearance" = "المظهر";
 "editor.field.theme" = "السمة";
 "editor.field.theme.default" = "الافتراضي";
+"editor.field.theme.override" = "تجاوز المظهر الافتراضي";
 "editor.field.font.size" = "حجم الخط";
+"editor.field.font.size.override" = "تجاوز حجم الخط الافتراضي";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "أمر للتشغيل عند بدء الطرفية";
 "editor.field.safe.paste" = "لصق آمن";
 "editor.field.safe.paste.help" = "إظهار تأكيد قبل لصق نص متعدد الأسطر";
+"editor.field.safe.paste.override" = "تجاوز اللصق الآمن الافتراضي";
+"editor.field.safe.paste.inherited.on" = "تشغيل (موروث)";
+"editor.field.safe.paste.inherited.off" = "إيقاف (موروث)";
 "editor.field.allow.autorun" = "السماح بالتشغيل التلقائي";
 "editor.field.allow.autorun.help" = "السماح لـ CLI بتشغيل الأوامر تلقائيًا";
 "editor.field.autorun.disabled.globally" = "التشغيل التلقائي معطل عالميًا";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "تجاوز الخلفية الافتراضية";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "لا يمكن تغيير الواجهة الخلفية أثناء نشاط الجلسة. أعد تشغيل الجلسة لتغيير الواجهات الخلفية.";
@@ -584,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "أدخل مسار worktree للمتابعة.";
 "sidebar.new.worktree.create" = "إنشاء";
 "sidebar.new.worktree.loading.branches" = "جارٍ تحميل الفروع...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "تحويل إلى بيئة عمل";
+"sidebar.convert.worktree.branch.label" = "اسم الفرع";
+"sidebar.convert.worktree.button" = "تحويل";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "تحويل إلى بيئة عمل…";
 "sidebar.branch.delete" = "حذف الفرع";
 "sidebar.branch.delete.title" = "حذف الفرع";
 "sidebar.branch.delete.confirm" = "حذف";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "محلي";
 "harnesses.source.registry" = "السجل";
+"harnesses.source.read.only" = "للقراءة فقط";
+"harnesses.source.forked.from %@" = "متفرع من %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "معلومات";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "يفوّض إلى (%d)";
 "harnesses.detail.picks %d" = "يختار (%d):";
 "harnesses.reveal.in.finder" = "إظهار في Finder";
+"harnesses.copy.path" = "نسخ كمسار";
 "harnesses.open.in.browser" = "فتح في المتصفح";
 "harnesses.close.detail" = "إغلاق";
 "harnesses.configure.from.marketplaces" = "كوِّن من الأسواق…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "تثبيت Harness";
 "harnesses.install.toolbar.help" = "تثبيت harness";
-"harnesses.install.tab.search" = "بحث";
+"harnesses.install.tab.library" = "المكتبة";
+"harnesses.install.manage.sources" = "إدارة المصادر…";
+"harnesses.install.manage.sources.help" = "إضافة مصادر harness المحلية أو إزالتها";
+"harnesses.install.manage.sources.done" = "تم";
 "harnesses.install.tab.git" = "من Git";
-"harnesses.install.tab.sources" = "المصادر";
 "harnesses.install.search.placeholder" = "البحث في السجلات والمصادر…";
 "harnesses.install.search.prompt" = "اكتب للبحث في السجلات والمصادر";
 "harnesses.install.search.empty" = "لا توجد نتائج";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "إزالة";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "إضافة مفوَّض";
+"harnesses.add.delegate.button" = "إضافة مفوَّض…";
+"harnesses.add.delegate.library.search.placeholder" = "البحث في الـ harness المثبَّتة…";
+"harnesses.add.delegate.library.empty" = "لا توجد harness مثبَّتة أخرى للتفويض إليها.";
+"source.picker.browse.local" = "استعراض محلي…";
+"source.picker.browse.local.help" = "اختر دليلًا محليًا";
+"harnesses.add.delegate.pick" = "اختيار";
+"harnesses.add.delegate.back" = "رجوع";
+"harnesses.add.delegate.apply" = "إضافة مفوَّض";
+
 "harnesses.update.button" = "تحديث";
 "harnesses.update.help" = "تحديث إلى الإصدار الأحدث";
+"harnesses.update.available" = "تحديث متاح";
+"harnesses.update.available.version %@" = "الإصدار %@ متاح";
 "harnesses.uninstall.button" = "إلغاء التثبيت";
 "harnesses.uninstall.help" = "إلغاء تثبيت هذا الـ harness";
 "harnesses.uninstall.alert.title %@" = "إلغاء تثبيت \"%@\"؟";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "افتراضي";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "محلي";
+"harnesses.group.quarantined" = "تحت الحجر الصحي";
+"harnesses.quarantine.restore" = "استعادة";
+"harnesses.quarantine.drop" = "حذف…";
 "harnesses.group.menu.settings" = "الإعدادات…";
 "harnesses.group.registry %@" = "السجل: %@";
 "harnesses.install.browsing" = "جارٍ تحميل الـ harness المتاحة…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "فرع أو وسم أو SHA الإيداع (اختياري)";
 "harnesses.install.retry" = "إعادة المحاولة";
 "harnesses.install.section.available" = "متاح من السجلات";
+"harnesses.install.section.available.empty" = "لا توجد أسواق مُهيَّأة. أضف واحدًا في الإعدادات ← المصادر الخارجية.";
 "harnesses.install.section.installed" = "مثبَّت";
 "harnesses.install.section.local" = "متاح محلياً";
 "harnesses.outdated.capabilities.unknown" = "غير معروف";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "فتح الطرفيات";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "نسخ محلي";
+"harnesses.fork.to.local.help" = "إنشاء نسخة محلية قابلة للتحرير من هذا الـ harness";
+"harnesses.update.dot.help" = "تحديث متاح";
+"harness.fork.title %@" = "نسخ \"%@\" محلياً";
+"harness.fork.explanation" = "ينشئ نسخة محلية قابلة للتحرير من هذا الـ harness. تتتبع النسخة أصلها حتى تتمكن من رؤية ما تغيّر في المصدر.";
+"harness.fork.button" = "نسخ";
+"harness.fork.progress.title %@" = "جارٍ نسخ \"%@\"…";
+"harness.fork.rename.label" = "الاسم (اختياري)";
+"harness.fork.rename.hint" = "اتركه فارغاً للإبقاء على اسم المصدر. سيكون المعرّف الأساسي للـ fork الجديد local/<الاسم>.";
+"harness.fork.identity.collision" = "يوجد بالفعل harness مثبّت بهذه الهوية.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "تحديث \"%@\"";
+"harness.update.progress.title %@" = "جارٍ تحديث \"%@\"…";
+"harness.update.button" = "تحديث";
+"harness.update.ynh.unavailable" = "ynh غير متاح.";
+"command.runner.running" = "جارٍ التشغيل…";
+"command.runner.succeeded" = "نجح";
+"command.runner.failed" = "فشل";
+"common.copy.output" = "نسخ المخرجات";
+"common.rerun" = "إعادة التشغيل";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "إجراءات التضمين";
+"harnesses.include.edit.button" = "تعديل التضمين…";
+"harnesses.include.remove.button" = "إزالة التضمين…";
+"harnesses.include.edit.title" = "تعديل التضمين";
+"harnesses.include.edit.source" = "المصدر";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "فرع أو علامة أو commit";
+"harnesses.include.edit.path" = "المسار";
+"harnesses.include.edit.path.placeholder" = "المسار الفرعي في مستودع المصدر";
+"harnesses.include.edit.picks" = "التحديد";
+"harnesses.include.edit.picks.explainer" = "العناصر المحددة موجودة حاليًا في هذا التضمين. بدّل لإضافة أو إزالة.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld من أصل %ld محدد";
+"harnesses.include.edit.picks.unknown.source" = "هذا المصدر غير موجود في أسواقك — يتم سرد العناصر الحالية فقط.";
+"harnesses.include.edit.save" = "حفظ التغييرات";
+"harnesses.include.remove.confirm.title" = "إزالة هذا التضمين؟";
+"harnesses.include.remove.confirm.message %@" = "سيتم إزالة %@ من هذا الـ harness. لن يُمسّ مستودع المصدر.";
+"harnesses.include.remove.confirm" = "إزالة";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "إضافة تضمين…";
+"harnesses.include.add.edit.existing" = "تعديل";
+"harnesses.include.add.search.placeholder" = "البحث في الإضافات…";
+"harnesses.include.add.no.marketplaces" = "لا توجد أسواق مُهيّأة. استخدم تبويب الأسواق لإضافة واحد.";
+"harnesses.include.add.no.matches" = "لا توجد إضافات مطابقة.";
+"harnesses.include.add.giturl.label" = "رابط URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "فرع أو علامة أو commit (اختياري)";
+"harnesses.include.add.gitpath.label" = "المسار";
+"harnesses.include.add.gitpath.placeholder" = "المجلد الفرعي في مستودع المصدر (اختياري)";
+"harnesses.include.add.giturl.hint" = "يشمل التحديد افتراضيًا كل ما يوفره المصدر. استخدم تعديل التضمين بعد الإضافة لتضييق النطاق.";
+"harnesses.include.add.picks.prompt" = "حدد العناصر التي تريد تضمينها.";
+"harnesses.include.add.apply" = "تطبيق";
+"harnesses.include.add.already.installed" = "مضاف مسبقًا";
+"harnesses.include.add.already.installed.help" = "هذه الإضافة موجودة بالفعل في هذا الـ harness — انقر لتعديل التحديد أو الـ ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "إجراءات المفوض";
+"harnesses.delegate.edit.button" = "تحرير المفوض…";
+"harnesses.delegate.remove.button" = "إزالة المفوض…";
+"harnesses.delegate.edit.title" = "تحرير المفوض";
+"harnesses.delegate.remove.confirm.title" = "إزالة هذا المفوض؟";
+"harnesses.delegate.remove.confirm.message %@" = "لن يتم دمج %@ في هذا التسخير بعد الآن. لن يتأثر مستودع المصدر.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "تعديل البيان…";
+"harnesses.manifest.edit.title" = "تعديل البيان";
+"harnesses.manifest.edit.name" = "الاسم";
+"harnesses.manifest.edit.version" = "الإصدار";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "استخدم semver: الرئيسي.الثانوي.التصحيح (مثلًا 0.2.0)";
+"harnesses.manifest.edit.vendor" = "المورّد الافتراضي";
+"harnesses.manifest.edit.description" = "الوصف";
+"harnesses.manifest.edit.description.hint" = "يظهر في قائمة الـ harness وفي رأس التفاصيل. اتركه فارغًا للتخطي.";
+"harnesses.manifest.edit.save" = "حفظ التغييرات";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "تغيّر الـ commit الأولي: %@ → %@";
+"harnesses.broken.fork.help" = "هذه النسخة المحلية تفتقر إلى ملف manifest الخاص بالحزمة. انقر بزر الماوس الأيمن واختر إلغاء التثبيت لإزالتها.";
+"harnesses.broken.fork.badge" = "معطوب";
+"harnesses.fork.of %@" = "تفرع من %@";
+"harnesses.fork.help %@" = "متفرع من %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "منطقة عمل جديدة من فرع";
+"sidebar.checkout.branch.label" = "الفرع";
+"sidebar.checkout.branch.placeholder" = "اختر فرعًا…";
+"sidebar.checkout.branch.required" = "اختر فرعًا للمتابعة.";
+"sidebar.checkout.branch.create" = "إنشاء منطقة عمل";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "لا توجد مصادر Git لتحديثها في هذا الـ harness.";
+"harnesses.loading.help" = "جارٍ الاتصال بـ ynh…";
+"harnesses.unversioned.drift.help" = "تغيّر المحتوى الأولي دون تحديث للإصدار — راجع قبل التحديث";
+"harnesses.unversioned.drift.banner" = "تغيّر المحتوى الأولي دون تحديث للإصدار — راجع قبل التحديث";
+"harnesses.unversioned.drift.confirm.title" = "مراجعة التغييرات الأولية";
+"harnesses.unversioned.drift.confirm.body" = "تغيّر المحتوى الأولي دون تحديث للإصدار. سيجلب التحديث المحتوى الجديد. راجع الـ SHA أدناه قبل المتابعة — قد يُخفي غياب تحديث الإصدار تغييرات ضارة.";
+"harnesses.unversioned.drift.confirm.proceed" = "تحديث على أي حال";

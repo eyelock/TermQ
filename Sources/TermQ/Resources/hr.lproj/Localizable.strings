@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Izgled";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Zadano";
+"editor.field.theme.override" = "Zamijeni zadanu temu";
 "editor.field.font.size" = "Veličina fonta";
+"editor.field.font.size.override" = "Zamijeni zadanu veličinu fonta";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Naredba za pokretanje pri pokretanju terminala";
 "editor.field.safe.paste" = "Sigurno lijepljenje";
 "editor.field.safe.paste.help" = "Prikaži potvrdu prije lijepljenja višelinijskog teksta";
+"editor.field.safe.paste.override" = "Zamijeni zadano sigurno lijepljenje";
+"editor.field.safe.paste.inherited.on" = "Uključeno (naslijeđeno)";
+"editor.field.safe.paste.inherited.off" = "Isključeno (naslijeđeno)";
 "editor.field.allow.autorun" = "Dopusti automatsko pokretanje";
 "editor.field.allow.autorun.help" = "Dopusti CLI-ju automatsko pokretanje naredbi";
 "editor.field.autorun.disabled.globally" = "Automatsko pokretanje globalno onemogućeno";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Zamijeni zadani backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend se ne može promijeniti dok je sesija aktivna. Ponovno pokrenite sesiju za promjenu backenda.";
@@ -574,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "Unesite putanju worktree-a za nastavak.";
 "sidebar.new.worktree.create" = "Stvori";
 "sidebar.new.worktree.loading.branches" = "Učitavanje grana...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Pretvori u radno stablo";
+"sidebar.convert.worktree.branch.label" = "Naziv grane";
+"sidebar.convert.worktree.button" = "Pretvori";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Pretvori u radno stablo…";
 "sidebar.branch.delete" = "Obriši granu";
 "sidebar.branch.delete.title" = "Obriši granu";
 "sidebar.branch.delete.confirm" = "Obriši";
@@ -601,6 +613,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokalno";
 "harnesses.source.registry" = "Registar";
+"harnesses.source.read.only" = "Samo za čitanje";
+"harnesses.source.forked.from %@" = "Forkano iz %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informacije";
@@ -619,6 +633,7 @@
 "harnesses.detail.delegates %d" = "Delegira na (%d)";
 "harnesses.detail.picks %d" = "Odabire (%d):";
 "harnesses.reveal.in.finder" = "Prikaži u Finderu";
+"harnesses.copy.path" = "Kopiraj kao putanju";
 "harnesses.open.in.browser" = "Otvori u pregledniku";
 "harnesses.close.detail" = "Zatvori";
 "harnesses.configure.from.marketplaces" = "Konfiguriraj iz tržnica…";
@@ -701,9 +716,11 @@
 // Install sheet
 "harnesses.install.title" = "Instalacija harness";
 "harnesses.install.toolbar.help" = "Instaliraj harness";
-"harnesses.install.tab.search" = "Pretraži";
+"harnesses.install.tab.library" = "Knjižnica";
+"harnesses.install.manage.sources" = "Upravljaj izvorima…";
+"harnesses.install.manage.sources.help" = "Dodaj ili ukloni lokalne izvore harness";
+"harnesses.install.manage.sources.done" = "Gotovo";
 "harnesses.install.tab.git" = "Iz Gita";
-"harnesses.install.tab.sources" = "Izvori";
 "harnesses.install.search.placeholder" = "Pretraži registre i izvore…";
 "harnesses.install.search.prompt" = "Unesite tekst za pretraživanje registara i izvora";
 "harnesses.install.search.empty" = "Nema rezultata";
@@ -722,8 +739,21 @@
 "harnesses.install.sources.remove" = "Ukloni";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Dodaj delegata";
+"harnesses.add.delegate.button" = "Dodaj delegata…";
+"harnesses.add.delegate.library.search.placeholder" = "Pretraži instalirane harness-e…";
+"harnesses.add.delegate.library.empty" = "Nema drugih instaliranih harness-a za delegiranje.";
+"source.picker.browse.local" = "Pregledaj lokalno…";
+"source.picker.browse.local.help" = "Odaberite lokalni direktorij";
+"harnesses.add.delegate.pick" = "Odaberi";
+"harnesses.add.delegate.back" = "Natrag";
+"harnesses.add.delegate.apply" = "Dodaj delegata";
+
 "harnesses.update.button" = "Ažuriraj";
 "harnesses.update.help" = "Ažuriraj na najnoviju verziju";
+"harnesses.update.available" = "Dostupno ažuriranje";
+"harnesses.update.available.version %@" = "Verzija %@ je dostupna";
 "harnesses.uninstall.button" = "Deinstaliraj";
 "harnesses.uninstall.help" = "Deinstaliraj ovaj harness";
 "harnesses.uninstall.alert.title %@" = "Deinstalirati \"%@\"?";
@@ -879,6 +909,9 @@
 "harnesses.group.default" = "Zadana";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokalna";
+"harnesses.group.quarantined" = "U karanteni";
+"harnesses.quarantine.restore" = "Obnovi";
+"harnesses.quarantine.drop" = "Ukloni…";
 "harnesses.group.menu.settings" = "Postavke…";
 "harnesses.group.registry %@" = "Registar: %@";
 "harnesses.install.browsing" = "Učitavanje dostupnih harness-a…";
@@ -886,6 +919,7 @@
 "harnesses.install.git.ref.placeholder" = "Grana, oznaka ili commit SHA (neobavezno)";
 "harnesses.install.retry" = "Pokušaj ponovo";
 "harnesses.install.section.available" = "Dostupno iz registara";
+"harnesses.install.section.available.empty" = "Nisu konfigurirani tržišni prostori. Dodajte jedan u Postavkama → Vanjski izvori.";
 "harnesses.install.section.installed" = "Instalirano";
 "harnesses.install.section.local" = "Dostupno lokalno";
 "harnesses.outdated.capabilities.unknown" = "nepoznato";
@@ -925,3 +959,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Otvori terminale";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork na lokalno";
+"harnesses.fork.to.local.help" = "Stvorite uređivu lokalnu kopiju ovog harness-a";
+"harnesses.update.dot.help" = "Dostupno ažuriranje";
+"harness.fork.title %@" = "Fork \"%@\" na lokalno";
+"harness.fork.explanation" = "Stvara uređivu lokalnu kopiju ovog harness-a. Kopija prati svoje podrijetlo kako biste mogli vidjeti što se promijenilo upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forkanje \"%@\"…";
+"harness.fork.rename.label" = "Naziv (neobavezno)";
+"harness.fork.rename.hint" = "Ostavite prazno kako biste zadržali izvorno ime. Kanonički id novog forka bit će local/<naziv>.";
+"harness.fork.identity.collision" = "Instalirani harness već ima ovaj identitet.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Ažuriraj \"%@\"";
+"harness.update.progress.title %@" = "Ažuriranje \"%@\"…";
+"harness.update.button" = "Ažuriraj";
+"harness.update.ynh.unavailable" = "ynh nije dostupan.";
+"command.runner.running" = "Pokretanje…";
+"command.runner.succeeded" = "Uspješno";
+"command.runner.failed" = "Neuspješno";
+"common.copy.output" = "Kopiraj izlaz";
+"common.rerun" = "Ponovi";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Radnje uključivanja";
+"harnesses.include.edit.button" = "Uredi uključivanje…";
+"harnesses.include.remove.button" = "Ukloni uključivanje…";
+"harnesses.include.edit.title" = "Uredi uključivanje";
+"harnesses.include.edit.source" = "Izvor";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "grana, oznaka ili commit";
+"harnesses.include.edit.path" = "Putanja";
+"harnesses.include.edit.path.placeholder" = "putanja u izvornom repozitoriju";
+"harnesses.include.edit.picks" = "Odabir";
+"harnesses.include.edit.picks.explainer" = "Označeni artefakti trenutno su u ovom uključivanju. Prebacite za dodavanje ili uklanjanje.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld od %ld odabrano";
+"harnesses.include.edit.picks.unknown.source" = "Ovaj izvor nije na vašim tržištima — prikazani su samo trenutni artefakti.";
+"harnesses.include.edit.save" = "Spremi promjene";
+"harnesses.include.remove.confirm.title" = "Ukloniti ovo uključivanje?";
+"harnesses.include.remove.confirm.message %@" = "%@ će biti uklonjen iz ovog harnessa. Izvorni repozitorij neće biti promijenjen.";
+"harnesses.include.remove.confirm" = "Ukloni";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Dodaj uključivanje…";
+"harnesses.include.add.edit.existing" = "Uredi";
+"harnesses.include.add.search.placeholder" = "Pretraži dodatke…";
+"harnesses.include.add.no.marketplaces" = "Nema konfiguriranih tržišta. Dodajte jedno putem kartice Tržišta.";
+"harnesses.include.add.no.matches" = "Nema odgovarajućih dodataka.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "grana, oznaka ili commit (neobavezno)";
+"harnesses.include.add.gitpath.label" = "Putanja";
+"harnesses.include.add.gitpath.placeholder" = "poddirektorij u izvornom repozitoriju (neobavezno)";
+"harnesses.include.add.giturl.hint" = "Odabir po zadanom uključuje sve što izvor pruža. Nakon dodavanja koristite Uredi uključivanje za sužavanje.";
+"harnesses.include.add.picks.prompt" = "Odaberite artefakte za uključivanje.";
+"harnesses.include.add.apply" = "Primijeni";
+"harnesses.include.add.already.installed" = "Već dodano";
+"harnesses.include.add.already.installed.help" = "Ovaj dodatak već je u ovom harnessu — kliknite za uređivanje odabira ili refa.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Radnje delegata";
+"harnesses.delegate.edit.button" = "Uredi delegata…";
+"harnesses.delegate.remove.button" = "Ukloni delegata…";
+"harnesses.delegate.edit.title" = "Uredi delegata";
+"harnesses.delegate.remove.confirm.title" = "Ukloniti ovog delegata?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ više neće biti spojen u ovaj harness. Izvorni repozitorij nije dirnut.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Uredi manifest…";
+"harnesses.manifest.edit.title" = "Uredi manifest";
+"harnesses.manifest.edit.name" = "Naziv";
+"harnesses.manifest.edit.version" = "Verzija";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Koristite semver: MAJOR.MINOR.PATCH (npr. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Zadani dobavljač";
+"harnesses.manifest.edit.description" = "Opis";
+"harnesses.manifest.edit.description.hint" = "Prikazano na popisu harnessa i u zaglavlju detalja. Ostavite prazno za izostavljanje.";
+"harnesses.manifest.edit.save" = "Spremi promjene";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit promijenjen: %@ → %@";
+"harnesses.broken.fork.help" = "Ovom lokalnom forku nedostaje manifest harness. Desnim klikom odaberite Deinstaliraj kako biste ga uklonili.";
+"harnesses.broken.fork.badge" = "Oštećen";
+"harnesses.fork.of %@" = "Fork od %@";
+"harnesses.fork.help %@" = "Forkano iz %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Novi worktree iz grane";
+"sidebar.checkout.branch.label" = "Grana";
+"sidebar.checkout.branch.placeholder" = "Odaberite granu…";
+"sidebar.checkout.branch.required" = "Odaberite granu za nastavak.";
+"sidebar.checkout.branch.create" = "Stvori worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Ovaj harness nema Git izvora za ažuriranje.";
+"harnesses.loading.help" = "Komunikacija s ynh-om…";
+"harnesses.unversioned.drift.help" = "Upstream sadržaj promijenjen bez verzijskog bumpanja — pregledajte prije ažuriranja";
+"harnesses.unversioned.drift.banner" = "Upstream sadržaj promijenjen bez verzijskog bumpanja — pregledajte prije ažuriranja";
+"harnesses.unversioned.drift.confirm.title" = "Pregledaj upstream promjene";
+"harnesses.unversioned.drift.confirm.body" = "Upstream sadržaj promijenjen je bez verzijskog bumpanja. Ažuriranjem će se povući novi sadržaj. Pregledajte SHA-ove u nastavku prije nastavka — nedostajući verzijski bump može prikriti zlonamjerne promjene.";
+"harnesses.unversioned.drift.confirm.proceed" = "Ažuriraj svejedno";

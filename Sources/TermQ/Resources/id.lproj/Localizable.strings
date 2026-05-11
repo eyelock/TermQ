@@ -146,7 +146,9 @@
 "editor.section.appearance" = "Tampilan";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Default";
+"editor.field.theme.override" = "Ganti tema bawaan";
 "editor.field.font.size" = "Ukuran Font";
+"editor.field.font.size.override" = "Ganti ukuran font bawaan";
 "editor.font.preview" = "AaBbCc Indo 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "Perintah yang dijalankan saat terminal dimulai";
 "editor.field.safe.paste" = "Tempel Aman";
 "editor.field.safe.paste.help" = "Tampilkan konfirmasi sebelum menempel teks multi-baris";
+"editor.field.safe.paste.override" = "Ganti tempel aman bawaan";
+"editor.field.safe.paste.inherited.on" = "Aktif (diwarisi)";
+"editor.field.safe.paste.inherited.off" = "Nonaktif (diwarisi)";
 "editor.field.allow.autorun" = "Izinkan Autorun";
 "editor.field.allow.autorun.help" = "Izinkan CLI menjalankan perintah secara otomatis";
 "editor.field.autorun.disabled.globally" = "Autorun dinonaktifkan secara global";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Ganti backend bawaan";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend tidak dapat diubah saat sesi aktif. Mulai ulang sesi untuk mengubah backend.";
@@ -582,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "Masukkan jalur worktree untuk melanjutkan.";
 "sidebar.new.worktree.create" = "Buat";
 "sidebar.new.worktree.loading.branches" = "Memuat branch...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Ubah menjadi Worktree";
+"sidebar.convert.worktree.branch.label" = "Nama Branch";
+"sidebar.convert.worktree.button" = "Ubah";
+
 "common.close.window" = "Tutup Jendela";
 "menu.toggle.sidebar" = "Tampilkan/Sembunyikan Bilah Sisi";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Ubah menjadi Worktree…";
 "sidebar.branch.delete" = "Hapus Branch";
 "sidebar.branch.delete.title" = "Hapus Branch";
 "sidebar.branch.delete.confirm" = "Hapus";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokal";
 "harnesses.source.registry" = "Registri";
+"harnesses.source.read.only" = "Hanya baca";
+"harnesses.source.forked.from %@" = "Dicabangkan dari %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informasi";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "Mendelegasikan ke (%d)";
 "harnesses.detail.picks %d" = "Memilih (%d):";
 "harnesses.reveal.in.finder" = "Tampilkan di Finder";
+"harnesses.copy.path" = "Salin sebagai jalur";
 "harnesses.open.in.browser" = "Buka di browser";
 "harnesses.close.detail" = "Tutup";
 "harnesses.configure.from.marketplaces" = "Konfigurasikan dari Marketplace…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "Pasang Harness";
 "harnesses.install.toolbar.help" = "Pasang harness";
-"harnesses.install.tab.search" = "Cari";
+"harnesses.install.tab.library" = "Pustaka";
+"harnesses.install.manage.sources" = "Kelola Sumber…";
+"harnesses.install.manage.sources.help" = "Tambah atau hapus sumber harness lokal";
+"harnesses.install.manage.sources.done" = "Selesai";
 "harnesses.install.tab.git" = "Dari Git";
-"harnesses.install.tab.sources" = "Sumber";
 "harnesses.install.search.placeholder" = "Cari registry dan sumber…";
 "harnesses.install.search.prompt" = "Ketik untuk mencari di registry dan sumber";
 "harnesses.install.search.empty" = "Tidak ada hasil";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "Hapus";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Tambah Delegat";
+"harnesses.add.delegate.button" = "Tambah Delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Cari harness yang terinstal…";
+"harnesses.add.delegate.library.empty" = "Tidak ada harness terinstal lain untuk didelegasikan.";
+"source.picker.browse.local" = "Telusuri Lokal…";
+"source.picker.browse.local.help" = "Pilih direktori lokal";
+"harnesses.add.delegate.pick" = "Pilih";
+"harnesses.add.delegate.back" = "Kembali";
+"harnesses.add.delegate.apply" = "Tambah Delegat";
+
 "harnesses.update.button" = "Perbarui";
 "harnesses.update.help" = "Perbarui ke versi terbaru";
+"harnesses.update.available" = "Pembaruan tersedia";
+"harnesses.update.available.version %@" = "Versi %@ tersedia";
 "harnesses.uninstall.button" = "Hapus Instalasi";
 "harnesses.uninstall.help" = "Hapus instalasi harness ini";
 "harnesses.uninstall.alert.title %@" = "Hapus instalasi \"%@\"?";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "Default";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokal";
+"harnesses.group.quarantined" = "Dikarantina";
+"harnesses.quarantine.restore" = "Pulihkan";
+"harnesses.quarantine.drop" = "Hapus…";
 "harnesses.group.menu.settings" = "Pengaturan…";
 "harnesses.group.registry %@" = "Registri: %@";
 "harnesses.install.browsing" = "Memuat harness yang tersedia…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "Cabang, tag, atau commit SHA (opsional)";
 "harnesses.install.retry" = "Coba lagi";
 "harnesses.install.section.available" = "Tersedia dari registri";
+"harnesses.install.section.available.empty" = "Tidak ada marketplace yang dikonfigurasi. Tambahkan satu di Pengaturan → Sumber Eksternal.";
 "harnesses.install.section.installed" = "Terinstal";
 "harnesses.install.section.local" = "Tersedia secara lokal";
 "harnesses.outdated.capabilities.unknown" = "tidak diketahui";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Buka terminal";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork ke lokal";
+"harnesses.fork.to.local.help" = "Buat salinan lokal yang dapat diedit dari harness ini";
+"harnesses.update.dot.help" = "Pembaruan tersedia";
+"harness.fork.title %@" = "Fork \"%@\" ke lokal";
+"harness.fork.explanation" = "Membuat salinan lokal yang dapat diedit dari harness ini. Salinan melacak asalnya sehingga Anda dapat melihat apa yang berubah di upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Mem-fork \"%@\"…";
+"harness.fork.rename.label" = "Nama (opsional)";
+"harness.fork.rename.hint" = "Biarkan kosong untuk mempertahankan nama sumber. Id kanonik fork baru akan menjadi local/<nama>.";
+"harness.fork.identity.collision" = "Harness yang sudah terpasang sudah memiliki identitas ini.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Perbarui \"%@\"";
+"harness.update.progress.title %@" = "Memperbarui \"%@\"…";
+"harness.update.button" = "Perbarui";
+"harness.update.ynh.unavailable" = "ynh tidak tersedia.";
+"command.runner.running" = "Berjalan…";
+"command.runner.succeeded" = "Berhasil";
+"command.runner.failed" = "Gagal";
+"common.copy.output" = "Salin keluaran";
+"common.rerun" = "Jalankan ulang";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Tindakan sertaan";
+"harnesses.include.edit.button" = "Edit Sertaan…";
+"harnesses.include.remove.button" = "Hapus Sertaan…";
+"harnesses.include.edit.title" = "Edit Sertaan";
+"harnesses.include.edit.source" = "Sumber";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "cabang, tag, atau commit";
+"harnesses.include.edit.path" = "Jalur";
+"harnesses.include.edit.path.placeholder" = "subjalur di repositori sumber";
+"harnesses.include.edit.picks" = "Pilihan";
+"harnesses.include.edit.picks.explainer" = "Artefak yang dicentang saat ini ada dalam sertaan ini. Beralih untuk menambah atau menghapus.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld dari %ld dipilih";
+"harnesses.include.edit.picks.unknown.source" = "Sumber ini tidak ada di marketplace Anda — hanya artefak saat ini yang tercantum.";
+"harnesses.include.edit.save" = "Simpan Perubahan";
+"harnesses.include.remove.confirm.title" = "Hapus sertaan ini?";
+"harnesses.include.remove.confirm.message %@" = "%@ akan dihapus dari harness ini. Repositori sumber tidak diubah.";
+"harnesses.include.remove.confirm" = "Hapus";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Tambah Sertaan…";
+"harnesses.include.add.edit.existing" = "Edit";
+"harnesses.include.add.search.placeholder" = "Cari plugin…";
+"harnesses.include.add.no.marketplaces" = "Tidak ada marketplace yang dikonfigurasi. Gunakan tab Marketplace untuk menambahkan satu.";
+"harnesses.include.add.no.matches" = "Tidak ada plugin yang cocok.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "cabang, tag, atau commit (opsional)";
+"harnesses.include.add.gitpath.label" = "Jalur";
+"harnesses.include.add.gitpath.placeholder" = "subdirektori di repositori sumber (opsional)";
+"harnesses.include.add.giturl.hint" = "Pilihan secara default mencakup semua yang disediakan sumber. Gunakan Edit Sertaan setelah menambahkan untuk mempersempit.";
+"harnesses.include.add.picks.prompt" = "Pilih artefak yang akan disertakan.";
+"harnesses.include.add.apply" = "Terapkan";
+"harnesses.include.add.already.installed" = "Sudah ditambahkan";
+"harnesses.include.add.already.installed.help" = "Plugin ini sudah ada di harness ini — klik untuk mengedit pilihan atau ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Tindakan delegat";
+"harnesses.delegate.edit.button" = "Edit delegat…";
+"harnesses.delegate.remove.button" = "Hapus delegat…";
+"harnesses.delegate.edit.title" = "Edit delegat";
+"harnesses.delegate.remove.confirm.title" = "Hapus delegat ini?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ tidak akan lagi digabungkan ke harness ini. Repositori sumber tidak diubah.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Edit Manifest…";
+"harnesses.manifest.edit.title" = "Edit Manifest";
+"harnesses.manifest.edit.name" = "Nama";
+"harnesses.manifest.edit.version" = "Versi";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Gunakan semver: MAJOR.MINOR.PATCH (mis. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Vendor Default";
+"harnesses.manifest.edit.description" = "Deskripsi";
+"harnesses.manifest.edit.description.hint" = "Ditampilkan dalam daftar harness dan header detail. Kosongkan untuk dihilangkan.";
+"harnesses.manifest.edit.save" = "Simpan Perubahan";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";
+"harnesses.broken.fork.help" = "Fork lokal ini tidak memiliki manifest harness. Klik kanan dan pilih Hapus Instalasi untuk menghapusnya.";
+"harnesses.broken.fork.badge" = "Rusak";
+"harnesses.fork.of %@" = "Cabang dari %@";
+"harnesses.fork.help %@" = "Dicabangkan dari %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree Baru dari Cabang";
+"sidebar.checkout.branch.label" = "Cabang";
+"sidebar.checkout.branch.placeholder" = "Pilih cabang…";
+"sidebar.checkout.branch.required" = "Pilih cabang untuk melanjutkan.";
+"sidebar.checkout.branch.create" = "Buat Worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Harness ini tidak memiliki sumber Git untuk diperbarui.";
+"harnesses.loading.help" = "Berkomunikasi dengan ynh…";
+"harnesses.unversioned.drift.help" = "Konten upstream berubah tanpa pembaruan versi — tinjau sebelum memperbarui";
+"harnesses.unversioned.drift.banner" = "Konten upstream berubah tanpa pembaruan versi — tinjau sebelum memperbarui";
+"harnesses.unversioned.drift.confirm.title" = "Tinjau perubahan upstream";
+"harnesses.unversioned.drift.confirm.body" = "Konten upstream berubah tanpa pembaruan versi. Memperbarui akan menarik konten baru. Tinjau SHA di bawah sebelum melanjutkan — pembaruan versi yang hilang dapat menutupi perubahan berbahaya.";
+"harnesses.unversioned.drift.confirm.proceed" = "Perbarui Tetap";

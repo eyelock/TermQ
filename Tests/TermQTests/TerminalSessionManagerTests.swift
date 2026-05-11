@@ -70,6 +70,21 @@ final class TerminalSessionManagerTests: XCTestCase {
         XCTAssertEqual(manager.effectiveBackend(for: card), .direct)
     }
 
+    // MARK: - sendTmuxCommand
+
+    func test_sendTmuxCommand_noopsWhenNoSession() async {
+        let mock = MockTmuxManager()
+        mock.tmuxPath = "/usr/local/bin/tmux"
+        let runner = StubCommandRunner()
+        let manager = TerminalSessionManager(tmuxManager: mock, commandRunner: runner)
+
+        manager.sendTmuxCommand("kill-pane", to: UUID())
+
+        // Give the Task a chance to run; if a runner invocation fired we'd see it.
+        try? await Task.sleep(for: .milliseconds(50))
+        XCTAssertTrue(runner.capturedInvocations.isEmpty)
+    }
+
     func testEffectiveBackendDirectCardReturnsDirect_WhenTmuxAvailable() {
         let mock = MockTmuxManager()
         mock.isAvailable = true

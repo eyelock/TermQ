@@ -11,12 +11,13 @@ struct CardEditorView: View {
 
     @StateObject private var viewModel = CardEditorViewModel()
     @State private var selectedTab: EditorTab = .general
-    @AppStorage("enableTerminalAutorun") private var globalAllowAgentPrompts = false
-    @AppStorage("allowOscClipboard") private var globalAllowOscClipboard = false
-    @AppStorage("confirmExternalLLMModifications") private var globalConfirmExternalModifications = true
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
-    @AppStorage("tmuxEnabled") private var tmuxEnabled = true
+    @Environment(SettingsStore.self) private var settings
+    private var globalAllowAgentPrompts: Bool { settings.enableTerminalAutorun }
+    private var globalAllowOscClipboard: Bool { settings.allowOscClipboard }
+    private var globalConfirmExternalModifications: Bool { settings.confirmExternalLLMModifications }
+    private var tmuxEnabled: Bool { settings.tmuxEnabled }
 
     private enum EditorTab: CaseIterable {
         case general
@@ -48,13 +49,51 @@ struct CardEditorView: View {
         return ["System Default"] + monoFonts.sorted()
     }
 
-    /// Preview font based on current selection
+    /// Preview font based on current selection. Resolves the per-card
+    /// override against the user-layer default for display only.
     private var previewFont: Font {
+        let size = SettingsStore.shared.effectiveFontSize(card: viewModel.fontSize)
         if viewModel.fontName.isEmpty {
-            return .system(size: viewModel.fontSize, design: .monospaced)
+            return .system(size: size, design: .monospaced)
         } else {
-            return .custom(viewModel.fontName, size: viewModel.fontSize)
+            return .custom(viewModel.fontName, size: size)
         }
+    }
+
+    // MARK: - Override bindings
+    //
+    // The four drift-named fields each carry an Optional override. The
+    // editor's UI exposes an "Override default" toggle that flips between
+    // `nil` (inherit) and an explicit value. The bindings below keep that
+    // mapping in one place so the form can keep using the existing
+    // controls (Picker/Slider/Toggle) over a non-Optional value.
+
+    private func overrideToggle<T>(
+        for keyPath: ReferenceWritableKeyPath<CardEditorViewModel, T?>,
+        defaultValue: @escaping () -> T
+    ) -> Binding<Bool> {
+        Binding(
+            get: { viewModel[keyPath: keyPath] != nil },
+            set: { isOverride in
+                if isOverride {
+                    if viewModel[keyPath: keyPath] == nil {
+                        viewModel[keyPath: keyPath] = defaultValue()
+                    }
+                } else {
+                    viewModel[keyPath: keyPath] = nil
+                }
+            }
+        )
+    }
+
+    private func overrideValue<T>(
+        for keyPath: ReferenceWritableKeyPath<CardEditorViewModel, T?>,
+        defaultValue: @escaping () -> T
+    ) -> Binding<T> {
+        Binding(
+            get: { viewModel[keyPath: keyPath] ?? defaultValue() },
+            set: { viewModel[keyPath: keyPath] = $0 }
+        )
     }
 
     var body: some View {
@@ -145,10 +184,26 @@ struct CardEditorView: View {
         }
 
         Section(Strings.Editor.sectionAppearance) {
-            Picker(Strings.Editor.fieldTheme, selection: $viewModel.themeId) {
-                Text(Strings.Editor.fieldThemeDefault).tag("")
-                ForEach(TerminalTheme.allThemes) { theme in
-                    Text(theme.name).tag(theme.id)
+            // Theme: Override toggle + Picker (when overriding)
+            Toggle(
+                Strings.Editor.fieldThemeOverride,
+                isOn: overrideToggle(for: \.themeId, defaultValue: { settings.themeId })
+            )
+            if viewModel.themeId != nil {
+                Picker(
+                    Strings.Editor.fieldTheme,
+                    selection: overrideValue(for: \.themeId, defaultValue: { settings.themeId })
+                ) {
+                    ForEach(TerminalTheme.allThemes) { theme in
+                        Text(theme.name).tag(theme.id)
+                    }
+                }
+            } else {
+                HStack {
+                    Text(Strings.Editor.fieldTheme)
+                    Spacer()
+                    Text(TerminalTheme.theme(for: settings.themeId).name)
+                        .foregroundColor(.secondary)
                 }
             }
 
@@ -158,17 +213,32 @@ struct CardEditorView: View {
                 }
             }
 
-            HStack {
-                Text(Strings.Editor.fieldFontSize)
-                Slider(value: $viewModel.fontSize, in: 9...24, step: 1)
-                Text("\(Int(viewModel.fontSize)) pt")
-                    .frame(width: 40)
+            // Font size: Override toggle + Slider (when overriding)
+            Toggle(
+                Strings.Editor.fieldFontSizeOverride,
+                isOn: overrideToggle(for: \.fontSize, defaultValue: { settings.fontSize })
+            )
+            if viewModel.fontSize != nil {
+                let size = overrideValue(for: \.fontSize, defaultValue: { settings.fontSize })
+                HStack {
+                    Text(Strings.Editor.fieldFontSize)
+                    Slider(value: size, in: 9...24, step: 1)
+                    Text("\(Int(size.wrappedValue)) pt")
+                        .frame(width: 40)
+                }
+            } else {
+                HStack {
+                    Text(Strings.Editor.fieldFontSize)
+                    Spacer()
+                    Text("\(Int(settings.fontSize)) pt")
+                        .foregroundColor(.secondary)
+                }
             }
 
-            // Font preview with theme colors
-            let previewTheme =
-                viewModel.themeId.isEmpty
-                ? TerminalTheme.defaultDark : TerminalTheme.theme(for: viewModel.themeId)
+            // Font preview reflects the *resolved* values so users see the
+            // effective appearance whether or not they're overriding.
+            let resolvedThemeId = settings.effectiveThemeId(card: viewModel.themeId)
+            let previewTheme = TerminalTheme.theme(for: resolvedThemeId)
             Text(Strings.Editor.fontPreview)
                 .font(previewFont)
                 .padding(8)
@@ -188,13 +258,32 @@ struct CardEditorView: View {
             let hasActiveSession = sessionManager.hasActiveSession(for: card.id)
 
             Section(Strings.Editor.sectionBackend) {
-                Picker(Strings.Editor.fieldBackend, selection: $viewModel.backend) {
-                    ForEach(TerminalBackend.allCases, id: \.self) { backend in
-                        Text(localizedName(for: backend)).tag(backend)
+                Toggle(
+                    Strings.Editor.fieldBackendOverride,
+                    isOn: overrideToggle(for: \.backend, defaultValue: { settings.backend })
+                )
+                .disabled(hasActiveSession)
+
+                let resolvedBackend = settings.effectiveBackend(card: viewModel.backend)
+                if viewModel.backend != nil {
+                    Picker(
+                        Strings.Editor.fieldBackend,
+                        selection: overrideValue(for: \.backend, defaultValue: { settings.backend })
+                    ) {
+                        ForEach(TerminalBackend.allCases, id: \.self) { backend in
+                            Text(localizedName(for: backend)).tag(backend)
+                        }
+                    }
+                    .pickerStyle(.radioGroup)
+                    .disabled(hasActiveSession)
+                } else {
+                    HStack {
+                        Text(Strings.Editor.fieldBackend)
+                        Spacer()
+                        Text(localizedName(for: resolvedBackend))
+                            .foregroundColor(.secondary)
                     }
                 }
-                .pickerStyle(.radioGroup)
-                .disabled(hasActiveSession)
 
                 if hasActiveSession {
                     Text(Strings.Editor.backendLockedWarning)
@@ -202,7 +291,7 @@ struct CardEditorView: View {
                         .foregroundColor(.orange)
                 } else {
                     Text(
-                        "\(localizedDescription(for: viewModel.backend)) \(Strings.Editor.backendRestartHint)"
+                        "\(localizedDescription(for: resolvedBackend)) \(Strings.Editor.backendRestartHint)"
                     )
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -224,8 +313,29 @@ struct CardEditorView: View {
         }
 
         Section(Strings.Editor.sectionSecurity) {
-            Toggle(Strings.Editor.fieldSafePaste, isOn: $viewModel.safePasteEnabled)
+            Toggle(
+                Strings.Editor.fieldSafePasteOverride,
+                isOn: overrideToggle(for: \.safePasteEnabled, defaultValue: { settings.safePaste })
+            )
+            if viewModel.safePasteEnabled != nil {
+                Toggle(
+                    Strings.Editor.fieldSafePaste,
+                    isOn: overrideValue(
+                        for: \.safePasteEnabled, defaultValue: { settings.safePaste })
+                )
                 .help(Strings.Editor.fieldSafePasteHelp)
+            } else {
+                HStack {
+                    Text(Strings.Editor.fieldSafePaste)
+                    Spacer()
+                    Text(
+                        settings.safePaste
+                            ? Strings.Editor.fieldSafePasteInheritedOn
+                            : Strings.Editor.fieldSafePasteInheritedOff
+                    )
+                    .foregroundColor(.secondary)
+                }
+            }
 
             SharedToggle(
                 label: Strings.Editor.allowAgentPrompts,

@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Εμφάνιση";
 "editor.field.theme" = "Θέμα";
 "editor.field.theme.default" = "Προεπιλογή";
+"editor.field.theme.override" = "Παράκαμψη προεπιλεγμένου θέματος";
 "editor.field.font.size" = "Μέγεθος γραμματοσειράς";
+"editor.field.font.size.override" = "Παράκαμψη προεπιλεγμένου μεγέθους γραμματοσειράς";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Εντολή για εκτέλεση κατά την εκκίνηση του τερματικού";
 "editor.field.safe.paste" = "Ασφαλής επικόλληση";
 "editor.field.safe.paste.help" = "Εμφάνιση επιβεβαίωσης πριν την επικόλληση πολλών γραμμών";
+"editor.field.safe.paste.override" = "Παράκαμψη προεπιλεγμένης ασφαλούς επικόλλησης";
+"editor.field.safe.paste.inherited.on" = "Ενεργό (κληρονομημένο)";
+"editor.field.safe.paste.inherited.off" = "Ανενεργό (κληρονομημένο)";
 "editor.field.allow.autorun" = "Επιτροπή αυτόματης εκτέλεσης";
 "editor.field.allow.autorun.help" = "Επιτροπή στο CLI να εκτελεί εντολές αυτόματα";
 "editor.field.autorun.disabled.globally" = "Η αυτόματη εκτέλεση είναι απενεργοποιημένη καθολικά";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Παράκαμψη προεπιλεγμένου backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Το backend δεν μπορεί να αλλάξει ενώ η συνεδρία είναι ενεργή. Επανεκκινήστε τη συνεδρία για να αλλάξετε backends.";
@@ -584,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Εισαγάγετε μια διαδρομή worktree για να συνεχίσετε.";
 "sidebar.new.worktree.create" = "Δημιουργία";
 "sidebar.new.worktree.loading.branches" = "Φόρτωση κλάδων...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Μετατροπή σε worktree";
+"sidebar.convert.worktree.branch.label" = "Όνομα κλάδου";
+"sidebar.convert.worktree.button" = "Μετατροπή";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Μετατροπή σε worktree…";
 "sidebar.branch.delete" = "Διαγραφή κλάδου";
 "sidebar.branch.delete.title" = "Διαγραφή κλάδου";
 "sidebar.branch.delete.confirm" = "Διαγραφή";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Τοπικό";
 "harnesses.source.registry" = "Μητρώο";
+"harnesses.source.read.only" = "Μόνο ανάγνωση";
+"harnesses.source.forked.from %@" = "Διακλάδωση από %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Πληροφορίες";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "Εκχωρεί σε (%d)";
 "harnesses.detail.picks %d" = "Επιλέγει (%d):";
 "harnesses.reveal.in.finder" = "Εμφάνιση στο Finder";
+"harnesses.copy.path" = "Αντιγραφή ως διαδρομή";
 "harnesses.open.in.browser" = "Άνοιγμα στο πρόγραμμα περιήγησης";
 "harnesses.close.detail" = "Κλείσιμο";
 "harnesses.configure.from.marketplaces" = "Ρύθμιση από αγορές…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "Εγκατάσταση harness";
 "harnesses.install.toolbar.help" = "Εγκατάσταση ενός harness";
-"harnesses.install.tab.search" = "Αναζήτηση";
+"harnesses.install.tab.library" = "Βιβλιοθήκη";
+"harnesses.install.manage.sources" = "Διαχείριση πηγών…";
+"harnesses.install.manage.sources.help" = "Προσθήκη ή αφαίρεση τοπικών πηγών harness";
+"harnesses.install.manage.sources.done" = "Τέλος";
 "harnesses.install.tab.git" = "Από Git";
-"harnesses.install.tab.sources" = "Πηγές";
 "harnesses.install.search.placeholder" = "Αναζήτηση σε μητρώα και πηγές…";
 "harnesses.install.search.prompt" = "Πληκτρολογήστε για αναζήτηση σε μητρώα και πηγές";
 "harnesses.install.search.empty" = "Δεν βρέθηκαν αποτελέσματα";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "Αφαίρεση";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Προσθήκη αντιπροσώπου";
+"harnesses.add.delegate.button" = "Προσθήκη αντιπροσώπου…";
+"harnesses.add.delegate.library.search.placeholder" = "Αναζήτηση εγκατεστημένων harness…";
+"harnesses.add.delegate.library.empty" = "Δεν υπάρχουν άλλα εγκατεστημένα harness για ανάθεση.";
+"source.picker.browse.local" = "Αναζήτηση τοπικά…";
+"source.picker.browse.local.help" = "Επιλέξτε τοπικό κατάλογο";
+"harnesses.add.delegate.pick" = "Επιλογή";
+"harnesses.add.delegate.back" = "Πίσω";
+"harnesses.add.delegate.apply" = "Προσθήκη αντιπροσώπου";
+
 "harnesses.update.button" = "Ενημέρωση";
 "harnesses.update.help" = "Ενημέρωση στην τελευταία έκδοση";
+"harnesses.update.available" = "Διαθέσιμη ενημέρωση";
+"harnesses.update.available.version %@" = "Η έκδοση %@ είναι διαθέσιμη";
 "harnesses.uninstall.button" = "Απεγκατάσταση";
 "harnesses.uninstall.help" = "Απεγκατάσταση αυτού του harness";
 "harnesses.uninstall.alert.title %@" = "Απεγκατάσταση \"%@\";";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "Προεπιλογή";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Τοπικό";
+"harnesses.group.quarantined" = "Σε καραντίνα";
+"harnesses.quarantine.restore" = "Επαναφορά";
+"harnesses.quarantine.drop" = "Κατάργηση…";
 "harnesses.group.menu.settings" = "Ρυθμίσεις…";
 "harnesses.group.registry %@" = "Μητρώο: %@";
 "harnesses.install.browsing" = "Φόρτωση διαθέσιμων harness…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "Κλάδος, ετικέτα ή SHA commit (προαιρετικό)";
 "harnesses.install.retry" = "Επανάληψη";
 "harnesses.install.section.available" = "Διαθέσιμο από μητρώα";
+"harnesses.install.section.available.empty" = "Δεν υπάρχουν ρυθμισμένα marketplace. Προσθέστε ένα στις Ρυθμίσεις → Εξωτερικές πηγές.";
 "harnesses.install.section.installed" = "Εγκατεστημένο";
 "harnesses.install.section.local" = "Διαθέσιμο τοπικά";
 "harnesses.outdated.capabilities.unknown" = "άγνωστο";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Άνοιγμα τερματικών";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Διακλάδωση σε τοπικό";
+"harnesses.fork.to.local.help" = "Δημιουργία επεξεργάσιμου τοπικού αντιγράφου αυτού του harness";
+"harnesses.update.dot.help" = "Διαθέσιμη ενημέρωση";
+"harness.fork.title %@" = "Διακλάδωση \"%@\" σε τοπικό";
+"harness.fork.explanation" = "Δημιουργεί ένα επεξεργάσιμο τοπικό αντίγραφο αυτού του harness. Το αντίγραφο παρακολουθεί την προέλευσή του ώστε να βλέπετε τι άλλαξε upstream.";
+"harness.fork.button" = "Διακλάδωση";
+"harness.fork.progress.title %@" = "Διακλάδωση του \"%@\"…";
+"harness.fork.rename.label" = "Όνομα (προαιρετικό)";
+"harness.fork.rename.hint" = "Αφήστε κενό για να διατηρηθεί το όνομα πηγής. Το κανονικό id του νέου fork θα είναι local/<όνομα>.";
+"harness.fork.identity.collision" = "Ένα εγκατεστημένο harness έχει ήδη αυτήν την ταυτότητα.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Ενημέρωση \"%@\"";
+"harness.update.progress.title %@" = "Ενημέρωση \"%@\"…";
+"harness.update.button" = "Ενημέρωση";
+"harness.update.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+"command.runner.running" = "Εκτελείται…";
+"command.runner.succeeded" = "Επιτυχία";
+"command.runner.failed" = "Αποτυχία";
+"common.copy.output" = "Αντιγραφή εξόδου";
+"common.rerun" = "Εκ νέου εκτέλεση";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Ενέργειες συμπερίληψης";
+"harnesses.include.edit.button" = "Επεξεργασία συμπερίληψης…";
+"harnesses.include.remove.button" = "Αφαίρεση συμπερίληψης…";
+"harnesses.include.edit.title" = "Επεξεργασία συμπερίληψης";
+"harnesses.include.edit.source" = "Πηγή";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "κλάδος, ετικέτα ή commit";
+"harnesses.include.edit.path" = "Διαδρομή";
+"harnesses.include.edit.path.placeholder" = "υποδιαδρομή στο αποθετήριο πηγής";
+"harnesses.include.edit.picks" = "Επιλογή";
+"harnesses.include.edit.picks.explainer" = "Τα επισημασμένα αντικείμενα βρίσκονται τώρα σε αυτή τη συμπερίληψη. Ενεργοποιήστε/απενεργοποιήστε για προσθήκη ή αφαίρεση.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld από %ld επιλεγμένα";
+"harnesses.include.edit.picks.unknown.source" = "Αυτή η πηγή δεν βρίσκεται στα marketplace σας — εμφανίζονται μόνο τα τρέχοντα αντικείμενα.";
+"harnesses.include.edit.save" = "Αποθήκευση αλλαγών";
+"harnesses.include.remove.confirm.title" = "Αφαίρεση αυτής της συμπερίληψης;";
+"harnesses.include.remove.confirm.message %@" = "Το %@ θα αφαιρεθεί από αυτό το harness. Το αποθετήριο πηγής δεν τροποποιείται.";
+"harnesses.include.remove.confirm" = "Αφαίρεση";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Προσθήκη συμπερίληψης…";
+"harnesses.include.add.edit.existing" = "Επεξεργασία";
+"harnesses.include.add.search.placeholder" = "Αναζήτηση προσθέτων…";
+"harnesses.include.add.no.marketplaces" = "Δεν έχουν ρυθμιστεί marketplace. Χρησιμοποιήστε την καρτέλα Marketplace για να προσθέσετε ένα.";
+"harnesses.include.add.no.matches" = "Κανένα πρόσθετο δεν ταιριάζει.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "κλάδος, ετικέτα ή commit (προαιρετικό)";
+"harnesses.include.add.gitpath.label" = "Διαδρομή";
+"harnesses.include.add.gitpath.placeholder" = "υποκατάλογος στο αποθετήριο πηγής (προαιρετικό)";
+"harnesses.include.add.giturl.hint" = "Η επιλογή περιλαμβάνει από προεπιλογή όλα όσα παρέχει η πηγή. Χρησιμοποιήστε Επεξεργασία συμπερίληψης μετά την προσθήκη για περιορισμό.";
+"harnesses.include.add.picks.prompt" = "Επιλέξτε τα αντικείμενα για συμπερίληψη.";
+"harnesses.include.add.apply" = "Εφαρμογή";
+"harnesses.include.add.already.installed" = "Ήδη προστέθηκε";
+"harnesses.include.add.already.installed.help" = "Αυτό το πρόσθετο βρίσκεται ήδη σε αυτό το harness — κάντε κλικ για επεξεργασία επιλογής ή ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Ενέργειες αντιπροσώπου";
+"harnesses.delegate.edit.button" = "Επεξεργασία αντιπροσώπου…";
+"harnesses.delegate.remove.button" = "Αφαίρεση αντιπροσώπου…";
+"harnesses.delegate.edit.title" = "Επεξεργασία αντιπροσώπου";
+"harnesses.delegate.remove.confirm.title" = "Αφαίρεση αυτού του αντιπροσώπου;";
+"harnesses.delegate.remove.confirm.message %@" = "Το %@ δεν θα συγχωνεύεται πλέον σε αυτό το harness. Το αποθετήριο πηγής δεν αλλάζει.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Επεξεργασία manifest…";
+"harnesses.manifest.edit.title" = "Επεξεργασία manifest";
+"harnesses.manifest.edit.name" = "Όνομα";
+"harnesses.manifest.edit.version" = "Έκδοση";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Χρησιμοποιήστε semver: MAJOR.MINOR.PATCH (π.χ. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Προεπιλεγμένος προμηθευτής";
+"harnesses.manifest.edit.description" = "Περιγραφή";
+"harnesses.manifest.edit.description.hint" = "Εμφανίζεται στη λίστα harness και στην κεφαλίδα λεπτομερειών. Αφήστε κενό για παράλειψη.";
+"harnesses.manifest.edit.save" = "Αποθήκευση αλλαγών";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Το upstream commit άλλαξε: %@ → %@";
+"harnesses.broken.fork.help" = "Αυτό το τοπικό fork δεν έχει αρχείο manifest harness. Κάντε δεξί κλικ και επιλέξτε Κατάργηση εγκατάστασης για να το αφαιρέσετε.";
+"harnesses.broken.fork.badge" = "Κατεστραμμένο";
+"harnesses.fork.of %@" = "Διακλάδωση από %@";
+"harnesses.fork.help %@" = "Διακλάδωση από %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Νέο worktree από κλάδο";
+"sidebar.checkout.branch.label" = "Κλάδος";
+"sidebar.checkout.branch.placeholder" = "Επιλέξτε κλάδο…";
+"sidebar.checkout.branch.required" = "Επιλέξτε κλάδο για να συνεχίσετε.";
+"sidebar.checkout.branch.create" = "Δημιουργία worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Αυτό το harness δεν έχει πηγές Git για ενημέρωση.";
+"harnesses.loading.help" = "Επικοινωνία με το ynh…";
+"harnesses.unversioned.drift.help" = "Το upstream περιεχόμενο άλλαξε χωρίς ενημέρωση έκδοσης — ελέγξτε πριν την ενημέρωση";
+"harnesses.unversioned.drift.banner" = "Το upstream περιεχόμενο άλλαξε χωρίς ενημέρωση έκδοσης — ελέγξτε πριν την ενημέρωση";
+"harnesses.unversioned.drift.confirm.title" = "Έλεγχος upstream αλλαγών";
+"harnesses.unversioned.drift.confirm.body" = "Το upstream περιεχόμενο άλλαξε χωρίς ενημέρωση έκδοσης. Η ενημέρωση θα φέρει το νέο περιεχόμενο. Ελέγξτε τα SHA παρακάτω πριν συνεχίσετε — η έλλειψη ενημέρωσης έκδοσης μπορεί να αποκρύψει κακόβουλες αλλαγές.";
+"harnesses.unversioned.drift.confirm.proceed" = "Ενημέρωση ούτως ή άλλως";

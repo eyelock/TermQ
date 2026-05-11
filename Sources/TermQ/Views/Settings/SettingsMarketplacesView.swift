@@ -5,8 +5,7 @@ struct SettingsMarketplacesView: View {
     @ObservedObject private var store = MarketplaceStore.shared
     @ObservedObject private var ynhDetector: YNHDetector = .shared
     @StateObject private var marketplaceService = YNHMarketplaceService()
-    @AppStorage("marketplaceAutoRefresh") private var autoRefresh = true
-    @AppStorage("defaultHarnessAuthorDirectory") private var defaultHarnessAuthorDirectory = ""
+    @ObservedObject private var authorPreferences = HarnessAuthorPreferences.shared
 
     @State private var showAddSheet = false
     @State private var marketplaceToRemove: Marketplace?
@@ -50,7 +49,7 @@ struct SettingsMarketplacesView: View {
             }
 
             Section {
-                Toggle(Strings.Settings.Marketplaces.autoRefresh, isOn: $autoRefresh)
+                Toggle(Strings.Settings.Marketplaces.autoRefresh, isOn: $store.autoRefresh)
             } header: {
                 Text(Strings.Settings.Marketplaces.sectionBehaviour)
             } footer: {
@@ -70,8 +69,8 @@ struct SettingsMarketplacesView: View {
                     }
                     Spacer()
                     Button(Strings.Common.browse) { browseForAuthorDirectory() }
-                    if !defaultHarnessAuthorDirectory.isEmpty {
-                        Button(Strings.Settings.Marketplaces.reset) { defaultHarnessAuthorDirectory = "" }
+                    if !authorPreferences.defaultDirectory.isEmpty {
+                        Button(Strings.Settings.Marketplaces.reset) { authorPreferences.defaultDirectory = "" }
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -148,7 +147,8 @@ struct SettingsMarketplacesView: View {
                 name: name,
                 shortURL: GitURLHelper.shortURL(marketplace.url),
                 description: marketplace.description,
-                browserURL: browserURL
+                browserURL: browserURL,
+                ref: marketplace.ref
             )
             Spacer()
             Button(role: .destructive) {
@@ -169,7 +169,8 @@ struct SettingsMarketplacesView: View {
                 name: ynhMarketplace.name,
                 shortURL: GitURLHelper.shortURL(ynhMarketplace.url),
                 description: ynhMarketplace.description,
-                browserURL: GitURLHelper.browserURL(for: ynhMarketplace.url)
+                browserURL: GitURLHelper.browserURL(for: ynhMarketplace.url),
+                ref: ynhMarketplace.ref
             )
             Spacer()
             Button(role: .destructive) {
@@ -184,9 +185,9 @@ struct SettingsMarketplacesView: View {
     }
 
     private var effectiveAuthorDirectory: String {
-        defaultHarnessAuthorDirectory.isEmpty
+        authorPreferences.defaultDirectory.isEmpty
             ? Strings.Settings.Marketplaces.authorDirectoryDetectedHint
-            : defaultHarnessAuthorDirectory
+            : authorPreferences.defaultDirectory
     }
 
     private var ynhEnvironment: [String: String] {
@@ -204,18 +205,19 @@ struct SettingsMarketplacesView: View {
         Task {
             let response = await panel.begin()
             if response == .OK, let url = panel.url {
-                defaultHarnessAuthorDirectory = url.path(percentEncoded: false)
+                authorPreferences.defaultDirectory = url.path(percentEncoded: false)
             }
         }
     }
 }
 
-/// Standardised label for marketplace and registry rows: name (clickable link) + org/repo + description.
+/// Standardised label for marketplace and registry rows: name (clickable link) + org/repo + description + ref pin.
 private struct ExternalSourceRowLabel: View {
     let name: String
     let shortURL: String
     let description: String?
     let browserURL: URL?
+    let ref: String?
 
     @State private var isHovering = false
 
@@ -245,6 +247,23 @@ private struct ExternalSourceRowLabel: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
+            }
+            // Pin signal — useful when debugging which version of a registry
+            // the app is reading. nil ref means "latest HEAD on default branch".
+            if let pin = ref, !pin.isEmpty {
+                HStack(spacing: 4) {
+                    Image(systemName: "pin.fill").imageScale(.small)
+                    Text(pin)
+                        .font(.system(size: 11, design: .monospaced))
+                }
+                .foregroundStyle(.secondary)
+            } else {
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.triangle.2.circlepath").imageScale(.small)
+                    Text("latest (unpinned)")
+                        .font(.caption)
+                }
+                .foregroundStyle(.secondary)
             }
         }
     }

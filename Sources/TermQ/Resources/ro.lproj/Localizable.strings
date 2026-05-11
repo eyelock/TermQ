@@ -146,7 +146,9 @@
 "editor.section.appearance" = "Aspect";
 "editor.field.theme" = "Temă";
 "editor.field.theme.default" = "Implicit";
+"editor.field.theme.override" = "Suprascriere temă implicită";
 "editor.field.font.size" = "Dimensiune font";
+"editor.field.font.size.override" = "Suprascriere dimensiune font implicită";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -162,6 +164,9 @@
 "editor.field.init.command.help" = "Comandă de rulat la pornirea terminalului";
 "editor.field.safe.paste" = "Lipire sigură";
 "editor.field.safe.paste.help" = "Afișare confirmare înainte de lipirea textului multilinie";
+"editor.field.safe.paste.override" = "Suprascriere lipire sigură implicită";
+"editor.field.safe.paste.inherited.on" = "Activat (moștenit)";
+"editor.field.safe.paste.inherited.off" = "Dezactivat (moștenit)";
 "editor.field.allow.autorun" = "Permitere rulare automată";
 "editor.field.allow.autorun.help" = "Permitere CLI să ruleze comenzi automat";
 "editor.field.autorun.disabled.globally" = "Rulare automată dezactivată global";
@@ -402,6 +407,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Suprascriere backend implicit";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend-ul nu poate fi modificat în timp ce sesiunea este activă. Reporniți sesiunea pentru a schimba backend-urile.";
@@ -582,12 +588,18 @@
 "sidebar.new.worktree.path.required" = "Introduceți o cale de worktree pentru a continua.";
 "sidebar.new.worktree.create" = "Creează";
 "sidebar.new.worktree.loading.branches" = "Se încarcă branch-urile...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Convertire în arbore de lucru";
+"sidebar.convert.worktree.branch.label" = "Numele branch-ului";
+"sidebar.convert.worktree.button" = "Convertire";
+
 "common.close.window" = "Închide fereastra";
 "menu.toggle.sidebar" = "Comută bara laterală";
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Convertire în arbore de lucru…";
 "sidebar.branch.delete" = "Șterge ramura";
 "sidebar.branch.delete.title" = "Șterge ramura";
 "sidebar.branch.delete.confirm" = "Șterge";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Registru";
+"harnesses.source.read.only" = "Doar citire";
+"harnesses.source.forked.from %@" = "Derivat din %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informații";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "Delegă la (%d)";
 "harnesses.detail.picks %d" = "Selectează (%d):";
 "harnesses.reveal.in.finder" = "Afișare în Finder";
+"harnesses.copy.path" = "Copiați ca cale";
 "harnesses.open.in.browser" = "Deschide în browser";
 "harnesses.close.detail" = "Închide";
 "harnesses.configure.from.marketplaces" = "Configurați din piețe…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "Instalare harness";
 "harnesses.install.toolbar.help" = "Instalează un harness";
-"harnesses.install.tab.search" = "Căutare";
+"harnesses.install.tab.library" = "Bibliotecă";
+"harnesses.install.manage.sources" = "Gestionează sursele…";
+"harnesses.install.manage.sources.help" = "Adăugă sau elimină surse locale de harness";
+"harnesses.install.manage.sources.done" = "Gata";
 "harnesses.install.tab.git" = "Din Git";
-"harnesses.install.tab.sources" = "Surse";
 "harnesses.install.search.placeholder" = "Caută în registre și surse…";
 "harnesses.install.search.prompt" = "Tastați pentru a căuta în registre și surse";
 "harnesses.install.search.empty" = "Niciun rezultat";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "Elimină";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Adaugă delegat";
+"harnesses.add.delegate.button" = "Adaugă delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Caută harness-uri instalate…";
+"harnesses.add.delegate.library.empty" = "Nu există alte harness-uri instalate la care să delegați.";
+"source.picker.browse.local" = "Răsfoire locală…";
+"source.picker.browse.local.help" = "Selectați un director local";
+"harnesses.add.delegate.pick" = "Selectați";
+"harnesses.add.delegate.back" = "Înapoi";
+"harnesses.add.delegate.apply" = "Adaugă delegat";
+
 "harnesses.update.button" = "Actualizare";
 "harnesses.update.help" = "Actualizare la ultima versiune";
+"harnesses.update.available" = "Actualizare disponibilă";
+"harnesses.update.available.version %@" = "Versiunea %@ este disponibilă";
 "harnesses.uninstall.button" = "Dezinstalare";
 "harnesses.uninstall.help" = "Dezinstalați acest harness";
 "harnesses.uninstall.alert.title %@" = "Dezinstalați \"%@\"?";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "Implicit";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Local";
+"harnesses.group.quarantined" = "În carantină";
+"harnesses.quarantine.restore" = "Restaurare";
+"harnesses.quarantine.drop" = "Eliminare…";
 "harnesses.group.menu.settings" = "Setări…";
 "harnesses.group.registry %@" = "Registru: %@";
 "harnesses.install.browsing" = "Se încarcă harness-urile disponibile…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "Ramură, tag sau SHA commit (opțional)";
 "harnesses.install.retry" = "Reîncearcă";
 "harnesses.install.section.available" = "Disponibil din registre";
+"harnesses.install.section.available.empty" = "Niciun marketplace configurat. Adăugați unul în Setări → Surse externe.";
 "harnesses.install.section.installed" = "Instalat";
 "harnesses.install.section.local" = "Disponibil local";
 "harnesses.outdated.capabilities.unknown" = "necunoscut";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Deschide terminale";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork la local";
+"harnesses.fork.to.local.help" = "Creați o copie locală editabilă a acestui harness";
+"harnesses.update.dot.help" = "Actualizare disponibilă";
+"harness.fork.title %@" = "Fork \"%@\" la local";
+"harness.fork.explanation" = "Creează o copie locală editabilă a acestui harness. Copia îi urmărește originea pentru a putea vedea ce s-a schimbat upstream.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Se creează fork-ul \"%@\"…";
+"harness.fork.rename.label" = "Nume (opțional)";
+"harness.fork.rename.hint" = "Lasă gol pentru a păstra numele sursei. Id-ul canonic al noului fork va fi local/<nume>.";
+"harness.fork.identity.collision" = "Un harness instalat are deja această identitate.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Actualizează \"%@\"";
+"harness.update.progress.title %@" = "Se actualizează \"%@\"…";
+"harness.update.button" = "Actualizează";
+"harness.update.ynh.unavailable" = "ynh nu este disponibil.";
+"command.runner.running" = "Se execută…";
+"command.runner.succeeded" = "Reușit";
+"command.runner.failed" = "Eșuat";
+"common.copy.output" = "Copiați ieșirea";
+"common.rerun" = "Rulați din nou";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Acțiuni includere";
+"harnesses.include.edit.button" = "Editați includerea…";
+"harnesses.include.remove.button" = "Eliminați includerea…";
+"harnesses.include.edit.title" = "Editați includerea";
+"harnesses.include.edit.source" = "Sursă";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "ramură, etichetă sau commit";
+"harnesses.include.edit.path" = "Cale";
+"harnesses.include.edit.path.placeholder" = "subcale în depozitul sursă";
+"harnesses.include.edit.picks" = "Selecție";
+"harnesses.include.edit.picks.explainer" = "Artefactele bifate sunt în prezent în această includere. Comutați pentru a adăuga sau elimina.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld din %ld selectate";
+"harnesses.include.edit.picks.unknown.source" = "Această sursă nu este în piețele dvs. — sunt listate doar artefactele curente.";
+"harnesses.include.edit.save" = "Salvați modificările";
+"harnesses.include.remove.confirm.title" = "Eliminați această includere?";
+"harnesses.include.remove.confirm.message %@" = "%@ va fi eliminat din acest harness. Depozitul sursă nu este modificat.";
+"harnesses.include.remove.confirm" = "Eliminați";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Adăugați includere…";
+"harnesses.include.add.edit.existing" = "Editează";
+"harnesses.include.add.search.placeholder" = "Căutați pluginuri…";
+"harnesses.include.add.no.marketplaces" = "Nu există piețe configurate. Utilizați fila Piețe pentru a adăuga una.";
+"harnesses.include.add.no.matches" = "Niciun plugin nu corespunde.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "ramură, etichetă sau commit (opțional)";
+"harnesses.include.add.gitpath.label" = "Cale";
+"harnesses.include.add.gitpath.placeholder" = "subdirector în depozitul sursă (opțional)";
+"harnesses.include.add.giturl.hint" = "Selecția include implicit tot ceea ce oferă sursa. Utilizați Editați includerea după adăugare pentru a restrânge.";
+"harnesses.include.add.picks.prompt" = "Selectați artefactele de inclus.";
+"harnesses.include.add.apply" = "Aplicați";
+"harnesses.include.add.already.installed" = "Deja adăugat";
+"harnesses.include.add.already.installed.help" = "Acest plugin este deja în acest harness — faceți clic pentru a edita selecția sau ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Acțiuni delegat";
+"harnesses.delegate.edit.button" = "Editează delegatul…";
+"harnesses.delegate.remove.button" = "Elimină delegatul…";
+"harnesses.delegate.edit.title" = "Editează delegatul";
+"harnesses.delegate.remove.confirm.title" = "Eliminați acest delegat?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ nu va mai fi integrat în acest harness. Depozitul sursă nu este modificat.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Editați manifestul…";
+"harnesses.manifest.edit.title" = "Editați manifestul";
+"harnesses.manifest.edit.name" = "Nume";
+"harnesses.manifest.edit.version" = "Versiune";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Utilizați semver: MAJOR.MINOR.PATCH (ex. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Furnizor implicit";
+"harnesses.manifest.edit.description" = "Descriere";
+"harnesses.manifest.edit.description.hint" = "Afișat în lista de harness-uri și în antetul detaliilor. Lăsați gol pentru a omite.";
+"harnesses.manifest.edit.save" = "Salvați modificările";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";
+"harnesses.broken.fork.help" = "Acestui fork local îi lipsește manifestul harness. Faceți clic dreapta și selectați Dezinstalare pentru a-l elimina.";
+"harnesses.broken.fork.badge" = "Defect";
+"harnesses.fork.of %@" = "Derivat din %@";
+"harnesses.fork.help %@" = "Derivat din %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree nou din ramură";
+"sidebar.checkout.branch.label" = "Ramură";
+"sidebar.checkout.branch.placeholder" = "Selectați o ramură…";
+"sidebar.checkout.branch.required" = "Selectați o ramură pentru a continua.";
+"sidebar.checkout.branch.create" = "Creați worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Acest harness nu are surse Git de actualizat.";
+"harnesses.loading.help" = "Comunicare cu ynh…";
+"harnesses.unversioned.drift.help" = "Conținutul upstream s-a modificat fără actualizare de versiune — verificați înainte de actualizare";
+"harnesses.unversioned.drift.banner" = "Conținutul upstream s-a modificat fără actualizare de versiune — verificați înainte de actualizare";
+"harnesses.unversioned.drift.confirm.title" = "Verificați modificările upstream";
+"harnesses.unversioned.drift.confirm.body" = "Conținutul upstream s-a modificat fără o actualizare de versiune. Actualizarea va descărca noul conținut. Verificați SHA-urile de mai jos înainte de a continua — o actualizare de versiune lipsă poate masca modificări malițioase.";
+"harnesses.unversioned.drift.confirm.proceed" = "Actualizați oricum";

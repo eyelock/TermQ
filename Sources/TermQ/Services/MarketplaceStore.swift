@@ -19,6 +19,12 @@ final class MarketplaceStore: ObservableObject {
     /// If non-nil, the HarnessIncludePicker should open pre-targeted at this harness.
     @Published var preselectedHarnessTarget: String?
 
+    /// Whether the marketplace browser should auto-refresh stale entries on
+    /// open. Persisted to UserDefaults so the choice survives launches.
+    @Published var autoRefresh: Bool {
+        didSet { defaults.set(autoRefresh, forKey: Self.autoRefreshKey) }
+    }
+
     private let fileURL: URL
     private let defaults: UserDefaults
     private let encoder = JSONEncoder()
@@ -26,6 +32,7 @@ final class MarketplaceStore: ObservableObject {
 
     private static let defaultsSeedKey = "marketplaces.defaultsSeeded.v1"
     private static let removedDefaultsKey = "marketplaces.removedDefaultURLs.v1"
+    private static let autoRefreshKey = "marketplaceAutoRefresh"
 
     /// Designated initialiser. Defaults to the production location and standard UserDefaults;
     /// tests inject a temp file and an isolated UserDefaults suite.
@@ -44,6 +51,9 @@ final class MarketplaceStore: ObservableObject {
             self.fileURL = dir.appendingPathComponent("marketplaces.json")
         }
         self.defaults = defaults
+        // Default true to match the prior @AppStorage("marketplaceAutoRefresh") = true behaviour
+        // when the key is absent.
+        self.autoRefresh = defaults.object(forKey: Self.autoRefreshKey) as? Bool ?? true
 
         encoder.outputFormatting = .prettyPrinted
         encoder.dateEncodingStrategy = .iso8601

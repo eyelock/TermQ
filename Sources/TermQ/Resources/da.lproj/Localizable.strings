@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Udseende";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Standard";
+"editor.field.theme.override" = "Tilsidesæt standardtema";
 "editor.field.font.size" = "Skriftstørrelse";
+"editor.field.font.size.override" = "Tilsidesæt standardskriftstørrelse";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Kommando at køre ved terminalstart";
 "editor.field.safe.paste" = "Sikker indsætning";
 "editor.field.safe.paste.help" = "Vis bekræftelse før indsætning af tekst med flere linjer";
+"editor.field.safe.paste.override" = "Tilsidesæt standard sikker indsætning";
+"editor.field.safe.paste.inherited.on" = "Til (nedarvet)";
+"editor.field.safe.paste.inherited.off" = "Fra (nedarvet)";
 "editor.field.allow.autorun" = "Tillad autokørsel";
 "editor.field.allow.autorun.help" = "Tillad CLI at køre kommandoer automatisk";
 "editor.field.autorun.disabled.globally" = "Autokørsel deaktiveret globalt";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Tilsidesæt standard-backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend kan ikke ændres, mens sessionen er aktiv. Genstart sessionen for at ændre backends.";
@@ -584,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Angiv en worktree-sti for at fortsætte.";
 "sidebar.new.worktree.create" = "Opret";
 "sidebar.new.worktree.loading.branches" = "Indlæser grene...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Konverter til worktree";
+"sidebar.convert.worktree.branch.label" = "Grensnavn";
+"sidebar.convert.worktree.button" = "Konverter";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Konverter til worktree…";
 "sidebar.branch.delete" = "Slet gren";
 "sidebar.branch.delete.title" = "Slet gren";
 "sidebar.branch.delete.confirm" = "Slet";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokal";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Skrivebeskyttet";
+"harnesses.source.forked.from %@" = "Forgrenet fra %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Oplysninger";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "Delegerer til (%d)";
 "harnesses.detail.picks %d" = "Vælger (%d):";
 "harnesses.reveal.in.finder" = "Vis i Finder";
+"harnesses.copy.path" = "Kopiér som sti";
 "harnesses.open.in.browser" = "Åbn i browser";
 "harnesses.close.detail" = "Luk";
 "harnesses.configure.from.marketplaces" = "Konfigurer fra markedspladser…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "Installer harness";
 "harnesses.install.toolbar.help" = "Installer et harness";
-"harnesses.install.tab.search" = "Søg";
+"harnesses.install.tab.library" = "Bibliotek";
+"harnesses.install.manage.sources" = "Administrer kilder…";
+"harnesses.install.manage.sources.help" = "Tilføj eller fjern lokale harness-kilder";
+"harnesses.install.manage.sources.done" = "Færdig";
 "harnesses.install.tab.git" = "Fra Git";
-"harnesses.install.tab.sources" = "Kilder";
 "harnesses.install.search.placeholder" = "Søg i registries og kilder…";
 "harnesses.install.search.prompt" = "Skriv for at søge i registries og kilder";
 "harnesses.install.search.empty" = "Ingen resultater";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "Fjern";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Tilføj delegat";
+"harnesses.add.delegate.button" = "Tilføj delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Søg i installerede harnesses…";
+"harnesses.add.delegate.library.empty" = "Ingen andre installerede harnesses at delegere til.";
+"source.picker.browse.local" = "Gennemse lokalt…";
+"source.picker.browse.local.help" = "Vælg en lokal mappe";
+"harnesses.add.delegate.pick" = "Vælg";
+"harnesses.add.delegate.back" = "Tilbage";
+"harnesses.add.delegate.apply" = "Tilføj delegat";
+
 "harnesses.update.button" = "Opdater";
 "harnesses.update.help" = "Opdater til den nyeste version";
+"harnesses.update.available" = "Opdatering tilgængelig";
+"harnesses.update.available.version %@" = "Version %@ er tilgængelig";
 "harnesses.uninstall.button" = "Afinstaller";
 "harnesses.uninstall.help" = "Afinstaller denne harness";
 "harnesses.uninstall.alert.title %@" = "Afinstaller \"%@\"?";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "Standard";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokal";
+"harnesses.group.quarantined" = "Karantæne";
+"harnesses.quarantine.restore" = "Gendan";
+"harnesses.quarantine.drop" = "Fjern…";
 "harnesses.group.menu.settings" = "Indstillinger…";
 "harnesses.group.registry %@" = "Register: %@";
 "harnesses.install.browsing" = "Indlæser tilgængelige harnesses…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "Branch, tag eller commit-SHA (valgfrit)";
 "harnesses.install.retry" = "Prøv igen";
 "harnesses.install.section.available" = "Tilgængelig fra registre";
+"harnesses.install.section.available.empty" = "Ingen markedspladser konfigureret. Tilføj en i Indstillinger → Eksterne kilder.";
 "harnesses.install.section.installed" = "Installeret";
 "harnesses.install.section.local" = "Tilgængelig lokalt";
 "harnesses.outdated.capabilities.unknown" = "ukendt";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Åbn terminaler";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork til lokal";
+"harnesses.fork.to.local.help" = "Opret en redigerbar lokal kopi af denne harness";
+"harnesses.update.dot.help" = "Opdatering tilgængelig";
+"harness.fork.title %@" = "Fork \"%@\" til lokal";
+"harness.fork.explanation" = "Opretter en redigerbar lokal kopi af denne harness. Kopien sporer sin oprindelse, så du kan se, hvad der er ændret opstrøms.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forker \"%@\"…";
+"harness.fork.rename.label" = "Navn (valgfrit)";
+"harness.fork.rename.hint" = "Lad feltet være tomt for at beholde kildenavnet. Det nye forks kanoniske id bliver local/<navn>.";
+"harness.fork.identity.collision" = "Et installeret harness har allerede denne identitet.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Opdater \"%@\"";
+"harness.update.progress.title %@" = "Opdaterer \"%@\"…";
+"harness.update.button" = "Opdater";
+"harness.update.ynh.unavailable" = "ynh er ikke tilgængelig.";
+"command.runner.running" = "Kører…";
+"command.runner.succeeded" = "Lykkedes";
+"command.runner.failed" = "Mislykkedes";
+"common.copy.output" = "Kopiér output";
+"common.rerun" = "Kør igen";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include-handlinger";
+"harnesses.include.edit.button" = "Rediger include…";
+"harnesses.include.remove.button" = "Fjern include…";
+"harnesses.include.edit.title" = "Rediger include";
+"harnesses.include.edit.source" = "Kilde";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "gren, tag eller commit";
+"harnesses.include.edit.path" = "Sti";
+"harnesses.include.edit.path.placeholder" = "understi i kilderepo";
+"harnesses.include.edit.picks" = "Udvalg";
+"harnesses.include.edit.picks.explainer" = "Markerede artefakter er i øjeblikket i denne include. Skift for at tilføje eller fjerne.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld af %ld valgt";
+"harnesses.include.edit.picks.unknown.source" = "Denne kilde er ikke i dine markedspladser — kun de aktuelle artefakter vises.";
+"harnesses.include.edit.save" = "Gem ændringer";
+"harnesses.include.remove.confirm.title" = "Fjern denne include?";
+"harnesses.include.remove.confirm.message %@" = "%@ fjernes fra dette harness. Kilderepository påvirkes ikke.";
+"harnesses.include.remove.confirm" = "Fjern";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Tilføj include…";
+"harnesses.include.add.edit.existing" = "Rediger";
+"harnesses.include.add.search.placeholder" = "Søg plugins…";
+"harnesses.include.add.no.marketplaces" = "Ingen markedspladser konfigureret. Brug fanen Markedspladser til at tilføje en.";
+"harnesses.include.add.no.matches" = "Ingen plugins matcher.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "gren, tag eller commit (valgfrit)";
+"harnesses.include.add.gitpath.label" = "Sti";
+"harnesses.include.add.gitpath.placeholder" = "undermappe i kilderepo (valgfrit)";
+"harnesses.include.add.giturl.hint" = "Udvalget inkluderer som standard alt, hvad kilden leverer. Brug Rediger include efter tilføjelse for at indsnævre det.";
+"harnesses.include.add.picks.prompt" = "Vælg de artefakter der skal inkluderes.";
+"harnesses.include.add.apply" = "Anvend";
+"harnesses.include.add.already.installed" = "Allerede tilføjet";
+"harnesses.include.add.already.installed.help" = "Dette plugin er allerede i dette harness — klik for at redigere udvalg eller ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegathandlinger";
+"harnesses.delegate.edit.button" = "Rediger delegat…";
+"harnesses.delegate.remove.button" = "Fjern delegat…";
+"harnesses.delegate.edit.title" = "Rediger delegat";
+"harnesses.delegate.remove.confirm.title" = "Fjern denne delegat?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ vil ikke længere blive flettet ind i dette harness. Kildelageret røres ikke.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Rediger manifest…";
+"harnesses.manifest.edit.title" = "Rediger manifest";
+"harnesses.manifest.edit.name" = "Navn";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Brug semver: MAJOR.MINOR.PATCH (f.eks. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Standardleverandør";
+"harnesses.manifest.edit.description" = "Beskrivelse";
+"harnesses.manifest.edit.description.hint" = "Vises i harness-listen og detailoverskriften. Lad stå tomt for at udelade.";
+"harnesses.manifest.edit.save" = "Gem ændringer";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit ændret: %@ → %@";
+"harnesses.broken.fork.help" = "Denne lokale fork mangler harness-manifestet. Højreklik og vælg Afinstaller for at fjerne den.";
+"harnesses.broken.fork.badge" = "Ødelagt";
+"harnesses.fork.of %@" = "Forgrening af %@";
+"harnesses.fork.help %@" = "Forgrenet fra %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nyt worktree fra gren";
+"sidebar.checkout.branch.label" = "Gren";
+"sidebar.checkout.branch.placeholder" = "Vælg en gren…";
+"sidebar.checkout.branch.required" = "Vælg en gren for at fortsætte.";
+"sidebar.checkout.branch.create" = "Opret worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Dette harness har ingen Git-kilder at opdatere.";
+"harnesses.loading.help" = "Kommunikerer med ynh…";
+"harnesses.unversioned.drift.help" = "Upstream-indhold ændret uden versionsopdatering — gennemgå inden opdatering";
+"harnesses.unversioned.drift.banner" = "Upstream-indhold ændret uden versionsopdatering — gennemgå inden opdatering";
+"harnesses.unversioned.drift.confirm.title" = "Gennemgå upstream-ændringer";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-indhold er ændret uden en versionsopdatering. Opdatering henter det nye indhold. Gennemgå SHA'erne nedenfor, inden du fortsætter — en manglende versionsopdatering kan skjule ondsindede ændringer.";
+"harnesses.unversioned.drift.confirm.proceed" = "Opdater alligevel";

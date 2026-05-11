@@ -148,7 +148,9 @@
 "editor.section.appearance" = "Зовнішній вигляд";
 "editor.field.theme" = "Тема";
 "editor.field.theme.default" = "Типова";
+"editor.field.theme.override" = "Замінити типову тему";
 "editor.field.font.size" = "Розмір шрифту";
+"editor.field.font.size.override" = "Замінити типовий розмір шрифту";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "Команда для виконання при запуску терміналу";
 "editor.field.safe.paste" = "Безпечне вставлення";
 "editor.field.safe.paste.help" = "Показувати підтвердження перед вставленням багаторядкового тексту";
+"editor.field.safe.paste.override" = "Замінити типове безпечне вставлення";
+"editor.field.safe.paste.inherited.on" = "Увімкнено (успадковано)";
+"editor.field.safe.paste.inherited.off" = "Вимкнено (успадковано)";
 "editor.field.allow.autorun" = "Дозволити автозапуск";
 "editor.field.allow.autorun.help" = "Дозволити CLI автоматично виконувати команди";
 "editor.field.autorun.disabled.globally" = "Автозапуск вимкнено глобально";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Замінити типовий бекенд";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Бекенд не можна змінити, поки сеанс активний. Перезапустіть сеанс, щоб змінити бекенди.";
@@ -575,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Введіть шлях робочого дерева для продовження.";
 "sidebar.new.worktree.create" = "Створити";
 "sidebar.new.worktree.loading.branches" = "Завантаження гілок...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Перетворити на робоче дерево";
+"sidebar.convert.worktree.branch.label" = "Назва гілки";
+"sidebar.convert.worktree.button" = "Перетворити";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Перетворити на робоче дерево…";
 "sidebar.branch.delete" = "Видалити гілку";
 "sidebar.branch.delete.title" = "Видалити гілку";
 "sidebar.branch.delete.confirm" = "Видалити";
@@ -602,6 +614,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Локальний";
 "harnesses.source.registry" = "Реєстр";
+"harnesses.source.read.only" = "Тільки для читання";
+"harnesses.source.forked.from %@" = "Відгалужено від %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Інформація";
@@ -620,6 +634,7 @@
 "harnesses.detail.delegates %d" = "Делегує (%d)";
 "harnesses.detail.picks %d" = "Вибирає (%d):";
 "harnesses.reveal.in.finder" = "Показати у Finder";
+"harnesses.copy.path" = "Копіювати як шлях";
 "harnesses.open.in.browser" = "Відкрити у браузері";
 "harnesses.close.detail" = "Закрити";
 "harnesses.configure.from.marketplaces" = "Налаштувати з маркетплейсів…";
@@ -702,9 +717,11 @@
 // Install sheet
 "harnesses.install.title" = "Встановити harness";
 "harnesses.install.toolbar.help" = "Встановити harness";
-"harnesses.install.tab.search" = "Пошук";
+"harnesses.install.tab.library" = "Бібліотека";
+"harnesses.install.manage.sources" = "Керувати джерелами…";
+"harnesses.install.manage.sources.help" = "Додати або видалити локальні джерела harness";
+"harnesses.install.manage.sources.done" = "Готово";
 "harnesses.install.tab.git" = "З Git";
-"harnesses.install.tab.sources" = "Джерела";
 "harnesses.install.search.placeholder" = "Пошук у реєстрах та джерелах…";
 "harnesses.install.search.prompt" = "Введіть текст для пошуку в реєстрах і джерелах";
 "harnesses.install.search.empty" = "Немає результатів";
@@ -723,8 +740,21 @@
 "harnesses.install.sources.remove" = "Видалити";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Додати делегат";
+"harnesses.add.delegate.button" = "Додати делегат…";
+"harnesses.add.delegate.library.search.placeholder" = "Пошук встановлених harness…";
+"harnesses.add.delegate.library.empty" = "Немає інших встановлених harness для делегування.";
+"source.picker.browse.local" = "Переглянути локально…";
+"source.picker.browse.local.help" = "Вибрати локальний каталог";
+"harnesses.add.delegate.pick" = "Вибрати";
+"harnesses.add.delegate.back" = "Назад";
+"harnesses.add.delegate.apply" = "Додати делегат";
+
 "harnesses.update.button" = "Оновити";
 "harnesses.update.help" = "Оновити до останньої версії";
+"harnesses.update.available" = "Доступне оновлення";
+"harnesses.update.available.version %@" = "Доступна версія %@";
 "harnesses.uninstall.button" = "Видалити";
 "harnesses.uninstall.help" = "Видалити цей harness";
 "harnesses.uninstall.alert.title %@" = "Видалити \"%@\"?";
@@ -880,6 +910,9 @@
 "harnesses.group.default" = "За замовчуванням";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Локальна";
+"harnesses.group.quarantined" = "На карантині";
+"harnesses.quarantine.restore" = "Відновити";
+"harnesses.quarantine.drop" = "Видалити…";
 "harnesses.group.menu.settings" = "Налаштування…";
 "harnesses.group.registry %@" = "Реєстр: %@";
 "harnesses.install.browsing" = "Завантаження доступних harness-ів…";
@@ -887,6 +920,7 @@
 "harnesses.install.git.ref.placeholder" = "Гілка, тег або SHA коміту (необов'язково)";
 "harnesses.install.retry" = "Повторити";
 "harnesses.install.section.available" = "Доступно з реєстрів";
+"harnesses.install.section.available.empty" = "Торгові майданчики не налаштовано. Додайте один у Налаштування → Зовнішні джерела.";
 "harnesses.install.section.installed" = "Встановлено";
 "harnesses.install.section.local" = "Доступно локально";
 "harnesses.outdated.capabilities.unknown" = "невідомо";
@@ -926,3 +960,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Відкрити термінали";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Форк до локального";
+"harnesses.fork.to.local.help" = "Створити редаговану локальну копію цього harness";
+"harnesses.update.dot.help" = "Доступне оновлення";
+"harness.fork.title %@" = "Форк \"%@\" до локального";
+"harness.fork.explanation" = "Створює редаговану локальну копію цього harness. Копія відстежує своє походження, щоб ви могли бачити, що змінилося у джерелі.";
+"harness.fork.button" = "Форк";
+"harness.fork.progress.title %@" = "Форк \"%@\"…";
+"harness.fork.rename.label" = "Назва (необов'язково)";
+"harness.fork.rename.hint" = "Залиште порожнім, щоб зберегти вихідну назву. Канонічний id нового форку буде local/<назва>.";
+"harness.fork.identity.collision" = "Встановлений харнес вже має цей ідентифікатор.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Оновити «%@»";
+"harness.update.progress.title %@" = "Оновлення «%@»…";
+"harness.update.button" = "Оновити";
+"harness.update.ynh.unavailable" = "ynh недоступний.";
+"command.runner.running" = "Виконується…";
+"command.runner.succeeded" = "Виконано";
+"command.runner.failed" = "Не виконано";
+"common.copy.output" = "Копіювати вивід";
+"common.rerun" = "Повторити";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Дії включення";
+"harnesses.include.edit.button" = "Редагувати включення…";
+"harnesses.include.remove.button" = "Видалити включення…";
+"harnesses.include.edit.title" = "Редагувати включення";
+"harnesses.include.edit.source" = "Джерело";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "гілка, тег або коміт";
+"harnesses.include.edit.path" = "Шлях";
+"harnesses.include.edit.path.placeholder" = "підшлях у вихідному репозиторії";
+"harnesses.include.edit.picks" = "Вибір";
+"harnesses.include.edit.picks.explainer" = "Позначені артефакти зараз знаходяться в цьому включенні. Перемикайте для додавання або видалення.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld з %ld вибрано";
+"harnesses.include.edit.picks.unknown.source" = "Це джерело не в ваших маркетплейсах — відображаються лише поточні артефакти.";
+"harnesses.include.edit.save" = "Зберегти зміни";
+"harnesses.include.remove.confirm.title" = "Видалити це включення?";
+"harnesses.include.remove.confirm.message %@" = "%@ буде видалено з цього набору. Вихідний репозиторій не зміниться.";
+"harnesses.include.remove.confirm" = "Видалити";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Додати включення…";
+"harnesses.include.add.edit.existing" = "Редагувати";
+"harnesses.include.add.search.placeholder" = "Пошук плагінів…";
+"harnesses.include.add.no.marketplaces" = "Маркетплейси не налаштовані. Скористайтеся вкладкою «Маркетплейси», щоб додати один.";
+"harnesses.include.add.no.matches" = "Немає відповідних плагінів.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "гілка, тег або коміт (необов'язково)";
+"harnesses.include.add.gitpath.label" = "Шлях";
+"harnesses.include.add.gitpath.placeholder" = "підкаталог у вихідному репозиторії (необов'язково)";
+"harnesses.include.add.giturl.hint" = "За замовчуванням вибирається все, що надає джерело. Використовуйте «Редагувати включення» після додавання для уточнення.";
+"harnesses.include.add.picks.prompt" = "Виберіть артефакти для включення.";
+"harnesses.include.add.apply" = "Застосувати";
+"harnesses.include.add.already.installed" = "Вже додано";
+"harnesses.include.add.already.installed.help" = "Цей плагін вже є в цьому наборі — натисніть для редагування вибору або ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Дії делегата";
+"harnesses.delegate.edit.button" = "Редагувати делегата…";
+"harnesses.delegate.remove.button" = "Видалити делегата…";
+"harnesses.delegate.edit.title" = "Редагувати делегата";
+"harnesses.delegate.remove.confirm.title" = "Видалити цього делегата?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ більше не зливатиметься з цим harness. Репозиторій джерела не змінюється.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Редагувати маніфест…";
+"harnesses.manifest.edit.title" = "Редагувати маніфест";
+"harnesses.manifest.edit.name" = "Назва";
+"harnesses.manifest.edit.version" = "Версія";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Використовуйте semver: MAJOR.MINOR.PATCH (наприклад 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Постачальник за замовчуванням";
+"harnesses.manifest.edit.description" = "Опис";
+"harnesses.manifest.edit.description.hint" = "Відображається у списку наборів і в заголовку деталей. Залиште порожнім, щоб не вказувати.";
+"harnesses.manifest.edit.save" = "Зберегти зміни";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Коміт upstream змінився: %@ → %@";
+"harnesses.broken.fork.help" = "У цьому локальному форку відсутній маніфест harness. Натисніть правою кнопкою миші та виберіть «Видалити», щоб прибрати його.";
+"harnesses.broken.fork.badge" = "Пошкоджено";
+"harnesses.fork.of %@" = "Відгалуження від %@";
+"harnesses.fork.help %@" = "Відгалужено від %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Нове робоче дерево з гілки";
+"sidebar.checkout.branch.label" = "Гілка";
+"sidebar.checkout.branch.placeholder" = "Виберіть гілку…";
+"sidebar.checkout.branch.required" = "Виберіть гілку для продовження.";
+"sidebar.checkout.branch.create" = "Створити робоче дерево";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Цей набір не має джерел Git для оновлення.";
+"harnesses.loading.help" = "Зв'язок з ynh…";
+"harnesses.unversioned.drift.help" = "Вміст upstream змінився без оновлення версії — перевірте перед оновленням";
+"harnesses.unversioned.drift.banner" = "Вміст upstream змінився без оновлення версії — перевірте перед оновленням";
+"harnesses.unversioned.drift.confirm.title" = "Перевірити зміни upstream";
+"harnesses.unversioned.drift.confirm.body" = "Вміст upstream змінився без оновлення версії. Оновлення завантажить новий вміст. Перевірте SHA нижче перед продовженням — відсутнє оновлення версії може приховати шкідливі зміни.";
+"harnesses.unversioned.drift.confirm.proceed" = "Все одно оновити";

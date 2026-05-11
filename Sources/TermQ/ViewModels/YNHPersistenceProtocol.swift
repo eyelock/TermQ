@@ -25,8 +25,19 @@ protocol YNHPersistenceProtocol: AnyObject {
     /// Returns the repository-level default harness, independent from worktree overrides.
     func repoDefaultHarness(for repoPath: String) -> String?
 
-    /// Returns the sorted list of worktree paths linked to a harness.
-    func worktrees(for harnessName: String) -> [String]
+    /// Returns the sorted list of worktree paths linked to a harness id.
+    func worktrees(forHarnessId harnessId: String) -> [String]
+
+    /// Returns the per-harness vendor override, if the user has set one.
+    /// Falls back to the harness's manifest-declared `default_vendor` at the
+    /// call site when nil.
+    func vendorOverride(for harnessId: String) -> String?
+
+    /// Last-used review harness id for the Run with Focus sheet, per repo.
+    func runHarness(for repoPath: String) -> String?
+
+    /// Last-used focus name for the Run with Focus sheet, per repo.
+    func runFocus(for repoPath: String) -> String?
 
     // MARK: - Mutations
 
@@ -35,6 +46,22 @@ protocol YNHPersistenceProtocol: AnyObject {
 
     /// Sets or clears the harness override for a specific worktree path.
     func setHarness(_ harnessName: String?, for worktreePath: String)
+
+    /// Sets or clears the per-harness vendor override. Pass `nil` to clear and
+    /// fall back to the harness's manifest-declared `default_vendor`.
+    func setVendorOverride(_ vendorId: String?, for harnessId: String)
+
+    /// Sets or clears the last-used review harness for a repo.
+    func setRunHarness(_ harnessId: String?, for repoPath: String)
+
+    /// Sets or clears the last-used review focus for a repo.
+    func setRunFocus(_ focus: String?, for repoPath: String)
+
+    /// Returns the per-repo Remote PR feed cap override, if set. `nil` means use the global setting.
+    func remotePRFeedCap(for repoPath: String) -> Int?
+
+    /// Sets or clears the per-repo Remote PR feed cap override. Pass `nil` to revert to global.
+    func setRemotePRFeedCap(_ cap: Int?, for repoPath: String)
 
     /// Removes all worktree and repo-level associations for a harness (called after uninstall).
     func removeAllAssociations(for harnessName: String)

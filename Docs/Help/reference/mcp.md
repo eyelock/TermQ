@@ -15,7 +15,7 @@ Install via **Settings > Tools > Install**. Configure in `~/.claude/mcp.json`:
 }
 ```
 
-See [Tutorial 10](tutorials/10-mcp.md) for setup and the session workflow.
+See [Tutorial 10](tutorials/mcp.md) for setup and the session workflow.
 
 ---
 

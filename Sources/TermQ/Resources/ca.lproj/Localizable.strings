@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Aparença";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Per defecte";
+"editor.field.theme.override" = "Substituir el tema per defecte";
 "editor.field.font.size" = "Mida de la lletra";
+"editor.field.font.size.override" = "Substituir la mida de lletra per defecte";
 "editor.font.preview" = "AaBbCc Català 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Comanda a executar quan s'inicia el terminal";
 "editor.field.safe.paste" = "Enganxar segur";
 "editor.field.safe.paste.help" = "Mostrar confirmació abans d'enganxar text multilínia";
+"editor.field.safe.paste.override" = "Substituir l'enganxament segur per defecte";
+"editor.field.safe.paste.inherited.on" = "Activat (heretat)";
+"editor.field.safe.paste.inherited.off" = "Desactivat (heretat)";
 "editor.field.allow.autorun" = "Permetre execució automàtica";
 "editor.field.allow.autorun.help" = "Permetre que CLI executi comandes automàticament";
 "editor.field.autorun.disabled.globally" = "L'execució automàtica està desactivada globalment";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Substituir el backend per defecte";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "El backend no es pot canviar mentre la sessió està activa. Reinicieu la sessió per canviar els backends.";
@@ -584,10 +590,16 @@
 "sidebar.new.worktree.path.required" = "Introduïu un camí de worktree per continuar.";
 "sidebar.new.worktree.create" = "Crear";
 "sidebar.new.worktree.loading.branches" = "Carregant branques...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Converteix en worktree";
+"sidebar.convert.worktree.branch.label" = "Nom de la branca";
+"sidebar.convert.worktree.button" = "Converteix";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Converteix en worktree…";
 "sidebar.branch.delete" = "Elimina la branca";
 "sidebar.branch.delete.title" = "Elimina la branca";
 "sidebar.branch.delete.confirm" = "Elimina";
@@ -611,6 +623,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Local";
 "harnesses.source.registry" = "Registre";
+"harnesses.source.read.only" = "Només lectura";
+"harnesses.source.forked.from %@" = "Bifurcat de %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informació";
@@ -629,6 +643,7 @@
 "harnesses.detail.delegates %d" = "Delega a (%d)";
 "harnesses.detail.picks %d" = "Selecciona (%d):";
 "harnesses.reveal.in.finder" = "Mostra al Finder";
+"harnesses.copy.path" = "Copia com a camí";
 "harnesses.open.in.browser" = "Obre al navegador";
 "harnesses.close.detail" = "Tanca";
 "harnesses.configure.from.marketplaces" = "Configura des dels mercats…";
@@ -695,9 +710,11 @@
 // Install sheet
 "harnesses.install.title" = "Instal·la Harness";
 "harnesses.install.toolbar.help" = "Instal·la un harness";
-"harnesses.install.tab.search" = "Cerca";
+"harnesses.install.tab.library" = "Biblioteca";
+"harnesses.install.manage.sources" = "Gestiona les fonts…";
+"harnesses.install.manage.sources.help" = "Afegeix o elimina fonts de harness locals";
+"harnesses.install.manage.sources.done" = "Fet";
 "harnesses.install.tab.git" = "Des de Git";
-"harnesses.install.tab.sources" = "Fonts";
 "harnesses.install.search.placeholder" = "Cerca als registres i fonts…";
 "harnesses.install.search.prompt" = "Escriu per cercar als registres i fonts";
 "harnesses.install.search.empty" = "Sense resultats";
@@ -716,8 +733,21 @@
 "harnesses.install.sources.remove" = "Elimina";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Afegeix un delegat";
+"harnesses.add.delegate.button" = "Afegeix un delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Cerca harnesses instal·lats…";
+"harnesses.add.delegate.library.empty" = "No hi ha altres harnesses instal·lats als quals delegar.";
+"source.picker.browse.local" = "Navega localment…";
+"source.picker.browse.local.help" = "Seleccioneu un directori local";
+"harnesses.add.delegate.pick" = "Selecciona";
+"harnesses.add.delegate.back" = "Enrere";
+"harnesses.add.delegate.apply" = "Afegeix un delegat";
+
 "harnesses.update.button" = "Actualitza";
 "harnesses.update.help" = "Actualitza a la versió més recent";
+"harnesses.update.available" = "Actualització disponible";
+"harnesses.update.available.version %@" = "La versió %@ està disponible";
 "harnesses.uninstall.button" = "Desinstal·la";
 "harnesses.uninstall.help" = "Desinstal·la aquest harness";
 "harnesses.uninstall.alert.title %@" = "Desinstal·lar \"%@\"?";
@@ -873,6 +903,9 @@
 "harnesses.group.default" = "Per defecte";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Local";
+"harnesses.group.quarantined" = "En quarantena";
+"harnesses.quarantine.restore" = "Restaura";
+"harnesses.quarantine.drop" = "Elimina…";
 "harnesses.group.menu.settings" = "Configuració…";
 "harnesses.group.registry %@" = "Registre: %@";
 "harnesses.install.browsing" = "Carregant harnesses disponibles…";
@@ -880,6 +913,7 @@
 "harnesses.install.git.ref.placeholder" = "Branca, etiqueta o SHA de commit (opcional)";
 "harnesses.install.retry" = "Torna-ho a intentar";
 "harnesses.install.section.available" = "Disponible als registres";
+"harnesses.install.section.available.empty" = "No hi ha mercats configurats. Afegiu-ne un a Configuració → Fonts externes.";
 "harnesses.install.section.installed" = "Instal·lat";
 "harnesses.install.section.local" = "Disponible localment";
 "harnesses.outdated.capabilities.unknown" = "desconegut";
@@ -919,3 +953,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Obre els terminals";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Bifurca a local";
+"harnesses.fork.to.local.help" = "Crea una còpia local editable d'aquest harness";
+"harnesses.update.dot.help" = "Actualització disponible";
+"harness.fork.title %@" = "Bifurca \"%@\" a local";
+"harness.fork.explanation" = "Crea una còpia local editable d'aquest harness. La còpia rastreja el seu origen per tal que puguis veure què ha canviat aigues amunt.";
+"harness.fork.button" = "Bifurca";
+"harness.fork.progress.title %@" = "Bifurcant \"%@\"…";
+"harness.fork.rename.label" = "Nom (opcional)";
+"harness.fork.rename.hint" = "Deixeu-ho buit per conservar el nom de la font. L'id canònic del nou fork serà local/<nom>.";
+"harness.fork.identity.collision" = "Ja hi ha un harness instal·lat amb aquesta identitat.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Actualitza \"%@\"";
+"harness.update.progress.title %@" = "S'està actualitzant \"%@\"…";
+"harness.update.button" = "Actualitza";
+"harness.update.ynh.unavailable" = "ynh no està disponible.";
+"command.runner.running" = "Executant…";
+"command.runner.succeeded" = "Correcte";
+"command.runner.failed" = "Fallat";
+"common.copy.output" = "Copia la sortida";
+"common.rerun" = "Torna a executar";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Accions d'inclusió";
+"harnesses.include.edit.button" = "Edita la inclusió…";
+"harnesses.include.remove.button" = "Elimina la inclusió…";
+"harnesses.include.edit.title" = "Edita la inclusió";
+"harnesses.include.edit.source" = "Font";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "branca, etiqueta o commit";
+"harnesses.include.edit.path" = "Ruta";
+"harnesses.include.edit.path.placeholder" = "subruta al repositori font";
+"harnesses.include.edit.picks" = "Selecció";
+"harnesses.include.edit.picks.explainer" = "Els artefactes marcats estan en aquesta inclusió. Activa o desactiva per afegir o eliminar.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld de %ld seleccionats";
+"harnesses.include.edit.picks.unknown.source" = "Aquesta font no és als teus mercats — només es llisten els artefactes actuals.";
+"harnesses.include.edit.save" = "Desa els canvis";
+"harnesses.include.remove.confirm.title" = "Eliminar aquesta inclusió?";
+"harnesses.include.remove.confirm.message %@" = "%@ s'eliminarà d'aquest harness. El repositori font no es modifica.";
+"harnesses.include.remove.confirm" = "Elimina";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Afegeix inclusió…";
+"harnesses.include.add.edit.existing" = "Edita";
+"harnesses.include.add.search.placeholder" = "Cerca connectors…";
+"harnesses.include.add.no.marketplaces" = "Cap mercat configurat. Utilitza la pestanya Mercats per afegir-ne un.";
+"harnesses.include.add.no.matches" = "Cap connector coincideix.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "branca, etiqueta o commit (opcional)";
+"harnesses.include.add.gitpath.label" = "Ruta";
+"harnesses.include.add.gitpath.placeholder" = "subdirectori al repositori font (opcional)";
+"harnesses.include.add.giturl.hint" = "La selecció inclou per defecte tot el que proporciona la font. Utilitza Edita la inclusió després d'afegir per restringir-la.";
+"harnesses.include.add.picks.prompt" = "Selecciona els artefactes a incloure.";
+"harnesses.include.add.apply" = "Aplica";
+"harnesses.include.add.already.installed" = "Ja afegit";
+"harnesses.include.add.already.installed.help" = "Aquest connector ja és en aquest harness — fes clic per editar la selecció o el ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Accions del delegat";
+"harnesses.delegate.edit.button" = "Edita el delegat…";
+"harnesses.delegate.remove.button" = "Elimina el delegat…";
+"harnesses.delegate.edit.title" = "Edita el delegat";
+"harnesses.delegate.remove.confirm.title" = "Eliminar aquest delegat?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ ja no es fusionarà en aquest harness. El dipòsit font no es modifica.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Edita el manifest…";
+"harnesses.manifest.edit.title" = "Edita el manifest";
+"harnesses.manifest.edit.name" = "Nom";
+"harnesses.manifest.edit.version" = "Versió";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Usa semver: MAJOR.MENOR.PEDAÇ (p. ex. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Proveïdor predeterminat";
+"harnesses.manifest.edit.description" = "Descripció";
+"harnesses.manifest.edit.description.hint" = "Es mostra a la llista de harnesses i a la capçalera de detalls. Deixa en blanc per ometre.";
+"harnesses.manifest.edit.save" = "Desa els canvis";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";
+"harnesses.broken.fork.help" = "A aquest fork local li falta el manifest del harness. Feu clic dret i seleccioneu Desinstal·la per eliminar-lo.";
+"harnesses.broken.fork.badge" = "Defectuós";
+"harnesses.fork.of %@" = "Bifurcació de %@";
+"harnesses.fork.help %@" = "Bifurcat de %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nou worktree des de la branca";
+"sidebar.checkout.branch.label" = "Branca";
+"sidebar.checkout.branch.placeholder" = "Selecciona una branca…";
+"sidebar.checkout.branch.required" = "Selecciona una branca per continuar.";
+"sidebar.checkout.branch.create" = "Crea worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Aquest harness no té fonts Git per actualitzar.";
+"harnesses.loading.help" = "Comunicant amb ynh…";
+"harnesses.unversioned.drift.help" = "El contingut upstream ha canviat sense actualització de versió — revisa abans d'actualitzar";
+"harnesses.unversioned.drift.banner" = "El contingut upstream ha canviat sense actualització de versió — revisa abans d'actualitzar";
+"harnesses.unversioned.drift.confirm.title" = "Revisar els canvis upstream";
+"harnesses.unversioned.drift.confirm.body" = "El contingut upstream ha canviat sense una actualització de versió. Actualitzar descarregarà el nou contingut. Revisa els SHA a continuació abans de continuar — una actualització de versió absent pot emmascarar canvis maliciosos.";
+"harnesses.unversioned.drift.confirm.proceed" = "Actualitza de totes formes";

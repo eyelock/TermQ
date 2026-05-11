@@ -10,13 +10,18 @@ final class VendorService: ObservableObject {
     @Published private(set) var isLoading = false
 
     private let ynhDetector: any YNHDetectorProtocol
+    private let commandRunner: any YNHCommandRunner
 
     private convenience init() {
         self.init(ynhDetector: YNHDetector.shared)
     }
 
-    init(ynhDetector: any YNHDetectorProtocol) {
+    init(
+        ynhDetector: any YNHDetectorProtocol,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
+    ) {
         self.ynhDetector = ynhDetector
+        self.commandRunner = commandRunner
     }
 
     func refresh() async {
@@ -34,12 +39,18 @@ final class VendorService: ObservableObject {
         }
 
         do {
-            let output = try await YNHDetector.runCommand(
-                ynhPath,
-                args: ["vendors", "--format", "json"],
+            let result = try await commandRunner.run(
+                executable: ynhPath,
+                arguments: ["vendors", "--format", "json"],
                 environment: env
             )
-            let data = Data(output.utf8)
+            guard result.didSucceed else {
+                throw YNHDetectionError.commandFailed(
+                    exitCode: result.exitCode,
+                    stderr: result.stderr
+                )
+            }
+            let data = Data(result.stdout.utf8)
             vendors = try JSONDecoder().decode([Vendor].self, from: data)
         } catch {
             if TermQLogger.fileLoggingEnabled {

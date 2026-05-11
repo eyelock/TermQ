@@ -147,7 +147,9 @@
 "editor.section.appearance" = "दिखावट";
 "editor.field.theme" = "थीम";
 "editor.field.theme.default" = "डिफ़ॉल्ट";
+"editor.field.theme.override" = "डिफ़ॉल्ट थीम ओवरराइड करें";
 "editor.field.font.size" = "फ़ॉन्ट आकार";
+"editor.field.font.size.override" = "डिफ़ॉल्ट फ़ॉन्ट आकार ओवरराइड करें";
 "editor.font.preview" = "AaBbCc हिंदी 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "टर्मिनल शुरू होने पर चलाने के लिए कमांड";
 "editor.field.safe.paste" = "सुरक्षित पेस्ट";
 "editor.field.safe.paste.help" = "बहु-पंक्ति टेक्स्ट पेस्ट करने से पहले पुष्टि दिखाएं";
+"editor.field.safe.paste.override" = "डिफ़ॉल्ट सुरक्षित पेस्ट ओवरराइड करें";
+"editor.field.safe.paste.inherited.on" = "चालू (विरासत में)";
+"editor.field.safe.paste.inherited.off" = "बंद (विरासत में)";
 "editor.field.allow.autorun" = "ऑटोरन की अनुमति दें";
 "editor.field.allow.autorun.help" = "CLI को स्वचालित रूप से कमांड चलाने की अनुमति दें";
 "editor.field.autorun.disabled.globally" = "ऑटोरन वैश्विक रूप से अक्षम है";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "डिफ़ॉल्ट बैकएंड ओवरराइड करें";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "सत्र सक्रिय होने पर बैकएंड नहीं बदला जा सकता। बैकएंड बदलने के लिए सत्र पुनः आरंभ करें।";
@@ -574,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "जारी रखने के लिए एक Worktree पथ दर्ज करें।";
 "sidebar.new.worktree.create" = "बनाएं";
 "sidebar.new.worktree.loading.branches" = "ब्रांचें लोड हो रही हैं...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Worktree में बदलें";
+"sidebar.convert.worktree.branch.label" = "ब्रांच का नाम";
+"sidebar.convert.worktree.button" = "बदलें";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Worktree में बदलें…";
 "sidebar.branch.delete" = "शाखा हटाएं";
 "sidebar.branch.delete.title" = "शाखा हटाएं";
 "sidebar.branch.delete.confirm" = "हटाएं";
@@ -601,6 +613,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "स्थानीय";
 "harnesses.source.registry" = "रजिस्ट्री";
+"harnesses.source.read.only" = "केवल पढ़ें";
+"harnesses.source.forked.from %@" = "%@ से फ़ोर्क किया";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "जानकारी";
@@ -619,6 +633,7 @@
 "harnesses.detail.delegates %d" = "प्रतिनिधित्व (%d) को";
 "harnesses.detail.picks %d" = "चुनता है (%d):";
 "harnesses.reveal.in.finder" = "Finder में दिखाएं";
+"harnesses.copy.path" = "पथनाम के रूप में कॉपी करें";
 "harnesses.open.in.browser" = "ब्राउज़र में खोलें";
 "harnesses.close.detail" = "बंद करें";
 "harnesses.configure.from.marketplaces" = "मार्केटप्लेस से कॉन्फ़िगर करें…";
@@ -701,9 +716,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness इंस्टॉल करें";
 "harnesses.install.toolbar.help" = "एक harness इंस्टॉल करें";
-"harnesses.install.tab.search" = "खोजें";
+"harnesses.install.tab.library" = "लाइब्रेरी";
+"harnesses.install.manage.sources" = "स्रोत प्रबंधित करें…";
+"harnesses.install.manage.sources.help" = "स्थानीय harness स्रोत जोड़ें या हटाएं";
+"harnesses.install.manage.sources.done" = "हो गया";
 "harnesses.install.tab.git" = "Git से";
-"harnesses.install.tab.sources" = "स्रोत";
 "harnesses.install.search.placeholder" = "रजिस्ट्रियों और स्रोतों में खोजें…";
 "harnesses.install.search.prompt" = "रजिस्ट्रियों और स्रोतों में खोजने के लिए टाइप करें";
 "harnesses.install.search.empty" = "कोई परिणाम नहीं";
@@ -722,8 +739,21 @@
 "harnesses.install.sources.remove" = "हटाएं";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "प्रतिनिधि जोड़ें";
+"harnesses.add.delegate.button" = "प्रतिनिधि जोड़ें…";
+"harnesses.add.delegate.library.search.placeholder" = "स्थापित harness खोजें…";
+"harnesses.add.delegate.library.empty" = "प्रतिनिधित्व करने के लिए कोई अन्य स्थापित harness नहीं है।";
+"source.picker.browse.local" = "स्थानीय ब्राउज़ करें…";
+"source.picker.browse.local.help" = "स्थानीय निर्देशिका चुनें";
+"harnesses.add.delegate.pick" = "चुनें";
+"harnesses.add.delegate.back" = "वापस";
+"harnesses.add.delegate.apply" = "प्रतिनिधि जोड़ें";
+
 "harnesses.update.button" = "अपडेट करें";
 "harnesses.update.help" = "नवीनतम संस्करण में अपडेट करें";
+"harnesses.update.available" = "अपडेट उपलब्ध है";
+"harnesses.update.available.version %@" = "संस्करण %@ उपलब्ध है";
 "harnesses.uninstall.button" = "अनइंस्टॉल करें";
 "harnesses.uninstall.help" = "इस harness को अनइंस्टॉल करें";
 "harnesses.uninstall.alert.title %@" = "\"%@\" को अनइंस्टॉल करें?";
@@ -879,6 +909,9 @@
 "harnesses.group.default" = "डिफ़ॉल्ट";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "स्थानीय";
+"harnesses.group.quarantined" = "क्वारंटाइन में";
+"harnesses.quarantine.restore" = "पुनर्स्थापित करें";
+"harnesses.quarantine.drop" = "हटाएं…";
 "harnesses.group.menu.settings" = "सेटिंग्स…";
 "harnesses.group.registry %@" = "Registry: %@";
 "harnesses.install.browsing" = "उपलब्ध harness लोड हो रहे हैं…";
@@ -886,6 +919,7 @@
 "harnesses.install.git.ref.placeholder" = "शाखा, टैग या commit SHA (वैकल्पिक)";
 "harnesses.install.retry" = "पुनः प्रयास करें";
 "harnesses.install.section.available" = "Registries से उपलब्ध";
+"harnesses.install.section.available.empty" = "कोई मार्केटप्लेस कॉन्फ़िगर नहीं है। सेटिंग्ज़ → बाहरी स्रोत में एक जोड़ें।";
 "harnesses.install.section.installed" = "इंस्टॉल है";
 "harnesses.install.section.local" = "स्थानीय रूप से उपलब्ध";
 "harnesses.outdated.capabilities.unknown" = "अज्ञात";
@@ -925,3 +959,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "टर्मिनल खोलें";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "स्थानीय रूप से फोर्क करें";
+"harnesses.fork.to.local.help" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाएं";
+"harnesses.update.dot.help" = "अपडेट उपलब्ध है";
+"harness.fork.title %@" = "\"%@\" को स्थानीय में फोर्क करें";
+"harness.fork.explanation" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाता है। प्रतिलिपि अपने मूल को ट्रैक करती है ताकि आप देख सकें कि upstream में क्या बदला।";
+"harness.fork.button" = "फोर्क";
+"harness.fork.progress.title %@" = "\"%@\" फोर्क हो रहा है…";
+"harness.fork.rename.label" = "नाम (वैकल्पिक)";
+"harness.fork.rename.hint" = "स्रोत नाम बनाए रखने के लिए खाली छोड़ें। नए fork का canonical id local/<नाम> होगा।";
+"harness.fork.identity.collision" = "पहले से स्थापित harness में यह पहचान है।";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "\"%@\" अपडेट करें";
+"harness.update.progress.title %@" = "\"%@\" अपडेट हो रहा है…";
+"harness.update.button" = "अपडेट करें";
+"harness.update.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+"command.runner.running" = "चल रहा है…";
+"command.runner.succeeded" = "सफल";
+"command.runner.failed" = "विफल";
+"common.copy.output" = "आउटपुट कॉपी करें";
+"common.rerun" = "पुनः चलाएं";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "समाविष्ट क्रियाएँ";
+"harnesses.include.edit.button" = "समाविष्ट संपादित करें…";
+"harnesses.include.remove.button" = "समाविष्ट हटाएँ…";
+"harnesses.include.edit.title" = "समाविष्ट संपादित करें";
+"harnesses.include.edit.source" = "स्रोत";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "शाखा, टैग या commit";
+"harnesses.include.edit.path" = "पथ";
+"harnesses.include.edit.path.placeholder" = "स्रोत रिपॉज़िटरी में उप-पथ";
+"harnesses.include.edit.picks" = "चयन";
+"harnesses.include.edit.picks.explainer" = "चिह्नित कलाकृतियाँ अभी इस समाविष्ट में हैं। जोड़ने या हटाने के लिए टॉगल करें।";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld चुने गए";
+"harnesses.include.edit.picks.unknown.source" = "यह स्रोत आपके marketplaces में नहीं है — केवल वर्तमान कलाकृतियाँ सूचीबद्ध हैं।";
+"harnesses.include.edit.save" = "परिवर्तन सहेजें";
+"harnesses.include.remove.confirm.title" = "यह समाविष्ट हटाएँ?";
+"harnesses.include.remove.confirm.message %@" = "%@ इस harness से हटा दिया जाएगा। स्रोत रिपॉज़िटरी प्रभावित नहीं होगी।";
+"harnesses.include.remove.confirm" = "हटाएँ";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "समाविष्ट जोड़ें…";
+"harnesses.include.add.edit.existing" = "संपादित करें";
+"harnesses.include.add.search.placeholder" = "प्लगइन खोजें…";
+"harnesses.include.add.no.marketplaces" = "कोई marketplace कॉन्फ़िगर नहीं किया गया। एक जोड़ने के लिए Marketplaces टैब का उपयोग करें।";
+"harnesses.include.add.no.matches" = "कोई प्लगइन मेल नहीं खाता।";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "शाखा, टैग या commit (वैकल्पिक)";
+"harnesses.include.add.gitpath.label" = "पथ";
+"harnesses.include.add.gitpath.placeholder" = "स्रोत रिपॉज़िटरी में उप-निर्देशिका (वैकल्पिक)";
+"harnesses.include.add.giturl.hint" = "चयन में डिफ़ॉल्ट रूप से स्रोत द्वारा प्रदान की गई सभी चीज़ें शामिल हैं। संकुचित करने के लिए जोड़ने के बाद समाविष्ट संपादित करें का उपयोग करें।";
+"harnesses.include.add.picks.prompt" = "शामिल करने के लिए कलाकृतियाँ चुनें।";
+"harnesses.include.add.apply" = "लागू करें";
+"harnesses.include.add.already.installed" = "पहले से जोड़ा गया";
+"harnesses.include.add.already.installed.help" = "यह प्लगइन पहले से इस harness में है — चयन या ref संपादित करने के लिए क्लिक करें।";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "प्रतिनिधि क्रियाएं";
+"harnesses.delegate.edit.button" = "प्रतिनिधि संपादित करें…";
+"harnesses.delegate.remove.button" = "प्रतिनिधि हटाएं…";
+"harnesses.delegate.edit.title" = "प्रतिनिधि संपादित करें";
+"harnesses.delegate.remove.confirm.title" = "इस प्रतिनिधि को हटाएं?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ अब इस harness में मर्ज नहीं होगा। स्रोत रिपोज़िटरी अनामत रहेगी।";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Manifest संपादित करें…";
+"harnesses.manifest.edit.title" = "Manifest संपादित करें";
+"harnesses.manifest.edit.name" = "नाम";
+"harnesses.manifest.edit.version" = "संस्करण";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "semver का उपयोग करें: MAJOR.MINOR.PATCH (उदा. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "डिफ़ॉल्ट विक्रेता";
+"harnesses.manifest.edit.description" = "विवरण";
+"harnesses.manifest.edit.description.hint" = "harness सूची और विवरण हेडर में दिखाया गया। छोड़ने के लिए खाली रखें।";
+"harnesses.manifest.edit.save" = "परिवर्तन सहेजें";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit बदल गया: %@ → %@";
+"harnesses.broken.fork.help" = "इस स्थानीय fork में harness manifest नहीं है। इसे हटाने के लिए राइट-क्लिक करें और अनइंस्टॉल चुनें।";
+"harnesses.broken.fork.badge" = "टूटा हुआ";
+"harnesses.fork.of %@" = "%@ का फ़ोर्क";
+"harnesses.fork.help %@" = "%@ से फ़ोर्क किया";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "शाखा से नया वर्कट्री";
+"sidebar.checkout.branch.label" = "शाखा";
+"sidebar.checkout.branch.placeholder" = "शाखा चुनें…";
+"sidebar.checkout.branch.required" = "जारी रखने के लिए एक शाखा चुनें।";
+"sidebar.checkout.branch.create" = "वर्कट्री बनाएँ";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "इस harness में अपडेट करने के लिए कोई Git स्रोत नहीं है।";
+"harnesses.loading.help" = "ynh से संवाद हो रहा है…";
+"harnesses.unversioned.drift.help" = "अपस्ट्रीम सामग्री संस्करण अपडेट के बिना बदल गई — अपडेट करने से पहले समीक्षा करें";
+"harnesses.unversioned.drift.banner" = "अपस्ट्रीम सामग्री संस्करण अपडेट के बिना बदल गई — अपडेट करने से पहले समीक्षा करें";
+"harnesses.unversioned.drift.confirm.title" = "अपस्ट्रीम परिवर्तनों की समीक्षा करें";
+"harnesses.unversioned.drift.confirm.body" = "अपस्ट्रीम सामग्री संस्करण अपडेट के बिना बदल गई है। अपडेट करने से नई सामग्री आएगी। जारी रखने से पहले नीचे दिए SHA की समीक्षा करें — संस्करण अपडेट का अभाव दुर्भावनापूर्ण परिवर्तनों को छिपा सकता है।";
+"harnesses.unversioned.drift.confirm.proceed" = "फिर भी अपडेट करें";

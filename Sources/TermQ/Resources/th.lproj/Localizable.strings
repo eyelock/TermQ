@@ -148,7 +148,9 @@
 "editor.section.appearance" = "รูปลักษณ์";
 "editor.field.theme" = "ธีม";
 "editor.field.theme.default" = "ค่าเริ่มต้น";
+"editor.field.theme.override" = "แทนที่ธีมเริ่มต้น";
 "editor.field.font.size" = "ขนาดตัวอักษร";
+"editor.field.font.size.override" = "แทนที่ขนาดตัวอักษรเริ่มต้น";
 "editor.font.preview" = "AaBbCc กขค 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "คำสั่งที่จะรันเมื่อเทอร์มินัลเริ่มต้น";
 "editor.field.safe.paste" = "วางอย่างปลอดภัย";
 "editor.field.safe.paste.help" = "แสดงการยืนยันก่อนวางข้อความหลายบรรทัด";
+"editor.field.safe.paste.override" = "แทนที่การวางแบบปลอดภัยเริ่มต้น";
+"editor.field.safe.paste.inherited.on" = "เปิด (สืบทอด)";
+"editor.field.safe.paste.inherited.off" = "ปิด (สืบทอด)";
 "editor.field.allow.autorun" = "อนุญาตการรันอัตโนมัติ";
 "editor.field.allow.autorun.help" = "อนุญาตให้ CLI รันคำสั่งอัตโนมัติ";
 "editor.field.autorun.disabled.globally" = "การรันอัตโนมัติถูกปิดใช้งานทั้งระบบ";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "แทนที่แบ็กเอนด์เริ่มต้น";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "ไม่สามารถเปลี่ยน Backend ได้ขณะเซสชันทำงานอยู่ เริ่มเซสชันใหม่เพื่อเปลี่ยน Backend";
@@ -575,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "ป้อนเส้นทาง Worktree เพื่อดำเนินการต่อ";
 "sidebar.new.worktree.create" = "สร้าง";
 "sidebar.new.worktree.loading.branches" = "กำลังโหลดสาขา...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "แปลงเป็น Worktree";
+"sidebar.convert.worktree.branch.label" = "ชื่อสาขา";
+"sidebar.convert.worktree.button" = "แปลง";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "แปลงเป็น Worktree…";
 "sidebar.branch.delete" = "ลบ Branch";
 "sidebar.branch.delete.title" = "ลบ Branch";
 "sidebar.branch.delete.confirm" = "ลบ";
@@ -602,6 +614,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "ในเครื่อง";
 "harnesses.source.registry" = "Registry";
+"harnesses.source.read.only" = "อ่านอย่างเดียว";
+"harnesses.source.forked.from %@" = "แยกจาก %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "ข้อมูล";
@@ -620,6 +634,7 @@
 "harnesses.detail.delegates %d" = "มอบหมายไปยัง (%d)";
 "harnesses.detail.picks %d" = "เลือก (%d):";
 "harnesses.reveal.in.finder" = "แสดงใน Finder";
+"harnesses.copy.path" = "คัดลอกเป็นชื่อเส้นทาง";
 "harnesses.open.in.browser" = "เปิดในเบราว์เซอร์";
 "harnesses.close.detail" = "ปิด";
 "harnesses.configure.from.marketplaces" = "กำหนดค่าจากตลาด…";
@@ -702,9 +717,11 @@
 // Install sheet
 "harnesses.install.title" = "ติดตั้ง Harness";
 "harnesses.install.toolbar.help" = "ติดตั้ง harness";
-"harnesses.install.tab.search" = "ค้นหา";
+"harnesses.install.tab.library" = "ไลบรารี";
+"harnesses.install.manage.sources" = "จัดการแหล่งที่มา…";
+"harnesses.install.manage.sources.help" = "เพิ่มหรือลบแหล่ง harness ในเครื่อง";
+"harnesses.install.manage.sources.done" = "เสร็จ";
 "harnesses.install.tab.git" = "จาก Git";
-"harnesses.install.tab.sources" = "แหล่งข้อมูล";
 "harnesses.install.search.placeholder" = "ค้นหาในรีจิสทรีและแหล่งข้อมูล…";
 "harnesses.install.search.prompt" = "พิมพ์เพื่อค้นหาในรีจิสทรีและแหล่งข้อมูล";
 "harnesses.install.search.empty" = "ไม่พบผลลัพธ์";
@@ -723,8 +740,21 @@
 "harnesses.install.sources.remove" = "ลบออก";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "เพิ่มตัวแทน";
+"harnesses.add.delegate.button" = "เพิ่มตัวแทน…";
+"harnesses.add.delegate.library.search.placeholder" = "ค้นหา harness ที่ติดตั้งแล้ว…";
+"harnesses.add.delegate.library.empty" = "ไม่มี harness ที่ติดตั้งอื่นให้มอบหมาย";
+"source.picker.browse.local" = "เรียกดูในเครื่อง…";
+"source.picker.browse.local.help" = "เลือกไดเรกทอรีในเครื่อง";
+"harnesses.add.delegate.pick" = "เลือก";
+"harnesses.add.delegate.back" = "ย้อนกลับ";
+"harnesses.add.delegate.apply" = "เพิ่มตัวแทน";
+
 "harnesses.update.button" = "อัปเดต";
 "harnesses.update.help" = "อัปเดตเป็นเวอร์ชันล่าสุด";
+"harnesses.update.available" = "มีอัปเดตใหม่";
+"harnesses.update.available.version %@" = "เวอร์ชัน %@ พร้อมใช้งาน";
 "harnesses.uninstall.button" = "ถอนการติดตั้ง";
 "harnesses.uninstall.help" = "ถอนการติดตั้ง harness นี้";
 "harnesses.uninstall.alert.title %@" = "ถอนการติดตั้ง \"%@\" หรือไม่?";
@@ -880,6 +910,9 @@
 "harnesses.group.default" = "ค่าเริ่มต้น";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "ในเครื่อง";
+"harnesses.group.quarantined" = "ถูกกักกัน";
+"harnesses.quarantine.restore" = "กู้คืน";
+"harnesses.quarantine.drop" = "ลบ…";
 "harnesses.group.menu.settings" = "การตั้งค่า…";
 "harnesses.group.registry %@" = "Registry: %@";
 "harnesses.install.browsing" = "กำลังโหลด Harness ที่มีอยู่…";
@@ -887,6 +920,7 @@
 "harnesses.install.git.ref.placeholder" = "สาขา แท็ก หรือ commit SHA (ไม่บังคับ)";
 "harnesses.install.retry" = "ลองอีกครั้ง";
 "harnesses.install.section.available" = "มีจาก Registry";
+"harnesses.install.section.available.empty" = "ไม่มีมาร์เก็ตเพลสที่กำหนดค่า เพิ่มหนึ่งในการตั้งค่า → แหล่งที่มาภายนอก";
 "harnesses.install.section.installed" = "ติดตั้งแล้ว";
 "harnesses.install.section.local" = "มีในเครื่อง";
 "harnesses.outdated.capabilities.unknown" = "ไม่ทราบ";
@@ -926,3 +960,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "เปิดเทอร์มินัล";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "แยกสาขาไปยังเครื่องท้องถิ่น";
+"harnesses.fork.to.local.help" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้";
+"harnesses.update.dot.help" = "มีการอัปเดต";
+"harness.fork.title %@" = "แยกสาขา \"%@\" ไปยังท้องถิ่น";
+"harness.fork.explanation" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้ สำเนาจะติดตามต้นกำเนิดเพื่อให้คุณเห็นว่ามีการเปลี่ยนแปลงอะไร upstream";
+"harness.fork.button" = "แยกสาขา";
+"harness.fork.progress.title %@" = "กำลังแยกสาขา \"%@\"…";
+"harness.fork.rename.label" = "ชื่อ (ไม่บังคับ)";
+"harness.fork.rename.hint" = "เว้นว่างเพื่อเก็บชื่อต้นทาง id หลักของ fork ใหม่จะเป็น local/<ชื่อ>";
+"harness.fork.identity.collision" = "มี harness ที่ติดตั้งแล้วใช้ตัวตนนี้อยู่";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "อัปเดต \"%@\"";
+"harness.update.progress.title %@" = "กำลังอัปเดต \"%@\"…";
+"harness.update.button" = "อัปเดต";
+"harness.update.ynh.unavailable" = "ynh ไม่พร้อมใช้งาน";
+"command.runner.running" = "กำลังทำงาน…";
+"command.runner.succeeded" = "สำเร็จ";
+"command.runner.failed" = "ล้มเหลว";
+"common.copy.output" = "คัดลอกผลลัพธ์";
+"common.rerun" = "เรียกใช้อีกครั้ง";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "การกระทำการรวมรายการ";
+"harnesses.include.edit.button" = "แก้ไขการรวมรายการ…";
+"harnesses.include.remove.button" = "นำการรวมรายการออก…";
+"harnesses.include.edit.title" = "แก้ไขการรวมรายการ";
+"harnesses.include.edit.source" = "แหล่งที่มา";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "สาขา แท็ก หรือ commit";
+"harnesses.include.edit.path" = "เส้นทาง";
+"harnesses.include.edit.path.placeholder" = "เส้นทางย่อยใน repository ต้นทาง";
+"harnesses.include.edit.picks" = "การเลือก";
+"harnesses.include.edit.picks.explainer" = "อาร์ติแฟกต์ที่ถูกเลือกอยู่ในการรวมรายการนี้อยู่แล้ว สลับเพื่อเพิ่มหรือนำออก";
+"harnesses.include.edit.picks.count %ld %ld" = "เลือกแล้ว %ld จาก %ld รายการ";
+"harnesses.include.edit.picks.unknown.source" = "แหล่งที่มานี้ไม่อยู่ใน marketplace ของคุณ — แสดงเฉพาะอาร์ติแฟกต์ปัจจุบัน";
+"harnesses.include.edit.save" = "บันทึกการเปลี่ยนแปลง";
+"harnesses.include.remove.confirm.title" = "นำการรวมรายการนี้ออก?";
+"harnesses.include.remove.confirm.message %@" = "%@ จะถูกนำออกจาก harness นี้ repository ต้นทางจะไม่ถูกแตะต้อง";
+"harnesses.include.remove.confirm" = "นำออก";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "เพิ่มการรวมรายการ…";
+"harnesses.include.add.edit.existing" = "แก้ไข";
+"harnesses.include.add.search.placeholder" = "ค้นหาปลั๊กอิน…";
+"harnesses.include.add.no.marketplaces" = "ไม่มี marketplace ที่กำหนดค่าไว้ ใช้แท็บ Marketplaces เพื่อเพิ่ม";
+"harnesses.include.add.no.matches" = "ไม่พบปลั๊กอินที่ตรงกัน";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "สาขา แท็ก หรือ commit (ไม่บังคับ)";
+"harnesses.include.add.gitpath.label" = "เส้นทาง";
+"harnesses.include.add.gitpath.placeholder" = "ไดเรกทอรีย่อยใน repository ต้นทาง (ไม่บังคับ)";
+"harnesses.include.add.giturl.hint" = "การเลือกจะรวมทุกอย่างที่แหล่งที่มาจัดหาตามค่าเริ่มต้น ใช้แก้ไขการรวมรายการหลังจากเพิ่มเพื่อจำกัดขอบเขต";
+"harnesses.include.add.picks.prompt" = "เลือกอาร์ติแฟกต์ที่ต้องการรวม";
+"harnesses.include.add.apply" = "ใช้งาน";
+"harnesses.include.add.already.installed" = "เพิ่มแล้ว";
+"harnesses.include.add.already.installed.help" = "ปลั๊กอินนี้อยู่ใน harness นี้แล้ว — คลิกเพื่อแก้ไขการเลือกหรือ ref";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "การดำเนินการผู้แทน";
+"harnesses.delegate.edit.button" = "แก้ไขผู้แทน…";
+"harnesses.delegate.remove.button" = "นำผู้แทนออก…";
+"harnesses.delegate.edit.title" = "แก้ไขผู้แทน";
+"harnesses.delegate.remove.confirm.title" = "นำผู้แทนนี้ออก?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ จะไม่ถูกรวมเข้าใน harness นี้อีกต่อไป ต้นฉบับชิงไม่ถูกสัมผัส";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "แก้ไข Manifest…";
+"harnesses.manifest.edit.title" = "แก้ไข Manifest";
+"harnesses.manifest.edit.name" = "ชื่อ";
+"harnesses.manifest.edit.version" = "เวอร์ชัน";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "ใช้ semver: MAJOR.MINOR.PATCH (เช่น 0.2.0)";
+"harnesses.manifest.edit.vendor" = "ผู้ขายเริ่มต้น";
+"harnesses.manifest.edit.description" = "คำอธิบาย";
+"harnesses.manifest.edit.description.hint" = "แสดงในรายการ harness และส่วนหัวรายละเอียด เว้นว่างเพื่อละเว้น";
+"harnesses.manifest.edit.save" = "บันทึกการเปลี่ยนแปลง";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit เปลี่ยนแปลง: %@ → %@";
+"harnesses.broken.fork.help" = "fork ในเครื่องนี้ไม่มีไฟล์ manifest ของ harness คลิกขวาแล้วเลือกถอนการติดตั้งเพื่อลบออก";
+"harnesses.broken.fork.badge" = "เสียหาย";
+"harnesses.fork.of %@" = "แยกจาก %@";
+"harnesses.fork.help %@" = "แยกจาก %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Worktree ใหม่จากสาขา";
+"sidebar.checkout.branch.label" = "สาขา";
+"sidebar.checkout.branch.placeholder" = "เลือกสาขา…";
+"sidebar.checkout.branch.required" = "เลือกสาขาเพื่อดำเนินการต่อ";
+"sidebar.checkout.branch.create" = "สร้าง Worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Harness นี้ไม่มีแหล่งที่มา Git ที่จะอัปเดต";
+"harnesses.loading.help" = "กำลังสื่อสารกับ ynh…";
+"harnesses.unversioned.drift.help" = "เนื้อหา upstream เปลี่ยนแปลงโดยไม่มีการอัปเดตเวอร์ชัน — ตรวจสอบก่อนอัปเดต";
+"harnesses.unversioned.drift.banner" = "เนื้อหา upstream เปลี่ยนแปลงโดยไม่มีการอัปเดตเวอร์ชัน — ตรวจสอบก่อนอัปเดต";
+"harnesses.unversioned.drift.confirm.title" = "ตรวจสอบการเปลี่ยนแปลง upstream";
+"harnesses.unversioned.drift.confirm.body" = "เนื้อหา upstream เปลี่ยนแปลงโดยไม่มีการอัปเดตเวอร์ชัน การอัปเดตจะดึงเนื้อหาใหม่ ตรวจสอบ SHA ด้านล่างก่อนดำเนินการ — การอัปเดตเวอร์ชันที่หายไปอาจซ่อนการเปลี่ยนแปลงที่เป็นอันตราย";
+"harnesses.unversioned.drift.confirm.proceed" = "อัปเดตต่อไป";

@@ -148,7 +148,9 @@
 "editor.section.appearance" = "Görünüm";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Varsayılan";
+"editor.field.theme.override" = "Varsayılan temayı geçersiz kıl";
 "editor.field.font.size" = "Yazı Tipi Boyutu";
+"editor.field.font.size.override" = "Varsayılan yazı tipi boyutunu geçersiz kıl";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "Terminal başladığında çalıştırılacak komut";
 "editor.field.safe.paste" = "Güvenli Yapıştırma";
 "editor.field.safe.paste.help" = "Çok satırlı metin yapıştırmadan önce onay göster";
+"editor.field.safe.paste.override" = "Varsayılan güvenli yapıştırmayı geçersiz kıl";
+"editor.field.safe.paste.inherited.on" = "Açık (devralındı)";
+"editor.field.safe.paste.inherited.off" = "Kapalı (devralındı)";
 "editor.field.allow.autorun" = "Otomatik Çalıştırmaya İzin Ver";
 "editor.field.allow.autorun.help" = "CLI'nin komutları otomatik çalıştırmasına izin ver";
 "editor.field.autorun.disabled.globally" = "Otomatik çalıştırma genel olarak devre dışı";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Varsayılan backend'i geçersiz kıl";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Oturum aktifken backend değiştirilemez. Backend'leri değiştirmek için oturumu yeniden başlatın.";
@@ -575,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Devam etmek için bir worktree yolu girin.";
 "sidebar.new.worktree.create" = "Oluştur";
 "sidebar.new.worktree.loading.branches" = "Dallar yükleniyor...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Çalışma Ağacına Dönüştür";
+"sidebar.convert.worktree.branch.label" = "Dal Adı";
+"sidebar.convert.worktree.button" = "Dönüştür";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Çalışma Ağacına Dönüştür…";
 "sidebar.branch.delete" = "Dalı sil";
 "sidebar.branch.delete.title" = "Dalı sil";
 "sidebar.branch.delete.confirm" = "Sil";
@@ -602,6 +614,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Yerel";
 "harnesses.source.registry" = "Kayıt Defteri";
+"harnesses.source.read.only" = "Salt okunur";
+"harnesses.source.forked.from %@" = "%@ kaynağından çatallandı";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Bilgi";
@@ -620,6 +634,7 @@
 "harnesses.detail.delegates %d" = "Devredilen (%d)";
 "harnesses.detail.picks %d" = "Seçilen (%d):";
 "harnesses.reveal.in.finder" = "Finder'da Göster";
+"harnesses.copy.path" = "Yol Adı Olarak Kopyala";
 "harnesses.open.in.browser" = "Tarayıcıda Aç";
 "harnesses.close.detail" = "Kapat";
 "harnesses.configure.from.marketplaces" = "Pazaryerlerinden yapılandır…";
@@ -702,9 +717,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness Kur";
 "harnesses.install.toolbar.help" = "Bir harness kur";
-"harnesses.install.tab.search" = "Ara";
+"harnesses.install.tab.library" = "Kütüphane";
+"harnesses.install.manage.sources" = "Kaynakları yönet…";
+"harnesses.install.manage.sources.help" = "Yerel harness kaynakları ekle veya kaldır";
+"harnesses.install.manage.sources.done" = "Tamam";
 "harnesses.install.tab.git" = "Git'ten";
-"harnesses.install.tab.sources" = "Kaynaklar";
 "harnesses.install.search.placeholder" = "Kayıt defterlerinde ve kaynaklarda ara…";
 "harnesses.install.search.prompt" = "Kayıt defterlerinde ve kaynaklarda aramak için yazın";
 "harnesses.install.search.empty" = "Sonuç bulunamadı";
@@ -723,8 +740,21 @@
 "harnesses.install.sources.remove" = "Kaldır";
 "harnesses.install.sources.count %ld" = "%ld harness";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Temsilci Ekle";
+"harnesses.add.delegate.button" = "Temsilci Ekle…";
+"harnesses.add.delegate.library.search.placeholder" = "Yüklü harness'lerde ara…";
+"harnesses.add.delegate.library.empty" = "Devredilecek başka yüklü harness yok.";
+"source.picker.browse.local" = "Yerel Göz At…";
+"source.picker.browse.local.help" = "Yerel bir dizin seçin";
+"harnesses.add.delegate.pick" = "Seç";
+"harnesses.add.delegate.back" = "Geri";
+"harnesses.add.delegate.apply" = "Temsilci Ekle";
+
 "harnesses.update.button" = "Güncelle";
 "harnesses.update.help" = "En son sürüme güncelle";
+"harnesses.update.available" = "Güncelleme mevcut";
+"harnesses.update.available.version %@" = "%@ sürümü mevcut";
 "harnesses.uninstall.button" = "Kaldır";
 "harnesses.uninstall.help" = "Bu harness'i kaldır";
 "harnesses.uninstall.alert.title %@" = "\"%@\" kaldırılsın mı?";
@@ -880,6 +910,9 @@
 "harnesses.group.default" = "Varsayılan";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Yerel";
+"harnesses.group.quarantined" = "Karantinada";
+"harnesses.quarantine.restore" = "Geri Yükle";
+"harnesses.quarantine.drop" = "Kaldır…";
 "harnesses.group.menu.settings" = "Ayarlar…";
 "harnesses.group.registry %@" = "Kayıt Defteri: %@";
 "harnesses.install.browsing" = "Mevcut harness'ler yükleniyor…";
@@ -887,6 +920,7 @@
 "harnesses.install.git.ref.placeholder" = "Dal, etiket veya commit SHA (isteğe bağlı)";
 "harnesses.install.retry" = "Yeniden dene";
 "harnesses.install.section.available" = "Kayıt defterlerinden mevcut";
+"harnesses.install.section.available.empty" = "Hiçbir market yapılandırılmamış. Ayarlar → Harici Kaynaklar bölümünden bir tane ekleyin.";
 "harnesses.install.section.installed" = "Yüklü";
 "harnesses.install.section.local" = "Yerel olarak mevcut";
 "harnesses.outdated.capabilities.unknown" = "bilinmiyor";
@@ -926,3 +960,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Terminalleri aç";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Yerel olarak çatalla";
+"harnesses.fork.to.local.help" = "Bu harness'in düzenlenebilir yerel bir kopyasını oluştur";
+"harnesses.update.dot.help" = "Güncelleme mevcut";
+"harness.fork.title %@" = "\"%@\" öğesini yerel olarak çatalla";
+"harness.fork.explanation" = "Bu harness'in düzenlenebilir yerel bir kopyasını oluşturur. Kopya, kaynakta nelerin değiştiğini görebilmeniz için kökenini takip eder.";
+"harness.fork.button" = "Çatalla";
+"harness.fork.progress.title %@" = "\"%@\" çatallanıyor…";
+"harness.fork.rename.label" = "Ad (isteğe bağlı)";
+"harness.fork.rename.hint" = "Kaynak adını korumak için boş bırakın. Yeni fork'un kanonik id'si local/<ad> olacak.";
+"harness.fork.identity.collision" = "Yüklü bir harness zaten bu kimliğe sahip.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "\"%@\" Güncelle";
+"harness.update.progress.title %@" = "\"%@\" güncelleniyor…";
+"harness.update.button" = "Güncelle";
+"harness.update.ynh.unavailable" = "ynh kullanılamıyor.";
+"command.runner.running" = "Çalışıyor…";
+"command.runner.succeeded" = "Başarılı";
+"command.runner.failed" = "Başarısız";
+"common.copy.output" = "Çıktıyı kopyala";
+"common.rerun" = "Yeniden çalıştır";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Ekleme eylemleri";
+"harnesses.include.edit.button" = "Eklemeyi Düzenle…";
+"harnesses.include.remove.button" = "Eklemeyi Kaldır…";
+"harnesses.include.edit.title" = "Eklemeyi Düzenle";
+"harnesses.include.edit.source" = "Kaynak";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "dal, etiket veya commit";
+"harnesses.include.edit.path" = "Yol";
+"harnesses.include.edit.path.placeholder" = "kaynak deposundaki alt yol";
+"harnesses.include.edit.picks" = "Seçim";
+"harnesses.include.edit.picks.explainer" = "İşaretli yapıtlar şu anda bu eklemede. Eklemek veya kaldırmak için geçiş yapın.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld / %ld seçili";
+"harnesses.include.edit.picks.unknown.source" = "Bu kaynak pazarlarınızda değil — yalnızca mevcut yapıtlar listeleniyor.";
+"harnesses.include.edit.save" = "Değişiklikleri Kaydet";
+"harnesses.include.remove.confirm.title" = "Bu ekleme kaldırılsın mı?";
+"harnesses.include.remove.confirm.message %@" = "%@ bu harnessten kaldırılacak. Kaynak depo değiştirilmez.";
+"harnesses.include.remove.confirm" = "Kaldır";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Ekleme Ekle…";
+"harnesses.include.add.edit.existing" = "Düzenle";
+"harnesses.include.add.search.placeholder" = "Eklentileri ara…";
+"harnesses.include.add.no.marketplaces" = "Yapılandırılmış pazar yok. Bir tane eklemek için Pazarlar sekmesini kullanın.";
+"harnesses.include.add.no.matches" = "Eşleşen eklenti yok.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "dal, etiket veya commit (isteğe bağlı)";
+"harnesses.include.add.gitpath.label" = "Yol";
+"harnesses.include.add.gitpath.placeholder" = "kaynak deposundaki alt dizin (isteğe bağlı)";
+"harnesses.include.add.giturl.hint" = "Seçim varsayılan olarak kaynağın sağladığı her şeyi içerir. Daraltmak için ekledikten sonra Eklemeyi Düzenle'yi kullanın.";
+"harnesses.include.add.picks.prompt" = "Dahil edilecek yapıtları seçin.";
+"harnesses.include.add.apply" = "Uygula";
+"harnesses.include.add.already.installed" = "Zaten eklendi";
+"harnesses.include.add.already.installed.help" = "Bu eklenti zaten bu harnesste — seçimi veya ref'i düzenlemek için tıklayın.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Temsilci eylemleri";
+"harnesses.delegate.edit.button" = "Temsilciyi düzenle…";
+"harnesses.delegate.remove.button" = "Temsilciyi kaldır…";
+"harnesses.delegate.edit.title" = "Temsilciyi düzenle";
+"harnesses.delegate.remove.confirm.title" = "Bu temsilci kaldırılsın mı?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ artık bu harness ile birleştirilmeyecek. Kaynak depo değiştirilmez.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Manifest Düzenle…";
+"harnesses.manifest.edit.title" = "Manifest Düzenle";
+"harnesses.manifest.edit.name" = "Ad";
+"harnesses.manifest.edit.version" = "Sürüm";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Semver kullanın: ANA.ALT.YAMA (ör. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Varsayılan Sağlayıcı";
+"harnesses.manifest.edit.description" = "Açıklama";
+"harnesses.manifest.edit.description.hint" = "Harness listesinde ve ayrıntı başlığında gösterilir. Atlamak için boş bırakın.";
+"harnesses.manifest.edit.save" = "Değişiklikleri Kaydet";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit değişti: %@ → %@";
+"harnesses.broken.fork.help" = "Bu yerel fork'ta harness bildirimi eksik. Kaldırmak için sağ tıklayın ve Kaldır'ı seçin.";
+"harnesses.broken.fork.badge" = "Bozuk";
+"harnesses.fork.of %@" = "%@ kaynağından çatal";
+"harnesses.fork.help %@" = "%@ kaynağından çatallandı";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Daldan Yeni Worktree";
+"sidebar.checkout.branch.label" = "Dal";
+"sidebar.checkout.branch.placeholder" = "Dal seçin…";
+"sidebar.checkout.branch.required" = "Devam etmek için dal seçin.";
+"sidebar.checkout.branch.create" = "Worktree Oluştur";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Bu harnessin güncellenecek Git kaynağı yok.";
+"harnesses.loading.help" = "ynh ile iletişim…";
+"harnesses.unversioned.drift.help" = "Upstream içerik sürüm artışı olmadan değişti — güncellemeden önce inceleyin";
+"harnesses.unversioned.drift.banner" = "Upstream içerik sürüm artışı olmadan değişti — güncellemeden önce inceleyin";
+"harnesses.unversioned.drift.confirm.title" = "Upstream değişikliklerini incele";
+"harnesses.unversioned.drift.confirm.body" = "Upstream içerik sürüm artışı olmadan değişti. Güncelleme yeni içeriği çekecek. Devam etmeden önce aşağıdaki SHA'ları inceleyin — eksik sürüm artışı kötü amaçlı değişiklikleri gizleyebilir.";
+"harnesses.unversioned.drift.confirm.proceed" = "Yine de güncelle";

@@ -15,6 +15,63 @@ struct NewWorktreeContext: Identifiable {
     let initialBaseBranch: String?
 }
 
+// MARK: - Convert Worktree Context
+
+/// Carries the target repository and the branch being converted into
+/// `ConvertToWorktreeSheet`. Used by the "Convert to Worktree" branch action,
+/// which checks the existing branch out as a worktree (optionally renaming it
+/// first), without creating a new branch.
+struct ConvertWorktreeContext: Identifiable {
+    let id = UUID()
+    let repo: ObservableRepository
+    let branch: String
+}
+
+// MARK: - Sidebar Mode
+
+/// Whether the Repositories panel is showing local worktrees or remote PRs.
+enum SidebarMode {
+    case local
+    case remote
+}
+
+// MARK: - Checkout PR Context
+
+struct CheckoutPRContext: Identifiable {
+    let id = UUID()
+    let pr: GitHubPR
+    let repo: ObservableRepository
+    let ghPath: String
+}
+
+// MARK: - Force Update PR Context
+
+struct ForceUpdatePRContext: Identifiable {
+    let id = UUID()
+    let worktree: GitWorktree
+    let repo: ObservableRepository
+    let prNumber: Int
+    let ghPath: String
+}
+
+// MARK: - Run With Focus Context
+
+struct RunWithFocusContext: Identifiable {
+    let id = UUID()
+    let worktree: GitWorktree
+    let repo: ObservableRepository
+    let prNumber: Int
+}
+
+// MARK: - Sidebar Toast
+
+struct SidebarToast: Identifiable {
+    let id = UUID()
+    let message: String
+    let actionLabel: String?
+    let action: (() -> Void)?
+}
+
 // MARK: - Repo Disclosure Wrapper
 
 /// Owns the `@State` for a repo's expanded/collapsed state so the `DisclosureGroup`

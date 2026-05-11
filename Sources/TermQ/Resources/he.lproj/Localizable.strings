@@ -147,7 +147,9 @@
 "editor.section.appearance" = "מראה";
 "editor.field.theme" = "ערכת נושא";
 "editor.field.theme.default" = "ברירת מחדל";
+"editor.field.theme.override" = "עקוף ערכת נושא ברירת מחדל";
 "editor.field.font.size" = "גודל גופן";
+"editor.field.font.size.override" = "עקוף גודל גופן ברירת מחדל";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "פקודה להרצה בעת הפעלת המסוף";
 "editor.field.safe.paste" = "הדבקה בטוחה";
 "editor.field.safe.paste.help" = "הצג אישור לפני הדבקת טקסט מרובה שורות";
+"editor.field.safe.paste.override" = "עקוף הדבקה בטוחה ברירת מחדל";
+"editor.field.safe.paste.inherited.on" = "פועל (בירושה)";
+"editor.field.safe.paste.inherited.off" = "כבוי (בירושה)";
 "editor.field.allow.autorun" = "אפשר הרצה אוטומטית";
 "editor.field.allow.autorun.help" = "אפשר ל-CLI להריץ פקודות אוטומטית";
 "editor.field.autorun.disabled.globally" = "הרצה אוטומטית מושבתת גלובלית";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "עקוף backend ברירת מחדל";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "לא ניתן לשנות את ה-backend כאשר ההפעלה פעילה. הפעל מחדש את ההפעלה כדי לשנות backends.";
@@ -574,10 +580,16 @@
 "sidebar.new.worktree.path.required" = "הזן נתיב worktree כדי להמשיך.";
 "sidebar.new.worktree.create" = "צור";
 "sidebar.new.worktree.loading.branches" = "טוען ענפים...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "המרה לעץ עבודה";
+"sidebar.convert.worktree.branch.label" = "שם ענף";
+"sidebar.convert.worktree.button" = "המר";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "המרה לעץ עבודה…";
 "sidebar.branch.delete" = "מחק ענף";
 "sidebar.branch.delete.title" = "מחק ענף";
 "sidebar.branch.delete.confirm" = "מחק";
@@ -601,6 +613,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "מקומי";
 "harnesses.source.registry" = "רשם";
+"harnesses.source.read.only" = "לקריאה בלבד";
+"harnesses.source.forked.from %@" = "מפוצל מ-%@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "מידע";
@@ -619,6 +633,7 @@
 "harnesses.detail.delegates %d" = "מאציל ל-(%d)";
 "harnesses.detail.picks %d" = "בוחר (%d):";
 "harnesses.reveal.in.finder" = "הצג ב-Finder";
+"harnesses.copy.path" = "העתק כנתיב";
 "harnesses.open.in.browser" = "פתח בדפדפן";
 "harnesses.close.detail" = "סגור";
 "harnesses.configure.from.marketplaces" = "הגדרה מהשווקים…";
@@ -701,9 +716,11 @@
 // Install sheet
 "harnesses.install.title" = "התקנת harness";
 "harnesses.install.toolbar.help" = "התקנת harness";
-"harnesses.install.tab.search" = "חיפוש";
+"harnesses.install.tab.library" = "ספרייה";
+"harnesses.install.manage.sources" = "נהל מקורות…";
+"harnesses.install.manage.sources.help" = "הוסף או הסר מקורות harness מקומיים";
+"harnesses.install.manage.sources.done" = "סיום";
 "harnesses.install.tab.git" = "מ-Git";
-"harnesses.install.tab.sources" = "מקורות";
 "harnesses.install.search.placeholder" = "חיפוש ב-registries ובמקורות…";
 "harnesses.install.search.prompt" = "הקלד לחיפוש ב-registries ובמקורות";
 "harnesses.install.search.empty" = "אין תוצאות";
@@ -722,8 +739,21 @@
 "harnesses.install.sources.remove" = "הסר";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "הוסף מואצל";
+"harnesses.add.delegate.button" = "הוסף מואצל…";
+"harnesses.add.delegate.library.search.placeholder" = "חפש ב-harness מותקנים…";
+"harnesses.add.delegate.library.empty" = "אין harness מותקנים אחרים להאצלה.";
+"source.picker.browse.local" = "עיון מקומי…";
+"source.picker.browse.local.help" = "בחר ספרייה מקומית";
+"harnesses.add.delegate.pick" = "בחר";
+"harnesses.add.delegate.back" = "חזרה";
+"harnesses.add.delegate.apply" = "הוסף מואצל";
+
 "harnesses.update.button" = "עדכן";
 "harnesses.update.help" = "עדכן לגרסה האחרונה";
+"harnesses.update.available" = "עדכון זמין";
+"harnesses.update.available.version %@" = "גרסה %@ זמינה";
 "harnesses.uninstall.button" = "הסר התקנה";
 "harnesses.uninstall.help" = "הסר את ה-harness הזה";
 "harnesses.uninstall.alert.title %@" = "להסיר את \"%@\"?";
@@ -879,6 +909,9 @@
 "harnesses.group.default" = "ברירת מחדל";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "מקומי";
+"harnesses.group.quarantined" = "בהסגר";
+"harnesses.quarantine.restore" = "שחזר";
+"harnesses.quarantine.drop" = "הסר…";
 "harnesses.group.menu.settings" = "הגדרות…";
 "harnesses.group.registry %@" = "רשומה: %@";
 "harnesses.install.browsing" = "טוען harness-ים זמינים…";
@@ -886,6 +919,7 @@
 "harnesses.install.git.ref.placeholder" = "ענף, תג או commit SHA (אופציונלי)";
 "harnesses.install.retry" = "נסה שוב";
 "harnesses.install.section.available" = "זמין מרשומות";
+"harnesses.install.section.available.empty" = "אין שווקים מוגדרים. הוסף אחד בהגדרות → מקורות חיצוניים.";
 "harnesses.install.section.installed" = "מותקן";
 "harnesses.install.section.local" = "זמין מקומית";
 "harnesses.outdated.capabilities.unknown" = "לא ידוע";
@@ -925,3 +959,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "פתח טרמינלים";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "פיצול לקומפיוטר המקומי";
+"harnesses.fork.to.local.help" = "צור עותק מקומי ניתן לעריכה של ה-harness הזה";
+"harnesses.update.dot.help" = "עדכון זמין";
+"harness.fork.title %@" = "פיצול \"%@\" למקומי";
+"harness.fork.explanation" = "יוצר עותק מקומי ניתן לעריכה של ה-harness הזה. העותק עוקב אחר מקורו כך שתוכל לראות מה השתנה upstream.";
+"harness.fork.button" = "פיצול";
+"harness.fork.progress.title %@" = "מפצל את \"%@\"…";
+"harness.fork.rename.label" = "שם (אופציונלי)";
+"harness.fork.rename.hint" = "השאר ריק כדי לשמור על שם המקור. ה-id הקנוני של ה-fork החדש יהיה local/<שם>.";
+"harness.fork.identity.collision" = "ל-harness מותקן כבר יש זהות זו.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "עדכן את \"%@\"";
+"harness.update.progress.title %@" = "מעדכן את \"%@\"…";
+"harness.update.button" = "עדכן";
+"harness.update.ynh.unavailable" = "ynh אינו זמין.";
+"command.runner.running" = "מריץ…";
+"command.runner.succeeded" = "הצליח";
+"command.runner.failed" = "נכשל";
+"common.copy.output" = "העתק פלט";
+"common.rerun" = "הרץ שוב";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "פעולות הכללה";
+"harnesses.include.edit.button" = "ערוך הכללה…";
+"harnesses.include.remove.button" = "הסר הכללה…";
+"harnesses.include.edit.title" = "ערוך הכללה";
+"harnesses.include.edit.source" = "מקור";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "ענף, תגית או commit";
+"harnesses.include.edit.path" = "נתיב";
+"harnesses.include.edit.path.placeholder" = "נתיב משנה במאגר המקור";
+"harnesses.include.edit.picks" = "בחירה";
+"harnesses.include.edit.picks.explainer" = "פריטים מסומנים נמצאים כרגע בהכללה זו. הפעל/השבת כדי להוסיף או להסיר.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld מתוך %ld נבחרו";
+"harnesses.include.edit.picks.unknown.source" = "מקור זה אינו בשווקים שלך — מוצגים רק הפריטים הנוכחיים.";
+"harnesses.include.edit.save" = "שמור שינויים";
+"harnesses.include.remove.confirm.title" = "להסיר הכללה זו?";
+"harnesses.include.remove.confirm.message %@" = "%@ יוסר מ-harness זה. מאגר המקור לא ישתנה.";
+"harnesses.include.remove.confirm" = "הסר";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "הוסף הכללה…";
+"harnesses.include.add.edit.existing" = "ערוך";
+"harnesses.include.add.search.placeholder" = "חפש תוספים…";
+"harnesses.include.add.no.marketplaces" = "לא הוגדרו שווקים. השתמש בכרטיסיית שווקים כדי להוסיף אחד.";
+"harnesses.include.add.no.matches" = "לא נמצאו תוספים תואמים.";
+"harnesses.include.add.giturl.label" = "כתובת URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "ענף, תגית או commit (אופציונלי)";
+"harnesses.include.add.gitpath.label" = "נתיב";
+"harnesses.include.add.gitpath.placeholder" = "תת-תיקייה במאגר המקור (אופציונלי)";
+"harnesses.include.add.giturl.hint" = "הבחירה כוללת כברירת מחדל את כל מה שהמקור מספק. השתמש בערוך הכללה לאחר ההוספה כדי לצמצם.";
+"harnesses.include.add.picks.prompt" = "בחר את הפריטים לכלול.";
+"harnesses.include.add.apply" = "החל";
+"harnesses.include.add.already.installed" = "כבר נוסף";
+"harnesses.include.add.already.installed.help" = "תוסף זה כבר נמצא ב-harness זה — לחץ לעריכת הבחירה או ה-ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "פעולות נציג";
+"harnesses.delegate.edit.button" = "עריכת נציג…";
+"harnesses.delegate.remove.button" = "הסרת נציג…";
+"harnesses.delegate.edit.title" = "עריכת נציג";
+"harnesses.delegate.remove.confirm.title" = "להסיר את הנציג הזה?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ לא ימוזג עוד ל-harness זה. מאגר המקור לא ישתנה.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "ערוך מניפסט…";
+"harnesses.manifest.edit.title" = "ערוך מניפסט";
+"harnesses.manifest.edit.name" = "שם";
+"harnesses.manifest.edit.version" = "גרסה";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "השתמש בסמוור: MAJOR.MINOR.PATCH (לדוג' 0.2.0)";
+"harnesses.manifest.edit.vendor" = "ספק ברירת מחדל";
+"harnesses.manifest.edit.description" = "תיאור";
+"harnesses.manifest.edit.description.hint" = "מוצג ברשימת ה-harness ובכותרת הפרטים. השאר ריק להשמטה.";
+"harnesses.manifest.edit.save" = "שמור שינויים";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "ה-commit העולמי השתנה: %@ → %@";
+"harnesses.broken.fork.help" = "בפיצול המקומי הזה חסר קובץ המניפסט של ה-harness. לחץ לחיצה ימנית ובחר הסרת התקנה כדי להסיר אותו.";
+"harnesses.broken.fork.badge" = "פגום";
+"harnesses.fork.of %@" = "פיצול מ-%@";
+"harnesses.fork.help %@" = "מפוצל מ-%@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "עץ עבודה חדש מענף";
+"sidebar.checkout.branch.label" = "ענף";
+"sidebar.checkout.branch.placeholder" = "בחר ענף…";
+"sidebar.checkout.branch.required" = "בחר ענף להמשך.";
+"sidebar.checkout.branch.create" = "צור עץ עבודה";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "ל-harness זה אין מקורות Git לעדכון.";
+"harnesses.loading.help" = "תקשורת עם ynh…";
+"harnesses.unversioned.drift.help" = "התוכן העולמי השתנה ללא עדכון גרסה — בדוק לפני עדכון";
+"harnesses.unversioned.drift.banner" = "התוכן העולמי השתנה ללא עדכון גרסה — בדוק לפני עדכון";
+"harnesses.unversioned.drift.confirm.title" = "בדיקת שינויים עולמיים";
+"harnesses.unversioned.drift.confirm.body" = "התוכן העולמי השתנה ללא עדכון גרסה. העדכון יביא את התוכן החדש. בדוק את ה-SHA למטה לפני שתמשיך — עדכון גרסה חסר עשוי להסתיר שינויים זדוניים.";
+"harnesses.unversioned.drift.confirm.proceed" = "עדכן בכל מקרה";

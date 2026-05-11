@@ -16,11 +16,23 @@ struct HarnessesSidebarTab: View {
     var onLaunchHarness: ((Harness) -> Void)?
     var onInstall: (() -> Void)?
     var onUninstall: ((String) -> Void)?
+    /// Destructive "Delete" action for local-source harnesses. Differs from
+    /// `onUninstall`: the parent should also remove the editable source tree
+    /// from disk. The dialog copy promises file deletion, so this is the
+    /// path that honours that promise.
+    var onDeleteLocal: ((String) -> Void)?
     var onUpdate: ((String) -> Void)?
     var onExport: ((String, String) -> Void)?
+    var onFork: ((String) -> Void)?
     var onNewHarness: (() -> Void)?
+    var quarantinedEntries: [QuarantineEntry] = []
+    var onRestoreQuarantine: ((String) -> Void)?
+    var onDropQuarantine: ((String) -> Void)?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
+    /// Observed so the header spinner reflects in-flight `--check-updates`
+    /// probes (alongside `repository.isLoading` for `ynh ls` calls).
+    @ObservedObject private var availability = LiveUpdateAvailabilityService.shared
     @State private var harnessToUninstall: Harness?
     @State private var harnessToDelete: Harness?
     @State private var harnessToDuplicate: Harness?
@@ -60,9 +72,11 @@ struct HarnessesSidebarTab: View {
         )
         .sheet(isPresented: $showAddMarketplace) {
             AddYNHMarketplaceSheet(detector: detector)
+                .frame(width: 480, height: 320)
         }
         .sheet(item: $harnessToDuplicate) { harness in
             DuplicateHarnessSheet(harness: harness, detector: detector, repository: repository)
+                .frame(width: 480, height: 360)
         }
         .onAppear {
             if repository.harnesses.isEmpty { Task { await repository.refresh() } }
@@ -92,12 +106,13 @@ struct HarnessesSidebarTab: View {
                 .font(.headline)
                 .foregroundColor(.primary)
 
-            Spacer()
-
-            if repository.isLoading {
+            if repository.isLoading || availability.isProbingAll {
                 ProgressView()
                     .controlSize(.small)
+                    .help(Strings.Harnesses.loadingHelp)
             }
+
+            Spacer()
 
             Button {
                 showAddMarketplace = true
@@ -149,10 +164,10 @@ struct HarnessesSidebarTab: View {
 
     @ViewBuilder
     private var harnessList: some View {
-        if repository.harnesses.isEmpty && !repository.isLoading {
+        if repository.harnesses.isEmpty && !repository.isLoading && quarantinedEntries.isEmpty {
             harnessesEmptyState
         } else {
-            List(selection: $repository.selectedHarnessName) {
+            List(selection: $repository.selectedHarnessId) {
                 ForEach(groupedHarnesses, id: \.title) { group in
                     DisclosureGroup(
                         isExpanded: expandedBinding(for: group.title)
@@ -169,6 +184,22 @@ struct HarnessesSidebarTab: View {
                             .contextMenu { groupContextMenu(for: group) }
                     }
                 }
+
+                if !quarantinedEntries.isEmpty {
+                    DisclosureGroup(
+                        isExpanded: expandedBinding(for: Strings.Harnesses.groupQuarantined)
+                    ) {
+                        ForEach(quarantinedEntries) { entry in
+                            quarantineRow(entry)
+                        }
+                    } label: {
+                        Label(Strings.Harnesses.groupQuarantined, systemImage: "exclamationmark.triangle")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.orange)
+                            .textCase(.uppercase)
+                    }
+                }
             }
             .listStyle(.sidebar)
             .confirmationDialog(
@@ -181,7 +212,7 @@ struct HarnessesSidebarTab: View {
             ) {
                 if let harness = harnessToUninstall {
                     Button(Strings.Harnesses.uninstallAlertConfirm, role: .destructive) {
-                        onUninstall?(harness.name)
+                        onUninstall?(harness.id)
                         harnessToUninstall = nil
                     }
                     Button(Strings.Harnesses.installCancel, role: .cancel) {
@@ -190,7 +221,7 @@ struct HarnessesSidebarTab: View {
                 }
             } message: {
                 if let harness = harnessToUninstall {
-                    let linked = ynhPersistence.worktrees(for: harness.name).count
+                    let linked = ynhPersistence.worktrees(forHarnessId: harness.id).count
                     Text(
                         linked > 0
                             ? Strings.Harnesses.uninstallAlertWorktrees(linked)
@@ -223,8 +254,9 @@ struct HarnessesSidebarTab: View {
 
     private func harnessRow(_ harness: Harness) -> some View {
         HarnessRowView(harness: harness)
-            .tag(harness.name)
+            .tag(harness.id)
             .contextMenu {
+                // Group 1 — Run.
                 Button {
                     onLaunchHarness?(harness)
                 } label: {
@@ -232,22 +264,23 @@ struct HarnessesSidebarTab: View {
                 }
                 Button {
                     NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString("ynh run \(harness.name)", forType: .string)
+                    NSPasteboard.general.setString("ynh run \(harness.id)", forType: .string)
                 } label: {
                     Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
                 }
 
                 Divider()
 
+                // Group 2 — Location.
                 Button {
                     NSWorkspace.shared.activateFileViewerSelecting(
-                        [URL(fileURLWithPath: harness.path)]
+                        [URL(fileURLWithPath: harness.editablePath)]
                     )
                 } label: {
                     Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
                 }
                 Button {
-                    openInTerminal(path: harness.path)
+                    openInTerminal(path: harness.editablePath)
                 } label: {
                     Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
                 }
@@ -255,54 +288,59 @@ struct HarnessesSidebarTab: View {
                     Menu(Strings.Sidebar.openIn) {
                         ForEach(editorRegistry.available) { editor in
                             Button(editor.displayName) {
-                                openIn(editor: editor, path: harness.path)
+                                openIn(editor: editor, path: harness.editablePath)
                             }
                         }
                     }
                 }
-
                 if let source = harness.installedFrom?.source,
                     let url = GitURLHelper.browserURL(
                         for: source,
                         path: harness.installedFrom?.path
                     )
                 {
-                    Divider()
                     Button {
                         NSWorkspace.shared.open(url)
                     } label: {
                         Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
                     }
                 }
+                Button {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(harness.editablePath, forType: .string)
+                } label: {
+                    Label(Strings.Harnesses.copyPath, systemImage: "doc.on.clipboard")
+                }
 
                 Divider()
-                Button {
-                    onUpdate?(harness.name)
-                } label: {
-                    Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
-                }
-                Button {
-                    harnessToDuplicate = harness
-                } label: {
-                    Label(Strings.HarnessDuplicate.duplicateButton, systemImage: "doc.on.doc")
-                }
-                Button {
-                    Task { @MainActor in
-                        let panel = NSOpenPanel()
-                        panel.canChooseDirectories = true
-                        panel.canChooseFiles = false
-                        panel.allowsMultipleSelection = false
-                        panel.canCreateDirectories = true
-                        panel.prompt = Strings.Harnesses.exportButton
-                        let response = await panel.begin()
-                        if response == .OK, let url = panel.url {
-                            onExport?(harness.name, url.path)
-                        }
+
+                // Group 3 — Actions. Sidebar drops Export as Marketplace
+                // (advanced, detail-pane only).
+                if !harness.isFork {
+                    Button {
+                        onUpdate?(harness.id)
+                    } label: {
+                        Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
                     }
-                } label: {
-                    Label(Strings.Harnesses.exportButton, systemImage: "square.and.arrow.up")
                 }
+                if harness.installedFrom?.sourceType == "registry" {
+                    Button {
+                        onFork?(harness.id)
+                    } label: {
+                        Label(Strings.Harnesses.forkToLocal, systemImage: "tuningfork")
+                    }
+                }
+                if harness.installedFrom?.sourceType != "registry" {
+                    Button {
+                        harnessToDuplicate = harness
+                    } label: {
+                        Label(Strings.HarnessDuplicate.duplicateButton, systemImage: "doc.on.doc")
+                    }
+                }
+
                 Divider()
+
+                // Group 4 — Destructive.
                 Button(role: .destructive) {
                     harnessToUninstall = harness
                 } label: {
@@ -335,8 +373,16 @@ struct HarnessesSidebarTab: View {
             harnesses.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         }
 
-        let defaults = repository.harnesses.filter { KnownHarnesses.defaultNames.contains($0.name) }
-        let remaining = repository.harnesses.filter { !KnownHarnesses.defaultNames.contains($0.name) }
+        // DEFAULT membership is name-based, but local-sourced harnesses
+        // (forks, hand-built) always belong in LOCAL even when they share
+        // a name with a known default. Without this gate a fork of
+        // `ynh-dev` would appear in DEFAULT and never surface in LOCAL.
+        let isDefault: (Harness) -> Bool = { harness in
+            guard KnownHarnesses.defaultNames.contains(harness.name) else { return false }
+            return (harness.installedFrom?.sourceType ?? "") != "local"
+        }
+        let defaults = repository.harnesses.filter(isDefault)
+        let remaining = repository.harnesses.filter { !isDefault($0) }
 
         var groups: [HarnessGroup] = []
 
@@ -573,14 +619,46 @@ extension HarnessesSidebarTab {
     }
 
     fileprivate func performDeleteLocalHarness(_ harness: Harness) {
-        onUninstall?(harness.name)
+        // Delete = uninstall + remove editable source tree. Falls back to
+        // plain uninstall when the parent didn't wire the delete callback.
+        if let onDeleteLocal {
+            onDeleteLocal(harness.id)
+        } else {
+            onUninstall?(harness.id)
+        }
+    }
+
+    @ViewBuilder
+    private func quarantineRow(_ entry: QuarantineEntry) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(entry.name)
+                .font(.caption)
+                .fontWeight(.medium)
+            Text(entry.reason)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+                .lineLimit(2)
+        }
+        .padding(.vertical, 2)
+        .contextMenu {
+            Button {
+                onRestoreQuarantine?(entry.name)
+            } label: {
+                Label(Strings.Harnesses.quarantineRestore, systemImage: "arrow.uturn.backward")
+            }
+            Button(role: .destructive) {
+                onDropQuarantine?(entry.name)
+            } label: {
+                Label(Strings.Harnesses.quarantineDrop, systemImage: "trash")
+            }
+        }
     }
 
     private func revealLocalGroupInFinder(_ group: HarnessGroup) {
         let path =
             group.harnesses.first?.installedFrom?.source
-            ?? UserDefaults.standard.string(forKey: "defaultHarnessAuthorDirectory")
-        guard let path, !path.isEmpty else { return }
+            ?? HarnessAuthorPreferences.shared.defaultDirectory
+        guard !path.isEmpty else { return }
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 

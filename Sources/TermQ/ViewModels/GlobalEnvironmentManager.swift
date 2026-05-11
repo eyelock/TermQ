@@ -16,14 +16,26 @@ public class GlobalEnvironmentManager: ObservableObject {
     public static let shared = GlobalEnvironmentManager()
 
     private let storageKey = "GlobalEnvironmentVariables"
+    private let secureStorage: SecureStorage
+    private let userDefaults: UserDefaults
 
     @Published public private(set) var variables: [EnvironmentVariable] = []
     @Published public private(set) var isLoading: Bool = false
     @Published public var error: Error?
 
-    private init() {
-        Task {
-            await load()
+    /// Designated init. Tests inject a fresh `SecureStorage` and an isolated
+    /// `UserDefaults` suite; production uses the live singleton + standard defaults.
+    init(
+        secureStorage: SecureStorage = .shared,
+        userDefaults: UserDefaults = .standard,
+        autoLoad: Bool = true
+    ) {
+        self.secureStorage = secureStorage
+        self.userDefaults = userDefaults
+        if autoLoad {
+            Task {
+                await load()
+            }
         }
     }
 
@@ -42,7 +54,7 @@ public class GlobalEnvironmentManager: ObservableObject {
                 if storedVar.isSecret {
                     // Fetch secret value from SecureStorage
                     let secretValue =
-                        try await SecureStorage.shared.retrieveSecret(
+                        try await secureStorage.retrieveSecret(
                             id: "global-\(storedVar.id.uuidString)") ?? ""
                     loaded.append(
                         EnvironmentVariable(
@@ -84,7 +96,7 @@ public class GlobalEnvironmentManager: ObservableObject {
 
         if variable.isSecret {
             // Store secret value in SecureStorage
-            try await SecureStorage.shared.storeSecret(
+            try await secureStorage.storeSecret(
                 id: "global-\(variable.id.uuidString)",
                 value: variable.value
             )
@@ -117,10 +129,10 @@ public class GlobalEnvironmentManager: ObservableObject {
         // Handle secret status change
         if oldVariable.isSecret && !variable.isSecret {
             // Was secret, now not - delete from SecureStorage
-            try await SecureStorage.shared.deleteSecret(id: "global-\(variable.id.uuidString)")
+            try await secureStorage.deleteSecret(id: "global-\(variable.id.uuidString)")
         } else if variable.isSecret {
             // Is secret (new or updated) - store in SecureStorage
-            try await SecureStorage.shared.storeSecret(
+            try await secureStorage.storeSecret(
                 id: "global-\(variable.id.uuidString)",
                 value: variable.value
             )
@@ -139,7 +151,7 @@ public class GlobalEnvironmentManager: ObservableObject {
         let variable = variables[index]
 
         if variable.isSecret {
-            try await SecureStorage.shared.deleteSecret(id: "global-\(id.uuidString)")
+            try await secureStorage.deleteSecret(id: "global-\(id.uuidString)")
         }
 
         variables.remove(at: index)
@@ -152,7 +164,7 @@ public class GlobalEnvironmentManager: ObservableObject {
 
         for variable in variables {
             if variable.isSecret {
-                if let secretValue = try await SecureStorage.shared.retrieveSecret(
+                if let secretValue = try await secureStorage.retrieveSecret(
                     id: "global-\(variable.id.uuidString)")
                 {
                     result[variable.key] = secretValue
@@ -194,7 +206,7 @@ public class GlobalEnvironmentManager: ObservableObject {
     // MARK: - Private Helpers
 
     private func loadStoredVariables() -> [StoredEnvironmentVariable] {
-        guard let data = UserDefaults.standard.data(forKey: storageKey) else {
+        guard let data = userDefaults.data(forKey: storageKey) else {
             return []
         }
 
@@ -217,7 +229,7 @@ public class GlobalEnvironmentManager: ObservableObject {
 
         do {
             let data = try JSONEncoder().encode(stored)
-            UserDefaults.standard.set(data, forKey: storageKey)
+            userDefaults.set(data, forKey: storageKey)
         } catch {
             self.error = error
         }

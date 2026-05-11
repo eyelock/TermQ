@@ -15,6 +15,10 @@ class TerminalSessionManager: ObservableObject {
     /// Reference to the tmux manager for tmux-backed sessions
     let tmuxManager: any TmuxManagerProtocol
 
+    /// User-layer settings owner. Resolved at session-create time to apply
+    /// per-card overrides against current user preferences.
+    private let settings: SettingsStore
+
     /// Resolver for the board view model. Called lazily at use time so that production
     /// wiring can default to `BoardViewModel.shared` without triggering a singleton
     /// init cycle (BVM.init touches TSM.shared, so TSM.init must not touch BVM.shared).
@@ -64,26 +68,34 @@ class TerminalSessionManager: ObservableObject {
         var activePaneId: String?  // Currently active pane ID for input routing
     }
 
+    private let commandRunner: any YNHCommandRunner
+
     init(
         tmuxManager: any TmuxManagerProtocol = TmuxManager.shared,
-        boardViewModel: @escaping @MainActor () -> any BoardViewModelProtocol = { BoardViewModel.shared }
+        boardViewModel: @escaping @MainActor () -> any BoardViewModelProtocol = { BoardViewModel.shared },
+        settings: SettingsStore = .shared,
+        commandRunner: any YNHCommandRunner = LiveYNHCommandRunner()
     ) {
         self.tmuxManager = tmuxManager
         self.boardViewModelProvider = boardViewModel
+        self.settings = settings
+        self.commandRunner = commandRunner
         // Set up theme change callback
         themeManager.onThemeChanged = { [weak self] in
             self?.applyThemeToAllSessions()
         }
     }
 
-    /// Determine the effective backend for a card (handles fallback if tmux unavailable)
+    /// Determine the effective backend for a card (handles fallback if tmux unavailable).
+    /// Resolves the per-card override against the user-layer default first,
+    /// then applies the runtime "tmux unavailable → direct" fallback.
     func effectiveBackend(for card: TerminalCard) -> TerminalBackend {
-        switch card.backend {
+        let resolved = settings.effectiveBackend(card: card.backend)
+        switch resolved {
         case .direct:
             return .direct
         case .tmuxAttach, .tmuxControl:
-            // Fall back to direct if tmux is not available
-            return tmuxManager.isAvailable ? card.backend : .direct
+            return tmuxManager.isAvailable ? resolved : .direct
         }
     }
 
@@ -145,13 +157,14 @@ class TerminalSessionManager: ObservableObject {
 
         // Create new terminal (using our subclass that fixes copy/paste)
         let terminal = TermQTerminalView(frame: .zero)
-        let scrollback = UserDefaults.standard.integer(forKey: "terminalScrollbackLines")
-        terminal.changeScrollback(scrollback > 0 ? scrollback : 5000)
+        terminal.changeScrollback(settings.terminalScrollbackLines)
         terminal.cardId = cardId
         terminal.terminalTitle = card.title
-        terminal.safePasteEnabled = card.safePasteEnabled
+        terminal.safePasteEnabled = settings.effectiveSafePaste(card: card.safePasteEnabled)
         terminal.onDisableSafePaste = {
-            // Persist the change to the card model
+            // Persist the change to the card model. Setting an explicit
+            // `false` override (rather than leaving it as inherit) is the
+            // user's intent: they hit "stop bothering me on this terminal."
             card.safePasteEnabled = false
         }
         // Use centralized bell handler to ensure bells work even for background terminals
@@ -166,7 +179,7 @@ class TerminalSessionManager: ObservableObject {
 
         // Configure terminal appearance with custom font if specified
         let terminalFont: NSFont
-        let size = card.fontSize > 0 ? card.fontSize : 13
+        let size = settings.effectiveFontSize(card: card.fontSize)
         if !card.fontName.isEmpty, let customFont = NSFont(name: card.fontName, size: size) {
             terminalFont = customFont
         } else {
@@ -174,8 +187,8 @@ class TerminalSessionManager: ObservableObject {
         }
         terminal.font = terminalFont
 
-        // Apply theme (per-terminal or global default)
-        let theme = themeManager.theme(for: card.themeId)
+        // Apply theme (per-terminal override or user-layer default)
+        let theme = TerminalTheme.theme(for: settings.effectiveThemeId(card: card.themeId))
         themeManager.applyTheme(to: terminal, theme: theme)
 
         // Set up OSC handlers for clipboard, notifications, etc.
@@ -389,8 +402,7 @@ class TerminalSessionManager: ObservableObject {
         let hadNextAction = !card.llmNextAction.isEmpty
 
         // Check if queued actions are enabled (global AND per-terminal)
-        let globalAutorunEnabled = UserDefaults.standard.bool(forKey: "enableTerminalAutorun")
-        let autorunAllowed = globalAutorunEnabled && card.allowAutorun
+        let autorunAllowed = settings.enableTerminalAutorun && card.allowAutorun
 
         // Perform token replacement based on queued action settings
         var initCmd = card.initCommand
@@ -658,12 +670,13 @@ class TerminalSessionManager: ObservableObject {
         let sessionName = tmuxManager.sessionName(for: cardId)
         guard let tmuxPath = tmuxManager.tmuxPath else { return }
 
+        let runner = commandRunner
         Task {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: tmuxPath)
-            process.arguments = [command] + ["-t", sessionName]
-            try? process.run()
-            process.waitUntilExit()
+            _ = try? await runner.run(
+                executable: tmuxPath,
+                arguments: [command, "-t", sessionName],
+                environment: nil
+            )
         }
     }
 

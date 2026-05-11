@@ -148,7 +148,9 @@
 "editor.section.appearance" = "Utseende";
 "editor.field.theme" = "Tema";
 "editor.field.theme.default" = "Standard";
+"editor.field.theme.override" = "Åsidosätt standardtema";
 "editor.field.font.size" = "Teckenstorlek";
+"editor.field.font.size.override" = "Åsidosätt standardteckenstorlek";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -164,6 +166,9 @@
 "editor.field.init.command.help" = "Kommando att köra när terminalen startar";
 "editor.field.safe.paste" = "Säker inklistring";
 "editor.field.safe.paste.help" = "Visa bekräftelse innan flerradigt text klistras in";
+"editor.field.safe.paste.override" = "Åsidosätt standardinställning för säker inklistring";
+"editor.field.safe.paste.inherited.on" = "På (ärvt)";
+"editor.field.safe.paste.inherited.off" = "Av (ärvt)";
 "editor.field.allow.autorun" = "Tillåt autokörning";
 "editor.field.allow.autorun.help" = "Tillåt CLI att köra kommandon automatiskt";
 "editor.field.autorun.disabled.globally" = "Autokörning inaktiverad globalt";
@@ -404,6 +409,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Åsidosätt standard-backend";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend kan inte ändras medan sessionen är aktiv. Starta om sessionen för att ändra backends.";
@@ -575,10 +581,16 @@
 "sidebar.new.worktree.path.required" = "Ange en worktree-sökväg för att fortsätta.";
 "sidebar.new.worktree.create" = "Skapa";
 "sidebar.new.worktree.loading.branches" = "Laddar grenar...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Konvertera till arbetstråd";
+"sidebar.convert.worktree.branch.label" = "Grennamn";
+"sidebar.convert.worktree.button" = "Konvertera";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Konvertera till arbetstråd…";
 "sidebar.branch.delete" = "Ta bort gren";
 "sidebar.branch.delete.title" = "Ta bort gren";
 "sidebar.branch.delete.confirm" = "Ta bort";
@@ -602,6 +614,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokal";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Skrivskyddad";
+"harnesses.source.forked.from %@" = "Grenad från %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Information";
@@ -620,6 +634,7 @@
 "harnesses.detail.delegates %d" = "Delegerar till (%d)";
 "harnesses.detail.picks %d" = "Väljer (%d):";
 "harnesses.reveal.in.finder" = "Visa i Finder";
+"harnesses.copy.path" = "Kopiera som sökväg";
 "harnesses.open.in.browser" = "Öppna i webbläsare";
 "harnesses.close.detail" = "Stäng";
 "harnesses.configure.from.marketplaces" = "Konfigurera från marknadsplatser…";
@@ -702,9 +717,11 @@
 // Install sheet
 "harnesses.install.title" = "Installera harness";
 "harnesses.install.toolbar.help" = "Installera en harness";
-"harnesses.install.tab.search" = "Sök";
+"harnesses.install.tab.library" = "Bibliotek";
+"harnesses.install.manage.sources" = "Hantera källor…";
+"harnesses.install.manage.sources.help" = "Lägg till eller ta bort lokala harnessskällor";
+"harnesses.install.manage.sources.done" = "Klar";
 "harnesses.install.tab.git" = "Från Git";
-"harnesses.install.tab.sources" = "Källor";
 "harnesses.install.search.placeholder" = "Sök i register och källor…";
 "harnesses.install.search.prompt" = "Skriv för att söka i register och källor";
 "harnesses.install.search.empty" = "Inga resultat";
@@ -723,8 +740,21 @@
 "harnesses.install.sources.remove" = "Ta bort";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Lägg till delegat";
+"harnesses.add.delegate.button" = "Lägg till delegat…";
+"harnesses.add.delegate.library.search.placeholder" = "Sök i installerade harnesses…";
+"harnesses.add.delegate.library.empty" = "Inga andra installerade harnesses att delegera till.";
+"source.picker.browse.local" = "Bläddra lokalt…";
+"source.picker.browse.local.help" = "Välj en lokal mapp";
+"harnesses.add.delegate.pick" = "Välj";
+"harnesses.add.delegate.back" = "Tillbaka";
+"harnesses.add.delegate.apply" = "Lägg till delegat";
+
 "harnesses.update.button" = "Uppdatera";
 "harnesses.update.help" = "Uppdatera till den senaste versionen";
+"harnesses.update.available" = "Uppdatering tillgänglig";
+"harnesses.update.available.version %@" = "Version %@ är tillgänglig";
 "harnesses.uninstall.button" = "Avinstallera";
 "harnesses.uninstall.help" = "Avinstallera denna harness";
 "harnesses.uninstall.alert.title %@" = "Avinstallera \"%@\"?";
@@ -880,6 +910,9 @@
 "harnesses.group.default" = "Standard";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokal";
+"harnesses.group.quarantined" = "Karantäniserad";
+"harnesses.quarantine.restore" = "Återställ";
+"harnesses.quarantine.drop" = "Ta bort…";
 "harnesses.group.menu.settings" = "Inställningar…";
 "harnesses.group.registry %@" = "Register: %@";
 "harnesses.install.browsing" = "Laddar tillgängliga harnesses…";
@@ -887,6 +920,7 @@
 "harnesses.install.git.ref.placeholder" = "Branch, tagg eller commit-SHA (valfritt)";
 "harnesses.install.retry" = "Försök igen";
 "harnesses.install.section.available" = "Tillgänglig från register";
+"harnesses.install.section.available.empty" = "Inga marknadsplatser konfigurerade. Lägg till en i Inställningar → Externa källor.";
 "harnesses.install.section.installed" = "Installerad";
 "harnesses.install.section.local" = "Tillgänglig lokalt";
 "harnesses.outdated.capabilities.unknown" = "okänd";
@@ -926,3 +960,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Öppna terminaler";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Forka till lokalt";
+"harnesses.fork.to.local.help" = "Skapa en redigerbar lokal kopia av denna harness";
+"harnesses.update.dot.help" = "Uppdatering tillgänglig";
+"harness.fork.title %@" = "Forka \"%@\" till lokalt";
+"harness.fork.explanation" = "Skapar en redigerbar lokal kopia av denna harness. Kopian spårar sitt ursprung så att du kan se vad som ändrats uppströms.";
+"harness.fork.button" = "Forka";
+"harness.fork.progress.title %@" = "Forkar \"%@\"…";
+"harness.fork.rename.label" = "Namn (valfritt)";
+"harness.fork.rename.hint" = "Lämna tomt för att behålla källnamnet. Det nya forkens kanoniska id blir local/<namn>.";
+"harness.fork.identity.collision" = "Ett installerat harness har redan den här identiteten.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Uppdatera \"%@\"";
+"harness.update.progress.title %@" = "Uppdaterar \"%@\"…";
+"harness.update.button" = "Uppdatera";
+"harness.update.ynh.unavailable" = "ynh är inte tillgänglig.";
+"command.runner.running" = "Körs…";
+"command.runner.succeeded" = "Lyckades";
+"command.runner.failed" = "Misslyckades";
+"common.copy.output" = "Kopiera utdata";
+"common.rerun" = "Kör igen";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include-åtgärder";
+"harnesses.include.edit.button" = "Redigera include…";
+"harnesses.include.remove.button" = "Ta bort include…";
+"harnesses.include.edit.title" = "Redigera include";
+"harnesses.include.edit.source" = "Källa";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "gren, tagg eller commit";
+"harnesses.include.edit.path" = "Sökväg";
+"harnesses.include.edit.path.placeholder" = "undersökväg i källrepository";
+"harnesses.include.edit.picks" = "Urval";
+"harnesses.include.edit.picks.explainer" = "Markerade artefakter finns för närvarande i denna include. Växla för att lägga till eller ta bort.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld av %ld valda";
+"harnesses.include.edit.picks.unknown.source" = "Den här källan finns inte i dina marknadsplatser — endast aktuella artefakter visas.";
+"harnesses.include.edit.save" = "Spara ändringar";
+"harnesses.include.remove.confirm.title" = "Ta bort denna include?";
+"harnesses.include.remove.confirm.message %@" = "%@ tas bort från detta harness. Källrepository påverkas inte.";
+"harnesses.include.remove.confirm" = "Ta bort";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Lägg till include…";
+"harnesses.include.add.edit.existing" = "Redigera";
+"harnesses.include.add.search.placeholder" = "Sök plugins…";
+"harnesses.include.add.no.marketplaces" = "Inga marknadsplatser konfigurerade. Använd fliken Marknadsplatser för att lägga till en.";
+"harnesses.include.add.no.matches" = "Inga plugins matchar.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "gren, tagg eller commit (valfritt)";
+"harnesses.include.add.gitpath.label" = "Sökväg";
+"harnesses.include.add.gitpath.placeholder" = "underkatalog i källrepository (valfritt)";
+"harnesses.include.add.giturl.hint" = "Urvalet inkluderar som standard allt källan tillhandahåller. Använd Redigera include efter tillägg för att begränsa det.";
+"harnesses.include.add.picks.prompt" = "Välj de artefakter som ska inkluderas.";
+"harnesses.include.add.apply" = "Tillämpa";
+"harnesses.include.add.already.installed" = "Redan tillagd";
+"harnesses.include.add.already.installed.help" = "Denna plugin finns redan i detta harness — klicka för att redigera urval eller ref.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Delegatåtgärder";
+"harnesses.delegate.edit.button" = "Redigera delegat…";
+"harnesses.delegate.remove.button" = "Ta bort delegat…";
+"harnesses.delegate.edit.title" = "Redigera delegat";
+"harnesses.delegate.remove.confirm.title" = "Ta bort den här delegaten?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ kommer inte längre att sammanfogas i det här harness. Källdatabasen rörs inte.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Redigera manifest…";
+"harnesses.manifest.edit.title" = "Redigera manifest";
+"harnesses.manifest.edit.name" = "Namn";
+"harnesses.manifest.edit.version" = "Version";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Använd semver: MAJOR.MINOR.PATCH (t.ex. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Standardleverantör";
+"harnesses.manifest.edit.description" = "Beskrivning";
+"harnesses.manifest.edit.description.hint" = "Visas i harness-listan och detaljrubriken. Lämna tomt för att utelämna.";
+"harnesses.manifest.edit.save" = "Spara ändringar";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit ändrad: %@ → %@";
+"harnesses.broken.fork.help" = "Denna lokala fork saknar harness-manifestet. Högerklicka och välj Avinstallera för att ta bort den.";
+"harnesses.broken.fork.badge" = "Trasig";
+"harnesses.fork.of %@" = "Gren av %@";
+"harnesses.fork.help %@" = "Grenad från %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Ny worktree från gren";
+"sidebar.checkout.branch.label" = "Gren";
+"sidebar.checkout.branch.placeholder" = "Välj en gren…";
+"sidebar.checkout.branch.required" = "Välj en gren för att fortsätta.";
+"sidebar.checkout.branch.create" = "Skapa worktree";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Det här harness har inga Git-källor att uppdatera.";
+"harnesses.loading.help" = "Kommunicerar med ynh…";
+"harnesses.unversioned.drift.help" = "Upstream-innehåll ändrades utan versionsökning — granska innan uppdatering";
+"harnesses.unversioned.drift.banner" = "Upstream-innehåll ändrades utan versionsökning — granska innan uppdatering";
+"harnesses.unversioned.drift.confirm.title" = "Granska upstream-ändringar";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-innehåll har ändrats utan versionsökning. Uppdatering hämtar det nya innehållet. Granska SHA:erna nedan innan du fortsätter — en saknad versionsökning kan maskera skadliga ändringar.";
+"harnesses.unversioned.drift.confirm.proceed" = "Uppdatera ändå";

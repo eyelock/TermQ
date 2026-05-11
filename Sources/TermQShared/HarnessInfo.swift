@@ -7,13 +7,17 @@ import Foundation
 /// ``HarnessDetail`` view model.
 public struct HarnessInfo: Codable, Sendable {
     public let name: String
+    /// The currently installed version. Maps from YNH's `version_installed` key.
     public let version: String
     public let description: String?
     public let defaultVendor: String
     public let path: String
     public let installedFrom: HarnessProvenance?
+    /// True when the harness is structurally pinned to a specific commit SHA.
+    /// Absent on YNH builds older than 0.3.0 — treat nil as `false`.
+    public let isPinned: Bool?
 
-    /// The raw `.harness.json` manifest. TermQ does not interpret this — it is
+    /// The raw `plugin.json` manifest. TermQ does not interpret this — it is
     /// passed through for diagnostic display only (e.g. a "View manifest" disclosure).
     /// Stored as an opaque JSON string to avoid modelling YNH's internal schema.
     public let manifest: JSONFragment?
@@ -24,6 +28,7 @@ public struct HarnessInfo: Codable, Sendable {
         case versionLegacy = "version"
         case defaultVendor = "default_vendor"
         case installedFrom = "installed_from"
+        case isPinned = "is_pinned"
     }
 
     public init(from decoder: Decoder) throws {
@@ -39,6 +44,7 @@ public struct HarnessInfo: Codable, Sendable {
         defaultVendor = try c.decode(String.self, forKey: .defaultVendor)
         path = try c.decode(String.self, forKey: .path)
         installedFrom = try c.decodeIfPresent(HarnessProvenance.self, forKey: .installedFrom)
+        isPinned = try c.decodeIfPresent(Bool.self, forKey: .isPinned)
         manifest = try c.decodeIfPresent(JSONFragment.self, forKey: .manifest)
     }
 
@@ -50,6 +56,7 @@ public struct HarnessInfo: Codable, Sendable {
         try c.encode(defaultVendor, forKey: .defaultVendor)
         try c.encode(path, forKey: .path)
         try c.encodeIfPresent(installedFrom, forKey: .installedFrom)
+        try c.encodeIfPresent(isPinned, forKey: .isPinned)
         try c.encodeIfPresent(manifest, forKey: .manifest)
     }
 }

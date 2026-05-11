@@ -11,23 +11,50 @@ public struct LocalYNHConfig: Codable, Sendable {
     public var repoHarness: [String: String]
     /// Global preferred vendor ID for harness launches.
     public var preferredVendor: String?
+    /// Per-harness vendor override. Maps harness id (`Harness.id`, namespace-
+    /// qualified when present) to a vendor id (`claude` / `codex` / `cursor`).
+    /// When set, this overrides the harness's own `default_vendor` for both
+    /// the badge in the detail pane and the launch sheet's initial selection.
+    public var harnessVendor: [String: String]
+    /// Last-used harness id for "Run with Focus" per repo path.
+    /// Independent from `repoHarness` — a review harness can differ from the
+    /// default terminal-launch harness.
+    public var repoRunHarness: [String: String]
+    /// Last-used focus name for "Run with Focus" per repo path.
+    /// Empty string means no focus selected (ad-hoc prompt).
+    public var repoRunFocus: [String: String]
+    /// Per-repo override for the Remote PR feed cap. `nil` means use the global setting.
+    public var repoRemotePRFeedCap: [String: Int]
 
     public init(
         worktreeHarness: [String: String] = [:],
         repoHarness: [String: String] = [:],
-        preferredVendor: String? = nil
+        preferredVendor: String? = nil,
+        harnessVendor: [String: String] = [:],
+        repoRunHarness: [String: String] = [:],
+        repoRunFocus: [String: String] = [:],
+        repoRemotePRFeedCap: [String: Int] = [:]
     ) {
         self.worktreeHarness = worktreeHarness
         self.repoHarness = repoHarness
         self.preferredVendor = preferredVendor
+        self.harnessVendor = harnessVendor
+        self.repoRunHarness = repoRunHarness
+        self.repoRunFocus = repoRunFocus
+        self.repoRemotePRFeedCap = repoRemotePRFeedCap
     }
 
-    // Custom decoder for backward compat: `repoHarness` may be absent in older ynh.json files.
+    // Custom decoder for backward compat: all optional dicts default to empty.
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         worktreeHarness = (try? c.decode([String: String].self, forKey: .worktreeHarness)) ?? [:]
         repoHarness = (try? c.decode([String: String].self, forKey: .repoHarness)) ?? [:]
         preferredVendor = try? c.decode(String.self, forKey: .preferredVendor)
+        harnessVendor = (try? c.decode([String: String].self, forKey: .harnessVendor)) ?? [:]
+        repoRunHarness = (try? c.decode([String: String].self, forKey: .repoRunHarness)) ?? [:]
+        repoRunFocus = (try? c.decode([String: String].self, forKey: .repoRunFocus)) ?? [:]
+        repoRemotePRFeedCap =
+            (try? c.decode([String: Int].self, forKey: .repoRemotePRFeedCap)) ?? [:]
     }
 }
 

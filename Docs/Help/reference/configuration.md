@@ -39,7 +39,7 @@ Open Settings with **⌘,** or via the TermQ menu.
 
 ### Environment
 
-Global environment variables injected into every terminal session. Manage variables and secrets here. See [Tutorial 6](tutorials/06-terminal-context.md) for details.
+Global environment variables injected into every terminal session. Manage variables and secrets here. See [Tutorial 6](tutorials/terminal-context.md) for details.
 
 ### Tools
 

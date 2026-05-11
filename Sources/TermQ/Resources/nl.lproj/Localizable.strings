@@ -147,7 +147,9 @@
 "editor.section.appearance" = "Weergave";
 "editor.field.theme" = "Thema";
 "editor.field.theme.default" = "Standaard";
+"editor.field.theme.override" = "Standaardthema overschrijven";
 "editor.field.font.size" = "Lettergrootte";
+"editor.field.font.size.override" = "Standaard lettergrootte overschrijven";
 "editor.font.preview" = "AaBbCc 123";
 
 // Editor - Terminal section
@@ -163,6 +165,9 @@
 "editor.field.init.command.help" = "Commando bij terminal start";
 "editor.field.safe.paste" = "Veilig plakken";
 "editor.field.safe.paste.help" = "Bevestiging tonen voor meerdere regels plakken";
+"editor.field.safe.paste.override" = "Standaard veilig plakken overschrijven";
+"editor.field.safe.paste.inherited.on" = "Aan (geërfd)";
+"editor.field.safe.paste.inherited.off" = "Uit (geërfd)";
 "editor.field.allow.autorun" = "Autorun toestaan";
 "editor.field.allow.autorun.help" = "CLI automatisch commando's laten uitvoeren";
 "editor.field.autorun.disabled.globally" = "Autorun globaal uitgeschakeld";
@@ -403,6 +408,7 @@
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
+"editor.field.backend.override" = "Standaard backend overschrijven";
 "editor.tmux.persist.note" = "tmux sessions persist even when TermQ quits. Reattach on next launch.";
 "editor.backend.restart.hint" = "Changing the backend requires restarting the session to take effect.";
 "editor.backend.locked.warning" = "Backend kan niet worden gewijzigd terwijl de sessie actief is. Start de sessie opnieuw om backends te wijzigen.";
@@ -573,10 +579,16 @@
 "sidebar.new.worktree.path.required" = "Voer een worktree-pad in om door te gaan.";
 "sidebar.new.worktree.create" = "Aanmaken";
 "sidebar.new.worktree.loading.branches" = "Branches laden...";
+// Convert to worktree sheet
+"sidebar.convert.worktree.title" = "Omzetten naar worktree";
+"sidebar.convert.worktree.branch.label" = "Branch-naam";
+"sidebar.convert.worktree.button" = "Omzetten";
+
 
 // Local branches section
 "sidebar.local.branches" = "Local Branches";
 "sidebar.branch.new.worktree.from.branch" = "New Worktree from Branch…";
+"sidebar.branch.convert.to.worktree" = "Omzetten naar worktree…";
 "sidebar.branch.delete" = "Branch verwijderen";
 "sidebar.branch.delete.title" = "Branch verwijderen";
 "sidebar.branch.delete.confirm" = "Verwijderen";
@@ -600,6 +612,8 @@
 // Harnesses — row badges
 "harnesses.source.local" = "Lokaal";
 "harnesses.source.registry" = "Register";
+"harnesses.source.read.only" = "Alleen-lezen";
+"harnesses.source.forked.from %@" = "Geforkt van %@";
 
 // Harnesses — detail view
 "harnesses.detail.info" = "Informatie";
@@ -618,6 +632,7 @@
 "harnesses.detail.delegates %d" = "Delegeert naar (%d)";
 "harnesses.detail.picks %d" = "Selecteert (%d):";
 "harnesses.reveal.in.finder" = "Tonen in Finder";
+"harnesses.copy.path" = "Kopiëren als padnaam";
 "harnesses.open.in.browser" = "Openen in browser";
 "harnesses.close.detail" = "Sluiten";
 "harnesses.configure.from.marketplaces" = "Configureer vanuit marktplaatsen…";
@@ -700,9 +715,11 @@
 // Install sheet
 "harnesses.install.title" = "Harness installeren";
 "harnesses.install.toolbar.help" = "Een harness installeren";
-"harnesses.install.tab.search" = "Zoeken";
+"harnesses.install.tab.library" = "Bibliotheek";
+"harnesses.install.manage.sources" = "Bronnen beheren…";
+"harnesses.install.manage.sources.help" = "Lokale harnessbronnen toevoegen of verwijderen";
+"harnesses.install.manage.sources.done" = "Gereed";
 "harnesses.install.tab.git" = "Vanuit Git";
-"harnesses.install.tab.sources" = "Bronnen";
 "harnesses.install.search.placeholder" = "Zoek in registers en bronnen…";
 "harnesses.install.search.prompt" = "Typ om te zoeken in registers en bronnen";
 "harnesses.install.search.empty" = "Geen resultaten";
@@ -721,8 +738,21 @@
 "harnesses.install.sources.remove" = "Verwijderen";
 "harnesses.install.sources.count %ld" = "%ld harnesses";
 
+// Add Delegate sheet
+"harnesses.add.delegate.title" = "Afgevaardigde toevoegen";
+"harnesses.add.delegate.button" = "Afgevaardigde toevoegen…";
+"harnesses.add.delegate.library.search.placeholder" = "Zoek in geïnstalleerde harnesses…";
+"harnesses.add.delegate.library.empty" = "Geen andere geïnstalleerde harnesses om aan te delegeren.";
+"source.picker.browse.local" = "Lokaal bladeren…";
+"source.picker.browse.local.help" = "Selecteer een lokale map";
+"harnesses.add.delegate.pick" = "Selecteren";
+"harnesses.add.delegate.back" = "Terug";
+"harnesses.add.delegate.apply" = "Afgevaardigde toevoegen";
+
 "harnesses.update.button" = "Bijwerken";
 "harnesses.update.help" = "Bijwerken naar de nieuwste versie";
+"harnesses.update.available" = "Update beschikbaar";
+"harnesses.update.available.version %@" = "Versie %@ is beschikbaar";
 "harnesses.uninstall.button" = "Verwijderen";
 "harnesses.uninstall.help" = "Deze harness verwijderen";
 "harnesses.uninstall.alert.title %@" = "\"%@\" verwijderen?";
@@ -878,6 +908,9 @@
 "harnesses.group.default" = "Standaard";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.local" = "Lokaal";
+"harnesses.group.quarantined" = "Onder quarantaine";
+"harnesses.quarantine.restore" = "Herstel";
+"harnesses.quarantine.drop" = "Verwijderen…";
 "harnesses.group.menu.settings" = "Instellingen…";
 "harnesses.group.registry %@" = "Register: %@";
 "harnesses.install.browsing" = "Beschikbare harnesses laden…";
@@ -885,6 +918,7 @@
 "harnesses.install.git.ref.placeholder" = "Branch, tag of commit-SHA (optioneel)";
 "harnesses.install.retry" = "Opnieuw proberen";
 "harnesses.install.section.available" = "Beschikbaar via registers";
+"harnesses.install.section.available.empty" = "Geen marktplaatsen geconfigureerd. Voeg er een toe bij Instellingen → Externe bronnen.";
 "harnesses.install.section.installed" = "Geïnstalleerd";
 "harnesses.install.section.local" = "Lokaal beschikbaar";
 "harnesses.outdated.capabilities.unknown" = "onbekend";
@@ -924,3 +958,107 @@
 
 // MARK: - Toolbar (added sync)
 "toolbar.open.terminals.help" = "Terminals openen";
+
+// MARK: - Harness Fork (added sync)
+"harnesses.fork.to.local" = "Fork naar lokaal";
+"harnesses.fork.to.local.help" = "Een bewerkbare lokale kopie van deze harness maken";
+"harnesses.update.dot.help" = "Update beschikbaar";
+"harness.fork.title %@" = "Fork \"%@\" naar lokaal";
+"harness.fork.explanation" = "Maakt een bewerkbare lokale kopie van deze harness. De kopie volgt zijn oorsprong zodat je kunt zien wat er bovenstrooms is veranderd.";
+"harness.fork.button" = "Fork";
+"harness.fork.progress.title %@" = "Forken van \"%@\"…";
+"harness.fork.rename.label" = "Naam (optioneel)";
+"harness.fork.rename.hint" = "Laat leeg om de bronnaam te behouden. Het canonieke id van de nieuwe fork wordt local/<naam>.";
+"harness.fork.identity.collision" = "Er is al een geïnstalleerd harness met deze identiteit.";
+
+
+// MARK: - Harness Update
+"harness.update.title %@" = "Bijwerken \"%@\"";
+"harness.update.progress.title %@" = "Bezig met bijwerken van \"%@\"…";
+"harness.update.button" = "Bijwerken";
+"harness.update.ynh.unavailable" = "ynh is niet beschikbaar.";
+"command.runner.running" = "Wordt uitgevoerd…";
+"command.runner.succeeded" = "Geslaagd";
+"command.runner.failed" = "Mislukt";
+"common.copy.output" = "Uitvoer kopiëren";
+"common.rerun" = "Opnieuw uitvoeren";
+
+// MARK: - Harnesses — include row editor (added sync)
+"harnesses.include.actions.help" = "Include-acties";
+"harnesses.include.edit.button" = "Include bewerken…";
+"harnesses.include.remove.button" = "Include verwijderen…";
+"harnesses.include.edit.title" = "Include bewerken";
+"harnesses.include.edit.source" = "Bron";
+"harnesses.include.edit.ref" = "Ref";
+"harnesses.include.edit.ref.placeholder" = "branch, tag of commit";
+"harnesses.include.edit.path" = "Pad";
+"harnesses.include.edit.path.placeholder" = "subpad in de bronrepository";
+"harnesses.include.edit.picks" = "Selectie";
+"harnesses.include.edit.picks.explainer" = "Aangevinkte artefacten zijn momenteel in deze include. Schakel in of uit om toe te voegen of te verwijderen.";
+"harnesses.include.edit.picks.count %ld %ld" = "%ld van %ld geselecteerd";
+"harnesses.include.edit.picks.unknown.source" = "Deze bron staat niet in je marketplaces — alleen de huidige artefacten worden weergegeven.";
+"harnesses.include.edit.save" = "Wijzigingen opslaan";
+"harnesses.include.remove.confirm.title" = "Deze include verwijderen?";
+"harnesses.include.remove.confirm.message %@" = "%@ wordt verwijderd uit dit harness. De bronrepository wordt niet gewijzigd.";
+"harnesses.include.remove.confirm" = "Verwijderen";
+
+// MARK: - Harnesses — add include flow (added sync)
+"harnesses.include.add.button" = "Include toevoegen…";
+"harnesses.include.add.edit.existing" = "Bewerken";
+"harnesses.include.add.search.placeholder" = "Plugins zoeken…";
+"harnesses.include.add.no.marketplaces" = "Geen marketplaces geconfigureerd. Gebruik het tabblad Marketplaces om er een toe te voegen.";
+"harnesses.include.add.no.matches" = "Geen plugins gevonden.";
+"harnesses.include.add.giturl.label" = "URL";
+"harnesses.include.add.giturl.placeholder" = "https://github.com/owner/repo";
+"harnesses.include.add.gitref.label" = "Ref";
+"harnesses.include.add.gitref.placeholder" = "branch, tag of commit (optioneel)";
+"harnesses.include.add.gitpath.label" = "Pad";
+"harnesses.include.add.gitpath.placeholder" = "submap in de bronrepository (optioneel)";
+"harnesses.include.add.giturl.hint" = "De selectie omvat standaard alles wat de bron biedt. Gebruik Include bewerken na het toevoegen om te verfijnen.";
+"harnesses.include.add.picks.prompt" = "Selecteer de artefacten die je wilt opnemen.";
+"harnesses.include.add.apply" = "Toepassen";
+"harnesses.include.add.already.installed" = "Al toegevoegd";
+"harnesses.include.add.already.installed.help" = "Deze plugin is al in dit harness — klik om de selectie of ref te bewerken.";
+
+// Harnesses — delegate editor
+"harnesses.delegate.actions.help" = "Gedelegeerde acties";
+"harnesses.delegate.edit.button" = "Gedelegeerde bewerken…";
+"harnesses.delegate.remove.button" = "Gedelegeerde verwijderen…";
+"harnesses.delegate.edit.title" = "Gedelegeerde bewerken";
+"harnesses.delegate.remove.confirm.title" = "Deze gedelegeerde verwijderen?";
+"harnesses.delegate.remove.confirm.message %@" = "%@ wordt niet langer samengevoegd in dit harness. De bronrepository wordt niet aangeraakt.";
+
+// MARK: - Harnesses — manifest editor (added sync)
+"harnesses.manifest.edit.menu" = "Manifest bewerken…";
+"harnesses.manifest.edit.title" = "Manifest bewerken";
+"harnesses.manifest.edit.name" = "Naam";
+"harnesses.manifest.edit.version" = "Versie";
+"harnesses.manifest.edit.version.placeholder" = "1.0.0";
+"harnesses.manifest.edit.version.invalid" = "Gebruik semver: MAJOR.MINOR.PATCH (bijv. 0.2.0)";
+"harnesses.manifest.edit.vendor" = "Standaard leverancier";
+"harnesses.manifest.edit.description" = "Beschrijving";
+"harnesses.manifest.edit.description.hint" = "Wordt weergegeven in de harness-lijst en de detailkoptekst. Leeg laten om weg te laten.";
+"harnesses.manifest.edit.save" = "Wijzigingen opslaan";
+
+// MARK: - Harnesses — unversioned drift (added sync)
+"harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit gewijzigd: %@ → %@";
+"harnesses.broken.fork.help" = "Deze lokale fork mist het harness-manifest. Klik met de rechtermuisknop en kies Verwijderen om het te verwijderen.";
+"harnesses.broken.fork.badge" = "Defect";
+"harnesses.fork.of %@" = "Fork van %@";
+"harnesses.fork.help %@" = "Geforkt van %@";
+
+// MARK: - Sidebar — checkout branch (added sync)
+"sidebar.checkout.branch.title" = "Nieuwe worktree vanuit branch";
+"sidebar.checkout.branch.label" = "Branch";
+"sidebar.checkout.branch.placeholder" = "Selecteer een branch…";
+"sidebar.checkout.branch.required" = "Selecteer een branch om door te gaan.";
+"sidebar.checkout.branch.create" = "Worktree aanmaken";
+
+// MARK: - Harnesses — additional (added sync)
+"harnesses.update.no.sources" = "Dit harness heeft geen Git-bronnen om bij te werken.";
+"harnesses.loading.help" = "Communicatie met ynh…";
+"harnesses.unversioned.drift.help" = "Upstream-inhoud is gewijzigd zonder versie-update — controleer voor bijwerken";
+"harnesses.unversioned.drift.banner" = "Upstream-inhoud is gewijzigd zonder versie-update — controleer voor bijwerken";
+"harnesses.unversioned.drift.confirm.title" = "Upstream-wijzigingen controleren";
+"harnesses.unversioned.drift.confirm.body" = "Upstream-inhoud is gewijzigd zonder versie-update. Bijwerken haalt de nieuwe inhoud op. Controleer de SHA's hieronder voordat u doorgaat — een ontbrekende versie-update kan kwaadaardige wijzigingen maskeren.";
+"harnesses.unversioned.drift.confirm.proceed" = "Toch bijwerken";

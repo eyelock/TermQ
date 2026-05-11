@@ -51,11 +51,39 @@ final class InMemoryKeyValueStore: KeyValueStore, @unchecked Sendable {
         storage[key] as? Bool ?? false
     }
 
+    func integer(forKey key: String) -> Int {
+        if let i = storage[key] as? Int { return i }
+        if let d = storage[key] as? Double { return Int(d) }
+        return 0
+    }
+
+    func double(forKey key: String) -> Double {
+        if let d = storage[key] as? Double { return d }
+        if let i = storage[key] as? Int { return Double(i) }
+        return 0
+    }
+
+    func object(forKey key: String) -> Any? {
+        storage[key]
+    }
+
     func set(_ value: Any?, forKey key: String) {
-        storage[key] = value
+        if let value {
+            storage[key] = value
+        } else {
+            storage.removeValue(forKey: key)
+        }
     }
 
     func set(_ value: Bool, forKey key: String) {
+        storage[key] = value
+    }
+
+    func set(_ value: Int, forKey key: String) {
+        storage[key] = value
+    }
+
+    func set(_ value: Double, forKey key: String) {
         storage[key] = value
     }
 }

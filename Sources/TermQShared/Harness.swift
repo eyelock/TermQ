@@ -6,15 +6,20 @@ import Foundation
 /// contract defined in YNH's `docs/cli-structured.md`. Uses `snake_case` JSON
 /// keys per the YNH convention.
 public struct Harness: Codable, Equatable, Sendable, Identifiable {
-    /// Unique identifier. Includes namespace when present: `"org/repo/name"`.
-    /// Falls back to plain `name` for flat/local installs.
-    public var id: String {
-        guard let ns = namespace, !ns.isEmpty else { return name }
-        return "\(ns)/\(name)"
-    }
+    /// Canonical identifier emitted by YNH. For YNH 0.4+ envelopes this is
+    /// the `id` field (`local/<name>`, `<host>/<org>/<repo>/<name>`, etc.).
+    /// For older YNH builds without an `id` field, falls back to composing
+    /// `namespace + "/" + name` or just `name` if neither is present.
+    public let id: String
 
     public let name: String
+    /// The currently installed version. Maps from YNH's `version_installed` key.
     public let version: String
+    /// The latest published version available, populated only when YNH is
+    /// invoked with `--check-updates` and the install record carries enough
+    /// provenance to resolve an upstream (registry installs). Absent in any
+    /// other case — the three-state semantics from the YNH JSON contract.
+    public let versionAvailable: String?
     public let description: String?
     public let defaultVendor: String
     /// Namespace derived from the registry entry (e.g. `"eyelock/assistants"`).
@@ -25,39 +30,142 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     public let artifacts: HarnessArtifactCounts
     public let includes: [HarnessInclude]
     public let delegatesTo: [HarnessDelegate]
+    /// True when the harness is structurally pinned to a specific commit SHA.
+    /// Absent on YNH builds older than 0.3.0 — treat nil as `false`.
+    public let isPinned: Bool?
+    /// Latest commit SHA on the harness's recorded install ref upstream
+    /// (`installed_from.ref`). Populated by `--check-updates` (YNH 0.3+
+    /// post the harness-level drift fix). Compare against
+    /// `installedFrom.sha` to detect drift on the harness's own source —
+    /// the path that catches self-contained plugins (no includes).
+    public let shaAvailable: String?
+
+    /// Coarse classification from YNH: "local-fork", "registry", "git", or
+    /// "local-fork-broken" for pointer-installed forks whose on-disk
+    /// `.ynh-plugin/plugin.json` is missing or unreadable. Optional —
+    /// older YNH envelopes don't emit it.
+    public let kind: String?
+
+    /// Human-readable reason a `local-fork-broken` row is broken (e.g.
+    /// "no harness manifest found in <path>"). Optional, only populated
+    /// for broken entries.
+    public let brokenReason: String?
+
+    /// True when YNH flagged this entry as a broken pointer-installed fork.
+    /// The sidebar surfaces these distinctly so the user can see why a row
+    /// looks empty and remove it without confusion.
+    public var isBrokenLocalFork: Bool { kind == "local-fork-broken" }
+
+    /// True when an update is available from upstream — populated only after a
+    /// `--check-updates` probe and only when the harness has registry
+    /// provenance. Otherwise nil ("unknown / not checked").
+    public var hasVersionUpdate: Bool? {
+        guard let versionAvailable, !versionAvailable.isEmpty else { return nil }
+        return versionAvailable != version
+    }
+
+    /// The "where to edit this harness" path that user-facing actions
+    /// (Reveal in Finder/Terminal, Open in editor, Copy Path) should target.
+    ///
+    /// For forked-local and plain-local installs whose `installed_from.source`
+    /// is a filesystem path, that's the editable working tree the user
+    /// expects to land in. Otherwise (registry, git, no provenance) the
+    /// canonical location is the install dir at `path`.
+    ///
+    /// Once YNH's `ynh fork --register` lands and the install dir becomes a
+    /// symlink to the source tree, the two converge — but we keep this
+    /// indirection so behaviour is stable across both layouts.
+    public var editablePath: String {
+        guard let provenance = installedFrom,
+            provenance.sourceType == "local"
+        else { return path }
+        let source = provenance.source
+        if source.hasPrefix("/") || source.hasPrefix("~") {
+            return (source as NSString).expandingTildeInPath
+        }
+        return path
+    }
+
+    /// True when this harness is a fork of a registry install — `update`
+    /// flows are disabled by YNH for forks (per `ynh update` behaviour),
+    /// so the UI hides the Update affordance for these.
+    public var isFork: Bool {
+        installedFrom?.forkedFrom != nil
+    }
+
+    /// True when the harness's own source SHA differs from upstream on the
+    /// recorded install ref. Distinct from include-level drift; specifically
+    /// catches self-contained plugins where the entire content lives inside
+    /// the harness directory (no includes to drift). Returns false when
+    /// either side is missing — we cannot prove drift without both.
+    public var hasSourceDrift: Bool {
+        guard let installedSHA = installedFrom?.sha, !installedSHA.isEmpty,
+            let availableSHA = shaAvailable, !availableSHA.isEmpty
+        else { return false }
+        return installedSHA != availableSHA
+    }
 
     enum CodingKeys: String, CodingKey {
-        case name, description, path, artifacts, includes, namespace
+        case id, name, description, path, artifacts, includes, namespace, kind
         case version = "version_installed"
         case versionLegacy = "version"
+        case versionAvailable = "version_available"
         case defaultVendor = "default_vendor"
         case installedFrom = "installed_from"
         case delegatesTo = "delegates_to"
+        case isPinned = "is_pinned"
+        case shaAvailable = "sha_available"
+        case brokenReason = "broken_reason"
     }
 
+    /// Custom decoder that tolerates `null` arrays for `includes` and
+    /// `delegates_to`. YNH emits these as `null` for broken installs (e.g. a
+    /// pointer file whose source path was deleted, or a harness with a legacy
+    /// manifest format) so they show up in `ynh ls` as error rows. Without
+    /// this tolerance, a single bad row would fail the whole list decode and
+    /// empty the sidebar.
+    ///
+    /// Also tolerates YNH 0.2.x JSON shapes: 0.2.x emits `version` instead of
+    /// `version_installed`. Accepts either key so users on YNH 0.2.x (the
+    /// current Homebrew tap version) see their harnesses correctly.
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        name = try c.decode(String.self, forKey: .name)
+        self.name = try c.decode(String.self, forKey: .name)
         // YNH 0.3+ emits `version_installed`; 0.2.x emits `version`. Accept either.
         if let modern = try c.decodeIfPresent(String.self, forKey: .version) {
-            version = modern
+            self.version = modern
         } else {
-            version = try c.decode(String.self, forKey: .versionLegacy)
+            self.version = try c.decode(String.self, forKey: .versionLegacy)
         }
-        description = try c.decodeIfPresent(String.self, forKey: .description)
-        defaultVendor = try c.decode(String.self, forKey: .defaultVendor)
-        namespace = try c.decodeIfPresent(String.self, forKey: .namespace)
-        path = try c.decode(String.self, forKey: .path)
-        installedFrom = try c.decodeIfPresent(HarnessProvenance.self, forKey: .installedFrom)
-        artifacts = try c.decode(HarnessArtifactCounts.self, forKey: .artifacts)
-        includes = try c.decodeIfPresent([HarnessInclude].self, forKey: .includes) ?? []
-        delegatesTo = try c.decodeIfPresent([HarnessDelegate].self, forKey: .delegatesTo) ?? []
+        self.versionAvailable = try c.decodeIfPresent(String.self, forKey: .versionAvailable)
+        self.description = try c.decodeIfPresent(String.self, forKey: .description)
+        self.defaultVendor = try c.decode(String.self, forKey: .defaultVendor)
+        self.namespace = try c.decodeIfPresent(String.self, forKey: .namespace)
+        self.path = try c.decode(String.self, forKey: .path)
+        self.installedFrom = try c.decodeIfPresent(HarnessProvenance.self, forKey: .installedFrom)
+        self.artifacts = try c.decode(HarnessArtifactCounts.self, forKey: .artifacts)
+        self.includes = (try? c.decodeIfPresent([HarnessInclude].self, forKey: .includes)) ?? []
+        self.delegatesTo = (try? c.decodeIfPresent([HarnessDelegate].self, forKey: .delegatesTo)) ?? []
+        self.isPinned = try c.decodeIfPresent(Bool.self, forKey: .isPinned)
+        self.shaAvailable = try c.decodeIfPresent(String.self, forKey: .shaAvailable)
+        self.kind = try c.decodeIfPresent(String.self, forKey: .kind)
+        self.brokenReason = try c.decodeIfPresent(String.self, forKey: .brokenReason)
+        // Prefer YNH's authoritative id when present (YNH 0.4+). For older
+        // envelopes that don't emit `id`, compose from namespace + name.
+        if let envelopeID = try c.decodeIfPresent(String.self, forKey: .id), !envelopeID.isEmpty {
+            self.id = envelopeID
+        } else if let ns = self.namespace, !ns.isEmpty {
+            self.id = "\(ns)/\(self.name)"
+        } else {
+            self.id = self.name
+        }
     }
 
     public func encode(to encoder: Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encode(name, forKey: .name)
         try c.encode(version, forKey: .version)
+        try c.encodeIfPresent(versionAvailable, forKey: .versionAvailable)
         try c.encodeIfPresent(description, forKey: .description)
         try c.encode(defaultVendor, forKey: .defaultVendor)
         try c.encodeIfPresent(namespace, forKey: .namespace)
@@ -66,11 +174,17 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         try c.encode(artifacts, forKey: .artifacts)
         try c.encode(includes, forKey: .includes)
         try c.encode(delegatesTo, forKey: .delegatesTo)
+        try c.encodeIfPresent(isPinned, forKey: .isPinned)
+        try c.encodeIfPresent(shaAvailable, forKey: .shaAvailable)
+        try c.encodeIfPresent(kind, forKey: .kind)
+        try c.encodeIfPresent(brokenReason, forKey: .brokenReason)
     }
 
     public init(
+        id: String? = nil,
         name: String,
         version: String,
+        versionAvailable: String? = nil,
         description: String? = nil,
         defaultVendor: String,
         namespace: String? = nil,
@@ -78,10 +192,15 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         installedFrom: HarnessProvenance? = nil,
         artifacts: HarnessArtifactCounts,
         includes: [HarnessInclude] = [],
-        delegatesTo: [HarnessDelegate] = []
+        delegatesTo: [HarnessDelegate] = [],
+        isPinned: Bool? = nil,
+        shaAvailable: String? = nil,
+        kind: String? = nil,
+        brokenReason: String? = nil
     ) {
         self.name = name
         self.version = version
+        self.versionAvailable = versionAvailable
         self.description = description
         self.defaultVendor = defaultVendor
         self.namespace = namespace
@@ -89,7 +208,18 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
         self.installedFrom = installedFrom
         self.artifacts = artifacts
         self.includes = includes
+        if let id, !id.isEmpty {
+            self.id = id
+        } else if let ns = namespace, !ns.isEmpty {
+            self.id = "\(ns)/\(name)"
+        } else {
+            self.id = name
+        }
         self.delegatesTo = delegatesTo
+        self.isPinned = isPinned
+        self.shaAvailable = shaAvailable
+        self.kind = kind
+        self.brokenReason = brokenReason
     }
 }
 
@@ -106,12 +236,69 @@ public struct HarnessProvenance: Codable, Equatable, Sendable {
     public let sha: String?
     /// Namespace of the registry entry this harness was installed from (ynh 0.2+).
     public let namespace: String?
+    /// When set, this is a forked-to-local harness and the value carries the
+    /// origin it was forked from. Populated by `ynh fork` (YNH 0.3+).
+    public let forkedFrom: ForkOrigin?
 
     enum CodingKeys: String, CodingKey {
         case source, path, ref, sha, namespace
         case sourceType = "source_type"
         case registryName = "registry_name"
         case installedAt = "installed_at"
+        case forkedFrom = "forked_from"
+    }
+
+    public init(
+        sourceType: String,
+        source: String,
+        path: String? = nil,
+        registryName: String? = nil,
+        installedAt: String,
+        ref: String? = nil,
+        sha: String? = nil,
+        namespace: String? = nil,
+        forkedFrom: ForkOrigin? = nil
+    ) {
+        self.sourceType = sourceType
+        self.source = source
+        self.path = path
+        self.registryName = registryName
+        self.installedAt = installedAt
+        self.ref = ref
+        self.sha = sha
+        self.namespace = namespace
+        self.forkedFrom = forkedFrom
+    }
+}
+
+/// Origin record for a forked-to-local harness. Captured at fork time so the
+/// detail pane can show the ghost origin and the "Re-fork from upstream"
+/// affordance has the data it needs.
+public struct ForkOrigin: Codable, Equatable, Sendable {
+    public let sourceType: String
+    public let source: String
+    public let registryName: String?
+    public let version: String?
+    public let sha: String?
+
+    enum CodingKeys: String, CodingKey {
+        case source, version, sha
+        case sourceType = "source_type"
+        case registryName = "registry_name"
+    }
+
+    public init(
+        sourceType: String,
+        source: String,
+        registryName: String? = nil,
+        version: String? = nil,
+        sha: String? = nil
+    ) {
+        self.sourceType = sourceType
+        self.source = source
+        self.registryName = registryName
+        self.version = version
+        self.sha = sha
     }
 }
 
@@ -136,9 +323,30 @@ public struct HarnessArtifactCounts: Codable, Equatable, Sendable {
 /// An include reference within a harness.
 public struct HarnessInclude: Codable, Equatable, Sendable {
     public let git: String
+    /// The manifest-declared ref (the pin in `plugin.json`) — present only when
+    /// the include is explicitly pinned. Floating refs leave this empty and
+    /// resolve to whatever upstream HEAD was at install time; that resolved
+    /// commit is captured separately in `refInstalled`.
     public let ref: String?
     public let path: String?
     public let pick: [String]?
+    /// True when the include is pinned to a specific commit SHA. Absent on
+    /// YNH builds older than 0.3.0 — treat nil as `false`.
+    public let isPinned: Bool?
+    /// Commit SHA actually checked out at install/update time, recorded by
+    /// YNH 0.3.0+ in `installed.json.resolved`. Compared against
+    /// `refAvailable` to detect per-include drift.
+    public let refInstalled: String?
+    /// Latest upstream commit SHA, populated when YNH was invoked with
+    /// `--check-updates`.
+    public let refAvailable: String?
+
+    enum CodingKeys: String, CodingKey {
+        case git, ref, path, pick
+        case isPinned = "is_pinned"
+        case refInstalled = "ref_installed"
+        case refAvailable = "ref_available"
+    }
 }
 
 /// A delegate reference within a harness.
@@ -146,4 +354,79 @@ public struct HarnessDelegate: Codable, Equatable, Sendable {
     public let git: String
     public let ref: String?
     public let path: String?
+}
+
+// MARK: - YNH structured-output envelope
+
+/// Top-level envelope returned by `ynh ls --format json`.
+///
+/// YNH 0.3+ wraps the harness list as `{harnesses: [...], capabilities, ynh_version}`.
+/// YNH 0.2.x emits a bare `[Harness]` array. This decoder accepts either shape.
+/// Callers read `harnesses`; `capabilities` and `ynhVersion` are nil on 0.2.x.
+public struct HarnessListResponse: Sendable {
+    public let capabilities: String?
+    public let ynhVersion: String?
+    /// On-disk YNH schema version. `2` means migration to canonical-id
+    /// shape has run; `1` (or absent) means TermQ should call
+    /// `ynh migrate --json --skip-broken` and consume the resulting
+    /// manifest before relying on the new id shape.
+    public let schemaVersion: Int?
+    public let harnesses: [Harness]
+}
+
+extension HarnessListResponse: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case capabilities, harnesses
+        case ynhVersion = "ynh_version"
+        case schemaVersion = "schema_version"
+    }
+
+    public init(from decoder: Decoder) throws {
+        if let keyed = try? decoder.container(keyedBy: CodingKeys.self),
+            keyed.contains(.harnesses)
+        {
+            harnesses = try keyed.decode([Harness].self, forKey: .harnesses)
+            capabilities = try keyed.decodeIfPresent(String.self, forKey: .capabilities)
+            ynhVersion = try keyed.decodeIfPresent(String.self, forKey: .ynhVersion)
+            schemaVersion = try keyed.decodeIfPresent(Int.self, forKey: .schemaVersion)
+        } else {
+            // YNH 0.2.x bare array shape
+            harnesses = try [Harness](from: decoder)
+            capabilities = nil
+            ynhVersion = nil
+            schemaVersion = nil
+        }
+    }
+}
+
+/// Top-level envelope returned by `ynh info <name> --format json`.
+///
+/// YNH 0.3+ wraps the payload as `{harness: {...}, capabilities, ynh_version}`.
+/// YNH 0.2.x emits a bare `HarnessInfo` object. This decoder accepts either shape.
+public struct HarnessInfoResponse: Sendable {
+    public let capabilities: String?
+    public let ynhVersion: String?
+    public let harness: HarnessInfo
+}
+
+extension HarnessInfoResponse: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case capabilities, harness
+        case ynhVersion = "ynh_version"
+    }
+
+    public init(from decoder: Decoder) throws {
+        if let keyed = try? decoder.container(keyedBy: CodingKeys.self),
+            keyed.contains(.harness)
+        {
+            harness = try keyed.decode(HarnessInfo.self, forKey: .harness)
+            capabilities = try keyed.decodeIfPresent(String.self, forKey: .capabilities)
+            ynhVersion = try keyed.decodeIfPresent(String.self, forKey: .ynhVersion)
+        } else {
+            // YNH 0.2.x bare object shape
+            harness = try HarnessInfo(from: decoder)
+            capabilities = nil
+            ynhVersion = nil
+        }
+    }
 }

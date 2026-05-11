@@ -2,17 +2,21 @@ import AppKit
 import SwiftUI
 import TermQShared
 
-/// Sheet for duplicating an installed harness.
+/// Sheet for duplicating a local harness under a new name.
 ///
-/// Reads the source harness manifest from `harness.path/.harness.json`, strips
-/// `installed_from`, writes a new `harness.json` at `<destination>/<new-name>/`,
-/// then runs `ynh install <new-path>`.
+/// Single-call flow: `ynh fork <name> --to <dest> --name <newname>` copies the
+/// source tree, rewrites the manifest's `name`, and self-registers via the
+/// pointer model. No follow-up `ynh install` is needed.
+///
+/// Available only for local/forked harnesses — registry harnesses are read-only
+/// and use **Fork to local** instead, which keeps the original name and
+/// upstream provenance.
 struct DuplicateHarnessSheet: View {
     let harness: Harness
     @ObservedObject var detector: YNHDetector
     @ObservedObject var repository: HarnessRepository
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("defaultHarnessAuthorDirectory") private var defaultHarnessAuthorDirectory = ""
+    @ObservedObject private var authorPreferences = HarnessAuthorPreferences.shared
 
     @State private var name = ""
     @State private var destination = ""
@@ -47,7 +51,7 @@ struct DuplicateHarnessSheet: View {
             Divider()
             footer
         }
-        .frame(width: 480, height: 360)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear { loadDefaultDestination() }
     }
 
@@ -167,8 +171,8 @@ struct DuplicateHarnessSheet: View {
 
     private func loadDefaultDestination() {
         name = "copy-of-\(harness.name)"
-        if !defaultHarnessAuthorDirectory.isEmpty {
-            destination = defaultHarnessAuthorDirectory
+        if !authorPreferences.defaultDirectory.isEmpty {
+            destination = authorPreferences.defaultDirectory
             return
         }
         // Fall back to ~/Documents — never default to the ynh-managed harnesses
@@ -201,38 +205,16 @@ struct DuplicateHarnessSheet: View {
 
         let newDir = (trimmedDest as NSString).appendingPathComponent(trimmedName)
 
-        do {
-            // Read source manifest
-            let sourcePath = (harness.path as NSString).appendingPathComponent(".harness.json")
-            let sourceData = try Data(contentsOf: URL(fileURLWithPath: sourcePath))
-            guard var manifest = try JSONSerialization.jsonObject(with: sourceData) as? [String: Any] else {
-                throw DuplicateError.badManifest
-            }
+        let exitCode = await runProcess(
+            ynhBin,
+            args: ["fork", harness.name, "--to", newDir, "--name", trimmedName],
+            environment: ynhEnvironment)
 
-            // Update fields for the new harness
-            manifest["name"] = trimmedName
-            manifest.removeValue(forKey: "installed_from")
-
-            // Create destination directory
-            try FileManager.default.createDirectory(
-                atPath: newDir,
-                withIntermediateDirectories: true
-            )
-
-            // Write .harness.json — ynh install expects this filename in the source directory
-            let destManifest = (newDir as NSString).appendingPathComponent(".harness.json")
-            let outData = try JSONSerialization.data(
-                withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
-            try outData.write(to: URL(fileURLWithPath: destManifest))
-
-            // ynh install <new-path>
-            let exitCode = await runProcess(ynhBin, args: ["install", newDir], environment: ynhEnvironment)
-            guard exitCode == 0 else { throw DuplicateError.installFailed(exitCode) }
-
+        if exitCode == 0 {
             await repository.refresh()
             succeeded = true
-        } catch {
-            errorMessage = error.localizedDescription
+        } else {
+            errorMessage = DuplicateError.forkFailed(exitCode).localizedDescription
         }
 
         isRunning = false
@@ -255,12 +237,10 @@ struct DuplicateHarnessSheet: View {
     }
 
     private enum DuplicateError: LocalizedError {
-        case badManifest
-        case installFailed(Int32)
+        case forkFailed(Int32)
         var errorDescription: String? {
             switch self {
-            case .badManifest: "Could not read harness manifest."
-            case .installFailed(let code): "ynh install failed (exit \(code))."
+            case .forkFailed(let code): "ynh fork failed (exit \(code))."
             }
         }
     }

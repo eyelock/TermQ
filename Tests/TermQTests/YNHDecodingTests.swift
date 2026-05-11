@@ -4,73 +4,93 @@ import XCTest
 
 @testable import TermQ
 
-/// Decode tests for YNH 0.2 JSON shapes.
+/// Decode tests for YNH 0.3 JSON shapes.
 ///
-/// Fixtures are inlined from actual `ynh ls`, `ynh search`, and `ynh paths` output.
-/// They serve as a contract test: if YNH changes its JSON shape, these fail first.
+/// Fixtures are inlined from actual `ynh ls`, `ynh info`, `ynh search`, and
+/// `ynh paths` output. They serve as a contract test: if YNH changes its JSON
+/// shape, these fail first.
+///
+/// Note: `ynh ls` and `ynh info` are wrapped in an envelope (capabilities +
+/// ynh_version + harnesses|harness) as of YNH 0.3.0. Fixtures here use the
+/// envelope shape and decode via `HarnessListResponse` / `HarnessInfoResponse`.
 final class YNHHarnessDecodingTests: XCTestCase {
 
-    // MARK: - ynh ls --format json
+    // MARK: - ynh ls --format json (envelope)
 
     func test_ynh_ls_decodesHarnessArray() throws {
         let json = """
-            [
-              {
-                "name": "assistants-dev",
-                "version_installed": "0.1.0",
-                "description": "A harness for adding to eyelock-assistants",
-                "default_vendor": "claude",
-                "path": "/Users/test/.ynh/harnesses/assistants-dev",
-                "installed_from": {
-                  "source_type": "local",
-                  "source": "/projects/assistants-dev",
-                  "installed_at": "2026-04-21T17:55:38Z"
-                },
-                "artifacts": { "skills": 0, "agents": 0, "rules": 0, "commands": 0 },
-                "includes": [
-                  { "git": "https://github.com/eyelock/assistants", "path": "plugins/gitflow" }
-                ],
-                "delegates_to": []
-              }
-            ]
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": [
+                {
+                  "name": "assistants-dev",
+                  "version_installed": "0.1.0",
+                  "description": "A harness for adding to eyelock-assistants",
+                  "default_vendor": "claude",
+                  "path": "/Users/test/.ynh/harnesses/assistants-dev",
+                  "is_pinned": false,
+                  "installed_from": {
+                    "source_type": "local",
+                    "source": "/projects/assistants-dev",
+                    "installed_at": "2026-04-21T17:55:38Z"
+                  },
+                  "artifacts": { "skills": 0, "agents": 0, "rules": 0, "commands": 0 },
+                  "includes": [
+                    { "git": "https://github.com/eyelock/assistants", "path": "plugins/gitflow", "is_pinned": false }
+                  ],
+                  "delegates_to": []
+                }
+              ]
+            }
             """
-        let harnesses = try JSONDecoder().decode([Harness].self, from: Data(json.utf8))
-        XCTAssertEqual(harnesses.count, 1)
-        let h = harnesses[0]
+        let response = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        XCTAssertEqual(response.ynhVersion, "0.3.0")
+        XCTAssertEqual(response.harnesses.count, 1)
+        let h = response.harnesses[0]
         XCTAssertEqual(h.name, "assistants-dev")
         XCTAssertEqual(h.version, "0.1.0")
         XCTAssertEqual(h.defaultVendor, "claude")
         XCTAssertNil(h.namespace)
         XCTAssertEqual(h.id, "assistants-dev")  // no namespace → id == name
+        XCTAssertEqual(h.isPinned, false)
         XCTAssertEqual(h.includes.count, 1)
         XCTAssertEqual(h.includes[0].git, "https://github.com/eyelock/assistants")
+        XCTAssertEqual(h.includes[0].isPinned, false)
     }
 
     func test_ynh_ls_decodesProvenanceFields() throws {
         let json = """
-            [
-              {
-                "name": "my-harness",
-                "version_installed": "0.1.0",
-                "default_vendor": "claude",
-                "path": "/Users/test/.ynh/harnesses/my-harness",
-                "installed_from": {
-                  "source_type": "registry",
-                  "source": "github.com/eyelock/assistants",
-                  "registry_name": "eyelock-assistants",
-                  "installed_at": "2026-04-21T00:00:00Z",
-                  "ref": "main",
-                  "sha": "abc1234",
-                  "namespace": "eyelock/assistants"
-                },
-                "artifacts": { "skills": 2, "agents": 1, "rules": 0, "commands": 1 },
-                "includes": [],
-                "delegates_to": []
-              }
-            ]
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": [
+                {
+                  "name": "my-harness",
+                  "version_installed": "0.1.0",
+                  "default_vendor": "claude",
+                  "path": "/Users/test/.ynh/harnesses/my-harness",
+                  "is_pinned": false,
+                  "installed_from": {
+                    "source_type": "registry",
+                    "source": "github.com/eyelock/assistants",
+                    "registry_name": "eyelock-assistants",
+                    "installed_at": "2026-04-21T00:00:00Z",
+                    "ref": "main",
+                    "sha": "abc1234",
+                    "namespace": "eyelock/assistants"
+                  },
+                  "artifacts": { "skills": 2, "agents": 1, "rules": 0, "commands": 1 },
+                  "includes": [],
+                  "delegates_to": []
+                }
+              ]
+            }
             """
-        let harnesses = try JSONDecoder().decode([Harness].self, from: Data(json.utf8))
-        let prov = try XCTUnwrap(harnesses[0].installedFrom)
+        let response = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        let prov = try XCTUnwrap(response.harnesses[0].installedFrom)
         XCTAssertEqual(prov.sourceType, "registry")
         XCTAssertEqual(prov.registryName, "eyelock-assistants")
         XCTAssertEqual(prov.ref, "main")
@@ -80,23 +100,159 @@ final class YNHHarnessDecodingTests: XCTestCase {
 
     func test_ynh_ls_decodesNamespacedHarness() throws {
         let json = """
-            [
-              {
-                "name": "tester",
-                "version_installed": "0.2.0",
-                "default_vendor": "claude",
-                "namespace": "eyelock/assistants",
-                "path": "/Users/test/.ynh/harnesses/eyelock--assistants/tester",
-                "artifacts": { "skills": 1, "agents": 0, "rules": 0, "commands": 0 },
-                "includes": [],
-                "delegates_to": []
-              }
-            ]
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": [
+                {
+                  "name": "tester",
+                  "version_installed": "0.2.0",
+                  "default_vendor": "claude",
+                  "namespace": "eyelock/assistants",
+                  "path": "/Users/test/.ynh/harnesses/eyelock--assistants/tester",
+                  "is_pinned": false,
+                  "artifacts": { "skills": 1, "agents": 0, "rules": 0, "commands": 0 },
+                  "includes": [],
+                  "delegates_to": []
+                }
+              ]
+            }
             """
-        let harnesses = try JSONDecoder().decode([Harness].self, from: Data(json.utf8))
-        let h = harnesses[0]
+        let response = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        let h = response.harnesses[0]
         XCTAssertEqual(h.namespace, "eyelock/assistants")
         XCTAssertEqual(h.id, "eyelock/assistants/tester")  // namespace-qualified id
+    }
+
+    // MARK: - ynh ls --check-updates --format json
+
+    /// `--check-updates` populates `version_available` (per harness) and
+    /// `ref_available` (per include). Both are absent in the default `ynh ls`
+    /// output and remain absent when the harness has no upstream to probe.
+    func test_ynh_ls_decodesCheckUpdatesPayload() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": [
+                {
+                  "name": "david",
+                  "version_installed": "0.1.0",
+                  "version_available": "0.2.0",
+                  "default_vendor": "claude",
+                  "path": "/Users/test/.ynh/harnesses/eyelock--assistants/david",
+                  "is_pinned": false,
+                  "installed_from": {
+                    "source_type": "registry",
+                    "source": "github.com/eyelock/assistants",
+                    "registry_name": "eyelock-assistants",
+                    "installed_at": "2026-04-28T18:16:35Z"
+                  },
+                  "artifacts": { "skills": 0, "agents": 0, "rules": 0, "commands": 0 },
+                  "includes": [
+                    {
+                      "git": "github.com/eyelock/assistants",
+                      "ref_available": "388eec9ab8567475a63601e6feaf38612450dd92",
+                      "is_pinned": false,
+                      "path": "skills/dev"
+                    }
+                  ],
+                  "delegates_to": []
+                }
+              ]
+            }
+            """
+        let response = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        let h = response.harnesses[0]
+        XCTAssertEqual(h.versionAvailable, "0.2.0")
+        XCTAssertEqual(h.hasVersionUpdate, true)
+        XCTAssertEqual(h.includes[0].refAvailable, "388eec9ab8567475a63601e6feaf38612450dd92")
+    }
+
+    func test_hasVersionUpdate_isFalseWhenInstalledMatchesAvailable() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": [
+                {
+                  "name": "david",
+                  "version_installed": "0.1.0",
+                  "version_available": "0.1.0",
+                  "default_vendor": "claude",
+                  "path": "/p",
+                  "is_pinned": false,
+                  "artifacts": { "skills": 0, "agents": 0, "rules": 0, "commands": 0 },
+                  "includes": [],
+                  "delegates_to": []
+                }
+              ]
+            }
+            """
+        let response = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        XCTAssertEqual(response.harnesses[0].hasVersionUpdate, false)
+    }
+
+    func test_hasVersionUpdate_isNilWhenAvailableIsAbsent() throws {
+        // ynh ls without --check-updates: omitted version_available means
+        // "unknown / not checked". Distinguishing this from up-to-date is the
+        // whole point of the three-state semantic.
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": [
+                {
+                  "name": "x",
+                  "version_installed": "0.1.0",
+                  "default_vendor": "claude",
+                  "path": "/p",
+                  "is_pinned": false,
+                  "artifacts": { "skills": 0, "agents": 0, "rules": 0, "commands": 0 },
+                  "includes": [],
+                  "delegates_to": []
+                }
+              ]
+            }
+            """
+        let response = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        XCTAssertNil(response.harnesses[0].versionAvailable)
+        XCTAssertNil(response.harnesses[0].hasVersionUpdate)
+    }
+
+    // MARK: - ynh info --format json (envelope)
+
+    func test_ynh_info_decodesHarnessInfoEnvelope() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harness": {
+                "name": "assistants-dev",
+                "version_installed": "0.1.0",
+                "description": "A harness for adding to eyelock-assistants",
+                "default_vendor": "claude",
+                "path": "/Users/test/.ynh/harnesses/assistants-dev",
+                "is_pinned": false,
+                "installed_from": {
+                  "source_type": "local",
+                  "source": "/projects/assistants-dev",
+                  "installed_at": "2026-04-21T17:55:38Z"
+                }
+              }
+            }
+            """
+        let response = try JSONDecoder().decode(
+            HarnessInfoResponse.self, from: Data(json.utf8))
+        XCTAssertEqual(response.ynhVersion, "0.3.0")
+        XCTAssertEqual(response.harness.name, "assistants-dev")
+        XCTAssertEqual(response.harness.version, "0.1.0")
+        XCTAssertEqual(response.harness.isPinned, false)
+        XCTAssertEqual(response.harness.installedFrom?.sourceType, "local")
     }
 
     func test_harness_id_isNamespaceQualifiedWhenPresent() {
@@ -104,11 +260,11 @@ final class YNHHarnessDecodingTests: XCTestCase {
             name: "my-harness",
             version: "1.0.0",
             defaultVendor: "claude",
-            namespace: "acme/tools",
+            namespace: "github.com/acme/tools",
             path: "/tmp/my-harness",
             artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0)
         )
-        XCTAssertEqual(h.id, "acme/tools/my-harness")
+        XCTAssertEqual(h.id, "github.com/acme/tools/my-harness")
     }
 
     func test_harness_id_isFlatNameWhenNamespaceIsNil() {
@@ -139,7 +295,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
             name: "tools",
             version: "1.0.0",
             defaultVendor: "claude",
-            namespace: "acme/tools",
+            namespace: "github.com/acme/tools",
             path: "/tmp/a",
             artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0)
         )
@@ -147,11 +303,86 @@ final class YNHHarnessDecodingTests: XCTestCase {
             name: "tools",
             version: "1.0.0",
             defaultVendor: "claude",
-            namespace: "eyelock/tools",
+            namespace: "github.com/eyelock/tools",
             path: "/tmp/b",
             artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0)
         )
         XCTAssertNotEqual(a.id, b.id)
+    }
+
+    // MARK: - Harness.id decoded from envelope (YNH 0.4+ canonical-id field)
+
+    /// YNH 0.4+ envelopes carry an authoritative `id` field that may not be
+    /// reconstructible from `namespace + "/" + name` (host-prefixed canonical).
+    /// The decoder must trust the envelope's `id` verbatim.
+    func test_harness_id_isReadFromEnvelopeWhenPresent() throws {
+        let json = """
+            {
+              "id": "github.com/eyelock/assistants/planner",
+              "name": "planner",
+              "version_installed": "0.2.0",
+              "default_vendor": "claude",
+              "namespace": "github.com/eyelock/assistants",
+              "path": "/Users/test/.ynh/installed/github.com--eyelock--assistants--planner",
+              "is_pinned": false,
+              "artifacts": { "skills": 1, "agents": 0, "rules": 0, "commands": 0 },
+              "includes": [],
+              "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: Data(json.utf8))
+        XCTAssertEqual(h.id, "github.com/eyelock/assistants/planner")
+    }
+
+    /// Forks emit `id: "local/<name>"` regardless of the source's namespace.
+    /// The envelope's `id` wins over any composition.
+    func test_harness_id_acceptsLocalPrefixForForks() throws {
+        let json = """
+            {
+              "id": "local/researcher-experiment",
+              "name": "researcher-experiment",
+              "version_installed": "0.1.0",
+              "default_vendor": "claude",
+              "path": "/Users/test/Documents/researcher-experiment",
+              "is_pinned": false,
+              "artifacts": { "skills": 0, "agents": 0, "rules": 0, "commands": 0 },
+              "includes": [],
+              "delegates_to": []
+            }
+            """
+        let h = try JSONDecoder().decode(Harness.self, from: Data(json.utf8))
+        XCTAssertEqual(h.id, "local/researcher-experiment")
+    }
+
+    /// `HarnessListResponse` round-trips the envelope's `schema_version` so
+    /// callers (the migration coordinator) can detect a pre-migration store.
+    func test_ynh_ls_envelope_decodesSchemaVersion() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "schema_version": 2,
+              "harnesses": []
+            }
+            """
+        let envelope = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        XCTAssertEqual(envelope.schemaVersion, 2)
+    }
+
+    /// Older envelopes that omit `schema_version` decode it as nil — the
+    /// migration coordinator treats nil as pre-migration (`< 2`).
+    func test_ynh_ls_envelope_schemaVersionAbsentDecodesAsNil() throws {
+        let json = """
+            {
+              "capabilities": "0.3.0",
+              "ynh_version": "0.3.0",
+              "harnesses": []
+            }
+            """
+        let envelope = try JSONDecoder().decode(
+            HarnessListResponse.self, from: Data(json.utf8))
+        XCTAssertNil(envelope.schemaVersion)
     }
 
     // MARK: - ynh ls envelope tolerance (0.2 bare array vs 0.3+ envelope)
@@ -171,7 +402,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
               }
             ]
             """
-        let envelope = try JSONDecoder().decode(YNHListEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessListResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harnesses.count, 1)
         XCTAssertEqual(envelope.harnesses[0].version, "0.1.0")
     }
@@ -194,7 +425,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
               ]
             }
             """
-        let envelope = try JSONDecoder().decode(YNHListEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessListResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harnesses.count, 1)
         XCTAssertEqual(envelope.harnesses[0].version, "0.1.0")
     }
@@ -205,7 +436,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
         let json = """
             {"name":"h","version":"1","default_vendor":"claude","path":"/p"}
             """
-        let envelope = try JSONDecoder().decode(YNHInfoEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessInfoResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harness.name, "h")
         XCTAssertEqual(envelope.harness.version, "1")
     }
@@ -218,7 +449,7 @@ final class YNHHarnessDecodingTests: XCTestCase {
               "harness": {"name":"h","version_installed":"1","default_vendor":"claude","path":"/p"}
             }
             """
-        let envelope = try JSONDecoder().decode(YNHInfoEnvelope.self, from: Data(json.utf8))
+        let envelope = try JSONDecoder().decode(HarnessInfoResponse.self, from: Data(json.utf8))
         XCTAssertEqual(envelope.harness.name, "h")
         XCTAssertEqual(envelope.harness.version, "1")
     }

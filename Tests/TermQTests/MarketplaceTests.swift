@@ -509,6 +509,70 @@ final class PluginSourceSpecDecodingTests: XCTestCase {
     }
 }
 
+// MARK: - GitURLNormalizer tests
+
+final class GitURLNormalizerTests: XCTestCase {
+    private let canonical = "github.com/eyelock/assistants"
+
+    func test_normalize_shortForm() {
+        XCTAssertEqual(GitURLNormalizer.normalize("eyelock/assistants"), "eyelock/assistants")
+    }
+
+    func test_normalize_hostPrefixed() {
+        XCTAssertEqual(GitURLNormalizer.normalize("github.com/eyelock/assistants"), "eyelock/assistants")
+    }
+
+    func test_normalize_https() {
+        XCTAssertEqual(
+            GitURLNormalizer.normalize("https://github.com/eyelock/assistants"),
+            "eyelock/assistants")
+    }
+
+    func test_normalize_httpsWithGitSuffix() {
+        XCTAssertEqual(
+            GitURLNormalizer.normalize("https://github.com/eyelock/assistants.git"),
+            "eyelock/assistants")
+    }
+
+    func test_normalize_ssh() {
+        XCTAssertEqual(
+            GitURLNormalizer.normalize("git@github.com:eyelock/assistants.git"),
+            "eyelock/assistants")
+    }
+
+    func test_normalize_caseInsensitive() {
+        XCTAssertEqual(
+            GitURLNormalizer.normalize("HTTPS://GitHub.com/Eyelock/Assistants.git"),
+            "eyelock/assistants")
+    }
+
+    func test_normalize_trailingSlash() {
+        XCTAssertEqual(
+            GitURLNormalizer.normalize("https://github.com/eyelock/assistants/"),
+            "eyelock/assistants")
+    }
+
+    func test_normalize_gitlabHost() {
+        XCTAssertEqual(
+            GitURLNormalizer.normalize("https://gitlab.com/eyelock/assistants"),
+            "eyelock/assistants")
+    }
+
+    /// All five forms YNH and TermQ might record for the same repo
+    /// converge to the same normalized form.
+    func test_normalize_allFormsAgree() {
+        let forms = [
+            "eyelock/assistants",
+            "github.com/eyelock/assistants",
+            "https://github.com/eyelock/assistants",
+            "https://github.com/eyelock/assistants.git",
+            "git@github.com:eyelock/assistants.git",
+        ]
+        let normalized = Set(forms.map { GitURLNormalizer.normalize($0) })
+        XCTAssertEqual(normalized.count, 1, "All forms should normalize identically: got \(normalized)")
+    }
+}
+
 // MARK: - IncludeApplier argument-building tests
 
 final class IncludeApplierArgsTests: XCTestCase {
@@ -516,7 +580,7 @@ final class IncludeApplierArgsTests: XCTestCase {
     func test_buildArgs_noPick_emitsBaseCommand() {
         let opts = IncludeApplicationOptions(
             harness: "my-harness", sourceURL: "https://github.com/owner/repo",
-            path: nil, pick: []
+            path: nil, ref: nil, pick: []
         )
         XCTAssertEqual(
             IncludeApplier.buildIncludeAddArgs(opts),
@@ -527,7 +591,7 @@ final class IncludeApplierArgsTests: XCTestCase {
     func test_buildArgs_withPath_includesPathFlag() {
         let opts = IncludeApplicationOptions(
             harness: "h", sourceURL: "https://github.com/o/r",
-            path: "plugins/foo", pick: []
+            path: "plugins/foo", ref: nil, pick: []
         )
         XCTAssertEqual(
             IncludeApplier.buildIncludeAddArgs(opts),
@@ -537,7 +601,7 @@ final class IncludeApplierArgsTests: XCTestCase {
 
     func test_buildArgs_emptyPathString_dropsPathFlag() {
         let opts = IncludeApplicationOptions(
-            harness: "h", sourceURL: "s", path: "", pick: []
+            harness: "h", sourceURL: "s", path: "", ref: nil, pick: []
         )
         XCTAssertEqual(IncludeApplier.buildIncludeAddArgs(opts), ["include", "add", "h", "s"])
     }
@@ -546,7 +610,7 @@ final class IncludeApplierArgsTests: XCTestCase {
         // Bug regression: earlier code stripped the type/ prefix from --pick values,
         // causing `ynh run` to fail with "pick path must be in format 'type/name'".
         let opts = IncludeApplicationOptions(
-            harness: "h", sourceURL: "s", path: nil,
+            harness: "h", sourceURL: "s", path: nil, ref: nil,
             pick: ["agents/claude-packager.md", "skills/my-skill"]
         )
         XCTAssertEqual(
@@ -555,14 +619,230 @@ final class IncludeApplierArgsTests: XCTestCase {
         )
     }
 
+    func test_buildArgs_withRef_emitsRefFlag() {
+        let opts = IncludeApplicationOptions(
+            harness: "h", sourceURL: "s", path: "plugins/foo", ref: "v1.0", pick: []
+        )
+        XCTAssertEqual(
+            IncludeApplier.buildIncludeAddArgs(opts),
+            ["include", "add", "h", "s", "--path", "plugins/foo", "--ref", "v1.0"]
+        )
+    }
+
+    func test_buildArgs_emptyRefString_dropsRefFlag() {
+        let opts = IncludeApplicationOptions(
+            harness: "h", sourceURL: "s", path: nil, ref: "", pick: []
+        )
+        XCTAssertEqual(IncludeApplier.buildIncludeAddArgs(opts), ["include", "add", "h", "s"])
+    }
+
     func test_buildArgs_pickKeepsMdExtension() {
         // Bug regression: enumerateArtifacts stripped .md, but CopyPicked resolves exact on-disk paths.
         let opts = IncludeApplicationOptions(
-            harness: "h", sourceURL: "s", path: nil,
+            harness: "h", sourceURL: "s", path: nil, ref: nil,
             pick: ["agents/foo.md", "commands/build.md", "rules/style.md"]
         )
         let args = IncludeApplier.buildIncludeAddArgs(opts)
         XCTAssertEqual(args.last, "agents/foo.md,commands/build.md,rules/style.md")
+    }
+}
+
+// MARK: - IncludeMutator argument-building tests
+
+final class IncludeMutatorArgsTests: XCTestCase {
+
+    // MARK: remove
+
+    func test_buildRemoveArgs_noPath_emitsBaseCommand() {
+        let opts = IncludeRemoveOptions(
+            harness: "my-harness", sourceURL: "https://github.com/o/r", path: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeRemoveArgs(opts),
+            ["include", "remove", "my-harness", "https://github.com/o/r"]
+        )
+    }
+
+    func test_buildRemoveArgs_withPath_includesPathFlag() {
+        let opts = IncludeRemoveOptions(
+            harness: "h", sourceURL: "s", path: "plugins/foo"
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeRemoveArgs(opts),
+            ["include", "remove", "h", "s", "--path", "plugins/foo"]
+        )
+    }
+
+    func test_buildRemoveArgs_emptyPathString_dropsPathFlag() {
+        let opts = IncludeRemoveOptions(harness: "h", sourceURL: "s", path: "")
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeRemoveArgs(opts),
+            ["include", "remove", "h", "s"]
+        )
+    }
+
+    // MARK: update
+
+    func test_buildUpdateArgs_noOptionalFields_emitsBaseCommand() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: nil, path: nil, pick: [], ref: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s"]
+        )
+    }
+
+    func test_buildUpdateArgs_fromPath_emittedFirst() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: "old/path", path: nil, pick: [], ref: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s", "--from-path", "old/path"]
+        )
+    }
+
+    func test_buildUpdateArgs_allFields_emitsCompleteCommand() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: "old", path: "new",
+            pick: ["agents/a.md", "skills/b"],
+            ref: "main"
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            [
+                "include", "update", "h", "s",
+                "--from-path", "old",
+                "--path", "new",
+                "--pick", "agents/a.md,skills/b",
+                "--ref", "main",
+            ]
+        )
+    }
+
+    func test_buildUpdateArgs_emptyStrings_dropOptionalFlags() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: "", path: "", pick: [], ref: ""
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s"]
+        )
+    }
+
+    func test_buildUpdateArgs_pickPreservesFullTypeNamePaths() {
+        let opts = IncludeUpdateOptions(
+            harness: "h", sourceURL: "s",
+            fromPath: nil, path: nil,
+            pick: ["agents/claude-packager.md", "skills/my-skill"],
+            ref: nil
+        )
+        XCTAssertEqual(
+            IncludeMutator.buildIncludeUpdateArgs(opts),
+            ["include", "update", "h", "s", "--pick", "agents/claude-packager.md,skills/my-skill"]
+        )
+    }
+}
+
+// MARK: - DelegateMutator argument-building tests
+
+final class DelegateMutatorArgsTests: XCTestCase {
+
+    // MARK: add
+
+    func test_buildAddArgs_basic_emitsBaseCommand() {
+        let opts = DelegateAddOptions(
+            harness: "h", sourceURL: "https://example.com/repo.git",
+            ref: nil, path: nil
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateAddArgs(opts),
+            ["delegate", "add", "h", "https://example.com/repo.git"]
+        )
+    }
+
+    func test_buildAddArgs_withRefAndPath() {
+        let opts = DelegateAddOptions(
+            harness: "h", sourceURL: "u",
+            ref: "main", path: "sub"
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateAddArgs(opts),
+            ["delegate", "add", "h", "u", "--ref", "main", "--path", "sub"]
+        )
+    }
+
+    func test_buildAddArgs_emptyRefAndPath_dropFlags() {
+        let opts = DelegateAddOptions(
+            harness: "h", sourceURL: "u", ref: "", path: ""
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateAddArgs(opts),
+            ["delegate", "add", "h", "u"]
+        )
+    }
+
+    // MARK: remove
+
+    func test_buildRemoveArgs_noPath_emitsBaseCommand() {
+        let opts = DelegateRemoveOptions(harness: "h", sourceURL: "u", path: nil)
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateRemoveArgs(opts),
+            ["delegate", "remove", "h", "u"]
+        )
+    }
+
+    func test_buildRemoveArgs_withPath_includesPathFlag() {
+        let opts = DelegateRemoveOptions(harness: "h", sourceURL: "u", path: "sub")
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateRemoveArgs(opts),
+            ["delegate", "remove", "h", "u", "--path", "sub"]
+        )
+    }
+
+    // MARK: update
+
+    func test_buildUpdateArgs_emitsBaseWhenNoOptions() {
+        let opts = DelegateUpdateOptions(
+            harness: "h", sourceURL: "u",
+            fromPath: nil, path: nil, ref: nil
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateUpdateArgs(opts),
+            ["delegate", "update", "h", "u"]
+        )
+    }
+
+    func test_buildUpdateArgs_allFields() {
+        let opts = DelegateUpdateOptions(
+            harness: "h", sourceURL: "u",
+            fromPath: "old", path: "new", ref: "main"
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateUpdateArgs(opts),
+            [
+                "delegate", "update", "h", "u",
+                "--from-path", "old",
+                "--path", "new",
+                "--ref", "main",
+            ]
+        )
+    }
+
+    func test_buildUpdateArgs_emptyStringsDropFlags() {
+        let opts = DelegateUpdateOptions(
+            harness: "h", sourceURL: "u",
+            fromPath: "", path: "", ref: ""
+        )
+        XCTAssertEqual(
+            DelegateMutator.buildDelegateUpdateArgs(opts),
+            ["delegate", "update", "h", "u"]
+        )
     }
 }
 

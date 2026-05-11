@@ -83,14 +83,14 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Custom font name (empty = system default monospace)
     @Published public var fontName: String
 
-    /// Font size in points (0 = default 13pt)
-    @Published public var fontSize: CGFloat
+    /// Font size override in points. `nil` means inherit the global default.
+    @Published public var fontSize: CGFloat?
 
-    /// Whether to show warnings when pasting potentially dangerous content
-    @Published public var safePasteEnabled: Bool
+    /// Safe-paste override. `nil` means inherit the global default.
+    @Published public var safePasteEnabled: Bool?
 
-    /// Terminal color theme ID (empty = use global default theme)
-    @Published public var themeId: String
+    /// Terminal color theme override. `nil` means inherit the global default.
+    @Published public var themeId: String?
 
     /// Whether this terminal allows agent autorun commands (requires global enableTerminalAutorun)
     @Published public var allowAutorun: Bool
@@ -107,8 +107,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// When an LLM last called termq_get for this terminal (nil = never, set = LLM is aware of TermQ)
     @Published public var lastLLMGet: Date?
 
-    /// Backend mode for session management (.direct, .tmuxAttach, .tmuxControl)
-    @Published public var backend: TerminalBackend
+    /// Backend override for session management. `nil` means inherit the
+    /// global default backend.
+    @Published public var backend: TerminalBackend?
 
     /// Cards created via headless MCP need tmux sessions when GUI starts
     /// GUI will detect this flag and create sessions automatically
@@ -142,15 +143,15 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         llmNextAction: String = "",
         badge: String = "",
         fontName: String = "",
-        fontSize: CGFloat = 0,
-        safePasteEnabled: Bool = true,
-        themeId: String = "",
+        fontSize: CGFloat? = nil,
+        safePasteEnabled: Bool? = nil,
+        themeId: String? = nil,
         allowAutorun: Bool = false,
         allowOscClipboard: Bool = true,
         confirmExternalModifications: Bool = true,
         deletedAt: Date? = nil,
         lastLLMGet: Date? = nil,
-        backend: TerminalBackend = .direct,
+        backend: TerminalBackend? = nil,
         needsTmuxSession: Bool = false,
         environmentVariables: [EnvironmentVariable] = []
     ) {
@@ -197,17 +198,24 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         llmNextAction = try container.decodeIfPresent(String.self, forKey: .llmNextAction) ?? ""
         badge = try container.decodeIfPresent(String.self, forKey: .badge) ?? ""
         fontName = try container.decodeIfPresent(String.self, forKey: .fontName) ?? ""
-        fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize) ?? 0
-        safePasteEnabled = try container.decodeIfPresent(Bool.self, forKey: .safePasteEnabled) ?? true
-        themeId = try container.decodeIfPresent(String.self, forKey: .themeId) ?? ""
+        // Drift-field migration: cards persisted before these became Optional
+        // round-trip their concrete values as explicit overrides. Cards
+        // written by this version with no override store nothing (inherit).
+        // Sentinel values from older builds (`fontSize == 0`, empty themeId)
+        // also map to "inherit" so a stored "use the default" intent survives.
+        let decodedFontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize)
+        fontSize = (decodedFontSize.flatMap { $0 > 0 ? $0 : nil })
+        safePasteEnabled = try container.decodeIfPresent(Bool.self, forKey: .safePasteEnabled)
+        let decodedThemeId = try container.decodeIfPresent(String.self, forKey: .themeId)
+        themeId = decodedThemeId.flatMap { $0.isEmpty ? nil : $0 }
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         allowOscClipboard = try container.decodeIfPresent(Bool.self, forKey: .allowOscClipboard) ?? true
         confirmExternalModifications =
             try container.decodeIfPresent(Bool.self, forKey: .confirmExternalModifications) ?? true
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
-        // Default to direct for cards without backend field (pre-tmux cards were direct mode)
-        backend = try container.decodeIfPresent(TerminalBackend.self, forKey: .backend) ?? .direct
+        // Backend override: present-and-concrete = explicit override; absent = inherit.
+        backend = try container.decodeIfPresent(TerminalBackend.self, forKey: .backend)
         needsTmuxSession = try container.decodeIfPresent(Bool.self, forKey: .needsTmuxSession) ?? false
         environmentVariables =
             try container.decodeIfPresent([EnvironmentVariable].self, forKey: .environmentVariables)
@@ -230,15 +238,15 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(llmNextAction, forKey: .llmNextAction)
         try container.encode(badge, forKey: .badge)
         try container.encode(fontName, forKey: .fontName)
-        try container.encode(fontSize, forKey: .fontSize)
-        try container.encode(safePasteEnabled, forKey: .safePasteEnabled)
-        try container.encode(themeId, forKey: .themeId)
+        try container.encodeIfPresent(fontSize, forKey: .fontSize)
+        try container.encodeIfPresent(safePasteEnabled, forKey: .safePasteEnabled)
+        try container.encodeIfPresent(themeId, forKey: .themeId)
         try container.encode(allowAutorun, forKey: .allowAutorun)
         try container.encode(allowOscClipboard, forKey: .allowOscClipboard)
         try container.encode(confirmExternalModifications, forKey: .confirmExternalModifications)
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
         try container.encodeIfPresent(lastLLMGet, forKey: .lastLLMGet)
-        try container.encode(backend, forKey: .backend)
+        try container.encodeIfPresent(backend, forKey: .backend)
         try container.encode(needsTmuxSession, forKey: .needsTmuxSession)
         try container.encode(environmentVariables, forKey: .environmentVariables)
     }
