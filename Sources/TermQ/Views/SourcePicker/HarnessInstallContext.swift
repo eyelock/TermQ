@@ -72,8 +72,24 @@ final class HarnessInstallContext: SourcePickerContext {
         return HarnessInstallConfig(displayName: name, installArgs: args)
     }
 
-    func applyLibrary(name: String) -> HarnessInstallConfig {
-        HarnessInstallConfig(displayName: name, installArgs: [name])
+    func applyLibrary(result: SearchResult) -> HarnessInstallConfig {
+        let ref: String
+        if let repo = result.repo, !repo.isEmpty {
+            // Build a path-shaped canonical ref: "github.com/org/repo/path" or
+            // "github.com/org/repo/name". YNH install resolves this as a git
+            // source — no registry lookup required, so it works across machines
+            // regardless of which registries are configured.
+            let within: String
+            if let path = result.path, !path.isEmpty {
+                within = path
+            } else {
+                within = result.name
+            }
+            ref = "\(repo)/\(within)"
+        } else {
+            ref = result.name
+        }
+        return HarnessInstallConfig(displayName: result.name, installArgs: [ref])
     }
 }
 
@@ -345,7 +361,7 @@ private struct HarnessInstallLibraryView: View {
                     .foregroundColor(.secondary)
             } else {
                 Button(Strings.Harnesses.installConfirm) {
-                    context.onInstall(context.applyLibrary(name: result.name))
+                    context.onInstall(context.applyLibrary(result: result))
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
