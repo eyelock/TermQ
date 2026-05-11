@@ -59,33 +59,6 @@ public struct HarnessInfo: Codable, Sendable {
         try c.encodeIfPresent(isPinned, forKey: .isPinned)
         try c.encodeIfPresent(manifest, forKey: .manifest)
     }
-
-    public init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        name = try c.decode(String.self, forKey: .name)
-        // YNH 0.3+ emits `version_installed`; 0.2.x emits `version`. Accept either.
-        if let modern = try c.decodeIfPresent(String.self, forKey: .version) {
-            version = modern
-        } else {
-            version = try c.decode(String.self, forKey: .versionLegacy)
-        }
-        description = try c.decodeIfPresent(String.self, forKey: .description)
-        defaultVendor = try c.decode(String.self, forKey: .defaultVendor)
-        path = try c.decode(String.self, forKey: .path)
-        installedFrom = try c.decodeIfPresent(HarnessProvenance.self, forKey: .installedFrom)
-        manifest = try c.decodeIfPresent(JSONFragment.self, forKey: .manifest)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(name, forKey: .name)
-        try c.encode(version, forKey: .version)
-        try c.encodeIfPresent(description, forKey: .description)
-        try c.encode(defaultVendor, forKey: .defaultVendor)
-        try c.encode(path, forKey: .path)
-        try c.encodeIfPresent(installedFrom, forKey: .installedFrom)
-        try c.encodeIfPresent(manifest, forKey: .manifest)
-    }
 }
 
 /// An opaque JSON value stored as its raw string representation.
