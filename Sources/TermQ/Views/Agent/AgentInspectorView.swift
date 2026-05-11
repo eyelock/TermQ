@@ -13,6 +13,7 @@ struct AgentInspectorView: View {
     @ObservedObject var card: TerminalCard
     @StateObject private var registry = AgentSessionRegistry.shared
     @AppStorage("agent.loopDriverCommand") private var globalLoopDriverCommand: String = ""
+    @State private var showingOverlayEditor = false
 
     private var controller: AgentSessionController {
         registry.controller(for: card.id)
@@ -35,6 +36,9 @@ struct AgentInspectorView: View {
                         planApprovalSection(content: planContent)
                     }
                     configSection
+                    if !lastSensorResults.isEmpty {
+                        lastSensorsSection
+                    }
                     trajectorySection
                 }
                 .padding(20)
@@ -48,6 +52,14 @@ struct AgentInspectorView: View {
         }
         .onChange(of: card.id) { _, _ in
             controller.loadPersistedEvents()
+        }
+        .sheet(isPresented: $showingOverlayEditor) {
+            if let config = card.agentConfig {
+                AgentSensorOverlayEditorView(
+                    harness: config.harness,
+                    sessionId: config.sessionId
+                )
+            }
         }
     }
 
@@ -92,6 +104,16 @@ struct AgentInspectorView: View {
                 StatusPill(status: status)
             }
             HStack(spacing: 8) {
+                Button {
+                    showingOverlayEditor = true
+                } label: {
+                    Label(Strings.Inspector.Agent.editSensors, systemImage: "slider.horizontal.3")
+                }
+                .disabled(card.agentConfig?.harness.isEmpty ?? true)
+                .help(Strings.Inspector.Agent.editSensors)
+
+                Divider().frame(height: 16)
+
                 Button {
                     Task { try? await controller.start(command: effectiveCommand) }
                 } label: {
@@ -198,7 +220,62 @@ struct AgentInspectorView: View {
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
+    // MARK: - Last sensors strip
+
+    /// Sensor results from the most recent turn that produced any.
+    private var lastSensorResults: [SensorRunSummary] {
+        for group in turnGroups.reversed() {
+            let results = group.sensorResults
+            if !results.isEmpty { return results }
+        }
+        return []
+    }
+
+    private var lastSensorsSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Last Sensors")
+                .font(.headline)
+            VStack(spacing: 0) {
+                ForEach(Array(lastSensorResults.enumerated()), id: \.offset) { i, r in
+                    SensorResultRow(
+                        name: r.name, exitCode: r.exitCode,
+                        durationMs: r.durationMs, summary: r.summary)
+                    if i < lastSensorResults.count - 1 {
+                        Divider()
+                    }
+                }
+            }
+            .background(Color.secondary.opacity(0.05))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.secondary.opacity(0.15), lineWidth: 1)
+            )
+        }
+    }
+
     // MARK: - Trajectory
+
+    private var turnGroups: [TurnGroup] {
+        guard !controller.events.isEmpty else { return [] }
+        var groups: [TurnGroup] = []
+        var currentEvents: [TrajectoryEvent] = []
+        var currentTurnNumber: Int? = nil
+        var groupIndex = 0
+
+        for event in controller.events {
+            if case .turnStart(let n) = event.decoded() {
+                groups.append(TurnGroup(id: groupIndex, turnNumber: currentTurnNumber, events: currentEvents))
+                groupIndex += 1
+                currentTurnNumber = n
+                currentEvents = []
+            } else {
+                currentEvents.append(event)
+            }
+        }
+        groups.append(TurnGroup(id: groupIndex, turnNumber: currentTurnNumber, events: currentEvents))
+        return groups.filter { !$0.events.isEmpty || $0.turnNumber != nil }
+    }
 
     private var trajectorySection: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -216,7 +293,7 @@ struct AgentInspectorView: View {
             if controller.events.isEmpty {
                 trajectoryEmptyState
             } else {
-                trajectoryEventList
+                turnGroupedList
             }
         }
     }
@@ -244,15 +321,134 @@ struct AgentInspectorView: View {
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
-    private var trajectoryEventList: some View {
+    private var turnGroupedList: some View {
         VStack(spacing: 0) {
-            ForEach(Array(controller.events.enumerated()), id: \.offset) { _, event in
-                TrajectoryEventRow(event: event)
-                Divider()
+            ForEach(turnGroups) { group in
+                TurnGroupView(group: group)
             }
         }
         .background(Color.secondary.opacity(0.05))
         .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+// MARK: - Turn grouping model
+
+private struct SensorRunSummary {
+    let name: String
+    let exitCode: Int
+    let durationMs: Int
+    let summary: String?
+}
+
+private struct TurnGroup: Identifiable {
+    let id: Int
+    let turnNumber: Int?
+    let events: [TrajectoryEvent]
+
+    var sensorResults: [SensorRunSummary] {
+        events.compactMap {
+            if case .sensorResult(let name, let code, let ms, let sum) = $0.decoded() {
+                return SensorRunSummary(name: name, exitCode: code, durationMs: ms, summary: sum)
+            }
+            return nil
+        }
+    }
+
+    var passCount: Int { sensorResults.filter { $0.exitCode == 0 }.count }
+    var failCount: Int { sensorResults.filter { $0.exitCode != 0 }.count }
+}
+
+// MARK: - Turn group view
+
+private struct TurnGroupView: View {
+    let group: TurnGroup
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            if let n = group.turnNumber {
+                TurnHeaderRow(
+                    turnNumber: n,
+                    passCount: group.passCount,
+                    failCount: group.failCount
+                )
+                Divider()
+            }
+            ForEach(Array(group.events.enumerated()), id: \.offset) { i, event in
+                switch event.decoded() {
+                case .sensorResult(let name, let code, let ms, let sum):
+                    SensorResultRow(name: name, exitCode: code, durationMs: ms, summary: sum)
+                default:
+                    TrajectoryEventRow(event: event)
+                }
+                if i < group.events.count - 1 {
+                    Divider()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Turn header row
+
+private struct TurnHeaderRow: View {
+    let turnNumber: Int
+    let passCount: Int
+    let failCount: Int
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text("Turn \(turnNumber)")
+                .font(.caption.weight(.semibold))
+            Spacer()
+            if failCount > 0 {
+                Label("\(failCount) failed", systemImage: "xmark.circle.fill")
+                    .font(.caption2)
+                    .foregroundStyle(.red)
+            } else if passCount > 0 {
+                Label("all passed", systemImage: "checkmark.circle.fill")
+                    .font(.caption2)
+                    .foregroundStyle(.green)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 5)
+        .background(Color.secondary.opacity(0.08))
+    }
+}
+
+// MARK: - Sensor result row
+
+private struct SensorResultRow: View {
+    let name: String
+    let exitCode: Int
+    let durationMs: Int
+    let summary: String?
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: exitCode == 0 ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .font(.caption)
+                .foregroundStyle(exitCode == 0 ? Color.green : Color.red)
+                .frame(width: 14)
+            Text(name)
+                .font(.caption.monospaced().weight(.medium))
+                .frame(width: 80, alignment: .leading)
+            Text("\(durationMs)ms")
+                .font(.caption.monospaced())
+                .foregroundStyle(.secondary)
+                .frame(width: 56, alignment: .leading)
+            if let summary {
+                Text(summary)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 5)
+        .background(exitCode == 0 ? Color.green.opacity(0.04) : Color.red.opacity(0.06))
     }
 }
 
