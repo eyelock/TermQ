@@ -28,6 +28,7 @@ struct HarnessesSidebarTab: View {
     var quarantinedEntries: [QuarantineEntry] = []
     var onRestoreQuarantine: ((String) -> Void)?
     var onDropQuarantine: ((String) -> Void)?
+    var activeHarnessId: String?
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     /// Observed so the header spinner reflects in-flight `--check-updates`
@@ -253,107 +254,110 @@ struct HarnessesSidebarTab: View {
     }
 
     private func harnessRow(_ harness: Harness) -> some View {
-        HarnessRowView(harness: harness)
-            .tag(harness.id)
-            .contextMenu {
-                // Group 1 — Run.
-                Button {
-                    onLaunchHarness?(harness)
-                } label: {
-                    Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
-                }
-                Button {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString("ynh run \(harness.id)", forType: .string)
-                } label: {
-                    Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
-                }
+        HarnessRowView(
+            harness: harness,
+            isActiveTerminal: harness.id == activeHarnessId || harness.name == activeHarnessId
+        )
+        .tag(harness.id)
+        .contextMenu {
+            // Group 1 — Run.
+            Button {
+                onLaunchHarness?(harness)
+            } label: {
+                Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
+            }
+            Button {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString("ynh run \(harness.id)", forType: .string)
+            } label: {
+                Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
+            }
 
-                Divider()
+            Divider()
 
-                // Group 2 — Location.
-                Button {
-                    NSWorkspace.shared.activateFileViewerSelecting(
-                        [URL(fileURLWithPath: harness.editablePath)]
-                    )
-                } label: {
-                    Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
-                }
-                Button {
-                    openInTerminal(path: harness.editablePath)
-                } label: {
-                    Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
-                }
-                if !editorRegistry.available.isEmpty {
-                    Menu(Strings.Sidebar.openIn) {
-                        ForEach(editorRegistry.available) { editor in
-                            Button(editor.displayName) {
-                                openIn(editor: editor, path: harness.editablePath)
-                            }
+            // Group 2 — Location.
+            Button {
+                NSWorkspace.shared.activateFileViewerSelecting(
+                    [URL(fileURLWithPath: harness.editablePath)]
+                )
+            } label: {
+                Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
+            }
+            Button {
+                openInTerminal(path: harness.editablePath)
+            } label: {
+                Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
+            }
+            if !editorRegistry.available.isEmpty {
+                Menu(Strings.Sidebar.openIn) {
+                    ForEach(editorRegistry.available) { editor in
+                        Button(editor.displayName) {
+                            openIn(editor: editor, path: harness.editablePath)
                         }
                     }
                 }
-                if let source = harness.installedFrom?.source,
-                    let url = GitURLHelper.browserURL(
-                        for: source,
-                        path: harness.installedFrom?.path
-                    )
-                {
-                    Button {
-                        NSWorkspace.shared.open(url)
-                    } label: {
-                        Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
-                    }
-                }
+            }
+            if let source = harness.installedFrom?.source,
+                let url = GitURLHelper.browserURL(
+                    for: source,
+                    path: harness.installedFrom?.path
+                )
+            {
                 Button {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(harness.editablePath, forType: .string)
+                    NSWorkspace.shared.open(url)
                 } label: {
-                    Label(Strings.Harnesses.copyPath, systemImage: "doc.on.clipboard")
-                }
-
-                Divider()
-
-                // Group 3 — Actions. Sidebar drops Export as Marketplace
-                // (advanced, detail-pane only).
-                if !harness.isFork {
-                    Button {
-                        onUpdate?(harness.id)
-                    } label: {
-                        Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
-                    }
-                }
-                if harness.installedFrom?.sourceType == "registry" {
-                    Button {
-                        onFork?(harness.id)
-                    } label: {
-                        Label(Strings.Harnesses.forkToLocal, systemImage: "tuningfork")
-                    }
-                }
-                if harness.installedFrom?.sourceType != "registry" {
-                    Button {
-                        harnessToDuplicate = harness
-                    } label: {
-                        Label(Strings.HarnessDuplicate.duplicateButton, systemImage: "doc.on.doc")
-                    }
-                }
-
-                Divider()
-
-                // Group 4 — Destructive.
-                Button(role: .destructive) {
-                    harnessToUninstall = harness
-                } label: {
-                    Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
-                }
-                if harness.installedFrom == nil || harness.installedFrom?.sourceType == "local" {
-                    Button(role: .destructive) {
-                        harnessToDelete = harness
-                    } label: {
-                        Label(Strings.Harnesses.deleteLocalButton, systemImage: "trash.fill")
-                    }
+                    Label(Strings.Harnesses.openInBrowser, systemImage: "safari")
                 }
             }
+            Button {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(harness.editablePath, forType: .string)
+            } label: {
+                Label(Strings.Harnesses.copyPath, systemImage: "doc.on.clipboard")
+            }
+
+            Divider()
+
+            // Group 3 — Actions. Sidebar drops Export as Marketplace
+            // (advanced, detail-pane only).
+            if !harness.isFork {
+                Button {
+                    onUpdate?(harness.id)
+                } label: {
+                    Label(Strings.Harnesses.updateButton, systemImage: "arrow.triangle.2.circlepath")
+                }
+            }
+            if harness.installedFrom?.sourceType == "registry" {
+                Button {
+                    onFork?(harness.id)
+                } label: {
+                    Label(Strings.Harnesses.forkToLocal, systemImage: "tuningfork")
+                }
+            }
+            if harness.installedFrom?.sourceType != "registry" {
+                Button {
+                    harnessToDuplicate = harness
+                } label: {
+                    Label(Strings.HarnessDuplicate.duplicateButton, systemImage: "doc.on.doc")
+                }
+            }
+
+            Divider()
+
+            // Group 4 — Destructive.
+            Button(role: .destructive) {
+                harnessToUninstall = harness
+            } label: {
+                Label(Strings.Harnesses.uninstallButton, systemImage: "trash")
+            }
+            if harness.installedFrom == nil || harness.installedFrom?.sourceType == "local" {
+                Button(role: .destructive) {
+                    harnessToDelete = harness
+                } label: {
+                    Label(Strings.Harnesses.deleteLocalButton, systemImage: "trash.fill")
+                }
+            }
+        }
     }
 
     // MARK: - Grouping

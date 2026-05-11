@@ -146,6 +146,11 @@ extension WorktreeSidebarView {
             isDraft: pr.isDraft,
             isCheckedOut: worktreePath != nil
         )
+        let isActive: Bool = {
+            guard let path = worktreePath, let card = boardVM.selectedCard else { return false }
+            let wd = card.workingDirectory
+            return wd == path || wd.hasPrefix(path + "/")
+        }()
 
         HStack(spacing: 6) {
             Image(systemName: "arrow.triangle.pull")
@@ -155,7 +160,7 @@ extension WorktreeSidebarView {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("#\(pr.number) \(pr.title)")
-                    .font(.subheadline)
+                    .font(.system(.subheadline, weight: isActive ? .semibold : .regular))
                     .lineLimit(1)
                     .foregroundColor(.primary)
 

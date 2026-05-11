@@ -416,6 +416,7 @@ extension WorktreeSidebarView {
     fileprivate func worktreeRow(
         _ worktree: GitWorktree, repo: ObservableRepository, allWorktrees: [GitWorktree]
     ) -> some View {
+        let isActive = isActiveTerminalInWorktree(worktree, allWorktrees: allWorktrees)
         HStack(spacing: 6) {
             WorktreeLeftIcon(
                 worktree: worktree,
@@ -431,7 +432,7 @@ extension WorktreeSidebarView {
                 } label: {
                     HStack(spacing: 4) {
                         Text(worktree.branch ?? Strings.Sidebar.detachedHead)
-                            .font(.subheadline)
+                            .font(.system(.subheadline, weight: isActive ? .semibold : .regular))
                             .lineLimit(1)
                             .foregroundColor(.primary)
                         if worktree.isDirty {

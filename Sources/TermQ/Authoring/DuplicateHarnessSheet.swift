@@ -4,7 +4,7 @@ import TermQShared
 
 /// Sheet for duplicating a local harness under a new name.
 ///
-/// Single-call flow: `ynh fork <name> --to <dest> --name <newname>` copies the
+/// Single-call flow: `ynh fork <id> --to <dest> --name <newname>` copies the
 /// source tree, rewrites the manifest's `name`, and self-registers via the
 /// pointer model. No follow-up `ynh install` is needed.
 ///
@@ -207,7 +207,7 @@ struct DuplicateHarnessSheet: View {
 
         let exitCode = await runProcess(
             ynhBin,
-            args: ["fork", harness.name, "--to", newDir, "--name", trimmedName],
+            args: ["fork", harness.id, "--to", newDir, "--name", trimmedName],
             environment: ynhEnvironment)
 
         if exitCode == 0 {
