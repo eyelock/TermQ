@@ -26,7 +26,26 @@ struct SidebarView: View {
     var onDropQuarantine: ((String) -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
     @ObservedObject private var sidebarState = SidebarState.shared
+    @ObservedObject private var boardVM: BoardViewModel = .shared
+    @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     private static var hasResetOnLaunch = false
+
+    private var activeHarnessId: String? {
+        guard let card = boardVM.selectedCard else { return nil }
+        let wd = card.workingDirectory
+        guard !wd.isEmpty else { return nil }
+        for repo in worktreeViewModel.repositories {
+            let matched =
+                wd == repo.path || wd.hasPrefix(repo.path + "/")
+                || (worktreeViewModel.worktrees[repo.id] ?? []).contains { tree in
+                    wd == tree.path || wd.hasPrefix(tree.path + "/")
+                }
+            guard matched else { continue }
+            return ynhPersistence.runHarness(for: repo.path)
+                ?? ynhPersistence.repoDefaultHarness(for: repo.path)
+        }
+        return nil
+    }
 
     private var showHarnessesTab: Bool {
         guard harnessTabEnabled else { return false }
@@ -60,7 +79,8 @@ struct SidebarView: View {
                     onNewHarness: onNewHarness,
                     quarantinedEntries: quarantinedEntries,
                     onRestoreQuarantine: onRestoreQuarantine,
-                    onDropQuarantine: onDropQuarantine
+                    onDropQuarantine: onDropQuarantine,
+                    activeHarnessId: activeHarnessId
                 )
             case .marketplaces where showHarnessesTab:
                 MarketplaceSidebarTab(

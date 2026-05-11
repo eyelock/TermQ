@@ -283,3 +283,21 @@ struct WorktreeLeftIcon: View {
         }
     }
 }
+
+// MARK: - Active Terminal Detection
+
+extension WorktreeSidebarView {
+    // Returns true when the currently selected terminal card lives inside `worktree`
+    // but not inside a more-specific sibling worktree — mirrors the exclusion logic
+    // in `WorktreeLeftIcon.matchingCards`.
+    func isActiveTerminalInWorktree(_ worktree: GitWorktree, allWorktrees: [GitWorktree]) -> Bool {
+        guard let card = boardVM.selectedCard, !card.isDeleted else { return false }
+        let wd = card.workingDirectory
+        guard !wd.isEmpty, wd == worktree.path || wd.hasPrefix(worktree.path + "/") else { return false }
+        return !allWorktrees.contains { other in
+            other.id != worktree.id
+                && other.path.count > worktree.path.count
+                && (wd == other.path || wd.hasPrefix(other.path + "/"))
+        }
+    }
+}
