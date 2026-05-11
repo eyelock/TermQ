@@ -233,11 +233,11 @@ class BoardViewModel: ObservableObject {
             columnId: column.id,
             orderIndex: maxIndex + 1,
             workingDirectory: defaults.workingDirectory,
-            safePasteEnabled: defaults.safePaste,
+            safePasteEnabled: nil,
             allowAutorun: defaults.allowAutorun,
             allowOscClipboard: defaults.allowOscClipboard,
             confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: defaults.backend,
+            backend: nil,
             agentConfig: AgentConfig(harness: harnessId)
         )
 
