@@ -6,6 +6,181 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.10.0</title>
+            <sparkle:version>0.10.0</sparkle:version>
+            <sparkle:shortVersionString>0.10.0</sparkle:shortVersionString>
+            <pubDate>Mon, 11 May 2026 06:30:22 +0000</pubDate>
+            <description><![CDATA[<h3 id="added">Added</h3>
+<ul>
+<li><p><strong>Remote PR feed</strong> — the Repositories sidebar gains a <strong>Local / Remote</strong> toggle. Remote mode lists open pull requests for each registered GitHub repository, fetched via the <code>gh</code> CLI. The feed is priority-ordered: checked-out PRs pin to the top, then review-requested, then open non-draft with no reviewers, then everything else. Within each tier, PRs are sorted by <code>updatedAt</code> descending.</p>
+<ul>
+<li><strong>Per-host identity</strong> — login is resolved per-repository by calling <code>gh api user</code> with the repo's working directory, so orgs on github.com, GHEC, and on-prem GHE each resolve the correct account automatically.</li>
+<li><strong>Configurable feed cap</strong> — defaults to 20 PRs per repo; adjustable globally in <strong>Settings → GitHub</strong> or per-repo via <code>YNHPersistence</code>. Tier-1 (checked-out) PRs always appear regardless of the cap.</li>
+<li><strong>Overflow indicator</strong> — when the full list exceeds the cap, a <code>+ N more</code> footer shows the count of hidden PRs.</li>
+<li><strong>Priority badges</strong> — each PR row carries role badges: <strong>you</strong> (author), <strong>review</strong> (review requested), <strong>assigned</strong>, <strong>draft</strong>, and <strong>checked out</strong> (green).</li>
+</ul></li>
+<li><p><strong>Run with Focus sheet</strong> — right-clicking any PR row with a checked-out worktree exposes <strong>Run with Focus…</strong>, a sheet for launching a <code>ynh run</code> harness session against that PR's worktree:</p>
+<ul>
+<li>Harness picker pre-selects the last-used harness for the repo.</li>
+<li>Focus picker pre-selects the repo's saved default focus (if set).</li>
+<li>Vendor picker lets you override the harness default vendor; shows availability.</li>
+<li>Profile picker is interactive in ad-hoc mode, locked to the focus's profile when a focus is selected.</li>
+<li>Prompt textarea shows the focus prompt read-only; a <strong>Customize</strong> button unlocks it for editing.</li>
+<li><strong>Stay interactive</strong> toggle (gated on vendor capability) appends <code>--interactive</code> so the agent stays open after the initial focus response.</li>
+<li><strong>Harness detail caching</strong> — focuses and profiles are cached in-process after the first load; re-opening the sheet is instant. A <strong>⟳</strong> refresh button forces a re-read from disk when the harness YAML has changed.</li>
+<li>Terminal cards created from the sheet are titled <code>focus: org/repo#N</code>, with the repo slug middle-truncated if the total would exceed 40 characters.</li>
+</ul></li>
+<li><p><strong>Remote PR context menu</strong> — the PR row right-click menu now matches the local worktree menu structure (when the PR is checked out):</p>
+<ul>
+<li><strong>Run with Focus…</strong> and <strong>Quick Launch Focus ▶</strong> submenu (per-focus quick launch without opening the full sheet; populated automatically when harness detail is cached).</li>
+<li><strong>Quick Terminal</strong> / <strong>Create Terminal…</strong> — open a terminal at the worktree path.</li>
+<li><strong>Reveal in Finder</strong> / <strong>Reveal in Terminal</strong> / <strong>Copy Branch Name</strong>.</li>
+<li><strong>Open PR on Remote</strong> / <strong>Copy PR URL</strong> / <strong>Update from Origin</strong>.</li>
+<li><strong>Show in Local</strong> — jump to Local mode, focused on the worktree.</li>
+<li><strong>Set Default Focus ▶</strong> — change or clear the default focus for the repo (used as the pre-selection next time the Run with Focus sheet opens).</li>
+</ul></li>
+<li><p><strong>Prune Closed PRs</strong> — a <strong>⊘ Prune Closed PRs</strong> action appears in Remote mode for repos with checked-out worktrees whose PRs have since been closed or merged. A confirmation sheet lists candidates with dirty/ahead flags; safe-to-prune rows are checked by default.</p></li>
+<li><p><strong>GitHub Settings tab</strong> — new <strong>Settings → GitHub</strong> tab with a stepper for the global PR feed cap (5–100, step 5).</p></li>
+<li><p><strong>Convert to Worktree</strong> — local branch rows gain a <strong>Convert to Worktree</strong> context menu action that creates a linked worktree for the branch without switching the main checkout.</p></li>
+<li><p><strong>Inline include and manifest editing</strong> — the detail pane now exposes per-row edit and remove on every include of an editable harness, plus a manifest-level editor for free-form fields. Mutations stream through <code>IncludeMutator</code> / <code>HarnessManifestEditor</code> against YNH and refresh the detail in place.</p></li>
+<li><p><strong>Per-row delegate management</strong> — delegates added by the host harness show as their own rows with edit + remove affordances, parallel to the include UX. Backed by <code>DelegateMutator</code> with the same source-aware apply path.</p></li>
+<li><p><strong>Unified Source Picker</strong> — Install Harness, Add Include, and Add Delegate now flow through a single Library / Git / Path picker surface. Library tab pulls from <code>ynh marketplace</code> results; Git accepts any URL with optional ref/sha pin; Path lets you point at a local source directory. Replaces the previous bespoke install + add-include sheets.</p></li>
+<li><p><strong>Schema-1 → 2 migration coordinator</strong> — on first launch against a YNH binary that has migrated <code>~/.ynh</code> to canonical-id schema 2, TermQ consumes the migration manifest and rewrites its persisted worktree↔︎harness associations from the old <code>&lt;namespace&gt;/&lt;name&gt;</code> shape to the new host-prefixed canonical id (<code>&lt;host&gt;/&lt;org&gt;/&lt;repo&gt;/&lt;name&gt;</code>). Idempotent — re-applying the same manifest is a no-op.</p></li>
+<li><p><strong>Quarantine sidebar group</strong> — quarantined harnesses (entries YNH could not load due to a broken manifest) appear in a dedicated QUARANTINED group below LOCAL with per-row Restore and Drop actions. Drop is confirmation-gated and permanently removes the entry from <code>~/.ynh/.quarantine/broken/</code>.</p></li>
+<li><p><strong>Harness Management Phase 1</strong> — first slice of the harness-as-first-class-citizen rework. Registry harnesses, local harnesses, and forks now have distinct identities, editability rules, and provenance display in TermQ.</p></li>
+<li><p><strong>Source badges</strong> — sidebar rows and detail pane header show a provenance chip: registry name (registry installs), short Git URL (git installs), <code>Local</code> (path installs), or <code>Forked from &lt;registry&gt;</code> (forked-locals).</p></li>
+<li><p><strong>Read-only indicator</strong> — registry harnesses display a Read-only pill; surfaces that direct edits will be overwritten by the next <code>ynh update</code>.</p></li>
+<li><p><strong>Update detection with three-state drift signal</strong></p>
+<ul>
+<li><strong>Versioned</strong> — manifest <code>version</code> bumped upstream → orange dot, info banner, single-click Update.</li>
+<li><strong>Unversioned drift</strong> — content changed upstream without a version bump → amber warning triangle, warning banner, confirmation step in the Update sheet listing each drifted include path with <code>installed → available</code> SHAs. Surfaces the supply-chain signal explicitly.</li>
+<li><strong>None</strong> — clean.</li>
+</ul></li>
+<li><p><strong>Fork to local</strong> — actions menu offers Fork to local on registry harnesses; single-call flow against pointer-model YNH (<code>ynh fork --to &lt;path&gt;</code>); creates one editable working tree, no copy under <code>~/.ynh/harnesses/</code>. Detail pane shows ghost origin via <code>installed_from.forked_from</code>.</p></li>
+<li><p><strong>Duplicate</strong> — local-only renamed copy via <code>ynh fork --to &lt;path&gt; --name &lt;newname&gt;</code> single call. Hidden for registry harnesses (Fork covers that intent). Appears in sidebar context menu and detail action menu.</p></li>
+<li><p><strong>Action menu parity</strong> — sidebar context menu and detail action menu share the same canonical layout in five groups (Run, Location, Actions, Help, Destructive). Sidebar drops Help and advanced Actions; detail keeps everything. "Open in…" submenu (VS Code, Cursor, Zed, etc.), Reveal in Terminal, Open in browser (URL sources), Copy as Pathname all consistent.</p></li>
+<li><p><strong>Editable path resolution</strong> — for forked-locals, Reveal/Open/Copy actions target the editable source tree (<code>installed_from.source</code>), not the YNH install slot. Single canonical "where this lives on disk" location.</p></li>
+<li><p><strong>Sidebar header spinner</strong> — global probe in flight shows a spinner next to the "Harnesses" title; per-harness operations show the spinner next to the row.</p></li>
+<li><p><strong>Vendor override picker</strong> — per-harness vendor override (claude / codex / cursor) persists across launches, surfaces as a picker badge in the detail header.</p></li>
+<li><p><strong>Update menu hidden for forks</strong> — YNH explicitly refuses <code>ynh update</code> on forks; menu reflects that rather than offering an action that always errors.</p></li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><p><strong>Canonical-id at the YNH CLI boundary</strong> — every TermQ→YNH command now passes <code>harness.id</code> (the canonical id YNH stamps on each harness) rather than the bare name. Eliminates the duplicate-name bug class where a registry install and a local fork sharing a name could resolve to the wrong target. The <code>id || name</code> fallback in <code>HarnessRepository</code> is gone and <code>Harness.id</code> is sourced verbatim from the YNH envelope (with a <code>namespace + "/" + name</code> fallback for older binaries that don't emit the field).</p></li>
+<li><p><strong>Fork sheet aligned with <code>ynh fork --name</code></strong> — the fork sheet's free-form Identity field is replaced with an optional Name field. The new fork's canonical id is always <code>local/&lt;name&gt;</code>; submitting with no name keeps the source's name. Matches what the YNH binary actually exposes.</p></li>
+<li><p><strong>Detail pane refactored</strong> — extracted <code>HarnessDetailViewModel</code> from the view; source classification, editability, and update signals live in pure types with their own test coverage. Old feature-flagged badge retired.</p></li>
+<li><p><strong>YNH command runner is injectable</strong> — <code>YNHCommandRunner</code> protocol replaces direct <code>CommandRunner.run</code> calls in repository, vendor, search, update-availability, harness author runners, editor registry, and terminal session manager. Production paths use the live runner; tests inject stubs to exercise success and failure branches without spawning real YNH subprocesses.</p></li>
+<li><p><strong>YNH JSON envelope</strong> — TermQ now reads <code>capabilities</code> and <code>ynh_version</code> from the structured-output envelope (YNH 0.3.0+) and gates Phase 1 features behind a version probe.</p></li>
+<li><p><strong>Tolerant decoder</strong> — <code>Harness</code> decoder accepts <code>null</code> for <code>includes</code> and <code>delegates_to</code> (which YNH emits for broken installs whose source path is missing). A single bad row no longer collapses the whole sidebar.</p></li>
+<li><p><strong>Settings layering</strong> — introduced <code>SettingsStore</code> as the single owner for user preferences, with explicit defaults → user → per-card override resolution. The four per-terminal fields the audit named — safe paste, font size, theme, and backend — now carry an Optional override on the card rather than being snapshotted from <code>UserDefaults</code> at create time. New cards inherit the global default and track future changes to it; the card editor exposes an "Override default" toggle for each field.</p>
+<p><strong>Upgrade behaviour for existing cards:</strong> cards persisted before this release keep their concrete values as explicit overrides. They will <em>not</em> track future changes to the matching global default. To opt back into the global, open the card editor and turn the "Override default" toggle off. This is intentional — it preserves "what users had" through the upgrade.</p></li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.10.0/TermQ-0.10.0.zip"
+                sparkle:edSignature="qhVOijoCxZ5sVJhSxZvIS3K3U1q8WiaXTdM4Xwwkqq+fNUkBeXcAIb5mKz1drHPT+X+euOIocQ3XE8QyBcJrCg=="
+                length="27016909"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.10.0.b2</title>
+            <sparkle:version>0.10.0.b2</sparkle:version>
+            <sparkle:shortVersionString>0.10.0.b2</sparkle:shortVersionString>
+            <pubDate>Sat, 09 May 2026 16:57:48 +0000</pubDate>
+            <description><![CDATA[<p><em>See <code>CHANGELOG.md</code> for changes in this release.</em></p>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0-beta.2.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0-beta.2.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.10.0-beta.2/TermQ-0.10.0-beta.2.zip"
+                sparkle:edSignature="R2tycz7Biedf/AHXeMhDrxu/Wnmds1RDMZ+v4HH4uP0gI7PPZchR5aPQZTuv1nZ2UQFjTicGYcJOzNVgrW1ZAg=="
+                length="27016735"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.10.0.b1</title>
+            <sparkle:version>0.10.0.b1</sparkle:version>
+            <sparkle:shortVersionString>0.10.0.b1</sparkle:shortVersionString>
+            <pubDate>Sat, 09 May 2026 11:47:27 +0000</pubDate>
+            <description><![CDATA[<p><em>See <code>CHANGELOG.md</code> for changes in this release.</em></p>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0-beta.1.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.0-beta.1.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.10.0-beta.1/TermQ-0.10.0-beta.1.zip"
+                sparkle:edSignature="fo/u/IVR46BPHpUdemrCfmQyDrLFypBORY6Dtf3ibT8NzixcqpiqE5WTY/4JVaoRsGlVjTZ5pKlCP+nOg4DXDw=="
+                length="24393053"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.9.7</title>
             <sparkle:version>0.9.7</sparkle:version>
             <sparkle:shortVersionString>0.9.7</sparkle:shortVersionString>

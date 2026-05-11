@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0]
+
 ### Added
 
 - **Remote PR feed** — the Repositories sidebar gains a **Local / Remote** toggle.
@@ -183,12 +185,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   which emits a bare `[Harness]` array with `version`. The mismatch
   left the Harnesses sidebar empty and produced a blank Launch card on
   worktree rows that already had a harness associated. Decoding is now
-  tolerant: `HarnessListResponse` / `HarnessInfoResponse` accept either
-  the 0.3 envelope or the 0.2 bare shape, and `Harness` / `HarnessInfo`
-  accept either `version_installed` or `version`. The compat layer can be
-  removed once YNH 0.3 ships to the tap and a capability gate is in place.
+  tolerant: `YNHListEnvelope` / `YNHInfoEnvelope` accept either the 0.3
+  envelope or the 0.2 bare shape, and `Harness` / `HarnessInfo` accept
+  either `version_installed` or `version`. The compat layer can be
+  removed once YNH 0.3 ships to the tap and a capability gate is in
+  place.
 
-## [0.9.6] — 2026-05-05
+## [0.9.6] — 2026-05-04
 
 ### Fixed
 
@@ -198,21 +201,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   called `makeKeyAndOrderFront`, stealing focus from whatever app the
   user was working in. The handler now only activates the window on
   genuine user-initiated reopen (unhide on Cmd+H, deminiaturize on
-  Cmd+M, or bring forward when no windows are visible).
+  Cmd+M, or bring forward when no windows are visible). Backport of
+  #268.
 - **Marketplace removals not persisted** — Removing a marketplace from
   Settings → External Sources didn't survive relaunch. Three concurrent
   issues fixed: the confirmation dialog read state after dismissal
   (racy), `save()` swallowed errors with `try?`, and a re-seed could
   re-add a default the user had removed. Tombstones now track removed
   defaults (`marketplaces.removedDefaultURLs.v1`); Restore Defaults
-  bypasses tombstones explicitly.
+  bypasses tombstones explicitly. Backport of #264.
 - **OSC 52 clipboard default mismatched Settings UI** — The runtime gate
   defaulted to `true` on unset while Settings → Data & Security
   displayed `false`, so a never-touched user saw "Off" but terminal
   programs could silently copy to the clipboard. The runtime now
   defaults to `false` to match the Settings UI. Behavior change:
   existing users who relied on the implicit-on default will need to
-  enable OSC 52 explicitly.
+  enable OSC 52 explicitly. Aligned with #270.
 
 ## [0.9.5] — 2026-05-03
 
