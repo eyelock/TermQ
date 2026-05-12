@@ -70,9 +70,75 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+        registerLifecycleObservers()
         // Store reference to the main window and set delegate
         // In SwiftUI apps, the window might not be created yet, so we poll for it
         setupMainWindowDelegate()
+    }
+
+    // MARK: - Lifecycle diagnostics
+
+    /// Subscribe to every NSApp/NSWindow transition so we can diagnose stealing-focus,
+    /// spontaneous-hide, and spontaneous-miniaturize reports without adding new logging
+    /// each time. Each event is recorded with a state snapshot + stack via `logLifecycle`.
+    private func registerLifecycleObservers() {
+        let nc = NotificationCenter.default
+        let appEvents: [(Notification.Name, String)] = [
+            (NSApplication.willBecomeActiveNotification, "app.willBecomeActive"),
+            (NSApplication.didBecomeActiveNotification, "app.didBecomeActive"),
+            (NSApplication.willResignActiveNotification, "app.willResignActive"),
+            (NSApplication.didResignActiveNotification, "app.didResignActive"),
+            (NSApplication.didHideNotification, "app.didHide"),
+            (NSApplication.didUnhideNotification, "app.didUnhide"),
+        ]
+        for (name, label) in appEvents {
+            nc.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated {
+                    self?.logLifecycle(label)
+                }
+            }
+        }
+        let windowEvents: [(Notification.Name, String)] = [
+            (NSWindow.didBecomeKeyNotification, "win.didBecomeKey"),
+            (NSWindow.didResignKeyNotification, "win.didResignKey"),
+            (NSWindow.didBecomeMainNotification, "win.didBecomeMain"),
+            (NSWindow.didResignMainNotification, "win.didResignMain"),
+            (NSWindow.didMiniaturizeNotification, "win.didMiniaturize"),
+            (NSWindow.didDeminiaturizeNotification, "win.didDeminiaturize"),
+        ]
+        for (name, label) in windowEvents {
+            nc.addObserver(forName: name, object: nil, queue: .main) { [weak self] note in
+                let objectID = (note.object as AnyObject?).map(ObjectIdentifier.init)
+                MainActor.assumeIsolated {
+                    guard let self,
+                        let mainID = self.mainWindow.map({ ObjectIdentifier($0 as AnyObject) }),
+                        objectID == mainID
+                    else { return }
+                    self.logLifecycle(label)
+                }
+            }
+        }
+    }
+
+    /// Single point of truth for lifecycle log formatting.
+    /// Layout: `<event> | <state snapshot> \n  <stack frames>`.
+    private func logLifecycle(_ event: String, withStack: Bool = true) {
+        let stack =
+            withStack
+            ? "\n  " + Thread.callStackSymbols.dropFirst().prefix(24).joined(separator: "\n  ")
+            : ""
+        TermQLogger.window.notice("\(event) | \(lifecycleSnapshot())\(stack)")
+    }
+
+    private func lifecycleSnapshot() -> String {
+        let app = NSApp
+        let win = mainWindow
+        let frontmost = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?"
+        return
+            "active=\(app?.isActive ?? false) hidden=\(app?.isHidden ?? false) "
+            + "win.visible=\(win?.isVisible ?? false) win.key=\(win?.isKeyWindow ?? false) "
+            + "win.main=\(win?.isMainWindow ?? false) win.min=\(win?.isMiniaturized ?? false) "
+            + "frontmost=\(frontmost)"
     }
 
     private func setupMainWindowDelegate() {
@@ -81,10 +147,11 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             mainWindow = window
             window.delegate = self
             window.tabbingMode = .disallowed
-            windowVisibilityObservation = window.observe(\.isVisible, options: [.new, .old]) { _, change in
+            windowVisibilityObservation = window.observe(\.isVisible, options: [.new, .old]) { [weak self] _, change in
                 guard change.oldValue == true, change.newValue == false else { return }
-                let stack = Thread.callStackSymbols.prefix(32).joined(separator: "\n  ")
-                TermQLogger.window.notice("mainWindow isVisible true→false — stack:\n  \(stack)")
+                MainActor.assumeIsolated {
+                    self?.logLifecycle("win.isVisible.true→false")
+                }
             }
             let desc = "\(type(of: window)) frame=\(window.frame)"
             TermQLogger.window.notice("setupMainWindowDelegate: delegate set on \(desc)")
@@ -105,15 +172,7 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     /// Prevent creating new windows when user tries to open the app again
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        let windows = NSApplication.shared.windows
-        let appHidden = NSApp.isHidden
-        TermQLogger.window.notice(
-            "applicationShouldHandleReopen: hasVisibleWindows=\(flag) isAppHidden=\(appHidden) total=\(windows.count)"
-        )
-        for (i, win) in windows.enumerated() {
-            let desc = "\(type(of: win)) visible=\(win.isVisible) frame=\(win.frame)"
-            TermQLogger.window.notice("  window[\(i)]: \(desc)")
-        }
+        logLifecycle("app.shouldHandleReopen(hasVisibleWindows=\(flag))")
         if let window = mainWindow {
             // Reopen events fire not just on Dock clicks but on every AppleEvent URL
             // delivery (e.g. MCP-driven `termq://` opens with activates:false). Activating
@@ -142,18 +201,12 @@ class TermQAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
 
-    /// Log when the app is about to hide (Cmd+H, "Hide TermQ" menu, or external caller).
-    /// The call stack reveals whether this is user-initiated or driven by an external tool.
     func applicationWillHide(_ notification: Notification) {
-        let stack = Thread.callStackSymbols.prefix(32).joined(separator: "\n  ")
-        TermQLogger.window.notice("applicationWillHide triggered — stack:\n  \(stack)")
+        logLifecycle("app.willHide")
     }
 
-    /// Log when the window is about to miniaturize so we can diagnose spontaneous occurrences.
-    /// The call stack captured here will reveal whether it's Cmd+M, an external tool, or macOS.
     func windowWillMiniaturize(_ notification: Notification) {
-        let stack = Thread.callStackSymbols.prefix(32).joined(separator: "\n  ")
-        TermQLogger.window.notice("windowWillMiniaturize triggered — stack:\n  \(stack)")
+        logLifecycle("win.willMiniaturize")
     }
 
     /// Keep app running even if last window closes (user can reopen from Dock)
