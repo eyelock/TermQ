@@ -60,12 +60,19 @@ public final class AgentSessionController: ObservableObject {
     /// Spawn `/bin/sh -c "<command>"` and stream its NDJSON output into
     /// `events`. No-op if a process is already running. Throws if the
     /// subprocess fails to launch.
+    ///
+    /// If the session has a saved sensor overlay file, appends
+    /// `--sensor-overlay <json>` to the command before launching so the
+    /// loop driver picks up the session-local sensor mutations.
     public func start(command: String) async throws {
         guard process == nil else { return }
+
+        let resolvedCommand = resolveCommand(command)
+
         let p = AgentLoopProcess()
         let stream = try await p.start(
             executable: URL(fileURLWithPath: "/bin/sh"),
-            arguments: ["-c", command]
+            arguments: ["-c", resolvedCommand]
         )
         process = p
         status = await p.status
@@ -239,6 +246,19 @@ public final class AgentSessionController: ObservableObject {
         if case .exited(let code) = finalStatus {
             updateCardStatus(code == 0 ? .converged : .errored)
         }
+    }
+
+    /// Append `--sensor-overlay <json>` to `base` if the session has saved
+    /// overlays, quoting the JSON for safe passing to `/bin/sh -c`.
+    /// Internal (not private) so tests can exercise the overlay injection
+    /// logic without spawning a real subprocess.
+    func resolveCommand(_ base: String) -> String {
+        guard let sessionId = cardLookup()?.agentConfig?.sessionId,
+              let overlayJSON = SensorOverlayStore.serialise(
+                  SensorOverlayStore.load(for: sessionId, baseDirectory: transcriptBaseURL))
+        else { return base }
+        let escaped = overlayJSON.replacingOccurrences(of: "'", with: "'\\''")
+        return "\(base) --sensor-overlay '\(escaped)'"
     }
 
     private func updateCardStatus(_ newStatus: AgentStatus) {

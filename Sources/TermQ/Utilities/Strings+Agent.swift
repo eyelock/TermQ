@@ -62,6 +62,43 @@ extension Strings {
     }
 }
 
+// MARK: - Fleet
+
+extension Strings {
+    enum Fleet {
+        static var sidebarTitle: String { localized("fleet.sidebar.title") }
+        static var newFleetHelp: String { localized("fleet.new.help") }
+        static var emptyTitle: String { localized("fleet.empty.title") }
+        static var emptyBody: String { localized("fleet.empty.body") }
+        static var launchTitle: String { localized("fleet.launch.title") }
+        static var sectionConfig: String { localized("fleet.launch.section.config") }
+        static var sectionTask: String { localized("fleet.launch.section.task") }
+        static var fieldHarness: String { localized("fleet.launch.field.harness") }
+        static var fieldHarnessPlaceholder: String { localized("fleet.launch.field.harness.placeholder") }
+        static var fieldSessions: String { localized("fleet.launch.field.sessions") }
+        static var fieldBaseWorktree: String { localized("fleet.launch.field.base.worktree") }
+        static var fieldBaseWorktreePlaceholder: String {
+            localized("fleet.launch.field.base.worktree.placeholder")
+        }
+        static var taskPlaceholder: String { localized("fleet.launch.task.placeholder") }
+        static var launch: String { localized("fleet.launch.button") }
+        static var cancel: String { localized("fleet.launch.cancel") }
+        static var fleetLabel: String { localized("fleet.group.label") }
+        static func aggregateRunning(_ running: Int, _ total: Int) -> String {
+            String(format: localized("fleet.aggregate.running"), running, total)
+        }
+        static func aggregateConverged(_ converged: Int, _ total: Int) -> String {
+            String(format: localized("fleet.aggregate.converged"), converged, total)
+        }
+        static func aggregateIdle(_ total: Int) -> String {
+            String(format: localized("fleet.aggregate.idle"), total)
+        }
+        static func promoteWinner(_ title: String) -> String {
+            String(format: localized("fleet.promote.winner"), title)
+        }
+    }
+}
+
 // MARK: - Editor.Agent
 
 extension Strings.Editor {
