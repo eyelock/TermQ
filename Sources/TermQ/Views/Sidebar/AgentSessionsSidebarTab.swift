@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 import TermQCore
 
 /// Sidebar content for the Agent Sessions tab.
@@ -10,6 +11,9 @@ struct AgentSessionsSidebarTab: View {
     @ObservedObject var boardViewModel: BoardViewModel
     @State private var showingFleetLaunch = false
     @State private var expandedFleets: Set<UUID> = []
+    @State private var showingTranscriptImporter = false
+    @State private var transcriptViewerEvents: [TrajectoryEvent]?
+    @State private var transcriptViewerFileName: String = ""
 
     private var agentCards: [TerminalCard] {
         boardViewModel.board.cards
@@ -52,6 +56,31 @@ struct AgentSessionsSidebarTab: View {
                 onDismiss: { showingFleetLaunch = false }
             )
         }
+        .sheet(isPresented: Binding(
+            get: { transcriptViewerEvents != nil },
+            set: { if !$0 { transcriptViewerEvents = nil } }
+        )) {
+            if let events = transcriptViewerEvents {
+                AgentTranscriptViewerView(
+                    events: events,
+                    fileName: transcriptViewerFileName,
+                    onDismiss: { transcriptViewerEvents = nil }
+                )
+            }
+        }
+        .fileImporter(
+            isPresented: $showingTranscriptImporter,
+            allowedContentTypes: [.plainText, .json, UTType(filenameExtension: "jsonl") ?? .plainText],
+            allowsMultipleSelection: false
+        ) { result in
+            guard case .success(let urls) = result, let url = urls.first else { return }
+            guard url.startAccessingSecurityScopedResource() else { return }
+            defer { url.stopAccessingSecurityScopedResource() }
+            if let events = AgentTranscriptViewerView.loadEvents(from: url) {
+                transcriptViewerFileName = url.lastPathComponent
+                transcriptViewerEvents = events
+            }
+        }
     }
 
     private var header: some View {
@@ -68,6 +97,14 @@ struct AgentSessionsSidebarTab: View {
                     .background(Color.secondary.opacity(0.15))
                     .clipShape(Capsule())
             }
+            Button {
+                showingTranscriptImporter = true
+            } label: {
+                Image(systemName: "clock.arrow.circlepath")
+                    .help(Strings.Fleet.openTranscriptHelp)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
             Button {
                 showingFleetLaunch = true
             } label: {

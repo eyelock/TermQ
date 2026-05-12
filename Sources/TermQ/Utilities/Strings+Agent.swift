@@ -68,6 +68,7 @@ extension Strings {
     enum Fleet {
         static var sidebarTitle: String { localized("fleet.sidebar.title") }
         static var newFleetHelp: String { localized("fleet.new.help") }
+        static var openTranscriptHelp: String { localized("fleet.open.transcript.help") }
         static var emptyTitle: String { localized("fleet.empty.title") }
         static var emptyBody: String { localized("fleet.empty.body") }
         static var launchTitle: String { localized("fleet.launch.title") }

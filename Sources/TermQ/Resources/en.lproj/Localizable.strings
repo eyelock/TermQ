@@ -927,6 +927,7 @@
 
 "fleet.sidebar.title" = "Agent Sessions";
 "fleet.new.help" = "Launch fleet run";
+"fleet.open.transcript.help" = "Open agent transcript";
 "fleet.empty.title" = "No agent sessions yet";
 "fleet.empty.body" = "Start one from a harness, or launch a fleet to run parallel sessions against the same task.";
 "fleet.launch.title" = "Launch Fleet Run";
