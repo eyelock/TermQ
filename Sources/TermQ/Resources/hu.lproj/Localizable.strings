@@ -978,6 +978,18 @@
 "harness.update.progress.title %@" = "\"%@\" frissítése…";
 "harness.update.button" = "Frissítés";
 "harness.update.ynh.unavailable" = "ynh nem érhető el.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" telepítése…";
+"harness.install.ynh.unavailable" = "ynh nem érhető el.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" eltávolítása…";
+"harness.uninstall.ynh.unavailable" = "ynh nem érhető el.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" exportálása…";
+"harness.export.ynd.unavailable" = "ynd nem érhető el.";
+
 "command.runner.running" = "Fut…";
 "command.runner.succeeded" = "Sikeres";
 "command.runner.failed" = "Sikertelen";

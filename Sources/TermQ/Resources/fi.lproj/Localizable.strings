@@ -978,6 +978,18 @@
 "harness.update.progress.title %@" = "Päivitetään \"%@\"…";
 "harness.update.button" = "Päivitä";
 "harness.update.ynh.unavailable" = "ynh ei ole käytettävissä.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Asennetaan \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh ei ole käytettävissä.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Poistetaan \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh ei ole käytettävissä.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Viedään \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd ei ole käytettävissä.";
+
 "command.runner.running" = "Suoritetaan…";
 "command.runner.succeeded" = "Onnistui";
 "command.runner.failed" = "Epäonnistui";

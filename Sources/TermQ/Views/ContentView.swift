@@ -24,8 +24,7 @@ struct ContentView: View {
     /// the view's body stays focused on layout.
     @State private var launchCoordinator = HarnessLaunchCoordinator()
 
-    /// Owns harness install/uninstall/update/export/fork flows and the
-    /// transient card tracking sets they spawn.
+    /// Owns harness install/uninstall/update/export/fork flows via CommandRunnerSheet-backed sheets.
     @State private var lifecycleCoordinator = HarnessLifecycleCoordinator()
 
     var body: some View {
@@ -68,7 +67,7 @@ struct ContentView: View {
                     },
                     onInstall: { lifecycleCoordinator.showInstallSheet = true },
                     onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
-                    onDeleteLocal: { id in lifecycleCoordinator.deleteLocalHarness(id: id) },
+                    onDeleteLocal: nil,
                     onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
                     onExport: { id, dir in
                         lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
@@ -268,16 +267,45 @@ struct ContentView: View {
                 }
                 .frame(width: 520, height: 540)
             }
-            .onReceive(
-                NotificationCenter.default.publisher(for: .termqDirectSessionExited)
-            ) { notif in
-                guard let cardId = notif.userInfo?["cardId"] as? UUID else { return }
-                let succeeded = (notif.userInfo?["exitCode"] as? Int) == 0
-                if let shouldClose = lifecycleCoordinator.handleTransientSessionExit(
-                    cardId: cardId, succeeded: succeeded), shouldClose
-                {
-                    closeHarnessCard(cardId)
+            .sheet(isPresented: $lifecycleCoordinator.showInstallProgressSheet) {
+                Group {
+                    if let config = lifecycleCoordinator.harnessConfigToInstall {
+                        HarnessInstallProgressSheet(
+                            config: config,
+                            detector: ynhDetector,
+                            repository: harnessRepo
+                        )
+                    }
                 }
+                .frame(width: 560, height: 420)
+            }
+            .sheet(isPresented: $lifecycleCoordinator.showUninstallSheet) {
+                Group {
+                    if let id = lifecycleCoordinator.harnessIDToUninstall {
+                        let displayName =
+                            harnessRepo.harnesses.first(where: { $0.id == id })?.name ?? id
+                        HarnessUninstallSheet(
+                            canonicalID: id,
+                            harnessName: displayName,
+                            detector: ynhDetector,
+                            repository: harnessRepo
+                        )
+                    }
+                }
+                .frame(width: 560, height: 420)
+            }
+            .sheet(isPresented: $lifecycleCoordinator.showExportSheet) {
+                Group {
+                    if let pending = lifecycleCoordinator.pendingExport {
+                        HarnessExportSheet(
+                            harnessName: pending.harnessName,
+                            harnessPath: pending.harnessPath,
+                            outputDir: pending.outputDir,
+                            detector: ynhDetector
+                        )
+                    }
+                }
+                .frame(width: 560, height: 420)
             }
             .sheet(isPresented: $lifecycleCoordinator.showForkSheet) {
                 // Frame applied at the .sheet content closure (the absolute
@@ -637,11 +665,6 @@ extension ContentView {
         }
     }
 
-    /// Wrap a string in single quotes for safe shell argument passing.
-    private func shellQuote(_ str: String) -> String {
-        "'" + str.replacingOccurrences(of: "'", with: "'\\''") + "'"
-    }
-
     /// Run the canonical-id migration coordinator at most once per
     /// session. Called from `onChange` of detector status and harness
     /// list state so it fires whenever the relevant inputs settle.
@@ -702,11 +725,6 @@ extension ContentView {
         }
     }
 
-    /// Close a transient harness operation card once its shell has exited.
-    private func closeHarnessCard(_ cardId: UUID) {
-        guard let card = viewModel.tabManager.card(for: cardId) else { return }
-        viewModel.closeTab(card)
-    }
 
     /// Launch native Terminal.app at the specified directory
     func launchNativeTerminal(at directory: String? = nil) {

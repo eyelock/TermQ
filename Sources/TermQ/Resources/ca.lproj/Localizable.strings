@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "S'està actualitzant \"%@\"…";
 "harness.update.button" = "Actualitza";
 "harness.update.ynh.unavailable" = "ynh no està disponible.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "S'està instal·lant \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh no està disponible.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "S'està desinstal·lant \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh no està disponible.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "S'està exportant \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd no està disponible.";
+
 "command.runner.running" = "Executant…";
 "command.runner.succeeded" = "Correcte";
 "command.runner.failed" = "Fallat";

@@ -974,6 +974,18 @@
 
 "harness.update.button" = "更新";
 "harness.update.ynh.unavailable" = "ynh 不可用。";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "正在安装\"%@\"…";
+"harness.install.ynh.unavailable" = "ynh 不可用。";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "正在卸载\"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh 不可用。";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "正在导出\"%@\"…";
+"harness.export.ynd.unavailable" = "ynd 不可用。";
+
 "command.runner.running" = "运行中…";
 "command.runner.succeeded" = "成功";
 "command.runner.failed" = "失败";

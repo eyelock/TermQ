@@ -978,6 +978,18 @@
 "harness.update.progress.title %@" = "מעדכן את \"%@\"…";
 "harness.update.button" = "עדכן";
 "harness.update.ynh.unavailable" = "ynh אינו זמין.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "מתקין את \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh אינו זמין.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "מסיר את \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh אינו זמין.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "מייצא את \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd אינו זמין.";
+
 "command.runner.running" = "מריץ…";
 "command.runner.succeeded" = "הצליח";
 "command.runner.failed" = "נכשל";

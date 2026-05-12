@@ -978,6 +978,18 @@
 "harness.update.progress.title %@" = "\"%@\" अपडेट हो रहा है…";
 "harness.update.button" = "अपडेट करें";
 "harness.update.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" इंस्टॉल हो रहा है…";
+"harness.install.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" अनइंस्टॉल हो रहा है…";
+"harness.uninstall.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" निर्यात हो रहा है…";
+"harness.export.ynd.unavailable" = "ynd उपलब्ध नहीं है।";
+
 "command.runner.running" = "चल रहा है…";
 "command.runner.succeeded" = "सफल";
 "command.runner.failed" = "विफल";

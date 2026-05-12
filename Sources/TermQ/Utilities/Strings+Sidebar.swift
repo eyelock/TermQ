@@ -544,6 +544,39 @@ extension Strings {
     }
 }
 
+// MARK: - HarnessInstall (progress sheet)
+
+extension Strings {
+    enum HarnessInstall {
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.install.progress.title %@"), name)
+        }
+        static var ynhUnavailable: String { localized("harness.install.ynh.unavailable") }
+    }
+}
+
+// MARK: - HarnessUninstall (progress sheet)
+
+extension Strings {
+    enum HarnessUninstall {
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.uninstall.progress.title %@"), name)
+        }
+        static var ynhUnavailable: String { localized("harness.uninstall.ynh.unavailable") }
+    }
+}
+
+// MARK: - HarnessExport (progress sheet)
+
+extension Strings {
+    enum HarnessExport {
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.export.progress.title %@"), name)
+        }
+        static var yndUnavailable: String { localized("harness.export.ynd.unavailable") }
+    }
+}
+
 // MARK: - CommandRunner
 
 extension Strings {

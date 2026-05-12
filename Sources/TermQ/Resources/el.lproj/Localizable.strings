@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "Ενημέρωση \"%@\"…";
 "harness.update.button" = "Ενημέρωση";
 "harness.update.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Εγκατάσταση \"%@\"…";
+"harness.install.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Κατάργηση εγκατάστασης \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Εξαγωγή \"%@\"…";
+"harness.export.ynd.unavailable" = "Το ynd δεν είναι διαθέσιμο.";
+
 "command.runner.running" = "Εκτελείται…";
 "command.runner.succeeded" = "Επιτυχία";
 "command.runner.failed" = "Αποτυχία";
