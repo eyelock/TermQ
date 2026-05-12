@@ -2,14 +2,15 @@ import SwiftUI
 import TermQCore
 import TermQShared
 
-/// Confirmation sheet for pruning worktrees of closed/merged PRs.
+/// Confirmation sheet for pruning remote-PR worktrees.
 ///
-/// Shows a list of closed PR worktrees split into "will prune" (clean) and
-/// "will keep" (dirty or has unpushed commits). Mirrors the existing
-/// `PruneWorktreesSheet` pattern.
+/// Shows two optional sections:
+/// - Closed/merged PR worktrees (may be dirty or ahead — those are kept)
+/// - Focus worktrees created by "Run with Focus" on non-checked-out PRs (always prunable)
 struct PruneClosedPRsSheet: View {
     let repo: ObservableRepository
     let candidates: [PRPruneCandidate]
+    let focusCandidates: [FocusWorktreeCandidate]
     @ObservedObject var viewModel: WorktreeSidebarViewModel
     @ObservedObject var prService: GitHubPRService
     let onDismiss: () -> Void
@@ -18,18 +19,37 @@ struct PruneClosedPRsSheet: View {
 
     private var toPrune: [PRPruneCandidate] { candidates.filter(\.canPrune) }
     private var toKeep: [PRPruneCandidate] { candidates.filter { !$0.canPrune } }
+    private var showBothSections: Bool { !candidates.isEmpty && !focusCandidates.isEmpty }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Title
-            Text(Strings.RemotePRs.pruneClosedPRsTitle(candidates.count))
+            Text(sheetTitle)
                 .font(.headline)
 
-            // Candidates list
             ScrollView {
                 VStack(alignment: .leading, spacing: 4) {
-                    ForEach(candidates) { candidate in
-                        candidateRow(candidate)
+                    if !candidates.isEmpty {
+                        if showBothSections {
+                            Text(Strings.RemotePRs.pruneClosedHeader)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .padding(.top, 4)
+                        }
+                        ForEach(candidates) { candidate in
+                            closedPRRow(candidate)
+                        }
+                    }
+
+                    if !focusCandidates.isEmpty {
+                        if showBothSections {
+                            Text(Strings.RemotePRs.pruneFocusHeader)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .padding(.top, 8)
+                        }
+                        ForEach(focusCandidates) { candidate in
+                            focusRow(candidate)
+                        }
                     }
                 }
             }
@@ -45,11 +65,11 @@ struct PruneClosedPRsSheet: View {
 
                 Spacer()
 
-                Button(pruneButtonLabel) {
+                Button(Strings.RemotePRs.pruneClosedPRsConfirm) {
                     Task { await prune() }
                 }
                 .keyboardShortcut(.defaultAction)
-                .disabled(toPrune.isEmpty || isPruning)
+                .disabled((toPrune.isEmpty && focusCandidates.isEmpty) || isPruning)
             }
         }
         .padding()
@@ -57,7 +77,7 @@ struct PruneClosedPRsSheet: View {
     }
 
     @ViewBuilder
-    private func candidateRow(_ candidate: PRPruneCandidate) -> some View {
+    private func closedPRRow(_ candidate: PRPruneCandidate) -> some View {
         HStack(alignment: .top, spacing: 8) {
             Image(systemName: candidate.canPrune ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
                 .foregroundColor(candidate.canPrune ? .green : .orange)
@@ -91,25 +111,47 @@ struct PruneClosedPRsSheet: View {
 
             Spacer()
 
-            Text(
-                candidate.canPrune
-                    ? Strings.RemotePRs.pruneRemove
-                    : Strings.RemotePRs.pruneKeep
-            )
-            .font(.caption)
-            .foregroundColor(candidate.canPrune ? .red : .secondary)
+            Text(candidate.canPrune ? Strings.RemotePRs.pruneRemove : Strings.RemotePRs.pruneKeep)
+                .font(.caption)
+                .foregroundColor(candidate.canPrune ? .red : .secondary)
         }
         .padding(.vertical, 2)
     }
 
-    private var pruneButtonLabel: String {
-        Strings.RemotePRs.pruneClosedPRsConfirm
+    @ViewBuilder
+    private func focusRow(_ candidate: FocusWorktreeCandidate) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+                .frame(width: 16)
+
+            Text(candidate.displayName)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+
+            Spacer()
+
+            Text(Strings.RemotePRs.pruneRemove)
+                .font(.caption)
+                .foregroundColor(.red)
+        }
+        .padding(.vertical, 2)
+    }
+
+    private var sheetTitle: String {
+        if candidates.isEmpty {
+            return Strings.RemotePRs.pruneFocusTitle(focusCandidates.count)
+        }
+        return Strings.RemotePRs.pruneClosedPRsTitle(candidates.count)
     }
 
     private func prune() async {
         isPruning = true
         defer { isPruning = false }
         await viewModel.pruneClosedPRs(repo: repo, candidates: toPrune)
+        if !focusCandidates.isEmpty {
+            await viewModel.pruneFocusWorktrees(repo: repo, paths: focusCandidates.map(\.path))
+        }
         onDismiss()
     }
 }

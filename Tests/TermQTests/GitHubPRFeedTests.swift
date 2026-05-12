@@ -287,6 +287,7 @@ final class HarnessLaunchConfigCommandTests: XCTestCase {
             profile: profile,
             workingDirectory: "/tmp",
             prompt: prompt,
+            instructions: nil,
             backend: .direct,
             branch: branch,
             interactive: false,
@@ -344,7 +345,7 @@ final class HarnessLaunchConfigCommandTests: XCTestCase {
         let config = HarnessLaunchConfig(
             harnessID: "h", vendorID: "", defaultVendor: "", focus: "f",
             profile: nil, workingDirectory: "/tmp", prompt: nil,
-            backend: .direct, branch: nil, interactive: true, cardTitle: nil)
+            instructions: nil, backend: .direct, branch: nil, interactive: true, cardTitle: nil)
         let cmd = config.command(sessionName: "termq-abc")
         // Expected: ynh run h --focus f --interactive --session-name termq-abc
         let parts = cmd.components(separatedBy: " ")
@@ -378,7 +379,7 @@ final class HarnessLaunchConfigCommandTests: XCTestCase {
         let config = HarnessLaunchConfig(
             harnessID: "h", vendorID: "", defaultVendor: "", focus: nil,
             profile: nil, workingDirectory: "/tmp", prompt: "review this PR",
-            backend: .direct, branch: nil, interactive: false, cardTitle: nil)
+            instructions: nil, backend: .direct, branch: nil, interactive: false, cardTitle: nil)
         let cmd = config.command()
         XCTAssertTrue(cmd.contains("--"))
         let dashIdx = cmd.range(of: " -- ")!.lowerBound
@@ -399,9 +400,50 @@ final class HarnessLaunchConfigCommandTests: XCTestCase {
         let config = HarnessLaunchConfig(
             harnessID: "h", vendorID: "", defaultVendor: "", focus: nil,
             profile: nil, workingDirectory: "/tmp", prompt: "it's a test",
-            backend: .direct, branch: nil, interactive: false, cardTitle: nil)
+            instructions: nil, backend: .direct, branch: nil, interactive: false, cardTitle: nil)
         let cmd = config.command()
         XCTAssertTrue(cmd.contains("'it'\\''s a test'"), "Single quotes must be escaped")
+    }
+
+    // MARK: Instructions flag
+
+    func testInstructionsFlagIncluded() {
+        let config = HarnessLaunchConfig(
+            harnessID: "h", vendorID: "", defaultVendor: "", focus: "pr-summary",
+            profile: nil, workingDirectory: "/tmp", prompt: nil,
+            instructions: "PR #42 in org/repo", backend: .direct, branch: nil,
+            interactive: false, cardTitle: nil)
+        let cmd = config.command()
+        XCTAssertTrue(cmd.contains("--instructions"), "instructions flag must be emitted")
+        XCTAssertTrue(cmd.contains("PR #42 in org/repo"), "instructions value must be in command")
+    }
+
+    func testInstructionsValueShellQuoted() {
+        let config = HarnessLaunchConfig(
+            harnessID: "h", vendorID: "", defaultVendor: "", focus: nil,
+            profile: nil, workingDirectory: "/tmp", prompt: nil,
+            instructions: "it's PR #1", backend: .direct, branch: nil,
+            interactive: false, cardTitle: nil)
+        let cmd = config.command()
+        XCTAssertTrue(cmd.contains("'it'\\''s PR #1'"), "single quotes in instructions must be escaped")
+    }
+
+    func testNilInstructionsOmitted() {
+        let cmd = makeConfig().command()
+        XCTAssertFalse(cmd.contains("--instructions"), "nil instructions must not emit flag")
+    }
+
+    func testInstructionsAppearsBeforeSessionName() {
+        let config = HarnessLaunchConfig(
+            harnessID: "h", vendorID: "", defaultVendor: "", focus: "f",
+            profile: nil, workingDirectory: "/tmp", prompt: nil,
+            instructions: "PR #7 in org/repo", backend: .direct, branch: nil,
+            interactive: false, cardTitle: nil)
+        let cmd = config.command(sessionName: "termq-abc")
+        let parts = cmd.components(separatedBy: " ")
+        let instrIdx = parts.firstIndex(of: "--instructions")!
+        let sessionIdx = parts.firstIndex(of: "--session-name")!
+        XCTAssertLessThan(instrIdx, sessionIdx, "--instructions comes before --session-name")
     }
 
     // MARK: Full command composition
@@ -410,7 +452,7 @@ final class HarnessLaunchConfigCommandTests: XCTestCase {
         let config = HarnessLaunchConfig(
             harnessID: "termq-dev", vendorID: "claude", defaultVendor: "claude",
             focus: "pr-summary", profile: nil, workingDirectory: "/tmp", prompt: nil,
-            backend: .direct, branch: "feat/x", interactive: true, cardTitle: nil)
+            instructions: nil, backend: .direct, branch: "feat/x", interactive: true, cardTitle: nil)
         let cmd = config.command(sessionName: "termq-abc123")
         XCTAssertEqual(
             cmd,
@@ -424,7 +466,7 @@ final class HarnessLaunchConfigCommandTests: XCTestCase {
         let config = HarnessLaunchConfig(
             harnessID: "h", vendorID: "claude", defaultVendor: "", focus: "pr-summary",
             profile: nil, workingDirectory: "/tmp", prompt: nil,
-            backend: .direct, branch: "main", interactive: false, cardTitle: nil)
+            instructions: nil, backend: .direct, branch: "main", interactive: false, cardTitle: nil)
         let tags = Dictionary(uniqueKeysWithValues: config.tags.map { ($0.key, $0.value) })
         XCTAssertEqual(tags["focus"], "pr-summary")
         XCTAssertEqual(tags["vendor"], "claude")
@@ -436,7 +478,7 @@ final class HarnessLaunchConfigCommandTests: XCTestCase {
         let config = HarnessLaunchConfig(
             harnessID: "h", vendorID: "", defaultVendor: "gemini", focus: nil,
             profile: nil, workingDirectory: "/tmp", prompt: nil,
-            backend: .direct, branch: nil, interactive: false, cardTitle: nil)
+            instructions: nil, backend: .direct, branch: nil, interactive: false, cardTitle: nil)
         let tags = Dictionary(uniqueKeysWithValues: config.tags.map { ($0.key, $0.value) })
         XCTAssertEqual(tags["vendor"], "gemini", "defaultVendor used for tag when vendorID empty")
     }

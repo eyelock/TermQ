@@ -115,6 +115,7 @@ final class MockGitService: GitServiceProtocol {
     }
 
     func inferRepoName(repoPath: String) async -> String { inferRepoNameResult }
+    func remoteURL(repoPath: String) async throws -> String { "" }
 }
 
 @MainActor

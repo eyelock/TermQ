@@ -24,6 +24,7 @@ struct WorktreeSidebarView: View {
     @State private var forceUpdatePRContext: ForceUpdatePRContext?
     @State var isShowingPruneClosedPRsFor: ObservableRepository?
     @State var pruneClosedPRsCandidates: [PRPruneCandidate] = []
+    @State var focusPruneCandidates: [FocusWorktreeCandidate] = []
     @State var pendingToast: SidebarToast?
     @State var runWithFocusContext: RunWithFocusContext?
     @State private var showAddRepo = false
@@ -162,9 +163,14 @@ struct WorktreeSidebarView: View {
         PruneClosedPRsSheet(
             repo: repo,
             candidates: pruneClosedPRsCandidates,
+            focusCandidates: focusPruneCandidates,
             viewModel: viewModel,
             prService: prService,
-            onDismiss: { isShowingPruneClosedPRsFor = nil }
+            onDismiss: {
+                isShowingPruneClosedPRsFor = nil
+                pruneClosedPRsCandidates = []
+                focusPruneCandidates = []
+            }
         )
     }
 
