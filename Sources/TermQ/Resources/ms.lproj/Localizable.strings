@@ -696,6 +696,7 @@
 
 "fleet.sidebar.title" = "Sesi Ejen";
 "fleet.new.help" = "Jalankan fleet";
+"fleet.open.transcript.help" = "Buka transkrip ejen";
 "fleet.empty.title" = "Tiada sesi ejen lagi";
 "fleet.empty.body" = "Mulakan satu daripada harness, atau jalankan fleet untuk sesi selari pada tugas yang sama.";
 "fleet.launch.title" = "Jalankan fleet";

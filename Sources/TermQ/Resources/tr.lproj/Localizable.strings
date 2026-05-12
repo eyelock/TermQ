@@ -698,6 +698,7 @@
 
 "fleet.sidebar.title" = "Agent oturumları";
 "fleet.new.help" = "Fleet çalıştır";
+"fleet.open.transcript.help" = "Ajan transkriptini aç";
 "fleet.empty.title" = "Henüz agent oturumu yok";
 "fleet.empty.body" = "Bir harness'tan başlatın veya aynı görev için paralel oturumlar çalıştırmak üzere bir fleet başlatın.";
 "fleet.launch.title" = "Fleet çalıştır";

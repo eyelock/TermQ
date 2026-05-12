@@ -697,6 +697,7 @@
 
 "fleet.sidebar.title" = "סשני Agent";
 "fleet.new.help" = "הפעל ריצת fleet";
+"fleet.open.transcript.help" = "פתח תמליל סוכן";
 "fleet.empty.title" = "אין עדיין סשני Agent";
 "fleet.empty.body" = "התחל סשן מ-harness, או הפעל fleet להרצת סשנים מקבילים על אותה משימה.";
 "fleet.launch.title" = "הפעל ריצת fleet";

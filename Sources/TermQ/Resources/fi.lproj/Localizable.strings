@@ -697,6 +697,7 @@
 
 "fleet.sidebar.title" = "Agenttiistunnot";
 "fleet.new.help" = "Käynnistä fleet-ajo";
+"fleet.open.transcript.help" = "Avaa agenttiloki";
 "fleet.empty.title" = "Ei agenttiistuntoja vielä";
 "fleet.empty.body" = "Aloita yksi harnessista tai käynnistä fleet rinnakkaisiin istuntoihin samaa tehtävää varten.";
 "fleet.launch.title" = "Käynnistä fleet-ajo";

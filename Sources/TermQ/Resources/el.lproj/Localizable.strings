@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Σεσιόν agent";
 "fleet.new.help" = "Εκκίνηση fleet";
+"fleet.open.transcript.help" = "Άνοιγμα μεταγραφής πράκτορα";
 "fleet.empty.title" = "Δεν υπάρχουν σεσιόν agent ακόμα";
 "fleet.empty.body" = "Ξεκινήστε μία από harness ή εκκινήστε fleet για παράλληλες σεσιόν στο ίδιο έργο.";
 "fleet.launch.title" = "Εκκίνηση fleet";

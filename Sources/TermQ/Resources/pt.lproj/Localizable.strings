@@ -696,6 +696,7 @@
 
 "fleet.sidebar.title" = "Sessões de agente";
 "fleet.new.help" = "Iniciar execução fleet";
+"fleet.open.transcript.help" = "Abrir transcrição do agente";
 "fleet.empty.title" = "Nenhuma sessão de agente ainda";
 "fleet.empty.body" = "Inicie uma a partir de um harness, ou lance um fleet para executar sessões paralelas sobre a mesma tarefa.";
 "fleet.launch.title" = "Iniciar execução fleet";

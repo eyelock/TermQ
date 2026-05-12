@@ -698,6 +698,7 @@
 
 "fleet.sidebar.title" = "Agentsessioner";
 "fleet.new.help" = "Starta fleet-körning";
+"fleet.open.transcript.help" = "Öppna agenttranskript";
 "fleet.empty.title" = "Inga agentsessioner ännu";
 "fleet.empty.body" = "Starta en från ett harness, eller lansera en fleet för parallella sessioner mot samma uppgift.";
 "fleet.launch.title" = "Starta fleet-körning";

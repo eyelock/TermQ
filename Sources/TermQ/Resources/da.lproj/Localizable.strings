@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Agentsessioner";
 "fleet.new.help" = "Start fleet-kørsel";
+"fleet.open.transcript.help" = "Åbn agentudskrift";
 "fleet.empty.title" = "Ingen agentsessioner endnu";
 "fleet.empty.body" = "Start en fra et harness, eller lancér en fleet for parallelle sessioner mod samme opgave.";
 "fleet.launch.title" = "Start fleet-kørsel";

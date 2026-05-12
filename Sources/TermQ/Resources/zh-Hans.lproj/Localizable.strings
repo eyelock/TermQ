@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Agent 会话";
 "fleet.new.help" = "启动 Fleet 运行";
+"fleet.open.transcript.help" = "打开代理记录";
 "fleet.empty.title" = "暂无 Agent 会话";
 "fleet.empty.body" = "从 Harness 启动一个，或启动 Fleet 以并行运行多个会话执行相同任务。";
 "fleet.launch.title" = "启动 Fleet 运行";

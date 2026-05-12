@@ -696,6 +696,7 @@
 
 "fleet.sidebar.title" = "Agent 세션";
 "fleet.new.help" = "Fleet 실행 시작";
+"fleet.open.transcript.help" = "에이전트 기록 열기";
 "fleet.empty.title" = "Agent 세션이 없습니다";
 "fleet.empty.body" = "Harness에서 하나를 시작하거나, Fleet을 시작해 같은 작업에 대한 병렬 세션을 실행하세요.";
 "fleet.launch.title" = "Fleet 실행 시작";

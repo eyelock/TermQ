@@ -696,6 +696,7 @@
 
 "fleet.sidebar.title" = "Sesje agenta";
 "fleet.new.help" = "Uruchom fleet";
+"fleet.open.transcript.help" = "Otwórz transkrypt agenta";
 "fleet.empty.title" = "Brak sesji agenta";
 "fleet.empty.body" = "Uruchom jedną z harness lub uruchom fleet, aby wykonywać równoległe sesje dla tego samego zadania.";
 "fleet.launch.title" = "Uruchom fleet";

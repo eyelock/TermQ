@@ -696,6 +696,7 @@
 
 "fleet.sidebar.title" = "Agentsessies";
 "fleet.new.help" = "Fleet-uitvoering starten";
+"fleet.open.transcript.help" = "Agenttranscriptie openen";
 "fleet.empty.title" = "Nog geen agentsessies";
 "fleet.empty.body" = "Start er een vanuit een harness, of lanceer een fleet voor parallelle sessies op dezelfde taak.";
 "fleet.launch.title" = "Fleet-uitvoering starten";

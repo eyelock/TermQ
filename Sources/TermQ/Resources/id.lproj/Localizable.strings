@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Sesi Agen";
 "fleet.new.help" = "Jalankan fleet";
+"fleet.open.transcript.help" = "Buka transkrip agen";
 "fleet.empty.title" = "Belum ada sesi agen";
 "fleet.empty.body" = "Mulai satu dari harness, atau jalankan fleet untuk sesi paralel pada tugas yang sama.";
 "fleet.launch.title" = "Jalankan fleet";

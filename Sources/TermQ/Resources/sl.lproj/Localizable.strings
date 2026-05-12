@@ -698,6 +698,7 @@
 
 "fleet.sidebar.title" = "Seje agenta";
 "fleet.new.help" = "Zaženi fleet";
+"fleet.open.transcript.help" = "Odpri prepis agenta";
 "fleet.empty.title" = "Ni sej agenta";
 "fleet.empty.body" = "Zaženite eno iz harness-a ali zaženite fleet za vzporedne seje na isti nalogi.";
 "fleet.launch.title" = "Zaženi fleet";

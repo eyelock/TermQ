@@ -698,6 +698,7 @@
 
 "fleet.sidebar.title" = "Phiên Agent";
 "fleet.new.help" = "Khởi chạy fleet";
+"fleet.open.transcript.help" = "Mở bản ghi tác nhân";
 "fleet.empty.title" = "Chưa có phiên Agent nào";
 "fleet.empty.body" = "Bắt đầu một phiên từ harness hoặc khởi chạy fleet để chạy các phiên song song cho cùng một tác vụ.";
 "fleet.launch.title" = "Khởi chạy fleet";

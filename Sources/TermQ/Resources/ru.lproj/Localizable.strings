@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Сеансы агента";
 "fleet.new.help" = "Запустить fleet";
+"fleet.open.transcript.help" = "Открыть транскрипт агента";
 "fleet.empty.title" = "Нет сеансов агента";
 "fleet.empty.body" = "Запустите один из harness или запустите fleet для параллельных сеансов одной задачи.";
 "fleet.launch.title" = "Запустить fleet";

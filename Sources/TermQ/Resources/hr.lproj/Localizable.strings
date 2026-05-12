@@ -697,6 +697,7 @@
 
 "fleet.sidebar.title" = "Sesije agenta";
 "fleet.new.help" = "Pokretanje fleet izvođenja";
+"fleet.open.transcript.help" = "Otvori transkript agenta";
 "fleet.empty.title" = "Još nema sesija agenta";
 "fleet.empty.body" = "Pokrenite jednu iz harness-a ili pokrenite fleet za paralelne sesije na istom zadatku.";
 "fleet.launch.title" = "Pokretanje fleet izvođenja";

@@ -698,6 +698,7 @@
 
 "fleet.sidebar.title" = "เซสชัน Agent";
 "fleet.new.help" = "เริ่มการรัน fleet";
+"fleet.open.transcript.help" = "เปิดบันทึกตัวแทน";
 "fleet.empty.title" = "ยังไม่มีเซสชัน Agent";
 "fleet.empty.body" = "เริ่มจาก harness หรือเปิด fleet เพื่อรันเซสชันแบบขนานสำหรับงานเดียวกัน";
 "fleet.launch.title" = "เริ่มการรัน fleet";

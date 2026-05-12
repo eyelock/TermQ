@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "جلسات Agent";
 "fleet.new.help" = "تشغيل fleet";
+"fleet.open.transcript.help" = "فتح نص المساعد";
 "fleet.empty.title" = "لا توجد جلسات Agent بعد";
 "fleet.empty.body" = "ابدأ واحدة من harness، أو أطلق fleet لتشغيل جلسات متوازية على نفس المهمة.";
 "fleet.launch.title" = "تشغيل fleet";

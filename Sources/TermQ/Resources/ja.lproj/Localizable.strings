@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "エージェントセッション";
 "fleet.new.help" = "Fleetを起動";
+"fleet.open.transcript.help" = "エージェントの記録を開く";
 "fleet.empty.title" = "エージェントセッションはまだありません";
 "fleet.empty.body" = "ハーネスから1つ開始するか、Fleetを起動して同一タスクに並列セッションを実行してください。";
 "fleet.launch.title" = "Fleetを起動";

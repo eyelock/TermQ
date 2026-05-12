@@ -697,6 +697,7 @@
 
 "fleet.sidebar.title" = "Agent munkamenetek";
 "fleet.new.help" = "Fleet futtatás indítása";
+"fleet.open.transcript.help" = "Ügynök átiratának megnyitása";
 "fleet.empty.title" = "Még nincsenek agent munkamenetek";
 "fleet.empty.body" = "Indítson egyet egy harnessből, vagy indítson fleet-et párhuzamos munkamenetek futtatásához ugyanazon a feladaton.";
 "fleet.launch.title" = "Fleet futtatás indítása";

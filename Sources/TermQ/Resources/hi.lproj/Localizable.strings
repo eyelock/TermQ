@@ -697,6 +697,7 @@
 
 "fleet.sidebar.title" = "Agent सेशन";
 "fleet.new.help" = "Fleet चलाएं";
+"fleet.open.transcript.help" = "एजेंट ट्रांसक्रिप्ट खोलें";
 "fleet.empty.title" = "अभी कोई Agent सेशन नहीं";
 "fleet.empty.body" = "Harness से एक शुरू करें, या उसी टास्क के लिए समानांतर सेशन चलाने के लिए Fleet लॉन्च करें।";
 "fleet.launch.title" = "Fleet चलाएं";

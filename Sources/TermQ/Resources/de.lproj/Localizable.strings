@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Agent-Sitzungen";
 "fleet.new.help" = "Fleet-Lauf starten";
+"fleet.open.transcript.help" = "Agentprotokoll öffnen";
 "fleet.empty.title" = "Noch keine Agent-Sitzungen";
 "fleet.empty.body" = "Starte eine von einem Harness aus, oder starte einen Fleet, um parallele Sitzungen für dieselbe Aufgabe auszuführen.";
 "fleet.launch.title" = "Fleet-Lauf starten";

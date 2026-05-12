@@ -696,6 +696,7 @@
 
 "fleet.sidebar.title" = "Agentøkter";
 "fleet.new.help" = "Start fleet-kjøring";
+"fleet.open.transcript.help" = "Åpne agentutskrift";
 "fleet.empty.title" = "Ingen agentøkter ennå";
 "fleet.empty.body" = "Start en fra et harness, eller lancér en fleet for parallelle økter mot samme oppgave.";
 "fleet.launch.title" = "Start fleet-kjøring";

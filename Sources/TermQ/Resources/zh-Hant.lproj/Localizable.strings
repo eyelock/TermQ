@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Agent 工作階段";
 "fleet.new.help" = "啟動 Fleet 執行";
+"fleet.open.transcript.help" = "開啟代理程式記錄";
 "fleet.empty.title" = "尚無 Agent 工作階段";
 "fleet.empty.body" = "從 Harness 啟動一個，或啟動 Fleet 以並行執行多個工作階段處理相同任務。";
 "fleet.launch.title" = "啟動 Fleet 執行";

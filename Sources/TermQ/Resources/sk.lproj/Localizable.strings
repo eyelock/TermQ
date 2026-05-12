@@ -707,6 +707,7 @@
 
 "fleet.sidebar.title" = "Relácie agenta";
 "fleet.new.help" = "Spustiť fleet";
+"fleet.open.transcript.help" = "Otvoriť prepis agenta";
 "fleet.empty.title" = "Žiadne relácie agenta";
 "fleet.empty.body" = "Spustite jednu z harness alebo spustite fleet pre paralelné relácie nad rovnakou úlohou.";
 "fleet.launch.title" = "Spustiť fleet";
