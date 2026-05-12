@@ -695,6 +695,26 @@
 "settings.agent.enable.tab" = "Agent munkamenetek oldalsáv-fül megjelenítése";
 "settings.agent.enable.tab.help" = "Hozzáad egy oldalsáv-fült, amely felsorolja a folyamatban lévő és múlt agent munkameneteket, és egy „Indítás Agent ként“ műveletet a harness sorokhoz.";
 
+"fleet.sidebar.title" = "Agent munkamenetek";
+"fleet.new.help" = "Fleet futtatás indítása";
+"fleet.empty.title" = "Még nincsenek agent munkamenetek";
+"fleet.empty.body" = "Indítson egyet egy harnessből, vagy indítson fleet-et párhuzamos munkamenetek futtatásához ugyanazon a feladaton.";
+"fleet.launch.title" = "Fleet futtatás indítása";
+"fleet.launch.section.config" = "Konfiguráció";
+"fleet.launch.section.task" = "Feladat";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "pl. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Párhuzamos munkamenetek";
+"fleet.launch.field.base.worktree" = "Worktree alap elérési útja";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Írja le a feladatot az agent számára…";
+"fleet.launch.button" = "Indítás";
+"fleet.launch.cancel" = "Mégse";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d fut";
+"fleet.aggregate.converged" = "%d/%d konvergált";
+"fleet.aggregate.idle" = "%d munkamenet";
+"fleet.promote.winner" = "%@ előléptetése";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Legutóbbi érzékelők";

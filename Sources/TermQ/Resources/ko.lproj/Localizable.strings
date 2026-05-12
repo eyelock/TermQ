@@ -694,6 +694,26 @@
 "settings.agent.enable.tab" = "Agent 세션 사이드바 탭 표시";
 "settings.agent.enable.tab.help" = "사이드바에 진행 중 및 과거 Agent 세션 목록 탭을 추가하고, 하네스 행에 ‘Agent로 실행’ 액션을 제공합니다.";
 
+"fleet.sidebar.title" = "Agent 세션";
+"fleet.new.help" = "Fleet 실행 시작";
+"fleet.empty.title" = "Agent 세션이 없습니다";
+"fleet.empty.body" = "Harness에서 하나를 시작하거나, Fleet을 시작해 같은 작업에 대한 병렬 세션을 실행하세요.";
+"fleet.launch.title" = "Fleet 실행 시작";
+"fleet.launch.section.config" = "구성";
+"fleet.launch.section.task" = "작업";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "예: eyelock/coding-agent";
+"fleet.launch.field.sessions" = "병렬 세션 수";
+"fleet.launch.field.base.worktree" = "Worktree 기본 경로";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Agent에게 전달할 작업을 설명하세요…";
+"fleet.launch.button" = "시작";
+"fleet.launch.cancel" = "취소";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d 실행 중";
+"fleet.aggregate.converged" = "%d/%d 수렴됨";
+"fleet.aggregate.idle" = "%d 세션";
+"fleet.promote.winner" = "%@ 채택";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "마지막 센서";

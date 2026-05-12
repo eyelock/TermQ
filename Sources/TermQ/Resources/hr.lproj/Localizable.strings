@@ -695,6 +695,26 @@
 "settings.agent.enable.tab" = "Prikaži karticu Sesije Agenta na bočnoj traci";
 "settings.agent.enable.tab.help" = "Dodaje karticu na bočnoj traci s popisom aktivnih i prošlih sesija agenta te akciju „Pokreni kao Agent“ na redovima harness.";
 
+"fleet.sidebar.title" = "Sesije agenta";
+"fleet.new.help" = "Pokretanje fleet izvođenja";
+"fleet.empty.title" = "Još nema sesija agenta";
+"fleet.empty.body" = "Pokrenite jednu iz harness-a ili pokrenite fleet za paralelne sesije na istom zadatku.";
+"fleet.launch.title" = "Pokretanje fleet izvođenja";
+"fleet.launch.section.config" = "Konfiguracija";
+"fleet.launch.section.task" = "Zadatak";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "npr. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Paralelne sesije";
+"fleet.launch.field.base.worktree" = "Osnovna putanja worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Opišite zadatak za agenta…";
+"fleet.launch.button" = "Pokreni";
+"fleet.launch.cancel" = "Otkaži";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d pokrenuto";
+"fleet.aggregate.converged" = "%d/%d konvergirano";
+"fleet.aggregate.idle" = "%d sesija";
+"fleet.promote.winner" = "Promoviraj %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Posljednji senzori";

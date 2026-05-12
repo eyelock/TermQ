@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "エージェントセッションタブをサイドバーに表示";
 "settings.agent.enable.tab.help" = "サイドバーにタブを追加し、進行中および過去のエージェントセッションを一覧表示します。ハーネス行に「エージェントとして起動」アクションも追加されます。";
 
+"fleet.sidebar.title" = "エージェントセッション";
+"fleet.new.help" = "Fleetを起動";
+"fleet.empty.title" = "エージェントセッションはまだありません";
+"fleet.empty.body" = "ハーネスから1つ開始するか、Fleetを起動して同一タスクに並列セッションを実行してください。";
+"fleet.launch.title" = "Fleetを起動";
+"fleet.launch.section.config" = "設定";
+"fleet.launch.section.task" = "タスク";
+"fleet.launch.field.harness" = "ハーネス";
+"fleet.launch.field.harness.placeholder" = "例: eyelock/coding-agent";
+"fleet.launch.field.sessions" = "並列セッション数";
+"fleet.launch.field.base.worktree" = "Worktreeの基本パス";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "エージェントへのタスクを説明してください…";
+"fleet.launch.button" = "起動";
+"fleet.launch.cancel" = "キャンセル";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d 実行中";
+"fleet.aggregate.converged" = "%d/%d 収束済み";
+"fleet.aggregate.idle" = "%d セッション";
+"fleet.promote.winner" = "%@ を採用";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "最後のセンサー";

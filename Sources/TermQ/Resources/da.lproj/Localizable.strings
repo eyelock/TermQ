@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Vis Agent Sessions-fane i sidebjælken";
 "settings.agent.enable.tab.help" = "Tilføjer en fane i sidebjælken med igangværende og afsluttede agentsessioner, og en handling „Start som Agent“ på harness-rækker.";
 
+"fleet.sidebar.title" = "Agentsessioner";
+"fleet.new.help" = "Start fleet-kørsel";
+"fleet.empty.title" = "Ingen agentsessioner endnu";
+"fleet.empty.body" = "Start en fra et harness, eller lancér en fleet for parallelle sessioner mod samme opgave.";
+"fleet.launch.title" = "Start fleet-kørsel";
+"fleet.launch.section.config" = "Konfiguration";
+"fleet.launch.section.task" = "Opgave";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "f.eks. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Parallelle sessioner";
+"fleet.launch.field.base.worktree" = "Basis-sti for worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beskriv opgaven for agenten…";
+"fleet.launch.button" = "Start";
+"fleet.launch.cancel" = "Annuller";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d kører";
+"fleet.aggregate.converged" = "%d/%d konvergerede";
+"fleet.aggregate.idle" = "%d sessioner";
+"fleet.promote.winner" = "Forfrem %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Seneste sensorer";

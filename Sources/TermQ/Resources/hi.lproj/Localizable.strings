@@ -695,6 +695,26 @@
 "settings.agent.enable.tab" = "साइडबार में Agent सेशन टैब दिखाएं";
 "settings.agent.enable.tab.help" = "साइडबार में एक टैब जोड़ता है जो चल रहे और पिछले Agent सेशन सूचीबद्ध करता है। harness पंक्तियों पर “ Agent के रूप में लॉन्च करें” क्रिया भी डिस्प्ले की जाती है।";
 
+"fleet.sidebar.title" = "Agent सेशन";
+"fleet.new.help" = "Fleet चलाएं";
+"fleet.empty.title" = "अभी कोई Agent सेशन नहीं";
+"fleet.empty.body" = "Harness से एक शुरू करें, या उसी टास्क के लिए समानांतर सेशन चलाने के लिए Fleet लॉन्च करें।";
+"fleet.launch.title" = "Fleet चलाएं";
+"fleet.launch.section.config" = "कॉन्फ़िगरेशन";
+"fleet.launch.section.task" = "टास्क";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "उदा. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "समानांतर सेशन";
+"fleet.launch.field.base.worktree" = "Worktree बेस पाथ";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Agent के लिए टास्क का विवरण दें…";
+"fleet.launch.button" = "लॉन्च";
+"fleet.launch.cancel" = "रद्द करें";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d चल रहे हैं";
+"fleet.aggregate.converged" = "%d/%d अभिसरित";
+"fleet.aggregate.idle" = "%d सेशन";
+"fleet.promote.winner" = "%@ को बढ़ावा दें";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "अंतिम सेंसर";

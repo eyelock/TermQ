@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "إظهار علامة تبويب جلسات Agent في الشريط الجانبي";
 "settings.agent.enable.tab.help" = "يضيف علامة تبويب في الشريط الجانبي تسرد جلسات Agent الجارية والماضية، وإجراء «تشغيل كـ Agent» على صفوف harness.";
 
+"fleet.sidebar.title" = "جلسات Agent";
+"fleet.new.help" = "تشغيل fleet";
+"fleet.empty.title" = "لا توجد جلسات Agent بعد";
+"fleet.empty.body" = "ابدأ واحدة من harness، أو أطلق fleet لتشغيل جلسات متوازية على نفس المهمة.";
+"fleet.launch.title" = "تشغيل fleet";
+"fleet.launch.section.config" = "الإعداد";
+"fleet.launch.section.task" = "المهمة";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "مثال: eyelock/coding-agent";
+"fleet.launch.field.sessions" = "جلسات متوازية";
+"fleet.launch.field.base.worktree" = "المسار الأساسي لـ worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "اوصف المهمة لـ agent…";
+"fleet.launch.button" = "تشغيل";
+"fleet.launch.cancel" = "إلغاء";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d قيد التشغيل";
+"fleet.aggregate.converged" = "%d/%d تقاربت";
+"fleet.aggregate.idle" = "%d جلسات";
+"fleet.promote.winner" = "ترقية %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "آخر المستشعرات";

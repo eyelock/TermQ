@@ -703,6 +703,26 @@
 "settings.agent.enable.tab" = "Show Agent Sessions sidebar tab";
 "settings.agent.enable.tab.help" = "Adds a sidebar tab listing in-progress and past agent sessions, and a 'Launch as Agent' action on harness rows.";
 
+"fleet.sidebar.title" = "Agent Sessions";
+"fleet.new.help" = "Launch fleet run";
+"fleet.empty.title" = "No agent sessions yet";
+"fleet.empty.body" = "Start one from a harness, or launch a fleet to run parallel sessions against the same task.";
+"fleet.launch.title" = "Launch Fleet Run";
+"fleet.launch.section.config" = "Configuration";
+"fleet.launch.section.task" = "Task";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "e.g. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Parallel sessions";
+"fleet.launch.field.base.worktree" = "Worktree base path";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Describe the task for the agent…";
+"fleet.launch.button" = "Launch";
+"fleet.launch.cancel" = "Cancel";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d running";
+"fleet.aggregate.converged" = "%d/%d converged";
+"fleet.aggregate.idle" = "%d sessions";
+"fleet.promote.winner" = "Promote %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Last Sensors";

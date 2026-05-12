@@ -696,6 +696,26 @@
 "settings.agent.enable.tab" = "Prikaži zavihek Seje Agenta v stranski vrstici";
 "settings.agent.enable.tab.help" = "Doda zavihek v stransko vrstico s seznamom tekočih in preteklih sej agenta ter dejanje „Zaženi kot Agent“ v vrsticah harness.";
 
+"fleet.sidebar.title" = "Seje agenta";
+"fleet.new.help" = "Zaženi fleet";
+"fleet.empty.title" = "Ni sej agenta";
+"fleet.empty.body" = "Zaženite eno iz harness-a ali zaženite fleet za vzporedne seje na isti nalogi.";
+"fleet.launch.title" = "Zaženi fleet";
+"fleet.launch.section.config" = "Konfiguracija";
+"fleet.launch.section.task" = "Naloga";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "npr. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Vzporedne seje";
+"fleet.launch.field.base.worktree" = "Osnovna pot worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Opišite nalogo za agenta…";
+"fleet.launch.button" = "Zaženi";
+"fleet.launch.cancel" = "Prekliči";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d deluje";
+"fleet.aggregate.converged" = "%d/%d konvergiralo";
+"fleet.aggregate.idle" = "%d sej";
+"fleet.promote.winner" = "Promoviraj %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Zadnji senzorji";

@@ -696,6 +696,26 @@
 "settings.agent.enable.tab" = "Visa agentsessioner i sidofältets flik";
 "settings.agent.enable.tab.help" = "Lägger till en flik i sidofältet som visar pågående och tidigare agentsessioner, och en åtgärd „Starta som Agent“ på harnessrader.";
 
+"fleet.sidebar.title" = "Agentsessioner";
+"fleet.new.help" = "Starta fleet-körning";
+"fleet.empty.title" = "Inga agentsessioner ännu";
+"fleet.empty.body" = "Starta en från ett harness, eller lansera en fleet för parallella sessioner mot samma uppgift.";
+"fleet.launch.title" = "Starta fleet-körning";
+"fleet.launch.section.config" = "Konfiguration";
+"fleet.launch.section.task" = "Uppgift";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "t.ex. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Parallella sessioner";
+"fleet.launch.field.base.worktree" = "Bas-sökväg för worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beskriv uppgiften för agenten…";
+"fleet.launch.button" = "Starta";
+"fleet.launch.cancel" = "Avbryt";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d körs";
+"fleet.aggregate.converged" = "%d/%d konvergerade";
+"fleet.aggregate.idle" = "%d sessioner";
+"fleet.promote.winner" = "Befordra %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Senaste sensorer";

@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Agent-Sitzungen-Tab in der Seitenleiste anzeigen";
 "settings.agent.enable.tab.help" = "Fügt der Seitenleiste einen Tab hinzu, der laufende und vergangene Agent-Sitzungen auflistet, und eine Aktion „Als Agent starten“ bei Harness-Zeilen.";
 
+"fleet.sidebar.title" = "Agent-Sitzungen";
+"fleet.new.help" = "Fleet-Lauf starten";
+"fleet.empty.title" = "Noch keine Agent-Sitzungen";
+"fleet.empty.body" = "Starte eine von einem Harness aus, oder starte einen Fleet, um parallele Sitzungen für dieselbe Aufgabe auszuführen.";
+"fleet.launch.title" = "Fleet-Lauf starten";
+"fleet.launch.section.config" = "Konfiguration";
+"fleet.launch.section.task" = "Aufgabe";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "z. B. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Parallele Sitzungen";
+"fleet.launch.field.base.worktree" = "Worktree-Basispfad";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beschreibe die Aufgabe für den Agenten…";
+"fleet.launch.button" = "Starten";
+"fleet.launch.cancel" = "Abbrechen";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d laufend";
+"fleet.aggregate.converged" = "%d/%d konvergiert";
+"fleet.aggregate.idle" = "%d Sitzungen";
+"fleet.promote.winner" = "%@ befördern";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Letzte Sensoren";

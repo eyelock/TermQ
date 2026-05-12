@@ -694,6 +694,26 @@
 "settings.agent.enable.tab" = "Tunjukkan tab Sesi Ejen dalam bar sisi";
 "settings.agent.enable.tab.help" = "Menambah tab dalam bar sisi yang menyenaraikan sesi ejen yang sedang berjalan dan yang telah selesai, serta tindakan “Lancar sebagai Ejen” pada baris harness.";
 
+"fleet.sidebar.title" = "Sesi Ejen";
+"fleet.new.help" = "Jalankan fleet";
+"fleet.empty.title" = "Tiada sesi ejen lagi";
+"fleet.empty.body" = "Mulakan satu daripada harness, atau jalankan fleet untuk sesi selari pada tugas yang sama.";
+"fleet.launch.title" = "Jalankan fleet";
+"fleet.launch.section.config" = "Konfigurasi";
+"fleet.launch.section.task" = "Tugas";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "cth. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Sesi selari";
+"fleet.launch.field.base.worktree" = "Laluan asas worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Huraikan tugas untuk ejen…";
+"fleet.launch.button" = "Jalankan";
+"fleet.launch.cancel" = "Batal";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d berjalan";
+"fleet.aggregate.converged" = "%d/%d menumpu";
+"fleet.aggregate.idle" = "%d sesi";
+"fleet.promote.winner" = "Promosikan %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Penderia Terakhir";

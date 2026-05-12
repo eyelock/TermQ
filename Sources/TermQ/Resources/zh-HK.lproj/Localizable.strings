@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "顯示 Agent 工作階段檢視窗格選項卡";
 "settings.agent.enable.tab.help" = "在檢視窗格新增選項卡，列出進行中同歷史 Agent 工作階段，並在 Harness 列提供「作為 Agent 啟動」操作。";
 
+"fleet.sidebar.title" = "Agent 工作階段";
+"fleet.new.help" = "啟動 Fleet 執行";
+"fleet.empty.title" = "尚無 Agent 工作階段";
+"fleet.empty.body" = "從 Harness 啟動一個，或啟動 Fleet 以並行執行多個工作階段處理相同任務。";
+"fleet.launch.title" = "啟動 Fleet 執行";
+"fleet.launch.section.config" = "設定";
+"fleet.launch.section.task" = "任務";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "例如 eyelock/coding-agent";
+"fleet.launch.field.sessions" = "並行工作階段數";
+"fleet.launch.field.base.worktree" = "Worktree 基礎路徑";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "描述 Agent 要執行的任務…";
+"fleet.launch.button" = "啟動";
+"fleet.launch.cancel" = "取消";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d 執行中";
+"fleet.aggregate.converged" = "%d/%d 已收斂";
+"fleet.aggregate.idle" = "%d 個工作階段";
+"fleet.promote.winner" = "推進 %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "最近感測器";

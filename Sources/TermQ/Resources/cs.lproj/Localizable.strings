@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Zobrazit kartu Sezení Agenta na bočním panelu";
 "settings.agent.enable.tab.help" = "Přidá kartu do bočního panelu se seznamem probíhačjích a minulých sezení Agenta a akci „Spustit jako Agent“ na řádcích harness.";
 
+"fleet.sidebar.title" = "Sezení agenta";
+"fleet.new.help" = "Spustit fleet";
+"fleet.empty.title" = "Žádná sezení agenta";
+"fleet.empty.body" = "Spusťte jedno z harness nebo spusťte fleet pro paralelní sezení nad stejným úkolem.";
+"fleet.launch.title" = "Spustit fleet";
+"fleet.launch.section.config" = "Konfigurace";
+"fleet.launch.section.task" = "Úkol";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "např. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Paralelní sezení";
+"fleet.launch.field.base.worktree" = "Základní cesta worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Popište úkol pro agenta…";
+"fleet.launch.button" = "Spustit";
+"fleet.launch.cancel" = "Zrušit";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d běží";
+"fleet.aggregate.converged" = "%d/%d konvergováno";
+"fleet.aggregate.idle" = "%d sezení";
+"fleet.promote.winner" = "Povýšit %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Poslední senzory";

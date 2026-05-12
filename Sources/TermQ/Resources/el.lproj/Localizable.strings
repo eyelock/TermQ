@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Εμφάνιση καρτέλας Σεσιών Agent στο πλαϊνό πλαίσιο";
 "settings.agent.enable.tab.help" = "Προσθέτει καρτέλα στο πλαϊνό πλαίσιο με τη λίστα τρεχόντων και παρελθόντων σεσιών agent και μια ενέργεια «Εκκίνηση ως Agent» στις γραμμές harness.";
 
+"fleet.sidebar.title" = "Σεσιόν agent";
+"fleet.new.help" = "Εκκίνηση fleet";
+"fleet.empty.title" = "Δεν υπάρχουν σεσιόν agent ακόμα";
+"fleet.empty.body" = "Ξεκινήστε μία από harness ή εκκινήστε fleet για παράλληλες σεσιόν στο ίδιο έργο.";
+"fleet.launch.title" = "Εκκίνηση fleet";
+"fleet.launch.section.config" = "Διαμόρφωση";
+"fleet.launch.section.task" = "Έργο";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "π.χ. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Παράλληλες σεσιόν";
+"fleet.launch.field.base.worktree" = "Βασική διαδρομή worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Περιγράψτε το έργο για τον agent…";
+"fleet.launch.button" = "Εκκίνηση";
+"fleet.launch.cancel" = "Ακύρωση";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d εκτελείται";
+"fleet.aggregate.converged" = "%d/%d σύγκλιναν";
+"fleet.aggregate.idle" = "%d σεσιόν";
+"fleet.promote.winner" = "Προώθηση %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Τελευταίοι αισθητήρες";

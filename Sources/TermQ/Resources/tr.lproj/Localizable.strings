@@ -696,6 +696,26 @@
 "settings.agent.enable.tab" = "Yan Panelde Agent Oturumları sekmesini göster";
 "settings.agent.enable.tab.help" = "Yan panele devam eden ve geçmiş agent oturumlarını listeleyen bir sekme ve harness satırlarına „Agent Olarak Başlat“ eylemi ekler.";
 
+"fleet.sidebar.title" = "Agent oturumları";
+"fleet.new.help" = "Fleet çalıştır";
+"fleet.empty.title" = "Henüz agent oturumu yok";
+"fleet.empty.body" = "Bir harness'tan başlatın veya aynı görev için paralel oturumlar çalıştırmak üzere bir fleet başlatın.";
+"fleet.launch.title" = "Fleet çalıştır";
+"fleet.launch.section.config" = "Yapılandırma";
+"fleet.launch.section.task" = "Görev";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "örn. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Paralel oturumlar";
+"fleet.launch.field.base.worktree" = "Worktree temel yolu";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Agent için görevi açıklayın…";
+"fleet.launch.button" = "Başlat";
+"fleet.launch.cancel" = "İptal";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d çalışıyor";
+"fleet.aggregate.converged" = "%d/%d yakınsadı";
+"fleet.aggregate.idle" = "%d oturum";
+"fleet.promote.winner" = "%@ yükselt";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Son Sensörler";

@@ -695,6 +695,26 @@
 "settings.agent.enable.tab" = "Näytä Agenttiistunnot-välilehti sivupalkissa";
 "settings.agent.enable.tab.help" = "Lisää sivupalkkiin välilehden, jossa näkyvät käynnissä olevat ja aiemmat agenttiistunnot, sekä „Käynnistä Agentina“ -toiminto harness-riveille.";
 
+"fleet.sidebar.title" = "Agenttiistunnot";
+"fleet.new.help" = "Käynnistä fleet-ajo";
+"fleet.empty.title" = "Ei agenttiistuntoja vielä";
+"fleet.empty.body" = "Aloita yksi harnessista tai käynnistä fleet rinnakkaisiin istuntoihin samaa tehtävää varten.";
+"fleet.launch.title" = "Käynnistä fleet-ajo";
+"fleet.launch.section.config" = "Asetukset";
+"fleet.launch.section.task" = "Tehtävä";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "esim. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Rinnakkaiset istunnot";
+"fleet.launch.field.base.worktree" = "Worktreen peruspolku";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Kuvaile tehtävä agentille…";
+"fleet.launch.button" = "Käynnistä";
+"fleet.launch.cancel" = "Peruuta";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d käynnissä";
+"fleet.aggregate.converged" = "%d/%d konvergoitunut";
+"fleet.aggregate.idle" = "%d istuntoa";
+"fleet.promote.winner" = "Ylennä %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Viimeisimmät anturit";

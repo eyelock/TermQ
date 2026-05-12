@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Mostra la pestanya Sessions d’Agent a la barra lateral";
 "settings.agent.enable.tab.help" = "Afegeix una pestanya a la barra lateral que llista les sessions d’agent en curs i passades, i una acció “Inicia com a Agent” a les files de harness.";
 
+"fleet.sidebar.title" = "Sessions d'agent";
+"fleet.new.help" = "Inicia una execució fleet";
+"fleet.empty.title" = "Encara no hi ha sessions d'agent";
+"fleet.empty.body" = "Inicieu-ne una des d'un harness o inicieu un fleet per executar sessions paral·leles sobre la mateixa tasca.";
+"fleet.launch.title" = "Inicia una execució fleet";
+"fleet.launch.section.config" = "Configuració";
+"fleet.launch.section.task" = "Tasca";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "p. ex. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Sessions paral·leles";
+"fleet.launch.field.base.worktree" = "Ruta base del worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Descriviu la tasca per a l'agent…";
+"fleet.launch.button" = "Inicia";
+"fleet.launch.cancel" = "Cancel·la";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d en execució";
+"fleet.aggregate.converged" = "%d/%d convergides";
+"fleet.aggregate.idle" = "%d sessions";
+"fleet.promote.winner" = "Promou %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Últims sensors";

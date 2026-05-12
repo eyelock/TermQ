@@ -696,6 +696,26 @@
 "settings.agent.enable.tab" = "Hiển thị tab Phên Agent trong thanh bên";
 "settings.agent.enable.tab.help" = "Thêm tab vào thanh bên liệt kê các phiên agent đang chạy và đã qua, cùng hành động “Khởi chạy dưới dạng Agent” trên các hàng harness.";
 
+"fleet.sidebar.title" = "Phiên Agent";
+"fleet.new.help" = "Khởi chạy fleet";
+"fleet.empty.title" = "Chưa có phiên Agent nào";
+"fleet.empty.body" = "Bắt đầu một phiên từ harness hoặc khởi chạy fleet để chạy các phiên song song cho cùng một tác vụ.";
+"fleet.launch.title" = "Khởi chạy fleet";
+"fleet.launch.section.config" = "Cấu hình";
+"fleet.launch.section.task" = "Tác vụ";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "vd. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Phiên song song";
+"fleet.launch.field.base.worktree" = "Đường dẫn gốc worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Mô tả tác vụ cho agent…";
+"fleet.launch.button" = "Khởi chạy";
+"fleet.launch.cancel" = "Hủy";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d đang chạy";
+"fleet.aggregate.converged" = "%d/%d đã hội tụ";
+"fleet.aggregate.idle" = "%d phiên";
+"fleet.promote.winner" = "Đề bạt %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Cảm biến cuối";

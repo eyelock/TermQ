@@ -694,6 +694,26 @@
 "settings.agent.enable.tab" = "Pokaż kartę Sesje Agenta na pasku bocznym";
 "settings.agent.enable.tab.help" = "Dodaje kartę na pasku bocznym z listą bieżących i przeszłych sesji agenta oraz akcją „Uruchom jako Agent“ w wierszach harness.";
 
+"fleet.sidebar.title" = "Sesje agenta";
+"fleet.new.help" = "Uruchom fleet";
+"fleet.empty.title" = "Brak sesji agenta";
+"fleet.empty.body" = "Uruchom jedną z harness lub uruchom fleet, aby wykonywać równoległe sesje dla tego samego zadania.";
+"fleet.launch.title" = "Uruchom fleet";
+"fleet.launch.section.config" = "Konfiguracja";
+"fleet.launch.section.task" = "Zadanie";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "np. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Równoległe sesje";
+"fleet.launch.field.base.worktree" = "Ścieżka bazowa worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Opisz zadanie dla agenta…";
+"fleet.launch.button" = "Uruchom";
+"fleet.launch.cancel" = "Anuluj";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d działa";
+"fleet.aggregate.converged" = "%d/%d zbiegło się";
+"fleet.aggregate.idle" = "%d sesji";
+"fleet.promote.winner" = "Promuj %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Ostatnie czujniki";

@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "显示 Agent 会话侧边栏选项卡";
 "settings.agent.enable.tab.help" = "在侧边栏添加选项卡，列出进行中和历史 Agent 会话，并在 Harness 行上提供“作为 Agent 启动”操作。";
 
+"fleet.sidebar.title" = "Agent 会话";
+"fleet.new.help" = "启动 Fleet 运行";
+"fleet.empty.title" = "暂无 Agent 会话";
+"fleet.empty.body" = "从 Harness 启动一个，或启动 Fleet 以并行运行多个会话执行相同任务。";
+"fleet.launch.title" = "启动 Fleet 运行";
+"fleet.launch.section.config" = "配置";
+"fleet.launch.section.task" = "任务";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "如 eyelock/coding-agent";
+"fleet.launch.field.sessions" = "并行会话数";
+"fleet.launch.field.base.worktree" = "Worktree 基础路径";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "描述 Agent 要执行的任务…";
+"fleet.launch.button" = "启动";
+"fleet.launch.cancel" = "取消";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d 运行中";
+"fleet.aggregate.converged" = "%d/%d 已收敛";
+"fleet.aggregate.idle" = "%d 个会话";
+"fleet.promote.winner" = "推进 %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "最近传感器";

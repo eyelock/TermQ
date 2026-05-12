@@ -695,6 +695,26 @@
 "settings.agent.enable.tab" = "Afficher l’onglet Sessions Agent dans la barre latérale";
 "settings.agent.enable.tab.help" = "Ajoute un onglet dans la barre latérale listant les sessions d’agent en cours et passées, et une action «Lancer comme Agent» sur les lignes de harnais.";
 
+"fleet.sidebar.title" = "Sessions d'agent";
+"fleet.new.help" = "Lancer une exécution fleet";
+"fleet.empty.title" = "Aucune session d'agent pour l'instant";
+"fleet.empty.body" = "Démarrez-en une depuis un harnais, ou lancez un fleet pour exécuter des sessions parallèles sur la même tâche.";
+"fleet.launch.title" = "Lancer une exécution fleet";
+"fleet.launch.section.config" = "Configuration";
+"fleet.launch.section.task" = "Tâche";
+"fleet.launch.field.harness" = "Harnais";
+"fleet.launch.field.harness.placeholder" = "ex. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Sessions parallèles";
+"fleet.launch.field.base.worktree" = "Chemin de base du worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Décrivez la tâche pour l'agent…";
+"fleet.launch.button" = "Lancer";
+"fleet.launch.cancel" = "Annuler";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d en cours";
+"fleet.aggregate.converged" = "%d/%d convergés";
+"fleet.aggregate.idle" = "%d sessions";
+"fleet.promote.winner" = "Promouvoir %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Derniers capteurs";

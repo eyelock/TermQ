@@ -695,6 +695,26 @@
 "settings.agent.enable.tab" = "הצג כרטיסיית סשני Agent בסרגל הצד";
 "settings.agent.enable.tab.help" = "מוסיף כרטיסיית לסרגל הצד המרשימת את סשני Agent הפעילים והשלמים, ופעולה הפעל כ-Agent בשורות harness.";
 
+"fleet.sidebar.title" = "סשני Agent";
+"fleet.new.help" = "הפעל ריצת fleet";
+"fleet.empty.title" = "אין עדיין סשני Agent";
+"fleet.empty.body" = "התחל סשן מ-harness, או הפעל fleet להרצת סשנים מקבילים על אותה משימה.";
+"fleet.launch.title" = "הפעל ריצת fleet";
+"fleet.launch.section.config" = "תצורה";
+"fleet.launch.section.task" = "משימה";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "למשל eyelock/coding-agent";
+"fleet.launch.field.sessions" = "סשנים מקבילים";
+"fleet.launch.field.base.worktree" = "נתיב בסיס worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "תאר את המשימה עבור ה-agent…";
+"fleet.launch.button" = "הפעל";
+"fleet.launch.cancel" = "ביטול";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d פועלים";
+"fleet.aggregate.converged" = "%d/%d התכנסו";
+"fleet.aggregate.idle" = "%d סשנים";
+"fleet.promote.winner" = "קדם %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "חישנים אחרונים";

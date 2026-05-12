@@ -694,6 +694,26 @@
 "settings.agent.enable.tab" = "Vis Agent Sesjoner-fane i sidepanelet";
 "settings.agent.enable.tab.help" = "Legger til en fane i sidepanelet med pågående og tidligere agentsesjoner, og en handling „Start som Agent“ på harness-rader.";
 
+"fleet.sidebar.title" = "Agentøkter";
+"fleet.new.help" = "Start fleet-kjøring";
+"fleet.empty.title" = "Ingen agentøkter ennå";
+"fleet.empty.body" = "Start en fra et harness, eller lancér en fleet for parallelle økter mot samme oppgave.";
+"fleet.launch.title" = "Start fleet-kjøring";
+"fleet.launch.section.config" = "Konfigurasjon";
+"fleet.launch.section.task" = "Oppgave";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "f.eks. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Parallelle økter";
+"fleet.launch.field.base.worktree" = "Grunnsti for worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beskriv oppgaven for agenten…";
+"fleet.launch.button" = "Start";
+"fleet.launch.cancel" = "Avbryt";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d kjører";
+"fleet.aggregate.converged" = "%d/%d konvergerte";
+"fleet.aggregate.idle" = "%d økter";
+"fleet.promote.winner" = "Forfrem %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Siste sensorer";

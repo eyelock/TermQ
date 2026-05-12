@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Tampilkan tab Sesi Agen di bilah samping";
 "settings.agent.enable.tab.help" = "Menambahkan tab di bilah samping yang menampilkan sesi agen yang sedang berjalan dan yang telah selesai, serta aksi “Jalankan sebagai Agen” pada baris harness.";
 
+"fleet.sidebar.title" = "Sesi Agen";
+"fleet.new.help" = "Jalankan fleet";
+"fleet.empty.title" = "Belum ada sesi agen";
+"fleet.empty.body" = "Mulai satu dari harness, atau jalankan fleet untuk sesi paralel pada tugas yang sama.";
+"fleet.launch.title" = "Jalankan fleet";
+"fleet.launch.section.config" = "Konfigurasi";
+"fleet.launch.section.task" = "Tugas";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "mis. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Sesi paralel";
+"fleet.launch.field.base.worktree" = "Jalur dasar worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Jelaskan tugas untuk agen…";
+"fleet.launch.button" = "Jalankan";
+"fleet.launch.cancel" = "Batal";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d berjalan";
+"fleet.aggregate.converged" = "%d/%d konvergen";
+"fleet.aggregate.idle" = "%d sesi";
+"fleet.promote.winner" = "Promosikan %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Sensor Terakhir";

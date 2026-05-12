@@ -696,6 +696,26 @@
 "settings.agent.enable.tab" = "แสดงแท็บ Agent เซสชันในแถบด้านข้าง";
 "settings.agent.enable.tab.help" = "เพิ่มแท็บในแถบด้านข้างที่แสดงรายการ agent เซสชันที่กำลังดำเนินการและที่ผ่านมาแล้ว และการกระทำ “เปิดใช้เป็น Agent” ในแถว harness";
 
+"fleet.sidebar.title" = "เซสชัน Agent";
+"fleet.new.help" = "เริ่มการรัน fleet";
+"fleet.empty.title" = "ยังไม่มีเซสชัน Agent";
+"fleet.empty.body" = "เริ่มจาก harness หรือเปิด fleet เพื่อรันเซสชันแบบขนานสำหรับงานเดียวกัน";
+"fleet.launch.title" = "เริ่มการรัน fleet";
+"fleet.launch.section.config" = "การตั้งค่า";
+"fleet.launch.section.task" = "งาน";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "เช่น eyelock/coding-agent";
+"fleet.launch.field.sessions" = "เซสชันแบบขนาน";
+"fleet.launch.field.base.worktree" = "เส้นทางฐาน worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "อธิบายงานสำหรับ agent…";
+"fleet.launch.button" = "เริ่ม";
+"fleet.launch.cancel" = "ยกเลิก";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d กำลังทำงาน";
+"fleet.aggregate.converged" = "%d/%d สิ้นสุดแล้ว";
+"fleet.aggregate.idle" = "%d เซสชัน";
+"fleet.promote.winner" = "โปรโมต %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "เซ็นเซอร์ล่าสุด";

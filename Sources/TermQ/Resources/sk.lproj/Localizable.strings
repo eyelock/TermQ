@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Zobrazť kartu Relácie Agenta na bočnom paneli";
 "settings.agent.enable.tab.help" = "Pridá kartu na bočnom paneli so zoznamom prebiehajúcich a minulých relácií Agenta a akciu „Spustiť ako Agent“ na riadkoch harness.";
 
+"fleet.sidebar.title" = "Relácie agenta";
+"fleet.new.help" = "Spustiť fleet";
+"fleet.empty.title" = "Žiadne relácie agenta";
+"fleet.empty.body" = "Spustite jednu z harness alebo spustite fleet pre paralelné relácie nad rovnakou úlohou.";
+"fleet.launch.title" = "Spustiť fleet";
+"fleet.launch.section.config" = "Konfigurácia";
+"fleet.launch.section.task" = "Úloha";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "napr. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Paralelné relácie";
+"fleet.launch.field.base.worktree" = "Základná cesta worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Popíšte úlohu pre agenta…";
+"fleet.launch.button" = "Spustiť";
+"fleet.launch.cancel" = "Zrušiť";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d beží";
+"fleet.aggregate.converged" = "%d/%d konvergovaných";
+"fleet.aggregate.idle" = "%d relácií";
+"fleet.promote.winner" = "Povýšiť %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Posledné senzory";

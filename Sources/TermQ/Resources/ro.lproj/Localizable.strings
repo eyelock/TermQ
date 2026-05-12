@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Afişează fila Sesiuni Agent în bara laterală";
 "settings.agent.enable.tab.help" = "Adaugă o filă în bara laterală cu sesiunile agent în curs şi anterioare şi o acțiune „Lansare ca Agent“ pe rândurile harness.";
 
+"fleet.sidebar.title" = "Sesiuni agent";
+"fleet.new.help" = "Lansează execuție fleet";
+"fleet.empty.title" = "Nicio sesiune agent încă";
+"fleet.empty.body" = "Porniți una dintr-un harness sau lansați un fleet pentru sesiuni paralele pe aceeași sarcină.";
+"fleet.launch.title" = "Lansează execuție fleet";
+"fleet.launch.section.config" = "Configurație";
+"fleet.launch.section.task" = "Sarcină";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "ex. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Sesiuni paralele";
+"fleet.launch.field.base.worktree" = "Cale bază worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Descrieți sarcina pentru agent…";
+"fleet.launch.button" = "Lansează";
+"fleet.launch.cancel" = "Anulare";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d în curs";
+"fleet.aggregate.converged" = "%d/%d convergente";
+"fleet.aggregate.idle" = "%d sesiuni";
+"fleet.promote.winner" = "Promovează %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Ultimii senzori";

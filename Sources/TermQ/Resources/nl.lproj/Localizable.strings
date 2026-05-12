@@ -694,6 +694,26 @@
 "settings.agent.enable.tab" = "Agentsessies-zijbalktab weergeven";
 "settings.agent.enable.tab.help" = "Voegt een zijbalktab toe met lopende en afgelopen agentsessies, en een actie „Als Agent starten“ op harnessrijen.";
 
+"fleet.sidebar.title" = "Agentsessies";
+"fleet.new.help" = "Fleet-uitvoering starten";
+"fleet.empty.title" = "Nog geen agentsessies";
+"fleet.empty.body" = "Start er een vanuit een harness, of lanceer een fleet voor parallelle sessies op dezelfde taak.";
+"fleet.launch.title" = "Fleet-uitvoering starten";
+"fleet.launch.section.config" = "Configuratie";
+"fleet.launch.section.task" = "Taak";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "bijv. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Parallelle sessies";
+"fleet.launch.field.base.worktree" = "Basispad worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beschrijf de taak voor de agent…";
+"fleet.launch.button" = "Starten";
+"fleet.launch.cancel" = "Annuleren";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d actief";
+"fleet.aggregate.converged" = "%d/%d geconvergeerd";
+"fleet.aggregate.idle" = "%d sessies";
+"fleet.promote.winner" = "%@ promoveren";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Laatste sensoren";

@@ -705,6 +705,26 @@
 "settings.agent.enable.tab" = "Показать вкладку Сеансы Agent на боковой панели";
 "settings.agent.enable.tab.help" = "Добавляет вкладку на боковой панели со списком текущих и завершённых сеансов Agent, а также действие «Запустить как Agent» в строках harness.";
 
+"fleet.sidebar.title" = "Сеансы агента";
+"fleet.new.help" = "Запустить fleet";
+"fleet.empty.title" = "Нет сеансов агента";
+"fleet.empty.body" = "Запустите один из harness или запустите fleet для параллельных сеансов одной задачи.";
+"fleet.launch.title" = "Запустить fleet";
+"fleet.launch.section.config" = "Конфигурация";
+"fleet.launch.section.task" = "Задача";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "напр. eyelock/coding-agent";
+"fleet.launch.field.sessions" = "Параллельные сеансы";
+"fleet.launch.field.base.worktree" = "Базовый путь worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Опишите задачу для агента…";
+"fleet.launch.button" = "Запустить";
+"fleet.launch.cancel" = "Отмена";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d выполняется";
+"fleet.aggregate.converged" = "%d/%d завершены";
+"fleet.aggregate.idle" = "%d сеансов";
+"fleet.promote.winner" = "Продвинуть %@";
 // MARK: - Inspector — Agent
 
 "inspector.agent.last.sensors" = "Последние сенсоры";
