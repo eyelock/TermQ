@@ -6,6 +6,51 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.10.1</title>
+            <sparkle:version>0.10.1</sparkle:version>
+            <sparkle:shortVersionString>0.10.1</sparkle:shortVersionString>
+            <pubDate>Tue, 12 May 2026 05:55:44 +0000</pubDate>
+            <description><![CDATA[<h3 id="added">Added</h3>
+<ul>
+<li><strong>Run with Focus on non-checked-out PRs</strong> — the Run with Focus sheet and Quick Launch Focus submenu are now available from the Remote PR context menu even when the PR's branch is not locally checked out. TermQ resolves the correct worktree root automatically and launches the harness session against it.</li>
+<li><strong>Active terminal sidebar highlight</strong> — the sidebar entry matching the currently active terminal is now displayed in bold, making it easier to track your position across many open sessions.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>YNH CLI invocations now use canonical harness IDs instead of bare names, preventing argument-parsing errors when harness names contain characters that the CLI interprets as flags.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.1.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.10.1.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.10.1/TermQ-0.10.1.zip"
+                sparkle:edSignature="WHkhcaJtcagTSGZzrRVipwqsAyshwRqkaB0zMf875e03GNw5ec6oVC8mDcdamPtYA9OeB51xd6R5QG5UskJ3Dw=="
+                length="27042800"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.10.0</title>
             <sparkle:version>0.10.0</sparkle:version>
             <sparkle:shortVersionString>0.10.0</sparkle:shortVersionString>
