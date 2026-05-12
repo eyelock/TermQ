@@ -333,8 +333,7 @@ struct RunWithFocusSheet: View {
             if !effectiveProfile.isEmpty {
                 parts.append(contentsOf: ["--profile", effectiveProfile])
             }
-            let prompt = isCustomizing ? customPrompt : focusPrompt
-            if !prompt.isEmpty {
+            if !effectivePromptText.isEmpty {
                 parts.append("--")
                 parts.append("\"…\"")
             }
@@ -357,14 +356,18 @@ struct RunWithFocusSheet: View {
             effectivePrompt = nil
         } else {
             effectiveFocus = nil
-            let promptText = isCustomizing ? customPrompt : focusPrompt
-            effectivePrompt = promptText.isEmpty ? nil : promptText
+            effectivePrompt = effectivePromptText.isEmpty ? nil : effectivePromptText
         }
 
         ynhPersistence.setRunHarness(harness.id, for: context.repo.path)
         if !selectedFocus.isEmpty {
             ynhPersistence.setRunFocus(selectedFocus, for: context.repo.path)
         }
+
+        let instructions: String? =
+            context.prNumber > 0
+            ? "PR #\(context.prNumber) in \(Self.repoSlug(from: context.repo.path))"
+            : nil
 
         let config = HarnessLaunchConfig(
             harnessID: harness.id,
@@ -374,6 +377,7 @@ struct RunWithFocusSheet: View {
             profile: effectiveFocus == nil ? (effectiveProfile.isEmpty ? nil : effectiveProfile) : nil,
             workingDirectory: context.worktree.path,
             prompt: effectivePrompt,
+            instructions: instructions,
             backend: settings.backend,
             branch: context.worktree.branch,
             interactive: isInteractive,
@@ -423,7 +427,7 @@ struct RunWithFocusSheet: View {
     }
 
     /// Extracts `org/repo` from a filesystem path (last two path components).
-    private static func repoSlug(from path: String) -> String {
+    static func repoSlug(from path: String) -> String {
         let components = path.split(separator: "/", omittingEmptySubsequences: true)
         guard components.count >= 2 else { return components.last.map(String.init) ?? path }
         return "\(components[components.count - 2])/\(components[components.count - 1])"

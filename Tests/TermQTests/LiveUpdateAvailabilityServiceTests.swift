@@ -111,7 +111,7 @@ final class LiveUpdateAvailabilityServiceTests: XCTestCase {
         XCTAssertEqual(service.state(forHarness: "a"), .fresh(at: Date(timeIntervalSince1970: 2_000)))
     }
 
-    func testRefreshHarness_stripsNamespaceFromIdBeforeCallingYnhInfo() async {
+    func testRefreshHarness_passesCanonicalIdDirectlyToYnhInfo() async {
         let infoJSON = Self.infoJSON(name: "leaf", versionInstalled: "0.1.0")
         nonisolated(unsafe) var seenName: String?
         let service = LiveUpdateAvailabilityService(
@@ -124,7 +124,7 @@ final class LiveUpdateAvailabilityServiceTests: XCTestCase {
 
         await service.refresh(harness: "ns/repo/leaf")
 
-        XCTAssertEqual(seenName, "leaf", "ynh info wants the bare name")
+        XCTAssertEqual(seenName, "ns/repo/leaf", "ynh info requires the canonical id")
     }
 
     // MARK: - State for unknown harness

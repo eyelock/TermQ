@@ -123,6 +123,18 @@ public struct PRPruneCandidate: Sendable, Identifiable {
     }
 }
 
+/// A focus worktree created by TermQ for reviewing a remote PR without a permanent checkout.
+///
+/// Focus worktrees live under `~/.termq/focus-worktrees/` and are always prunable — they carry
+/// no uncommitted work by design.
+public struct FocusWorktreeCandidate: Sendable, Identifiable {
+    public let path: String
+    public var id: String { path }
+    public var displayName: String { URL(fileURLWithPath: path).lastPathComponent }
+
+    public init(path: String) { self.path = path }
+}
+
 /// The result of matching PRs against local worktrees for a repo.
 public struct PRWorktreeMatch: Sendable {
     /// The PR number.

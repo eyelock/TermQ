@@ -178,6 +178,7 @@ struct HarnessLaunchSheet: View {
                             profile: nil,
                             workingDirectory: workingDirectory,
                             prompt: prompt.isEmpty ? nil : prompt,
+                            instructions: nil,
                             backend: selectedBackend,
                             branch: initialBranch,
                             interactive: false,
@@ -252,6 +253,10 @@ struct HarnessLaunchConfig {
     let profile: String?
     let workingDirectory: String
     let prompt: String?
+    /// Per-invocation context injected after harness instructions via `--instructions`.
+    /// Vendor-neutral: YNH translates to `--append-system-prompt` (Claude),
+    /// `-c developer_instructions=` (Codex), or file append (Cursor).
+    let instructions: String?
     let backend: TerminalBackend
     /// Branch name of the worktree this harness was launched from, if any.
     let branch: String?
@@ -272,6 +277,9 @@ struct HarnessLaunchConfig {
             parts.append(contentsOf: ["--focus", focus])
         } else if let profile, !profile.isEmpty {
             parts.append(contentsOf: ["--profile", profile])
+        }
+        if let instructions, !instructions.isEmpty {
+            parts.append(contentsOf: ["--instructions", shellQuote(instructions)])
         }
         if interactive {
             parts.append("--interactive")

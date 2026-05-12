@@ -73,6 +73,7 @@ extension WorktreeSidebarView {
             let (feed, overflow) = GitHubPRService.prioritisedFeed(
                 prs: prs, login: prService.login(for: repo.path), matches: matches, cap: cap)
             let hasClosedPRWorktrees = hasClosedPRWorktrees(worktrees: worktrees, openPRs: prs)
+            let hasFocusWorktrees = !(viewModel.focusWorktrees[repo.id] ?? []).isEmpty
 
             if feed.isEmpty {
                 Text(Strings.Sidebar.worktreesEmpty)
@@ -96,11 +97,11 @@ extension WorktreeSidebarView {
                 }
             }
 
-            if hasClosedPRWorktrees {
+            if hasClosedPRWorktrees || hasFocusWorktrees {
                 Button {
-                    Task { await analysePruneClosedPRs(repo: repo) }
+                    Task { await analyseAndPrune(repo: repo) }
                 } label: {
-                    Label(Strings.RemotePRs.pruneClosedPRs, systemImage: "xmark.circle")
+                    Label(Strings.RemotePRs.pruneAll, systemImage: "xmark.circle")
                         .font(.caption)
                         .foregroundColor(.accentColor)
                 }
@@ -145,6 +146,11 @@ extension WorktreeSidebarView {
             isDraft: pr.isDraft,
             isCheckedOut: worktreePath != nil
         )
+        let isActive: Bool = {
+            guard let path = worktreePath, let card = boardVM.selectedCard else { return false }
+            let wd = card.workingDirectory
+            return wd == path || wd.hasPrefix(path + "/")
+        }()
 
         HStack(spacing: 6) {
             Image(systemName: "arrow.triangle.pull")
@@ -154,7 +160,7 @@ extension WorktreeSidebarView {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("#\(pr.number) \(pr.title)")
-                    .font(.subheadline)
+                    .font(.system(.subheadline, weight: isActive ? .semibold : .regular))
                     .lineLimit(1)
                     .foregroundColor(.primary)
 
@@ -274,6 +280,13 @@ extension WorktreeSidebarView {
             }
 
             Divider()
+        } else if case .ready(let ghPath, _) = ghProbe.status {
+            Button {
+                Task { await checkoutAndRunFocus(pr, repo: repo, ghPath: ghPath) }
+            } label: {
+                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
+            }
+            Divider()
         }
 
         // ─── Group 4: Remote links ───
@@ -367,6 +380,10 @@ extension WorktreeSidebarView {
         let title = RunWithFocusSheet.makeCardTitleStatic(
             focus: focusName, profile: "", harnessId: harnessId,
             repoPath: repo.path, prNumber: prNumber)
+        let instructions: String? =
+            prNumber > 0
+            ? "PR #\(prNumber) in \(RunWithFocusSheet.repoSlug(from: repo.path))"
+            : nil
         let config = HarnessLaunchConfig(
             harnessID: harnessId,
             vendorID: "",
@@ -375,6 +392,7 @@ extension WorktreeSidebarView {
             profile: nil,
             workingDirectory: worktree.path,
             prompt: nil,
+            instructions: instructions,
             backend: settings.backend,
             branch: worktree.branch,
             interactive: false,
@@ -440,15 +458,12 @@ extension WorktreeSidebarView {
         }
     }
 
-    /// Discover closed-PR worktrees (`pr-NNN` directories not in the open list)
-    /// and populate the prune candidates sheet.
-    private func analysePruneClosedPRs(repo: ObservableRepository) async {
+    /// Collect closed-PR worktrees and focus worktrees, then open the combined prune sheet.
+    private func analyseAndPrune(repo: ObservableRepository) async {
         await prService.refresh(repoPath: repo.path, force: true)
-        // Abort if the refresh failed — treat a nil list as unknown, not "all closed"
         guard prService.prsByRepo[repo.path] != nil else {
             viewModel.operationError =
-                prService.errorByRepo[repo.path]
-                ?? Strings.RemotePRs.ghAuthCheckFailed
+                prService.errorByRepo[repo.path] ?? Strings.RemotePRs.ghAuthCheckFailed
             return
         }
         let openNumbers = Set((prService.prsByRepo[repo.path] ?? []).map(\.number))
@@ -460,13 +475,32 @@ extension WorktreeSidebarView {
                 closedPRNumbers.insert(prNum)
             }
         }
-        guard !closedPRNumbers.isEmpty else {
+        let closedCandidates =
+            closedPRNumbers.isEmpty
+            ? []
+            : await viewModel.pruneClosedPRsDryRun(
+                repo: repo, closedPRNumbers: closedPRNumbers, prService: prService)
+        let focusCandidates = (viewModel.focusWorktrees[repo.id] ?? []).map {
+            FocusWorktreeCandidate(path: $0.path)
+        }
+        guard !closedCandidates.isEmpty || !focusCandidates.isEmpty else {
             viewModel.operationError = Strings.RemotePRs.pruneClosedPRsNothingTitle
             return
         }
-        let candidates = await viewModel.pruneClosedPRsDryRun(
-            repo: repo, closedPRNumbers: closedPRNumbers, prService: prService)
-        pruneClosedPRsCandidates = candidates
+        pruneClosedPRsCandidates = closedCandidates
+        focusPruneCandidates = focusCandidates
         isShowingPruneClosedPRsFor = repo
+    }
+
+    /// Create (or reuse) a focus worktree for `pr` then open the Run with Focus sheet.
+    private func checkoutAndRunFocus(
+        _ pr: GitHubPR, repo: ObservableRepository, ghPath: String
+    ) async {
+        do {
+            let worktree = try await viewModel.checkoutPRForFocus(pr, repo: repo, ghPath: ghPath)
+            runWithFocusContext = RunWithFocusContext(worktree: worktree, repo: repo, prNumber: pr.number)
+        } catch {
+            viewModel.operationError = error.localizedDescription
+        }
     }
 }

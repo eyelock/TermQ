@@ -24,6 +24,7 @@ struct WorktreeSidebarView: View {
     @State private var forceUpdatePRContext: ForceUpdatePRContext?
     @State var isShowingPruneClosedPRsFor: ObservableRepository?
     @State var pruneClosedPRsCandidates: [PRPruneCandidate] = []
+    @State var focusPruneCandidates: [FocusWorktreeCandidate] = []
     @State var pendingToast: SidebarToast?
     @State var runWithFocusContext: RunWithFocusContext?
     @State private var showAddRepo = false
@@ -162,9 +163,14 @@ struct WorktreeSidebarView: View {
         PruneClosedPRsSheet(
             repo: repo,
             candidates: pruneClosedPRsCandidates,
+            focusCandidates: focusPruneCandidates,
             viewModel: viewModel,
             prService: prService,
-            onDismiss: { isShowingPruneClosedPRsFor = nil }
+            onDismiss: {
+                isShowingPruneClosedPRsFor = nil
+                pruneClosedPRsCandidates = []
+                focusPruneCandidates = []
+            }
         )
     }
 
@@ -410,6 +416,7 @@ extension WorktreeSidebarView {
     fileprivate func worktreeRow(
         _ worktree: GitWorktree, repo: ObservableRepository, allWorktrees: [GitWorktree]
     ) -> some View {
+        let isActive = isActiveTerminalInWorktree(worktree, allWorktrees: allWorktrees)
         HStack(spacing: 6) {
             WorktreeLeftIcon(
                 worktree: worktree,
@@ -425,7 +432,7 @@ extension WorktreeSidebarView {
                 } label: {
                     HStack(spacing: 4) {
                         Text(worktree.branch ?? Strings.Sidebar.detachedHead)
-                            .font(.subheadline)
+                            .font(.system(.subheadline, weight: isActive ? .semibold : .regular))
                             .lineLimit(1)
                             .foregroundColor(.primary)
                         if worktree.isDirty {

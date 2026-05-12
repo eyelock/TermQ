@@ -55,6 +55,7 @@ struct ContentView: View {
                             profile: nil,
                             workingDirectory: path,
                             prompt: nil,
+                            instructions: nil,
                             backend: SettingsStore.shared.backend,
                             branch: branch,
                             interactive: false,
