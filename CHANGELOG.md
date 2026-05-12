@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.1]
+
+### Added
+
+- **Run with Focus on non-checked-out PRs** — the Run with Focus sheet and Quick Launch Focus submenu are now available from the Remote PR context menu even when the PR's branch is not locally checked out. TermQ resolves the correct worktree root automatically and launches the harness session against it.
+- **Active terminal sidebar highlight** — the sidebar entry matching the currently active terminal is now displayed in bold, making it easier to track your position across many open sessions.
+
+### Fixed
+
+- YNH CLI invocations now use canonical harness IDs instead of bare names, preventing argument-parsing errors when harness names contain characters that the CLI interprets as flags.
+
 ## [0.10.0]
 
 ### Added
