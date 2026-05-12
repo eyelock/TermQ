@@ -248,6 +248,67 @@ class BoardViewModel: ObservableObject {
         return card
     }
 
+    /// Create a fleet of `count` agent session cards that all share a
+    /// `fleetId`, placed in the same column as the currently-selected card
+    /// (or the first column). Each card's `loopDriverCommand` is set to a
+    /// complete `ynh agent run` invocation with the given harness, task
+    /// (written inline with shell quoting), and a distinct worktree path
+    /// under `baseWorktreeDir`.
+    ///
+    /// Returns the created cards, or an empty array if the board has no
+    /// columns or `count < 2`.
+    @discardableResult
+    func createFleet(
+        harnessId: String,
+        task: String,
+        count: Int,
+        baseWorktreeDir: String,
+        driverBase: String
+    ) -> [TerminalCard] {
+        guard count >= 2 else { return [] }
+
+        let column: Column
+        if let current = selectedCard,
+           let currentColumn = board.columns.first(where: { $0.id == current.columnId }) {
+            column = currentColumn
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+        } else { return [] }
+
+        let fleetId = UUID()
+        let defaults = newTerminalDefaults()
+        var created: [TerminalCard] = []
+        let maxIndex = board.cards(for: column).map(\.orderIndex).max() ?? -1
+
+        for i in 1...count {
+            let worktreePath = "\(baseWorktreeDir)/session-\(i)"
+            let escapedTask = task.replacingOccurrences(of: "'", with: "'\\''")
+            let command = "\(driverBase) --harness '\(harnessId)' --task '\(escapedTask)' --worktree '\(worktreePath)'"
+
+            var config = AgentConfig(harness: harnessId, fleetId: fleetId)
+            config.loopDriverCommand = command
+
+            let card = TerminalCard(
+                title: "\(harnessId.components(separatedBy: "/").last ?? harnessId) (\(i)/\(count))",
+                columnId: column.id,
+                orderIndex: maxIndex + i,
+                workingDirectory: defaults.workingDirectory,
+                safePasteEnabled: nil,
+                allowAutorun: defaults.allowAutorun,
+                allowOscClipboard: defaults.allowOscClipboard,
+                confirmExternalModifications: defaults.confirmExternalModifications,
+                backend: nil,
+                agentConfig: config
+            )
+            board.cards.append(card)
+            created.append(card)
+        }
+
+        objectWillChange.send()
+        save()
+        return created
+    }
+
     func duplicateTerminal(_ source: TerminalCard) {
         // Find the target column
         guard let column = board.columns.first(where: { $0.id == source.columnId }) else {

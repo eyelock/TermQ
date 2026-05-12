@@ -386,6 +386,92 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertEqual(controller.status, .notStarted)
     }
 
+    // MARK: - Overlay injection
+
+    @MainActor
+    func testResolveCommand_noOverlays_returnsBaseCommandUnchanged() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("OverlayTest-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(
+            cardId: card.id, cardLookup: { card }, transcriptBaseURL: tempDir)
+
+        XCTAssertEqual(controller.resolveCommand("ynh agent run"), "ynh agent run")
+    }
+
+    @MainActor
+    func testResolveCommand_withOverlays_appendsSensorOverlayFlag() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("OverlayTest-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let sessionId = card.agentConfig!.sessionId
+
+        let overlays: SensorOverlays = [
+            "build": SensorOverlay(role: "regular", source: nil)
+        ]
+        SensorOverlayStore.save(overlays, for: sessionId, baseDirectory: tempDir)
+
+        let controller = AgentSessionController(
+            cardId: card.id, cardLookup: { card }, transcriptBaseURL: tempDir)
+
+        let resolved = controller.resolveCommand("ynh agent run")
+        XCTAssertTrue(resolved.hasPrefix("ynh agent run --sensor-overlay '"))
+        XCTAssertTrue(resolved.contains("\"build\""))
+    }
+
+    @MainActor
+    func testResolveCommand_overlayJSONWithSingleQuote_isEscaped() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("OverlayTest-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let sessionId = card.agentConfig!.sessionId
+
+        let focus = SensorOverlayFocus(prompt: "it's a test", profile: nil)
+        let overlays: SensorOverlays = [
+            "judge": SensorOverlay(role: nil, source: SensorOverlaySource(focus: focus))
+        ]
+        SensorOverlayStore.save(overlays, for: sessionId, baseDirectory: tempDir)
+
+        let controller = AgentSessionController(
+            cardId: card.id, cardLookup: { card }, transcriptBaseURL: tempDir)
+
+        let resolved = controller.resolveCommand("ynh agent run")
+        // Single quotes in the JSON must be shell-escaped so /bin/sh -c doesn't break.
+        XCTAssertFalse(resolved.contains("it's"))
+        XCTAssertTrue(resolved.contains("it'\\''s"))
+    }
+
+    @MainActor
+    func testResolveCommand_emptyOverlays_returnsBaseCommandUnchanged() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("OverlayTest-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let sessionId = card.agentConfig!.sessionId
+
+        // All overlays are empty (no role, no source) — serialise returns nil.
+        let overlays: SensorOverlays = [
+            "build": SensorOverlay(role: nil, source: nil)
+        ]
+        SensorOverlayStore.save(overlays, for: sessionId, baseDirectory: tempDir)
+
+        let controller = AgentSessionController(
+            cardId: card.id, cardLookup: { card }, transcriptBaseURL: tempDir)
+
+        XCTAssertEqual(controller.resolveCommand("ynh agent run"), "ynh agent run")
+    }
+
     // MARK: - Helpers
 
     /// Set a card's agent status without going through the controller — used

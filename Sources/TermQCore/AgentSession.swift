@@ -4,6 +4,7 @@ import Foundation
 public enum AgentBackend: String, Codable, Sendable, CaseIterable {
     case claudeCode = "claude-code"
     case codex
+    case cursor
 }
 
 /// Lifecycle phase of an agent session.
@@ -98,8 +99,13 @@ public struct AgentConfig: Codable, Sendable, Equatable {
     /// "inherit the global `agent.loopDriverCommand` UserDefault".
     public var loopDriverCommand: String
 
+    /// If this session is part of a fleet run, all sessions in the same fleet
+    /// share this identifier. `nil` for standalone sessions.
+    public var fleetId: UUID?
+
     enum CodingKeys: String, CodingKey {
-        case sessionId, harness, backend, mode, interactionMode, budget, status, loopDriverCommand
+        case sessionId, harness, backend, mode, interactionMode, budget, status,
+             loopDriverCommand, fleetId
     }
 
     public init(
@@ -110,7 +116,8 @@ public struct AgentConfig: Codable, Sendable, Equatable {
         interactionMode: AgentInteractionMode = .confirm,
         budget: AgentBudget = .default,
         status: AgentStatus = .idle,
-        loopDriverCommand: String = ""
+        loopDriverCommand: String = "",
+        fleetId: UUID? = nil
     ) {
         self.sessionId = sessionId
         self.harness = harness
@@ -120,6 +127,7 @@ public struct AgentConfig: Codable, Sendable, Equatable {
         self.budget = budget
         self.status = status
         self.loopDriverCommand = loopDriverCommand
+        self.fleetId = fleetId
     }
 
     public init(from decoder: Decoder) throws {
@@ -131,8 +139,8 @@ public struct AgentConfig: Codable, Sendable, Equatable {
         interactionMode = try container.decode(AgentInteractionMode.self, forKey: .interactionMode)
         budget = try container.decode(AgentBudget.self, forKey: .budget)
         status = try container.decode(AgentStatus.self, forKey: .status)
-        // Backward compat: pre-slice-20 saved cards have no loopDriverCommand.
         loopDriverCommand =
             try container.decodeIfPresent(String.self, forKey: .loopDriverCommand) ?? ""
+        fleetId = try container.decodeIfPresent(UUID.self, forKey: .fleetId)
     }
 }
