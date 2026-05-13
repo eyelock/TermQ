@@ -725,7 +725,6 @@ extension ContentView {
         }
     }
 
-
     /// Launch native Terminal.app at the specified directory
     func launchNativeTerminal(at directory: String? = nil) {
         let path = directory ?? NSHomeDirectory()
