@@ -265,7 +265,62 @@ Once a harness is editable — local, git-cloned, or forked — the detail pane 
 
 **Manifest** — the manifest editor opens from the detail action menu. It exposes the harness-level fields (name, version, default vendor, description) without making you hand-edit `plugin.json`. Submit reflects in the detail pane immediately.
 
+![Harness composition edit overview](../Images/harness-composition-edit-overview.png)
+
+**Hooks** — the Hooks section of the Composition area lists every resolved hook by event. For editable harnesses, a `+` button below each section adds a new hook. Clicking it opens the Add Hook sheet:
+
+- **Event** — pick one of `before_tool`, `after_tool`, `before_prompt`, or `on_stop` from the segmented picker.
+- **Command** — the shell command to run.
+- **Matcher** — optional tool-name pattern (most useful for `before_tool` / `after_tool` to limit which tool calls trigger the hook).
+
+![Add Hook sheet](../Images/harness-add-hook-sheet.png)
+
+Each existing hook row carries a `−` button to remove it. Removal is immediate — no confirmation sheet. Hook entries are ordered; removal targets by index, so TermQ re-fetches composition state on each change.
+
+**MCP Servers** — the MCP Servers section works the same way. The `+` button opens the Add MCP Server sheet, where you choose between a **Command** server (executable + args) or a **URL** server (SSE endpoint), supply a name, and click Add. The `−` button on each server row removes it by name.
+
+![Add MCP Server sheet](../Images/harness-add-mcp-sheet.png)
+
+**Profiles** — the Profiles section lists every resolved profile as a card. For editable harnesses each card has an **⋯** menu with two actions:
+
+![Profile card menu](../Images/harness-profile-card-menu.png)
+
+- **Edit** — opens the Profile edit sheet (see §12a below).
+- **Remove** — drops the profile after a confirmation alert.
+
+A `+` button below the list adds a new profile by name.
+
+**Focuses** — the Focuses section works similarly. Each focus row's **⋯** menu offers **Edit** and **Remove**.
+
+![Focus card menu](../Images/harness-focus-card-menu.png)
+
+The Edit sheet exposes:
+
+![Focus edit sheet](../Images/harness-focus-edit-sheet.png)
+
+- **Name** — the focus identifier (read-only once created; remove and re-add to rename).
+- **Prompt** — the text sent to the AI client at launch. Multi-line is supported.
+- **Profile** (optional) — bind this focus to one of the harness's profiles, or leave unset for an unprofile launch.
+
+A `+` button below the list adds a new focus.
+
 All edits stream their YNH command output through the same progress sheet you see during install — so you can watch what TermQ is asking YNH to do.
+
+### §12a — Editing a profile
+
+Clicking **Edit** on a profile card opens the Profile edit sheet. The sheet is a scrollable form with four sub-sections:
+
+![Profile edit sheet](../Images/harness-profile-edit-sheet.png)
+
+**Hooks** — lists the profile's own hooks by event. The `+` button opens the same Add Hook sheet described above. The `−` button on each row removes that hook entry. Because hooks are ordered, TermQ re-reads composition state after each change to keep remove-by-index accurate.
+
+**MCP Servers** — lists the profile's own MCP server overrides. The `+` button opens the Add MCP Server sheet. The `−` button removes by name. Servers added here layer on top of (or suppress, using the null flag) the harness-level servers in composed output — they do not replace the harness-level entries in `plugin.json`.
+
+> **Null server:** checking the **Suppress inherited server** option in the Add MCP sheet creates a `null` entry for that server name. This explicitly removes an inherited harness-level server from the composed output for sessions running this profile. It has no analogue at the harness level (nothing to suppress there).
+
+**Includes** — lists the profile's own source includes. The `+` button opens the unified **Source Picker** (Library / Git URL tabs), the same picker used for harness-level includes. The `−` button removes an include entry.
+
+**Changes take effect immediately** — after each mutation, TermQ reloads the composition and updates the sheet in place. You do not need to close and reopen the sheet to see the current state.
 
 ---
 
@@ -396,20 +451,27 @@ On success, the wizard shows a completion overlay with three options:
 
 ## 19 — The typical authoring loop
 
-A complete session — from idea to populated harness — looks like this:
+A complete session — from blank slate to a harness you can launch with one click from any worktree:
 
-1. **Create** the harness with the wizard (§18). Check *Install after create*.
-2. Click **Browse Marketplaces** in the success overlay.
-3. **Browse** marketplace plugins and use **Add to Harness** (§16) to pull in the content you want.
-4. The harness is now installed and populated. **Launch** it from the Harnesses tab (§7).
+1. **Scaffold** — create a new harness with the wizard (§18) and check *Install after create*, or fork an existing community harness (§11) to start from a known-good baseline.
 
-For iterative authoring (adding more plugins later), open the harness detail and use **Add Include…** directly — the Library tab is the same catalogue.
+2. **Pull in community content** — from the wizard's success overlay click **Browse Marketplaces**, or open the **Add Include…** picker from the detail pane later. The Library tab lists your configured marketplaces; pick the skills, agents, and rules your workflow needs (§16).
+
+3. **Wire up your tooling** — in the detail pane's **Hooks** section, add the lifecycle hooks your workflow depends on: `before_tool` guards, `on_stop` notifications, `before_prompt` context injectors. In the **MCP Servers** section, add the servers your AI client should connect to during sessions. Both sections have `+` / `−` buttons that round-trip immediately through `ynh` (§12).
+
+4. **Define profiles** — if different tasks need different hook or MCP configurations (e.g., a "review" mode vs. a "ship" mode), create profiles in the **Profiles** section. Each profile can override hooks, MCP servers, and includes independently. Use the profile edit sheet (§12a) to build each one up.
+
+5. **Write focuses** — a focus is the unit you actually launch with. Each one binds a profile to a prompt. Write one focus per repeating task: *code review*, *architecture walkthrough*, *debugging session*. Keep prompts concise — they're sent to the AI client at launch, not pasted into a chat. Add focuses from the `+` button in the **Focuses** section (§12).
+
+6. **Test end-to-end** — right-click a linked worktree in the Repositories sidebar and choose **Run with Focus…** (or **Quick Launch Focus ▶** for a one-click launch). Verify the prompt loads, the right profile is active, and the MCP servers connect.
+
+7. **Iterate** — tweak focus prompts, adjust hooks, add or remove MCP servers. Changes are visible in the Composition view the moment `ynh` writes them. No restart needed.
 
 ---
 
 ## 20 — What's next
 
-You've covered the complete harness lifecycle: install, link to worktrees, launch, update, uninstall, fork, duplicate, edit in place, manage quarantined entries, populate from marketplaces, create new harnesses with the wizard, and the typical authoring loop.
+You've covered the complete harness lifecycle: install, link to worktrees, launch, update, uninstall, fork, duplicate, edit includes and delegates in place, edit hooks, MCP servers, profiles, and focuses inline, manage quarantined entries, populate from marketplaces, create new harnesses with the wizard, and the full authoring loop from scaffold to launchable focus.
 
 The next tutorials cover automation and AI integration:
 

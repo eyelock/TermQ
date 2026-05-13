@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles
+  directly in the detail pane:
+  - **Focuses** — add, edit, and remove focuses from the Focuses section. The edit sheet exposes
+    the focus name, prompt, and optional profile binding. Changes round-trip through
+    `ynh focus add`, `ynh focus update`, and `ynh focus remove`.
+  - **Profiles** — add and remove profiles from the Profiles section. Each profile card carries
+    an **⋯** menu with **Edit** (opens the profile sheet) and **Remove** (with confirmation).
+  - **Profile hooks** — within the profile edit sheet, add and remove hooks per event via the
+    same `plus.circle` / `minus.circle` affordances used at the harness level.
+  - **Profile MCP servers** — add and remove MCP servers within a profile. The Add MCP sheet
+    supports both command and SSE-URL server types with args, env vars, and HTTP headers.
+  - **Profile includes** — the profile edit sheet's Includes section uses the unified Source Picker
+    (Library / Git URL) to add includes, and a remove button to drop them.
+- **Harness-level hook and MCP server editing** — the Hooks and MCP Servers sections of the
+  composition view now support inline add and remove for editable harnesses:
+  - Add hooks via `ynh hook add`, remove individual hook entries by index via `ynh hook remove`.
+  - Add MCP servers via `ynh mcp add`, remove them by name via `ynh mcp remove`.
+  - Remove buttons appear per-entry and are disabled while a mutation is in flight to prevent
+    double-actions.
+
 ## [0.10.1]
 
 ### Added
