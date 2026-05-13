@@ -52,6 +52,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Deferred from this release: a formal `elicitation/create` flow wired into `harness_launch` (annotations carry the prompt-hint for now), `roots/list` boundary enforcement (no filesystem-touching tools currently exceed `~/Library/Application Support`), and the GitHub-PR resource (`termq://prs`) which would shell out to `gh` and needs more design.
 
+### Added — Tooling and docs
+
+- **`ToolParity.swift` registry** — single source of truth listing every MCP tool as `mandatoryCLI` (a matching `termqcli` subcommand must exist) or `omittedCLI` (with a stated reason). Five `ToolParityTests` enforce classification at build time: adding a tool without classifying it fails CI.
+- **`Scripts/check-mcp-docs.sh`** — narrow CI gate that fails when MCP surface files (`SchemaDefinitions.swift`, `ToolParity.swift`) change without a matching `Docs/Help/reference/mcp.md` update. Override via `[no-doc]` in commit subject for genuine no-surface changes.
+- **`Docs/Help/reference/mcp.md` rewritten** — reflects the full Tier 0–3 surface, includes a spec-feature support matrix at the top, documents the CLI-parity policy and its enforcement.
+- **`Docs/Help/tutorials/mcp-subscriptions.md`** — new tutorial walking through the resource-subscription feature with worked code and sharp-edges section.
+
+Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
+
 ### Added
 
 - **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles
