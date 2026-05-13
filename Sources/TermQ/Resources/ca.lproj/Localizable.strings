@@ -1057,3 +1057,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Revisar els canvis upstream";
 "harnesses.unversioned.drift.confirm.body" = "El contingut upstream ha canviat sense una actualització de versió. Actualitzar descarregarà el nou contingut. Revisa els SHA a continuació abans de continuar — una actualització de versió absent pot emmascarar canvis maliciosos.";
 "harnesses.unversioned.drift.confirm.proceed" = "Actualitza de totes formes";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Sense inclusions";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Afegeix focus";
+"harnesses.focus.add.title" = "Afegeix focus";
+"harnesses.focus.edit.button" = "Edita";
+"harnesses.focus.edit.title" = "Edita el focus";
+"harnesses.focus.remove.button" = "Elimina";
+"harnesses.focus.remove.confirm.title" = "Elimina el focus";
+"harnesses.focus.remove.confirm.button" = "Elimina";
+"harnesses.focus.remove.confirm.message %@" = "Eliminar el focus \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Nom";
+"harnesses.focus.name.placeholder" = "el-meu-focus";
+"harnesses.focus.prompt" = "Indicació";
+"harnesses.focus.profile" = "Perfil";
+"harnesses.focus.profile.none" = "Cap";
+"harnesses.focus.clear.profile" = "Esborra el perfil";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Afegeix";
+"harnesses.focus.save" = "Desa";
+"harnesses.focus.cancel" = "Cancel·la";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Afegeix perfil";
+"harnesses.profile.add.title" = "Afegeix perfil";
+"harnesses.profile.edit.button" = "Edita";
+"harnesses.profile.edit.title %@" = "Edita el perfil: %@";
+"harnesses.profile.edit.done" = "Fet";
+"harnesses.profile.remove.button" = "Elimina";
+"harnesses.profile.remove.confirm.title" = "Elimina el perfil";
+"harnesses.profile.remove.confirm.button" = "Elimina";
+"harnesses.profile.remove.confirm.message %@" = "Eliminar el perfil \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Nom";
+"harnesses.profile.name.placeholder" = "el-meu-perfil";
+"harnesses.profile.add.confirm" = "Afegeix";
+"harnesses.profile.includes" = "Inclusions";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Afegeix hook";
+"harnesses.profile.hook.add.title" = "Afegeix hook";
+"harnesses.profile.hook.event" = "Esdeveniment";
+"harnesses.profile.hook.command" = "Ordre";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Comparador";
+"harnesses.profile.hook.matcher.placeholder" = "Patró opcional";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Afegeix servidor";
+"harnesses.profile.mcp.add.title" = "Afegeix servidor MCP";
+"harnesses.profile.mcp.name" = "Nom";
+"harnesses.profile.mcp.name.placeholder" = "nom-servidor";
+"harnesses.profile.mcp.type" = "Tipus";
+"harnesses.profile.mcp.type.command" = "Ordre";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Ordre";
+"harnesses.profile.mcp.args" = "Arguments";
+"harnesses.profile.mcp.args.placeholder" = "--indicador valor";
+"harnesses.profile.mcp.args.hint" = "Arguments separats per espais";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Desactivat per aquest perfil (substitueix qualsevol servidor heretat)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Afegeix inclusió";
+"harnesses.profile.include.add.title" = "Afegeix inclusió";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "assignat";
+"remote.prs.badge.author" = "jo";
+"remote.prs.badge.checked.out" = "extret";
+"remote.prs.badge.draft" = "esborrany";
+"remote.prs.badge.review" = "revisió";
+"remote.prs.checking.out %lld" = "S'extreu el PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Extreu com a worktree";
+"remote.prs.checkout.toast %@" = "Extret com a %@.";
+"remote.prs.clear.default.focus" = "Esborra el focus per defecte";
+"remote.prs.copy.branch.name" = "Copia el nom de la branca";
+"remote.prs.copy.url" = "Copia l'URL del PR";
+"remote.prs.default.focus.set %@" = "Focus per defecte: %@";
+"remote.prs.force.push.indicator" = "↑ actualitzat";
+"remote.prs.force.update.cancel" = "Cancel·la";
+"remote.prs.force.update.confirm" = "Força igualment";
+"remote.prs.force.update.message %lld %lld" = "El teu worktree local té %lld fitxer(s) modificat(s) i %lld commit(s) per davant de l'origen. La forçar l'actualització restablirà al nou head del PR i es perdrà aquesta feina.";
+"remote.prs.force.update.title" = "El head del PR ha estat forçat";
+"remote.prs.gh.auth.failed" = "No s'ha pogut verificar l'autenticació gh — tornar a intentar?";
+"remote.prs.gh.missing.message" = "Instal·la el GitHub CLI per usar el mode Remote.";
+"remote.prs.gh.missing.title" = "No s'ha trobat gh CLI";
+"remote.prs.gh.recheck" = "Torna a comprovar";
+"remote.prs.gh.unauth.message" = "Executa `gh auth login` per iniciar sessió.";
+"remote.prs.gh.unauth.title" = "No has iniciat sessió a GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Local";
+"remote.prs.mode.remote" = "Remot";
+"remote.prs.no.github.remote" = "— sense remote de GitHub —";
+"remote.prs.open.pr.on.remote" = "Obre el PR al Remot";
+"remote.prs.overflow.more %lld" = "+ %lld més — Obre els detalls del repositori";
+"remote.prs.prune.all" = "⊘ Neteja…";
+"remote.prs.prune.closed" = "⊘ Neteja els PRs tancats";
+"remote.prs.prune.closed.confirm" = "Neteja";
+"remote.prs.prune.closed.header" = "Worktrees de PRs tancats";
+"remote.prs.prune.closed.nothing.message" = "Totes les files de PR seguides segueixen obertes.";
+"remote.prs.prune.closed.nothing.title" = "Res per netejar";
+"remote.prs.prune.closed.title %lld" = "%lld PRs tancats o fusionats";
+"remote.prs.prune.focus.header" = "Worktrees de focus";
+"remote.prs.prune.focus.title %lld" = "%lld worktrees de focus";
+"remote.prs.prune.keep" = "Conserva";
+"remote.prs.prune.reason.ahead" = "commits no enviats";
+"remote.prs.prune.reason.dirty" = "canvis no confirmats";
+"remote.prs.prune.remove" = "Elimina";
+"remote.prs.quick.launch.focus" = "Inici ràpid del focus";
+"remote.prs.run.cancel" = "Cancel·la";
+"remote.prs.run.customize" = "Personalitza";
+"remote.prs.run.focus.item %@" = "Executa %@";
+"remote.prs.run.focus.label" = "Focus";
+"remote.prs.run.focus.none" = "(cap — indicació ad hoc)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "L'agent respondrà al focus inicial i es mantindrà obert per a preguntes de seguiment.";
+"remote.prs.run.interactive.label" = "Mantén-te interactiu després d'executar";
+"remote.prs.run.loading.detail" = "S'estan carregant els detalls del Harness…";
+"remote.prs.run.profile.default" = "(valors per defecte del Harness)";
+"remote.prs.run.profile.label" = "Perfil";
+"remote.prs.run.prompt.label" = "Indicació de focus";
+"remote.prs.run.refresh.detail" = "Torna a carregar els focuses i perfils del Harness des del disc";
+"remote.prs.run.run" = "Executa";
+"remote.prs.run.sheet.title" = "Executa amb focus";
+"remote.prs.run.vendor.default" = "Per defecte del Harness";
+"remote.prs.run.vendor.label" = "Proveïdor";
+"remote.prs.run.with.focus" = "Executa amb focus…";
+"remote.prs.set.default.focus" = "Estableix el focus per defecte…";
+"remote.prs.show.in.local" = "Mostra localment";
+"remote.prs.show.in.remote" = "Mostra al Remot";
+"remote.prs.switch.to.existing" = "Canvia a l'existent";
+"remote.prs.switch.to.local" = "Canvia a local";
+"remote.prs.worktree.exists" = "El worktree ja existeix";
+"settings.github.feed.cap.help" = "Nombre màxim de pull requests mostrades per repositori a la barra lateral Remote. Els PRs extrets sempre s'inclouen.";
+"settings.github.feed.cap.label" = "PRs per repositori";
+"settings.github.section.feed" = "Flux de Remote PR";
+"settings.tab.github" = "GitHub";

@@ -1059,3 +1059,147 @@
 "harnesses.unversioned.drift.confirm.title" = "检查上游更改";
 "harnesses.unversioned.drift.confirm.body" = "上游内容已更改但未更新版本号。更新将拉取新内容。继续操作前请检查下方的 SHA — 缺少版本号更新可能掩盖恶意更改。";
 "harnesses.unversioned.drift.confirm.proceed" = "仍然更新";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "无包含项";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "添加焦点";
+"harnesses.focus.add.title" = "添加焦点";
+"harnesses.focus.edit.button" = "编辑";
+"harnesses.focus.edit.title" = "编辑焦点";
+"harnesses.focus.remove.button" = "移除";
+"harnesses.focus.remove.confirm.title" = "移除焦点";
+"harnesses.focus.remove.confirm.button" = "移除";
+"harnesses.focus.remove.confirm.message %@" = "移除焦点"%@"？";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "名称";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "提示词";
+"harnesses.focus.profile" = "配置文件";
+"harnesses.focus.profile.none" = "无";
+"harnesses.focus.clear.profile" = "清除配置文件";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "添加";
+"harnesses.focus.save" = "保存";
+"harnesses.focus.cancel" = "取消";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "添加配置文件";
+"harnesses.profile.add.title" = "添加配置文件";
+"harnesses.profile.edit.button" = "编辑";
+"harnesses.profile.edit.title %@" = "编辑配置文件：%@";
+"harnesses.profile.edit.done" = "完成";
+"harnesses.profile.remove.button" = "移除";
+"harnesses.profile.remove.confirm.title" = "移除配置文件";
+"harnesses.profile.remove.confirm.button" = "移除";
+"harnesses.profile.remove.confirm.message %@" = "移除配置文件"%@"？";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "名称";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "添加";
+"harnesses.profile.includes" = "包含项";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "添加钩子";
+"harnesses.profile.hook.add.title" = "添加钩子";
+"harnesses.profile.hook.event" = "事件";
+"harnesses.profile.hook.command" = "命令";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "匹配器";
+"harnesses.profile.hook.matcher.placeholder" = "可选模式";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "添加服务器";
+"harnesses.profile.mcp.add.title" = "添加MCP服务器";
+"harnesses.profile.mcp.name" = "名称";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "类型";
+"harnesses.profile.mcp.type.command" = "命令";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "命令";
+"harnesses.profile.mcp.args" = "参数";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "空格分隔的参数";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "已被此配置文件禁用（覆盖任何继承的服务器）";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "添加包含项";
+"harnesses.profile.include.add.title" = "添加包含项";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "已分配";
+"remote.prs.badge.author" = "我";
+"remote.prs.badge.checked.out" = "已签出";
+"remote.prs.badge.draft" = "草稿";
+"remote.prs.badge.review" = "审查";
+"remote.prs.checking.out %lld" = "正在签出 PR #%lld…";
+"remote.prs.checkout.as.worktree" = "作为工作树签出";
+"remote.prs.checkout.toast %@" = "已签出为 %@。";
+"remote.prs.clear.default.focus" = "清除默认焦点";
+"remote.prs.copy.branch.name" = "复制分支名称";
+"remote.prs.copy.url" = "复制 PR URL";
+"remote.prs.default.focus.set %@" = "默认焦点：%@";
+"remote.prs.force.push.indicator" = "↑ 已更新";
+"remote.prs.force.update.cancel" = "取消";
+"remote.prs.force.update.confirm" = "仍然强制更新";
+"remote.prs.force.update.message %lld %lld" = "您的本地工作树有 %lld 个已修改文件，比 origin 超前 %lld 个提交。强制更新将重置到新的 PR head 并丢失此工作。";
+"remote.prs.force.update.title" = "PR head 已被强制推送";
+"remote.prs.gh.auth.failed" = "无法验证 gh 身份验证 — 重试？";
+"remote.prs.gh.missing.message" = "安装 GitHub CLI 以使用远程模式。";
+"remote.prs.gh.missing.title" = "未找到 gh CLI";
+"remote.prs.gh.recheck" = "重新检查";
+"remote.prs.gh.unauth.message" = "运行 `gh auth login` 以登录。";
+"remote.prs.gh.unauth.title" = "未登录 GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "本地";
+"remote.prs.mode.remote" = "远程";
+"remote.prs.no.github.remote" = "— 无 GitHub 远程 —";
+"remote.prs.open.pr.on.remote" = "在远程打开 PR";
+"remote.prs.overflow.more %lld" = "+ 还有 %lld 个 — 打开仓库详情";
+"remote.prs.prune.all" = "⊘ 修剪…";
+"remote.prs.prune.closed" = "⊘ 修剪已关闭的 PR";
+"remote.prs.prune.closed.confirm" = "修剪";
+"remote.prs.prune.closed.header" = "已关闭 PR 的工作树";
+"remote.prs.prune.closed.nothing.message" = "所有跟踪的 PR 行仍处于打开状态。";
+"remote.prs.prune.closed.nothing.title" = "无需修剪";
+"remote.prs.prune.closed.title %lld" = "%lld 个 PR 已关闭或合并";
+"remote.prs.prune.focus.header" = "焦点工作树";
+"remote.prs.prune.focus.title %lld" = "%lld 个焦点工作树";
+"remote.prs.prune.keep" = "保留";
+"remote.prs.prune.reason.ahead" = "未推送的提交";
+"remote.prs.prune.reason.dirty" = "未提交的更改";
+"remote.prs.prune.remove" = "移除";
+"remote.prs.quick.launch.focus" = "快速启动焦点";
+"remote.prs.run.cancel" = "取消";
+"remote.prs.run.customize" = "自定义";
+"remote.prs.run.focus.item %@" = "运行 %@";
+"remote.prs.run.focus.label" = "焦点";
+"remote.prs.run.focus.none" = "（无 — 即席提示）";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "代理将响应初始焦点，然后保持开放以回答后续问题。";
+"remote.prs.run.interactive.label" = "运行后保持交互状态";
+"remote.prs.run.loading.detail" = "正在加载 Harness 详情…";
+"remote.prs.run.profile.default" = "（Harness 默认值）";
+"remote.prs.run.profile.label" = "配置文件";
+"remote.prs.run.prompt.label" = "焦点提示";
+"remote.prs.run.refresh.detail" = "从磁盘重新加载 Harness 焦点和配置文件";
+"remote.prs.run.run" = "运行";
+"remote.prs.run.sheet.title" = "使用焦点运行";
+"remote.prs.run.vendor.default" = "Harness 默认";
+"remote.prs.run.vendor.label" = "供应商";
+"remote.prs.run.with.focus" = "使用焦点运行…";
+"remote.prs.set.default.focus" = "设置默认焦点…";
+"remote.prs.show.in.local" = "在本地显示";
+"remote.prs.show.in.remote" = "在远程显示";
+"remote.prs.switch.to.existing" = "切换到现有";
+"remote.prs.switch.to.local" = "切换到本地";
+"remote.prs.worktree.exists" = "工作树已存在";
+"settings.github.feed.cap.help" = "远程侧边栏中每个仓库显示的最大拉取请求数。已签出的 PR 始终包含在内。";
+"settings.github.feed.cap.label" = "每个仓库的 PR 数";
+"settings.github.section.feed" = "远程 PR 订阅";
+"settings.tab.github" = "GitHub";

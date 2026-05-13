@@ -475,7 +475,7 @@ final class HarnessModelTests: XCTestCase {
             {
                 "name": "h", "version": "1", "default_vendor": "claude",
                 "artifacts": {"skills":[],"agents":[],"rules":[],"commands":[]},
-                "includes": [], "delegates_to": [], "profiles": [],
+                "includes": [], "delegates_to": [], "profiles": {},
                 "counts": {"skills":0,"agents":0,"rules":0,"commands":0}
             }
             """

@@ -1063,3 +1063,147 @@
 "harnesses.unversioned.drift.confirm.title" = "בדיקת שינויים עולמיים";
 "harnesses.unversioned.drift.confirm.body" = "התוכן העולמי השתנה ללא עדכון גרסה. העדכון יביא את התוכן החדש. בדוק את ה-SHA למטה לפני שתמשיך — עדכון גרסה חסר עשוי להסתיר שינויים זדוניים.";
 "harnesses.unversioned.drift.confirm.proceed" = "עדכן בכל מקרה";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "אין כוללים";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "הוסף מיקוד";
+"harnesses.focus.add.title" = "הוסף מיקוד";
+"harnesses.focus.edit.button" = "ערוך";
+"harnesses.focus.edit.title" = "ערוך מיקוד";
+"harnesses.focus.remove.button" = "הסר";
+"harnesses.focus.remove.confirm.title" = "הסר מיקוד";
+"harnesses.focus.remove.confirm.button" = "הסר";
+"harnesses.focus.remove.confirm.message %@" = "להסיר את המיקוד \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "שם";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "הנחייה";
+"harnesses.focus.profile" = "פרופיל";
+"harnesses.focus.profile.none" = "ללא";
+"harnesses.focus.clear.profile" = "נקה פרופיל";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "הוסף";
+"harnesses.focus.save" = "שמור";
+"harnesses.focus.cancel" = "ביטול";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "הוסף פרופיל";
+"harnesses.profile.add.title" = "הוסף פרופיל";
+"harnesses.profile.edit.button" = "ערוך";
+"harnesses.profile.edit.title %@" = "ערוך פרופיל: %@";
+"harnesses.profile.edit.done" = "סיום";
+"harnesses.profile.remove.button" = "הסר";
+"harnesses.profile.remove.confirm.title" = "הסר פרופיל";
+"harnesses.profile.remove.confirm.button" = "הסר";
+"harnesses.profile.remove.confirm.message %@" = "להסיר את הפרופיל \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "שם";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "הוסף";
+"harnesses.profile.includes" = "כוללים";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "הוסף קרס";
+"harnesses.profile.hook.add.title" = "הוסף קרס";
+"harnesses.profile.hook.event" = "אירוע";
+"harnesses.profile.hook.command" = "פקודה";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "מתאם";
+"harnesses.profile.hook.matcher.placeholder" = "תבנית אופציונלית";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "הוסף שרת";
+"harnesses.profile.mcp.add.title" = "הוסף שרת MCP";
+"harnesses.profile.mcp.name" = "שם";
+"harnesses.profile.mcp.name.placeholder" = "shem-server";
+"harnesses.profile.mcp.type" = "סוג";
+"harnesses.profile.mcp.type.command" = "פקודה";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "פקודה";
+"harnesses.profile.mcp.args" = "ארגומנטים";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "ארגומנטים מופרדים ברווחים";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "מושבת על ידי פרופיל זה (מבטל כל שרת שנורש)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "הוסף כלול";
+"harnesses.profile.include.add.title" = "הוסף כלול";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "הוקצה";
+"remote.prs.badge.author" = "אני";
+"remote.prs.badge.checked.out" = "נשלף";
+"remote.prs.badge.draft" = "טיוטה";
+"remote.prs.badge.review" = "סקירה";
+"remote.prs.checking.out %lld" = "שולף PR #%lld…";
+"remote.prs.checkout.as.worktree" = "שלוף כ-worktree";
+"remote.prs.checkout.toast %@" = "נשלף כ-%@.";
+"remote.prs.clear.default.focus" = "נקה מיקוד ברירת מחדל";
+"remote.prs.copy.branch.name" = "העתק שם ענף";
+"remote.prs.copy.url" = "העתק URL של PR";
+"remote.prs.default.focus.set %@" = "מיקוד ברירת מחדל: %@";
+"remote.prs.force.push.indicator" = "↑ עודכן";
+"remote.prs.force.update.cancel" = "ביטול";
+"remote.prs.force.update.confirm" = "כפה בכל זאת";
+"remote.prs.force.update.message %lld %lld" = "ה-worktree המקומי שלך מכיל %lld קובץ/ים שונה/ים ו-%lld commit(ים) לפני המקור. עדכון כפוי יאפס ל-head החדש של ה-PR ויאבד עבודה זו.";
+"remote.prs.force.update.title" = "ה-head של ה-PR נדחף בכוח";
+"remote.prs.gh.auth.failed" = "לא ניתן לאמת אימות gh — לנסות שוב?";
+"remote.prs.gh.missing.message" = "התקן את GitHub CLI כדי להשתמש במצב Remote.";
+"remote.prs.gh.missing.title" = "gh CLI לא נמצא";
+"remote.prs.gh.recheck" = "בדוק שוב";
+"remote.prs.gh.unauth.message" = "הפעל `gh auth login` כדי להתחבר.";
+"remote.prs.gh.unauth.title" = "לא מחובר ל-GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "מקומי";
+"remote.prs.mode.remote" = "מרוחק";
+"remote.prs.no.github.remote" = "— ללא GitHub remote —";
+"remote.prs.open.pr.on.remote" = "פתח PR ב-Remote";
+"remote.prs.overflow.more %lld" = "+ עוד %lld — פתח פרטי מאגר";
+"remote.prs.prune.all" = "⊘ נקה…";
+"remote.prs.prune.closed" = "⊘ נקה PRים סגורים";
+"remote.prs.prune.closed.confirm" = "נקה";
+"remote.prs.prune.closed.header" = "Worktrees של PRים סגורים";
+"remote.prs.prune.closed.nothing.message" = "כל שורות ה-PR במעקב עדיין פתוחות.";
+"remote.prs.prune.closed.nothing.title" = "אין מה לנקות";
+"remote.prs.prune.closed.title %lld" = "%lld PRים נסגרו או מוזגו";
+"remote.prs.prune.focus.header" = "Worktrees של מיקוד";
+"remote.prs.prune.focus.title %lld" = "%lld Worktrees של מיקוד";
+"remote.prs.prune.keep" = "שמור";
+"remote.prs.prune.reason.ahead" = "commits שלא נדחפו";
+"remote.prs.prune.reason.dirty" = "שינויים שלא הוכנסו";
+"remote.prs.prune.remove" = "הסר";
+"remote.prs.quick.launch.focus" = "הפעלה מהירה של מיקוד";
+"remote.prs.run.cancel" = "ביטול";
+"remote.prs.run.customize" = "התאמה אישית";
+"remote.prs.run.focus.item %@" = "הפעל %@";
+"remote.prs.run.focus.label" = "מיקוד";
+"remote.prs.run.focus.none" = "(ללא — הנחייה אד-הוק)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "הסוכן יגיב למיקוד הראשוני ואז יישאר פתוח לשאלות המשך.";
+"remote.prs.run.interactive.label" = "הישאר אינטראקטיבי לאחר הפעלה";
+"remote.prs.run.loading.detail" = "טוען פרטי Harness…";
+"remote.prs.run.profile.default" = "(ברירות מחדל של Harness)";
+"remote.prs.run.profile.label" = "פרופיל";
+"remote.prs.run.prompt.label" = "הנחיית מיקוד";
+"remote.prs.run.refresh.detail" = "טען מחדש את מיקודי ופרופילי Harness מהדיסק";
+"remote.prs.run.run" = "הפעל";
+"remote.prs.run.sheet.title" = "הפעל עם מיקוד";
+"remote.prs.run.vendor.default" = "ברירת מחדל של Harness";
+"remote.prs.run.vendor.label" = "ספק";
+"remote.prs.run.with.focus" = "הפעל עם מיקוד…";
+"remote.prs.set.default.focus" = "הגדר מיקוד ברירת מחדל…";
+"remote.prs.show.in.local" = "הצג מקומית";
+"remote.prs.show.in.remote" = "הצג ב-Remote";
+"remote.prs.switch.to.existing" = "עבור לקיים";
+"remote.prs.switch.to.local" = "עבור למקומי";
+"remote.prs.worktree.exists" = "Worktree כבר קיים";
+"settings.github.feed.cap.help" = "מספר מרבי של pull requests המוצגים לכל מאגר בסרגל הצד Remote. PRים שנשלפו תמיד נכללים.";
+"settings.github.feed.cap.label" = "PRים לכל מאגר";
+"settings.github.section.feed" = "פיד Remote PR";
+"settings.tab.github" = "GitHub";

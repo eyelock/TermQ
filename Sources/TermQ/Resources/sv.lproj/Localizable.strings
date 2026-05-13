@@ -1064,3 +1064,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Granska upstream-ändringar";
 "harnesses.unversioned.drift.confirm.body" = "Upstream-innehåll har ändrats utan versionsökning. Uppdatering hämtar det nya innehållet. Granska SHA:erna nedan innan du fortsätter — en saknad versionsökning kan maskera skadliga ändringar.";
 "harnesses.unversioned.drift.confirm.proceed" = "Uppdatera ändå";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Inga inkluderingar";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Lägg till fokus";
+"harnesses.focus.add.title" = "Lägg till fokus";
+"harnesses.focus.edit.button" = "Redigera";
+"harnesses.focus.edit.title" = "Redigera fokus";
+"harnesses.focus.remove.button" = "Ta bort";
+"harnesses.focus.remove.confirm.title" = "Ta bort fokus";
+"harnesses.focus.remove.confirm.button" = "Ta bort";
+"harnesses.focus.remove.confirm.message %@" = "Ta bort fokus \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Namn";
+"harnesses.focus.name.placeholder" = "mitt-fokus";
+"harnesses.focus.prompt" = "Prompt";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Inget";
+"harnesses.focus.clear.profile" = "Rensa profil";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Lägg till";
+"harnesses.focus.save" = "Spara";
+"harnesses.focus.cancel" = "Avbryt";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Lägg till profil";
+"harnesses.profile.add.title" = "Lägg till profil";
+"harnesses.profile.edit.button" = "Redigera";
+"harnesses.profile.edit.title %@" = "Redigera profil: %@";
+"harnesses.profile.edit.done" = "Klar";
+"harnesses.profile.remove.button" = "Ta bort";
+"harnesses.profile.remove.confirm.title" = "Ta bort profil";
+"harnesses.profile.remove.confirm.button" = "Ta bort";
+"harnesses.profile.remove.confirm.message %@" = "Ta bort profil \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Namn";
+"harnesses.profile.name.placeholder" = "min-profil";
+"harnesses.profile.add.confirm" = "Lägg till";
+"harnesses.profile.includes" = "Inkluderingar";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Lägg till hook";
+"harnesses.profile.hook.add.title" = "Lägg till hook";
+"harnesses.profile.hook.event" = "Händelse";
+"harnesses.profile.hook.command" = "Kommando";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Matchare";
+"harnesses.profile.hook.matcher.placeholder" = "Valfritt mönster";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Lägg till server";
+"harnesses.profile.mcp.add.title" = "Lägg till MCP-server";
+"harnesses.profile.mcp.name" = "Namn";
+"harnesses.profile.mcp.name.placeholder" = "servernamn";
+"harnesses.profile.mcp.type" = "Typ";
+"harnesses.profile.mcp.type.command" = "Kommando";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Kommando";
+"harnesses.profile.mcp.args" = "Argument";
+"harnesses.profile.mcp.args.placeholder" = "--flagga värde";
+"harnesses.profile.mcp.args.hint" = "Mellanrumsseparerade argument";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Inaktiverad av den här profilen (åsidosätter alla ärvda servrar)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Lägg till inkludering";
+"harnesses.profile.include.add.title" = "Lägg till inkludering";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "tilldelad";
+"remote.prs.badge.author" = "jag";
+"remote.prs.badge.checked.out" = "utcheckad";
+"remote.prs.badge.draft" = "utkast";
+"remote.prs.badge.review" = "granskning";
+"remote.prs.checking.out %lld" = "Checkar ut PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Checka ut som worktree";
+"remote.prs.checkout.toast %@" = "Utcheckad som %@.";
+"remote.prs.clear.default.focus" = "Rensa standardfokus";
+"remote.prs.copy.branch.name" = "Kopiera grennamn";
+"remote.prs.copy.url" = "Kopiera PR-URL";
+"remote.prs.default.focus.set %@" = "Standardfokus: %@";
+"remote.prs.force.push.indicator" = "↑ uppdaterad";
+"remote.prs.force.update.cancel" = "Avbryt";
+"remote.prs.force.update.confirm" = "Tvinga ändå";
+"remote.prs.force.update.message %lld %lld" = "Din lokala worktree har %lld ändrad(e) fil(er) och %lld commit(s) före ursprunget. Tvingad uppdatering återställer till nytt PR-head och förlorar detta arbete.";
+"remote.prs.force.update.title" = "PR-head tvångspushades";
+"remote.prs.gh.auth.failed" = "Kunde inte verifiera gh-autentisering — försök igen?";
+"remote.prs.gh.missing.message" = "Installera GitHub CLI för att använda Remote-läget.";
+"remote.prs.gh.missing.title" = "gh CLI hittades inte";
+"remote.prs.gh.recheck" = "Kontrollera igen";
+"remote.prs.gh.unauth.message" = "Kör `gh auth login` för att logga in.";
+"remote.prs.gh.unauth.title" = "Inte inloggad på GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Lokal";
+"remote.prs.mode.remote" = "Remote";
+"remote.prs.no.github.remote" = "— ingen GitHub-remote —";
+"remote.prs.open.pr.on.remote" = "Öppna PR på Remote";
+"remote.prs.overflow.more %lld" = "+ %lld till — Öppna databasdetalj";
+"remote.prs.prune.all" = "⊘ Rensa…";
+"remote.prs.prune.closed" = "⊘ Rensa stängda PRs";
+"remote.prs.prune.closed.confirm" = "Rensa";
+"remote.prs.prune.closed.header" = "Worktrees för stängda PRs";
+"remote.prs.prune.closed.nothing.message" = "Alla spårade PR-rader är fortfarande öppna.";
+"remote.prs.prune.closed.nothing.title" = "Inget att rensa";
+"remote.prs.prune.closed.title %lld" = "%lld PRs stängda eller sammanslagna";
+"remote.prs.prune.focus.header" = "Fokus-worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld fokus-worktrees";
+"remote.prs.prune.keep" = "Behåll";
+"remote.prs.prune.reason.ahead" = "opushade commits";
+"remote.prs.prune.reason.dirty" = "ocommittade ändringar";
+"remote.prs.prune.remove" = "Ta bort";
+"remote.prs.quick.launch.focus" = "Snabbstarta fokus";
+"remote.prs.run.cancel" = "Avbryt";
+"remote.prs.run.customize" = "Anpassa";
+"remote.prs.run.focus.item %@" = "Kör %@";
+"remote.prs.run.focus.label" = "Fokus";
+"remote.prs.run.focus.none" = "(inget — ad hoc-prompt)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Agenten svarar på det initiala fokuset och förblir sedan öppen för uppföljningsfrågor.";
+"remote.prs.run.interactive.label" = "Förbli interaktiv efter körning";
+"remote.prs.run.loading.detail" = "Laddar harness-detaljer…";
+"remote.prs.run.profile.default" = "(harness-standardvärden)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Fokusprompt";
+"remote.prs.run.refresh.detail" = "Ladda om harness-fokus och -profiler från disk";
+"remote.prs.run.run" = "Kör";
+"remote.prs.run.sheet.title" = "Kör med fokus";
+"remote.prs.run.vendor.default" = "Harness-standard";
+"remote.prs.run.vendor.label" = "Leverantör";
+"remote.prs.run.with.focus" = "Kör med fokus…";
+"remote.prs.set.default.focus" = "Ange standardfokus…";
+"remote.prs.show.in.local" = "Visa lokalt";
+"remote.prs.show.in.remote" = "Visa på remote";
+"remote.prs.switch.to.existing" = "Byt till befintlig";
+"remote.prs.switch.to.local" = "Byt till lokal";
+"remote.prs.worktree.exists" = "Worktree finns redan";
+"settings.github.feed.cap.help" = "Maximalt antal pull requests som visas per databas i Remote-sidofältet. Utcheckade PRs inkluderas alltid.";
+"settings.github.feed.cap.label" = "PRs per databas";
+"settings.github.section.feed" = "Remote PR-flöde";
+"settings.tab.github" = "GitHub";
