@@ -249,7 +249,7 @@ final class ServerTests: XCTestCase {
 
     func testAvailableToolsCount() {
         let tools = TermQMCPServer.availableTools
-        XCTAssertEqual(tools.count, 11)
+        XCTAssertEqual(tools.count, 16)
     }
 
     func testAvailableToolsNames() {

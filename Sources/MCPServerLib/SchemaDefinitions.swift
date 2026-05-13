@@ -39,10 +39,19 @@ extension TermQMCPServer {
             Tool(
                 name: "list",
                 title: "List terminals",
-                description: "List all terminals or filter by column. Supports listing columns only.",
+                description: """
+                    List all terminals or filter by column. Supports listing columns only and
+                    optional pagination via `cursor` / `limit`. Pass `includeDeleted: true` to
+                    include soft-deleted (binned) cards in the result.
+                    """,
                 inputSchema: Schema.objectSchema([
                     Schema.string("column", "Filter by column name"),
                     Schema.bool("columnsOnly", "Return only column names"),
+                    Schema.bool(
+                        "includeDeleted",
+                        "If true, include soft-deleted cards (default: false — only active cards)"),
+                    Schema.string("cursor", "Opaque pagination cursor returned by a previous call"),
+                    Schema.int("limit", "Maximum number of results (default: no limit)"),
                 ]),
                 annotations: Tool.Annotations(
                     readOnlyHint: true, idempotentHint: true, openWorldHint: false),
@@ -76,6 +85,8 @@ extension TermQMCPServer {
                     Schema.string("id", "Filter by UUID"),
                     Schema.string("badge", "Filter by badge"),
                     Schema.bool("favourites", "Only show favourites"),
+                    Schema.string("cursor", "Opaque pagination cursor returned by a previous call"),
+                    Schema.int("limit", "Maximum number of results (default: no limit)"),
                 ]),
                 annotations: Tool.Annotations(
                     readOnlyHint: true, idempotentHint: true, openWorldHint: false),
@@ -191,6 +202,82 @@ extension TermQMCPServer {
                     readOnlyHint: false, destructiveHint: false,
                     idempotentHint: false, openWorldHint: false),
                 outputSchema: Schema.terminalOutputItemSchema
+            ),
+            Tool(
+                name: "whoami",
+                title: "Identify current terminal",
+                description: """
+                    Identify the terminal this MCP server is being called from. Looks up
+                    the card whose UUID matches the `TERMQ_TERMINAL_ID` environment
+                    variable. Returns the full card or null if the env var is unset or
+                    points at a non-existent terminal.
+
+                    Equivalent to `get(id: $TERMQ_TERMINAL_ID)` but avoids the manual
+                    substitution dance and surfaces a friendly null when running outside
+                    a TermQ terminal context (e.g. a top-level Claude session).
+                    """,
+                inputSchema: Schema.emptySchema(),
+                annotations: Tool.Annotations(
+                    readOnlyHint: true, idempotentHint: true, openWorldHint: false),
+                outputSchema: Schema.terminalOutputItemSchema
+            ),
+            Tool(
+                name: "restore",
+                title: "Restore deleted terminal",
+                description: """
+                    Restore a soft-deleted terminal from the bin. The card's `deletedAt`
+                    timestamp is cleared; the card reappears in the GUI in its original column.
+                    Permanent deletes (those committed via `delete(permanent: true)`) cannot
+                    be restored — the card is gone from board.json.
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("identifier", "Terminal name or UUID", required: true)
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: true, openWorldHint: false),
+                outputSchema: Schema.terminalOutputItemSchema
+            ),
+            Tool(
+                name: "create_column",
+                title: "Create column",
+                description: "Create a new column on the board.",
+                inputSchema: Schema.objectSchema([
+                    Schema.string("name", "Column name (must be unique)", required: true),
+                    Schema.string("description", "Optional column description"),
+                    Schema.string("color", "Optional hex colour (e.g. '#FF5733')"),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: false, openWorldHint: false)
+            ),
+            Tool(
+                name: "rename_column",
+                title: "Rename column",
+                description: "Rename an existing column. Cards retain their column membership.",
+                inputSchema: Schema.objectSchema([
+                    Schema.string("identifier", "Current column name", required: true),
+                    Schema.string("newName", "New column name", required: true),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: true, openWorldHint: false)
+            ),
+            Tool(
+                name: "delete_column",
+                title: "Delete column",
+                description: """
+                    Delete a column. Refuses to delete a column that still contains active cards —
+                    move or delete those first. Use `force: true` to soft-delete all cards in the
+                    column along with it (cards land in the bin and can be restored individually).
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("identifier", "Column name", required: true),
+                    Schema.bool("force", "If true, soft-deletes cards in the column too (default: false)"),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: true,
+                    idempotentHint: true, openWorldHint: false)
             ),
             Tool(
                 name: "record_handshake",

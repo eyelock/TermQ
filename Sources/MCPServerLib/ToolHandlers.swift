@@ -43,6 +43,16 @@ extension TermQMCPServer {
             return try await handleGet(params.arguments)
         case "record_handshake":
             return try await handleRecordHandshake(params.arguments)
+        case "whoami":
+            return try await handleWhoami(params.arguments)
+        case "restore":
+            return try await handleRestore(params.arguments)
+        case "create_column":
+            return try await handleCreateColumn(params.arguments)
+        case "rename_column":
+            return try await handleRenameColumn(params.arguments)
+        case "delete_column":
+            return try await handleDeleteColumn(params.arguments)
         case "delete":
             return try await handleDelete(params.arguments)
         default:
@@ -143,6 +153,12 @@ extension TermQMCPServer {
     func handleList(_ arguments: [String: Value]?) async throws -> CallTool.Result {
         let columnFilter = InputValidator.optionalString("column", from: arguments)
         let columnsOnly = InputValidator.optionalBool("columnsOnly", from: arguments)
+        let includeDeleted = InputValidator.optionalBool("includeDeleted", from: arguments)
+        let cursor = InputValidator.optionalString("cursor", from: arguments)
+        let limit = (arguments?["limit"]).flatMap { value -> Int? in
+            if case .int(let i) = value { return i }
+            return nil
+        }
 
         do {
             let board = try loadBoard()
@@ -158,14 +174,24 @@ extension TermQMCPServer {
                 return try structuredResult(columns)
             }
 
-            // Get cards, optionally filtered by column
-            var cards = board.activeCards
+            // Source set — active by default, all cards (incl. soft-deleted) when requested.
+            var cards = includeDeleted ? board.cards : board.activeCards
             cards = CardFilterEngine.filterByColumn(cards, column: columnFilter, columns: board.columns)
 
-            // Sort by column order, then card order
+            // Sort by column order, then card order — stable across pagination calls.
             cards = CardFilterEngine.sortByColumnThenOrder(cards, columns: board.columns)
 
-            let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
+            let paginated = paginate(cards, cursor: cursor, limit: limit)
+            let output = paginated.items.map {
+                TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId))
+            }
+            // When the caller asked for pagination, wrap; otherwise emit the bare array
+            // for back-compat with existing clients (the outputSchema only describes that
+            // shape — paginated callers can read `_meta.nextCursor` from the response).
+            if cursor != nil || limit != nil {
+                return try structuredResult(
+                    PaginatedTerminals(items: output, nextCursor: paginated.nextCursor))
+            }
             return try structuredResult(output)
 
         } catch {
@@ -173,6 +199,38 @@ extension TermQMCPServer {
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true)
         }
+    }
+
+    /// Envelope used when the caller opted into pagination by passing `cursor` or
+    /// `limit`. Unpaginated calls keep returning the bare array.
+    struct PaginatedTerminals: Codable {
+        let items: [TerminalOutput]
+        let nextCursor: String?
+    }
+
+    /// Cursor-based pagination over a stable slice. Cursor is a base64-encoded integer
+    /// offset — opaque to the client, stable while sort order is stable.
+    func paginate<T>(_ items: [T], cursor: String?, limit: Int?) -> (items: [T], nextCursor: String?) {
+        let start: Int = {
+            guard let cursor,
+                let data = Data(base64Encoded: cursor),
+                let s = String(data: data, encoding: .utf8),
+                let n = Int(s),
+                n >= 0,
+                n <= items.count
+            else { return 0 }
+            return n
+        }()
+        let end: Int = {
+            guard let limit, limit > 0 else { return items.count }
+            return min(start + limit, items.count)
+        }()
+        let slice = Array(items[start..<end])
+        let nextCursor: String? = {
+            guard end < items.count else { return nil }
+            return Data("\(end)".utf8).base64EncodedString()
+        }()
+        return (slice, nextCursor)
     }
 
     func handleFind(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -235,7 +293,19 @@ extension TermQMCPServer {
                 cards = CardFilterEngine.sortByRelevance(cards, scores: relevanceScores)
             }
 
-            let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
+            let cursor = InputValidator.optionalString("cursor", from: arguments)
+            let limit = (arguments?["limit"]).flatMap { value -> Int? in
+                if case .int(let i) = value { return i }
+                return nil
+            }
+            let paginated = paginate(cards, cursor: cursor, limit: limit)
+            let output = paginated.items.map {
+                TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId))
+            }
+            if cursor != nil || limit != nil {
+                return try structuredResult(
+                    PaginatedTerminals(items: output, nextCursor: paginated.nextCursor))
+            }
             return try structuredResult(output)
 
         } catch {
@@ -862,6 +932,152 @@ extension TermQMCPServer {
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
+        }
+    }
+
+    // MARK: - Tier 2 handlers (whoami / restore / column CRUD)
+
+    /// Resolve the current card from `TERMQ_TERMINAL_ID`. Returns a null structured
+    /// content when the env var is unset, so callers can distinguish "no env" from a
+    /// real error.
+    func handleWhoami(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        guard let envValue = ProcessInfo.processInfo.environment["TERMQ_TERMINAL_ID"],
+            !envValue.isEmpty,
+            let uuid = UUID(uuidString: envValue)
+        else {
+            // Surface as a non-error empty result — top-level Claude sessions (no TermQ
+            // container) hit this routinely and shouldn't see an error.
+            return CallTool.Result(
+                content: [
+                    .text(
+                        text: "{\"terminal\": null, \"reason\": \"TERMQ_TERMINAL_ID not set or invalid\"}",
+                        annotations: nil, _meta: nil)
+                ])
+        }
+        do {
+            let board = try loadBoard()
+            guard let card = board.activeCards.first(where: { $0.id == uuid }) else {
+                return CallTool.Result(
+                    content: [
+                        .text(
+                            text:
+                                "{\"terminal\": null, \"reason\": \"Terminal not found for env id\"}",
+                            annotations: nil, _meta: nil)
+                    ])
+            }
+            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+            return try structuredResult(output)
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+    }
+
+    func handleRestore(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let identifier: String
+        do {
+            identifier = try InputValidator.requireString("identifier", from: arguments, tool: "restore")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+        do {
+            let restored = try BoardWriter.restoreCard(
+                identifier: identifier, dataDirectory: dataDirectory)
+            let board = try loadBoard()
+            let output = TerminalOutput(
+                from: restored, columnName: board.columnName(for: restored.columnId))
+            return try structuredResult(output)
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+    }
+
+    func handleCreateColumn(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let name: String
+        do {
+            name = try InputValidator.requireString("name", from: arguments, tool: "create_column")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+        let description = InputValidator.optionalString("description", from: arguments) ?? ""
+        let color = InputValidator.optionalString("color", from: arguments) ?? "#6B7280"
+        do {
+            let column = try BoardWriter.createColumn(
+                name: name, description: description, color: color, dataDirectory: dataDirectory)
+            return CallTool.Result(
+                content: [
+                    .text(
+                        text:
+                            "{\"id\": \"\(column.id.uuidString)\", \"name\": \"\(column.name)\"}",
+                        annotations: nil, _meta: nil)
+                ])
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+    }
+
+    func handleRenameColumn(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let identifier: String
+        let newName: String
+        do {
+            identifier = try InputValidator.requireString(
+                "identifier", from: arguments, tool: "rename_column")
+            newName = try InputValidator.requireString("newName", from: arguments, tool: "rename_column")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+        do {
+            let column = try BoardWriter.renameColumn(
+                identifier: identifier, newName: newName, dataDirectory: dataDirectory)
+            return CallTool.Result(
+                content: [
+                    .text(
+                        text:
+                            "{\"id\": \"\(column.id.uuidString)\", \"name\": \"\(column.name)\"}",
+                        annotations: nil, _meta: nil)
+                ])
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+    }
+
+    func handleDeleteColumn(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let identifier: String
+        do {
+            identifier = try InputValidator.requireString(
+                "identifier", from: arguments, tool: "delete_column")
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+        let force = InputValidator.optionalBool("force", from: arguments)
+        do {
+            try BoardWriter.deleteColumn(
+                identifier: identifier, force: force, dataDirectory: dataDirectory)
+            return CallTool.Result(
+                content: [
+                    .text(
+                        text: "{\"ok\": true, \"deleted\": \"\(identifier)\", \"force\": \(force)}",
+                        annotations: nil, _meta: nil)
+                ])
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
         }
     }
 }

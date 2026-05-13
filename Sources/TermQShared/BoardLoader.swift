@@ -416,6 +416,161 @@ public enum BoardWriter {
         }
     }
 
+    // MARK: - Column CRUD
+
+    /// Create a new column. Throws if a column with the same name (case-insensitive)
+    /// already exists.
+    public static func createColumn(
+        name: String,
+        description: String = "",
+        color: String = "#6B7280",
+        dataDirectory: URL? = nil,
+        profile: AppProfile.Variant = .current
+    ) throws -> Column {
+        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+            guard var columns = board["columns"] as? [[String: Any]] else {
+                throw WriteError.encodingFailed("Invalid columns format")
+            }
+            let nameLower = name.lowercased()
+            if columns.contains(where: { ($0["name"] as? String)?.lowercased() == nameLower }) {
+                throw WriteError.encodingFailed("Column already exists: \(name)")
+            }
+            let maxOrder = columns.compactMap { $0["orderIndex"] as? Int }.max() ?? -1
+            let newId = UUID()
+            let newColumn: [String: Any] = [
+                "id": newId.uuidString,
+                "name": name,
+                "description": description,
+                "orderIndex": maxOrder + 1,
+                "color": color,
+            ]
+            columns.append(newColumn)
+            board["columns"] = columns
+            let data = try JSONSerialization.data(withJSONObject: newColumn)
+            return try JSONDecoder().decode(Column.self, from: data)
+        }
+    }
+
+    /// Rename an existing column. Card membership is unchanged.
+    @discardableResult
+    public static func renameColumn(
+        identifier: String,
+        newName: String,
+        dataDirectory: URL? = nil,
+        profile: AppProfile.Variant = .current
+    ) throws -> Column {
+        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+            guard var columns = board["columns"] as? [[String: Any]] else {
+                throw WriteError.encodingFailed("Invalid columns format")
+            }
+            let identifierLower = identifier.lowercased()
+            guard let idx = columns.firstIndex(where: {
+                ($0["name"] as? String)?.lowercased() == identifierLower
+                    || ($0["id"] as? String) == identifier
+            }) else {
+                throw WriteError.columnNotFound(name: identifier)
+            }
+            // Reject duplicates (other than the renamed column itself).
+            let newNameLower = newName.lowercased()
+            if columns.enumerated().contains(where: { i, c in
+                i != idx && (c["name"] as? String)?.lowercased() == newNameLower
+            }) {
+                throw WriteError.encodingFailed("Column already exists: \(newName)")
+            }
+            columns[idx]["name"] = newName
+            board["columns"] = columns
+            let data = try JSONSerialization.data(withJSONObject: columns[idx])
+            return try JSONDecoder().decode(Column.self, from: data)
+        }
+    }
+
+    /// Delete a column.
+    ///
+    /// - Throws `columnNotFound` if the column doesn't exist.
+    /// - When `force == false` (default): throws `encodingFailed` if any active cards
+    ///   remain in the column — callers must move or delete them first.
+    /// - When `force == true`: soft-deletes all cards in the column (sets `deletedAt`).
+    ///   The column is removed from the columns array regardless. Soft-deleted cards
+    ///   can be individually restored via `restoreCard`.
+    public static func deleteColumn(
+        identifier: String,
+        force: Bool = false,
+        dataDirectory: URL? = nil,
+        profile: AppProfile.Variant = .current
+    ) throws {
+        try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+            guard var columns = board["columns"] as? [[String: Any]],
+                var cards = board["cards"] as? [[String: Any]]
+            else {
+                throw WriteError.encodingFailed("Invalid board format")
+            }
+            let identifierLower = identifier.lowercased()
+            guard let idx = columns.firstIndex(where: {
+                ($0["name"] as? String)?.lowercased() == identifierLower
+                    || ($0["id"] as? String) == identifier
+            }) else {
+                throw WriteError.columnNotFound(name: identifier)
+            }
+            guard let columnId = columns[idx]["id"] as? String else {
+                throw WriteError.columnNotFound(name: identifier)
+            }
+
+            let activeInColumn = cards.filter {
+                ($0["columnId"] as? String) == columnId && $0["deletedAt"] == nil
+            }
+            if !activeInColumn.isEmpty && !force {
+                throw WriteError.encodingFailed(
+                    "Column '\(identifier)' has \(activeInColumn.count) active card(s)."
+                        + " Move them or pass force: true to soft-delete them.")
+            }
+
+            if force {
+                let nowString = ISO8601DateFormatter().string(from: Date())
+                for i in cards.indices where (cards[i]["columnId"] as? String) == columnId
+                    && cards[i]["deletedAt"] == nil {
+                    cards[i]["deletedAt"] = nowString
+                }
+                board["cards"] = cards
+            }
+            columns.remove(at: idx)
+            board["columns"] = columns
+            return ()
+        }
+    }
+
+    /// Restore a soft-deleted card by clearing its `deletedAt` timestamp.
+    @discardableResult
+    public static func restoreCard(
+        identifier: String,
+        dataDirectory: URL? = nil,
+        profile: AppProfile.Variant = .current
+    ) throws -> Card {
+        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+            guard var cards = board["cards"] as? [[String: Any]] else {
+                throw WriteError.encodingFailed("Invalid cards format")
+            }
+            // Find among deleted cards specifically — restoring something not in the bin
+            // is a no-op the caller should know about.
+            let identifierLower = identifier.lowercased()
+            guard let idx = cards.firstIndex(where: {
+                let isDeleted = $0["deletedAt"] != nil
+                let matches =
+                    ($0["id"] as? String) == identifier
+                    || ($0["title"] as? String)?.lowercased() == identifierLower
+                return isDeleted && matches
+            }) else {
+                throw WriteError.cardNotFound(identifier: identifier)
+            }
+            cards[idx]["deletedAt"] = nil
+            // Remove the deletedAt key entirely rather than leaving an NSNull entry.
+            cards[idx].removeValue(forKey: "deletedAt")
+            board["cards"] = cards
+            let cardUUID = (cards[idx]["id"] as? String).flatMap(UUID.init(uuidString:))
+            return try decodeCard(
+                at: idx, in: cards, identifier: identifier, capturedUUID: cardUUID)
+        }
+    }
+
     /// Find card index by identifier
     private static func findCardIndex(
         identifier: String,

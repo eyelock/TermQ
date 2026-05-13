@@ -34,6 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Resource subscriptions** (`resources/subscribe` / `resources/unsubscribe` + `notifications/resources/updated`) — long-running clients can subscribe to `termq://terminals`, `termq://pending`, or any other resource URI and be notified when board.json changes (e.g. the user moves a card in the GUI). Backed by a `DispatchSourceFileSystemObject` watcher with a 150ms debounce window so atomic writes don't fan out to multiple notifications. The `subscribe: true` capability TermQ has declared since 0.x is now actually honoured.
 - **`record_handshake` tool** — explicit, side-effect-only marker that an LLM session has consumed a terminal's context. Idiomatic pair with reading `termq://terminal/{id}` (pure). `get` retains the combined read+handshake behaviour for one release as a deprecated alias per the audit's semantic-break policy.
 
+### Added — MCP domain symmetry (Tier 2)
+
+- **`whoami` tool** — resolves the current card from the `TERMQ_TERMINAL_ID` environment variable. Returns null (not error) when running outside a TermQ terminal context, so top-level Claude sessions don't see a spurious failure.
+- **`restore` tool + `BoardWriter.restoreCard`** — restore a soft-deleted (binned) card by clearing its `deletedAt` timestamp. Permanent deletes remain irrecoverable. Closes the asymmetry where MCP could delete but not undelete.
+- **Column CRUD** — `create_column`, `rename_column`, `delete_column` tools with matching `BoardWriter.createColumn` / `renameColumn` / `deleteColumn` primitives. `delete_column` refuses by default if active cards remain; pass `force: true` to soft-delete them along with the column.
+- **`list` extended:** `includeDeleted: true` to include binned cards; `cursor` + `limit` for pagination. Unpaginated calls keep returning the bare array — pagination is opt-in.
+- **`find` extended:** same `cursor` + `limit` parameters as `list`. Pagination cursor is base64-encoded offset, opaque to clients.
+
 ### Added
 
 - **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles
