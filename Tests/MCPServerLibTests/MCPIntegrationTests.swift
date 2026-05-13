@@ -241,7 +241,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         XCTAssertEqual(terminals.count, 4)
     }
@@ -258,7 +258,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         XCTAssertEqual(terminals.count, 2)  // Test Terminal 1 and Favourite Terminal
     }
@@ -275,7 +275,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let columns = try JSONDecoder().decode([ColumnOutput].self, from: data)
+        let columns = try JSONDecoder().decode(ColumnListEnvelope.self, from: data).items
 
         XCTAssertEqual(columns.count, 3)
         XCTAssertEqual(columns[0].name, "To Do")
@@ -294,7 +294,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let columns = try JSONDecoder().decode([ColumnOutput].self, from: data)
+        let columns = try JSONDecoder().decode(ColumnListEnvelope.self, from: data).items
 
         // First column has a description
         XCTAssertEqual(columns[0].description, "Tasks to start")
@@ -316,7 +316,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Favourite Terminal")
@@ -334,7 +334,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Test Terminal 1")
@@ -352,7 +352,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Favourite Terminal")
@@ -370,7 +370,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Favourite Terminal")
@@ -393,7 +393,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         // Should find the mcp-toolkit terminal
         XCTAssertTrue(terminals.contains { $0.name.contains("mcp-toolkit") })
@@ -412,7 +412,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         // Should find the mcp-toolkit terminal by its description
         XCTAssertTrue(terminals.contains { $0.name.contains("mcp-toolkit") })
@@ -430,7 +430,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         XCTAssertEqual(terminals.count, 0)
     }
@@ -451,7 +451,7 @@ final class MCPIntegrationTests: XCTestCase {
         }
 
         let data = json.data(using: .utf8)!
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: data)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: data).items
 
         // Should find mcp-toolkit (matches query and is in "In Progress")
         XCTAssertEqual(terminals.count, 1)
@@ -727,4 +727,15 @@ final class MCPIntegrationTests: XCTestCase {
             // Expected
         }
     }
+}
+
+/// Local mirror of the `list` / `find` envelope shape — see SchemaBuilder.terminalListSchema.
+struct TerminalListEnvelope: Codable {
+    let items: [TerminalOutput]
+    let nextCursor: String?
+}
+
+/// Local mirror of the columns-only envelope emitted by `list { columnsOnly: true }`.
+struct ColumnListEnvelope: Codable {
+    let items: [ColumnOutput]
 }

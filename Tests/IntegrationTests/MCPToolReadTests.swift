@@ -75,7 +75,7 @@ final class MCPToolReadTests: XCTestCase {
 
         // Should return columns, not terminals
         let data = Data(json.utf8)
-        let columns = try JSONDecoder().decode([ColumnOutput].self, from: data)
+        let columns = try JSONDecoder().decode(ColumnListEnvelope.self, from: data).items
 
         XCTAssertEqual(columns.count, 3, "Should return 3 default columns")
         XCTAssertEqual(columns[0].name, "To Do")
@@ -93,7 +93,7 @@ final class MCPToolReadTests: XCTestCase {
         }
 
         let data = Data(json.utf8)
-        let columns = try JSONDecoder().decode([ColumnOutput].self, from: data)
+        let columns = try JSONDecoder().decode(ColumnListEnvelope.self, from: data).items
 
         XCTAssertEqual(columns[0].description, "Tasks to start")
         XCTAssertEqual(columns[1].description, "Active work")
@@ -109,7 +109,7 @@ final class MCPToolReadTests: XCTestCase {
         }
 
         let data = Data(json.utf8)
-        let columns = try JSONDecoder().decode([ColumnOutput].self, from: data)
+        let columns = try JSONDecoder().decode(ColumnListEnvelope.self, from: data).items
 
         // Verify terminal counts match what we set up
         // TestBoardBuilder.comprehensive: To Do=2, In Progress=2, Done=1
@@ -535,19 +535,24 @@ final class MCPToolReadTests: XCTestCase {
 
 // MARK: - Helper Functions
 
-/// Extract terminal array from tool result
+/// Extract terminal array from tool result.
+///
+/// `list` and `find` now emit an envelope `{ items: [...], nextCursor?: string }`
+/// per MCP's requirement that `structuredContent` be a JSON object — so this
+/// helper unwraps `items` rather than expecting a bare top-level array.
 func extractTerminalArray(from result: CallTool.Result) throws -> [[String: Any]] {
     guard case .text(let json, _, _) = result.content[0] else {
         throw TestHelperError.noTextContent
     }
 
     guard let data = json.data(using: .utf8),
-        let array = try JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+        let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+        let items = obj["items"] as? [[String: Any]]
     else {
         throw TestHelperError.invalidJSON
     }
 
-    return array
+    return items
 }
 
 /// Extract single terminal from tool result
@@ -568,4 +573,9 @@ func extractTerminal(from result: CallTool.Result) throws -> [String: Any] {
 enum TestHelperError: Error {
     case noTextContent
     case invalidJSON
+}
+
+/// Local mirror of the columns-only envelope emitted by `list { columnsOnly: true }`.
+struct ColumnListEnvelope: Codable {
+    let items: [ColumnOutput]
 }

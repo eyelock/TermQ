@@ -117,11 +117,22 @@ enum SchemaBuilder {
         ])
     }
 
-    /// Schema for an array of TerminalOutput rows (used by `list`, `find`).
+    /// Schema for the `list` / `find` envelope.
+    ///
+    /// MCP requires `outputSchema.type` to be `"object"` at the top level and the
+    /// emitted `structuredContent` to be a JSON object — so the array of rows
+    /// lives under `items` and an optional `nextCursor` carries paginated state.
     static var terminalListSchema: Value {
         .object([
-            "type": .string("array"),
-            "items": terminalOutputItemSchema,
+            "type": .string("object"),
+            "properties": .object([
+                "items": .object([
+                    "type": .string("array"),
+                    "items": terminalOutputItemSchema,
+                ]),
+                "nextCursor": .object(["type": .string("string")]),
+            ]),
+            "required": .array([.string("items")]),
         ])
     }
 

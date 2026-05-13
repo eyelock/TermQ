@@ -169,7 +169,7 @@ extension TermQMCPServer {
         do {
             let board = try loadBoard()
 
-            // If columnsOnly, return just column info
+            // If columnsOnly, return just column info wrapped in the envelope shape.
             if columnsOnly {
                 let columns = board.sortedColumns().map { column in
                     ColumnOutput(
@@ -177,7 +177,7 @@ extension TermQMCPServer {
                         terminalCount: board.activeCards.filter { $0.columnId == column.id }.count
                     )
                 }
-                return try structuredResult(columns)
+                return try structuredResult(ColumnList(items: columns))
             }
 
             // Source set — active by default, all cards (incl. soft-deleted) when requested.
@@ -191,14 +191,10 @@ extension TermQMCPServer {
             let output = paginated.items.map {
                 TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId))
             }
-            // When the caller asked for pagination, wrap; otherwise emit the bare array
-            // for back-compat with existing clients (the outputSchema only describes that
-            // shape — paginated callers can read `_meta.nextCursor` from the response).
-            if cursor != nil || limit != nil {
-                return try structuredResult(
-                    PaginatedTerminals(items: output, nextCursor: paginated.nextCursor))
-            }
-            return try structuredResult(output)
+            // MCP requires `structuredContent` to be a JSON object — always emit the
+            // envelope, with `nextCursor` only present when the caller paginated.
+            return try structuredResult(
+                PaginatedTerminals(items: output, nextCursor: paginated.nextCursor))
 
         } catch {
             return CallTool.Result(
@@ -207,11 +203,25 @@ extension TermQMCPServer {
         }
     }
 
-    /// Envelope used when the caller opted into pagination by passing `cursor` or
-    /// `limit`. Unpaginated calls keep returning the bare array.
+    /// Envelope for `list` / `find` — MCP requires `structuredContent` to be an
+    /// object, so the rows are always wrapped under `items` with an optional
+    /// `nextCursor` for pagination.
     struct PaginatedTerminals: Codable {
         let items: [TerminalOutput]
         let nextCursor: String?
+
+        func encode(to encoder: Encoder) throws {
+            var c = encoder.container(keyedBy: CodingKeys.self)
+            try c.encode(items, forKey: .items)
+            if let nextCursor = nextCursor {
+                try c.encode(nextCursor, forKey: .nextCursor)
+            }
+        }
+    }
+
+    /// Envelope for `list` with `columnsOnly: true`.
+    struct ColumnList: Codable {
+        let items: [ColumnOutput]
     }
 
     /// Cursor-based pagination over a stable slice. Cursor is a base64-encoded integer
@@ -266,7 +276,8 @@ extension TermQMCPServer {
             if let query = query, !query.isEmpty {
                 let queryWords = CardFilterEngine.normalizeToWords(query)
                 guard !queryWords.isEmpty else {
-                    return try structuredResult([TerminalOutput]())
+                    return try structuredResult(
+                        PaginatedTerminals(items: [], nextCursor: nil))
                 }
 
                 cards = cards.filter { card in
@@ -308,11 +319,8 @@ extension TermQMCPServer {
             let output = paginated.items.map {
                 TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId))
             }
-            if cursor != nil || limit != nil {
-                return try structuredResult(
-                    PaginatedTerminals(items: output, nextCursor: paginated.nextCursor))
-            }
-            return try structuredResult(output)
+            return try structuredResult(
+                PaginatedTerminals(items: output, nextCursor: paginated.nextCursor))
 
         } catch {
             return CallTool.Result(
