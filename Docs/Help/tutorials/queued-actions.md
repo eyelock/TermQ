@@ -134,7 +134,7 @@ termqcli set "API Server" --llm-next-action "Run the test suite and check if AUT
 Or via MCP (what Claude does at session end):
 
 ```
-termq_set identifier="API Server" llmNextAction="Run the test suite and check if AUTH-23 is resolved."
+set identifier="API Server" llmNextAction="Run the test suite and check if AUTH-23 is resolved."
 ```
 
 Now the next time that terminal opens, the queued action fires.

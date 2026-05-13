@@ -60,8 +60,8 @@ extension TermQMCPServer {
             if !pendingCards.isEmpty {
                 content += "1. Address pending actions above\n"
             }
-            content += "2. Use `termq_pending` for detailed terminal view\n"
-            content += "3. Use `termq_context` for workflow guide\n"
+            content += "2. Use `pending` for detailed terminal view\n"
+            content += "3. Use `context` for workflow guide\n"
 
         } catch {
             content += "Error loading board: \(error.localizedDescription)\n\n"
@@ -135,7 +135,7 @@ extension TermQMCPServer {
 
         ## SESSION START CHECKLIST (Do This First!)
 
-        1. Use the `termq_pending` tool to see what needs attention:
+        1. Use the `pending` tool to see what needs attention:
            - Shows terminals with queued tasks (llmNextAction)
            - Shows staleness indicators
 
@@ -179,18 +179,18 @@ extension TermQMCPServer {
         ## AVAILABLE MCP TOOLS
 
         ### Query Tools
-        - `termq_pending` - Check terminals needing attention (SESSION START)
-        - `termq_context` - Get this documentation
-        - `termq_list` - List all terminals or filter by column
-        - `termq_find` - Search terminals by name, column, tag, etc.
-        - `termq_open` - Get terminal details by name, UUID, or path
-        - `termq_get` - Get terminal by UUID (use with $TERMQ_TERMINAL_ID)
+        - `pending` - Check terminals needing attention (SESSION START)
+        - `context` - Get this documentation
+        - `list` - List all terminals or filter by column
+        - `find` - Search terminals by name, column, tag, etc.
+        - `open` - Get terminal details by name, UUID, or path
+        - `get` - Get terminal by UUID (use with $TERMQ_TERMINAL_ID)
 
         ### Write Tools
         These tools modify the board directly:
-        - `termq_create` - Create a new terminal
-        - `termq_set` - Modify terminal properties (name, badge, llmPrompt, etc.)
-        - `termq_move` - Move terminal to a different column
+        - `create` - Create a new terminal
+        - `set` - Modify terminal properties (name, badge, llmPrompt, etc.)
+        - `move` - Move terminal to a different column
 
         ## TERMINAL FIELDS
 
@@ -205,7 +205,7 @@ extension TermQMCPServer {
 
         ## TIPS
 
-        - ALWAYS use `termq_pending` at session start
+        - ALWAYS use `pending` at session start
         - ALWAYS set `llmNextAction` when parking incomplete work
         - Use `staleness` tag to track what needs attention
         - Use `project` tag to group related terminals

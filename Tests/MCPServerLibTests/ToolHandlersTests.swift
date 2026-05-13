@@ -300,7 +300,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 2)
     }
 
@@ -327,7 +327,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let columns = try JSONDecoder().decode([ColumnOutput].self, from: json.data(using: .utf8)!)
+        let columns = try JSONDecoder().decode(ColumnListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(columns.count, 2)
         XCTAssertEqual(columns[0].name, "To Do")
         XCTAssertEqual(columns[0].description, "Tasks to do")
@@ -358,7 +358,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Active Card")
     }
@@ -386,7 +386,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 3)
         // Should be sorted: column 0 cards first (by order), then column 1 cards
         XCTAssertEqual(terminals[0].name, "Card A")
@@ -423,7 +423,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Frontend Project")
     }
@@ -447,7 +447,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Has Env Tag")
     }
@@ -471,7 +471,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].name, "Production")
     }
@@ -500,7 +500,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertTrue(terminals.contains { $0.name.contains("mcp-toolkit") })
     }
 
@@ -520,7 +520,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 0)
     }
 
@@ -541,7 +541,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         // Should return empty since query normalizes to nothing
         XCTAssertEqual(terminals.count, 0)
     }
@@ -584,7 +584,7 @@ final class ToolHandlersTests: XCTestCase {
             return
         }
 
-        let terminals = try JSONDecoder().decode([TerminalOutput].self, from: json.data(using: .utf8)!)
+        let terminals = try JSONDecoder().decode(TerminalListEnvelope.self, from: json.data(using: .utf8)!).items
         XCTAssertEqual(terminals.count, 1)
         XCTAssertEqual(terminals[0].id, cardId.uuidString)
     }

@@ -92,15 +92,20 @@ final class ResourceHandlersTests: XCTestCase {
     }
 
     func testTerminalsResourceWithLoadError() async throws {
-        // Server with no board.json
+        // Server with no board.json — load failures must SURFACE to the client, not
+        // silently return "[]". An empty array means "the board has zero cards"; a
+        // missing/corrupt board means "something is wrong with the install." Conflating
+        // the two is exactly the bug this work was opened to fix.
         server = TermQMCPServer(dataDirectory: tempDirectory)
 
         let params = ReadResource.Parameters(uri: "termq://terminals")
-        let result = try await server.dispatchResourceRead(params)
-
-        // Should return empty array on error
-        let json = result.contents[0].text ?? ""
-        XCTAssertEqual(json, "[]")
+        do {
+            _ = try await server.dispatchResourceRead(params)
+            XCTFail("Expected load error to be thrown")
+        } catch {
+            // Any thrown error is acceptable — the contract is "surface the failure," not a
+            // specific error type. Confirming the call did not silently succeed is enough.
+        }
     }
 
     // MARK: - Columns Resource Tests
@@ -129,10 +134,12 @@ final class ResourceHandlersTests: XCTestCase {
         server = TermQMCPServer(dataDirectory: tempDirectory)
 
         let params = ReadResource.Parameters(uri: "termq://columns")
-        let result = try await server.dispatchResourceRead(params)
-
-        let json = result.contents[0].text ?? ""
-        XCTAssertEqual(json, "[]")
+        do {
+            _ = try await server.dispatchResourceRead(params)
+            XCTFail("Expected load error to be thrown")
+        } catch {
+            // Surface, not swallow — see testTerminalsResourceWithLoadError.
+        }
     }
 
     // MARK: - Pending Resource Tests
@@ -196,10 +203,12 @@ final class ResourceHandlersTests: XCTestCase {
         server = TermQMCPServer(dataDirectory: tempDirectory)
 
         let params = ReadResource.Parameters(uri: "termq://pending")
-        let result = try await server.dispatchResourceRead(params)
-
-        let json = result.contents[0].text ?? ""
-        XCTAssertEqual(json, "{}")
+        do {
+            _ = try await server.dispatchResourceRead(params)
+            XCTFail("Expected load error to be thrown")
+        } catch {
+            // Surface, not swallow — see testTerminalsResourceWithLoadError.
+        }
     }
 
     func testPendingResourceSortsByActionsFirst() async throws {

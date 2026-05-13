@@ -29,7 +29,8 @@ struct Pending: ParsableCommand {
     func run() throws {
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: shouldUseDebugMode(debug))
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: resolveProfile(debug))
             let cards = getFilteredAndSortedCards(from: board)
             let output = buildPendingOutput(cards: cards, board: board)
 
