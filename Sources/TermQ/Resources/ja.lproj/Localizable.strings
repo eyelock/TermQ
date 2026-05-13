@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "「%@」をアップデート中…";
 "harness.update.button" = "アップデート";
 "harness.update.ynh.unavailable" = "ynh が利用できません。";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" をインストール中…";
+"harness.install.ynh.unavailable" = "ynh が利用できません。";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" をアンインストール中…";
+"harness.uninstall.ynh.unavailable" = "ynh が利用できません。";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" をエクスポート中…";
+"harness.export.ynd.unavailable" = "ynd が利用できません。";
+
 "command.runner.running" = "実行中…";
 "command.runner.succeeded" = "成功";
 "command.runner.failed" = "失敗";
@@ -1057,3 +1069,147 @@
 "harnesses.unversioned.drift.confirm.title" = "上流の変更を確認";
 "harnesses.unversioned.drift.confirm.body" = "上流のコンテンツがバージョン更新なしに変更されました。更新すると新しいコンテンツが取得されます。続行前に以下の SHA を確認してください — バージョン更新の欠如は悪意ある変更を隠す可能性があります。";
 "harnesses.unversioned.drift.confirm.proceed" = "それでも更新";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "インクルードなし";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "フォーカスを追加";
+"harnesses.focus.add.title" = "フォーカスを追加";
+"harnesses.focus.edit.button" = "編集";
+"harnesses.focus.edit.title" = "フォーカスを編集";
+"harnesses.focus.remove.button" = "削除";
+"harnesses.focus.remove.confirm.title" = "フォーカスを削除";
+"harnesses.focus.remove.confirm.button" = "削除";
+"harnesses.focus.remove.confirm.message %@" = "フォーカス\"%@\"を削除しますか？";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "名前";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "プロンプト";
+"harnesses.focus.profile" = "プロファイル";
+"harnesses.focus.profile.none" = "なし";
+"harnesses.focus.clear.profile" = "プロファイルをクリア";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "追加";
+"harnesses.focus.save" = "保存";
+"harnesses.focus.cancel" = "キャンセル";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "プロファイルを追加";
+"harnesses.profile.add.title" = "プロファイルを追加";
+"harnesses.profile.edit.button" = "編集";
+"harnesses.profile.edit.title %@" = "プロファイルを編集: %@";
+"harnesses.profile.edit.done" = "完了";
+"harnesses.profile.remove.button" = "削除";
+"harnesses.profile.remove.confirm.title" = "プロファイルを削除";
+"harnesses.profile.remove.confirm.button" = "削除";
+"harnesses.profile.remove.confirm.message %@" = "プロファイル\"%@\"を削除しますか？";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "名前";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "追加";
+"harnesses.profile.includes" = "インクルード";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "フックを追加";
+"harnesses.profile.hook.add.title" = "フックを追加";
+"harnesses.profile.hook.event" = "イベント";
+"harnesses.profile.hook.command" = "コマンド";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "マッチャー";
+"harnesses.profile.hook.matcher.placeholder" = "任意のパターン";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "サーバーを追加";
+"harnesses.profile.mcp.add.title" = "MCPサーバーを追加";
+"harnesses.profile.mcp.name" = "名前";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "種類";
+"harnesses.profile.mcp.type.command" = "コマンド";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "コマンド";
+"harnesses.profile.mcp.args" = "引数";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "スペース区切りの引数";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "このプロファイルにより無効化（継承されたサーバーを上書き）";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "インクルードを追加";
+"harnesses.profile.include.add.title" = "インクルードを追加";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "担当";
+"remote.prs.badge.author" = "自分";
+"remote.prs.badge.checked.out" = "チェックアウト済";
+"remote.prs.badge.draft" = "下書き";
+"remote.prs.badge.review" = "レビュー";
+"remote.prs.checking.out %lld" = "PR #%lldをチェックアウト中…";
+"remote.prs.checkout.as.worktree" = "Worktreeとしてチェックアウト";
+"remote.prs.checkout.toast %@" = "%@としてチェックアウトしました。";
+"remote.prs.clear.default.focus" = "デフォルトフォーカスをクリア";
+"remote.prs.copy.branch.name" = "ブランチ名をコピー";
+"remote.prs.copy.url" = "PR URLをコピー";
+"remote.prs.default.focus.set %@" = "デフォルトフォーカス: %@";
+"remote.prs.force.push.indicator" = "↑ 更新済";
+"remote.prs.force.update.cancel" = "キャンセル";
+"remote.prs.force.update.confirm" = "強制的に更新";
+"remote.prs.force.update.message %lld %lld" = "ローカルworktreeには%lld個の変更ファイルとoriginより%lld個先のcommitがあります。強制更新すると新しいPR headにリセットされ、この作業は失われます。";
+"remote.prs.force.update.title" = "PR headが強制プッシュされました";
+"remote.prs.gh.auth.failed" = "gh認証を確認できませんでした — 再試行しますか？";
+"remote.prs.gh.missing.message" = "リモートモードを使用するにはGitHub CLIをインストールしてください。";
+"remote.prs.gh.missing.title" = "gh CLIが見つかりません";
+"remote.prs.gh.recheck" = "再確認";
+"remote.prs.gh.unauth.message" = "ログインするには`gh auth login`を実行してください。";
+"remote.prs.gh.unauth.title" = "GitHubにサインインしていません";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "ローカル";
+"remote.prs.mode.remote" = "リモート";
+"remote.prs.no.github.remote" = "— GitHubリモートなし —";
+"remote.prs.open.pr.on.remote" = "リモートでPRを開く";
+"remote.prs.overflow.more %lld" = "さらに%lld件 — リポジトリ詳細を開く";
+"remote.prs.prune.all" = "⊘ 整理…";
+"remote.prs.prune.closed" = "⊘ クローズされたPRを整理";
+"remote.prs.prune.closed.confirm" = "整理";
+"remote.prs.prune.closed.header" = "クローズされたPRのWorktrees";
+"remote.prs.prune.closed.nothing.message" = "追跡中のすべてのPR行はまだオープンです。";
+"remote.prs.prune.closed.nothing.title" = "整理するものはありません";
+"remote.prs.prune.closed.title %lld" = "%lld件のPRがクローズまたはマージ済み";
+"remote.prs.prune.focus.header" = "フォーカスWorktrees";
+"remote.prs.prune.focus.title %lld" = "%lld件のフォーカスWorktrees";
+"remote.prs.prune.keep" = "保持";
+"remote.prs.prune.reason.ahead" = "未プッシュのcommit";
+"remote.prs.prune.reason.dirty" = "未commit の変更";
+"remote.prs.prune.remove" = "削除";
+"remote.prs.quick.launch.focus" = "フォーカスをクイック起動";
+"remote.prs.run.cancel" = "キャンセル";
+"remote.prs.run.customize" = "カスタマイズ";
+"remote.prs.run.focus.item %@" = "%@を実行";
+"remote.prs.run.focus.label" = "フォーカス";
+"remote.prs.run.focus.none" = "（なし — アドホックプロンプト）";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "エージェントは最初のフォーカスに応答し、その後フォローアップの質問に対してオープンのままにします。";
+"remote.prs.run.interactive.label" = "実行後もインタラクティブのままにする";
+"remote.prs.run.loading.detail" = "Harness詳細を読み込み中…";
+"remote.prs.run.profile.default" = "（Harnessデフォルト）";
+"remote.prs.run.profile.label" = "プロファイル";
+"remote.prs.run.prompt.label" = "フォーカスプロンプト";
+"remote.prs.run.refresh.detail" = "ディスクからHarnessフォーカスとプロファイルを再読み込み";
+"remote.prs.run.run" = "実行";
+"remote.prs.run.sheet.title" = "フォーカスで実行";
+"remote.prs.run.vendor.default" = "Harnessデフォルト";
+"remote.prs.run.vendor.label" = "ベンダー";
+"remote.prs.run.with.focus" = "フォーカスで実行…";
+"remote.prs.set.default.focus" = "デフォルトフォーカスを設定…";
+"remote.prs.show.in.local" = "ローカルに表示";
+"remote.prs.show.in.remote" = "リモートに表示";
+"remote.prs.switch.to.existing" = "既存のものに切り替え";
+"remote.prs.switch.to.local" = "ローカルに切り替え";
+"remote.prs.worktree.exists" = "Worktreeは既に存在します";
+"settings.github.feed.cap.help" = "リモートサイドバーでリポジトリごとに表示されるプルリクエストの最大数。チェックアウト済みのPRは常に含まれます。";
+"settings.github.feed.cap.label" = "リポジトリごとのPR数";
+"settings.github.section.feed" = "リモートPRフィード";
+"settings.tab.github" = "GitHub";

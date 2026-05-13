@@ -978,6 +978,18 @@
 "harness.update.progress.title %@" = "\"%@\" frissítése…";
 "harness.update.button" = "Frissítés";
 "harness.update.ynh.unavailable" = "ynh nem érhető el.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" telepítése…";
+"harness.install.ynh.unavailable" = "ynh nem érhető el.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" eltávolítása…";
+"harness.uninstall.ynh.unavailable" = "ynh nem érhető el.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" exportálása…";
+"harness.export.ynd.unavailable" = "ynd nem érhető el.";
+
 "command.runner.running" = "Fut…";
 "command.runner.succeeded" = "Sikeres";
 "command.runner.failed" = "Sikertelen";
@@ -1063,3 +1075,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Upstream-változások ellenőrzése";
 "harnesses.unversioned.drift.confirm.body" = "Az upstream tartalom verziónövekedés nélkül változott. A frissítés letölti az új tartalmat. Ellenőrizze az alábbi SHA-kat a folytatás előtt — a hiányzó verziónövekedés rosszindulatú változásokat leplezhet.";
 "harnesses.unversioned.drift.confirm.proceed" = "Frissítés mindenképpen";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Nincsenek belefoglalások";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Fókusz hozzáadása";
+"harnesses.focus.add.title" = "Fókusz hozzáadása";
+"harnesses.focus.edit.button" = "Szerkesztés";
+"harnesses.focus.edit.title" = "Fókusz szerkesztése";
+"harnesses.focus.remove.button" = "Eltávolítás";
+"harnesses.focus.remove.confirm.title" = "Fókusz eltávolítása";
+"harnesses.focus.remove.confirm.button" = "Eltávolítás";
+"harnesses.focus.remove.confirm.message %@" = "Eltávolítja a(z) \"%@\" fókuszt?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Név";
+"harnesses.focus.name.placeholder" = "sajat-fokusz";
+"harnesses.focus.prompt" = "Parancssor";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Nincs";
+"harnesses.focus.clear.profile" = "Profil törlése";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Hozzáadás";
+"harnesses.focus.save" = "Mentés";
+"harnesses.focus.cancel" = "Mégse";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Profil hozzáadása";
+"harnesses.profile.add.title" = "Profil hozzáadása";
+"harnesses.profile.edit.button" = "Szerkesztés";
+"harnesses.profile.edit.title %@" = "Profil szerkesztése: %@";
+"harnesses.profile.edit.done" = "Kész";
+"harnesses.profile.remove.button" = "Eltávolítás";
+"harnesses.profile.remove.confirm.title" = "Profil eltávolítása";
+"harnesses.profile.remove.confirm.button" = "Eltávolítás";
+"harnesses.profile.remove.confirm.message %@" = "Eltávolítja a(z) \"%@\" profilt?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Név";
+"harnesses.profile.name.placeholder" = "sajat-profil";
+"harnesses.profile.add.confirm" = "Hozzáadás";
+"harnesses.profile.includes" = "Belefoglalások";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Hook hozzáadása";
+"harnesses.profile.hook.add.title" = "Hook hozzáadása";
+"harnesses.profile.hook.event" = "Esemény";
+"harnesses.profile.hook.command" = "Parancs";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Illesztő";
+"harnesses.profile.hook.matcher.placeholder" = "Opcionális minta";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Szerver hozzáadása";
+"harnesses.profile.mcp.add.title" = "MCP-szerver hozzáadása";
+"harnesses.profile.mcp.name" = "Név";
+"harnesses.profile.mcp.name.placeholder" = "szerver-neve";
+"harnesses.profile.mcp.type" = "Típus";
+"harnesses.profile.mcp.type.command" = "Parancs";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Parancs";
+"harnesses.profile.mcp.args" = "Argumentumok";
+"harnesses.profile.mcp.args.placeholder" = "--jelző érték";
+"harnesses.profile.mcp.args.hint" = "Szóközzel elválasztott argumentumok";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Ez a profil letiltotta (felülírja az örökölt szervereket)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Belefoglalás hozzáadása";
+"harnesses.profile.include.add.title" = "Belefoglalás hozzáadása";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "hozzárendelve";
+"remote.prs.badge.author" = "én";
+"remote.prs.badge.checked.out" = "kivéve";
+"remote.prs.badge.draft" = "vázlat";
+"remote.prs.badge.review" = "felülvizsgálat";
+"remote.prs.checking.out %lld" = "PR #%lld kivétele…";
+"remote.prs.checkout.as.worktree" = "Kivétel worktree-ként";
+"remote.prs.checkout.toast %@" = "Kivéve %@-ként.";
+"remote.prs.clear.default.focus" = "Alapértelmezett fókusz törlése";
+"remote.prs.copy.branch.name" = "Ágnév másolása";
+"remote.prs.copy.url" = "PR URL másolása";
+"remote.prs.default.focus.set %@" = "Alapértelmezett fókusz: %@";
+"remote.prs.force.push.indicator" = "↑ frissítve";
+"remote.prs.force.update.cancel" = "Mégse";
+"remote.prs.force.update.confirm" = "Kényszerítés mindenképp";
+"remote.prs.force.update.message %lld %lld" = "A helyi worktree-nek %lld módosított fájlja van és %lld commit-tal van az origin előtt. A kényszerített frissítés az új PR head-re áll vissza és elveszti ezt a munkát.";
+"remote.prs.force.update.title" = "A PR head kényszerítve lett küldve";
+"remote.prs.gh.auth.failed" = "Nem sikerült ellenőrizni a gh hitelesítést — újra?";
+"remote.prs.gh.missing.message" = "Telepítse a GitHub CLI-t a Remote mód használatához.";
+"remote.prs.gh.missing.title" = "A gh CLI nem található";
+"remote.prs.gh.recheck" = "Újra ellenőrzés";
+"remote.prs.gh.unauth.message" = "Futtassa a `gh auth login` parancsot a bejelentkezéshez.";
+"remote.prs.gh.unauth.title" = "Nincs bejelentkezve a GitHub-ra";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Helyi";
+"remote.prs.mode.remote" = "Távoli";
+"remote.prs.no.github.remote" = "— nincs GitHub remote —";
+"remote.prs.open.pr.on.remote" = "PR megnyitása Remote-on";
+"remote.prs.overflow.more %lld" = "+ még %lld — Tárház részletek megnyitása";
+"remote.prs.prune.all" = "⊘ Törlés…";
+"remote.prs.prune.closed" = "⊘ Lezárt PR-ek törlése";
+"remote.prs.prune.closed.confirm" = "Törlés";
+"remote.prs.prune.closed.header" = "Lezárt PR-ek Worktree-i";
+"remote.prs.prune.closed.nothing.message" = "Minden nyomon követett PR sor még nyitott.";
+"remote.prs.prune.closed.nothing.title" = "Nincs törlendő";
+"remote.prs.prune.closed.title %lld" = "%lld PR lezárva vagy egyesítve";
+"remote.prs.prune.focus.header" = "Fókusz-Worktree-k";
+"remote.prs.prune.focus.title %lld" = "%lld Fókusz-Worktree";
+"remote.prs.prune.keep" = "Megtartás";
+"remote.prs.prune.reason.ahead" = "el nem küldött commit-ok";
+"remote.prs.prune.reason.dirty" = "el nem mentett változtatások";
+"remote.prs.prune.remove" = "Eltávolítás";
+"remote.prs.quick.launch.focus" = "Fókusz gyors indítása";
+"remote.prs.run.cancel" = "Mégse";
+"remote.prs.run.customize" = "Testreszabás";
+"remote.prs.run.focus.item %@" = "%@ futtatása";
+"remote.prs.run.focus.label" = "Fókusz";
+"remote.prs.run.focus.none" = "(nincs — ad hoc parancssor)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Az ügynök válaszol a kezdeti fókuszra, majd nyitva marad a követési kérdésekre.";
+"remote.prs.run.interactive.label" = "Maradjon interaktív futás után";
+"remote.prs.run.loading.detail" = "Harness részletek betöltése…";
+"remote.prs.run.profile.default" = "(Harness alapértelmezések)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Fókusz parancssora";
+"remote.prs.run.refresh.detail" = "Harness fókuszok és profilok újratöltése lemezről";
+"remote.prs.run.run" = "Futtatás";
+"remote.prs.run.sheet.title" = "Futtatás fókusszal";
+"remote.prs.run.vendor.default" = "Harness alapértelmezett";
+"remote.prs.run.vendor.label" = "Szállító";
+"remote.prs.run.with.focus" = "Futtatás fókusszal…";
+"remote.prs.set.default.focus" = "Alapértelmezett fókusz beállítása…";
+"remote.prs.show.in.local" = "Megjelenítés helyileg";
+"remote.prs.show.in.remote" = "Megjelenítés Remote-on";
+"remote.prs.switch.to.existing" = "Váltás meglévőre";
+"remote.prs.switch.to.local" = "Váltás helyire";
+"remote.prs.worktree.exists" = "A Worktree már létezik";
+"settings.github.feed.cap.help" = "Tárházonként megjelenített pull request-ek maximális száma a Remote oldalsávban. A kivett PR-ek mindig szerepelnek.";
+"settings.github.feed.cap.label" = "PR-ek tárházonként";
+"settings.github.section.feed" = "Remote PR-folyam";
+"settings.tab.github" = "GitHub";

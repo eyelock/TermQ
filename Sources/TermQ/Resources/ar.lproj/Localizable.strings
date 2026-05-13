@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "جارٍ تحديث \"%@\"…";
 "harness.update.button" = "تحديث";
 "harness.update.ynh.unavailable" = "ynh غير متاح.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "جارٍ تثبيت \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh غير متاح.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "جارٍ إلغاء تثبيت \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh غير متاح.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "جارٍ تصدير \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd غير متاح.";
+
 "command.runner.running" = "جارٍ التشغيل…";
 "command.runner.succeeded" = "نجح";
 "command.runner.failed" = "فشل";
@@ -1057,3 +1069,147 @@
 "harnesses.unversioned.drift.confirm.title" = "مراجعة التغييرات الأولية";
 "harnesses.unversioned.drift.confirm.body" = "تغيّر المحتوى الأولي دون تحديث للإصدار. سيجلب التحديث المحتوى الجديد. راجع الـ SHA أدناه قبل المتابعة — قد يُخفي غياب تحديث الإصدار تغييرات ضارة.";
 "harnesses.unversioned.drift.confirm.proceed" = "تحديث على أي حال";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "لا توجد تضمينات";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "إضافة تركيز";
+"harnesses.focus.add.title" = "إضافة تركيز";
+"harnesses.focus.edit.button" = "تعديل";
+"harnesses.focus.edit.title" = "تعديل التركيز";
+"harnesses.focus.remove.button" = "إزالة";
+"harnesses.focus.remove.confirm.title" = "إزالة التركيز";
+"harnesses.focus.remove.confirm.button" = "إزالة";
+"harnesses.focus.remove.confirm.message %@" = "هل تريد إزالة التركيز \"%@\"؟";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "الاسم";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "التعليمات";
+"harnesses.focus.profile" = "الملف الشخصي";
+"harnesses.focus.profile.none" = "لا شيء";
+"harnesses.focus.clear.profile" = "مسح الملف الشخصي";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "إضافة";
+"harnesses.focus.save" = "حفظ";
+"harnesses.focus.cancel" = "إلغاء";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "إضافة ملف شخصي";
+"harnesses.profile.add.title" = "إضافة ملف شخصي";
+"harnesses.profile.edit.button" = "تعديل";
+"harnesses.profile.edit.title %@" = "تعديل الملف الشخصي: %@";
+"harnesses.profile.edit.done" = "تم";
+"harnesses.profile.remove.button" = "إزالة";
+"harnesses.profile.remove.confirm.title" = "إزالة الملف الشخصي";
+"harnesses.profile.remove.confirm.button" = "إزالة";
+"harnesses.profile.remove.confirm.message %@" = "هل تريد إزالة الملف الشخصي \"%@\"؟";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "الاسم";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "إضافة";
+"harnesses.profile.includes" = "التضمينات";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "إضافة خطاف";
+"harnesses.profile.hook.add.title" = "إضافة خطاف";
+"harnesses.profile.hook.event" = "الحدث";
+"harnesses.profile.hook.command" = "الأمر";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "المطابق";
+"harnesses.profile.hook.matcher.placeholder" = "نمط اختياري";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "إضافة خادم";
+"harnesses.profile.mcp.add.title" = "إضافة خادم MCP";
+"harnesses.profile.mcp.name" = "الاسم";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "النوع";
+"harnesses.profile.mcp.type.command" = "أمر";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "الأمر";
+"harnesses.profile.mcp.args" = "المعاملات";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "معاملات مفصولة بمسافات";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "معطل بواسطة هذا الملف الشخصي (يتجاوز أي خادم موروث)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "إضافة تضمين";
+"harnesses.profile.include.add.title" = "إضافة تضمين";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "مُعيَّن";
+"remote.prs.badge.author" = "أنا";
+"remote.prs.badge.checked.out" = "مُستخرج";
+"remote.prs.badge.draft" = "مسودة";
+"remote.prs.badge.review" = "مراجعة";
+"remote.prs.checking.out %lld" = "استخراج PR #%lld…";
+"remote.prs.checkout.as.worktree" = "استخراج كـ worktree";
+"remote.prs.checkout.toast %@" = "تم الاستخراج كـ %@.";
+"remote.prs.clear.default.focus" = "مسح التركيز الافتراضي";
+"remote.prs.copy.branch.name" = "نسخ اسم الفرع";
+"remote.prs.copy.url" = "نسخ رابط PR";
+"remote.prs.default.focus.set %@" = "التركيز الافتراضي: %@";
+"remote.prs.force.push.indicator" = "↑ محدَّث";
+"remote.prs.force.update.cancel" = "إلغاء";
+"remote.prs.force.update.confirm" = "فرض التحديث على أي حال";
+"remote.prs.force.update.message %lld %lld" = "مساحة العمل المحلية لديك تحتوي على %lld ملف/ملفات معدَّلة و%lld إيداع/إيداعات أمام الأصل. سيُعيد التحديث القسري ضبط الإعدادات إلى رأس PR الجديد مع فقدان هذا العمل.";
+"remote.prs.force.update.title" = "تم دفع رأس PR قسراً";
+"remote.prs.gh.auth.failed" = "تعذّر التحقق من مصادقة gh — إعادة المحاولة؟";
+"remote.prs.gh.missing.message" = "ثبِّت GitHub CLI لاستخدام وضع Remote.";
+"remote.prs.gh.missing.title" = "لم يتم العثور على gh CLI";
+"remote.prs.gh.recheck" = "إعادة الفحص";
+"remote.prs.gh.unauth.message" = "شغِّل `gh auth login` لتسجيل الدخول.";
+"remote.prs.gh.unauth.title" = "غير مسجَّل الدخول على GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "محلي";
+"remote.prs.mode.remote" = "بعيد";
+"remote.prs.no.github.remote" = "— لا يوجد GitHub remote —";
+"remote.prs.open.pr.on.remote" = "فتح PR على Remote";
+"remote.prs.overflow.more %lld" = "+ %lld أخرى — فتح تفاصيل المستودع";
+"remote.prs.prune.all" = "⊘ تنظيف…";
+"remote.prs.prune.closed" = "⊘ تنظيف PRs المغلقة";
+"remote.prs.prune.closed.confirm" = "تنظيف";
+"remote.prs.prune.closed.header" = "Worktrees الخاصة بـ PRs المغلقة";
+"remote.prs.prune.closed.nothing.message" = "جميع صفوف PR المتتبَّعة لا تزال مفتوحة.";
+"remote.prs.prune.closed.nothing.title" = "لا شيء للتنظيف";
+"remote.prs.prune.closed.title %lld" = "%lld من PRs المغلقة أو المدمجة";
+"remote.prs.prune.focus.header" = "Worktrees التركيز";
+"remote.prs.prune.focus.title %lld" = "%lld من Worktrees التركيز";
+"remote.prs.prune.keep" = "احتفظ";
+"remote.prs.prune.reason.ahead" = "إيداعات غير مرفوعة";
+"remote.prs.prune.reason.dirty" = "تغييرات غير موافق عليها";
+"remote.prs.prune.remove" = "إزالة";
+"remote.prs.quick.launch.focus" = "تشغيل سريع للتركيز";
+"remote.prs.run.cancel" = "إلغاء";
+"remote.prs.run.customize" = "تخصيص";
+"remote.prs.run.focus.item %@" = "تشغيل %@";
+"remote.prs.run.focus.label" = "التركيز";
+"remote.prs.run.focus.none" = "(لا شيء — موجِّه مخصَّص)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "سيستجيب الوكيل للتركيز الأولي ثم يظل مفتوحاً للأسئلة المتابِعة.";
+"remote.prs.run.interactive.label" = "البقاء تفاعلياً بعد التشغيل";
+"remote.prs.run.loading.detail" = "جارٍ تحميل تفاصيل Harness…";
+"remote.prs.run.profile.default" = "(إعدادات Harness الافتراضية)";
+"remote.prs.run.profile.label" = "الملف الشخصي";
+"remote.prs.run.prompt.label" = "موجِّه التركيز";
+"remote.prs.run.refresh.detail" = "إعادة تحميل تركيزات وملفات Harness من القرص";
+"remote.prs.run.run" = "تشغيل";
+"remote.prs.run.sheet.title" = "التشغيل مع التركيز";
+"remote.prs.run.vendor.default" = "افتراضي Harness";
+"remote.prs.run.vendor.label" = "المورِّد";
+"remote.prs.run.with.focus" = "التشغيل مع التركيز…";
+"remote.prs.set.default.focus" = "تعيين التركيز الافتراضي…";
+"remote.prs.show.in.local" = "عرض محلياً";
+"remote.prs.show.in.remote" = "عرض على Remote";
+"remote.prs.switch.to.existing" = "التبديل إلى موجود";
+"remote.prs.switch.to.local" = "التبديل إلى محلي";
+"remote.prs.worktree.exists" = "Worktree موجود بالفعل";
+"settings.github.feed.cap.help" = "الحد الأقصى لعدد طلبات السحب المعروضة لكل مستودع في الشريط الجانبي Remote. يتم تضمين PRs المستخرجة دائماً.";
+"settings.github.feed.cap.label" = "PRs لكل مستودع";
+"settings.github.section.feed" = "موجز Remote PR";
+"settings.tab.github" = "GitHub";

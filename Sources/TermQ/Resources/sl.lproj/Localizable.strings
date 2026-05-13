@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "Posodabljanje \"%@\"…";
 "harness.update.button" = "Posodobi";
 "harness.update.ynh.unavailable" = "ynh ni na voljo.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Nameščanje \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh ni na voljo.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Odstranjevanje \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh ni na voljo.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Izvoz \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd ni na voljo.";
+
 "command.runner.running" = "Izvajanje…";
 "command.runner.succeeded" = "Uspelo";
 "command.runner.failed" = "Neuspešno";
@@ -1064,3 +1076,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Pregled sprememb upstream";
 "harnesses.unversioned.drift.confirm.body" = "Vsebina upstream se je spremenila brez posodobitve različice. Posodobitev bo potegnila novo vsebino. Preglejte SHA spodaj, preden nadaljujete — manjkajoča posodobitev različice lahko prikriva zlonamerne spremembe.";
 "harnesses.unversioned.drift.confirm.proceed" = "Posodobi vseeno";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Ni vključitev";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Dodaj fokus";
+"harnesses.focus.add.title" = "Dodaj fokus";
+"harnesses.focus.edit.button" = "Uredi";
+"harnesses.focus.edit.title" = "Uredi fokus";
+"harnesses.focus.remove.button" = "Odstrani";
+"harnesses.focus.remove.confirm.title" = "Odstrani fokus";
+"harnesses.focus.remove.confirm.button" = "Odstrani";
+"harnesses.focus.remove.confirm.message %@" = "Odstranim fokus \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Ime";
+"harnesses.focus.name.placeholder" = "moj-fokus";
+"harnesses.focus.prompt" = "Poziv";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Brez";
+"harnesses.focus.clear.profile" = "Počisti profil";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Dodaj";
+"harnesses.focus.save" = "Shrani";
+"harnesses.focus.cancel" = "Prekliči";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Dodaj profil";
+"harnesses.profile.add.title" = "Dodaj profil";
+"harnesses.profile.edit.button" = "Uredi";
+"harnesses.profile.edit.title %@" = "Uredi profil: %@";
+"harnesses.profile.edit.done" = "Končano";
+"harnesses.profile.remove.button" = "Odstrani";
+"harnesses.profile.remove.confirm.title" = "Odstrani profil";
+"harnesses.profile.remove.confirm.button" = "Odstrani";
+"harnesses.profile.remove.confirm.message %@" = "Odstranim profil \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Ime";
+"harnesses.profile.name.placeholder" = "moj-profil";
+"harnesses.profile.add.confirm" = "Dodaj";
+"harnesses.profile.includes" = "Vključitve";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Dodaj kljuko";
+"harnesses.profile.hook.add.title" = "Dodaj kljuko";
+"harnesses.profile.hook.event" = "Dogodek";
+"harnesses.profile.hook.command" = "Ukaz";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Ujemalo";
+"harnesses.profile.hook.matcher.placeholder" = "Neobvezni vzorec";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Dodaj strežnik";
+"harnesses.profile.mcp.add.title" = "Dodaj MCP strežnik";
+"harnesses.profile.mcp.name" = "Ime";
+"harnesses.profile.mcp.name.placeholder" = "ime-streznika";
+"harnesses.profile.mcp.type" = "Vrsta";
+"harnesses.profile.mcp.type.command" = "Ukaz";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Ukaz";
+"harnesses.profile.mcp.args" = "Argumenti";
+"harnesses.profile.mcp.args.placeholder" = "--zastavica vrednost";
+"harnesses.profile.mcp.args.hint" = "Argumenti, ločeni s presledki";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Onemogočeno s tem profilom (prepiše vse podedovane strežnike)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Dodaj vključitev";
+"harnesses.profile.include.add.title" = "Dodaj vključitev";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "dodeljeno";
+"remote.prs.badge.author" = "jaz";
+"remote.prs.badge.checked.out" = "izvlečeno";
+"remote.prs.badge.draft" = "osnutek";
+"remote.prs.badge.review" = "pregled";
+"remote.prs.checking.out %lld" = "Izvlačenje PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Izvleci kot worktree";
+"remote.prs.checkout.toast %@" = "Izvlečeno kot %@.";
+"remote.prs.clear.default.focus" = "Počisti privzeti fokus";
+"remote.prs.copy.branch.name" = "Kopiraj ime veje";
+"remote.prs.copy.url" = "Kopiraj URL PR";
+"remote.prs.default.focus.set %@" = "Privzeti fokus: %@";
+"remote.prs.force.push.indicator" = "↑ posodobljeno";
+"remote.prs.force.update.cancel" = "Prekliči";
+"remote.prs.force.update.confirm" = "Vseeno vsili";
+"remote.prs.force.update.message %lld %lld" = "Vaš lokalni worktree ima %lld spremenjen(e) datoteke in %lld commit(e) pred izvorom. Prisilna posodobitev bo ponastavila na nov head PR in izgubila to delo.";
+"remote.prs.force.update.title" = "Head PR je bil prisilno poslan";
+"remote.prs.gh.auth.failed" = "Ni mogoče preveriti gh avtentikacije — poskusi znova?";
+"remote.prs.gh.missing.message" = "Namestite GitHub CLI za uporabo načina Remote.";
+"remote.prs.gh.missing.title" = "gh CLI ni bil najden";
+"remote.prs.gh.recheck" = "Preveri znova";
+"remote.prs.gh.unauth.message" = "Zaženite `gh auth login` za prijavo.";
+"remote.prs.gh.unauth.title" = "Niste prijavljeni v GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Lokalno";
+"remote.prs.mode.remote" = "Oddaljeno";
+"remote.prs.no.github.remote" = "— brez GitHub remote —";
+"remote.prs.open.pr.on.remote" = "Odpri PR na Remote";
+"remote.prs.overflow.more %lld" = "+ %lld več — Odpri podrobnosti repozitorija";
+"remote.prs.prune.all" = "⊘ Počisti…";
+"remote.prs.prune.closed" = "⊘ Počisti zaprte PR";
+"remote.prs.prune.closed.confirm" = "Počisti";
+"remote.prs.prune.closed.header" = "Worktrees zaprtih PR";
+"remote.prs.prune.closed.nothing.message" = "Vse sledene vrstice PR so še vedno odprte.";
+"remote.prs.prune.closed.nothing.title" = "Ni česa za čiščenje";
+"remote.prs.prune.closed.title %lld" = "%lld PR zaprtih ali združenih";
+"remote.prs.prune.focus.header" = "Fokus-Worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld Fokus-Worktrees";
+"remote.prs.prune.keep" = "Obdrži";
+"remote.prs.prune.reason.ahead" = "neposredovani commiti";
+"remote.prs.prune.reason.dirty" = "neshranjene spremembe";
+"remote.prs.prune.remove" = "Odstrani";
+"remote.prs.quick.launch.focus" = "Hitri zagon fokusa";
+"remote.prs.run.cancel" = "Prekliči";
+"remote.prs.run.customize" = "Prilagodi";
+"remote.prs.run.focus.item %@" = "Zaženi %@";
+"remote.prs.run.focus.label" = "Fokus";
+"remote.prs.run.focus.none" = "(brez — ad hoc poziv)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Agent bo odgovoril na začetni fokus, nato pa ostal odprt za nadaljnja vprašanja.";
+"remote.prs.run.interactive.label" = "Ostani interaktiven po zagonu";
+"remote.prs.run.loading.detail" = "Nalaganje podrobnosti Harness…";
+"remote.prs.run.profile.default" = "(privzete vrednosti Harness)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Poziv fokusa";
+"remote.prs.run.refresh.detail" = "Znova naloži fokuse in profile Harness z diska";
+"remote.prs.run.run" = "Zaženi";
+"remote.prs.run.sheet.title" = "Zaženi s fokusom";
+"remote.prs.run.vendor.default" = "Privzeti Harness";
+"remote.prs.run.vendor.label" = "Dobavitelj";
+"remote.prs.run.with.focus" = "Zaženi s fokusom…";
+"remote.prs.set.default.focus" = "Nastavi privzeti fokus…";
+"remote.prs.show.in.local" = "Prikaži lokalno";
+"remote.prs.show.in.remote" = "Prikaži na Remote";
+"remote.prs.switch.to.existing" = "Preklopi na obstoječe";
+"remote.prs.switch.to.local" = "Preklopi na lokalno";
+"remote.prs.worktree.exists" = "Worktree že obstaja";
+"settings.github.feed.cap.help" = "Največje število pull requestov, prikazanih na repozitorij v stranski vrstici Remote. Izvlečeni PR so vedno vključeni.";
+"settings.github.feed.cap.label" = "PR na repozitorij";
+"settings.github.section.feed" = "Remote PR vir";
+"settings.tab.github" = "GitHub";

@@ -978,6 +978,18 @@
 "harness.update.progress.title %@" = "\"%@\" अपडेट हो रहा है…";
 "harness.update.button" = "अपडेट करें";
 "harness.update.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" इंस्टॉल हो रहा है…";
+"harness.install.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" अनइंस्टॉल हो रहा है…";
+"harness.uninstall.ynh.unavailable" = "ynh उपलब्ध नहीं है।";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" निर्यात हो रहा है…";
+"harness.export.ynd.unavailable" = "ynd उपलब्ध नहीं है।";
+
 "command.runner.running" = "चल रहा है…";
 "command.runner.succeeded" = "सफल";
 "command.runner.failed" = "विफल";
@@ -1063,3 +1075,147 @@
 "harnesses.unversioned.drift.confirm.title" = "अपस्ट्रीम परिवर्तनों की समीक्षा करें";
 "harnesses.unversioned.drift.confirm.body" = "अपस्ट्रीम सामग्री संस्करण अपडेट के बिना बदल गई है। अपडेट करने से नई सामग्री आएगी। जारी रखने से पहले नीचे दिए SHA की समीक्षा करें — संस्करण अपडेट का अभाव दुर्भावनापूर्ण परिवर्तनों को छिपा सकता है।";
 "harnesses.unversioned.drift.confirm.proceed" = "फिर भी अपडेट करें";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "कोई समावेश नहीं";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "फ़ोकस जोड़ें";
+"harnesses.focus.add.title" = "फ़ोकस जोड़ें";
+"harnesses.focus.edit.button" = "संपादित करें";
+"harnesses.focus.edit.title" = "फ़ोकस संपादित करें";
+"harnesses.focus.remove.button" = "हटाएं";
+"harnesses.focus.remove.confirm.title" = "फ़ोकस हटाएं";
+"harnesses.focus.remove.confirm.button" = "हटाएं";
+"harnesses.focus.remove.confirm.message %@" = "फ़ोकस \"%@\" हटाएं?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "नाम";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "प्रॉम्प्ट";
+"harnesses.focus.profile" = "प्रोफ़ाइल";
+"harnesses.focus.profile.none" = "कोई नहीं";
+"harnesses.focus.clear.profile" = "प्रोफ़ाइल साफ़ करें";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "जोड़ें";
+"harnesses.focus.save" = "सहेजें";
+"harnesses.focus.cancel" = "रद्द करें";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "प्रोफ़ाइल जोड़ें";
+"harnesses.profile.add.title" = "प्रोफ़ाइल जोड़ें";
+"harnesses.profile.edit.button" = "संपादित करें";
+"harnesses.profile.edit.title %@" = "प्रोफ़ाइल संपादित करें: %@";
+"harnesses.profile.edit.done" = "हो गया";
+"harnesses.profile.remove.button" = "हटाएं";
+"harnesses.profile.remove.confirm.title" = "प्रोफ़ाइल हटाएं";
+"harnesses.profile.remove.confirm.button" = "हटाएं";
+"harnesses.profile.remove.confirm.message %@" = "प्रोफ़ाइल \"%@\" हटाएं?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "नाम";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "जोड़ें";
+"harnesses.profile.includes" = "समावेश";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "हुक जोड़ें";
+"harnesses.profile.hook.add.title" = "हुक जोड़ें";
+"harnesses.profile.hook.event" = "घटना";
+"harnesses.profile.hook.command" = "कमांड";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "मैचर";
+"harnesses.profile.hook.matcher.placeholder" = "वैकल्पिक पैटर्न";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "सर्वर जोड़ें";
+"harnesses.profile.mcp.add.title" = "MCP सर्वर जोड़ें";
+"harnesses.profile.mcp.name" = "नाम";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "प्रकार";
+"harnesses.profile.mcp.type.command" = "कमांड";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "कमांड";
+"harnesses.profile.mcp.args" = "तर्क";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "स्पेस से अलग किए गए तर्क";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "इस प्रोफ़ाइल द्वारा अक्षम (किसी भी इनहेरिट किए गए सर्वर को ओवरराइड करता है)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "समावेश जोड़ें";
+"harnesses.profile.include.add.title" = "समावेश जोड़ें";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "आवंटित";
+"remote.prs.badge.author" = "मैं";
+"remote.prs.badge.checked.out" = "प्राप्त";
+"remote.prs.badge.draft" = "मसौदा";
+"remote.prs.badge.review" = "समीक्षा";
+"remote.prs.checking.out %lld" = "PR #%lld प्राप्त किया जा रहा है…";
+"remote.prs.checkout.as.worktree" = "worktree के रूप में प्राप्त करें";
+"remote.prs.checkout.toast %@" = "%@ के रूप में प्राप्त किया गया।";
+"remote.prs.clear.default.focus" = "डिफ़ॉल्ट फ़ोकस साफ़ करें";
+"remote.prs.copy.branch.name" = "शाखा नाम कॉपी करें";
+"remote.prs.copy.url" = "PR URL कॉपी करें";
+"remote.prs.default.focus.set %@" = "डिफ़ॉल्ट फ़ोकस: %@";
+"remote.prs.force.push.indicator" = "↑ अपडेट किया";
+"remote.prs.force.update.cancel" = "रद्द करें";
+"remote.prs.force.update.confirm" = "फिर भी ज़बरदस्ती करें";
+"remote.prs.force.update.message %lld %lld" = "आपके स्थानीय worktree में %lld संशोधित फ़ाइल(ें) और origin से %lld commit(s) आगे हैं। ज़बरदस्ती अपडेट नए PR head पर रीसेट करेगा और यह काम खो देगा।";
+"remote.prs.force.update.title" = "PR head को ज़बरदस्ती पुश किया गया";
+"remote.prs.gh.auth.failed" = "gh प्रमाणीकरण सत्यापित नहीं किया जा सका — पुनः प्रयास करें?";
+"remote.prs.gh.missing.message" = "Remote मोड का उपयोग करने के लिए GitHub CLI इंस्टॉल करें।";
+"remote.prs.gh.missing.title" = "gh CLI नहीं मिला";
+"remote.prs.gh.recheck" = "पुनः जांचें";
+"remote.prs.gh.unauth.message" = "लॉग इन करने के लिए `gh auth login` चलाएं।";
+"remote.prs.gh.unauth.title" = "GitHub में लॉग इन नहीं हैं";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "स्थानीय";
+"remote.prs.mode.remote" = "रिमोट";
+"remote.prs.no.github.remote" = "— कोई GitHub remote नहीं —";
+"remote.prs.open.pr.on.remote" = "Remote पर PR खोलें";
+"remote.prs.overflow.more %lld" = "+ %lld और — रिपॉजिटरी विवरण खोलें";
+"remote.prs.prune.all" = "⊘ साफ़ करें…";
+"remote.prs.prune.closed" = "⊘ बंद PR साफ़ करें";
+"remote.prs.prune.closed.confirm" = "साफ़ करें";
+"remote.prs.prune.closed.header" = "बंद PR के Worktrees";
+"remote.prs.prune.closed.nothing.message" = "सभी ट्रैक किए गए PR पंक्तियाँ अभी भी खुली हैं।";
+"remote.prs.prune.closed.nothing.title" = "साफ़ करने के लिए कुछ नहीं";
+"remote.prs.prune.closed.title %lld" = "%lld PR बंद या मर्ज किए गए";
+"remote.prs.prune.focus.header" = "फ़ोकस Worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld फ़ोकस Worktrees";
+"remote.prs.prune.keep" = "रखें";
+"remote.prs.prune.reason.ahead" = "न पुश किए गए commit";
+"remote.prs.prune.reason.dirty" = "बिना commit की गई परिवर्तन";
+"remote.prs.prune.remove" = "हटाएं";
+"remote.prs.quick.launch.focus" = "फ़ोकस त्वरित लॉन्च";
+"remote.prs.run.cancel" = "रद्द करें";
+"remote.prs.run.customize" = "अनुकूलित करें";
+"remote.prs.run.focus.item %@" = "%@ चलाएं";
+"remote.prs.run.focus.label" = "फ़ोकस";
+"remote.prs.run.focus.none" = "(कोई नहीं — तदर्थ प्रॉम्प्ट)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "एजेंट प्रारंभिक फ़ोकस का जवाब देगा, फिर अनुवर्ती प्रश्नों के लिए खुला रहेगा।";
+"remote.prs.run.interactive.label" = "चलाने के बाद इंटरएक्टिव रहें";
+"remote.prs.run.loading.detail" = "Harness विवरण लोड हो रहा है…";
+"remote.prs.run.profile.default" = "(Harness डिफ़ॉल्ट)";
+"remote.prs.run.profile.label" = "प्रोफ़ाइल";
+"remote.prs.run.prompt.label" = "फ़ोकस प्रॉम्प्ट";
+"remote.prs.run.refresh.detail" = "डिस्क से Harness फ़ोकस और प्रोफ़ाइल पुनः लोड करें";
+"remote.prs.run.run" = "चलाएं";
+"remote.prs.run.sheet.title" = "फ़ोकस के साथ चलाएं";
+"remote.prs.run.vendor.default" = "Harness डिफ़ॉल्ट";
+"remote.prs.run.vendor.label" = "विक्रेता";
+"remote.prs.run.with.focus" = "फ़ोकस के साथ चलाएं…";
+"remote.prs.set.default.focus" = "डिफ़ॉल्ट फ़ोकस सेट करें…";
+"remote.prs.show.in.local" = "स्थानीय रूप से दिखाएं";
+"remote.prs.show.in.remote" = "Remote पर दिखाएं";
+"remote.prs.switch.to.existing" = "मौजूदा पर स्विच करें";
+"remote.prs.switch.to.local" = "स्थानीय पर स्विच करें";
+"remote.prs.worktree.exists" = "Worktree पहले से मौजूद है";
+"settings.github.feed.cap.help" = "Remote साइडबार में प्रति रिपॉजिटरी अधिकतम pull request दिखाए जाते हैं। चेकआउट किए गए PR हमेशा शामिल होते हैं।";
+"settings.github.feed.cap.label" = "PR प्रति रिपॉजिटरी";
+"settings.github.section.feed" = "Remote PR फ़ीड";
+"settings.tab.github" = "GitHub";

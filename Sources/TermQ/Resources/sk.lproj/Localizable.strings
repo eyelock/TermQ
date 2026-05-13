@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "Aktualizácia \"%@\"…";
 "harness.update.button" = "Aktualizovať";
 "harness.update.ynh.unavailable" = "ynh nie je k dispozícii.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Inštalácia \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh nie je k dispozícii.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Odinštalovanie \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh nie je k dispozícii.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Export \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd nie je k dispozícii.";
+
 "command.runner.running" = "Spúšťanie…";
 "command.runner.succeeded" = "Úspešne dokončené";
 "command.runner.failed" = "Zlyhalo";
@@ -1057,3 +1069,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Skontrolovať zmeny upstream";
 "harnesses.unversioned.drift.confirm.body" = "Obsah upstream sa zmenil bez aktualizácie verzie. Aktualizácia stiahne nový obsah. Skontrolujte SHA nižšie pred pokračovaním — chýbajúca aktualizácia verzie môže maskovať škodlivé zmeny.";
 "harnesses.unversioned.drift.confirm.proceed" = "Aktualizovať aj tak";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Žiadne zahrnutia";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Pridať fokus";
+"harnesses.focus.add.title" = "Pridať fokus";
+"harnesses.focus.edit.button" = "Upraviť";
+"harnesses.focus.edit.title" = "Upraviť fokus";
+"harnesses.focus.remove.button" = "Odstrániť";
+"harnesses.focus.remove.confirm.title" = "Odstrániť fokus";
+"harnesses.focus.remove.confirm.button" = "Odstrániť";
+"harnesses.focus.remove.confirm.message %@" = "Odstrániť fokus \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Názov";
+"harnesses.focus.name.placeholder" = "moj-fokus";
+"harnesses.focus.prompt" = "Výzva";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Žiadny";
+"harnesses.focus.clear.profile" = "Vymazať profil";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Pridať";
+"harnesses.focus.save" = "Uložiť";
+"harnesses.focus.cancel" = "Zrušiť";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Pridať profil";
+"harnesses.profile.add.title" = "Pridať profil";
+"harnesses.profile.edit.button" = "Upraviť";
+"harnesses.profile.edit.title %@" = "Upraviť profil: %@";
+"harnesses.profile.edit.done" = "Hotovo";
+"harnesses.profile.remove.button" = "Odstrániť";
+"harnesses.profile.remove.confirm.title" = "Odstrániť profil";
+"harnesses.profile.remove.confirm.button" = "Odstrániť";
+"harnesses.profile.remove.confirm.message %@" = "Odstrániť profil \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Názov";
+"harnesses.profile.name.placeholder" = "moj-profil";
+"harnesses.profile.add.confirm" = "Pridať";
+"harnesses.profile.includes" = "Zahrnutia";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Pridať hák";
+"harnesses.profile.hook.add.title" = "Pridať hák";
+"harnesses.profile.hook.event" = "Udalosť";
+"harnesses.profile.hook.command" = "Príkaz";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Porovnávač";
+"harnesses.profile.hook.matcher.placeholder" = "Voliteľný vzor";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Pridať server";
+"harnesses.profile.mcp.add.title" = "Pridať MCP server";
+"harnesses.profile.mcp.name" = "Názov";
+"harnesses.profile.mcp.name.placeholder" = "nazov-servera";
+"harnesses.profile.mcp.type" = "Typ";
+"harnesses.profile.mcp.type.command" = "Príkaz";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Príkaz";
+"harnesses.profile.mcp.args" = "Argumenty";
+"harnesses.profile.mcp.args.placeholder" = "--príznak hodnota";
+"harnesses.profile.mcp.args.hint" = "Argumenty oddelené medzerami";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Zakázané týmto profilom (prepíše akýkoľvek zdedený server)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Pridať zahrnutie";
+"harnesses.profile.include.add.title" = "Pridať zahrnutie";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "priradené";
+"remote.prs.badge.author" = "ja";
+"remote.prs.badge.checked.out" = "odvetvenoé";
+"remote.prs.badge.draft" = "návrh";
+"remote.prs.badge.review" = "recenzia";
+"remote.prs.checking.out %lld" = "Odbočenie PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Odbočiť ako worktree";
+"remote.prs.checkout.toast %@" = "Odbočené ako %@.";
+"remote.prs.clear.default.focus" = "Vymazať predvolený fokus";
+"remote.prs.copy.branch.name" = "Kopírovať názov vetvy";
+"remote.prs.copy.url" = "Kopírovať URL PR";
+"remote.prs.default.focus.set %@" = "Predvolený fokus: %@";
+"remote.prs.force.push.indicator" = "↑ aktualizované";
+"remote.prs.force.update.cancel" = "Zrušiť";
+"remote.prs.force.update.confirm" = "Napriek tomu vynútiť";
+"remote.prs.force.update.message %lld %lld" = "Váš lokálny worktree má %lld zmenený súbor/súborov a %lld commit(y) pred originom. Vynútená aktualizácia resetuje na nový head PR a stratí túto prácu.";
+"remote.prs.force.update.title" = "Head PR bol vynútene odoslaný";
+"remote.prs.gh.auth.failed" = "Nemožno overiť autentifikáciu gh — skúsiť znova?";
+"remote.prs.gh.missing.message" = "Nainštalujte GitHub CLI na použitie režimu Remote.";
+"remote.prs.gh.missing.title" = "gh CLI nenájdené";
+"remote.prs.gh.recheck" = "Znova skontrolovať";
+"remote.prs.gh.unauth.message" = "Spustite `gh auth login` na prihlásenie.";
+"remote.prs.gh.unauth.title" = "Neprihlásený do GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Lokálny";
+"remote.prs.mode.remote" = "Vzdialený";
+"remote.prs.no.github.remote" = "— žiadny GitHub remote —";
+"remote.prs.open.pr.on.remote" = "Otvoriť PR na Remote";
+"remote.prs.overflow.more %lld" = "+ %lld ďalších — Otvoriť detail repozitára";
+"remote.prs.prune.all" = "⊘ Vyčistiť…";
+"remote.prs.prune.closed" = "⊘ Vyčistiť zatvorené PR";
+"remote.prs.prune.closed.confirm" = "Vyčistiť";
+"remote.prs.prune.closed.header" = "Worktrees zatvorených PR";
+"remote.prs.prune.closed.nothing.message" = "Všetky sledované riadky PR sú stále otvorené.";
+"remote.prs.prune.closed.nothing.title" = "Nič na vyčistenie";
+"remote.prs.prune.closed.title %lld" = "%lld PR zatvorených alebo zlúčených";
+"remote.prs.prune.focus.header" = "Focus-Worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld Focus-Worktrees";
+"remote.prs.prune.keep" = "Ponechať";
+"remote.prs.prune.reason.ahead" = "neodoslané commity";
+"remote.prs.prune.reason.dirty" = "nezachytené zmeny";
+"remote.prs.prune.remove" = "Odstrániť";
+"remote.prs.quick.launch.focus" = "Rýchle spustenie fokusu";
+"remote.prs.run.cancel" = "Zrušiť";
+"remote.prs.run.customize" = "Prispôsobiť";
+"remote.prs.run.focus.item %@" = "Spustiť %@";
+"remote.prs.run.focus.label" = "Fokus";
+"remote.prs.run.focus.none" = "(žiadny — ad hoc výzva)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Agent odpovie na počiatočný fokus a potom zostane otvorený pre doplňujúce otázky.";
+"remote.prs.run.interactive.label" = "Zostať interaktívny po spustení";
+"remote.prs.run.loading.detail" = "Načítanie podrobností Harness…";
+"remote.prs.run.profile.default" = "(predvolené hodnoty Harness)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Výzva fokusu";
+"remote.prs.run.refresh.detail" = "Znova načítať fokusy a profily Harness z disku";
+"remote.prs.run.run" = "Spustiť";
+"remote.prs.run.sheet.title" = "Spustiť s fokusem";
+"remote.prs.run.vendor.default" = "Predvolený Harness";
+"remote.prs.run.vendor.label" = "Dodávateľ";
+"remote.prs.run.with.focus" = "Spustiť s fokusem…";
+"remote.prs.set.default.focus" = "Nastaviť predvolený fokus…";
+"remote.prs.show.in.local" = "Zobraziť lokálne";
+"remote.prs.show.in.remote" = "Zobraziť na Remote";
+"remote.prs.switch.to.existing" = "Prepnúť na existujúci";
+"remote.prs.switch.to.local" = "Prepnúť na lokálny";
+"remote.prs.worktree.exists" = "Worktree už existuje";
+"settings.github.feed.cap.help" = "Maximálny počet pull requestov zobrazených na repozitár v bočnom paneli Remote. Odbočené PR sú vždy zahrnuté.";
+"settings.github.feed.cap.label" = "PR na repozitár";
+"settings.github.section.feed" = "Feed Remote PR";
+"settings.tab.github" = "GitHub";

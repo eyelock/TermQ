@@ -979,6 +979,18 @@
 
 "harness.update.button" = "업데이트";
 "harness.update.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" 설치 중…";
+"harness.install.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" 제거 중…";
+"harness.uninstall.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" 내보내기 중…";
+"harness.export.ynd.unavailable" = "ynd를 사용할 수 없습니다.";
+
 "command.runner.running" = "실행 중…";
 "command.runner.succeeded" = "성공";
 "command.runner.failed" = "실패";
@@ -1064,3 +1076,147 @@
 "harnesses.unversioned.drift.confirm.title" = "업스트림 변경사항 검토";
 "harnesses.unversioned.drift.confirm.body" = "업스트림 콘텐츠가 버전 업데이트 없이 변경되었습니다. 업데이트하면 새 콘텐츠를 가져옵니다. 계속하기 전에 아래 SHA를 검토하세요 — 버전 업데이트 누락은 악의적인 변경을 숨길 수 있습니다.";
 "harnesses.unversioned.drift.confirm.proceed" = "어쨌든 업데이트";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "포함 항목 없음";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "포커스 추가";
+"harnesses.focus.add.title" = "포커스 추가";
+"harnesses.focus.edit.button" = "편집";
+"harnesses.focus.edit.title" = "포커스 편집";
+"harnesses.focus.remove.button" = "제거";
+"harnesses.focus.remove.confirm.title" = "포커스 제거";
+"harnesses.focus.remove.confirm.button" = "제거";
+"harnesses.focus.remove.confirm.message %@" = "포커스 \"%@\"를 제거하시겠습니까?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "이름";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "프롬프트";
+"harnesses.focus.profile" = "프로필";
+"harnesses.focus.profile.none" = "없음";
+"harnesses.focus.clear.profile" = "프로필 지우기";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "추가";
+"harnesses.focus.save" = "저장";
+"harnesses.focus.cancel" = "취소";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "프로필 추가";
+"harnesses.profile.add.title" = "프로필 추가";
+"harnesses.profile.edit.button" = "편집";
+"harnesses.profile.edit.title %@" = "프로필 편집: %@";
+"harnesses.profile.edit.done" = "완료";
+"harnesses.profile.remove.button" = "제거";
+"harnesses.profile.remove.confirm.title" = "프로필 제거";
+"harnesses.profile.remove.confirm.button" = "제거";
+"harnesses.profile.remove.confirm.message %@" = "프로필 \"%@\"를 제거하시겠습니까?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "이름";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "추가";
+"harnesses.profile.includes" = "포함 항목";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "훅 추가";
+"harnesses.profile.hook.add.title" = "훅 추가";
+"harnesses.profile.hook.event" = "이벤트";
+"harnesses.profile.hook.command" = "명령";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "매처";
+"harnesses.profile.hook.matcher.placeholder" = "선택적 패턴";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "서버 추가";
+"harnesses.profile.mcp.add.title" = "MCP 서버 추가";
+"harnesses.profile.mcp.name" = "이름";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "유형";
+"harnesses.profile.mcp.type.command" = "명령";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "명령";
+"harnesses.profile.mcp.args" = "인수";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "공백으로 구분된 인수";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "이 프로필에 의해 비활성화됨 (상속된 서버를 재정의)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "포함 항목 추가";
+"harnesses.profile.include.add.title" = "포함 항목 추가";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "담당";
+"remote.prs.badge.author" = "나";
+"remote.prs.badge.checked.out" = "체크아웃됨";
+"remote.prs.badge.draft" = "초안";
+"remote.prs.badge.review" = "검토";
+"remote.prs.checking.out %lld" = "PR #%lld 체크아웃 중…";
+"remote.prs.checkout.as.worktree" = "워크트리로 체크아웃";
+"remote.prs.checkout.toast %@" = "%@(으)로 체크아웃되었습니다.";
+"remote.prs.clear.default.focus" = "기본 포커스 지우기";
+"remote.prs.copy.branch.name" = "브랜치 이름 복사";
+"remote.prs.copy.url" = "PR URL 복사";
+"remote.prs.default.focus.set %@" = "기본 포커스: %@";
+"remote.prs.force.push.indicator" = "↑ 업데이트됨";
+"remote.prs.force.update.cancel" = "취소";
+"remote.prs.force.update.confirm" = "그래도 강제 업데이트";
+"remote.prs.force.update.message %lld %lld" = "로컬 워크트리에는 %lld개의 수정된 파일과 origin보다 %lld개 앞선 커밋이 있습니다. 강제 업데이트하면 새 PR 헤드로 초기화되고 이 작업이 손실됩니다.";
+"remote.prs.force.update.title" = "PR 헤드가 강제 푸시되었습니다";
+"remote.prs.gh.auth.failed" = "gh 인증을 확인할 수 없습니다 — 다시 시도할까요?";
+"remote.prs.gh.missing.message" = "Remote 모드를 사용하려면 GitHub CLI를 설치하세요.";
+"remote.prs.gh.missing.title" = "gh CLI를 찾을 수 없음";
+"remote.prs.gh.recheck" = "다시 확인";
+"remote.prs.gh.unauth.message" = "로그인하려면 `gh auth login`을 실행하세요.";
+"remote.prs.gh.unauth.title" = "GitHub에 로그인되지 않음";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "로컬";
+"remote.prs.mode.remote" = "원격";
+"remote.prs.no.github.remote" = "— GitHub 원격 없음 —";
+"remote.prs.open.pr.on.remote" = "원격에서 PR 열기";
+"remote.prs.overflow.more %lld" = "+ %lld개 더 — 저장소 세부정보 열기";
+"remote.prs.prune.all" = "⊘ 정리…";
+"remote.prs.prune.closed" = "⊘ 닫힌 PR 정리";
+"remote.prs.prune.closed.confirm" = "정리";
+"remote.prs.prune.closed.header" = "닫힌 PR의 워크트리";
+"remote.prs.prune.closed.nothing.message" = "추적 중인 모든 PR 항목이 아직 열려 있습니다.";
+"remote.prs.prune.closed.nothing.title" = "정리할 항목 없음";
+"remote.prs.prune.closed.title %lld" = "%lld개의 PR 닫힘 또는 병합됨";
+"remote.prs.prune.focus.header" = "포커스 워크트리";
+"remote.prs.prune.focus.title %lld" = "포커스 워크트리 %lld개";
+"remote.prs.prune.keep" = "유지";
+"remote.prs.prune.reason.ahead" = "푸시되지 않은 커밋";
+"remote.prs.prune.reason.dirty" = "커밋되지 않은 변경사항";
+"remote.prs.prune.remove" = "제거";
+"remote.prs.quick.launch.focus" = "포커스 빠른 실행";
+"remote.prs.run.cancel" = "취소";
+"remote.prs.run.customize" = "사용자화";
+"remote.prs.run.focus.item %@" = "%@ 실행";
+"remote.prs.run.focus.label" = "포커스";
+"remote.prs.run.focus.none" = "(없음 — 임시 프롬프트)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "에이전트가 초기 포커스에 응답한 후 후속 질문을 위해 열린 상태를 유지합니다.";
+"remote.prs.run.interactive.label" = "실행 후에도 대화형 유지";
+"remote.prs.run.loading.detail" = "Harness 세부정보 로드 중…";
+"remote.prs.run.profile.default" = "(Harness 기본값)";
+"remote.prs.run.profile.label" = "프로필";
+"remote.prs.run.prompt.label" = "포커스 프롬프트";
+"remote.prs.run.refresh.detail" = "디스크에서 Harness 포커스 및 프로필 다시 로드";
+"remote.prs.run.run" = "실행";
+"remote.prs.run.sheet.title" = "포커스로 실행";
+"remote.prs.run.vendor.default" = "Harness 기본값";
+"remote.prs.run.vendor.label" = "공급업체";
+"remote.prs.run.with.focus" = "포커스로 실행…";
+"remote.prs.set.default.focus" = "기본 포커스 설정…";
+"remote.prs.show.in.local" = "로컬에서 보기";
+"remote.prs.show.in.remote" = "원격에서 보기";
+"remote.prs.switch.to.existing" = "기존 항목으로 전환";
+"remote.prs.switch.to.local" = "로컬로 전환";
+"remote.prs.worktree.exists" = "워크트리가 이미 존재합니다";
+"settings.github.feed.cap.help" = "원격 사이드바에서 저장소별 최대 표시 풀 리퀘스트 수. 체크아웃된 PR은 항상 포함됩니다.";
+"settings.github.feed.cap.label" = "저장소당 PR 수";
+"settings.github.section.feed" = "원격 PR 피드";
+"settings.tab.github" = "GitHub";

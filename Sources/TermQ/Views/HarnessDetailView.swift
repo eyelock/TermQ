@@ -44,6 +44,9 @@ struct HarnessDetailView: View {
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @StateObject private var includeEditor = HarnessIncludeEditor()
     @StateObject private var delegateEditor = HarnessDelegateEditor()
+    @StateObject private var focusEditor = HarnessFocusEditor()
+    @StateObject private var profileEditor = HarnessProfileEditor()
+    @StateObject private var hookEditor = HarnessHookEditor()
     @State private var popoverForPath: String?
     @State private var showUninstallAlert = false
     @State private var harnessToDuplicate: Harness?
@@ -84,7 +87,11 @@ struct HarnessDetailView: View {
 
                 if let detail {
                     HarnessDetailCompositionView(
-                        composition: detail.composition
+                        composition: detail.composition,
+                        harnessID: harness.id,
+                        focusEditor: viewModel.editability == .fullyEditable ? focusEditor : nil,
+                        profileEditor: viewModel.editability == .fullyEditable ? profileEditor : nil,
+                        hookEditor: viewModel.editability == .fullyEditable ? hookEditor : nil
                     )
                 }
 

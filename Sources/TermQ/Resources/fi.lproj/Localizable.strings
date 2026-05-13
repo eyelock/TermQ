@@ -978,6 +978,18 @@
 "harness.update.progress.title %@" = "Päivitetään \"%@\"…";
 "harness.update.button" = "Päivitä";
 "harness.update.ynh.unavailable" = "ynh ei ole käytettävissä.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Asennetaan \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh ei ole käytettävissä.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Poistetaan \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh ei ole käytettävissä.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Viedään \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd ei ole käytettävissä.";
+
 "command.runner.running" = "Suoritetaan…";
 "command.runner.succeeded" = "Onnistui";
 "command.runner.failed" = "Epäonnistui";
@@ -1063,3 +1075,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Tarkista upstream-muutokset";
 "harnesses.unversioned.drift.confirm.body" = "Upstream-sisältö on muuttunut ilman versionpäivitystä. Päivittäminen hakee uuden sisällön. Tarkista alla olevat SHA:t ennen jatkamista — puuttuva versionpäivitys voi peittää haitalliset muutokset.";
 "harnesses.unversioned.drift.confirm.proceed" = "Päivitä silti";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Ei sisällytyksiä";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Lisää tarkennos";
+"harnesses.focus.add.title" = "Lisää tarkennos";
+"harnesses.focus.edit.button" = "Muokkaa";
+"harnesses.focus.edit.title" = "Muokkaa tarkennosta";
+"harnesses.focus.remove.button" = "Poista";
+"harnesses.focus.remove.confirm.title" = "Poista tarkennos";
+"harnesses.focus.remove.confirm.button" = "Poista";
+"harnesses.focus.remove.confirm.message %@" = "Poistetaanko tarkennos \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Nimi";
+"harnesses.focus.name.placeholder" = "oma-tarkennos";
+"harnesses.focus.prompt" = "Kehote";
+"harnesses.focus.profile" = "Profiili";
+"harnesses.focus.profile.none" = "Ei mitään";
+"harnesses.focus.clear.profile" = "Tyhjennä profiili";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Lisää";
+"harnesses.focus.save" = "Tallenna";
+"harnesses.focus.cancel" = "Peruuta";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Lisää profiili";
+"harnesses.profile.add.title" = "Lisää profiili";
+"harnesses.profile.edit.button" = "Muokkaa";
+"harnesses.profile.edit.title %@" = "Muokkaa profiilia: %@";
+"harnesses.profile.edit.done" = "Valmis";
+"harnesses.profile.remove.button" = "Poista";
+"harnesses.profile.remove.confirm.title" = "Poista profiili";
+"harnesses.profile.remove.confirm.button" = "Poista";
+"harnesses.profile.remove.confirm.message %@" = "Poistetaanko profiili \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Nimi";
+"harnesses.profile.name.placeholder" = "oma-profiili";
+"harnesses.profile.add.confirm" = "Lisää";
+"harnesses.profile.includes" = "Sisällytykset";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Lisää koukku";
+"harnesses.profile.hook.add.title" = "Lisää koukku";
+"harnesses.profile.hook.event" = "Tapahtuma";
+"harnesses.profile.hook.command" = "Komento";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Täsmäytin";
+"harnesses.profile.hook.matcher.placeholder" = "Valinnainen kuvio";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Lisää palvelin";
+"harnesses.profile.mcp.add.title" = "Lisää MCP-palvelin";
+"harnesses.profile.mcp.name" = "Nimi";
+"harnesses.profile.mcp.name.placeholder" = "palvelimen-nimi";
+"harnesses.profile.mcp.type" = "Tyyppi";
+"harnesses.profile.mcp.type.command" = "Komento";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Komento";
+"harnesses.profile.mcp.args" = "Argumentit";
+"harnesses.profile.mcp.args.placeholder" = "--lippu arvo";
+"harnesses.profile.mcp.args.hint" = "Välilyönnillä erotetut argumentit";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Poistettu käytöstä tässä profiilissa (ohittaa kaikki perityt palvelimet)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Lisää sisällytys";
+"harnesses.profile.include.add.title" = "Lisää sisällytys";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "osoitettu";
+"remote.prs.badge.author" = "minä";
+"remote.prs.badge.checked.out" = "kaivettu";
+"remote.prs.badge.draft" = "luonnos";
+"remote.prs.badge.review" = "katsaus";
+"remote.prs.checking.out %lld" = "Kaivetaan PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Kaiva worktreeksi";
+"remote.prs.checkout.toast %@" = "Kaivettu nimellä %@.";
+"remote.prs.clear.default.focus" = "Tyhjennä oletustarkennus";
+"remote.prs.copy.branch.name" = "Kopioi haaran nimi";
+"remote.prs.copy.url" = "Kopioi PR:n URL";
+"remote.prs.default.focus.set %@" = "Oletustarkennus: %@";
+"remote.prs.force.push.indicator" = "↑ päivitetty";
+"remote.prs.force.update.cancel" = "Peruuta";
+"remote.prs.force.update.confirm" = "Pakota silti";
+"remote.prs.force.update.message %lld %lld" = "Paikallisessa worktreessäsi on %lld muutettua tiedostoa ja %lld commitia edellä alkuperää. Pakotettu päivitys palauttaa uuteen PR-headiin ja menettää tämän työn.";
+"remote.prs.force.update.title" = "PR-head pakotettiin";
+"remote.prs.gh.auth.failed" = "gh-todennusta ei voitu vahvistaa — yritä uudelleen?";
+"remote.prs.gh.missing.message" = "Asenna GitHub CLI käyttääksesi Remote-tilaa.";
+"remote.prs.gh.missing.title" = "gh CLI:tä ei löydy";
+"remote.prs.gh.recheck" = "Tarkista uudelleen";
+"remote.prs.gh.unauth.message" = "Suorita `gh auth login` kirjautuaksesi sisään.";
+"remote.prs.gh.unauth.title" = "Ei kirjautunut GitHubiin";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Paikallinen";
+"remote.prs.mode.remote" = "Etä";
+"remote.prs.no.github.remote" = "— ei GitHub-etäpalvelinta —";
+"remote.prs.open.pr.on.remote" = "Avaa PR etäpalvelimella";
+"remote.prs.overflow.more %lld" = "+ %lld lisää — Avaa tietovaraston tiedot";
+"remote.prs.prune.all" = "⊘ Siivoa…";
+"remote.prs.prune.closed" = "⊘ Siivoa suljetut PRt";
+"remote.prs.prune.closed.confirm" = "Siivoa";
+"remote.prs.prune.closed.header" = "Suljettujen PR:ien worktreelit";
+"remote.prs.prune.closed.nothing.message" = "Kaikki seuratut PR-rivit ovat edelleen auki.";
+"remote.prs.prune.closed.nothing.title" = "Ei siivottavaa";
+"remote.prs.prune.closed.title %lld" = "%lld PRta suljettu tai yhdistetty";
+"remote.prs.prune.focus.header" = "Tarkennos-worktreelit";
+"remote.prs.prune.focus.title %lld" = "%lld tarkennos-worktreelia";
+"remote.prs.prune.keep" = "Säilytä";
+"remote.prs.prune.reason.ahead" = "lähettämättömiä committeja";
+"remote.prs.prune.reason.dirty" = "committoimattomia muutoksia";
+"remote.prs.prune.remove" = "Poista";
+"remote.prs.quick.launch.focus" = "Pikastartta tarkennus";
+"remote.prs.run.cancel" = "Peruuta";
+"remote.prs.run.customize" = "Mukauta";
+"remote.prs.run.focus.item %@" = "Suorita %@";
+"remote.prs.run.focus.label" = "Tarkennus";
+"remote.prs.run.focus.none" = "(ei mitään — ad hoc -kehote)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Agentti vastaa alkuperäiseen tarkennokseen ja pysyy sen jälkeen avoimena seurantakysymyksille.";
+"remote.prs.run.interactive.label" = "Pysy vuorovaikutteisena suorituksen jälkeen";
+"remote.prs.run.loading.detail" = "Ladataan harness-tietoja…";
+"remote.prs.run.profile.default" = "(harness-oletukset)";
+"remote.prs.run.profile.label" = "Profiili";
+"remote.prs.run.prompt.label" = "Tarkennus-kehote";
+"remote.prs.run.refresh.detail" = "Lataa harness-tarkennokset ja -profiilit uudelleen levyltä";
+"remote.prs.run.run" = "Suorita";
+"remote.prs.run.sheet.title" = "Suorita tarkennuksella";
+"remote.prs.run.vendor.default" = "Harness-oletus";
+"remote.prs.run.vendor.label" = "Toimittaja";
+"remote.prs.run.with.focus" = "Suorita tarkennuksella…";
+"remote.prs.set.default.focus" = "Aseta oletustarkennus…";
+"remote.prs.show.in.local" = "Näytä paikallisesti";
+"remote.prs.show.in.remote" = "Näytä etänä";
+"remote.prs.switch.to.existing" = "Vaihda olemassa olevaan";
+"remote.prs.switch.to.local" = "Vaihda paikalliseen";
+"remote.prs.worktree.exists" = "Worktree on jo olemassa";
+"settings.github.feed.cap.help" = "Enimmäismäärä pull requesteja per tietovarasto Remote-sivupalkissa. Kaivetut PR:t sisällytetään aina.";
+"settings.github.feed.cap.label" = "PR:iä per tietovarasto";
+"settings.github.section.feed" = "Etä-PR-syöte";
+"settings.tab.github" = "GitHub";

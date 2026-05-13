@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "Đang cập nhật \"%@\"…";
 "harness.update.button" = "Cập nhật";
 "harness.update.ynh.unavailable" = "ynh không khả dụng.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Đang cài đặt \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh không khả dụng.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Đang gỡ cài đặt \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh không khả dụng.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Đang xuất \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd không khả dụng.";
+
 "command.runner.running" = "Đang chạy…";
 "command.runner.succeeded" = "Thành công";
 "command.runner.failed" = "Thất bại";
@@ -1064,3 +1076,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Xem xét các thay đổi upstream";
 "harnesses.unversioned.drift.confirm.body" = "Nội dung upstream đã thay đổi mà không có cập nhật phiên bản. Cập nhật sẽ kéo nội dung mới. Xem xét các SHA bên dưới trước khi tiếp tục — thiếu cập nhật phiên bản có thể che giấu các thay đổi độc hại.";
 "harnesses.unversioned.drift.confirm.proceed" = "Cập nhật dù sao";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Không có mục bao gồm";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Thêm tiêu điểm";
+"harnesses.focus.add.title" = "Thêm tiêu điểm";
+"harnesses.focus.edit.button" = "Sửa";
+"harnesses.focus.edit.title" = "Sửa tiêu điểm";
+"harnesses.focus.remove.button" = "Xóa";
+"harnesses.focus.remove.confirm.title" = "Xóa tiêu điểm";
+"harnesses.focus.remove.confirm.button" = "Xóa";
+"harnesses.focus.remove.confirm.message %@" = "Xóa tiêu điểm \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Tên";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "Lời nhắc";
+"harnesses.focus.profile" = "Hồ sơ";
+"harnesses.focus.profile.none" = "Không có";
+"harnesses.focus.clear.profile" = "Xóa hồ sơ";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Thêm";
+"harnesses.focus.save" = "Lưu";
+"harnesses.focus.cancel" = "Hủy";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Thêm hồ sơ";
+"harnesses.profile.add.title" = "Thêm hồ sơ";
+"harnesses.profile.edit.button" = "Sửa";
+"harnesses.profile.edit.title %@" = "Sửa hồ sơ: %@";
+"harnesses.profile.edit.done" = "Xong";
+"harnesses.profile.remove.button" = "Xóa";
+"harnesses.profile.remove.confirm.title" = "Xóa hồ sơ";
+"harnesses.profile.remove.confirm.button" = "Xóa";
+"harnesses.profile.remove.confirm.message %@" = "Xóa hồ sơ \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Tên";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "Thêm";
+"harnesses.profile.includes" = "Các mục bao gồm";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Thêm hook";
+"harnesses.profile.hook.add.title" = "Thêm hook";
+"harnesses.profile.hook.event" = "Sự kiện";
+"harnesses.profile.hook.command" = "Lệnh";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Bộ khớp";
+"harnesses.profile.hook.matcher.placeholder" = "Mẫu tùy chọn";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Thêm máy chủ";
+"harnesses.profile.mcp.add.title" = "Thêm máy chủ MCP";
+"harnesses.profile.mcp.name" = "Tên";
+"harnesses.profile.mcp.name.placeholder" = "ten-may-chu";
+"harnesses.profile.mcp.type" = "Loại";
+"harnesses.profile.mcp.type.command" = "Lệnh";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Lệnh";
+"harnesses.profile.mcp.args" = "Đối số";
+"harnesses.profile.mcp.args.placeholder" = "--co-hieu gia-tri";
+"harnesses.profile.mcp.args.hint" = "Các đối số cách nhau bằng dấu cách";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Bị tắt bởi hồ sơ này (ghi đè bất kỳ máy chủ kế thừa nào)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Thêm mục bao gồm";
+"harnesses.profile.include.add.title" = "Thêm mục bao gồm";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "được giao";
+"remote.prs.badge.author" = "tôi";
+"remote.prs.badge.checked.out" = "đã lấy về";
+"remote.prs.badge.draft" = "bản nháp";
+"remote.prs.badge.review" = "xem xét";
+"remote.prs.checking.out %lld" = "Đang lấy PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Lấy về dưới dạng worktree";
+"remote.prs.checkout.toast %@" = "Đã lấy về dưới dạng %@.";
+"remote.prs.clear.default.focus" = "Xóa tiêu điểm mặc định";
+"remote.prs.copy.branch.name" = "Sao chép tên nhánh";
+"remote.prs.copy.url" = "Sao chép URL PR";
+"remote.prs.default.focus.set %@" = "Tiêu điểm mặc định: %@";
+"remote.prs.force.push.indicator" = "↑ đã cập nhật";
+"remote.prs.force.update.cancel" = "Hủy";
+"remote.prs.force.update.confirm" = "Buộc cập nhật dù sao";
+"remote.prs.force.update.message %lld %lld" = "Worktree cục bộ của bạn có %lld tệp đã sửa đổi và %lld commit trước origin. Cập nhật buộc sẽ đặt lại về PR head mới và mất công việc này.";
+"remote.prs.force.update.title" = "PR head đã bị buộc đẩy";
+"remote.prs.gh.auth.failed" = "Không thể xác minh xác thực gh — thử lại?";
+"remote.prs.gh.missing.message" = "Cài đặt GitHub CLI để sử dụng chế độ Remote.";
+"remote.prs.gh.missing.title" = "Không tìm thấy gh CLI";
+"remote.prs.gh.recheck" = "Kiểm tra lại";
+"remote.prs.gh.unauth.message" = "Chạy `gh auth login` để đăng nhập.";
+"remote.prs.gh.unauth.title" = "Chưa đăng nhập GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Cục bộ";
+"remote.prs.mode.remote" = "Từ xa";
+"remote.prs.no.github.remote" = "— không có GitHub remote —";
+"remote.prs.open.pr.on.remote" = "Mở PR trên Remote";
+"remote.prs.overflow.more %lld" = "+ %lld nữa — Mở chi tiết kho lưu trữ";
+"remote.prs.prune.all" = "⊘ Dọn sạch…";
+"remote.prs.prune.closed" = "⊘ Dọn PR đã đóng";
+"remote.prs.prune.closed.confirm" = "Dọn sạch";
+"remote.prs.prune.closed.header" = "Worktrees của PR đã đóng";
+"remote.prs.prune.closed.nothing.message" = "Tất cả các hàng PR đang theo dõi vẫn còn mở.";
+"remote.prs.prune.closed.nothing.title" = "Không có gì để dọn";
+"remote.prs.prune.closed.title %lld" = "%lld PR đã đóng hoặc hợp nhất";
+"remote.prs.prune.focus.header" = "Worktrees tiêu điểm";
+"remote.prs.prune.focus.title %lld" = "%lld worktrees tiêu điểm";
+"remote.prs.prune.keep" = "Giữ";
+"remote.prs.prune.reason.ahead" = "commit chưa đẩy";
+"remote.prs.prune.reason.dirty" = "thay đổi chưa commit";
+"remote.prs.prune.remove" = "Xóa";
+"remote.prs.quick.launch.focus" = "Khởi chạy tiêu điểm nhanh";
+"remote.prs.run.cancel" = "Hủy";
+"remote.prs.run.customize" = "Tùy chỉnh";
+"remote.prs.run.focus.item %@" = "Chạy %@";
+"remote.prs.run.focus.label" = "Tiêu điểm";
+"remote.prs.run.focus.none" = "(không có — lời nhắc đột xuất)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Tác nhân sẽ phản hồi tiêu điểm ban đầu, sau đó vẫn mở để trả lời các câu hỏi tiếp theo.";
+"remote.prs.run.interactive.label" = "Tiếp tục ở chế độ tương tác sau khi chạy";
+"remote.prs.run.loading.detail" = "Đang tải chi tiết Harness…";
+"remote.prs.run.profile.default" = "(mặc định Harness)";
+"remote.prs.run.profile.label" = "Hồ sơ";
+"remote.prs.run.prompt.label" = "Lời nhắc tiêu điểm";
+"remote.prs.run.refresh.detail" = "Tải lại tiêu điểm và hồ sơ Harness từ đĩa";
+"remote.prs.run.run" = "Chạy";
+"remote.prs.run.sheet.title" = "Chạy với tiêu điểm";
+"remote.prs.run.vendor.default" = "Mặc định Harness";
+"remote.prs.run.vendor.label" = "Nhà cung cấp";
+"remote.prs.run.with.focus" = "Chạy với tiêu điểm…";
+"remote.prs.set.default.focus" = "Đặt tiêu điểm mặc định…";
+"remote.prs.show.in.local" = "Hiển thị cục bộ";
+"remote.prs.show.in.remote" = "Hiển thị trên Remote";
+"remote.prs.switch.to.existing" = "Chuyển sang hiện có";
+"remote.prs.switch.to.local" = "Chuyển về cục bộ";
+"remote.prs.worktree.exists" = "Worktree đã tồn tại";
+"settings.github.feed.cap.help" = "Số lượng pull request tối đa hiển thị mỗi kho lưu trữ trong thanh bên Remote. PR đã lấy về luôn được bao gồm.";
+"settings.github.feed.cap.label" = "PR mỗi kho lưu trữ";
+"settings.github.section.feed" = "Nguồn cấp Remote PR";
+"settings.tab.github" = "GitHub";

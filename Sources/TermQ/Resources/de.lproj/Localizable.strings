@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "Wird aktualisiert: \"%@\"…";
 "harness.update.button" = "Aktualisieren";
 "harness.update.ynh.unavailable" = "ynh ist nicht verfügbar.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Installiere \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh ist nicht verfügbar.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Deinstalliere \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh ist nicht verfügbar.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Exportiere \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd ist nicht verfügbar.";
+
 "command.runner.running" = "Wird ausgeführt…";
 "command.runner.succeeded" = "Erfolgreich";
 "command.runner.failed" = "Fehlgeschlagen";
@@ -1057,3 +1069,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Upstream-Änderungen überprüfen";
 "harnesses.unversioned.drift.confirm.body" = "Upstream-Inhalte haben sich ohne Versionserhöhung geändert. Das Aktualisieren holt die neuen Inhalte. Überprüfen Sie die SHA-Werte unten, bevor Sie fortfahren — eine fehlende Versionserhöhung kann böswillige Änderungen verschleiern.";
 "harnesses.unversioned.drift.confirm.proceed" = "Trotzdem aktualisieren";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Keine Includes";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Focus hinzufügen";
+"harnesses.focus.add.title" = "Focus hinzufügen";
+"harnesses.focus.edit.button" = "Bearbeiten";
+"harnesses.focus.edit.title" = "Focus bearbeiten";
+"harnesses.focus.remove.button" = "Entfernen";
+"harnesses.focus.remove.confirm.title" = "Focus entfernen";
+"harnesses.focus.remove.confirm.button" = "Entfernen";
+"harnesses.focus.remove.confirm.message %@" = "Focus \"%@\" entfernen?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Name";
+"harnesses.focus.name.placeholder" = "mein-focus";
+"harnesses.focus.prompt" = "Eingabeaufforderung";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Keine";
+"harnesses.focus.clear.profile" = "Profil löschen";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Hinzufügen";
+"harnesses.focus.save" = "Speichern";
+"harnesses.focus.cancel" = "Abbrechen";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Profil hinzufügen";
+"harnesses.profile.add.title" = "Profil hinzufügen";
+"harnesses.profile.edit.button" = "Bearbeiten";
+"harnesses.profile.edit.title %@" = "Profil bearbeiten: %@";
+"harnesses.profile.edit.done" = "Fertig";
+"harnesses.profile.remove.button" = "Entfernen";
+"harnesses.profile.remove.confirm.title" = "Profil entfernen";
+"harnesses.profile.remove.confirm.button" = "Entfernen";
+"harnesses.profile.remove.confirm.message %@" = "Profil \"%@\" entfernen?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Name";
+"harnesses.profile.name.placeholder" = "mein-profil";
+"harnesses.profile.add.confirm" = "Hinzufügen";
+"harnesses.profile.includes" = "Includes";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Hook hinzufügen";
+"harnesses.profile.hook.add.title" = "Hook hinzufügen";
+"harnesses.profile.hook.event" = "Ereignis";
+"harnesses.profile.hook.command" = "Befehl";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Abgleich";
+"harnesses.profile.hook.matcher.placeholder" = "Optionales Muster";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Server hinzufügen";
+"harnesses.profile.mcp.add.title" = "MCP-Server hinzufügen";
+"harnesses.profile.mcp.name" = "Name";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "Typ";
+"harnesses.profile.mcp.type.command" = "Befehl";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Befehl";
+"harnesses.profile.mcp.args" = "Argumente";
+"harnesses.profile.mcp.args.placeholder" = "--flag wert";
+"harnesses.profile.mcp.args.hint" = "Leerzeichen-getrennte Argumente";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Durch dieses Profil deaktiviert (überschreibt jeden übernommenen Server)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Include hinzufügen";
+"harnesses.profile.include.add.title" = "Include hinzufügen";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "zugewiesen";
+"remote.prs.badge.author" = "ich";
+"remote.prs.badge.checked.out" = "ausgecheckt";
+"remote.prs.badge.draft" = "Entwurf";
+"remote.prs.badge.review" = "Review";
+"remote.prs.checking.out %lld" = "PR #%lld wird ausgecheckt…";
+"remote.prs.checkout.as.worktree" = "Als Worktree auschecken";
+"remote.prs.checkout.toast %@" = "Ausgecheckt als %@.";
+"remote.prs.clear.default.focus" = "Standard-Focus löschen";
+"remote.prs.copy.branch.name" = "Branch-Name kopieren";
+"remote.prs.copy.url" = "PR-URL kopieren";
+"remote.prs.default.focus.set %@" = "Standard-Focus: %@";
+"remote.prs.force.push.indicator" = "↑ aktualisiert";
+"remote.prs.force.update.cancel" = "Abbrechen";
+"remote.prs.force.update.confirm" = "Trotzdem erzwingen";
+"remote.prs.force.update.message %lld %lld" = "Ihr lokaler Worktree hat %lld geänderte Datei(en) und %lld Commit(s) vor dem Ursprung. Die Erzwungene Aktualisierung setzt auf den neuen PR-Head zurück und verliert diese Arbeit.";
+"remote.prs.force.update.title" = "PR-Head wurde zwangs-gepusht";
+"remote.prs.gh.auth.failed" = "gh-Authentifizierung konnte nicht verifiziert werden — erneut versuchen?";
+"remote.prs.gh.missing.message" = "Installieren Sie die GitHub CLI, um den Remote-Modus zu verwenden.";
+"remote.prs.gh.missing.title" = "gh CLI nicht gefunden";
+"remote.prs.gh.recheck" = "Erneut prüfen";
+"remote.prs.gh.unauth.message" = "Führen Sie `gh auth login` aus, um sich anzumelden.";
+"remote.prs.gh.unauth.title" = "Nicht bei GitHub angemeldet";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Lokal";
+"remote.prs.mode.remote" = "Remote";
+"remote.prs.no.github.remote" = "— kein GitHub-Remote —";
+"remote.prs.open.pr.on.remote" = "PR auf Remote öffnen";
+"remote.prs.overflow.more %lld" = "+ %lld weitere — Repository-Detail öffnen";
+"remote.prs.prune.all" = "⊘ Bereinigen…";
+"remote.prs.prune.closed" = "⊘ Geschlossene PRs bereinigen";
+"remote.prs.prune.closed.confirm" = "Bereinigen";
+"remote.prs.prune.closed.header" = "Geschlossene PR-Worktrees";
+"remote.prs.prune.closed.nothing.message" = "Alle verfolgten PR-Zeilen sind noch geöffnet.";
+"remote.prs.prune.closed.nothing.title" = "Nichts zu bereinigen";
+"remote.prs.prune.closed.title %lld" = "%lld PRs geschlossen oder zusammengeführt";
+"remote.prs.prune.focus.header" = "Focus-Worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld Focus-Worktrees";
+"remote.prs.prune.keep" = "Behalten";
+"remote.prs.prune.reason.ahead" = "nicht gepushte Commits";
+"remote.prs.prune.reason.dirty" = "nicht commitete Änderungen";
+"remote.prs.prune.remove" = "Entfernen";
+"remote.prs.quick.launch.focus" = "Focus schnell starten";
+"remote.prs.run.cancel" = "Abbrechen";
+"remote.prs.run.customize" = "Anpassen";
+"remote.prs.run.focus.item %@" = "%@ ausführen";
+"remote.prs.run.focus.label" = "Focus";
+"remote.prs.run.focus.none" = "(keiner — Ad-hoc-Eingabe)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Der Agent reagiert auf den anfänglichen Focus und bleibt dann für Folgefragen offen.";
+"remote.prs.run.interactive.label" = "Nach dem Ausführen interaktiv bleiben";
+"remote.prs.run.loading.detail" = "Harness-Details werden geladen…";
+"remote.prs.run.profile.default" = "(Harness-Standardwerte)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Focus-Eingabe";
+"remote.prs.run.refresh.detail" = "Harness-Focuses und -Profile von der Festplatte neu laden";
+"remote.prs.run.run" = "Ausführen";
+"remote.prs.run.sheet.title" = "Mit Focus ausführen";
+"remote.prs.run.vendor.default" = "Harness-Standard";
+"remote.prs.run.vendor.label" = "Anbieter";
+"remote.prs.run.with.focus" = "Mit Focus ausführen…";
+"remote.prs.set.default.focus" = "Standard-Focus festlegen…";
+"remote.prs.show.in.local" = "Lokal anzeigen";
+"remote.prs.show.in.remote" = "Remote anzeigen";
+"remote.prs.switch.to.existing" = "Zu vorhandenem wechseln";
+"remote.prs.switch.to.local" = "Zu Lokal wechseln";
+"remote.prs.worktree.exists" = "Worktree bereits vorhanden";
+"settings.github.feed.cap.help" = "Maximale Anzahl der pro Repository in der Remote-Seitenleiste angezeigten Pull Requests. Ausgecheckte PRs werden immer eingeschlossen.";
+"settings.github.feed.cap.label" = "PRs pro Repository";
+"settings.github.section.feed" = "Remote-PR-Feed";
+"settings.tab.github" = "GitHub";

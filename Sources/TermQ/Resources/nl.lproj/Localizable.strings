@@ -977,6 +977,18 @@
 "harness.update.progress.title %@" = "Bezig met bijwerken van \"%@\"…";
 "harness.update.button" = "Bijwerken";
 "harness.update.ynh.unavailable" = "ynh is niet beschikbaar.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Bezig met installeren van \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh is niet beschikbaar.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Bezig met verwijderen van \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh is niet beschikbaar.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Bezig met exporteren van \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd is niet beschikbaar.";
+
 "command.runner.running" = "Wordt uitgevoerd…";
 "command.runner.succeeded" = "Geslaagd";
 "command.runner.failed" = "Mislukt";
@@ -1062,3 +1074,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Upstream-wijzigingen controleren";
 "harnesses.unversioned.drift.confirm.body" = "Upstream-inhoud is gewijzigd zonder versie-update. Bijwerken haalt de nieuwe inhoud op. Controleer de SHA's hieronder voordat u doorgaat — een ontbrekende versie-update kan kwaadaardige wijzigingen maskeren.";
 "harnesses.unversioned.drift.confirm.proceed" = "Toch bijwerken";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Geen includes";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Focus toevoegen";
+"harnesses.focus.add.title" = "Focus toevoegen";
+"harnesses.focus.edit.button" = "Bewerken";
+"harnesses.focus.edit.title" = "Focus bewerken";
+"harnesses.focus.remove.button" = "Verwijderen";
+"harnesses.focus.remove.confirm.title" = "Focus verwijderen";
+"harnesses.focus.remove.confirm.button" = "Verwijderen";
+"harnesses.focus.remove.confirm.message %@" = "Focus \"%@\" verwijderen?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Naam";
+"harnesses.focus.name.placeholder" = "mijn-focus";
+"harnesses.focus.prompt" = "Prompt";
+"harnesses.focus.profile" = "Profiel";
+"harnesses.focus.profile.none" = "Geen";
+"harnesses.focus.clear.profile" = "Profiel wissen";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Toevoegen";
+"harnesses.focus.save" = "Opslaan";
+"harnesses.focus.cancel" = "Annuleren";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Profiel toevoegen";
+"harnesses.profile.add.title" = "Profiel toevoegen";
+"harnesses.profile.edit.button" = "Bewerken";
+"harnesses.profile.edit.title %@" = "Profiel bewerken: %@";
+"harnesses.profile.edit.done" = "Gereed";
+"harnesses.profile.remove.button" = "Verwijderen";
+"harnesses.profile.remove.confirm.title" = "Profiel verwijderen";
+"harnesses.profile.remove.confirm.button" = "Verwijderen";
+"harnesses.profile.remove.confirm.message %@" = "Profiel \"%@\" verwijderen?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Naam";
+"harnesses.profile.name.placeholder" = "mijn-profiel";
+"harnesses.profile.add.confirm" = "Toevoegen";
+"harnesses.profile.includes" = "Includes";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Hook toevoegen";
+"harnesses.profile.hook.add.title" = "Hook toevoegen";
+"harnesses.profile.hook.event" = "Gebeurtenis";
+"harnesses.profile.hook.command" = "Opdracht";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Patroon";
+"harnesses.profile.hook.matcher.placeholder" = "Optioneel patroon";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Server toevoegen";
+"harnesses.profile.mcp.add.title" = "MCP-server toevoegen";
+"harnesses.profile.mcp.name" = "Naam";
+"harnesses.profile.mcp.name.placeholder" = "servernaam";
+"harnesses.profile.mcp.type" = "Type";
+"harnesses.profile.mcp.type.command" = "Opdracht";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Opdracht";
+"harnesses.profile.mcp.args" = "Argumenten";
+"harnesses.profile.mcp.args.placeholder" = "--vlag waarde";
+"harnesses.profile.mcp.args.hint" = "Spatie-gescheiden argumenten";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Uitgeschakeld door dit profiel (overschrijft elke geërfde server)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Include toevoegen";
+"harnesses.profile.include.add.title" = "Include toevoegen";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "toegewezen";
+"remote.prs.badge.author" = "ik";
+"remote.prs.badge.checked.out" = "uitgecheckt";
+"remote.prs.badge.draft" = "concept";
+"remote.prs.badge.review" = "beoordeling";
+"remote.prs.checking.out %lld" = "PR #%lld uitchecken…";
+"remote.prs.checkout.as.worktree" = "Uitchecken als worktree";
+"remote.prs.checkout.toast %@" = "Uitgecheckt als %@.";
+"remote.prs.clear.default.focus" = "Standaardfocus wissen";
+"remote.prs.copy.branch.name" = "Branch-naam kopiëren";
+"remote.prs.copy.url" = "PR-URL kopiëren";
+"remote.prs.default.focus.set %@" = "Standaardfocus: %@";
+"remote.prs.force.push.indicator" = "↑ bijgewerkt";
+"remote.prs.force.update.cancel" = "Annuleren";
+"remote.prs.force.update.confirm" = "Toch forceren";
+"remote.prs.force.update.message %lld %lld" = "Uw lokale worktree heeft %lld gewijzigd(e) bestand(en) en %lld commit(s) voor op de oorsprong. Geforceerd bijwerken zal teruggaan naar de nieuwe PR-head en dit werk verliezen.";
+"remote.prs.force.update.title" = "PR-head is geforceerd gepusht";
+"remote.prs.gh.auth.failed" = "Kon gh-authenticatie niet verifiëren — opnieuw proberen?";
+"remote.prs.gh.missing.message" = "Installeer de GitHub CLI om de Remote-modus te gebruiken.";
+"remote.prs.gh.missing.title" = "gh CLI niet gevonden";
+"remote.prs.gh.recheck" = "Opnieuw controleren";
+"remote.prs.gh.unauth.message" = "Voer `gh auth login` uit om in te loggen.";
+"remote.prs.gh.unauth.title" = "Niet aangemeld bij GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Lokaal";
+"remote.prs.mode.remote" = "Remote";
+"remote.prs.no.github.remote" = "— geen GitHub-remote —";
+"remote.prs.open.pr.on.remote" = "PR openen op Remote";
+"remote.prs.overflow.more %lld" = "+ %lld meer — Repositorydetail openen";
+"remote.prs.prune.all" = "⊘ Snoeien…";
+"remote.prs.prune.closed" = "⊘ Gesloten PRs snoeien";
+"remote.prs.prune.closed.confirm" = "Snoeien";
+"remote.prs.prune.closed.header" = "Worktrees van gesloten PRs";
+"remote.prs.prune.closed.nothing.message" = "Alle gevolgde PR-rijen zijn nog open.";
+"remote.prs.prune.closed.nothing.title" = "Niets te snoeien";
+"remote.prs.prune.closed.title %lld" = "%lld PRs gesloten of samengevoegd";
+"remote.prs.prune.focus.header" = "Focus-worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld focus-worktrees";
+"remote.prs.prune.keep" = "Bewaren";
+"remote.prs.prune.reason.ahead" = "niet-gepushte commits";
+"remote.prs.prune.reason.dirty" = "niet-gecommitte wijzigingen";
+"remote.prs.prune.remove" = "Verwijderen";
+"remote.prs.quick.launch.focus" = "Focus snel starten";
+"remote.prs.run.cancel" = "Annuleren";
+"remote.prs.run.customize" = "Aanpassen";
+"remote.prs.run.focus.item %@" = "%@ uitvoeren";
+"remote.prs.run.focus.label" = "Focus";
+"remote.prs.run.focus.none" = "(geen — ad-hocprompt)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "De agent reageert op de initiële focus en blijft daarna open voor vervolgvragen.";
+"remote.prs.run.interactive.label" = "Interactief blijven na uitvoering";
+"remote.prs.run.loading.detail" = "Harness-details laden…";
+"remote.prs.run.profile.default" = "(harness-standaarden)";
+"remote.prs.run.profile.label" = "Profiel";
+"remote.prs.run.prompt.label" = "Focusprompt";
+"remote.prs.run.refresh.detail" = "Harness-focuses en -profielen opnieuw laden van schijf";
+"remote.prs.run.run" = "Uitvoeren";
+"remote.prs.run.sheet.title" = "Uitvoeren met focus";
+"remote.prs.run.vendor.default" = "Harness-standaard";
+"remote.prs.run.vendor.label" = "Leverancier";
+"remote.prs.run.with.focus" = "Uitvoeren met focus…";
+"remote.prs.set.default.focus" = "Standaardfocus instellen…";
+"remote.prs.show.in.local" = "Lokaal tonen";
+"remote.prs.show.in.remote" = "Op remote tonen";
+"remote.prs.switch.to.existing" = "Naar bestaande wisselen";
+"remote.prs.switch.to.local" = "Naar lokaal wisselen";
+"remote.prs.worktree.exists" = "Worktree bestaat al";
+"settings.github.feed.cap.help" = "Maximaal aantal pull requests per repository in de Remote-zijbalk. Uitgecheckte PR's worden altijd meegenomen.";
+"settings.github.feed.cap.label" = "PR's per repository";
+"settings.github.section.feed" = "Remote PR-feed";
+"settings.tab.github" = "GitHub";

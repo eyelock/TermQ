@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "Оновлення «%@»…";
 "harness.update.button" = "Оновити";
 "harness.update.ynh.unavailable" = "ynh недоступний.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Встановлення «%@»…";
+"harness.install.ynh.unavailable" = "ynh недоступний.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Видалення «%@»…";
+"harness.uninstall.ynh.unavailable" = "ynh недоступний.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Експорт «%@»…";
+"harness.export.ynd.unavailable" = "ynd недоступний.";
+
 "command.runner.running" = "Виконується…";
 "command.runner.succeeded" = "Виконано";
 "command.runner.failed" = "Не виконано";
@@ -1064,3 +1076,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Перевірити зміни upstream";
 "harnesses.unversioned.drift.confirm.body" = "Вміст upstream змінився без оновлення версії. Оновлення завантажить новий вміст. Перевірте SHA нижче перед продовженням — відсутнє оновлення версії може приховати шкідливі зміни.";
 "harnesses.unversioned.drift.confirm.proceed" = "Все одно оновити";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Немає включень";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Додати фокус";
+"harnesses.focus.add.title" = "Додати фокус";
+"harnesses.focus.edit.button" = "Редагувати";
+"harnesses.focus.edit.title" = "Редагувати фокус";
+"harnesses.focus.remove.button" = "Видалити";
+"harnesses.focus.remove.confirm.title" = "Видалити фокус";
+"harnesses.focus.remove.confirm.button" = "Видалити";
+"harnesses.focus.remove.confirm.message %@" = "Видалити фокус «%@»?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Назва";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "Запит";
+"harnesses.focus.profile" = "Профіль";
+"harnesses.focus.profile.none" = "Немає";
+"harnesses.focus.clear.profile" = "Очистити профіль";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Додати";
+"harnesses.focus.save" = "Зберегти";
+"harnesses.focus.cancel" = "Скасувати";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Додати профіль";
+"harnesses.profile.add.title" = "Додати профіль";
+"harnesses.profile.edit.button" = "Редагувати";
+"harnesses.profile.edit.title %@" = "Редагувати профіль: %@";
+"harnesses.profile.edit.done" = "Готово";
+"harnesses.profile.remove.button" = "Видалити";
+"harnesses.profile.remove.confirm.title" = "Видалити профіль";
+"harnesses.profile.remove.confirm.button" = "Видалити";
+"harnesses.profile.remove.confirm.message %@" = "Видалити профіль «%@»?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Назва";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "Додати";
+"harnesses.profile.includes" = "Включення";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Додати хук";
+"harnesses.profile.hook.add.title" = "Додати хук";
+"harnesses.profile.hook.event" = "Подія";
+"harnesses.profile.hook.command" = "Команда";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Зіставлювач";
+"harnesses.profile.hook.matcher.placeholder" = "Необов'язковий шаблон";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Додати сервер";
+"harnesses.profile.mcp.add.title" = "Додати MCP-сервер";
+"harnesses.profile.mcp.name" = "Назва";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "Тип";
+"harnesses.profile.mcp.type.command" = "Команда";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Команда";
+"harnesses.profile.mcp.args" = "Аргументи";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "Аргументи, розділені пробілами";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Вимкнено цим профілем (замінює будь-який успадкований сервер)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Додати включення";
+"harnesses.profile.include.add.title" = "Додати включення";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "призначено";
+"remote.prs.badge.author" = "я";
+"remote.prs.badge.checked.out" = "отримано";
+"remote.prs.badge.draft" = "чернетка";
+"remote.prs.badge.review" = "огляд";
+"remote.prs.checking.out %lld" = "Отримання PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Отримати як worktree";
+"remote.prs.checkout.toast %@" = "Отримано як %@.";
+"remote.prs.clear.default.focus" = "Очистити стандартний фокус";
+"remote.prs.copy.branch.name" = "Скопіювати назву гілки";
+"remote.prs.copy.url" = "Скопіювати URL PR";
+"remote.prs.default.focus.set %@" = "Стандартний фокус: %@";
+"remote.prs.force.push.indicator" = "↑ оновлено";
+"remote.prs.force.update.cancel" = "Скасувати";
+"remote.prs.force.update.confirm" = "Все одно примусити";
+"remote.prs.force.update.message %lld %lld" = "Ваш локальний worktree містить %lld змінений файл(ів) і %lld коміт(ів) попереду origin. Примусове оновлення скине до нового head PR та втратить цю роботу.";
+"remote.prs.force.update.title" = "Head PR було примусово відправлено";
+"remote.prs.gh.auth.failed" = "Не вдалося перевірити автентифікацію gh — повторити?";
+"remote.prs.gh.missing.message" = "Встановіть GitHub CLI для використання режиму Remote.";
+"remote.prs.gh.missing.title" = "gh CLI не знайдено";
+"remote.prs.gh.recheck" = "Перевірити знову";
+"remote.prs.gh.unauth.message" = "Виконайте `gh auth login` для входу.";
+"remote.prs.gh.unauth.title" = "Не увійшли до GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Локальний";
+"remote.prs.mode.remote" = "Віддалений";
+"remote.prs.no.github.remote" = "— немає GitHub remote —";
+"remote.prs.open.pr.on.remote" = "Відкрити PR на Remote";
+"remote.prs.overflow.more %lld" = "+ ще %lld — Відкрити деталі репозиторію";
+"remote.prs.prune.all" = "⊘ Очистити…";
+"remote.prs.prune.closed" = "⊘ Очистити закриті PR";
+"remote.prs.prune.closed.confirm" = "Очистити";
+"remote.prs.prune.closed.header" = "Worktrees закритих PR";
+"remote.prs.prune.closed.nothing.message" = "Усі відстежувані рядки PR ще відкриті.";
+"remote.prs.prune.closed.nothing.title" = "Нічого очищати";
+"remote.prs.prune.closed.title %lld" = "%lld PR закрито або злито";
+"remote.prs.prune.focus.header" = "Focus-Worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld Focus-Worktrees";
+"remote.prs.prune.keep" = "Залишити";
+"remote.prs.prune.reason.ahead" = "невідправлені коміти";
+"remote.prs.prune.reason.dirty" = "незафіксовані зміни";
+"remote.prs.prune.remove" = "Видалити";
+"remote.prs.quick.launch.focus" = "Швидкий запуск фокусу";
+"remote.prs.run.cancel" = "Скасувати";
+"remote.prs.run.customize" = "Налаштувати";
+"remote.prs.run.focus.item %@" = "Запустити %@";
+"remote.prs.run.focus.label" = "Фокус";
+"remote.prs.run.focus.none" = "(немає — нерегулярний запит)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Агент відповість на початковий фокус, а потім залишиться відкритим для подальших запитань.";
+"remote.prs.run.interactive.label" = "Залишатися інтерактивним після запуску";
+"remote.prs.run.loading.detail" = "Завантаження деталей Harness…";
+"remote.prs.run.profile.default" = "(значення Harness за замовчуванням)";
+"remote.prs.run.profile.label" = "Профіль";
+"remote.prs.run.prompt.label" = "Запит фокусу";
+"remote.prs.run.refresh.detail" = "Перезавантажити фокуси та профілі Harness з диска";
+"remote.prs.run.run" = "Запустити";
+"remote.prs.run.sheet.title" = "Запустити з фокусом";
+"remote.prs.run.vendor.default" = "За замовчуванням Harness";
+"remote.prs.run.vendor.label" = "Постачальник";
+"remote.prs.run.with.focus" = "Запустити з фокусом…";
+"remote.prs.set.default.focus" = "Встановити стандартний фокус…";
+"remote.prs.show.in.local" = "Показати локально";
+"remote.prs.show.in.remote" = "Показати на Remote";
+"remote.prs.switch.to.existing" = "Перейти до існуючого";
+"remote.prs.switch.to.local" = "Перейти до локального";
+"remote.prs.worktree.exists" = "Worktree вже існує";
+"settings.github.feed.cap.help" = "Максимальна кількість pull request, що відображаються на репозиторій у бічній панелі Remote. Отримані PR завжди включені.";
+"settings.github.feed.cap.label" = "PR на репозиторій";
+"settings.github.section.feed" = "Стрічка Remote PR";
+"settings.tab.github" = "GitHub";

@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "Ενημέρωση \"%@\"…";
 "harness.update.button" = "Ενημέρωση";
 "harness.update.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Εγκατάσταση \"%@\"…";
+"harness.install.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Κατάργηση εγκατάστασης \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "Το ynh δεν είναι διαθέσιμο.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Εξαγωγή \"%@\"…";
+"harness.export.ynd.unavailable" = "Το ynd δεν είναι διαθέσιμο.";
+
 "command.runner.running" = "Εκτελείται…";
 "command.runner.succeeded" = "Επιτυχία";
 "command.runner.failed" = "Αποτυχία";
@@ -1057,3 +1069,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Έλεγχος upstream αλλαγών";
 "harnesses.unversioned.drift.confirm.body" = "Το upstream περιεχόμενο άλλαξε χωρίς ενημέρωση έκδοσης. Η ενημέρωση θα φέρει το νέο περιεχόμενο. Ελέγξτε τα SHA παρακάτω πριν συνεχίσετε — η έλλειψη ενημέρωσης έκδοσης μπορεί να αποκρύψει κακόβουλες αλλαγές.";
 "harnesses.unversioned.drift.confirm.proceed" = "Ενημέρωση ούτως ή άλλως";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Χωρίς συμπεριλήψεις";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Προσθήκη εστίασης";
+"harnesses.focus.add.title" = "Προσθήκη εστίασης";
+"harnesses.focus.edit.button" = "Επεξεργασία";
+"harnesses.focus.edit.title" = "Επεξεργασία εστίασης";
+"harnesses.focus.remove.button" = "Αφαίρεση";
+"harnesses.focus.remove.confirm.title" = "Αφαίρεση εστίασης";
+"harnesses.focus.remove.confirm.button" = "Αφαίρεση";
+"harnesses.focus.remove.confirm.message %@" = "Να αφαιρεθεί η εστίαση \"%@\";";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Όνομα";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "Προτροπή";
+"harnesses.focus.profile" = "Προφίλ";
+"harnesses.focus.profile.none" = "Κανένα";
+"harnesses.focus.clear.profile" = "Εκκαθάριση προφίλ";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Προσθήκη";
+"harnesses.focus.save" = "Αποθήκευση";
+"harnesses.focus.cancel" = "Ακύρωση";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Προσθήκη προφίλ";
+"harnesses.profile.add.title" = "Προσθήκη προφίλ";
+"harnesses.profile.edit.button" = "Επεξεργασία";
+"harnesses.profile.edit.title %@" = "Επεξεργασία προφίλ: %@";
+"harnesses.profile.edit.done" = "Τέλος";
+"harnesses.profile.remove.button" = "Αφαίρεση";
+"harnesses.profile.remove.confirm.title" = "Αφαίρεση προφίλ";
+"harnesses.profile.remove.confirm.button" = "Αφαίρεση";
+"harnesses.profile.remove.confirm.message %@" = "Να αφαιρεθεί το προφίλ \"%@\";";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Όνομα";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "Προσθήκη";
+"harnesses.profile.includes" = "Συμπεριλήψεις";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Προσθήκη hook";
+"harnesses.profile.hook.add.title" = "Προσθήκη hook";
+"harnesses.profile.hook.event" = "Συμβάν";
+"harnesses.profile.hook.command" = "Εντολή";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Αντιπαραβολέας";
+"harnesses.profile.hook.matcher.placeholder" = "Προαιρετικό μοτίβο";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Προσθήκη διακομιστή";
+"harnesses.profile.mcp.add.title" = "Προσθήκη διακομιστή MCP";
+"harnesses.profile.mcp.name" = "Όνομα";
+"harnesses.profile.mcp.name.placeholder" = "onoma-diakomisti";
+"harnesses.profile.mcp.type" = "Τύπος";
+"harnesses.profile.mcp.type.command" = "Εντολή";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Εντολή";
+"harnesses.profile.mcp.args" = "Ορίσματα";
+"harnesses.profile.mcp.args.placeholder" = "--σημαία τιμή";
+"harnesses.profile.mcp.args.hint" = "Ορίσματα διαχωρισμένα με κενά";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Απενεργοποιήθηκε από αυτό το προφίλ (υπερισχύει κάθε κληρονομημένου διακομιστή)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Προσθήκη συμπερίληψης";
+"harnesses.profile.include.add.title" = "Προσθήκη συμπερίληψης";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "ανατεθειμένο";
+"remote.prs.badge.author" = "εγώ";
+"remote.prs.badge.checked.out" = "ελήφθη";
+"remote.prs.badge.draft" = "πρόχειρο";
+"remote.prs.badge.review" = "αναθεώρηση";
+"remote.prs.checking.out %lld" = "Λήψη PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Λήψη ως worktree";
+"remote.prs.checkout.toast %@" = "Ελήφθη ως %@.";
+"remote.prs.clear.default.focus" = "Εκκαθάριση προεπιλεγμένης εστίασης";
+"remote.prs.copy.branch.name" = "Αντιγραφή ονόματος κλάδου";
+"remote.prs.copy.url" = "Αντιγραφή URL PR";
+"remote.prs.default.focus.set %@" = "Προεπιλεγμένη εστίαση: %@";
+"remote.prs.force.push.indicator" = "↑ ενημερώθηκε";
+"remote.prs.force.update.cancel" = "Ακύρωση";
+"remote.prs.force.update.confirm" = "Εξαναγκασμός ούτως ή άλλως";
+"remote.prs.force.update.message %lld %lld" = "Το τοπικό worktree έχει %lld τροποποιημένο/α αρχείο/α και %lld commit(s) μπροστά από την προέλευση. Η αναγκαστική ενημέρωση θα επαναφέρει στο νέο head PR και θα χαθεί αυτή η εργασία.";
+"remote.prs.force.update.title" = "Το head του PR αναγκάστηκε";
+"remote.prs.gh.auth.failed" = "Δεν ήταν δυνατή η επαλήθευση gh — επανάληψη;";
+"remote.prs.gh.missing.message" = "Εγκαταστήστε το GitHub CLI για χρήση της λειτουργίας Remote.";
+"remote.prs.gh.missing.title" = "Το gh CLI δεν βρέθηκε";
+"remote.prs.gh.recheck" = "Επαναέλεγχος";
+"remote.prs.gh.unauth.message" = "Εκτελέστε `gh auth login` για σύνδεση.";
+"remote.prs.gh.unauth.title" = "Δεν έχετε συνδεθεί στο GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Τοπικό";
+"remote.prs.mode.remote" = "Απομακρυσμένο";
+"remote.prs.no.github.remote" = "— χωρίς GitHub remote —";
+"remote.prs.open.pr.on.remote" = "Άνοιγμα PR στο Remote";
+"remote.prs.overflow.more %lld" = "+ %lld ακόμη — Άνοιγμα λεπτομερειών αποθετηρίου";
+"remote.prs.prune.all" = "⊘ Εκκαθάριση…";
+"remote.prs.prune.closed" = "⊘ Εκκαθάριση κλειστών PR";
+"remote.prs.prune.closed.confirm" = "Εκκαθάριση";
+"remote.prs.prune.closed.header" = "Worktrees κλειστών PR";
+"remote.prs.prune.closed.nothing.message" = "Όλες οι παρακολουθούμενες γραμμές PR είναι ακόμη ανοιχτές.";
+"remote.prs.prune.closed.nothing.title" = "Τίποτα να εκκαθαριστεί";
+"remote.prs.prune.closed.title %lld" = "%lld PR κλειστά ή συγχωνευμένα";
+"remote.prs.prune.focus.header" = "Worktrees εστίασης";
+"remote.prs.prune.focus.title %lld" = "%lld worktrees εστίασης";
+"remote.prs.prune.keep" = "Διατήρηση";
+"remote.prs.prune.reason.ahead" = "μη αποστελλόμενα commits";
+"remote.prs.prune.reason.dirty" = "αδέσμευτες αλλαγές";
+"remote.prs.prune.remove" = "Αφαίρεση";
+"remote.prs.quick.launch.focus" = "Γρήγορη εκκίνηση εστίασης";
+"remote.prs.run.cancel" = "Ακύρωση";
+"remote.prs.run.customize" = "Προσαρμογή";
+"remote.prs.run.focus.item %@" = "Εκτέλεση %@";
+"remote.prs.run.focus.label" = "Εστίαση";
+"remote.prs.run.focus.none" = "(καμία — ad hoc προτροπή)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Ο πράκτορας θα απαντήσει στην αρχική εστίαση και στη συνέχεια θα παραμείνει ανοιχτός για ερωτήσεις παρακολούθησης.";
+"remote.prs.run.interactive.label" = "Παραμονή σε διαδραστική λειτουργία μετά την εκτέλεση";
+"remote.prs.run.loading.detail" = "Φόρτωση λεπτομερειών Harness…";
+"remote.prs.run.profile.default" = "(προεπιλογές Harness)";
+"remote.prs.run.profile.label" = "Προφίλ";
+"remote.prs.run.prompt.label" = "Προτροπή εστίασης";
+"remote.prs.run.refresh.detail" = "Επαναφόρτωση εστιάσεων και προφίλ Harness από δίσκο";
+"remote.prs.run.run" = "Εκτέλεση";
+"remote.prs.run.sheet.title" = "Εκτέλεση με εστίαση";
+"remote.prs.run.vendor.default" = "Προεπιλογή Harness";
+"remote.prs.run.vendor.label" = "Πάροχος";
+"remote.prs.run.with.focus" = "Εκτέλεση με εστίαση…";
+"remote.prs.set.default.focus" = "Ορισμός προεπιλεγμένης εστίασης…";
+"remote.prs.show.in.local" = "Εμφάνιση τοπικά";
+"remote.prs.show.in.remote" = "Εμφάνιση στο Remote";
+"remote.prs.switch.to.existing" = "Μετάβαση σε υπάρχον";
+"remote.prs.switch.to.local" = "Μετάβαση σε τοπικό";
+"remote.prs.worktree.exists" = "Το Worktree υπάρχει ήδη";
+"settings.github.feed.cap.help" = "Μέγιστος αριθμός pull requests που εμφανίζονται ανά αποθετήριο στην πλευρική μπάρα Remote. Τα ληφθέντα PR περιλαμβάνονται πάντα.";
+"settings.github.feed.cap.label" = "PR ανά αποθετήριο";
+"settings.github.section.feed" = "Remote PR Feed";
+"settings.tab.github" = "GitHub";

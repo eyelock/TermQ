@@ -220,6 +220,75 @@ extension Strings {
         static var detailNoMCPServers: String { localized("harnesses.detail.no.mcp.servers") }
         static var detailNoProfiles: String { localized("harnesses.detail.no.profiles") }
         static var detailNoFocuses: String { localized("harnesses.detail.no.focuses") }
+        static var detailNoIncludes: String { localized("harnesses.detail.no.includes") }
+
+        // Focus editor
+        static var addFocusButton: String { localized("harnesses.focus.add.button") }
+        static var addFocusTitle: String { localized("harnesses.focus.add.title") }
+        static var editFocusButton: String { localized("harnesses.focus.edit.button") }
+        static var editFocusTitle: String { localized("harnesses.focus.edit.title") }
+        static var removeFocusButton: String { localized("harnesses.focus.remove.button") }
+        static var removeFocusConfirmTitle: String { localized("harnesses.focus.remove.confirm.title") }
+        static var removeFocusConfirmButton: String { localized("harnesses.focus.remove.confirm.button") }
+        static func removeFocusConfirmMessage(_ name: String) -> String {
+            String(format: localized("harnesses.focus.remove.confirm.message %@"), name)
+        }
+        static var focusName: String { localized("harnesses.focus.name") }
+        static var focusNamePlaceholder: String { localized("harnesses.focus.name.placeholder") }
+        static var focusPrompt: String { localized("harnesses.focus.prompt") }
+        static var focusProfile: String { localized("harnesses.focus.profile") }
+        static var focusProfileNone: String { localized("harnesses.focus.profile.none") }
+        static var focusClearProfile: String { localized("harnesses.focus.clear.profile") }
+        static var focusAddButton: String { localized("harnesses.focus.add.confirm") }
+        static var focusSaveButton: String { localized("harnesses.focus.save") }
+        static var focusCancelButton: String { localized("harnesses.focus.cancel") }
+
+        // Profile editor
+        static var addProfileButton: String { localized("harnesses.profile.add.button") }
+        static var addProfileTitle: String { localized("harnesses.profile.add.title") }
+        static var editProfileButton: String { localized("harnesses.profile.edit.button") }
+        static func editProfileTitle(_ name: String) -> String {
+            String(format: localized("harnesses.profile.edit.title %@"), name)
+        }
+        static var editProfileDoneButton: String { localized("harnesses.profile.edit.done") }
+        static var removeProfileButton: String { localized("harnesses.profile.remove.button") }
+        static var removeProfileConfirmTitle: String { localized("harnesses.profile.remove.confirm.title") }
+        static var removeProfileConfirmButton: String { localized("harnesses.profile.remove.confirm.button") }
+        static func removeProfileConfirmMessage(_ name: String) -> String {
+            String(format: localized("harnesses.profile.remove.confirm.message %@"), name)
+        }
+        static var profileName: String { localized("harnesses.profile.name") }
+        static var profileNamePlaceholder: String { localized("harnesses.profile.name.placeholder") }
+        static var profileAddButton: String { localized("harnesses.profile.add.confirm") }
+        static var profileIncludes: String { localized("harnesses.profile.includes") }
+
+        // Profile hook editor
+        static var addHookButton: String { localized("harnesses.profile.hook.add.button") }
+        static var addHookTitle: String { localized("harnesses.profile.hook.add.title") }
+        static var hookEvent: String { localized("harnesses.profile.hook.event") }
+        static var hookCommand: String { localized("harnesses.profile.hook.command") }
+        static var hookCommandPlaceholder: String { localized("harnesses.profile.hook.command.placeholder") }
+        static var hookMatcher: String { localized("harnesses.profile.hook.matcher") }
+        static var hookMatcherPlaceholder: String { localized("harnesses.profile.hook.matcher.placeholder") }
+
+        // Profile MCP editor
+        static var addMCPButton: String { localized("harnesses.profile.mcp.add.button") }
+        static var addMCPTitle: String { localized("harnesses.profile.mcp.add.title") }
+        static var mcpServerName: String { localized("harnesses.profile.mcp.name") }
+        static var mcpServerNamePlaceholder: String { localized("harnesses.profile.mcp.name.placeholder") }
+        static var mcpServerType: String { localized("harnesses.profile.mcp.type") }
+        static var mcpServerTypeCommand: String { localized("harnesses.profile.mcp.type.command") }
+        static var mcpServerTypeURL: String { localized("harnesses.profile.mcp.type.url") }
+        static var mcpServerCommand: String { localized("harnesses.profile.mcp.command") }
+        static var mcpServerArgs: String { localized("harnesses.profile.mcp.args") }
+        static var mcpServerArgsPlaceholder: String { localized("harnesses.profile.mcp.args.placeholder") }
+        static var mcpServerArgsHint: String { localized("harnesses.profile.mcp.args.hint") }
+        static var mcpServerURL: String { localized("harnesses.profile.mcp.url") }
+        static var mcpNulledHint: String { localized("harnesses.profile.mcp.nulled.hint") }
+
+        // Profile include editor
+        static var addProfileIncludeButton: String { localized("harnesses.profile.include.add.button") }
+        static var addProfileIncludeTitle: String { localized("harnesses.profile.include.add.title") }
 
         // Include row editor
         static var includeActionsHelp: String { localized("harnesses.include.actions.help") }
@@ -472,6 +541,39 @@ extension Strings {
         }
         static var updateButton: String { localized("harness.update.button") }
         static var ynhUnavailable: String { localized("harness.update.ynh.unavailable") }
+    }
+}
+
+// MARK: - HarnessInstall (progress sheet)
+
+extension Strings {
+    enum HarnessInstall {
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.install.progress.title %@"), name)
+        }
+        static var ynhUnavailable: String { localized("harness.install.ynh.unavailable") }
+    }
+}
+
+// MARK: - HarnessUninstall (progress sheet)
+
+extension Strings {
+    enum HarnessUninstall {
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.uninstall.progress.title %@"), name)
+        }
+        static var ynhUnavailable: String { localized("harness.uninstall.ynh.unavailable") }
+    }
+}
+
+// MARK: - HarnessExport (progress sheet)
+
+extension Strings {
+    enum HarnessExport {
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.export.progress.title %@"), name)
+        }
+        static var yndUnavailable: String { localized("harness.export.ynd.unavailable") }
     }
 }
 
