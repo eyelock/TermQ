@@ -8,7 +8,7 @@ SHELL := /bin/bash
 .PHONY: all build-release clean test test.coverage lint format check install uninstall run debug help
 .PHONY: install-cli uninstall-cli install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release publish-release
-.PHONY: copy-help docs.help
+.PHONY: copy-help docs.help mcp.inspect mcp.inspect.release
 
 # Project-specific configuration (change these for other projects)
 APP_NAME := TermQ
@@ -578,6 +578,22 @@ compress-images:
 	done
 	@echo "Done."
 
+# Launch the MCP Inspector against the debug termqmcp binary.
+# Inspector is the official browser UI for poking at an MCP server:
+# https://github.com/modelcontextprotocol/inspector — requires Node/npx.
+# Builds the debug binary first so the inspector always launches a fresh server.
+mcp.inspect: $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY)
+	@which npx > /dev/null || (echo "Error: npx not found. Install Node.js: brew install node" && exit 1)
+	@echo "Launching MCP Inspector against $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY)..."
+	@echo "  (TERMQ_DEBUG=1 — file logs at /tmp/termq-debug.log)"
+	@TERMQ_DEBUG=1 npx --yes @modelcontextprotocol/inspector $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY)
+
+# Launch the MCP Inspector against the release termqmcp binary.
+mcp.inspect.release: build-release
+	@which npx > /dev/null || (echo "Error: npx not found. Install Node.js: brew install node" && exit 1)
+	@echo "Launching MCP Inspector against $(RELEASE_BUILD_DIR)/$(MCP_BINARY)..."
+	@npx --yes @modelcontextprotocol/inspector $(RELEASE_BUILD_DIR)/$(MCP_BINARY)
+
 # Serve help documentation with docsify (live reload)
 docs.help:
 	@echo "Starting docsify server for Help documentation..."
@@ -630,6 +646,8 @@ help:
 	@echo ""
 	@echo "  compress-images - Compress PNGs in Docs/Help/Images with pngquant"
 	@echo "  docs.help     - Serve Help docs with docsify (live reload)"
+	@echo "  mcp.inspect   - Launch MCP Inspector against debug termqmcpd (browser UI)"
+	@echo "  mcp.inspect.release - Launch MCP Inspector against release termqmcp"
 	@echo "  help          - Show this help message"
 	@echo ""
 	@echo "Current version: $(VERSION)"
