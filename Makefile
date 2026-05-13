@@ -6,7 +6,7 @@ SHELL := /bin/bash
 .SHELLFLAGS := -o pipefail -c
 
 .PHONY: all build-release clean test test.coverage lint format check install uninstall run debug help
-.PHONY: install-cli uninstall-cli install-all uninstall-all
+.PHONY: install-cli uninstall-cli install-mcp install-mcp-debug uninstall-mcp install-all uninstall-all
 .PHONY: version release release-major release-minor release-patch tag-release publish-release
 .PHONY: copy-help docs.help mcp.inspect mcp.inspect.release
 
@@ -288,13 +288,32 @@ uninstall-cli:
 	rm -f $(INSTALL_CLI_DIR)/$(CLI_BINARY)
 	@echo "CLI tool '$(CLI_BINARY)' removed"
 
+# Install MCP server (release binary) onto PATH so .mcp.json entries can launch it.
+install-mcp: build-release
+	@mkdir -p $(INSTALL_CLI_DIR)
+	cp $(RELEASE_BUILD_DIR)/$(MCP_BINARY) $(INSTALL_CLI_DIR)/$(MCP_BINARY)
+	@echo "MCP server '$(MCP_BINARY)' installed to $(INSTALL_CLI_DIR)"
+
+# Install the *debug* MCP server as $(MCP_BINARY) on PATH, so a project-level
+# .mcp.json referencing `termqmcp` resolves to the in-development binary while
+# iterating on a branch. Use `make install-mcp` to swap back to release.
+install-mcp-debug: $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY)
+	@mkdir -p $(INSTALL_CLI_DIR)
+	cp $(DEBUG_BUILD_DIR)/$(MCP_DEBUG_BINARY) $(INSTALL_CLI_DIR)/$(MCP_BINARY)
+	@echo "MCP server '$(MCP_BINARY)' installed to $(INSTALL_CLI_DIR) (debug build)"
+
+# Uninstall MCP server
+uninstall-mcp:
+	rm -f $(INSTALL_CLI_DIR)/$(MCP_BINARY)
+	@echo "MCP server '$(MCP_BINARY)' removed"
+
 # Install both app and CLI
-install-all: install install-cli
-	@echo "TermQ app and CLI installed"
+install-all: install install-cli install-mcp
+	@echo "TermQ app, CLI, and MCP server installed"
 
 # Uninstall both app and CLI
-uninstall-all: uninstall uninstall-cli
-	@echo "TermQ app and CLI removed"
+uninstall-all: uninstall uninstall-cli uninstall-mcp
+	@echo "TermQ app, CLI, and MCP server removed"
 
 # Create a distributable DMG (requires create-dmg tool)
 dmg: release-app
@@ -629,6 +648,9 @@ help:
 	@echo "  uninstall     - Remove app from $(INSTALL_APP_DIR)"
 	@echo "  install-cli   - Install CLI tool to $(INSTALL_CLI_DIR)"
 	@echo "  uninstall-cli - Remove CLI tool from $(INSTALL_CLI_DIR)"
+	@echo "  install-mcp   - Install MCP server (release) to $(INSTALL_CLI_DIR)"
+	@echo "  install-mcp-debug - Install MCP server (debug) to $(INSTALL_CLI_DIR) for branch testing"
+	@echo "  uninstall-mcp - Remove MCP server from $(INSTALL_CLI_DIR)"
 	@echo "  install-all   - Install both app and CLI"
 	@echo "  uninstall-all - Remove both app and CLI"
 	@echo "  dmg           - Create distributable DMG"

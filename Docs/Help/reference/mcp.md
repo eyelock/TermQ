@@ -118,7 +118,7 @@ List all terminals, optionally filtered. Supports pagination and including soft-
 | `cursor` | string | Opaque pagination cursor from a previous call |
 | `limit` | integer | Maximum number of results |
 
-Unpaginated calls return the bare card array; paginated calls return `{items, nextCursor}`.
+Always returns the envelope `{ items: [...] }`. Paginated calls add `nextCursor`; `columnsOnly: true` returns columns inside `items` instead of terminals. `find` uses the same shape. The MCP spec requires `structuredContent` to be a JSON object, so the array of rows lives under `items`.
 
 #### `find`
 
