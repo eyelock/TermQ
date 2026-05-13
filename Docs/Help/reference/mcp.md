@@ -268,9 +268,11 @@ Invoke `ynh run <harness>` against a working directory. Annotated `destructiveHi
 
 | Parameter | Type | Description |
 |---|---|---|
-| `harness` | string | Harness name from `termq://harnesses` |
+| `harness` | string | **Canonical** harness id from `termq://harnesses` (the `id` field, e.g. `local/claude-dev`). Bare `name` values are rejected by `ynh run`. |
 | `workingDirectory` | string | Absolute path to run in |
 | `prompt` | string | Optional prompt to seed the harness |
+
+> The YNH CLI requires canonical ids (`local/<name>`, `github.com/<org>/<repo>/<name>`, etc.) and rejects bare names with an `io_error`. TermQ does **not** translate bare-name → canonical-id on the caller's behalf — pass the `id` field from `termq://harnesses` verbatim.
 
 ---
 
@@ -286,7 +288,7 @@ Invoke `ynh run <harness>` against a working directory. Annotated `destructiveHi
 | `termq://context` | Workflow guide | text/markdown |
 | `termq://repos` | Registered git repositories | application/json |
 | `termq://worktrees` | Worktrees across all repos | application/json |
-| `termq://harnesses` | Installed YNH harnesses (via `ynh ls`) | application/json |
+| `termq://harnesses` | Installed YNH harnesses — full `ynh ls --format json` envelope passed through verbatim (`capabilities`, `schema_version`, `ynh_version`, `harnesses` array). Each harness has both `id` (canonical) and `name` (bare). | application/json |
 
 ### Resource templates
 

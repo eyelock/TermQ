@@ -321,13 +321,23 @@ extension TermQMCPServer {
                     invoked via `ynh run <harness>` in the target directory; output is
                     captured and returned.
 
+                    Pass the **canonical harness id** (the `id` field from `termq://harnesses`,
+                    e.g. `local/claude-dev`), not the bare `name`. `ynh run` rejects bare
+                    names with an `io_error` — TermQ does NOT translate bare-name → canonical-id
+                    on the caller's behalf.
+
                     This is the most consequential write tool TermQ exposes: it spawns an
                     LLM/agent process. Permissioned clients should elicit user confirmation
                     before each call. The destructiveHint annotation is set conservatively
                     so strict clients prompt by default.
                     """,
                 inputSchema: Schema.objectSchema([
-                    Schema.string("harness", "Harness name (from termq://harnesses)", required: true),
+                    Schema.string(
+                        "harness",
+                        "Canonical harness id (the `id` field from termq://harnesses, e.g."
+                            + " `local/claude-dev` or `github.com/<org>/<repo>/<name>`)."
+                            + " Bare names from the `name` field are NOT accepted by `ynh run`.",
+                        required: true),
                     Schema.string("workingDirectory", "Absolute path to run in", required: true),
                     Schema.string("prompt", "Optional prompt to seed the harness with"),
                 ]),
@@ -430,7 +440,11 @@ extension TermQMCPServer {
                 uri: "termq://harnesses",
                 title: "Installed YNH harnesses",
                 description:
-                    "Harnesses installed via the `ynh` CLI. Empty when ynh is not installed.",
+                    "Output of `ynh ls --format json`, passed through verbatim — full YNH"
+                        + " envelope including `capabilities`, `schema_version`, `ynh_version`,"
+                        + " and the `harnesses` array. Each harness has both an `id`"
+                        + " (canonical, e.g. `local/claude-dev`) and a `name` (bare). Use `id`"
+                        + " when calling `harness_launch`. Empty array when `ynh` is not installed.",
                 mimeType: "application/json"
             ),
         ]
