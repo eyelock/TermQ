@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "Posodabljanje \"%@\"…";
 "harness.update.button" = "Posodobi";
 "harness.update.ynh.unavailable" = "ynh ni na voljo.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Nameščanje \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh ni na voljo.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Odstranjevanje \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh ni na voljo.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Izvoz \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd ni na voljo.";
+
 "command.runner.running" = "Izvajanje…";
 "command.runner.succeeded" = "Uspelo";
 "command.runner.failed" = "Neuspešno";

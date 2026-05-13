@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "Оновлення «%@»…";
 "harness.update.button" = "Оновити";
 "harness.update.ynh.unavailable" = "ynh недоступний.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Встановлення «%@»…";
+"harness.install.ynh.unavailable" = "ynh недоступний.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Видалення «%@»…";
+"harness.uninstall.ynh.unavailable" = "ynh недоступний.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Експорт «%@»…";
+"harness.export.ynd.unavailable" = "ynd недоступний.";
+
 "command.runner.running" = "Виконується…";
 "command.runner.succeeded" = "Виконано";
 "command.runner.failed" = "Не виконано";

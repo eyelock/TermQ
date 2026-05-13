@@ -979,6 +979,18 @@
 
 "harness.update.button" = "업데이트";
 "harness.update.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" 설치 중…";
+"harness.install.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" 제거 중…";
+"harness.uninstall.ynh.unavailable" = "ynh를 사용할 수 없습니다.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" 내보내기 중…";
+"harness.export.ynd.unavailable" = "ynd를 사용할 수 없습니다.";
+
 "command.runner.running" = "실행 중…";
 "command.runner.succeeded" = "성공";
 "command.runner.failed" = "실패";

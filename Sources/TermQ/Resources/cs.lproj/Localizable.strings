@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "Aktualizace \"%@\"…";
 "harness.update.button" = "Aktualizovat";
 "harness.update.ynh.unavailable" = "ynh není k dispozici.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Instalace \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh není k dispozici.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Odinstalace \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh není k dispozici.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Export \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd není k dispozici.";
+
 "command.runner.running" = "Spouštění…";
 "command.runner.succeeded" = "Úspěšně dokončeno";
 "command.runner.failed" = "Selhalo";

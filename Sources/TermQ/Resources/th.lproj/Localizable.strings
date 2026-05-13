@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "กำลังอัปเดต \"%@\"…";
 "harness.update.button" = "อัปเดต";
 "harness.update.ynh.unavailable" = "ynh ไม่พร้อมใช้งาน";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "กำลังติดตั้ง \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh ไม่พร้อมใช้งาน.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "กำลังถอนการติดตั้ง \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh ไม่พร้อมใช้งาน.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "กำลังส่งออก \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd ไม่พร้อมใช้งาน.";
+
 "command.runner.running" = "กำลังทำงาน…";
 "command.runner.succeeded" = "สำเร็จ";
 "command.runner.failed" = "ล้มเหลว";

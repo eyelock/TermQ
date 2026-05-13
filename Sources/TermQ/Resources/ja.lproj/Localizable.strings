@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "「%@」をアップデート中…";
 "harness.update.button" = "アップデート";
 "harness.update.ynh.unavailable" = "ynh が利用できません。";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "\"%@\" をインストール中…";
+"harness.install.ynh.unavailable" = "ynh が利用できません。";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "\"%@\" をアンインストール中…";
+"harness.uninstall.ynh.unavailable" = "ynh が利用できません。";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "\"%@\" をエクスポート中…";
+"harness.export.ynd.unavailable" = "ynd が利用できません。";
+
 "command.runner.running" = "実行中…";
 "command.runner.succeeded" = "成功";
 "command.runner.failed" = "失敗";

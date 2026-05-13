@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "Se actualizează \"%@\"…";
 "harness.update.button" = "Actualizează";
 "harness.update.ynh.unavailable" = "ynh nu este disponibil.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Se instalează \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh nu este disponibil.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Se dezinstalează \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh nu este disponibil.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Se exportă \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd nu este disponibil.";
+
 "command.runner.running" = "Se execută…";
 "command.runner.succeeded" = "Reușit";
 "command.runner.failed" = "Eșuat";

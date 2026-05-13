@@ -977,6 +977,18 @@
 "harness.update.progress.title %@" = "Mengemas kini \"%@\"…";
 "harness.update.button" = "Kemas Kini";
 "harness.update.ynh.unavailable" = "ynh tidak tersedia.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Memasang \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh tidak tersedia.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Menyahpasang \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh tidak tersedia.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Mengeksport \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd tidak tersedia.";
+
 "command.runner.running" = "Sedang berjalan…";
 "command.runner.succeeded" = "Berjaya";
 "command.runner.failed" = "Gagal";

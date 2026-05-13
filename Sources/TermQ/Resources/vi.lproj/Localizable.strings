@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "Đang cập nhật \"%@\"…";
 "harness.update.button" = "Cập nhật";
 "harness.update.ynh.unavailable" = "ynh không khả dụng.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Đang cài đặt \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh không khả dụng.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Đang gỡ cài đặt \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh không khả dụng.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Đang xuất \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd không khả dụng.";
+
 "command.runner.running" = "Đang chạy…";
 "command.runner.succeeded" = "Thành công";
 "command.runner.failed" = "Thất bại";

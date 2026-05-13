@@ -972,6 +972,18 @@
 "harness.update.progress.title %@" = "Обновление «%@»…";
 "harness.update.button" = "Обновить";
 "harness.update.ynh.unavailable" = "ynh недоступен.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Установка «%@»…";
+"harness.install.ynh.unavailable" = "ynh недоступен.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Удаление «%@»…";
+"harness.uninstall.ynh.unavailable" = "ynh недоступен.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Экспорт «%@»…";
+"harness.export.ynd.unavailable" = "ynd недоступен.";
+
 "command.runner.running" = "Выполняется…";
 "command.runner.succeeded" = "Выполнено";
 "command.runner.failed" = "Не выполнено";

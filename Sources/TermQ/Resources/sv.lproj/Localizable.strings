@@ -979,6 +979,18 @@
 "harness.update.progress.title %@" = "Uppdaterar \"%@\"…";
 "harness.update.button" = "Uppdatera";
 "harness.update.ynh.unavailable" = "ynh är inte tillgänglig.";
+// MARK: - Harness Install (progress sheet)
+"harness.install.progress.title %@" = "Installerar \"%@\"…";
+"harness.install.ynh.unavailable" = "ynh är inte tillgänglig.";
+
+// MARK: - Harness Uninstall (progress sheet)
+"harness.uninstall.progress.title %@" = "Avinstallerar \"%@\"…";
+"harness.uninstall.ynh.unavailable" = "ynh är inte tillgänglig.";
+
+// MARK: - Harness Export (progress sheet)
+"harness.export.progress.title %@" = "Exporterar \"%@\"…";
+"harness.export.ynd.unavailable" = "ynd är inte tillgänglig.";
+
 "command.runner.running" = "Körs…";
 "command.runner.succeeded" = "Lyckades";
 "command.runner.failed" = "Misslyckades";
