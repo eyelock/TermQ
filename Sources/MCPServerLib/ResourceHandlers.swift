@@ -23,8 +23,109 @@ extension TermQMCPServer {
             return try await handlePendingResource(uri: uri)
         case "termq://context":
             return ReadResource.Result(contents: [.text(Self.contextDocumentation, uri: uri)])
+        case "termq://repos":
+            return try await handleReposResource(uri: uri)
+        case "termq://worktrees":
+            return try await handleWorktreesResource(uri: uri)
+        case "termq://harnesses":
+            return try await handleHarnessesResource(uri: uri)
         default:
             return try await dispatchTemplatedResource(uri: uri)
+        }
+    }
+
+    // MARK: - Tier 3 resource handlers — repos, worktrees, harnesses
+
+    /// All registered git repositories.
+    private func handleReposResource(uri: String) async throws -> ReadResource.Result {
+        let config = (try? RepoConfigLoader.load()) ?? RepoConfig()
+        let payload = config.repositories.map { repo -> [String: Any] in
+            [
+                "id": repo.id.uuidString,
+                "name": repo.name,
+                "path": repo.path,
+                "worktreeBasePath": repo.worktreeBasePath as Any,
+                "protectedBranches": repo.protectedBranches as Any,
+                "addedAt": ISO8601DateFormatter().string(from: repo.addedAt),
+            ]
+        }
+        let data = try JSONSerialization.data(withJSONObject: payload, options: [.prettyPrinted, .sortedKeys])
+        let json = String(data: data, encoding: .utf8) ?? "[]"
+        return ReadResource.Result(contents: [.text(json, uri: uri)])
+    }
+
+    /// Worktrees enumerated from every registered repository.
+    /// Skips repos whose `git worktree list` fails — those errors don't kill the whole
+    /// listing, but each failure is mirrored to `notifications/message` for diagnostics.
+    private func handleWorktreesResource(uri: String) async throws -> ReadResource.Result {
+        let config = (try? RepoConfigLoader.load()) ?? RepoConfig()
+        var rows: [[String: Any]] = []
+        for repo in config.repositories {
+            do {
+                let trees = try await GitServiceShared.listWorktrees(repoPath: repo.path)
+                for t in trees {
+                    rows.append([
+                        "repoId": repo.id.uuidString,
+                        "repoName": repo.name,
+                        "path": t.path,
+                        "branch": t.branch as Any,
+                        "commitHash": t.commitHash,
+                        "isMainWorktree": t.isMainWorktree,
+                        "isLocked": t.isLocked,
+                    ])
+                }
+            } catch {
+                await emitLog(
+                    .warning,
+                    "listWorktrees failed for repo \(repo.name): \(error.localizedDescription)",
+                    logger: "termq.worktrees"
+                )
+            }
+        }
+        let data = try JSONSerialization.data(withJSONObject: rows, options: [.prettyPrinted, .sortedKeys])
+        let json = String(data: data, encoding: .utf8) ?? "[]"
+        return ReadResource.Result(contents: [.text(json, uri: uri)])
+    }
+
+    /// Installed harnesses — listed via the `ynh` CLI when available. Empty array when
+    /// ynh isn't on PATH or returns a non-zero exit; logged at info level so operators
+    /// can see why.
+    private func handleHarnessesResource(uri: String) async throws -> ReadResource.Result {
+        let json = await runYnhCommand(arguments: ["ls", "--format", "json"]) ?? "[]"
+        return ReadResource.Result(contents: [.text(json, uri: uri)])
+    }
+
+    /// Run an arbitrary `ynh` subcommand, capturing stdout as String. Returns nil when
+    /// ynh is unavailable or the command fails. The MCP server runs headless and
+    /// inherits the user's PATH — if `ynh` isn't there, the surface degrades gracefully
+    /// rather than failing the whole resource.
+    private func runYnhCommand(arguments: [String]) async -> String? {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        process.arguments = ["ynh"] + arguments
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        process.standardError = Pipe()
+        do {
+            try process.run()
+            process.waitUntilExit()
+            guard process.terminationStatus == 0 else {
+                await emitLog(
+                    .info,
+                    "ynh \(arguments.joined(separator: " ")) exited \(process.terminationStatus)",
+                    logger: "termq.ynh"
+                )
+                return nil
+            }
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            return String(data: data, encoding: .utf8)
+        } catch {
+            await emitLog(
+                .info,
+                "ynh not available: \(error.localizedDescription)",
+                logger: "termq.ynh"
+            )
+            return nil
         }
     }
 

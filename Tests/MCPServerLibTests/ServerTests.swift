@@ -216,7 +216,7 @@ final class ServerTests: XCTestCase {
 
     func testAvailableResourcesCount() {
         let resources = TermQMCPServer.availableResources
-        XCTAssertEqual(resources.count, 4)
+        XCTAssertEqual(resources.count, 7)
     }
 
     func testAvailableResourcesURIs() {
@@ -249,7 +249,7 @@ final class ServerTests: XCTestCase {
 
     func testAvailableToolsCount() {
         let tools = TermQMCPServer.availableTools
-        XCTAssertEqual(tools.count, 16)
+        XCTAssertEqual(tools.count, 19)
     }
 
     func testAvailableToolsNames() {

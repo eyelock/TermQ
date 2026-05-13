@@ -42,6 +42,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`list` extended:** `includeDeleted: true` to include binned cards; `cursor` + `limit` for pagination. Unpaginated calls keep returning the bare array — pagination is opt-in.
 - **`find` extended:** same `cursor` + `limit` parameters as `list`. Pagination cursor is base64-encoded offset, opaque to clients.
 
+### Added — MCP new domains (Tier 3)
+
+- **`termq://repos` resource** — list of every registered git repository (id, name, path, worktree base, protected branches, addedAt).
+- **`termq://worktrees` resource** — git worktrees enumerated across every registered repository. Per-repo failures are mirrored to `notifications/message` rather than killing the whole listing — a misconfigured repo doesn't take the rest down.
+- **`termq://harnesses` resource** — installed YNH harnesses via `ynh ls --format json`. Empty array when `ynh` isn't on PATH; degradation is logged at info level for diagnostics.
+- **`create_worktree` and `remove_worktree` tools** — backed by the existing `GitServiceShared` primitives. Create takes a repo UUID + branch name; remove takes a repo UUID + absolute path. `force` plumbed onto the wire surface but currently informational (GitServiceShared.removeWorktree doesn't take it yet).
+- **`harness_launch` tool** — invokes `ynh run <harness>` in a working directory, optionally seeded with a prompt. Annotated `destructiveHint: true` so permissioned clients prompt; full `elicitation/create` integration is a follow-up. Output is truncated to a 4 KB suffix to keep the MCP frame bounded.
+
+Deferred from this release: a formal `elicitation/create` flow wired into `harness_launch` (annotations carry the prompt-hint for now), `roots/list` boundary enforcement (no filesystem-touching tools currently exceed `~/Library/Application Support`), and the GitHub-PR resource (`termq://prs`) which would shell out to `gh` and needs more design.
+
 ### Added
 
 - **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles

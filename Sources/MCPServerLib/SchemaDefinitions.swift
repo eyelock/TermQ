@@ -280,6 +280,62 @@ extension TermQMCPServer {
                     idempotentHint: true, openWorldHint: false)
             ),
             Tool(
+                name: "create_worktree",
+                title: "Create git worktree",
+                description: """
+                    Create a new git worktree on a registered repository. The worktree path
+                    is rooted under the repository's configured `worktreeBasePath` (or
+                    `<repoParent>/<branch>` if unset).
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("repoId", "Repository UUID (from termq://repos)", required: true),
+                    Schema.string("branch", "Branch name to check out as a worktree", required: true),
+                    Schema.bool("createBranch", "Create the branch if it doesn't exist (default: false)"),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: false, openWorldHint: true)
+            ),
+            Tool(
+                name: "remove_worktree",
+                title: "Remove git worktree",
+                description: """
+                    Remove an existing worktree (does NOT delete the underlying branch).
+                    Refuses to remove the main worktree or a worktree with uncommitted changes
+                    unless `force: true` is passed.
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("repoId", "Repository UUID", required: true),
+                    Schema.string("path", "Absolute path of the worktree to remove", required: true),
+                    Schema.bool("force", "Force removal even if dirty (default: false)"),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: true,
+                    idempotentHint: true, openWorldHint: true)
+            ),
+            Tool(
+                name: "harness_launch",
+                title: "Launch YNH harness",
+                description: """
+                    Launch a YNH harness session against a working directory. The harness is
+                    invoked via `ynh run <harness>` in the target directory; output is
+                    captured and returned.
+
+                    This is the most consequential write tool TermQ exposes: it spawns an
+                    LLM/agent process. Permissioned clients should elicit user confirmation
+                    before each call. The destructiveHint annotation is set conservatively
+                    so strict clients prompt by default.
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("harness", "Harness name (from termq://harnesses)", required: true),
+                    Schema.string("workingDirectory", "Absolute path to run in", required: true),
+                    Schema.string("prompt", "Optional prompt to seed the harness with"),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: true,
+                    idempotentHint: false, openWorldHint: true)
+            ),
+            Tool(
                 name: "record_handshake",
                 title: "Record LLM handshake",
                 description: """
@@ -354,6 +410,28 @@ extension TermQMCPServer {
                 title: "Workflow guide (markdown)",
                 description: "Comprehensive documentation for cross-session workflows",
                 mimeType: "text/markdown"
+            ),
+            Resource(
+                name: "Repositories",
+                uri: "termq://repos",
+                title: "Registered git repositories",
+                description: "All git repositories the user has registered with TermQ.",
+                mimeType: "application/json"
+            ),
+            Resource(
+                name: "Worktrees",
+                uri: "termq://worktrees",
+                title: "Git worktrees across all repositories",
+                description: "Worktrees enumerated from every registered repository.",
+                mimeType: "application/json"
+            ),
+            Resource(
+                name: "Installed harnesses",
+                uri: "termq://harnesses",
+                title: "Installed YNH harnesses",
+                description:
+                    "Harnesses installed via the `ynh` CLI. Empty when ynh is not installed.",
+                mimeType: "application/json"
             ),
         ]
     }
