@@ -28,9 +28,9 @@ private final class MutatorStubRunner: YNHCommandRunner, @unchecked Sendable {
         capturedArgs.append(arguments)
         switch outcome {
         case .success(let stdout):
-            stdout.split(separator: "\n", omittingEmptySubsequences: false)
-                .map(String.init)
-                .forEach { onStdoutLine?($0) }
+            for line in stdout.split(separator: "\n", omittingEmptySubsequences: false).map(String.init) {
+                onStdoutLine?(line)
+            }
             return CommandRunner.Result(exitCode: 0, stdout: stdout, stderr: "", duration: 0)
         case .failure(let stderr, let code):
             onStderrLine?(stderr)
@@ -87,6 +87,14 @@ final class FocusMutatorArgTests: XCTestCase {
             FocusUpdateOptions(harness: "local/h", name: "f", prompt: "new prompt", profile: nil, clearProfile: false)
         )
         XCTAssertEqual(args, ["focus", "update", "local/h", "f", "--prompt", "new prompt"])
+    }
+
+    func test_buildUpdateArgs_emptyProfileWithoutClear_omitted() {
+        let args = FocusMutator.buildUpdateArgs(
+            FocusUpdateOptions(harness: "local/h", name: "f", prompt: nil, profile: "", clearProfile: false)
+        )
+        XCTAssertFalse(args.contains("--profile"))
+        XCTAssertFalse(args.contains("--clear-profile"))
     }
 
     func test_buildUpdateArgs_emptyPromptOmitted() {
@@ -477,6 +485,30 @@ final class ProfileMutatorArgTests: XCTestCase {
             )
         )
         XCTAssertTrue(args.contains("--clear-env"))
+    }
+
+    func test_buildMCPUpdateArgs_emptyCommandOmitted() {
+        let args = ProfileMutator.buildMCPUpdateArgs(
+            ProfileMCPUpdateOptions(
+                harness: "local/h", profileName: "dev", serverName: "s",
+                command: "", args: [], setArgs: false,
+                env: [:], setEnv: false,
+                url: nil, headers: [:], setHeaders: false
+            )
+        )
+        XCTAssertFalse(args.contains("--command"))
+    }
+
+    func test_buildMCPUpdateArgs_emptyURLOmitted() {
+        let args = ProfileMutator.buildMCPUpdateArgs(
+            ProfileMCPUpdateOptions(
+                harness: "local/h", profileName: "dev", serverName: "s",
+                command: nil, args: [], setArgs: false,
+                env: [:], setEnv: false,
+                url: "", headers: [:], setHeaders: false
+            )
+        )
+        XCTAssertFalse(args.contains("--url"))
     }
 
     func test_buildMCPUpdateArgs_setHeadersTrue_empty_clearHeaders() {

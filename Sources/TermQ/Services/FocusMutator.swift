@@ -65,7 +65,7 @@ final class FocusMutator: ObservableObject {
         }
         if options.clearProfile {
             args += ["--clear-profile"]
-        } else if let profile = options.profile {
+        } else if let profile = options.profile, !profile.isEmpty {
             args += ["--profile", profile]
         }
         return args

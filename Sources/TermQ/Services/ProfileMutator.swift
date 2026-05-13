@@ -200,7 +200,7 @@ final class ProfileMutator: ObservableObject {
 
     nonisolated static func buildMCPUpdateArgs(_ options: ProfileMCPUpdateOptions) -> [String] {
         var args = ["profile", "mcp", "update", options.harness, options.profileName, options.serverName]
-        if let command = options.command {
+        if let command = options.command, !command.isEmpty {
             args += ["--command", command]
         }
         if options.setArgs {
@@ -219,7 +219,7 @@ final class ProfileMutator: ObservableObject {
                 }
             }
         }
-        if let url = options.url {
+        if let url = options.url, !url.isEmpty {
             args += ["--url", url]
         }
         if options.setHeaders {
