@@ -37,7 +37,7 @@ This prompt is there every session. There are two ways it reaches an LLM assista
 
 **Automatically** — via the `{{PROMPT}}` token in the terminal's init command (see [Tutorial 11](tutorials/queued-actions.md)). When the terminal opens, the token is replaced with this field's content before the command runs — e.g. `claude "{{PROMPT}} {{NEXT_ACTION}}"` becomes a single prompt combining standing context and the queued task.
 
-**On demand** — when an LLM assistant calls `termq_open` or `termq_get` via the MCP server, the response includes this field. The assistant reads it and orients itself. See [Tutorial 10](tutorials/mcp.md).
+**On demand** — when an LLM assistant calls `open` or `get` via the MCP server, the response includes this field. The assistant reads it and orients itself. See [Tutorial 10](tutorials/mcp.md).
 
 **When to update it:** When the nature of the work changes substantially. After finishing the auth refactor, update it to reflect what the terminal is for now.
 
@@ -56,7 +56,7 @@ Like the LLM Prompt, there are two ways this reaches an LLM assistant:
 
 **Automatically** — via the `{{NEXT_ACTION}}` token in the init command. When the terminal opens and queued actions are enabled, the token is replaced with this field's content, the command runs, and the field is cleared. It fires once and is gone. See [Tutorial 11](tutorials/queued-actions.md).
 
-**On demand** — `termqcli pending` and `termq_pending` (MCP) surface terminals that have a Next Action set. The LLM reads it and acts on it, then clears it when done.
+**On demand** — `termqcli pending` and `pending` (MCP) surface terminals that have a Next Action set. The LLM reads it and acts on it, then clears it when done.
 
 > **The key difference:** LLM Prompt is *always present* — it's standing context that doesn't change often. Next Action is *consumed once* — it's for handoffs between sessions.
 

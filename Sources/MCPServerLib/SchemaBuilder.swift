@@ -86,4 +86,114 @@ enum SchemaBuilder {
     static func stringArray(_ name: String, _ description: String, required: Bool = false) -> Property {
         Property(name, .array, description: description, required: required)
     }
+
+    // MARK: - Output Schemas (Tier 1b — structured tool output)
+    //
+    // These describe the shape of `structuredContent` returned by read-shaped tools.
+    // Per the MCP spec, the structuredContent must validate against the tool's
+    // outputSchema — clients can codegen types or runtime-validate against these.
+
+    /// Schema for a single TerminalOutput row.
+    static var terminalOutputItemSchema: Value {
+        .object([
+            "type": .string("object"),
+            "properties": .object([
+                "id": stringField("Terminal UUID"),
+                "name": stringField("Display name"),
+                "description": stringField("Free-form description"),
+                "column": stringField("Column display name"),
+                "columnId": stringField("Column UUID"),
+                "tags": .object(["type": .string("object")]),
+                "path": stringField("Working directory"),
+                "badges": .object([
+                    "type": .string("array"),
+                    "items": .object(["type": .string("string")]),
+                ]),
+                "isFavourite": boolField("Pinned to favourites bar"),
+                "llmPrompt": stringField("Persistent LLM context"),
+                "llmNextAction": stringField("Queued one-time action"),
+                "allowAutorun": boolField("Whether queued actions auto-execute"),
+            ]),
+        ])
+    }
+
+    /// Schema for the `list` / `find` envelope.
+    ///
+    /// MCP requires `outputSchema.type` to be `"object"` at the top level and the
+    /// emitted `structuredContent` to be a JSON object — so the array of rows
+    /// lives under `items` and an optional `nextCursor` carries paginated state.
+    static var terminalListSchema: Value {
+        .object([
+            "type": .string("object"),
+            "properties": .object([
+                "items": .object([
+                    "type": .string("array"),
+                    "items": terminalOutputItemSchema,
+                ]),
+                "nextCursor": .object(["type": .string("string")]),
+            ]),
+            "required": .array([.string("items")]),
+        ])
+    }
+
+    /// Schema for ColumnOutput.
+    static var columnOutputItemSchema: Value {
+        .object([
+            "type": .string("object"),
+            "properties": .object([
+                "id": stringField("Column UUID"),
+                "name": stringField("Column name"),
+                "description": stringField("Free-form description"),
+                "color": stringField("Hex colour"),
+                "terminalCount": intField("Number of active cards in this column"),
+            ]),
+        ])
+    }
+
+    /// Schema for a PendingOutput envelope.
+    static var pendingOutputSchema: Value {
+        .object([
+            "type": .string("object"),
+            "properties": .object([
+                "terminals": .object([
+                    "type": .string("array"),
+                    "items": .object([
+                        "type": .string("object"),
+                        "properties": .object([
+                            "id": stringField("Terminal UUID"),
+                            "name": stringField("Display name"),
+                            "column": stringField("Column display name"),
+                            "path": stringField("Working directory"),
+                            "llmNextAction": stringField("Queued one-time action"),
+                            "llmPrompt": stringField("Persistent LLM context"),
+                            "allowAutorun": boolField("Whether queued actions auto-execute"),
+                            "staleness": stringField("Staleness tag value"),
+                            "tags": .object(["type": .string("object")]),
+                        ]),
+                    ]),
+                ]),
+                "summary": .object([
+                    "type": .string("object"),
+                    "properties": .object([
+                        "total": intField("Total cards considered"),
+                        "withNextAction": intField("Cards with llmNextAction set"),
+                        "stale": intField("Cards tagged stale or old"),
+                        "fresh": intField("Cards tagged fresh"),
+                    ]),
+                ]),
+            ]),
+        ])
+    }
+
+    private static func stringField(_ description: String) -> Value {
+        .object(["type": .string("string"), "description": .string(description)])
+    }
+
+    private static func boolField(_ description: String) -> Value {
+        .object(["type": .string("boolean"), "description": .string(description)])
+    }
+
+    private static func intField(_ description: String) -> Value {
+        .object(["type": .string("integer"), "description": .string(description)])
+    }
 }

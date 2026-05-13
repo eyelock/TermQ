@@ -7,6 +7,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — BREAKING (MCP / CLI)
+
+- **MCP tool names lose the `termq_` prefix.** Every TermQ MCP tool is now reachable as `mcp__termq__<name>` rather than `mcp__termq__termq_<name>`. Affected tools: `pending`, `context`, `list`, `find`, `open`, `create`, `set`, `move`, `get`, `delete`. **No alias is provided.** Anyone with `mcp__termq__termq_*` hardcoded in a CLAUDE.md, hook script, or recorded prompt must update by deleting one prefix.
+- **Tag filter semantics converge on literal exact-match.** Both `find(tag:)` (MCP) and `find --tag` (CLI) now interpret `key=value` as a literal exact match (case-insensitive). Previously CLI did partial-substring match on the value while MCP did exact — they now behave identically. To regex-match, prefix with `re:`: `find(tag: "staleness=re:(stale|ageing)")` matches the value as regex; `find(tag: "re:project=org/.+")` matches the whole `key=value` string as regex. Invalid regex patterns surface an error rather than silently falling back to literal. **CLI partial-match users:** rewrite as `--tag project=re:.*` or just `--tag project` (key-only still works).
+
+### Fixed — MCP / CLI
+
+- **MCP resource reads now surface load errors instead of returning empty arrays.** Previously `termq://terminals`, `termq://columns`, and `termq://pending` silently returned `[]` or `{}` if the board could not be loaded — conflating "the board has zero cards" with "the install is broken" and masking the original "empty results" bug. Failures now propagate as MCP errors with descriptive messages.
+- **`AppProfile` runtime injection point in `BoardLoader` / `BoardWriter`.** Methods now take a `profile: AppProfile.Variant` parameter (default `.current`) instead of `debug: Bool`. `.current` resolves to `.debug` under `TERMQ_DEBUG_BUILD` and `.production` otherwise. Test code can pass `.debug` or `.production` explicitly without recompiling.
+- **Atomic read-modify-write in `BoardWriter`.** `updateCard`, `moveCard`, and `createCard` previously split their read and write across two separate `NSFileCoordinator` claims, leaving a window where two concurrent writers could both finish their reads before either wrote — the second write silently clobbering the first. They now run inside a single `writingItemAt:` claim via the new `BoardWriter.atomicUpdate(...)` helper, closing the lost-update race and the `orderIndex` collision on concurrent appends.
+- **`termqmcp --verbose` logs the resolved profile and data directory at startup**, so a debug-vs-production data-directory mismatch is visible to the operator.
+
+### Added — MCP polish
+
+- **Tool annotations** on every MCP tool — `readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`. Permissioned clients (e.g. Claude Desktop) use these to auto-allow read-only tools and prompt before destructive ones. Notable: `delete` is marked destructive (even soft-delete prompts confirmation in strict clients); `set` and `move` are marked idempotent.
+- **Display titles** on every tool, resource, prompt, and prompt argument — human-readable labels surfaced in client UIs alongside the programmatic names.
+- **Argument completion** (`completion/complete`) — TermQ now provides autocomplete suggestions for the `terminal_summary` prompt's `terminal` argument, matching live board terminal names by case-insensitive substring. Capped at 100 results; clients see `total` and `hasMore` so they can prompt the user to refine.
+- **`notifications/message` log mirror** — `termqmcp` now emits MCP log notifications (gated by client-configured minimum level via `logging/setLevel`) for board-load failures and other operationally relevant events. Lets a remote operator observe failures without needing `--verbose` stderr access.
+- **`logging/setLevel` honoured properly** — previously the request was accepted and ignored; now the configured threshold actually filters subsequent log emissions.
+
+### Added — MCP structural (Tier 1b)
+
+- **Resource templates** (`resources/templates/list`) — `termq://terminal/{id}`, `termq://terminal-by-name/{name}`, `termq://column/{name}`. Idiomatic per-card reads via standard `resources/read` — no per-card tool needed.
+- **Structured tool output** (`outputSchema` + `structuredContent`) on all read tools (`pending`, `list`, `find`, `open`, `get`). Clients can codegen types or runtime-validate against the published schema rather than re-parsing `text` content. Legacy `text` mirror is retained for one release; payload roughly doubles in the meantime (~80 KB instead of ~40 KB on a 200-card board — acceptable for stdio).
+- **Resource subscriptions** (`resources/subscribe` / `resources/unsubscribe` + `notifications/resources/updated`) — long-running clients can subscribe to `termq://terminals`, `termq://pending`, or any other resource URI and be notified when board.json changes (e.g. the user moves a card in the GUI). Backed by a `DispatchSourceFileSystemObject` watcher with a 150ms debounce window so atomic writes don't fan out to multiple notifications. The `subscribe: true` capability TermQ has declared since 0.x is now actually honoured.
+- **`record_handshake` tool** — explicit, side-effect-only marker that an LLM session has consumed a terminal's context. Idiomatic pair with reading `termq://terminal/{id}` (pure). `get` retains the combined read+handshake behaviour for one release as a deprecated alias per the audit's semantic-break policy.
+
+### Added — MCP domain symmetry (Tier 2)
+
+- **`whoami` tool** — resolves the current card from the `TERMQ_TERMINAL_ID` environment variable. Returns null (not error) when running outside a TermQ terminal context, so top-level Claude sessions don't see a spurious failure.
+- **`restore` tool + `BoardWriter.restoreCard`** — restore a soft-deleted (binned) card by clearing its `deletedAt` timestamp. Permanent deletes remain irrecoverable. Closes the asymmetry where MCP could delete but not undelete.
+- **Column CRUD** — `create_column`, `rename_column`, `delete_column` tools with matching `BoardWriter.createColumn` / `renameColumn` / `deleteColumn` primitives. `delete_column` refuses by default if active cards remain; pass `force: true` to soft-delete them along with the column.
+- **`list` extended:** `includeDeleted: true` to include binned cards; `cursor` + `limit` for pagination. Unpaginated calls keep returning the bare array — pagination is opt-in.
+- **`find` extended:** same `cursor` + `limit` parameters as `list`. Pagination cursor is base64-encoded offset, opaque to clients.
+
+### Added — MCP new domains (Tier 3)
+
+- **`termq://repos` resource** — list of every registered git repository (id, name, path, worktree base, protected branches, addedAt).
+- **`termq://worktrees` resource** — git worktrees enumerated across every registered repository. Per-repo failures are mirrored to `notifications/message` rather than killing the whole listing — a misconfigured repo doesn't take the rest down.
+- **`termq://harnesses` resource** — installed YNH harnesses via `ynh ls --format json`. Empty array when `ynh` isn't on PATH; degradation is logged at info level for diagnostics.
+- **`create_worktree` and `remove_worktree` tools** — backed by the existing `GitServiceShared` primitives. Create takes a repo UUID + branch name; remove takes a repo UUID + absolute path. `force` plumbed onto the wire surface but currently informational (GitServiceShared.removeWorktree doesn't take it yet).
+- **`harness_launch` tool** — invokes `ynh run <harness>` in a working directory, optionally seeded with a prompt. Annotated `destructiveHint: true` so permissioned clients prompt; full `elicitation/create` integration is a follow-up. Output is truncated to a 4 KB suffix to keep the MCP frame bounded.
+
+Deferred from this release: a formal `elicitation/create` flow wired into `harness_launch` (annotations carry the prompt-hint for now), `roots/list` boundary enforcement (no filesystem-touching tools currently exceed `~/Library/Application Support`), and the GitHub-PR resource (`termq://prs`) which would shell out to `gh` and needs more design.
+
+### Added — Tooling and docs
+
+- **`ToolParity.swift` registry** — single source of truth listing every MCP tool as `mandatoryCLI` (a matching `termqcli` subcommand must exist) or `omittedCLI` (with a stated reason). Five `ToolParityTests` enforce classification at build time: adding a tool without classifying it fails CI.
+- **`Scripts/check-mcp-docs.sh`** — narrow CI gate that fails when MCP surface files (`SchemaDefinitions.swift`, `ToolParity.swift`) change without a matching `Docs/Help/reference/mcp.md` update. Override via `[no-doc]` in commit subject for genuine no-surface changes.
+- **`Docs/Help/reference/mcp.md` rewritten** — reflects the full Tier 0–3 surface, includes a spec-feature support matrix at the top, documents the CLI-parity policy and its enforcement.
+- **`Docs/Help/tutorials/mcp-subscriptions.md`** — new tutorial walking through the resource-subscription feature with worked code and sharp-edges section.
+
+Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
+
 ## [0.11.0]
 
 ### Added

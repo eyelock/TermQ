@@ -15,9 +15,9 @@ import XCTest
 /// See: .claude/plans/headless-mode-implementation.md for implementation plan.
 ///
 /// Key workflows tested:
-/// - Creating terminals (termq_create) - SKIPPED, requires GUI
-/// - Updating terminal fields (termq_set) - Passing (uses existing terminals)
-/// - Moving terminals between columns (termq_move) - SKIPPED, requires GUI
+/// - Creating terminals (create) - SKIPPED, requires GUI
+/// - Updating terminal fields (set) - Passing (uses existing terminals)
+/// - Moving terminals between columns (move) - SKIPPED, requires GUI
 /// - Setting tags via MCP - Passing (uses existing terminals)
 ///
 /// Run with: `swift test --filter MCPToolWriteTests`
@@ -40,7 +40,7 @@ final class MCPToolWriteTests: XCTestCase {
         GUIDetector.testModeOverride = nil
     }
 
-    // MARK: - termq_create Tests
+    // MARK: - create Tests
 
     func testCreateTerminalWithName() async throws {
         let args: [String: Value] = [
@@ -115,7 +115,7 @@ final class MCPToolWriteTests: XCTestCase {
         XCTAssertNotNil(found, "Created terminal should persist in board file")
     }
 
-    // MARK: - termq_set Tests
+    // MARK: - set Tests
 
     func testSetTerminalName() async throws {
         let args: [String: Value] = [
@@ -240,7 +240,7 @@ final class MCPToolWriteTests: XCTestCase {
         XCTAssertEqual(terminal?.llmPrompt, "Persisted prompt value")
     }
 
-    // MARK: - termq_set Tag Tests (TDD - may expose missing functionality)
+    // MARK: - set Tag Tests (TDD - may expose missing functionality)
 
     func testSetSingleTag() async throws {
         // User's key workflow: setting tags via MCP
@@ -260,7 +260,7 @@ final class MCPToolWriteTests: XCTestCase {
         }
 
         // Verify the tag was actually set
-        XCTAssertEqual(tags["project"], "my/repo", "Tag 'project=my/repo' should be set via termq_set")
+        XCTAssertEqual(tags["project"], "my/repo", "Tag 'project=my/repo' should be set via set")
     }
 
     func testSetMultipleTags() async throws {
@@ -289,7 +289,7 @@ final class MCPToolWriteTests: XCTestCase {
         XCTAssertEqual(tags["type"], "feature", "type tag should be set")
     }
 
-    // MARK: - termq_move Tests
+    // MARK: - move Tests
 
     func testMoveTerminalToColumn() async throws {
         let args: [String: Value] = [

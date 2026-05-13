@@ -2,16 +2,18 @@ import ArgumentParser
 import Foundation
 import MCP
 import MCPServerLib
+import TermQShared
 
 // MARK: - Build Configuration
 
-/// Returns whether to use debug mode based on build configuration and explicit flag
-/// In debug builds, always use debug mode unless explicitly overridden
-private func shouldUseDebugMode(_ explicitDebug: Bool) -> Bool {
+/// Resolves the AppProfile.Variant for this invocation. In a debug build, `.debug` is the
+/// only valid option (overriding any user input). In a production build, the user's
+/// `--debug` flag selects between `.production` and `.debug`.
+private func resolveProfile(explicitDebug: Bool) -> AppProfile.Variant {
     #if TERMQ_DEBUG_BUILD
-        return true
+        return .debug
     #else
-        return explicitDebug
+        return explicitDebug ? .debug : .production
     #endif
 }
 
@@ -65,19 +67,27 @@ struct TermQMCPCommand: AsyncParsableCommand {
     }
 
     func run() async throws {
-        // Determine data directory
-        let useDebug = shouldUseDebugMode(debug)
-        let dataDirectory: URL?
-        if useDebug {
-            dataDirectory = FileManager.default
-                .urls(for: .applicationSupportDirectory, in: .userDomainMask)
-                .first?
-                .appendingPathComponent("TermQ-Debug")
-        } else {
-            dataDirectory = nil
+        // Resolve the app profile and derive the data directory from it.
+        // The resolved values are logged below so debug/production mismatches are visible
+        // — that was the root cause of the "MCP returns empty results" bug.
+        let profile = resolveProfile(explicitDebug: debug)
+        let dataDirectory = BoardLoader.getDataDirectoryPath(profile: profile)
+
+        if verbose {
+            fputs(
+                """
+                termqmcp starting
+                  profile:       \(profile)
+                  data directory: \(dataDirectory.path)
+                  bundle id:     \(profile.bundleIdentifier)
+                  transport:     \(http ? "http" : "stdio")
+
+                """,
+                stderr
+            )
         }
 
-        // Create server
+        // Create server with the explicit data directory derived from profile.
         let server = TermQMCPServer(dataDirectory: dataDirectory)
 
         if http {

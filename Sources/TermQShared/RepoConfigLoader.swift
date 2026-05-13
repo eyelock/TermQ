@@ -39,16 +39,16 @@ public enum RepoConfigLoader {
     }
 
     /// URL for `repos.json` in the TermQ data directory
-    public static func getConfigURL(dataDirectory: URL? = nil, debug: Bool = false) -> URL {
-        BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, debug: debug)
+    public static func getConfigURL(dataDirectory: URL? = nil, profile: AppProfile.Variant = .current) -> URL {
+        BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
             .appendingPathComponent("repos.json")
     }
 
     /// Load repository configuration from disk.
     ///
     /// Returns an empty `RepoConfig` if the file does not exist yet.
-    public static func load(dataDirectory: URL? = nil, debug: Bool = false) throws -> RepoConfig {
-        let configURL = getConfigURL(dataDirectory: dataDirectory, debug: debug)
+    public static func load(dataDirectory: URL? = nil, profile: AppProfile.Variant = .current) throws -> RepoConfig {
+        let configURL = getConfigURL(dataDirectory: dataDirectory, profile: profile)
 
         guard FileManager.default.fileExists(atPath: configURL.path) else {
             return RepoConfig()
@@ -86,8 +86,10 @@ public enum RepoConfigLoader {
     /// Save repository configuration to disk.
     ///
     /// Creates the TermQ data directory if it does not yet exist.
-    public static func save(_ config: RepoConfig, dataDirectory: URL? = nil, debug: Bool = false) throws {
-        let configURL = getConfigURL(dataDirectory: dataDirectory, debug: debug)
+    public static func save(
+        _ config: RepoConfig, dataDirectory: URL? = nil, profile: AppProfile.Variant = .current
+    ) throws {
+        let configURL = getConfigURL(dataDirectory: dataDirectory, profile: profile)
 
         // Ensure the data directory exists
         let dirURL = configURL.deletingLastPathComponent()

@@ -18,6 +18,14 @@ func shouldUseDebugMode(_ explicitDebug: Bool) -> Bool {
     #endif
 }
 
+/// Resolves the AppProfile variant for a CLI invocation: in a debug build always `.debug`;
+/// in a production build the user's `--debug` flag selects between `.production` and `.debug`.
+/// Use this at every `BoardLoader`/`BoardWriter`/`HeadlessWriter` call site so the long-form
+/// `AppProfile.Variant(debug: shouldUseDebugMode(debug))` doesn't leak everywhere.
+func resolveProfile(_ explicitDebug: Bool) -> AppProfile.Variant {
+    AppProfile.Variant(debug: shouldUseDebugMode(explicitDebug))
+}
+
 // MARK: - Shared Helpers
 
 func parseTags(_ tagStrings: [String]) -> [(key: String, value: String)] {
@@ -175,7 +183,8 @@ struct Open: ParsableCommand {
 
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: shouldUseDebugMode(debug))
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: resolveProfile(debug))
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -269,7 +278,7 @@ struct Create: ParsableCommand {
                         tags: parsedTags.isEmpty ? nil : parsedTags
                     ),
                     dataDirectory: dataDirURL,
-                    debug: shouldUseDebugMode(false)
+                    profile: resolveProfile(false)
                 )
 
                 JSONHelper.printJSON(
@@ -379,7 +388,8 @@ struct List: ParsableCommand {
     func run() throws {
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: shouldUseDebugMode(debug))
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: resolveProfile(debug))
 
             if columns {
                 let columnOutput = board.sortedColumns().map { col in
