@@ -27,7 +27,7 @@ final class MCPToolReadTests: XCTestCase {
         server = nil
     }
 
-    // MARK: - termq_list Tests
+    // MARK: - list Tests
 
     func testListReturnsAllTerminals() async throws {
         let result = try await server.handleList(nil)
@@ -118,7 +118,7 @@ final class MCPToolReadTests: XCTestCase {
         XCTAssertEqual(columns[2].terminalCount, 1, "Done should have 1 terminal")
     }
 
-    // MARK: - termq_find Tests
+    // MARK: - find Tests
 
     func testFindBySmartQuery() async throws {
         let args: [String: Value] = ["query": .string("Fresh Active Project")]
@@ -235,7 +235,7 @@ final class MCPToolReadTests: XCTestCase {
         XCTAssertEqual(terminals.count, 0, "Should return empty array for no matches")
     }
 
-    // MARK: - termq_open Tests
+    // MARK: - open Tests
 
     func testOpenByExactName() async throws {
         let args: [String: Value] = ["identifier": .string("Fresh Active Project")]
@@ -307,7 +307,7 @@ final class MCPToolReadTests: XCTestCase {
         XCTAssertTrue(result.isError ?? false)
     }
 
-    // MARK: - termq_pending Tests
+    // MARK: - pending Tests
 
     func testPendingReturnsAllWithSummary() async throws {
         let result = try await server.handlePending(nil)
@@ -397,7 +397,7 @@ final class MCPToolReadTests: XCTestCase {
         XCTAssertGreaterThan(output.summary.stale, 0, "Should have stale terminals")
     }
 
-    // MARK: - termq_context Tests
+    // MARK: - context Tests
 
     func testContextReturnsGuide() async throws {
         let result = try await server.handleContext()
@@ -425,7 +425,7 @@ final class MCPToolReadTests: XCTestCase {
         XCTAssertTrue(content.contains("staleness"), "Should document staleness tag")
     }
 
-    // MARK: - termq_get Tests
+    // MARK: - get Tests
 
     func testGetByUUID() async throws {
         // Create environment with known UUID

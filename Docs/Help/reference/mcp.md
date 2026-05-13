@@ -21,7 +21,7 @@ See [Tutorial 10](tutorials/mcp.md) for setup and the session workflow.
 
 ## Tools
 
-### `termq_pending`
+### `pending`
 
 List terminals needing attention. Run this at the **start of every session**.
 
@@ -33,7 +33,7 @@ Returns terminals sorted by urgency: those with `llmNextAction` set first, then 
 
 ---
 
-### `termq_list`
+### `list`
 
 List all terminals, optionally filtered.
 
@@ -44,7 +44,7 @@ List all terminals, optionally filtered.
 
 ---
 
-### `termq_find`
+### `find`
 
 Search terminals. All filters are AND-combined.
 
@@ -62,7 +62,7 @@ Search terminals. All filters are AND-combined.
 
 ---
 
-### `termq_open`
+### `open`
 
 Open a terminal. Returns full details including `llmPrompt` and `llmNextAction`.
 
@@ -72,7 +72,7 @@ Open a terminal. Returns full details including `llmPrompt` and `llmNextAction`.
 
 ---
 
-### `termq_get`
+### `get`
 
 Get context for a terminal by UUID. Use with `$TERMQ_TERMINAL_ID` to retrieve context for the terminal the LLM is currently running in.
 
@@ -81,12 +81,12 @@ Get context for a terminal by UUID. Use with `$TERMQ_TERMINAL_ID` to retrieve co
 | `id` | string | Terminal UUID |
 
 ```
-termq_get id="$TERMQ_TERMINAL_ID"
+get id="$TERMQ_TERMINAL_ID"
 ```
 
 ---
 
-### `termq_create`
+### `create`
 
 Create a new terminal.
 
@@ -103,7 +103,7 @@ Create a new terminal.
 
 ---
 
-### `termq_set`
+### `set`
 
 Update terminal fields. Tags are additive by default.
 
@@ -123,7 +123,7 @@ Update terminal fields. Tags are additive by default.
 
 ---
 
-### `termq_move`
+### `move`
 
 Move a terminal to a different column.
 
@@ -134,7 +134,7 @@ Move a terminal to a different column.
 
 ---
 
-### `termq_delete`
+### `delete`
 
 Delete a terminal. Soft-delete (bin) by default.
 
@@ -169,12 +169,12 @@ Delete a terminal. Soft-delete (bin) by default.
 ## Session workflow
 
 **Start:**
-1. Call `termq_pending` to see what needs attention
-2. Call `termq_get id="$TERMQ_TERMINAL_ID"` to load current terminal's context
+1. Call `pending` to see what needs attention
+2. Call `get id="$TERMQ_TERMINAL_ID"` to load current terminal's context
 3. Address `llmNextAction` if set, or ask the user which terminal to work in
 
 **End:**
-1. Call `termq_set` to write `llmNextAction` if work is incomplete
+1. Call `set` to write `llmNextAction` if work is incomplete
 2. Update the `staleness` tag to `fresh`
 3. Update `llmPrompt` if the standing context has materially changed
 
@@ -182,7 +182,7 @@ Delete a terminal. Soft-delete (bin) by default.
 
 ## Cross-session state tags
 
-Use these tag keys consistently to make `termq_pending` sorting useful:
+Use these tag keys consistently to make `pending` sorting useful:
 
 | Tag | Values | Purpose |
 |---|---|---|

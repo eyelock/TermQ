@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — BREAKING (MCP / CLI)
+
+- **MCP tool names lose the `termq_` prefix.** Every TermQ MCP tool is now reachable as `mcp__termq__<name>` rather than `mcp__termq__termq_<name>`. Affected tools: `pending`, `context`, `list`, `find`, `open`, `create`, `set`, `move`, `get`, `delete`. **No alias is provided.** Anyone with `mcp__termq__termq_*` hardcoded in a CLAUDE.md, hook script, or recorded prompt must update by deleting one prefix.
+- **Tag filter semantics converge on literal exact-match.** Both `find(tag:)` (MCP) and `find --tag` (CLI) now interpret `key=value` as a literal exact match (case-insensitive). Previously CLI did partial-substring match on the value while MCP did exact — they now behave identically. To regex-match, prefix with `re:`: `find(tag: "staleness=re:(stale|ageing)")` matches the value as regex; `find(tag: "re:project=org/.+")` matches the whole `key=value` string as regex. Invalid regex patterns surface an error rather than silently falling back to literal. **CLI partial-match users:** rewrite as `--tag project=re:.*` or just `--tag project` (key-only still works).
+
+### Fixed — MCP / CLI
+
+- **MCP resource reads now surface load errors instead of returning empty arrays.** Previously `termq://terminals`, `termq://columns`, and `termq://pending` silently returned `[]` or `{}` if the board could not be loaded — conflating "the board has zero cards" with "the install is broken" and masking the original "empty results" bug. Failures now propagate as MCP errors with descriptive messages.
+- **`AppProfile` runtime injection point in `BoardLoader` / `BoardWriter`.** Methods now take a `profile: AppProfile.Variant` parameter (default `.current`) instead of `debug: Bool`. `.current` resolves to `.debug` under `TERMQ_DEBUG_BUILD` and `.production` otherwise. Test code can pass `.debug` or `.production` explicitly without recompiling.
+- **Atomic read-modify-write in `BoardWriter`.** `updateCard`, `moveCard`, and `createCard` previously split their read and write across two separate `NSFileCoordinator` claims, leaving a window where two concurrent writers could both finish their reads before either wrote — the second write silently clobbering the first. They now run inside a single `writingItemAt:` claim via the new `BoardWriter.atomicUpdate(...)` helper, closing the lost-update race and the `orderIndex` collision on concurrent appends.
+- **`termqmcp --verbose` logs the resolved profile and data directory at startup**, so a debug-vs-production data-directory mismatch is visible to the operator.
+
 ### Added
 
 - **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles

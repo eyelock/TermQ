@@ -96,7 +96,7 @@ final class ServerTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
         let server = TermQMCPServer(dataDirectory: tempDir)
-        let params = CallTool.Parameters(name: "termq_pending", arguments: nil)
+        let params = CallTool.Parameters(name: "pending", arguments: nil)
         let result = try await server.dispatchToolCall(params)
 
         XCTAssertFalse(result.isError ?? false)
@@ -108,7 +108,7 @@ final class ServerTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
         let server = TermQMCPServer(dataDirectory: tempDir)
-        let params = CallTool.Parameters(name: "termq_context", arguments: nil)
+        let params = CallTool.Parameters(name: "context", arguments: nil)
         let result = try await server.dispatchToolCall(params)
 
         XCTAssertFalse(result.isError ?? false)
@@ -124,7 +124,7 @@ final class ServerTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
         let server = TermQMCPServer(dataDirectory: tempDir)
-        let params = CallTool.Parameters(name: "termq_list", arguments: nil)
+        let params = CallTool.Parameters(name: "list", arguments: nil)
         let result = try await server.dispatchToolCall(params)
 
         XCTAssertFalse(result.isError ?? false)
@@ -135,7 +135,7 @@ final class ServerTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
         let server = TermQMCPServer(dataDirectory: tempDir)
-        let params = CallTool.Parameters(name: "termq_find", arguments: ["name": .string("Test")])
+        let params = CallTool.Parameters(name: "find", arguments: ["name": .string("Test")])
         let result = try await server.dispatchToolCall(params)
 
         XCTAssertFalse(result.isError ?? false)
@@ -146,7 +146,7 @@ final class ServerTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
         let server = TermQMCPServer(dataDirectory: tempDir)
-        let params = CallTool.Parameters(name: "termq_open", arguments: ["identifier": .string("Test Terminal")])
+        let params = CallTool.Parameters(name: "open", arguments: ["identifier": .string("Test Terminal")])
         let result = try await server.dispatchToolCall(params)
 
         // This might fail because terminal doesn't exist, which is fine
@@ -160,7 +160,7 @@ final class ServerTests: XCTestCase {
 
         let server = TermQMCPServer(dataDirectory: tempDir)
         let params = CallTool.Parameters(
-            name: "termq_create",
+            name: "create",
             arguments: ["name": .string("New Terminal"), "path": .string("/tmp")]
         )
         let result = try await server.dispatchToolCall(params)
@@ -174,7 +174,7 @@ final class ServerTests: XCTestCase {
 
         let server = TermQMCPServer(dataDirectory: tempDir)
         let params = CallTool.Parameters(
-            name: "termq_set",
+            name: "set",
             arguments: ["identifier": .string("Test Terminal"), "description": .string("Updated")]
         )
         let result = try await server.dispatchToolCall(params)
@@ -189,7 +189,7 @@ final class ServerTests: XCTestCase {
 
         let server = TermQMCPServer(dataDirectory: tempDir)
         let params = CallTool.Parameters(
-            name: "termq_move",
+            name: "move",
             arguments: ["identifier": .string("Test Terminal"), "column": .string("Done")]
         )
         let result = try await server.dispatchToolCall(params)
@@ -203,7 +203,7 @@ final class ServerTests: XCTestCase {
 
         let server = TermQMCPServer(dataDirectory: tempDir)
         let params = CallTool.Parameters(
-            name: "termq_get",
+            name: "get",
             arguments: ["id": .string(UUID().uuidString)]
         )
         let result = try await server.dispatchToolCall(params)
@@ -256,16 +256,16 @@ final class ServerTests: XCTestCase {
         let tools = TermQMCPServer.availableTools
         let names = Set(tools.map { $0.name })
 
-        XCTAssertTrue(names.contains("termq_pending"))
-        XCTAssertTrue(names.contains("termq_context"))
-        XCTAssertTrue(names.contains("termq_list"))
-        XCTAssertTrue(names.contains("termq_find"))
-        XCTAssertTrue(names.contains("termq_open"))
-        XCTAssertTrue(names.contains("termq_create"))
-        XCTAssertTrue(names.contains("termq_set"))
-        XCTAssertTrue(names.contains("termq_move"))
-        XCTAssertTrue(names.contains("termq_get"))
-        XCTAssertTrue(names.contains("termq_delete"))
+        XCTAssertTrue(names.contains("pending"))
+        XCTAssertTrue(names.contains("context"))
+        XCTAssertTrue(names.contains("list"))
+        XCTAssertTrue(names.contains("find"))
+        XCTAssertTrue(names.contains("open"))
+        XCTAssertTrue(names.contains("create"))
+        XCTAssertTrue(names.contains("set"))
+        XCTAssertTrue(names.contains("move"))
+        XCTAssertTrue(names.contains("get"))
+        XCTAssertTrue(names.contains("delete"))
     }
 
     // MARK: - Context Documentation Tests

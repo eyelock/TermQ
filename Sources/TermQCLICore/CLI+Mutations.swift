@@ -55,9 +55,10 @@ struct Set: ParsableCommand {
 
     func run() throws {
         do {
-            let debugMode = shouldUseDebugMode(debug)
+            let profile = resolveProfile(debug)
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: debugMode)
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: profile)
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -100,7 +101,7 @@ struct Set: ParsableCommand {
                         identifier: card.id.uuidString,
                         toColumn: columnName,
                         dataDirectory: dataDirURL,
-                        debug: debugMode
+                        profile: profile
                     )
                 }
 
@@ -108,7 +109,7 @@ struct Set: ParsableCommand {
                     identifier: card.id.uuidString,
                     params: params,
                     dataDirectory: dataDirURL,
-                    debug: debugMode
+                    profile: profile
                 )
 
                 if initCommand != nil {
@@ -161,9 +162,10 @@ struct Move: ParsableCommand {
 
     func run() throws {
         do {
-            let debugMode = shouldUseDebugMode(debug)
+            let profile = resolveProfile(debug)
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: debugMode)
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: profile)
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -177,7 +179,7 @@ struct Move: ParsableCommand {
                     identifier: card.id.uuidString,
                     toColumn: toColumn,
                     dataDirectory: dataDirURL,
-                    debug: debugMode
+                    profile: profile
                 )
 
                 JSONHelper.printJSON(
@@ -229,9 +231,10 @@ struct Delete: ParsableCommand {
 
     func run() throws {
         do {
-            let debugMode = shouldUseDebugMode(debug)
+            let profile = resolveProfile(debug)
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: debugMode)
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: profile)
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -245,7 +248,7 @@ struct Delete: ParsableCommand {
                     identifier: card.id.uuidString,
                     permanent: permanent,
                     dataDirectory: dataDirURL,
-                    debug: debugMode
+                    profile: profile
                 )
 
                 JSONHelper.printJSON(

@@ -94,13 +94,14 @@ public enum YNHConfigLoader {
         }
     }
 
-    public static func getConfigURL(dataDirectory: URL? = nil, debug: Bool = false) -> URL {
-        BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, debug: debug)
+    public static func getConfigURL(dataDirectory: URL? = nil, profile: AppProfile.Variant = .current) -> URL {
+        BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
             .appendingPathComponent("ynh.json")
     }
 
-    public static func load(dataDirectory: URL? = nil, debug: Bool = false) throws -> LocalYNHConfig {
-        let configURL = getConfigURL(dataDirectory: dataDirectory, debug: debug)
+    public static func load(dataDirectory: URL? = nil, profile: AppProfile.Variant = .current) throws -> LocalYNHConfig
+    {
+        let configURL = getConfigURL(dataDirectory: dataDirectory, profile: profile)
 
         guard FileManager.default.fileExists(atPath: configURL.path) else {
             return LocalYNHConfig()
@@ -132,8 +133,10 @@ public enum YNHConfigLoader {
         return try result.get()
     }
 
-    public static func save(_ config: LocalYNHConfig, dataDirectory: URL? = nil, debug: Bool = false) throws {
-        let configURL = getConfigURL(dataDirectory: dataDirectory, debug: debug)
+    public static func save(
+        _ config: LocalYNHConfig, dataDirectory: URL? = nil, profile: AppProfile.Variant = .current
+    ) throws {
+        let configURL = getConfigURL(dataDirectory: dataDirectory, profile: profile)
 
         let dirURL = configURL.deletingLastPathComponent()
         if !FileManager.default.fileExists(atPath: dirURL.path) {

@@ -10,7 +10,7 @@ extension TermQMCPServer {
     static var availableTools: [Tool] {
         [
             Tool(
-                name: "termq_pending",
+                name: "pending",
                 description: """
                     Check terminals needing attention. Run this at the START of every LLM session.
                     Returns terminals with pending actions (llmNextAction) and staleness indicators.
@@ -21,7 +21,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_context",
+                name: "context",
                 description: """
                     Output comprehensive documentation for LLM/AI assistants.
                     Includes session start/end checklists, tag schema, command reference,
@@ -30,7 +30,7 @@ extension TermQMCPServer {
                 inputSchema: Schema.emptySchema()
             ),
             Tool(
-                name: "termq_list",
+                name: "list",
                 description: "List all terminals or filter by column. Supports listing columns only.",
                 inputSchema: Schema.objectSchema([
                     Schema.string("column", "Filter by column name"),
@@ -38,7 +38,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_find",
+                name: "find",
                 description: """
                     Search for terminals by various criteria. Use 'query' for smart multi-word search
                     across name, description, path, and tags. All filters are AND-combined.
@@ -59,7 +59,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_open",
+                name: "open",
                 description: """
                     Open an existing terminal by name, UUID, or path. Returns terminal details
                     including llmPrompt (persistent context) and llmNextAction (one-time task).
@@ -71,7 +71,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_create",
+                name: "create",
                 description: """
                     Create a new terminal in TermQ. Optionally specify name, description, column,
                     path, tags, LLM context, and initialization command.
@@ -89,7 +89,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_set",
+                name: "set",
                 description: """
                     Update terminal properties. Identify terminal by name or UUID.
                     Can set name, description, column, badges, LLM fields, tags, init command, and favourite status.
@@ -113,7 +113,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_move",
+                name: "move",
                 description: "Move a terminal to a different column (workflow stage).",
                 inputSchema: Schema.objectSchema([
                     Schema.string("identifier", "Terminal name or UUID", required: true),
@@ -121,7 +121,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_get",
+                name: "get",
                 description: """
                     Get terminal context by ID. Use with TERMQ_TERMINAL_ID environment variable
                     to get context for the terminal you're currently running in.
@@ -132,7 +132,7 @@ extension TermQMCPServer {
                 ])
             ),
             Tool(
-                name: "termq_delete",
+                name: "delete",
                 description: """
                     Delete a terminal. By default, moves to bin (soft delete).
                     Use permanent=true to permanently delete without bin recovery option.

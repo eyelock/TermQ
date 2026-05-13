@@ -22,26 +22,40 @@ public enum BoardLoader {
         }
     }
 
-    /// Get the TermQ data directory path
-    public static func getDataDirectoryPath(customDirectory: URL? = nil, debug: Bool = false) -> URL {
+    /// Get the TermQ data directory path.
+    ///
+    /// - Parameters:
+    ///   - customDirectory: Optional override (typically for tests). When non-nil, ignores `profile`.
+    ///   - profile: Which app profile's data directory to resolve. Defaults to `.current` —
+    ///     resolves to `.debug` in `TERMQ_DEBUG_BUILD` builds and `.production` otherwise.
+    public static func getDataDirectoryPath(
+        customDirectory: URL? = nil,
+        profile: AppProfile.Variant = .current
+    ) -> URL {
         if let custom = customDirectory {
             return custom
         }
+        let dirName = profile.dataDirectoryName
         guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
         else {
             // Fallback to home directory if Application Support not available
             let homeDir = FileManager.default.homeDirectoryForCurrentUser
-            let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
             return homeDir.appendingPathComponent(".termq", isDirectory: true).appendingPathComponent(
                 dirName, isDirectory: true)
         }
-        let dirName = debug ? AppProfile.Debug.dataDirectoryName : AppProfile.Production.dataDirectoryName
         return appSupport.appendingPathComponent(dirName, isDirectory: true)
     }
 
-    /// Load the board from disk with file coordination for safe concurrent access
-    public static func loadBoard(dataDirectory: URL? = nil, debug: Bool = false) throws -> Board {
-        let dataDir = getDataDirectoryPath(customDirectory: dataDirectory, debug: debug)
+    /// Load the board from disk with file coordination for safe concurrent access.
+    ///
+    /// - Parameters:
+    ///   - dataDirectory: Optional explicit data directory (tests use a temp dir).
+    ///   - profile: Which app profile to resolve when `dataDirectory` is nil. Defaults to `.current`.
+    public static func loadBoard(
+        dataDirectory: URL? = nil,
+        profile: AppProfile.Variant = .current
+    ) throws -> Board {
+        let dataDir = getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
         let boardURL = dataDir.appendingPathComponent("board.json")
 
         guard FileManager.default.fileExists(atPath: boardURL.path) else {
@@ -110,9 +124,9 @@ public enum BoardWriter {
     /// Load board as raw JSON dictionary (preserves all fields)
     /// Uses file coordination for safe concurrent access
     public static func loadRawBoard(
-        dataDirectory: URL? = nil, debug: Bool = false
+        dataDirectory: URL? = nil, profile: AppProfile.Variant = .current
     ) throws -> (url: URL, data: [String: Any]) {
-        let dataDir = BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, debug: debug)
+        let dataDir = BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
         let boardURL = dataDir.appendingPathComponent("board.json")
 
         guard FileManager.default.fileExists(atPath: boardURL.path) else {
@@ -147,7 +161,15 @@ public enum BoardWriter {
         return (boardURL, try result.get())
     }
 
-    /// Save raw board JSON to disk with file coordination for safe concurrent access
+    /// Save raw board JSON to disk with file coordination for safe concurrent access.
+    ///
+    /// **Avoid for new code.** This is a half-claim (write only). Pairing a separate
+    /// `loadRawBoard` read claim with a `saveRawBoard` write claim opens a lost-update
+    /// race: two processes can both finish their reads before either writes, and the
+    /// second write silently clobbers the first. Use `atomicUpdate(...)` instead for any
+    /// read-modify-write — it holds a single exclusive claim across both halves.
+    /// Retained here only for callers that are genuinely write-only (constructing a
+    /// fresh board from scratch).
     public static func saveRawBoard(_ board: [String: Any], to url: URL) throws {
         let jsonData = try JSONSerialization.data(withJSONObject: board, options: [.prettyPrinted, .sortedKeys])
 
@@ -172,191 +194,226 @@ public enum BoardWriter {
         }
     }
 
-    /// Update a card's fields
+    /// Atomic read-modify-write under a single `NSFileCoordinator` writing claim.
+    ///
+    /// The closure receives the parsed board JSON. It may mutate the board however it
+    /// likes (and may compute and return any value from it). The mutated board is written
+    /// back inside the same exclusive claim, so no other process can read or write the
+    /// file while this call is in flight.
+    ///
+    /// Closes the lost-update race that a split `loadRawBoard` + `saveRawBoard` pattern
+    /// otherwise allows: two processes both finishing their reads before either writes,
+    /// and the second write silently clobbering the first. Same fix also resolves the
+    /// `orderIndex` collision (two concurrent appends computing the same `max + 1`).
+    @discardableResult
+    public static func atomicUpdate<T>(
+        dataDirectory: URL? = nil,
+        profile: AppProfile.Variant = .current,
+        body: (inout [String: Any]) throws -> T
+    ) throws -> T {
+        let dataDir = BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
+        let boardURL = dataDir.appendingPathComponent("board.json")
+
+        guard FileManager.default.fileExists(atPath: boardURL.path) else {
+            throw WriteError.boardNotFound(path: boardURL.path)
+        }
+
+        var coordinationError: NSError?
+        var result: Result<T, Error>?
+
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+        coordinator.coordinate(writingItemAt: boardURL, options: [], error: &coordinationError) { writeURL in
+            do {
+                let data = try Data(contentsOf: writeURL)
+                guard var board = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                    throw WriteError.encodingFailed("Invalid board format")
+                }
+                let value = try body(&board)
+                let newData = try JSONSerialization.data(
+                    withJSONObject: board, options: [.prettyPrinted, .sortedKeys])
+                try newData.write(to: writeURL, options: .atomic)
+                result = .success(value)
+            } catch {
+                result = .failure(error)
+            }
+        }
+
+        if let error = coordinationError {
+            throw WriteError.coordinationFailed(error.localizedDescription)
+        }
+        guard let result else {
+            throw WriteError.coordinationFailed("File coordination completed without result")
+        }
+        return try result.get()
+    }
+
+    /// Update a card's fields atomically.
+    ///
+    /// Read, mutation, and write happen under a single `NSFileCoordinator` writing claim
+    /// — no other process can interleave, so the lost-update race is closed.
     public static func updateCard(
         identifier: String,
         updates: [String: Any],
         dataDirectory: URL? = nil,
-        debug: Bool = false
+        profile: AppProfile.Variant = .current
     ) throws -> Card {
-        let rawBoard = try loadRawBoard(dataDirectory: dataDirectory, debug: debug)
-        let boardURL = rawBoard.url
-        var board = rawBoard.data
-        guard var cards = board["cards"] as? [[String: Any]] else {
-            throw WriteError.encodingFailed("Invalid cards format")
+        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+            guard var cards = board["cards"] as? [[String: Any]] else {
+                throw WriteError.encodingFailed("Invalid cards format")
+            }
+
+            // Find the card to update (include deleted cards so we can update after soft-delete)
+            let cardIndex = try findCardIndex(identifier: identifier, in: cards, includeDeleted: true)
+
+            // Capture the stable UUID before applying updates — the caller may be renaming
+            // the card (updating `title`), which would break a post-mutation name lookup.
+            let cardUUID = (cards[cardIndex]["id"] as? String).flatMap(UUID.init(uuidString:))
+
+            for (key, value) in updates {
+                cards[cardIndex][key] = value
+            }
+            board["cards"] = cards
+
+            // Decode the post-mutation card from the in-memory dict so we return a result
+            // that matches what's about to be persisted (and don't have to re-read from disk
+            // outside the claim, which would re-open the race).
+            let decoded = try decodeCard(at: cardIndex, in: cards, identifier: identifier, capturedUUID: cardUUID)
+            return decoded
         }
-
-        // Find the card to update (include deleted cards so we can update after soft-delete)
-        let cardIndex = try findCardIndex(identifier: identifier, in: cards, includeDeleted: true)
-
-        // Capture the stable UUID before applying updates — the caller may be renaming
-        // the card (updating `title`), which would break a post-save name lookup.
-        let cardUUID = (cards[cardIndex]["id"] as? String).flatMap(UUID.init(uuidString:))
-
-        // Apply updates
-        for (key, value) in updates {
-            cards[cardIndex][key] = value
-        }
-
-        // Save back
-        board["cards"] = cards
-        try saveRawBoard(board, to: boardURL)
-
-        // Return the updated card (search in ALL cards, not just active ones)
-        // This is important for operations like soft-delete that set deletedAt
-        let updatedBoard = try BoardLoader.loadBoard(dataDirectory: dataDirectory, debug: debug)
-
-        // Prefer the captured UUID — survives title changes
-        if let uuid = cardUUID,
-            let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid })
-        {
-            return updatedCard
-        }
-
-        // Fallback: if identifier was a UUID string, try that
-        if let uuid = UUID(uuidString: identifier),
-            let updatedCard = updatedBoard.cards.first(where: { $0.id == uuid })
-        {
-            return updatedCard
-        }
-
-        // Final fallback: name search (only reliable when title wasn't updated)
-        let identifierLower = identifier.lowercased()
-        if let updatedCard = updatedBoard.cards.first(where: {
-            $0.title.lowercased() == identifierLower || $0.title.lowercased().contains(identifierLower)
-        }) {
-            return updatedCard
-        }
-
-        throw WriteError.cardNotFound(identifier: identifier)
     }
 
-    /// Move a card to a different column
+    /// Decode the card at `cardIndex` from a raw cards array.
+    /// Helper used by `updateCard` to return a typed `Card` from the mutated state without
+    /// leaving the atomic claim.
+    private static func decodeCard(
+        at cardIndex: Int,
+        in cards: [[String: Any]],
+        identifier: String,
+        capturedUUID: UUID?
+    ) throws -> Card {
+        let cardData = try JSONSerialization.data(withJSONObject: cards[cardIndex])
+        do {
+            return try JSONDecoder().decode(Card.self, from: cardData)
+        } catch {
+            // If decoding the specific row fails for any reason, surface card-not-found
+            // with the original identifier so callers see a useful error.
+            _ = capturedUUID
+            throw WriteError.cardNotFound(identifier: identifier)
+        }
+    }
+
+    /// Move a card to a different column atomically. See `updateCard` for race-fix details.
     public static func moveCard(
         identifier: String,
         toColumn columnName: String,
         dataDirectory: URL? = nil,
-        debug: Bool = false
+        profile: AppProfile.Variant = .current
     ) throws -> Card {
-        let rawBoard = try loadRawBoard(dataDirectory: dataDirectory, debug: debug)
-        let boardURL = rawBoard.url
-        var board = rawBoard.data
-        guard var cards = board["cards"] as? [[String: Any]],
-            let columns = board["columns"] as? [[String: Any]]
-        else {
-            throw WriteError.encodingFailed("Invalid board format")
+        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+            guard var cards = board["cards"] as? [[String: Any]],
+                let columns = board["columns"] as? [[String: Any]]
+            else {
+                throw WriteError.encodingFailed("Invalid board format")
+            }
+
+            // Find target column
+            let columnNameLower = columnName.lowercased()
+            guard
+                let targetColumn = columns.first(where: {
+                    ($0["name"] as? String)?.lowercased() == columnNameLower
+                }),
+                let targetColumnId = targetColumn["id"] as? String
+            else {
+                throw WriteError.columnNotFound(name: columnName)
+            }
+
+            let cardIndex = try findCardIndex(identifier: identifier, in: cards)
+
+            // Calculate new orderIndex inside the claim — concurrent appends can no longer
+            // both compute the same `max + 1`.
+            let cardsInTargetColumn = cards.filter { ($0["columnId"] as? String) == targetColumnId }
+            let maxOrderIndex = cardsInTargetColumn.compactMap { $0["orderIndex"] as? Int }.max() ?? -1
+
+            cards[cardIndex]["columnId"] = targetColumnId
+            cards[cardIndex]["orderIndex"] = maxOrderIndex + 1
+            board["cards"] = cards
+
+            let cardUUID = (cards[cardIndex]["id"] as? String).flatMap(UUID.init(uuidString:))
+            return try decodeCard(at: cardIndex, in: cards, identifier: identifier, capturedUUID: cardUUID)
         }
-
-        // Find target column
-        let columnNameLower = columnName.lowercased()
-        guard
-            let targetColumn = columns.first(where: {
-                ($0["name"] as? String)?.lowercased() == columnNameLower
-            }),
-            let targetColumnId = targetColumn["id"] as? String
-        else {
-            throw WriteError.columnNotFound(name: columnName)
-        }
-
-        // Find the card to move
-        let cardIndex = try findCardIndex(identifier: identifier, in: cards)
-
-        // Calculate new orderIndex (put at end of target column)
-        let cardsInTargetColumn = cards.filter { ($0["columnId"] as? String) == targetColumnId }
-        let maxOrderIndex = cardsInTargetColumn.compactMap { $0["orderIndex"] as? Int }.max() ?? -1
-
-        // Update the card
-        cards[cardIndex]["columnId"] = targetColumnId
-        cards[cardIndex]["orderIndex"] = maxOrderIndex + 1
-
-        // Save back
-        board["cards"] = cards
-        try saveRawBoard(board, to: boardURL)
-
-        // Return the updated card
-        let updatedBoard = try BoardLoader.loadBoard(dataDirectory: dataDirectory, debug: debug)
-        guard let updatedCard = updatedBoard.findTerminal(identifier: identifier) else {
-            throw WriteError.cardNotFound(identifier: identifier)
-        }
-        return updatedCard
     }
 
-    /// Create a new card
+    /// Create a new card atomically. See `updateCard` for race-fix details.
+    /// The `orderIndex` calculation now runs inside the exclusive claim, so two
+    /// concurrent appends to the same column produce distinct `orderIndex` values.
     public static func createCard(
         name: String,
         columnName: String?,
         workingDirectory: String,
         description: String = "",
         dataDirectory: URL? = nil,
-        debug: Bool = false
+        profile: AppProfile.Variant = .current
     ) throws -> Card {
-        let rawBoard = try loadRawBoard(dataDirectory: dataDirectory, debug: debug)
-        let boardURL = rawBoard.url
-        var board = rawBoard.data
-        guard var cards = board["cards"] as? [[String: Any]],
-            let columns = board["columns"] as? [[String: Any]]
-        else {
-            throw WriteError.encodingFailed("Invalid board format")
-        }
-
-        // Find target column (default to first column if not specified)
-        let targetColumn: [String: Any]
-        if let columnName = columnName {
-            let columnNameLower = columnName.lowercased()
-            guard
-                let found = columns.first(where: {
-                    ($0["name"] as? String)?.lowercased() == columnNameLower
-                })
+        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+            guard var cards = board["cards"] as? [[String: Any]],
+                let columns = board["columns"] as? [[String: Any]]
             else {
-                throw WriteError.columnNotFound(name: columnName)
+                throw WriteError.encodingFailed("Invalid board format")
             }
-            targetColumn = found
-        } else {
-            // Use first column sorted by orderIndex
-            let sortedColumns = columns.sorted {
-                ($0["orderIndex"] as? Int ?? 0) < ($1["orderIndex"] as? Int ?? 0)
+
+            // Find target column (default to first column if not specified)
+            let targetColumn: [String: Any]
+            if let columnName = columnName {
+                let columnNameLower = columnName.lowercased()
+                guard
+                    let found = columns.first(where: {
+                        ($0["name"] as? String)?.lowercased() == columnNameLower
+                    })
+                else {
+                    throw WriteError.columnNotFound(name: columnName)
+                }
+                targetColumn = found
+            } else {
+                let sortedColumns = columns.sorted {
+                    ($0["orderIndex"] as? Int ?? 0) < ($1["orderIndex"] as? Int ?? 0)
+                }
+                guard let first = sortedColumns.first else {
+                    throw WriteError.columnNotFound(name: "default")
+                }
+                targetColumn = first
             }
-            guard let first = sortedColumns.first else {
-                throw WriteError.columnNotFound(name: "default")
+
+            guard let targetColumnId = targetColumn["id"] as? String else {
+                throw WriteError.columnNotFound(name: columnName ?? "default")
             }
-            targetColumn = first
+
+            let cardsInTargetColumn = cards.filter { ($0["columnId"] as? String) == targetColumnId }
+            let maxOrderIndex = cardsInTargetColumn.compactMap { $0["orderIndex"] as? Int }.max() ?? -1
+
+            let newCardId = UUID()
+            let newCard: [String: Any] = [
+                "id": newCardId.uuidString,
+                "title": name,
+                "description": description,
+                "columnId": targetColumnId,
+                "orderIndex": maxOrderIndex + 1,
+                "workingDirectory": workingDirectory,
+                "isFavourite": false,
+                "badge": "",
+                "llmPrompt": "",
+                "llmNextAction": "",
+                "tags": [[String: Any]](),
+                "createdAt": ISO8601DateFormatter().string(from: Date()),
+            ]
+
+            cards.append(newCard)
+            board["cards"] = cards
+
+            // Decode the just-appended card from the in-claim state.
+            let newIndex = cards.count - 1
+            return try decodeCard(
+                at: newIndex, in: cards, identifier: newCardId.uuidString, capturedUUID: newCardId)
         }
-
-        guard let targetColumnId = targetColumn["id"] as? String else {
-            throw WriteError.columnNotFound(name: columnName ?? "default")
-        }
-
-        // Calculate orderIndex
-        let cardsInTargetColumn = cards.filter { ($0["columnId"] as? String) == targetColumnId }
-        let maxOrderIndex = cardsInTargetColumn.compactMap { $0["orderIndex"] as? Int }.max() ?? -1
-
-        // Create new card
-        let newCardId = UUID()
-        let newCard: [String: Any] = [
-            "id": newCardId.uuidString,
-            "title": name,
-            "description": description,
-            "columnId": targetColumnId,
-            "orderIndex": maxOrderIndex + 1,
-            "workingDirectory": workingDirectory,
-            "isFavourite": false,
-            "badge": "",
-            "llmPrompt": "",
-            "llmNextAction": "",
-            "tags": [[String: Any]](),
-            "createdAt": ISO8601DateFormatter().string(from: Date()),
-        ]
-
-        cards.append(newCard)
-        board["cards"] = cards
-        try saveRawBoard(board, to: boardURL)
-
-        // Return the created card
-        let updatedBoard = try BoardLoader.loadBoard(dataDirectory: dataDirectory, debug: debug)
-        guard let createdCard = updatedBoard.findTerminal(identifier: newCardId.uuidString) else {
-            throw WriteError.cardNotFound(identifier: newCardId.uuidString)
-        }
-        return createdCard
     }
 
     /// Find card index by identifier

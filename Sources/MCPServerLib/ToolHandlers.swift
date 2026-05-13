@@ -8,25 +8,25 @@ extension TermQMCPServer {
     /// Dispatch tool calls to appropriate handlers
     func dispatchToolCall(_ params: CallTool.Parameters) async throws -> CallTool.Result {
         switch params.name {
-        case "termq_pending":
+        case "pending":
             return try await handlePending(params.arguments)
-        case "termq_context":
+        case "context":
             return try await handleContext()
-        case "termq_list":
+        case "list":
             return try await handleList(params.arguments)
-        case "termq_find":
+        case "find":
             return try await handleFind(params.arguments)
-        case "termq_open":
+        case "open":
             return try await handleOpen(params.arguments)
-        case "termq_create":
+        case "create":
             return try await handleCreate(params.arguments)
-        case "termq_set":
+        case "set":
             return try await handleSet(params.arguments)
-        case "termq_move":
+        case "move":
             return try await handleMove(params.arguments)
-        case "termq_get":
+        case "get":
             return try await handleGet(params.arguments)
-        case "termq_delete":
+        case "delete":
             return try await handleDelete(params.arguments)
         default:
             throw MCPError.invalidRequest("Unknown tool: \(params.name)")
@@ -214,7 +214,7 @@ extension TermQMCPServer {
             }
 
             cards = CardFilterEngine.filterByColumn(cards, column: columnFilter, columns: board.columns)
-            cards = CardFilterEngine.filterByTag(cards, tagFilter: tagFilter, valueMatch: .exact)
+            cards = try CardFilterEngine.filterByTag(cards, tagFilter: tagFilter)
             cards = CardFilterEngine.filterByBadge(cards, badge: badgeFilter)
             if favouritesOnly { cards = CardFilterEngine.filterFavourites(cards) }
 
@@ -236,7 +236,7 @@ extension TermQMCPServer {
     func handleOpen(_ arguments: [String: Value]?) async throws -> CallTool.Result {
         let identifier: String
         do {
-            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_open")
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "open")
         } catch let error as InputValidator.ValidationError {
             return CallTool.Result(
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
@@ -271,7 +271,7 @@ extension TermQMCPServer {
     func handleGet(_ arguments: [String: Value]?) async throws -> CallTool.Result {
         let id: String
         do {
-            let uuid = try InputValidator.requireUUID("id", from: arguments, tool: "termq_get")
+            let uuid = try InputValidator.requireUUID("id", from: arguments, tool: "get")
             id = uuid.uuidString
         } catch let error as InputValidator.ValidationError {
             return CallTool.Result(
@@ -453,7 +453,7 @@ extension TermQMCPServer {
     func handleSet(_ arguments: [String: Value]?) async throws -> CallTool.Result {
         let identifier: String
         do {
-            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_set")
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "set")
         } catch let error as InputValidator.ValidationError {
             return CallTool.Result(
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
@@ -589,7 +589,7 @@ extension TermQMCPServer {
                 dataDirectory: dataDirectory
             )
 
-            // `termq_set` with a `column` argument is equivalent to a move — apply it
+            // `set` with a `column` argument is equivalent to a move — apply it
             // after the field updates so a rename + column change in one call both land.
             if let column = params.column {
                 card = try HeadlessWriter.moveCard(
@@ -624,8 +624,8 @@ extension TermQMCPServer {
         let identifier: String
         let column: String
         do {
-            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_move")
-            column = try InputValidator.requireNonEmptyString("column", from: arguments, tool: "termq_move")
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "move")
+            column = try InputValidator.requireNonEmptyString("column", from: arguments, tool: "move")
         } catch let error as InputValidator.ValidationError {
             return CallTool.Result(
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
@@ -727,7 +727,7 @@ extension TermQMCPServer {
     func handleDelete(_ arguments: [String: Value]?) async throws -> CallTool.Result {
         let identifier: String
         do {
-            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "termq_delete")
+            identifier = try InputValidator.requireNonEmptyString("identifier", from: arguments, tool: "delete")
         } catch let error as InputValidator.ValidationError {
             return CallTool.Result(
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],

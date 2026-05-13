@@ -73,7 +73,7 @@ public enum HeadlessWriter {
     public static func createCard(
         _ options: CardCreationOptions,
         dataDirectory: URL? = nil,
-        debug: Bool = false
+        profile: AppProfile.Variant = .current
     ) throws -> Card {
         // Create the card using BoardWriter
         var card = try BoardWriter.createCard(
@@ -82,7 +82,7 @@ public enum HeadlessWriter {
             workingDirectory: options.workingDirectory,
             description: options.description ?? "",
             dataDirectory: dataDirectory,
-            debug: debug
+            profile: profile
         )
 
         // Build updates for additional MCP fields
@@ -117,7 +117,7 @@ public enum HeadlessWriter {
                 identifier: card.id.uuidString,
                 updates: updates,
                 dataDirectory: dataDirectory,
-                debug: debug
+                profile: profile
             )
         }
 
@@ -129,7 +129,7 @@ public enum HeadlessWriter {
         identifier: String,
         params: UpdateParameters,
         dataDirectory: URL? = nil,
-        debug: Bool = false
+        profile: AppProfile.Variant = .current
     ) throws -> Card {
         var updates: [String: Any] = [:]
 
@@ -171,7 +171,7 @@ public enum HeadlessWriter {
                 updates["tags"] = tagDicts
             } else {
                 // Merge with existing tags
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDirectory, debug: debug)
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDirectory, profile: profile)
                 guard let card = board.findTerminal(identifier: identifier) else {
                     throw BoardWriter.WriteError.cardNotFound(identifier: identifier)
                 }
@@ -205,7 +205,7 @@ public enum HeadlessWriter {
             identifier: identifier,
             updates: updates,
             dataDirectory: dataDirectory,
-            debug: debug
+            profile: profile
         )
     }
 
@@ -214,13 +214,13 @@ public enum HeadlessWriter {
         identifier: String,
         toColumn columnName: String,
         dataDirectory: URL? = nil,
-        debug: Bool = false
+        profile: AppProfile.Variant = .current
     ) throws -> Card {
         try BoardWriter.moveCard(
             identifier: identifier,
             toColumn: columnName,
             dataDirectory: dataDirectory,
-            debug: debug
+            profile: profile
         )
     }
 
@@ -229,12 +229,12 @@ public enum HeadlessWriter {
         identifier: String,
         permanent: Bool,
         dataDirectory: URL? = nil,
-        debug: Bool = false
+        profile: AppProfile.Variant = .current
     ) throws {
         if permanent {
             // For permanent deletion, load board and remove from array
             // Note: BoardWriter doesn't have permanent delete, so we handle it here
-            let rawBoard = try BoardWriter.loadRawBoard(dataDirectory: dataDirectory, debug: debug)
+            let rawBoard = try BoardWriter.loadRawBoard(dataDirectory: dataDirectory, profile: profile)
             let boardURL = rawBoard.url
             var board = rawBoard.data
             guard var cards = board["cards"] as? [[String: Any]] else {
@@ -256,7 +256,7 @@ public enum HeadlessWriter {
                 identifier: identifier,
                 updates: ["deletedAt": now],
                 dataDirectory: dataDirectory,
-                debug: debug
+                profile: profile
             )
         }
     }

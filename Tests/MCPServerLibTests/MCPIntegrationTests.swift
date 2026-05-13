@@ -525,16 +525,16 @@ final class MCPIntegrationTests: XCTestCase {
         XCTAssertEqual(tools.count, 10)
 
         let toolNames = Set(tools.map { $0.name })
-        XCTAssertTrue(toolNames.contains("termq_pending"))
-        XCTAssertTrue(toolNames.contains("termq_context"))
-        XCTAssertTrue(toolNames.contains("termq_list"))
-        XCTAssertTrue(toolNames.contains("termq_find"))
-        XCTAssertTrue(toolNames.contains("termq_open"))
-        XCTAssertTrue(toolNames.contains("termq_create"))
-        XCTAssertTrue(toolNames.contains("termq_set"))
-        XCTAssertTrue(toolNames.contains("termq_move"))
-        XCTAssertTrue(toolNames.contains("termq_get"))
-        XCTAssertTrue(toolNames.contains("termq_delete"))
+        XCTAssertTrue(toolNames.contains("pending"))
+        XCTAssertTrue(toolNames.contains("context"))
+        XCTAssertTrue(toolNames.contains("list"))
+        XCTAssertTrue(toolNames.contains("find"))
+        XCTAssertTrue(toolNames.contains("open"))
+        XCTAssertTrue(toolNames.contains("create"))
+        XCTAssertTrue(toolNames.contains("set"))
+        XCTAssertTrue(toolNames.contains("move"))
+        XCTAssertTrue(toolNames.contains("get"))
+        XCTAssertTrue(toolNames.contains("delete"))
     }
 
     func testAvailableResourcesSchema() {

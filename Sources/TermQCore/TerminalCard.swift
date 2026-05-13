@@ -104,7 +104,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// When the card was soft-deleted (nil = active, set = in bin)
     @Published public var deletedAt: Date?
 
-    /// When an LLM last called termq_get for this terminal (nil = never, set = LLM is aware of TermQ)
+    /// When an LLM last called get for this terminal (nil = never, set = LLM is aware of TermQ)
     @Published public var lastLLMGet: Date?
 
     /// Backend override for session management. `nil` means inherit the
@@ -256,7 +256,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         deletedAt != nil
     }
 
-    /// Whether the LLM has recently identified itself via termq_get (within last 10 minutes)
+    /// Whether the LLM has recently identified itself via get (within last 10 minutes)
     public var isWired: Bool {
         guard let lastGet = lastLLMGet else { return false }
         return Date().timeIntervalSince(lastGet) < 600  // 10 minutes
