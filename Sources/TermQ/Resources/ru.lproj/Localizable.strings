@@ -1057,3 +1057,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Проверить изменения upstream";
 "harnesses.unversioned.drift.confirm.body" = "Содержимое upstream изменилось без обновления версии. Обновление загрузит новое содержимое. Проверьте SHA ниже перед продолжением — отсутствующее обновление версии может скрыть вредоносные изменения.";
 "harnesses.unversioned.drift.confirm.proceed" = "Всё равно обновить";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Нет включений";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Добавить фокус";
+"harnesses.focus.add.title" = "Добавить фокус";
+"harnesses.focus.edit.button" = "Изменить";
+"harnesses.focus.edit.title" = "Изменить фокус";
+"harnesses.focus.remove.button" = "Удалить";
+"harnesses.focus.remove.confirm.title" = "Удалить фокус";
+"harnesses.focus.remove.confirm.button" = "Удалить";
+"harnesses.focus.remove.confirm.message %@" = "Удалить фокус «%@»?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Имя";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "Запрос";
+"harnesses.focus.profile" = "Профиль";
+"harnesses.focus.profile.none" = "Нет";
+"harnesses.focus.clear.profile" = "Очистить профиль";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Добавить";
+"harnesses.focus.save" = "Сохранить";
+"harnesses.focus.cancel" = "Отмена";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Добавить профиль";
+"harnesses.profile.add.title" = "Добавить профиль";
+"harnesses.profile.edit.button" = "Изменить";
+"harnesses.profile.edit.title %@" = "Изменить профиль: %@";
+"harnesses.profile.edit.done" = "Готово";
+"harnesses.profile.remove.button" = "Удалить";
+"harnesses.profile.remove.confirm.title" = "Удалить профиль";
+"harnesses.profile.remove.confirm.button" = "Удалить";
+"harnesses.profile.remove.confirm.message %@" = "Удалить профиль «%@»?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Имя";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "Добавить";
+"harnesses.profile.includes" = "Включения";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Добавить хук";
+"harnesses.profile.hook.add.title" = "Добавить хук";
+"harnesses.profile.hook.event" = "Событие";
+"harnesses.profile.hook.command" = "Команда";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Сопоставитель";
+"harnesses.profile.hook.matcher.placeholder" = "Необязательный шаблон";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Добавить сервер";
+"harnesses.profile.mcp.add.title" = "Добавить MCP-сервер";
+"harnesses.profile.mcp.name" = "Имя";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "Тип";
+"harnesses.profile.mcp.type.command" = "Команда";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Команда";
+"harnesses.profile.mcp.args" = "Аргументы";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "Аргументы, разделённые пробелами";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Отключено этим профилем (переопределяет любой унаследованный сервер)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Добавить включение";
+"harnesses.profile.include.add.title" = "Добавить включение";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "назначено";
+"remote.prs.badge.author" = "я";
+"remote.prs.badge.checked.out" = "извлечено";
+"remote.prs.badge.draft" = "черновик";
+"remote.prs.badge.review" = "ревью";
+"remote.prs.checking.out %lld" = "Извлечение PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Извлечь как worktree";
+"remote.prs.checkout.toast %@" = "Извлечено как %@.";
+"remote.prs.clear.default.focus" = "Очистить фокус по умолчанию";
+"remote.prs.copy.branch.name" = "Копировать имя ветки";
+"remote.prs.copy.url" = "Копировать URL PR";
+"remote.prs.default.focus.set %@" = "Фокус по умолчанию: %@";
+"remote.prs.force.push.indicator" = "↑ обновлено";
+"remote.prs.force.update.cancel" = "Отмена";
+"remote.prs.force.update.confirm" = "Всё равно принудить";
+"remote.prs.force.update.message %lld %lld" = "Ваш локальный worktree содержит %lld изменённый файл(ов) и %lld коммит(а) впереди origin. Принудительное обновление сбросит до нового head PR и потеряет эту работу.";
+"remote.prs.force.update.title" = "Head PR был принудительно отправлен";
+"remote.prs.gh.auth.failed" = "Не удалось проверить аутентификацию gh — повторить?";
+"remote.prs.gh.missing.message" = "Установите GitHub CLI для использования режима Remote.";
+"remote.prs.gh.missing.title" = "gh CLI не найден";
+"remote.prs.gh.recheck" = "Проверить снова";
+"remote.prs.gh.unauth.message" = "Выполните `gh auth login` для входа.";
+"remote.prs.gh.unauth.title" = "Не вошли в GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Локальный";
+"remote.prs.mode.remote" = "Удалённый";
+"remote.prs.no.github.remote" = "— нет GitHub remote —";
+"remote.prs.open.pr.on.remote" = "Открыть PR на Remote";
+"remote.prs.overflow.more %lld" = "+ ещё %lld — Открыть детали репозитория";
+"remote.prs.prune.all" = "⊘ Очистить…";
+"remote.prs.prune.closed" = "⊘ Очистить закрытые PR";
+"remote.prs.prune.closed.confirm" = "Очистить";
+"remote.prs.prune.closed.header" = "Worktrees закрытых PR";
+"remote.prs.prune.closed.nothing.message" = "Все отслеживаемые строки PR ещё открыты.";
+"remote.prs.prune.closed.nothing.title" = "Нечего очищать";
+"remote.prs.prune.closed.title %lld" = "%lld PR закрыты или слиты";
+"remote.prs.prune.focus.header" = "Focus-Worktrees";
+"remote.prs.prune.focus.title %lld" = "%lld Focus-Worktrees";
+"remote.prs.prune.keep" = "Оставить";
+"remote.prs.prune.reason.ahead" = "неотправленные коммиты";
+"remote.prs.prune.reason.dirty" = "незафиксированные изменения";
+"remote.prs.prune.remove" = "Удалить";
+"remote.prs.quick.launch.focus" = "Быстрый запуск фокуса";
+"remote.prs.run.cancel" = "Отмена";
+"remote.prs.run.customize" = "Настроить";
+"remote.prs.run.focus.item %@" = "Запустить %@";
+"remote.prs.run.focus.label" = "Фокус";
+"remote.prs.run.focus.none" = "(нет — нерегулярный запрос)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Агент ответит на начальный фокус, затем останется открытым для дополнительных вопросов.";
+"remote.prs.run.interactive.label" = "Оставаться интерактивным после запуска";
+"remote.prs.run.loading.detail" = "Загрузка деталей Harness…";
+"remote.prs.run.profile.default" = "(значения Harness по умолчанию)";
+"remote.prs.run.profile.label" = "Профиль";
+"remote.prs.run.prompt.label" = "Запрос фокуса";
+"remote.prs.run.refresh.detail" = "Перезагрузить фокусы и профили Harness с диска";
+"remote.prs.run.run" = "Запустить";
+"remote.prs.run.sheet.title" = "Запустить с фокусом";
+"remote.prs.run.vendor.default" = "По умолчанию Harness";
+"remote.prs.run.vendor.label" = "Поставщик";
+"remote.prs.run.with.focus" = "Запустить с фокусом…";
+"remote.prs.set.default.focus" = "Задать фокус по умолчанию…";
+"remote.prs.show.in.local" = "Показать локально";
+"remote.prs.show.in.remote" = "Показать на Remote";
+"remote.prs.switch.to.existing" = "Переключиться на существующий";
+"remote.prs.switch.to.local" = "Переключиться на локальный";
+"remote.prs.worktree.exists" = "Worktree уже существует";
+"settings.github.feed.cap.help" = "Максимальное количество pull request, отображаемых на репозиторий в боковой панели Remote. Извлечённые PR всегда включены.";
+"settings.github.feed.cap.label" = "PR на репозиторий";
+"settings.github.section.feed" = "Лента Remote PR";
+"settings.tab.github" = "GitHub";

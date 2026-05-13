@@ -1064,3 +1064,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Upstream değişikliklerini incele";
 "harnesses.unversioned.drift.confirm.body" = "Upstream içerik sürüm artışı olmadan değişti. Güncelleme yeni içeriği çekecek. Devam etmeden önce aşağıdaki SHA'ları inceleyin — eksik sürüm artışı kötü amaçlı değişiklikleri gizleyebilir.";
 "harnesses.unversioned.drift.confirm.proceed" = "Yine de güncelle";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Dahil etme yok";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Odak ekle";
+"harnesses.focus.add.title" = "Odak ekle";
+"harnesses.focus.edit.button" = "Düzenle";
+"harnesses.focus.edit.title" = "Odağı düzenle";
+"harnesses.focus.remove.button" = "Kaldır";
+"harnesses.focus.remove.confirm.title" = "Odağı kaldır";
+"harnesses.focus.remove.confirm.button" = "Kaldır";
+"harnesses.focus.remove.confirm.message %@" = "\"%@\" odağı kaldırılsın mı?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Ad";
+"harnesses.focus.name.placeholder" = "odagim";
+"harnesses.focus.prompt" = "İstem";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Hiçbiri";
+"harnesses.focus.clear.profile" = "Profili temizle";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Ekle";
+"harnesses.focus.save" = "Kaydet";
+"harnesses.focus.cancel" = "İptal";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Profil ekle";
+"harnesses.profile.add.title" = "Profil ekle";
+"harnesses.profile.edit.button" = "Düzenle";
+"harnesses.profile.edit.title %@" = "Profili düzenle: %@";
+"harnesses.profile.edit.done" = "Bitti";
+"harnesses.profile.remove.button" = "Kaldır";
+"harnesses.profile.remove.confirm.title" = "Profili kaldır";
+"harnesses.profile.remove.confirm.button" = "Kaldır";
+"harnesses.profile.remove.confirm.message %@" = "\"%@\" profili kaldırılsın mı?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Ad";
+"harnesses.profile.name.placeholder" = "profilim";
+"harnesses.profile.add.confirm" = "Ekle";
+"harnesses.profile.includes" = "Dahil etmeler";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Kanca ekle";
+"harnesses.profile.hook.add.title" = "Kanca ekle";
+"harnesses.profile.hook.event" = "Olay";
+"harnesses.profile.hook.command" = "Komut";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Eşleştirici";
+"harnesses.profile.hook.matcher.placeholder" = "İsteğe bağlı desen";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Sunucu ekle";
+"harnesses.profile.mcp.add.title" = "MCP sunucusu ekle";
+"harnesses.profile.mcp.name" = "Ad";
+"harnesses.profile.mcp.name.placeholder" = "sunucu-adi";
+"harnesses.profile.mcp.type" = "Tür";
+"harnesses.profile.mcp.type.command" = "Komut";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Komut";
+"harnesses.profile.mcp.args" = "Bağımsız değişkenler";
+"harnesses.profile.mcp.args.placeholder" = "--bayrak deger";
+"harnesses.profile.mcp.args.hint" = "Boşlukla ayrılmış bağımsız değişkenler";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Bu profil tarafından devre dışı bırakıldı (devralınan tüm sunucuları geçersiz kılar)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Dahil etme ekle";
+"harnesses.profile.include.add.title" = "Dahil etme ekle";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "atandı";
+"remote.prs.badge.author" = "ben";
+"remote.prs.badge.checked.out" = "alındı";
+"remote.prs.badge.draft" = "taslak";
+"remote.prs.badge.review" = "inceleme";
+"remote.prs.checking.out %lld" = "PR #%lld alınıyor…";
+"remote.prs.checkout.as.worktree" = "Worktree olarak al";
+"remote.prs.checkout.toast %@" = "%@ olarak alındı.";
+"remote.prs.clear.default.focus" = "Varsayılan odağı temizle";
+"remote.prs.copy.branch.name" = "Dal adını kopyala";
+"remote.prs.copy.url" = "PR URL'sini kopyala";
+"remote.prs.default.focus.set %@" = "Varsayılan odak: %@";
+"remote.prs.force.push.indicator" = "↑ güncellendi";
+"remote.prs.force.update.cancel" = "İptal";
+"remote.prs.force.update.confirm" = "Yine de zorla";
+"remote.prs.force.update.message %lld %lld" = "Yerel worktree'nizde %lld değiştirilmiş dosya ve orijinden %lld commit önde bulunmaktadır. Zorla güncelleme yeni PR head'ine sıfırlayacak ve bu çalışmayı kaybedecektir.";
+"remote.prs.force.update.title" = "PR head zorla gönderildi";
+"remote.prs.gh.auth.failed" = "gh kimlik doğrulaması kontrol edilemedi — yeniden dene?";
+"remote.prs.gh.missing.message" = "Remote modunu kullanmak için GitHub CLI'yı yükleyin.";
+"remote.prs.gh.missing.title" = "gh CLI bulunamadı";
+"remote.prs.gh.recheck" = "Yeniden kontrol et";
+"remote.prs.gh.unauth.message" = "Giriş yapmak için `gh auth login` komutunu çalıştırın.";
+"remote.prs.gh.unauth.title" = "GitHub'a giriş yapılmadı";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Yerel";
+"remote.prs.mode.remote" = "Uzak";
+"remote.prs.no.github.remote" = "— GitHub remote yok —";
+"remote.prs.open.pr.on.remote" = "PR'yi Remote'da aç";
+"remote.prs.overflow.more %lld" = "+ %lld daha — Depo ayrıntılarını aç";
+"remote.prs.prune.all" = "⊘ Temizle…";
+"remote.prs.prune.closed" = "⊘ Kapalı PR'leri temizle";
+"remote.prs.prune.closed.confirm" = "Temizle";
+"remote.prs.prune.closed.header" = "Kapalı PR Worktree'leri";
+"remote.prs.prune.closed.nothing.message" = "Takip edilen tüm PR satırları hâlâ açık.";
+"remote.prs.prune.closed.nothing.title" = "Temizlenecek bir şey yok";
+"remote.prs.prune.closed.title %lld" = "%lld PR kapatıldı veya birleştirildi";
+"remote.prs.prune.focus.header" = "Odak Worktree'leri";
+"remote.prs.prune.focus.title %lld" = "%lld Odak Worktree";
+"remote.prs.prune.keep" = "Tut";
+"remote.prs.prune.reason.ahead" = "gönderilmemiş commitler";
+"remote.prs.prune.reason.dirty" = "kaydedilmemiş değişiklikler";
+"remote.prs.prune.remove" = "Kaldır";
+"remote.prs.quick.launch.focus" = "Hızlı odak başlatma";
+"remote.prs.run.cancel" = "İptal";
+"remote.prs.run.customize" = "Özelleştir";
+"remote.prs.run.focus.item %@" = "%@ çalıştır";
+"remote.prs.run.focus.label" = "Odak";
+"remote.prs.run.focus.none" = "(hiçbiri — geçici istem)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Ajan başlangıç odağına yanıt verir, ardından takip soruları için açık kalır.";
+"remote.prs.run.interactive.label" = "Çalıştırmadan sonra etkileşimli kal";
+"remote.prs.run.loading.detail" = "Harness ayrıntıları yükleniyor…";
+"remote.prs.run.profile.default" = "(Harness varsayılanları)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Odak istemi";
+"remote.prs.run.refresh.detail" = "Harness odaklarını ve profillerini diskten yeniden yükle";
+"remote.prs.run.run" = "Çalıştır";
+"remote.prs.run.sheet.title" = "Odakla çalıştır";
+"remote.prs.run.vendor.default" = "Harness varsayılanı";
+"remote.prs.run.vendor.label" = "Satıcı";
+"remote.prs.run.with.focus" = "Odakla çalıştır…";
+"remote.prs.set.default.focus" = "Varsayılan odağı ayarla…";
+"remote.prs.show.in.local" = "Yerel olarak göster";
+"remote.prs.show.in.remote" = "Remote'da göster";
+"remote.prs.switch.to.existing" = "Mevcut olana geç";
+"remote.prs.switch.to.local" = "Yerele geç";
+"remote.prs.worktree.exists" = "Worktree zaten mevcut";
+"settings.github.feed.cap.help" = "Remote kenar çubuğunda depo başına gösterilen maksimum çekme isteği sayısı. Alınan PR'ler her zaman dahil edilir.";
+"settings.github.feed.cap.label" = "Depo başına PR sayısı";
+"settings.github.section.feed" = "Remote PR Akışı";
+"settings.tab.github" = "GitHub";

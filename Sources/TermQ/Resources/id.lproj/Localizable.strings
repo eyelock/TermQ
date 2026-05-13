@@ -1057,3 +1057,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Tinjau perubahan upstream";
 "harnesses.unversioned.drift.confirm.body" = "Konten upstream berubah tanpa pembaruan versi. Memperbarui akan menarik konten baru. Tinjau SHA di bawah sebelum melanjutkan — pembaruan versi yang hilang dapat menutupi perubahan berbahaya.";
 "harnesses.unversioned.drift.confirm.proceed" = "Perbarui Tetap";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Tidak ada penyertaan";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Tambah Fokus";
+"harnesses.focus.add.title" = "Tambah Fokus";
+"harnesses.focus.edit.button" = "Edit";
+"harnesses.focus.edit.title" = "Edit Fokus";
+"harnesses.focus.remove.button" = "Hapus";
+"harnesses.focus.remove.confirm.title" = "Hapus Fokus";
+"harnesses.focus.remove.confirm.button" = "Hapus";
+"harnesses.focus.remove.confirm.message %@" = "Hapus fokus \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Nama";
+"harnesses.focus.name.placeholder" = "fokus-saya";
+"harnesses.focus.prompt" = "Perintah";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Tidak Ada";
+"harnesses.focus.clear.profile" = "Hapus Profil";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Tambah";
+"harnesses.focus.save" = "Simpan";
+"harnesses.focus.cancel" = "Batal";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Tambah Profil";
+"harnesses.profile.add.title" = "Tambah Profil";
+"harnesses.profile.edit.button" = "Edit";
+"harnesses.profile.edit.title %@" = "Edit Profil: %@";
+"harnesses.profile.edit.done" = "Selesai";
+"harnesses.profile.remove.button" = "Hapus";
+"harnesses.profile.remove.confirm.title" = "Hapus Profil";
+"harnesses.profile.remove.confirm.button" = "Hapus";
+"harnesses.profile.remove.confirm.message %@" = "Hapus profil \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Nama";
+"harnesses.profile.name.placeholder" = "profil-saya";
+"harnesses.profile.add.confirm" = "Tambah";
+"harnesses.profile.includes" = "Penyertaan";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Tambah Hook";
+"harnesses.profile.hook.add.title" = "Tambah Hook";
+"harnesses.profile.hook.event" = "Peristiwa";
+"harnesses.profile.hook.command" = "Perintah";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Pencocok";
+"harnesses.profile.hook.matcher.placeholder" = "Pola opsional";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Tambah Server";
+"harnesses.profile.mcp.add.title" = "Tambah Server MCP";
+"harnesses.profile.mcp.name" = "Nama";
+"harnesses.profile.mcp.name.placeholder" = "nama-server";
+"harnesses.profile.mcp.type" = "Jenis";
+"harnesses.profile.mcp.type.command" = "Perintah";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Perintah";
+"harnesses.profile.mcp.args" = "Argumen";
+"harnesses.profile.mcp.args.placeholder" = "--flag nilai";
+"harnesses.profile.mcp.args.hint" = "Argumen dipisahkan spasi";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Dinonaktifkan oleh profil ini (menggantikan server yang diwarisi)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Tambah Penyertaan";
+"harnesses.profile.include.add.title" = "Tambah Penyertaan";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "ditugaskan";
+"remote.prs.badge.author" = "saya";
+"remote.prs.badge.checked.out" = "sudah diambil";
+"remote.prs.badge.draft" = "draf";
+"remote.prs.badge.review" = "ulasan";
+"remote.prs.checking.out %lld" = "Mengambil PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Ambil sebagai worktree";
+"remote.prs.checkout.toast %@" = "Diambil sebagai %@.";
+"remote.prs.clear.default.focus" = "Hapus fokus default";
+"remote.prs.copy.branch.name" = "Salin nama cabang";
+"remote.prs.copy.url" = "Salin URL PR";
+"remote.prs.default.focus.set %@" = "Fokus default: %@";
+"remote.prs.force.push.indicator" = "↑ diperbarui";
+"remote.prs.force.update.cancel" = "Batal";
+"remote.prs.force.update.confirm" = "Paksa tetap";
+"remote.prs.force.update.message %lld %lld" = "Worktree lokal Anda memiliki %lld file yang dimodifikasi dan %lld commit di depan asal. Pembaruan paksa akan mengatur ulang ke head PR baru dan kehilangan pekerjaan ini.";
+"remote.prs.force.update.title" = "Head PR telah dipaksa";
+"remote.prs.gh.auth.failed" = "Tidak dapat memverifikasi autentikasi gh — coba lagi?";
+"remote.prs.gh.missing.message" = "Instal GitHub CLI untuk menggunakan mode Remote.";
+"remote.prs.gh.missing.title" = "gh CLI tidak ditemukan";
+"remote.prs.gh.recheck" = "Periksa Ulang";
+"remote.prs.gh.unauth.message" = "Jalankan `gh auth login` untuk masuk.";
+"remote.prs.gh.unauth.title" = "Belum masuk ke GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Lokal";
+"remote.prs.mode.remote" = "Remote";
+"remote.prs.no.github.remote" = "— tidak ada GitHub remote —";
+"remote.prs.open.pr.on.remote" = "Buka PR di Remote";
+"remote.prs.overflow.more %lld" = "+ %lld lagi — Buka detail repositori";
+"remote.prs.prune.all" = "⊘ Bersihkan…";
+"remote.prs.prune.closed" = "⊘ Bersihkan PR yang ditutup";
+"remote.prs.prune.closed.confirm" = "Bersihkan";
+"remote.prs.prune.closed.header" = "Worktrees PR yang Ditutup";
+"remote.prs.prune.closed.nothing.message" = "Semua baris PR yang dilacak masih terbuka.";
+"remote.prs.prune.closed.nothing.title" = "Tidak Ada yang Perlu Dibersihkan";
+"remote.prs.prune.closed.title %lld" = "%lld PR Ditutup atau Digabung";
+"remote.prs.prune.focus.header" = "Worktrees Fokus";
+"remote.prs.prune.focus.title %lld" = "%lld Worktrees Fokus";
+"remote.prs.prune.keep" = "Simpan";
+"remote.prs.prune.reason.ahead" = "commit yang belum di-push";
+"remote.prs.prune.reason.dirty" = "perubahan yang belum di-commit";
+"remote.prs.prune.remove" = "Hapus";
+"remote.prs.quick.launch.focus" = "Peluncuran Fokus Cepat";
+"remote.prs.run.cancel" = "Batal";
+"remote.prs.run.customize" = "Sesuaikan";
+"remote.prs.run.focus.item %@" = "Jalankan %@";
+"remote.prs.run.focus.label" = "Fokus";
+"remote.prs.run.focus.none" = "(tidak ada — prompt ad-hoc)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Agen akan merespons fokus awal, lalu tetap terbuka untuk pertanyaan lanjutan.";
+"remote.prs.run.interactive.label" = "Tetap interaktif setelah dijalankan";
+"remote.prs.run.loading.detail" = "Memuat detail Harness…";
+"remote.prs.run.profile.default" = "(default Harness)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Prompt fokus";
+"remote.prs.run.refresh.detail" = "Muat ulang fokus dan profil Harness dari disk";
+"remote.prs.run.run" = "Jalankan";
+"remote.prs.run.sheet.title" = "Jalankan dengan Fokus";
+"remote.prs.run.vendor.default" = "Default Harness";
+"remote.prs.run.vendor.label" = "Vendor";
+"remote.prs.run.with.focus" = "Jalankan dengan Fokus…";
+"remote.prs.set.default.focus" = "Tetapkan Fokus Default…";
+"remote.prs.show.in.local" = "Tampilkan Secara Lokal";
+"remote.prs.show.in.remote" = "Tampilkan di Remote";
+"remote.prs.switch.to.existing" = "Beralih ke yang Ada";
+"remote.prs.switch.to.local" = "Beralih ke Lokal";
+"remote.prs.worktree.exists" = "Worktree Sudah Ada";
+"settings.github.feed.cap.help" = "Jumlah maksimum pull request yang ditampilkan per repositori di bilah sisi Remote. PR yang diambil selalu disertakan.";
+"settings.github.feed.cap.label" = "PR per repositori";
+"settings.github.section.feed" = "Umpan Remote PR";
+"settings.tab.github" = "GitHub";

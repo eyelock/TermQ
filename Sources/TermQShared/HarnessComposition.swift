@@ -16,7 +16,7 @@ public struct HarnessComposition: Codable, Sendable {
     public let delegatesTo: [ComposedDelegate]
     public let hooks: [String: [ComposedHook]]?
     public let mcpServers: [String: ComposedMCPServer]?
-    public let profiles: [String]
+    public let profiles: [String: ComposedProfile]
     public let focuses: [String: ComposedFocus]?
     public let counts: ComposedCounts
 
@@ -85,6 +85,49 @@ public struct ComposedMCPServer: Codable, Sendable {
     public let env: [String: String]?
     public let url: String?
     public let headers: [String: String]?
+}
+
+// MARK: - Profiles
+
+/// An MCP server entry inside a profile. Can be a real server or an explicit
+/// null (which removes an inherited server when the profile is applied).
+public enum ComposedProfileMCPEntry: Codable, Sendable {
+    case server(ComposedMCPServer)
+    case nulled
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if container.decodeNil() {
+            self = .nulled
+        } else {
+            self = .server(try container.decode(ComposedMCPServer.self))
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .nulled: try container.encodeNil()
+        case .server(let server): try container.encode(server)
+        }
+    }
+
+    public var server: ComposedMCPServer? {
+        if case .server(let server) = self { return server }
+        return nil
+    }
+}
+
+/// A named profile from the composed harness, with full content.
+public struct ComposedProfile: Codable, Sendable {
+    public let hooks: [String: [ComposedHook]]?
+    public let mcpServers: [String: ComposedProfileMCPEntry]?
+    public let includes: [ComposedInclude]?
+
+    enum CodingKeys: String, CodingKey {
+        case hooks, includes
+        case mcpServers = "mcp_servers"
+    }
 }
 
 // MARK: - Focuses

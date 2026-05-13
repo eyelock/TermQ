@@ -1057,3 +1057,147 @@
 "harnesses.unversioned.drift.confirm.title" = "Verificați modificările upstream";
 "harnesses.unversioned.drift.confirm.body" = "Conținutul upstream s-a modificat fără o actualizare de versiune. Actualizarea va descărca noul conținut. Verificați SHA-urile de mai jos înainte de a continua — o actualizare de versiune lipsă poate masca modificări malițioase.";
 "harnesses.unversioned.drift.confirm.proceed" = "Actualizați oricum";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "Fără includeri";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "Adaugă focus";
+"harnesses.focus.add.title" = "Adaugă focus";
+"harnesses.focus.edit.button" = "Editează";
+"harnesses.focus.edit.title" = "Editează focusul";
+"harnesses.focus.remove.button" = "Elimină";
+"harnesses.focus.remove.confirm.title" = "Elimină focusul";
+"harnesses.focus.remove.confirm.button" = "Elimină";
+"harnesses.focus.remove.confirm.message %@" = "Elimini focusul \"%@\"?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "Nume";
+"harnesses.focus.name.placeholder" = "focusul-meu";
+"harnesses.focus.prompt" = "Prompt";
+"harnesses.focus.profile" = "Profil";
+"harnesses.focus.profile.none" = "Niciunul";
+"harnesses.focus.clear.profile" = "Șterge profilul";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "Adaugă";
+"harnesses.focus.save" = "Salvează";
+"harnesses.focus.cancel" = "Anulează";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "Adaugă profil";
+"harnesses.profile.add.title" = "Adaugă profil";
+"harnesses.profile.edit.button" = "Editează";
+"harnesses.profile.edit.title %@" = "Editează profilul: %@";
+"harnesses.profile.edit.done" = "Gata";
+"harnesses.profile.remove.button" = "Elimină";
+"harnesses.profile.remove.confirm.title" = "Elimină profilul";
+"harnesses.profile.remove.confirm.button" = "Elimină";
+"harnesses.profile.remove.confirm.message %@" = "Elimini profilul \"%@\"?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "Nume";
+"harnesses.profile.name.placeholder" = "profilul-meu";
+"harnesses.profile.add.confirm" = "Adaugă";
+"harnesses.profile.includes" = "Includeri";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "Adaugă hook";
+"harnesses.profile.hook.add.title" = "Adaugă hook";
+"harnesses.profile.hook.event" = "Eveniment";
+"harnesses.profile.hook.command" = "Comandă";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "Potrivitor";
+"harnesses.profile.hook.matcher.placeholder" = "Tipar opțional";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "Adaugă server";
+"harnesses.profile.mcp.add.title" = "Adaugă server MCP";
+"harnesses.profile.mcp.name" = "Nume";
+"harnesses.profile.mcp.name.placeholder" = "nume-server";
+"harnesses.profile.mcp.type" = "Tip";
+"harnesses.profile.mcp.type.command" = "Comandă";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "Comandă";
+"harnesses.profile.mcp.args" = "Argumente";
+"harnesses.profile.mcp.args.placeholder" = "--opțiune valoare";
+"harnesses.profile.mcp.args.hint" = "Argumente separate prin spații";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "Dezactivat de acest profil (suprascrie orice server moștenit)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "Adaugă includere";
+"harnesses.profile.include.add.title" = "Adaugă includere";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "atribuit";
+"remote.prs.badge.author" = "eu";
+"remote.prs.badge.checked.out" = "extras";
+"remote.prs.badge.draft" = "ciornă";
+"remote.prs.badge.review" = "revizuire";
+"remote.prs.checking.out %lld" = "Extragere PR #%lld…";
+"remote.prs.checkout.as.worktree" = "Extrage ca worktree";
+"remote.prs.checkout.toast %@" = "Extras ca %@.";
+"remote.prs.clear.default.focus" = "Șterge focusul implicit";
+"remote.prs.copy.branch.name" = "Copiază numele ramificației";
+"remote.prs.copy.url" = "Copiază URL-ul PR";
+"remote.prs.default.focus.set %@" = "Focus implicit: %@";
+"remote.prs.force.push.indicator" = "↑ actualizat";
+"remote.prs.force.update.cancel" = "Anulează";
+"remote.prs.force.update.confirm" = "Forțează oricum";
+"remote.prs.force.update.message %lld %lld" = "Worktree-ul local are %lld fișier(e) modificat(e) și %lld commit(uri) înaintea originii. Actualizarea forțată va reseta la noul head PR și va pierde această muncă.";
+"remote.prs.force.update.title" = "Head-ul PR a fost forțat";
+"remote.prs.gh.auth.failed" = "Nu s-a putut verifica autentificarea gh — reîncercați?";
+"remote.prs.gh.missing.message" = "Instalați GitHub CLI pentru a folosi modul Remote.";
+"remote.prs.gh.missing.title" = "gh CLI nu a fost găsit";
+"remote.prs.gh.recheck" = "Verificați din nou";
+"remote.prs.gh.unauth.message" = "Rulați `gh auth login` pentru a vă autentifica.";
+"remote.prs.gh.unauth.title" = "Neautentificat în GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "Local";
+"remote.prs.mode.remote" = "Remote";
+"remote.prs.no.github.remote" = "— fără remote GitHub —";
+"remote.prs.open.pr.on.remote" = "Deschide PR pe Remote";
+"remote.prs.overflow.more %lld" = "+ %lld mai multe — Deschide detalii depozit";
+"remote.prs.prune.all" = "⊘ Curăță…";
+"remote.prs.prune.closed" = "⊘ Curăță PR-urile închise";
+"remote.prs.prune.closed.confirm" = "Curăță";
+"remote.prs.prune.closed.header" = "Worktrees de PR-uri închise";
+"remote.prs.prune.closed.nothing.message" = "Toate rândurile PR urmărite sunt încă deschise.";
+"remote.prs.prune.closed.nothing.title" = "Nimic de curățat";
+"remote.prs.prune.closed.title %lld" = "%lld PR-uri închise sau îmbinate";
+"remote.prs.prune.focus.header" = "Worktrees focus";
+"remote.prs.prune.focus.title %lld" = "%lld worktrees focus";
+"remote.prs.prune.keep" = "Păstrează";
+"remote.prs.prune.reason.ahead" = "commit-uri netrimise";
+"remote.prs.prune.reason.dirty" = "modificări neconfirmate";
+"remote.prs.prune.remove" = "Elimină";
+"remote.prs.quick.launch.focus" = "Lansare rapidă focus";
+"remote.prs.run.cancel" = "Anulează";
+"remote.prs.run.customize" = "Personalizează";
+"remote.prs.run.focus.item %@" = "Rulează %@";
+"remote.prs.run.focus.label" = "Focus";
+"remote.prs.run.focus.none" = "(niciunul — prompt ad hoc)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "Agentul va răspunde la focusul inițial, apoi va rămâne deschis pentru întrebări ulterioare.";
+"remote.prs.run.interactive.label" = "Rămâi interactiv după rulare";
+"remote.prs.run.loading.detail" = "Se încarcă detaliile Harness…";
+"remote.prs.run.profile.default" = "(valorile implicite Harness)";
+"remote.prs.run.profile.label" = "Profil";
+"remote.prs.run.prompt.label" = "Prompt focus";
+"remote.prs.run.refresh.detail" = "Reîncarcă focusurile și profilurile Harness de pe disc";
+"remote.prs.run.run" = "Rulează";
+"remote.prs.run.sheet.title" = "Rulează cu focus";
+"remote.prs.run.vendor.default" = "Implicit Harness";
+"remote.prs.run.vendor.label" = "Furnizor";
+"remote.prs.run.with.focus" = "Rulează cu focus…";
+"remote.prs.set.default.focus" = "Setează focusul implicit…";
+"remote.prs.show.in.local" = "Arată local";
+"remote.prs.show.in.remote" = "Arată pe Remote";
+"remote.prs.switch.to.existing" = "Comută la existent";
+"remote.prs.switch.to.local" = "Comută la local";
+"remote.prs.worktree.exists" = "Worktree-ul există deja";
+"settings.github.feed.cap.help" = "Numărul maxim de pull request-uri afișate pe depozit în bara laterală Remote. PR-urile extrase sunt întotdeauna incluse.";
+"settings.github.feed.cap.label" = "PR-uri pe depozit";
+"settings.github.section.feed" = "Feed Remote PR";
+"settings.tab.github" = "GitHub";

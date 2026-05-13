@@ -1064,3 +1064,147 @@
 "harnesses.unversioned.drift.confirm.title" = "ตรวจสอบการเปลี่ยนแปลง upstream";
 "harnesses.unversioned.drift.confirm.body" = "เนื้อหา upstream เปลี่ยนแปลงโดยไม่มีการอัปเดตเวอร์ชัน การอัปเดตจะดึงเนื้อหาใหม่ ตรวจสอบ SHA ด้านล่างก่อนดำเนินการ — การอัปเดตเวอร์ชันที่หายไปอาจซ่อนการเปลี่ยนแปลงที่เป็นอันตราย";
 "harnesses.unversioned.drift.confirm.proceed" = "อัปเดตต่อไป";
+
+// MARK: - Harness detail — empty states
+"harnesses.detail.no.includes" = "ไม่มีการรวม";
+
+// MARK: - Focus editor — section header buttons
+"harnesses.focus.add.button" = "เพิ่มโฟกัส";
+"harnesses.focus.add.title" = "เพิ่มโฟกัส";
+"harnesses.focus.edit.button" = "แก้ไข";
+"harnesses.focus.edit.title" = "แก้ไขโฟกัส";
+"harnesses.focus.remove.button" = "ลบ";
+"harnesses.focus.remove.confirm.title" = "ลบโฟกัส";
+"harnesses.focus.remove.confirm.button" = "ลบ";
+"harnesses.focus.remove.confirm.message %@" = "ลบโฟกัส \"%@\" หรือไม่?";
+
+// MARK: - Focus editor — fields
+"harnesses.focus.name" = "ชื่อ";
+"harnesses.focus.name.placeholder" = "my-focus";
+"harnesses.focus.prompt" = "คำสั่ง";
+"harnesses.focus.profile" = "โปรไฟล์";
+"harnesses.focus.profile.none" = "ไม่มี";
+"harnesses.focus.clear.profile" = "ล้างโปรไฟล์";
+
+// MARK: - Focus editor — action buttons
+"harnesses.focus.add.confirm" = "เพิ่ม";
+"harnesses.focus.save" = "บันทึก";
+"harnesses.focus.cancel" = "ยกเลิก";
+
+// MARK: - Profile editor — section header buttons
+"harnesses.profile.add.button" = "เพิ่มโปรไฟล์";
+"harnesses.profile.add.title" = "เพิ่มโปรไฟล์";
+"harnesses.profile.edit.button" = "แก้ไข";
+"harnesses.profile.edit.title %@" = "แก้ไขโปรไฟล์: %@";
+"harnesses.profile.edit.done" = "เสร็จสิ้น";
+"harnesses.profile.remove.button" = "ลบ";
+"harnesses.profile.remove.confirm.title" = "ลบโปรไฟล์";
+"harnesses.profile.remove.confirm.button" = "ลบ";
+"harnesses.profile.remove.confirm.message %@" = "ลบโปรไฟล์ \"%@\" หรือไม่?";
+
+// MARK: - Profile editor — fields
+"harnesses.profile.name" = "ชื่อ";
+"harnesses.profile.name.placeholder" = "my-profile";
+"harnesses.profile.add.confirm" = "เพิ่ม";
+"harnesses.profile.includes" = "การรวม";
+
+// MARK: - Profile hook editor
+"harnesses.profile.hook.add.button" = "เพิ่ม Hook";
+"harnesses.profile.hook.add.title" = "เพิ่ม Hook";
+"harnesses.profile.hook.event" = "เหตุการณ์";
+"harnesses.profile.hook.command" = "คำสั่ง";
+"harnesses.profile.hook.command.placeholder" = "bash -c \"...\"";
+"harnesses.profile.hook.matcher" = "ตัวจับคู่";
+"harnesses.profile.hook.matcher.placeholder" = "รูปแบบที่เป็นตัวเลือก";
+
+// MARK: - Profile MCP server editor
+"harnesses.profile.mcp.add.button" = "เพิ่มเซิร์ฟเวอร์";
+"harnesses.profile.mcp.add.title" = "เพิ่มเซิร์ฟเวอร์ MCP";
+"harnesses.profile.mcp.name" = "ชื่อ";
+"harnesses.profile.mcp.name.placeholder" = "server-name";
+"harnesses.profile.mcp.type" = "ประเภท";
+"harnesses.profile.mcp.type.command" = "คำสั่ง";
+"harnesses.profile.mcp.type.url" = "URL";
+"harnesses.profile.mcp.command" = "คำสั่ง";
+"harnesses.profile.mcp.args" = "อาร์กิวเมนต์";
+"harnesses.profile.mcp.args.placeholder" = "--flag value";
+"harnesses.profile.mcp.args.hint" = "อาร์กิวเมนต์คั่นด้วยช่องว่าง";
+"harnesses.profile.mcp.url" = "URL";
+"harnesses.profile.mcp.nulled.hint" = "ปิดการใช้งานโดยโปรไฟล์นี้ (แทนที่เซิร์ฟเวอร์ที่สืบทอดมาทั้งหมด)";
+
+// MARK: - Profile include editor
+"harnesses.profile.include.add.button" = "เพิ่มการรวม";
+"harnesses.profile.include.add.title" = "เพิ่มการรวม";
+
+// MARK: - Remote PRs (pre-existing sync)
+"remote.prs.badge.assigned" = "มอบหมาย";
+"remote.prs.badge.author" = "ฉัน";
+"remote.prs.badge.checked.out" = "ดึงออกแล้ว";
+"remote.prs.badge.draft" = "ร่าง";
+"remote.prs.badge.review" = "ตรวจสอบ";
+"remote.prs.checking.out %lld" = "กำลังดึง PR #%lld…";
+"remote.prs.checkout.as.worktree" = "ดึงออกเป็น worktree";
+"remote.prs.checkout.toast %@" = "ดึงออกเป็น %@ แล้ว";
+"remote.prs.clear.default.focus" = "ล้างโฟกัสเริ่มต้น";
+"remote.prs.copy.branch.name" = "คัดลอกชื่อสาขา";
+"remote.prs.copy.url" = "คัดลอก URL ของ PR";
+"remote.prs.default.focus.set %@" = "โฟกัสเริ่มต้น: %@";
+"remote.prs.force.push.indicator" = "↑ อัปเดตแล้ว";
+"remote.prs.force.update.cancel" = "ยกเลิก";
+"remote.prs.force.update.confirm" = "บังคับอัปเดตอยู่ดี";
+"remote.prs.force.update.message %lld %lld" = "worktree ในเครื่องของคุณมีไฟล์ที่แก้ไขแล้ว %lld ไฟล์และ commit ที่ %lld รายการนำหน้า origin อัปเดตแบบบังคับจะรีเซ็ตเป็น PR head ใหม่และสูญเสียงานนี้";
+"remote.prs.force.update.title" = "PR head ถูกบังคับพุช";
+"remote.prs.gh.auth.failed" = "ไม่สามารถตรวจสอบการยืนยันตัวตน gh — ลองใหม่?";
+"remote.prs.gh.missing.message" = "ติดตั้ง GitHub CLI เพื่อใช้โหมด Remote";
+"remote.prs.gh.missing.title" = "ไม่พบ gh CLI";
+"remote.prs.gh.recheck" = "ตรวจสอบใหม่";
+"remote.prs.gh.unauth.message" = "รัน `gh auth login` เพื่อลงชื่อเข้าใช้";
+"remote.prs.gh.unauth.title" = "ยังไม่ได้ลงชื่อเข้าใช้ GitHub";
+"remote.prs.linked.pr %lld" = "PR #%lld";
+"remote.prs.mode.local" = "ในเครื่อง";
+"remote.prs.mode.remote" = "ระยะไกล";
+"remote.prs.no.github.remote" = "— ไม่มี GitHub remote —";
+"remote.prs.open.pr.on.remote" = "เปิด PR บน Remote";
+"remote.prs.overflow.more %lld" = "+ อีก %lld รายการ — เปิดรายละเอียด Repository";
+"remote.prs.prune.all" = "⊘ ตัดแต่ง…";
+"remote.prs.prune.closed" = "⊘ ตัดแต่ง PR ที่ปิดแล้ว";
+"remote.prs.prune.closed.confirm" = "ตัดแต่ง";
+"remote.prs.prune.closed.header" = "Worktrees ของ PR ที่ปิดแล้ว";
+"remote.prs.prune.closed.nothing.message" = "แถว PR ที่ติดตามทั้งหมดยังเปิดอยู่";
+"remote.prs.prune.closed.nothing.title" = "ไม่มีอะไรต้องตัดแต่ง";
+"remote.prs.prune.closed.title %lld" = "%lld PR ปิดหรือผสานแล้ว";
+"remote.prs.prune.focus.header" = "Worktrees โฟกัส";
+"remote.prs.prune.focus.title %lld" = "%lld Worktrees โฟกัส";
+"remote.prs.prune.keep" = "เก็บไว้";
+"remote.prs.prune.reason.ahead" = "commit ที่ยังไม่ได้พุช";
+"remote.prs.prune.reason.dirty" = "การเปลี่ยนแปลงที่ยังไม่ได้ commit";
+"remote.prs.prune.remove" = "ลบ";
+"remote.prs.quick.launch.focus" = "เปิดโฟกัสด่วน";
+"remote.prs.run.cancel" = "ยกเลิก";
+"remote.prs.run.customize" = "ปรับแต่ง";
+"remote.prs.run.focus.item %@" = "รัน %@";
+"remote.prs.run.focus.label" = "โฟกัส";
+"remote.prs.run.focus.none" = "(ไม่มี — พร้อมต์เฉพาะกิจ)";
+"remote.prs.run.harness.label" = "Harness";
+"remote.prs.run.interactive.help" = "เอเย่นต์จะตอบสนองต่อโฟกัสเริ่มต้น จากนั้นยังคงเปิดรับคำถามติดตาม";
+"remote.prs.run.interactive.label" = "คงอยู่ในโหมดโต้ตอบหลังรัน";
+"remote.prs.run.loading.detail" = "กำลังโหลดรายละเอียด Harness…";
+"remote.prs.run.profile.default" = "(ค่าเริ่มต้น Harness)";
+"remote.prs.run.profile.label" = "โปรไฟล์";
+"remote.prs.run.prompt.label" = "พร้อมต์โฟกัส";
+"remote.prs.run.refresh.detail" = "โหลดโฟกัสและโปรไฟล์ Harness จากดิสก์ใหม่";
+"remote.prs.run.run" = "รัน";
+"remote.prs.run.sheet.title" = "รันพร้อมโฟกัส";
+"remote.prs.run.vendor.default" = "ค่าเริ่มต้น Harness";
+"remote.prs.run.vendor.label" = "ผู้จำหน่าย";
+"remote.prs.run.with.focus" = "รันพร้อมโฟกัส…";
+"remote.prs.set.default.focus" = "ตั้งค่าโฟกัสเริ่มต้น…";
+"remote.prs.show.in.local" = "แสดงในเครื่อง";
+"remote.prs.show.in.remote" = "แสดงบน Remote";
+"remote.prs.switch.to.existing" = "สลับไปยังที่มีอยู่";
+"remote.prs.switch.to.local" = "สลับไปเครื่อง";
+"remote.prs.worktree.exists" = "Worktree มีอยู่แล้ว";
+"settings.github.feed.cap.help" = "จำนวน pull request สูงสุดที่แสดงต่อ repository ในแถบด้านข้าง Remote PR ที่ดึงออกแล้วจะถูกรวมไว้เสมอ";
+"settings.github.feed.cap.label" = "PR ต่อ repository";
+"settings.github.section.feed" = "ฟีด Remote PR";
+"settings.tab.github" = "GitHub";

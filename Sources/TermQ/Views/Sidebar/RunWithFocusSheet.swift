@@ -41,7 +41,7 @@ struct RunWithFocusSheet: View {
     }
 
     private var profiles: [String] {
-        detail?.composition.profiles ?? []
+        detail.map { Array($0.composition.profiles.keys).sorted() } ?? []
     }
 
     private var resolvedProfile: String {
