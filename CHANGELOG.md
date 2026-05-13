@@ -61,6 +61,8 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.0]
+
 ### Added
 
 - **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles
