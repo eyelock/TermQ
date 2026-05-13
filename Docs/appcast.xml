@@ -6,6 +6,59 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.11.0</title>
+            <sparkle:version>0.11.0</sparkle:version>
+            <sparkle:shortVersionString>0.11.0</sparkle:shortVersionString>
+            <pubDate>Wed, 13 May 2026 07:34:26 +0000</pubDate>
+            <description><![CDATA[<h3 id="added">Added</h3>
+<ul>
+<li><strong>Focus and profile editing</strong> — editable harnesses gain full inline editing for focuses and profiles directly in the detail pane:
+<ul>
+<li><strong>Focuses</strong> — add, edit, and remove focuses from the Focuses section. The edit sheet exposes the focus name, prompt, and optional profile binding. Changes round-trip through <code>ynh focus add</code>, <code>ynh focus update</code>, and <code>ynh focus remove</code>.</li>
+<li><strong>Profiles</strong> — add and remove profiles from the Profiles section. Each profile card carries an <strong>⋯</strong> menu with <strong>Edit</strong> (opens the profile sheet) and <strong>Remove</strong> (with confirmation).</li>
+<li><strong>Profile hooks</strong> — within the profile edit sheet, add and remove hooks per event via the same <code>plus.circle</code> / <code>minus.circle</code> affordances used at the harness level.</li>
+<li><strong>Profile MCP servers</strong> — add and remove MCP servers within a profile. The Add MCP sheet supports both command and SSE-URL server types with args, env vars, and HTTP headers.</li>
+<li><strong>Profile includes</strong> — the profile edit sheet's Includes section uses the unified Source Picker (Library / Git URL) to add includes, and a remove button to drop them.</li>
+</ul></li>
+<li><strong>Harness-level hook and MCP server editing</strong> — the Hooks and MCP Servers sections of the composition view now support inline add and remove for editable harnesses:
+<ul>
+<li>Add hooks via <code>ynh hook add</code>, remove individual hook entries by index via <code>ynh hook remove</code>.</li>
+<li>Add MCP servers via <code>ynh mcp add</code>, remove them by name via <code>ynh mcp remove</code>.</li>
+<li>Remove buttons appear per-entry and are disabled while a mutation is in flight to prevent double-actions.</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.0/TermQ-0.11.0.zip"
+                sparkle:edSignature="QLkoOrEMxz3Li1/qPmXDUczDUERKgUDZA2Fd/E4xvY4fj4CY7ToYtmHwpqpiKEAbOEdOt4DlNaJ+mY3XpC+qDw=="
+                length="28622108"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.10.1</title>
             <sparkle:version>0.10.1</sparkle:version>
             <sparkle:shortVersionString>0.10.1</sparkle:shortVersionString>
