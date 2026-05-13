@@ -27,6 +27,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`notifications/message` log mirror** — `termqmcp` now emits MCP log notifications (gated by client-configured minimum level via `logging/setLevel`) for board-load failures and other operationally relevant events. Lets a remote operator observe failures without needing `--verbose` stderr access.
 - **`logging/setLevel` honoured properly** — previously the request was accepted and ignored; now the configured threshold actually filters subsequent log emissions.
 
+### Added — MCP structural (Tier 1b)
+
+- **Resource templates** (`resources/templates/list`) — `termq://terminal/{id}`, `termq://terminal-by-name/{name}`, `termq://column/{name}`. Idiomatic per-card reads via standard `resources/read` — no per-card tool needed.
+- **Structured tool output** (`outputSchema` + `structuredContent`) on all read tools (`pending`, `list`, `find`, `open`, `get`). Clients can codegen types or runtime-validate against the published schema rather than re-parsing `text` content. Legacy `text` mirror is retained for one release; payload roughly doubles in the meantime (~80 KB instead of ~40 KB on a 200-card board — acceptable for stdio).
+- **Resource subscriptions** (`resources/subscribe` / `resources/unsubscribe` + `notifications/resources/updated`) — long-running clients can subscribe to `termq://terminals`, `termq://pending`, or any other resource URI and be notified when board.json changes (e.g. the user moves a card in the GUI). Backed by a `DispatchSourceFileSystemObject` watcher with a 150ms debounce window so atomic writes don't fan out to multiple notifications. The `subscribe: true` capability TermQ has declared since 0.x is now actually honoured.
+- **`record_handshake` tool** — explicit, side-effect-only marker that an LLM session has consumed a terminal's context. Idiomatic pair with reading `termq://terminal/{id}` (pure). `get` retains the combined read+handshake behaviour for one release as a deprecated alias per the audit's semantic-break policy.
+
 ### Added
 
 - **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles

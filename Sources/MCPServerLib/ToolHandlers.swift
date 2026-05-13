@@ -5,6 +5,21 @@ import TermQShared
 // MARK: - Tool Handler Implementations
 
 extension TermQMCPServer {
+    /// Build a `CallTool.Result` that satisfies the tool's `outputSchema` by populating
+    /// both legacy `text` content (for back-compat with clients that don't read
+    /// `structuredContent`) and the new `structuredContent` field. The dual encoding
+    /// roughly doubles the response payload — acceptable on stdio for a single-user app
+    /// (see audit §3.3 payload note), and the `text` mirror can be dropped after one
+    /// release once clients have migrated.
+    func structuredResult<T: Codable>(_ output: T) throws -> CallTool.Result {
+        let json = try JSONHelper.encode(output)
+        // Throwing init handles the Codable -> Value conversion internally.
+        return try CallTool.Result(
+            content: [.text(text: json, annotations: nil, _meta: nil)],
+            structuredContent: output
+        )
+    }
+
     /// Dispatch tool calls to appropriate handlers
     func dispatchToolCall(_ params: CallTool.Parameters) async throws -> CallTool.Result {
         switch params.name {
@@ -26,6 +41,8 @@ extension TermQMCPServer {
             return try await handleMove(params.arguments)
         case "get":
             return try await handleGet(params.arguments)
+        case "record_handshake":
+            return try await handleRecordHandshake(params.arguments)
         case "delete":
             return try await handleDelete(params.arguments)
         default:
@@ -109,8 +126,7 @@ extension TermQMCPServer {
                 )
             )
 
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
         } catch {
             return CallTool.Result(
@@ -139,8 +155,7 @@ extension TermQMCPServer {
                         terminalCount: board.activeCards.filter { $0.columnId == column.id }.count
                     )
                 }
-                let json = try JSONHelper.encode(columns)
-                return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+                return try structuredResult(columns)
             }
 
             // Get cards, optionally filtered by column
@@ -151,8 +166,7 @@ extension TermQMCPServer {
             cards = CardFilterEngine.sortByColumnThenOrder(cards, columns: board.columns)
 
             let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
         } catch {
             return CallTool.Result(
@@ -188,8 +202,7 @@ extension TermQMCPServer {
             if let query = query, !query.isEmpty {
                 let queryWords = CardFilterEngine.normalizeToWords(query)
                 guard !queryWords.isEmpty else {
-                    let json = try JSONHelper.encode([TerminalOutput]())
-                    return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+                    return try structuredResult([TerminalOutput]())
                 }
 
                 cards = cards.filter { card in
@@ -223,8 +236,7 @@ extension TermQMCPServer {
             }
 
             let output = cards.map { TerminalOutput(from: $0, columnName: board.columnName(for: $0.columnId)) }
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
         } catch {
             return CallTool.Result(
@@ -254,13 +266,49 @@ extension TermQMCPServer {
             }
 
             let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
-            let json = try JSONHelper.encode(output)
 
             // Note: MCP server is read-only, it cannot open terminals in the GUI
             // The CLI uses URL schemes to communicate with the app
             // For MCP, we just return the terminal data
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
+        } catch {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+    }
+
+    /// Record an LLM handshake — write the `lastLLMGet` timestamp without returning the
+    /// card payload. Idiomatic pair with reading `termq://terminal/{id}` as a pure
+    /// resource. The `get` tool keeps doing both for one release as the deprecation
+    /// alias for callers who haven't migrated yet (see audit §3.1 deprecation policy).
+    func handleRecordHandshake(_ arguments: [String: Value]?) async throws -> CallTool.Result {
+        let id: String
+        do {
+            let uuid = try InputValidator.requireUUID("id", from: arguments, tool: "record_handshake")
+            id = uuid.uuidString
+        } catch let error as InputValidator.ValidationError {
+            return CallTool.Result(
+                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
+                isError: true)
+        }
+
+        do {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            let nowString = formatter.string(from: Date())
+            _ = try BoardWriter.updateCard(
+                identifier: id,
+                updates: ["lastLLMGet": nowString],
+                dataDirectory: dataDirectory
+            )
+            return CallTool.Result(
+                content: [
+                    .text(
+                        text: "{\"ok\": true, \"id\": \"\(id)\", \"lastLLMGet\": \"\(nowString)\"}",
+                        annotations: nil, _meta: nil)
+                ])
         } catch {
             return CallTool.Result(
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
@@ -302,8 +350,7 @@ extension TermQMCPServer {
             }
 
             let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
         } catch {
             return CallTool.Result(
@@ -406,8 +453,7 @@ extension TermQMCPServer {
                 let board = try loadBoard()
                 if let card = board.findTerminal(identifier: cardId.uuidString) {
                     let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
-                    let json = try JSONHelper.encode(output)
-                    return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+                    return try structuredResult(output)
                 }
             }
 
@@ -416,8 +462,7 @@ extension TermQMCPServer {
                 id: cardId.uuidString,
                 message: "Terminal creation requested. The terminal may take a moment to appear in TermQ."
             )
-            let json = try JSONHelper.encode(pendingOutput)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(pendingOutput)
         } catch {
             return CallTool.Result(
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
@@ -434,8 +479,7 @@ extension TermQMCPServer {
                 from: card,
                 columnName: board.columnName(for: card.columnId)
             )
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(
@@ -556,8 +600,7 @@ extension TermQMCPServer {
             if let updatedCard = updatedBoard.findTerminal(identifier: card.id.uuidString) {
                 let output = TerminalOutput(
                     from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
-                let json = try JSONHelper.encode(output)
-                return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+                return try structuredResult(output)
             } else {
                 return CallTool.Result(
                     content: [.text(text: "Error: Terminal not found after update", annotations: nil, _meta: nil)],
@@ -604,8 +647,7 @@ extension TermQMCPServer {
                 from: card,
                 columnName: board.columnName(for: card.columnId)
             )
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(
@@ -681,8 +723,7 @@ extension TermQMCPServer {
             if let updatedCard = updatedBoard.findTerminal(identifier: card.id.uuidString) {
                 let output = TerminalOutput(
                     from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
-                let json = try JSONHelper.encode(output)
-                return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+                return try structuredResult(output)
             } else {
                 return CallTool.Result(
                     content: [.text(text: "Error: Terminal not found after move", annotations: nil, _meta: nil)],
@@ -708,8 +749,7 @@ extension TermQMCPServer {
                 from: card,
                 columnName: board.columnName(for: card.columnId)
             )
-            let json = try JSONHelper.encode(output)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(output)
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(
@@ -781,8 +821,7 @@ extension TermQMCPServer {
                 id: card.id.uuidString,
                 permanent: permanent
             )
-            let json = try JSONHelper.encode(result)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(result)
         } catch {
             return CallTool.Result(
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
@@ -811,8 +850,7 @@ extension TermQMCPServer {
                 id: card.id.uuidString,
                 permanent: permanent
             )
-            let json = try JSONHelper.encode(result)
-            return CallTool.Result(content: [.text(text: json, annotations: nil, _meta: nil)])
+            return try structuredResult(result)
 
         } catch let error as BoardWriter.WriteError {
             return CallTool.Result(

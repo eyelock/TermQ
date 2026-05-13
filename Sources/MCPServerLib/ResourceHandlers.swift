@@ -5,26 +5,88 @@ import TermQShared
 // MARK: - Resource Handler Implementations
 
 extension TermQMCPServer {
-    /// Handle resource read requests
+    /// Handle resource read requests. Supports both static URIs and the templated forms
+    /// declared in `availableResourceTemplates` (`termq://terminal/{id}`,
+    /// `termq://terminal-by-name/{name}`, `termq://column/{name}`).
+    ///
+    /// Templates are matched after static URIs: a static URI takes precedence if both
+    /// match (none currently overlap, but the order makes the precedence explicit).
     func dispatchResourceRead(_ params: ReadResource.Parameters) async throws -> ReadResource.Result {
         let uri = params.uri
 
         switch uri {
         case "termq://terminals":
             return try await handleTerminalsResource(uri: uri)
-
         case "termq://columns":
             return try await handleColumnsResource(uri: uri)
-
         case "termq://pending":
             return try await handlePendingResource(uri: uri)
-
         case "termq://context":
             return ReadResource.Result(contents: [.text(Self.contextDocumentation, uri: uri)])
-
         default:
-            throw MCPError.invalidRequest("Unknown resource: \(uri)")
+            return try await dispatchTemplatedResource(uri: uri)
         }
+    }
+
+    /// Match a URI against the declared resource templates and dispatch to the right reader.
+    /// Pure reads — no mutation, no handshake side-effects (use the `record_handshake`
+    /// tool for that).
+    private func dispatchTemplatedResource(uri: String) async throws -> ReadResource.Result {
+        if let id = parseTemplatePath(uri: uri, prefix: "termq://terminal/") {
+            return try await handleTerminalByIdResource(uri: uri, id: id)
+        }
+        if let name = parseTemplatePath(uri: uri, prefix: "termq://terminal-by-name/") {
+            return try await handleTerminalByNameResource(uri: uri, name: name)
+        }
+        if let name = parseTemplatePath(uri: uri, prefix: "termq://column/") {
+            return try await handleColumnByNameResource(uri: uri, name: name)
+        }
+        throw MCPError.invalidRequest("Unknown resource: \(uri)")
+    }
+
+    /// Extract the path segment after `prefix`. Returns nil if the URI doesn't match the
+    /// prefix or has nothing after it. Decodes percent-escapes so callers can pass spaces
+    /// in column / terminal names.
+    private func parseTemplatePath(uri: String, prefix: String) -> String? {
+        guard uri.hasPrefix(prefix) else { return nil }
+        let raw = String(uri.dropFirst(prefix.count))
+        guard !raw.isEmpty else { return nil }
+        return raw.removingPercentEncoding ?? raw
+    }
+
+    private func handleTerminalByIdResource(uri: String, id: String) async throws -> ReadResource.Result {
+        let board = try loadBoard()
+        guard let uuid = UUID(uuidString: id),
+            let card = board.activeCards.first(where: { $0.id == uuid })
+        else {
+            throw MCPError.invalidRequest("Terminal not found for UUID: \(id)")
+        }
+        let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+        let json = try JSONHelper.encode(output)
+        return ReadResource.Result(contents: [.text(json, uri: uri)])
+    }
+
+    private func handleTerminalByNameResource(uri: String, name: String) async throws -> ReadResource.Result {
+        let board = try loadBoard()
+        let nameLower = name.lowercased()
+        guard let card = board.activeCards.first(where: { $0.title.lowercased() == nameLower }) else {
+            throw MCPError.invalidRequest("Terminal not found for name: \(name)")
+        }
+        let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
+        let json = try JSONHelper.encode(output)
+        return ReadResource.Result(contents: [.text(json, uri: uri)])
+    }
+
+    private func handleColumnByNameResource(uri: String, name: String) async throws -> ReadResource.Result {
+        let board = try loadBoard()
+        let nameLower = name.lowercased()
+        guard let column = board.columns.first(where: { $0.name.lowercased() == nameLower }) else {
+            throw MCPError.invalidRequest("Column not found: \(name)")
+        }
+        let cards = board.activeCards.filter { $0.columnId == column.id }
+        let output = cards.map { TerminalOutput(from: $0, columnName: column.name) }
+        let json = try JSONHelper.encode(output)
+        return ReadResource.Result(contents: [.text(json, uri: uri)])
     }
 
     // MARK: - Resource Implementations

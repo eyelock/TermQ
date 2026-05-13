@@ -17,6 +17,10 @@ public final class TermQMCPServer: @unchecked Sendable {
     private let server: Server
     let dataDirectory: URL?
 
+    /// Lazily-created subscription manager. Watches board.json and fires
+    /// `notifications/resources/updated` for subscribed URIs when the file changes.
+    private var subscriptionManager: ResourceSubscriptionManager?
+
     /// Server name identifier
     public static let serverName = "termq"
 
@@ -70,8 +74,30 @@ public final class TermQMCPServer: @unchecked Sendable {
     public func run(transport: any Transport) async throws {
         // Register handlers before starting
         await registerHandlers()
+        await startSubscriptionWatcher()
         try await server.start(transport: transport)
         await server.waitUntilCompleted()
+    }
+
+    /// Initialise the subscription manager and arm the file watcher pointed at the
+    /// resolved board.json. Called from `run(transport:)` once at startup. No-op when
+    /// subscriptions aren't useful (e.g. tests that pass in a manual `dataDirectory`
+    /// pointing nowhere) — the watcher silently retries until the file appears.
+    private func startSubscriptionWatcher() async {
+        let dataDir = dataDirectory ?? BoardLoader.getDataDirectoryPath()
+        let boardURL = dataDir.appendingPathComponent("board.json")
+        let manager = ResourceSubscriptionManager { [weak self] uri in
+            await self?.emitResourceUpdated(uri: uri)
+        }
+        self.subscriptionManager = manager
+        await manager.startWatching(boardURL: boardURL)
+    }
+
+    /// Emit `notifications/resources/updated` for a single URI. Best-effort —
+    /// transport hiccups don't propagate (subscribers will catch up on next change).
+    private func emitResourceUpdated(uri: String) async {
+        let params = ResourceUpdatedNotification.Parameters(uri: uri)
+        try? await server.notify(ResourceUpdatedNotification.message(params))
     }
 
     // MARK: - Handler Registration
@@ -107,6 +133,13 @@ public final class TermQMCPServer: @unchecked Sendable {
             return try await self.dispatchResourceRead(params)
         }
 
+        _ = await server.withMethodHandler(ListResourceTemplates.self) { [weak self] _ in
+            guard self != nil else {
+                return ListResourceTemplates.Result(templates: [])
+            }
+            return ListResourceTemplates.Result(templates: Self.availableResourceTemplates)
+        }
+
         // Register prompt handlers
         _ = await server.withMethodHandler(ListPrompts.self) { [weak self] _ in
             guard self != nil else {
@@ -137,6 +170,17 @@ public final class TermQMCPServer: @unchecked Sendable {
                 throw MCPError.internalError("Server deallocated")
             }
             return try await self.dispatchCompletion(params)
+        }
+
+        // Register subscription handlers. The actual emission lives in
+        // ResourceSubscriptionManager; these just track which URIs are live.
+        _ = await server.withMethodHandler(ResourceSubscribe.self) { [weak self] params in
+            await self?.subscriptionManager?.subscribe(uri: params.uri)
+            return Empty()
+        }
+        _ = await server.withMethodHandler(ResourceUnsubscribe.self) { [weak self] params in
+            await self?.subscriptionManager?.unsubscribe(uri: params.uri)
+            return Empty()
         }
     }
 

@@ -21,7 +21,8 @@ extension TermQMCPServer {
                     Schema.bool("actionsOnly", "Only show terminals with llmNextAction set")
                 ]),
                 annotations: Tool.Annotations(
-                    readOnlyHint: true, idempotentHint: true, openWorldHint: false)
+                    readOnlyHint: true, idempotentHint: true, openWorldHint: false),
+                outputSchema: Schema.pendingOutputSchema
             ),
             Tool(
                 name: "context",
@@ -44,7 +45,11 @@ extension TermQMCPServer {
                     Schema.bool("columnsOnly", "Return only column names"),
                 ]),
                 annotations: Tool.Annotations(
-                    readOnlyHint: true, idempotentHint: true, openWorldHint: false)
+                    readOnlyHint: true, idempotentHint: true, openWorldHint: false),
+                // outputSchema describes the cards-listing shape; when `columnsOnly` is true,
+                // the result is an array of strings instead — clients must check the shape
+                // at runtime. Documented in the tool description; no formal union schema.
+                outputSchema: Schema.terminalListSchema
             ),
             Tool(
                 name: "find",
@@ -73,7 +78,8 @@ extension TermQMCPServer {
                     Schema.bool("favourites", "Only show favourites"),
                 ]),
                 annotations: Tool.Annotations(
-                    readOnlyHint: true, idempotentHint: true, openWorldHint: false)
+                    readOnlyHint: true, idempotentHint: true, openWorldHint: false),
+                outputSchema: Schema.terminalListSchema
             ),
             Tool(
                 name: "open",
@@ -93,7 +99,8 @@ extension TermQMCPServer {
                 // effect that is neither destructive nor strictly idempotent.
                 annotations: Tool.Annotations(
                     readOnlyHint: false, destructiveHint: false,
-                    idempotentHint: false, openWorldHint: false)
+                    idempotentHint: false, openWorldHint: false),
+                outputSchema: Schema.terminalOutputItemSchema
             ),
             Tool(
                 name: "create",
@@ -177,11 +184,35 @@ extension TermQMCPServer {
                         required: true)
                 ]),
                 // `get` records a `lastLLMGet` handshake timestamp as a side effect; not
-                // strictly read-only. Tier 1b will split this into a pure resource-read plus
-                // an explicit `record_handshake` tool — see audit §3.1.
+                // strictly read-only. DEPRECATED in favour of reading `termq://terminal/{id}`
+                // (pure) plus the `record_handshake` tool (explicit write). One-release
+                // alias per the deprecation policy in audit §3.1.
                 annotations: Tool.Annotations(
                     readOnlyHint: false, destructiveHint: false,
-                    idempotentHint: false, openWorldHint: false)
+                    idempotentHint: false, openWorldHint: false),
+                outputSchema: Schema.terminalOutputItemSchema
+            ),
+            Tool(
+                name: "record_handshake",
+                title: "Record LLM handshake",
+                description: """
+                    Mark a terminal as touched by the current LLM session. Sets the card's
+                    `lastLLMGet` timestamp. Idiomatic pair: read the card via
+                    `termq://terminal/{id}` (pure, no side effects) then call this when you
+                    have actually consumed the context.
+
+                    Pre-Tier-1b, this side effect lived on the `get` tool — see audit §3.1.
+                    `get` remains as a deprecated alias and still records the handshake; new
+                    callers should split the read (resource) from the write (this tool).
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string(
+                        "id", "Terminal UUID (use $TERMQ_TERMINAL_ID from your environment)",
+                        required: true)
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: true, openWorldHint: false)
             ),
             Tool(
                 name: "delete",
@@ -236,6 +267,41 @@ extension TermQMCPServer {
                 title: "Workflow guide (markdown)",
                 description: "Comprehensive documentation for cross-session workflows",
                 mimeType: "text/markdown"
+            ),
+        ]
+    }
+}
+
+// MARK: - Resource Templates
+
+extension TermQMCPServer {
+    /// Parameterised resource URIs the client can fill in. Clients call
+    /// `resources/templates/list` to discover these; once filled, the resulting URI is
+    /// read via standard `resources/read`.
+    static var availableResourceTemplates: [Resource.Template] {
+        [
+            Resource.Template(
+                uriTemplate: "termq://terminal/{id}",
+                name: "Terminal by UUID",
+                title: "Terminal (by UUID)",
+                description:
+                    "One terminal card resolved by UUID. Use $TERMQ_TERMINAL_ID inside a TermQ session.",
+                mimeType: "application/json"
+            ),
+            Resource.Template(
+                uriTemplate: "termq://terminal-by-name/{name}",
+                name: "Terminal by name",
+                title: "Terminal (by name)",
+                description:
+                    "One terminal card resolved by exact name. Prefer UUID form for stability.",
+                mimeType: "application/json"
+            ),
+            Resource.Template(
+                uriTemplate: "termq://column/{name}",
+                name: "Column by name",
+                title: "Cards in column",
+                description: "All active cards in the named column.",
+                mimeType: "application/json"
             ),
         ]
     }
