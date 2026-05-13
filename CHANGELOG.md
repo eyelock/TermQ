@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Atomic read-modify-write in `BoardWriter`.** `updateCard`, `moveCard`, and `createCard` previously split their read and write across two separate `NSFileCoordinator` claims, leaving a window where two concurrent writers could both finish their reads before either wrote — the second write silently clobbering the first. They now run inside a single `writingItemAt:` claim via the new `BoardWriter.atomicUpdate(...)` helper, closing the lost-update race and the `orderIndex` collision on concurrent appends.
 - **`termqmcp --verbose` logs the resolved profile and data directory at startup**, so a debug-vs-production data-directory mismatch is visible to the operator.
 
+### Added — MCP polish
+
+- **Tool annotations** on every MCP tool — `readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`. Permissioned clients (e.g. Claude Desktop) use these to auto-allow read-only tools and prompt before destructive ones. Notable: `delete` is marked destructive (even soft-delete prompts confirmation in strict clients); `set` and `move` are marked idempotent.
+- **Display titles** on every tool, resource, prompt, and prompt argument — human-readable labels surfaced in client UIs alongside the programmatic names.
+- **Argument completion** (`completion/complete`) — TermQ now provides autocomplete suggestions for the `terminal_summary` prompt's `terminal` argument, matching live board terminal names by case-insensitive substring. Capped at 100 results; clients see `total` and `hasMore` so they can prompt the user to refine.
+- **`notifications/message` log mirror** — `termqmcp` now emits MCP log notifications (gated by client-configured minimum level via `logging/setLevel`) for board-load failures and other operationally relevant events. Lets a remote operator observe failures without needing `--verbose` stderr access.
+- **`logging/setLevel` honoured properly** — previously the request was accepted and ignored; now the configured threshold actually filters subsequent log emissions.
+
 ### Added
 
 - **Focus and profile editing** — editable harnesses gain full inline editing for focuses and profiles
