@@ -326,12 +326,23 @@ class TerminalSessionManager: ObservableObject {
             fi
             # Configure session for TermQ
             \(tmux) set-option -t \(name) status off 2>/dev/null || true
-            \(tmux) set-option -t \(name) mouse off 2>/dev/null || true
+            # `mouse on` lets tmux handle scroll-wheel scrollback natively.
+            # Selection still works: TermQTerminalView toggles allowMouseReporting off on drag
+            # so SwiftTerm captures the drag for native text selection (see #147).
+            \(tmux) set-option -t \(name) mouse on 2>/dev/null || true
             \(tmux) set-option -t \(name) \\
                 default-terminal 'xterm-256color' 2>/dev/null || true
             \(tmux) set-option -t \(name) escape-time 10 2>/dev/null || true
             \(tmux) set-option -t \(name) \\
                 allow-passthrough off 2>/dev/null || true
+            # Auto-exit copy-mode when scrolling reaches the bottom, so the wheel
+            # doesn't leave the user parked in copy-mode with a [n/n] indicator visible.
+            \(tmux) bind-key -T copy-mode WheelDownPane \\
+                if-shell -F '#{e|<=:#{scroll_position},1}' \\
+                'send-keys -X cancel' 'send-keys -X scroll-down' 2>/dev/null || true
+            \(tmux) bind-key -T copy-mode-vi WheelDownPane \\
+                if-shell -F '#{e|<=:#{scroll_position},1}' \\
+                'send-keys -X cancel' 'send-keys -X scroll-down' 2>/dev/null || true
             # Attach to the session
             exec \(tmux) attach-session -t \(name)
             """
