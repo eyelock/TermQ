@@ -63,15 +63,15 @@ extension TermQMCPServer {
         for repo in config.repositories {
             do {
                 let trees = try await GitServiceShared.listWorktrees(repoPath: repo.path)
-                for t in trees {
+                for tree in trees {
                     rows.append([
                         "repoId": repo.id.uuidString,
                         "repoName": repo.name,
-                        "path": t.path,
-                        "branch": t.branch as Any,
-                        "commitHash": t.commitHash,
-                        "isMainWorktree": t.isMainWorktree,
-                        "isLocked": t.isLocked,
+                        "path": tree.path,
+                        "branch": tree.branch as Any,
+                        "commitHash": tree.commitHash,
+                        "isMainWorktree": tree.isMainWorktree,
+                        "isLocked": tree.isLocked,
                     ])
                 }
             } catch {

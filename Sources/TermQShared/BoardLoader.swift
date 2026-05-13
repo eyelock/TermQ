@@ -464,10 +464,12 @@ public enum BoardWriter {
                 throw WriteError.encodingFailed("Invalid columns format")
             }
             let identifierLower = identifier.lowercased()
-            guard let idx = columns.firstIndex(where: {
-                ($0["name"] as? String)?.lowercased() == identifierLower
-                    || ($0["id"] as? String) == identifier
-            }) else {
+            guard
+                let idx = columns.firstIndex(where: {
+                    ($0["name"] as? String)?.lowercased() == identifierLower
+                        || ($0["id"] as? String) == identifier
+                })
+            else {
                 throw WriteError.columnNotFound(name: identifier)
             }
             // Reject duplicates (other than the renamed column itself).
@@ -505,10 +507,12 @@ public enum BoardWriter {
                 throw WriteError.encodingFailed("Invalid board format")
             }
             let identifierLower = identifier.lowercased()
-            guard let idx = columns.firstIndex(where: {
-                ($0["name"] as? String)?.lowercased() == identifierLower
-                    || ($0["id"] as? String) == identifier
-            }) else {
+            guard
+                let idx = columns.firstIndex(where: {
+                    ($0["name"] as? String)?.lowercased() == identifierLower
+                        || ($0["id"] as? String) == identifier
+                })
+            else {
                 throw WriteError.columnNotFound(name: identifier)
             }
             guard let columnId = columns[idx]["id"] as? String else {
@@ -526,8 +530,10 @@ public enum BoardWriter {
 
             if force {
                 let nowString = ISO8601DateFormatter().string(from: Date())
-                for i in cards.indices where (cards[i]["columnId"] as? String) == columnId
-                    && cards[i]["deletedAt"] == nil {
+                for i in cards.indices
+                where (cards[i]["columnId"] as? String) == columnId
+                    && cards[i]["deletedAt"] == nil
+                {
                     cards[i]["deletedAt"] = nowString
                 }
                 board["cards"] = cards
@@ -552,13 +558,15 @@ public enum BoardWriter {
             // Find among deleted cards specifically — restoring something not in the bin
             // is a no-op the caller should know about.
             let identifierLower = identifier.lowercased()
-            guard let idx = cards.firstIndex(where: {
-                let isDeleted = $0["deletedAt"] != nil
-                let matches =
-                    ($0["id"] as? String) == identifier
-                    || ($0["title"] as? String)?.lowercased() == identifierLower
-                return isDeleted && matches
-            }) else {
+            guard
+                let idx = cards.firstIndex(where: {
+                    let isDeleted = $0["deletedAt"] != nil
+                    let matches =
+                        ($0["id"] as? String) == identifier
+                        || ($0["title"] as? String)?.lowercased() == identifierLower
+                    return isDeleted && matches
+                })
+            else {
                 throw WriteError.cardNotFound(identifier: identifier)
             }
             cards[idx]["deletedAt"] = nil

@@ -230,12 +230,12 @@ extension TermQMCPServer {
         let start: Int = {
             guard let cursor,
                 let data = Data(base64Encoded: cursor),
-                let s = String(data: data, encoding: .utf8),
-                let n = Int(s),
-                n >= 0,
-                n <= items.count
+                let str = String(data: data, encoding: .utf8),
+                let offset = Int(str),
+                offset >= 0,
+                offset <= items.count
             else { return 0 }
-            return n
+            return offset
         }()
         let end: Int = {
             guard let limit, limit > 0 else { return items.count }

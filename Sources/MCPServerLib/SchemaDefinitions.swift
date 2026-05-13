@@ -441,10 +441,10 @@ extension TermQMCPServer {
                 title: "Installed YNH harnesses",
                 description:
                     "Output of `ynh ls --format json`, passed through verbatim — full YNH"
-                        + " envelope including `capabilities`, `schema_version`, `ynh_version`,"
-                        + " and the `harnesses` array. Each harness has both an `id`"
-                        + " (canonical, e.g. `local/claude-dev`) and a `name` (bare). Use `id`"
-                        + " when calling `harness_launch`. Empty array when `ynh` is not installed.",
+                    + " envelope including `capabilities`, `schema_version`, `ynh_version`,"
+                    + " and the `harnesses` array. Each harness has both an `id`"
+                    + " (canonical, e.g. `local/claude-dev`) and a `name` (bare). Use `id`"
+                    + " when calling `harness_launch`. Empty array when `ynh` is not installed.",
                 mimeType: "application/json"
             ),
         ]

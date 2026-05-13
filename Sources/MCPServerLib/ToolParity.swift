@@ -52,11 +52,13 @@ public enum ToolParity {
         ),
         (
             "harness_launch",
-            "Requires elicitation/user confirmation; no CLI equivalent. Security gate — launching a harness from a pipe bypasses the confirmation surface."
+            "Requires elicitation/user confirmation; no CLI equivalent. Security gate — "
+                + "launching a harness from a pipe bypasses the confirmation surface."
         ),
         (
             "create_worktree",
-            "`git worktree add` already exists as a first-class CLI; re-wrapping in termqcli is wrapper-on-wrapper. Revisit if a concrete CLI need appears."
+            "`git worktree add` already exists as a first-class CLI; re-wrapping in termqcli "
+                + "is wrapper-on-wrapper. Revisit if a concrete CLI need appears."
         ),
         (
             "remove_worktree",
