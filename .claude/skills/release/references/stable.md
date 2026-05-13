@@ -94,41 +94,42 @@ gh release view v{VERSION}
 # Should show: title "TermQ v{VERSION}", assets (DMG, ZIP, checksums), NOT pre-release
 ```
 
-### 7. Back-Merge the Release Branch to Develop — MANDATORY
+### 7. Back-Merge + Appcast Sync to Develop — MANDATORY (combined PR)
+
+After the tag is pushed, `update-appcast.yml` opens an auto-merging PR (`hotfix/appcast-update → main`)
+that commits the updated appcast files to `main`. **Wait for that PR to merge before opening the
+back-merge**, then fold the appcast files into a single combined back-merge PR. One PR is the
+default; two separate PRs is the fallback only when waiting isn't acceptable.
 
 ```bash
+# 1. Wait for the appcast PR to land on main
+gh pr list --base main --search "appcast in:title" --state merged --limit 1   # confirm merged
+
+# 2. Build the combined back-merge branch from develop
 git checkout -b chore/back-merge-v{VERSION} develop
 git merge origin/release/v{VERSION}
+git fetch origin
+git checkout origin/main -- Docs/appcast.xml Docs/appcast-beta.xml
+git commit -m "chore: sync appcast entries for v{VERSION}"
 git push -u origin chore/back-merge-v{VERSION}
+
+# 3. Open one PR carrying both the back-merge and the appcast sync
 gh pr create --base develop \
-  --title "chore: back-merge release/v{VERSION} into develop" \
-  --body "Brings CHANGELOG update and any release-branch conflict resolutions back to develop."
+  --title "chore: back-merge release/v{VERSION} + appcast sync into develop" \
+  --body "Brings CHANGELOG update, release-branch conflict resolutions, and Docs/appcast{,-beta}.xml entries for v{VERSION} back to develop."
 ```
 
-Merge once CI passes, then delete the release branch:
+Merge once CI passes (squash, matching prior back-merge convention), then delete the release branch:
 
 ```bash
 git push origin --delete release/v{VERSION}
 ```
 
-### 8. Forward-Port Appcast to Develop — MANDATORY
+#### Fallback: separate PRs
 
-`update-appcast.yml` commits appcast files directly to `main` after the release. These must
-come to develop separately:
-
-```bash
-git checkout -b chore/sync-appcast-v{VERSION} develop
-git checkout origin/main -- Docs/appcast.xml Docs/appcast-beta.xml
-git commit -m "chore: sync appcast entries for v{VERSION} back to develop"
-git push -u origin chore/sync-appcast-v{VERSION}
-gh pr create --base develop \
-  --title "chore: sync appcast entries for v{VERSION} back to develop"
-```
-
-Merge once CI passes.
-
-> **Note:** Steps 7 and 8 can be combined into one PR if the appcast update workflow
-> has already completed before you open the back-merge.
+Only if waiting for the appcast PR isn't acceptable. Open `chore/back-merge-v{VERSION}` without
+the appcast files, merge it, then follow up with a `chore/sync-appcast-v{VERSION}` PR cherry-picking
+`Docs/appcast.xml` and `Docs/appcast-beta.xml` from `origin/main`.
 
 ## Troubleshooting
 
@@ -155,4 +156,4 @@ git push origin :refs/tags/v{VERSION}
 - NEVER use custom release titles
 - NEVER skip CI verification
 - NEVER tag from branches other than `main`
-- NEVER skip the back-merge (step 7) or appcast sync (step 8)
+- NEVER skip the combined back-merge + appcast sync (step 7)
