@@ -41,18 +41,10 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Event monitor for tracking key input
     private var keyInputMonitor: Any?
 
-    /// Timer for auto-scrolling during selection drag
-    private var autoScrollTimer: Timer?
-
-    /// Direction and speed of auto-scroll (-1 = up, 1 = down, magnitude = speed)
-    private var autoScrollDelta: Int = 0
-
-    /// Last known mouse position during drag (for extending selection after scroll)
-    private var lastDragPosition: NSPoint?
-
-    /// Target yDisp row for upward auto-scroll; nil when not active.
-    /// Persists the intended viewport position across linefeed resets.
-    private var selectionScrollTargetRow: Int?
+    /// Drag-to-select controller — manages NSEvent monitors, allowMouseReporting
+    /// toggle, and auto-scroll during selection. Created lazily so the `self`
+    /// reference is valid.
+    private lazy var dragController = TerminalSelectionDragController(view: self)
 
     // MARK: - Init
 
@@ -84,7 +76,6 @@ class TermQTerminalView: LocalProcessTerminalView {
         // Use MainActor.assumeIsolated since deinit is nonisolated in Swift 6
         // but we're always deallocated on the main thread for NSView subclasses
         MainActor.assumeIsolated {
-            autoScrollTimer?.invalidate()
             cleanupAutoScrollDuringSelection()
             cleanupCopyOnSelect()
             cleanupKeyInputMonitor()
@@ -220,210 +211,46 @@ class TermQTerminalView: LocalProcessTerminalView {
         showVisualBell()
     }
 
-    // MARK: - Auto-scroll During Selection
+    // MARK: - Drag-to-Select (delegated to TerminalSelectionDragController)
 
-    /// Event monitor for mouse drag
-    private var dragEventMonitor: Any?
-
-    /// Event monitor for mouse down (to track drag origin)
-    private var mouseDownMonitor: Any?
-
-    /// Whether current drag started inside the terminal
-    private var dragStartedInTerminal: Bool = false
-
-    /// Set up auto-scroll during selection
+    /// Install the drag-to-select event monitors. Called by `TerminalSessionManager`
+    /// when a session is set up.
     func setupAutoScrollDuringSelection() {
-        cleanupAutoScrollDuringSelection()
-
-        // Monitor for mouse down to track where drag starts
-        mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
-            self?.handleMouseDownForAutoScroll(event)
-            return event
-        }
-
-        // Monitor for mouse dragged events
-        dragEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDragged, .leftMouseUp]) {
-            [weak self] event in
-            self?.handleMouseEventForAutoScroll(event)
-            return event
-        }
+        dragController.start()
     }
 
-    /// Clean up auto-scroll event monitor
+    /// Tear down the drag-to-select event monitors. Called on session teardown
+    /// and from `deinit`.
     func cleanupAutoScrollDuringSelection() {
-        if let monitor = dragEventMonitor {
-            NSEvent.removeMonitor(monitor)
-            dragEventMonitor = nil
-        }
-        if let monitor = mouseDownMonitor {
-            NSEvent.removeMonitor(monitor)
-            mouseDownMonitor = nil
-        }
-        stopAutoScrollTimer()
-        dragStartedInTerminal = false
-        // Clear global drag flag in case terminal is destroyed during selection
-        TerminalSessionManager.shared.isMouseDragInProgress = false
-    }
-
-    /// Handle mouse down to track if drag starts in terminal
-    private func handleMouseDownForAutoScroll(_ event: NSEvent) {
-        // Check if mouse down is in our terminal view
-        guard let eventWindow = event.window,
-            eventWindow == self.window
-        else {
-            dragStartedInTerminal = false
-            return
-        }
-
-        // Restore mouse reporting so clicks are forwarded to the running app (e.g. Claude Code TUI).
-        // This was disabled during a drag-to-select to prevent SwiftTerm from intercepting drags.
-        allowMouseReporting = true
-
-        let localPoint = convert(event.locationInWindow, from: nil)
-        dragStartedInTerminal = bounds.contains(localPoint)
-
-        // Set global drag flag to prevent focus stealing during selection
-        if dragStartedInTerminal {
-            TerminalSessionManager.shared.isMouseDragInProgress = true
-        }
-    }
-
-    /// Handle mouse events for auto-scroll during selection
-    private func handleMouseEventForAutoScroll(_ event: NSEvent) {
-        // Check if event is in our window
-        guard let eventWindow = event.window,
-            eventWindow == self.window
-        else { return }
-
-        if event.type == .leftMouseUp {
-            stopAutoScrollTimer()
-            lastDragPosition = nil
-            dragStartedInTerminal = false
-            TerminalSessionManager.shared.isMouseDragInProgress = false
-            // Do NOT restore allowMouseReporting here — leaving it false keeps SwiftTerm from
-            // calling selectNone() on the next linefeed while streaming continues.
-            // allowMouseReporting is restored in handleMouseDownForAutoScroll on the next click.
-            return
-        }
-
-        if event.type == .leftMouseDragged {
-            if dragStartedInTerminal && allowMouseReporting {
-                allowMouseReporting = false
-            }
-        }
-
-        // Only process drag if it started inside the terminal (not toolbar/titlebar)
-        guard dragStartedInTerminal else { return }
-
-        // It's a drag event
-        lastDragPosition = event.locationInWindow
-
-        // Calculate if mouse is above or below the visible area
-        let localPoint = convert(event.locationInWindow, from: nil)
-
-        // Only process if drag originated in our view (check if within x bounds)
-        guard localPoint.x >= 0, localPoint.x <= bounds.width else {
-            stopAutoScrollTimer()
-            return
-        }
-
-        let viewHeight = bounds.height
-        autoScrollDelta = 0
-
-        if localPoint.y > viewHeight {
-            // Mouse is above the view (NSView y=0 is at bottom)
-            // We want to scroll up (show earlier content in history)
-            let overshoot = localPoint.y - viewHeight
-            autoScrollDelta = -calcScrollSpeed(overshoot: overshoot)
-        } else if localPoint.y < 0 {
-            // Mouse is below the view
-            // We want to scroll down (show later content)
-            let overshoot = -localPoint.y
-            autoScrollDelta = calcScrollSpeed(overshoot: overshoot)
-        }
-
-        // Start or stop timer based on whether we need to scroll
-        if autoScrollDelta != 0 {
-            startAutoScrollTimer()
-        } else {
-            stopAutoScrollTimer()
-        }
-    }
-
-    /// Calculate scroll speed based on how far outside the view the mouse is
-    private func calcScrollSpeed(overshoot: CGFloat) -> Int {
-        if overshoot > 100 {
-            return 5
-        } else if overshoot > 50 {
-            return 3
-        } else if overshoot > 20 {
-            return 2
-        }
-        return 1
-    }
-
-    /// Start the auto-scroll timer if not already running
-    private func startAutoScrollTimer() {
-        guard autoScrollTimer == nil else { return }
-
-        autoScrollTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
-            // Timer callbacks run on main thread but need MainActor annotation for Swift 6
-            MainActor.assumeIsolated {
-                self?.autoScrollTimerFired()
-            }
-        }
-    }
-
-    /// Stop the auto-scroll timer
-    private func stopAutoScrollTimer() {
-        autoScrollTimer?.invalidate()
-        autoScrollTimer = nil
-        autoScrollDelta = 0
-        selectionScrollTargetRow = nil
-    }
-
-    /// Called when auto-scroll timer fires
-    private func autoScrollTimerFired() {
-        guard autoScrollDelta != 0 else { return }
-
-        let currentYDisp = getTerminal().buffer.yDisp
-
-        if autoScrollDelta < 0 {
-            // Scrolling up into history.
-            // Accumulate the intended position from the last known target (not from yDisp,
-            // which may have been reset to yBase by a linefeed since the last timer fire).
-            let currentEffective = selectionScrollTargetRow ?? currentYDisp
-            let newTarget = max(currentEffective - abs(autoScrollDelta), 0)
-            selectionScrollTargetRow = newTarget
-            if currentYDisp > newTarget {
-                scrollUp(lines: currentYDisp - newTarget)
-            }
-        } else {
-            // Scrolling down toward live view. No need to fight linefeeds — they help.
-            selectionScrollTargetRow = nil
-            scrollDown(lines: autoScrollDelta)
-        }
-
-        setNeedsDisplay(bounds)
+        dragController.stop()
     }
 
     /// Called by SwiftTerm when the terminal engine resets yDisp (e.g. on each linefeed).
     /// Re-applies our scroll target so upward auto-scroll is not undone by streaming output.
     override func scrolled(source: Terminal, yDisp: Int) {
         super.scrolled(source: source, yDisp: yDisp)
-        guard let targetRow = selectionScrollTargetRow, yDisp > targetRow else { return }
-        scrollUp(lines: yDisp - targetRow)
+        dragController.handleScrolled(yDisp: yDisp)
     }
 
     /// Override linefeed to avoid flickering the selection on each new output line.
-    /// Position re-apply is handled in scrolled() which fires before linefeed().
+    /// Position re-apply is handled in `scrolled()` which fires before `linefeed()`.
     override func linefeed(source: Terminal) {
-        // Only delegate to super (which calls selectNone()) when not in a drag-to-select.
-        // During a drag, clearing the selection on each linefeed causes visible flicker —
-        // the drag monitor re-extends it on the next event anyway.
-        if allowMouseReporting {
-            super.linefeed(source: source)
+        if dragController.shouldSuppressLinefeed {
+            #if TERMQ_DEBUG_BUILD
+                if TermQLogger.fileLoggingEnabled {
+                    TermQLogger.io.debug("sel.linefeed suppressed (drag active)")
+                }
+            #endif
+            return
         }
+        super.linefeed(source: source)
+    }
+
+    /// Track selection state transitions for diagnostics — surfaces any path that
+    /// activates/deactivates selection (feedPrepare, resize, keyDown, etc.).
+    override func selectionChanged(source: Terminal) {
+        super.selectionChanged(source: source)
+        dragController.handleSelectionChanged()
     }
 
     // MARK: - Copy on Select
