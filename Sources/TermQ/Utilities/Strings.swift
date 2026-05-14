@@ -471,10 +471,8 @@ enum Strings {
         static var tabTools: String { localized("settings.tab.tools") }
         static var tabDataAndSecurity: String { localized("settings.tab.data.and.security") }
         static var tabMarketplaces: String { localized("settings.tab.marketplaces") }
-        static var tabGitHub: String { localized("settings.tab.github") }
 
-        // GitHub tab
-        static var githubSectionFeed: String { localized("settings.github.section.feed") }
+        // Remote PR feed (shown in General → Git section)
         static var githubFeedCapLabel: String { localized("settings.github.feed.cap.label") }
         static var githubFeedCapHelp: String { localized("settings.github.feed.cap.help") }
 
@@ -601,6 +599,8 @@ enum Strings {
         static var tmuxEnableButton: String { localized("settings.tmux.enable.button") }
         static var tmuxAutoReattach: String { localized("settings.tmux.auto.reattach") }
         static var tmuxAutoReattachHelp: String { localized("settings.tmux.auto.reattach.help") }
+
+        // Tools - GitHub CLI (gh) section — see Strings+Gh.swift
 
         // Environment tab
         static var tabEnvironment: String { localized("settings.tab.environment") }

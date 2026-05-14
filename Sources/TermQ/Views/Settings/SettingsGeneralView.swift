@@ -30,6 +30,9 @@ struct SettingsGeneralView: View {
     // Git preferences
     @Binding var protectedBranches: String
 
+    // Remote PR feed cap (GitHub)
+    @Binding var remotePRFeedCap: Int
+
     var body: some View {
         // Terminal section
         Section {
@@ -78,6 +81,23 @@ struct SettingsGeneralView: View {
                 prompt: Text(Strings.Settings.protectedBranchesPrompt)
             )
             Text(Strings.Settings.protectedBranchesHelp)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Stepper(
+                value: $remotePRFeedCap,
+                in: 5...100,
+                step: 5
+            ) {
+                HStack {
+                    Text(Strings.Settings.githubFeedCapLabel)
+                    Spacer()
+                    Text("\(remotePRFeedCap)")
+                        .foregroundColor(.secondary)
+                        .monospacedDigit()
+                }
+            }
+            Text(Strings.Settings.githubFeedCapHelp)
                 .font(.caption)
                 .foregroundColor(.secondary)
         } header: {
