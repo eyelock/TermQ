@@ -406,6 +406,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Ohita oletustaustaohjelma";
@@ -1217,5 +1232,3 @@
 "remote.prs.worktree.exists" = "Worktree on jo olemassa";
 "settings.github.feed.cap.help" = "Enimmäismäärä pull requesteja per tietovarasto Remote-sivupalkissa. Kaivetut PR:t sisällytetään aina.";
 "settings.github.feed.cap.label" = "PR:iä per tietovarasto";
-"settings.github.section.feed" = "Etä-PR-syöte";
-"settings.tab.github" = "GitHub";

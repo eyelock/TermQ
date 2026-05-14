@@ -385,6 +385,21 @@
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
 
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 // Settings - Environment tab
 "settings.tab.environment" = "Environment";
 
@@ -437,8 +452,6 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "External Sources";
-"settings.tab.github" = "GitHub";
-"settings.github.section.feed" = "Remote PR Feed";
 "settings.github.feed.cap.label" = "PRs per repository";
 "settings.github.feed.cap.help" = "Maximum number of pull requests shown per repository in the Remote sidebar. Checked-out PRs are always included.";
 "settings.marketplaces.section.list" = "Configured Marketplaces";

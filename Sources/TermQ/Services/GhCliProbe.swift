@@ -49,6 +49,9 @@ final class GhCliProbe: ObservableObject {
 
     @Published private(set) var status: GhCliStatus = .missing
 
+    /// Detected `gh` version string (e.g. "2.55.0"). Populated alongside `status` when binary is found.
+    @Published private(set) var version: String?
+
     init() {}
 
     // MARK: - Probe
@@ -57,8 +60,11 @@ final class GhCliProbe: ObservableObject {
     func probe() async {
         guard let ghPath = findGhBinary() else {
             status = .missing
+            version = nil
             return
         }
+
+        version = await fetchVersion(ghPath: ghPath)
 
         // Auth check
         let authResult = try? await CommandRunner.run(
@@ -117,6 +123,21 @@ final class GhCliProbe: ObservableObject {
     }
 
     // MARK: - Helpers
+
+    private func fetchVersion(ghPath: String) async -> String? {
+        guard
+            let result = try? await CommandRunner.run(
+                executable: ghPath,
+                arguments: ["--version"]
+            ),
+            result.didSucceed
+        else { return nil }
+        // First line is "gh version 2.55.0 (2024-08-21)"
+        guard let line = result.stdout.split(separator: "\n").first else { return nil }
+        let parts = line.split(separator: " ")
+        guard parts.count >= 3 else { return nil }
+        return String(parts[2])
+    }
 
     private func fetchLogin(ghPath: String) async -> String? {
         guard
