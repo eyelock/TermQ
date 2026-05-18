@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.1]
+
+### Fixed
+
+- **Drag-to-select works in tmux control-mode panes.** `ControlModeTerminalView` is a bare `TerminalView` subclass and never had the `allowMouseReporting` toggle that lets users select text in panes whose inner app has mouse mode on (e.g. the Claude Code TUI). SwiftTerm's `mouseDragged` short-circuited on the inner app's mouse mode and `feedPrepare()` cleared any nascent selection on every output burst — visible as "can't select while Claude is thinking" in tmux-control panes. The drag-to-select logic (event monitors, `allowMouseReporting` toggle, auto-scroll timer, linefeed/selection/scrolled overrides) has been extracted into a new `TerminalSelectionDragController` that both `TermQTerminalView` and `ControlModeTerminalView` now own. Behaviour in Direct and tmux-attach panes is unchanged.
+
 ## [0.11.0]
 
 ### Added

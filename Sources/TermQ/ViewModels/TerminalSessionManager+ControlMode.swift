@@ -7,13 +7,48 @@ import TermQCore
 
 /// Simple terminal view for control mode panes (no local process)
 class ControlModeTerminalView: TerminalView {
+    /// Drag-to-select controller — same one used by `TermQTerminalView`. Without
+    /// it, the inner TUI's mouse mode causes SwiftTerm's mouseDragged to
+    /// short-circuit before selection can start, and `feedPrepare()` clears any
+    /// selection on every output burst.
+    private lazy var dragController = TerminalSelectionDragController(view: self)
+
     init() {
         super.init(frame: .zero)
         self.terminalDelegate = nil  // Will be set by SessionManager
+        dragController.start()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) not implemented")
+    }
+
+    deinit {
+        MainActor.assumeIsolated {
+            dragController.stop()
+        }
+    }
+
+    override func scrolled(source: Terminal, yDisp: Int) {
+        super.scrolled(source: source, yDisp: yDisp)
+        dragController.handleScrolled(yDisp: yDisp)
+    }
+
+    override func linefeed(source: Terminal) {
+        if dragController.shouldSuppressLinefeed {
+            #if TERMQ_DEBUG_BUILD
+                if TermQLogger.fileLoggingEnabled {
+                    TermQLogger.io.debug("sel.linefeed suppressed (drag active) [control]")
+                }
+            #endif
+            return
+        }
+        super.linefeed(source: source)
+    }
+
+    override func selectionChanged(source: Terminal) {
+        super.selectionChanged(source: source)
+        dragController.handleSelectionChanged()
     }
 }
 
