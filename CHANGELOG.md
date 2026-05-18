@@ -60,6 +60,11 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 - **`Docs/Help/tutorials/mcp-subscriptions.md`** — new tutorial walking through the resource-subscription feature with worked code and sharp-edges section.
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
+## [0.11.1]
+
+### Fixed
+
+- **Drag-to-select works in tmux control-mode panes.** `ControlModeTerminalView` is a bare `TerminalView` subclass and never had the `allowMouseReporting` toggle that lets users select text in panes whose inner app has mouse mode on (e.g. the Claude Code TUI). SwiftTerm's `mouseDragged` short-circuited on the inner app's mouse mode and `feedPrepare()` cleared any nascent selection on every output burst — visible as "can't select while Claude is thinking" in tmux-control panes. The drag-to-select logic (event monitors, `allowMouseReporting` toggle, auto-scroll timer, linefeed/selection/scrolled overrides) has been extracted into a new `TerminalSelectionDragController` that both `TermQTerminalView` and `ControlModeTerminalView` now own. Behaviour in Direct and tmux-attach panes is unchanged.
 
 ## [0.11.0]
 
