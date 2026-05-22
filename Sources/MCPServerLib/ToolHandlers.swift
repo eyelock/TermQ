@@ -22,6 +22,13 @@ extension TermQMCPServer {
 
     /// Dispatch tool calls to appropriate handlers
     func dispatchToolCall(_ params: CallTool.Parameters) async throws -> CallTool.Result {
+        if let result = try await dispatchTier1(params) { return result }
+        if let result = try await dispatchTier2(params) { return result }
+        if let result = try await dispatchTier3(params) { return result }
+        throw MCPError.invalidRequest("Unknown tool: \(params.name)")
+    }
+
+    private func dispatchTier1(_ params: CallTool.Parameters) async throws -> CallTool.Result? {
         switch params.name {
         case "pending":
             return try await handlePending(params.arguments)
@@ -43,6 +50,15 @@ extension TermQMCPServer {
             return try await handleGet(params.arguments)
         case "record_handshake":
             return try await handleRecordHandshake(params.arguments)
+        case "delete":
+            return try await handleDelete(params.arguments)
+        default:
+            return nil
+        }
+    }
+
+    private func dispatchTier2(_ params: CallTool.Parameters) async throws -> CallTool.Result? {
+        switch params.name {
         case "whoami":
             return try await handleWhoami(params.arguments)
         case "restore":
@@ -53,16 +69,21 @@ extension TermQMCPServer {
             return try await handleRenameColumn(params.arguments)
         case "delete_column":
             return try await handleDeleteColumn(params.arguments)
+        default:
+            return nil
+        }
+    }
+
+    private func dispatchTier3(_ params: CallTool.Parameters) async throws -> CallTool.Result? {
+        switch params.name {
         case "create_worktree":
             return try await handleCreateWorktree(params.arguments)
         case "remove_worktree":
             return try await handleRemoveWorktree(params.arguments)
         case "harness_launch":
             return try await handleHarnessLaunch(params.arguments)
-        case "delete":
-            return try await handleDelete(params.arguments)
         default:
-            throw MCPError.invalidRequest("Unknown tool: \(params.name)")
+            return nil
         }
     }
 
@@ -946,288 +967,6 @@ extension TermQMCPServer {
                 content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
                 isError: true
             )
-        }
-    }
-
-    // MARK: - Tier 2 handlers (whoami / restore / column CRUD)
-
-    /// Resolve the current card from `TERMQ_TERMINAL_ID`. Returns a null structured
-    /// content when the env var is unset, so callers can distinguish "no env" from a
-    /// real error.
-    func handleWhoami(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        guard let envValue = ProcessInfo.processInfo.environment["TERMQ_TERMINAL_ID"],
-            !envValue.isEmpty,
-            let uuid = UUID(uuidString: envValue)
-        else {
-            // Surface as a non-error empty result — top-level Claude sessions (no TermQ
-            // container) hit this routinely and shouldn't see an error.
-            return CallTool.Result(
-                content: [
-                    .text(
-                        text: "{\"terminal\": null, \"reason\": \"TERMQ_TERMINAL_ID not set or invalid\"}",
-                        annotations: nil, _meta: nil)
-                ])
-        }
-        do {
-            let board = try loadBoard()
-            guard let card = board.activeCards.first(where: { $0.id == uuid }) else {
-                return CallTool.Result(
-                    content: [
-                        .text(
-                            text:
-                                "{\"terminal\": null, \"reason\": \"Terminal not found for env id\"}",
-                            annotations: nil, _meta: nil)
-                    ])
-            }
-            let output = TerminalOutput(from: card, columnName: board.columnName(for: card.columnId))
-            return try structuredResult(output)
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    func handleRestore(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let identifier: String
-        do {
-            identifier = try InputValidator.requireString("identifier", from: arguments, tool: "restore")
-        } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-        do {
-            let restored = try BoardWriter.restoreCard(
-                identifier: identifier, dataDirectory: dataDirectory)
-            let board = try loadBoard()
-            let output = TerminalOutput(
-                from: restored, columnName: board.columnName(for: restored.columnId))
-            return try structuredResult(output)
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    func handleCreateColumn(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let name: String
-        do {
-            name = try InputValidator.requireString("name", from: arguments, tool: "create_column")
-        } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-        let description = InputValidator.optionalString("description", from: arguments) ?? ""
-        let color = InputValidator.optionalString("color", from: arguments) ?? "#6B7280"
-        do {
-            let column = try BoardWriter.createColumn(
-                name: name, description: description, color: color, dataDirectory: dataDirectory)
-            return CallTool.Result(
-                content: [
-                    .text(
-                        text:
-                            "{\"id\": \"\(column.id.uuidString)\", \"name\": \"\(column.name)\"}",
-                        annotations: nil, _meta: nil)
-                ])
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    func handleRenameColumn(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let identifier: String
-        let newName: String
-        do {
-            identifier = try InputValidator.requireString(
-                "identifier", from: arguments, tool: "rename_column")
-            newName = try InputValidator.requireString("newName", from: arguments, tool: "rename_column")
-        } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-        do {
-            let column = try BoardWriter.renameColumn(
-                identifier: identifier, newName: newName, dataDirectory: dataDirectory)
-            return CallTool.Result(
-                content: [
-                    .text(
-                        text:
-                            "{\"id\": \"\(column.id.uuidString)\", \"name\": \"\(column.name)\"}",
-                        annotations: nil, _meta: nil)
-                ])
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    // MARK: - Tier 3 handlers — worktrees, harnesses
-
-    /// Look up a registered repository by UUID. Returns the GitRepository or throws a
-    /// CLI-flavoured error if not found / config can't be loaded.
-    private func loadRepo(repoId: String) throws -> GitRepository {
-        let config = try RepoConfigLoader.load()
-        guard let uuid = UUID(uuidString: repoId),
-            let repo = config.repositories.first(where: { $0.id == uuid })
-        else {
-            throw MCPError.invalidParams("Unknown repository: \(repoId)")
-        }
-        return repo
-    }
-
-    func handleCreateWorktree(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let repoId: String
-        let branch: String
-        do {
-            repoId = try InputValidator.requireString("repoId", from: arguments, tool: "create_worktree")
-            branch = try InputValidator.requireString("branch", from: arguments, tool: "create_worktree")
-        } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-        let createBranch = InputValidator.optionalBool("createBranch", from: arguments)
-        do {
-            let repo = try loadRepo(repoId: repoId)
-            let basePath = repo.worktreeBasePath ?? URL(fileURLWithPath: repo.path).deletingLastPathComponent().path
-            let worktreePath = "\(basePath)/\(branch)"
-            // GitServiceShared.addWorktree always creates a branch (`-b <branch>`); the
-            // `createBranch` flag here is informational — passing false won't suppress
-            // the -b flag. Threaded onto the wire surface for future expansion.
-            _ = createBranch
-            try await GitServiceShared.addWorktree(
-                repoPath: repo.path,
-                branch: branch,
-                worktreePath: worktreePath
-            )
-            return CallTool.Result(
-                content: [
-                    .text(
-                        text:
-                            "{\"ok\": true, \"path\": \"\(worktreePath)\", \"branch\": \"\(branch)\"}",
-                        annotations: nil, _meta: nil)
-                ])
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    func handleRemoveWorktree(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let repoId: String
-        let path: String
-        do {
-            repoId = try InputValidator.requireString("repoId", from: arguments, tool: "remove_worktree")
-            path = try InputValidator.requireString("path", from: arguments, tool: "remove_worktree")
-        } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-        // `force` is currently informational — GitServiceShared.removeWorktree doesn't
-        // take a force flag in the public API yet. Threaded here so the wire surface is
-        // stable; future revision can plumb it through.
-        _ = InputValidator.optionalBool("force", from: arguments)
-        do {
-            let repo = try loadRepo(repoId: repoId)
-            try await GitServiceShared.removeWorktree(repoPath: repo.path, worktreePath: path)
-            return CallTool.Result(
-                content: [
-                    .text(text: "{\"ok\": true, \"removed\": \"\(path)\"}", annotations: nil, _meta: nil)
-                ])
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    /// Launch a harness via `ynh run <harness>`. The most consequential write tool —
-    /// permissioned clients should treat the `destructiveHint` as a strong prompt for
-    /// user confirmation (full `elicitation/create` integration is a follow-up).
-    func handleHarnessLaunch(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let harness: String
-        let workingDirectory: String
-        do {
-            harness = try InputValidator.requireString("harness", from: arguments, tool: "harness_launch")
-            workingDirectory = try InputValidator.requireString(
-                "workingDirectory", from: arguments, tool: "harness_launch")
-        } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-        let prompt = InputValidator.optionalString("prompt", from: arguments)
-
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
-        var args = ["ynh", "run", harness]
-        if let prompt, !prompt.isEmpty {
-            args.append(contentsOf: ["--prompt", prompt])
-        }
-        process.arguments = args
-        process.currentDirectoryURL = URL(fileURLWithPath: workingDirectory)
-        let outPipe = Pipe()
-        process.standardOutput = outPipe
-        process.standardError = outPipe
-        do {
-            try process.run()
-            process.waitUntilExit()
-            let data = outPipe.fileHandleForReading.readDataToEndOfFile()
-            let output = String(data: data, encoding: .utf8) ?? ""
-            let status = process.terminationStatus
-            // Truncate excessive output so the MCP frame stays bounded.
-            let snippet = output.count > 4096 ? String(output.suffix(4096)) : output
-            let body: [String: Any] = [
-                "ok": status == 0,
-                "exitCode": status,
-                "output": snippet,
-            ]
-            let json = try JSONSerialization.data(withJSONObject: body, options: [.prettyPrinted])
-            return CallTool.Result(
-                content: [
-                    .text(text: String(data: json, encoding: .utf8) ?? "{}", annotations: nil, _meta: nil)
-                ],
-                isError: status != 0)
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    func handleDeleteColumn(_ arguments: [String: Value]?) async throws -> CallTool.Result {
-        let identifier: String
-        do {
-            identifier = try InputValidator.requireString(
-                "identifier", from: arguments, tool: "delete_column")
-        } catch let error as InputValidator.ValidationError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-        let force = InputValidator.optionalBool("force", from: arguments)
-        do {
-            try BoardWriter.deleteColumn(
-                identifier: identifier, force: force, dataDirectory: dataDirectory)
-            return CallTool.Result(
-                content: [
-                    .text(
-                        text: "{\"ok\": true, \"deleted\": \"\(identifier)\", \"force\": \(force)}",
-                        annotations: nil, _meta: nil)
-                ])
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
         }
     }
 }
