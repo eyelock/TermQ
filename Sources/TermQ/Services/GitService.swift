@@ -97,6 +97,19 @@ public class GitService: GitServiceProtocol {
         return output.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
+    /// Run `git submodule update --init --recursive` in the repository at `repoPath`.
+    ///
+    /// Used to hydrate submodule content after a worktree is created or a
+    /// repository is added. No-op on repos without submodules. Errors are
+    /// surfaced so callers can present stderr to the user — credential
+    /// failures on SSH remotes are the most common cause.
+    public func initializeSubmodules(repoPath: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["submodule", "update", "--init", "--recursive"]
+        )
+    }
+
     /// Lock the worktree at `path` to protect it during agent work.
     public func lockWorktree(repoPath: String, worktreePath: String) async throws {
         _ = try await GitServiceShared.runGitCommand(repoPath: repoPath, args: ["worktree", "lock", worktreePath])

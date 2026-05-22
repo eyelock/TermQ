@@ -269,6 +269,8 @@
 "settings.protected.branches.label" = "受保护的分支";
 "settings.protected.branches.help" = "清理时永不提供删除的分支。用逗号分隔名称。";
 "settings.protected.branches.prompt" = "逗号分隔的分支名称";
+"settings.git.init.submodules.label" = "初始化 Git 子模块";
+"settings.git.init.submodules.help" = "创建工作树或添加仓库时，运行 `git submodule update --init --recursive`，确保子模块内容在代理开始工作前已就绪。";
 
 // Settings - Language section
 "settings.section.language" = "语言";
@@ -563,6 +565,7 @@
 "sidebar.remove.worktree.title" = "删除工作树？";
 "sidebar.remove.worktree.confirm" = "删除";
 "sidebar.remove.main.worktree.error" = "无法移除主工作树。";
+"sidebar.submodule.init.failed %@" = "子模块初始化失败：%@";
 "sidebar.remove.worktree.message %@" = "这将永久删除“%@”处的工作树。分支不会被删除。";
 
 // Delete worktree (force)

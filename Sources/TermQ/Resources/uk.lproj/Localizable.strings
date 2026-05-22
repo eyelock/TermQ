@@ -271,6 +271,8 @@
 "settings.protected.branches.label" = "Захищені гілки";
 "settings.protected.branches.help" = "Гілки, які ніколи не пропонуються для видалення під час очищення. Розділяйте імена комами.";
 "settings.protected.branches.prompt" = "Імена гілок через кому";
+"settings.git.init.submodules.label" = "Ініціалізувати підмодулі Git";
+"settings.git.init.submodules.help" = "Під час створення робочого дерева або додавання репозиторію виконується `git submodule update --init --recursive`, щоб вміст підмодулів був доступний до початку роботи агентів.";
 
 // Settings - Language section
 "settings.section.language" = "Мова";
@@ -564,6 +566,7 @@
 "sidebar.remove.worktree.title" = "Видалити робоче дерево?";
 "sidebar.remove.worktree.confirm" = "Видалити";
 "sidebar.remove.main.worktree.error" = "Головне робоче дерево неможливо видалити.";
+"sidebar.submodule.init.failed %@" = "Помилка ініціалізації підмодуля: %@";
 "sidebar.remove.worktree.message %@" = "Це остаточно видалить робоче дерево у \"%@\". Гілку буде збережено.";
 
 // Delete worktree (force)

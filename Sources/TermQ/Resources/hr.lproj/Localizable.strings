@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Zaštićene grane";
 "settings.protected.branches.help" = "Grane koje se nikad ne nude za brisanje pri čišćenju. Odvojite nazive zarezima.";
 "settings.protected.branches.prompt" = "Nazivi grana odvojeni zarezima";
+"settings.git.init.submodules.label" = "Inicijaliziraj Git podmodule";
+"settings.git.init.submodules.help" = "Pri stvaranju worktree stabla ili dodavanju repozitorija pokreće se `git submodule update --init --recursive` kako bi sadržaj podmodula bio dostupan prije nego agenti počnu raditi.";
 
 // Settings - Language section
 "settings.section.language" = "Jezik";
@@ -563,6 +565,7 @@
 "sidebar.remove.worktree.title" = "Ukloniti radno stablo?";
 "sidebar.remove.worktree.confirm" = "Ukloni";
 "sidebar.remove.main.worktree.error" = "Glavno radno stablo ne može se ukloniti.";
+"sidebar.submodule.init.failed %@" = "Inicijalizacija podmodula nije uspjela: %@";
 "sidebar.remove.worktree.message %@" = "Ovo će trajno ukloniti radno stablo na \"%@\". Grana neće biti obrisana.";
 
 // Delete worktree (force)

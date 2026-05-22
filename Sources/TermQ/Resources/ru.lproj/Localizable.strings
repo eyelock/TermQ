@@ -269,6 +269,8 @@
 "settings.protected.branches.label" = "Защищённые ветки";
 "settings.protected.branches.help" = "Ветки, которые никогда не предлагаются для удаления при очистке. Разделяйте имена запятыми.";
 "settings.protected.branches.prompt" = "Имена веток через запятую";
+"settings.git.init.submodules.label" = "Инициализировать подмодули Git";
+"settings.git.init.submodules.help" = "При создании рабочего дерева или добавлении репозитория выполняется `git submodule update --init --recursive`, чтобы содержимое подмодулей было доступно до начала работы агентов.";
 
 // Settings - Language section
 "settings.section.language" = "Язык";
@@ -563,6 +565,7 @@
 "sidebar.remove.worktree.title" = "Удалить рабочее дерево?";
 "sidebar.remove.worktree.confirm" = "Удалить";
 "sidebar.remove.main.worktree.error" = "Основное рабочее дерево не может быть удалено.";
+"sidebar.submodule.init.failed %@" = "Ошибка инициализации подмодуля: %@";
 "sidebar.remove.worktree.message %@" = "Это навсегда удалит рабочее дерево по пути «%@». Ветка удалена не будет.";
 
 // Delete worktree (force)

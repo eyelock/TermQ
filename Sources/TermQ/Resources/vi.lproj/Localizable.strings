@@ -271,6 +271,8 @@
 "settings.protected.branches.label" = "Nhánh được bảo vệ";
 "settings.protected.branches.help" = "Các nhánh không bao giờ được đề xuất xóa khi dọn dẹp. Phân tách tên bằng dấu phẩy.";
 "settings.protected.branches.prompt" = "Tên nhánh phân cách bằng dấu phẩy";
+"settings.git.init.submodules.label" = "Khởi tạo Git Submodule";
+"settings.git.init.submodules.help" = "Khi tạo worktree hoặc thêm kho lưu trữ, lệnh `git submodule update --init --recursive` sẽ được chạy để nội dung submodule có sẵn trước khi các agent bắt đầu làm việc.";
 
 // Settings - Language section
 "settings.section.language" = "Ngôn ngữ";
@@ -564,6 +566,7 @@
 "sidebar.remove.worktree.title" = "Xóa Worktree?";
 "sidebar.remove.worktree.confirm" = "Xóa";
 "sidebar.remove.main.worktree.error" = "Không thể xóa worktree chính.";
+"sidebar.submodule.init.failed %@" = "Khởi tạo submodule thất bại: %@";
 "sidebar.remove.worktree.message %@" = "Thao tác này sẽ xóa vĩnh viễn worktree tại \"%@\". Nhánh sẽ không bị xóa.";
 
 // Delete worktree (force)

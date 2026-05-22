@@ -269,6 +269,8 @@
 "settings.protected.branches.label" = "Ramuri protejate";
 "settings.protected.branches.help" = "Ramuri care nu sunt niciodată oferite pentru ștergere la curățare. Separați numele cu virgule.";
 "settings.protected.branches.prompt" = "Nume de ramuri separate prin virgule";
+"settings.git.init.submodules.label" = "Inițializează submodulele Git";
+"settings.git.init.submodules.help" = "La crearea unui worktree sau adăugarea unui depozit, se rulează `git submodule update --init --recursive` pentru ca conținutul submodulelor să fie disponibil înainte ca agenții să înceapă lucrul.";
 
 // Settings - Language section
 "settings.section.language" = "Limbă";
@@ -563,6 +565,7 @@
 "sidebar.remove.worktree.title" = "Ștergeți arborele de lucru?";
 "sidebar.remove.worktree.confirm" = "Șterge";
 "sidebar.remove.main.worktree.error" = "Arborele de lucru principal nu poate fi eliminat.";
+"sidebar.submodule.init.failed %@" = "Inițializarea submodulului a eșuat: %@";
 "sidebar.remove.worktree.message %@" = "Aceasta va șterge permanent arborele de lucru din \"%@\". Branch-ul nu va fi șters.";
 
 // Delete worktree (force)

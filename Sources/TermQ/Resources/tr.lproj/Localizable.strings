@@ -271,6 +271,8 @@
 "settings.protected.branches.label" = "Korumalı dallar";
 "settings.protected.branches.help" = "Budama sırasında hiçbir zaman silinmek için sunulmayan dallar. Adları virgülle ayırın.";
 "settings.protected.branches.prompt" = "Virgülle ayrılmış dal adları";
+"settings.git.init.submodules.label" = "Git Alt Modüllerini Başlat";
+"settings.git.init.submodules.help" = "Bir worktree oluştururken veya depo eklerken `git submodule update --init --recursive` çalıştırılır; böylece alt modül içeriği ajanlar çalışmaya başlamadan önce hazır olur.";
 
 // Settings - Language section
 "settings.section.language" = "Dil";
@@ -564,6 +566,7 @@
 "sidebar.remove.worktree.title" = "Çalışma Ağacı Kaldırılsın mı?";
 "sidebar.remove.worktree.confirm" = "Kaldır";
 "sidebar.remove.main.worktree.error" = "Ana çalışma ağacı kaldırılamaz.";
+"sidebar.submodule.init.failed %@" = "Alt modül başlatma başarısız oldu: %@";
 "sidebar.remove.worktree.message %@" = "\"%@\" konumundaki çalışma ağacı kalıcı olarak kaldırılacak. Dal silinmeyecek.";
 
 // Delete worktree (force)

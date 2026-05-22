@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.2] - 2026-05-22
+
+### Added — Git workflow
+
+- **"Initialize Git Submodules" toggle (Settings → General → Git).** When enabled, TermQ runs `git submodule update --init --recursive` after creating a worktree, adding a repository, or pulling — so submodule content is present before agents start working in the directory. Off by default. Failures surface stderr in the sidebar (`Submodule init failed: …`) rather than rolling back the operation, so credential issues on SSH submodules are diagnosable.
+
 ## [0.11.1]
 
 ### Fixed
