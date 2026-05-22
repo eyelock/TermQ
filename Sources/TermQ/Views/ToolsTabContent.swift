@@ -86,7 +86,7 @@ extension ToolsTabContent {
 
             StatusIndicator(
                 icon: "arrow.triangle.branch",
-                label: Strings.Settings.Gh.title,
+                label: Strings.Settings.GhCli.title,
                 status: ghStatusIndicator,
                 message: ghStatusMessage
             )
@@ -477,12 +477,12 @@ extension ToolsTabContent {
         case .missing:
             return Strings.Settings.notInstalled
         case .unauthenticated:
-            return Strings.Settings.Gh.statusUnauthenticated
+            return Strings.Settings.GhCli.statusUnauthenticated
         case .authCheckFailed:
-            return Strings.Settings.Gh.statusAuthCheckFailed
+            return Strings.Settings.GhCli.statusAuthCheckFailed
         case .ready(_, let login):
             let version = ghProbe.version.map { "\($0) · " } ?? ""
-            return "\(version)\(Strings.Settings.Gh.statusSignedInAs(login))"
+            return "\(version)\(Strings.Settings.GhCli.statusSignedInAs(login))"
         }
     }
 
@@ -496,9 +496,9 @@ extension ToolsTabContent {
                         .foregroundColor(.secondary)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(Strings.Settings.Gh.title)
+                        Text(Strings.Settings.GhCli.title)
                             .font(.headline)
-                        Text(Strings.Settings.Gh.description)
+                        Text(Strings.Settings.GhCli.description)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -522,7 +522,7 @@ extension ToolsTabContent {
             }
             .padding(.vertical, 4)
         } header: {
-            Text(Strings.Settings.Gh.section)
+            Text(Strings.Settings.GhCli.section)
         }
         .onAppear {
             Task { await ghProbe.probe() }
@@ -534,7 +534,7 @@ extension ToolsTabContent {
         VStack(alignment: .leading, spacing: 8) {
             if let version = ghProbe.version {
                 HStack {
-                    Text(Strings.Settings.Gh.version)
+                    Text(Strings.Settings.GhCli.version)
                         .foregroundColor(.secondary)
                     Text(version)
                         .font(.system(.body, design: .monospaced))
@@ -544,7 +544,7 @@ extension ToolsTabContent {
 
             if let path = ghProbe.status.ghPath {
                 HStack {
-                    Text(Strings.Settings.Gh.path)
+                    Text(Strings.Settings.GhCli.path)
                         .foregroundColor(.secondary)
                     Text(path)
                         .font(.system(.body, design: .monospaced))
@@ -558,7 +558,7 @@ extension ToolsTabContent {
                 HStack {
                     Image(systemName: "checkmark.seal.fill")
                         .foregroundColor(.green)
-                    Text(Strings.Settings.Gh.statusSignedInAs(login))
+                    Text(Strings.Settings.GhCli.statusSignedInAs(login))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -567,11 +567,11 @@ extension ToolsTabContent {
                     HStack {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundColor(.orange)
-                        Text(Strings.Settings.Gh.statusUnauthenticated)
+                        Text(Strings.Settings.GhCli.statusUnauthenticated)
                             .font(.caption)
                             .foregroundColor(.orange)
                     }
-                    Text(Strings.Settings.Gh.authHint)
+                    Text(Strings.Settings.GhCli.authHint)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -579,7 +579,7 @@ extension ToolsTabContent {
                 HStack {
                     Image(systemName: "exclamationmark.triangle")
                         .foregroundColor(.orange)
-                    Text(Strings.Settings.Gh.statusAuthCheckFailed)
+                    Text(Strings.Settings.GhCli.statusAuthCheckFailed)
                         .font(.caption)
                         .foregroundColor(.orange)
                 }
@@ -590,14 +590,14 @@ extension ToolsTabContent {
             HStack {
                 Image(systemName: "info.circle")
                     .foregroundColor(.blue)
-                Text(Strings.Settings.Gh.info)
+                Text(Strings.Settings.GhCli.info)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
 
             HStack {
                 Spacer()
-                Button(Strings.Settings.Gh.checkAgain) {
+                Button(Strings.Settings.GhCli.checkAgain) {
                     Task { await ghProbe.reprobe() }
                 }
                 .font(.caption)
@@ -608,11 +608,11 @@ extension ToolsTabContent {
     @ViewBuilder
     var ghNotAvailableContent: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(Strings.Settings.Gh.notInstalledDescription)
+            Text(Strings.Settings.GhCli.notInstalledDescription)
                 .font(.caption)
                 .foregroundColor(.secondary)
 
-            Text(Strings.Settings.Gh.installHint)
+            Text(Strings.Settings.GhCli.installHint)
                 .font(.caption)
                 .foregroundColor(.secondary)
 
@@ -634,7 +634,7 @@ extension ToolsTabContent {
                 .help(Strings.Settings.copyToClipboard)
             }
 
-            Button(Strings.Settings.Gh.checkAgain) {
+            Button(Strings.Settings.GhCli.checkAgain) {
                 Task { await ghProbe.reprobe() }
             }
             .font(.caption)

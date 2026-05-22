@@ -1,10 +1,10 @@
 import Foundation
 import SwiftUI
 
-// MARK: - Settings.Gh
+// MARK: - Settings.GhCli
 
 extension Strings.Settings {
-    enum Gh {
+    enum GhCli {
         static var section: String { localized("settings.section.gh") }
         static var title: String { localized("settings.gh.title") }
         static var description: String { localized("settings.gh.description") }
