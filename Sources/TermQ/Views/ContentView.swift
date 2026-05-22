@@ -529,20 +529,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .alert(Strings.Delete.title, isPresented: $viewModel.showDeleteConfirmation) {
-                Button(Strings.Delete.cancel, role: .cancel) {}
-                Button(Strings.Delete.moveToBin, role: .destructive) {
-                    if let selectedCard = viewModel.selectedCard {
-                        viewModel.deleteTabCard(selectedCard)
-                    }
-                }
-            } message: {
-                if let selectedCard = viewModel.selectedCard {
-                    Text(Strings.Delete.binMessage(selectedCard.title))
-                } else {
-                    Text(Strings.Delete.binMessage(""))
-                }
-            }
+            .modifier(DeleteCardConfirmationAlert(viewModel: viewModel))
             .navigationTitle(Strings.appName)
             .focusedSceneValue(\.terminalActions, terminalActions)
         }
@@ -836,6 +823,32 @@ extension ContentView {
         viewModel.selectCard(card)
     }
 
+}
+
+// MARK: - View Modifiers
+
+/// Extracted from `ContentView.body` to keep the struct body under the
+/// `type_body_length` lint threshold.
+private struct DeleteCardConfirmationAlert: ViewModifier {
+    @ObservedObject var viewModel: BoardViewModel
+
+    func body(content: Content) -> some View {
+        content
+            .alert(Strings.Delete.title, isPresented: $viewModel.showDeleteConfirmation) {
+                Button(Strings.Delete.cancel, role: .cancel) {}
+                Button(Strings.Delete.moveToBin, role: .destructive) {
+                    if let selectedCard = viewModel.selectedCard {
+                        viewModel.deleteTabCard(selectedCard)
+                    }
+                }
+            } message: {
+                if let selectedCard = viewModel.selectedCard {
+                    Text(Strings.Delete.binMessage(selectedCard.title))
+                } else {
+                    Text(Strings.Delete.binMessage(""))
+                }
+            }
+    }
 }
 
 // MARK: - Harness sub-views
