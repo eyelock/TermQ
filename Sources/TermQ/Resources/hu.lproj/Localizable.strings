@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Védett ágak";
 "settings.protected.branches.help" = "Olyan ágak, amelyek soha nem jelennek meg törlésre kínálva tisztítás során. Az neveket vesszővel válassza el.";
 "settings.protected.branches.prompt" = "Vesszővel elválasztott ágnevek";
+"settings.git.init.submodules.label" = "Git almodulok inicializálása";
+"settings.git.init.submodules.help" = "Worktree létrehozásakor vagy tároló hozzáadásakor a `git submodule update --init --recursive` parancs fut le, hogy az almodulok tartalma elérhető legyen, mielőtt az ügynökök munkát kezdenek.";
 
 // Settings - Language section
 "settings.section.language" = "Nyelv";
@@ -578,6 +580,7 @@
 "sidebar.remove.worktree.title" = "Eltávolítja a munkakönyvtárat?";
 "sidebar.remove.worktree.confirm" = "Eltávolítás";
 "sidebar.remove.main.worktree.error" = "A fő munkakönyvtár nem távolítható el.";
+"sidebar.submodule.init.failed %@" = "Almodul inicializálása sikertelen: %@";
 "sidebar.remove.worktree.message %@" = "Ez véglegesen eltávolítja a \"%@\" munkakönyvtárat. Az ág nem törlődik.";
 
 // Delete worktree (force)

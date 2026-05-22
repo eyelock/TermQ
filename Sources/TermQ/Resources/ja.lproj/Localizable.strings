@@ -269,6 +269,8 @@
 "settings.protected.branches.label" = "保護されたブランチ";
 "settings.protected.branches.help" = "整理時に削除候補として表示されないブランチです。名前はカンマで区切ってください。";
 "settings.protected.branches.prompt" = "カンマ区切りのブランチ名";
+"settings.git.init.submodules.label" = "Git サブモジュールを初期化";
+"settings.git.init.submodules.help" = "ワークツリーの作成またはリポジトリの追加時に `git submodule update --init --recursive` を実行し、エージェントが作業を開始する前にサブモジュールのコンテンツが揃っている状態にします。";
 
 // Settings - Language section
 "settings.section.language" = "言語";
@@ -578,6 +580,7 @@
 "sidebar.remove.worktree.title" = "ワークツリーを削除しますか？";
 "sidebar.remove.worktree.confirm" = "削除";
 "sidebar.remove.main.worktree.error" = "メインのワークツリーは削除できません。";
+"sidebar.submodule.init.failed %@" = "サブモジュールの初期化に失敗しました: %@";
 "sidebar.remove.worktree.message %@" = "「%@」 のワークツリーを完全に削除します。ブランチは削除されません。";
 
 // Delete worktree (force)

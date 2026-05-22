@@ -55,6 +55,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
     let gitService: any GitServiceProtocol
     private let persistence: any RepoPersistenceProtocol
     private let prService: GitHubPRService
+    private let gitConfig: GitConfigStore
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     var monitors: [UUID: GitRepositoryMonitor] = [:]
@@ -63,11 +64,13 @@ final class WorktreeSidebarViewModel: ObservableObject {
     init(
         gitService: any GitServiceProtocol = GitService.shared,
         persistence: any RepoPersistenceProtocol = RepoPersistence(),
-        prService: GitHubPRService = .shared
+        prService: GitHubPRService = .shared,
+        gitConfig: GitConfigStore = .shared
     ) {
         self.persistence = persistence
         self.gitService = gitService
         self.prService = prService
+        self.gitConfig = gitConfig
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
         let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
@@ -182,6 +185,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
             ensureGitignored(repoPath: path, basePath: base)
         }
         startMonitor(for: repo)
+        await initializeSubmodulesIfEnabled(at: path)
         await refreshWorktrees(for: repo)
     }
 
@@ -314,6 +318,19 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     // MARK: - Worktree CRUD
 
+    /// Run `git submodule update --init --recursive` at `path` when the user has
+    /// the "Initialize Git Submodules" toggle on. Failures surface via
+    /// `operationError` rather than throwing — the worktree/repo is already
+    /// created, so the user can re-run the init manually after fixing creds.
+    private func initializeSubmodulesIfEnabled(at path: String) async {
+        guard gitConfig.initializeSubmodules else { return }
+        do {
+            try await gitService.initializeSubmodules(repoPath: path)
+        } catch {
+            operationError = Strings.Sidebar.submoduleInitFailed(error.localizedDescription)
+        }
+    }
+
     func createWorktree(
         repo: ObservableRepository,
         branchName: String,
@@ -326,6 +343,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
             path: path,
             baseBranch: baseBranch
         )
+        await initializeSubmodulesIfEnabled(at: path)
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
     }
@@ -336,6 +354,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
             branch: branch,
             path: path
         )
+        await initializeSubmodulesIfEnabled(at: path)
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
     }
@@ -362,6 +381,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
             branch: newBranch,
             path: path
         )
+        await initializeSubmodulesIfEnabled(at: path)
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
     }
@@ -462,6 +482,9 @@ final class WorktreeSidebarViewModel: ObservableObject {
         updatingWorktreeIDs.insert(worktree.id)
         defer { updatingWorktreeIDs.remove(worktree.id) }
         try await gitService.pullBranch(worktreePath: worktree.path)
+        // Pull may have advanced submodule pointers — re-init when enabled so
+        // the worktree isn't left pointing at stale submodule commits.
+        await initializeSubmodulesIfEnabled(at: worktree.path)
         await refreshWorktrees(for: repo)
     }
 

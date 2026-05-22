@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Beskyttede grener";
 "settings.protected.branches.help" = "Grener som aldri tilbys for sletting ved beskjæring. Skill navn med kommaer.";
 "settings.protected.branches.prompt" = "Kommaseparerte grenernavn";
+"settings.git.init.submodules.label" = "Initialiser Git-undermoduler";
+"settings.git.init.submodules.help" = "Når det opprettes et worktree eller legges til et lager, kjøres `git submodule update --init --recursive` slik at innholdet i undermodulene er tilgjengelig før agenter begynner å arbeide.";
 
 // Settings - Language section
 "settings.section.language" = "Språk";
@@ -577,6 +579,7 @@
 "sidebar.remove.worktree.title" = "Fjerne worktree?";
 "sidebar.remove.worktree.confirm" = "Fjern";
 "sidebar.remove.main.worktree.error" = "Hoved-worktreen kan ikke fjernes.";
+"sidebar.submodule.init.failed %@" = "Initialisering av undermodul mislyktes: %@";
 "sidebar.remove.worktree.message %@" = "Dette vil fjerne worktree på \"%@\" permanent. Branchen slettes ikke.";
 
 // Delete worktree (force)

@@ -60,6 +60,11 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 - **`Docs/Help/tutorials/mcp-subscriptions.md`** — new tutorial walking through the resource-subscription feature with worked code and sharp-edges section.
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
+
+### Added — Git workflow
+
+- **"Initialize Git Submodules" toggle (Settings → General → Git).** When enabled, TermQ runs `git submodule update --init --recursive` after creating a worktree, adding a repository, or pulling — so submodule content is present before agents start working in the directory. Off by default. Failures surface stderr in the sidebar (`Submodule init failed: …`) rather than rolling back the operation, so credential issues on SSH submodules are diagnosable.
+
 ## [0.11.1]
 
 ### Fixed

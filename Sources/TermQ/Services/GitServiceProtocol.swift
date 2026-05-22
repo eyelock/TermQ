@@ -25,4 +25,5 @@ protocol GitServiceProtocol: AnyObject {
     func updateRemoteHead(repoPath: String) async
     func inferRepoName(repoPath: String) async -> String
     func remoteURL(repoPath: String) async throws -> String
+    func initializeSubmodules(repoPath: String) async throws
 }

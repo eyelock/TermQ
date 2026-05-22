@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Cawangan yang dilindungi";
 "settings.protected.branches.help" = "Cawangan yang tidak pernah ditawarkan untuk dipadam semasa pemangkasan. Pisahkan nama dengan koma.";
 "settings.protected.branches.prompt" = "Nama cawangan dipisahkan koma";
+"settings.git.init.submodules.label" = "Mulakan Submodul Git";
+"settings.git.init.submodules.help" = "Apabila mencipta worktree atau menambah repositori, `git submodule update --init --recursive` dijalankan supaya kandungan submodul sedia ada sebelum ejen mula bekerja.";
 
 // Settings - Language section
 "settings.section.language" = "Bahasa";
@@ -577,6 +579,7 @@
 "sidebar.remove.worktree.title" = "Buang Worktree?";
 "sidebar.remove.worktree.confirm" = "Buang";
 "sidebar.remove.main.worktree.error" = "Worktree utama tidak boleh dibuang.";
+"sidebar.submodule.init.failed %@" = "Inisialisasi submodul gagal: %@";
 "sidebar.remove.worktree.message %@" = "Ini akan membuang worktree di \"%@\" secara kekal. Cawangan tidak akan dipadam.";
 
 // Delete worktree (force)

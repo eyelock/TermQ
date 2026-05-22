@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Beschermde branches";
 "settings.protected.branches.help" = "Branches die nooit worden aangeboden voor verwijdering bij het snoeien. Scheid namen met komma's.";
 "settings.protected.branches.prompt" = "Kommagescheiden branchenamen";
+"settings.git.init.submodules.label" = "Git-submodules initialiseren";
+"settings.git.init.submodules.help" = "Bij het aanmaken van een worktree of toevoegen van een repository wordt `git submodule update --init --recursive` uitgevoerd zodat de submodule-inhoud aanwezig is voordat agenten aan de slag gaan.";
 
 // Settings - Language section
 "settings.section.language" = "Taal";
@@ -577,6 +579,7 @@
 "sidebar.remove.worktree.title" = "Worktree verwijderen?";
 "sidebar.remove.worktree.confirm" = "Verwijder";
 "sidebar.remove.main.worktree.error" = "De hoofd-worktree kan niet worden verwijderd.";
+"sidebar.submodule.init.failed %@" = "Initialisatie submodule mislukt: %@";
 "sidebar.remove.worktree.message %@" = "Dit verwijdert de worktree op \"%@\" permanent. De branch wordt niet verwijderd.";
 
 // Delete worktree (force)

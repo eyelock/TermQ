@@ -271,6 +271,8 @@
 "settings.protected.branches.label" = "Skyddade grenar";
 "settings.protected.branches.help" = "Grenar som aldrig erbjuds för borttagning vid rensning. Separera namn med kommatecken.";
 "settings.protected.branches.prompt" = "Kommaseparerade grennamn";
+"settings.git.init.submodules.label" = "Initiera Git-submoduler";
+"settings.git.init.submodules.help" = "När ett arbetstråd skapas eller ett arkiv läggs till körs `git submodule update --init --recursive` så att submodulinnehållet finns tillgängligt innan agenter börjar arbeta.";
 
 // Settings - Language section
 "settings.section.language" = "Språk";
@@ -579,6 +581,7 @@
 "sidebar.remove.worktree.title" = "Ta bort arbetstråd?";
 "sidebar.remove.worktree.confirm" = "Ta bort";
 "sidebar.remove.main.worktree.error" = "Huvudarbetstrådet kan inte tas bort.";
+"sidebar.submodule.init.failed %@" = "Initiering av submodul misslyckades: %@";
 "sidebar.remove.worktree.message %@" = "Detta tar permanent bort arbetstrådet på \"%@\". Grenen raderas inte.";
 
 // Delete worktree (force)

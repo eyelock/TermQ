@@ -271,6 +271,8 @@
 "settings.protected.branches.label" = "สาขาที่ป้องกัน";
 "settings.protected.branches.help" = "สาขาที่ไม่เคยถูกเสนอให้ลบเมื่อทำการตัดแต่ง แยกชื่อด้วยเครื่องหมายจุลภาค";
 "settings.protected.branches.prompt" = "ชื่อสาขาคั่นด้วยจุลภาค";
+"settings.git.init.submodules.label" = "เริ่มต้น Git Submodule";
+"settings.git.init.submodules.help" = "เมื่อสร้าง worktree หรือเพิ่มที่เก็บโค้ด จะรัน `git submodule update --init --recursive` เพื่อให้เนื้อหาของ submodule พร้อมก่อนที่ agent จะเริ่มทำงาน";
 
 // Settings - Language section
 "settings.section.language" = "ภาษา";
@@ -579,6 +581,7 @@
 "sidebar.remove.worktree.title" = "ลบ Worktree?";
 "sidebar.remove.worktree.confirm" = "ลบ";
 "sidebar.remove.main.worktree.error" = "ไม่สามารถลบ worktree หลักได้";
+"sidebar.submodule.init.failed %@" = "การเริ่มต้น submodule ล้มเหลว: %@";
 "sidebar.remove.worktree.message %@" = "การดำเนินการนี้จะลบ worktree ที่ \"%@\" อย่างถาวร สาขาจะไม่ถูกลบ";
 
 // Delete worktree (force)

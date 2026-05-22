@@ -72,6 +72,9 @@ extension Strings {
         static var removeWorktreeTitle: String { localized("sidebar.remove.worktree.title") }
         static var removeWorktreeConfirm: String { localized("sidebar.remove.worktree.confirm") }
         static var removeMainWorktreeError: String { localized("sidebar.remove.main.worktree.error") }
+        static func submoduleInitFailed(_ stderr: String) -> String {
+            localized("sidebar.submodule.init.failed %@", stderr)
+        }
         static func removeWorktreeMessage(_ path: String) -> String {
             localized("sidebar.remove.worktree.message %@", path)
         }

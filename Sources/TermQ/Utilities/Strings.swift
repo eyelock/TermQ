@@ -530,6 +530,8 @@ enum Strings {
         static var protectedBranchesLabel: String { localized("settings.protected.branches.label") }
         static var protectedBranchesHelp: String { localized("settings.protected.branches.help") }
         static var protectedBranchesPrompt: String { localized("settings.protected.branches.prompt") }
+        static var initializeSubmodulesLabel: String { localized("settings.git.init.submodules.label") }
+        static var initializeSubmodulesHelp: String { localized("settings.git.init.submodules.help") }
 
         // General - Language section
         static var sectionLanguage: String { localized("settings.section.language") }
