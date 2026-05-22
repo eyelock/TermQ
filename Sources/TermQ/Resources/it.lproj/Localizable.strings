@@ -269,6 +269,8 @@
 "settings.protected.branches.label" = "Branch protetti";
 "settings.protected.branches.help" = "Branch mai proposti per l'eliminazione durante la potatura. Separa i nomi con virgole.";
 "settings.protected.branches.prompt" = "Nomi di branch separati da virgole";
+"settings.git.init.submodules.label" = "Inizializza i sottomoduli Git";
+"settings.git.init.submodules.help" = "Quando si crea un worktree o si aggiunge un repository, viene eseguito `git submodule update --init --recursive` affinché il contenuto dei sottomoduli sia disponibile prima che gli agenti inizino a lavorare.";
 
 // Settings - Language section
 "settings.section.language" = "Lingua";
@@ -578,6 +580,7 @@
 "sidebar.remove.worktree.title" = "Eliminare il worktree?";
 "sidebar.remove.worktree.confirm" = "Elimina";
 "sidebar.remove.main.worktree.error" = "Il worktree principale non può essere rimosso.";
+"sidebar.submodule.init.failed %@" = "Inizializzazione sottomodulo fallita: %@";
 "sidebar.remove.worktree.message %@" = "Questo eliminerà permanentemente il worktree in \"%@\". Il branch non verrà eliminato.";
 
 // Delete worktree (force)

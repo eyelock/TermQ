@@ -271,6 +271,8 @@
 "settings.protected.branches.label" = "Zaščitene veje";
 "settings.protected.branches.help" = "Veje, ki se med čiščenjem nikoli ne ponudijo za brisanje. Ločite imena z vejicami.";
 "settings.protected.branches.prompt" = "Imena vej ločena z vejicami";
+"settings.git.init.submodules.label" = "Inicializiraj Git podmodule";
+"settings.git.init.submodules.help" = "Pri ustvarjanju delovne kopije ali dodajanju repozitorija se izvede `git submodule update --init --recursive`, da je vsebina podmodulov na voljo, preden agenti začnejo delati.";
 
 // Settings - Language section
 "settings.section.language" = "Jezik";
@@ -579,6 +581,7 @@
 "sidebar.remove.worktree.title" = "Odstrani delovno kopijo?";
 "sidebar.remove.worktree.confirm" = "Odstrani";
 "sidebar.remove.main.worktree.error" = "Glavne delovne kopije ni mogoče odstraniti.";
+"sidebar.submodule.init.failed %@" = "Inicializacija podmodula ni uspela: %@";
 "sidebar.remove.worktree.message %@" = "To bo trajno odstranilo delovno kopijo na \"%@\". Veja ne bo izbrisana.";
 
 // Delete worktree (force)

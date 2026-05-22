@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Προστατευμένοι κλάδοι";
 "settings.protected.branches.help" = "Κλάδοι που δεν προσφέρονται ποτέ για διαγραφή κατά την εκκαθάριση. Διαχωρίστε τα ονόματα με κόμματα.";
 "settings.protected.branches.prompt" = "Ονόματα κλάδων διαχωρισμένα με κόμματα";
+"settings.git.init.submodules.label" = "Αρχικοποίηση υποενοτήτων Git";
+"settings.git.init.submodules.help" = "Κατά τη δημιουργία ενός worktree ή την προσθήκη αποθετηρίου, εκτελείται `git submodule update --init --recursive` ώστε το περιεχόμενο των υποενοτήτων να είναι διαθέσιμο πριν οι πράκτορες ξεκινήσουν να εργάζονται.";
 
 // Settings - Language section
 "settings.section.language" = "Γλώσσα";
@@ -580,6 +582,7 @@
 "sidebar.remove.worktree.title" = "Διαγραφή worktree;";
 "sidebar.remove.worktree.confirm" = "Διαγραφή";
 "sidebar.remove.main.worktree.error" = "Το κύριο worktree δεν μπορεί να αφαιρεθεί.";
+"sidebar.submodule.init.failed %@" = "Αποτυχία αρχικοποίησης υποενότητας: %@";
 "sidebar.remove.worktree.message %@" = "Αυτό θα διαγράψει μόνιμα το worktree στο \"%@\". Ο κλάδος δεν θα διαγραφεί.";
 
 // Delete worktree (force)

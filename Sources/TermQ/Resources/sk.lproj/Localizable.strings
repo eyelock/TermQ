@@ -269,6 +269,8 @@
 "settings.protected.branches.label" = "Chránené vetvy";
 "settings.protected.branches.help" = "Vetvy, ktoré sa nikdy neponúkajú na odstránenie pri čistení. Oddeľte názvy čiarkami.";
 "settings.protected.branches.prompt" = "Názvy vetiev oddelené čiarkami";
+"settings.git.init.submodules.label" = "Inicializovať submoduly Git";
+"settings.git.init.submodules.help" = "Pri vytvorení worktree alebo pridaní repozitára sa spustí `git submodule update --init --recursive`, aby bol obsah submodulov dostupný pred začatím práce agentov.";
 
 // Settings - Language section
 "settings.section.language" = "Jazyk";
@@ -578,6 +580,7 @@
 "sidebar.remove.worktree.title" = "Zmazať pracovný strom?";
 "sidebar.remove.worktree.confirm" = "Zmazať";
 "sidebar.remove.main.worktree.error" = "Hlavný pracovný strom nemožno odstrániť.";
+"sidebar.submodule.init.failed %@" = "Inicializácia submodulu zlyhala: %@";
 "sidebar.remove.worktree.message %@" = "Týmto sa trvalo zmaže pracovný strom v \"%@\". Vetva nebude vymazaná.";
 
 // Delete worktree (force)

@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "الفروع المحمية";
 "settings.protected.branches.help" = "الفروع التي لا تُعرض أبدًا للحذف عند التقليم. افصل الأسماء بفواصل.";
 "settings.protected.branches.prompt" = "أسماء الفروع مفصولة بفواصل";
+"settings.git.init.submodules.label" = "تهيئة الوحدات الفرعية لـ Git";
+"settings.git.init.submodules.help" = "عند إنشاء بيئة عمل أو إضافة مستودع، يتم تشغيل `git submodule update --init --recursive` لضمان توفر محتوى الوحدات الفرعية قبل أن تبدأ الوكلاء في العمل.";
 
 // Settings - Language section
 "settings.section.language" = "اللغة";
@@ -580,6 +582,7 @@
 "sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
 "sidebar.remove.worktree.confirm" = "حذف";
 "sidebar.remove.main.worktree.error" = "لا يمكن إزالة بيئة العمل الرئيسية.";
+"sidebar.submodule.init.failed %@" = "فشل تهيئة الوحدة الفرعية: %@";
 "sidebar.remove.worktree.message %@" = "سيؤدي هذا إلى حذف بيئة العمل في \"%@\" بشكل دائم. لن يتم حذف الفرع.";
 
 // Delete worktree (force)

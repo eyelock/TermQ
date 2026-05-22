@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Ramas protegidas";
 "settings.protected.branches.help" = "Ramas que nunca se ofrecen para eliminar al podar. Separa los nombres con comas.";
 "settings.protected.branches.prompt" = "Nombres de ramas separados por comas";
+"settings.git.init.submodules.label" = "Inicializar submódulos de Git";
+"settings.git.init.submodules.help" = "Al crear un worktree o agregar un repositorio, ejecuta `git submodule update --init --recursive` para que el contenido de los submódulos esté presente antes de que los agentes comiencen a trabajar.";
 
 // Settings - Language section
 "settings.section.language" = "Idioma";
@@ -580,6 +582,7 @@
 "sidebar.remove.worktree.title" = "¿Eliminar Worktree?";
 "sidebar.remove.worktree.confirm" = "Eliminar";
 "sidebar.remove.main.worktree.error" = "El worktree principal no se puede eliminar.";
+"sidebar.submodule.init.failed %@" = "Error al inicializar el submódulo: %@";
 "sidebar.remove.worktree.message %@" = "Esto eliminará permanentemente el worktree en \"%@\". La rama no se eliminará.";
 
 // Delete worktree (force)

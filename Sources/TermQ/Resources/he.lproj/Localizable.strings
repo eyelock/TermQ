@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "ענפים מוגנים";
 "settings.protected.branches.help" = "ענפים שלעולם אינם מוצעים למחיקה בעת גיזום. הפרד שמות בפסיקים.";
 "settings.protected.branches.prompt" = "שמות ענפים מופרדים בפסיקים";
+"settings.git.init.submodules.label" = "אתחל תת-מודולים של Git";
+"settings.git.init.submodules.help" = "בעת יצירת עץ עבודה או הוספת מאגר, מופעל `git submodule update --init --recursive` כדי שתוכן תת-המודולים יהיה זמין לפני שסוכנים מתחילים לעבוד.";
 
 // Settings - Language section
 "settings.section.language" = "שפה";
@@ -578,6 +580,7 @@
 "sidebar.remove.worktree.title" = "הסר עץ עבודה?";
 "sidebar.remove.worktree.confirm" = "הסר";
 "sidebar.remove.main.worktree.error" = "לא ניתן להסיר את עץ העבודה הראשי.";
+"sidebar.submodule.init.failed %@" = "אתחול תת-מודול נכשל: %@";
 "sidebar.remove.worktree.message %@" = "פעולה זו תסיר לצמיתות את עץ העבודה ב-\"%@\". הענף לא יימחק.";
 
 // Delete worktree (force)

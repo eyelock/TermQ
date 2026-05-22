@@ -29,6 +29,7 @@ struct SettingsGeneralView: View {
 
     // Git preferences
     @Binding var protectedBranches: String
+    @Binding var initializeSubmodules: Bool
 
     // Remote PR feed cap (GitHub)
     @Binding var remotePRFeedCap: Int
@@ -81,6 +82,11 @@ struct SettingsGeneralView: View {
                 prompt: Text(Strings.Settings.protectedBranchesPrompt)
             )
             Text(Strings.Settings.protectedBranchesHelp)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Toggle(Strings.Settings.initializeSubmodulesLabel, isOn: $initializeSubmodules)
+            Text(Strings.Settings.initializeSubmodulesHelp)
                 .font(.caption)
                 .foregroundColor(.secondary)
 

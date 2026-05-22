@@ -93,6 +93,7 @@ struct SettingsView: View {
                         selectedLanguage: $selectedLanguage,
                         showUninstallSheet: $showUninstallSheet,
                         protectedBranches: $gitConfig.globalProtectedBranches,
+                        initializeSubmodules: $gitConfig.initializeSubmodules,
                         remotePRFeedCap: $settings.remotePRFeedCap
                     )
                 case .environment:

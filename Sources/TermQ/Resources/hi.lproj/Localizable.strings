@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "संरक्षित शाखाएं";
 "settings.protected.branches.help" = "शाखाएं जो छंटाई के दौरान कभी भी हटाने के लिए प्रस्तावित नहीं होती हैं। नामों को अल्पविराम से अलग करें।";
 "settings.protected.branches.prompt" = "अल्पविराम से अलग की गई शाखाओं के नाम";
+"settings.git.init.submodules.label" = "Git सबमॉड्यूल प्रारंभ करें";
+"settings.git.init.submodules.help" = "एक worktree बनाते समय या कोई रिपॉज़िटरी जोड़ते समय, `git submodule update --init --recursive` चलाया जाता है ताकि एजेंट काम शुरू करने से पहले सबमॉड्यूल की सामग्री उपलब्ध रहे।";
 
 // Settings - Language section
 "settings.section.language" = "भाषा";
@@ -578,6 +580,7 @@
 "sidebar.remove.worktree.title" = "Worktree हटाएं?";
 "sidebar.remove.worktree.confirm" = "हटाएं";
 "sidebar.remove.main.worktree.error" = "मुख्य worktree को नहीं हटाया जा सकता।";
+"sidebar.submodule.init.failed %@" = "सबमॉड्यूल प्रारंभ विफल: %@";
 "sidebar.remove.worktree.message %@" = "\"%@\" पर स्थित worktree स्थायी रूप से हटा दिया जाएगा। ब्रांच हटाई नहीं जाएगी।";
 
 // Delete worktree (force)

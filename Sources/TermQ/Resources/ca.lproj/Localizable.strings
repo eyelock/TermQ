@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Branques protegides";
 "settings.protected.branches.help" = "Branques que mai s'ofereixen per esborrar en netejar. Separeu els noms amb comes.";
 "settings.protected.branches.prompt" = "Noms de branques separats per comes";
+"settings.git.init.submodules.label" = "Inicialitza els submòduls de Git";
+"settings.git.init.submodules.help" = "En crear un worktree o afegir un repositori, s'executa `git submodule update --init --recursive` perquè el contingut dels submòduls estigui disponible abans que els agents comencin a treballar.";
 
 // Settings - Language section
 "settings.section.language" = "Idioma";
@@ -580,6 +582,7 @@
 "sidebar.remove.worktree.title" = "Eliminar worktree?";
 "sidebar.remove.worktree.confirm" = "Eliminar";
 "sidebar.remove.main.worktree.error" = "El worktree principal no es pot eliminar.";
+"sidebar.submodule.init.failed %@" = "Error en inicialitzar el submòdul: %@";
 "sidebar.remove.worktree.message %@" = "Això eliminarà permanentment el worktree a \"%@\". La branca no s'eliminarà.";
 
 // Delete worktree (force)
