@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Suojatut haarat";
 "settings.protected.branches.help" = "Haaroja, joita ei koskaan tarjota poistettavaksi karsinnassa. Erota nimet pilkuilla.";
 "settings.protected.branches.prompt" = "Pilkuilla erotetut haarojen nimet";
+"settings.git.init.submodules.label" = "Alusta Git-alimoduulit";
+"settings.git.init.submodules.help" = "Kun luodaan worktree tai lisätään tietovarasto, suoritetaan `git submodule update --init --recursive`, jotta alimoduulien sisältö on saatavilla ennen kuin agentit aloittavat työn.";
 
 // Settings - Language section
 "settings.section.language" = "Kieli";
@@ -563,6 +565,7 @@
 "sidebar.remove.worktree.title" = "Poistetaanko työskentelypuu?";
 "sidebar.remove.worktree.confirm" = "Poista";
 "sidebar.remove.main.worktree.error" = "Päätyöskentelypuuta ei voi poistaa.";
+"sidebar.submodule.init.failed %@" = "Alimoduulin alustus epäonnistui: %@";
 "sidebar.remove.worktree.message %@" = "Tämä poistaa pysyvästi työskentelypuun kohteessa \"%@\". Haaraa ei poisteta.";
 
 // Delete worktree (force)

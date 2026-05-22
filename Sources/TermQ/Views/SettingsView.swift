@@ -94,7 +94,8 @@ struct SettingsView: View {
                         updaterViewModel: updaterViewModel,
                         selectedLanguage: $selectedLanguage,
                         showUninstallSheet: $showUninstallSheet,
-                        protectedBranches: $gitConfig.globalProtectedBranches
+                        protectedBranches: $gitConfig.globalProtectedBranches,
+                        initializeSubmodules: $gitConfig.initializeSubmodules
                     )
                 case .environment:
                     SettingsEnvironmentView()

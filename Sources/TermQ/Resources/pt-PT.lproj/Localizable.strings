@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Branches protegidos";
 "settings.protected.branches.help" = "Branches que nunca são oferecidos para eliminação ao podar. Separe os nomes com vírgulas.";
 "settings.protected.branches.prompt" = "Nomes de branches separados por vírgulas";
+"settings.git.init.submodules.label" = "Inicializar submódulos do Git";
+"settings.git.init.submodules.help" = "Ao criar um worktree ou adicionar um repositório, executa `git submodule update --init --recursive` para que o conteúdo dos submódulos esteja presente antes que os agentes comecem a trabalhar.";
 
 // Settings - Language section
 "settings.section.language" = "Idioma";
@@ -562,6 +564,7 @@
 "sidebar.remove.worktree.title" = "Remover Árvore de Trabalho?";
 "sidebar.remove.worktree.confirm" = "Remover";
 "sidebar.remove.main.worktree.error" = "A árvore de trabalho principal não pode ser removida.";
+"sidebar.submodule.init.failed %@" = "Falha ao inicializar submódulo: %@";
 "sidebar.remove.worktree.message %@" = "Isto irá remover permanentemente a árvore de trabalho em \"%@\". O ramo não será eliminado.";
 
 // Delete worktree (force)

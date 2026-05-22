@@ -27,6 +27,8 @@ final class MockGitService: GitServiceProtocol {
     private(set) var pruneWorktreesCalled = false
     private(set) var isGitRepoCalled = false
     private(set) var addWorktreeCalled = false
+    private(set) var initializeSubmodulesCalls: [String] = []
+    var initializeSubmodulesError: Error?
     private(set) var removeWorktreeCalled = false
     private(set) var lockWorktreeCalled = false
     private(set) var unlockWorktreeCalled = false
@@ -116,6 +118,11 @@ final class MockGitService: GitServiceProtocol {
 
     func inferRepoName(repoPath: String) async -> String { inferRepoNameResult }
     func remoteURL(repoPath: String) async throws -> String { "" }
+
+    func initializeSubmodules(repoPath: String) async throws {
+        initializeSubmodulesCalls.append(repoPath)
+        if let error = initializeSubmodulesError { throw error }
+    }
 }
 
 @MainActor
@@ -140,10 +147,17 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
 
     private func makeVM(
         gitService: MockGitService = MockGitService(),
-        persistence: MockRepoPersistence = MockRepoPersistence()
+        persistence: MockRepoPersistence = MockRepoPersistence(),
+        gitConfig: GitConfigStore = GitConfigStore(defaults: makeIsolatedDefaults())
     ) -> WorktreeSidebarViewModel {
-        WorktreeSidebarViewModel(gitService: gitService, persistence: persistence)
+        WorktreeSidebarViewModel(gitService: gitService, persistence: persistence, gitConfig: gitConfig)
     }
+
+    private static func makeIsolatedDefaults() -> UserDefaults {
+        UserDefaults(suiteName: "WorktreeSidebarViewModelTests.\(UUID().uuidString)")!
+    }
+
+    private func makeIsolatedDefaults() -> UserDefaults { Self.makeIsolatedDefaults() }
 
     private func makeRepo(path: String = "/tmp/test-repo") -> ObservableRepository {
         ObservableRepository(name: "test", path: path)
@@ -920,5 +934,52 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         let error = WorktreeSidebarError.notAGitRepository(path: "/weird/path")
         XCTAssertNotNil(error.errorDescription)
         XCTAssertTrue(error.errorDescription!.contains("/weird/path"))
+    }
+
+    // MARK: - Submodule initialization
+
+    func testCreateWorktree_submodulesEnabled_initializesAtWorktreePath() async throws {
+        let mock = MockGitService()
+        let config = GitConfigStore(defaults: makeIsolatedDefaults())
+        config.initializeSubmodules = true
+        let vm = makeVM(gitService: mock, gitConfig: config)
+        let repo = makeRepo()
+
+        try await vm.createWorktree(
+            repo: repo, branchName: "feat/x", baseBranch: nil, path: "/tmp/test-repo/.worktrees/feat-x")
+
+        XCTAssertEqual(mock.initializeSubmodulesCalls, ["/tmp/test-repo/.worktrees/feat-x"])
+    }
+
+    func testCreateWorktree_submodulesDisabled_skipsInit() async throws {
+        let mock = MockGitService()
+        let config = GitConfigStore(defaults: makeIsolatedDefaults())
+        config.initializeSubmodules = false
+        let vm = makeVM(gitService: mock, gitConfig: config)
+        let repo = makeRepo()
+
+        try await vm.createWorktree(
+            repo: repo, branchName: "feat/x", baseBranch: nil, path: "/tmp/test-repo/.worktrees/feat-x")
+
+        XCTAssertTrue(mock.initializeSubmodulesCalls.isEmpty)
+    }
+
+    func testCreateWorktree_submoduleInitFailure_surfacesOperationError() async throws {
+        let mock = MockGitService()
+        mock.initializeSubmodulesError = NSError(
+            domain: "git", code: 128,
+            userInfo: [
+                NSLocalizedDescriptionKey: "ssh: permission denied"
+            ])
+        let config = GitConfigStore(defaults: makeIsolatedDefaults())
+        config.initializeSubmodules = true
+        let vm = makeVM(gitService: mock, gitConfig: config)
+        let repo = makeRepo()
+
+        try await vm.createWorktree(
+            repo: repo, branchName: "feat/x", baseBranch: nil, path: "/tmp/test-repo/.worktrees/feat-x")
+
+        XCTAssertNotNil(vm.operationError)
+        XCTAssertTrue(vm.operationError!.contains("ssh: permission denied"))
     }
 }
