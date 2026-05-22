@@ -317,6 +317,8 @@
 "settings.protected.branches.label" = "Protected Branches";
 "settings.protected.branches.help" = "Branches never offered for deletion when pruning. Separate names with commas.";
 "settings.protected.branches.prompt" = "Comma-separated branch names";
+"settings.git.init.submodules.label" = "Initialize Git Submodules";
+"settings.git.init.submodules.help" = "When creating a worktree or adding a repository, run `git submodule update --init --recursive` so submodule content is present before agents start working.";
 
 // Settings - Language section
 "settings.section.language" = "Language";
@@ -611,6 +613,7 @@
 "sidebar.remove.worktree.title" = "Remove Worktree?";
 "sidebar.remove.worktree.confirm" = "Remove";
 "sidebar.remove.main.worktree.error" = "The main worktree cannot be removed.";
+"sidebar.submodule.init.failed %@" = "Submodule init failed: %@";
 "sidebar.remove.worktree.message %@" = "This will permanently delete the worktree at \"%@\". The branch will not be deleted.";
 
 // Destroy worktree (force)

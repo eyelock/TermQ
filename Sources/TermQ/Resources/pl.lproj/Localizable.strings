@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "Chronione gałęzie";
 "settings.protected.branches.help" = "Gałęzie, które nigdy nie są proponowane do usunięcia podczas czyszczenia. Oddziel nazwy przecinkami.";
 "settings.protected.branches.prompt" = "Nazwy gałęzi oddzielone przecinkami";
+"settings.git.init.submodules.label" = "Inicjuj submoduły Git";
+"settings.git.init.submodules.help" = "Podczas tworzenia worktree lub dodawania repozytorium uruchamiane jest `git submodule update --init --recursive`, aby zawartość submodułów była dostępna przed rozpoczęciem pracy przez agentów.";
 
 // Settings - Language section
 "settings.section.language" = "Język";
@@ -577,6 +579,7 @@
 "sidebar.remove.worktree.title" = "Usunąć drzewo robocze?";
 "sidebar.remove.worktree.confirm" = "Usuń";
 "sidebar.remove.main.worktree.error" = "Głównego drzewa roboczego nie można usunąć.";
+"sidebar.submodule.init.failed %@" = "Inicjalizacja submodułu nie powiodła się: %@";
 "sidebar.remove.worktree.message %@" = "Spowoduje to trwałe usunięcie drzewa roboczego pod \"%@\". Gałąź nie zostanie usunięta.";
 
 // Delete worktree (force)

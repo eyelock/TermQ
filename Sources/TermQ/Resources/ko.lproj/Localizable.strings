@@ -270,6 +270,8 @@
 "settings.protected.branches.label" = "보호된 브랜치";
 "settings.protected.branches.help" = "정리 시 삭제 대상으로 표시되지 않는 브랜치입니다. 이름은 쉼표로 구분하세요.";
 "settings.protected.branches.prompt" = "쉼표로 구분된 브랜치 이름";
+"settings.git.init.submodules.label" = "Git 서브모듈 초기화";
+"settings.git.init.submodules.help" = "워크트리를 생성하거나 저장소를 추가할 때 `git submodule update --init --recursive`를 실행하여 에이전트가 작업을 시작하기 전에 서브모듈 콘텐츠가 준비되도록 합니다.";
 
 // Settings - Language section
 "settings.section.language" = "언어";
@@ -577,6 +579,7 @@
 "sidebar.remove.worktree.title" = "워크트리를 제거하시겠습니까?";
 "sidebar.remove.worktree.confirm" = "제거";
 "sidebar.remove.main.worktree.error" = "기본 워크트리는 제거할 수 없습니다.";
+"sidebar.submodule.init.failed %@" = "서브모듈 초기화 실패: %@";
 "sidebar.remove.worktree.message %@" = "\"%@\"의 워크트리가 영구적으로 제거됩니다. 브랜치는 삭제되지 않습니다.";
 
 // Delete worktree (force)
