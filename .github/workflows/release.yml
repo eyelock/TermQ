@@ -171,6 +171,77 @@ jobs:
           echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> $GITHUB_ENV
           echo "KEYCHAIN_PASSWORD=$KEYCHAIN_PASSWORD" >> $GITHUB_ENV
 
+      - name: Install provisioning profile (optional, enables DP Keychain)
+        env:
+          PROVISION_PROFILE_BASE64: ${{ secrets.DEVELOPER_ID_PROVISION_PROFILE_BASE64 }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          # When DEVELOPER_ID_PROVISION_PROFILE_BASE64 is set, the released app gets
+          # the keychain-access-groups entitlement authorized by an embedded
+          # provisioning profile (TN3125 §"Entitlements on macOS") and uses the
+          # macOS Data Protection Keychain for secrets at runtime.
+          #
+          # When the secret is NOT set, the workflow signs with the basic
+          # TermQ.entitlements exactly as before this PR — the app still works
+          # because EncryptionKeyStore falls back to a 0o600 file. This keeps the
+          # release pipeline working even before the one-time portal setup
+          # described in CONTRIBUTING.md §"Data Protection Keychain Setup" is
+          # complete.
+          #
+          # The chosen mode is captured in the SECRETS_BACKEND env var and used by
+          # later steps to pick the right entitlements file.
+          if [ -z "$PROVISION_PROFILE_BASE64" ]; then
+            echo "⚠️  DEVELOPER_ID_PROVISION_PROFILE_BASE64 not set — release will sign"
+            echo "    with TermQ.entitlements (file-based key storage at runtime)."
+            echo "    To enable Data Protection Keychain, follow"
+            echo "    CONTRIBUTING.md §\"Data Protection Keychain Setup\"."
+            echo "SECRETS_BACKEND=file" >> $GITHUB_ENV
+            exit 0
+          fi
+          if [ -z "$APPLE_TEAM_ID" ]; then
+            echo "❌ APPLE_TEAM_ID secret is not set (required when provisioning profile is used)."
+            exit 1
+          fi
+
+          PROFILE_PATH="$RUNNER_TEMP/embedded.provisionprofile"
+          echo "$PROVISION_PROFILE_BASE64" | base64 --decode > "$PROFILE_PATH"
+
+          # Sanity check: profile must authorize keychain-access-groups for our App ID.
+          PROFILE_PLIST="$RUNNER_TEMP/profile-payload.plist"
+          security cms -D -i "$PROFILE_PATH" -o "$PROFILE_PLIST"
+          PROFILE_APP_ID=$(plutil -extract Entitlements.application-identifier raw -o - "$PROFILE_PLIST" 2>/dev/null || echo "")
+          EXPECTED_APP_ID="${APPLE_TEAM_ID}.net.eyelock.termq.app"
+          if [ "$PROFILE_APP_ID" != "$EXPECTED_APP_ID" ] && [[ "$PROFILE_APP_ID" != "${APPLE_TEAM_ID}."*"*" ]]; then
+            echo "❌ Provisioning profile App ID mismatch."
+            echo "   Profile contains: $PROFILE_APP_ID"
+            echo "   Expected:         $EXPECTED_APP_ID (or wildcard ${APPLE_TEAM_ID}.*)"
+            exit 1
+          fi
+          if ! plutil -extract Entitlements.keychain-access-groups xml1 -o - "$PROFILE_PLIST" >/dev/null 2>&1; then
+            echo "❌ Provisioning profile does not authorize keychain-access-groups."
+            echo "   Enable Keychain Sharing on the App ID in the Apple Developer Portal,"
+            echo "   regenerate the Developer ID profile, then update the secret."
+            exit 1
+          fi
+
+          echo "PROVISION_PROFILE_PATH=$PROFILE_PATH" >> $GITHUB_ENV
+          echo "SECRETS_BACKEND=keychain" >> $GITHUB_ENV
+          echo "✅ Provisioning profile validated (App ID: $PROFILE_APP_ID)"
+
+      - name: Render release entitlements
+        if: env.SECRETS_BACKEND == 'keychain'
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          # codesign does not expand $(AppIdentifierPrefix) — that's an Xcode build
+          # setting. Substitute it ourselves with the Team ID followed by a period,
+          # matching what Xcode would do.
+          RENDERED="$RUNNER_TEMP/TermQ-Release.entitlements"
+          sed "s|\$(AppIdentifierPrefix)|${APPLE_TEAM_ID}.|g" TermQ-Release.entitlements > "$RENDERED"
+          echo "RELEASE_ENTITLEMENTS=$RENDERED" >> $GITHUB_ENV
+          echo "Rendered release entitlements (team prefix: ${APPLE_TEAM_ID}.):"
+          cat "$RENDERED"
+
       - name: Get version from tag
         id: version
         run: |
@@ -201,6 +272,15 @@ jobs:
             cp -R .build/release/TermQ_TermQ.bundle TermQ.app/Contents/Resources/
           fi
           if [ -f AppIcon.icns ]; then cp AppIcon.icns TermQ.app/Contents/Resources/AppIcon.icns; fi
+
+          # Embed Developer ID provisioning profile when present (enables Data
+          # Protection Keychain via the keychain-access-groups entitlement —
+          # TN3125 §"Profile location"). When SECRETS_BACKEND=file (the secret is
+          # not configured), skip this step and the app uses the file fallback at
+          # runtime.
+          if [ "$SECRETS_BACKEND" = "keychain" ]; then
+            cp "$PROVISION_PROFILE_PATH" TermQ.app/Contents/embedded.provisionprofile
+          fi
 
           # Create Info.plist with version info
           # SPARKLE_VERSION converts dash pre-release notation to dot notation so
@@ -268,18 +348,37 @@ jobs:
             echo "✅ Sparkle.framework signed"
           fi
 
-          # Sign the main app bundle
-          echo "Signing TermQ.app..."
+          # Sign the main app bundle. Use the rendered release entitlements
+          # (with keychain-access-groups, authorized by the embedded profile)
+          # when SECRETS_BACKEND=keychain; otherwise sign with the basic
+          # entitlements — same behavior as before this PR.
+          if [ "$SECRETS_BACKEND" = "keychain" ]; then
+            APP_ENTITLEMENTS="$RELEASE_ENTITLEMENTS"
+            echo "Signing TermQ.app with release entitlements (Data Protection Keychain)..."
+          else
+            APP_ENTITLEMENTS="TermQ.entitlements"
+            echo "Signing TermQ.app with basic entitlements (file-based key storage)..."
+          fi
           codesign --force --options runtime --timestamp \
             --sign "$SIGNING_IDENTITY" \
             --keychain "$KEYCHAIN_PATH" \
-            --entitlements TermQ.entitlements \
+            --entitlements "$APP_ENTITLEMENTS" \
             TermQ.app
 
           # Verify signature
           echo "Verifying signature..."
           codesign --verify --deep --strict --verbose=2 TermQ.app
-          echo "✅ App bundle signed successfully"
+
+          # When we asked for the keychain backend, confirm the entitlement
+          # actually made it into the signed binary — silently losing it would
+          # mean the released app falls back to file without anyone noticing.
+          if [ "$SECRETS_BACKEND" = "keychain" ]; then
+            echo "Verifying keychain-access-groups is present in signed binary..."
+            codesign --display --entitlements - --xml TermQ.app \
+              | plutil -extract keychain-access-groups xml1 -o - - >/dev/null \
+              || { echo "❌ keychain-access-groups missing from signed entitlements"; exit 1; }
+          fi
+          echo "✅ App bundle signed successfully (backend: $SECRETS_BACKEND)"
 
       - name: Notarize app bundle
         env:

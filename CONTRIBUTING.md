@@ -283,9 +283,8 @@ The Makefile passes `-Xswiftc -DTERMQ_DEBUG_BUILD` when building the debug app b
 
 | Behaviour | Release build | Debug build (`TERMQ_DEBUG_BUILD`) |
 |-----------|--------------|-----------------------------------|
-| **Signing** | Real Development/Distribution certificate (Team ID required) | Ad-hoc (`codesign --sign -`, no Team ID) |
-| **Keychain** | Data Protection Keychain (`kSecUseDataProtectionKeychain: true`) — survives rebuilds | Not used — see below |
-| **Encryption key storage** | Keychain: `CFBundleIdentifier + Team ID` access group | File: `~/.../TermQ-Debug/.enc-key` (0o600 permissions) |
+| **Signing** | Developer ID certificate (CI) or ad-hoc (local `make release-app`) | Ad-hoc (`codesign --sign -`, no Team ID) |
+| **Encryption key storage** | Data Protection Keychain when authorized; 0o600 file fallback otherwise (see `LiveEncryptionKeyStore`) | File only: `~/.../TermQ-Debug/.enc-key` (0o600 permissions) |
 | **Bundle ID** | `net.eyelock.termq.app` | `net.eyelock.termq.app.debug` |
 | **Data directory** | `~/Library/Application Support/TermQ` | `~/Library/Application Support/TermQ-Debug` |
 | **About build number** | `CFBundleVersion` = version string (e.g. `0.7.2`) | `CFBundleVersion` = `<SHA>-debug` (e.g. `446ee59-debug`) |
@@ -293,9 +292,11 @@ The Makefile passes `-Xswiftc -DTERMQ_DEBUG_BUILD` when building the debug app b
 
 **Why file-based key storage in debug?**
 
-The Data Protection Keychain ties items to the app's Team ID via `kSecAttrAccessControl`. Ad-hoc signed binaries have no Team ID, so the keychain falls back to the legacy Login Keychain and its binary-hash ACL — which invalidates on every rebuild and triggers "TermQ Debug wants to access confidential information" on every launch.
+The Data Protection Keychain requires the `keychain-access-groups` entitlement authorised by an embedded provisioning profile ([TN3125 §"Entitlements on macOS"](https://developer.apple.com/documentation/technotes/tn3125-inside-code-signing-provisioning-profiles)). Ad-hoc signed binaries can't carry that authorisation: declaring the entitlement without it makes macOS 15 refuse to launch the binary ("Launchd job spawn failed"). The debug build is always ad-hoc-signed, so it always uses the file backend — declaring the entitlement is never an option.
 
-The file-based backend stores a 256-bit AES key in `~/.../TermQ-Debug/.enc-key` (0o600). The secrets file itself remains AES-GCM encrypted; only the key storage location changes. Release builds are unaffected and continue to use the proper keychain backend.
+Release builds use a hybrid path: try Data Protection Keychain first, fall back to the same file backend on `errSecMissingEntitlement`. This means a CI release with the provisioning profile configured (see [Data Protection Keychain Setup](#data-protection-keychain-setup-optional)) gets the Keychain; a local ad-hoc `make release-app` gets the file. Same code, runtime detection.
+
+The file backend stores a 256-bit AES key in `<data dir>/.enc-key` (0o600). The secrets file itself remains AES-GCM encrypted; only where the key lives changes.
 
 **How to distinguish a debug build at runtime:**
 ```bash
@@ -374,6 +375,57 @@ git push origin v0.8.0
 
 Pushing the tag triggers `release.yml`. Do not push the branch separately — the workflow
 is tag-driven, not branch-driven.
+
+### Data Protection Keychain Setup (Optional)
+
+This is a one-time Apple Developer Portal setup that upgrades the released app's secret storage from a 0o600 file to the macOS Data Protection Keychain — Apple's recommended backend per [TN3137](https://developer.apple.com/documentation/technotes/tn3137-on-mac-keychains).
+
+You don't need to do this for the release pipeline to work. Without it, the CI release signs with the basic entitlements (exactly as it did before the hybrid `EncryptionKeyStore` landed) and the released app uses the file backend. Whenever you complete the steps below, the next tagged release picks up the Keychain automatically — no code change needed.
+
+#### Why a provisioning profile is required
+
+The `keychain-access-groups` entitlement is a *restricted entitlement* on macOS ([TN3125 §"Entitlements on macOS"](https://developer.apple.com/documentation/technotes/tn3125-inside-code-signing-provisioning-profiles)). Restricted entitlements must be authorized by an embedded provisioning profile — this is how macOS prevents other developers from impersonating TermQ to read its keychain items. Developer ID signing alone is not sufficient. There is no code path or workaround that avoids this requirement.
+
+#### One-time steps
+
+1. **Register the App ID** (if not already done). Sign in to <https://developer.apple.com/account/resources/identifiers/list>, click **+**, choose *App IDs* → *App* type. Description: anything (e.g. `TermQ`). Bundle ID: **Explicit**, value `net.eyelock.termq.app`. No capabilities need toggling — Keychain access is granted automatically to every App ID and there is intentionally no "Keychain Sharing" checkbox on the portal. Register.
+
+2. **Create a Developer ID Provisioning Profile.** Go to <https://developer.apple.com/account/resources/profiles/list>, click **+**. Under *Distribution* choose **Developer ID**. Select App ID `net.eyelock.termq.app`. Select your Developer ID Application certificate (the same one whose `.p12` is in the `APPLE_CERTIFICATE_BASE64` secret). Name it (e.g. `TermQ Developer ID (Keychain)`). **Generate**, **Download**. The profile's `keychain-access-groups` allowlist will contain `<your-team-id>.*` as a wildcard, which authorizes the specific group claimed by the app (`<team-id>.net.eyelock.termq.app`).
+
+3. **Base64-encode the profile.** On your machine:
+   ```bash
+   base64 -i ~/Downloads/TermQ_Developer_ID__Keychain_.provisionprofile | pbcopy
+   ```
+
+4. **Add the GitHub secret.** Repo *Settings → Secrets and variables → Actions → New repository secret*. Name: `DEVELOPER_ID_PROVISION_PROFILE_BASE64`. Paste from clipboard. Save.
+
+The existing `APPLE_CERTIFICATE_BASE64`, `APPLE_CERTIFICATE_PASSWORD`, `APPLE_ID`, `APPLE_APP_PASSWORD`, and `APPLE_TEAM_ID` secrets are unchanged and still required.
+
+#### How CI uses it
+
+`.github/workflows/release.yml`:
+
+1. Decodes the secret to `$RUNNER_TEMP/embedded.provisionprofile`. If the secret is absent, sets `SECRETS_BACKEND=file` and skips the next two steps — the release proceeds with the basic entitlements.
+2. Validates the profile authorizes `keychain-access-groups` for the correct App ID — fails the release loudly if the profile is misconfigured, so a broken profile can't silently produce a release that downgrades to the file fallback.
+3. Embeds the profile at `TermQ.app/Contents/embedded.provisionprofile` — the path macOS inspects at launch (TN3125 §"Profile location").
+4. Renders `TermQ-Release.entitlements`, substituting `$(AppIdentifierPrefix)` with `${APPLE_TEAM_ID}.` (codesign does not expand this Xcode variable itself).
+5. Signs `TermQ.app` with the rendered entitlements. Embedded helpers (`termqcli`, `termqmcp`) keep the basic `TermQ.entitlements` — they don't touch the keychain.
+6. After signing, verifies `keychain-access-groups` is actually present in the final entitlements blob.
+
+The chosen mode is captured in the "Sign app bundle" step log as `backend: keychain` or `backend: file` so you can confirm which path any given release took.
+
+#### Rotation and expiry
+
+Developer ID provisioning profiles expire 18 years after creation — effectively "never". No periodic rotation needed. If the underlying Developer ID Application certificate is rotated, regenerate the provisioning profile against the new certificate and update the secret.
+
+#### Build behavior matrix
+
+| Build | Entitlement signed in? | Profile embedded? | Runtime behavior |
+|---|---|---|---|
+| Local debug (`make debug`) | No | No | File-based (`TERMQ_DEBUG_BUILD`) — always |
+| Local ad-hoc production (`make release-app`) | No | No | Tries DP Keychain → `errSecMissingEntitlement` → file fallback |
+| CI release without portal setup | No | No | File fallback (same as before this change) |
+| CI release with portal setup | Yes | Yes | Data Protection Keychain |
 
 ## CI/CD
 
