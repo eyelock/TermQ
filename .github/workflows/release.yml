@@ -226,30 +226,44 @@ jobs:
             exit 1
           fi
 
-          # Convert to JSON for jq (plutil's dotted key-path can't address keys
-          # that themselves contain dots — macOS Developer ID profiles store the
-          # App ID under `com.apple.application-identifier`, TN3125 §"The how").
-          PROFILE_JSON=$(plutil -convert json -o - "$PROFILE_PLIST" 2>/tmp/plutil.err)
-          if [ -z "$PROFILE_JSON" ]; then
-            echo "❌ plutil -convert json failed:"
-            cat /tmp/plutil.err
+          # Parse the plist with Python's plistlib — the profile contains binary
+          # certificate data and `plutil -convert json` emits non-JSON output for
+          # those fields, breaking jq. plistlib handles them cleanly.
+          # macOS Developer ID profiles store the App ID under
+          # `com.apple.application-identifier` (TN3125 §"The how"); iOS profiles
+          # use `application-identifier`. We accept either.
+          PROFILE_INFO=$(/usr/bin/python3 <<PYEOF
+          import plistlib, json, sys
+          with open("$PROFILE_PLIST", "rb") as f:
+              p = plistlib.load(f)
+          ents = p.get("Entitlements", {})
+          out = {
+              "app_id": ents.get("com.apple.application-identifier") or ents.get("application-identifier") or "",
+              "kag": ents.get("keychain-access-groups", []),
+              "ent_keys": sorted(ents.keys()),
+          }
+          print(json.dumps(out))
+          PYEOF
+          )
+          if [ -z "$PROFILE_INFO" ]; then
+            echo "❌ Failed to parse provisioning profile plist with plistlib."
             exit 1
           fi
 
-          PROFILE_APP_ID=$(echo "$PROFILE_JSON" | jq -r '.Entitlements["com.apple.application-identifier"] // .Entitlements["application-identifier"] // ""')
+          PROFILE_APP_ID=$(echo "$PROFILE_INFO" | jq -r '.app_id')
+          KAG_COUNT=$(echo "$PROFILE_INFO" | jq -r '.kag | length')
           EXPECTED_APP_ID="${APPLE_TEAM_ID}.net.eyelock.termq.app"
           WILDCARD_APP_ID="${APPLE_TEAM_ID}.*"
+
           if [ "$PROFILE_APP_ID" != "$EXPECTED_APP_ID" ] && [ "$PROFILE_APP_ID" != "$WILDCARD_APP_ID" ]; then
             echo "❌ Provisioning profile App ID mismatch."
             echo "   Profile contains: '$PROFILE_APP_ID'"
             echo "   Expected:         '$EXPECTED_APP_ID' (or wildcard '$WILDCARD_APP_ID')"
-            echo ""
-            echo "   Full Entitlements dictionary from the profile:"
-            echo "$PROFILE_JSON" | jq '.Entitlements'
+            echo "   Entitlement keys present in profile:"
+            echo "$PROFILE_INFO" | jq -r '.ent_keys[]' | sed 's/^/     - /'
             exit 1
           fi
 
-          KAG_COUNT=$(echo "$PROFILE_JSON" | jq -r '.Entitlements["keychain-access-groups"] // [] | length')
           if [ "$KAG_COUNT" = "0" ]; then
             echo "❌ Provisioning profile does not authorize keychain-access-groups."
             echo "   Regenerate the Developer ID profile against an App ID with Keychain Sharing,"
