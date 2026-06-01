@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.3] - 2026-06-01
+
+### Fixed — Secrets storage
+
+- **Secrets storage no longer fails with "Keychain error: A required entitlement isn't present."** Commit `920cb46` migrated the encryption-key store from the legacy Login Keychain to the Data Protection Keychain via `kSecUseDataProtectionKeychain: true`, but the matching `keychain-access-groups` entitlement (a restricted entitlement, [TN3125 §"Entitlements on macOS"](https://developer.apple.com/documentation/technotes/tn3125-inside-code-signing-provisioning-profiles)) was never added — and cannot be added to ad-hoc-signed binaries on macOS 15 without also embedding an authorising provisioning profile, which causes "Launchd job spawn failed" at launch. `LiveEncryptionKeyStore` is now hybrid: it tries the Data Protection Keychain first and falls back to a 0o600 file in the app's data directory on `errSecMissingEntitlement`. Existing legacy Login Keychain entries are migrated into the active backend on first load. Debug builds remain file-only since they're always ad-hoc.
+- **Release pipeline can opt into Data Protection Keychain via a Developer ID provisioning profile.** When the `DEVELOPER_ID_PROVISION_PROFILE_BASE64` secret is set, `release.yml` validates the profile, embeds it at `Contents/embedded.provisionprofile`, and signs the main app bundle with a new `TermQ-Release.entitlements` carrying `com.apple.application-identifier` and `keychain-access-groups`. When the secret is absent, the workflow signs with the existing basic entitlements exactly as before — no breaking change to the release flow. See CONTRIBUTING.md §"Data Protection Keychain Setup". CI logs the chosen backend (`backend: keychain` or `backend: file`) at the end of the sign step.
+
 ## [0.11.2] - 2026-05-22
 
 ### Added — Git workflow
