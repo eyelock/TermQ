@@ -207,26 +207,34 @@ jobs:
           echo "$PROVISION_PROFILE_BASE64" | base64 --decode > "$PROFILE_PATH"
 
           # Sanity check: profile must authorize keychain-access-groups for our App ID.
+          # plutil's dotted key path can't represent keys that themselves contain dots
+          # (the macOS Developer ID profile uses `com.apple.application-identifier`),
+          # so convert to JSON and use jq instead. TN3125 §"The how" documents both
+          # the iOS-style `application-identifier` and the macOS-style
+          # `com.apple.application-identifier` key names — we accept either.
           PROFILE_PLIST="$RUNNER_TEMP/profile-payload.plist"
           security cms -D -i "$PROFILE_PATH" -o "$PROFILE_PLIST"
-          PROFILE_APP_ID=$(plutil -extract Entitlements.application-identifier raw -o - "$PROFILE_PLIST" 2>/dev/null || echo "")
+          PROFILE_JSON=$(plutil -convert json -o - "$PROFILE_PLIST")
+          PROFILE_APP_ID=$(echo "$PROFILE_JSON" | jq -r '.Entitlements["com.apple.application-identifier"] // .Entitlements["application-identifier"] // ""')
           EXPECTED_APP_ID="${APPLE_TEAM_ID}.net.eyelock.termq.app"
-          if [ "$PROFILE_APP_ID" != "$EXPECTED_APP_ID" ] && [[ "$PROFILE_APP_ID" != "${APPLE_TEAM_ID}."*"*" ]]; then
+          WILDCARD_APP_ID="${APPLE_TEAM_ID}.*"
+          if [ "$PROFILE_APP_ID" != "$EXPECTED_APP_ID" ] && [ "$PROFILE_APP_ID" != "$WILDCARD_APP_ID" ]; then
             echo "❌ Provisioning profile App ID mismatch."
             echo "   Profile contains: $PROFILE_APP_ID"
-            echo "   Expected:         $EXPECTED_APP_ID (or wildcard ${APPLE_TEAM_ID}.*)"
+            echo "   Expected:         $EXPECTED_APP_ID (or wildcard $WILDCARD_APP_ID)"
             exit 1
           fi
-          if ! plutil -extract Entitlements.keychain-access-groups xml1 -o - "$PROFILE_PLIST" >/dev/null 2>&1; then
+          KAG_COUNT=$(echo "$PROFILE_JSON" | jq -r '.Entitlements["keychain-access-groups"] // [] | length')
+          if [ "$KAG_COUNT" = "0" ]; then
             echo "❌ Provisioning profile does not authorize keychain-access-groups."
-            echo "   Enable Keychain Sharing on the App ID in the Apple Developer Portal,"
-            echo "   regenerate the Developer ID profile, then update the secret."
+            echo "   Regenerate the Developer ID profile against an App ID with Keychain Sharing,"
+            echo "   then update the secret."
             exit 1
           fi
 
           echo "PROVISION_PROFILE_PATH=$PROFILE_PATH" >> $GITHUB_ENV
           echo "SECRETS_BACKEND=keychain" >> $GITHUB_ENV
-          echo "✅ Provisioning profile validated (App ID: $PROFILE_APP_ID)"
+          echo "✅ Provisioning profile validated (App ID: $PROFILE_APP_ID, keychain-access-groups entries: $KAG_COUNT)"
 
       - name: Render release entitlements
         if: env.SECRETS_BACKEND == 'keychain'
