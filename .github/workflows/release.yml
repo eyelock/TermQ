@@ -203,30 +203,77 @@ jobs:
             exit 1
           fi
 
+          # Avoid bash -e aborting silently mid-pipeline; we handle errors per-step
+          # with explicit messages so a misconfigured profile is easy to diagnose.
+          set +e
+
           PROFILE_PATH="$RUNNER_TEMP/embedded.provisionprofile"
           echo "$PROVISION_PROFILE_BASE64" | base64 --decode > "$PROFILE_PATH"
-
-          # Sanity check: profile must authorize keychain-access-groups for our App ID.
-          PROFILE_PLIST="$RUNNER_TEMP/profile-payload.plist"
-          security cms -D -i "$PROFILE_PATH" -o "$PROFILE_PLIST"
-          PROFILE_APP_ID=$(plutil -extract Entitlements.application-identifier raw -o - "$PROFILE_PLIST" 2>/dev/null || echo "")
-          EXPECTED_APP_ID="${APPLE_TEAM_ID}.net.eyelock.termq.app"
-          if [ "$PROFILE_APP_ID" != "$EXPECTED_APP_ID" ] && [[ "$PROFILE_APP_ID" != "${APPLE_TEAM_ID}."*"*" ]]; then
-            echo "❌ Provisioning profile App ID mismatch."
-            echo "   Profile contains: $PROFILE_APP_ID"
-            echo "   Expected:         $EXPECTED_APP_ID (or wildcard ${APPLE_TEAM_ID}.*)"
+          if [ ! -s "$PROFILE_PATH" ]; then
+            echo "❌ Failed to decode DEVELOPER_ID_PROVISION_PROFILE_BASE64."
+            echo "   The secret is set but base64 --decode produced an empty file."
+            echo "   Re-encode the .provisionprofile with: base64 -i <profile>"
             exit 1
           fi
-          if ! plutil -extract Entitlements.keychain-access-groups xml1 -o - "$PROFILE_PLIST" >/dev/null 2>&1; then
+          echo "Decoded profile: $(wc -c < "$PROFILE_PATH" | tr -d ' ') bytes"
+
+          # Unwrap the CMS signature to get the property list payload.
+          PROFILE_PLIST="$RUNNER_TEMP/profile-payload.plist"
+          if ! security cms -D -i "$PROFILE_PATH" -o "$PROFILE_PLIST" 2>/tmp/cms.err; then
+            echo "❌ security cms -D failed — the secret doesn't decode to a valid"
+            echo "   CMS-signed provisioning profile."
+            cat /tmp/cms.err
+            exit 1
+          fi
+
+          # Parse the plist with Python's plistlib — the profile contains binary
+          # certificate data and `plutil -convert json` emits non-JSON output for
+          # those fields, breaking jq. plistlib handles them cleanly.
+          # macOS Developer ID profiles store the App ID under
+          # `com.apple.application-identifier` (TN3125 §"The how"); iOS profiles
+          # use `application-identifier`. We accept either.
+          PROFILE_INFO=$(/usr/bin/python3 <<PYEOF
+          import plistlib, json, sys
+          with open("$PROFILE_PLIST", "rb") as f:
+              p = plistlib.load(f)
+          ents = p.get("Entitlements", {})
+          out = {
+              "app_id": ents.get("com.apple.application-identifier") or ents.get("application-identifier") or "",
+              "kag": ents.get("keychain-access-groups", []),
+              "ent_keys": sorted(ents.keys()),
+          }
+          print(json.dumps(out))
+          PYEOF
+          )
+          if [ -z "$PROFILE_INFO" ]; then
+            echo "❌ Failed to parse provisioning profile plist with plistlib."
+            exit 1
+          fi
+
+          PROFILE_APP_ID=$(echo "$PROFILE_INFO" | jq -r '.app_id')
+          KAG_COUNT=$(echo "$PROFILE_INFO" | jq -r '.kag | length')
+          EXPECTED_APP_ID="${APPLE_TEAM_ID}.net.eyelock.termq.app"
+          WILDCARD_APP_ID="${APPLE_TEAM_ID}.*"
+
+          if [ "$PROFILE_APP_ID" != "$EXPECTED_APP_ID" ] && [ "$PROFILE_APP_ID" != "$WILDCARD_APP_ID" ]; then
+            echo "❌ Provisioning profile App ID mismatch."
+            echo "   Profile contains: '$PROFILE_APP_ID'"
+            echo "   Expected:         '$EXPECTED_APP_ID' (or wildcard '$WILDCARD_APP_ID')"
+            echo "   Entitlement keys present in profile:"
+            echo "$PROFILE_INFO" | jq -r '.ent_keys[]' | sed 's/^/     - /'
+            exit 1
+          fi
+
+          if [ "$KAG_COUNT" = "0" ]; then
             echo "❌ Provisioning profile does not authorize keychain-access-groups."
-            echo "   Enable Keychain Sharing on the App ID in the Apple Developer Portal,"
-            echo "   regenerate the Developer ID profile, then update the secret."
+            echo "   Regenerate the Developer ID profile against an App ID with Keychain Sharing,"
+            echo "   then update the secret."
             exit 1
           fi
 
           echo "PROVISION_PROFILE_PATH=$PROFILE_PATH" >> $GITHUB_ENV
           echo "SECRETS_BACKEND=keychain" >> $GITHUB_ENV
-          echo "✅ Provisioning profile validated (App ID: $PROFILE_APP_ID)"
+          echo "✅ Provisioning profile validated (App ID: $PROFILE_APP_ID, keychain-access-groups entries: $KAG_COUNT)"
 
       - name: Render release entitlements
         if: env.SECRETS_BACKEND == 'keychain'
