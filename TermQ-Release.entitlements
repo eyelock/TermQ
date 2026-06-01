@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+    Release entitlements used by .github/workflows/release.yml for the main TermQ.app
+    bundle. Identical to TermQ.entitlements (used for local ad-hoc builds and for the
+    embedded helper binaries termqcli/termqmcp) plus two restricted entitlements that
+    enable the Data Protection Keychain:
+
+      - com.apple.application-identifier: gives the app its default keychain access
+        group, $(AppIdentifierPrefix)net.eyelock.termq.app. Required for SecItemAdd /
+        SecItemCopyMatching with kSecUseDataProtectionKeychain: true to associate
+        items with this app.
+
+      - keychain-access-groups: explicit list of access groups this app may use.
+        Restricted entitlement — must be authorized by the embedded provisioning
+        profile at Contents/embedded.provisionprofile (see TN3125 §"Entitlements on
+        macOS"). The CI release workflow downloads the profile from the
+        DEVELOPER_ID_PROVISION_PROFILE_BASE64 secret and embeds it.
+
+    $(AppIdentifierPrefix) is substituted with "${APPLE_TEAM_ID}." by the release
+    workflow before codesign runs — codesign itself does not expand this variable
+    (unlike Xcode's build system).
+
+    NEVER use this file for local ad-hoc signing (make release-app). Ad-hoc signed
+    binaries cannot have restricted entitlements authorized by a provisioning profile,
+    so macOS 15 refuses to launch them ("Launchd job spawn failed").
+-->
+<plist version="1.0">
+<dict>
+    <!-- Disable sandboxing - terminal apps need full filesystem access -->
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+
+    <!-- Allow spawning child processes (shells) -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+
+    <!-- Allow loading arbitrary dylibs (for shell plugins, etc.) -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+
+    <!-- Allow JIT compilation (some terminal features need this) -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+
+    <!-- Inherit environment from parent process -->
+    <key>com.apple.security.inherit</key>
+    <true/>
+
+    <!-- Access to all files (when properly signed) -->
+    <key>com.apple.security.files.all</key>
+    <true/>
+
+    <!-- Access to user's home directory -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+
+    <!-- Network access for tools like git, curl, etc. -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <key>com.apple.security.network.server</key>
+    <true/>
+
+    <!-- Access to devices (for USB serial terminals, etc.) -->
+    <key>com.apple.security.device.serial</key>
+    <true/>
+
+    <!-- App ID — establishes the default keychain access group -->
+    <key>com.apple.application-identifier</key>
+    <string>$(AppIdentifierPrefix)net.eyelock.termq.app</string>
+
+    <!-- Data Protection Keychain access. Authorized by embedded.provisionprofile. -->
+    <key>keychain-access-groups</key>
+    <array>
+        <string>$(AppIdentifierPrefix)net.eyelock.termq.app</string>
+    </array>
+</dict>
+</plist>
