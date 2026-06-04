@@ -587,14 +587,16 @@ extension WorktreeSidebarView {
         let effectiveHarness =
             ynhPersistence.harness(for: worktree.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
 
+        // Group 0: Harness actions
         if let harnessName = effectiveHarness {
             Button {
                 onLaunchHarness?(harnessName, worktree.path, worktree.branch)
             } label: {
                 Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
             }
-            Divider()
         }
+        worktreeFocusMenuItems(worktree, repo: repo)
+        Divider()
 
         // Group 1: Terminal actions
         Button {
@@ -753,16 +755,10 @@ extension WorktreeSidebarView {
             harnessContextItems(forPath: worktree.path)
         }
 
-        // PR-linked actions (appended only when this worktree is linked to a PR)
+        // PR-linked actions (appended only when this worktree is linked to a PR).
+        // "Run with Focus…" itself lives in the top-level menu group for all worktrees.
         if let prNumber = linkedPRNumber(for: worktree, repo: repo) {
             Divider()
-
-            Button {
-                runWithFocusContext = RunWithFocusContext(
-                    worktree: worktree, repo: repo, prNumber: prNumber)
-            } label: {
-                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-            }
 
             Button {
                 openPROnRemote(prNumber: prNumber, repo: repo)
