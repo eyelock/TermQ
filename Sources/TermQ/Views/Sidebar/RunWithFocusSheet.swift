@@ -5,7 +5,8 @@ import TermQShared
 /// Sentinel — "use harness default vendor, don't pass -v".
 private let defaultVendorTag = "__default__"
 
-/// Sheet for launching a "Run with Focus" harness run on a PR-linked worktree.
+/// Sheet for launching a "Run with Focus" harness run on a worktree —
+/// either a PR-linked checkout or a plain local worktree.
 ///
 /// Presents harness/vendor/focus/profile pickers, a prompt textarea (read-only when a
 /// focus is selected unless Customize is pressed), an optional --interactive toggle,
@@ -83,6 +84,14 @@ struct RunWithFocusSheet: View {
         isCustomizing ? customPrompt : (selectedFocus.isEmpty ? customPrompt : focusPrompt)
     }
 
+    /// `#N` for PR-linked runs; the branch (or commit) for plain local worktrees.
+    private var headerSubtitle: String {
+        if let prNumber = context.prNumber {
+            return "#\(prNumber)"
+        }
+        return context.worktree.branch ?? context.worktree.commitHash
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // Header
@@ -90,7 +99,7 @@ struct RunWithFocusSheet: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(Strings.RemotePRs.runSheetTitle)
                         .font(.headline)
-                    Text("#\(context.prNumber)")
+                    Text(headerSubtitle)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -364,10 +373,9 @@ struct RunWithFocusSheet: View {
             ynhPersistence.setRunFocus(selectedFocus, for: context.repo.path)
         }
 
-        let instructions: String? =
-            context.prNumber > 0
-            ? "PR #\(context.prNumber) in \(Self.repoSlug(from: context.repo.path))"
-            : nil
+        let instructions: String? = context.prNumber.map {
+            "PR #\($0) in \(Self.repoSlug(from: context.repo.path))"
+        }
 
         let config = HarnessLaunchConfig(
             harnessID: harness.id,
@@ -386,7 +394,8 @@ struct RunWithFocusSheet: View {
         onLaunch(config)
     }
 
-    /// Builds a card title: `focus: org/repo#N`, truncating the repo slug when long.
+    /// Builds a card title: `focus: org/repo#N` (or `focus: org/repo` without a PR),
+    /// truncating the repo slug when long.
     private func makeCardTitle(focus: String?, profile: String) -> String {
         let label: String
         if let focusName = focus, !focusName.isEmpty {
@@ -401,7 +410,7 @@ struct RunWithFocusSheet: View {
 
     /// Static entry point for building a card title outside the sheet (e.g. quick-launch).
     static func makeCardTitleStatic(
-        focus: String?, profile: String, harnessId: String, repoPath: String, prNumber: Int
+        focus: String?, profile: String, harnessId: String, repoPath: String, prNumber: Int?
     ) -> String {
         let label: String
         if let focusName = focus, !focusName.isEmpty {
@@ -414,15 +423,15 @@ struct RunWithFocusSheet: View {
         return buildTitle(label: label, repoPath: repoPath, prNumber: prNumber)
     }
 
-    private static func buildTitle(label: String, repoPath: String, prNumber: Int) -> String {
+    private static func buildTitle(label: String, repoPath: String, prNumber: Int?) -> String {
         let slug = repoSlug(from: repoPath)
-        let prSuffix = "#\(prNumber)"
+        let prSuffix = prNumber.map { "#\($0)" } ?? ""
         let repoAndPR = "\(slug)\(prSuffix)"
         let budget = 40 - label.count - 2
         let truncated =
             budget > prSuffix.count + 1
             ? truncateMiddle(repoAndPR, to: budget)
-            : prSuffix
+            : (prSuffix.isEmpty ? "…" : prSuffix)
         return "\(label): \(truncated)"
     }
 

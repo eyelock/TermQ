@@ -262,6 +262,34 @@ final class RunWithFocusSheetTitleTests: XCTestCase {
             repoPath: "/eyelock/TermQ", prNumber: 300)
         XCTAssertLessThanOrEqual(title.count, 40)
     }
+
+    // MARK: Local worktree runs (no PR)
+
+    func testNilPRNumberOmitsPRSuffix() {
+        let title = RunWithFocusSheet.makeCardTitleStatic(
+            focus: "pr-review", profile: "", harnessId: "h",
+            repoPath: "/eyelock/TermQ", prNumber: nil)
+        XCTAssertEqual(title, "pr-review: eyelock/TermQ")
+        XCTAssertFalse(title.contains("#"), "No PR suffix for local worktree runs")
+    }
+
+    func testNilPRNumberLongSlugStillTruncated() {
+        let longPath = "/MyCompany-Admin-And-Another-Team/Admin-MySuperProject-CalledReallyLong"
+        let title = RunWithFocusSheet.makeCardTitleStatic(
+            focus: "pr-summary", profile: "", harnessId: "h",
+            repoPath: longPath, prNumber: nil)
+        XCTAssertLessThanOrEqual(title.count, 40, "Title must not exceed 40 chars")
+        XCTAssertTrue(title.hasPrefix("pr-summary: "))
+        XCTAssertTrue(title.contains("…"), "Long slug should be middle-truncated")
+    }
+
+    func testNilPRNumberWithExtremelyLongFocusName() {
+        let veryLongFocus = String(repeating: "x", count: 35)
+        let title = RunWithFocusSheet.makeCardTitleStatic(
+            focus: veryLongFocus, profile: "", harnessId: "h",
+            repoPath: "/org/repo", prNumber: nil)
+        XCTAssertTrue(title.hasPrefix("\(veryLongFocus): "), "Label always preserved")
+    }
 }
 
 // MARK: - HarnessLaunchConfig.command tests
