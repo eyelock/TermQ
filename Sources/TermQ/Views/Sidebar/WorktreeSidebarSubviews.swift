@@ -60,7 +60,8 @@ struct RunWithFocusContext: Identifiable {
     let id = UUID()
     let worktree: GitWorktree
     let repo: ObservableRepository
-    let prNumber: Int
+    /// Linked PR number, or `nil` when launching on a plain local worktree.
+    let prNumber: Int?
 }
 
 // MARK: - Sidebar Toast

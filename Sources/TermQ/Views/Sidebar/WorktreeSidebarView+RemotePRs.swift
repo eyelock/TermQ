@@ -372,18 +372,18 @@ extension WorktreeSidebarView {
         }
     }
 
-    private func quickLaunchFocus(
+    /// Launches a focus directly (no sheet). `prNumber` is nil for plain local worktrees.
+    func quickLaunchFocus(
         _ focusName: String, worktree: GitWorktree, repo: ObservableRepository,
-        prNumber: Int, harnessId: String
+        prNumber: Int?, harnessId: String
     ) {
         let harness = harnessRepository.harnesses.first { $0.id == harnessId || $0.name == harnessId }
         let title = RunWithFocusSheet.makeCardTitleStatic(
             focus: focusName, profile: "", harnessId: harnessId,
             repoPath: repo.path, prNumber: prNumber)
-        let instructions: String? =
-            prNumber > 0
-            ? "PR #\(prNumber) in \(RunWithFocusSheet.repoSlug(from: repo.path))"
-            : nil
+        let instructions: String? = prNumber.map {
+            "PR #\($0) in \(RunWithFocusSheet.repoSlug(from: repo.path))"
+        }
         let config = HarnessLaunchConfig(
             harnessID: harnessId,
             vendorID: "",
