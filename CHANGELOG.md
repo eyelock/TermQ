@@ -61,6 +61,12 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.4] - 2026-06-04
+
+### Added — Run with Focus on local worktrees
+
+- **"Run with Focus…" and the Quick Launch Focus submenu are now available on every local worktree, not just PR checkouts.** Previously these items appeared only when the worktree was linked to an open GitHub PR. Any local branch — including the main worktree — can now launch a focus run directly from its sidebar context menu. When the worktree is a PR checkout the sheet behaves as before (PR number carried through, card titles reference the PR); when it is a plain local branch the sheet falls back to the branch name in the header and omits the PR reference from card titles and instructions. `RunWithFocusContext.prNumber` is now optional.
+
 ## [0.11.3] - 2026-06-01
 
 ### Fixed — Secrets storage
