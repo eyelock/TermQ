@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Διακλάδωση σε τοπικό";
 "harnesses.fork.to.local.help" = "Δημιουργία επεξεργάσιμου τοπικού αντιγράφου αυτού του harness";
+"harnesses.publish.to.repository" = "Δημοσίευση σε αποθετήριο…";
 "harnesses.update.dot.help" = "Διαθέσιμη ενημέρωση";
 "harness.fork.title %@" = "Διακλάδωση \"%@\" σε τοπικό";
 "harness.fork.explanation" = "Δημιουργεί ένα επεξεργάσιμο τοπικό αντίγραφο αυτού του harness. Το αντίγραφο παρακολουθεί την προέλευσή του ώστε να βλέπετε τι άλλαξε upstream.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "Αφήστε κενό για να διατηρηθεί το όνομα πηγής. Το κανονικό id του νέου fork θα είναι local/<όνομα>.";
 "harness.fork.identity.collision" = "Ένα εγκατεστημένο harness έχει ήδη αυτήν την ταυτότητα.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Δημοσίευση \"%@\" σε αποθετήριο";
+"harness.publish.explanation" = "Αντιγράφει αυτό το harness σε ένα νέο worktree του αποθετηρίου προορισμού, έτοιμο για commit. Οι ίδιες συμβάσεις του αποθετηρίου (σενάρια εγγραφής, manifests) αποφασίζουν τα υπόλοιπα.";
+"harness.publish.button" = "Δημοσίευση";
+"harness.publish.update.button" = "Ενημέρωση υπάρχουσας καταχώρισης";
+"harness.publish.progress.title %@" = "Δημοσίευση \"%@\"…";
+"harness.publish.repo.label" = "Αποθετήριο προορισμού";
+"harness.publish.repo.placeholder" = "Επιλέξτε αποθετήριο…";
+"harness.publish.parentdir.label" = "Κατάλογος στο αποθετήριο";
+"harness.publish.parentdir.hint" = "Προτείνεται από εκεί που το αποθετήριο ήδη διατηρεί harnesses. Πλήρως επεξεργάσιμο.";
+"harness.publish.name.label" = "Όνομα";
+"harness.publish.branch.label" = "Κλάδος";
+"harness.publish.basebranch.label" = "Βασικός κλάδος";
+"harness.publish.worktreepath.label" = "Διαδρομή worktree";
+"harness.publish.files.label" = "Αρχεία προς αντιγραφή";
+"harness.publish.changes.label" = "Αλλαγές σε σχέση με το δημοσιευμένο αντίγραφο";
+"harness.publish.mode.label" = "Λειτουργία αντιγραφής";
+"harness.publish.mode.entire" = "Ολόκληρος κατάλογος";
+"harness.publish.mode.enumerated" = "Μόνο αρχεία harness";
+"harness.publish.mode.enumerated.hint" = "Ο κατάλογος προέλευσης χρησιμεύει και ως αποθετήριο έργου — αντιγράφονται μόνο τα αρχεία που ανήκουν στο harness.";
+"harness.publish.state.new" = "Νέα καταχώριση — αυτό το harness δεν υπάρχει ακόμα στο αποθετήριο.";
+"harness.publish.state.update %@" = "Ενημερώνει την υπάρχουσα καταχώριση στο %@ (αντικαθιστά το περιεχόμενό της).";
+"harness.publish.state.clash %@" = "Αυτός ο κατάλογος περιέχει ήδη διαφορετικό harness (\"%@\") — επιλέξτε άλλο όνομα.";
+"harness.publish.state.occupied" = "Αυτός ο κατάλογος υπάρχει ήδη στο αποθετήριο — επιλέξτε άλλο όνομα ή τοποθεσία.";
+"harness.publish.state.samerepo" = "Αυτό το harness βρίσκεται ήδη στο επιλεγμένο αποθετήριο — υποβάλετε τις αλλαγές σας εκεί αντί να δημοσιεύσετε.";
+"harness.publish.reveal.repository" = "Εμφάνιση στα αποθετήρια";
+"harness.publish.preflight.failed" = "Το τοπικό harness δεν επικυρώνεται — διορθώστε το πριν δημοσιεύσετε.";
+"harness.publish.composition.unavailable" = "Η εντολή ynd compose απέτυχε για αυτό το harness — η λειτουργία \"μόνο αρχεία harness\" χρειάζεται αυτήν για να γνωρίζει ποια αρχεία ανήκουν στο harness. Διορθώστε το harness ή μεταβείτε σε \"ολόκληρος κατάλογος\".";
+"harness.publish.unresolved %lld" = "%lld αναφερόμενο(-α) αρχείο(-α) λείπουν από την πηγή — δεν θα αντιγραφούν.";
+"harness.publish.register.disclosure %@" = "Μετά την αντιγραφή, θα εκτελεστεί το %@ του αποθετηρίου (σενάριο παρεχόμενο από το αποθετήριο).";
+"harness.publish.change.added" = "προστέθηκε";
+"harness.publish.change.modified" = "τροποποιήθηκε";
+"harness.publish.change.removed" = "αφαιρέθηκε";
+"harness.publish.changes.none" = "Καμία διαφορά — το δημοσιευμένο αντίγραφο ταιριάζει με τα τοπικά σας αρχεία.";
+"harness.publish.step.worktree %@" = "Δημιουργία worktree στον κλάδο %@…";
+"harness.publish.step.copy %@" = "Αντιγραφή harness στο %@…";
+"harness.publish.step.copied %lld" = "Αντιγράφηκαν %lld ομάδα(-ες) αρχείων.";
+"harness.publish.step.validate" = "Επικύρωση αντιγραμμένου harness (ynd validate)…";
+"harness.publish.step.register %@" = "Εκτέλεση %@…";
+"harness.publish.step.done %@" = "Ολοκληρώθηκε — το worktree είναι έτοιμο στο %@.";
+"harness.publish.warning %@" = "Προειδοποίηση: %@";
+"harness.publish.deleted %@" = "Αφαιρέθηκε παρωχημένη διαδρομή: %@";
+"harness.publish.validation.failed" = "Η επικύρωση απέτυχε στο worktree — δεν έγινε κανένα commit. Το worktree διατηρείται για επιθεώρηση.";
+"harness.publish.register.failed" = "Το σενάριο εγγραφής του αποθετηρίου απέτυχε — το worktree διατηρείται για επιθεώρηση.";
+"harness.publish.references.missing %@" = "Αρχεία που αναφέρονται στο manifest λείπουν μετά την αντιγραφή: %@";
+"harness.publish.error.occupied %@" = "Ο προορισμός περιέχει ήδη ένα harness: %@";
+"harness.publish.error.invaliddest %@" = "Ο προορισμός εκφεύγει από το worktree: %@";
+"harness.publish.error.copy %@" = "Η αντιγραφή απέτυχε: %@";
+"harness.publish.error.rename %@" = "Αδύνατη η αναγραφή του ονόματος στο manifest: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Ενημέρωση \"%@\"";

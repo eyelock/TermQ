@@ -981,6 +981,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Dupliquer en local";
 "harnesses.fork.to.local.help" = "Créer une copie locale modifiable de ce harnais";
+"harnesses.publish.to.repository" = "Publier dans le dépôt…";
 "harnesses.update.dot.help" = "Mise à jour disponible";
 "harness.fork.title %@" = "Dupliquer \"%@\" en local";
 "harness.fork.explanation" = "Crée une copie locale modifiable de ce harnais. La copie suit son origine afin que vous puissiez voir ce qui a changé en amont.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.hint" = "Laissez vide pour conserver le nom source. L'identifiant canonique du nouveau fork sera local/<nom>.";
 "harness.fork.identity.collision" = "Un harness installé possède déjà cette identité.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publier \"%@\" dans le dépôt";
+"harness.publish.explanation" = "Copie ce harnais dans un nouveau worktree du dépôt cible, prêt à être commis. Les conventions propres au dépôt (scripts d'enregistrement, manifestes) gèrent le reste.";
+"harness.publish.button" = "Publier";
+"harness.publish.update.button" = "Mettre à jour l'entrée existante";
+"harness.publish.progress.title %@" = "Publication de \"%@\"…";
+"harness.publish.repo.label" = "Dépôt cible";
+"harness.publish.repo.placeholder" = "Sélectionner un dépôt…";
+"harness.publish.parentdir.label" = "Répertoire dans le dépôt";
+"harness.publish.parentdir.hint" = "Suggéré d'après l'endroit où ce dépôt conserve déjà ses harnais. Entièrement modifiable.";
+"harness.publish.name.label" = "Nom";
+"harness.publish.branch.label" = "Branche";
+"harness.publish.basebranch.label" = "Branche de base";
+"harness.publish.worktreepath.label" = "Chemin du worktree";
+"harness.publish.files.label" = "Fichiers à copier";
+"harness.publish.changes.label" = "Modifications par rapport à la copie publiée";
+"harness.publish.mode.label" = "Mode de copie";
+"harness.publish.mode.entire" = "Répertoire entier";
+"harness.publish.mode.enumerated" = "Fichiers du harnais uniquement";
+"harness.publish.mode.enumerated.hint" = "Le répertoire source sert également de dépôt de projet — seuls les fichiers appartenant au harnais sont copiés.";
+"harness.publish.state.new" = "Nouvelle entrée — ce harnais n'existe pas encore dans le dépôt.";
+"harness.publish.state.update %@" = "Met à jour l'entrée existante à %@ (l'écrase).";
+"harness.publish.state.clash %@" = "Ce répertoire contient déjà un harnais différent (\"%@\") — choisissez un autre nom.";
+"harness.publish.state.occupied" = "Ce répertoire existe déjà dans le dépôt — choisissez un autre nom ou emplacement.";
+"harness.publish.state.samerepo" = "Ce harnais se trouve déjà dans le dépôt sélectionné — validez vos modifications là-bas plutôt que de publier.";
+"harness.publish.reveal.repository" = "Afficher dans les dépôts";
+"harness.publish.preflight.failed" = "Le harnais local ne valide pas — corrigez-le avant de publier.";
+"harness.publish.composition.unavailable" = "ynd compose a échoué pour ce harnais — le mode \"fichiers du harnais uniquement\" en a besoin pour savoir quels fichiers lui appartiennent. Corrigez le harnais ou passez à \"répertoire entier\".";
+"harness.publish.unresolved %lld" = "%lld fichier(s) référencé(s) manquant(s) dans la source — ils ne seront pas copiés.";
+"harness.publish.register.disclosure %@" = "Après la copie, le %@ du dépôt sera exécuté (script fourni par le dépôt).";
+"harness.publish.change.added" = "ajouté";
+"harness.publish.change.modified" = "modifié";
+"harness.publish.change.removed" = "supprimé";
+"harness.publish.changes.none" = "Aucune différence — la copie publiée correspond à vos fichiers locaux.";
+"harness.publish.step.worktree %@" = "Création du worktree sur la branche %@…";
+"harness.publish.step.copy %@" = "Copie du harnais dans %@…";
+"harness.publish.step.copied %lld" = "%lld groupe(s) de fichiers copié(s).";
+"harness.publish.step.validate" = "Validation du harnais copié (ynd validate)…";
+"harness.publish.step.register %@" = "Exécution de %@…";
+"harness.publish.step.done %@" = "Terminé — worktree prêt à %@.";
+"harness.publish.warning %@" = "Avertissement : %@";
+"harness.publish.deleted %@" = "Chemin obsolète supprimé : %@";
+"harness.publish.validation.failed" = "La validation a échoué dans le worktree — rien n'a été commis. Le worktree est conservé pour inspection.";
+"harness.publish.register.failed" = "Le script d'enregistrement du dépôt a échoué — le worktree est conservé pour inspection.";
+"harness.publish.references.missing %@" = "Des fichiers référencés par le manifeste sont absents après la copie : %@";
+"harness.publish.error.occupied %@" = "La destination contient déjà un harnais : %@";
+"harness.publish.error.invaliddest %@" = "La destination sort du worktree : %@";
+"harness.publish.error.copy %@" = "Échec de la copie : %@";
+"harness.publish.error.rename %@" = "Impossible de réécrire le nom du manifeste : %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Mettre à jour \"%@\"";

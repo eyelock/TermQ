@@ -980,6 +980,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "로컬로 포크";
 "harnesses.fork.to.local.help" = "이 harness의 편집 가능한 로컬 사본 만들기";
+"harnesses.publish.to.repository" = "저장소에 게시…";
 "harnesses.update.dot.help" = "업데이트 가능";
 "harness.fork.title %@" = "\"%@\" 을 로컬로 포크";
 "harness.fork.explanation" = "이 harness의 편집 가능한 로컬 사본을 만듭니다. 사본은 업스트림에서 무엇이 변경되었는지 확인할 수 있도록 원본을 추적합니다.";
@@ -989,6 +990,56 @@
 "harness.fork.rename.hint" = "비워 두면 소스 이름을 유지합니다. 새 포크의 정식 id는 local/<이름>이 됩니다.";
 "harness.fork.identity.collision" = "이미 이 ID를 가진 하네스가 설치되어 있습니다.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\"을(를) 저장소에 게시";
+"harness.publish.explanation" = "이 harness를 대상 저장소의 새 worktree로 복사하여 커밋할 준비를 합니다. 저장소의 고유 규칙(등록 스크립트, 매니페스트)이 나머지를 처리합니다.";
+"harness.publish.button" = "게시";
+"harness.publish.update.button" = "기존 항목 업데이트";
+"harness.publish.progress.title %@" = "\"%@\" 게시 중…";
+"harness.publish.repo.label" = "대상 저장소";
+"harness.publish.repo.placeholder" = "저장소를 선택하세요…";
+"harness.publish.parentdir.label" = "저장소 내 디렉토리";
+"harness.publish.parentdir.hint" = "이 저장소가 이미 harness를 보관하는 위치에서 제안됩니다. 완전히 수정 가능합니다.";
+"harness.publish.name.label" = "이름";
+"harness.publish.branch.label" = "브랜치";
+"harness.publish.basebranch.label" = "기본 브랜치";
+"harness.publish.worktreepath.label" = "Worktree 경로";
+"harness.publish.files.label" = "복사할 파일";
+"harness.publish.changes.label" = "게시된 사본과의 변경 사항";
+"harness.publish.mode.label" = "복사 모드";
+"harness.publish.mode.entire" = "전체 디렉토리";
+"harness.publish.mode.enumerated" = "Harness 파일만";
+"harness.publish.mode.enumerated.hint" = "소스 디렉토리가 프로젝트 저장소를 겸합니다 — harness가 소유한 파일만 복사됩니다.";
+"harness.publish.state.new" = "새 항목 — 이 harness는 저장소에 아직 존재하지 않습니다.";
+"harness.publish.state.update %@" = "%@에 있는 기존 항목을 업데이트합니다 (덮어씁니다).";
+"harness.publish.state.clash %@" = "해당 디렉토리에 이미 다른 harness(\"%@\")가 있습니다 — 다른 이름을 선택하세요.";
+"harness.publish.state.occupied" = "해당 디렉토리가 저장소에 이미 존재합니다 — 다른 이름이나 위치를 선택하세요.";
+"harness.publish.state.samerepo" = "이 harness는 이미 선택한 저장소에 있습니다 — 게시 대신 변경 사항을 그곳에 커밋하세요.";
+"harness.publish.reveal.repository" = "저장소에서 보기";
+"harness.publish.preflight.failed" = "로컬 harness가 검증되지 않습니다 — 게시하기 전에 수정하세요.";
+"harness.publish.composition.unavailable" = "이 harness에 대해 ynd compose가 실패했습니다 — \"harness 파일만\" 모드는 소유 파일을 파악하기 위해 이것이 필요합니다. harness를 수정하거나 \"전체 디렉토리\"로 전환하세요.";
+"harness.publish.unresolved %lld" = "소스에서 참조된 파일 %lld개가 누락되었습니다 — 복사되지 않습니다.";
+"harness.publish.register.disclosure %@" = "복사 후 저장소의 %@이(가) 실행됩니다 (저장소 제공 스크립트).";
+"harness.publish.change.added" = "추가됨";
+"harness.publish.change.modified" = "수정됨";
+"harness.publish.change.removed" = "제거됨";
+"harness.publish.changes.none" = "차이 없음 — 게시된 사본이 로컬 파일과 일치합니다.";
+"harness.publish.step.worktree %@" = "%@ 브랜치에 worktree 생성 중…";
+"harness.publish.step.copy %@" = "%@에 harness 복사 중…";
+"harness.publish.step.copied %lld" = "%lld개의 파일 그룹을 복사했습니다.";
+"harness.publish.step.validate" = "복사된 harness 검증 중 (ynd validate)…";
+"harness.publish.step.register %@" = "%@ 실행 중…";
+"harness.publish.step.done %@" = "완료 — worktree가 %@에 준비되었습니다.";
+"harness.publish.warning %@" = "경고: %@";
+"harness.publish.deleted %@" = "오래된 경로 제거됨: %@";
+"harness.publish.validation.failed" = "worktree에서 검증 실패 — 아무것도 커밋되지 않았습니다. worktree는 검사를 위해 유지됩니다.";
+"harness.publish.register.failed" = "저장소의 등록 스크립트가 실패했습니다 — worktree는 검사를 위해 유지됩니다.";
+"harness.publish.references.missing %@" = "복사 후 매니페스트에서 참조된 파일이 누락되었습니다: %@";
+"harness.publish.error.occupied %@" = "대상에 이미 harness가 있습니다: %@";
+"harness.publish.error.invaliddest %@" = "대상이 worktree를 벗어납니다: %@";
+"harness.publish.error.copy %@" = "복사 실패: %@";
+"harness.publish.error.rename %@" = "매니페스트 이름을 다시 쓸 수 없습니다: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "\"%@\" 업데이트";

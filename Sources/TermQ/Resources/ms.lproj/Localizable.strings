@@ -980,6 +980,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork ke lokal";
 "harnesses.fork.to.local.help" = "Cipta salinan tempatan yang boleh diedit bagi harness ini";
+"harnesses.publish.to.repository" = "Terbitkan ke Repositori…";
 "harnesses.update.dot.help" = "Kemas kini tersedia";
 "harness.fork.title %@" = "Fork \"%@\" ke lokal";
 "harness.fork.explanation" = "Mencipta salinan tempatan yang boleh diedit bagi harness ini. Salinan menjejak asalnya supaya anda boleh melihat apa yang berubah di upstream.";
@@ -989,6 +990,56 @@
 "harness.fork.rename.hint" = "Biarkan kosong untuk mengekalkan nama sumber. Id kanonik fork baharu ialah local/<nama>.";
 "harness.fork.identity.collision" = "Harness yang dipasang sudah mempunyai identiti ini.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Terbitkan \"%@\" ke Repositori";
+"harness.publish.explanation" = "Menyalin harness ini ke dalam worktree baharu repositori sasaran, sedia untuk dikomit. Konvensyen repositori itu sendiri (skrip pendaftaran, manifes) menentukan selebihnya.";
+"harness.publish.button" = "Terbitkan";
+"harness.publish.update.button" = "Kemas Kini Entri Sedia Ada";
+"harness.publish.progress.title %@" = "Menerbitkan \"%@\"…";
+"harness.publish.repo.label" = "Repositori Sasaran";
+"harness.publish.repo.placeholder" = "Pilih repositori…";
+"harness.publish.parentdir.label" = "Direktori dalam Repositori";
+"harness.publish.parentdir.hint" = "Dicadangkan berdasarkan lokasi repositori ini sudah menyimpan harness. Boleh diedit sepenuhnya.";
+"harness.publish.name.label" = "Nama";
+"harness.publish.branch.label" = "Cawangan";
+"harness.publish.basebranch.label" = "Cawangan Asas";
+"harness.publish.worktreepath.label" = "Laluan Worktree";
+"harness.publish.files.label" = "Fail untuk Disalin";
+"harness.publish.changes.label" = "Perubahan berbanding Salinan Diterbitkan";
+"harness.publish.mode.label" = "Mod Salin";
+"harness.publish.mode.entire" = "Keseluruhan direktori";
+"harness.publish.mode.enumerated" = "Fail harness sahaja";
+"harness.publish.mode.enumerated.hint" = "Direktori sumber juga berfungsi sebagai repositori projek — hanya fail yang dimiliki harness disalin.";
+"harness.publish.state.new" = "Entri baharu — harness ini belum wujud dalam repositori.";
+"harness.publish.state.update %@" = "Mengemas kini entri sedia ada di %@ (menimpa).";
+"harness.publish.state.clash %@" = "Direktori itu sudah mengandungi harness lain (\"%@\") — pilih nama lain.";
+"harness.publish.state.occupied" = "Direktori itu sudah wujud dalam repositori — pilih nama atau lokasi lain.";
+"harness.publish.state.samerepo" = "Harness ini sudah berada dalam repositori yang dipilih — komit perubahan anda di sana dan bukannya menerbitkan.";
+"harness.publish.reveal.repository" = "Dedahkan dalam Repositori";
+"harness.publish.preflight.failed" = "Harness tempatan tidak lulus pengesahan — betulkan sebelum menerbitkan.";
+"harness.publish.composition.unavailable" = "ynd compose gagal untuk harness ini — mod \"fail harness sahaja\" memerlukannya untuk mengetahui fail yang dimiliki. Betulkan harness atau tukar kepada \"keseluruhan direktori\".";
+"harness.publish.unresolved %lld" = "%lld fail yang dirujuk tiada dalam sumber — ia tidak akan disalin.";
+"harness.publish.register.disclosure %@" = "Selepas menyalin, %@ repositori akan dijalankan (skrip yang disediakan repositori).";
+"harness.publish.change.added" = "ditambah";
+"harness.publish.change.modified" = "diubah suai";
+"harness.publish.change.removed" = "dialih keluar";
+"harness.publish.changes.none" = "Tiada perbezaan — salinan yang diterbitkan sepadan dengan fail tempatan anda.";
+"harness.publish.step.worktree %@" = "Mencipta worktree pada cawangan %@…";
+"harness.publish.step.copy %@" = "Menyalin harness ke dalam %@…";
+"harness.publish.step.copied %lld" = "Disalin %lld kumpulan fail.";
+"harness.publish.step.validate" = "Mengesahkan harness yang disalin (ynd validate)…";
+"harness.publish.step.register %@" = "Menjalankan %@…";
+"harness.publish.step.done %@" = "Selesai — worktree sedia di %@.";
+"harness.publish.warning %@" = "Amaran: %@";
+"harness.publish.deleted %@" = "Laluan lapuk dibuang: %@";
+"harness.publish.validation.failed" = "Pengesahan gagal dalam worktree — tiada yang dikomit. Worktree dikekalkan untuk pemeriksaan.";
+"harness.publish.register.failed" = "Skrip pendaftaran repositori gagal — worktree dikekalkan untuk pemeriksaan.";
+"harness.publish.references.missing %@" = "Fail yang dirujuk oleh manifes tiada selepas salinan: %@";
+"harness.publish.error.occupied %@" = "Destinasi sudah mengandungi harness: %@";
+"harness.publish.error.invaliddest %@" = "Destinasi terkeluar dari worktree: %@";
+"harness.publish.error.copy %@" = "Salin gagal: %@";
+"harness.publish.error.rename %@" = "Tidak dapat menulis semula nama manifes: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Kemas Kini \"%@\"";

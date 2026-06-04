@@ -980,6 +980,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Utwórz fork lokalny";
 "harnesses.fork.to.local.help" = "Utwórz edytowalną kopię lokalną tego harness";
+"harnesses.publish.to.repository" = "Opublikuj w repozytorium…";
 "harnesses.update.dot.help" = "Dostępna aktualizacja";
 "harness.fork.title %@" = "Fork \"%@\" do lokalnego";
 "harness.fork.explanation" = "Tworzy edytowalną kopię lokalną tego harness. Kopia śledzi swoje źródło, dzięki czemu możesz zobaczyć, co zmieniło się upstream.";
@@ -989,6 +990,56 @@
 "harness.fork.rename.hint" = "Zostaw puste, aby zachować nazwę źródłową. Kanoniczny id nowego forka to local/<nazwa>.";
 "harness.fork.identity.collision" = "Zainstalowany harness ma już tę tożsamość.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Opublikuj \"%@\" w repozytorium";
+"harness.publish.explanation" = "Kopiuje ten harness do nowego worktree docelowego repozytorium, gotowego do zatwierdzenia. Własne konwencje repozytorium (skrypty rejestracji, manifesty) zajmują się resztą.";
+"harness.publish.button" = "Opublikuj";
+"harness.publish.update.button" = "Aktualizuj istniejący wpis";
+"harness.publish.progress.title %@" = "Publikowanie \"%@\"…";
+"harness.publish.repo.label" = "Docelowe repozytorium";
+"harness.publish.repo.placeholder" = "Wybierz repozytorium…";
+"harness.publish.parentdir.label" = "Katalog w repozytorium";
+"harness.publish.parentdir.hint" = "Sugerowany na podstawie miejsca, w którym to repozytorium już przechowuje harnesses. W pełni edytowalny.";
+"harness.publish.name.label" = "Nazwa";
+"harness.publish.branch.label" = "Gałąź";
+"harness.publish.basebranch.label" = "Gałąź bazowa";
+"harness.publish.worktreepath.label" = "Ścieżka worktree";
+"harness.publish.files.label" = "Pliki do skopiowania";
+"harness.publish.changes.label" = "Zmiany względem opublikowanej kopii";
+"harness.publish.mode.label" = "Tryb kopiowania";
+"harness.publish.mode.entire" = "Cały katalog";
+"harness.publish.mode.enumerated" = "Tylko pliki harness";
+"harness.publish.mode.enumerated.hint" = "Katalog źródłowy pełni jednocześnie rolę repozytorium projektu — kopiowane są tylko pliki należące do harness.";
+"harness.publish.state.new" = "Nowy wpis — ten harness jeszcze nie istnieje w repozytorium.";
+"harness.publish.state.update %@" = "Aktualizuje istniejący wpis w %@ (nadpisuje go).";
+"harness.publish.state.clash %@" = "Ten katalog zawiera już inny harness (\"%@\") — wybierz inną nazwę.";
+"harness.publish.state.occupied" = "Ten katalog już istnieje w repozytorium — wybierz inną nazwę lub lokalizację.";
+"harness.publish.state.samerepo" = "Ten harness już znajduje się w wybranym repozytorium — zatwierdź tam swoje zmiany zamiast publikować.";
+"harness.publish.reveal.repository" = "Pokaż w repozytoriach";
+"harness.publish.preflight.failed" = "Lokalny harness nie przechodzi walidacji — napraw go przed opublikowaniem.";
+"harness.publish.composition.unavailable" = "ynd compose nie powiodło się dla tego harness — tryb \"tylko pliki harness\" wymaga go do ustalenia, które pliki są własne. Napraw harness lub przełącz na \"cały katalog\".";
+"harness.publish.unresolved %lld" = "%lld plik(ów) wskazany(ch) w manifeście brakuje w źródle — nie zostanie skopiowany(ch).";
+"harness.publish.register.disclosure %@" = "Po skopiowaniu zostanie uruchomiony %@ repozytorium (skrypt dostarczony przez repozytorium).";
+"harness.publish.change.added" = "dodany";
+"harness.publish.change.modified" = "zmodyfikowany";
+"harness.publish.change.removed" = "usunięty";
+"harness.publish.changes.none" = "Brak różnic — opublikowana kopia jest zgodna z lokalnymi plikami.";
+"harness.publish.step.worktree %@" = "Tworzenie worktree na gałęzi %@…";
+"harness.publish.step.copy %@" = "Kopiowanie harness do %@…";
+"harness.publish.step.copied %lld" = "Skopiowano %lld grupę(y) plików.";
+"harness.publish.step.validate" = "Walidowanie skopiowanego harness (ynd validate)…";
+"harness.publish.step.register %@" = "Uruchamianie %@…";
+"harness.publish.step.done %@" = "Gotowe — worktree przygotowany w %@.";
+"harness.publish.warning %@" = "Ostrzeżenie: %@";
+"harness.publish.deleted %@" = "Usunięto nieaktualną ścieżkę: %@";
+"harness.publish.validation.failed" = "Walidacja nie powiodła się w worktree — nic nie zostało zatwierdzone. Worktree zostaje zachowany do inspekcji.";
+"harness.publish.register.failed" = "Skrypt rejestracji repozytorium nie powiódł się — worktree zostaje zachowany do inspekcji.";
+"harness.publish.references.missing %@" = "Pliki wskazane przez manifest brakują po skopiowaniu: %@";
+"harness.publish.error.occupied %@" = "Cel zawiera już harness: %@";
+"harness.publish.error.invaliddest %@" = "Cel wykracza poza worktree: %@";
+"harness.publish.error.copy %@" = "Kopiowanie nie powiodło się: %@";
+"harness.publish.error.rename %@" = "Nie można przepisać nazwy w manifeście: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Aktualizuj \"%@\"";

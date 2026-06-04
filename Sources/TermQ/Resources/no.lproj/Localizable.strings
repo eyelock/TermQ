@@ -980,6 +980,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork til lokalt";
 "harnesses.fork.to.local.help" = "Opprett en redigerbar lokal kopi av denne harness";
+"harnesses.publish.to.repository" = "Publiser til repository…";
 "harnesses.update.dot.help" = "Oppdatering tilgjengelig";
 "harness.fork.title %@" = "Fork \"%@\" til lokalt";
 "harness.fork.explanation" = "Oppretter en redigerbar lokal kopi av denne harness. Kopien sporer sitt opphav slik at du kan se hva som er endret oppstrøms.";
@@ -989,6 +990,56 @@
 "harness.fork.rename.hint" = "La feltet stå tomt for å beholde kildenavnet. Den nye forkens kanoniske id blir local/<navn>.";
 "harness.fork.identity.collision" = "Et installert harness har allerede denne identiteten.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publiser \"%@\" til repository";
+"harness.publish.explanation" = "Kopierer denne harness inn i en ny worktree i målrepositoryets, klar for commit. Repositoryets egne konvensjoner (registreringsskripter, manifester) tar seg av resten.";
+"harness.publish.button" = "Publiser";
+"harness.publish.update.button" = "Oppdater eksisterende oppføring";
+"harness.publish.progress.title %@" = "Publiserer \"%@\"…";
+"harness.publish.repo.label" = "Målrepository";
+"harness.publish.repo.placeholder" = "Velg et repository…";
+"harness.publish.parentdir.label" = "Mappe i repository";
+"harness.publish.parentdir.hint" = "Foreslått basert på hvor dette repositoryet allerede lagrer harnesses. Fullt redigerbar.";
+"harness.publish.name.label" = "Navn";
+"harness.publish.branch.label" = "Gren";
+"harness.publish.basebranch.label" = "Basisgren";
+"harness.publish.worktreepath.label" = "Worktree-sti";
+"harness.publish.files.label" = "Filer som skal kopieres";
+"harness.publish.changes.label" = "Endringer i forhold til publisert kopi";
+"harness.publish.mode.label" = "Kopieringsmodus";
+"harness.publish.mode.entire" = "Hele mappen";
+"harness.publish.mode.enumerated" = "Bare harness-filer";
+"harness.publish.mode.enumerated.hint" = "Kildemappen fungerer også som et prosjektrepository — bare filer harness eier kopieres.";
+"harness.publish.state.new" = "Ny oppføring — denne harness finnes ikke i repositoryet ennå.";
+"harness.publish.state.update %@" = "Oppdaterer eksisterende oppføring på %@ (overskriver den).";
+"harness.publish.state.clash %@" = "Den mappen inneholder allerede en annen harness (\"%@\") — velg et annet navn.";
+"harness.publish.state.occupied" = "Den mappen finnes allerede i repositoryet — velg et annet navn eller sted.";
+"harness.publish.state.samerepo" = "Denne harness ligger allerede i det valgte repositoryet — commit endringene dine der i stedet for å publisere.";
+"harness.publish.reveal.repository" = "Vis i repositories";
+"harness.publish.preflight.failed" = "Den lokale harness validerer ikke — fiks den før publisering.";
+"harness.publish.composition.unavailable" = "ynd compose feilet for denne harness — modusen \"bare harness-filer\" trenger den for å vite hvilke filer som eies. Fiks harness eller bytt til \"hele mappen\".";
+"harness.publish.unresolved %lld" = "%lld referert(e) fil(er) mangler fra kilden — de kopieres ikke.";
+"harness.publish.register.disclosure %@" = "Etter kopiering vil repositoryets %@ kjøres (skript levert av repositoryet).";
+"harness.publish.change.added" = "lagt til";
+"harness.publish.change.modified" = "endret";
+"harness.publish.change.removed" = "fjernet";
+"harness.publish.changes.none" = "Ingen forskjeller — den publiserte kopien samsvarer med dine lokale filer.";
+"harness.publish.step.worktree %@" = "Oppretter worktree på gren %@…";
+"harness.publish.step.copy %@" = "Kopierer harness inn i %@…";
+"harness.publish.step.copied %lld" = "Kopierte %lld filgruppe(r).";
+"harness.publish.step.validate" = "Validerer kopiert harness (ynd validate)…";
+"harness.publish.step.register %@" = "Kjører %@…";
+"harness.publish.step.done %@" = "Ferdig — worktree klar på %@.";
+"harness.publish.warning %@" = "Advarsel: %@";
+"harness.publish.deleted %@" = "Fjernet utdatert sti: %@";
+"harness.publish.validation.failed" = "Validering feilet i worktreen — ingenting ble committet. Worktreen beholdes for inspeksjon.";
+"harness.publish.register.failed" = "Repositoryets registreringsskript feilet — worktreen beholdes for inspeksjon.";
+"harness.publish.references.missing %@" = "Filer referert av manifestet mangler etter kopiering: %@";
+"harness.publish.error.occupied %@" = "Destinasjonen inneholder allerede en harness: %@";
+"harness.publish.error.invaliddest %@" = "Destinasjonen er utenfor worktreen: %@";
+"harness.publish.error.copy %@" = "Kopiering feilet: %@";
+"harness.publish.error.rename %@" = "Kunne ikke omskrive manifestnavnet: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Oppdater \"%@\"";

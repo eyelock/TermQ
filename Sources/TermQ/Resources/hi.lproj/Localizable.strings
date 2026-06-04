@@ -981,6 +981,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "स्थानीय रूप से फोर्क करें";
 "harnesses.fork.to.local.help" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाएं";
+"harnesses.publish.to.repository" = "रिपॉज़िटरी में प्रकाशित करें…";
 "harnesses.update.dot.help" = "अपडेट उपलब्ध है";
 "harness.fork.title %@" = "\"%@\" को स्थानीय में फोर्क करें";
 "harness.fork.explanation" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाता है। प्रतिलिपि अपने मूल को ट्रैक करती है ताकि आप देख सकें कि upstream में क्या बदला।";
@@ -990,6 +991,56 @@
 "harness.fork.rename.hint" = "स्रोत नाम बनाए रखने के लिए खाली छोड़ें। नए fork का canonical id local/<नाम> होगा।";
 "harness.fork.identity.collision" = "पहले से स्थापित harness में यह पहचान है।";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" को रिपॉज़िटरी में प्रकाशित करें";
+"harness.publish.explanation" = "इस harness को लक्षित रिपॉज़िटरी के एक नए worktree में कॉपी करता है, commit के लिए तैयार। रिपॉज़िटरी की अपनी परंपराएं (पंजीकरण स्क्रिप्ट, manifests) बाकी काम करती हैं।";
+"harness.publish.button" = "प्रकाशित करें";
+"harness.publish.update.button" = "मौजूदा प्रविष्टि अपडेट करें";
+"harness.publish.progress.title %@" = "\"%@\" प्रकाशित हो रहा है…";
+"harness.publish.repo.label" = "लक्षित रिपॉज़िटरी";
+"harness.publish.repo.placeholder" = "एक रिपॉज़िटरी चुनें…";
+"harness.publish.parentdir.label" = "रिपॉज़िटरी में डायरेक्टरी";
+"harness.publish.parentdir.hint" = "इस रिपॉज़िटरी में harnesses पहले से कहाँ रखे हैं, उसके आधार पर सुझाया गया। पूरी तरह संपादन योग्य।";
+"harness.publish.name.label" = "नाम";
+"harness.publish.branch.label" = "ब्रांच";
+"harness.publish.basebranch.label" = "आधार ब्रांच";
+"harness.publish.worktreepath.label" = "Worktree पथ";
+"harness.publish.files.label" = "कॉपी की जाने वाली फ़ाइलें";
+"harness.publish.changes.label" = "प्रकाशित प्रति के मुकाबले परिवर्तन";
+"harness.publish.mode.label" = "कॉपी मोड";
+"harness.publish.mode.entire" = "पूरी डायरेक्टरी";
+"harness.publish.mode.enumerated" = "केवल harness फ़ाइलें";
+"harness.publish.mode.enumerated.hint" = "स्रोत डायरेक्टरी एक प्रोजेक्ट रिपॉज़िटरी के रूप में भी काम करती है — केवल harness के स्वामित्व वाली फ़ाइलें कॉपी की जाती हैं।";
+"harness.publish.state.new" = "नई प्रविष्टि — यह harness रिपॉज़िटरी में अभी तक मौजूद नहीं है।";
+"harness.publish.state.update %@" = "%@ पर मौजूदा प्रविष्टि अपडेट करता है (उसे ओवरराइट करता है)।";
+"harness.publish.state.clash %@" = "उस डायरेक्टरी में पहले से एक अलग harness (\"%@\") है — कोई और नाम चुनें।";
+"harness.publish.state.occupied" = "वह डायरेक्टरी रिपॉज़िटरी में पहले से मौजूद है — कोई और नाम या स्थान चुनें।";
+"harness.publish.state.samerepo" = "यह harness पहले से चुनी गई रिपॉज़िटरी में है — प्रकाशित करने के बजाय अपने परिवर्तन वहीं commit करें।";
+"harness.publish.reveal.repository" = "रिपॉज़िटरी में दिखाएं";
+"harness.publish.preflight.failed" = "स्थानीय harness मान्य नहीं है — प्रकाशित करने से पहले उसे ठीक करें।";
+"harness.publish.composition.unavailable" = "ynd compose इस harness के लिए विफल रहा — \"केवल harness फ़ाइलें\" मोड को यह जानने के लिए चाहिए कि कौन सी फ़ाइलें harness की हैं। harness को ठीक करें या \"पूरी डायरेक्टरी\" पर स्विच करें।";
+"harness.publish.unresolved %lld" = "स्रोत से %lld संदर्भित फ़ाइलें गायब हैं — वे कॉपी नहीं की जाएंगी।";
+"harness.publish.register.disclosure %@" = "कॉपी करने के बाद, रिपॉज़िटरी का %@ चलाया जाएगा (रिपॉज़िटरी-प्रदत्त स्क्रिप्ट)।";
+"harness.publish.change.added" = "जोड़ा गया";
+"harness.publish.change.modified" = "संशोधित";
+"harness.publish.change.removed" = "हटाया गया";
+"harness.publish.changes.none" = "कोई अंतर नहीं — प्रकाशित प्रति आपकी स्थानीय फ़ाइलों से मेल खाती है।";
+"harness.publish.step.worktree %@" = "ब्रांच %@ पर worktree बनाया जा रहा है…";
+"harness.publish.step.copy %@" = "harness को %@ में कॉपी किया जा रहा है…";
+"harness.publish.step.copied %lld" = "%lld फ़ाइल समूह कॉपी किए गए।";
+"harness.publish.step.validate" = "कॉपी किए गए harness को मान्य किया जा रहा है (ynd validate)…";
+"harness.publish.step.register %@" = "%@ चलाया जा रहा है…";
+"harness.publish.step.done %@" = "पूर्ण — worktree %@ पर तैयार है।";
+"harness.publish.warning %@" = "चेतावनी: %@";
+"harness.publish.deleted %@" = "पुराना पथ हटाया गया: %@";
+"harness.publish.validation.failed" = "worktree में मान्यता विफल रही — कुछ भी commit नहीं किया गया। worktree निरीक्षण के लिए सुरक्षित है।";
+"harness.publish.register.failed" = "रिपॉज़िटरी की पंजीकरण स्क्रिप्ट विफल रही — worktree निरीक्षण के लिए सुरक्षित है।";
+"harness.publish.references.missing %@" = "manifest द्वारा संदर्भित फ़ाइलें कॉपी के बाद गायब हैं: %@";
+"harness.publish.error.occupied %@" = "गंतव्य में पहले से एक harness है: %@";
+"harness.publish.error.invaliddest %@" = "गंतव्य worktree की सीमाओं से बाहर है: %@";
+"harness.publish.error.copy %@" = "कॉपी विफल: %@";
+"harness.publish.error.rename %@" = "manifest नाम पुनः नहीं लिखा जा सका: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "\"%@\" अपडेट करें";

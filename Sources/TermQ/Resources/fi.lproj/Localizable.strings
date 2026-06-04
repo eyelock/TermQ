@@ -981,6 +981,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Haaruta paikalliseksi";
 "harnesses.fork.to.local.help" = "Luo muokattava paikallinen kopio tästä harness-ohjelmasta";
+"harnesses.publish.to.repository" = "Julkaise tietovarastoon…";
 "harnesses.update.dot.help" = "Päivitys saatavilla";
 "harness.fork.title %@" = "Haaruta \"%@\" paikalliseksi";
 "harness.fork.explanation" = "Luo muokattavan paikallisen kopion tästä harness-ohjelmasta. Kopio seuraa alkuperäänsä, joten näet mitä ylävirrassa on muuttunut.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.hint" = "Jätä tyhjäksi säilyttääksesi lähteen nimen. Uuden forkin kanoninen id on local/<nimi>.";
 "harness.fork.identity.collision" = "Asennetulla harnessilla on jo tämä identiteetti.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Julkaise \"%@\" tietovarastoon";
+"harness.publish.explanation" = "Kopioi tämän harnessn uuteen työskentelypuuhun kohde-tietovarastossa, valmiina commitoitavaksi. Tietovaraston omat käytännöt (rekisteröintiskriptit, manifestit) hoitavat loput.";
+"harness.publish.button" = "Julkaise";
+"harness.publish.update.button" = "Päivitä olemassa oleva merkintä";
+"harness.publish.progress.title %@" = "Julkaistaan \"%@\"…";
+"harness.publish.repo.label" = "Kohdeovarasto";
+"harness.publish.repo.placeholder" = "Valitse tietovarasto…";
+"harness.publish.parentdir.label" = "Hakemisto tietovarastossa";
+"harness.publish.parentdir.hint" = "Ehdotettu sen perusteella, mihin tietovarasto jo tallentaa harnesseja. Täysin muokattavissa.";
+"harness.publish.name.label" = "Nimi";
+"harness.publish.branch.label" = "Haara";
+"harness.publish.basebranch.label" = "Pohjahaara";
+"harness.publish.worktreepath.label" = "Työskentelypuun polku";
+"harness.publish.files.label" = "Kopioitavat tiedostot";
+"harness.publish.changes.label" = "Muutokset vs. julkaistu kopio";
+"harness.publish.mode.label" = "Kopiointitila";
+"harness.publish.mode.entire" = "Koko hakemisto";
+"harness.publish.mode.enumerated" = "Vain harness-tiedostot";
+"harness.publish.mode.enumerated.hint" = "Lähdetiedosto toimii myös projektihakemistona — kopioidaan vain harnessille kuuluvat tiedostot.";
+"harness.publish.state.new" = "Uusi merkintä — tätä harnessia ei vielä ole tietovarastossa.";
+"harness.publish.state.update %@" = "Päivittää olemassa olevan merkinnän kohteessa %@ (ylikirjoittaa sen).";
+"harness.publish.state.clash %@" = "Kyseisessä hakemistossa on jo eri harness (\"%@\") — valitse toinen nimi.";
+"harness.publish.state.occupied" = "Kyseinen hakemisto on jo tietovarastossa — valitse toinen nimi tai sijainti.";
+"harness.publish.state.samerepo" = "Tämä harness on jo valitussa tietovarastossa — commitoi muutokset siellä julkaisemisen sijaan.";
+"harness.publish.reveal.repository" = "Näytä Tietovarastoissa";
+"harness.publish.preflight.failed" = "Paikallinen harness ei läpäise validointia — korjaa se ennen julkaisemista.";
+"harness.publish.composition.unavailable" = "ynd compose epäonnistui tälle harnessille — \"vain harness-tiedostot\" -tila tarvitsee sen tietääkseen, mitkä tiedostot kuuluvat harnessille. Korjaa harness tai vaihda \"koko hakemisto\" -tilaan.";
+"harness.publish.unresolved %lld" = "%lld viitattu tiedosto puuttuu lähteestä — niitä ei kopioida.";
+"harness.publish.register.disclosure %@" = "Kopioinnin jälkeen tietovaraston %@ suoritetaan (tietovaraston tarjoama skripti).";
+"harness.publish.change.added" = "lisätty";
+"harness.publish.change.modified" = "muokattu";
+"harness.publish.change.removed" = "poistettu";
+"harness.publish.changes.none" = "Ei eroja — julkaistu kopio vastaa paikallisia tiedostoja.";
+"harness.publish.step.worktree %@" = "Luodaan työskentelypuu haaralle %@…";
+"harness.publish.step.copy %@" = "Kopioidaan harness kohteeseen %@…";
+"harness.publish.step.copied %lld" = "Kopioitu %lld tiedostoryhmä(ä).";
+"harness.publish.step.validate" = "Validoidaan kopioitu harness (ynd validate)…";
+"harness.publish.step.register %@" = "Suoritetaan %@…";
+"harness.publish.step.done %@" = "Valmis — työskentelypuu valmiina kohteessa %@.";
+"harness.publish.warning %@" = "Varoitus: %@";
+"harness.publish.deleted %@" = "Poistettu vanhentunut polku: %@";
+"harness.publish.validation.failed" = "Validointi epäonnistui työskentelypuussa — mitään ei commitoitu. Työskentelypuu säilytetään tarkastelua varten.";
+"harness.publish.register.failed" = "Tietovaraston rekisteröintiskripti epäonnistui — työskentelypuu säilytetään tarkastelua varten.";
+"harness.publish.references.missing %@" = "Manifestissa viitatut tiedostot puuttuvat kopioinnin jälkeen: %@";
+"harness.publish.error.occupied %@" = "Kohde sisältää jo harnessn: %@";
+"harness.publish.error.invaliddest %@" = "Kohde on työskentelypuun ulkopuolella: %@";
+"harness.publish.error.copy %@" = "Kopiointi epäonnistui: %@";
+"harness.publish.error.rename %@" = "Manifesti-nimeä ei voitu kirjoittaa uudelleen: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Päivitä \"%@\"";

@@ -981,6 +981,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork na lokalno";
 "harnesses.fork.to.local.help" = "Stvorite uređivu lokalnu kopiju ovog harness-a";
+"harnesses.publish.to.repository" = "Objavi u repozitorij…";
 "harnesses.update.dot.help" = "Dostupno ažuriranje";
 "harness.fork.title %@" = "Fork \"%@\" na lokalno";
 "harness.fork.explanation" = "Stvara uređivu lokalnu kopiju ovog harness-a. Kopija prati svoje podrijetlo kako biste mogli vidjeti što se promijenilo upstream.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.hint" = "Ostavite prazno kako biste zadržali izvorno ime. Kanonički id novog forka bit će local/<naziv>.";
 "harness.fork.identity.collision" = "Instalirani harness već ima ovaj identitet.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Objavi \"%@\" u repozitorij";
+"harness.publish.explanation" = "Kopira ovaj harness u novi worktree ciljnog repozitorija, spreman za commit. Konvencije repozitorija (skripte za registraciju, manifesti) određuju ostatak.";
+"harness.publish.button" = "Objavi";
+"harness.publish.update.button" = "Ažuriraj postojeći unos";
+"harness.publish.progress.title %@" = "Objavljujem \"%@\"…";
+"harness.publish.repo.label" = "Ciljni repozitorij";
+"harness.publish.repo.placeholder" = "Odaberite repozitorij…";
+"harness.publish.parentdir.label" = "Direktorij u repozitoriju";
+"harness.publish.parentdir.hint" = "Predloženo prema tome gdje ovaj repozitorij već čuva harness-e. Potpuno uređivo.";
+"harness.publish.name.label" = "Naziv";
+"harness.publish.branch.label" = "Grana";
+"harness.publish.basebranch.label" = "Osnovna grana";
+"harness.publish.worktreepath.label" = "Putanja worktree-a";
+"harness.publish.files.label" = "Datoteke za kopiranje";
+"harness.publish.changes.label" = "Promjene u odnosu na objavljenu kopiju";
+"harness.publish.mode.label" = "Način kopiranja";
+"harness.publish.mode.entire" = "Cijeli direktorij";
+"harness.publish.mode.enumerated" = "Samo datoteke harness-a";
+"harness.publish.mode.enumerated.hint" = "Izvorni direktorij ujedno je projektni repozitorij — kopiraju se samo datoteke koje harness posjeduje.";
+"harness.publish.state.new" = "Novi unos — ovaj harness još ne postoji u repozitoriju.";
+"harness.publish.state.update %@" = "Ažurira postojeći unos na %@ (prepisuje ga).";
+"harness.publish.state.clash %@" = "Taj direktorij već sadrži drugi harness (\"%@\") — odaberite drugi naziv.";
+"harness.publish.state.occupied" = "Taj direktorij već postoji u repozitoriju — odaberite drugi naziv ili lokaciju.";
+"harness.publish.state.samerepo" = "Ovaj harness već se nalazi u odabranom repozitoriju — commitajte promjene tamo umjesto objavljivanja.";
+"harness.publish.reveal.repository" = "Prikaži u repozitorijima";
+"harness.publish.preflight.failed" = "Lokalni harness ne prolazi validaciju — popravite ga prije objavljivanja.";
+"harness.publish.composition.unavailable" = "ynd compose nije uspio za ovaj harness — način \"samo datoteke harness-a\" zahtijeva ga da zna koje datoteke posjeduje. Popravite harness ili prijeđite na \"cijeli direktorij\".";
+"harness.publish.unresolved %lld" = "%lld referencirane datoteke nedostaju iz izvora — neće biti kopirane.";
+"harness.publish.register.disclosure %@" = "Nakon kopiranja, pokrenit će se %@ repozitorija (skripta iz repozitorija).";
+"harness.publish.change.added" = "dodano";
+"harness.publish.change.modified" = "izmijenjeno";
+"harness.publish.change.removed" = "uklonjeno";
+"harness.publish.changes.none" = "Nema razlika — objavljena kopija odgovara vašim lokalnim datotekama.";
+"harness.publish.step.worktree %@" = "Stvaram worktree na grani %@…";
+"harness.publish.step.copy %@" = "Kopiram harness u %@…";
+"harness.publish.step.copied %lld" = "Kopirano %lld grupa datoteka.";
+"harness.publish.step.validate" = "Validiram kopirani harness (ynd validate)…";
+"harness.publish.step.register %@" = "Pokrećem %@…";
+"harness.publish.step.done %@" = "Gotovo — worktree spreman na %@.";
+"harness.publish.warning %@" = "Upozorenje: %@";
+"harness.publish.deleted %@" = "Uklonjen zastarjeli put: %@";
+"harness.publish.validation.failed" = "Validacija nije uspjela u worktree-u — ništa nije commitano. Worktree je zadržan za pregled.";
+"harness.publish.register.failed" = "Skripta za registraciju repozitorija nije uspjela — worktree je zadržan za pregled.";
+"harness.publish.references.missing %@" = "Datoteke navedene u manifestu nedostaju nakon kopiranja: %@";
+"harness.publish.error.occupied %@" = "Odredište već sadrži harness: %@";
+"harness.publish.error.invaliddest %@" = "Odredište izlazi iz worktree-a: %@";
+"harness.publish.error.copy %@" = "Kopiranje nije uspjelo: %@";
+"harness.publish.error.rename %@" = "Nije moguće prepisati naziv manifesta: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Ažuriraj \"%@\"";

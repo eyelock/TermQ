@@ -982,6 +982,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Forka till lokalt";
 "harnesses.fork.to.local.help" = "Skapa en redigerbar lokal kopia av denna harness";
+"harnesses.publish.to.repository" = "Publicera till repositorium…";
 "harnesses.update.dot.help" = "Uppdatering tillgänglig";
 "harness.fork.title %@" = "Forka \"%@\" till lokalt";
 "harness.fork.explanation" = "Skapar en redigerbar lokal kopia av denna harness. Kopian spårar sitt ursprung så att du kan se vad som ändrats uppströms.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.label" = "Namn (valfritt)";
 "harness.fork.rename.hint" = "Lämna tomt för att behålla källnamnet. Det nya forkens kanoniska id blir local/<namn>.";
 "harness.fork.identity.collision" = "Ett installerat harness har redan den här identiteten.";
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publicera \"%@\" till repositorium";
+"harness.publish.explanation" = "Kopierar detta harness till ett nytt arbetsträd i målrepositoriet, redo att committa. Repositoriets egna konventioner (registreringsskript, manifest) sköter resten.";
+"harness.publish.button" = "Publicera";
+"harness.publish.update.button" = "Uppdatera befintlig post";
+"harness.publish.progress.title %@" = "Publicerar \"%@\"…";
+"harness.publish.repo.label" = "Målrepositorium";
+"harness.publish.repo.placeholder" = "Välj ett repositorium…";
+"harness.publish.parentdir.label" = "Katalog i repositoriet";
+"harness.publish.parentdir.hint" = "Föreslagen baserat på var detta repositorium redan förvarar harnesses. Fullt redigerbar.";
+"harness.publish.name.label" = "Namn";
+"harness.publish.branch.label" = "Gren";
+"harness.publish.basebranch.label" = "Basgren";
+"harness.publish.worktreepath.label" = "Arbetsträdsökväg";
+"harness.publish.files.label" = "Filer att kopiera";
+"harness.publish.changes.label" = "Ändringar jämfört med publicerad kopia";
+"harness.publish.mode.label" = "Kopieringsläge";
+"harness.publish.mode.entire" = "Hela katalogen";
+"harness.publish.mode.enumerated" = "Endast harness-filer";
+"harness.publish.mode.enumerated.hint" = "Källkatalogen fungerar också som projektrepositorium — bara filer som harness äger kopieras.";
+"harness.publish.state.new" = "Ny post — detta harness finns inte i repositoriet än.";
+"harness.publish.state.update %@" = "Uppdaterar befintlig post på %@ (skriver över den).";
+"harness.publish.state.clash %@" = "Den katalogen innehåller redan ett annat harness (\"%@\") — välj ett annat namn.";
+"harness.publish.state.occupied" = "Den katalogen finns redan i repositoriet — välj ett annat namn eller en annan plats.";
+"harness.publish.state.samerepo" = "Detta harness finns redan i det valda repositoriet — commita dina ändringar där istället för att publicera.";
+"harness.publish.reveal.repository" = "Visa i Repositorier";
+"harness.publish.preflight.failed" = "Det lokala harness validerar inte — åtgärda det innan du publicerar.";
+"harness.publish.composition.unavailable" = "ynd compose misslyckades för detta harness — läget \"endast harness-filer\" behöver det för att veta vilka filer som ägs. Åtgärda harness eller byt till \"hela katalogen\".";
+"harness.publish.unresolved %lld" = "%lld refererad(e) fil(er) saknas i källan — de kopieras inte.";
+"harness.publish.register.disclosure %@" = "Efter kopiering körs repositoriets %@ (skript från repositoriet).";
+"harness.publish.change.added" = "tillagd";
+"harness.publish.change.modified" = "ändrad";
+"harness.publish.change.removed" = "borttagen";
+"harness.publish.changes.none" = "Inga skillnader — den publicerade kopian matchar dina lokala filer.";
+"harness.publish.step.worktree %@" = "Skapar arbetsträd på gren %@…";
+"harness.publish.step.copy %@" = "Kopierar harness till %@…";
+"harness.publish.step.copied %lld" = "Kopierade %lld filgrupp(er).";
+"harness.publish.step.validate" = "Validerar kopierat harness (ynd validate)…";
+"harness.publish.step.register %@" = "Kör %@…";
+"harness.publish.step.done %@" = "Klart — arbetsträdet är redo på %@.";
+"harness.publish.warning %@" = "Varning: %@";
+"harness.publish.deleted %@" = "Tog bort inaktuell sökväg: %@";
+"harness.publish.validation.failed" = "Validering misslyckades i arbetsträdet — inget committades. Arbetsträdet behålls för granskning.";
+"harness.publish.register.failed" = "Repositoriets registreringsskript misslyckades — arbetsträdet behålls för granskning.";
+"harness.publish.references.missing %@" = "Filer som refereras av manifestet saknas efter kopiering: %@";
+"harness.publish.error.occupied %@" = "Destinationen innehåller redan ett harness: %@";
+"harness.publish.error.invaliddest %@" = "Destinationen hamnar utanför arbetsträdet: %@";
+"harness.publish.error.copy %@" = "Kopiering misslyckades: %@";
+"harness.publish.error.rename %@" = "Det gick inte att skriva om manifestnamnet: %@";
+
 
 
 // MARK: - Harness Update

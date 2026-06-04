@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork 到本地";
 "harnesses.fork.to.local.help" = "创建此 harness 的可编辑本地副本";
+"harnesses.publish.to.repository" = "发布到仓库…";
 "harnesses.update.dot.help" = "有可用更新";
 "harness.fork.title %@" = "将 \"%@\" Fork 到本地";
 "harness.fork.explanation" = "创建此 harness 的可编辑本地副本。该副本跟踪其来源，以便您查看上游的变更。";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "留空以保留源名称。新 fork 的规范 id 将为 local/<名称>。";
 "harness.fork.identity.collision" = "已有安装的 harness 使用此标识。";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "将\"%@\"发布到仓库";
+"harness.publish.explanation" = "将此 harness 复制到目标仓库的新 worktree 中，准备好进行 commit。仓库自身的规范（注册脚本、manifest）负责其余部分。";
+"harness.publish.button" = "发布";
+"harness.publish.update.button" = "更新现有条目";
+"harness.publish.progress.title %@" = "正在发布\"%@\"…";
+"harness.publish.repo.label" = "目标仓库";
+"harness.publish.repo.placeholder" = "选择仓库…";
+"harness.publish.parentdir.label" = "仓库中的目录";
+"harness.publish.parentdir.hint" = "根据此仓库已存储 harness 的位置建议。可自由编辑。";
+"harness.publish.name.label" = "名称";
+"harness.publish.branch.label" = "分支";
+"harness.publish.basebranch.label" = "基础分支";
+"harness.publish.worktreepath.label" = "Worktree 路径";
+"harness.publish.files.label" = "要复制的文件";
+"harness.publish.changes.label" = "与已发布副本的差异";
+"harness.publish.mode.label" = "复制模式";
+"harness.publish.mode.entire" = "整个目录";
+"harness.publish.mode.enumerated" = "仅 harness 文件";
+"harness.publish.mode.enumerated.hint" = "源目录同时是项目仓库——仅复制 harness 拥有的文件。";
+"harness.publish.state.new" = "新条目——此 harness 尚不存在于仓库中。";
+"harness.publish.state.update %@" = "更新 %@ 处的现有条目（覆盖）。";
+"harness.publish.state.clash %@" = "该目录已包含另一个 harness（\"%@\"）——请选择其他名称。";
+"harness.publish.state.occupied" = "该目录在仓库中已存在——请选择其他名称或位置。";
+"harness.publish.state.samerepo" = "此 harness 已位于所选仓库中——请直接在那里 commit 更改，而不是发布。";
+"harness.publish.reveal.repository" = "在仓库中显示";
+"harness.publish.preflight.failed" = "本地 harness 未通过验证——请在发布前修复问题。";
+"harness.publish.composition.unavailable" = "ynd compose 对此 harness 失败——\"仅 harness 文件\"模式需要它来确定哪些文件属于 harness。请修复 harness 或切换到\"整个目录\"。";
+"harness.publish.unresolved %lld" = "源中缺少 %lld 个被引用文件——这些文件将不会被复制。";
+"harness.publish.register.disclosure %@" = "复制完成后，仓库的 %@ 将运行（仓库提供的脚本）。";
+"harness.publish.change.added" = "已添加";
+"harness.publish.change.modified" = "已修改";
+"harness.publish.change.removed" = "已删除";
+"harness.publish.changes.none" = "无差异——已发布的副本与本地文件一致。";
+"harness.publish.step.worktree %@" = "正在分支 %@ 上创建 worktree…";
+"harness.publish.step.copy %@" = "正在将 harness 复制到 %@…";
+"harness.publish.step.copied %lld" = "已复制 %lld 个文件组。";
+"harness.publish.step.validate" = "正在验证已复制的 harness（ynd validate）…";
+"harness.publish.step.register %@" = "正在运行 %@…";
+"harness.publish.step.done %@" = "完成——worktree 已就绪：%@。";
+"harness.publish.warning %@" = "警告：%@";
+"harness.publish.deleted %@" = "已删除过时路径：%@";
+"harness.publish.validation.failed" = "worktree 中验证失败——未进行任何 commit。worktree 已保留以供检查。";
+"harness.publish.register.failed" = "仓库的注册脚本失败——worktree 已保留以供检查。";
+"harness.publish.references.missing %@" = "复制后 manifest 引用的文件缺失：%@";
+"harness.publish.error.occupied %@" = "目标已包含一个 harness：%@";
+"harness.publish.error.invaliddest %@" = "目标超出 worktree 范围：%@";
+"harness.publish.error.copy %@" = "复制失败：%@";
+"harness.publish.error.rename %@" = "无法重写 manifest 名称：%@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "更新\"%@\"";

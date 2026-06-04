@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Форк на локальный";
 "harnesses.fork.to.local.help" = "Создать редактируемую локальную копию этого harness";
+"harnesses.publish.to.repository" = "Опубликовать в репозиторий…";
 "harnesses.update.dot.help" = "Доступно обновление";
 "harness.fork.title %@" = "Форк \"%@\" на локальный";
 "harness.fork.explanation" = "Создаёт редактируемую локальную копию этого harness. Копия отслеживает своё происхождение, чтобы вы могли видеть, что изменилось в источнике.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "Оставьте пустым, чтобы сохранить исходное имя. Канонический id нового форка будет local/<имя>.";
 "harness.fork.identity.collision" = "Установленный харнесс уже имеет этот идентификатор.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Опубликовать «%@» в репозиторий";
+"harness.publish.explanation" = "Копирует этот harness в новое рабочее дерево целевого репозитория, готовое к коммиту. Собственные соглашения репозитория (скрипты регистрации, манифесты) решают остальное.";
+"harness.publish.button" = "Опубликовать";
+"harness.publish.update.button" = "Обновить существующую запись";
+"harness.publish.progress.title %@" = "Публикация «%@»…";
+"harness.publish.repo.label" = "Целевой репозиторий";
+"harness.publish.repo.placeholder" = "Выберите репозиторий…";
+"harness.publish.parentdir.label" = "Директория в репозитории";
+"harness.publish.parentdir.hint" = "Предложено на основе того, где репозиторий уже хранит harness-ы. Полностью редактируемо.";
+"harness.publish.name.label" = "Имя";
+"harness.publish.branch.label" = "Ветка";
+"harness.publish.basebranch.label" = "Базовая ветка";
+"harness.publish.worktreepath.label" = "Путь к рабочему дереву";
+"harness.publish.files.label" = "Файлы для копирования";
+"harness.publish.changes.label" = "Изменения относительно опубликованной копии";
+"harness.publish.mode.label" = "Режим копирования";
+"harness.publish.mode.entire" = "Весь каталог";
+"harness.publish.mode.enumerated" = "Только файлы harness";
+"harness.publish.mode.enumerated.hint" = "Исходный каталог также является репозиторием проекта — копируются только файлы, принадлежащие harness.";
+"harness.publish.state.new" = "Новая запись — этот harness ещё не существует в репозитории.";
+"harness.publish.state.update %@" = "Обновляет существующую запись в %@ (перезаписывает её).";
+"harness.publish.state.clash %@" = "Этот каталог уже содержит другой harness («%@») — выберите другое имя.";
+"harness.publish.state.occupied" = "Этот каталог уже существует в репозитории — выберите другое имя или расположение.";
+"harness.publish.state.samerepo" = "Этот harness уже находится в выбранном репозитории — зафиксируйте изменения там, а не публикуйте.";
+"harness.publish.reveal.repository" = "Показать в репозиториях";
+"harness.publish.preflight.failed" = "Локальный harness не прошёл проверку — исправьте его перед публикацией.";
+"harness.publish.composition.unavailable" = "ynd compose завершился с ошибкой для этого harness — режим \"только файлы harness\" требует его для определения принадлежащих файлов. Исправьте harness или переключитесь на \"весь каталог\".";
+"harness.publish.unresolved %lld" = "%lld файл(ов), указанных в ссылках, отсутствуют в источнике — они не будут скопированы.";
+"harness.publish.register.disclosure %@" = "После копирования будет запущен %@ репозитория (скрипт, предоставляемый репозиторием).";
+"harness.publish.change.added" = "добавлено";
+"harness.publish.change.modified" = "изменено";
+"harness.publish.change.removed" = "удалено";
+"harness.publish.changes.none" = "Нет различий — опубликованная копия соответствует вашим локальным файлам.";
+"harness.publish.step.worktree %@" = "Создание рабочего дерева на ветке %@…";
+"harness.publish.step.copy %@" = "Копирование harness в %@…";
+"harness.publish.step.copied %lld" = "Скопировано %lld групп(ы) файлов.";
+"harness.publish.step.validate" = "Проверка скопированного harness (ynd validate)…";
+"harness.publish.step.register %@" = "Запуск %@…";
+"harness.publish.step.done %@" = "Готово — рабочее дерево готово по пути %@.";
+"harness.publish.warning %@" = "Предупреждение: %@";
+"harness.publish.deleted %@" = "Устаревший путь удалён: %@";
+"harness.publish.validation.failed" = "Проверка в рабочем дереве не прошла — ничего не зафиксировано. Рабочее дерево сохранено для проверки.";
+"harness.publish.register.failed" = "Скрипт регистрации репозитория завершился с ошибкой — рабочее дерево сохранено для проверки.";
+"harness.publish.references.missing %@" = "Файлы, указанные в манифесте, отсутствуют после копирования: %@";
+"harness.publish.error.occupied %@" = "Место назначения уже содержит harness: %@";
+"harness.publish.error.invaliddest %@" = "Место назначения выходит за пределы рабочего дерева: %@";
+"harness.publish.error.copy %@" = "Ошибка копирования: %@";
+"harness.publish.error.rename %@" = "Не удалось переписать имя манифеста: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Обновить «%@»";
