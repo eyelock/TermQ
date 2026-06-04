@@ -981,6 +981,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "פיצול לקומפיוטר המקומי";
 "harnesses.fork.to.local.help" = "צור עותק מקומי ניתן לעריכה של ה-harness הזה";
+"harnesses.publish.to.repository" = "פרסם במאגר…";
 "harnesses.update.dot.help" = "עדכון זמין";
 "harness.fork.title %@" = "פיצול \"%@\" למקומי";
 "harness.fork.explanation" = "יוצר עותק מקומי ניתן לעריכה של ה-harness הזה. העותק עוקב אחר מקורו כך שתוכל לראות מה השתנה upstream.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.hint" = "השאר ריק כדי לשמור על שם המקור. ה-id הקנוני של ה-fork החדש יהיה local/<שם>.";
 "harness.fork.identity.collision" = "ל-harness מותקן כבר יש זהות זו.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "פרסם \"%@\" במאגר";
+"harness.publish.explanation" = "מעתיק את ה-harness הזה לתוך עץ עבודה חדש במאגר היעד, מוכן ל-commit. המוסכמות של המאגר עצמו (סקריפטי רישום, manifests) מטפלים בשאר.";
+"harness.publish.button" = "פרסם";
+"harness.publish.update.button" = "עדכן רשומה קיימת";
+"harness.publish.progress.title %@" = "מפרסם \"%@\"…";
+"harness.publish.repo.label" = "מאגר יעד";
+"harness.publish.repo.placeholder" = "בחר מאגר…";
+"harness.publish.parentdir.label" = "ספרייה במאגר";
+"harness.publish.parentdir.hint" = "מוצע לפי המיקום שבו מאגר זה כבר שומר harnesses. ניתן לעריכה מלאה.";
+"harness.publish.name.label" = "שם";
+"harness.publish.branch.label" = "ענף";
+"harness.publish.basebranch.label" = "ענף בסיס";
+"harness.publish.worktreepath.label" = "נתיב עץ עבודה";
+"harness.publish.files.label" = "קבצים להעתקה";
+"harness.publish.changes.label" = "שינויים לעומת העותק המפורסם";
+"harness.publish.mode.label" = "מצב העתקה";
+"harness.publish.mode.entire" = "ספרייה שלמה";
+"harness.publish.mode.enumerated" = "קבצי harness בלבד";
+"harness.publish.mode.enumerated.hint" = "ספריית המקור משמשת גם כמאגר פרויקט — רק קבצים בבעלות ה-harness מועתקים.";
+"harness.publish.state.new" = "רשומה חדשה — ה-harness הזה אינו קיים עדיין במאגר.";
+"harness.publish.state.update %@" = "מעדכן את הרשומה הקיימת ב-%@ (מחליף אותה).";
+"harness.publish.state.clash %@" = "הספרייה הזו כבר מכילה harness שונה (\"%@\") — בחר שם אחר.";
+"harness.publish.state.occupied" = "הספרייה הזו כבר קיימת במאגר — בחר שם או מיקום אחר.";
+"harness.publish.state.samerepo" = "ה-harness הזה כבר נמצא במאגר שנבחר — commit את השינויים שם במקום לפרסם.";
+"harness.publish.reveal.repository" = "הצג במאגרים";
+"harness.publish.preflight.failed" = "ה-harness המקומי אינו עובר אימות — תקן אותו לפני הפרסום.";
+"harness.publish.composition.unavailable" = "ynd compose נכשל עבור ה-harness הזה — מצב \"קבצי harness בלבד\" זקוק לו כדי לדעת אילו קבצים בבעלות ה-harness. תקן את ה-harness או עבור ל-\"ספרייה שלמה\".";
+"harness.publish.unresolved %lld" = "%lld קבצים מוזכרים חסרים מהמקור — הם לא יועתקו.";
+"harness.publish.register.disclosure %@" = "לאחר ההעתקה, ה-%@ של המאגר יופעל (סקריפט שמספק המאגר).";
+"harness.publish.change.added" = "נוסף";
+"harness.publish.change.modified" = "שונה";
+"harness.publish.change.removed" = "הוסר";
+"harness.publish.changes.none" = "אין הבדלים — העותק המפורסם תואם את הקבצים המקומיים שלך.";
+"harness.publish.step.worktree %@" = "יוצר עץ עבודה על ענף %@…";
+"harness.publish.step.copy %@" = "מעתיק harness ל-%@…";
+"harness.publish.step.copied %lld" = "הועתקו %lld קבוצת קבצים.";
+"harness.publish.step.validate" = "מאמת harness שהועתק (ynd validate)…";
+"harness.publish.step.register %@" = "מריץ %@…";
+"harness.publish.step.done %@" = "סיום — עץ עבודה מוכן ב-%@.";
+"harness.publish.warning %@" = "אזהרה: %@";
+"harness.publish.deleted %@" = "נתיב ישן הוסר: %@";
+"harness.publish.validation.failed" = "האימות נכשל בעץ העבודה — שום דבר לא עבר commit. עץ העבודה נשמר לבדיקה.";
+"harness.publish.register.failed" = "סקריפט הרישום של המאגר נכשל — עץ העבודה נשמר לבדיקה.";
+"harness.publish.references.missing %@" = "קבצים המוזכרים ב-manifest חסרים לאחר ההעתקה: %@";
+"harness.publish.error.occupied %@" = "היעד כבר מכיל harness: %@";
+"harness.publish.error.invaliddest %@" = "היעד חורג מגבולות עץ העבודה: %@";
+"harness.publish.error.copy %@" = "ההעתקה נכשלה: %@";
+"harness.publish.error.rename %@" = "לא ניתן לשכתב את שם ה-manifest: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "עדכן את \"%@\"";

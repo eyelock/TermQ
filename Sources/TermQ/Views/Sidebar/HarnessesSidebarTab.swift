@@ -24,6 +24,9 @@ struct HarnessesSidebarTab: View {
     var onUpdate: ((String) -> Void)?
     var onExport: ((String, String) -> Void)?
     var onFork: ((String) -> Void)?
+    /// "Publish to Repository…" — graduate a local-sourced harness into a
+    /// git repository via a fresh worktree.
+    var onPublish: ((String) -> Void)?
     var onNewHarness: (() -> Void)?
     var quarantinedEntries: [QuarantineEntry] = []
     var onRestoreQuarantine: ((String) -> Void)?
@@ -339,6 +342,20 @@ struct HarnessesSidebarTab: View {
                     harnessToDuplicate = harness
                 } label: {
                     Label(Strings.HarnessDuplicate.duplicateButton, systemImage: "doc.on.doc")
+                }
+            }
+            // Local-sourced harnesses (hand-built, forked, or registered
+            // from a sources dir) can graduate into a repository. Forks
+            // are covered by "local": `ynh fork` registers its pointer
+            // with source_type "local" (fork provenance lives in
+            // forked_from, not the source type).
+            if harness.installedFrom?.sourceType == "local"
+                || harness.installedFrom?.sourceType == "source"
+            {
+                Button {
+                    onPublish?(harness.id)
+                } label: {
+                    Label(Strings.Harnesses.publishToRepository, systemImage: "square.and.arrow.up")
                 }
             }
 

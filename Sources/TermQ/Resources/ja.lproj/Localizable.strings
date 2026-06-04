@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "ローカルにフォーク";
 "harnesses.fork.to.local.help" = "このハーネスの編集可能なローカルコピーを作成";
+"harnesses.publish.to.repository" = "リポジトリに公開…";
 "harnesses.update.dot.help" = "アップデートあり";
 "harness.fork.title %@" = "\"%@\" をローカルにフォーク";
 "harness.fork.explanation" = "このハーネスの編集可能なローカルコピーを作成します。コピーは元のリポジトリを追跡するため、アップストリームの変更を確認できます。";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "空のままにするとソース名を引き継ぎます。新しいフォークの正規 id は local/<名前> になります。";
 "harness.fork.identity.collision" = "この ID を持つハーネスがすでにインストールされています。";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" をリポジトリに公開";
+"harness.publish.explanation" = "このハーネスをターゲットリポジトリの新しいワークツリーにコピーし、コミットできる状態にします。リポジトリ独自の規則（登録スクリプト、マニフェスト）が残りを決定します。";
+"harness.publish.button" = "公開";
+"harness.publish.update.button" = "既存エントリを更新";
+"harness.publish.progress.title %@" = "\"%@\" を公開中…";
+"harness.publish.repo.label" = "ターゲットリポジトリ";
+"harness.publish.repo.placeholder" = "リポジトリを選択…";
+"harness.publish.parentdir.label" = "リポジトリ内のディレクトリ";
+"harness.publish.parentdir.hint" = "このリポジトリが既にハーネスを保存している場所から提案されます。自由に編集できます。";
+"harness.publish.name.label" = "名前";
+"harness.publish.branch.label" = "ブランチ";
+"harness.publish.basebranch.label" = "ベースブランチ";
+"harness.publish.worktreepath.label" = "ワークツリーのパス";
+"harness.publish.files.label" = "コピーするファイル";
+"harness.publish.changes.label" = "公開済みコピーとの差分";
+"harness.publish.mode.label" = "コピーモード";
+"harness.publish.mode.entire" = "ディレクトリ全体";
+"harness.publish.mode.enumerated" = "ハーネスファイルのみ";
+"harness.publish.mode.enumerated.hint" = "ソースディレクトリはプロジェクトリポジトリを兼ねています — ハーネスが所有するファイルのみがコピーされます。";
+"harness.publish.state.new" = "新規エントリ — このハーネスはまだリポジトリに存在しません。";
+"harness.publish.state.update %@" = "%@ にある既存エントリを更新します（上書きされます）。";
+"harness.publish.state.clash %@" = "そのディレクトリには別のハーネス（\"%@\"）が既に存在します — 別の名前を選択してください。";
+"harness.publish.state.occupied" = "そのディレクトリはリポジトリに既に存在します — 別の名前または場所を選択してください。";
+"harness.publish.state.samerepo" = "このハーネスは選択したリポジトリに既に存在します — 公開せずにそこで変更をコミットしてください。";
+"harness.publish.reveal.repository" = "リポジトリで表示";
+"harness.publish.preflight.failed" = "ローカルのハーネスが検証に失敗しました — 公開前に修正してください。";
+"harness.publish.composition.unavailable" = "このハーネスで ynd compose が失敗しました — \"ハーネスファイルのみ\" モードはどのファイルを所有するかを知るために必要です。ハーネスを修正するか \"ディレクトリ全体\" に切り替えてください。";
+"harness.publish.unresolved %lld" = "ソースに %lld 個の参照ファイルが見つかりません — コピーされません。";
+"harness.publish.register.disclosure %@" = "コピー後、リポジトリの %@ が実行されます（リポジトリ提供のスクリプト）。";
+"harness.publish.change.added" = "追加";
+"harness.publish.change.modified" = "変更";
+"harness.publish.change.removed" = "削除";
+"harness.publish.changes.none" = "差分なし — 公開済みコピーはローカルファイルと一致しています。";
+"harness.publish.step.worktree %@" = "ブランチ %@ にワークツリーを作成中…";
+"harness.publish.step.copy %@" = "ハーネスを %@ にコピー中…";
+"harness.publish.step.copied %lld" = "%lld 個のファイルグループをコピーしました。";
+"harness.publish.step.validate" = "コピーされたハーネスを検証中（ynd validate）…";
+"harness.publish.step.register %@" = "%@ を実行中…";
+"harness.publish.step.done %@" = "完了 — ワークツリーが %@ に準備されました。";
+"harness.publish.warning %@" = "警告: %@";
+"harness.publish.deleted %@" = "古いパスを削除しました: %@";
+"harness.publish.validation.failed" = "ワークツリーでの検証に失敗しました — 何もコミットされていません。ワークツリーは検査のために保持されています。";
+"harness.publish.register.failed" = "リポジトリの登録スクリプトが失敗しました — ワークツリーは検査のために保持されています。";
+"harness.publish.references.missing %@" = "マニフェストで参照されているファイルがコピー後に見つかりません: %@";
+"harness.publish.error.occupied %@" = "コピー先にすでにハーネスが存在します: %@";
+"harness.publish.error.invaliddest %@" = "コピー先がワークツリーの外に出ています: %@";
+"harness.publish.error.copy %@" = "コピーに失敗しました: %@";
+"harness.publish.error.rename %@" = "マニフェスト名を書き換えられませんでした: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "「%@」をアップデート";

@@ -982,6 +982,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "แยกสาขาไปยังเครื่องท้องถิ่น";
 "harnesses.fork.to.local.help" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้";
+"harnesses.publish.to.repository" = "เผยแพร่ไปยังคลังเก็บโค้ด…";
 "harnesses.update.dot.help" = "มีการอัปเดต";
 "harness.fork.title %@" = "แยกสาขา \"%@\" ไปยังท้องถิ่น";
 "harness.fork.explanation" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้ สำเนาจะติดตามต้นกำเนิดเพื่อให้คุณเห็นว่ามีการเปลี่ยนแปลงอะไร upstream";
@@ -990,6 +991,56 @@
 "harness.fork.rename.label" = "ชื่อ (ไม่บังคับ)";
 "harness.fork.rename.hint" = "เว้นว่างเพื่อเก็บชื่อต้นทาง id หลักของ fork ใหม่จะเป็น local/<ชื่อ>";
 "harness.fork.identity.collision" = "มี harness ที่ติดตั้งแล้วใช้ตัวตนนี้อยู่";
+// MARK: - Harness Publish
+"harness.publish.title %@" = "เผยแพร่ \"%@\" ไปยังคลังเก็บโค้ด";
+"harness.publish.explanation" = "คัดลอก harness นี้ไปยัง worktree ใหม่ของคลังเก็บโค้ดเป้าหมาย พร้อมสำหรับการ commit แบบแผนของคลังเก็บโค้ดเอง (สคริปต์การลงทะเบียน, ไฟล์ manifest) จะดูแลส่วนที่เหลือ";
+"harness.publish.button" = "เผยแพร่";
+"harness.publish.update.button" = "อัปเดตรายการที่มีอยู่";
+"harness.publish.progress.title %@" = "กำลังเผยแพร่ \"%@\"…";
+"harness.publish.repo.label" = "คลังเก็บโค้ดเป้าหมาย";
+"harness.publish.repo.placeholder" = "เลือกคลังเก็บโค้ด…";
+"harness.publish.parentdir.label" = "ไดเรกทอรีในคลังเก็บโค้ด";
+"harness.publish.parentdir.hint" = "แนะนำจากตำแหน่งที่คลังเก็บโค้ดนี้เก็บ harness อยู่แล้ว แก้ไขได้อย่างเต็มที่";
+"harness.publish.name.label" = "ชื่อ";
+"harness.publish.branch.label" = "สาขา";
+"harness.publish.basebranch.label" = "สาขาฐาน";
+"harness.publish.worktreepath.label" = "เส้นทาง worktree";
+"harness.publish.files.label" = "ไฟล์ที่จะคัดลอก";
+"harness.publish.changes.label" = "การเปลี่ยนแปลงเทียบกับสำเนาที่เผยแพร่";
+"harness.publish.mode.label" = "โหมดการคัดลอก";
+"harness.publish.mode.entire" = "ทั้งไดเรกทอรี";
+"harness.publish.mode.enumerated" = "เฉพาะไฟล์ harness";
+"harness.publish.mode.enumerated.hint" = "ไดเรกทอรีต้นทางทำหน้าที่เป็นคลังเก็บโค้ดของโปรเจกต์ด้วย — คัดลอกเฉพาะไฟล์ที่ harness เป็นเจ้าของเท่านั้น";
+"harness.publish.state.new" = "รายการใหม่ — harness นี้ยังไม่มีอยู่ในคลังเก็บโค้ด";
+"harness.publish.state.update %@" = "อัปเดตรายการที่มีอยู่ที่ %@ (เขียนทับ)";
+"harness.publish.state.clash %@" = "ไดเรกทอรีนั้นมี harness อื่นอยู่แล้ว (\"%@\") — เลือกชื่ออื่น";
+"harness.publish.state.occupied" = "ไดเรกทอรีนั้นมีอยู่แล้วในคลังเก็บโค้ด — เลือกชื่อหรือตำแหน่งอื่น";
+"harness.publish.state.samerepo" = "harness นี้อยู่ในคลังเก็บโค้ดที่เลือกแล้ว — commit การเปลี่ยนแปลงที่นั่นแทนการเผยแพร่";
+"harness.publish.reveal.repository" = "แสดงในคลังเก็บโค้ด";
+"harness.publish.preflight.failed" = "harness ในเครื่องผ่านการตรวจสอบไม่ผ่าน — แก้ไขก่อนเผยแพร่";
+"harness.publish.composition.unavailable" = "ynd compose ล้มเหลวสำหรับ harness นี้ — โหมด \"เฉพาะไฟล์ harness\" ต้องการเพื่อทราบว่าไฟล์ใดเป็นเจ้าของ แก้ไข harness หรือเปลี่ยนเป็น \"ทั้งไดเรกทอรี\"";
+"harness.publish.unresolved %lld" = "%lld ไฟล์อ้างอิงหายไปจากต้นทาง — จะไม่ถูกคัดลอก";
+"harness.publish.register.disclosure %@" = "หลังการคัดลอก %@ ของคลังเก็บโค้ดจะทำงาน (สคริปต์ที่คลังเก็บโค้ดจัดเตรียม)";
+"harness.publish.change.added" = "เพิ่ม";
+"harness.publish.change.modified" = "แก้ไข";
+"harness.publish.change.removed" = "ลบ";
+"harness.publish.changes.none" = "ไม่มีความแตกต่าง — สำเนาที่เผยแพร่ตรงกับไฟล์ในเครื่องของคุณ";
+"harness.publish.step.worktree %@" = "กำลังสร้าง worktree บนสาขา %@…";
+"harness.publish.step.copy %@" = "กำลังคัดลอก harness ไปยัง %@…";
+"harness.publish.step.copied %lld" = "คัดลอก %lld กลุ่มไฟล์แล้ว";
+"harness.publish.step.validate" = "กำลังตรวจสอบ harness ที่คัดลอก (ynd validate)…";
+"harness.publish.step.register %@" = "กำลังรัน %@…";
+"harness.publish.step.done %@" = "เสร็จสิ้น — worktree พร้อมใช้งานที่ %@";
+"harness.publish.warning %@" = "คำเตือน: %@";
+"harness.publish.deleted %@" = "ลบเส้นทางที่ล้าสมัย: %@";
+"harness.publish.validation.failed" = "การตรวจสอบล้มเหลวใน worktree — ไม่มีอะไรถูก commit ไว้ worktree ถูกเก็บไว้เพื่อตรวจสอบ";
+"harness.publish.register.failed" = "สคริปต์การลงทะเบียนของคลังเก็บโค้ดล้มเหลว — worktree ถูกเก็บไว้เพื่อตรวจสอบ";
+"harness.publish.references.missing %@" = "ไฟล์ที่อ้างอิงโดย manifest หายไปหลังการคัดลอก: %@";
+"harness.publish.error.occupied %@" = "ปลายทางมี harness อยู่แล้ว: %@";
+"harness.publish.error.invaliddest %@" = "ปลายทางอยู่นอก worktree: %@";
+"harness.publish.error.copy %@" = "การคัดลอกล้มเหลว: %@";
+"harness.publish.error.rename %@" = "ไม่สามารถเขียนชื่อ manifest ใหม่ได้: %@";
+
 
 
 // MARK: - Harness Update

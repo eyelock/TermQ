@@ -974,6 +974,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork to local";
 "harnesses.fork.to.local.help" = "Create an editable local copy of this harness";
+"harnesses.publish.to.repository" = "Publish to Repository…";
 "harnesses.update.dot.help" = "Update available";
 "harness.fork.title %@" = "Fork \"%@\" to Local";
 "harness.fork.explanation" = "Creates an editable local copy of this harness. The copy tracks its origin so you can see what changed upstream.";
@@ -983,6 +984,56 @@
 "harness.fork.rename.hint" = "Leave empty to keep the source name. The new fork's canonical id will be local/<name>.";
 "harness.fork.identity.collision" = "An installed harness already has this identity.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publish \"%@\" to Repository";
+"harness.publish.explanation" = "Copies this harness into a new worktree of the target repository, ready to commit. The repository's own conventions (registration scripts, manifests) decide the rest.";
+"harness.publish.button" = "Publish";
+"harness.publish.update.button" = "Update Existing Entry";
+"harness.publish.progress.title %@" = "Publishing \"%@\"…";
+"harness.publish.repo.label" = "Target Repository";
+"harness.publish.repo.placeholder" = "Select a repository…";
+"harness.publish.parentdir.label" = "Directory in Repository";
+"harness.publish.parentdir.hint" = "Suggested from where this repository already keeps harnesses. Fully editable.";
+"harness.publish.name.label" = "Name";
+"harness.publish.branch.label" = "Branch";
+"harness.publish.basebranch.label" = "Base Branch";
+"harness.publish.worktreepath.label" = "Worktree Path";
+"harness.publish.files.label" = "Files to Copy";
+"harness.publish.changes.label" = "Changes vs Published Copy";
+"harness.publish.mode.label" = "Copy Mode";
+"harness.publish.mode.entire" = "Entire directory";
+"harness.publish.mode.enumerated" = "Harness files only";
+"harness.publish.mode.enumerated.hint" = "The source directory doubles as a project repository — only files the harness owns are copied.";
+"harness.publish.state.new" = "New entry — this harness does not exist in the repository yet.";
+"harness.publish.state.update %@" = "Updates the existing entry at %@ (overwrites it).";
+"harness.publish.state.clash %@" = "That directory already holds a different harness (\"%@\") — choose another name.";
+"harness.publish.state.occupied" = "That directory already exists in the repository — choose another name or location.";
+"harness.publish.state.samerepo" = "This harness already lives in the selected repository — commit your changes there instead of publishing.";
+"harness.publish.reveal.repository" = "Reveal in Repositories";
+"harness.publish.preflight.failed" = "The local harness does not validate — fix it before publishing.";
+"harness.publish.composition.unavailable" = "ynd compose failed for this harness — \"harness files only\" mode needs it to know which files are owned. Fix the harness or switch to \"entire directory\".";
+"harness.publish.unresolved %lld" = "%lld referenced file(s) missing from the source — they will not be copied.";
+"harness.publish.register.disclosure %@" = "After copying, the repository's %@ will run (repo-provided script).";
+"harness.publish.change.added" = "added";
+"harness.publish.change.modified" = "modified";
+"harness.publish.change.removed" = "removed";
+"harness.publish.changes.none" = "No differences — the published copy matches your local files.";
+"harness.publish.step.worktree %@" = "Creating worktree on branch %@…";
+"harness.publish.step.copy %@" = "Copying harness into %@…";
+"harness.publish.step.copied %lld" = "Copied %lld file group(s).";
+"harness.publish.step.validate" = "Validating copied harness (ynd validate)…";
+"harness.publish.step.register %@" = "Running %@…";
+"harness.publish.step.done %@" = "Done — worktree ready at %@.";
+"harness.publish.warning %@" = "Warning: %@";
+"harness.publish.deleted %@" = "Removed stale path: %@";
+"harness.publish.validation.failed" = "Validation failed in the worktree — nothing was committed. The worktree is kept for inspection.";
+"harness.publish.register.failed" = "The repository's registration script failed — the worktree is kept for inspection.";
+"harness.publish.references.missing %@" = "Files referenced by the manifest are missing after the copy: %@";
+"harness.publish.error.occupied %@" = "Destination already contains a harness: %@";
+"harness.publish.error.invaliddest %@" = "Destination escapes the worktree: %@";
+"harness.publish.error.copy %@" = "Copy failed: %@";
+"harness.publish.error.rename %@" = "Could not rewrite the manifest name: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Update \"%@\"";

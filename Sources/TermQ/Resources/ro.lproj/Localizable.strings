@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork la local";
 "harnesses.fork.to.local.help" = "Creați o copie locală editabilă a acestui harness";
+"harnesses.publish.to.repository" = "Publică în depozit…";
 "harnesses.update.dot.help" = "Actualizare disponibilă";
 "harness.fork.title %@" = "Fork \"%@\" la local";
 "harness.fork.explanation" = "Creează o copie locală editabilă a acestui harness. Copia îi urmărește originea pentru a putea vedea ce s-a schimbat upstream.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "Lasă gol pentru a păstra numele sursei. Id-ul canonic al noului fork va fi local/<nume>.";
 "harness.fork.identity.collision" = "Un harness instalat are deja această identitate.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publică \"%@\" în depozit";
+"harness.publish.explanation" = "Copiază acest harness într-un arbore de lucru nou al depozitului țintă, gata de confirmat. Convențiile proprii ale depozitului (scripturi de înregistrare, manifeste) decid restul.";
+"harness.publish.button" = "Publică";
+"harness.publish.update.button" = "Actualizează intrarea existentă";
+"harness.publish.progress.title %@" = "Se publică \"%@\"…";
+"harness.publish.repo.label" = "Depozit țintă";
+"harness.publish.repo.placeholder" = "Selectează un depozit…";
+"harness.publish.parentdir.label" = "Director în depozit";
+"harness.publish.parentdir.hint" = "Sugerat din locul unde depozitul păstrează deja harness-urile. Complet editabil.";
+"harness.publish.name.label" = "Nume";
+"harness.publish.branch.label" = "Ramură";
+"harness.publish.basebranch.label" = "Ramură de bază";
+"harness.publish.worktreepath.label" = "Calea arborelui de lucru";
+"harness.publish.files.label" = "Fișiere de copiat";
+"harness.publish.changes.label" = "Modificări față de copia publicată";
+"harness.publish.mode.label" = "Mod de copiere";
+"harness.publish.mode.entire" = "Întreg directorul";
+"harness.publish.mode.enumerated" = "Doar fișierele harness-ului";
+"harness.publish.mode.enumerated.hint" = "Directorul sursă servește și ca depozit de proiect — se copiază doar fișierele deținute de harness.";
+"harness.publish.state.new" = "Intrare nouă — acest harness nu există încă în depozit.";
+"harness.publish.state.update %@" = "Actualizează intrarea existentă din %@ (o suprascrie).";
+"harness.publish.state.clash %@" = "Acel director conține deja un harness diferit (\"%@\") — alege alt nume.";
+"harness.publish.state.occupied" = "Acel director există deja în depozit — alege alt nume sau altă locație.";
+"harness.publish.state.samerepo" = "Acest harness există deja în depozitul selectat — confirmă modificările acolo în loc să publici.";
+"harness.publish.reveal.repository" = "Dezvăluie în depozite";
+"harness.publish.preflight.failed" = "Harness-ul local nu este valid — corectează-l înainte de a publica.";
+"harness.publish.composition.unavailable" = "ynd compose a eșuat pentru acest harness — modul \"doar fișierele harness-ului\" are nevoie de el pentru a ști ce fișiere îi aparțin. Corectează harness-ul sau treci la \"întreg directorul\".";
+"harness.publish.unresolved %lld" = "%lld fișier(e) referențiate lipsesc din sursă — nu vor fi copiate.";
+"harness.publish.register.disclosure %@" = "După copiere, %@ al depozitului va fi rulat (script furnizat de depozit).";
+"harness.publish.change.added" = "adăugat";
+"harness.publish.change.modified" = "modificat";
+"harness.publish.change.removed" = "eliminat";
+"harness.publish.changes.none" = "Fără diferențe — copia publicată corespunde fișierelor locale.";
+"harness.publish.step.worktree %@" = "Se creează arborele de lucru pe ramura %@…";
+"harness.publish.step.copy %@" = "Se copiază harness-ul în %@…";
+"harness.publish.step.copied %lld" = "Copiat(e) %lld grup(uri) de fișiere.";
+"harness.publish.step.validate" = "Se validează harness-ul copiat (ynd validate)…";
+"harness.publish.step.register %@" = "Se rulează %@…";
+"harness.publish.step.done %@" = "Gata — arborele de lucru este pregătit la %@.";
+"harness.publish.warning %@" = "Avertisment: %@";
+"harness.publish.deleted %@" = "Cale învechită eliminată: %@";
+"harness.publish.validation.failed" = "Validarea a eșuat în arborele de lucru — nimic nu a fost confirmat. Arborele de lucru este păstrat pentru inspecție.";
+"harness.publish.register.failed" = "Scriptul de înregistrare al depozitului a eșuat — arborele de lucru este păstrat pentru inspecție.";
+"harness.publish.references.missing %@" = "Fișierele referențiate de manifest lipsesc după copiere: %@";
+"harness.publish.error.occupied %@" = "Destinația conține deja un harness: %@";
+"harness.publish.error.invaliddest %@" = "Destinația depășește limitele arborelui de lucru: %@";
+"harness.publish.error.copy %@" = "Copierea a eșuat: %@";
+"harness.publish.error.rename %@" = "Nu s-a putut rescrie numele manifestului: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Actualizează \"%@\"";

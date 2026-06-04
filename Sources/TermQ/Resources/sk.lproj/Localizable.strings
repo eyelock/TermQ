@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Vytvoriť fork lokálne";
 "harnesses.fork.to.local.help" = "Vytvoriť upraviteľnú lokálnu kópiu tohto harness";
+"harnesses.publish.to.repository" = "Publikovať do repozitára…";
 "harnesses.update.dot.help" = "Dostupná aktualizácia";
 "harness.fork.title %@" = "Fork \"%@\" do lokálneho";
 "harness.fork.explanation" = "Vytvorí upraviteľnú lokálnu kópiu tohto harness. Kópia sleduje svoj pôvod, aby ste mohli vidieť, čo sa zmenilo upstream.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "Nechajte prázdne pre zachovanie zdrojového názvu. Kanonické id nového forku bude local/<názov>.";
 "harness.fork.identity.collision" = "Nainštalovaný harness už má túto identitu.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publikovať \"%@\" do repozitára";
+"harness.publish.explanation" = "Skopíruje tento harness do nového pracovného stromu cieľového repozitára, pripravený na potvrdenie. O zvyšok sa postarajú vlastné konvencie repozitára (registračné skripty, manifesty).";
+"harness.publish.button" = "Publikovať";
+"harness.publish.update.button" = "Aktualizovať existujúci záznam";
+"harness.publish.progress.title %@" = "Publikovanie \"%@\"…";
+"harness.publish.repo.label" = "Cieľový repozitár";
+"harness.publish.repo.placeholder" = "Vyberte repozitár…";
+"harness.publish.parentdir.label" = "Adresár v repozitári";
+"harness.publish.parentdir.hint" = "Navrhnuté podľa miesta, kde tento repozitár už uchováva harness-y. Úplne editovateľné.";
+"harness.publish.name.label" = "Názov";
+"harness.publish.branch.label" = "Vetva";
+"harness.publish.basebranch.label" = "Základná vetva";
+"harness.publish.worktreepath.label" = "Cesta pracovného stromu";
+"harness.publish.files.label" = "Súbory na skopírovanie";
+"harness.publish.changes.label" = "Zmeny oproti publikovanej kópii";
+"harness.publish.mode.label" = "Režim kopírovania";
+"harness.publish.mode.entire" = "Celý adresár";
+"harness.publish.mode.enumerated" = "Iba súbory harness-u";
+"harness.publish.mode.enumerated.hint" = "Zdrojový adresár slúži aj ako repozitár projektu — kopírujú sa iba súbory patriace harness-u.";
+"harness.publish.state.new" = "Nový záznam — tento harness v repozitári ešte neexistuje.";
+"harness.publish.state.update %@" = "Aktualizuje existujúci záznam v %@ (prepíše ho).";
+"harness.publish.state.clash %@" = "Tento adresár už obsahuje iný harness (\"%@\") — vyberte iný názov.";
+"harness.publish.state.occupied" = "Tento adresár v repozitári už existuje — vyberte iný názov alebo umiestnenie.";
+"harness.publish.state.samerepo" = "Tento harness sa už nachádza vo vybranom repozitári — odovzdajte zmeny tam namiesto publikovania.";
+"harness.publish.reveal.repository" = "Zobraziť v repozitároch";
+"harness.publish.preflight.failed" = "Lokálny harness nie je platný — opravte ho pred publikovaním.";
+"harness.publish.composition.unavailable" = "ynd compose zlyhal pre tento harness — režim \"iba súbory harness-u\" ho potrebuje na zistenie, ktoré súbory vlastní. Opravte harness alebo prepnite na \"celý adresár\".";
+"harness.publish.unresolved %lld" = "%lld odkazovaný/odkazovaných súbor(ov) chýba v zdroji — nebudú skopírované.";
+"harness.publish.register.disclosure %@" = "Po skopírovaní sa spustí %@ repozitára (skript poskytnutý repozitárom).";
+"harness.publish.change.added" = "pridané";
+"harness.publish.change.modified" = "zmenené";
+"harness.publish.change.removed" = "odstránené";
+"harness.publish.changes.none" = "Žiadne rozdiely — publikovaná kópia zodpovedá vašim lokálnym súborom.";
+"harness.publish.step.worktree %@" = "Vytváranie pracovného stromu na vetve %@…";
+"harness.publish.step.copy %@" = "Kopírovanie harness-u do %@…";
+"harness.publish.step.copied %lld" = "Skopírovaných %lld skupina/skupín súborov.";
+"harness.publish.step.validate" = "Validácia skopírovaného harness-u (ynd validate)…";
+"harness.publish.step.register %@" = "Spúšťanie %@…";
+"harness.publish.step.done %@" = "Hotovo — pracovný strom je pripravený na %@.";
+"harness.publish.warning %@" = "Upozornenie: %@";
+"harness.publish.deleted %@" = "Zastaraná cesta odstránená: %@";
+"harness.publish.validation.failed" = "Validácia v pracovnom strome zlyhala — nič nebolo potvrdené. Pracovný strom je zachovaný na kontrolu.";
+"harness.publish.register.failed" = "Registračný skript repozitára zlyhal — pracovný strom je zachovaný na kontrolu.";
+"harness.publish.references.missing %@" = "Súbory odkazované v manifeste chýbajú po skopírovaní: %@";
+"harness.publish.error.occupied %@" = "Cieľ už obsahuje harness: %@";
+"harness.publish.error.invaliddest %@" = "Cieľ presahuje hranice pracovného stromu: %@";
+"harness.publish.error.copy %@" = "Kopírovanie zlyhalo: %@";
+"harness.publish.error.rename %@" = "Nepodarilo sa prepísať názov manifestu: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Aktualizovať \"%@\"";

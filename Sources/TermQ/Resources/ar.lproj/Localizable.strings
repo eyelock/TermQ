@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "نسخ محلي";
 "harnesses.fork.to.local.help" = "إنشاء نسخة محلية قابلة للتحرير من هذا الـ harness";
+"harnesses.publish.to.repository" = "نشر في المستودع…";
 "harnesses.update.dot.help" = "تحديث متاح";
 "harness.fork.title %@" = "نسخ \"%@\" محلياً";
 "harness.fork.explanation" = "ينشئ نسخة محلية قابلة للتحرير من هذا الـ harness. تتتبع النسخة أصلها حتى تتمكن من رؤية ما تغيّر في المصدر.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "اتركه فارغاً للإبقاء على اسم المصدر. سيكون المعرّف الأساسي للـ fork الجديد local/<الاسم>.";
 "harness.fork.identity.collision" = "يوجد بالفعل harness مثبّت بهذه الهوية.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "نشر \"%@\" في المستودع";
+"harness.publish.explanation" = "ينسخ هذا الـ harness إلى فرع عمل جديد من المستودع الهدف، جاهزاً للحفظ. تُحدِّد اصطلاحات المستودع (سكريبتات التسجيل، الملفات التعريفية) ما يتبع ذلك.";
+"harness.publish.button" = "نشر";
+"harness.publish.update.button" = "تحديث الإدخال الموجود";
+"harness.publish.progress.title %@" = "جارٍ نشر \"%@\"…";
+"harness.publish.repo.label" = "المستودع الهدف";
+"harness.publish.repo.placeholder" = "اختر مستودعاً…";
+"harness.publish.parentdir.label" = "المجلد في المستودع";
+"harness.publish.parentdir.hint" = "مقترح من المكان الذي يحفظ فيه هذا المستودع الأطواق بالفعل. قابل للتحرير بالكامل.";
+"harness.publish.name.label" = "الاسم";
+"harness.publish.branch.label" = "الفرع";
+"harness.publish.basebranch.label" = "الفرع الأساسي";
+"harness.publish.worktreepath.label" = "مسار بيئة العمل";
+"harness.publish.files.label" = "الملفات المراد نسخها";
+"harness.publish.changes.label" = "التغييرات مقارنةً بالنسخة المنشورة";
+"harness.publish.mode.label" = "وضع النسخ";
+"harness.publish.mode.entire" = "المجلد بأكمله";
+"harness.publish.mode.enumerated" = "ملفات الـ harness فقط";
+"harness.publish.mode.enumerated.hint" = "يُستخدم المجلد المصدر أيضاً كمستودع مشروع — يُنسخ فقط الملفات التي يملكها الـ harness.";
+"harness.publish.state.new" = "إدخال جديد — هذا الـ harness غير موجود في المستودع بعد.";
+"harness.publish.state.update %@" = "يُحدِّث الإدخال الموجود في %@ (يستبدله).";
+"harness.publish.state.clash %@" = "يحتوي ذلك المجلد بالفعل على harness مختلف (\"%@\") — اختر اسماً آخر.";
+"harness.publish.state.occupied" = "يوجد ذلك المجلد بالفعل في المستودع — اختر اسماً أو موقعاً آخر.";
+"harness.publish.state.samerepo" = "يقطن هذا الـ harness بالفعل في المستودع المحدد — احفظ تغييراتك هناك بدلاً من النشر.";
+"harness.publish.reveal.repository" = "إظهار في المستودعات";
+"harness.publish.preflight.failed" = "الـ harness المحلي لا يُجتاز التحقق — أصلحه قبل النشر.";
+"harness.publish.composition.unavailable" = "فشل ynd compose لهذا الـ harness — يحتاج وضع \"ملفات الـ harness فقط\" إليه لمعرفة الملفات المملوكة. أصلح الـ harness أو انتقل إلى \"المجلد بأكمله\".";
+"harness.publish.unresolved %lld" = "%lld ملف(ملفات) مرجعية مفقودة من المصدر — لن تُنسخ.";
+"harness.publish.register.disclosure %@" = "بعد النسخ، سيتم تشغيل %@ الخاص بالمستودع (سكريبت مقدَّم من المستودع).";
+"harness.publish.change.added" = "مُضاف";
+"harness.publish.change.modified" = "مُعدَّل";
+"harness.publish.change.removed" = "مُزال";
+"harness.publish.changes.none" = "لا فروق — النسخة المنشورة تطابق ملفاتك المحلية.";
+"harness.publish.step.worktree %@" = "إنشاء بيئة عمل على الفرع %@…";
+"harness.publish.step.copy %@" = "نسخ الـ harness إلى %@…";
+"harness.publish.step.copied %lld" = "تم نسخ %lld مجموعة ملفات.";
+"harness.publish.step.validate" = "التحقق من الـ harness المنسوخ (ynd validate)…";
+"harness.publish.step.register %@" = "تشغيل %@…";
+"harness.publish.step.done %@" = "تم — بيئة العمل جاهزة في %@.";
+"harness.publish.warning %@" = "تحذير: %@";
+"harness.publish.deleted %@" = "تمت إزالة المسار القديم: %@";
+"harness.publish.validation.failed" = "فشل التحقق في بيئة العمل — لم يتم الحفظ. يتم الاحتفاظ ببيئة العمل للفحص.";
+"harness.publish.register.failed" = "فشل سكريبت التسجيل الخاص بالمستودع — يتم الاحتفاظ ببيئة العمل للفحص.";
+"harness.publish.references.missing %@" = "الملفات المُشار إليها في الملف التعريفي مفقودة بعد النسخ: %@";
+"harness.publish.error.occupied %@" = "الوجهة تحتوي بالفعل على harness: %@";
+"harness.publish.error.invaliddest %@" = "الوجهة تتجاوز بيئة العمل: %@";
+"harness.publish.error.copy %@" = "فشل النسخ: %@";
+"harness.publish.error.rename %@" = "تعذّر إعادة كتابة اسم الملف التعريفي: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "تحديث \"%@\"";

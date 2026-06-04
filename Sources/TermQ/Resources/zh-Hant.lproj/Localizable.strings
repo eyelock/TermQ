@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork 到本機";
 "harnesses.fork.to.local.help" = "建立此 harness 的可編輯本機副本";
+"harnesses.publish.to.repository" = "發佈至儲存庫…";
 "harnesses.update.dot.help" = "有可用更新";
 "harness.fork.title %@" = "將 \"%@\" Fork 到本機";
 "harness.fork.explanation" = "建立此 harness 的可編輯本機副本。此副本追蹤其來源，讓您可以查看上游的變更。";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "留空以保留來源名稱。新 fork 的標準 id 將為 local/<名稱>。";
 "harness.fork.identity.collision" = "已有已安裝的 harness 使用此識別碼。";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "將「%@」發佈至儲存庫";
+"harness.publish.explanation" = "將此 harness 複製到目標儲存庫的新 worktree 中，準備好進行 commit。儲存庫自身的規範（登錄指令碼、manifest）負責其餘部分。";
+"harness.publish.button" = "發佈";
+"harness.publish.update.button" = "更新現有項目";
+"harness.publish.progress.title %@" = "正在發佈「%@」…";
+"harness.publish.repo.label" = "目標儲存庫";
+"harness.publish.repo.placeholder" = "選擇儲存庫…";
+"harness.publish.parentdir.label" = "儲存庫中的目錄";
+"harness.publish.parentdir.hint" = "根據此儲存庫已存放 harness 的位置建議。可自由編輯。";
+"harness.publish.name.label" = "名稱";
+"harness.publish.branch.label" = "分支";
+"harness.publish.basebranch.label" = "基礎分支";
+"harness.publish.worktreepath.label" = "Worktree 路徑";
+"harness.publish.files.label" = "要複製的檔案";
+"harness.publish.changes.label" = "與已發佈副本的差異";
+"harness.publish.mode.label" = "複製模式";
+"harness.publish.mode.entire" = "整個目錄";
+"harness.publish.mode.enumerated" = "僅 harness 檔案";
+"harness.publish.mode.enumerated.hint" = "來源目錄同時是專案儲存庫——僅複製 harness 所擁有的檔案。";
+"harness.publish.state.new" = "新項目——此 harness 尚未存在於儲存庫中。";
+"harness.publish.state.update %@" = "更新 %@ 處的現有項目（覆寫）。";
+"harness.publish.state.clash %@" = "該目錄已包含另一個 harness（「%@」）——請選擇其他名稱。";
+"harness.publish.state.occupied" = "該目錄在儲存庫中已存在——請選擇其他名稱或位置。";
+"harness.publish.state.samerepo" = "此 harness 已位於所選儲存庫中——請直接在那裡 commit 變更，而非發佈。";
+"harness.publish.reveal.repository" = "在儲存庫中顯示";
+"harness.publish.preflight.failed" = "本機 harness 未通過驗證——請在發佈前修正問題。";
+"harness.publish.composition.unavailable" = "ynd compose 對此 harness 失敗——「僅 harness 檔案」模式需要它來確定哪些檔案屬於 harness。請修正 harness 或切換至「整個目錄」。";
+"harness.publish.unresolved %lld" = "來源中缺少 %lld 個被參照的檔案——這些檔案將不會被複製。";
+"harness.publish.register.disclosure %@" = "複製完成後，儲存庫的 %@ 將會執行（儲存庫提供的指令碼）。";
+"harness.publish.change.added" = "已新增";
+"harness.publish.change.modified" = "已修改";
+"harness.publish.change.removed" = "已移除";
+"harness.publish.changes.none" = "無差異——已發佈的副本與本機檔案一致。";
+"harness.publish.step.worktree %@" = "正在分支 %@ 上建立 worktree…";
+"harness.publish.step.copy %@" = "正在將 harness 複製到 %@…";
+"harness.publish.step.copied %lld" = "已複製 %lld 個檔案群組。";
+"harness.publish.step.validate" = "正在驗證已複製的 harness（ynd validate）…";
+"harness.publish.step.register %@" = "正在執行 %@…";
+"harness.publish.step.done %@" = "完成——worktree 已就緒：%@。";
+"harness.publish.warning %@" = "警告：%@";
+"harness.publish.deleted %@" = "已刪除過時路徑：%@";
+"harness.publish.validation.failed" = "worktree 中驗證失敗——未進行任何 commit。worktree 已保留以供檢查。";
+"harness.publish.register.failed" = "儲存庫的登錄指令碼失敗——worktree 已保留以供檢查。";
+"harness.publish.references.missing %@" = "複製後 manifest 參照的檔案缺失：%@";
+"harness.publish.error.occupied %@" = "目的地已包含一個 harness：%@";
+"harness.publish.error.invaliddest %@" = "目的地超出 worktree 範圍：%@";
+"harness.publish.error.copy %@" = "複製失敗：%@";
+"harness.publish.error.rename %@" = "無法重寫 manifest 名稱：%@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "更新「%@」";

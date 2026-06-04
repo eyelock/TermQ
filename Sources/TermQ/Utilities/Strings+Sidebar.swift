@@ -486,6 +486,7 @@ extension Strings {
         // Fork to local
         static var forkToLocal: String { localized("harnesses.fork.to.local") }
         static var forkToLocalHelp: String { localized("harnesses.fork.to.local.help") }
+        static var publishToRepository: String { localized("harnesses.publish.to.repository") }
 
         // Update dot (sidebar)
         static var updateDotHelp: String { localized("harnesses.update.dot.help") }
@@ -529,6 +530,111 @@ extension Strings {
         static var renameLabel: String { localized("harness.fork.rename.label") }
         static var renameHint: String { localized("harness.fork.rename.hint") }
         static var identityCollision: String { localized("harness.fork.identity.collision") }
+    }
+}
+
+// MARK: - HarnessPublish
+
+extension Strings {
+    enum HarnessPublish {
+        static func title(_ name: String) -> String {
+            String(format: localized("harness.publish.title %@"), name)
+        }
+        static var explanation: String { localized("harness.publish.explanation") }
+        static var publishButton: String { localized("harness.publish.button") }
+        static var updateButton: String { localized("harness.publish.update.button") }
+        static func progressTitle(_ name: String) -> String {
+            String(format: localized("harness.publish.progress.title %@"), name)
+        }
+
+        // Form labels
+        static var repoLabel: String { localized("harness.publish.repo.label") }
+        static var repoPlaceholder: String { localized("harness.publish.repo.placeholder") }
+        static var parentDirLabel: String { localized("harness.publish.parentdir.label") }
+        static var parentDirHint: String { localized("harness.publish.parentdir.hint") }
+        static var nameLabel: String { localized("harness.publish.name.label") }
+        static var branchLabel: String { localized("harness.publish.branch.label") }
+        static var baseBranchLabel: String { localized("harness.publish.basebranch.label") }
+        static var worktreePathLabel: String { localized("harness.publish.worktreepath.label") }
+        static var filesLabel: String { localized("harness.publish.files.label") }
+        static var changesLabel: String { localized("harness.publish.changes.label") }
+
+        // Copy mode
+        static var modeLabel: String { localized("harness.publish.mode.label") }
+        static var modeEntire: String { localized("harness.publish.mode.entire") }
+        static var modeEnumerated: String { localized("harness.publish.mode.enumerated") }
+        static var modeEnumeratedHint: String { localized("harness.publish.mode.enumerated.hint") }
+
+        // Destination states
+        static var stateNew: String { localized("harness.publish.state.new") }
+        static func stateUpdate(_ path: String) -> String {
+            String(format: localized("harness.publish.state.update %@"), path)
+        }
+        static func stateClash(_ name: String) -> String {
+            String(format: localized("harness.publish.state.clash %@"), name)
+        }
+        static var stateOccupied: String { localized("harness.publish.state.occupied") }
+        static var stateSameRepo: String { localized("harness.publish.state.samerepo") }
+        static var revealRepository: String { localized("harness.publish.reveal.repository") }
+
+        // Pre-flight & plan
+        static var preflightFailed: String { localized("harness.publish.preflight.failed") }
+        static var compositionUnavailable: String { localized("harness.publish.composition.unavailable") }
+        static func unresolvedReferences(_ count: Int) -> String {
+            String(format: localized("harness.publish.unresolved %lld"), count)
+        }
+        static func willRunRegisterScript(_ script: String) -> String {
+            String(format: localized("harness.publish.register.disclosure %@"), script)
+        }
+
+        // Change preview
+        static var changeAdded: String { localized("harness.publish.change.added") }
+        static var changeModified: String { localized("harness.publish.change.modified") }
+        static var changeRemoved: String { localized("harness.publish.change.removed") }
+        static var changesNone: String { localized("harness.publish.changes.none") }
+
+        // Progress steps
+        static func stepWorktree(_ branch: String) -> String {
+            String(format: localized("harness.publish.step.worktree %@"), branch)
+        }
+        static func stepCopy(_ destination: String) -> String {
+            String(format: localized("harness.publish.step.copy %@"), destination)
+        }
+        static func stepCopied(_ count: Int) -> String {
+            String(format: localized("harness.publish.step.copied %lld"), count)
+        }
+        static var stepValidate: String { localized("harness.publish.step.validate") }
+        static func stepRegister(_ script: String) -> String {
+            String(format: localized("harness.publish.step.register %@"), script)
+        }
+        static func stepDone(_ path: String) -> String {
+            String(format: localized("harness.publish.step.done %@"), path)
+        }
+        static func warningPrefix(_ message: String) -> String {
+            String(format: localized("harness.publish.warning %@"), message)
+        }
+        static func deletedLine(_ path: String) -> String {
+            String(format: localized("harness.publish.deleted %@"), path)
+        }
+
+        // Failures
+        static var validationFailed: String { localized("harness.publish.validation.failed") }
+        static var registerFailed: String { localized("harness.publish.register.failed") }
+        static func referencesMissing(_ list: String) -> String {
+            String(format: localized("harness.publish.references.missing %@"), list)
+        }
+        static func errorDestinationOccupied(_ path: String) -> String {
+            String(format: localized("harness.publish.error.occupied %@"), path)
+        }
+        static func errorInvalidDestination(_ path: String) -> String {
+            String(format: localized("harness.publish.error.invaliddest %@"), path)
+        }
+        static func errorCopyFailed(_ detail: String) -> String {
+            String(format: localized("harness.publish.error.copy %@"), detail)
+        }
+        static func errorRenameFailed(_ detail: String) -> String {
+            String(format: localized("harness.publish.error.rename %@"), detail)
+        }
     }
 }
 

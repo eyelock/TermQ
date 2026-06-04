@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork til lokal";
 "harnesses.fork.to.local.help" = "Opret en redigerbar lokal kopi af denne harness";
+"harnesses.publish.to.repository" = "Publicer til arkiv…";
 "harnesses.update.dot.help" = "Opdatering tilgængelig";
 "harness.fork.title %@" = "Fork \"%@\" til lokal";
 "harness.fork.explanation" = "Opretter en redigerbar lokal kopi af denne harness. Kopien sporer sin oprindelse, så du kan se, hvad der er ændret opstrøms.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "Lad feltet være tomt for at beholde kildenavnet. Det nye forks kanoniske id bliver local/<navn>.";
 "harness.fork.identity.collision" = "Et installeret harness har allerede denne identitet.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publicer \"%@\" til arkiv";
+"harness.publish.explanation" = "Kopierer denne harness til et nyt worktree i målarkivet, klar til commit. Arkivets egne konventioner (registreringsskripter, manifester) tager sig af resten.";
+"harness.publish.button" = "Publicer";
+"harness.publish.update.button" = "Opdater eksisterende post";
+"harness.publish.progress.title %@" = "Publicerer \"%@\"…";
+"harness.publish.repo.label" = "Målarkiv";
+"harness.publish.repo.placeholder" = "Vælg et arkiv…";
+"harness.publish.parentdir.label" = "Mappe i arkiv";
+"harness.publish.parentdir.hint" = "Foreslået ud fra, hvor dette arkiv allerede opbevarer harnesses. Fuldt redigerbar.";
+"harness.publish.name.label" = "Navn";
+"harness.publish.branch.label" = "Gren";
+"harness.publish.basebranch.label" = "Basisgren";
+"harness.publish.worktreepath.label" = "Worktree-sti";
+"harness.publish.files.label" = "Filer der skal kopieres";
+"harness.publish.changes.label" = "Ændringer ift. publiceret kopi";
+"harness.publish.mode.label" = "Kopieringstilstand";
+"harness.publish.mode.entire" = "Hele mappen";
+"harness.publish.mode.enumerated" = "Kun harness-filer";
+"harness.publish.mode.enumerated.hint" = "Kildemappen fungerer også som projektarkiv — kun filer, som harness ejer, kopieres.";
+"harness.publish.state.new" = "Ny post — denne harness findes endnu ikke i arkivet.";
+"harness.publish.state.update %@" = "Opdaterer den eksisterende post ved %@ (overskriver den).";
+"harness.publish.state.clash %@" = "Den mappe indeholder allerede en anden harness (\"%@\") — vælg et andet navn.";
+"harness.publish.state.occupied" = "Den mappe findes allerede i arkivet — vælg et andet navn eller en anden placering.";
+"harness.publish.state.samerepo" = "Denne harness befinder sig allerede i det valgte arkiv — commit dine ændringer der i stedet for at publicere.";
+"harness.publish.reveal.repository" = "Vis i Arkiver";
+"harness.publish.preflight.failed" = "Den lokale harness validerer ikke — ret fejlen inden publicering.";
+"harness.publish.composition.unavailable" = "ynd compose mislykkedes for denne harness — tilstanden \"kun harness-filer\" kræver det for at vide, hvilke filer der ejes. Ret harness eller skift til \"hele mappen\".";
+"harness.publish.unresolved %lld" = "%lld refereret(e) fil(er) mangler i kilden — de vil ikke blive kopieret.";
+"harness.publish.register.disclosure %@" = "Efter kopiering køres arkivets %@ (arkivleveret skript).";
+"harness.publish.change.added" = "tilføjet";
+"harness.publish.change.modified" = "ændret";
+"harness.publish.change.removed" = "fjernet";
+"harness.publish.changes.none" = "Ingen forskelle — den publicerede kopi matcher dine lokale filer.";
+"harness.publish.step.worktree %@" = "Opretter worktree på gren %@…";
+"harness.publish.step.copy %@" = "Kopierer harness til %@…";
+"harness.publish.step.copied %lld" = "Kopierede %lld filgruppe(r).";
+"harness.publish.step.validate" = "Validerer kopieret harness (ynd validate)…";
+"harness.publish.step.register %@" = "Kører %@…";
+"harness.publish.step.done %@" = "Færdig — worktree klar ved %@.";
+"harness.publish.warning %@" = "Advarsel: %@";
+"harness.publish.deleted %@" = "Forældet sti fjernet: %@";
+"harness.publish.validation.failed" = "Validering i worktree mislykkedes — intet blev committet. Worktree bevares til inspektion.";
+"harness.publish.register.failed" = "Arkivets registreringsskript mislykkedes — worktree bevares til inspektion.";
+"harness.publish.references.missing %@" = "Filer refereret af manifestet mangler efter kopiering: %@";
+"harness.publish.error.occupied %@" = "Destinationen indeholder allerede en harness: %@";
+"harness.publish.error.invaliddest %@" = "Destinationen er uden for worktree: %@";
+"harness.publish.error.copy %@" = "Kopiering mislykkedes: %@";
+"harness.publish.error.rename %@" = "Kunne ikke omskrive manifestnavnet: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Opdater \"%@\"";

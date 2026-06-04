@@ -982,6 +982,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Форк до локального";
 "harnesses.fork.to.local.help" = "Створити редаговану локальну копію цього harness";
+"harnesses.publish.to.repository" = "Опублікувати в репозиторій…";
 "harnesses.update.dot.help" = "Доступне оновлення";
 "harness.fork.title %@" = "Форк \"%@\" до локального";
 "harness.fork.explanation" = "Створює редаговану локальну копію цього harness. Копія відстежує своє походження, щоб ви могли бачити, що змінилося у джерелі.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.label" = "Назва (необов'язково)";
 "harness.fork.rename.hint" = "Залиште порожнім, щоб зберегти вихідну назву. Канонічний id нового форку буде local/<назва>.";
 "harness.fork.identity.collision" = "Встановлений харнес вже має цей ідентифікатор.";
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Опублікувати «%@» в репозиторій";
+"harness.publish.explanation" = "Копіює цей harness у новий worktree цільового репозиторію, готовий до commit. Власні угоди репозиторію (скрипти реєстрації, маніфести) подбають про решту.";
+"harness.publish.button" = "Опублікувати";
+"harness.publish.update.button" = "Оновити наявний запис";
+"harness.publish.progress.title %@" = "Публікація «%@»…";
+"harness.publish.repo.label" = "Цільовий репозиторій";
+"harness.publish.repo.placeholder" = "Виберіть репозиторій…";
+"harness.publish.parentdir.label" = "Директорія в репозиторії";
+"harness.publish.parentdir.hint" = "Запропоновано на основі того, де цей репозиторій вже зберігає harnesses. Повністю редагується.";
+"harness.publish.name.label" = "Назва";
+"harness.publish.branch.label" = "Гілка";
+"harness.publish.basebranch.label" = "Базова гілка";
+"harness.publish.worktreepath.label" = "Шлях worktree";
+"harness.publish.files.label" = "Файли для копіювання";
+"harness.publish.changes.label" = "Зміни порівняно з опублікованою копією";
+"harness.publish.mode.label" = "Режим копіювання";
+"harness.publish.mode.entire" = "Вся директорія";
+"harness.publish.mode.enumerated" = "Лише файли harness";
+"harness.publish.mode.enumerated.hint" = "Вихідна директорія також є репозиторієм проекту — копіюються лише файли, якими володіє harness.";
+"harness.publish.state.new" = "Новий запис — цього harness ще немає в репозиторії.";
+"harness.publish.state.update %@" = "Оновлює наявний запис за адресою %@ (перезаписує його).";
+"harness.publish.state.clash %@" = "Ця директорія вже містить інший harness («%@») — виберіть іншу назву.";
+"harness.publish.state.occupied" = "Ця директорія вже існує в репозиторії — виберіть іншу назву або розташування.";
+"harness.publish.state.samerepo" = "Цей harness вже знаходиться у вибраному репозиторії — зробіть commit змін там, а не публікуйте.";
+"harness.publish.reveal.repository" = "Показати в Репозиторіях";
+"harness.publish.preflight.failed" = "Локальний harness не проходить валідацію — виправте його перед публікацією.";
+"harness.publish.composition.unavailable" = "ynd compose не вдалося для цього harness — режим «лише файли harness» потребує цього, щоб знати, які файли є власністю. Виправте harness або перейдіть на «вся директорія».";
+"harness.publish.unresolved %lld" = "%lld вказаних файлів відсутні в джерелі — вони не будуть скопійовані.";
+"harness.publish.register.disclosure %@" = "Після копіювання запустяться %@ репозиторію (скрипт, наданий репозиторієм).";
+"harness.publish.change.added" = "додано";
+"harness.publish.change.modified" = "змінено";
+"harness.publish.change.removed" = "видалено";
+"harness.publish.changes.none" = "Відмінностей немає — опублікована копія збігається з вашими локальними файлами.";
+"harness.publish.step.worktree %@" = "Створення worktree на гілці %@…";
+"harness.publish.step.copy %@" = "Копіювання harness у %@…";
+"harness.publish.step.copied %lld" = "Скопійовано %lld груп файлів.";
+"harness.publish.step.validate" = "Валідація скопійованого harness (ynd validate)…";
+"harness.publish.step.register %@" = "Запуск %@…";
+"harness.publish.step.done %@" = "Готово — worktree готовий за адресою %@.";
+"harness.publish.warning %@" = "Попередження: %@";
+"harness.publish.deleted %@" = "Видалено застарілий шлях: %@";
+"harness.publish.validation.failed" = "Валідація у worktree не вдалася — нічого не було зроблено commit. Worktree збережено для перевірки.";
+"harness.publish.register.failed" = "Скрипт реєстрації репозиторію не вдався — worktree збережено для перевірки.";
+"harness.publish.references.missing %@" = "Файли, на які посилається маніфест, відсутні після копіювання: %@";
+"harness.publish.error.occupied %@" = "Призначення вже містить harness: %@";
+"harness.publish.error.invaliddest %@" = "Призначення виходить за межі worktree: %@";
+"harness.publish.error.copy %@" = "Копіювання не вдалося: %@";
+"harness.publish.error.rename %@" = "Не вдалося переписати назву маніфесту: %@";
+
 
 
 // MARK: - Harness Update

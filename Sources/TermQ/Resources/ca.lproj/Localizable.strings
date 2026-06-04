@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Bifurca a local";
 "harnesses.fork.to.local.help" = "Crea una còpia local editable d'aquest harness";
+"harnesses.publish.to.repository" = "Publica al repositori…";
 "harnesses.update.dot.help" = "Actualització disponible";
 "harness.fork.title %@" = "Bifurca \"%@\" a local";
 "harness.fork.explanation" = "Crea una còpia local editable d'aquest harness. La còpia rastreja el seu origen per tal que puguis veure què ha canviat aigues amunt.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "Deixeu-ho buit per conservar el nom de la font. L'id canònic del nou fork serà local/<nom>.";
 "harness.fork.identity.collision" = "Ja hi ha un harness instal·lat amb aquesta identitat.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publica \"%@\" al repositori";
+"harness.publish.explanation" = "Copia aquest harness en un nou worktree del repositori de destinació, llest per fer commit. Les convencions del repositori (scripts de registre, manifests) s'encarreguen de la resta.";
+"harness.publish.button" = "Publica";
+"harness.publish.update.button" = "Actualitza l'entrada existent";
+"harness.publish.progress.title %@" = "S'està publicant \"%@\"…";
+"harness.publish.repo.label" = "Repositori de destinació";
+"harness.publish.repo.placeholder" = "Selecciona un repositori…";
+"harness.publish.parentdir.label" = "Directori al repositori";
+"harness.publish.parentdir.hint" = "Suggerit d'on aquest repositori ja guarda els harnesses. Totalment editable.";
+"harness.publish.name.label" = "Nom";
+"harness.publish.branch.label" = "Branca";
+"harness.publish.basebranch.label" = "Branca base";
+"harness.publish.worktreepath.label" = "Camí del worktree";
+"harness.publish.files.label" = "Fitxers a copiar";
+"harness.publish.changes.label" = "Canvis respecte a la còpia publicada";
+"harness.publish.mode.label" = "Mode de còpia";
+"harness.publish.mode.entire" = "Directori sencer";
+"harness.publish.mode.enumerated" = "Només fitxers del harness";
+"harness.publish.mode.enumerated.hint" = "El directori font fa de repositori de projecte alhora — només es copien els fitxers que el harness posseeix.";
+"harness.publish.state.new" = "Entrada nova — aquest harness encara no existeix al repositori.";
+"harness.publish.state.update %@" = "Actualitza l'entrada existent a %@ (la sobreescriu).";
+"harness.publish.state.clash %@" = "Aquell directori ja conté un harness diferent (\"%@\") — tria un altre nom.";
+"harness.publish.state.occupied" = "Aquell directori ja existeix al repositori — tria un altre nom o ubicació.";
+"harness.publish.state.samerepo" = "Aquest harness ja resideix al repositori seleccionat — fes commit dels teus canvis allà en lloc de publicar.";
+"harness.publish.reveal.repository" = "Mostra als Repositoris";
+"harness.publish.preflight.failed" = "El harness local no supera la validació — corregeix-lo abans de publicar.";
+"harness.publish.composition.unavailable" = "ynd compose ha fallat per a aquest harness — el mode \"només fitxers del harness\" el necessita per saber quins fitxers posseeix. Corregeix el harness o canvia a \"directori sencer\".";
+"harness.publish.unresolved %lld" = "%lld fitxer(s) referenciats manquen a la font — no es copiaran.";
+"harness.publish.register.disclosure %@" = "Després de copiar, s'executarà %@ del repositori (script proporcionat pel repositori).";
+"harness.publish.change.added" = "afegit";
+"harness.publish.change.modified" = "modificat";
+"harness.publish.change.removed" = "eliminat";
+"harness.publish.changes.none" = "Sense diferències — la còpia publicada coincideix amb els teus fitxers locals.";
+"harness.publish.step.worktree %@" = "S'està creant el worktree a la branca %@…";
+"harness.publish.step.copy %@" = "S'està copiant el harness a %@…";
+"harness.publish.step.copied %lld" = "S'han copiat %lld grup(s) de fitxers.";
+"harness.publish.step.validate" = "S'està validant el harness copiat (ynd validate)…";
+"harness.publish.step.register %@" = "S'està executant %@…";
+"harness.publish.step.done %@" = "Fet — el worktree està llest a %@.";
+"harness.publish.warning %@" = "Avís: %@";
+"harness.publish.deleted %@" = "Camí obsolet eliminat: %@";
+"harness.publish.validation.failed" = "La validació al worktree ha fallat — no s'ha fet cap commit. El worktree es conserva per inspeccionar-lo.";
+"harness.publish.register.failed" = "L'script de registre del repositori ha fallat — el worktree es conserva per inspeccionar-lo.";
+"harness.publish.references.missing %@" = "Els fitxers referenciats pel manifest manquen després de la còpia: %@";
+"harness.publish.error.occupied %@" = "La destinació ja conté un harness: %@";
+"harness.publish.error.invaliddest %@" = "La destinació s'escapa del worktree: %@";
+"harness.publish.error.copy %@" = "La còpia ha fallat: %@";
+"harness.publish.error.rename %@" = "No s'ha pogut reescriure el nom del manifest: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Actualitza \"%@\"";

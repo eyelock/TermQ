@@ -981,6 +981,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork helyire";
 "harnesses.fork.to.local.help" = "Szerkeszthető helyi másolat létrehozása erről a harness-ről";
+"harnesses.publish.to.repository" = "Közzététel tárolóba…";
 "harnesses.update.dot.help" = "Frissítés elérhető";
 "harness.fork.title %@" = "\"%@\" fork helyire";
 "harness.fork.explanation" = "Szerkeszthető helyi másolatot hoz létre erről a harness-ről. A másolat nyomkövetéssel rendelkezik, így láthatja, mi változott az upstream-ben.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.hint" = "Hagyja üresen a forrásnév megtartásához. Az új fork kanonikus id-je local/<név> lesz.";
 "harness.fork.identity.collision" = "Egy telepített harness már rendelkezik ezzel az azonosítóval.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" közzététele tárolóba";
+"harness.publish.explanation" = "Ezt a harness-t egy új munkakönyvtárba másolja a célállomáson, commitálásra készen. A tároló saját konvenciói (regisztrációs szkriptek, manifestek) döntenek a többiről.";
+"harness.publish.button" = "Közzétesz";
+"harness.publish.update.button" = "Meglévő bejegyzés frissítése";
+"harness.publish.progress.title %@" = "\"%@\" közzététele…";
+"harness.publish.repo.label" = "Cél tároló";
+"harness.publish.repo.placeholder" = "Tároló kiválasztása…";
+"harness.publish.parentdir.label" = "Könyvtár a tárolóban";
+"harness.publish.parentdir.hint" = "A tároló meglévő harness-tárolási helye alapján javasolva. Teljesen szerkeszthető.";
+"harness.publish.name.label" = "Név";
+"harness.publish.branch.label" = "Ág";
+"harness.publish.basebranch.label" = "Alapág";
+"harness.publish.worktreepath.label" = "Munkakönyvtár elérési útja";
+"harness.publish.files.label" = "Másolandó fájlok";
+"harness.publish.changes.label" = "Változások a közzétett másolathoz képest";
+"harness.publish.mode.label" = "Másolási mód";
+"harness.publish.mode.entire" = "Teljes könyvtár";
+"harness.publish.mode.enumerated" = "Csak harness fájlok";
+"harness.publish.mode.enumerated.hint" = "A forrásmappa egyben egy projektmappa is — csak a harness által kezelt fájlok másolódnak.";
+"harness.publish.state.new" = "Új bejegyzés — ez a harness még nem szerepel a tárolóban.";
+"harness.publish.state.update %@" = "Frissíti a meglévő bejegyzést itt: %@ (felülírja).";
+"harness.publish.state.clash %@" = "Ez a könyvtár már tartalmaz egy másik harness-t (\"%@\") — válasszon másik nevet.";
+"harness.publish.state.occupied" = "Ez a könyvtár már létezik a tárolóban — válasszon másik nevet vagy helyet.";
+"harness.publish.state.samerepo" = "Ez a harness már a kiválasztott tárolóban van — commitálja ott a változásokat közzététel helyett.";
+"harness.publish.reveal.repository" = "Megjelenítés a tárolókban";
+"harness.publish.preflight.failed" = "A helyi harness nem validálható — javítsa ki közzététel előtt.";
+"harness.publish.composition.unavailable" = "A ynd compose nem sikerült ehhez a harness-hez — a \"csak harness fájlok\" módhoz szükséges, hogy tudja, mely fájlok tartoznak hozzá. Javítsa ki a harness-t, vagy váltson \"teljes könyvtár\" módra.";
+"harness.publish.unresolved %lld" = "%lld hivatkozott fájl hiányzik a forrásból — nem lesznek másolva.";
+"harness.publish.register.disclosure %@" = "Másolás után a tároló %@ szkriptje fut le (tároló által biztosított szkript).";
+"harness.publish.change.added" = "hozzáadva";
+"harness.publish.change.modified" = "módosítva";
+"harness.publish.change.removed" = "eltávolítva";
+"harness.publish.changes.none" = "Nincs különbség — a közzétett másolat megegyezik a helyi fájlokkal.";
+"harness.publish.step.worktree %@" = "Munkakönyvtár létrehozása a(z) %@ ágon…";
+"harness.publish.step.copy %@" = "Harness másolása ide: %@…";
+"harness.publish.step.copied %lld" = "%lld fájlcsoport másolva.";
+"harness.publish.step.validate" = "Másolt harness ellenőrzése (ynd validate)…";
+"harness.publish.step.register %@" = "Futtatás: %@…";
+"harness.publish.step.done %@" = "Kész — a munkakönyvtár itt elérhető: %@.";
+"harness.publish.warning %@" = "Figyelmeztetés: %@";
+"harness.publish.deleted %@" = "Elavult elérési út eltávolítva: %@";
+"harness.publish.validation.failed" = "Az ellenőrzés sikertelen a munkakönyvtárban — semmi sem lett commitálva. A munkakönyvtár megtartva vizsgálathoz.";
+"harness.publish.register.failed" = "A tároló regisztrációs szkriptje sikertelen — a munkakönyvtár megtartva vizsgálathoz.";
+"harness.publish.references.missing %@" = "A manifest által hivatkozott fájlok hiányoznak a másolás után: %@";
+"harness.publish.error.occupied %@" = "A célhely már tartalmaz egy harness-t: %@";
+"harness.publish.error.invaliddest %@" = "A célhely kilép a munkakönyvtárból: %@";
+"harness.publish.error.copy %@" = "Másolás sikertelen: %@";
+"harness.publish.error.rename %@" = "Nem sikerült átírni a manifest nevét: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Frissítés: \"%@\"";

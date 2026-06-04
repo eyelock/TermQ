@@ -975,6 +975,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Biforca in locale";
 "harnesses.fork.to.local.help" = "Crea una copia locale modificabile di questo harness";
+"harnesses.publish.to.repository" = "Pubblica nel repository…";
 "harnesses.update.dot.help" = "Aggiornamento disponibile";
 "harness.fork.title %@" = "Biforca \"%@\" in locale";
 "harness.fork.explanation" = "Crea una copia locale modificabile di questo harness. La copia tiene traccia della sua origine in modo che tu possa vedere cosa è cambiato a monte.";
@@ -984,6 +985,56 @@
 "harness.fork.rename.hint" = "Lascia vuoto per mantenere il nome sorgente. L'id canonico del nuovo fork sarà local/<nome>.";
 "harness.fork.identity.collision" = "Un harness installato ha già questa identità.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Pubblica \"%@\" nel repository";
+"harness.publish.explanation" = "Copia questo harness in un nuovo worktree del repository di destinazione, pronto per il commit. Le convenzioni del repository (script di registrazione, manifest) decidono il resto.";
+"harness.publish.button" = "Pubblica";
+"harness.publish.update.button" = "Aggiorna voce esistente";
+"harness.publish.progress.title %@" = "Pubblicazione di \"%@\"…";
+"harness.publish.repo.label" = "Repository di destinazione";
+"harness.publish.repo.placeholder" = "Seleziona un repository…";
+"harness.publish.parentdir.label" = "Directory nel repository";
+"harness.publish.parentdir.hint" = "Suggerita in base a dove questo repository conserva già gli harness. Completamente modificabile.";
+"harness.publish.name.label" = "Nome";
+"harness.publish.branch.label" = "Branch";
+"harness.publish.basebranch.label" = "Branch di base";
+"harness.publish.worktreepath.label" = "Percorso worktree";
+"harness.publish.files.label" = "File da copiare";
+"harness.publish.changes.label" = "Modifiche rispetto alla copia pubblicata";
+"harness.publish.mode.label" = "Modalità di copia";
+"harness.publish.mode.entire" = "Intera directory";
+"harness.publish.mode.enumerated" = "Solo file harness";
+"harness.publish.mode.enumerated.hint" = "La directory sorgente funge anche da repository di progetto — vengono copiati solo i file di proprietà dell'harness.";
+"harness.publish.state.new" = "Nuova voce — questo harness non esiste ancora nel repository.";
+"harness.publish.state.update %@" = "Aggiorna la voce esistente in %@ (la sovrascrive).";
+"harness.publish.state.clash %@" = "Quella directory contiene già un harness diverso (\"%@\") — scegli un altro nome.";
+"harness.publish.state.occupied" = "Quella directory esiste già nel repository — scegli un altro nome o posizione.";
+"harness.publish.state.samerepo" = "Questo harness è già nel repository selezionato — esegui il commit delle modifiche lì invece di pubblicare.";
+"harness.publish.reveal.repository" = "Mostra nei repository";
+"harness.publish.preflight.failed" = "L'harness locale non supera la validazione — correggilo prima di pubblicare.";
+"harness.publish.composition.unavailable" = "ynd compose non è riuscito per questo harness — la modalità \"solo file harness\" ne ha bisogno per sapere quali file possiede. Correggi l'harness o passa a \"intera directory\".";
+"harness.publish.unresolved %lld" = "%lld file referenziati mancanti dalla sorgente — non verranno copiati.";
+"harness.publish.register.disclosure %@" = "Dopo la copia, verrà eseguito %@ del repository (script fornito dal repository).";
+"harness.publish.change.added" = "aggiunto";
+"harness.publish.change.modified" = "modificato";
+"harness.publish.change.removed" = "rimosso";
+"harness.publish.changes.none" = "Nessuna differenza — la copia pubblicata corrisponde ai file locali.";
+"harness.publish.step.worktree %@" = "Creazione del worktree sul branch %@…";
+"harness.publish.step.copy %@" = "Copia dell'harness in %@…";
+"harness.publish.step.copied %lld" = "Copiati %lld gruppi di file.";
+"harness.publish.step.validate" = "Validazione dell'harness copiato (ynd validate)…";
+"harness.publish.step.register %@" = "Esecuzione di %@…";
+"harness.publish.step.done %@" = "Fatto — worktree pronto in %@.";
+"harness.publish.warning %@" = "Avviso: %@";
+"harness.publish.deleted %@" = "Percorso obsoleto rimosso: %@";
+"harness.publish.validation.failed" = "Validazione non riuscita nel worktree — nessun commit eseguito. Il worktree è conservato per l'ispezione.";
+"harness.publish.register.failed" = "Lo script di registrazione del repository non è riuscito — il worktree è conservato per l'ispezione.";
+"harness.publish.references.missing %@" = "I file referenziati dal manifest risultano mancanti dopo la copia: %@";
+"harness.publish.error.occupied %@" = "La destinazione contiene già un harness: %@";
+"harness.publish.error.invaliddest %@" = "La destinazione esula dal worktree: %@";
+"harness.publish.error.copy %@" = "Copia non riuscita: %@";
+"harness.publish.error.rename %@" = "Impossibile riscrivere il nome del manifest: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Aggiorna \"%@\"";

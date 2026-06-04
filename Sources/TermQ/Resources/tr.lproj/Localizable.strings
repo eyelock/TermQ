@@ -982,6 +982,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Yerel olarak çatalla";
 "harnesses.fork.to.local.help" = "Bu harness'in düzenlenebilir yerel bir kopyasını oluştur";
+"harnesses.publish.to.repository" = "Depoya Yayımla…";
 "harnesses.update.dot.help" = "Güncelleme mevcut";
 "harness.fork.title %@" = "\"%@\" öğesini yerel olarak çatalla";
 "harness.fork.explanation" = "Bu harness'in düzenlenebilir yerel bir kopyasını oluşturur. Kopya, kaynakta nelerin değiştiğini görebilmeniz için kökenini takip eder.";
@@ -990,6 +991,56 @@
 "harness.fork.rename.label" = "Ad (isteğe bağlı)";
 "harness.fork.rename.hint" = "Kaynak adını korumak için boş bırakın. Yeni fork'un kanonik id'si local/<ad> olacak.";
 "harness.fork.identity.collision" = "Yüklü bir harness zaten bu kimliğe sahip.";
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" Öğesini Depoya Yayımla";
+"harness.publish.explanation" = "Bu harness'i hedef deponun yeni bir worktree'sine kopyalar, commit için hazır hale getirir. Deponun kendi kuralları (kayıt betikleri, manifestolar) geri kalanını yönetir.";
+"harness.publish.button" = "Yayımla";
+"harness.publish.update.button" = "Mevcut Girdiyi Güncelle";
+"harness.publish.progress.title %@" = "\"%@\" Yayımlanıyor…";
+"harness.publish.repo.label" = "Hedef Depo";
+"harness.publish.repo.placeholder" = "Bir depo seçin…";
+"harness.publish.parentdir.label" = "Depodaki Dizin";
+"harness.publish.parentdir.hint" = "Bu deponun harness'leri zaten sakladığı yerden önerilir. Tamamen düzenlenebilir.";
+"harness.publish.name.label" = "Ad";
+"harness.publish.branch.label" = "Dal";
+"harness.publish.basebranch.label" = "Temel Dal";
+"harness.publish.worktreepath.label" = "Worktree Yolu";
+"harness.publish.files.label" = "Kopyalanacak Dosyalar";
+"harness.publish.changes.label" = "Yayımlanan Kopyaya Göre Değişiklikler";
+"harness.publish.mode.label" = "Kopyalama Modu";
+"harness.publish.mode.entire" = "Tüm dizin";
+"harness.publish.mode.enumerated" = "Yalnızca harness dosyaları";
+"harness.publish.mode.enumerated.hint" = "Kaynak dizin aynı zamanda bir proje deposu olarak da işlev görüyor — yalnızca harness'in sahip olduğu dosyalar kopyalanır.";
+"harness.publish.state.new" = "Yeni giriş — bu harness depoda henüz mevcut değil.";
+"harness.publish.state.update %@" = "%@ konumundaki mevcut girdiyi günceller (üzerine yazar).";
+"harness.publish.state.clash %@" = "O dizin zaten farklı bir harness (\"%@\") içeriyor — başka bir ad seçin.";
+"harness.publish.state.occupied" = "O dizin depoda zaten mevcut — başka bir ad veya konum seçin.";
+"harness.publish.state.samerepo" = "Bu harness zaten seçili depoda bulunuyor — yayımlamak yerine değişikliklerinizi orada commit edin.";
+"harness.publish.reveal.repository" = "Depolar'da Göster";
+"harness.publish.preflight.failed" = "Yerel harness doğrulamayı geçemiyor — yayımlamadan önce düzeltin.";
+"harness.publish.composition.unavailable" = "Bu harness için ynd compose başarısız oldu — \"yalnızca harness dosyaları\" modu hangi dosyaların sahipli olduğunu bilmek için buna ihtiyaç duyar. Harness'i düzeltin veya \"tüm dizin\" moduna geçin.";
+"harness.publish.unresolved %lld" = "Kaynakta %lld referanslı dosya eksik — kopyalanmayacak.";
+"harness.publish.register.disclosure %@" = "Kopyaladıktan sonra deponun %@ betiği çalışacak (depo tarafından sağlanan betik).";
+"harness.publish.change.added" = "eklendi";
+"harness.publish.change.modified" = "değiştirildi";
+"harness.publish.change.removed" = "kaldırıldı";
+"harness.publish.changes.none" = "Fark yok — yayımlanan kopya yerel dosyalarınızla eşleşiyor.";
+"harness.publish.step.worktree %@" = "%@ dalında worktree oluşturuluyor…";
+"harness.publish.step.copy %@" = "Harness %@ konumuna kopyalanıyor…";
+"harness.publish.step.copied %lld" = "%lld dosya grubu kopyalandı.";
+"harness.publish.step.validate" = "Kopyalanan harness doğrulanıyor (ynd validate)…";
+"harness.publish.step.register %@" = "%@ çalıştırılıyor…";
+"harness.publish.step.done %@" = "Tamamlandı — worktree %@ konumunda hazır.";
+"harness.publish.warning %@" = "Uyarı: %@";
+"harness.publish.deleted %@" = "Eski yol kaldırıldı: %@";
+"harness.publish.validation.failed" = "Worktree'de doğrulama başarısız oldu — hiçbir şey commit edilmedi. Worktree inceleme için muhafaza edildi.";
+"harness.publish.register.failed" = "Deponun kayıt betiği başarısız oldu — worktree inceleme için muhafaza edildi.";
+"harness.publish.references.missing %@" = "Manifest tarafından referanslanan dosyalar kopyalamadan sonra eksik: %@";
+"harness.publish.error.occupied %@" = "Hedef zaten bir harness içeriyor: %@";
+"harness.publish.error.invaliddest %@" = "Hedef worktree'nin dışına çıkıyor: %@";
+"harness.publish.error.copy %@" = "Kopyalama başarısız oldu: %@";
+"harness.publish.error.rename %@" = "Manifest adı yeniden yazılamadı: %@";
+
 
 
 // MARK: - Harness Update
