@@ -6,6 +6,84 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.11.3</title>
+            <sparkle:version>0.11.3</sparkle:version>
+            <sparkle:shortVersionString>0.11.3</sparkle:shortVersionString>
+            <pubDate>Mon, 01 Jun 2026 23:24:47 +0000</pubDate>
+            <description><![CDATA[<h3 id="fixed--secrets-storage">Fixed — Secrets storage</h3>
+<ul>
+<li><strong>Secrets storage no longer fails with "Keychain error: A required entitlement isn't present."</strong> Commit <code>920cb46</code> migrated the encryption-key store from the legacy Login Keychain to the Data Protection Keychain via <code>kSecUseDataProtectionKeychain: true</code>, but the matching <code>keychain-access-groups</code> entitlement (a restricted entitlement, <a href="https://developer.apple.com/documentation/technotes/tn3125-inside-code-signing-provisioning-profiles">TN3125 §"Entitlements on macOS"</a>) was never added — and cannot be added to ad-hoc-signed binaries on macOS 15 without also embedding an authorising provisioning profile, which causes "Launchd job spawn failed" at launch. <code>LiveEncryptionKeyStore</code> is now hybrid: it tries the Data Protection Keychain first and falls back to a 0o600 file in the app's data directory on <code>errSecMissingEntitlement</code>. Existing legacy Login Keychain entries are migrated into the active backend on first load. Debug builds remain file-only since they're always ad-hoc.</li>
+<li><strong>Release pipeline can opt into Data Protection Keychain via a Developer ID provisioning profile.</strong> When the <code>DEVELOPER_ID_PROVISION_PROFILE_BASE64</code> secret is set, <code>release.yml</code> validates the profile, embeds it at <code>Contents/embedded.provisionprofile</code>, and signs the main app bundle with a new <code>TermQ-Release.entitlements</code> carrying <code>com.apple.application-identifier</code> and <code>keychain-access-groups</code>. When the secret is absent, the workflow signs with the existing basic entitlements exactly as before — no breaking change to the release flow. See CONTRIBUTING.md §"Data Protection Keychain Setup". CI logs the chosen backend (<code>backend: keychain</code> or <code>backend: file</code>) at the end of the sign step.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.3.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.3.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.3/TermQ-0.11.3.zip"
+                sparkle:edSignature="KN3ZGCEjI4e/uVdOYqiWw3P2VTo7uXytDxugrd2i5+a9wLpElYhV/0LR5fmchF2hlDQBADNgO8mbYhpphgDyAQ=="
+                length="28707002"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.11.3.b4</title>
+            <sparkle:version>0.11.3.b4</sparkle:version>
+            <sparkle:shortVersionString>0.11.3.b4</sparkle:shortVersionString>
+            <pubDate>Mon, 01 Jun 2026 21:33:18 +0000</pubDate>
+            <description><![CDATA[<p><em>See <code>CHANGELOG.md</code> for changes in this release.</em></p>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.3-beta.4.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.3-beta.4.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.3-beta.4/TermQ-0.11.3-beta.4.zip"
+                sparkle:edSignature="5kOCBP4qZRpqDHPgWRdpD0BTiuikvsUCmuimo3Mabh2JkgndLMDowRz4W2sVl/Llh0b/kfuKBOtg/IBi40jFDA=="
+                length="28706912"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.11.2</title>
             <sparkle:version>0.11.2</sparkle:version>
             <sparkle:shortVersionString>0.11.2</sparkle:shortVersionString>
