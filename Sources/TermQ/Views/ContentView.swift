@@ -73,6 +73,7 @@ struct ContentView: View {
                         lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
                     },
                     onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
+                    onPublish: { id in lifecycleCoordinator.publishHarness(id: id) },
                     onNewHarness: {},
                     quarantinedEntries: migrationCoordinator.quarantinedEntries,
                     onRestoreQuarantine: { name in restoreQuarantine(name: name) },
@@ -327,6 +328,9 @@ struct ContentView: View {
                     }
                 }
                 .frame(width: 560, height: 420)
+            }
+            .sheet(isPresented: $lifecycleCoordinator.showPublishSheet) {
+                publishSheetContent()
             }
             .sheet(isPresented: $viewModel.showSessionRecovery) {
                 SessionRecoveryView(viewModel: viewModel)
@@ -891,6 +895,21 @@ extension ContentView {
         )
     }
 
+    /// Content for the publish sheet. The view model is held by the
+    /// lifecycle coordinator so ContentView re-renders don't recreate it.
+    @ViewBuilder
+    func publishSheetContent() -> some View {
+        Group {
+            if let publishVM = lifecycleCoordinator.publishViewModel {
+                PublishHarnessSheet(
+                    viewModel: publishVM,
+                    onCompleted: { lifecycleCoordinator.handlePublishCompleted() }
+                )
+            }
+        }
+        .frame(width: 560, height: 620)
+    }
+
     @ViewBuilder
     func forkSheet(for id: String) -> some View {
         if let harness = harnessRepo.harnesses.first(where: { $0.id == id }) {
@@ -904,4 +923,5 @@ extension ContentView {
             )
         }
     }
+
 }

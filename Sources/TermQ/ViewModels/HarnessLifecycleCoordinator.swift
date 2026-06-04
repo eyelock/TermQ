@@ -48,6 +48,14 @@ final class HarnessLifecycleCoordinator {
     /// Controls `HarnessExportSheet` visibility.
     var showExportSheet = false
 
+    /// View model backing an in-flight `PublishHarnessSheet`. Held here —
+    /// not built inline in the sheet builder — so ContentView re-renders
+    /// don't recreate it and wipe the form/progress state mid-flow.
+    var publishViewModel: PublishHarnessViewModel?
+
+    /// Controls `PublishHarnessSheet` visibility.
+    var showPublishSheet = false
+
     struct PendingExport: Equatable {
         let harnessName: String
         let harnessPath: String
@@ -128,6 +136,30 @@ final class HarnessLifecycleCoordinator {
     func forkHarness(id: String) {
         harnessIDToFork = id
         showForkSheet = true
+    }
+
+    // MARK: - Publish
+
+    /// Graduate a local harness into a repository via `PublishHarnessSheet`
+    /// — creates a worktree, copies the harness, validates in place.
+    func publishHarness(id: String) {
+        guard case .ready = ynhDetector.status,
+            let harness = harnessRepo.harnesses.first(where: { $0.id == id })
+        else { return }
+        publishViewModel = PublishHarnessViewModel(
+            harness: harness,
+            worktreeViewModel: WorktreeSidebarViewModel.shared
+        )
+        showPublishSheet = true
+    }
+
+    /// Called when the publish sheet completes (success dismissal or the
+    /// same-repo redirect). Reveals the Repositories sidebar where the new
+    /// worktree awaits its commit.
+    func handlePublishCompleted() {
+        showPublishSheet = false
+        publishViewModel = nil
+        SidebarState.shared.selectedTab = .repositories
     }
 
     // MARK: - Sheet completion
