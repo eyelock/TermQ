@@ -6,6 +6,46 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.11.4</title>
+            <sparkle:version>0.11.4</sparkle:version>
+            <sparkle:shortVersionString>0.11.4</sparkle:shortVersionString>
+            <pubDate>Thu, 04 Jun 2026 07:39:04 +0000</pubDate>
+            <description><![CDATA[<h3 id="added--run-with-focus-on-local-worktrees">Added — Run with Focus on local worktrees</h3>
+<ul>
+<li><strong>"Run with Focus…" and the Quick Launch Focus submenu are now available on every local worktree, not just PR checkouts.</strong> Previously these items appeared only when the worktree was linked to an open GitHub PR. Any local branch — including the main worktree — can now launch a focus run directly from its sidebar context menu. When the worktree is a PR checkout the sheet behaves as before (PR number carried through, card titles reference the PR); when it is a plain local branch the sheet falls back to the branch name in the header and omits the PR reference from card titles and instructions. <code>RunWithFocusContext.prNumber</code> is now optional.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.4.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.4.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.4/TermQ-0.11.4.zip"
+                sparkle:edSignature="hb61zqjwi1dQBt1Q2xBIhRyoATo1NMOUXXbdA147ndQKL1eW0OaViJ3TRjYNxThXp3ZjC5XxtyWNzdJ/FiyzBA=="
+                length="28712995"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.11.3</title>
             <sparkle:version>0.11.3</sparkle:version>
             <sparkle:shortVersionString>0.11.3</sparkle:shortVersionString>
