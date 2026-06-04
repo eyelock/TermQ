@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.4] - 2026-06-04
+
+### Added — Run with Focus on local worktrees
+
+- **"Run with Focus…" and the Quick Launch Focus submenu are now available on every local worktree, not just PR checkouts.** Previously these items appeared only when the worktree was linked to an open GitHub PR. Any local branch — including the main worktree — can now launch a focus run directly from its sidebar context menu. When the worktree is a PR checkout the sheet behaves as before (PR number carried through, card titles reference the PR); when it is a plain local branch the sheet falls back to the branch name in the header and omits the PR reference from card titles and instructions. `RunWithFocusContext.prNumber` is now optional.
+
 ## [0.11.3] - 2026-06-01
 
 ### Fixed — Secrets storage
