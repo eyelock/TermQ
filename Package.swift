@@ -27,9 +27,13 @@ let package = Package(
         .library(name: "MCPServerLib", targets: ["MCPServerLib"])
     ],
     dependencies: [
-        // Pinned post-v1.13.0: includes cursor ghosting (DECTCEM), EV_VANISHED crash,
-        // PTY resize/Auto Layout, and SGR mouse encoding fixes. Fork eyelock/SwiftTerm archived.
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "b6ce28a4b222b06d76a3fd44e904e00a95044d53"),
+        // Pinned post-v1.13.0 (2026-06-10). Includes all v1.13.0 fixes (cursor ghosting DECTCEM,
+        // EV_VANISHED crash, SGR mouse encoding) plus post-tag fixes: LocalProcess retain cycle
+        // (#551), Terminal retain cycle in resetNormalBuffer (#538), PTY read backpressure (#574),
+        // Buffer.resize O(content) (#573), Metal renderer rebind on window reparent (#548),
+        // stale Metal cursor (#547), row-cache invalidation, PTY pixel size from cells (#544).
+        // Fork eyelock/SwiftTerm archived.
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "24a68bcadc479d945c7ca32f21ac0a8ab895c690"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.0"),
