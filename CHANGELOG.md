@@ -61,6 +61,19 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.5] - 2026-06-11
+
+### Fixed — SwiftTerm stability
+
+- **Bump SwiftTerm to 2026-06-10 HEAD (post-v1.13.0).** This picks up five upstream fixes that directly affected TermQ's terminal stability and memory behaviour:
+  - **LocalProcess retain cycle** — every shell session leaked its process object; memory grew unboundedly over time ([SwiftTerm #551](https://github.com/migueldeicaza/SwiftTerm/pull/551)).
+  - **Terminal retain cycle in `resetNormalBuffer`** — the terminal object leaked on every alternate-buffer exit (vim, less, tmux), compounding the per-session leak ([SwiftTerm #538](https://github.com/migueldeicaza/SwiftTerm/pull/538)).
+  - **PTY read backpressure** — a missing flow-control path caused runaway memory consumption under heavy terminal output ([SwiftTerm #574](https://github.com/migueldeicaza/SwiftTerm/pull/574)).
+  - **`Buffer.resize` performance** — resize cost was O(scrollback capacity) regardless of actual content; now O(content), preventing multi-second hitches on windows with large scrollback ([SwiftTerm #573](https://github.com/migueldeicaza/SwiftTerm/pull/573)).
+  - **Metal renderer blank after window reparent** — the Metal view went blank after Run-with-Focus or any other operation that reparented the window ([SwiftTerm #548](https://github.com/migueldeicaza/SwiftTerm/pull/548)).
+- **Remove redundant `setFrameSize` override in `TermQTerminalView`.** The override called `terminal.feed(text:)` to force a resize notification, but SwiftTerm already calls `processSizeChange` from its own `setFrameSize` — resulting in every resize firing the full resize path twice. The override is removed; resize handling is now single-path.
+- **Fix pre-existing `TermQLogger.io` privacy violations in debug builds.** Two call sites were logging terminal I/O bytes with `.public` privacy level, exposing raw user data in the unified log under debug builds. Both are now `.private`.
+
 ## [0.11.4] - 2026-06-04
 
 ### Added — Run with Focus on local worktrees
