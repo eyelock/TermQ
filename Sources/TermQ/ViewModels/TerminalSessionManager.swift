@@ -116,10 +116,8 @@ class TerminalSessionManager: ObservableObject {
             }
             // Clean up pane terminals
             paneTerminals.removeValue(forKey: cardId)
-            // Clean up event monitors
-            session.terminal.cleanupAutoScrollDuringSelection()
-            session.terminal.cleanupCopyOnSelect()
-            session.terminal.cleanupKeyInputMonitor()
+            // Clean up event monitors before view is destroyed (prevents EV_VANISHED)
+            cleanupTerminalEventMonitors(session.terminal)
             // Terminate the old process
             if session.isRunning {
                 switch session.backend {
@@ -539,6 +537,16 @@ class TerminalSessionManager: ObservableObject {
         sessions[cardId]?.pendingRestart = true
     }
 
+    /// Tear down NSEvent monitors on `terminal` before the view is destroyed.
+    ///
+    /// Must be called before the owning session is removed to avoid EV_VANISHED
+    /// errors that occur when a live event monitor outlives its source view.
+    private func cleanupTerminalEventMonitors(_ terminal: TermQTerminalView) {
+        terminal.cleanupAutoScrollDuringSelection()
+        terminal.cleanupCopyOnSelect()
+        terminal.cleanupKeyInputMonitor()
+    }
+
     /// Remove a session (when card is deleted or tab closed)
     /// For tmux sessions: detaches by default (session continues running)
     /// For direct sessions: terminates the process
@@ -554,11 +562,8 @@ class TerminalSessionManager: ObservableObject {
         // Clean up pane terminals
         paneTerminals.removeValue(forKey: cardId)
 
-        // Clean up event monitors before destroying terminal to prevent EV_VANISHED errors
-        // This must happen before the session is fully removed to avoid race conditions
-        session.terminal.cleanupAutoScrollDuringSelection()
-        session.terminal.cleanupCopyOnSelect()
-        session.terminal.cleanupKeyInputMonitor()
+        // Clean up event monitors before view is destroyed (prevents EV_VANISHED)
+        cleanupTerminalEventMonitors(session.terminal)
 
         if session.isRunning {
             switch session.backend {
@@ -604,10 +609,8 @@ class TerminalSessionManager: ObservableObject {
         // Clean up pane terminals
         paneTerminals.removeValue(forKey: cardId)
 
-        // Clean up event monitors before destroying terminal to prevent EV_VANISHED errors
-        session.terminal.cleanupAutoScrollDuringSelection()
-        session.terminal.cleanupCopyOnSelect()
-        session.terminal.cleanupKeyInputMonitor()
+        // Clean up event monitors before view is destroyed (prevents EV_VANISHED)
+        cleanupTerminalEventMonitors(session.terminal)
 
         if session.isRunning {
             switch session.backend {
