@@ -82,31 +82,6 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
-    // MARK: - Size Change Fix
-
-    /// Override to fix PTY size synchronization with Auto Layout.
-    ///
-    /// SwiftTerm's MacTerminalView handles PTY resizing in its `frame` property setter
-    /// (which calls `processSizeChange`), but NOT in `setFrameSize`. When Auto Layout
-    /// resolves constraints, it calls `setFrameSize` directly, bypassing the resize logic.
-    ///
-    /// This fix triggers the frame setter after size changes, ensuring the PTY gets
-    /// the correct dimensions even when using Auto Layout constraints.
-    override func setFrameSize(_ newSize: NSSize) {
-        let oldSize = frame.size
-
-        // Call parent implementation first
-        super.setFrameSize(newSize)
-
-        // If size actually changed, trigger the frame property setter which
-        // contains the resize logic (processSizeChange) that setFrameSize lacks.
-        // The guard prevents infinite recursion: the frame setter will call
-        // setFrameSize again, but then oldSize == newSize so we won't re-trigger.
-        if oldSize != newSize {
-            self.frame = NSRect(origin: frame.origin, size: newSize)
-        }
-    }
-
     /// Set up event monitor to track key input (to distinguish user typing from process output)
     func setupKeyInputMonitor() {
         cleanupKeyInputMonitor()
@@ -121,7 +96,9 @@ class TermQTerminalView: LocalProcessTerminalView {
 
             self.lastUserInputTime = Date()
             #if TERMQ_DEBUG_BUILD
-                TermQLogger.io.debug("keyDown allowMouseReporting=\(self.allowMouseReporting)")
+                if TermQLogger.fileLoggingEnabled {
+                    TermQLogger.io.debug("keyDown allowMouseReporting=\(self.allowMouseReporting)")
+                }
             #endif
 
             // Intercept Cmd+C when a drag-selection is live (allowMouseReporting == false).
@@ -151,12 +128,14 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Called when terminal view needs redrawing (indicates new content)
     override func setNeedsDisplay(_ invalidRect: NSRect) {
         #if TERMQ_DEBUG_BUILD
-            let sinceInput = Date().timeIntervalSince(lastUserInputTime)
-            if sinceInput < 2.0 {
-                let sinceFmt = String(format: "%.2f", sinceInput)
-                TermQLogger.io.debug(
-                    "setNeedsDisplay sinceUserInput=\(sinceFmt)s allowMouseReporting=\(self.allowMouseReporting)"
-                )
+            if TermQLogger.fileLoggingEnabled {
+                let sinceInput = Date().timeIntervalSince(lastUserInputTime)
+                if sinceInput < 2.0 {
+                    let sinceFmt = String(format: "%.2f", sinceInput)
+                    TermQLogger.io.debug(
+                        "setNeedsDisplay sinceUserInput=\(sinceFmt)s allowMouseReporting=\(self.allowMouseReporting)"
+                    )
+                }
             }
         #endif
         super.setNeedsDisplay(invalidRect)
