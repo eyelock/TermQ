@@ -6,6 +6,55 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.11.5</title>
+            <sparkle:version>0.11.5</sparkle:version>
+            <sparkle:shortVersionString>0.11.5</sparkle:shortVersionString>
+            <pubDate>Thu, 11 Jun 2026 17:32:43 +0000</pubDate>
+            <description><![CDATA[<h3 id="fixed--swiftterm-stability">Fixed — SwiftTerm stability</h3>
+<ul>
+<li><strong>Bump SwiftTerm to 2026-06-10 HEAD (post-v1.13.0).</strong> This picks up five upstream fixes that directly affected TermQ's terminal stability and memory behaviour:
+<ul>
+<li><strong>LocalProcess retain cycle</strong> — every shell session leaked its process object; memory grew unboundedly over time (<a href="https://github.com/migueldeicaza/SwiftTerm/pull/551">SwiftTerm #551</a>).</li>
+<li><strong>Terminal retain cycle in <code>resetNormalBuffer</code></strong> — the terminal object leaked on every alternate-buffer exit (vim, less, tmux), compounding the per-session leak (<a href="https://github.com/migueldeicaza/SwiftTerm/pull/538">SwiftTerm #538</a>).</li>
+<li><strong>PTY read backpressure</strong> — a missing flow-control path caused runaway memory consumption under heavy terminal output (<a href="https://github.com/migueldeicaza/SwiftTerm/pull/574">SwiftTerm #574</a>).</li>
+<li><strong><code>Buffer.resize</code> performance</strong> — resize cost was O(scrollback capacity) regardless of actual content; now O(content), preventing multi-second hitches on windows with large scrollback (<a href="https://github.com/migueldeicaza/SwiftTerm/pull/573">SwiftTerm #573</a>).</li>
+<li><strong>Metal renderer blank after window reparent</strong> — the Metal view went blank after Run-with-Focus or any other operation that reparented the window (<a href="https://github.com/migueldeicaza/SwiftTerm/pull/548">SwiftTerm #548</a>).</li>
+</ul></li>
+<li><strong>Remove redundant <code>setFrameSize</code> override in <code>TermQTerminalView</code>.</strong> The override called <code>terminal.feed(text:)</code> to force a resize notification, but SwiftTerm already calls <code>processSizeChange</code> from its own <code>setFrameSize</code> — resulting in every resize firing the full resize path twice. The override is removed; resize handling is now single-path.</li>
+<li><strong>Fix pre-existing <code>TermQLogger.io</code> privacy violations in debug builds.</strong> Two call sites were logging terminal I/O bytes with <code>.public</code> privacy level, exposing raw user data in the unified log under debug builds. Both are now <code>.private</code>.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.5.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.5.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.5/TermQ-0.11.5.zip"
+                sparkle:edSignature="FmQJ+gTHBMmK0eJcnItWpu5iHNkZrCwpMLihk03VhOhswVaCiEdiZebOlSHcFLyGkZeWU6oH1TcImD2ALiBCBw=="
+                length="28732179"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.11.4</title>
             <sparkle:version>0.11.4</sparkle:version>
             <sparkle:shortVersionString>0.11.4</sparkle:shortVersionString>
