@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.6] - 2026-06-12
+
+### Added — Terminal
+
+- **"Copy without Line Breaks" context-menu item in the terminal.** TUI apps (e.g. Claude Code) soft-wrap long commands across terminal rows; a normal copy picks up the wrap points as hard newlines and the command cannot be pasted into a shell in one piece. The new item runs the standard copy then rewrites the pasteboard as a single line — each row trimmed, blank rows dropped, joined with single spaces — so multi-line TUI output pastes cleanly.
+
 ## [0.11.5] - 2026-06-11
 
 ### Fixed — SwiftTerm stability
