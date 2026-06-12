@@ -8,12 +8,13 @@ import SwiftTerm
 /// inner app, then flip it to `false` on the first `leftMouseDragged` so SwiftTerm
 /// stops intercepting drags and starts a selection. The flag stays `false` until
 /// the next `leftMouseDown`, which keeps streaming output from clearing the
-/// selection via `feedPrepare()` / `linefeed()`.
+/// selection — SwiftTerm's `feedPrepare()` and `linefeed()` both skip
+/// `selectNone()` while `allowMouseReporting` is off.
 ///
 /// Composed into terminal view subclasses (`TermQTerminalView`,
 /// `ControlModeTerminalView`) since they have different `TerminalView` ancestors
-/// and can't share a Swift base class. Each subclass forwards its `linefeed`,
-/// `scrolled`, and `selectionChanged` overrides into the controller.
+/// and can't share a Swift base class. Each subclass forwards its `scrolled`
+/// and `selectionChanged` overrides into the controller.
 @MainActor
 final class TerminalSelectionDragController {
 
@@ -75,13 +76,6 @@ final class TerminalSelectionDragController {
     }
 
     // MARK: - View-side hooks
-
-    /// True while a drag-to-select is live and SwiftTerm's default linefeed
-    /// `selectNone()` should be suppressed to avoid flicker.
-    var shouldSuppressLinefeed: Bool {
-        guard let view else { return false }
-        return !view.allowMouseReporting
-    }
 
     /// Forward from the view's `scrolled(source:yDisp:)` override after `super`.
     /// Re-applies the upward auto-scroll target so streaming linefeeds don't

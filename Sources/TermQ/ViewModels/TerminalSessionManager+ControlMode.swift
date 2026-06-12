@@ -34,18 +34,6 @@ class ControlModeTerminalView: TerminalView {
         dragController.handleScrolled(yDisp: yDisp)
     }
 
-    override func linefeed(source: Terminal) {
-        if dragController.shouldSuppressLinefeed {
-            #if TERMQ_DEBUG_BUILD
-                if TermQLogger.fileLoggingEnabled {
-                    TermQLogger.io.debug("sel.linefeed suppressed (drag active) [control]")
-                }
-            #endif
-            return
-        }
-        super.linefeed(source: source)
-    }
-
     override func selectionChanged(source: Terminal) {
         super.selectionChanged(source: source)
         dragController.handleSelectionChanged()

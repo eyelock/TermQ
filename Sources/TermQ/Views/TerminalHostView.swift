@@ -211,20 +211,6 @@ class TermQTerminalView: LocalProcessTerminalView {
         dragController.handleScrolled(yDisp: yDisp)
     }
 
-    /// Override linefeed to avoid flickering the selection on each new output line.
-    /// Position re-apply is handled in `scrolled()` which fires before `linefeed()`.
-    override func linefeed(source: Terminal) {
-        if dragController.shouldSuppressLinefeed {
-            #if TERMQ_DEBUG_BUILD
-                if TermQLogger.fileLoggingEnabled {
-                    TermQLogger.io.debug("sel.linefeed suppressed (drag active)")
-                }
-            #endif
-            return
-        }
-        super.linefeed(source: source)
-    }
-
     /// Track selection state transitions for diagnostics — surfaces any path that
     /// activates/deactivates selection (feedPrepare, resize, keyDown, etc.).
     override func selectionChanged(source: Terminal) {
