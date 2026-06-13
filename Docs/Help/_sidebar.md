@@ -21,6 +21,7 @@
   - [13. Persistent AI Context](tutorials/ai-context.md)
   - [14. MCP Integration](tutorials/mcp.md)
   - [15. Queued Actions](tutorials/queued-actions.md)
+  - [16. Coding Agent](tutorials/coding-agent.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)

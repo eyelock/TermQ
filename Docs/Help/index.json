@@ -113,6 +113,12 @@
           "title": "Queued Actions",
           "icon": "list.bullet",
           "keywords": ["queue", "action", "batch", "autorun", "sequence", "automation"]
+        },
+        {
+          "id": "tutorials/coding-agent",
+          "title": "Coding Agent",
+          "icon": "sparkles",
+          "keywords": ["agent", "coding", "loop", "ynh-agent", "sensor", "trajectory", "plan", "approval", "turn", "inspector", "transcript", "ci", "claude", "codex", "autonomous"]
         }
       ]
     },
