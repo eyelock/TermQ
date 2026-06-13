@@ -145,25 +145,27 @@ public final class AgentSessionController: ObservableObject {
         // to inherit (we don't want to silently rewrite to home).
         let workingDirectoryURL: URL? = {
             guard let card = cardLookup(),
-                  !card.workingDirectory.isEmpty,
-                  FileManager.default.fileExists(atPath: card.workingDirectory)
+                !card.workingDirectory.isEmpty,
+                FileManager.default.fileExists(atPath: card.workingDirectory)
             else { return nil }
             return URL(fileURLWithPath: card.workingDirectory)
         }()
 
-        TermQLogger.agent.notice(
-            "controller.start mode=\(String(describing: trajectoryMode)) cmdLen=\(resolvedCommand.count) cwd=\(workingDirectoryURL?.path ?? "<inherit>")"
-        )
+        let startSummary =
+            "controller.start mode=\(String(describing: trajectoryMode))"
+            + " cmdLen=\(resolvedCommand.count)"
+            + " cwd=\(workingDirectoryURL?.path ?? "<inherit>")"
+        TermQLogger.agent.notice(startSummary)
 
-        let p = AgentLoopProcess()
-        let stream = try await p.start(
+        let loopProcess = AgentLoopProcess()
+        let stream = try await loopProcess.start(
             executable: URL(fileURLWithPath: "/bin/sh"),
             arguments: ["-c", resolvedCommand],
             currentDirectory: workingDirectoryURL,
             trajectoryFile: trajectoryFile
         )
-        process = p
-        status = await p.status
+        process = loopProcess
+        status = await loopProcess.status
         events.removeAll()
         lastError = nil
         updateCardStatus(.running)
@@ -182,8 +184,8 @@ public final class AgentSessionController: ObservableObject {
                 self?.handleEventForCardStatus(event)
             }
             // Stream finished — pull the final status off the actor.
-            let finalStatus = await p.status
-            let stderrTail = await p.stderrTail
+            let finalStatus = await loopProcess.status
+            let stderrTail = await loopProcess.stderrTail
             self?.status = finalStatus
             self?.process = nil
             self?.writer?.close()
@@ -233,14 +235,14 @@ public final class AgentSessionController: ObservableObject {
     /// Wire format: NDJSON action message, same channel as approve_plan
     /// (see plan §6.1 control protocol).
     public func stop(graceSeconds: Double = 1.5) async {
-        guard let p = process else { return }
+        guard let loopProcess = process else { return }
         userStopRequested = true
-        try? await p.send(line: #"{"action":"interrupt"}"#)
+        try? await loopProcess.send(line: #"{"action":"interrupt"}"#)
         try? await Task.sleep(nanoseconds: UInt64(graceSeconds * 1_000_000_000))
         // If the driver responded to interrupt and exited, process is nil now.
         // Otherwise fall back to SIGTERM.
         if process != nil {
-            await p.stop()
+            await loopProcess.stop()
         }
     }
 
@@ -351,7 +353,8 @@ public final class AgentSessionController: ObservableObject {
         guard !notes.isEmpty else { return }
         if let data = try? JSONSerialization.data(
             withJSONObject: ["action": "replace_feedback", "feedback": notes]),
-           let line = String(data: data, encoding: .utf8) {
+            let line = String(data: data, encoding: .utf8)
+        {
             try? await process?.send(line: line)
         }
         updateCardStatus(.running)
@@ -368,9 +371,10 @@ public final class AgentSessionController: ObservableObject {
     public func approveTurn(feedback: String? = nil) async {
         guard cardLookup()?.agentConfig?.status == .awaitingTurnApproval else { return }
         if let feedback, !feedback.isEmpty,
-           let data = try? JSONSerialization.data(
-               withJSONObject: ["action": "replace_feedback", "feedback": feedback]),
-           let line = String(data: data, encoding: .utf8) {
+            let data = try? JSONSerialization.data(
+                withJSONObject: ["action": "replace_feedback", "feedback": feedback]),
+            let line = String(data: data, encoding: .utf8)
+        {
             try? await process?.send(line: line)
         } else {
             try? await process?.send(line: #"{"action":"approve_turn"}"#)
@@ -434,13 +438,12 @@ public final class AgentSessionController: ObservableObject {
     /// logic without spawning a real subprocess.
     func resolveCommand(_ base: String) -> String {
         guard let sessionId = cardLookup()?.agentConfig?.sessionId,
-              let overlayJSON = SensorOverlayStore.serialise(
-                  SensorOverlayStore.load(for: sessionId, baseDirectory: transcriptBaseURL))
+            let overlayJSON = SensorOverlayStore.serialise(
+                SensorOverlayStore.load(for: sessionId, baseDirectory: transcriptBaseURL))
         else { return base }
         let escaped = overlayJSON.replacingOccurrences(of: "'", with: "'\\''")
         return "\(base) --sensor-overlay '\(escaped)'"
     }
-
 
     private func updateCardStatus(_ newStatus: AgentStatus) {
         guard let card = cardLookup(), var config = card.agentConfig else { return }

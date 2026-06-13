@@ -1,6 +1,6 @@
 import SwiftUI
-import UniformTypeIdentifiers
 import TermQCore
+import UniformTypeIdentifiers
 
 /// Sidebar content for the Agent Sessions tab.
 ///
@@ -36,7 +36,8 @@ struct AgentSessionsSidebarTab: View {
             guard let fid = card.agentConfig?.fleetId else { continue }
             groups[fid, default: []].append(card)
         }
-        return groups
+        return
+            groups
             .map { (id: $0.key, cards: $0.value.sorted { $0.title < $1.title }) }
             .sorted { $0.cards.first?.title ?? "" < $1.cards.first?.title ?? "" }
     }
@@ -63,7 +64,7 @@ struct AgentSessionsSidebarTab: View {
                 mode: .agent(card: card),
                 onLaunch: { payload in
                     if case .agent(let cardId, _, let focus, let profile, let prompt) = payload,
-                       let target = boardViewModel.board.cards.first(where: { $0.id == cardId })
+                        let target = boardViewModel.board.cards.first(where: { $0.id == cardId })
                     {
                         let controller = AgentSessionRegistry.shared.controller(for: target.id)
                         let command = AgentInspectorView.buildAgentCommand(
@@ -76,10 +77,12 @@ struct AgentSessionsSidebarTab: View {
                 onCancel: { runSheetCard = nil }
             )
         }
-        .sheet(isPresented: Binding(
-            get: { transcriptViewerEvents != nil },
-            set: { if !$0 { transcriptViewerEvents = nil } }
-        )) {
+        .sheet(
+            isPresented: Binding(
+                get: { transcriptViewerEvents != nil },
+                set: { if !$0 { transcriptViewerEvents = nil } }
+            )
+        ) {
             if let events = transcriptViewerEvents {
                 AgentTranscriptViewerView(
                     events: events,
@@ -233,9 +236,7 @@ struct AgentSessionsSidebarTab: View {
         let harness = HarnessRepository.shared.harnesses.first {
             $0.id == qualified || $0.name == qualified || qualified.hasSuffix("/\($0.name)")
         }
-        let path = harness?.editablePath.isEmpty == false
-            ? harness!.editablePath
-            : harness?.path
+        let path = harness.flatMap { !$0.editablePath.isEmpty ? $0.editablePath : $0.path }
         guard let path, !path.isEmpty else { return }
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
@@ -436,12 +437,12 @@ struct AgentSessionRow: View {
     let isSelected: Bool
     let onSelect: () -> Void
     var indent: Bool = false
-    var onRun: (() -> Void)? = nil
-    var onEdit: (() -> Void)? = nil
-    var onEditHarness: (() -> Void)? = nil
-    var onDuplicate: (() -> Void)? = nil
-    var onToggleFavourite: (() -> Void)? = nil
-    var onDelete: (() -> Void)? = nil
+    var onRun: (() -> Void)?
+    var onEdit: (() -> Void)?
+    var onEditHarness: (() -> Void)?
+    var onDuplicate: (() -> Void)?
+    var onToggleFavourite: (() -> Void)?
+    var onDelete: (() -> Void)?
 
     var body: some View {
         Button(action: onSelect) {
@@ -495,8 +496,9 @@ struct AgentSessionRow: View {
             }
             if let onToggleFavourite {
                 Divider()
-                Button(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin,
-                       action: onToggleFavourite)
+                Button(
+                    card.isFavourite ? Strings.Card.unpin : Strings.Card.pin,
+                    action: onToggleFavourite)
             }
             if let onDelete {
                 Divider()

@@ -129,7 +129,7 @@ public struct AgentConfig: Codable, Sendable, Equatable {
 
     enum CodingKeys: String, CodingKey {
         case sessionId, harness, backend, mode, interactionMode, budget, status,
-             loopDriverCommand, fleetId
+            loopDriverCommand, fleetId
     }
 
     public init(

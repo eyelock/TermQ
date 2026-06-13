@@ -50,7 +50,10 @@ private struct SensorShowEntry: Decodable {
 
 @MainActor
 private final class OverlayEditorModel: ObservableObject {
-    enum LoadState { case loading, loaded, failed(String) }
+    enum LoadState {
+        case loading, loaded
+        case failed(String)
+    }
 
     @Published var sensors: [SensorListEntry] = []
     @Published var details: [String: SensorShowEntry] = [:]
@@ -112,7 +115,8 @@ private final class OverlayEditorModel: ObservableObject {
 
     func setFocusPrompt(_ prompt: String, for name: String) {
         var overlay = overlays[name] ?? SensorOverlay()
-        overlay.source = prompt.isEmpty
+        overlay.source =
+            prompt.isEmpty
             ? nil
             : SensorOverlaySource(focus: SensorOverlayFocus(prompt: prompt))
         overlays[name] = overlay.isEmpty ? nil : overlay
@@ -238,10 +242,11 @@ struct AgentSensorOverlayEditorView: View {
                 dismiss()
             }
             .keyboardShortcut(.defaultAction)
-            .disabled({
-                if case .loaded = model.loadState { return false }
-                return true
-            }())
+            .disabled(
+                {
+                    if case .loaded = model.loadState { return false }
+                    return true
+                }())
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 14)
@@ -279,10 +284,13 @@ private struct SensorOverlayRow: View {
     }
 
     private var rolePicker: some View {
-        Picker(Strings.OverlayEditor.roleLabel, selection: Binding(
-            get: { role },
-            set: { onRoleChange($0) }
-        )) {
+        Picker(
+            Strings.OverlayEditor.roleLabel,
+            selection: Binding(
+                get: { role },
+                set: { onRoleChange($0) }
+            )
+        ) {
             Text(Strings.OverlayEditor.roleInherited).tag("")
             ForEach(Self.roles.dropFirst(), id: \.self) { r in
                 Text(r).tag(r)
@@ -314,10 +322,12 @@ private struct SensorOverlayRow: View {
                 Text(Strings.OverlayEditor.promptOverrideLabel)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                TextEditor(text: Binding(
-                    get: { focusPrompt },
-                    set: { onFocusPromptChange($0) }
-                ))
+                TextEditor(
+                    text: Binding(
+                        get: { focusPrompt },
+                        set: { onFocusPromptChange($0) }
+                    )
+                )
                 .font(.callout)
                 .frame(minHeight: 80)
                 .overlay(
@@ -358,9 +368,10 @@ private struct SourceKindBadge: View {
 
     private var label: String {
         switch kind {
-        case "focus": return inlineFocus
-            ? Strings.OverlayEditor.sourceKindFocus + "*"
-            : Strings.OverlayEditor.sourceKindFocus
+        case "focus":
+            return inlineFocus
+                ? Strings.OverlayEditor.sourceKindFocus + "*"
+                : Strings.OverlayEditor.sourceKindFocus
         case "command": return Strings.OverlayEditor.sourceKindCommand
         default: return Strings.OverlayEditor.sourceKindFiles
         }

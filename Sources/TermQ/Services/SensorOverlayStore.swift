@@ -28,7 +28,8 @@ enum SensorOverlayStore {
 
     static func fileURL(for sessionId: UUID, baseDirectory: URL? = nil) -> URL {
         let base = baseDirectory ?? TrajectoryWriter.defaultAgentSessionsDirectory()
-        return base
+        return
+            base
             .appendingPathComponent(sessionId.uuidString, isDirectory: true)
             .appendingPathComponent("sensor-overlays.json")
     }

@@ -1,6 +1,6 @@
 import SwiftUI
-import UniformTypeIdentifiers
 import TermQCore
+import UniformTypeIdentifiers
 
 /// Read-only replay of a saved agent trajectory.
 ///
@@ -121,10 +121,10 @@ struct AgentTranscriptViewerView: View {
         }
     }
 
-    private func formatTokens(_ n: Int) -> String {
-        if n >= 1_000_000 { return "\(n / 1_000_000)M" }
-        if n >= 1_000 { return "\(n / 1_000)k" }
-        return "\(n)"
+    private func formatTokens(_ tokens: Int) -> String {
+        if tokens >= 1_000_000 { return "\(tokens / 1_000_000)M" }
+        if tokens >= 1_000 { return "\(tokens / 1_000)k" }
+        return "\(tokens)"
     }
 }
 
@@ -144,8 +144,8 @@ private struct SessionSummary {
 
         for event in events {
             switch event.decoded() {
-            case .sessionStart(_, let h):
-                harness = h
+            case .sessionStart(_, let sessionHarness):
+                harness = sessionHarness
             case .sessionEnd(let code, let turns, let tokens):
                 exitCode = code
                 totalTurns = turns
@@ -168,7 +168,8 @@ extension AgentTranscriptViewerView {
     /// if the file can't be read or contains no recognisable events.
     static func loadEvents(from url: URL) -> [TrajectoryEvent]? {
         guard let contents = try? String(contentsOf: url, encoding: .utf8) else { return nil }
-        let events = contents
+        let events =
+            contents
             .split(separator: "\n", omittingEmptySubsequences: true)
             .compactMap { AgentLoopProcess.parseLine(String($0)) }
         return events.isEmpty ? nil : events

@@ -337,12 +337,12 @@ public actor AgentLoopProcess {
         return TrajectoryEvent(type: type, timestamp: timestamp, payloadJSON: line)
     }
 
-    private static func parseISODate(_ s: String) -> Date? {
+    private static func parseISODate(_ string: String) -> Date? {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        if let date = formatter.date(from: s) { return date }
+        if let date = formatter.date(from: string) { return date }
         formatter.formatOptions = [.withInternetDateTime]
-        return formatter.date(from: s)
+        return formatter.date(from: string)
     }
 }
 

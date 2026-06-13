@@ -38,10 +38,10 @@ func buildTurnGroups(from events: [TrajectoryEvent]) -> [TurnGroup] {
     var groupIndex = 0
 
     for event in events {
-        if case .turnStart(let n) = event.decoded() {
+        if case .turnStart(let turnNumber) = event.decoded() {
             groups.append(TurnGroup(id: groupIndex, turnNumber: currentTurnNumber, events: currentEvents))
             groupIndex += 1
-            currentTurnNumber = n
+            currentTurnNumber = turnNumber
             currentEvents = []
         } else {
             currentEvents.append(event)
@@ -58,9 +58,9 @@ struct TurnGroupView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if let n = group.turnNumber {
+            if let turnNumber = group.turnNumber {
                 TurnHeaderRow(
-                    turnNumber: n,
+                    turnNumber: turnNumber,
                     passCount: group.passCount,
                     failCount: group.failCount
                 )
@@ -154,9 +154,9 @@ struct TrajectoryEventRow: View {
     let event: TrajectoryEvent
 
     private static let timeFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "HH:mm:ss"
-        return f
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter
     }()
 
     var body: some View {
@@ -229,9 +229,9 @@ struct AssistantMessageRow: View {
     let timestamp: Date
 
     private static let timeFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "HH:mm:ss"
-        return f
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter
     }()
 
     var body: some View {
@@ -306,9 +306,9 @@ struct AgentWorkingFooter: View {
         let reference = lastEventAt ?? now
         let secs = max(0, Int(now.timeIntervalSince(reference)))
         if secs < 60 { return "\(secs)s" }
-        let m = secs / 60
-        let s = secs % 60
-        return "\(m)m \(s)s"
+        let minutes = secs / 60
+        let seconds = secs % 60
+        return "\(minutes)m \(seconds)s"
     }
 
     private var label: String {

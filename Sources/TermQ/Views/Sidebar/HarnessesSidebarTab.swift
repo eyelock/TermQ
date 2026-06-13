@@ -467,8 +467,11 @@ struct HarnessesSidebarTab: View {
         )
     }
 
-    // MARK: - States
+}
 
+// MARK: - States
+
+extension HarnessesSidebarTab {
     private func outdatedState(reportedCapabilities: String?) -> some View {
         VStack(spacing: 12) {
             Image(systemName: "arrow.up.circle")
@@ -494,7 +497,7 @@ struct HarnessesSidebarTab: View {
         .padding()
     }
 
-    private var initRequiredState: some View {
+    var initRequiredState: some View {
         VStack(spacing: 12) {
             Image(systemName: "wrench.and.screwdriver")
                 .font(.system(size: 32))
@@ -514,7 +517,7 @@ struct HarnessesSidebarTab: View {
         .padding()
     }
 
-    private var harnessesEmptyState: some View {
+    var harnessesEmptyState: some View {
         VStack(spacing: 10) {
             Image(systemName: "puzzlepiece.extension")
                 .font(.system(size: 32))

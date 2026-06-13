@@ -30,66 +30,8 @@ struct ContentView: View {
     var body: some View {
         HSplitView {
             if !isSidebarCollapsed {
-                SidebarView(
-                    worktreeViewModel: sidebarViewModel,
-                    detector: ynhDetector,
-                    harnessRepository: harnessRepo,
-                    boardViewModel: viewModel,
-                    onLaunchHarness: { harness in
-                        launchCoordinator.requestLaunch(
-                            harnessId: harness.id, workingDirectory: nil, branch: nil)
-                    },
-                    onLaunchAsAgent: { harness in
-                        let created = viewModel.createAgentCard(
-                            harnessId: harness.id,
-                            title: harness.name,
-                            description: harness.description ?? ""
-                        )
-                        guard created != nil else { return }
-                        SidebarState.shared.selectedTab = .agents
-                    },
-                    onLaunchHarnessInWorktree: { harnessIdOrName, path, branch in
-                        launchCoordinator.requestLaunch(
-                            harnessId: harnessIdOrName, workingDirectory: path, branch: branch)
-                    },
-                    onAutoLaunchHarness: { harnessIdOrName, path, branch in
-                        let harness = harnessRepo.harnesses.first {
-                            $0.id == harnessIdOrName || $0.name == harnessIdOrName
-                        }
-                        let config = HarnessLaunchConfig(
-                            harnessID: harness?.id ?? harnessIdOrName,
-                            vendorID: "",
-                            defaultVendor: harness?.defaultVendor ?? "",
-                            focus: nil,
-                            profile: nil,
-                            workingDirectory: path,
-                            prompt: nil,
-                            instructions: nil,
-                            backend: SettingsStore.shared.backend,
-                            branch: branch,
-                            interactive: false,
-                            cardTitle: nil
-                        )
-                        launchCoordinator.launchHarness(config)
-                    },
-                    onRunWithFocus: { config in
-                        launchCoordinator.launchHarness(config, reuseExisting: false)
-                    },
-                    onInstall: { lifecycleCoordinator.showInstallSheet = true },
-                    onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
-                    onDeleteLocal: nil,
-                    onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
-                    onExport: { id, dir in
-                        lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
-                    },
-                    onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
-                    onPublish: { id in lifecycleCoordinator.publishHarness(id: id) },
-                    onNewHarness: {},
-                    quarantinedEntries: migrationCoordinator.quarantinedEntries,
-                    onRestoreQuarantine: { name in restoreQuarantine(name: name) },
-                    onDropQuarantine: { name in dropQuarantine(name: name) }
-                )
-                .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
+                sidebarSection
+                    .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
             }
 
             ZStack {
@@ -557,6 +499,73 @@ struct ContentView: View {
         }
     }
 
+}
+
+// MARK: - Sidebar
+
+extension ContentView {
+    @ViewBuilder
+    var sidebarSection: some View {
+        SidebarView(
+            worktreeViewModel: sidebarViewModel,
+            detector: ynhDetector,
+            harnessRepository: harnessRepo,
+            boardViewModel: viewModel,
+            onLaunchHarness: { harness in
+                launchCoordinator.requestLaunch(
+                    harnessId: harness.id, workingDirectory: nil, branch: nil)
+            },
+            onLaunchAsAgent: { harness in
+                let created = viewModel.createAgentCard(
+                    harnessId: harness.id,
+                    title: harness.name,
+                    description: harness.description ?? ""
+                )
+                guard created != nil else { return }
+                SidebarState.shared.selectedTab = .agents
+            },
+            onLaunchHarnessInWorktree: { harnessIdOrName, path, branch in
+                launchCoordinator.requestLaunch(
+                    harnessId: harnessIdOrName, workingDirectory: path, branch: branch)
+            },
+            onAutoLaunchHarness: { harnessIdOrName, path, branch in
+                let harness = harnessRepo.harnesses.first {
+                    $0.id == harnessIdOrName || $0.name == harnessIdOrName
+                }
+                let config = HarnessLaunchConfig(
+                    harnessID: harness?.id ?? harnessIdOrName,
+                    vendorID: "",
+                    defaultVendor: harness?.defaultVendor ?? "",
+                    focus: nil,
+                    profile: nil,
+                    workingDirectory: path,
+                    prompt: nil,
+                    instructions: nil,
+                    backend: SettingsStore.shared.backend,
+                    branch: branch,
+                    interactive: false,
+                    cardTitle: nil
+                )
+                launchCoordinator.launchHarness(config)
+            },
+            onRunWithFocus: { config in
+                launchCoordinator.launchHarness(config, reuseExisting: false)
+            },
+            onInstall: { lifecycleCoordinator.showInstallSheet = true },
+            onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
+            onDeleteLocal: nil,
+            onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
+            onExport: { id, dir in
+                lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
+            },
+            onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
+            onPublish: { id in lifecycleCoordinator.publishHarness(id: id) },
+            onNewHarness: {},
+            quarantinedEntries: migrationCoordinator.quarantinedEntries,
+            onRestoreQuarantine: { name in restoreQuarantine(name: name) },
+            onDropQuarantine: { name in dropQuarantine(name: name) }
+        )
+    }
 }
 
 // MARK: - Private Helpers

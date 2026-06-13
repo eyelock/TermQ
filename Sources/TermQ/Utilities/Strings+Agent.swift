@@ -24,14 +24,16 @@ extension Strings {
                 localized("inspector.agent.trajectory.empty.configure")
             }
             static var trajectoryEmptyRun: String { localized("inspector.agent.trajectory.empty.run") }
-            static func turn(_ n: Int) -> String { String(format: localized("inspector.agent.turn"), n) }
+            static func turn(_ number: Int) -> String {
+                String(format: localized("inspector.agent.turn"), number)
+            }
             static var sensorsAllPassed: String { localized("inspector.agent.sensors.all.passed") }
-            static func sensorsFailed(_ n: Int) -> String {
-                String(format: localized("inspector.agent.sensors.failed"), n)
+            static func sensorsFailed(_ count: Int) -> String {
+                String(format: localized("inspector.agent.sensors.failed"), count)
             }
             static var editSensors: String { localized("inspector.agent.edit.sensors") }
-            static func turnApprovalTitle(_ n: Int) -> String {
-                String(format: localized("inspector.agent.turn.approval.title"), n)
+            static func turnApprovalTitle(_ number: Int) -> String {
+                String(format: localized("inspector.agent.turn.approval.title"), number)
             }
             static var turnApprovalSend: String { localized("inspector.agent.turn.approval.send") }
             static var turnApprovalReset: String { localized("inspector.agent.turn.approval.reset") }

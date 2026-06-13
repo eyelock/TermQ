@@ -340,13 +340,15 @@ struct RunWithFocusSheet: View {
                 if isAgentMode {
                     Section {
                         HStack(spacing: 8) {
-                            TextField(Strings.Fleet.cwdEmpty,
-                                      text: $agentWorkingDirectory)
-                                .textFieldStyle(.roundedBorder)
-                                .font(.body.monospaced())
-                                .lineLimit(1)
-                                .truncationMode(.middle)
-                                .frame(maxWidth: .infinity)
+                            TextField(
+                                Strings.Fleet.cwdEmpty,
+                                text: $agentWorkingDirectory
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .font(.body.monospaced())
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                            .frame(maxWidth: .infinity)
                             Button(Strings.Fleet.cwdChoose) {
                                 pickAgentWorkingDirectory()
                             }
@@ -372,17 +374,21 @@ struct RunWithFocusSheet: View {
                                     .font(.caption.weight(.semibold))
                                     .foregroundStyle(.secondary)
                                     .padding(.top, 4)
-                                Picker(Strings.Editor.Agent.fieldMode,
-                                       selection: $selectedMode) {
-                                    ForEach(AgentMode.allCases, id: \.self) { m in
-                                        Text(m.rawValue).tag(m)
+                                Picker(
+                                    Strings.Editor.Agent.fieldMode,
+                                    selection: $selectedMode
+                                ) {
+                                    ForEach(AgentMode.allCases, id: \.self) { mode in
+                                        Text(mode.rawValue).tag(mode)
                                     }
                                 }
                                 .pickerStyle(.menu)
-                                Picker(Strings.Editor.Agent.fieldInteraction,
-                                       selection: $selectedInteraction) {
-                                    ForEach(AgentInteractionMode.allCases, id: \.self) { m in
-                                        Text(m.rawValue).tag(m)
+                                Picker(
+                                    Strings.Editor.Agent.fieldInteraction,
+                                    selection: $selectedInteraction
+                                ) {
+                                    ForEach(AgentInteractionMode.allCases, id: \.self) { interaction in
+                                        Text(interaction.rawValue).tag(interaction)
                                     }
                                 }
                                 .pickerStyle(.menu)
@@ -393,21 +399,27 @@ struct RunWithFocusSheet: View {
                                     .font(.caption.weight(.semibold))
                                     .foregroundStyle(.secondary)
                                 Stepper(value: $maxTurns, in: 1...500) {
-                                    LabeledContent(Strings.Editor.Agent.fieldMaxTurns,
-                                                   value: "\(maxTurns)")
+                                    LabeledContent(
+                                        Strings.Editor.Agent.fieldMaxTurns,
+                                        value: "\(maxTurns)")
                                 }
-                                Stepper(value: $maxTokens,
-                                        in: 10_000...10_000_000, step: 10_000) {
-                                    LabeledContent(Strings.Editor.Agent.fieldMaxTokens,
-                                                   value: "\(maxTokens / 1000)k")
+                                Stepper(
+                                    value: $maxTokens,
+                                    in: 10_000...10_000_000, step: 10_000
+                                ) {
+                                    LabeledContent(
+                                        Strings.Editor.Agent.fieldMaxTokens,
+                                        value: "\(maxTokens / 1000)k")
                                 }
                                 Stepper(value: $maxWallMinutes, in: 1...1440) {
-                                    LabeledContent(Strings.Editor.Agent.fieldMaxWallMinutes,
-                                                   value: "\(maxWallMinutes) min")
+                                    LabeledContent(
+                                        Strings.Editor.Agent.fieldMaxWallMinutes,
+                                        value: "\(maxWallMinutes) min")
                                 }
                                 Stepper(value: $maxPlanIterations, in: 1...20) {
-                                    LabeledContent("Max plan iterations",
-                                                   value: "\(maxPlanIterations)")
+                                    LabeledContent(
+                                        "Max plan iterations",
+                                        value: "\(maxPlanIterations)")
                                 }
                             }
                         } label: {
@@ -544,7 +556,12 @@ struct RunWithFocusSheet: View {
         }
     }
 
-    private func commandPreview() -> String {
+}
+
+// MARK: - Command preview & launch helpers
+
+extension RunWithFocusSheet {
+    func commandPreview() -> String {
         guard let harness = selectedHarness else {
             return isAgentMode ? "ynh agent run …" : "ynh run …"
         }
@@ -689,13 +706,14 @@ struct RunWithFocusSheet: View {
             payloadPrompt = promptText
         }
 
-        onLaunch(.agent(
-            cardId: card.id,
-            harness: harness.id,
-            focus: payloadFocus,
-            profile: payloadProfile,
-            prompt: payloadPrompt
-        ))
+        onLaunch(
+            .agent(
+                cardId: card.id,
+                harness: harness.id,
+                focus: payloadFocus,
+                profile: payloadProfile,
+                prompt: payloadPrompt
+            ))
     }
 
     /// Builds a card title: `focus: org/repo#N` (or `focus: org/repo` without a PR),

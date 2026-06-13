@@ -104,69 +104,117 @@ extension TrajectoryEvent {
             return .other(type: type, json: payloadJSON)
         }
         let decoder = JSONDecoder()
+        if let payload = decodeSessionFamily(decoder: decoder, bytes: bytes) {
+            return payload
+        }
+        if let payload = decodeTurnFamily(decoder: decoder, bytes: bytes) {
+            return payload
+        }
+        if let payload = decodePlanFamily(decoder: decoder, bytes: bytes) {
+            return payload
+        }
+        if let payload = decodeSensorFamily(decoder: decoder, bytes: bytes) {
+            return payload
+        }
+        return .other(type: type, json: payloadJSON)
+    }
+
+    /// Decodes `session_start`, `session_end`, and `converged` markers.
+    /// Returns `nil` if `type` is not one of these.
+    private func decodeSessionFamily(decoder: JSONDecoder, bytes: Data) -> TrajectoryEventPayload? {
         switch type {
         case "session_start":
-            if let p = try? decoder.decode(SessionStartWire.self, from: bytes) {
-                return .sessionStart(sessionId: p.data.sessionId, harness: p.data.harness)
+            if let wire = try? decoder.decode(SessionStartWire.self, from: bytes) {
+                return .sessionStart(sessionId: wire.data.sessionId, harness: wire.data.harness)
             }
+        case "converged":
+            return .converged
+        case "session_end":
+            if let wire = try? decoder.decode(SessionEndWire.self, from: bytes) {
+                return .sessionEnd(
+                    exitCode: wire.data.exitCode,
+                    totalTurns: wire.data.totalTurns,
+                    totalTokens: wire.data.totalTokens
+                )
+            }
+        default:
+            return nil
+        }
+        return nil
+    }
+
+    /// Decodes turn-scoped events: `turn_start`, `assistant_message`, and
+    /// `turn_approval_required`. Returns `nil` if `type` is not one of these.
+    private func decodeTurnFamily(decoder: JSONDecoder, bytes: Data) -> TrajectoryEventPayload? {
+        switch type {
+        case "turn_start":
+            if let wire = try? decoder.decode(TurnStartWire.self, from: bytes) {
+                return .turnStart(turn: wire.turn)
+            }
+        case "assistant_message":
+            if let wire = try? decoder.decode(AssistantMessageWire.self, from: bytes) {
+                return .assistantMessage(turn: wire.turn, content: wire.data ?? "")
+            }
+        case "turn_approval_required":
+            if let wire = try? decoder.decode(TurnApprovalRequiredWire.self, from: bytes) {
+                return .turnApprovalRequired(
+                    turn: wire.turn, synthesizedFeedback: wire.data.synthesizedFeedback)
+            }
+        default:
+            return nil
+        }
+        return nil
+    }
+
+    /// Decodes plan-phase events: `plan`, `plan_approval_required`, and
+    /// `plan_revised`. Returns `nil` if `type` is not one of these.
+    private func decodePlanFamily(decoder: JSONDecoder, bytes: Data) -> TrajectoryEventPayload? {
+        switch type {
         case "plan":
             // Tolerate (a) no `data` key, (b) `data` as object without
             // `content`, (c) `data` as object with `content`. ynh today
             // emits (a); leaving room for (c).
             let content = (try? decoder.decode(PlanWire.self, from: bytes))?.data?.content
             return .plan(content: content ?? "")
-        case "turn_start":
-            if let p = try? decoder.decode(TurnStartWire.self, from: bytes) {
-                return .turnStart(turn: p.turn)
-            }
-        case "assistant_message":
-            if let p = try? decoder.decode(AssistantMessageWire.self, from: bytes) {
-                return .assistantMessage(turn: p.turn, content: p.data ?? "")
-            }
-        case "sensor_result":
-            if let p = try? decoder.decode(SensorResultWire.self, from: bytes) {
-                return .sensorResult(
-                    name: p.data.name,
-                    exitCode: p.data.exitCode,
-                    durationMs: p.data.durationMs,
-                    summary: p.data.summary
-                )
-            }
         case "plan_approval_required":
-            if let p = try? decoder.decode(PlanApprovalRequiredWire.self, from: bytes) {
-                return .planApprovalRequired(plan: p.data.plan, iteration: p.data.iteration)
+            if let wire = try? decoder.decode(PlanApprovalRequiredWire.self, from: bytes) {
+                return .planApprovalRequired(plan: wire.data.plan, iteration: wire.data.iteration)
             }
         case "plan_revised":
-            if let p = try? decoder.decode(PlanRevisedWire.self, from: bytes) {
-                return .planRevised(iteration: p.data.iteration, notes: p.data.notes)
-            }
-        case "turn_approval_required":
-            if let p = try? decoder.decode(TurnApprovalRequiredWire.self, from: bytes) {
-                return .turnApprovalRequired(
-                    turn: p.turn, synthesizedFeedback: p.data.synthesizedFeedback)
-            }
-        case "stuck_detected":
-            if let p = try? decoder.decode(StuckDetectedWire.self, from: bytes) {
-                return .stuckDetected(reason: p.data.reason)
-            }
-        case "budget_exceeded":
-            if let p = try? decoder.decode(BudgetExceededWire.self, from: bytes) {
-                return .budgetExceeded(budget: p.data.budget)
-            }
-        case "converged":
-            return .converged
-        case "session_end":
-            if let p = try? decoder.decode(SessionEndWire.self, from: bytes) {
-                return .sessionEnd(
-                    exitCode: p.data.exitCode,
-                    totalTurns: p.data.totalTurns,
-                    totalTokens: p.data.totalTokens
-                )
+            if let wire = try? decoder.decode(PlanRevisedWire.self, from: bytes) {
+                return .planRevised(iteration: wire.data.iteration, notes: wire.data.notes)
             }
         default:
-            break
+            return nil
         }
-        return .other(type: type, json: payloadJSON)
+        return nil
+    }
+
+    /// Decodes sensor and watchdog events: `sensor_result`, `stuck_detected`,
+    /// and `budget_exceeded`. Returns `nil` if `type` is not one of these.
+    private func decodeSensorFamily(decoder: JSONDecoder, bytes: Data) -> TrajectoryEventPayload? {
+        switch type {
+        case "sensor_result":
+            if let wire = try? decoder.decode(SensorResultWire.self, from: bytes) {
+                return .sensorResult(
+                    name: wire.data.name,
+                    exitCode: wire.data.exitCode,
+                    durationMs: wire.data.durationMs,
+                    summary: wire.data.summary
+                )
+            }
+        case "stuck_detected":
+            if let wire = try? decoder.decode(StuckDetectedWire.self, from: bytes) {
+                return .stuckDetected(reason: wire.data.reason)
+            }
+        case "budget_exceeded":
+            if let wire = try? decoder.decode(BudgetExceededWire.self, from: bytes) {
+                return .budgetExceeded(budget: wire.data.budget)
+            }
+        default:
+            return nil
+        }
+        return nil
     }
 }
 

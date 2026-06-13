@@ -529,7 +529,6 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertTrue(resolved.contains("\"build\""))
     }
 
-
     @MainActor
     func testResolveCommand_overlayJSONWithSingleQuote_isEscaped() throws {
         let tempDir = FileManager.default.temporaryDirectory

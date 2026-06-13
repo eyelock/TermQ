@@ -181,8 +181,8 @@ struct AgentInspectorView: View {
 
     /// Single-quote-wrap with internal single quotes escaped — safe for
     /// `/bin/sh -c`.
-    static func shellQuote(_ s: String) -> String {
-        let escaped = s.replacingOccurrences(of: "'", with: "'\\''")
+    static func shellQuote(_ value: String) -> String {
+        let escaped = value.replacingOccurrences(of: "'", with: "'\\''")
         return "'\(escaped)'"
     }
 
@@ -215,7 +215,8 @@ struct AgentInspectorView: View {
         guard card.agentConfig?.status == .awaitingTurnApproval else { return nil }
         for event in controller.events.reversed() {
             if case .turnApprovalRequired(let turn, let feedback) = event.decoded(),
-               turn > 0 {
+                turn > 0
+            {
                 return (turn, feedback)
             }
         }
@@ -288,11 +289,11 @@ struct AgentInspectorView: View {
                 ConfigRow(label: "Backend", value: config.backend.rawValue)
                 ConfigRow(label: "Mode", value: config.mode.rawValue)
                 ConfigRow(label: "Interaction", value: config.interactionMode.rawValue)
-                ConfigRow(
-                    label: "Budget",
-                    value:
-                        "\(config.budget.maxTurns) turns · \(formatTokens(config.budget.maxTokens)) tokens · \(formatDuration(config.budget.maxWallSeconds))"
-                )
+                let budgetValue =
+                    "\(config.budget.maxTurns) turns"
+                    + " · \(formatTokens(config.budget.maxTokens)) tokens"
+                    + " · \(formatDuration(config.budget.maxWallSeconds))"
+                ConfigRow(label: "Budget", value: budgetValue)
                 ConfigRow(label: "Session", value: config.sessionId.uuidString.prefix(8).description)
             }
         }
@@ -350,10 +351,14 @@ struct AgentInspectorView: View {
             }
 
             if error.stderrTail.isEmpty {
-                Text("No stderr output — the driver exited without writing diagnostics. Check that the command resolves on your PATH and try running it manually in a terminal to see what it does.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                Text(
+                    "No stderr output — the driver exited without writing diagnostics. "
+                        + "Check that the command resolves on your PATH and try running it "
+                        + "manually in a terminal to see what it does."
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             } else {
                 ScrollView {
                     Text(error.stderrTail)
@@ -492,7 +497,7 @@ struct AgentInspectorView: View {
             Text("Press Run to spawn the loop driver.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
+                .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 32)

@@ -89,8 +89,8 @@ struct AgentFleetLaunchSheet: View {
 
                 LabeledContent(Strings.Fleet.fieldSessions) {
                     Picker("", selection: $sessionCount) {
-                        ForEach(countOptions, id: \.self) { n in
-                            Text("\(n)").tag(n)
+                        ForEach(countOptions, id: \.self) { count in
+                            Text("\(count)").tag(count)
                         }
                     }
                     .pickerStyle(.segmented)
