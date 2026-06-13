@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.7] - 2026-06-13
+
+### Changed — Terminal
+
+- **Drop redundant linefeed-suppression overrides.** `TermQTerminalView` and `ControlModeTerminalView` previously overrode `linefeed()` to guard `super.linefeed()` behind a `shouldSuppressLinefeed` flag, preventing streaming output from clearing a drag-selection. The upstream SwiftTerm `MacTerminalView.linefeed` now performs the same `allowMouseReporting` check itself before calling `selectNone()`, so the local overrides duplicated behaviour one level down. Both overrides and the `shouldSuppressLinefeed` property are removed. No behaviour change.
+
 ## [0.11.6] - 2026-06-12
 
 ### Added — Terminal
