@@ -61,6 +61,12 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.7] - 2026-06-13
+
+### Changed — Terminal
+
+- **Drop redundant linefeed-suppression overrides.** `TermQTerminalView` and `ControlModeTerminalView` previously overrode `linefeed()` to guard `super.linefeed()` behind a `shouldSuppressLinefeed` flag, preventing streaming output from clearing a drag-selection. The upstream SwiftTerm `MacTerminalView.linefeed` now performs the same `allowMouseReporting` check itself before calling `selectNone()`, so the local overrides duplicated behaviour one level down. Both overrides and the `shouldSuppressLinefeed` property are removed. No behaviour change.
+
 ## [0.11.6] - 2026-06-12
 
 ### Added — Terminal

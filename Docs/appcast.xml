@@ -6,6 +6,46 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.11.7</title>
+            <sparkle:version>0.11.7</sparkle:version>
+            <sparkle:shortVersionString>0.11.7</sparkle:shortVersionString>
+            <pubDate>Sat, 13 Jun 2026 08:55:35 +0000</pubDate>
+            <description><![CDATA[<h3 id="changed--terminal">Changed — Terminal</h3>
+<ul>
+<li><strong>Drop redundant linefeed-suppression overrides.</strong> <code>TermQTerminalView</code> and <code>ControlModeTerminalView</code> previously overrode <code>linefeed()</code> to guard <code>super.linefeed()</code> behind a <code>shouldSuppressLinefeed</code> flag, preventing streaming output from clearing a drag-selection. The upstream SwiftTerm <code>MacTerminalView.linefeed</code> now performs the same <code>allowMouseReporting</code> check itself before calling <code>selectNone()</code>, so the local overrides duplicated behaviour one level down. Both overrides and the <code>shouldSuppressLinefeed</code> property are removed. No behaviour change.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.7.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.7.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.7/TermQ-0.11.7.zip"
+                sparkle:edSignature="1AvBlxVDYZXvvaM0RciDnr44ADQs/8dZe1q83Vw00kI4wi4afQq59m2C8ksrsLIkx/0L35ssqn0WJF3r/CMPAw=="
+                length="28771072"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.11.6</title>
             <sparkle:version>0.11.6</sparkle:version>
             <sparkle:shortVersionString>0.11.6</sparkle:shortVersionString>
