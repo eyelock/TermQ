@@ -56,6 +56,15 @@ class BoardViewModel: ObservableObject {
         self.tabManager = TabManager()
         self.board = persistence.loadBoard()
 
+        // Any agent session that was mid-run when the app last quit is now
+        // an orphan — its loop driver process is gone and we no longer have
+        // its captured stderr/exit code. Reset transient and error states
+        // to .idle so the UI doesn't claim "running" or show a red pill
+        // with no banner to explain it. Terminal "I finished cleanly"
+        // states (.converged, .stuck) survive so users can still see how
+        // a session resolved across launches.
+        resetStaleAgentStatuses()
+
         // Configure TabManager callbacks after all properties initialized
         tabManager.configure(
             board: { [weak self] in self?.board ?? Board() },
@@ -739,6 +748,32 @@ class BoardViewModel: ObservableObject {
         }
         objectWillChange.send()
         save()
+    }
+
+    /// Flip persisted agent statuses that can't be substantiated post-restart
+    /// back to `.idle`:
+    ///
+    /// - `running`, `planning`, `awaitingPlanApproval`, `awaitingTurnApproval`
+    ///   were claiming an active loop driver that no longer exists.
+    /// - `errored` was attached to a `lastError` payload we never persisted,
+    ///   so showing the red pill with no banner is worse than silent — there's
+    ///   nothing the user can do with it.
+    /// - `converged` and `stuck` are kept: they're terminal outcomes the user
+    ///   may want to revisit. `paused` is kept (user intentionally stopped).
+    private func resetStaleAgentStatuses() {
+        var changed = false
+        for card in board.cards {
+            guard var config = card.agentConfig else { continue }
+            switch config.status {
+            case .running, .planning, .awaitingPlanApproval, .awaitingTurnApproval, .errored:
+                config.status = .idle
+                card.agentConfig = config
+                changed = true
+            default:
+                break
+            }
+        }
+        if changed { save() }
     }
 
     private func purgeExpiredCards() {

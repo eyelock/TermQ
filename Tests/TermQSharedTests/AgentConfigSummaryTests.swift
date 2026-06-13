@@ -9,7 +9,7 @@ final class AgentConfigSummaryTests: XCTestCase {
         let original = AgentConfigSummary(
             sessionId: UUID(),
             harness: "x@y/z",
-            backend: "claude-code",
+            backend: "claude",
             mode: "act",
             interactionMode: "tweak",
             status: "running",
@@ -29,7 +29,7 @@ final class AgentConfigSummaryTests: XCTestCase {
             {
                 "sessionId": "\(UUID().uuidString)",
                 "harness": "x@y/z",
-                "backend": "claude-code",
+                "backend": "claude",
                 "mode": "plan",
                 "interactionMode": "confirm",
                 "status": "idle",
@@ -111,7 +111,7 @@ final class AgentConfigSummaryTests: XCTestCase {
         let summary = AgentConfigSummary(
             sessionId: UUID(),
             harness: "x@y/z",
-            backend: "claude-code",
+            backend: "claude",
             mode: "plan",
             interactionMode: "confirm",
             status: "idle",

@@ -1,5 +1,6 @@
 import SwiftUI
 import TermQCore
+import TermQShared
 
 /// Sheet for launching a fleet of parallel agent sessions against the same task.
 ///
@@ -11,6 +12,7 @@ struct AgentFleetLaunchSheet: View {
     let onDismiss: () -> Void
 
     @AppStorage("agent.loopDriverCommand") private var globalDriverCommand: String = ""
+    @ObservedObject private var harnessRepository = HarnessRepository.shared
 
     @State private var harnessId: String = ""
     @State private var task: String = ""
@@ -18,6 +20,13 @@ struct AgentFleetLaunchSheet: View {
     @State private var baseWorktreeDir: String = ""
 
     private let countOptions = [2, 3, 4, 5]
+
+    /// Installed harnesses available to launch as a fleet, sorted by display id.
+    private var availableHarnesses: [Harness] {
+        harnessRepository.harnesses.sorted {
+            $0.id.localizedCaseInsensitiveCompare($1.id) == .orderedAscending
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -31,6 +40,9 @@ struct AgentFleetLaunchSheet: View {
         .onAppear {
             if baseWorktreeDir.isEmpty, let home = ProcessInfo.processInfo.environment["HOME"] {
                 baseWorktreeDir = "\(home)/fleet-runs"
+            }
+            if availableHarnesses.isEmpty {
+                Task { await harnessRepository.refresh() }
             }
         }
     }
@@ -58,8 +70,21 @@ struct AgentFleetLaunchSheet: View {
         Form {
             Section {
                 LabeledContent(Strings.Fleet.fieldHarness) {
-                    TextField(Strings.Fleet.fieldHarnessPlaceholder, text: $harnessId)
-                        .textFieldStyle(.plain)
+                    if availableHarnesses.isEmpty {
+                        Text(Strings.Fleet.fieldHarnessEmpty)
+                            .foregroundStyle(.secondary)
+                            .italic()
+                    } else {
+                        Picker("", selection: $harnessId) {
+                            Text(Strings.Fleet.fieldHarnessPlaceholder)
+                                .foregroundStyle(.secondary)
+                                .tag("")
+                            ForEach(availableHarnesses, id: \.id) { harness in
+                                Text(harness.id).tag(harness.id)
+                            }
+                        }
+                        .labelsHidden()
+                    }
                 }
 
                 LabeledContent(Strings.Fleet.fieldSessions) {

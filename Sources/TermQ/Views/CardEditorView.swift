@@ -11,6 +11,7 @@ struct CardEditorView: View {
 
     @StateObject private var viewModel = CardEditorViewModel()
     @State private var selectedTab: EditorTab = .general
+    @State private var advancedAgentExpanded: Bool = false
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @Environment(SettingsStore.self) private var settings
@@ -166,6 +167,10 @@ struct CardEditorView: View {
         .onAppear {
             viewModel.load(from: card)
             viewModel.mcpInstalled = MCPServerInstaller.currentInstallLocation != nil
+            if viewModel.hasAgentConfig {
+                selectedTab = .agent
+            }
+            advancedAgentExpanded = !viewModel.agentLoopDriverCommand.isEmpty
         }
     }
 
@@ -463,16 +468,27 @@ struct CardEditorView: View {
         }
 
         Section {
-            TextField(
-                Strings.Editor.Agent.fieldLoopDriverCommandPlaceholder,
-                text: $viewModel.agentLoopDriverCommand,
-                axis: .vertical
-            )
-            .lineLimit(2...4)
-            .font(.system(.body, design: .monospaced))
-            .help(Strings.Editor.Agent.fieldLoopDriverCommandHelp)
-        } header: {
-            Text(Strings.Editor.Agent.fieldLoopDriverCommand)
+            DisclosureGroup(
+                Strings.Editor.Agent.advancedToggle,
+                isExpanded: $advancedAgentExpanded
+            ) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(Strings.Editor.Agent.fieldLoopDriverCommand)
+                        .font(.subheadline.weight(.medium))
+                    TextField(
+                        Strings.Editor.Agent.fieldLoopDriverCommandPlaceholder,
+                        text: $viewModel.agentLoopDriverCommand,
+                        axis: .vertical
+                    )
+                    .lineLimit(2...4)
+                    .font(.system(.body, design: .monospaced))
+                    Text(Strings.Editor.Agent.fieldLoopDriverCommandHelp)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.top, 4)
+            }
         }
 
         Section(Strings.Editor.Agent.sectionBudget) {

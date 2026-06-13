@@ -75,7 +75,7 @@ final class AgentSessionControllerTests: XCTestCase {
         let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
 
         try await controller.start(
-            command: #"echo '{"type":"stuck_detected","reason":"edit-loop"}'"#)
+            command: #"echo '{"type":"stuck_detected","data":{"reason":"edit-loop"}}'"#)
 
         try await waitUntil { card.agentConfig?.status == .stuck }
         XCTAssertEqual(card.agentConfig?.status, .stuck)
@@ -87,7 +87,7 @@ final class AgentSessionControllerTests: XCTestCase {
         let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
 
         try await controller.start(
-            command: #"echo '{"type":"budget_exceeded","budget":"turns"}'"#)
+            command: #"echo '{"type":"budget_exceeded","data":{"budget":"turns"}}'"#)
 
         try await waitUntil { card.agentConfig?.status == .errored }
         XCTAssertEqual(card.agentConfig?.status, .errored)
@@ -142,7 +142,7 @@ final class AgentSessionControllerTests: XCTestCase {
 
         // Stuck event flips card to .stuck; non-zero exit must NOT clobber that.
         try await controller.start(
-            command: #"echo '{"type":"stuck_detected","reason":"oscillation"}'; exit 1"#)
+            command: #"echo '{"type":"stuck_detected","data":{"reason":"oscillation"}}'; exit 1"#)
 
         // Wait for stream end (both stuck propagation and exit).
         try await waitUntil {
@@ -215,23 +215,127 @@ final class AgentSessionControllerTests: XCTestCase {
     // MARK: - Plan approval
 
     @MainActor
-    func testEvent_planFlipsCardToAwaitingApproval() {
-        // Direct unit test: a transient subprocess race made this flaky —
-        // the stub exits, handleStreamEnd fires, and status flips past
-        // .awaitingPlanApproval before any polling could observe it.
-        // In production the loop driver doesn't exit while awaiting, so
-        // this race is a test artefact only. Inject the event directly.
+    func testEvent_planWithContent_flipsCardToAwaitingApproval() {
+        // Contract: when ynh attaches inline plan content to a plan event,
+        // that's the approval gate — flip the card to awaitingPlanApproval.
         let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
         let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
 
         let planEvent = TrajectoryEvent(
             type: "plan",
             timestamp: Date(),
-            payloadJSON: ##"{"type":"plan","content":"# do x"}"##
+            payloadJSON: ##"{"type":"plan","data":{"content":"# do x"}}"##
         )
         controller.handleEventForCardStatus(planEvent)
 
         XCTAssertEqual(card.agentConfig?.status, .awaitingPlanApproval)
+    }
+
+    @MainActor
+    func testEvent_planApprovalRequired_flipsToPlanApproval() {
+        // ynh 0.5+ dedicated plan-phase event — the canonical signal.
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        let event = TrajectoryEvent(
+            type: "plan_approval_required",
+            timestamp: Date(),
+            payloadJSON:
+                ##"{"type":"plan_approval_required","turn":0,"data":{"plan":"# P","iteration":1}}"##
+        )
+        controller.handleEventForCardStatus(event)
+
+        XCTAssertEqual(card.agentConfig?.status, .awaitingPlanApproval)
+    }
+
+    @MainActor
+    func testEvent_turnApprovalRequiredTurn0_flipsToPlanApproval() {
+        // ynh emits the plan-phase approval gate as turn_approval_required
+        // with turn=0, the plan body riding in synthesized_feedback. That's
+        // our real plan-approval signal — the bare `plan` marker carries
+        // no content.
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        let event = TrajectoryEvent(
+            type: "turn_approval_required",
+            timestamp: Date(),
+            payloadJSON:
+                ##"{"type":"turn_approval_required","turn":0,"data":{"synthesized_feedback":"# Plan"}}"##
+        )
+        controller.handleEventForCardStatus(event)
+
+        XCTAssertEqual(card.agentConfig?.status, .awaitingPlanApproval)
+    }
+
+    @MainActor
+    func testEvent_turnApprovalRequiredTurnPositive_flipsToTurnApproval() {
+        // Act-phase per-turn gate: ynh emits turn_approval_required with
+        // turn ≥ 1 after sensors run and feedback is synthesized.
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        let event = TrajectoryEvent(
+            type: "turn_approval_required",
+            timestamp: Date(),
+            payloadJSON:
+                ##"{"type":"turn_approval_required","turn":3,"data":{"synthesized_feedback":"continue"}}"##
+        )
+        controller.handleEventForCardStatus(event)
+
+        XCTAssertEqual(card.agentConfig?.status, .awaitingTurnApproval)
+    }
+
+    @MainActor
+    func testEvent_planBareMarker_doesNotFlipStatus() {
+        // ynh today emits a bare `{"type":"plan"}` marker the moment the
+        // agent enters plan mode. That's not an approval gate — the plan
+        // content arrives later via `assistant_message` events. The card
+        // should remain in whatever state it was (typically .running).
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+        forceCardStatus(.running, on: card)
+
+        let planEvent = TrajectoryEvent(
+            type: "plan",
+            timestamp: Date(),
+            payloadJSON: #"{"type":"plan"}"#
+        )
+        controller.handleEventForCardStatus(planEvent)
+
+        XCTAssertEqual(card.agentConfig?.status, .running)
+    }
+
+    @MainActor
+    func testRefinePlan_returnsCardToRunning() async throws {
+        // refinePlan optimistically flips status back to running so the
+        // working footer shows while ynh generates the next iteration.
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        try await controller.start(command: "sleep 30")
+        forceCardStatus(.awaitingPlanApproval, on: card)
+
+        await controller.refinePlan(notes: "tighten step 3")
+
+        XCTAssertEqual(card.agentConfig?.status, .running)
+        await controller.stop(graceSeconds: 0)
+    }
+
+    @MainActor
+    func testRefinePlan_emptyNotes_noOps() async throws {
+        // Empty notes must not flip status — there's nothing to send to ynh,
+        // and silently approving would be confusing.
+        let card = TerminalCard(columnId: UUID(), agentConfig: AgentConfig(harness: "x"))
+        let controller = AgentSessionController(cardId: card.id, cardLookup: { card })
+
+        try await controller.start(command: "sleep 30")
+        forceCardStatus(.awaitingPlanApproval, on: card)
+
+        await controller.refinePlan(notes: "")
+
+        XCTAssertEqual(card.agentConfig?.status, .awaitingPlanApproval)
+        await controller.stop(graceSeconds: 0)
     }
 
     @MainActor
@@ -424,6 +528,7 @@ final class AgentSessionControllerTests: XCTestCase {
         XCTAssertTrue(resolved.hasPrefix("ynh agent run --sensor-overlay '"))
         XCTAssertTrue(resolved.contains("\"build\""))
     }
+
 
     @MainActor
     func testResolveCommand_overlayJSONWithSingleQuote_isEscaped() throws {

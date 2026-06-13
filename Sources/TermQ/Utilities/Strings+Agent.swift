@@ -68,6 +68,8 @@ extension Strings {
     enum Fleet {
         static var sidebarTitle: String { localized("fleet.sidebar.title") }
         static var newFleetHelp: String { localized("fleet.new.help") }
+        static var newSessionHelp: String { localized("fleet.new.session.help") }
+        static var refreshHelp: String { localized("fleet.refresh.help") }
         static var openTranscriptHelp: String { localized("fleet.open.transcript.help") }
         static var emptyTitle: String { localized("fleet.empty.title") }
         static var emptyBody: String { localized("fleet.empty.body") }
@@ -76,6 +78,7 @@ extension Strings {
         static var sectionTask: String { localized("fleet.launch.section.task") }
         static var fieldHarness: String { localized("fleet.launch.field.harness") }
         static var fieldHarnessPlaceholder: String { localized("fleet.launch.field.harness.placeholder") }
+        static var fieldHarnessEmpty: String { localized("fleet.launch.field.harness.empty") }
         static var fieldSessions: String { localized("fleet.launch.field.sessions") }
         static var fieldBaseWorktree: String { localized("fleet.launch.field.base.worktree") }
         static var fieldBaseWorktreePlaceholder: String {
@@ -85,6 +88,12 @@ extension Strings {
         static var launch: String { localized("fleet.launch.button") }
         static var cancel: String { localized("fleet.launch.cancel") }
         static var fleetLabel: String { localized("fleet.group.label") }
+        static var contextRun: String { localized("fleet.context.run") }
+        static var contextEditHarness: String { localized("fleet.context.edit.harness") }
+        static var runAdvanced: String { localized("fleet.run.advanced") }
+        static var cwdLabel: String { localized("fleet.run.cwd.label") }
+        static var cwdEmpty: String { localized("fleet.run.cwd.empty") }
+        static var cwdChoose: String { localized("fleet.run.cwd.choose") }
         static func aggregateRunning(_ running: Int, _ total: Int) -> String {
             String(format: localized("fleet.aggregate.running"), running, total)
         }
@@ -120,5 +129,6 @@ extension Strings.Editor {
         static var fieldLoopDriverCommandPlaceholder: String {
             localized("editor.agent.field.loop.driver.command.placeholder")
         }
+        static var advancedToggle: String { localized("editor.agent.advanced") }
     }
 }

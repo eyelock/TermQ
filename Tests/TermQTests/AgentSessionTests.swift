@@ -9,12 +9,23 @@ final class AgentSessionTests: XCTestCase {
         XCTAssertEqual(budget.maxTurns, 25)
         XCTAssertEqual(budget.maxTokens, 500_000)
         XCTAssertEqual(budget.maxWallSeconds, 3600)
+        XCTAssertEqual(budget.maxPlanIterations, 5)
+    }
+
+    /// Backcompat — budgets persisted before ynh 0.5 lack
+    /// `maxPlanIterations`. Decoding must default it to 5 rather than throw.
+    func testAgentBudgetLegacyJSON_defaultsPlanIterations() throws {
+        let json = #"{"maxTurns":10,"maxTokens":100000,"maxWallSeconds":600}"#
+            .data(using: .utf8)!
+        let decoded = try JSONDecoder().decode(AgentBudget.self, from: json)
+        XCTAssertEqual(decoded.maxPlanIterations, 5)
+        XCTAssertEqual(decoded.maxTurns, 10)
     }
 
     func testAgentConfigInitDefaults() {
         let config = AgentConfig(harness: "coding-agent@eyelock/harnesses")
         XCTAssertEqual(config.harness, "coding-agent@eyelock/harnesses")
-        XCTAssertEqual(config.backend, .claudeCode)
+        XCTAssertEqual(config.backend, .claude)
         XCTAssertEqual(config.mode, .plan)
         XCTAssertEqual(config.interactionMode, .confirm)
         XCTAssertEqual(config.budget, .default)
@@ -29,7 +40,7 @@ final class AgentSessionTests: XCTestCase {
             {
                 "sessionId": "\(UUID().uuidString)",
                 "harness": "x@y/z",
-                "backend": "claude-code",
+                "backend": "claude",
                 "mode": "plan",
                 "interactionMode": "confirm",
                 "budget": {
@@ -63,8 +74,8 @@ final class AgentSessionTests: XCTestCase {
     }
 
     func testAgentBackendRawValues() {
-        // Stable wire format — guard against accidental rename.
-        XCTAssertEqual(AgentBackend.claudeCode.rawValue, "claude-code")
+        // Canonical wire format — matches ynh's vendor adapter identifiers.
+        XCTAssertEqual(AgentBackend.claude.rawValue, "claude")
         XCTAssertEqual(AgentBackend.codex.rawValue, "codex")
         XCTAssertEqual(AgentBackend.cursor.rawValue, "cursor")
     }
@@ -91,7 +102,7 @@ final class AgentSessionTests: XCTestCase {
             {
                 "sessionId": "\(UUID().uuidString)",
                 "harness": "x@y/z",
-                "backend": "claude-code",
+                "backend": "claude",
                 "mode": "plan",
                 "interactionMode": "confirm",
                 "budget": {"maxTurns": 25, "maxTokens": 500000, "maxWallSeconds": 3600},

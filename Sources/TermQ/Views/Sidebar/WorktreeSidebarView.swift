@@ -72,9 +72,11 @@ struct WorktreeSidebarView: View {
         .sheet(item: $forceUpdatePRContext) { ctx in ForceUpdatePRSheet(context: ctx, viewModel: viewModel) }
         .sheet(item: $runWithFocusContext) { ctx in
             RunWithFocusSheet(
-                context: ctx,
-                onLaunch: { cfg in
-                    onRunWithFocus?(cfg)
+                mode: .interactive(context: ctx),
+                onLaunch: { payload in
+                    if case .interactive(let cfg) = payload {
+                        onRunWithFocus?(cfg)
+                    }
                     runWithFocusContext = nil
                 },
                 onCancel: { runWithFocusContext = nil }

@@ -18,6 +18,38 @@ public final class AgentSessionController: ObservableObject {
     @Published public private(set) var events: [TrajectoryEvent] = []
     @Published public private(set) var status: AgentLoopProcessStatus = .notStarted
 
+    /// Captured stderr tail and exit code from the most recent session that
+    /// ended in `.errored`. Cleared when a new session starts. `nil` means
+    /// no error to surface — either we haven't run yet, the last run is
+    /// in progress, or it converged cleanly.
+    @Published public private(set) var lastError: LastError?
+
+    public struct LastError: Equatable, Sendable {
+        public let exitCode: Int32?
+        public let stderrTail: String
+        public let resolvedCommand: String
+    }
+
+    /// Source of trajectory events.
+    ///
+    /// - `.file` — production. The controller appends `--emit-jsonl <path>`
+    ///   to the spawned command and tells `AgentLoopProcess` to tail that
+    ///   file. ynh becomes the single writer of the canonical
+    ///   `trajectory.jsonl`; the controller is a read-only consumer.
+    /// - `.stdout` — tests. The spawned command (typically a shell fixture
+    ///   that uses `echo`) writes JSONL straight to stdout; `AgentLoopProcess`
+    ///   parses each line as it arrives. No file is written by the
+    ///   subprocess in this mode; the controller's `writerFactory` provides
+    ///   any persistence the test needs.
+    public enum TrajectoryMode: Sendable {
+        case file
+        case stdout
+    }
+
+    /// Trajectory transport. Production callers (via `AgentSessionRegistry`)
+    /// pick `.file`; tests default to `.stdout`.
+    public let trajectoryMode: TrajectoryMode
+
     /// Resolves a `TerminalCard` for the controller's `cardId`. Defaults to
     /// `BoardViewModel.shared.card(for:)`; tests inject their own.
     public var cardLookup: () -> TerminalCard?
@@ -37,16 +69,23 @@ public final class AgentSessionController: ObservableObject {
     private var consumeTask: Task<Void, Never>?
     private var writer: TrajectoryWriter?
 
+    /// Set by `stop()` so the subprocess exit (typically SIGTERM = code 15)
+    /// is treated as a user-initiated halt, not a driver crash. Cleared at
+    /// the start of every run.
+    private var userStopRequested = false
+
     public init(
         cardId: UUID,
         cardLookup: (() -> TerminalCard?)? = nil,
         writerFactory: ((UUID) -> TrajectoryWriter?)? = nil,
-        transcriptBaseURL: URL? = nil
+        transcriptBaseURL: URL? = nil,
+        trajectoryMode: TrajectoryMode = .stdout
     ) {
         self.cardId = cardId
         self.cardLookup = cardLookup ?? { BoardViewModel.shared.card(for: cardId) }
         self.writerFactory = writerFactory
         self.transcriptBaseURL = transcriptBaseURL
+        self.trajectoryMode = trajectoryMode
     }
 
     /// Default writer factory used by `AgentSessionRegistry`: opens
@@ -57,9 +96,15 @@ public final class AgentSessionController: ObservableObject {
         try? TrajectoryWriter(sessionId: sessionId)
     }
 
-    /// Spawn `/bin/sh -c "<command>"` and stream its NDJSON output into
-    /// `events`. No-op if a process is already running. Throws if the
+    /// Spawn `/bin/sh -c "<command>"` and stream NDJSON trajectory events
+    /// into `events`. No-op if a process is already running. Throws if the
     /// subprocess fails to launch.
+    ///
+    /// In `.file` mode (production), this appends `--emit-jsonl <path>` to
+    /// the command so ynh writes events to a real file under the session's
+    /// app-support directory; `AgentLoopProcess` tails that file via
+    /// `DispatchSource`. In `.stdout` mode (tests), the subprocess is
+    /// expected to write JSONL directly to stdout — see `TrajectoryMode`.
     ///
     /// If the session has a saved sensor overlay file, appends
     /// `--sensor-overlay <json>` to the command before launching so the
@@ -67,23 +112,67 @@ public final class AgentSessionController: ObservableObject {
     public func start(command: String) async throws {
         guard process == nil else { return }
 
-        let resolvedCommand = resolveCommand(command)
+        userStopRequested = false
+        let baseCommand = resolveCommand(command)
+        let sessionId = cardLookup()?.agentConfig?.sessionId
+
+        // In file-mode, the trajectory path is the canonical
+        // <appSupport>/agent-sessions/<id>/trajectory.jsonl that ynh writes
+        // to — same path `loadPersistedEvents()` reads from. There's no
+        // separate `TrajectoryWriter` in this mode: ynh is the writer.
+        let trajectoryFile: URL?
+        let resolvedCommand: String
+        switch trajectoryMode {
+        case .file:
+            if let sessionId {
+                let url = TrajectoryWriter.fileURL(
+                    for: sessionId, baseDirectory: transcriptBaseURL)
+                trajectoryFile = url
+                let escapedPath = url.path.replacingOccurrences(of: "'", with: "'\\''")
+                resolvedCommand = "\(baseCommand) --emit-jsonl '\(escapedPath)'"
+            } else {
+                trajectoryFile = nil
+                resolvedCommand = baseCommand
+            }
+        case .stdout:
+            trajectoryFile = nil
+            resolvedCommand = baseCommand
+        }
+
+        // Run ynh in the card's working directory if one is configured.
+        // Otherwise the subprocess inherits TermQ's CWD, which is virtually
+        // never what the user wants. Empty or non-existent paths fall back
+        // to inherit (we don't want to silently rewrite to home).
+        let workingDirectoryURL: URL? = {
+            guard let card = cardLookup(),
+                  !card.workingDirectory.isEmpty,
+                  FileManager.default.fileExists(atPath: card.workingDirectory)
+            else { return nil }
+            return URL(fileURLWithPath: card.workingDirectory)
+        }()
+
+        TermQLogger.agent.notice(
+            "controller.start mode=\(String(describing: trajectoryMode)) cmdLen=\(resolvedCommand.count) cwd=\(workingDirectoryURL?.path ?? "<inherit>")"
+        )
 
         let p = AgentLoopProcess()
         let stream = try await p.start(
             executable: URL(fileURLWithPath: "/bin/sh"),
-            arguments: ["-c", resolvedCommand]
+            arguments: ["-c", resolvedCommand],
+            currentDirectory: workingDirectoryURL,
+            trajectoryFile: trajectoryFile
         )
         process = p
         status = await p.status
         events.removeAll()
+        lastError = nil
         updateCardStatus(.running)
 
-        // Open per-session trajectory file. Falls back to nil if the
-        // factory returns nil or no card/session can be resolved — events
-        // still flow in-memory.
-        if let sessionId = cardLookup()?.agentConfig?.sessionId {
-            writer = writerFactory?(sessionId)
+        // Stdout-mode persistence: tests opt in via writerFactory. In
+        // file-mode the trajectory file IS the persisted artifact, so we
+        // don't create a second writer.
+        if trajectoryMode == .stdout, let sid = sessionId {
+            writer = writerFactory?(sid)
         }
 
         consumeTask = Task { [weak self] in
@@ -94,12 +183,46 @@ public final class AgentSessionController: ObservableObject {
             }
             // Stream finished — pull the final status off the actor.
             let finalStatus = await p.status
+            let stderrTail = await p.stderrTail
             self?.status = finalStatus
             self?.process = nil
             self?.writer?.close()
             self?.writer = nil
+            self?.captureLastErrorIfNeeded(
+                finalStatus: finalStatus,
+                stderrTail: stderrTail,
+                resolvedCommand: resolvedCommand
+            )
             self?.handleStreamEnd(finalStatus: finalStatus)
         }
+    }
+
+    private func captureLastErrorIfNeeded(
+        finalStatus: AgentLoopProcessStatus,
+        stderrTail: String,
+        resolvedCommand: String
+    ) {
+        // User pressed Stop — the non-zero exit is the SIGTERM we sent, not
+        // a driver crash. Suppress the error banner.
+        guard !userStopRequested else { return }
+        let exitCode: Int32?
+        let isError: Bool
+        switch finalStatus {
+        case .exited(let code):
+            exitCode = code
+            isError = code != 0
+        case .failed:
+            exitCode = nil
+            isError = true
+        default:
+            return
+        }
+        guard isError else { return }
+        lastError = LastError(
+            exitCode: exitCode,
+            stderrTail: stderrTail.trimmingCharacters(in: .whitespacesAndNewlines),
+            resolvedCommand: resolvedCommand
+        )
     }
 
     /// Graceful stop: send an `interrupt` action to the loop driver's
@@ -111,6 +234,7 @@ public final class AgentSessionController: ObservableObject {
     /// (see plan §6.1 control protocol).
     public func stop(graceSeconds: Double = 1.5) async {
         guard let p = process else { return }
+        userStopRequested = true
         try? await p.send(line: #"{"action":"interrupt"}"#)
         try? await Task.sleep(nanoseconds: UInt64(graceSeconds * 1_000_000_000))
         // If the driver responded to interrupt and exited, process is nil now.
@@ -151,20 +275,42 @@ public final class AgentSessionController: ObservableObject {
     // MARK: - Card status writeback
 
     /// Decide whether an incoming event implies a new card status, and
-    /// apply it. Most events (turn_start, sensor_result, etc.) leave the
-    /// status unchanged at `.running`; `.plan` flips the card into the
-    /// approval-gated state; terminal-shaped events flip to a final state.
+    /// apply it. Most events (turn_start, sensor_result, assistant_message,
+    /// etc.) leave the status unchanged at `.running`; `turn_approval_required`
+    /// flips into the approval-gated state; terminal-shaped events flip to a
+    /// final state.
+    ///
+    /// Note on plan mode: ynh emits a bare `plan` marker the moment the
+    /// agent enters plan mode — *not* an approval gate. The user shouldn't
+    /// be prompted to approve a non-existent plan; instead the agent will
+    /// produce `assistant_message` events containing the plan text and
+    /// then either converge on its own or emit an explicit approval-gate
+    /// event. We do nothing on bare `plan` for that reason.
     ///
     /// Internal (not private) so unit tests can inject synthetic events
-    /// without standing up a real subprocess — useful for the
-    /// `.awaitingPlanApproval` flip which races with handleStreamEnd in
-    /// short-lived stubs.
+    /// without standing up a real subprocess.
     func handleEventForCardStatus(_ event: TrajectoryEvent) {
         switch event.decoded() {
-        case .plan:
+        case .plan(let content):
+            // Only treat as an approval gate if ynh attaches inline plan
+            // content. Bare `{"type":"plan"}` markers (the current ynh
+            // behaviour) are ignored — see method doc.
+            if !content.isEmpty {
+                updateCardStatus(.awaitingPlanApproval)
+            }
+        case .planApprovalRequired:
+            // ynh 0.5+ plan-phase gate. Carries the plan content + iteration
+            // directly; UI sources content from the event.
             updateCardStatus(.awaitingPlanApproval)
-        case .turnApprovalRequired:
-            updateCardStatus(.awaitingTurnApproval)
+        case .turnApprovalRequired(let turn, _):
+            // Pre-0.5 ynh emitted turn=0 for the plan-phase approval gate;
+            // we keep that path so older installs still work. Turn ≥1 is
+            // unambiguous: act-phase per-turn gate.
+            if turn == 0 {
+                updateCardStatus(.awaitingPlanApproval)
+            } else {
+                updateCardStatus(.awaitingTurnApproval)
+            }
         case .converged:
             updateCardStatus(.converged)
         case .stuckDetected:
@@ -191,21 +337,44 @@ public final class AgentSessionController: ObservableObject {
         updateCardStatus(.running)
     }
 
-    // MARK: - Turn approval
-
-    /// Approve the pending turn. If `feedback` differs from the loop driver's
-    /// synthesized text, a `replace_feedback` message is sent first so the
-    /// driver injects the user's version instead. Unknown actions are silently
-    /// ignored by older drivers, so this is safe to send today.
-    public func approveTurn(feedback: String? = nil) async {
-        guard cardLookup()?.agentConfig?.status == .awaitingTurnApproval else { return }
-        if let feedback,
-           let data = try? JSONSerialization.data(
-               withJSONObject: ["action": "replace_feedback", "content": feedback]),
+    /// Refine the pending plan. Sends `replace_feedback` carrying the
+    /// user's notes; ynh 0.5+ consumes this and re-enters the plan loop
+    /// (emits `plan_revised` + a fresh `assistant_message` +
+    /// `plan_approval_required` for the next iteration). The card stays
+    /// in `.awaitingPlanApproval` momentarily — ynh's act-phase
+    /// `waitForApproval` treats `replace_feedback` as an implicit
+    /// approval, but in plan phase it triggers a new iteration so the
+    /// gate just refreshes. We optimistically drop to `.running` so the
+    /// "Working…" footer shows while the next plan is generating.
+    public func refinePlan(notes: String) async {
+        guard cardLookup()?.agentConfig?.status == .awaitingPlanApproval else { return }
+        guard !notes.isEmpty else { return }
+        if let data = try? JSONSerialization.data(
+            withJSONObject: ["action": "replace_feedback", "feedback": notes]),
            let line = String(data: data, encoding: .utf8) {
             try? await process?.send(line: line)
         }
-        try? await process?.send(line: #"{"action":"approve_turn"}"#)
+        updateCardStatus(.running)
+    }
+
+    // MARK: - Turn approval
+
+    /// Approve the pending turn, optionally replacing the sensor-synthesized
+    /// feedback with the user's version. ynh's protocol treats
+    /// `replace_feedback` as an *implicit approval* — so we send exactly one
+    /// message: either `replace_feedback` (with the edited text) OR plain
+    /// `approve_turn`. Sending both would queue an extra approve_turn that
+    /// silently auto-approves the next turn.
+    public func approveTurn(feedback: String? = nil) async {
+        guard cardLookup()?.agentConfig?.status == .awaitingTurnApproval else { return }
+        if let feedback, !feedback.isEmpty,
+           let data = try? JSONSerialization.data(
+               withJSONObject: ["action": "replace_feedback", "feedback": feedback]),
+           let line = String(data: data, encoding: .utf8) {
+            try? await process?.send(line: line)
+        } else {
+            try? await process?.send(line: #"{"action":"approve_turn"}"#)
+        }
         updateCardStatus(.running)
     }
 
@@ -234,6 +403,17 @@ public final class AgentSessionController: ObservableObject {
     ///   → `.errored`.
     private func handleStreamEnd(finalStatus: AgentLoopProcessStatus) {
         guard let card = cardLookup(), let config = card.agentConfig else { return }
+        // User pressed Stop — treat the exit as a paused session rather than
+        // an error, regardless of the underlying exit code (typically SIGTERM).
+        if userStopRequested {
+            switch config.status {
+            case .converged, .stuck, .errored:
+                return
+            default:
+                updateCardStatus(.paused)
+                return
+            }
+        }
         switch config.status {
         case .converged, .stuck, .errored:
             return
@@ -260,6 +440,7 @@ public final class AgentSessionController: ObservableObject {
         let escaped = overlayJSON.replacingOccurrences(of: "'", with: "'\\''")
         return "\(base) --sensor-overlay '\(escaped)'"
     }
+
 
     private func updateCardStatus(_ newStatus: AgentStatus) {
         guard let card = cardLookup(), var config = card.agentConfig else { return }

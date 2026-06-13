@@ -45,12 +45,13 @@ final class CardEditorViewModel: ObservableObject {
     // (sessionId, harness, status) are preserved from the source card on
     // save.
     @Published var hasAgentConfig: Bool = false
-    @Published var agentBackend: AgentBackend = .claudeCode
+    @Published var agentBackend: AgentBackend = .claude
     @Published var agentMode: AgentMode = .plan
     @Published var agentInteractionMode: AgentInteractionMode = .confirm
     @Published var agentMaxTurns: Int = AgentBudget.default.maxTurns
     @Published var agentMaxTokens: Int = AgentBudget.default.maxTokens
     @Published var agentMaxWallMinutes: Int = AgentBudget.default.maxWallSeconds / 60
+    @Published var agentMaxPlanIterations: Int = AgentBudget.default.maxPlanIterations
     @Published var agentLoopDriverCommand: String = ""
 
     // MARK: - Validation
@@ -91,6 +92,7 @@ final class CardEditorViewModel: ObservableObject {
             agentMaxTurns = config.budget.maxTurns
             agentMaxTokens = config.budget.maxTokens
             agentMaxWallMinutes = max(1, config.budget.maxWallSeconds / 60)
+            agentMaxPlanIterations = config.budget.maxPlanIterations
             agentLoopDriverCommand = config.loopDriverCommand
         } else {
             hasAgentConfig = false
@@ -129,7 +131,8 @@ final class CardEditorViewModel: ObservableObject {
             config.budget = AgentBudget(
                 maxTurns: agentMaxTurns,
                 maxTokens: agentMaxTokens,
-                maxWallSeconds: agentMaxWallMinutes * 60
+                maxWallSeconds: agentMaxWallMinutes * 60,
+                maxPlanIterations: agentMaxPlanIterations
             )
             config.loopDriverCommand = agentLoopDriverCommand
             card.agentConfig = config

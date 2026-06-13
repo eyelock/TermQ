@@ -290,7 +290,7 @@ final class CardEditorViewModelTests: XCTestCase {
         let original = AgentConfig(
             sessionId: UUID(),
             harness: "kept-harness",
-            backend: .claudeCode,
+            backend: .claude,
             status: .running
         )
         let card = TerminalCard(columnId: UUID(), agentConfig: original)

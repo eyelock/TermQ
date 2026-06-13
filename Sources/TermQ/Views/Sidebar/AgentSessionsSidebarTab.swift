@@ -14,6 +14,8 @@ struct AgentSessionsSidebarTab: View {
     @State private var showingTranscriptImporter = false
     @State private var transcriptViewerEvents: [TrajectoryEvent]?
     @State private var transcriptViewerFileName: String = ""
+    @State private var cardPendingDelete: TerminalCard?
+    @State private var runSheetCard: TerminalCard?
 
     private var agentCards: [TerminalCard] {
         boardViewModel.board.cards
@@ -56,6 +58,24 @@ struct AgentSessionsSidebarTab: View {
                 onDismiss: { showingFleetLaunch = false }
             )
         }
+        .sheet(item: $runSheetCard) { card in
+            RunWithFocusSheet(
+                mode: .agent(card: card),
+                onLaunch: { payload in
+                    if case .agent(let cardId, _, let focus, let profile, let prompt) = payload,
+                       let target = boardViewModel.board.cards.first(where: { $0.id == cardId })
+                    {
+                        let controller = AgentSessionRegistry.shared.controller(for: target.id)
+                        let command = AgentInspectorView.buildAgentCommand(
+                            card: target, focus: focus, profile: profile, prompt: prompt
+                        )
+                        Task { try? await controller.start(command: command) }
+                    }
+                    runSheetCard = nil
+                },
+                onCancel: { runSheetCard = nil }
+            )
+        }
         .sheet(isPresented: Binding(
             get: { transcriptViewerEvents != nil },
             set: { if !$0 { transcriptViewerEvents = nil } }
@@ -81,6 +101,24 @@ struct AgentSessionsSidebarTab: View {
                 transcriptViewerEvents = events
             }
         }
+        .alert(
+            Strings.Delete.title,
+            isPresented: Binding(
+                get: { cardPendingDelete != nil },
+                set: { if !$0 { cardPendingDelete = nil } }
+            ),
+            presenting: cardPendingDelete
+        ) { card in
+            Button(Strings.Delete.cancel, role: .cancel) {
+                cardPendingDelete = nil
+            }
+            Button(Strings.Delete.confirm, role: .destructive) {
+                boardViewModel.deleteCard(card)
+                cardPendingDelete = nil
+            }
+        } message: { card in
+            Text(Strings.Delete.message(card.title))
+        }
     }
 
     private var header: some View {
@@ -101,18 +139,29 @@ struct AgentSessionsSidebarTab: View {
                 showingTranscriptImporter = true
             } label: {
                 Image(systemName: "clock.arrow.circlepath")
-                    .help(Strings.Fleet.openTranscriptHelp)
+                    .imageScale(.medium)
             }
             .buttonStyle(.plain)
             .foregroundStyle(.secondary)
+            .help(Strings.Fleet.openTranscriptHelp)
             Button {
                 showingFleetLaunch = true
             } label: {
-                Image(systemName: "square.stack.3d.up.badge.automatic")
-                    .help(Strings.Fleet.newFleetHelp)
+                Image(systemName: "plus")
+                    .imageScale(.medium)
             }
             .buttonStyle(.plain)
             .foregroundStyle(.secondary)
+            .help(Strings.Fleet.newSessionHelp)
+            Button {
+                AgentSessionRegistry.shared.refreshPersistedState()
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .imageScale(.medium)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
+            .help(Strings.Fleet.refreshHelp)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -148,7 +197,13 @@ struct AgentSessionsSidebarTab: View {
                         selectedCardId: boardViewModel.selectedCard?.id,
                         onToggle: { toggleFleet(group.id) },
                         onSelect: { boardViewModel.selectCard($0) },
-                        onPromote: { boardViewModel.selectCard($0) }
+                        onPromote: { boardViewModel.selectCard($0) },
+                        onRun: { runSheetCard = $0 },
+                        onEdit: { boardViewModel.isEditingCard = $0 },
+                        onEditHarness: { revealHarness(for: $0) },
+                        onDuplicate: { boardViewModel.duplicateTerminal($0) },
+                        onToggleFavourite: { boardViewModel.toggleFavourite($0) },
+                        onDelete: { cardPendingDelete = $0 }
                     )
                 }
 
@@ -156,12 +211,33 @@ struct AgentSessionsSidebarTab: View {
                     AgentSessionRow(
                         card: card,
                         isSelected: boardViewModel.selectedCard?.id == card.id,
-                        onSelect: { boardViewModel.selectCard(card) }
+                        onSelect: { boardViewModel.selectCard(card) },
+                        onRun: { runSheetCard = card },
+                        onEdit: { boardViewModel.isEditingCard = card },
+                        onEditHarness: { revealHarness(for: card) },
+                        onDuplicate: { boardViewModel.duplicateTerminal(card) },
+                        onToggleFavourite: { boardViewModel.toggleFavourite(card) },
+                        onDelete: { cardPendingDelete = card }
                     )
                 }
             }
             .padding(.vertical, 4)
         }
+    }
+
+    /// "Edit Harness…" jumps to the harness's source directory in Finder so
+    /// the user can edit `plugin.json` there. Falls back to the install path
+    /// when no editable source is recorded (e.g. registry-installed harnesses).
+    private func revealHarness(for card: TerminalCard) {
+        guard let qualified = card.agentConfig?.harness else { return }
+        let harness = HarnessRepository.shared.harnesses.first {
+            $0.id == qualified || $0.name == qualified || qualified.hasSuffix("/\($0.name)")
+        }
+        let path = harness?.editablePath.isEmpty == false
+            ? harness!.editablePath
+            : harness?.path
+        guard let path, !path.isEmpty else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 
     private func toggleFleet(_ id: UUID) {
@@ -183,6 +259,12 @@ private struct FleetGroupView: View {
     let onToggle: () -> Void
     let onSelect: (TerminalCard) -> Void
     let onPromote: (TerminalCard) -> Void
+    let onRun: (TerminalCard) -> Void
+    let onEdit: (TerminalCard) -> Void
+    let onEditHarness: (TerminalCard) -> Void
+    let onDuplicate: (TerminalCard) -> Void
+    let onToggleFavourite: (TerminalCard) -> Void
+    let onDelete: (TerminalCard) -> Void
 
     init(
         fleetId: UUID,
@@ -191,7 +273,13 @@ private struct FleetGroupView: View {
         selectedCardId: UUID?,
         onToggle: @escaping () -> Void,
         onSelect: @escaping (TerminalCard) -> Void,
-        onPromote: @escaping (TerminalCard) -> Void
+        onPromote: @escaping (TerminalCard) -> Void,
+        onRun: @escaping (TerminalCard) -> Void,
+        onEdit: @escaping (TerminalCard) -> Void,
+        onEditHarness: @escaping (TerminalCard) -> Void,
+        onDuplicate: @escaping (TerminalCard) -> Void,
+        onToggleFavourite: @escaping (TerminalCard) -> Void,
+        onDelete: @escaping (TerminalCard) -> Void
     ) {
         self.fleetId = fleetId
         self.cards = ObservableCardList(cards)
@@ -200,6 +288,12 @@ private struct FleetGroupView: View {
         self.onToggle = onToggle
         self.onSelect = onSelect
         self.onPromote = onPromote
+        self.onRun = onRun
+        self.onEdit = onEdit
+        self.onEditHarness = onEditHarness
+        self.onDuplicate = onDuplicate
+        self.onToggleFavourite = onToggleFavourite
+        self.onDelete = onDelete
     }
 
     private var convergedCards: [TerminalCard] {
@@ -247,7 +341,13 @@ private struct FleetGroupView: View {
                         card: card,
                         isSelected: selectedCardId == card.id,
                         onSelect: { onSelect(card) },
-                        indent: true
+                        indent: true,
+                        onRun: { onRun(card) },
+                        onEdit: { onEdit(card) },
+                        onEditHarness: { onEditHarness(card) },
+                        onDuplicate: { onDuplicate(card) },
+                        onToggleFavourite: { onToggleFavourite(card) },
+                        onDelete: { onDelete(card) }
                     )
                 }
                 if !convergedCards.isEmpty {
@@ -336,6 +436,12 @@ struct AgentSessionRow: View {
     let isSelected: Bool
     let onSelect: () -> Void
     var indent: Bool = false
+    var onRun: (() -> Void)? = nil
+    var onEdit: (() -> Void)? = nil
+    var onEditHarness: (() -> Void)? = nil
+    var onDuplicate: (() -> Void)? = nil
+    var onToggleFavourite: (() -> Void)? = nil
+    var onDelete: (() -> Void)? = nil
 
     var body: some View {
         Button(action: onSelect) {
@@ -372,6 +478,31 @@ struct AgentSessionRow: View {
         }
         .buttonStyle(.plain)
         .padding(.horizontal, 4)
+        .contextMenu {
+            Button(Strings.Card.open, action: onSelect)
+            if let onRun {
+                Button(Strings.Fleet.contextRun, action: onRun)
+            }
+            Divider()
+            if let onEdit {
+                Button(Strings.Card.edit, action: onEdit)
+            }
+            if let onEditHarness {
+                Button(Strings.Fleet.contextEditHarness, action: onEditHarness)
+            }
+            if let onDuplicate {
+                Button(Strings.Card.duplicate, action: onDuplicate)
+            }
+            if let onToggleFavourite {
+                Divider()
+                Button(card.isFavourite ? Strings.Card.unpin : Strings.Card.pin,
+                       action: onToggleFavourite)
+            }
+            if let onDelete {
+                Divider()
+                Button(Strings.Card.delete, role: .destructive, action: onDelete)
+            }
+        }
     }
 }
 
@@ -397,7 +528,7 @@ private struct StatusBadge: View {
         case .awaitingPlanApproval: return "plan?"
         case .running: return "running"
         case .awaitingTurnApproval: return "turn?"
-        case .paused: return "paused"
+        case .paused: return "stopped"
         case .converged: return "done"
         case .stuck: return "stuck"
         case .errored: return "error"

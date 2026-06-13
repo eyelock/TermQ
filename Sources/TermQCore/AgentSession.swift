@@ -1,8 +1,12 @@
 import Foundation
 
 /// Vendor agent runtime that runs as the worker process.
+///
+/// Raw values match ynh's canonical vendor identifiers (the strings ynh's
+/// vendor adapter registry exposes; see `ynh vendors`). These are the same
+/// names accepted by `ynh run -v <name>` and `ynh agent run --backend <name>`.
 public enum AgentBackend: String, Codable, Sendable, CaseIterable {
-    case claudeCode = "claude-code"
+    case claude
     case codex
     case cursor
 }
@@ -41,21 +45,41 @@ public enum AgentStatus: String, Codable, Sendable, CaseIterable {
 }
 
 /// Hard caps enforced by the loop driver. Any-fires-stops.
+/// `maxPlanIterations` bounds the plan-refine loop (ynh 0.5+); 0 means
+/// "use ynh's default" (currently 5). Decoder tolerates older persisted
+/// budgets that lack the field.
 public struct AgentBudget: Codable, Sendable, Equatable {
     public var maxTurns: Int
     public var maxTokens: Int
     public var maxWallSeconds: Int
+    public var maxPlanIterations: Int
 
     public static let `default` = AgentBudget(
         maxTurns: 25,
         maxTokens: 500_000,
-        maxWallSeconds: 3600
+        maxWallSeconds: 3600,
+        maxPlanIterations: 5
     )
 
-    public init(maxTurns: Int, maxTokens: Int, maxWallSeconds: Int) {
+    public init(
+        maxTurns: Int, maxTokens: Int, maxWallSeconds: Int, maxPlanIterations: Int = 5
+    ) {
         self.maxTurns = maxTurns
         self.maxTokens = maxTokens
         self.maxWallSeconds = maxWallSeconds
+        self.maxPlanIterations = maxPlanIterations
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case maxTurns, maxTokens, maxWallSeconds, maxPlanIterations
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        self.maxTurns = try c.decode(Int.self, forKey: .maxTurns)
+        self.maxTokens = try c.decode(Int.self, forKey: .maxTokens)
+        self.maxWallSeconds = try c.decode(Int.self, forKey: .maxWallSeconds)
+        self.maxPlanIterations = try c.decodeIfPresent(Int.self, forKey: .maxPlanIterations) ?? 5
     }
 }
 
@@ -111,7 +135,7 @@ public struct AgentConfig: Codable, Sendable, Equatable {
     public init(
         sessionId: UUID = UUID(),
         harness: String,
-        backend: AgentBackend = .claudeCode,
+        backend: AgentBackend = .claude,
         mode: AgentMode = .plan,
         interactionMode: AgentInteractionMode = .confirm,
         budget: AgentBudget = .default,

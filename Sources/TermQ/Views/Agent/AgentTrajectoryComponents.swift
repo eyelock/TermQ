@@ -70,6 +70,10 @@ struct TurnGroupView: View {
                 switch event.decoded() {
                 case .sensorResult(let name, let code, let ms, let sum):
                     SensorResultRow(name: name, exitCode: code, durationMs: ms, summary: sum)
+                case .assistantMessage(_, let content):
+                    AssistantMessageRow(content: content, timestamp: event.timestamp)
+                case .planRevised(let iteration, let notes):
+                    PlanRevisedRow(iteration: iteration, notes: notes)
                 default:
                     TrajectoryEventRow(event: event)
                 }
@@ -180,9 +184,21 @@ func eventSummary(_ event: TrajectoryEvent) -> String {
     case .sessionStart(_, let harness):
         return harness ?? ""
     case .plan(let content):
+        if content.isEmpty {
+            return "plan mode entered"
+        }
         return content.split(whereSeparator: \.isNewline).first.map(String.init) ?? ""
+    case .planApprovalRequired(_, let iteration):
+        return "iteration \(iteration) — awaiting approval"
+    case .planRevised(let iteration, _):
+        return "revising — iteration \(iteration)"
     case .turnStart(let turn):
         return "turn \(turn)"
+    case .assistantMessage(_, let content):
+        // Rendered by `AssistantMessageRow`, not by the generic row that
+        // calls this — kept here for completeness in case the row falls
+        // back to the default path.
+        return content.split(whereSeparator: \.isNewline).first.map(String.init) ?? ""
     case .sensorResult(let name, let exitCode, let durationMs, let summary):
         let verdict = exitCode == 0 ? "✓" : "✗"
         return "\(verdict) \(name) — \(durationMs)ms\(summary.map { " — \($0)" } ?? "")"
@@ -198,5 +214,127 @@ func eventSummary(_ event: TrajectoryEvent) -> String {
         return "exit \(exitCode)\(totalTurns.map { " · \($0) turns" } ?? "")"
     case .other:
         return ""
+    }
+}
+
+// MARK: - Assistant message row
+
+/// Multi-line row that displays the agent's natural-language output. Unlike
+/// the compact one-line `TrajectoryEventRow`, this row wraps and lets
+/// long messages occupy the height they need so users can actually read
+/// what the agent said. Tap-to-expand isn't needed yet — content typically
+/// fits in 4-8 lines.
+struct AssistantMessageRow: View {
+    let content: String
+    let timestamp: Date
+
+    private static let timeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm:ss"
+        return f
+    }()
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(Self.timeFormatter.string(from: timestamp))
+                .font(.caption.monospaced())
+                .foregroundStyle(.secondary)
+                .frame(width: 64, alignment: .leading)
+            Image(systemName: "sparkles")
+                .font(.caption)
+                .foregroundStyle(Color.accentColor)
+                .frame(width: 14)
+            Text(content)
+                .font(.callout)
+                .textSelection(.enabled)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.accentColor.opacity(0.05))
+    }
+}
+
+// MARK: - Plan revised row
+
+/// Trajectory boundary between plan iterations. Surfaces the iteration
+/// number we're about to produce and the user's refinement notes that
+/// triggered the revision. Visually distinct from `AssistantMessageRow`
+/// because it represents a *human* contribution, not the agent's output.
+struct PlanRevisedRow: View {
+    let iteration: Int
+    let notes: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 8) {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .font(.caption)
+                    .foregroundStyle(.orange)
+                Text("Plan iteration \(iteration) — revising")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.orange)
+                Spacer()
+            }
+            Text(notes)
+                .font(.callout)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .textSelection(.enabled)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.orange.opacity(0.08))
+    }
+}
+
+// MARK: - Working footer
+
+/// Live "the agent is working, please wait" indicator. Shown whenever the
+/// session is in the `.running` state. Ticks a 1Hz timer so the elapsed
+/// counter advances even when no trajectory events arrive — vendors can sit
+/// silent for tens of seconds between events while the LLM is generating, so
+/// users need *something* moving on screen to know the process isn't wedged.
+struct AgentWorkingFooter: View {
+    let lastEventAt: Date?
+
+    @State private var now: Date = .init()
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
+    private var elapsedString: String {
+        let reference = lastEventAt ?? now
+        let secs = max(0, Int(now.timeIntervalSince(reference)))
+        if secs < 60 { return "\(secs)s" }
+        let m = secs / 60
+        let s = secs % 60
+        return "\(m)m \(s)s"
+    }
+
+    private var label: String {
+        if lastEventAt == nil {
+            return "Starting agent…"
+        }
+        return "Working… (\(elapsedString) since last event)"
+    }
+
+    var body: some View {
+        HStack(spacing: 10) {
+            ProgressView()
+                .controlSize(.small)
+                .progressViewStyle(.circular)
+            Text(label)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Spacer(minLength: 0)
+            ProgressView()
+                .progressViewStyle(.linear)
+                .frame(width: 120)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.accentColor.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
+        .onReceive(timer) { now = $0 }
     }
 }

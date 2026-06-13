@@ -19,9 +19,11 @@ public final class AgentSessionRegistry: ObservableObject {
     /// inject `cardLookup` and `writerFactory`.
     public func controller(for cardId: UUID) -> AgentSessionController {
         if let existing = controllers[cardId] { return existing }
+        // Production: `.file` mode → ynh writes trajectory.jsonl directly;
+        // the controller tails it. No writerFactory needed in this mode.
         let new = AgentSessionController(
             cardId: cardId,
-            writerFactory: AgentSessionController.defaultWriterFactory
+            trajectoryMode: .file
         )
         controllers[cardId] = new
         return new
@@ -31,5 +33,15 @@ public final class AgentSessionRegistry: ObservableObject {
     /// `stop()` first if a process is still running.
     public func remove(cardId: UUID) {
         controllers.removeValue(forKey: cardId)
+    }
+
+    /// Re-read persisted trajectory state from disk for every cached
+    /// controller that isn't currently running. Used by the sidebar's
+    /// refresh button to pick up trajectory updates written by an
+    /// external process (e.g. a CI run).
+    public func refreshPersistedState() {
+        for controller in controllers.values {
+            controller.loadPersistedEvents()
+        }
     }
 }

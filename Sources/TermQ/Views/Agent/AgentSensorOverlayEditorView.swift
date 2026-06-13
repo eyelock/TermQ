@@ -18,6 +18,16 @@ private struct SensorListEntry: Decodable, Identifiable {
         case sourceKind = "source_kind"
         case inlineFocus = "inline_focus"
     }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        name = try c.decode(String.self, forKey: .name)
+        category = try c.decodeIfPresent(String.self, forKey: .category)
+        role = try c.decodeIfPresent(String.self, forKey: .role)
+        sourceKind = try c.decode(String.self, forKey: .sourceKind)
+        format = try c.decode(String.self, forKey: .format)
+        inlineFocus = try c.decodeIfPresent(Bool.self, forKey: .inlineFocus) ?? false
+    }
 }
 
 private struct SensorShowEntry: Decodable {

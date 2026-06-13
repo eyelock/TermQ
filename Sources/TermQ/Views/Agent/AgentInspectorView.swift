@@ -14,16 +14,33 @@ struct AgentInspectorView: View {
     @StateObject private var registry = AgentSessionRegistry.shared
     @AppStorage("agent.loopDriverCommand") private var globalLoopDriverCommand: String = ""
     @State private var showingOverlayEditor = false
+    @State private var showingRunSheet = false
 
     private var controller: AgentSessionController {
         registry.controller(for: card.id)
     }
 
-    /// Per-card override wins; empty falls back to the global default.
+    /// Default loop driver command — TermQ runs `ynh agent` from PATH unless
+    /// the user has explicitly overridden the binary globally or per-card.
+    static let defaultLoopDriverCommand = "ynh agent"
+
+    /// Resolution: per-card override > global UserDefault > built-in default.
+    /// Empty per-card and empty global both fall through to `ynh agent`.
     private var effectiveCommand: String {
+        Self.effectiveCommand(card: card, globalOverride: globalLoopDriverCommand)
+    }
+
+    /// File-static so non-AgentInspectorView call sites (sidebar context
+    /// menu Run, fleet launchers) can build the same command line without
+    /// instantiating an Inspector. `globalOverride` is the value of the
+    /// `agent.loopDriverCommand` UserDefault.
+    static func effectiveCommand(card: TerminalCard, globalOverride: String) -> String {
         let perCard =
             card.agentConfig?.loopDriverCommand.trimmingCharacters(in: .whitespaces) ?? ""
-        return perCard.isEmpty ? globalLoopDriverCommand : perCard
+        if !perCard.isEmpty { return perCard }
+        let global = globalOverride.trimmingCharacters(in: .whitespaces)
+        if !global.isEmpty { return global }
+        return defaultLoopDriverCommand
     }
 
     var body: some View {
@@ -32,6 +49,9 @@ struct AgentInspectorView: View {
             Divider()
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    if let lastError = controller.lastError {
+                        errorSection(lastError)
+                    }
                     if let planContent = pendingPlanContent {
                         planApprovalSection(content: planContent)
                     }
@@ -69,15 +89,122 @@ struct AgentInspectorView: View {
                 )
             }
         }
+        .sheet(isPresented: $showingRunSheet) {
+            RunWithFocusSheet(
+                mode: .agent(card: card),
+                onLaunch: { payload in
+                    if case .agent(_, _, let focus, let profile, let prompt) = payload {
+                        let command = buildAgentCommand(
+                            focus: focus, profile: profile, prompt: prompt
+                        )
+                        Task { try? await controller.start(command: command) }
+                    }
+                    showingRunSheet = false
+                },
+                // The payload's `prompt` is non-nil only when no focus was
+                // selected (or when Customize was used to override one).
+                // When `focus` is set, prompt is nil and the command builder
+                // passes `--focus <name>` instead.
+                onCancel: { showingRunSheet = false }
+            )
+        }
     }
 
-    /// The latest `plan` event's content, surfaced only while the card is
-    /// in the `.awaitingPlanApproval` state. Returns `nil` outside that
-    /// state — the section disappears once the user approves or rejects.
+    /// Build the `ynh agent run …` invocation from the card's locked config
+    /// (harness, backend) plus the per-launch focus/profile/prompt the user
+    /// just picked. Returns a shell-ready command string. The controller
+    /// appends `--sensor-overlay '…'` when overlays exist; no need to add
+    /// it here.
+    ///
+    /// Argument shape (mirrors `ynh run`'s mutual-exclusion rules):
+    /// - `focus` non-nil → `--focus <name>` (focus carries prompt + profile;
+    ///   profile arg is not added and a separate prompt is ignored)
+    /// - otherwise → `--task <prompt>` plus optional `--profile <name>`
+    private func buildAgentCommand(focus: String?, profile: String?, prompt: String?) -> String {
+        Self.buildAgentCommand(
+            card: card,
+            globalLoopDriverCommand: globalLoopDriverCommand,
+            focus: focus, profile: profile, prompt: prompt
+        )
+    }
+
+    /// File-static so the sidebar context menu's Run flow can build the
+    /// exact same command line. See instance overload's doc comment for
+    /// argument shape.
+    static func buildAgentCommand(
+        card: TerminalCard,
+        globalLoopDriverCommand: String = UserDefaults.standard.string(
+            forKey: "agent.loopDriverCommand") ?? "",
+        focus: String?, profile: String?, prompt: String?
+    ) -> String {
+        let cmd = effectiveCommand(card: card, globalOverride: globalLoopDriverCommand)
+        guard let cfg = card.agentConfig else { return cmd }
+        var parts: [String] = [cmd, "run", "--harness", shellQuote(cfg.harness)]
+        let backend = cfg.backend.rawValue
+        if !backend.isEmpty {
+            parts.append(contentsOf: ["--backend", shellQuote(backend)])
+        }
+        // Budget: pass non-default values through. ynh agent run accepts
+        // --max-turns, --max-tokens, --max-wall (e.g. "60m").
+        parts.append(contentsOf: ["--max-turns", String(cfg.budget.maxTurns)])
+        parts.append(contentsOf: ["--max-tokens", String(cfg.budget.maxTokens)])
+        let wallMinutes = max(1, cfg.budget.maxWallSeconds / 60)
+        parts.append(contentsOf: ["--max-wall", "\(wallMinutes)m"])
+
+        // Per-turn approval gates: ynh emits turn_approval_required events
+        // and reads NDJSON ControlMessages from stdin when --interactive is
+        // set. ynh 0.5+ also emits dedicated plan_approval_required /
+        // plan_revised events for the plan phase.
+        if cfg.interactionMode == .confirm {
+            parts.append("--interactive")
+        }
+
+        // Plan-iteration cap (ynh 0.5+). Older ynh ignores the flag.
+        if cfg.budget.maxPlanIterations > 0 {
+            parts.append(contentsOf: [
+                "--max-plan-iterations", String(cfg.budget.maxPlanIterations),
+            ])
+        }
+
+        if let focus, !focus.isEmpty {
+            parts.append(contentsOf: ["--focus", shellQuote(focus)])
+        } else {
+            if let profile, !profile.isEmpty {
+                parts.append(contentsOf: ["--profile", shellQuote(profile)])
+            }
+            if let prompt, !prompt.isEmpty {
+                parts.append(contentsOf: ["--task", shellQuote(prompt)])
+            }
+        }
+        return parts.joined(separator: " ")
+    }
+
+    /// Single-quote-wrap with internal single quotes escaped — safe for
+    /// `/bin/sh -c`.
+    static func shellQuote(_ s: String) -> String {
+        let escaped = s.replacingOccurrences(of: "'", with: "'\\''")
+        return "'\(escaped)'"
+    }
+
+    /// The plan content awaiting approval. ynh 0.5+ emits a dedicated
+    /// `plan_approval_required` event with the plan in its `plan` field;
+    /// pre-0.5 ynh emitted it as `synthesized_feedback` on a
+    /// `turn_approval_required` event with `turn=0`. The walk takes
+    /// whichever arrived most recently — covers both wire versions and
+    /// keeps the latest iteration visible during refine loops.
     private var pendingPlanContent: String? {
         guard card.agentConfig?.status == .awaitingPlanApproval else { return nil }
         for event in controller.events.reversed() {
-            if case .plan(let content) = event.decoded() { return content }
+            switch event.decoded() {
+            case .planApprovalRequired(let plan, _):
+                return plan
+            case .turnApprovalRequired(let turn, let feedback) where turn == 0:
+                return feedback
+            case .plan(let content) where !content.isEmpty:
+                return content
+            default:
+                continue
+            }
         }
         return nil
     }
@@ -87,15 +214,12 @@ struct AgentInspectorView: View {
     private var pendingTurnApproval: (turn: Int, feedback: String)? {
         guard card.agentConfig?.status == .awaitingTurnApproval else { return nil }
         for event in controller.events.reversed() {
-            if case .turnApprovalRequired(let turn, let feedback) = event.decoded() {
+            if case .turnApprovalRequired(let turn, let feedback) = event.decoded(),
+               turn > 0 {
                 return (turn, feedback)
             }
         }
         return nil
-    }
-
-    private var canRun: Bool {
-        !effectiveCommand.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
     private var isRunning: Bool {
@@ -135,15 +259,12 @@ struct AgentInspectorView: View {
                 Divider().frame(height: 16)
 
                 Button {
-                    Task { try? await controller.start(command: effectiveCommand) }
+                    showingRunSheet = true
                 } label: {
-                    Label("Run", systemImage: "play.fill")
+                    Label("Run…", systemImage: "play.fill")
                 }
-                .disabled(!canRun || isRunning)
-                .help(
-                    canRun
-                        ? "Spawn the configured loop driver"
-                        : "Set agent.loopDriverCommand globally or override per-card in the editor")
+                .disabled(isRunning || (card.agentConfig?.harness.isEmpty ?? true))
+                .help("Pick a focus or write a task, then run")
                 Button {
                     Task { await controller.stop() }
                 } label: {
@@ -189,55 +310,94 @@ struct AgentInspectorView: View {
         return "\(seconds)s"
     }
 
+    // MARK: - Error banner
+
+    @ViewBuilder
+    private func errorSection(_ error: AgentSessionController.LastError) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundStyle(.red)
+                Text("Loop driver failed")
+                    .font(.headline)
+                Spacer()
+                if let code = error.exitCode {
+                    Text("exit \(code)")
+                        .font(.caption.monospaced())
+                        .foregroundStyle(.secondary)
+                }
+                Button {
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(error.stderrTail, forType: .string)
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                        .labelStyle(.iconOnly)
+                }
+                .buttonStyle(.borderless)
+                .help("Copy stderr to clipboard")
+            }
+
+            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                Text("Command:")
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(.secondary)
+                Text(error.resolvedCommand)
+                    .font(.caption.monospaced())
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+                    .lineLimit(2)
+            }
+
+            if error.stderrTail.isEmpty {
+                Text("No stderr output — the driver exited without writing diagnostics. Check that the command resolves on your PATH and try running it manually in a terminal to see what it does.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else {
+                ScrollView {
+                    Text(error.stderrTail)
+                        .font(.system(.caption, design: .monospaced))
+                        .textSelection(.enabled)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(8)
+                }
+                .frame(maxHeight: 180)
+                .background(Color(NSColor.textBackgroundColor).opacity(0.5))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+            }
+        }
+        .padding(12)
+        .background(Color.red.opacity(0.10))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.red.opacity(0.35), lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
     // MARK: - Plan approval
 
     private func planApprovalSection(content: String) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 8) {
-                Image(systemName: "doc.text.magnifyingglass")
-                    .foregroundStyle(.orange)
-                Text("Plan ready for review")
-                    .font(.headline)
-                Spacer()
-            }
+        PlanApprovalSection(
+            content: content,
+            iteration: latestPlanIteration,
+            onApprove: { Task { await controller.approvePlan() } },
+            onReject: { Task { await controller.rejectPlan() } },
+            onRefine: { notes in Task { await controller.refinePlan(notes: notes) } }
+        )
+    }
 
-            ScrollView {
-                Text(content)
-                    .font(.system(.callout, design: .monospaced))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .textSelection(.enabled)
-                    .padding(12)
-            }
-            .frame(maxHeight: 320)
-            .background(Color(NSColor.textBackgroundColor))
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-            .overlay(
-                RoundedRectangle(cornerRadius: 6)
-                    .strokeBorder(Color.secondary.opacity(0.2), lineWidth: 1)
-            )
-
-            HStack(spacing: 8) {
-                Spacer()
-                Button {
-                    Task { await controller.rejectPlan() }
-                } label: {
-                    Label("Reject", systemImage: "xmark")
-                }
-                Button {
-                    Task { await controller.approvePlan() }
-                } label: {
-                    Label("Approve", systemImage: "checkmark")
-                }
-                .keyboardShortcut(.defaultAction)
+    /// Iteration number of the most recent plan_approval_required event,
+    /// or 1 if the only signal is the legacy turn=0 turn_approval_required
+    /// path. Surfaced in the banner header so users see the refine loop.
+    private var latestPlanIteration: Int {
+        for event in controller.events.reversed() {
+            if case .planApprovalRequired(_, let iteration) = event.decoded() {
+                return iteration
             }
         }
-        .padding(16)
-        .background(Color.orange.opacity(0.08))
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .strokeBorder(Color.orange.opacity(0.4), lineWidth: 1)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        return 1
     }
 
     // MARK: - Last sensors strip
@@ -293,10 +453,30 @@ struct AgentInspectorView: View {
                 }
             }
 
-            if controller.events.isEmpty {
+            // Process is alive AND the card isn't sitting on a human gate.
+            // ynh is technically still "running" while blocked on stdin for
+            // approval, but from the user's perspective nothing's happening
+            // — they're the bottleneck — so "Working…" would be misleading.
+            let isRunning: Bool = {
+                guard case .running = controller.status else { return false }
+                switch card.agentConfig?.status {
+                case .awaitingPlanApproval, .awaitingTurnApproval:
+                    return false
+                default:
+                    return true
+                }
+            }()
+
+            if controller.events.isEmpty && !isRunning {
                 trajectoryEmptyState
-            } else {
+            } else if !controller.events.isEmpty {
                 turnGroupedList
+            }
+
+            if isRunning {
+                AgentWorkingFooter(
+                    lastEventAt: controller.events.last?.timestamp
+                )
             }
         }
     }
@@ -309,13 +489,9 @@ struct AgentInspectorView: View {
             Text("No trajectory yet")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
-            Text(
-                canRun
-                    ? "Press Run to spawn the configured loop driver."
-                    : "Configure agent.loopDriverCommand in defaults, then press Run."
-            )
-            .font(.caption)
-            .foregroundStyle(.secondary)
+            Text("Press Run to spawn the loop driver.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
             .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
@@ -331,6 +507,113 @@ struct AgentInspectorView: View {
             }
         }
         .background(Color.secondary.opacity(0.05))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+// MARK: - Plan approval section
+
+private struct PlanApprovalSection: View {
+    let content: String
+    let iteration: Int
+    let onApprove: () -> Void
+    let onReject: () -> Void
+    let onRefine: (String) -> Void
+
+    @State private var refineNotes: String = ""
+    @State private var refineExpanded: Bool = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
+                Image(systemName: "doc.text.magnifyingglass")
+                    .foregroundStyle(.orange)
+                Text("Plan ready for review")
+                    .font(.headline)
+                if iteration > 1 {
+                    Text("iteration \(iteration)")
+                        .font(.caption)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 2)
+                        .background(Color.orange.opacity(0.18))
+                        .clipShape(Capsule())
+                }
+                Spacer()
+            }
+
+            ScrollView {
+                Text(content)
+                    .font(.system(.callout, design: .monospaced))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .textSelection(.enabled)
+                    .padding(12)
+            }
+            .frame(maxHeight: 320)
+            .background(Color(NSColor.textBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .strokeBorder(Color.secondary.opacity(0.2), lineWidth: 1)
+            )
+
+            if refineExpanded {
+                TextEditor(text: $refineNotes)
+                    .font(.system(.callout, design: .monospaced))
+                    .frame(minHeight: 70, maxHeight: 160)
+                    .scrollContentBackground(.hidden)
+                    .padding(6)
+                    .background(Color(NSColor.textBackgroundColor))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .strokeBorder(Color.secondary.opacity(0.2), lineWidth: 1)
+                    )
+            }
+
+            HStack(spacing: 8) {
+                Button {
+                    onReject()
+                } label: {
+                    Label("Reject", systemImage: "xmark")
+                }
+                Spacer()
+                if refineExpanded {
+                    Button("Cancel") {
+                        refineExpanded = false
+                        refineNotes = ""
+                    }
+                    Button {
+                        let notes = refineNotes.trimmingCharacters(in: .whitespacesAndNewlines)
+                        guard !notes.isEmpty else { return }
+                        onRefine(notes)
+                        refineExpanded = false
+                        refineNotes = ""
+                    } label: {
+                        Label("Send refinement", systemImage: "arrow.triangle.2.circlepath")
+                    }
+                    .disabled(
+                        refineNotes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                } else {
+                    Button {
+                        refineExpanded = true
+                    } label: {
+                        Label("Refine…", systemImage: "pencil")
+                    }
+                    Button {
+                        onApprove()
+                    } label: {
+                        Label("Approve", systemImage: "checkmark")
+                    }
+                    .keyboardShortcut(.defaultAction)
+                }
+            }
+        }
+        .padding(16)
+        .background(Color.orange.opacity(0.08))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .strokeBorder(Color.orange.opacity(0.4), lineWidth: 1)
+        )
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
@@ -434,7 +717,7 @@ private struct StatusPill: View {
         case .awaitingPlanApproval: return "Plan approval"
         case .running: return "Running"
         case .awaitingTurnApproval: return "Turn approval"
-        case .paused: return "Paused"
+        case .paused: return "Stopped"
         case .converged: return "Converged"
         case .stuck: return "Stuck"
         case .errored: return "Errored"
