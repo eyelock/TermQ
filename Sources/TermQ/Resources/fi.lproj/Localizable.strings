@@ -705,7 +705,8 @@
 "editor.agent.field.max.wall.minutes" = "Enint. aika (min)";
 "editor.agent.field.loop.driver.command" = "Loop-ajurin komento";
 "editor.agent.field.loop.driver.command.placeholder" = "Peri yleinen oletus";
-"editor.agent.field.loop.driver.command.help" = "Polku ynh-agent-ohjelmaan (tai mihin tahansa NDJSON-tulostetta tuottavaan binääriin) ja argumentit. Tyhjä perii yleisen asetuksen agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Korvaa sen ohjelman, jota TermQ ajaa agentin silmukan ajurina. Tyhjä tarkoittaa, että TermQ käyttää `ynh agent` -ohjelmaa PATH-muuttujastasi — se on vakioasetus. Osoita tähän omaan käännökseen, wrapper-skriptiin tai muuhun NDJSON-tulostavaan ohjelmaan.";
+"editor.agent.advanced" = "Lisäasetukset";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agenttisilmukka";
@@ -715,14 +716,23 @@
 
 "fleet.sidebar.title" = "Agenttiistunnot";
 "fleet.new.help" = "Käynnistä fleet-ajo";
+"fleet.new.session.help" = "Uusi agenttisessio";
+"fleet.refresh.help" = "Lataa trajektorit uudelleen levyltä";
 "fleet.open.transcript.help" = "Avaa agenttiloki";
+"fleet.context.run" = "Aja…";
+"fleet.context.edit.harness" = "Muokkaa Harnessaa…";
+"fleet.run.advanced" = "Lisäasetukset";
+"fleet.run.cwd.label" = "Työhakemisto";
+"fleet.run.cwd.empty" = "(perii TermQ:n nykyisen hakemiston)";
+"fleet.run.cwd.choose" = "Valitse…";
 "fleet.empty.title" = "Ei agenttiistuntoja vielä";
 "fleet.empty.body" = "Aloita yksi harnessista tai käynnistä fleet rinnakkaisiin istuntoihin samaa tehtävää varten.";
 "fleet.launch.title" = "Käynnistä fleet-ajo";
 "fleet.launch.section.config" = "Asetukset";
 "fleet.launch.section.task" = "Tehtävä";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "esim. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Valitse harness…";
+"fleet.launch.field.harness.empty" = "Harness-lisäosia ei asennettu. Asenna yksi ensin Harnesses-välilehdeltä.";
 "fleet.launch.field.sessions" = "Rinnakkaiset istunnot";
 "fleet.launch.field.base.worktree" = "Worktreen peruspolku";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

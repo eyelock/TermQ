@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "最大実行時間（分）";
 "editor.agent.field.loop.driver.command" = "ループドライバーコマンド";
 "editor.agent.field.loop.driver.command.placeholder" = "グローバルデフォルトを使用";
-"editor.agent.field.loop.driver.command.help" = "ynh-agent（またはNDJSONを出力する任意のバイナリ）へのパスと引数。空の場合はグローバル設定 agent.loopDriverCommand を使用します。";
+"editor.agent.field.loop.driver.command.help" = "TermQ がエージェントループドライバーとして実行するバイナリを上書きします。空の場合、TermQ は PATH にある `ynh agent` を使用します — これが標準的な選択です。カスタムビルド、ラッパースクリプト、または別の NDJSON 出力バイナリを指定することもできます。";
+"editor.agent.advanced" = "詳細設定";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "エージェントループ";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "エージェントセッション";
 "fleet.new.help" = "Fleetを起動";
+"fleet.new.session.help" = "新しいエージェントセッション";
+"fleet.refresh.help" = "ディスクからトラジェクトリを再読み込み";
 "fleet.open.transcript.help" = "エージェントの記録を開く";
+"fleet.context.run" = "実行…";
+"fleet.context.edit.harness" = "Harness を編集…";
+"fleet.run.advanced" = "詳細設定";
+"fleet.run.cwd.label" = "作業ディレクトリ";
+"fleet.run.cwd.empty" = "(TermQ の現在のディレクトリを継承)";
+"fleet.run.cwd.choose" = "選択…";
 "fleet.empty.title" = "エージェントセッションはまだありません";
 "fleet.empty.body" = "ハーネスから1つ開始するか、Fleetを起動して同一タスクに並列セッションを実行してください。";
 "fleet.launch.title" = "Fleetを起動";
 "fleet.launch.section.config" = "設定";
 "fleet.launch.section.task" = "タスク";
 "fleet.launch.field.harness" = "ハーネス";
-"fleet.launch.field.harness.placeholder" = "例: eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Harness を選択…";
+"fleet.launch.field.harness.empty" = "Harness がインストールされていません。先に Harnesses タブからインストールしてください。";
 "fleet.launch.field.sessions" = "並列セッション数";
 "fleet.launch.field.base.worktree" = "Worktreeの基本パス";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

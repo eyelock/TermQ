@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "الحد الأقصى للوقت (د)";
 "editor.agent.field.loop.driver.command" = "أمر مشغّل الحلقة";
 "editor.agent.field.loop.driver.command.placeholder" = "استخدام الإعداد الافتراضي العام";
-"editor.agent.field.loop.driver.command.help" = "مسار ynh-agent (أو أي ملف ثنائي يصدر NDJSON) مع الوسيطات. يؤدي الترك فارغاً إلى توارث الإعداد العام agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "يُستبدل الملف الثنائي الذي يُشغّله TermQ كمشغّل حلقة الوكيل. ترك الحقل فارغاً يعني أن TermQ يستخدم `ynh agent` من PATH الخاص بك — الخيار القياسي. أشر هنا إلى إصدار مخصص أو سكريبت مُغلِّف أو ملف ثنائي مختلف يصدر NDJSON.";
+"editor.agent.advanced" = "متقدم";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "حلقة Agent";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "جلسات Agent";
 "fleet.new.help" = "تشغيل fleet";
+"fleet.new.session.help" = "جلسة وكيل جديدة";
+"fleet.refresh.help" = "إعادة تحميل المسارات من القرص";
 "fleet.open.transcript.help" = "فتح نص المساعد";
+"fleet.context.run" = "تشغيل…";
+"fleet.context.edit.harness" = "تعديل Harness…";
+"fleet.run.advanced" = "متقدم";
+"fleet.run.cwd.label" = "دليل العمل";
+"fleet.run.cwd.empty" = "(يرث الدليل الحالي لـ TermQ)";
+"fleet.run.cwd.choose" = "اختر…";
 "fleet.empty.title" = "لا توجد جلسات Agent بعد";
 "fleet.empty.body" = "ابدأ واحدة من harness، أو أطلق fleet لتشغيل جلسات متوازية على نفس المهمة.";
 "fleet.launch.title" = "تشغيل fleet";
 "fleet.launch.section.config" = "الإعداد";
 "fleet.launch.section.task" = "المهمة";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "مثال: eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "اختر harness…";
+"fleet.launch.field.harness.empty" = "لا توجد harnesses مثبتة. ثبّت واحداً أولاً من تبويب Harnesses.";
 "fleet.launch.field.sessions" = "جلسات متوازية";
 "fleet.launch.field.base.worktree" = "المسار الأساسي لـ worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "Max. čas (min)";
 "editor.agent.field.loop.driver.command" = "Príkaz ovládača slučky";
 "editor.agent.field.loop.driver.command.placeholder" = "Zdediť globálnu predvolenú hodnotu";
-"editor.agent.field.loop.driver.command.help" = "Cesta k ynh-agent (alebo ľubovoľnému binárnemu súboru generujúcemu NDJSON) plus argumenty. Prázdne pole dedí globálne nastavenie agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Prepíše spustiteľný súbor, ktorý TermQ spúšťa ako ovládač slučky agenta. Prázdne pole znamená, že TermQ používa `ynh agent` z vášho PATH — štandardná voľba. Zadajte sem cestu k vlastnému zostaveniu, skriptu obálky alebo inému binárnemu súboru generujúcemu NDJSON.";
+"editor.agent.advanced" = "Pokročilé";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Slučka Agenta";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Relácie agenta";
 "fleet.new.help" = "Spustiť fleet";
+"fleet.new.session.help" = "Nová relácia agenta";
+"fleet.refresh.help" = "Znovu načítať trajektórie z disku";
 "fleet.open.transcript.help" = "Otvoriť prepis agenta";
+"fleet.context.run" = "Spustiť…";
+"fleet.context.edit.harness" = "Upraviť Harness…";
+"fleet.run.advanced" = "Pokročilé";
+"fleet.run.cwd.label" = "Pracovný adresár";
+"fleet.run.cwd.empty" = "(dedí aktuálny adresár TermQ)";
+"fleet.run.cwd.choose" = "Vybrať…";
 "fleet.empty.title" = "Žiadne relácie agenta";
 "fleet.empty.body" = "Spustite jednu z harness alebo spustite fleet pre paralelné relácie nad rovnakou úlohou.";
 "fleet.launch.title" = "Spustiť fleet";
 "fleet.launch.section.config" = "Konfigurácia";
 "fleet.launch.section.task" = "Úloha";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "napr. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Vyberte harness…";
+"fleet.launch.field.harness.empty" = "Žiadne harnesses nie sú nainštalované. Najprv nainštalujte jeden z karty Harnesses.";
 "fleet.launch.field.sessions" = "Paralelné relácie";
 "fleet.launch.field.base.worktree" = "Základná cesta worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

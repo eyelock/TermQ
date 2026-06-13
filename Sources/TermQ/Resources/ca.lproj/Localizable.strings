@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "Temps màx. (min)";
 "editor.agent.field.loop.driver.command" = "Ordre del controlador de bucle";
 "editor.agent.field.loop.driver.command.placeholder" = "Hereta el valor predeterminat global";
-"editor.agent.field.loop.driver.command.help" = "Ruta a ynh-agent (o qualsevol binari que emeti NDJSON) més arguments. Buit hereta la configuració global agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Substitueix el binari que TermQ executa com a controlador del bucle de l'agent. Buit significa que TermQ utilitza `ynh agent` del vostre PATH — l'opció estàndard. Apunteu aquí a una compilació personalitzada, un script d'embolcall o un binari diferent que emeti NDJSON.";
+"editor.agent.advanced" = "Avançat";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Bucle d’agent";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Sessions d'agent";
 "fleet.new.help" = "Inicia una execució fleet";
+"fleet.new.session.help" = "Nova sessió d'agent";
+"fleet.refresh.help" = "Torna a carregar les trajectòries des del disc";
 "fleet.open.transcript.help" = "Obre la transcripció de l'agent";
+"fleet.context.run" = "Executa…";
+"fleet.context.edit.harness" = "Edita el Harness…";
+"fleet.run.advanced" = "Avançat";
+"fleet.run.cwd.label" = "Directori de treball";
+"fleet.run.cwd.empty" = "(hereta el directori actual de TermQ)";
+"fleet.run.cwd.choose" = "Tria…";
 "fleet.empty.title" = "Encara no hi ha sessions d'agent";
 "fleet.empty.body" = "Inicieu-ne una des d'un harness o inicieu un fleet per executar sessions paral·leles sobre la mateixa tasca.";
 "fleet.launch.title" = "Inicia una execució fleet";
 "fleet.launch.section.config" = "Configuració";
 "fleet.launch.section.task" = "Tasca";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "p. ex. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Trieu un harness…";
+"fleet.launch.field.harness.empty" = "No hi ha harnesses instal·lats. Instal·la'n un primer des de la pestanya Harnesses.";
 "fleet.launch.field.sessions" = "Sessions paral·leles";
 "fleet.launch.field.base.worktree" = "Ruta base del worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

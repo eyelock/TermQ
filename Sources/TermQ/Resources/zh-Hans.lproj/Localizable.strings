@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "最长时间（分）";
 "editor.agent.field.loop.driver.command" = "循环驱动命令";
 "editor.agent.field.loop.driver.command.placeholder" = "继承全局默认值";
-"editor.agent.field.loop.driver.command.help" = "ynh-agent（或任何输出 NDJSON 的可执行文件）的路径及参数。留空则继承全局 agent.loopDriverCommand 设置。";
+"editor.agent.field.loop.driver.command.help" = "覆盖 TermQ 作为代理循环驱动程序运行的可执行文件。留空表示 TermQ 使用 PATH 中的 `ynh agent` — 这是标准选择。在此处指向自定义构建、包装脚本或其他输出 NDJSON 的可执行文件。";
+"editor.agent.advanced" = "高级";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent 循环";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Agent 会话";
 "fleet.new.help" = "启动 Fleet 运行";
+"fleet.new.session.help" = "新建代理会话";
+"fleet.refresh.help" = "从磁盘重新加载轨迹";
 "fleet.open.transcript.help" = "打开代理记录";
+"fleet.context.run" = "运行…";
+"fleet.context.edit.harness" = "编辑 Harness…";
+"fleet.run.advanced" = "高级";
+"fleet.run.cwd.label" = "工作目录";
+"fleet.run.cwd.empty" = "(继承 TermQ 的当前目录)";
+"fleet.run.cwd.choose" = "选择…";
 "fleet.empty.title" = "暂无 Agent 会话";
 "fleet.empty.body" = "从 Harness 启动一个，或启动 Fleet 以并行运行多个会话执行相同任务。";
 "fleet.launch.title" = "启动 Fleet 运行";
 "fleet.launch.section.config" = "配置";
 "fleet.launch.section.task" = "任务";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "如 eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "选择 Harness…";
+"fleet.launch.field.harness.empty" = "未安装任何 Harness。请先在 Harnesses 标签页安装一个。";
 "fleet.launch.field.sessions" = "并行会话数";
 "fleet.launch.field.base.worktree" = "Worktree 基础路径";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

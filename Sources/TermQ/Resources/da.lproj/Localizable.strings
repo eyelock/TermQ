@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "Maks. tid (min)";
 "editor.agent.field.loop.driver.command" = "Kommando til loop-driver";
 "editor.agent.field.loop.driver.command.placeholder" = "Arv global standard";
-"editor.agent.field.loop.driver.command.help" = "Sti til ynh-agent (eller enhver binær der udsender NDJSON) plus argumenter. Tom arver den globale indstilling agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Tilsidesætter det program, som TermQ kører som agentens loop-driver. Tom betyder, at TermQ bruger `ynh agent` fra din PATH — standardvalget. Peg her mod et brugerdefineret build, et wrapper-script eller et andet NDJSON-udsendende binært program.";
+"editor.agent.advanced" = "Avanceret";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agentløkke";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Agentsessioner";
 "fleet.new.help" = "Start fleet-kørsel";
+"fleet.new.session.help" = "Ny agentsession";
+"fleet.refresh.help" = "Genindlæs trajektorier fra disk";
 "fleet.open.transcript.help" = "Åbn agentudskrift";
+"fleet.context.run" = "Kør…";
+"fleet.context.edit.harness" = "Rediger Harness…";
+"fleet.run.advanced" = "Avanceret";
+"fleet.run.cwd.label" = "Arbejdsmappe";
+"fleet.run.cwd.empty" = "(arver TermQ's nuværende mappe)";
+"fleet.run.cwd.choose" = "Vælg…";
 "fleet.empty.title" = "Ingen agentsessioner endnu";
 "fleet.empty.body" = "Start en fra et harness, eller lancér en fleet for parallelle sessioner mod samme opgave.";
 "fleet.launch.title" = "Start fleet-kørsel";
 "fleet.launch.section.config" = "Konfiguration";
 "fleet.launch.section.task" = "Opgave";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "f.eks. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Vælg et harness…";
+"fleet.launch.field.harness.empty" = "Ingen harnesses installeret. Installer en først fra fanen Harnesses.";
 "fleet.launch.field.sessions" = "Parallelle sessioner";
 "fleet.launch.field.base.worktree" = "Basis-sti for worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

@@ -706,7 +706,8 @@
 "editor.agent.field.max.wall.minutes" = "Макс. час (хв)";
 "editor.agent.field.loop.driver.command" = "Команда драйвера циклу";
 "editor.agent.field.loop.driver.command.placeholder" = "Успадкувати глобальне значення за замовчуванням";
-"editor.agent.field.loop.driver.command.help" = "Шлях до ynh-agent (або будь-якого бінарного файлу, що виводить NDJSON) та аргументи. Порожнє поле успадковує глобальне налаштування agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Замінює виконуваний файл, який TermQ запускає як драйвер циклу агента. Порожнє поле означає, що TermQ використовує `ynh agent` з вашого PATH — стандартний вибір. Вкажіть тут шлях до власного збирання, скрипту-обгортки або іншого бінарного файлу, що виводить NDJSON.";
+"editor.agent.advanced" = "Додатково";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Цикл Agent";
@@ -716,14 +717,23 @@
 
 "fleet.sidebar.title" = "Сеанси агента";
 "fleet.new.help" = "Запустити fleet";
+"fleet.new.session.help" = "Новий сеанс агента";
+"fleet.refresh.help" = "Перезавантажити траєкторії з диску";
 "fleet.open.transcript.help" = "Відкрити транскрипт агента";
+"fleet.context.run" = "Запустити…";
+"fleet.context.edit.harness" = "Редагувати Harness…";
+"fleet.run.advanced" = "Додатково";
+"fleet.run.cwd.label" = "Робочий каталог";
+"fleet.run.cwd.empty" = "(наслідує поточний каталог TermQ)";
+"fleet.run.cwd.choose" = "Вибрати…";
 "fleet.empty.title" = "Немає сеансів агента";
 "fleet.empty.body" = "Запустіть один із harness або запустіть fleet для паралельних сеансів одного завдання.";
 "fleet.launch.title" = "Запустити fleet";
 "fleet.launch.section.config" = "Конфігурація";
 "fleet.launch.section.task" = "Завдання";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "напр. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Виберіть harness…";
+"fleet.launch.field.harness.empty" = "Немає встановлених harness. Спочатку встановіть один з вкладки Harnesses.";
 "fleet.launch.field.sessions" = "Паралельні сеанси";
 "fleet.launch.field.base.worktree" = "Базовий шлях worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

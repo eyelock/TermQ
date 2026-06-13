@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "Timp max. (min)";
 "editor.agent.field.loop.driver.command" = "Comanda driverului de buclă";
 "editor.agent.field.loop.driver.command.placeholder" = "Moștenește valoarea implicită globală";
-"editor.agent.field.loop.driver.command.help" = "Calea către ynh-agent (sau orice binar care emite NDJSON) plus argumente. Gol moștenește setarea globală agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Suprascrie executabilul pe care TermQ îl rulează ca driver al buclei agentului. Gol înseamnă că TermQ folosește `ynh agent` din PATH-ul dvs. — alegerea standard. Indicați aici un build personalizat, un script wrapper sau un binar diferit care emite NDJSON.";
+"editor.agent.advanced" = "Avansat";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Buclă Agent";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Sesiuni agent";
 "fleet.new.help" = "Lansează execuție fleet";
+"fleet.new.session.help" = "Sesiune nouă de agent";
+"fleet.refresh.help" = "Reîncarcă traiectoriile de pe disc";
 "fleet.open.transcript.help" = "Deschide transcrierea agentului";
+"fleet.context.run" = "Rulează…";
+"fleet.context.edit.harness" = "Editează Harness…";
+"fleet.run.advanced" = "Avansat";
+"fleet.run.cwd.label" = "Director de lucru";
+"fleet.run.cwd.empty" = "(moștenește directorul curent al TermQ)";
+"fleet.run.cwd.choose" = "Alegeți…";
 "fleet.empty.title" = "Nicio sesiune agent încă";
 "fleet.empty.body" = "Porniți una dintr-un harness sau lansați un fleet pentru sesiuni paralele pe aceeași sarcină.";
 "fleet.launch.title" = "Lansează execuție fleet";
 "fleet.launch.section.config" = "Configurație";
 "fleet.launch.section.task" = "Sarcină";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "ex. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Alegeți un harness…";
+"fleet.launch.field.harness.empty" = "Nu sunt harness-uri instalate. Instalează mai întâi unul din fila Harnesses.";
 "fleet.launch.field.sessions" = "Sesiuni paralele";
 "fleet.launch.field.base.worktree" = "Cale bază worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

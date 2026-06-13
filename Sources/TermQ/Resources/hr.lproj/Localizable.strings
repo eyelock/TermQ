@@ -705,7 +705,8 @@
 "editor.agent.field.max.wall.minutes" = "Maks. vrijeme (min)";
 "editor.agent.field.loop.driver.command" = "Naredba upravljačkog programa petlje";
 "editor.agent.field.loop.driver.command.placeholder" = "Naslijedi globalni zadani";
-"editor.agent.field.loop.driver.command.help" = "Putanja do ynh-agent (ili bilo kojeg binarnog programa koji emitira NDJSON) plus argumenti. Prazno nasljeđuje globalnu postavku agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Nadjačava izvršnu datoteku koju TermQ pokreće kao upravljač petlje agenta. Prazno znači da TermQ koristi `ynh agent` iz vašeg PATH-a — standardni izbor. Ovdje unesite put do prilagođene verzije, skripte omotača ili drugog binarnog programa koji emitira NDJSON.";
+"editor.agent.advanced" = "Napredno";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Petlja Agenta";
@@ -715,14 +716,23 @@
 
 "fleet.sidebar.title" = "Sesije agenta";
 "fleet.new.help" = "Pokretanje fleet izvođenja";
+"fleet.new.session.help" = "Nova sesija agenta";
+"fleet.refresh.help" = "Ponovo učitaj trajektorije s diska";
 "fleet.open.transcript.help" = "Otvori transkript agenta";
+"fleet.context.run" = "Pokretanje…";
+"fleet.context.edit.harness" = "Uredi Harness…";
+"fleet.run.advanced" = "Napredno";
+"fleet.run.cwd.label" = "Radni direktorij";
+"fleet.run.cwd.empty" = "(nasljeđuje trenutni direktorij TermQ-a)";
+"fleet.run.cwd.choose" = "Odaberi…";
 "fleet.empty.title" = "Još nema sesija agenta";
 "fleet.empty.body" = "Pokrenite jednu iz harness-a ili pokrenite fleet za paralelne sesije na istom zadatku.";
 "fleet.launch.title" = "Pokretanje fleet izvođenja";
 "fleet.launch.section.config" = "Konfiguracija";
 "fleet.launch.section.task" = "Zadatak";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "npr. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Odaberite harness…";
+"fleet.launch.field.harness.empty" = "Nijedan harness nije instaliran. Najprije instalirajte jedan s kartice Harnesses.";
 "fleet.launch.field.sessions" = "Paralelne sesije";
 "fleet.launch.field.base.worktree" = "Osnovna putanja worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

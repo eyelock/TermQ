@@ -705,7 +705,8 @@
 "editor.agent.field.max.wall.minutes" = "अधिकतम समय (मिनट)";
 "editor.agent.field.loop.driver.command" = "लूप ड्राइवर कमांड";
 "editor.agent.field.loop.driver.command.placeholder" = "वैश्विक डिफ़ॉल्ट इनहेरिट करें";
-"editor.agent.field.loop.driver.command.help" = "ynh-agent (या कोई भी NDJSON उत्सर्जित करने वाला binary) का पथ और तर्क। खाली छोड़ने पर वैश्विक agent.loopDriverCommand सेटिंग इनहेरिट होती है।";
+"editor.agent.field.loop.driver.command.help" = "TermQ द्वारा एजेंट लूप ड्राइवर के रूप में चलाए जाने वाले binary को बदलें। खाली का मतलब है TermQ आपके PATH से `ynh agent` का उपयोग करता है — मानक विकल्प। इसे किसी कस्टम बिल्ड, रैपर स्क्रिप्ट या अलग NDJSON-उत्सर्जित binary पर इंगित करें।";
+"editor.agent.advanced" = "उन्नत";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent लूप";
@@ -715,14 +716,23 @@
 
 "fleet.sidebar.title" = "Agent सेशन";
 "fleet.new.help" = "Fleet चलाएं";
+"fleet.new.session.help" = "नया एजेंट सत्र";
+"fleet.refresh.help" = "डिस्क से ट्रेजेक्टरी फिर से लोड करें";
 "fleet.open.transcript.help" = "एजेंट ट्रांसक्रिप्ट खोलें";
+"fleet.context.run" = "चलाएं…";
+"fleet.context.edit.harness" = "Harness संपादित करें…";
+"fleet.run.advanced" = "उन्नत";
+"fleet.run.cwd.label" = "कार्यशील डायरेक्टरी";
+"fleet.run.cwd.empty" = "(TermQ की वर्तमान डायरेक्टरी इन्हेरिट करता है)";
+"fleet.run.cwd.choose" = "चुनें…";
 "fleet.empty.title" = "अभी कोई Agent सेशन नहीं";
 "fleet.empty.body" = "Harness से एक शुरू करें, या उसी टास्क के लिए समानांतर सेशन चलाने के लिए Fleet लॉन्च करें।";
 "fleet.launch.title" = "Fleet चलाएं";
 "fleet.launch.section.config" = "कॉन्फ़िगरेशन";
 "fleet.launch.section.task" = "टास्क";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "उदा. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Harness चुनें…";
+"fleet.launch.field.harness.empty" = "कोई Harness install नहीं है। पहले Harnesses tab से एक install करें।";
 "fleet.launch.field.sessions" = "समानांतर सेशन";
 "fleet.launch.field.base.worktree" = "Worktree बेस पाथ";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

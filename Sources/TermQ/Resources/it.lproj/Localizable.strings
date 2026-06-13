@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "Durata max (min)";
 "editor.agent.field.loop.driver.command" = "Comando del driver di ciclo";
 "editor.agent.field.loop.driver.command.placeholder" = "Eredita il valore predefinito globale";
-"editor.agent.field.loop.driver.command.help" = "Percorso di ynh-agent (o qualsiasi binario che emette NDJSON) più argomenti. Vuoto eredita il valore predefinito globale agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Sostituisce il binario che TermQ esegue come pilota del ciclo dell'agente. Vuoto significa che TermQ usa `ynh agent` dal tuo PATH — la scelta standard. Punta qui a una build personalizzata, uno script wrapper o un binario diverso che emette NDJSON.";
+"editor.agent.advanced" = "Avanzate";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Loop Agente";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Sessioni agente";
 "fleet.new.help" = "Avvia esecuzione fleet";
+"fleet.new.session.help" = "Nuova sessione agente";
+"fleet.refresh.help" = "Ricarica traiettorie dal disco";
 "fleet.open.transcript.help" = "Apri trascrizione agente";
+"fleet.context.run" = "Esegui…";
+"fleet.context.edit.harness" = "Modifica Harness…";
+"fleet.run.advanced" = "Avanzate";
+"fleet.run.cwd.label" = "Directory di lavoro";
+"fleet.run.cwd.empty" = "(eredita la directory corrente di TermQ)";
+"fleet.run.cwd.choose" = "Scegli…";
 "fleet.empty.title" = "Nessuna sessione agente ancora";
 "fleet.empty.body" = "Avviarne una da un harness, o lancia un fleet per eseguire sessioni parallele sullo stesso task.";
 "fleet.launch.title" = "Avvia esecuzione fleet";
 "fleet.launch.section.config" = "Configurazione";
 "fleet.launch.section.task" = "Task";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "es. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Scegli un harness…";
+"fleet.launch.field.harness.empty" = "Nessun harness installato. Installane uno prima dalla scheda Harnesses.";
 "fleet.launch.field.sessions" = "Sessioni parallele";
 "fleet.launch.field.base.worktree" = "Percorso base worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

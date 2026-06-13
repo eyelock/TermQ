@@ -705,7 +705,8 @@
 "editor.agent.field.max.wall.minutes" = "מקס׳ זמן (דק׳)";
 "editor.agent.field.loop.driver.command" = "פקודת מנהל הלולאה";
 "editor.agent.field.loop.driver.command.placeholder" = "ירש ברירת מחדל גלובלית";
-"editor.agent.field.loop.driver.command.help" = "נתיב אל ynh-agent (או כל קובץ בינארי שפולט NDJSON) בתוספת ארגומנטים. ריק יורש את הגדרת agent.loopDriverCommand הגלובלית.";
+"editor.agent.field.loop.driver.command.help" = "מחליף את הקובץ הבינארי שמריץ TermQ כמנהל הלולאה של הסוכן. ריק פירושו שTermQ משתמש ב-`ynh agent` מה-PATH שלך — הבחירה הסטנדרטית. הצבע כאן על build מותאם, סקריפט עטיפה, או קובץ בינארי אחר שפולט NDJSON.";
+"editor.agent.advanced" = "מתקדם";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "לולאת Agent";
@@ -715,14 +716,23 @@
 
 "fleet.sidebar.title" = "סשני Agent";
 "fleet.new.help" = "הפעל ריצת fleet";
+"fleet.new.session.help" = "סשן סוכן חדש";
+"fleet.refresh.help" = "טען מחדש מסלולים מהדיסק";
 "fleet.open.transcript.help" = "פתח תמליל סוכן";
+"fleet.context.run" = "הפעל…";
+"fleet.context.edit.harness" = "ערוך Harness…";
+"fleet.run.advanced" = "מתקדם";
+"fleet.run.cwd.label" = "ספריית עבודה";
+"fleet.run.cwd.empty" = "(יורש את התיקייה הנוכחית של TermQ)";
+"fleet.run.cwd.choose" = "בחר…";
 "fleet.empty.title" = "אין עדיין סשני Agent";
 "fleet.empty.body" = "התחל סשן מ-harness, או הפעל fleet להרצת סשנים מקבילים על אותה משימה.";
 "fleet.launch.title" = "הפעל ריצת fleet";
 "fleet.launch.section.config" = "תצורה";
 "fleet.launch.section.task" = "משימה";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "למשל eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "בחר harness…";
+"fleet.launch.field.harness.empty" = "אין harnesses מותקנים. התקן אחד תחילה מהלשונית Harnesses.";
 "fleet.launch.field.sessions" = "סשנים מקבילים";
 "fleet.launch.field.base.worktree" = "נתיב בסיס worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

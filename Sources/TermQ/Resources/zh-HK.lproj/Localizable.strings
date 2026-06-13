@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "最長時間（分）";
 "editor.agent.field.loop.driver.command" = "迴圈驅動命令";
 "editor.agent.field.loop.driver.command.placeholder" = "繼承全域預設值";
-"editor.agent.field.loop.driver.command.help" = "ynh-agent（或任何輸出 NDJSON 的執行檔）的路徑及參數。留空則繼承全域 agent.loopDriverCommand 設定。";
+"editor.agent.field.loop.driver.command.help" = "覆寫 TermQ 用作代理程式迴圈驅動程式的執行檔。留空表示 TermQ 使用 PATH 中的 `ynh agent` — 這是標準選擇。在此處指向自訂建置、包裝腳本或其他輸出 NDJSON 的執行檔。";
+"editor.agent.advanced" = "進階";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent 循環";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Agent 工作階段";
 "fleet.new.help" = "啟動 Fleet 執行";
+"fleet.new.session.help" = "新增代理程式工作階段";
+"fleet.refresh.help" = "從磁碟重新載入軌跡";
 "fleet.open.transcript.help" = "開啟代理程式記錄";
+"fleet.context.run" = "執行…";
+"fleet.context.edit.harness" = "編輯 Harness…";
+"fleet.run.advanced" = "進階";
+"fleet.run.cwd.label" = "工作目錄";
+"fleet.run.cwd.empty" = "(繼承 TermQ 的目前目錄)";
+"fleet.run.cwd.choose" = "選擇…";
 "fleet.empty.title" = "尚無 Agent 工作階段";
 "fleet.empty.body" = "從 Harness 啟動一個，或啟動 Fleet 以並行執行多個工作階段處理相同任務。";
 "fleet.launch.title" = "啟動 Fleet 執行";
 "fleet.launch.section.config" = "設定";
 "fleet.launch.section.task" = "任務";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "例如 eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "選擇 Harness…";
+"fleet.launch.field.harness.empty" = "未安裝任何 Harness。請先在 Harnesses 標籤頁安裝一個。";
 "fleet.launch.field.sessions" = "並行工作階段數";
 "fleet.launch.field.base.worktree" = "Worktree 基礎路徑";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

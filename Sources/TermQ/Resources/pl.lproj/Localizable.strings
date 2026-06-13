@@ -704,7 +704,8 @@
 "editor.agent.field.max.wall.minutes" = "Maks. czas (min)";
 "editor.agent.field.loop.driver.command" = "Polecenie sterownika pętli";
 "editor.agent.field.loop.driver.command.placeholder" = "Dziedzicz globalną wartość domyślną";
-"editor.agent.field.loop.driver.command.help" = "Ścieżka do ynh-agent (lub dowolnego pliku binarnego emitującego NDJSON) wraz z argumentami. Puste pole dziedziczy globalną wartość agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Zastępuje plik wykonywalny, który TermQ uruchamia jako sterownik pętli agenta. Puste pole oznacza, że TermQ używa `ynh agent` z Twojego PATH — to standardowy wybór. Wskaż tutaj własną kompilację, skrypt opakowujący lub inny plik binarny emitujący NDJSON.";
+"editor.agent.advanced" = "Zaawansowane";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Pętla Agenta";
@@ -714,14 +715,23 @@
 
 "fleet.sidebar.title" = "Sesje agenta";
 "fleet.new.help" = "Uruchom fleet";
+"fleet.new.session.help" = "Nowa sesja agenta";
+"fleet.refresh.help" = "Załaduj ponownie trajektorie z dysku";
 "fleet.open.transcript.help" = "Otwórz transkrypt agenta";
+"fleet.context.run" = "Uruchom…";
+"fleet.context.edit.harness" = "Edytuj Harness…";
+"fleet.run.advanced" = "Zaawansowane";
+"fleet.run.cwd.label" = "Katalog roboczy";
+"fleet.run.cwd.empty" = "(dziedziczy bieżący katalog TermQ)";
+"fleet.run.cwd.choose" = "Wybierz…";
 "fleet.empty.title" = "Brak sesji agenta";
 "fleet.empty.body" = "Uruchom jedną z harness lub uruchom fleet, aby wykonywać równoległe sesje dla tego samego zadania.";
 "fleet.launch.title" = "Uruchom fleet";
 "fleet.launch.section.config" = "Konfiguracja";
 "fleet.launch.section.task" = "Zadanie";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "np. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Wybierz harness…";
+"fleet.launch.field.harness.empty" = "Brak zainstalowanych harnessów. Najpierw zainstaluj jeden z karty Harnesses.";
 "fleet.launch.field.sessions" = "Równoległe sesje";
 "fleet.launch.field.base.worktree" = "Ścieżka bazowa worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

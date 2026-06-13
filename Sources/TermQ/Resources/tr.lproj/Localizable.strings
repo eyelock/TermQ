@@ -706,7 +706,8 @@
 "editor.agent.field.max.wall.minutes" = "Maks. süre (dk)";
 "editor.agent.field.loop.driver.command" = "Döngü sürücüsü komutu";
 "editor.agent.field.loop.driver.command.placeholder" = "Genel varsayılanı devral";
-"editor.agent.field.loop.driver.command.help" = "ynh-agent (veya NDJSON çıkışı veren herhangi bir ikili) yolu ve argümanları. Boş bırakılırsa genel agent.loopDriverCommand ayarı devralınır.";
+"editor.agent.field.loop.driver.command.help" = "TermQ'nun ajan döngü sürücüsü olarak çalıştırdığı programı geçersiz kılar. Boş bırakmak, TermQ'nun PATH'ınızdaki `ynh agent`'ı kullandığı anlamına gelir — standart seçim. Özel bir derlemeye, sarmalayıcı bir betiğe veya NDJSON çıkışı veren başka bir programa işaret etmek için burayı kullanın.";
+"editor.agent.advanced" = "Gelişmiş";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent Döngüsü";
@@ -716,14 +717,23 @@
 
 "fleet.sidebar.title" = "Agent oturumları";
 "fleet.new.help" = "Fleet çalıştır";
+"fleet.new.session.help" = "Yeni ajan oturumu";
+"fleet.refresh.help" = "Yörüngeleri diskten yeniden yükle";
 "fleet.open.transcript.help" = "Ajan transkriptini aç";
+"fleet.context.run" = "Çalıştır…";
+"fleet.context.edit.harness" = "Harness'ı Düzenle…";
+"fleet.run.advanced" = "Gelişmiş";
+"fleet.run.cwd.label" = "Çalışma dizini";
+"fleet.run.cwd.empty" = "(TermQ'nin geçerli dizinini devralır)";
+"fleet.run.cwd.choose" = "Seç…";
 "fleet.empty.title" = "Henüz agent oturumu yok";
 "fleet.empty.body" = "Bir harness'tan başlatın veya aynı görev için paralel oturumlar çalıştırmak üzere bir fleet başlatın.";
 "fleet.launch.title" = "Fleet çalıştır";
 "fleet.launch.section.config" = "Yapılandırma";
 "fleet.launch.section.task" = "Görev";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "örn. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Bir harness seçin…";
+"fleet.launch.field.harness.empty" = "Harness kurulu değil. Önce Harnesses sekmesinden birini kurun.";
 "fleet.launch.field.sessions" = "Paralel oturumlar";
 "fleet.launch.field.base.worktree" = "Worktree temel yolu";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

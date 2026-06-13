@@ -705,7 +705,8 @@
 "editor.agent.field.max.wall.minutes" = "Max. idő (perc)";
 "editor.agent.field.loop.driver.command" = "Loop-meghajtó parancsa";
 "editor.agent.field.loop.driver.command.placeholder" = "Globális alapértelmezés öröklése";
-"editor.agent.field.loop.driver.command.help" = "Az ynh-agent (vagy bármely NDJSON-t kibocsátó bináris) elérési útja és argumentumai. Üres esetén a globális agent.loopDriverCommand beállítás érvényes.";
+"editor.agent.field.loop.driver.command.help" = "Felülírja azt a futtatható fájlt, amelyet a TermQ az ügynök ciklusmeghajtójaként futtat. Az üres mező azt jelenti, hogy a TermQ a PATH-ból veszi a `ynh agent`-et — ez a szokásos választás. Ide írhatja egy egyedi build, wrapper szkript vagy más NDJSON-t kibocsátó bináris elérési útját.";
+"editor.agent.advanced" = "Speciális";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agent hurok";
@@ -715,14 +716,23 @@
 
 "fleet.sidebar.title" = "Agent munkamenetek";
 "fleet.new.help" = "Fleet futtatás indítása";
+"fleet.new.session.help" = "Új ügynökmunkamenet";
+"fleet.refresh.help" = "Pályák újratöltése lemezről";
 "fleet.open.transcript.help" = "Ügynök átiratának megnyitása";
+"fleet.context.run" = "Futtatás…";
+"fleet.context.edit.harness" = "Harness szerkesztése…";
+"fleet.run.advanced" = "Speciális";
+"fleet.run.cwd.label" = "Munkakönyvtár";
+"fleet.run.cwd.empty" = "(a TermQ aktuális könyvtárát örökli)";
+"fleet.run.cwd.choose" = "Választás…";
 "fleet.empty.title" = "Még nincsenek agent munkamenetek";
 "fleet.empty.body" = "Indítson egyet egy harnessből, vagy indítson fleet-et párhuzamos munkamenetek futtatásához ugyanazon a feladaton.";
 "fleet.launch.title" = "Fleet futtatás indítása";
 "fleet.launch.section.config" = "Konfiguráció";
 "fleet.launch.section.task" = "Feladat";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "pl. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Válasszon harness-t…";
+"fleet.launch.field.harness.empty" = "Nincsenek telepített harness-ek. Először telepítsen egyet a Harnesses lapfülén.";
 "fleet.launch.field.sessions" = "Párhuzamos munkamenetek";
 "fleet.launch.field.base.worktree" = "Worktree alap elérési útja";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

@@ -715,7 +715,8 @@
 "editor.agent.field.max.wall.minutes" = "Maks. waktu (mnt)";
 "editor.agent.field.loop.driver.command" = "Perintah driver loop";
 "editor.agent.field.loop.driver.command.placeholder" = "Warisi default global";
-"editor.agent.field.loop.driver.command.help" = "Jalur ke ynh-agent (atau biner apa pun yang memancarkan NDJSON) beserta argumen. Kosong mewarisi pengaturan global agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Mengganti biner yang dijalankan TermQ sebagai driver loop agen. Kosong berarti TermQ menggunakan `ynh agent` dari PATH Anda — pilihan standar. Tunjuk ke sini untuk build kustom, skrip wrapper, atau biner berbeda yang memancarkan NDJSON.";
+"editor.agent.advanced" = "Lanjutan";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Agen Loop";
@@ -725,14 +726,23 @@
 
 "fleet.sidebar.title" = "Sesi Agen";
 "fleet.new.help" = "Jalankan fleet";
+"fleet.new.session.help" = "Sesi agen baru";
+"fleet.refresh.help" = "Muat ulang trajektori dari disk";
 "fleet.open.transcript.help" = "Buka transkrip agen";
+"fleet.context.run" = "Jalankan…";
+"fleet.context.edit.harness" = "Edit Harness…";
+"fleet.run.advanced" = "Lanjutan";
+"fleet.run.cwd.label" = "Direktori kerja";
+"fleet.run.cwd.empty" = "(mewarisi direktori saat ini dari TermQ)";
+"fleet.run.cwd.choose" = "Pilih…";
 "fleet.empty.title" = "Belum ada sesi agen";
 "fleet.empty.body" = "Mulai satu dari harness, atau jalankan fleet untuk sesi paralel pada tugas yang sama.";
 "fleet.launch.title" = "Jalankan fleet";
 "fleet.launch.section.config" = "Konfigurasi";
 "fleet.launch.section.task" = "Tugas";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "mis. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Pilih harness…";
+"fleet.launch.field.harness.empty" = "Tidak ada harness yang terpasang. Pasang satu terlebih dahulu dari tab Harnesses.";
 "fleet.launch.field.sessions" = "Sesi paralel";
 "fleet.launch.field.base.worktree" = "Jalur dasar worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";

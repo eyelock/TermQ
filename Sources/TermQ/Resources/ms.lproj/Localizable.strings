@@ -704,7 +704,8 @@
 "editor.agent.field.max.wall.minutes" = "Maks. masa (min)";
 "editor.agent.field.loop.driver.command" = "Perintah pemacu gelung";
 "editor.agent.field.loop.driver.command.placeholder" = "Warisi lalai global";
-"editor.agent.field.loop.driver.command.help" = "Laluan ke ynh-agent (atau mana-mana binari yang mengeluarkan NDJSON) beserta hujah. Kosong mewarisi tetapan global agent.loopDriverCommand.";
+"editor.agent.field.loop.driver.command.help" = "Menggantikan fail boleh laku yang dijalankan TermQ sebagai pemacu gelung agen. Kosong bermakna TermQ menggunakan `ynh agent` daripada PATH anda — pilihan standard. Tunjukkan di sini kepada build tersuai, skrip pembalut, atau fail binari lain yang menghasilkan NDJSON.";
+"editor.agent.advanced" = "Lanjutan";
 
 // MARK: - Settings — Agent Loop
 "settings.agent.section" = "Gelung Ejen";
@@ -714,14 +715,23 @@
 
 "fleet.sidebar.title" = "Sesi Ejen";
 "fleet.new.help" = "Jalankan fleet";
+"fleet.new.session.help" = "Sesi agen baharu";
+"fleet.refresh.help" = "Muatkan semula trajektori dari cakera";
 "fleet.open.transcript.help" = "Buka transkrip ejen";
+"fleet.context.run" = "Jalankan…";
+"fleet.context.edit.harness" = "Edit Harness…";
+"fleet.run.advanced" = "Lanjutan";
+"fleet.run.cwd.label" = "Direktori kerja";
+"fleet.run.cwd.empty" = "(mewarisi direktori semasa TermQ)";
+"fleet.run.cwd.choose" = "Pilih…";
 "fleet.empty.title" = "Tiada sesi ejen lagi";
 "fleet.empty.body" = "Mulakan satu daripada harness, atau jalankan fleet untuk sesi selari pada tugas yang sama.";
 "fleet.launch.title" = "Jalankan fleet";
 "fleet.launch.section.config" = "Konfigurasi";
 "fleet.launch.section.task" = "Tugas";
 "fleet.launch.field.harness" = "Harness";
-"fleet.launch.field.harness.placeholder" = "cth. eyelock/coding-agent";
+"fleet.launch.field.harness.placeholder" = "Pilih harness…";
+"fleet.launch.field.harness.empty" = "Tiada harness dipasang. Pasang satu dahulu daripada tab Harnesses.";
 "fleet.launch.field.sessions" = "Sesi selari";
 "fleet.launch.field.base.worktree" = "Laluan asas worktree";
 "fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
