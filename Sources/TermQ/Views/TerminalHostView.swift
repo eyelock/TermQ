@@ -310,7 +310,8 @@ class TermQTerminalView: LocalProcessTerminalView {
                 return
             }
 
-            let oneLiner = text
+            let oneLiner =
+                text
                 .components(separatedBy: .newlines)
                 .map { $0.trimmingCharacters(in: .whitespaces) }
                 .filter { !$0.isEmpty }

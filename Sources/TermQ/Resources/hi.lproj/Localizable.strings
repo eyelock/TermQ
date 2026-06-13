@@ -693,6 +693,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "नई Harness बनाएं";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "कॉन्फ़िगरेशन";
+"editor.agent.section.budget" = "बजट";
+"editor.agent.field.backend" = "बैकएंड";
+"editor.agent.field.mode" = "मोड";
+"editor.agent.field.interaction" = "इंटरैक्शन";
+"editor.agent.field.max.turns" = "अधिकतम चक्र";
+"editor.agent.field.max.tokens" = "अधिकतम tokens";
+"editor.agent.field.max.wall.minutes" = "अधिकतम समय (मिनट)";
+"editor.agent.field.loop.driver.command" = "लूप ड्राइवर कमांड";
+"editor.agent.field.loop.driver.command.placeholder" = "वैश्विक डिफ़ॉल्ट इनहेरिट करें";
+"editor.agent.field.loop.driver.command.help" = "TermQ द्वारा एजेंट लूप ड्राइवर के रूप में चलाए जाने वाले binary को बदलें। खाली का मतलब है TermQ आपके PATH से `ynh agent` का उपयोग करता है — मानक विकल्प। इसे किसी कस्टम बिल्ड, रैपर स्क्रिप्ट या अलग NDJSON-उत्सर्जित binary पर इंगित करें।";
+"editor.agent.advanced" = "उन्नत";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent लूप";
+"settings.agent.description" = "YNH harness को सेंसर-संचालित agent लूप के रूप में चलाएं। प्रायोगिक.";
+"settings.agent.enable.tab" = "साइडबार में Agent सेशन टैब दिखाएं";
+"settings.agent.enable.tab.help" = "साइडबार में एक टैब जोड़ता है जो चल रहे और पिछले Agent सेशन सूचीबद्ध करता है। harness पंक्तियों पर “ Agent के रूप में लॉन्च करें” क्रिया भी डिस्प्ले की जाती है।";
+
+"fleet.sidebar.title" = "Agent सेशन";
+"fleet.new.help" = "Fleet चलाएं";
+"fleet.new.session.help" = "नया एजेंट सत्र";
+"fleet.refresh.help" = "डिस्क से ट्रेजेक्टरी फिर से लोड करें";
+"fleet.open.transcript.help" = "एजेंट ट्रांसक्रिप्ट खोलें";
+"fleet.context.run" = "चलाएं…";
+"fleet.context.edit.harness" = "Harness संपादित करें…";
+"fleet.run.advanced" = "उन्नत";
+"fleet.run.cwd.label" = "कार्यशील डायरेक्टरी";
+"fleet.run.cwd.empty" = "(TermQ की वर्तमान डायरेक्टरी इन्हेरिट करता है)";
+"fleet.run.cwd.choose" = "चुनें…";
+"fleet.empty.title" = "अभी कोई Agent सेशन नहीं";
+"fleet.empty.body" = "Harness से एक शुरू करें, या उसी टास्क के लिए समानांतर सेशन चलाने के लिए Fleet लॉन्च करें।";
+"fleet.launch.title" = "Fleet चलाएं";
+"fleet.launch.section.config" = "कॉन्फ़िगरेशन";
+"fleet.launch.section.task" = "टास्क";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Harness चुनें…";
+"fleet.launch.field.harness.empty" = "कोई Harness install नहीं है। पहले Harnesses tab से एक install करें।";
+"fleet.launch.field.sessions" = "समानांतर सेशन";
+"fleet.launch.field.base.worktree" = "Worktree बेस पाथ";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Agent के लिए टास्क का विवरण दें…";
+"fleet.launch.button" = "लॉन्च";
+"fleet.launch.cancel" = "रद्द करें";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d चल रहे हैं";
+"fleet.aggregate.converged" = "%d/%d अभिसरित";
+"fleet.aggregate.idle" = "%d सेशन";
+"fleet.promote.winner" = "%@ को बढ़ावा दें";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "अंतिम सेंसर";
+"inspector.agent.trajectory" = "पथ";
+"inspector.agent.trajectory.empty" = "अभी तक कोई पथ नहीं";
+"inspector.agent.trajectory.empty.configure" = "सेटिंग में agent.loopDriverCommand कॉन्फ़िगर करें, फिर चलाएं दबाएं।";
+"inspector.agent.trajectory.empty.run" = "कॉन्फ़िगर किए गए लूप ड्राइवर को शुरू करने के लिए चलाएं दबाएं।";
+"inspector.agent.turn" = "चाल %d";
+"inspector.agent.sensors.all.passed" = "सभी पास हुए";
+"inspector.agent.sensors.failed" = "%d विफल";
+"inspector.agent.edit.sensors" = "सेंसर संपादित करें";
+"inspector.agent.turn.approval.title" = "टर्न %d — फ़ीडबैक की समीक्षा करें";
+"inspector.agent.turn.approval.send" = "भेजें";
+"inspector.agent.turn.approval.reset" = "रीसेट करें";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "सेंसर ओवरले";
+"overlay.editor.loading" = "सेंसर लोड हो रहे हैं…";
+"overlay.editor.no.sensors" = "इस harness में कोई सेंसर घोषित नहीं है।";
+"overlay.editor.role.label" = "भूमिका";
+"overlay.editor.role.inherited" = "विरासत";
+"overlay.editor.prompt.harness.label" = "Harness प्रॉम्प्ट";
+"overlay.editor.prompt.override.label" = "ओवरराइड";
+"overlay.editor.prompt.override.placeholder" = "harness प्रॉम्प्ट इनहेरिट करने के लिए खाली छोड़ें";
+"overlay.editor.source.kind.command" = "कमांड";
+"overlay.editor.source.kind.files" = "फ़ाइलें";
+"overlay.editor.source.kind.focus" = "फ़ोकस";
+"overlay.editor.save" = "सहेजें";
+"overlay.editor.cancel" = "रद्द करें";
+"overlay.editor.error.ynh.not.ready" = "ynh तैयार नहीं है। सेटिंग में YNH टूलचेन जाँचें।";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH Harness टूलचेन";
 "settings.ynh.title" = "ynh";

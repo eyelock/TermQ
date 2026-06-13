@@ -693,6 +693,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Luo uusi harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agentti";
+"editor.agent.section.config" = "Asetukset";
+"editor.agent.section.budget" = "Budjetti";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Tila";
+"editor.agent.field.interaction" = "Vuorovaikutus";
+"editor.agent.field.max.turns" = "Enint. kierroksia";
+"editor.agent.field.max.tokens" = "Enint. tokeneita";
+"editor.agent.field.max.wall.minutes" = "Enint. aika (min)";
+"editor.agent.field.loop.driver.command" = "Loop-ajurin komento";
+"editor.agent.field.loop.driver.command.placeholder" = "Peri yleinen oletus";
+"editor.agent.field.loop.driver.command.help" = "Korvaa sen ohjelman, jota TermQ ajaa agentin silmukan ajurina. Tyhjä tarkoittaa, että TermQ käyttää `ynh agent` -ohjelmaa PATH-muuttujastasi — se on vakioasetus. Osoita tähän omaan käännökseen, wrapper-skriptiin tai muuhun NDJSON-tulostavaan ohjelmaan.";
+"editor.agent.advanced" = "Lisäasetukset";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agenttisilmukka";
+"settings.agent.description" = "Suorita YNH-harness sensoriohjattuna agenttisilmukkana. Kokeellinen.";
+"settings.agent.enable.tab" = "Näytä Agenttiistunnot-välilehti sivupalkissa";
+"settings.agent.enable.tab.help" = "Lisää sivupalkkiin välilehden, jossa näkyvät käynnissä olevat ja aiemmat agenttiistunnot, sekä „Käynnistä Agentina“ -toiminto harness-riveille.";
+
+"fleet.sidebar.title" = "Agenttiistunnot";
+"fleet.new.help" = "Käynnistä fleet-ajo";
+"fleet.new.session.help" = "Uusi agenttisessio";
+"fleet.refresh.help" = "Lataa trajektorit uudelleen levyltä";
+"fleet.open.transcript.help" = "Avaa agenttiloki";
+"fleet.context.run" = "Aja…";
+"fleet.context.edit.harness" = "Muokkaa Harnessaa…";
+"fleet.run.advanced" = "Lisäasetukset";
+"fleet.run.cwd.label" = "Työhakemisto";
+"fleet.run.cwd.empty" = "(perii TermQ:n nykyisen hakemiston)";
+"fleet.run.cwd.choose" = "Valitse…";
+"fleet.empty.title" = "Ei agenttiistuntoja vielä";
+"fleet.empty.body" = "Aloita yksi harnessista tai käynnistä fleet rinnakkaisiin istuntoihin samaa tehtävää varten.";
+"fleet.launch.title" = "Käynnistä fleet-ajo";
+"fleet.launch.section.config" = "Asetukset";
+"fleet.launch.section.task" = "Tehtävä";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Valitse harness…";
+"fleet.launch.field.harness.empty" = "Harness-lisäosia ei asennettu. Asenna yksi ensin Harnesses-välilehdeltä.";
+"fleet.launch.field.sessions" = "Rinnakkaiset istunnot";
+"fleet.launch.field.base.worktree" = "Worktreen peruspolku";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Kuvaile tehtävä agentille…";
+"fleet.launch.button" = "Käynnistä";
+"fleet.launch.cancel" = "Peruuta";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d käynnissä";
+"fleet.aggregate.converged" = "%d/%d konvergoitunut";
+"fleet.aggregate.idle" = "%d istuntoa";
+"fleet.promote.winner" = "Ylennä %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Viimeisimmät anturit";
+"inspector.agent.trajectory" = "Kulku";
+"inspector.agent.trajectory.empty" = "Ei kulkua vielä";
+"inspector.agent.trajectory.empty.configure" = "Määritä agent.loopDriverCommand asetuksissa ja paina sitten Suorita.";
+"inspector.agent.trajectory.empty.run" = "Paina Suorita käynnistääksesi määritetyn silmukkaohjain.";
+"inspector.agent.turn" = "Vuoro %d";
+"inspector.agent.sensors.all.passed" = "kaikki hyväksytty";
+"inspector.agent.sensors.failed" = "%d epäonnistui";
+"inspector.agent.edit.sensors" = "Muokkaa antureita";
+"inspector.agent.turn.approval.title" = "Vuoro %d — Tarkista palaute";
+"inspector.agent.turn.approval.send" = "Lähetä";
+"inspector.agent.turn.approval.reset" = "Palauta";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Anturin peittokuvat";
+"overlay.editor.loading" = "Ladataan antureita…";
+"overlay.editor.no.sensors" = "Tässä harnessissa ei ole määriteltyjä antureita.";
+"overlay.editor.role.label" = "Rooli";
+"overlay.editor.role.inherited" = "Peritty";
+"overlay.editor.prompt.harness.label" = "Harnessin kehote";
+"overlay.editor.prompt.override.label" = "Ohita";
+"overlay.editor.prompt.override.placeholder" = "Jätä tyhjäksi periäksesi harnessin kehote";
+"overlay.editor.source.kind.command" = "komento";
+"overlay.editor.source.kind.files" = "tiedostot";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Tallenna";
+"overlay.editor.cancel" = "Peruuta";
+"overlay.editor.error.ynh.not.ready" = "ynh ei ole valmis. Tarkista YNH-työkaluketju asetuksista.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-työkaluketju";
 "settings.ynh.title" = "ynh";

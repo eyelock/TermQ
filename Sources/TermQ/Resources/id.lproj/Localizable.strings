@@ -703,6 +703,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Buat Harness Baru";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agen";
+"editor.agent.section.config" = "Konfigurasi";
+"editor.agent.section.budget" = "Anggaran";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Mode";
+"editor.agent.field.interaction" = "Interaksi";
+"editor.agent.field.max.turns" = "Maks. giliran";
+"editor.agent.field.max.tokens" = "Maks. token";
+"editor.agent.field.max.wall.minutes" = "Maks. waktu (mnt)";
+"editor.agent.field.loop.driver.command" = "Perintah driver loop";
+"editor.agent.field.loop.driver.command.placeholder" = "Warisi default global";
+"editor.agent.field.loop.driver.command.help" = "Mengganti biner yang dijalankan TermQ sebagai driver loop agen. Kosong berarti TermQ menggunakan `ynh agent` dari PATH Anda — pilihan standar. Tunjuk ke sini untuk build kustom, skrip wrapper, atau biner berbeda yang memancarkan NDJSON.";
+"editor.agent.advanced" = "Lanjutan";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agen Loop";
+"settings.agent.description" = "Jalankan harness YNH sebagai agen loop yang digerakkan oleh sensor. Eksperimental.";
+"settings.agent.enable.tab" = "Tampilkan tab Sesi Agen di bilah samping";
+"settings.agent.enable.tab.help" = "Menambahkan tab di bilah samping yang menampilkan sesi agen yang sedang berjalan dan yang telah selesai, serta aksi “Jalankan sebagai Agen” pada baris harness.";
+
+"fleet.sidebar.title" = "Sesi Agen";
+"fleet.new.help" = "Jalankan fleet";
+"fleet.new.session.help" = "Sesi agen baru";
+"fleet.refresh.help" = "Muat ulang trajektori dari disk";
+"fleet.open.transcript.help" = "Buka transkrip agen";
+"fleet.context.run" = "Jalankan…";
+"fleet.context.edit.harness" = "Edit Harness…";
+"fleet.run.advanced" = "Lanjutan";
+"fleet.run.cwd.label" = "Direktori kerja";
+"fleet.run.cwd.empty" = "(mewarisi direktori saat ini dari TermQ)";
+"fleet.run.cwd.choose" = "Pilih…";
+"fleet.empty.title" = "Belum ada sesi agen";
+"fleet.empty.body" = "Mulai satu dari harness, atau jalankan fleet untuk sesi paralel pada tugas yang sama.";
+"fleet.launch.title" = "Jalankan fleet";
+"fleet.launch.section.config" = "Konfigurasi";
+"fleet.launch.section.task" = "Tugas";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Pilih harness…";
+"fleet.launch.field.harness.empty" = "Tidak ada harness yang terpasang. Pasang satu terlebih dahulu dari tab Harnesses.";
+"fleet.launch.field.sessions" = "Sesi paralel";
+"fleet.launch.field.base.worktree" = "Jalur dasar worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Jelaskan tugas untuk agen…";
+"fleet.launch.button" = "Jalankan";
+"fleet.launch.cancel" = "Batal";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d berjalan";
+"fleet.aggregate.converged" = "%d/%d konvergen";
+"fleet.aggregate.idle" = "%d sesi";
+"fleet.promote.winner" = "Promosikan %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Sensor Terakhir";
+"inspector.agent.trajectory" = "Lintasan";
+"inspector.agent.trajectory.empty" = "Belum ada lintasan";
+"inspector.agent.trajectory.empty.configure" = "Konfigurasikan agent.loopDriverCommand di pengaturan, lalu tekan Jalankan.";
+"inspector.agent.trajectory.empty.run" = "Tekan Jalankan untuk memulai driver loop yang dikonfigurasi.";
+"inspector.agent.turn" = "Giliran %d";
+"inspector.agent.sensors.all.passed" = "semua lulus";
+"inspector.agent.sensors.failed" = "%d gagal";
+"inspector.agent.edit.sensors" = "Edit Sensor";
+"inspector.agent.turn.approval.title" = "Giliran %d — Tinjau umpan balik";
+"inspector.agent.turn.approval.send" = "Kirim";
+"inspector.agent.turn.approval.reset" = "Setel ulang";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Lapisan Sensor";
+"overlay.editor.loading" = "Memuat sensor…";
+"overlay.editor.no.sensors" = "Tidak ada sensor yang dideklarasikan dalam harness ini.";
+"overlay.editor.role.label" = "Peran";
+"overlay.editor.role.inherited" = "Diwarisi";
+"overlay.editor.prompt.harness.label" = "Prompt harness";
+"overlay.editor.prompt.override.label" = "Timpa";
+"overlay.editor.prompt.override.placeholder" = "Kosongkan untuk mewarisi prompt harness";
+"overlay.editor.source.kind.command" = "perintah";
+"overlay.editor.source.kind.files" = "berkas";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Simpan";
+"overlay.editor.cancel" = "Batal";
+"overlay.editor.error.ynh.not.ready" = "ynh belum siap. Periksa rantai alat YNH di Pengaturan.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Toolchain YNH";
 "settings.ynh.title" = "ynh";

@@ -1,0 +1,71 @@
+name: Agent Loop
+
+on:
+  workflow_dispatch:
+    inputs:
+      harness:
+        description: "YNH harness name (e.g. coding-agent@eyelock/harnesses)"
+        required: true
+        type: string
+      task:
+        description: "Path to task file inside the repo, or inline task text"
+        required: true
+        type: string
+      backend:
+        description: "Worker backend"
+        required: false
+        default: "claude"
+        type: choice
+        options:
+          - claude
+          - codex
+      max_turns:
+        description: "Maximum agent turns"
+        required: false
+        default: "25"
+        type: string
+      max_tokens:
+        description: "Token budget"
+        required: false
+        default: "500000"
+        type: string
+      max_wall:
+        description: "Wall-clock time limit (e.g. 60m)"
+        required: false
+        default: "60m"
+        type: string
+
+jobs:
+  agent:
+    name: Run agent loop
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/eyelock/ynh:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install harness
+        run: ynh install "${{ inputs.harness }}"
+
+      - name: Run agent loop
+        run: |
+          ynh agent run \
+            --harness "${{ inputs.harness }}" \
+            --task "${{ inputs.task }}" \
+            --backend "${{ inputs.backend }}" \
+            --max-turns "${{ inputs.max_turns }}" \
+            --max-tokens "${{ inputs.max_tokens }}" \
+            --max-wall "${{ inputs.max_wall }}" \
+            --emit-jsonl agent-trajectory.jsonl \
+            --auto-commit
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Upload trajectory artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-trajectory-${{ github.run_number }}
+          path: agent-trajectory.jsonl
+          retention-days: 30

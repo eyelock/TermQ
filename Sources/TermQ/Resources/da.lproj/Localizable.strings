@@ -703,6 +703,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Opret et nyt harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguration";
+"editor.agent.section.budget" = "Budget";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Tilstand";
+"editor.agent.field.interaction" = "Interaktion";
+"editor.agent.field.max.turns" = "Maks. ture";
+"editor.agent.field.max.tokens" = "Maks. tokens";
+"editor.agent.field.max.wall.minutes" = "Maks. tid (min)";
+"editor.agent.field.loop.driver.command" = "Kommando til loop-driver";
+"editor.agent.field.loop.driver.command.placeholder" = "Arv global standard";
+"editor.agent.field.loop.driver.command.help" = "Tilsidesætter det program, som TermQ kører som agentens loop-driver. Tom betyder, at TermQ bruger `ynh agent` fra din PATH — standardvalget. Peg her mod et brugerdefineret build, et wrapper-script eller et andet NDJSON-udsendende binært program.";
+"editor.agent.advanced" = "Avanceret";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agentløkke";
+"settings.agent.description" = "Kør et YNH-harness som en sensordriven agentløkke. Eksperimentel.";
+"settings.agent.enable.tab" = "Vis Agent Sessions-fane i sidebjælken";
+"settings.agent.enable.tab.help" = "Tilføjer en fane i sidebjælken med igangværende og afsluttede agentsessioner, og en handling „Start som Agent“ på harness-rækker.";
+
+"fleet.sidebar.title" = "Agentsessioner";
+"fleet.new.help" = "Start fleet-kørsel";
+"fleet.new.session.help" = "Ny agentsession";
+"fleet.refresh.help" = "Genindlæs trajektorier fra disk";
+"fleet.open.transcript.help" = "Åbn agentudskrift";
+"fleet.context.run" = "Kør…";
+"fleet.context.edit.harness" = "Rediger Harness…";
+"fleet.run.advanced" = "Avanceret";
+"fleet.run.cwd.label" = "Arbejdsmappe";
+"fleet.run.cwd.empty" = "(arver TermQ's nuværende mappe)";
+"fleet.run.cwd.choose" = "Vælg…";
+"fleet.empty.title" = "Ingen agentsessioner endnu";
+"fleet.empty.body" = "Start en fra et harness, eller lancér en fleet for parallelle sessioner mod samme opgave.";
+"fleet.launch.title" = "Start fleet-kørsel";
+"fleet.launch.section.config" = "Konfiguration";
+"fleet.launch.section.task" = "Opgave";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Vælg et harness…";
+"fleet.launch.field.harness.empty" = "Ingen harnesses installeret. Installer en først fra fanen Harnesses.";
+"fleet.launch.field.sessions" = "Parallelle sessioner";
+"fleet.launch.field.base.worktree" = "Basis-sti for worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beskriv opgaven for agenten…";
+"fleet.launch.button" = "Start";
+"fleet.launch.cancel" = "Annuller";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d kører";
+"fleet.aggregate.converged" = "%d/%d konvergerede";
+"fleet.aggregate.idle" = "%d sessioner";
+"fleet.promote.winner" = "Forfrem %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Seneste sensorer";
+"inspector.agent.trajectory" = "Forløb";
+"inspector.agent.trajectory.empty" = "Intet forløb endnu";
+"inspector.agent.trajectory.empty.configure" = "Konfigurer agent.loopDriverCommand i indstillingerne, og tryk derefter på Kør.";
+"inspector.agent.trajectory.empty.run" = "Tryk på Kør for at starte den konfigurerede loop-driver.";
+"inspector.agent.turn" = "Tur %d";
+"inspector.agent.sensors.all.passed" = "alle bestået";
+"inspector.agent.sensors.failed" = "%d fejlede";
+"inspector.agent.edit.sensors" = "Rediger sensorer";
+"inspector.agent.turn.approval.title" = "Tur %d — Gennemgå feedback";
+"inspector.agent.turn.approval.send" = "Send";
+"inspector.agent.turn.approval.reset" = "Nulstil";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensoroverlay";
+"overlay.editor.loading" = "Indlæser sensorer…";
+"overlay.editor.no.sensors" = "Ingen sensorer erklæret i dette harness.";
+"overlay.editor.role.label" = "Rolle";
+"overlay.editor.role.inherited" = "Nedarvet";
+"overlay.editor.prompt.harness.label" = "Harness-prompt";
+"overlay.editor.prompt.override.label" = "Tilsidesæt";
+"overlay.editor.prompt.override.placeholder" = "Lad være tomt for at arve harness-prompten";
+"overlay.editor.source.kind.command" = "kommando";
+"overlay.editor.source.kind.files" = "filer";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Gem";
+"overlay.editor.cancel" = "Annuller";
+"overlay.editor.error.ynh.not.ready" = "ynh er ikke klar. Kontroller YNH-værktøjskæden i Indstillinger.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-toolchain";
 "settings.ynh.title" = "ynh";

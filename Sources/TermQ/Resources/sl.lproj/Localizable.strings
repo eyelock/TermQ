@@ -694,6 +694,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Ustvari nov harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguracija";
+"editor.agent.section.budget" = "Proračun";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Način";
+"editor.agent.field.interaction" = "Interakcija";
+"editor.agent.field.max.turns" = "Maks. krogov";
+"editor.agent.field.max.tokens" = "Maks. žetonov";
+"editor.agent.field.max.wall.minutes" = "Maks. čas (min)";
+"editor.agent.field.loop.driver.command" = "Ukaz gonilnika zanke";
+"editor.agent.field.loop.driver.command.placeholder" = "Podeduj globalno privzeto vrednost";
+"editor.agent.field.loop.driver.command.help" = "Preglasi izvršljivo datoteko, ki jo TermQ zaganja kot gonilnik agentove zanke. Prazno pomeni, da TermQ uporablja `ynh agent` iz vašega PATH — standardna izbira. Tukaj vnesite pot do lastne različice, skripte ovojnice ali drugega binarnega programa, ki oddaja NDJSON.";
+"editor.agent.advanced" = "Napredno";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Zanka Agenta";
+"settings.agent.description" = "Zaženite harness YNH kot zanko agenta, ki jo poganjajo senzorji. Eksperimentalno.";
+"settings.agent.enable.tab" = "Prikaži zavihek Seje Agenta v stranski vrstici";
+"settings.agent.enable.tab.help" = "Doda zavihek v stransko vrstico s seznamom tekočih in preteklih sej agenta ter dejanje „Zaženi kot Agent“ v vrsticah harness.";
+
+"fleet.sidebar.title" = "Seje agenta";
+"fleet.new.help" = "Zaženi fleet";
+"fleet.new.session.help" = "Nova seja agenta";
+"fleet.refresh.help" = "Znova naloži trajektorije z diska";
+"fleet.open.transcript.help" = "Odpri prepis agenta";
+"fleet.context.run" = "Zaženi…";
+"fleet.context.edit.harness" = "Uredi Harness…";
+"fleet.run.advanced" = "Napredno";
+"fleet.run.cwd.label" = "Delovni imenik";
+"fleet.run.cwd.empty" = "(podeduje trenutni imenik TermQ-a)";
+"fleet.run.cwd.choose" = "Izberi…";
+"fleet.empty.title" = "Ni sej agenta";
+"fleet.empty.body" = "Zaženite eno iz harness-a ali zaženite fleet za vzporedne seje na isti nalogi.";
+"fleet.launch.title" = "Zaženi fleet";
+"fleet.launch.section.config" = "Konfiguracija";
+"fleet.launch.section.task" = "Naloga";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Izberite harness…";
+"fleet.launch.field.harness.empty" = "Nobena harness ni nameščena. Najprej namestite eno z zavihka Harnesses.";
+"fleet.launch.field.sessions" = "Vzporedne seje";
+"fleet.launch.field.base.worktree" = "Osnovna pot worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Opišite nalogo za agenta…";
+"fleet.launch.button" = "Zaženi";
+"fleet.launch.cancel" = "Prekliči";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d deluje";
+"fleet.aggregate.converged" = "%d/%d konvergiralo";
+"fleet.aggregate.idle" = "%d sej";
+"fleet.promote.winner" = "Promoviraj %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Zadnji senzorji";
+"inspector.agent.trajectory" = "Potek";
+"inspector.agent.trajectory.empty" = "Še ni poteka";
+"inspector.agent.trajectory.empty.configure" = "Konfigurirajte agent.loopDriverCommand v nastavitvah in nato pritisnite Zaženi.";
+"inspector.agent.trajectory.empty.run" = "Pritisnite Zaženi za zagon konfiguriranega gonilnika zanke.";
+"inspector.agent.turn" = "Poteza %d";
+"inspector.agent.sensors.all.passed" = "vse opravljeno";
+"inspector.agent.sensors.failed" = "%d neuspešnih";
+"inspector.agent.edit.sensors" = "Uredi senzorje";
+"inspector.agent.turn.approval.title" = "Poteza %d — Preglej povratne informacije";
+"inspector.agent.turn.approval.send" = "Pošlji";
+"inspector.agent.turn.approval.reset" = "Ponastavi";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Prekrivniki senzorjev";
+"overlay.editor.loading" = "Nalaganje senzorjev…";
+"overlay.editor.no.sensors" = "V tem harnessu ni deklariranih senzorjev.";
+"overlay.editor.role.label" = "Vloga";
+"overlay.editor.role.inherited" = "Podedovana";
+"overlay.editor.prompt.harness.label" = "Poziv harness";
+"overlay.editor.prompt.override.label" = "Prepiši";
+"overlay.editor.prompt.override.placeholder" = "Pustite prazno za podedovanje poziva harness";
+"overlay.editor.source.kind.command" = "ukaz";
+"overlay.editor.source.kind.files" = "datoteke";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Shrani";
+"overlay.editor.cancel" = "Prekliči";
+"overlay.editor.error.ynh.not.ready" = "ynh ni pripravljen. Preverite orodja YNH v Nastavitvah.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Orodni verižnik YNH";
 "settings.ynh.title" = "ynh";

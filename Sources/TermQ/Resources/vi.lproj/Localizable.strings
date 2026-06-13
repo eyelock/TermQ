@@ -694,6 +694,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Tạo Harness mới";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Cấu hình";
+"editor.agent.section.budget" = "Ngân sách";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Chế độ";
+"editor.agent.field.interaction" = "Tương tác";
+"editor.agent.field.max.turns" = "Số lượt tối đa";
+"editor.agent.field.max.tokens" = "Token tối đa";
+"editor.agent.field.max.wall.minutes" = "Thời gian tối đa (phút)";
+"editor.agent.field.loop.driver.command" = "Lệnh trình điều khiển vòng lặp";
+"editor.agent.field.loop.driver.command.placeholder" = "Kế thừa giá trị mặc định toàn cục";
+"editor.agent.field.loop.driver.command.help" = "Ghi đè tệp nhị phân mà TermQ chạy làm trình điều khiển vòng lặp tác nhân. Để trống có nghĩa là TermQ sử dụng `ynh agent` từ PATH của bạn — lựa chọn tiêu chuẩn. Trỏ đây đến một bản build tùy chỉnh, script wrapper hoặc tệp nhị phân khác phát ra NDJSON.";
+"editor.agent.advanced" = "Nâng cao";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Vòng lặp Agent";
+"settings.agent.description" = "Chạy harness YNH dưới dạng vòng lặp agent được điều khiển bởi các bộ cảm biến. Thử nghiệm.";
+"settings.agent.enable.tab" = "Hiển thị tab Phên Agent trong thanh bên";
+"settings.agent.enable.tab.help" = "Thêm tab vào thanh bên liệt kê các phiên agent đang chạy và đã qua, cùng hành động “Khởi chạy dưới dạng Agent” trên các hàng harness.";
+
+"fleet.sidebar.title" = "Phiên Agent";
+"fleet.new.help" = "Khởi chạy fleet";
+"fleet.new.session.help" = "Phiên tác nhân mới";
+"fleet.refresh.help" = "Tải lại quỹ đạo từ đĩa";
+"fleet.open.transcript.help" = "Mở bản ghi tác nhân";
+"fleet.context.run" = "Chạy…";
+"fleet.context.edit.harness" = "Chỉnh sửa Harness…";
+"fleet.run.advanced" = "Nâng cao";
+"fleet.run.cwd.label" = "Thư mục làm việc";
+"fleet.run.cwd.empty" = "(kế thừa thư mục hiện tại của TermQ)";
+"fleet.run.cwd.choose" = "Chọn…";
+"fleet.empty.title" = "Chưa có phiên Agent nào";
+"fleet.empty.body" = "Bắt đầu một phiên từ harness hoặc khởi chạy fleet để chạy các phiên song song cho cùng một tác vụ.";
+"fleet.launch.title" = "Khởi chạy fleet";
+"fleet.launch.section.config" = "Cấu hình";
+"fleet.launch.section.task" = "Tác vụ";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Chọn một harness…";
+"fleet.launch.field.harness.empty" = "Chưa có harness nào được cài đặt. Hãy cài đặt một cái từ tab Harnesses trước.";
+"fleet.launch.field.sessions" = "Phiên song song";
+"fleet.launch.field.base.worktree" = "Đường dẫn gốc worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Mô tả tác vụ cho agent…";
+"fleet.launch.button" = "Khởi chạy";
+"fleet.launch.cancel" = "Hủy";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d đang chạy";
+"fleet.aggregate.converged" = "%d/%d đã hội tụ";
+"fleet.aggregate.idle" = "%d phiên";
+"fleet.promote.winner" = "Đề bạt %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Cảm biến cuối";
+"inspector.agent.trajectory" = "Quỹ đạo";
+"inspector.agent.trajectory.empty" = "Chưa có quỹ đạo";
+"inspector.agent.trajectory.empty.configure" = "Cấu hình agent.loopDriverCommand trong defaults, sau đó nhấn Chạy.";
+"inspector.agent.trajectory.empty.run" = "Nhấn Chạy để khởi động trình điều khiển vòng lặp đã cấu hình.";
+"inspector.agent.turn" = "Lượt %d";
+"inspector.agent.sensors.all.passed" = "tất cả đã vượt";
+"inspector.agent.sensors.failed" = "%d thất bại";
+"inspector.agent.edit.sensors" = "Chỉnh sửa cảm biến";
+"inspector.agent.turn.approval.title" = "Lượt %d — Xem lại phản hồi";
+"inspector.agent.turn.approval.send" = "Gửi";
+"inspector.agent.turn.approval.reset" = "Đặt lại";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Lớp phủ cảm biến";
+"overlay.editor.loading" = "Đang tải cảm biến…";
+"overlay.editor.no.sensors" = "Không có cảm biến nào được khai báo trong harness này.";
+"overlay.editor.role.label" = "Vai trò";
+"overlay.editor.role.inherited" = "Kế thừa";
+"overlay.editor.prompt.harness.label" = "Prompt của harness";
+"overlay.editor.prompt.override.label" = "Ghi đè";
+"overlay.editor.prompt.override.placeholder" = "Để trống để kế thừa prompt của harness";
+"overlay.editor.source.kind.command" = "lệnh";
+"overlay.editor.source.kind.files" = "tệp";
+"overlay.editor.source.kind.focus" = "tiêu điểm";
+"overlay.editor.save" = "Lưu";
+"overlay.editor.cancel" = "Hủy";
+"overlay.editor.error.ynh.not.ready" = "ynh chưa sẵn sàng. Kiểm tra chuỗi công cụ YNH trong Cài đặt.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Chuỗi công cụ YNH";
 "settings.ynh.title" = "ynh";

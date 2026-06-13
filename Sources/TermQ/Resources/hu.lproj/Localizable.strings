@@ -693,6 +693,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Új harness létrehozása";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguráció";
+"editor.agent.section.budget" = "Keret";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Mód";
+"editor.agent.field.interaction" = "Interakció";
+"editor.agent.field.max.turns" = "Max. körök";
+"editor.agent.field.max.tokens" = "Max. tokenek";
+"editor.agent.field.max.wall.minutes" = "Max. idő (perc)";
+"editor.agent.field.loop.driver.command" = "Loop-meghajtó parancsa";
+"editor.agent.field.loop.driver.command.placeholder" = "Globális alapértelmezés öröklése";
+"editor.agent.field.loop.driver.command.help" = "Felülírja azt a futtatható fájlt, amelyet a TermQ az ügynök ciklusmeghajtójaként futtat. Az üres mező azt jelenti, hogy a TermQ a PATH-ból veszi a `ynh agent`-et — ez a szokásos választás. Ide írhatja egy egyedi build, wrapper szkript vagy más NDJSON-t kibocsátó bináris elérési útját.";
+"editor.agent.advanced" = "Speciális";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent hurok";
+"settings.agent.description" = "YNH harness futtatása érzékelők által vezérelt agent hurokban. Kísérleti.";
+"settings.agent.enable.tab" = "Agent munkamenetek oldalsáv-fül megjelenítése";
+"settings.agent.enable.tab.help" = "Hozzáad egy oldalsáv-fült, amely felsorolja a folyamatban lévő és múlt agent munkameneteket, és egy „Indítás Agent ként“ műveletet a harness sorokhoz.";
+
+"fleet.sidebar.title" = "Agent munkamenetek";
+"fleet.new.help" = "Fleet futtatás indítása";
+"fleet.new.session.help" = "Új ügynökmunkamenet";
+"fleet.refresh.help" = "Pályák újratöltése lemezről";
+"fleet.open.transcript.help" = "Ügynök átiratának megnyitása";
+"fleet.context.run" = "Futtatás…";
+"fleet.context.edit.harness" = "Harness szerkesztése…";
+"fleet.run.advanced" = "Speciális";
+"fleet.run.cwd.label" = "Munkakönyvtár";
+"fleet.run.cwd.empty" = "(a TermQ aktuális könyvtárát örökli)";
+"fleet.run.cwd.choose" = "Választás…";
+"fleet.empty.title" = "Még nincsenek agent munkamenetek";
+"fleet.empty.body" = "Indítson egyet egy harnessből, vagy indítson fleet-et párhuzamos munkamenetek futtatásához ugyanazon a feladaton.";
+"fleet.launch.title" = "Fleet futtatás indítása";
+"fleet.launch.section.config" = "Konfiguráció";
+"fleet.launch.section.task" = "Feladat";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Válasszon harness-t…";
+"fleet.launch.field.harness.empty" = "Nincsenek telepített harness-ek. Először telepítsen egyet a Harnesses lapfülén.";
+"fleet.launch.field.sessions" = "Párhuzamos munkamenetek";
+"fleet.launch.field.base.worktree" = "Worktree alap elérési útja";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Írja le a feladatot az agent számára…";
+"fleet.launch.button" = "Indítás";
+"fleet.launch.cancel" = "Mégse";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d fut";
+"fleet.aggregate.converged" = "%d/%d konvergált";
+"fleet.aggregate.idle" = "%d munkamenet";
+"fleet.promote.winner" = "%@ előléptetése";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Legutóbbi érzékelők";
+"inspector.agent.trajectory" = "Pálya";
+"inspector.agent.trajectory.empty" = "Még nincs pálya";
+"inspector.agent.trajectory.empty.configure" = "Állítsd be az agent.loopDriverCommand értéket a beállításokban, majd nyomd meg a Futtatás gombot.";
+"inspector.agent.trajectory.empty.run" = "Nyomd meg a Futtatás gombot a konfigurált hurokillesztő elindításához.";
+"inspector.agent.turn" = "%d. kör";
+"inspector.agent.sensors.all.passed" = "mind megfelelt";
+"inspector.agent.sensors.failed" = "%d meghiúsult";
+"inspector.agent.edit.sensors" = "Érzékelők szerkesztése";
+"inspector.agent.turn.approval.title" = "%d. kör — Visszajelzés áttekintése";
+"inspector.agent.turn.approval.send" = "Küldés";
+"inspector.agent.turn.approval.reset" = "Visszaállítás";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Érzékelő átfedések";
+"overlay.editor.loading" = "Érzékelők betöltése…";
+"overlay.editor.no.sensors" = "Ebben a harness-ben nincsenek érzékelők deklarálva.";
+"overlay.editor.role.label" = "Szerepkör";
+"overlay.editor.role.inherited" = "Örökölt";
+"overlay.editor.prompt.harness.label" = "Harness prompt";
+"overlay.editor.prompt.override.label" = "Felülírás";
+"overlay.editor.prompt.override.placeholder" = "Hagyd üresen a harness prompt örökléséhez";
+"overlay.editor.source.kind.command" = "parancs";
+"overlay.editor.source.kind.files" = "fájlok";
+"overlay.editor.source.kind.focus" = "fókusz";
+"overlay.editor.save" = "Mentés";
+"overlay.editor.cancel" = "Mégse";
+"overlay.editor.error.ynh.not.ready" = "ynh nem áll készen. Ellenőrizd a YNH eszközláncot a Beállításokban.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH harness eszközlánc";
 "settings.ynh.title" = "ynh";

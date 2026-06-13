@@ -56,6 +56,15 @@ class BoardViewModel: ObservableObject {
         self.tabManager = TabManager()
         self.board = persistence.loadBoard()
 
+        // Any agent session that was mid-run when the app last quit is now
+        // an orphan — its loop driver process is gone and we no longer have
+        // its captured stderr/exit code. Reset transient and error states
+        // to .idle so the UI doesn't claim "running" or show a red pill
+        // with no banner to explain it. Terminal "I finished cleanly"
+        // states (.converged, .stuck) survive so users can still see how
+        // a session resolved across launches.
+        resetStaleAgentStatuses()
+
         // Configure TabManager callbacks after all properties initialized
         tabManager.configure(
             board: { [weak self] in self?.board ?? Board() },
@@ -678,7 +687,7 @@ extension BoardViewModel: BoardViewModelProtocol {}
 
 // MARK: - New Terminal Defaults
 
-private struct NewTerminalDefaults {
+struct NewTerminalDefaults {
     let workingDirectory: String
     let allowAutorun: Bool
     let allowOscClipboard: Bool
@@ -686,7 +695,7 @@ private struct NewTerminalDefaults {
 }
 
 extension BoardViewModel {
-    fileprivate func newTerminalDefaults() -> NewTerminalDefaults {
+    func newTerminalDefaults() -> NewTerminalDefaults {
         let store = SettingsStore.shared
         return NewTerminalDefaults(
             workingDirectory: store.defaultWorkingDirectory,

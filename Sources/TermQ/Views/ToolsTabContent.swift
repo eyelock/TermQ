@@ -45,6 +45,7 @@ struct ToolsTabContent: View {
         tmuxSection
         ghSection
         ynhSection
+        agentSection
     }
 }
 

@@ -64,6 +64,11 @@ public enum ToolParity {
             "remove_worktree",
             "Same reasoning as create_worktree — defer to `git worktree remove`."
         ),
+        (
+            "termq_agents",
+            "MCP-only — exposes live agent session state for an external LLM to consume. "
+                + "The same information is shown in the Agent Sessions sidebar; no shell pipeline use case."
+        ),
     ]
 
     /// All names known to the parity registry.

@@ -703,6 +703,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Creare harness nou";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Configurare";
+"editor.agent.section.budget" = "Buget";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Mod";
+"editor.agent.field.interaction" = "Interacțiune";
+"editor.agent.field.max.turns" = "Ture max.";
+"editor.agent.field.max.tokens" = "Tokenuri max.";
+"editor.agent.field.max.wall.minutes" = "Timp max. (min)";
+"editor.agent.field.loop.driver.command" = "Comanda driverului de buclă";
+"editor.agent.field.loop.driver.command.placeholder" = "Moștenește valoarea implicită globală";
+"editor.agent.field.loop.driver.command.help" = "Suprascrie executabilul pe care TermQ îl rulează ca driver al buclei agentului. Gol înseamnă că TermQ folosește `ynh agent` din PATH-ul dvs. — alegerea standard. Indicați aici un build personalizat, un script wrapper sau un binar diferit care emite NDJSON.";
+"editor.agent.advanced" = "Avansat";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Buclă Agent";
+"settings.agent.description" = "Rulează un harness YNH ca buclă agent condusă de senzori. Experimental.";
+"settings.agent.enable.tab" = "Afişează fila Sesiuni Agent în bara laterală";
+"settings.agent.enable.tab.help" = "Adaugă o filă în bara laterală cu sesiunile agent în curs şi anterioare şi o acțiune „Lansare ca Agent“ pe rândurile harness.";
+
+"fleet.sidebar.title" = "Sesiuni agent";
+"fleet.new.help" = "Lansează execuție fleet";
+"fleet.new.session.help" = "Sesiune nouă de agent";
+"fleet.refresh.help" = "Reîncarcă traiectoriile de pe disc";
+"fleet.open.transcript.help" = "Deschide transcrierea agentului";
+"fleet.context.run" = "Rulează…";
+"fleet.context.edit.harness" = "Editează Harness…";
+"fleet.run.advanced" = "Avansat";
+"fleet.run.cwd.label" = "Director de lucru";
+"fleet.run.cwd.empty" = "(moștenește directorul curent al TermQ)";
+"fleet.run.cwd.choose" = "Alegeți…";
+"fleet.empty.title" = "Nicio sesiune agent încă";
+"fleet.empty.body" = "Porniți una dintr-un harness sau lansați un fleet pentru sesiuni paralele pe aceeași sarcină.";
+"fleet.launch.title" = "Lansează execuție fleet";
+"fleet.launch.section.config" = "Configurație";
+"fleet.launch.section.task" = "Sarcină";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Alegeți un harness…";
+"fleet.launch.field.harness.empty" = "Nu sunt harness-uri instalate. Instalează mai întâi unul din fila Harnesses.";
+"fleet.launch.field.sessions" = "Sesiuni paralele";
+"fleet.launch.field.base.worktree" = "Cale bază worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Descrieți sarcina pentru agent…";
+"fleet.launch.button" = "Lansează";
+"fleet.launch.cancel" = "Anulare";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d în curs";
+"fleet.aggregate.converged" = "%d/%d convergente";
+"fleet.aggregate.idle" = "%d sesiuni";
+"fleet.promote.winner" = "Promovează %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Ultimii senzori";
+"inspector.agent.trajectory" = "Traiectorie";
+"inspector.agent.trajectory.empty" = "Nicio traiectorie încă";
+"inspector.agent.trajectory.empty.configure" = "Configurați agent.loopDriverCommand în preferințe, apoi apăsați Rulare.";
+"inspector.agent.trajectory.empty.run" = "Apăsați Rulare pentru a porni driverul de buclă configurat.";
+"inspector.agent.turn" = "Tur %d";
+"inspector.agent.sensors.all.passed" = "toate trecute";
+"inspector.agent.sensors.failed" = "%d eșuate";
+"inspector.agent.edit.sensors" = "Editare senzori";
+"inspector.agent.turn.approval.title" = "Tur %d — Revizuire feedback";
+"inspector.agent.turn.approval.send" = "Trimite";
+"inspector.agent.turn.approval.reset" = "Resetare";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Suprapuneri senzori";
+"overlay.editor.loading" = "Se încarcă senzorii…";
+"overlay.editor.no.sensors" = "Nu sunt senzori declarați în acest harness.";
+"overlay.editor.role.label" = "Rol";
+"overlay.editor.role.inherited" = "Moștenit";
+"overlay.editor.prompt.harness.label" = "Prompt harness";
+"overlay.editor.prompt.override.label" = "Suprascriere";
+"overlay.editor.prompt.override.placeholder" = "Lăsați gol pentru a moșteni promptul harness";
+"overlay.editor.source.kind.command" = "comandă";
+"overlay.editor.source.kind.files" = "fișiere";
+"overlay.editor.source.kind.focus" = "focus";
+"overlay.editor.save" = "Salvare";
+"overlay.editor.cancel" = "Anulare";
+"overlay.editor.error.ynh.not.ready" = "ynh nu este pregătit. Verificați lanțul de instrumente YNH în Preferințe.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Lanț de instrumente YNH";
 "settings.ynh.title" = "ynh";

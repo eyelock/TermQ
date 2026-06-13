@@ -693,6 +693,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "יצירת Harness חדש";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "הגדרות";
+"editor.agent.section.budget" = "תקציב";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "מצב";
+"editor.agent.field.interaction" = "אינטראקציה";
+"editor.agent.field.max.turns" = "מקס׳ תורות";
+"editor.agent.field.max.tokens" = "מקס׳ tokens";
+"editor.agent.field.max.wall.minutes" = "מקס׳ זמן (דק׳)";
+"editor.agent.field.loop.driver.command" = "פקודת מנהל הלולאה";
+"editor.agent.field.loop.driver.command.placeholder" = "ירש ברירת מחדל גלובלית";
+"editor.agent.field.loop.driver.command.help" = "מחליף את הקובץ הבינארי שמריץ TermQ כמנהל הלולאה של הסוכן. ריק פירושו שTermQ משתמש ב-`ynh agent` מה-PATH שלך — הבחירה הסטנדרטית. הצבע כאן על build מותאם, סקריפט עטיפה, או קובץ בינארי אחר שפולט NDJSON.";
+"editor.agent.advanced" = "מתקדם";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "לולאת Agent";
+"settings.agent.description" = "הפעל harness של YNH כלולאת agent מונעת על ידי חישנים. נִסיוני.";
+"settings.agent.enable.tab" = "הצג כרטיסיית סשני Agent בסרגל הצד";
+"settings.agent.enable.tab.help" = "מוסיף כרטיסיית לסרגל הצד המרשימת את סשני Agent הפעילים והשלמים, ופעולה הפעל כ-Agent בשורות harness.";
+
+"fleet.sidebar.title" = "סשני Agent";
+"fleet.new.help" = "הפעל ריצת fleet";
+"fleet.new.session.help" = "סשן סוכן חדש";
+"fleet.refresh.help" = "טען מחדש מסלולים מהדיסק";
+"fleet.open.transcript.help" = "פתח תמליל סוכן";
+"fleet.context.run" = "הפעל…";
+"fleet.context.edit.harness" = "ערוך Harness…";
+"fleet.run.advanced" = "מתקדם";
+"fleet.run.cwd.label" = "ספריית עבודה";
+"fleet.run.cwd.empty" = "(יורש את התיקייה הנוכחית של TermQ)";
+"fleet.run.cwd.choose" = "בחר…";
+"fleet.empty.title" = "אין עדיין סשני Agent";
+"fleet.empty.body" = "התחל סשן מ-harness, או הפעל fleet להרצת סשנים מקבילים על אותה משימה.";
+"fleet.launch.title" = "הפעל ריצת fleet";
+"fleet.launch.section.config" = "תצורה";
+"fleet.launch.section.task" = "משימה";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "בחר harness…";
+"fleet.launch.field.harness.empty" = "אין harnesses מותקנים. התקן אחד תחילה מהלשונית Harnesses.";
+"fleet.launch.field.sessions" = "סשנים מקבילים";
+"fleet.launch.field.base.worktree" = "נתיב בסיס worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "תאר את המשימה עבור ה-agent…";
+"fleet.launch.button" = "הפעל";
+"fleet.launch.cancel" = "ביטול";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d פועלים";
+"fleet.aggregate.converged" = "%d/%d התכנסו";
+"fleet.aggregate.idle" = "%d סשנים";
+"fleet.promote.winner" = "קדם %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "חישנים אחרונים";
+"inspector.agent.trajectory" = "מסלול";
+"inspector.agent.trajectory.empty" = "אין מסלול עדיין";
+"inspector.agent.trajectory.empty.configure" = "הגדר את agent.loopDriverCommand בהגדרות ואז לחץ על הפעל.";
+"inspector.agent.trajectory.empty.run" = "לחץ על הפעל כדי להפעיל את מנהל הלולאה המוגדר.";
+"inspector.agent.turn" = "תור %d";
+"inspector.agent.sensors.all.passed" = "הכל עבר";
+"inspector.agent.sensors.failed" = "%d נכשלו";
+"inspector.agent.edit.sensors" = "עריכת חישנים";
+"inspector.agent.turn.approval.title" = "סבב %d — סקירת משוב";
+"inspector.agent.turn.approval.send" = "שלח";
+"inspector.agent.turn.approval.reset" = "אפס";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "שכבות-על של חישנים";
+"overlay.editor.loading" = "טוען חישנים…";
+"overlay.editor.no.sensors" = "לא הוכרזו חישנים ב-harness זה.";
+"overlay.editor.role.label" = "תפקיד";
+"overlay.editor.role.inherited" = "עוּבַּר";
+"overlay.editor.prompt.harness.label" = "הנחיית harness";
+"overlay.editor.prompt.override.label" = "דרוס";
+"overlay.editor.prompt.override.placeholder" = "השאר ריק לירושת הנחיית harness";
+"overlay.editor.source.kind.command" = "פקודה";
+"overlay.editor.source.kind.files" = "קבצים";
+"overlay.editor.source.kind.focus" = "מיקוד";
+"overlay.editor.save" = "שמור";
+"overlay.editor.cancel" = "ביטול";
+"overlay.editor.error.ynh.not.ready" = "ynh אינו מוכן. בדוק את שרשרת הכלים YNH בהגדרות.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "שרשרת כלים YNH";
 "settings.ynh.title" = "ynh";
