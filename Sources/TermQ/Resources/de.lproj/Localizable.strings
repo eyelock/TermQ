@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Nächstes angeheftetes Terminal";
 "menu.previous.pinned" = "Vorheriges angeheftetes Terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Schriftgröße vergrößern";
+"menu.font.size.decrease" = "Schriftgröße verkleinern";
+"menu.font.size.reset" = "Schriftgröße zurücksetzen";
 
 
 // MARK: - Command Palette

@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Következő rögzített terminál";
 "menu.previous.pinned" = "Előző rögzített terminál";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Betűméret növelése";
+"menu.font.size.decrease" = "Betűméret csökkentése";
+"menu.font.size.reset" = "Betűméret visszaállítása";
 
 
 // MARK: - Command Palette

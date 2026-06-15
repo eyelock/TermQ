@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Nästa fästa terminal";
 "menu.previous.pinned" = "Föregående fästa terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Öka teckenstorlek";
+"menu.font.size.decrease" = "Minska teckenstorlek";
+"menu.font.size.reset" = "Återställ teckenstorlek";
 "menu.toggle.sidebar" = "Växla sidofält";
 
 

@@ -545,6 +545,7 @@ struct ContentView: View {
             }
             .navigationTitle(Strings.appName)
             .focusedSceneValue(\.terminalActions, terminalActions)
+            .background { fontZoomShortcutAliases }
         }
         .onAppear {
             let count = NSApplication.shared.windows.count
@@ -560,6 +561,19 @@ extension ContentView {
     /// MCP server status indicator
     var mcpStatusIndicator: some View {
         MCPStatusView(isWired: viewModel.selectedCard?.isWired ?? false)
+    }
+
+    /// Hidden buttons that register extra font-zoom key equivalents the menu
+    /// items can't express. The "Increase Font Size" menu item shows the
+    /// conventional ⌘+ (typed as Shift+=), so this also binds the bare ⌘=
+    /// that terminal users reach for. Rendered hidden — they exist purely to
+    /// carry the shortcut.
+    @ViewBuilder
+    private var fontZoomShortcutAliases: some View {
+        Button("") { viewModel.adjustSelectedFontSize(by: 1) }
+            .keyboardShortcut("=", modifiers: .command)
+            .disabled(viewModel.selectedCard == nil)
+            .hidden()
     }
 
     var terminalActions: TerminalActions {
@@ -624,7 +638,10 @@ extension ContentView {
             },
             toggleSidebar: {
                 isSidebarCollapsed.toggle()
-            }
+            },
+            increaseFontSize: { viewModel.adjustSelectedFontSize(by: 1) },
+            decreaseFontSize: { viewModel.adjustSelectedFontSize(by: -1) },
+            resetFontSize: { viewModel.resetSelectedFontSize() }
         )
     }
 
@@ -724,7 +741,6 @@ extension ContentView {
             )
         }
     }
-
 
     /// Launch native Terminal.app at the specified directory
     func launchNativeTerminal(at directory: String? = nil) {

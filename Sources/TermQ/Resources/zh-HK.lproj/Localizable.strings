@@ -104,6 +104,9 @@
 "menu.next.pinned" = "下一個釘選終端機";
 "menu.previous.pinned" = "上一個釘選終端機";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "增大字型大小";
+"menu.font.size.decrease" = "減小字型大小";
+"menu.font.size.reset" = "重置字型大小";
 
 
 // MARK: - Command Palette

@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Terminal ghim tiếp theo";
 "menu.previous.pinned" = "Terminal ghim trước đó";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Tăng cỡ chữ";
+"menu.font.size.decrease" = "Giảm cỡ chữ";
+"menu.font.size.reset" = "Đặt lại cỡ chữ";
 "menu.toggle.sidebar" = "Bật/tắt thanh bên";
 
 

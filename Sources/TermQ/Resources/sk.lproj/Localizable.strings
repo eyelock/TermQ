@@ -104,6 +104,9 @@
 "menu.next.pinned" = "Ďalší pripnutý terminál";
 "menu.previous.pinned" = "Predchádzajúci pripnutý terminál";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Zväčšiť veľkosť písma";
+"menu.font.size.decrease" = "Zmenšiť veľkosť písma";
+"menu.font.size.reset" = "Obnoviť veľkosť písma";
 
 
 // MARK: - Command Palette

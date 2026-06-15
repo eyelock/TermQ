@@ -105,6 +105,9 @@
 "menu.next.pinned" = "अगला पिन किया टर्मिनल";
 "menu.previous.pinned" = "पिछला पिन किया टर्मिनल";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "फ़ॉन्ट आकार बढ़ाएं";
+"menu.font.size.decrease" = "फ़ॉन्ट आकार घटाएं";
+"menu.font.size.reset" = "फ़ॉन्ट आकार रीसेट करें";
 
 
 // MARK: - Command Palette

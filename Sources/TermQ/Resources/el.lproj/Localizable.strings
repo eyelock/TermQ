@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Επόμενο καρφιτσωμένο τερματικό";
 "menu.previous.pinned" = "Προηγούμενο καρφιτσωμένο τερματικό";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Μεγαλύτερη γραμματοσειρά";
+"menu.font.size.decrease" = "Μικρότερη γραμματοσειρά";
+"menu.font.size.reset" = "Επαναφορά μεγέθους γραμματοσειράς";
 
 
 // MARK: - Command Palette

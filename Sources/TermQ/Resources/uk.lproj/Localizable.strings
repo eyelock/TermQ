@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Наступний закріплений термінал";
 "menu.previous.pinned" = "Попередній закріплений термінал";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Збільшити розмір шрифту";
+"menu.font.size.decrease" = "Зменшити розмір шрифту";
+"menu.font.size.reset" = "Скинути розмір шрифту";
 "menu.toggle.sidebar" = "Показати/сховати бічну панель";
 
 

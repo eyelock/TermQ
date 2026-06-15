@@ -105,6 +105,9 @@
 "menu.next.pinned" = "המסוף המוצמד הבא";
 "menu.previous.pinned" = "המסוף המוצמד הקודם";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "הגדל גודל גופן";
+"menu.font.size.decrease" = "הקטן גודל גופן";
+"menu.font.size.reset" = "אפס גודל גופן";
 
 
 // MARK: - Command Palette

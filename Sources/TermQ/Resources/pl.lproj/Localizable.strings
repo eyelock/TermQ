@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Następny przypięty terminal";
 "menu.previous.pinned" = "Poprzedni przypięty terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Zwiększ rozmiar czcionki";
+"menu.font.size.decrease" = "Zmniejsz rozmiar czcionki";
+"menu.font.size.reset" = "Resetuj rozmiar czcionki";
 
 
 // MARK: - Command Palette
