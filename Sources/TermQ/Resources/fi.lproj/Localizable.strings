@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Seuraava kiinnitetty terminaali";
 "menu.previous.pinned" = "Edellinen kiinnitetty terminaali";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Suurenna kirjasinkokoa";
+"menu.font.size.decrease" = "Pienennä kirjasinkokoa";
+"menu.font.size.reset" = "Palauta kirjasinko";
 
 
 // MARK: - Command Palette

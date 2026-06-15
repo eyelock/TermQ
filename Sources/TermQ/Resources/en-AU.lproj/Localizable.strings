@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Next Pinned Terminal";
 "menu.previous.pinned" = "Previous Pinned Terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Increase Font Size";
+"menu.font.size.decrease" = "Decrease Font Size";
+"menu.font.size.reset" = "Reset Font Size";
 
 
 // MARK: - Command Palette

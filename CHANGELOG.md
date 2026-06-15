@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.8] - 2026-06-15
+
+### Added — Terminal UI
+
+- **Terminal font-size zoom.** Increase, decrease, and reset the focused terminal's font size live from the **View** menu or with ⌘+ / ⌘− / ⌘0 (⌘= also zooms in). The change applies to the running session immediately — no restart — and persists as a per-terminal override; ⌘0 clears the override back to the global default. Range is 6–72 pt, matching the per-terminal Font Size slider in the terminal editor.
+
 ## [0.11.7] - 2026-06-13
 
 ### Changed — Terminal

@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Neste festede terminal";
 "menu.previous.pinned" = "Forrige festede terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Øk skriftstørrelse";
+"menu.font.size.decrease" = "Reduser skriftstørrelse";
+"menu.font.size.reset" = "Tilbakestill skriftstørrelse";
 
 
 // MARK: - Command Palette

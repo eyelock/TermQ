@@ -105,6 +105,9 @@
 "menu.next.pinned" = "الطرفية المثبتة التالية";
 "menu.previous.pinned" = "الطرفية المثبتة السابقة";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "تكبير حجم الخط";
+"menu.font.size.decrease" = "تصغير حجم الخط";
+"menu.font.size.reset" = "إعادة ضبط حجم الخط";
 
 
 // MARK: - Command Palette

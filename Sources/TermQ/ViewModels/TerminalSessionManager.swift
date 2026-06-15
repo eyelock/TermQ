@@ -176,14 +176,9 @@ class TerminalSessionManager: ObservableObject {
         }
 
         // Configure terminal appearance with custom font if specified
-        let terminalFont: NSFont
-        let size = settings.effectiveFontSize(card: card.fontSize)
-        if !card.fontName.isEmpty, let customFont = NSFont(name: card.fontName, size: size) {
-            terminalFont = customFont
-        } else {
-            terminalFont = NSFont.monospacedSystemFont(ofSize: size, weight: .regular)
-        }
-        terminal.font = terminalFont
+        terminal.font = makeTerminalFont(
+            name: card.fontName,
+            size: settings.effectiveFontSize(card: card.fontSize))
 
         // Apply theme (per-terminal override or user-layer default)
         let theme = TerminalTheme.theme(for: settings.effectiveThemeId(card: card.themeId))
@@ -828,6 +823,38 @@ class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
                 userInfo: userInfo
             )
             onExit()
+        }
+    }
+}
+
+// MARK: - Font Application
+
+extension TerminalSessionManager {
+    /// Build the terminal font for a card, honouring the per-card custom
+    /// font name when set and falling back to the monospaced system font.
+    func makeTerminalFont(name fontName: String, size: CGFloat) -> NSFont {
+        if !fontName.isEmpty, let customFont = NSFont(name: fontName, size: size) {
+            return customFont
+        }
+        return NSFont.monospacedSystemFont(ofSize: size, weight: .regular)
+    }
+
+    /// Re-apply the card's resolved font to its live terminal view(s).
+    ///
+    /// Drives the runtime font-size zoom commands. SwiftTerm's `font`
+    /// setter recomputes cell dimensions and reflows the grid (and the
+    /// PTY size), so the change is immediate without recreating the
+    /// session. Control-mode panes render independently of the primary
+    /// terminal view, so they are updated too.
+    func applyFont(to card: TerminalCard) {
+        let font = makeTerminalFont(
+            name: card.fontName,
+            size: settings.effectiveFontSize(card: card.fontSize))
+        sessions[card.id]?.terminal.font = font
+        if let panes = paneTerminals[card.id] {
+            for paneView in panes.values {
+                paneView.font = font
+            }
         }
     }
 }

@@ -104,6 +104,9 @@
 "menu.next.pinned" = "下一个固定终端";
 "menu.previous.pinned" = "上一个固定终端";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "增大字体大小";
+"menu.font.size.decrease" = "减小字体大小";
+"menu.font.size.reset" = "重置字体大小";
 
 
 // MARK: - Command Palette

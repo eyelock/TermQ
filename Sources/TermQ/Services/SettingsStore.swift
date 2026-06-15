@@ -28,6 +28,8 @@ public final class SettingsStore {
     public enum Defaults {
         public static let safePaste = true
         public static let fontSize: CGFloat = 13
+        public static let minFontSize: CGFloat = 6
+        public static let maxFontSize: CGFloat = 72
         public static let themeId = "default-dark"
         public static let backend: TerminalBackend = .direct
 
@@ -374,6 +376,17 @@ public final class SettingsStore {
 
     public func effectiveFontSize(card: CGFloat?) -> CGFloat {
         card ?? fontSize
+    }
+
+    /// The supported range for terminal font sizes. Shared by the per-card
+    /// editor slider and the runtime font-size zoom commands so both stay
+    /// in agreement about the representable bounds.
+    public static let fontSizeRange: ClosedRange<CGFloat> =
+        Defaults.minFontSize...Defaults.maxFontSize
+
+    /// Clamp a font size to `fontSizeRange`.
+    public static func clampFontSize(_ size: CGFloat) -> CGFloat {
+        min(max(size, Defaults.minFontSize), Defaults.maxFontSize)
     }
 
     public func effectiveThemeId(card: String?) -> String {

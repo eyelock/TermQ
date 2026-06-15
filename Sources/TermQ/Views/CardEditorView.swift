@@ -222,7 +222,7 @@ struct CardEditorView: View {
                 let size = overrideValue(for: \.fontSize, defaultValue: { settings.fontSize })
                 HStack {
                     Text(Strings.Editor.fieldFontSize)
-                    Slider(value: size, in: 9...24, step: 1)
+                    Slider(value: size, in: SettingsStore.fontSizeRange, step: 1)
                     Text("\(Int(size.wrappedValue)) pt")
                         .frame(width: 40)
                 }
