@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Naslednji pripeti terminal";
 "menu.previous.pinned" = "Prejšnji pripeti terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Povečaj velikost pisave";
+"menu.font.size.decrease" = "Zmanjšaj velikost pisave";
+"menu.font.size.reset" = "Ponastavi velikost pisave";
 "menu.toggle.sidebar" = "Preklopi stransko vrstico";
 
 

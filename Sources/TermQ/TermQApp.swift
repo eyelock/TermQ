@@ -57,6 +57,31 @@ struct TermQApp: App {
                 .keyboardShortcut("w", modifiers: .command)
             }
 
+            // View menu — terminal text-size controls. macOS convention
+            // places these under View (cf. Messages, Safari, Terminal), so
+            // they slot in beside the system "Enter Full Screen" item.
+            CommandGroup(after: .sidebar) {
+                Button(Strings.Menu.increaseFontSize) {
+                    terminalActions?.increaseFontSize()
+                }
+                .keyboardShortcut("+", modifiers: .command)
+                .disabled(terminalActions == nil)
+
+                Button(Strings.Menu.decreaseFontSize) {
+                    terminalActions?.decreaseFontSize()
+                }
+                .keyboardShortcut("-", modifiers: .command)
+                .disabled(terminalActions == nil)
+
+                Button(Strings.Menu.resetFontSize) {
+                    terminalActions?.resetFontSize()
+                }
+                .keyboardShortcut("0", modifiers: .command)
+                .disabled(terminalActions == nil)
+
+                Divider()
+            }
+
             // Utilities menu — developer tools available in all builds
             CommandMenu(Strings.Menu.utilities) {
                 Button(Strings.Menu.utilitiesLogging) {

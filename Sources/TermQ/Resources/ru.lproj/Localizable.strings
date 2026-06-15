@@ -104,6 +104,9 @@
 "menu.next.pinned" = "Следующий закреплённый терминал";
 "menu.previous.pinned" = "Предыдущий закреплённый терминал";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Увеличить размер шрифта";
+"menu.font.size.decrease" = "Уменьшить размер шрифта";
+"menu.font.size.reset" = "Сбросить размер шрифта";
 
 
 // MARK: - Command Palette

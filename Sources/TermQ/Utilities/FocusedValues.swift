@@ -34,6 +34,12 @@ struct TerminalActions {
     let showBin: () -> Void
     /// Toggle the worktree sidebar open/closed
     let toggleSidebar: () -> Void
+    /// Increase the active terminal's font size by one step
+    let increaseFontSize: () -> Void
+    /// Decrease the active terminal's font size by one step
+    let decreaseFontSize: () -> Void
+    /// Reset the active terminal's font size to the global default
+    let resetFontSize: () -> Void
 }
 
 struct TerminalActionsKey: FocusedValueKey {

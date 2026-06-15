@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Sljedeći prikvačeni terminal";
 "menu.previous.pinned" = "Prethodni prikvačeni terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Povećaj veličinu fonta";
+"menu.font.size.decrease" = "Smanji veličinu fonta";
+"menu.font.size.reset" = "Poništi veličinu fonta";
 
 
 // MARK: - Command Palette

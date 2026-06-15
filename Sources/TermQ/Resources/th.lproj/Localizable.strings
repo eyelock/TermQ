@@ -105,6 +105,9 @@
 "menu.next.pinned" = "เทอร์มินัลปักหมุดถัดไป";
 "menu.previous.pinned" = "เทอร์มินัลปักหมุดก่อนหน้า";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "เพิ่มขนาดฟอนต์";
+"menu.font.size.decrease" = "ลดขนาดฟอนต์";
+"menu.font.size.reset" = "รีเซ็ตขนาดฟอนต์";
 "menu.toggle.sidebar" = "สลับแถบด้านข้าง";
 
 

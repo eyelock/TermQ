@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Volgende vastgezette terminal";
 "menu.previous.pinned" = "Vorige vastgezette terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Tekengrootte vergroten";
+"menu.font.size.decrease" = "Tekengrootte verkleinen";
+"menu.font.size.reset" = "Tekengrootte herstellen";
 
 
 // MARK: - Command Palette

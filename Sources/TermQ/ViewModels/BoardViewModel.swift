@@ -697,6 +697,39 @@ extension BoardViewModel {
     }
 }
 
+// MARK: - Font Size
+
+extension BoardViewModel {
+    /// Adjust the selected terminal's font size by `delta` points, clamped
+    /// to `SettingsStore.fontSizeRange`, persisting it as a per-card override
+    /// and applying it to the live terminal. No-op when nothing is selected
+    /// or the clamp would leave the size unchanged (already at a bound).
+    func adjustSelectedFontSize(by delta: CGFloat) {
+        guard let card = selectedCard else { return }
+        let current = SettingsStore.shared.effectiveFontSize(card: card.fontSize)
+        let newSize = SettingsStore.clampFontSize(current + delta)
+        // Compare against the resolved size, not the raw optional override:
+        // this also no-ops when an inheriting card is already at a clamp
+        // bound, avoiding redundant override writes + saves.
+        guard newSize != current else { return }
+        card.fontSize = newSize
+        objectWillChange.send()
+        save()
+        TerminalSessionManager.shared.applyFont(to: card)
+    }
+
+    /// Clear the selected terminal's font-size override, returning it to the
+    /// global default, and apply it to the live terminal. No-op when nothing
+    /// is selected or no override is set.
+    func resetSelectedFontSize() {
+        guard let card = selectedCard, card.fontSize != nil else { return }
+        card.fontSize = nil
+        objectWillChange.send()
+        save()
+        TerminalSessionManager.shared.applyFont(to: card)
+    }
+}
+
 // MARK: - Private helpers
 
 private func nextTransientTitle(base: String?, existing: Set<String>) -> String {
