@@ -104,6 +104,9 @@
 "menu.next.pinned" = "Următorul terminal fixat";
 "menu.previous.pinned" = "Terminalul fixat anterior";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Mărire dimensiune font";
+"menu.font.size.decrease" = "Micșorare dimensiune font";
+"menu.font.size.reset" = "Resetare dimensiune font";
 
 
 // MARK: - Command Palette

@@ -104,6 +104,9 @@
 "menu.next.pinned" = "次のピン留めターミナル";
 "menu.previous.pinned" = "前のピン留めターミナル";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "フォントサイズを拡大";
+"menu.font.size.decrease" = "フォントサイズを縮小";
+"menu.font.size.reset" = "フォントサイズをリセット";
 
 
 // MARK: - Command Palette

@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Següent terminal fixat";
 "menu.previous.pinned" = "Anterior terminal fixat";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Augmenta la mida de la lletra";
+"menu.font.size.decrease" = "Redueix la mida de la lletra";
+"menu.font.size.reset" = "Restableix la mida de la lletra";
 
 
 // MARK: - Command Palette

@@ -104,6 +104,9 @@
 "menu.next.pinned" = "Terminale fissato successivo";
 "menu.previous.pinned" = "Terminale fissato precedente";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Aumenta dimensione carattere";
+"menu.font.size.decrease" = "Diminuisci dimensione carattere";
+"menu.font.size.reset" = "Ripristina dimensione carattere";
 
 
 // MARK: - Command Palette

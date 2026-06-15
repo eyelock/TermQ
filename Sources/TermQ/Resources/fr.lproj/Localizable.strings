@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Terminal épinglé suivant";
 "menu.previous.pinned" = "Terminal épinglé précédent";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Augmenter la taille du texte";
+"menu.font.size.decrease" = "Diminuer la taille du texte";
+"menu.font.size.reset" = "Réinitialiser la taille du texte";
 
 
 // MARK: - Command Palette

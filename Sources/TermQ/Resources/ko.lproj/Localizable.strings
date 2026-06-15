@@ -105,6 +105,9 @@
 "menu.next.pinned" = "다음 고정 터미널";
 "menu.previous.pinned" = "이전 고정 터미널";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "글꼴 크기 늘리기";
+"menu.font.size.decrease" = "글꼴 크기 줄이기";
+"menu.font.size.reset" = "글꼴 크기 재설정";
 
 
 // MARK: - Command Palette

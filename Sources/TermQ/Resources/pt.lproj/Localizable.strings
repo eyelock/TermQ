@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Próximo terminal fixado";
 "menu.previous.pinned" = "Terminal fixado anterior";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Aumentar tamanho da fonte";
+"menu.font.size.decrease" = "Diminuir tamanho da fonte";
+"menu.font.size.reset" = "Restaurar tamanho da fonte";
 
 
 // MARK: - Command Palette

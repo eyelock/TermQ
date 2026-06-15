@@ -260,6 +260,9 @@ enum Strings {
         static var nextPinned: String { localized("menu.next.pinned") }
         static var previousPinned: String { localized("menu.previous.pinned") }
         static var checkForUpdates: String { localized("menu.check.for.updates") }
+        static var increaseFontSize: String { localized("menu.font.size.increase") }
+        static var decreaseFontSize: String { localized("menu.font.size.decrease") }
+        static var resetFontSize: String { localized("menu.font.size.reset") }
     }
 
     // MARK: - Command Palette

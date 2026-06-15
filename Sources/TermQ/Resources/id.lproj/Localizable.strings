@@ -104,6 +104,9 @@
 "menu.next.pinned" = "Terminal Tersemat Berikutnya";
 "menu.previous.pinned" = "Terminal Tersemat Sebelumnya";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Perbesar Ukuran Font";
+"menu.font.size.decrease" = "Perkecil Ukuran Font";
+"menu.font.size.reset" = "Atur Ulang Ukuran Font";
 
 
 // MARK: - Command Palette

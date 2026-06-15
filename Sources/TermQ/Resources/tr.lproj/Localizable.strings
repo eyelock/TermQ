@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Sonraki Sabitlenmiş Terminal";
 "menu.previous.pinned" = "Önceki Sabitlenmiş Terminal";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Yazı Tipi Boyutunu Artır";
+"menu.font.size.decrease" = "Yazı Tipi Boyutunu Azalt";
+"menu.font.size.reset" = "Yazı Tipi Boyutunu Sıfırla";
 "menu.toggle.sidebar" = "Kenar Çubuğunu Aç/Kapat";
 
 

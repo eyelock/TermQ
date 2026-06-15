@@ -105,6 +105,9 @@
 "menu.next.pinned" = "Terminal Tersemat Seterusnya";
 "menu.previous.pinned" = "Terminal Tersemat Sebelumnya";
 "menu.check.for.updates" = "Check for Updates...";
+"menu.font.size.increase" = "Besarkan Saiz Fon";
+"menu.font.size.decrease" = "Kecilkan Saiz Fon";
+"menu.font.size.reset" = "Tetapkan Semula Saiz Fon";
 
 
 // MARK: - Command Palette
