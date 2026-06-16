@@ -695,6 +695,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Utwórz nową wiązkę";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguracja";
+"editor.agent.section.budget" = "Budżet";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Tryb";
+"editor.agent.field.interaction" = "Interakcja";
+"editor.agent.field.max.turns" = "Maks. rund";
+"editor.agent.field.max.tokens" = "Maks. tokenów";
+"editor.agent.field.max.wall.minutes" = "Maks. czas (min)";
+"editor.agent.field.loop.driver.command" = "Polecenie sterownika pętli";
+"editor.agent.field.loop.driver.command.placeholder" = "Dziedzicz globalną wartość domyślną";
+"editor.agent.field.loop.driver.command.help" = "Zastępuje plik wykonywalny, który TermQ uruchamia jako sterownik pętli agenta. Puste pole oznacza, że TermQ używa `ynh agent` z Twojego PATH — to standardowy wybór. Wskaż tutaj własną kompilację, skrypt opakowujący lub inny plik binarny emitujący NDJSON.";
+"editor.agent.advanced" = "Zaawansowane";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Pętla Agenta";
+"settings.agent.description" = "Uruchom harness YNH jako pętlę agenta sterowaną przez czujniki. Eksperymentalne.";
+"settings.agent.enable.tab" = "Pokaż kartę Sesje Agenta na pasku bocznym";
+"settings.agent.enable.tab.help" = "Dodaje kartę na pasku bocznym z listą bieżących i przeszłych sesji agenta oraz akcją „Uruchom jako Agent“ w wierszach harness.";
+
+"fleet.sidebar.title" = "Sesje agenta";
+"fleet.new.help" = "Uruchom fleet";
+"fleet.new.session.help" = "Nowa sesja agenta";
+"fleet.refresh.help" = "Załaduj ponownie trajektorie z dysku";
+"fleet.open.transcript.help" = "Otwórz transkrypt agenta";
+"fleet.context.run" = "Uruchom…";
+"fleet.context.edit.harness" = "Edytuj Harness…";
+"fleet.run.advanced" = "Zaawansowane";
+"fleet.run.cwd.label" = "Katalog roboczy";
+"fleet.run.cwd.empty" = "(dziedziczy bieżący katalog TermQ)";
+"fleet.run.cwd.choose" = "Wybierz…";
+"fleet.empty.title" = "Brak sesji agenta";
+"fleet.empty.body" = "Uruchom jedną z harness lub uruchom fleet, aby wykonywać równoległe sesje dla tego samego zadania.";
+"fleet.launch.title" = "Uruchom fleet";
+"fleet.launch.section.config" = "Konfiguracja";
+"fleet.launch.section.task" = "Zadanie";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Wybierz harness…";
+"fleet.launch.field.harness.empty" = "Brak zainstalowanych harnessów. Najpierw zainstaluj jeden z karty Harnesses.";
+"fleet.launch.field.sessions" = "Równoległe sesje";
+"fleet.launch.field.base.worktree" = "Ścieżka bazowa worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Opisz zadanie dla agenta…";
+"fleet.launch.button" = "Uruchom";
+"fleet.launch.cancel" = "Anuluj";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d działa";
+"fleet.aggregate.converged" = "%d/%d zbiegło się";
+"fleet.aggregate.idle" = "%d sesji";
+"fleet.promote.winner" = "Promuj %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Ostatnie czujniki";
+"inspector.agent.trajectory" = "Przebieg";
+"inspector.agent.trajectory.empty" = "Brak przebiegu";
+"inspector.agent.trajectory.empty.configure" = "Skonfiguruj agent.loopDriverCommand w ustawieniach, a następnie naciśnij Uruchom.";
+"inspector.agent.trajectory.empty.run" = "Naciśnij Uruchom, aby uruchomić skonfigurowany sterownik pętli.";
+"inspector.agent.turn" = "Tura %d";
+"inspector.agent.sensors.all.passed" = "wszystkie zaliczone";
+"inspector.agent.sensors.failed" = "%d nie powiodło się";
+"inspector.agent.edit.sensors" = "Edytuj czujniki";
+"inspector.agent.turn.approval.title" = "Tura %d — Przejrzyj opinię";
+"inspector.agent.turn.approval.send" = "Wyślij";
+"inspector.agent.turn.approval.reset" = "Zresetuj";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Nakładki czujników";
+"overlay.editor.loading" = "Ładowanie czujników…";
+"overlay.editor.no.sensors" = "W tym harnesie nie zadeklarowano żadnych czujników.";
+"overlay.editor.role.label" = "Rola";
+"overlay.editor.role.inherited" = "Odziedziczony";
+"overlay.editor.prompt.harness.label" = "Prompt harnessu";
+"overlay.editor.prompt.override.label" = "Zastąp";
+"overlay.editor.prompt.override.placeholder" = "Zostaw puste, aby odziedziczyć prompt harnessu";
+"overlay.editor.source.kind.command" = "polecenie";
+"overlay.editor.source.kind.files" = "pliki";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Zapisz";
+"overlay.editor.cancel" = "Anuluj";
+"overlay.editor.error.ynh.not.ready" = "ynh nie jest gotowy. Sprawdź łańcuch narzędzi YNH w Ustawieniach.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Łańcuch narzędzi YNH";
 "settings.ynh.title" = "ynh";

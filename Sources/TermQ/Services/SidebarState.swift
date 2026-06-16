@@ -1,18 +1,20 @@
 import Foundation
 
-/// The three top-level tabs in the sidebar. Promoted out of `SidebarView` so
+/// The top-level tabs in the sidebar. Promoted out of `SidebarView` so
 /// that other views (HarnessWizardSheet, HarnessDetailView, etc.) can drive
 /// the selection through `SidebarState` without needing the View itself.
 enum SidebarTab: String, CaseIterable, Sendable {
     case repositories
     case harnesses
     case marketplaces
+    case agents
 
     var icon: String {
         switch self {
         case .repositories: return "shippingbox"
         case .harnesses: return "puzzlepiece.extension"
         case .marketplaces: return "storefront"
+        case .agents: return "sparkles"
         }
     }
 
@@ -21,6 +23,7 @@ enum SidebarTab: String, CaseIterable, Sendable {
         case .repositories: return "Repositories"
         case .harnesses: return "Harnesses"
         case .marketplaces: return "Marketplaces"
+        case .agents: return "Agent Sessions"
         }
     }
 }

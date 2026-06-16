@@ -697,6 +697,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Skapa ett nytt harness";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguration";
+"editor.agent.section.budget" = "Budget";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Läge";
+"editor.agent.field.interaction" = "Interaktion";
+"editor.agent.field.max.turns" = "Max varv";
+"editor.agent.field.max.tokens" = "Max tokens";
+"editor.agent.field.max.wall.minutes" = "Max tid (min)";
+"editor.agent.field.loop.driver.command" = "Kommando för loopstyrare";
+"editor.agent.field.loop.driver.command.placeholder" = "Ärv globalt standardvärde";
+"editor.agent.field.loop.driver.command.help" = "Åsidosätter det program som TermQ kör som agentloopens drivrutin. Tom innebär att TermQ använder `ynh agent` från din PATH — standardvalet. Peka här mot ett eget bygge, ett wrapper-skript eller ett annat NDJSON-sändande program.";
+"editor.agent.advanced" = "Avancerat";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agentloop";
+"settings.agent.description" = "Kör ett YNH-harness som en sensordriven agentloop. Experimentell.";
+"settings.agent.enable.tab" = "Visa agentsessioner i sidofältets flik";
+"settings.agent.enable.tab.help" = "Lägger till en flik i sidofältet som visar pågående och tidigare agentsessioner, och en åtgärd „Starta som Agent“ på harnessrader.";
+
+"fleet.sidebar.title" = "Agentsessioner";
+"fleet.new.help" = "Starta fleet-körning";
+"fleet.new.session.help" = "Ny agentsession";
+"fleet.refresh.help" = "Ladda om trajektorier från disk";
+"fleet.open.transcript.help" = "Öppna agenttranskript";
+"fleet.context.run" = "Kör…";
+"fleet.context.edit.harness" = "Redigera Harness…";
+"fleet.run.advanced" = "Avancerat";
+"fleet.run.cwd.label" = "Arbetskatalog";
+"fleet.run.cwd.empty" = "(ärver TermQ:s aktuella katalog)";
+"fleet.run.cwd.choose" = "Välj…";
+"fleet.empty.title" = "Inga agentsessioner ännu";
+"fleet.empty.body" = "Starta en från ett harness, eller lansera en fleet för parallella sessioner mot samma uppgift.";
+"fleet.launch.title" = "Starta fleet-körning";
+"fleet.launch.section.config" = "Konfiguration";
+"fleet.launch.section.task" = "Uppgift";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Välj ett harness…";
+"fleet.launch.field.harness.empty" = "Inga harnesses installerade. Installera en först från fliken Harnesses.";
+"fleet.launch.field.sessions" = "Parallella sessioner";
+"fleet.launch.field.base.worktree" = "Bas-sökväg för worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beskriv uppgiften för agenten…";
+"fleet.launch.button" = "Starta";
+"fleet.launch.cancel" = "Avbryt";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d körs";
+"fleet.aggregate.converged" = "%d/%d konvergerade";
+"fleet.aggregate.idle" = "%d sessioner";
+"fleet.promote.winner" = "Befordra %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Senaste sensorer";
+"inspector.agent.trajectory" = "Förlopp";
+"inspector.agent.trajectory.empty" = "Inget förlopp ännu";
+"inspector.agent.trajectory.empty.configure" = "Konfigurera agent.loopDriverCommand i inställningarna och tryck sedan på Kör.";
+"inspector.agent.trajectory.empty.run" = "Tryck på Kör för att starta den konfigurerade loop-drivrutinen.";
+"inspector.agent.turn" = "Tur %d";
+"inspector.agent.sensors.all.passed" = "alla godkända";
+"inspector.agent.sensors.failed" = "%d misslyckades";
+"inspector.agent.edit.sensors" = "Redigera sensorer";
+"inspector.agent.turn.approval.title" = "Tur %d — Granska återkoppling";
+"inspector.agent.turn.approval.send" = "Skicka";
+"inspector.agent.turn.approval.reset" = "Återställ";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensoröverlägg";
+"overlay.editor.loading" = "Läser in sensorer…";
+"overlay.editor.no.sensors" = "Inga sensorer deklarerade i det här harnesset.";
+"overlay.editor.role.label" = "Roll";
+"overlay.editor.role.inherited" = "Ärvd";
+"overlay.editor.prompt.harness.label" = "Harness-prompt";
+"overlay.editor.prompt.override.label" = "Åsidosätt";
+"overlay.editor.prompt.override.placeholder" = "Lämna tomt för att ärva harness-prompten";
+"overlay.editor.source.kind.command" = "kommando";
+"overlay.editor.source.kind.files" = "filer";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Spara";
+"overlay.editor.cancel" = "Avbryt";
+"overlay.editor.error.ynh.not.ready" = "ynh är inte redo. Kontrollera YNH-verktygskedjan i Inställningar.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-harness-verktygskedja";
 "settings.ynh.title" = "ynh";

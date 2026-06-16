@@ -1,0 +1,180 @@
+import Foundation
+import XCTest
+
+@testable import TermQCore
+
+final class AgentSessionTests: XCTestCase {
+    func testAgentBudgetDefaults() {
+        let budget = AgentBudget.default
+        XCTAssertEqual(budget.maxTurns, 25)
+        XCTAssertEqual(budget.maxTokens, 500_000)
+        XCTAssertEqual(budget.maxWallSeconds, 3600)
+        XCTAssertEqual(budget.maxPlanIterations, 5)
+    }
+
+    /// Backcompat — budgets persisted before ynh 0.5 lack
+    /// `maxPlanIterations`. Decoding must default it to 5 rather than throw.
+    func testAgentBudgetLegacyJSON_defaultsPlanIterations() throws {
+        let json = #"{"maxTurns":10,"maxTokens":100000,"maxWallSeconds":600}"#
+            .data(using: .utf8)!
+        let decoded = try JSONDecoder().decode(AgentBudget.self, from: json)
+        XCTAssertEqual(decoded.maxPlanIterations, 5)
+        XCTAssertEqual(decoded.maxTurns, 10)
+    }
+
+    func testAgentConfigInitDefaults() {
+        let config = AgentConfig(harness: "coding-agent@eyelock/harnesses")
+        XCTAssertEqual(config.harness, "coding-agent@eyelock/harnesses")
+        XCTAssertEqual(config.backend, .claude)
+        XCTAssertEqual(config.mode, .plan)
+        XCTAssertEqual(config.interactionMode, .confirm)
+        XCTAssertEqual(config.budget, .default)
+        XCTAssertEqual(config.status, .idle)
+        XCTAssertEqual(config.loopDriverCommand, "")
+    }
+
+    /// Backward compat — pre-slice-20 saved JSON has no `loopDriverCommand`
+    /// field. Decoding must default it to "" rather than throw.
+    func testAgentConfigLegacyJSONBackwardCompat() throws {
+        let json = """
+            {
+                "sessionId": "\(UUID().uuidString)",
+                "harness": "x@y/z",
+                "backend": "claude",
+                "mode": "plan",
+                "interactionMode": "confirm",
+                "budget": {
+                    "maxTurns": 25,
+                    "maxTokens": 500000,
+                    "maxWallSeconds": 3600
+                },
+                "status": "idle"
+            }
+            """.data(using: .utf8)!
+
+        let decoded = try JSONDecoder().decode(AgentConfig.self, from: json)
+        XCTAssertEqual(decoded.loopDriverCommand, "")
+    }
+
+    func testAgentConfigCodableRoundTrip() throws {
+        let original = AgentConfig(
+            sessionId: UUID(),
+            harness: "x@y/z",
+            backend: .codex,
+            mode: .act,
+            interactionMode: .tweak,
+            budget: AgentBudget(maxTurns: 10, maxTokens: 100_000, maxWallSeconds: 600),
+            status: .running
+        )
+
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(AgentConfig.self, from: data)
+
+        XCTAssertEqual(original, decoded)
+    }
+
+    func testAgentBackendRawValues() {
+        // Canonical wire format — matches ynh's vendor adapter identifiers.
+        XCTAssertEqual(AgentBackend.claude.rawValue, "claude")
+        XCTAssertEqual(AgentBackend.codex.rawValue, "codex")
+        XCTAssertEqual(AgentBackend.cursor.rawValue, "cursor")
+    }
+
+    // MARK: - Fleet
+
+    func testAgentConfigFleetIdDefaultsToNil() {
+        let config = AgentConfig(harness: "x")
+        XCTAssertNil(config.fleetId)
+    }
+
+    func testAgentConfigFleetIdRoundTrip() throws {
+        let fleetId = UUID()
+        let original = AgentConfig(harness: "x", fleetId: fleetId)
+
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(AgentConfig.self, from: data)
+
+        XCTAssertEqual(decoded.fleetId, fleetId)
+    }
+
+    func testAgentConfigLegacyJSON_noFleetId_decodesAsNil() throws {
+        let json = """
+            {
+                "sessionId": "\(UUID().uuidString)",
+                "harness": "x@y/z",
+                "backend": "claude",
+                "mode": "plan",
+                "interactionMode": "confirm",
+                "budget": {"maxTurns": 25, "maxTokens": 500000, "maxWallSeconds": 3600},
+                "status": "idle"
+            }
+            """.data(using: .utf8)!
+
+        let decoded = try JSONDecoder().decode(AgentConfig.self, from: json)
+        XCTAssertNil(decoded.fleetId)
+    }
+
+    func testAgentStatusRawValues() {
+        // Stable wire format for snake_case multi-word cases.
+        XCTAssertEqual(AgentStatus.awaitingPlanApproval.rawValue, "awaiting_plan_approval")
+        XCTAssertEqual(AgentStatus.awaitingTurnApproval.rawValue, "awaiting_turn_approval")
+    }
+
+    func testTerminalCardWithAgentConfigRoundTrip() throws {
+        let columnId = UUID()
+        let config = AgentConfig(harness: "coding-agent@eyelock/harnesses", status: .running)
+        let card = TerminalCard(columnId: columnId, agentConfig: config)
+
+        let data = try JSONEncoder().encode(card)
+        let decoded = try JSONDecoder().decode(TerminalCard.self, from: data)
+
+        XCTAssertEqual(decoded.agentConfig, config)
+    }
+
+    func testTerminalCardWithoutAgentConfigRoundTrip() throws {
+        let columnId = UUID()
+        let card = TerminalCard(columnId: columnId)
+
+        let data = try JSONEncoder().encode(card)
+        let decoded = try JSONDecoder().decode(TerminalCard.self, from: data)
+
+        XCTAssertNil(decoded.agentConfig)
+    }
+
+    /// Backward compatibility — pre-agent JSON (no `agentConfig` key) must decode
+    /// without error and yield `agentConfig == nil`.
+    func testTerminalCardLegacyJSONBackwardCompat() throws {
+        let columnId = UUID()
+        let json = """
+            {
+                "id": "\(UUID().uuidString)",
+                "title": "Legacy Card",
+                "description": "",
+                "tags": [],
+                "columnId": "\(columnId.uuidString)",
+                "orderIndex": 0,
+                "shellPath": "/bin/zsh",
+                "workingDirectory": "/tmp",
+                "isFavourite": false,
+                "initCommand": "",
+                "llmPrompt": "",
+                "llmNextAction": "",
+                "badge": "",
+                "fontName": "",
+                "fontSize": 0,
+                "safePasteEnabled": true,
+                "themeId": "",
+                "allowAutorun": false,
+                "allowOscClipboard": true,
+                "confirmExternalModifications": true,
+                "backend": "direct",
+                "needsTmuxSession": false,
+                "environmentVariables": []
+            }
+            """.data(using: .utf8)!
+
+        let decoded = try JSONDecoder().decode(TerminalCard.self, from: json)
+        XCTAssertNil(decoded.agentConfig)
+        XCTAssertEqual(decoded.title, "Legacy Card")
+    }
+}

@@ -384,6 +384,20 @@ extension TermQMCPServer {
                     readOnlyHint: false, destructiveHint: true,
                     idempotentHint: true, openWorldHint: false)
             ),
+            Tool(
+                name: "termq_agents",
+                description: """
+                    List terminal cards configured as agent sessions. Returns each card's
+                    id, name, column, working directory, and an `agent` block with
+                    sessionId, harness, backend, mode, interactionMode, status, budget
+                    (turns/tokens/wall-clock), and any per-card loopDriverCommand override.
+                    Optional `status` filter narrows by AgentStatus raw value (e.g.
+                    'running', 'converged', 'errored').
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("status", "Filter by AgentStatus raw value (idle, running, converged, ...)")
+                ])
+            ),
         ]
     }
 }

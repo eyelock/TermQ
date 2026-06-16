@@ -11,6 +11,7 @@ struct CardEditorView: View {
 
     @StateObject private var viewModel = CardEditorViewModel()
     @State private var selectedTab: EditorTab = .general
+    @State private var advancedAgentExpanded: Bool = false
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
     @Environment(SettingsStore.self) private var settings
@@ -23,6 +24,7 @@ struct CardEditorView: View {
         case general
         case terminal
         case environment
+        case agent
         case metadata
         case prompts
 
@@ -31,9 +33,18 @@ struct CardEditorView: View {
             case .general: return Strings.Editor.tabGeneral
             case .terminal: return Strings.Editor.sectionTerminal
             case .environment: return Strings.Settings.tabEnvironment
+            case .agent: return Strings.Editor.Agent.tab
             case .metadata: return Strings.Editor.sectionTags
             case .prompts: return Strings.Editor.sectionPrompts
             }
+        }
+    }
+
+    /// Tabs visible in the picker. The Agent tab appears only for cards
+    /// whose agentConfig is set.
+    private var visibleTabs: [EditorTab] {
+        EditorTab.allCases.filter { tab in
+            tab != .agent || viewModel.hasAgentConfig
         }
     }
 
@@ -121,7 +132,7 @@ struct CardEditorView: View {
 
             // Tab picker
             Picker("", selection: $selectedTab) {
-                ForEach(EditorTab.allCases, id: \.self) { tab in
+                ForEach(visibleTabs, id: \.self) { tab in
                     Text(tab.title).tag(tab)
                 }
             }
@@ -141,6 +152,8 @@ struct CardEditorView: View {
                         environmentVariables: $viewModel.environmentVariables,
                         cardId: card.id
                     )
+                case .agent:
+                    agentContent
                 case .metadata:
                     metadataContent
                 case .prompts:
@@ -154,6 +167,10 @@ struct CardEditorView: View {
         .onAppear {
             viewModel.load(from: card)
             viewModel.mcpInstalled = MCPServerInstaller.currentInstallLocation != nil
+            if viewModel.hasAgentConfig {
+                selectedTab = .agent
+            }
+            advancedAgentExpanded = !viewModel.agentLoopDriverCommand.isEmpty
         }
     }
 
@@ -557,9 +574,12 @@ struct CardEditorView: View {
         }
     }
 
-    // MARK: - Backend Localization Helpers
+}
 
-    private func localizedName(for backend: TerminalBackend) -> String {
+// MARK: - Backend Localization Helpers
+
+extension CardEditorView {
+    func localizedName(for backend: TerminalBackend) -> String {
         switch backend {
         case .direct:
             return Strings.Editor.backendDirect
@@ -570,7 +590,7 @@ struct CardEditorView: View {
         }
     }
 
-    private func localizedDescription(for backend: TerminalBackend) -> String {
+    func localizedDescription(for backend: TerminalBackend) -> String {
         switch backend {
         case .direct:
             return Strings.Editor.backendDirectDescription
@@ -580,5 +600,89 @@ struct CardEditorView: View {
             return Strings.Editor.backendTmuxControlDescription
         }
     }
+}
 
+// MARK: - Agent Tab Content
+
+extension CardEditorView {
+    @ViewBuilder
+    var agentContent: some View {
+        Section(Strings.Editor.Agent.sectionConfig) {
+            Picker(Strings.Editor.Agent.fieldBackend, selection: $viewModel.agentBackend) {
+                ForEach(AgentBackend.allCases, id: \.self) { backend in
+                    Text(backend.rawValue).tag(backend)
+                }
+            }
+            Picker(Strings.Editor.Agent.fieldMode, selection: $viewModel.agentMode) {
+                ForEach(AgentMode.allCases, id: \.self) { mode in
+                    Text(mode.rawValue).tag(mode)
+                }
+            }
+            Picker(Strings.Editor.Agent.fieldInteraction, selection: $viewModel.agentInteractionMode) {
+                ForEach(AgentInteractionMode.allCases, id: \.self) { mode in
+                    Text(mode.rawValue).tag(mode)
+                }
+            }
+        }
+
+        Section {
+            DisclosureGroup(
+                Strings.Editor.Agent.advancedToggle,
+                isExpanded: $advancedAgentExpanded
+            ) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(Strings.Editor.Agent.fieldLoopDriverCommand)
+                        .font(.subheadline.weight(.medium))
+                    TextField(
+                        Strings.Editor.Agent.fieldLoopDriverCommandPlaceholder,
+                        text: $viewModel.agentLoopDriverCommand,
+                        axis: .vertical
+                    )
+                    .lineLimit(2...4)
+                    .font(.system(.body, design: .monospaced))
+                    Text(Strings.Editor.Agent.fieldLoopDriverCommandHelp)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.top, 4)
+            }
+        }
+
+        Section(Strings.Editor.Agent.sectionBudget) {
+            Stepper(
+                value: $viewModel.agentMaxTurns, in: 1...500, step: 5,
+                label: {
+                    HStack {
+                        Text(Strings.Editor.Agent.fieldMaxTurns)
+                        Spacer()
+                        Text("\(viewModel.agentMaxTurns)").monospacedDigit()
+                    }
+                })
+            Stepper(
+                value: $viewModel.agentMaxTokens, in: 10_000...10_000_000, step: 50_000,
+                label: {
+                    HStack {
+                        Text(Strings.Editor.Agent.fieldMaxTokens)
+                        Spacer()
+                        Text(formatTokens(viewModel.agentMaxTokens)).monospacedDigit()
+                    }
+                })
+            Stepper(
+                value: $viewModel.agentMaxWallMinutes, in: 1...720, step: 5,
+                label: {
+                    HStack {
+                        Text(Strings.Editor.Agent.fieldMaxWallMinutes)
+                        Spacer()
+                        Text("\(viewModel.agentMaxWallMinutes) min").monospacedDigit()
+                    }
+                })
+        }
+    }
+
+    func formatTokens(_ tokens: Int) -> String {
+        if tokens >= 1_000_000 { return "\(tokens / 1_000_000)M" }
+        if tokens >= 1_000 { return "\(tokens / 1_000)k" }
+        return "\(tokens)"
+    }
 }

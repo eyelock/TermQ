@@ -39,6 +39,21 @@ final class CardEditorViewModel: ObservableObject {
     @Published var backend: TerminalBackend?
     @Published var environmentVariables: [EnvironmentVariable] = []
 
+    // Agent session fields. `hasAgentConfig` mirrors `card.agentConfig != nil`;
+    // the editor's Agent tab is only shown when this is true. The other
+    // fields hold the editable mirror; non-editable identity fields
+    // (sessionId, harness, status) are preserved from the source card on
+    // save.
+    @Published var hasAgentConfig: Bool = false
+    @Published var agentBackend: AgentBackend = .claude
+    @Published var agentMode: AgentMode = .plan
+    @Published var agentInteractionMode: AgentInteractionMode = .confirm
+    @Published var agentMaxTurns: Int = AgentBudget.default.maxTurns
+    @Published var agentMaxTokens: Int = AgentBudget.default.maxTokens
+    @Published var agentMaxWallMinutes: Int = AgentBudget.default.maxWallSeconds / 60
+    @Published var agentMaxPlanIterations: Int = AgentBudget.default.maxPlanIterations
+    @Published var agentLoopDriverCommand: String = ""
+
     // MARK: - Validation
 
     var isValid: Bool {
@@ -68,6 +83,21 @@ final class CardEditorViewModel: ObservableObject {
         confirmExternalModifications = card.confirmExternalModifications
         backend = card.backend
         environmentVariables = card.environmentVariables
+
+        if let config = card.agentConfig {
+            hasAgentConfig = true
+            agentBackend = config.backend
+            agentMode = config.mode
+            agentInteractionMode = config.interactionMode
+            agentMaxTurns = config.budget.maxTurns
+            agentMaxTokens = config.budget.maxTokens
+            agentMaxWallMinutes = max(1, config.budget.maxWallSeconds / 60)
+            agentMaxPlanIterations = config.budget.maxPlanIterations
+            agentLoopDriverCommand = config.loopDriverCommand
+        } else {
+            hasAgentConfig = false
+            agentLoopDriverCommand = ""
+        }
     }
 
     func save(to card: TerminalCard) {
@@ -91,6 +121,22 @@ final class CardEditorViewModel: ObservableObject {
         card.confirmExternalModifications = confirmExternalModifications
         card.backend = backend
         card.environmentVariables = environmentVariables
+
+        if hasAgentConfig, var config = card.agentConfig {
+            // Preserve identity fields (sessionId, harness, status); only
+            // user-editable knobs are written through.
+            config.backend = agentBackend
+            config.mode = agentMode
+            config.interactionMode = agentInteractionMode
+            config.budget = AgentBudget(
+                maxTurns: agentMaxTurns,
+                maxTokens: agentMaxTokens,
+                maxWallSeconds: agentMaxWallMinutes * 60,
+                maxPlanIterations: agentMaxPlanIterations
+            )
+            config.loopDriverCommand = agentLoopDriverCommand
+            card.agentConfig = config
+        }
     }
 
     // MARK: - Tag Helpers

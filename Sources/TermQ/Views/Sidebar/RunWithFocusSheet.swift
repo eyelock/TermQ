@@ -5,22 +5,96 @@ import TermQShared
 /// Sentinel — "use harness default vendor, don't pass -v".
 private let defaultVendorTag = "__default__"
 
-/// Sheet for launching a "Run with Focus" harness run on a worktree —
-/// either a PR-linked checkout or a plain local worktree.
+/// Mode that controls what kind of run this sheet configures.
+///
+/// - `.interactive` — the original "Run with Focus" flow: a worktree (a
+///   PR-linked checkout or a plain local worktree) wants to launch a
+///   `ynh run <harness>` session interactively.
+/// - `.agent` — the agent-loop flow: an existing agent card wants to launch a
+///   `ynh agent run --harness <h> --task <prompt> …` loop. Harness and backend
+///   are locked to the card; the sheet still picks focus / profile / prompt.
+enum RunSheetMode {
+    case interactive(context: RunWithFocusContext)
+    case agent(card: TerminalCard)
+}
+
+/// What the sheet hands back to its caller. The two cases mirror `RunSheetMode`.
+enum RunSheetPayload {
+    case interactive(HarnessLaunchConfig)
+    /// Agent-loop payload. Mutually exclusive:
+    /// - `focus` non-nil → `prompt` is nil; caller passes `--focus <name>`
+    ///   (focus carries its own prompt and profile binding inside ynh).
+    /// - `focus` nil → `prompt` is the user's task text and `profile` is
+    ///   the optional profile override.
+    case agent(
+        cardId: UUID,
+        harness: String,
+        focus: String?,
+        profile: String?,
+        prompt: String?
+    )
+}
+
+/// Sheet for launching a "Run with Focus" harness run (interactive) or
+/// an agent-loop run, depending on `mode`.
 ///
 /// Presents harness/vendor/focus/profile pickers, a prompt textarea (read-only when a
-/// focus is selected unless Customize is pressed), an optional --interactive toggle,
-/// and a Run action.
+/// focus is selected unless Customize is pressed), an optional --interactive toggle
+/// (interactive mode only), and a Run action.
 ///
-/// Invocation rules (§4 of the plan):
+/// Invocation rules (interactive — §4 of the plan):
 /// - Focus selected + no Customize → `ynh run <h> --focus <name>`
 /// - Focus selected + Customize pressed → `ynh run <h> [--profile <p>] "<prompt>"`
 /// - No focus selected → `ynh run <h> [--profile <p>] "<prompt>"`
 /// - Interactive toggle on → appends `--interactive` (only when vendor supports it)
+///
+/// Invocation rules (agent):
+/// - Always `ynh agent run --harness <h> --task "<prompt>" [--profile <p>]
+///   --backend <b>`; --focus is not yet honored by `ynh agent run`, so a focus
+///   selection is flattened to its prompt text on our side. Mode/budget flags
+///   are added by the AgentSessionController, not the sheet.
 struct RunWithFocusSheet: View {
-    let context: RunWithFocusContext
-    let onLaunch: (HarnessLaunchConfig) -> Void
+    let mode: RunSheetMode
+    let onLaunch: (RunSheetPayload) -> Void
     let onCancel: () -> Void
+
+    private var isAgentMode: Bool {
+        if case .agent = mode { return true }
+        return false
+    }
+
+    /// Card backing the agent mode, or nil for interactive.
+    private var agentCard: TerminalCard? {
+        if case .agent(let card) = mode { return card }
+        return nil
+    }
+
+    /// PR context backing the interactive mode, or nil for agent.
+    private var interactiveContext: RunWithFocusContext? {
+        if case .interactive(let ctx) = mode { return ctx }
+        return nil
+    }
+
+    private var headerTitle: String {
+        switch mode {
+        case .interactive: return Strings.RemotePRs.runSheetTitle
+        case .agent: return "Run Agent"
+        }
+    }
+
+    private var headerSubtitle: String {
+        switch mode {
+        case .interactive(let ctx):
+            // `#N` for PR-linked runs; the branch (or commit) for plain
+            // local worktrees — see #341.
+            if let prNumber = ctx.prNumber {
+                return "#\(prNumber)"
+            }
+            return ctx.worktree.branch ?? ctx.worktree.commitHash
+        case .agent(let card):
+            return card.agentConfig?.harness ?? card.title
+        }
+    }
 
     @ObservedObject private var harnessRepository: HarnessRepository = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
@@ -36,6 +110,23 @@ struct RunWithFocusSheet: View {
     @State private var isInteractive: Bool = false
     @State private var detail: HarnessDetail?
     @State private var isLoadingDetail: Bool = false
+
+    // Agent-mode advanced knobs. Seeded from the card's AgentConfig in
+    // applyAgentDefaults and written back in runAgent so the card reflects
+    // the most recent run.
+    @State private var advancedExpanded: Bool = false
+    @State private var selectedMode: AgentMode = .plan
+    @State private var selectedInteraction: AgentInteractionMode = .confirm
+    @State private var maxTurns: Int = AgentBudget.default.maxTurns
+    @State private var maxTokens: Int = AgentBudget.default.maxTokens
+    @State private var maxWallMinutes: Int =
+        max(1, AgentBudget.default.maxWallSeconds / 60)
+    @State private var maxPlanIterations: Int = AgentBudget.default.maxPlanIterations
+
+    /// Working directory the agent process runs in. Seeded from the card's
+    /// `workingDirectory`; user can override via the directory picker. The
+    /// chosen path is written back to the card on Run.
+    @State private var agentWorkingDirectory: String = ""
 
     private var focuses: [String: ComposedFocus] {
         detail?.composition.focuses ?? [:]
@@ -84,20 +175,12 @@ struct RunWithFocusSheet: View {
         isCustomizing ? customPrompt : (selectedFocus.isEmpty ? customPrompt : focusPrompt)
     }
 
-    /// `#N` for PR-linked runs; the branch (or commit) for plain local worktrees.
-    private var headerSubtitle: String {
-        if let prNumber = context.prNumber {
-            return "#\(prNumber)"
-        }
-        return context.worktree.branch ?? context.worktree.commitHash
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             // Header
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(Strings.RemotePRs.runSheetTitle)
+                    Text(headerTitle)
                         .font(.headline)
                     Text(headerSubtitle)
                         .font(.subheadline)
@@ -126,6 +209,7 @@ struct RunWithFocusSheet: View {
                             Text(harness.name).tag(harness.id)
                         }
                     }
+                    .disabled(isAgentMode)
                     .onChange(of: selectedHarnessId) { _, newId in
                         selectedVendorID = defaultVendorTag
                         selectedFocus = ""
@@ -239,13 +323,108 @@ struct RunWithFocusSheet: View {
                 }
 
                 // Interactive toggle — only when vendor supports it and there's a prompt/focus
-                if selectedVendorSupportsInteractive && hasPromptOrFocus {
+                // Hidden in agent mode (an agent run is never interactive in this sense).
+                if !isAgentMode && selectedVendorSupportsInteractive && hasPromptOrFocus {
                     Section {
                         Toggle(Strings.RemotePRs.runInteractiveLabel, isOn: $isInteractive)
                         if isInteractive {
                             Text(Strings.RemotePRs.runInteractiveHelp)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
+                        }
+                    }
+                }
+
+                // Working directory — agent mode only. ynh and its agent
+                // operate inside this directory; defaults from the card.
+                if isAgentMode {
+                    Section {
+                        HStack(spacing: 8) {
+                            TextField(
+                                Strings.Fleet.cwdEmpty,
+                                text: $agentWorkingDirectory
+                            )
+                            .textFieldStyle(.roundedBorder)
+                            .font(.body.monospaced())
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                            .frame(maxWidth: .infinity)
+                            Button(Strings.Fleet.cwdChoose) {
+                                pickAgentWorkingDirectory()
+                            }
+                            .controlSize(.small)
+                        }
+                    } header: {
+                        Text(Strings.Fleet.cwdLabel)
+                    }
+                }
+
+                // Advanced (agent mode only) — Mode / Interaction / Budget,
+                // collapsed by default. These mirror the Card Editor's Agent
+                // tab so per-run tweaks don't require a round-trip through
+                // edit details.
+                if isAgentMode {
+                    Section {
+                        DisclosureGroup(isExpanded: $advancedExpanded) {
+                            // Two visually distinct sub-groups, each with a
+                            // small caption header so the user can parse the
+                            // shape of the disclosure at a glance.
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text(Strings.Editor.Agent.sectionConfig)
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(.secondary)
+                                    .padding(.top, 4)
+                                Picker(
+                                    Strings.Editor.Agent.fieldMode,
+                                    selection: $selectedMode
+                                ) {
+                                    ForEach(AgentMode.allCases, id: \.self) { mode in
+                                        Text(mode.rawValue).tag(mode)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                Picker(
+                                    Strings.Editor.Agent.fieldInteraction,
+                                    selection: $selectedInteraction
+                                ) {
+                                    ForEach(AgentInteractionMode.allCases, id: \.self) { interaction in
+                                        Text(interaction.rawValue).tag(interaction)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+
+                                Divider().padding(.vertical, 2)
+
+                                Text(Strings.Editor.Agent.sectionBudget)
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(.secondary)
+                                Stepper(value: $maxTurns, in: 1...500) {
+                                    LabeledContent(
+                                        Strings.Editor.Agent.fieldMaxTurns,
+                                        value: "\(maxTurns)")
+                                }
+                                Stepper(
+                                    value: $maxTokens,
+                                    in: 10_000...10_000_000, step: 10_000
+                                ) {
+                                    LabeledContent(
+                                        Strings.Editor.Agent.fieldMaxTokens,
+                                        value: "\(maxTokens / 1000)k")
+                                }
+                                Stepper(value: $maxWallMinutes, in: 1...1440) {
+                                    LabeledContent(
+                                        Strings.Editor.Agent.fieldMaxWallMinutes,
+                                        value: "\(maxWallMinutes) min")
+                                }
+                                Stepper(value: $maxPlanIterations, in: 1...20) {
+                                    LabeledContent(
+                                        "Max plan iterations",
+                                        value: "\(maxPlanIterations)")
+                                }
+                            }
+                        } label: {
+                            Text(Strings.Fleet.runAdvanced)
+                                .font(.body.weight(.medium))
                         }
                     }
                 }
@@ -290,6 +469,15 @@ struct RunWithFocusSheet: View {
     // MARK: - Helpers
 
     private func applyDefaults() {
+        switch mode {
+        case .interactive(let ctx):
+            applyInteractiveDefaults(context: ctx)
+        case .agent(let card):
+            applyAgentDefaults(card: card)
+        }
+    }
+
+    private func applyInteractiveDefaults(context: RunWithFocusContext) {
         let repoPath = context.repo.path
         let savedHarness =
             ynhPersistence.runHarness(for: repoPath)
@@ -315,6 +503,44 @@ struct RunWithFocusSheet: View {
         }
     }
 
+    private func applyAgentDefaults(card: TerminalCard) {
+        // Harness and vendor are locked to the card's config in agent mode.
+        let harnessId = card.agentConfig?.harness ?? ""
+        selectedHarnessId = harnessId
+        let backendID = card.agentConfig?.backend.rawValue ?? ""
+        selectedVendorID = backendID.isEmpty ? defaultVendorTag : backendID
+
+        // Seed Advanced from the card's current config.
+        if let cfg = card.agentConfig {
+            selectedMode = cfg.mode
+            selectedInteraction = cfg.interactionMode
+            maxTurns = cfg.budget.maxTurns
+            maxTokens = cfg.budget.maxTokens
+            maxWallMinutes = max(1, cfg.budget.maxWallSeconds / 60)
+            maxPlanIterations = cfg.budget.maxPlanIterations
+        }
+
+        agentWorkingDirectory = card.workingDirectory
+
+        loadDetail(for: selectedHarnessId)
+    }
+
+    /// Run a folder-picker NSOpenPanel and assign the chosen path. macOS
+    /// app-sandboxed builds get an implicit security-scoped bookmark for
+    /// the duration of the run.
+    private func pickAgentWorkingDirectory() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        if !agentWorkingDirectory.isEmpty {
+            panel.directoryURL = URL(fileURLWithPath: agentWorkingDirectory)
+        }
+        if panel.runModal() == .OK, let url = panel.url {
+            agentWorkingDirectory = url.path
+        }
+    }
+
     private func loadDetail(for harnessId: String, force: Bool = false) {
         guard !harnessId.isEmpty else { return }
         if !force, let cached = harnessRepository.cachedDetail(for: harnessId) {
@@ -330,8 +556,18 @@ struct RunWithFocusSheet: View {
         }
     }
 
-    private func commandPreview() -> String {
-        guard let harness = selectedHarness else { return "ynh run …" }
+}
+
+// MARK: - Command preview & launch helpers
+
+extension RunWithFocusSheet {
+    func commandPreview() -> String {
+        guard let harness = selectedHarness else {
+            return isAgentMode ? "ynh agent run …" : "ynh run …"
+        }
+        if isAgentMode {
+            return agentCommandPreview(harness: harness)
+        }
         var parts = ["ynh", "run", harness.id]
         if !effectiveVendorID.isEmpty {
             parts.append(contentsOf: ["-v", effectiveVendorID])
@@ -353,9 +589,39 @@ struct RunWithFocusSheet: View {
         return parts.joined(separator: " ")
     }
 
+    private func agentCommandPreview(harness: Harness) -> String {
+        // Mirrors runAgent's payload shape and the controller's command build.
+        // Budget flags are added by the controller, not the sheet.
+        var parts = ["ynh", "agent", "run", "--harness", harness.id]
+        if !effectiveVendorID.isEmpty {
+            parts.append(contentsOf: ["--backend", effectiveVendorID])
+        }
+        let useFocusFlag = !selectedFocus.isEmpty && !isCustomizing
+        if useFocusFlag {
+            parts.append(contentsOf: ["--focus", selectedFocus])
+        } else {
+            if !effectiveProfile.isEmpty {
+                parts.append(contentsOf: ["--profile", effectiveProfile])
+            }
+            if !effectivePromptText.isEmpty {
+                parts.append(contentsOf: ["--task", "\"…\""])
+            }
+        }
+        return parts.joined(separator: " ")
+    }
+
     private func run() {
         guard let harness = selectedHarness else { return }
 
+        switch mode {
+        case .interactive(let context):
+            runInteractive(harness: harness, context: context)
+        case .agent(let card):
+            runAgent(harness: harness, card: card)
+        }
+    }
+
+    private func runInteractive(harness: Harness, context: RunWithFocusContext) {
         let useFocusFlag = !selectedFocus.isEmpty && !isCustomizing
         let effectivePrompt: String?
         let effectiveFocus: String?
@@ -389,14 +655,70 @@ struct RunWithFocusSheet: View {
             backend: settings.backend,
             branch: context.worktree.branch,
             interactive: isInteractive,
-            cardTitle: makeCardTitle(focus: effectiveFocus, profile: effectiveProfile)
+            cardTitle: makeCardTitle(focus: effectiveFocus, profile: effectiveProfile, context: context)
         )
-        onLaunch(config)
+        onLaunch(.interactive(config))
+    }
+
+    private func runAgent(harness: Harness, card: TerminalCard) {
+        // Persist the Advanced knobs back to the card before the controller
+        // reads them to build the command line. Backend can change via the
+        // vendor picker even when Advanced is collapsed.
+        if var cfg = card.agentConfig {
+            if let backend = AgentBackend(rawValue: effectiveVendorID) {
+                cfg.backend = backend
+            }
+            cfg.mode = selectedMode
+            cfg.interactionMode = selectedInteraction
+            cfg.budget = AgentBudget(
+                maxTurns: maxTurns,
+                maxTokens: maxTokens,
+                maxWallSeconds: maxWallMinutes * 60,
+                maxPlanIterations: maxPlanIterations
+            )
+            card.agentConfig = cfg
+        }
+        // Working directory write-back — the controller reads
+        // `card.workingDirectory` when spawning, so this needs to land
+        // before `controller.start()` runs.
+        if card.workingDirectory != agentWorkingDirectory {
+            card.workingDirectory = agentWorkingDirectory
+        }
+
+        // Same mutual-exclusion rules `ynh run` and `ynh agent run` enforce:
+        //   focus + no Customize → pass --focus <name>; prompt/profile are nil
+        //   focus + Customize    → pass --task <custom-text>; focus is nil
+        //   no focus             → pass --task <custom-text> + optional --profile
+        let useFocusFlag = !selectedFocus.isEmpty && !isCustomizing
+        let payloadFocus: String?
+        let payloadProfile: String?
+        let payloadPrompt: String?
+
+        if useFocusFlag {
+            payloadFocus = selectedFocus
+            payloadProfile = nil
+            payloadPrompt = nil
+        } else {
+            payloadFocus = nil
+            payloadProfile = effectiveProfile.isEmpty ? nil : effectiveProfile
+            let promptText = effectivePromptText
+            guard !promptText.isEmpty else { return }
+            payloadPrompt = promptText
+        }
+
+        onLaunch(
+            .agent(
+                cardId: card.id,
+                harness: harness.id,
+                focus: payloadFocus,
+                profile: payloadProfile,
+                prompt: payloadPrompt
+            ))
     }
 
     /// Builds a card title: `focus: org/repo#N` (or `focus: org/repo` without a PR),
     /// truncating the repo slug when long.
-    private func makeCardTitle(focus: String?, profile: String) -> String {
+    private func makeCardTitle(focus: String?, profile: String, context: RunWithFocusContext) -> String {
         let label: String
         if let focusName = focus, !focusName.isEmpty {
             label = focusName

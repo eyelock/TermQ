@@ -706,6 +706,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Vytvoriť novú sadu";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfigurácia";
+"editor.agent.section.budget" = "Rozpočet";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Režim";
+"editor.agent.field.interaction" = "Interakcia";
+"editor.agent.field.max.turns" = "Max. kôl";
+"editor.agent.field.max.tokens" = "Max. tokenov";
+"editor.agent.field.max.wall.minutes" = "Max. čas (min)";
+"editor.agent.field.loop.driver.command" = "Príkaz ovládača slučky";
+"editor.agent.field.loop.driver.command.placeholder" = "Zdediť globálnu predvolenú hodnotu";
+"editor.agent.field.loop.driver.command.help" = "Prepíše spustiteľný súbor, ktorý TermQ spúšťa ako ovládač slučky agenta. Prázdne pole znamená, že TermQ používa `ynh agent` z vášho PATH — štandardná voľba. Zadajte sem cestu k vlastnému zostaveniu, skriptu obálky alebo inému binárnemu súboru generujúcemu NDJSON.";
+"editor.agent.advanced" = "Pokročilé";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Slučka Agenta";
+"settings.agent.description" = "Spustite harness YNH ako slučku agenta riadenú senzormi. Experimentálne.";
+"settings.agent.enable.tab" = "Zobrazť kartu Relácie Agenta na bočnom paneli";
+"settings.agent.enable.tab.help" = "Pridá kartu na bočnom paneli so zoznamom prebiehajúcich a minulých relácií Agenta a akciu „Spustiť ako Agent“ na riadkoch harness.";
+
+"fleet.sidebar.title" = "Relácie agenta";
+"fleet.new.help" = "Spustiť fleet";
+"fleet.new.session.help" = "Nová relácia agenta";
+"fleet.refresh.help" = "Znovu načítať trajektórie z disku";
+"fleet.open.transcript.help" = "Otvoriť prepis agenta";
+"fleet.context.run" = "Spustiť…";
+"fleet.context.edit.harness" = "Upraviť Harness…";
+"fleet.run.advanced" = "Pokročilé";
+"fleet.run.cwd.label" = "Pracovný adresár";
+"fleet.run.cwd.empty" = "(dedí aktuálny adresár TermQ)";
+"fleet.run.cwd.choose" = "Vybrať…";
+"fleet.empty.title" = "Žiadne relácie agenta";
+"fleet.empty.body" = "Spustite jednu z harness alebo spustite fleet pre paralelné relácie nad rovnakou úlohou.";
+"fleet.launch.title" = "Spustiť fleet";
+"fleet.launch.section.config" = "Konfigurácia";
+"fleet.launch.section.task" = "Úloha";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Vyberte harness…";
+"fleet.launch.field.harness.empty" = "Žiadne harnesses nie sú nainštalované. Najprv nainštalujte jeden z karty Harnesses.";
+"fleet.launch.field.sessions" = "Paralelné relácie";
+"fleet.launch.field.base.worktree" = "Základná cesta worktree";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Popíšte úlohu pre agenta…";
+"fleet.launch.button" = "Spustiť";
+"fleet.launch.cancel" = "Zrušiť";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d beží";
+"fleet.aggregate.converged" = "%d/%d konvergovaných";
+"fleet.aggregate.idle" = "%d relácií";
+"fleet.promote.winner" = "Povýšiť %@";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Posledné senzory";
+"inspector.agent.trajectory" = "Priebeh";
+"inspector.agent.trajectory.empty" = "Zatiaľ žiadny priebeh";
+"inspector.agent.trajectory.empty.configure" = "Nakonfigurujte agent.loopDriverCommand v nastaveniach a potom stlačte Spustiť.";
+"inspector.agent.trajectory.empty.run" = "Stlačte Spustiť na spustenie nakonfigurovaného ovládača slučky.";
+"inspector.agent.turn" = "Ťah %d";
+"inspector.agent.sensors.all.passed" = "všetko prešlo";
+"inspector.agent.sensors.failed" = "%d zlyhalo";
+"inspector.agent.edit.sensors" = "Upraviť senzory";
+"inspector.agent.turn.approval.title" = "Ťah %d — Skontrolovať spätnú väzbu";
+"inspector.agent.turn.approval.send" = "Odoslať";
+"inspector.agent.turn.approval.reset" = "Obnoviť";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Prekryvy senzorov";
+"overlay.editor.loading" = "Načítavanie senzorov…";
+"overlay.editor.no.sensors" = "V tomto harnessei nie sú deklarované žiadne senzory.";
+"overlay.editor.role.label" = "Rola";
+"overlay.editor.role.inherited" = "Zdedená";
+"overlay.editor.prompt.harness.label" = "Výzva harnessu";
+"overlay.editor.prompt.override.label" = "Prepísať";
+"overlay.editor.prompt.override.placeholder" = "Ponechajte prázdne pre zdedenie výzvy harnessu";
+"overlay.editor.source.kind.command" = "príkaz";
+"overlay.editor.source.kind.files" = "súbory";
+"overlay.editor.source.kind.focus" = "fokus";
+"overlay.editor.save" = "Uložiť";
+"overlay.editor.cancel" = "Zrušiť";
+"overlay.editor.error.ynh.not.ready" = "ynh nie je pripravené. Skontrolujte sadu nástrojov YNH v Nastaveniach.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "Nástrojový reťazec YNH";
 "settings.ynh.title" = "ynh";

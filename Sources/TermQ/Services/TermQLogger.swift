@@ -60,6 +60,11 @@ enum TermQLogger {
     /// `fileLoggingEnabled`.
     static let process = CategoryLogger(category: "process")
 
+    /// Agent loop driver lifecycle: spawn, trajectory file open/read/close,
+    /// event decode, status flips. Trajectory bytes are user data — gate
+    /// payload dumps behind `fileLoggingEnabled`.
+    static let agent = CategoryLogger(category: "agent")
+
     // MARK: - File Logging
 
     /// True when TERMQ_DEBUG is set in the environment. Evaluated once at

@@ -706,6 +706,90 @@
 // Toolbar tooltips
 "harnesses.wizard.toolbar.help" = "Neuen Harness erstellen";
 
+// MARK: - Editor — Agent
+"editor.tab.agent" = "Agent";
+"editor.agent.section.config" = "Konfiguration";
+"editor.agent.section.budget" = "Budget";
+"editor.agent.field.backend" = "Backend";
+"editor.agent.field.mode" = "Modus";
+"editor.agent.field.interaction" = "Interaktion";
+"editor.agent.field.max.turns" = "Max. Runden";
+"editor.agent.field.max.tokens" = "Max. Tokens";
+"editor.agent.field.max.wall.minutes" = "Max. Laufzeit (Min.)";
+"editor.agent.field.loop.driver.command" = "Befehl für Loop-Treiber";
+"editor.agent.field.loop.driver.command.placeholder" = "Globale Vorgabe übernehmen";
+"editor.agent.field.loop.driver.command.help" = "Überschreibt das Programm, das TermQ als Agenten-Loop-Treiber ausführt. Leer bedeutet, TermQ verwendet `ynh agent` aus Ihrem PATH — die Standardwahl. Verweisen Sie hier auf einen eigenen Build, ein Wrapper-Skript oder ein anderes NDJSON-ausgebendes Binary.";
+"editor.agent.advanced" = "Erweitert";
+
+// MARK: - Settings — Agent Loop
+"settings.agent.section" = "Agent-Loop";
+"settings.agent.description" = "YNH-Harness als sensorgesteuerten Agent-Loop ausführen. Experimentell.";
+"settings.agent.enable.tab" = "Agent-Sitzungen-Tab in der Seitenleiste anzeigen";
+"settings.agent.enable.tab.help" = "Fügt der Seitenleiste einen Tab hinzu, der laufende und vergangene Agent-Sitzungen auflistet, und eine Aktion „Als Agent starten“ bei Harness-Zeilen.";
+
+"fleet.sidebar.title" = "Agent-Sitzungen";
+"fleet.new.help" = "Fleet-Lauf starten";
+"fleet.new.session.help" = "Neue Agent-Sitzung";
+"fleet.refresh.help" = "Trajektorien von der Festplatte neu laden";
+"fleet.open.transcript.help" = "Agentprotokoll öffnen";
+"fleet.context.run" = "Ausführen…";
+"fleet.context.edit.harness" = "Harness bearbeiten…";
+"fleet.run.advanced" = "Erweitert";
+"fleet.run.cwd.label" = "Arbeitsverzeichnis";
+"fleet.run.cwd.empty" = "(erbt das aktuelle Verzeichnis von TermQ)";
+"fleet.run.cwd.choose" = "Auswählen…";
+"fleet.empty.title" = "Noch keine Agent-Sitzungen";
+"fleet.empty.body" = "Starte eine von einem Harness aus, oder starte einen Fleet, um parallele Sitzungen für dieselbe Aufgabe auszuführen.";
+"fleet.launch.title" = "Fleet-Lauf starten";
+"fleet.launch.section.config" = "Konfiguration";
+"fleet.launch.section.task" = "Aufgabe";
+"fleet.launch.field.harness" = "Harness";
+"fleet.launch.field.harness.placeholder" = "Harness auswählen…";
+"fleet.launch.field.harness.empty" = "Keine Harnesses installiert. Installiere zuerst eines über die Registerkarte Harnesses.";
+"fleet.launch.field.sessions" = "Parallele Sitzungen";
+"fleet.launch.field.base.worktree" = "Worktree-Basispfad";
+"fleet.launch.field.base.worktree.placeholder" = "~/fleet-runs";
+"fleet.launch.task.placeholder" = "Beschreibe die Aufgabe für den Agenten…";
+"fleet.launch.button" = "Starten";
+"fleet.launch.cancel" = "Abbrechen";
+"fleet.group.label" = "Fleet";
+"fleet.aggregate.running" = "%d/%d laufend";
+"fleet.aggregate.converged" = "%d/%d konvergiert";
+"fleet.aggregate.idle" = "%d Sitzungen";
+"fleet.promote.winner" = "%@ befördern";
+// MARK: - Inspector — Agent
+
+"inspector.agent.last.sensors" = "Letzte Sensoren";
+"inspector.agent.trajectory" = "Verlauf";
+"inspector.agent.trajectory.empty" = "Noch kein Verlauf";
+"inspector.agent.trajectory.empty.configure" = "agent.loopDriverCommand in den Einstellungen konfigurieren, dann auf Ausführen drücken.";
+"inspector.agent.trajectory.empty.run" = "Auf Ausführen drücken, um den konfigurierten Loop-Treiber zu starten.";
+"inspector.agent.turn" = "Runde %d";
+"inspector.agent.sensors.all.passed" = "alle bestanden";
+"inspector.agent.sensors.failed" = "%d fehlgeschlagen";
+"inspector.agent.edit.sensors" = "Sensoren bearbeiten";
+"inspector.agent.turn.approval.title" = "Runde %d — Feedback prüfen";
+"inspector.agent.turn.approval.send" = "Senden";
+"inspector.agent.turn.approval.reset" = "Zurücksetzen";
+
+// MARK: - Overlay Editor
+
+"overlay.editor.title" = "Sensor-Overlays";
+"overlay.editor.loading" = "Sensoren werden geladen…";
+"overlay.editor.no.sensors" = "Keine Sensoren in diesem Harness deklariert.";
+"overlay.editor.role.label" = "Rolle";
+"overlay.editor.role.inherited" = "Geerbt";
+"overlay.editor.prompt.harness.label" = "Harness-Prompt";
+"overlay.editor.prompt.override.label" = "Überschreiben";
+"overlay.editor.prompt.override.placeholder" = "Leer lassen, um den Harness-Prompt zu verwenden";
+"overlay.editor.source.kind.command" = "Befehl";
+"overlay.editor.source.kind.files" = "Dateien";
+"overlay.editor.source.kind.focus" = "Fokus";
+"overlay.editor.save" = "Sichern";
+"overlay.editor.cancel" = "Abbrechen";
+"overlay.editor.error.ynh.not.ready" = "ynh ist nicht bereit. Überprüfe die YNH-Toolchain in den Einstellungen.";
+
+
 // MARK: - Settings — YNH
 "settings.ynh.section" = "YNH-Harness-Toolchain";
 "settings.ynh.title" = "ynh";
