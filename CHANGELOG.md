@@ -7,10 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added — Terminal UI
-
-- **Terminal font-size zoom.** Increase, decrease, and reset the focused terminal's font size live from the **View** menu or with ⌘+ / ⌘− / ⌘0 (⌘= also zooms in). The change applies to the running session immediately — no restart — and persists as a per-terminal override; ⌘0 clears the override back to the global default. Range is 6–72 pt, matching the per-terminal Font Size slider in the terminal editor.
-
 ### Changed — BREAKING (MCP / CLI)
 
 - **MCP tool names lose the `termq_` prefix.** Every TermQ MCP tool is now reachable as `mcp__termq__<name>` rather than `mcp__termq__termq_<name>`. Affected tools: `pending`, `context`, `list`, `find`, `open`, `create`, `set`, `move`, `get`, `delete`. **No alias is provided.** Anyone with `mcp__termq__termq_*` hardcoded in a CLAUDE.md, hook script, or recorded prompt must update by deleting one prefix.
@@ -64,6 +60,12 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 - **`Docs/Help/tutorials/mcp-subscriptions.md`** — new tutorial walking through the resource-subscription feature with worked code and sharp-edges section.
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
+
+## [0.11.8] - 2026-06-15
+
+### Added — Terminal UI
+
+- **Terminal font-size zoom.** Increase, decrease, and reset the focused terminal's font size live from the **View** menu or with ⌘+ / ⌘− / ⌘0 (⌘= also zooms in). The change applies to the running session immediately — no restart — and persists as a per-terminal override; ⌘0 clears the override back to the global default. Range is 6–72 pt, matching the per-terminal Font Size slider in the terminal editor.
 
 ## [0.11.7] - 2026-06-13
 
