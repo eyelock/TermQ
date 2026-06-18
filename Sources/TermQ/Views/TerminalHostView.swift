@@ -278,6 +278,11 @@ class TermQTerminalView: LocalProcessTerminalView {
                 title: "Copy without Line Breaks",
                 action: #selector(copyWithoutLineBreaks(_:)),
                 keyEquivalent: ""))
+        menu.addItem(
+            NSMenuItem(
+                title: "Copy without Indentation",
+                action: #selector(copyWithoutIndentation(_:)),
+                keyEquivalent: ""))
 
         menu.addItem(.separator())
 
@@ -290,7 +295,9 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// SwiftTerm's implementation returns `false` for any selector it doesn't
     /// recognize, which would leave our custom menu items permanently disabled.
     override func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
-        if item.action == #selector(copyWithoutLineBreaks(_:)) {
+        if item.action == #selector(copyWithoutLineBreaks(_:))
+            || item.action == #selector(copyWithoutIndentation(_:))
+        {
             return selectionActive
         }
         return super.validateUserInterfaceItem(item)
@@ -299,24 +306,30 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Copy the selection as a single line — newlines collapsed to single spaces —
     /// so multi-line commands wrapped by a TUI can be pasted straight into a shell.
     @objc private func copyWithoutLineBreaks(_ sender: Any) {
+        copyTransformingSelection(sender, with: TerminalSelectionFormatter.collapsingLineBreaks)
+    }
+
+    /// Copy the selection with the shared leading indentation removed but line
+    /// breaks preserved — so a multi-line command a TUI rendered with a display
+    /// indent (e.g. a quoted heredoc) pastes into a shell as literal, runnable text.
+    @objc private func copyWithoutIndentation(_ sender: Any) {
+        copyTransformingSelection(sender, with: TerminalSelectionFormatter.strippingIndentation)
+    }
+
+    /// Run the standard copy, then rewrite the pasteboard with `transform` applied
+    /// to the copied text. `copy(_:)` writes the pasteboard synchronously today;
+    /// the deferred read guards against SwiftTerm ever making it asynchronous
+    /// (same pattern as `selectAll` above).
+    private func copyTransformingSelection(_ sender: Any, with transform: @escaping (String) -> String) {
         guard selectionActive else { return }
         copy(sender)
 
-        // copy(_:) writes the pasteboard synchronously today; defer the read one
-        // tick in case SwiftTerm ever makes it asynchronous (same pattern as
-        // selectAll above).
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             guard let text = NSPasteboard.general.string(forType: .string), !text.isEmpty else {
                 return
             }
-
-            let oneLiner = text
-                .components(separatedBy: .newlines)
-                .map { $0.trimmingCharacters(in: .whitespaces) }
-                .filter { !$0.isEmpty }
-                .joined(separator: " ")
             NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(oneLiner, forType: .string)
+            NSPasteboard.general.setString(transform(text), forType: .string)
         }
     }
 
