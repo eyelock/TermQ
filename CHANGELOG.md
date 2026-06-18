@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.9] - 2026-06-18
+
+### Added — Terminal UI
+
+- **"Copy without Indentation" context-menu item in the terminal.** Sibling to "Copy without Line Breaks" (0.11.6). A TUI (e.g. Claude Code) often renders a multi-line command — such as a quoted heredoc — with a uniform left indent; a normal copy carries that indentation, and the leading whitespace breaks the command when pasted into a shell. The new item runs the standard copy then rewrites the pasteboard with the common leading indentation removed while preserving line breaks, so the literal command pastes cleanly. Only the shared outer indent is stripped — relative indentation within the block (a nested heredoc body, an `if`/`fi` block) is kept intact.
+
 ## [0.11.8] - 2026-06-15
 
 ### Added — Terminal UI
