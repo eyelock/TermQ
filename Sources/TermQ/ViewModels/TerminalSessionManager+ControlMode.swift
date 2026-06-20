@@ -102,7 +102,7 @@ class ControlModePaneDelegate: TerminalViewDelegate {
             // frame before the list-panes response has updated parser.panes, so we
             // can't scale its size reliably.  Wait for the next render cycle.
             guard let parserPane = allPanes.first(where: { $0.id == capturedPaneId }) else {
-                TermQLogger.tmux.debug(
+                TermQLogger.tmux.notice(
                     "sizeChanged SKIP pane=\(capturedPaneId)"
                         + " swiftterm=\(capturedCols)x\(capturedRows) reason=not-in-parser"
                 )
@@ -131,16 +131,38 @@ class ControlModePaneDelegate: TerminalViewDelegate {
                         Double(capturedRows) * Double(totalParserRows)
                             / Double(paneParserHeight))))
 
-            // Snap to the parser's current total if within ±2 to absorb pixel-rounding
-            // noise.  SwiftUI proportional layout doesn't guarantee an exact multiple of
-            // cellHeight/cellWidth, so SwiftTerm's floor() can land 1–2 units below the
-            // correct value.  A ≤2 difference is rounding, not a user-driven resize.
-            let cols = abs(computedCols - totalParserCols) <= 2 ? totalParserCols : computedCols
-            let rows = abs(computedRows - totalParserRows) <= 2 ? totalParserRows : computedRows
+            // Single pane fills the whole window, so SwiftTerm's grid IS the authoritative
+            // size — send it verbatim. tmux MUST render to exactly the cols/rows SwiftTerm
+            // displays; any mismatch mis-places absolute-positioned TUI output (e.g. a
+            // bottom-anchored input box paints into a row SwiftTerm doesn't have → invisible
+            // until a reflow — the missing-text / floating-cursor bug).
+            //
+            // No oscillation to fear here: for one pane the container frame is always
+            // full-bounds (pane.width == totalCols ⇒ frame == bounds, independent of the size
+            // tmux reports back), so SwiftTerm re-floors to the same value and settles.
+            //
+            // `allPanes.count == 1` is the genuine single-pane case. A zoomed pane in a
+            // multi-pane session still reports every pane in the parser, so it stays on the
+            // multi-pane (snap) path below — the guard isn't fooled by tmux zoom.
+            //
+            // Multi-pane DOES need a tolerance: each pane's pixel frame is derived from tmux's
+            // reported pane size, so exact-matching can oscillate. Snap to the parser's current
+            // total when within ±2 to absorb that pixel-rounding noise (SwiftUI proportional
+            // layout doesn't guarantee an exact multiple of cellWidth/cellHeight, so SwiftTerm's
+            // floor() can land 1–2 units below the correct value).
+            let cols: Int
+            let rows: Int
+            if allPanes.count == 1 {
+                cols = capturedCols
+                rows = capturedRows
+            } else {
+                cols = abs(computedCols - totalParserCols) <= 2 ? totalParserCols : computedCols
+                rows = abs(computedRows - totalParserRows) <= 2 ? totalParserRows : computedRows
+            }
 
             let paneIds = allPanes.map { "\($0.id):\($0.width)x\($0.height)@\($0.x),\($0.y)" }
                 .joined(separator: " ")
-            TermQLogger.tmux.debug(
+            TermQLogger.tmux.notice(
                 "sizeChanged pane=\(capturedPaneId) swiftterm=\(capturedCols)x\(capturedRows)"
                     + " computed=\(computedCols)x\(computedRows) snap=\(cols)x\(rows)"
                     + " parser={\(paneIds)}"
@@ -399,6 +421,11 @@ extension TerminalSessionManager {
     /// Store delegates to keep them alive
     private static var terminalDelegates: [UUID: [String: ControlModePaneDelegate]] = [:]
 
+    /// Last-logged geometry signature per "cardId/paneId" for the desync detector in
+    /// `handlePaneOutput`. Keeps the check to one log line per state change, so a
+    /// persistent SwiftTerm↔tmux size mismatch costs one line, not one per chunk.
+    private static var geoCheckSignatures: [String: String] = [:]
+
     /// Clean up terminal views and delegates for panes that no longer exist
     private func cleanupStalePaneTerminals(cardId: UUID, currentPanes: [TmuxPane]) {
         let currentPaneIds = Set(currentPanes.map(\.id))
@@ -407,6 +434,7 @@ extension TerminalSessionManager {
             for paneId in paneViews.keys where !currentPaneIds.contains(paneId) {
                 paneTerminals[cardId]?.removeValue(forKey: paneId)
                 Self.terminalDelegates[cardId]?.removeValue(forKey: paneId)
+                Self.geoCheckSignatures.removeValue(forKey: "\(cardId.uuidString)/\(paneId)")
             }
         }
     }
@@ -432,6 +460,37 @@ extension TerminalSessionManager {
         }
         if let paneTerminal = getTerminalView(for: cardId, paneId: paneId) {
             paneTerminal.feed(byteArray: bytes[...])
+
+            // Geometry desync detector. SwiftTerm's grid MUST equal tmux's pane size:
+            // tmux positions cursor/text by absolute row/column for ITS size, so any
+            // divergence makes absolute-positioned TUI output (e.g. a bottom-anchored
+            // input box) land off-grid and render invisibly until a reflow. We log only
+            // when the (swiftterm, parser) signature changes, so a persistent mismatch
+            // costs one line, not one per output chunk.
+            if let pane = getControlModeSession(for: cardId)?.parser.panes
+                .first(where: { $0.id == paneId })
+            {
+                let term = paneTerminal.getTerminal()
+                let signature = "\(term.cols)x\(term.rows)|\(pane.width)x\(pane.height)"
+                let key = "\(cardId.uuidString)/\(paneId)"
+                if Self.geoCheckSignatures[key] != signature {
+                    Self.geoCheckSignatures[key] = signature
+                    if term.cols == pane.width, term.rows == pane.height {
+                        TermQLogger.tmux.debug(
+                            "geo MATCH pane=\(paneId)"
+                                + " swiftterm=\(term.cols)x\(term.rows)"
+                                + " parser=\(pane.width)x\(pane.height)"
+                        )
+                    } else {
+                        TermQLogger.tmux.warning(
+                            "geo DESYNC pane=\(paneId)"
+                                + " swiftterm=\(term.cols)x\(term.rows)"
+                                + " parser=\(pane.width)x\(pane.height)"
+                                + " dCol=\(term.cols - pane.width) dRow=\(term.rows - pane.height)"
+                        )
+                    }
+                }
+            }
         }
     }
 
