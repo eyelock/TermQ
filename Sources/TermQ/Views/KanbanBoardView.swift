@@ -3,6 +3,8 @@ import TermQCore
 
 struct KanbanBoardView: View {
     @ObservedObject var viewModel: BoardViewModel
+    /// Reuse-in-place launch actions for non-live cards (card right-click menu).
+    var launchActions: CardLaunchActions?
 
     private let minColumnWidth: CGFloat = 200
     private let columnSpacing: CGFloat = 16
@@ -29,6 +31,7 @@ struct KanbanBoardView: View {
                             processingCards: viewModel.processingCards,
                             activeSessionCards: viewModel.activeSessionCards,
                             openTabs: Set(viewModel.sessionTabs),
+                            launchActions: launchActions,
                             onAddCard: {
                                 viewModel.addTerminal(to: column)
                             },
