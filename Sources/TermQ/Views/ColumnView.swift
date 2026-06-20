@@ -8,6 +8,8 @@ struct ColumnView: View {
     let processingCards: Set<UUID>
     let activeSessionCards: Set<UUID>
     let openTabs: Set<UUID>
+    /// Reuse-in-place launch actions for non-live cards (card right-click menu).
+    var launchActions: CardLaunchActions?
     let onAddCard: () -> Void
     let onSelectCard: (TerminalCard) -> Void
     let onEditCard: (TerminalCard) -> Void
@@ -90,6 +92,7 @@ struct ColumnView: View {
                             isProcessing: processingCards.contains(card.id),
                             isOpenAsTab: openTabs.contains(card.id),
                             hasActiveSession: activeSessionCards.contains(card.id),
+                            launchActions: launchActions,
                             onSelect: { onSelectCard(card) },
                             onEdit: { onEditCard(card) },
                             onDelete: { onDeleteCard(card) },

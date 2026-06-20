@@ -56,12 +56,48 @@ struct ForceUpdatePRContext: Identifiable {
 
 // MARK: - Run With Focus Context
 
+/// Origin-agnostic context for the Run-with-Focus sheet. Built either from a
+/// sidebar worktree (creates a new card on launch) or from an existing terminal
+/// card (reused in place). The sheet reads only the primitive fields; the
+/// presenter decides what to do with the produced `HarnessLaunchConfig`.
 struct RunWithFocusContext: Identifiable {
     let id = UUID()
-    let worktree: GitWorktree
-    let repo: ObservableRepository
-    /// Linked PR number, or `nil` when launching on a plain local worktree.
+    let workingDirectory: String
+    let branch: String?
+    let commitHash: String?
+    /// Repo path for run/focus persistence + the card-title slug. `nil` for a
+    /// card-origin launch that doesn't resolve to a registered repo — launch
+    /// still works off the preferred harness; persistence is simply skipped.
+    let repoPath: String?
+    /// Linked PR number, or `nil` for plain local worktrees / cards.
     let prNumber: Int?
+    /// Harness id to preselect (the card's effective harness). `nil` falls back
+    /// to the saved run-harness / repo default.
+    let preferredHarnessId: String?
+    /// Existing card to reuse in place; `nil` for worktree-origin (new-card).
+    let card: TerminalCard?
+
+    /// Worktree-origin (sidebar) — launches create a new card.
+    init(worktree: GitWorktree, repo: ObservableRepository, prNumber: Int?) {
+        self.workingDirectory = worktree.path
+        self.branch = worktree.branch
+        self.commitHash = worktree.commitHash
+        self.repoPath = repo.path
+        self.prNumber = prNumber
+        self.preferredHarnessId = nil
+        self.card = nil
+    }
+
+    /// Card-origin (card menu) — launches reuse `card` in place.
+    init(card: TerminalCard, options: CardLaunchOptions) {
+        self.workingDirectory = options.workingDirectory
+        self.branch = options.branch
+        self.commitHash = nil
+        self.repoPath = options.repoPath
+        self.prNumber = nil
+        self.preferredHarnessId = options.effectiveHarnessId
+        self.card = card
+    }
 }
 
 // MARK: - Sidebar Toast
