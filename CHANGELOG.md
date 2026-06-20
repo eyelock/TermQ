@@ -61,6 +61,16 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.11] - 2026-06-20
+
+### Fixed — Terminal
+
+- **Typed text no longer goes missing and the cursor no longer floats outside the box in full-screen terminal apps.** In a tmux control-mode card running a full-screen TUI (e.g. Claude Code), SwiftTerm's grid and tmux's pane size could settle 1–2 cells apart, so tmux's absolute-positioned output — notably a bottom-anchored input box — painted into a row/column SwiftTerm didn't have. The typed characters stayed invisible until a reflow (pressing Enter) or a window resize forced the two sizes back into agreement. For the single-pane case the resize handler now sends SwiftTerm's exact grid to tmux instead of snapping to a near-but-different value, keeping the two in lockstep. Multi-pane layouts keep the ±2 rounding tolerance they need to avoid resize oscillation.
+
+### Added — Diagnostics
+
+- **Geometry desync detector.** When a control-mode pane's SwiftTerm grid diverges from its tmux pane size, TermQ logs a `geo DESYNC` warning (the pane id and each side's cols×rows, with deltas); the resize decisions that drive sizing are logged at notice level. Both persist in release builds and carry only grid dimensions — never terminal content — so any recurrence can be diagnosed after the fact via `log show`.
+
 ## [0.11.10] - 2026-06-20
 
 ### Added — Terminal UI
