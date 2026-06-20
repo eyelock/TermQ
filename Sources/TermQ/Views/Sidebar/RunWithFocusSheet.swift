@@ -89,7 +89,7 @@ struct RunWithFocusSheet: View {
         if let prNumber = context.prNumber {
             return "#\(prNumber)"
         }
-        return context.worktree.branch ?? context.worktree.commitHash
+        return context.branch ?? context.commitHash ?? ""
     }
 
     var body: some View {
@@ -290,11 +290,13 @@ struct RunWithFocusSheet: View {
     // MARK: - Helpers
 
     private func applyDefaults() {
-        let repoPath = context.repo.path
+        // Card-origin launches preselect the card's effective harness; both
+        // origins then fall back to saved run-harness / worktree / repo default.
         let savedHarness =
-            ynhPersistence.runHarness(for: repoPath)
-            ?? ynhPersistence.harness(for: context.worktree.path)
-            ?? ynhPersistence.repoDefaultHarness(for: repoPath)
+            context.preferredHarnessId
+            ?? context.repoPath.flatMap { ynhPersistence.runHarness(for: $0) }
+            ?? ynhPersistence.harness(for: context.workingDirectory)
+            ?? context.repoPath.flatMap { ynhPersistence.repoDefaultHarness(for: $0) }
 
         if let harnessId = savedHarness,
             harnessRepository.harnesses.contains(where: { $0.id == harnessId || $0.name == harnessId })
@@ -309,7 +311,7 @@ struct RunWithFocusSheet: View {
         // Defer focus restore: onChange(of: selectedHarnessId) fires after this returns
         // and unconditionally clears selectedFocus. Scheduling on the next main-actor
         // iteration ensures we restore after the clear.
-        let savedFocus = ynhPersistence.runFocus(for: repoPath) ?? ""
+        let savedFocus = context.repoPath.flatMap { ynhPersistence.runFocus(for: $0) } ?? ""
         Task { @MainActor in
             selectedFocus = savedFocus
         }
@@ -368,13 +370,16 @@ struct RunWithFocusSheet: View {
             effectivePrompt = effectivePromptText.isEmpty ? nil : effectivePromptText
         }
 
-        ynhPersistence.setRunHarness(harness.id, for: context.repo.path)
-        if !selectedFocus.isEmpty {
-            ynhPersistence.setRunFocus(selectedFocus, for: context.repo.path)
+        // Persist run-harness / focus only when the launch resolves to a repo.
+        if let repoPath = context.repoPath {
+            ynhPersistence.setRunHarness(harness.id, for: repoPath)
+            if !selectedFocus.isEmpty {
+                ynhPersistence.setRunFocus(selectedFocus, for: repoPath)
+            }
         }
 
         let instructions: String? = context.prNumber.map {
-            "PR #\($0) in \(Self.repoSlug(from: context.repo.path))"
+            "PR #\($0) in \(Self.repoSlug(from: context.repoPath ?? context.workingDirectory))"
         }
 
         let config = HarnessLaunchConfig(
@@ -383,11 +388,11 @@ struct RunWithFocusSheet: View {
             defaultVendor: harness.defaultVendor,
             focus: effectiveFocus,
             profile: effectiveFocus == nil ? (effectiveProfile.isEmpty ? nil : effectiveProfile) : nil,
-            workingDirectory: context.worktree.path,
+            workingDirectory: context.workingDirectory,
             prompt: effectivePrompt,
             instructions: instructions,
             backend: settings.backend,
-            branch: context.worktree.branch,
+            branch: context.branch,
             interactive: isInteractive,
             cardTitle: makeCardTitle(focus: effectiveFocus, profile: effectiveProfile)
         )
@@ -405,7 +410,8 @@ struct RunWithFocusSheet: View {
         } else {
             label = selectedHarness?.id ?? selectedHarnessId
         }
-        return Self.buildTitle(label: label, repoPath: context.repo.path, prNumber: context.prNumber)
+        return Self.buildTitle(
+            label: label, repoPath: context.repoPath ?? context.workingDirectory, prNumber: context.prNumber)
     }
 
     /// Static entry point for building a card title outside the sheet (e.g. quick-launch).

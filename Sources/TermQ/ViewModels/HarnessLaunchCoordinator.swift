@@ -207,6 +207,90 @@ final class HarnessLaunchCoordinator {
         boardViewModel.selectedCard = card
     }
 
+    // MARK: - Reuse-in-place (existing card)
+
+    /// Rewrite an existing card's launch (init command + harness tags) from
+    /// `config` and open it, instead of creating a new card. Backs the card
+    /// menu's Launch / Run with Focus / Quick Launch Focus actions — the fix
+    /// for the delete-and-recreate workflow.
+    ///
+    /// Preserves the card's identity tags (`backend`, `shell`, `session`,
+    /// `window`) and its title/backend; only the launch-describing tags and
+    /// the init command change.
+    func applyLaunchToCard(_ card: TerminalCard, config: HarnessLaunchConfig) {
+        rewriteCardLaunch(card, config: config)
+        openFresh(card)
+    }
+
+    /// Pure reuse-in-place mutation: rewrite the card's launch tags + init
+    /// command from `config`, preserving identity tags (`backend`, `shell`,
+    /// `session`, `window`). Separated from the open side effect so the rewrite
+    /// is unit-testable without driving the session/tab machinery.
+    func rewriteCardLaunch(_ card: TerminalCard, config: HarnessLaunchConfig) {
+        // Identity tags that outlive a launch change. `repository` is included
+        // because `HarnessLaunchConfig.tags` never emits it, so a card that
+        // started as a plain terminal would otherwise lose its repo association.
+        let preservedKeys: Set<String> = ["backend", "shell", "session", "window", "repository"]
+        let preserved = card.tags.filter { preservedKeys.contains($0.key) }
+        let launchTags = config.tags.map { TermQCore.Tag(key: $0.key, value: $0.value) }
+        card.tags = launchTags + preserved
+
+        // Bind to the card's stable tmux session name (matches the new-card
+        // launch path, which derives the same name from the card id).
+        card.initCommand = config.command(sessionName: card.tmuxSessionName)
+        card.allowAutorun = true
+
+        boardViewModel.save()
+    }
+
+    /// Build a minimal `ynh run` config for `card`'s effective harness and apply
+    /// it in place. Backs the card menu's "Launch `<harness>`" (focus == nil) and
+    /// "Quick Launch Focus" (focus set) items.
+    func applyHarness(_ harnessId: String, focus: String?, branch: String?, to card: TerminalCard) {
+        let harness = harnessRepo.harnesses.first { $0.id == harnessId || $0.name == harnessId }
+        let config = HarnessLaunchConfig(
+            harnessID: harness?.id ?? harnessId,
+            vendorID: "",
+            defaultVendor: harness?.defaultVendor ?? "",
+            focus: focus,
+            profile: nil,
+            workingDirectory: card.workingDirectory,
+            prompt: nil,
+            instructions: nil,
+            backend: SettingsStore.shared.backend,
+            branch: branch,
+            interactive: false,
+            cardTitle: nil
+        )
+        applyLaunchToCard(card, config: config)
+    }
+
+    /// Open a fresh plain "Quick Terminal" at the card's working directory — a
+    /// new throwaway card with its own session, mirroring the sidebar's Quick
+    /// Terminal. Backs the card menu's "Quick Terminal" item.
+    ///
+    /// Deliberately does *not* reuse the card's own session: a card's tmux
+    /// session (named from its id) may be stale from a prior harness run, so
+    /// re-attaching to it shows a blank/dead pane. A brand-new card always gets
+    /// a clean session.
+    func openQuickTerminal(_ card: TerminalCard) {
+        let branch = card.tags.first { $0.key == "branch" }?.value
+        let repoName = card.tags.first { $0.key == "repository" }?.value
+        boardViewModel.newTerminal(at: card.workingDirectory, branch: branch, repoName: repoName)
+    }
+
+    /// Force a fresh terminal session for `card` (so a rewritten init command
+    /// takes effect) and open it. A stale session entry is marked for restart so
+    /// the manager tears it down and recreates on next access.
+    private func openFresh(_ card: TerminalCard) {
+        let manager = TerminalSessionManager.shared
+        if manager.sessionExists(for: card.id) {
+            manager.restartSession(for: card.id)
+        }
+        harnessRepo.selectedHarnessId = nil
+        boardViewModel.selectCard(card)
+    }
+
     // MARK: - Sheet/detail dismiss
 
     /// Called from the launch sheet's `onDismiss`. Clears the working-dir

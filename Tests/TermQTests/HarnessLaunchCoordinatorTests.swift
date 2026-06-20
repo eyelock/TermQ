@@ -1,3 +1,4 @@
+import TermQCore
 import TermQShared
 import XCTest
 
@@ -94,5 +95,67 @@ final class HarnessLaunchCoordinatorTests: XCTestCase {
 
         XCTAssertNil(coord.cardBeforeHarness)
         XCTAssertNil(repo.selectedHarnessId)
+    }
+
+    // MARK: - Reuse-in-place (existing card)
+
+    private func launchConfig(focus: String?, branch: String?) -> HarnessLaunchConfig {
+        HarnessLaunchConfig(
+            harnessID: "new/h", vendorID: "", defaultVendor: "",
+            focus: focus, profile: nil,
+            workingDirectory: "/r/wt", prompt: nil, instructions: nil,
+            backend: .direct, branch: branch, interactive: false, cardTitle: nil)
+    }
+
+    func testRewriteCardLaunch_swapsLaunchTags_preservingIdentityTags() {
+        let (coord, _, bvm) = makeCoordinator()
+        let column = bvm.board.columns.first ?? bvm.board.addColumn(name: "Test")
+        let card = bvm.board.addCard(to: column, title: "Tab")
+        card.workingDirectory = "/r/wt"
+        // Stale launch tags + identity tags that must survive the rewrite.
+        card.tags = [
+            TermQCore.Tag(key: "source", value: "harness"),
+            TermQCore.Tag(key: "harness", value: "old/h"),
+            TermQCore.Tag(key: "focus", value: "stale"),
+            TermQCore.Tag(key: "backend", value: "pty"),
+            TermQCore.Tag(key: "shell", value: "zsh"),
+            TermQCore.Tag(key: "session", value: "termq-keepme"),
+            TermQCore.Tag(key: "window", value: "0"),
+            TermQCore.Tag(key: "repository", value: "eyelock/collective"),
+        ]
+        card.initCommand = "ynh run old/h --focus stale"
+
+        coord.rewriteCardLaunch(card, config: launchConfig(focus: "review", branch: "feat/y"))
+
+        let dict = Dictionary(card.tags.map { ($0.key, $0.value) }, uniquingKeysWith: { a, _ in a })
+        XCTAssertEqual(dict["harness"], "new/h", "harness tag is swapped to the new launch")
+        XCTAssertEqual(dict["focus"], "review")
+        XCTAssertEqual(dict["branch"], "feat/y")
+        // Identity tags preserved verbatim.
+        XCTAssertEqual(dict["backend"], "pty")
+        XCTAssertEqual(dict["shell"], "zsh")
+        XCTAssertEqual(dict["session"], "termq-keepme")
+        XCTAssertEqual(dict["window"], "0")
+        XCTAssertEqual(dict["repository"], "eyelock/collective", "repo association survives a relaunch")
+        // Init command rebuilt for the new launch, bound to the card's session.
+        XCTAssertTrue(card.initCommand.contains("ynh run new/h"), card.initCommand)
+        XCTAssertTrue(card.initCommand.contains("--focus review"), card.initCommand)
+        XCTAssertTrue(
+            card.initCommand.contains("--session-name \(card.tmuxSessionName)"), card.initCommand)
+        XCTAssertFalse(card.initCommand.contains("old/h"))
+        XCTAssertTrue(card.allowAutorun)
+    }
+
+    func testRewriteCardLaunch_noFocus_omitsFocusFlagAndTag() {
+        let (coord, _, bvm) = makeCoordinator()
+        let column = bvm.board.columns.first ?? bvm.board.addColumn(name: "Test")
+        let card = bvm.board.addCard(to: column, title: "Tab")
+        card.workingDirectory = "/r/wt"
+
+        coord.rewriteCardLaunch(card, config: launchConfig(focus: nil, branch: nil))
+
+        XCTAssertFalse(card.tags.contains { $0.key == "focus" })
+        XCTAssertFalse(card.initCommand.contains("--focus"), card.initCommand)
+        XCTAssertTrue(card.initCommand.contains("ynh run new/h"), card.initCommand)
     }
 }
