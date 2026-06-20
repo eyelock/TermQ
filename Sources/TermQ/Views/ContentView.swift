@@ -27,6 +27,9 @@ struct ContentView: View {
     /// Owns harness install/uninstall/update/export/fork flows via CommandRunnerSheet-backed sheets.
     @State private var lifecycleCoordinator = HarnessLifecycleCoordinator()
 
+    /// Run-with-Focus sheet context for a card-menu launch (reuse-in-place).
+    @State private var runWithFocusCardContext: RunWithFocusContext?
+
     var body: some View {
         HSplitView {
             if !isSidebarCollapsed {
@@ -131,7 +134,11 @@ struct ContentView: View {
                     )
                 } else {
                     // Kanban board view
-                    KanbanBoardView(viewModel: viewModel)
+                    KanbanBoardView(
+                        viewModel: viewModel,
+                        launchActions: .live(
+                            coordinator: launchCoordinator,
+                            runWithFocusContext: $runWithFocusCardContext))
                 }
 
                 // Command palette overlay
@@ -255,6 +262,18 @@ struct ContentView: View {
                     }
                 }
             )
+            .sheet(item: $runWithFocusCardContext) { ctx in
+                RunWithFocusSheet(
+                    context: ctx,
+                    onLaunch: { config in
+                        if let card = ctx.card {
+                            launchCoordinator.applyLaunchToCard(card, config: config)
+                        }
+                        runWithFocusCardContext = nil
+                    },
+                    onCancel: { runWithFocusCardContext = nil }
+                )
+            }
             .onChange(of: harnessRepo.listState) { _, _ in
                 launchCoordinator.tryResolvePendingLaunch()
             }

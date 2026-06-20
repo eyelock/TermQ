@@ -8,6 +8,9 @@ struct TerminalCardView: View {
     var isProcessing: Bool = false
     var isOpenAsTab: Bool = false
     var hasActiveSession: Bool = false
+    /// Reuse-in-place launch actions for a non-live card. Nil hides the launch
+    /// section.
+    var launchActions: CardLaunchActions?
     let onSelect: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
@@ -223,6 +226,38 @@ struct TerminalCardView: View {
             Button(Strings.Card.open) {
                 onSelect()
             }
+
+            // Launch family for a non-live card — mirrors the sidebar worktree
+            // menu, keyed off whatever the card resolves back to.
+            if !hasActiveSession, let actions = launchActions {
+                let opts = CardLaunchResolver().resolve(card)
+                if opts.showsLaunchItem, let name = opts.effectiveHarnessName {
+                    Button(Strings.Sidebar.launchHarness(name)) {
+                        actions.launchHarness(card)
+                    }
+                }
+                if opts.canLaunchHarness {
+                    Button(Strings.RemotePRs.runWithFocus) {
+                        actions.runWithFocus(card)
+                    }
+                    if !opts.focuses.isEmpty {
+                        Menu(Strings.RemotePRs.quickLaunchFocus) {
+                            ForEach(opts.focuses, id: \.self) { focusName in
+                                Button(Strings.RemotePRs.runFocusItem(focusName)) {
+                                    actions.quickLaunchFocus(card, focusName)
+                                }
+                            }
+                        }
+                    }
+                }
+                // Fresh plain terminal at the card's directory — a new card, so
+                // it never re-attaches to the card's (possibly stale) session.
+                Button(Strings.Sidebar.newTerminal) {
+                    actions.quickTerminal(card)
+                }
+                Divider()
+            }
+
             Button(Strings.Card.edit) {
                 onEdit()
             }
