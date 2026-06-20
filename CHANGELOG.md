@@ -61,7 +61,9 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
-### Added — UI
+## [0.11.10] - 2026-06-20
+
+### Added — Terminal UI
 
 - **Relaunch a non-live terminal card from its right-click menu — no delete-and-recreate.** When a card's terminal isn't running, its context menu now mirrors the Repositories sidebar's launch options: **Launch `<harness>`** (when the card's directory resolves to a configured harness), **Run with Focus…**, **Quick Launch Focus**, and **Quick Terminal** (a fresh plain shell at the card's directory). The harness/focus actions rewrite the card in place — preserving its identity tags (`backend`, `shell`, `session`, `window`, `repository`); **Quick Terminal** opens a brand-new throwaway card so it never re-attaches to a card's stale session. A card is matched back to its harness/worktree/repo via its `harness` tag first, then by matching its working directory against tracked worktrees and registered repositories.
 
