@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "저장소";
+"sidebar.workspace.all" = "모든 저장소";
+"sidebar.workspace.menu.help" = "워크스페이스별 저장소 필터링";
+"sidebar.workspace.new" = "새 워크스페이스…";
+"sidebar.workspace.new.title" = "새 워크스페이스";
+"sidebar.workspace.name.label" = "워크스페이스 이름";
+"sidebar.workspace.name.placeholder" = "예: 업무, 개인 프로젝트";
+"sidebar.workspace.create" = "생성";
+"sidebar.workspace.manage" = "워크스페이스 관리…";
+"sidebar.workspace.manage.title" = "워크스페이스 관리";
+"sidebar.workspace.manage.empty" = "아직 워크스페이스가 없습니다. 워크스페이스 메뉴에서 만드세요.";
+"sidebar.workspace.manage.done" = "완료";
+"sidebar.workspace.add.to" = "워크스페이스에 추가";
+"sidebar.workspace.delete.title" = "워크스페이스를 삭제하시겠습니까?";
+"sidebar.workspace.delete.confirm" = "삭제";
+"sidebar.workspace.delete.message %@" = "“%@”이(가) 제거됩니다. 그 안의 저장소는 삭제되지 않습니다.";
+"sidebar.workspace.empty.message" = "이 워크스페이스에 저장소가 없습니다.\n“모든 저장소”에서 저장소를 오른쪽 클릭하여 여기에 추가하세요.";
 "sidebar.add.button.help" = "저장소 추가";
 "sidebar.empty.message" = "추가된 저장소가 없습니다.\n+ 버튼을 눌러 git 저장소를 추가하세요.";
 "sidebar.worktrees.placeholder" = "워크트리가 여기에 표시됩니다";

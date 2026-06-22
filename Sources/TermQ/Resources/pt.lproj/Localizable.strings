@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositórios";
+"sidebar.workspace.all" = "Todos os repositórios";
+"sidebar.workspace.menu.help" = "Filtrar repositórios por espaço de trabalho";
+"sidebar.workspace.new" = "Novo espaço de trabalho…";
+"sidebar.workspace.new.title" = "Novo espaço de trabalho";
+"sidebar.workspace.name.label" = "Nome do espaço de trabalho";
+"sidebar.workspace.name.placeholder" = "ex.: Trabalho, Projetos pessoais";
+"sidebar.workspace.create" = "Criar";
+"sidebar.workspace.manage" = "Gerenciar espaços de trabalho…";
+"sidebar.workspace.manage.title" = "Gerenciar espaços de trabalho";
+"sidebar.workspace.manage.empty" = "Nenhum espaço de trabalho ainda. Crie um pelo menu de espaços de trabalho.";
+"sidebar.workspace.manage.done" = "Concluído";
+"sidebar.workspace.add.to" = "Adicionar a espaço de trabalho";
+"sidebar.workspace.delete.title" = "Excluir espaço de trabalho?";
+"sidebar.workspace.delete.confirm" = "Apagar";
+"sidebar.workspace.delete.message %@" = "“%@” será removido. Os repositórios nele não serão apagados.";
+"sidebar.workspace.empty.message" = "Nenhum repositório neste espaço de trabalho.\nClique com o botão direito em um repositório em “Todos os repositórios” para adicioná-lo aqui.";
 "sidebar.add.button.help" = "Adicionar repositório";
 "sidebar.empty.message" = "Nenhum repositório adicionado.\nClique em + para adicionar um repositório git.";
 "sidebar.worktrees.placeholder" = "Árvores de trabalho aparecerão aqui";

@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "リポジトリ";
+"sidebar.workspace.all" = "すべてのリポジトリ";
+"sidebar.workspace.menu.help" = "ワークスペースでリポジトリをフィルタ";
+"sidebar.workspace.new" = "新しいワークスペース…";
+"sidebar.workspace.new.title" = "新しいワークスペース";
+"sidebar.workspace.name.label" = "ワークスペース名";
+"sidebar.workspace.name.placeholder" = "例：仕事、個人プロジェクト";
+"sidebar.workspace.create" = "作成";
+"sidebar.workspace.manage" = "ワークスペースを管理…";
+"sidebar.workspace.manage.title" = "ワークスペースを管理";
+"sidebar.workspace.manage.empty" = "まだワークスペースがありません。ワークスペースメニューから作成してください。";
+"sidebar.workspace.manage.done" = "完了";
+"sidebar.workspace.add.to" = "ワークスペースに追加";
+"sidebar.workspace.delete.title" = "ワークスペースを削除しますか？";
+"sidebar.workspace.delete.confirm" = "削除";
+"sidebar.workspace.delete.message %@" = "「%@」が削除されます。含まれているリポジトリは削除されません。";
+"sidebar.workspace.empty.message" = "このワークスペースにはリポジトリがありません。\n「すべてのリポジトリ」内のリポジトリを右クリックして、ここに追加してください。";
 "sidebar.add.button.help" = "リポジトリを追加";
 "sidebar.empty.message" = "リポジトリが追加されていません。\n+ をクリックして Git リポジトリを追加してください。";
 "sidebar.worktrees.placeholder" = "ワークツリーがここに表示されます";

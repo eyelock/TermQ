@@ -110,7 +110,7 @@ extension TermQMCPServer {
 
         do {
             let board = try loadBoard()
-            var cards = board.activeCards
+            var cards = Board.cardsInWorkspace(board.activeCards, workspaceId: workspaceId)
 
             // Filter if actionsOnly
             if actionsOnly {
@@ -189,20 +189,23 @@ extension TermQMCPServer {
 
         do {
             let board = try loadBoard()
+            let scopedActiveCards = Board.cardsInWorkspace(board.activeCards, workspaceId: workspaceId)
 
             // If columnsOnly, return just column info wrapped in the envelope shape.
             if columnsOnly {
                 let columns = board.sortedColumns().map { column in
                     ColumnOutput(
                         from: column,
-                        terminalCount: board.activeCards.filter { $0.columnId == column.id }.count
+                        terminalCount: scopedActiveCards.filter { $0.columnId == column.id }.count
                     )
                 }
                 return try structuredResult(ColumnList(items: columns))
             }
 
             // Source set — active by default, all cards (incl. soft-deleted) when requested.
-            var cards = includeDeleted ? board.cards : board.activeCards
+            var cards =
+                includeDeleted
+                ? Board.cardsInWorkspace(board.cards, workspaceId: workspaceId) : scopedActiveCards
             cards = CardFilterEngine.filterByColumn(cards, column: columnFilter, columns: board.columns)
 
             // Sort by column order, then card order — stable across pagination calls.
@@ -290,7 +293,7 @@ extension TermQMCPServer {
 
         do {
             let board = try loadBoard()
-            var cards = board.activeCards
+            var cards = Board.cardsInWorkspace(board.activeCards, workspaceId: workspaceId)
             var relevanceScores: [UUID: Int] = [:]
 
             // Smart query search (multi-word, multi-field)
@@ -406,7 +409,8 @@ extension TermQMCPServer {
             _ = try BoardWriter.updateCard(
                 identifier: id,
                 updates: ["lastLLMGet": nowString],
-                dataDirectory: dataDirectory
+                dataDirectory: dataDirectory,
+                boardFilename: boardFilename
             )
             return CallTool.Result(
                 content: [
@@ -441,7 +445,8 @@ extension TermQMCPServer {
             _ = try BoardWriter.updateCard(
                 identifier: id,
                 updates: ["lastLLMGet": nowString],
-                dataDirectory: dataDirectory
+                dataDirectory: dataDirectory,
+                boardFilename: boardFilename
             )
 
             // Reload to get updated card
@@ -550,7 +555,7 @@ extension TermQMCPServer {
             // Wait for GUI to process with retry and exponential backoff
             let dataDir = dataDirectory
             let found = await URLOpener.waitForCondition {
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir, boardFilename: boardFilename)
                 return board.findTerminal(identifier: cardId.uuidString) != nil
             }
 
@@ -577,7 +582,8 @@ extension TermQMCPServer {
 
     private func handleCreateHeadless(_ options: HeadlessWriter.CardCreationOptions) async throws -> CallTool.Result {
         do {
-            let card = try HeadlessWriter.createCard(options, dataDirectory: dataDirectory)
+            let card = try HeadlessWriter.createCard(
+                options, workspaceId: workspaceId, dataDirectory: dataDirectory, boardFilename: boardFilename)
 
             let board = try loadBoard()
             let output = TerminalOutput(
@@ -696,7 +702,7 @@ extension TermQMCPServer {
             let cardIdStr = card.id.uuidString
             _ = await URLOpener.waitForCondition {
                 // Just verify the card still exists - we trust the GUI applied the update
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir, boardFilename: boardFilename)
                 return board.findTerminal(identifier: cardIdStr) != nil
             }
 
@@ -734,7 +740,8 @@ extension TermQMCPServer {
             var card = try HeadlessWriter.updateCard(
                 identifier: identifier,
                 params: updateParams,
-                dataDirectory: dataDirectory
+                dataDirectory: dataDirectory,
+                boardFilename: boardFilename
             )
 
             // `set` with a `column` argument is equivalent to a move — apply it
@@ -743,7 +750,8 @@ extension TermQMCPServer {
                 card = try HeadlessWriter.moveCard(
                     identifier: card.id.uuidString,
                     toColumn: column,
-                    dataDirectory: dataDirectory
+                    dataDirectory: dataDirectory,
+                    boardFilename: boardFilename
                 )
             }
 
@@ -817,7 +825,7 @@ extension TermQMCPServer {
             let targetColumn = column.lowercased()
             _ = await URLOpener.waitForCondition {
                 // Verify the card moved to the target column
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir, boardFilename: boardFilename)
                 guard let movedCard = board.findTerminal(identifier: cardIdStr) else { return false }
                 let columnName = board.columnName(for: movedCard.columnId).lowercased()
                 return columnName == targetColumn
@@ -846,7 +854,8 @@ extension TermQMCPServer {
             let card = try HeadlessWriter.moveCard(
                 identifier: identifier,
                 toColumn: column,
-                dataDirectory: dataDirectory
+                dataDirectory: dataDirectory,
+                boardFilename: boardFilename
             )
 
             let board = try loadBoard()
@@ -918,7 +927,7 @@ extension TermQMCPServer {
             let cardIdStr = card.id.uuidString
             _ = await URLOpener.waitForCondition {
                 // Verify the card is no longer in active cards (deleted or in bin)
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDir)
+                let board = try BoardLoader.loadBoard(dataDirectory: dataDir, boardFilename: boardFilename)
                 return board.findTerminal(identifier: cardIdStr) == nil
             }
 
@@ -948,7 +957,8 @@ extension TermQMCPServer {
             try HeadlessWriter.deleteCard(
                 identifier: identifier,
                 permanent: permanent,
-                dataDirectory: dataDirectory
+                dataDirectory: dataDirectory,
+                boardFilename: boardFilename
             )
 
             let result = DeleteResponse(

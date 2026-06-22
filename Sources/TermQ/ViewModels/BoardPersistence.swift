@@ -69,29 +69,44 @@ final class FileMonitor: @unchecked Sendable {
 /// Extracted from BoardViewModel for single responsibility
 @MainActor
 public final class BoardPersistence {
+    /// The board file this persistence targets — always `board.json` in production,
+    /// or an injected URL in tests. Workspace scoping is a per-card filter in the
+    /// view model, not a separate file, so this never changes after init.
     let saveURL: URL
     private var fileMonitor: FileMonitor?
     private var onExternalChange: (() -> Void)?
 
     init() {
-        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-        else {
-            fatalError("Unable to access Application Support directory")
-        }
-        #if DEBUG
-            let termqDir = appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
-        #else
-            let termqDir = appSupport.appendingPathComponent("TermQ", isDirectory: true)
-        #endif
-
-        try? FileManager.default.createDirectory(at: termqDir, withIntermediateDirectories: true)
-        self.saveURL = termqDir.appendingPathComponent("board.json")
+        self.saveURL = Self.boardURL()
+        try? FileManager.default.createDirectory(
+            at: saveURL.deletingLastPathComponent(), withIntermediateDirectories: true)
     }
 
     init(saveURL: URL) {
         try? FileManager.default.createDirectory(
             at: saveURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         self.saveURL = saveURL
+    }
+
+    /// Application Support directory holding board files. Matches the existing
+    /// `board.json` location so the app, the MCP server, and the CLI agree on
+    /// where workspace boards live.
+    static func dataDirectory() -> URL {
+        guard
+            let appSupport = FileManager.default.urls(
+                for: .applicationSupportDirectory, in: .userDomainMask
+            ).first
+        else { fatalError("Unable to access Application Support directory") }
+        #if DEBUG
+            return appSupport.appendingPathComponent("TermQ-Debug", isDirectory: true)
+        #else
+            return appSupport.appendingPathComponent("TermQ", isDirectory: true)
+        #endif
+    }
+
+    /// The board file URL (`board.json`) in the app-support data directory.
+    static func boardURL() -> URL {
+        dataDirectory().appendingPathComponent("board.json")
     }
 
     deinit {

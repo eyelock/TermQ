@@ -51,12 +51,15 @@ public enum BoardLoader {
     /// - Parameters:
     ///   - dataDirectory: Optional explicit data directory (tests use a temp dir).
     ///   - profile: Which app profile to resolve when `dataDirectory` is nil. Defaults to `.current`.
+    ///   - boardFilename: Which board file to read. Defaults to `board.json`; pass a
+    ///     `board-<workspaceId>.json` for a workspace-scoped board.
     public static func loadBoard(
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Board {
         let dataDir = getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
-        let boardURL = dataDir.appendingPathComponent("board.json")
+        let boardURL = dataDir.appendingPathComponent(boardFilename)
 
         guard FileManager.default.fileExists(atPath: boardURL.path) else {
             throw LoadError.boardNotFound(path: boardURL.path)
@@ -124,10 +127,11 @@ public enum BoardWriter {
     /// Load board as raw JSON dictionary (preserves all fields)
     /// Uses file coordination for safe concurrent access
     public static func loadRawBoard(
-        dataDirectory: URL? = nil, profile: AppProfile.Variant = .current
+        dataDirectory: URL? = nil, profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> (url: URL, data: [String: Any]) {
         let dataDir = BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
-        let boardURL = dataDir.appendingPathComponent("board.json")
+        let boardURL = dataDir.appendingPathComponent(boardFilename)
 
         guard FileManager.default.fileExists(atPath: boardURL.path) else {
             throw WriteError.boardNotFound(path: boardURL.path)
@@ -209,10 +213,11 @@ public enum BoardWriter {
     public static func atomicUpdate<T>(
         dataDirectory: URL? = nil,
         profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json",
         body: (inout [String: Any]) throws -> T
     ) throws -> T {
         let dataDir = BoardLoader.getDataDirectoryPath(customDirectory: dataDirectory, profile: profile)
-        let boardURL = dataDir.appendingPathComponent("board.json")
+        let boardURL = dataDir.appendingPathComponent(boardFilename)
 
         guard FileManager.default.fileExists(atPath: boardURL.path) else {
             throw WriteError.boardNotFound(path: boardURL.path)
@@ -255,9 +260,12 @@ public enum BoardWriter {
         identifier: String,
         updates: [String: Any],
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Card {
-        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+        return try atomicUpdate(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename
+        ) { board in
             guard var cards = board["cards"] as? [[String: Any]] else {
                 throw WriteError.encodingFailed("Invalid cards format")
             }
@@ -307,9 +315,12 @@ public enum BoardWriter {
         identifier: String,
         toColumn columnName: String,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Card {
-        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+        return try atomicUpdate(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename
+        ) { board in
             guard var cards = board["cards"] as? [[String: Any]],
                 let columns = board["columns"] as? [[String: Any]]
             else {
@@ -351,10 +362,14 @@ public enum BoardWriter {
         columnName: String?,
         workingDirectory: String,
         description: String = "",
+        workspaceId: String? = nil,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Card {
-        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+        return try atomicUpdate(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename
+        ) { board in
             guard var cards = board["cards"] as? [[String: Any]],
                 let columns = board["columns"] as? [[String: Any]]
             else {
@@ -391,7 +406,7 @@ public enum BoardWriter {
             let maxOrderIndex = cardsInTargetColumn.compactMap { $0["orderIndex"] as? Int }.max() ?? -1
 
             let newCardId = UUID()
-            let newCard: [String: Any] = [
+            var newCard: [String: Any] = [
                 "id": newCardId.uuidString,
                 "title": name,
                 "description": description,
@@ -405,6 +420,11 @@ public enum BoardWriter {
                 "tags": [[String: Any]](),
                 "createdAt": ISO8601DateFormatter().string(from: Date()),
             ]
+            // Stamp the workspace so the app/CLI/MCP filter this card into that
+            // workspace's view. Absent for unpinned ("All") creators.
+            if let workspaceId, !workspaceId.isEmpty {
+                newCard["workspaceId"] = workspaceId
+            }
 
             cards.append(newCard)
             board["cards"] = cards
@@ -425,9 +445,12 @@ public enum BoardWriter {
         description: String = "",
         color: String = "#6B7280",
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Column {
-        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+        return try atomicUpdate(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename
+        ) { board in
             guard var columns = board["columns"] as? [[String: Any]] else {
                 throw WriteError.encodingFailed("Invalid columns format")
             }
@@ -457,9 +480,12 @@ public enum BoardWriter {
         identifier: String,
         newName: String,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Column {
-        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+        return try atomicUpdate(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename
+        ) { board in
             guard var columns = board["columns"] as? [[String: Any]] else {
                 throw WriteError.encodingFailed("Invalid columns format")
             }
@@ -498,9 +524,12 @@ public enum BoardWriter {
         identifier: String,
         force: Bool = false,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws {
-        try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+        try atomicUpdate(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename
+        ) { board in
             guard var columns = board["columns"] as? [[String: Any]],
                 var cards = board["cards"] as? [[String: Any]]
             else {
@@ -549,9 +578,12 @@ public enum BoardWriter {
     public static func restoreCard(
         identifier: String,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Card {
-        return try atomicUpdate(dataDirectory: dataDirectory, profile: profile) { board in
+        return try atomicUpdate(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename
+        ) { board in
             guard var cards = board["cards"] as? [[String: Any]] else {
                 throw WriteError.encodingFailed("Invalid cards format")
             }

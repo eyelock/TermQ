@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "仓库";
+"sidebar.workspace.all" = "所有仓库";
+"sidebar.workspace.menu.help" = "按工作区筛选仓库";
+"sidebar.workspace.new" = "新建工作区…";
+"sidebar.workspace.new.title" = "新建工作区";
+"sidebar.workspace.name.label" = "工作区名称";
+"sidebar.workspace.name.placeholder" = "例如：工作、个人项目";
+"sidebar.workspace.create" = "创建";
+"sidebar.workspace.manage" = "管理工作区…";
+"sidebar.workspace.manage.title" = "管理工作区";
+"sidebar.workspace.manage.empty" = "尚无工作区。从工作区菜单创建一个。";
+"sidebar.workspace.manage.done" = "完成";
+"sidebar.workspace.add.to" = "添加到工作区";
+"sidebar.workspace.delete.title" = "删除工作区？";
+"sidebar.workspace.delete.confirm" = "删除";
+"sidebar.workspace.delete.message %@" = ""%@"将被移除。其中的仓库不会被删除。";
+"sidebar.workspace.empty.message" = "此工作区没有仓库。\n在“所有仓库”中右键点击一个仓库以将其添加到此处。";
 "sidebar.add.button.help" = "添加仓库";
 "sidebar.empty.message" = "未添加任何仓库。\n点击 + 添加 Git 仓库。";
 "sidebar.worktrees.placeholder" = "工作树将显示在此处";

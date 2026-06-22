@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Depozite";
+"sidebar.workspace.all" = "Toate depozitele";
+"sidebar.workspace.menu.help" = "Filtrare depozite după spaţiu de lucru";
+"sidebar.workspace.new" = "Spaţiu de lucru nou…";
+"sidebar.workspace.new.title" = "Spaţiu de lucru nou";
+"sidebar.workspace.name.label" = "Numele spaţiului de lucru";
+"sidebar.workspace.name.placeholder" = "ex. Muncă, Proiecte secundare";
+"sidebar.workspace.create" = "Creează";
+"sidebar.workspace.manage" = "Gestionare spaţii de lucru…";
+"sidebar.workspace.manage.title" = "Gestionare spaţii de lucru";
+"sidebar.workspace.manage.empty" = "Niciun spaţiu de lucru încă. Creaţi unul din meniul spaţiilor de lucru.";
+"sidebar.workspace.manage.done" = "Gata";
+"sidebar.workspace.add.to" = "Adaugă la spaţiul de lucru";
+"sidebar.workspace.delete.title" = "Ştergeţi spaţiul de lucru?";
+"sidebar.workspace.delete.confirm" = "Ştergere";
+"sidebar.workspace.delete.message %@" = "„%@" va fi eliminat. Depozitele din el nu vor fi şterse.";
+"sidebar.workspace.empty.message" = "Nu există depozite în acest spațiu de lucru.\nDaţi clic dreapta pe un depozit din „Toate depozitele“ pentru a-l adăuga aici.";
 "sidebar.add.button.help" = "Adaugă depozit";
 "sidebar.empty.message" = "Nu au fost adăugate depozite.\nFă clic pe + pentru a adăuga un depozit git.";
 "sidebar.worktrees.placeholder" = "Arborii de lucru vor apărea aici";

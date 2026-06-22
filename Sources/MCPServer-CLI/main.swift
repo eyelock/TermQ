@@ -73,12 +73,20 @@ struct TermQMCPCommand: AsyncParsableCommand {
         let profile = resolveProfile(explicitDebug: debug)
         let dataDirectory = BoardLoader.getDataDirectoryPath(profile: profile)
 
+        // Pin to the launching terminal's workspace. The app injects
+        // TERMQ_WORKSPACE_ID into each terminal; this stdio server is a child of
+        // that terminal and inherits it. The board file is always board.json — the
+        // workspace is a per-card filter applied to reads and stamped on creates.
+        // Unset → "All" (sees/creates unpinned cards).
+        let workspaceId = ProcessInfo.processInfo.environment["TERMQ_WORKSPACE_ID"]
+
         if verbose {
             fputs(
                 """
                 termqmcp starting
                   profile:       \(profile)
                   data directory: \(dataDirectory.path)
+                  workspace:     \(workspaceId ?? "all")
                   bundle id:     \(profile.bundleIdentifier)
                   transport:     \(http ? "http" : "stdio")
 
@@ -88,7 +96,7 @@ struct TermQMCPCommand: AsyncParsableCommand {
         }
 
         // Create server with the explicit data directory derived from profile.
-        let server = TermQMCPServer(dataDirectory: dataDirectory)
+        let server = TermQMCPServer(dataDirectory: dataDirectory, workspaceId: workspaceId)
 
         if http {
             // HTTP mode with bearer token authentication

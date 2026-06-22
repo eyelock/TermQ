@@ -576,6 +576,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repozitoriji";
+"sidebar.workspace.all" = "Vsa repozitorija";
+"sidebar.workspace.menu.help" = "Filtriraj repozitorija po delovnem prostoru";
+"sidebar.workspace.new" = "Nov delovni prostor…";
+"sidebar.workspace.new.title" = "Nov delovni prostor";
+"sidebar.workspace.name.label" = "Ime delovnega prostora";
+"sidebar.workspace.name.placeholder" = "npr. Delo, Stranski projekti";
+"sidebar.workspace.create" = "Ustvari";
+"sidebar.workspace.manage" = "Upravljaj delovne prostore…";
+"sidebar.workspace.manage.title" = "Upravljaj delovne prostore";
+"sidebar.workspace.manage.empty" = "Še ni delovnih prostorov. Ustvarite enega v meniju delovnih prostorov.";
+"sidebar.workspace.manage.done" = "Dokončano";
+"sidebar.workspace.add.to" = "Dodaj v delovni prostor";
+"sidebar.workspace.delete.title" = "Izbrisati delovni prostor?";
+"sidebar.workspace.delete.confirm" = "Izbriši";
+"sidebar.workspace.delete.message %@" = "„%@” bo odstranjen. Repozitoriji v njem ne bodo izbrisani.";
+"sidebar.workspace.empty.message" = "V tem delovnem prostoru ni repozitorijev.\nZ desnim klikom na repozitorij v „Vsa repozitorija“ ga dodajte sem.";
 "sidebar.add.button.help" = "Dodaj repozitorij";
 "sidebar.empty.message" = "Ni dodanih repozitorijev.\nKliknite + za dodajanje git repozitorija.";
 "sidebar.worktrees.placeholder" = "Delovne kopije se bodo prikazale tukaj";

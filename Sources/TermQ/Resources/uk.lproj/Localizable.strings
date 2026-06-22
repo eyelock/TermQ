@@ -576,6 +576,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Репозиторії";
+"sidebar.workspace.all" = "Усі репозиторії";
+"sidebar.workspace.menu.help" = "Фільтрувати репозиторії за робочою областю";
+"sidebar.workspace.new" = "Нова робоча область…";
+"sidebar.workspace.new.title" = "Нова робоча область";
+"sidebar.workspace.name.label" = "Назва робочої області";
+"sidebar.workspace.name.placeholder" = "наприклад: Робота, Особисті проекти";
+"sidebar.workspace.create" = "Створити";
+"sidebar.workspace.manage" = "Керування робочими областями…";
+"sidebar.workspace.manage.title" = "Керування робочими областями";
+"sidebar.workspace.manage.empty" = "Ще немає робочих областей. Створіть одну в меню робочої області.";
+"sidebar.workspace.manage.done" = "Готово";
+"sidebar.workspace.add.to" = "Додати до робочої області";
+"sidebar.workspace.delete.title" = "Видалити робочу область?";
+"sidebar.workspace.delete.confirm" = "Видалити";
+"sidebar.workspace.delete.message %@" = "«%@» буде видалено. Репозиторії всередині не видаляються.";
+"sidebar.workspace.empty.message" = "У цьому робочому просторі немає репозиторіїв.\nНатисніть правою кнопкою миші на репозиторій у розділі «Усі репозиторії», щоб додати його сюди.";
 "sidebar.add.button.help" = "Додати репозиторій";
 "sidebar.empty.message" = "Репозиторії не додано.\nНатисніть +, щоб додати git репозиторій.";
 "sidebar.worktrees.placeholder" = "Робочі дерева зʼявляться тут";

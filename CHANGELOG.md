@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Workspaces
+
+- **Workspaces — group repositories and scope the board to one context at a time.** A workspace is a named filter over your registered repositories: the sidebar repo list narrows to the active workspace, and "All Repositories" shows every repo. The kanban board is scoped to match — each card carries a `workspaceId`, "All" aggregates every card, and a workspace shows only its own (unassigned cards appear only in "All", the same rule the repo list uses for zero-membership repos). Switching workspaces is a pure display re-filter: there is a single `board.json`, no file is swapped, and **no terminal session is ever torn down** — every running terminal (Direct and tmux) keeps its session across switches. A card's workspace is fixed at creation (the then-active workspace, or unassigned in "All"). Agents launched inside a workspace are pinned to it via the `TERMQ_WORKSPACE_ID` environment variable, so the MCP server and `termqcli` stamp new cards into that workspace and filter their reads to it. Columns remain global across workspaces for now; per-workspace columns and card reassignment are deferred follow-ups.
+
 ### Changed — BREAKING (MCP / CLI)
 
 - **MCP tool names lose the `termq_` prefix.** Every TermQ MCP tool is now reachable as `mcp__termq__<name>` rather than `mcp__termq__termq_<name>`. Affected tools: `pending`, `context`, `list`, `find`, `open`, `create`, `set`, `move`, `get`, `delete`. **No alias is provided.** Anyone with `mcp__termq__termq_*` hardcoded in a CLAUDE.md, hook script, or recorded prompt must update by deleting one prefix.

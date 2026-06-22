@@ -17,6 +17,17 @@ public final class TermQMCPServer: @unchecked Sendable {
     private let server: Server
     let dataDirectory: URL?
 
+    /// The single board file this server operates on (`board.json`). Workspace
+    /// pinning is a per-card filter (see `workspaceId`), not a separate file.
+    let boardFilename: String
+
+    /// The workspace this server is pinned to, resolved once at startup from
+    /// `TERMQ_WORKSPACE_ID` — the stdio server is a child of the launching terminal
+    /// and inherits its env. When set, list/find ops show only this workspace's
+    /// cards and newly-created cards are stamped with it. `nil`/empty = top-level
+    /// ("All") — sees and creates unpinned cards.
+    let workspaceId: String?
+
     /// Lazily-created subscription manager. Watches board.json and fires
     /// `notifications/resources/updated` for subscribed URIs when the file changes.
     private var subscriptionManager: ResourceSubscriptionManager?
@@ -52,8 +63,10 @@ public final class TermQMCPServer: @unchecked Sendable {
 
     /// Initialize the MCP server
     /// - Parameter dataDirectory: Optional custom data directory (nil uses default)
-    public init(dataDirectory: URL? = nil) {
+    public init(dataDirectory: URL? = nil, boardFilename: String = "board.json", workspaceId: String? = nil) {
         self.dataDirectory = dataDirectory
+        self.boardFilename = boardFilename
+        self.workspaceId = workspaceId
         self.server = Server(
             name: Self.serverName,
             version: Self.serverVersion,
@@ -85,7 +98,7 @@ public final class TermQMCPServer: @unchecked Sendable {
     /// pointing nowhere) — the watcher silently retries until the file appears.
     private func startSubscriptionWatcher() async {
         let dataDir = dataDirectory ?? BoardLoader.getDataDirectoryPath()
-        let boardURL = dataDir.appendingPathComponent("board.json")
+        let boardURL = dataDir.appendingPathComponent(boardFilename)
         let manager = ResourceSubscriptionManager { [weak self] uri in
             await self?.emitResourceUpdated(uri: uri)
         }
@@ -193,7 +206,7 @@ public final class TermQMCPServer: @unchecked Sendable {
     /// re-throws — surfacing the failure to the calling tool is still mandatory.
     func loadBoard() throws -> Board {
         do {
-            return try BoardLoader.loadBoard(dataDirectory: dataDirectory)
+            return try BoardLoader.loadBoard(dataDirectory: dataDirectory, boardFilename: boardFilename)
         } catch {
             // Best-effort fire-and-forget mirror; never let logging affect the error path.
             Task { [weak self] in

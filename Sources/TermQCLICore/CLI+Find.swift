@@ -45,9 +45,10 @@ struct Find: ParsableCommand {
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
             let board = try BoardLoader.loadBoard(
-                dataDirectory: dataDirURL, profile: resolveProfile(debug))
+                dataDirectory: dataDirURL, profile: resolveProfile(debug),
+                boardFilename: resolveBoardFilename())
 
-            var cards = board.activeCards
+            var cards = Board.cardsInWorkspace(board.activeCards, workspaceId: resolveWorkspaceId())
             var relevanceScores: [UUID: Int] = [:]
 
             if let queryStr = query, !queryStr.isEmpty {

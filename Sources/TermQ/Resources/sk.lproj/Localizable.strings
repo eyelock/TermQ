@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repozitáre";
+"sidebar.workspace.all" = "Všetky repozitáre";
+"sidebar.workspace.menu.help" = "Filtrovať repozitáre podľa pracovného priestoru";
+"sidebar.workspace.new" = "Nový pracovný priestor…";
+"sidebar.workspace.new.title" = "Nový pracovný priestor";
+"sidebar.workspace.name.label" = "Názov pracovného priestoru";
+"sidebar.workspace.name.placeholder" = "napr. Práca, Vedlajšie projekty";
+"sidebar.workspace.create" = "Vytvoriť";
+"sidebar.workspace.manage" = "Správa pracovných priestorov…";
+"sidebar.workspace.manage.title" = "Správa pracovných priestorov";
+"sidebar.workspace.manage.empty" = "Zatiaľ žiadne pracovné priestory. Vytvorte jeden z ponuky pracovných priestorov.";
+"sidebar.workspace.manage.done" = "Hotovo";
+"sidebar.workspace.add.to" = "Pridať do pracovného priestoru";
+"sidebar.workspace.delete.title" = "Zmazať pracovný priestor?";
+"sidebar.workspace.delete.confirm" = "Zmazať";
+"sidebar.workspace.delete.message %@" = "„%@" bude odstránený. Repozitáre v ňom nebudú zmazané.";
+"sidebar.workspace.empty.message" = "V tomto pracovnom priestore nie sú žiadne repozitáre.\nKliknite pravým tlačidlom na repozitár v „Všetky repozitáre“ a pridajte ho sem.";
 "sidebar.add.button.help" = "Pridať repozitár";
 "sidebar.empty.message" = "Neboli pridané žiadne repozitáre.\nKliknite na + a pridajte git repozitár.";
 "sidebar.worktrees.placeholder" = "Pracovné stromy sa zobrazia tu";

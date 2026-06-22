@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Arkiver";
+"sidebar.workspace.all" = "Alle arkiver";
+"sidebar.workspace.menu.help" = "Filtrer arkiver efter arbejdsområde";
+"sidebar.workspace.new" = "Nyt arbejdsområde…";
+"sidebar.workspace.new.title" = "Nyt arbejdsområde";
+"sidebar.workspace.name.label" = "Navn på arbejdsområde";
+"sidebar.workspace.name.placeholder" = "f.eks. Arbejde, Sideprojekter";
+"sidebar.workspace.create" = "Opret";
+"sidebar.workspace.manage" = "Administrer arbejdsområder…";
+"sidebar.workspace.manage.title" = "Administrer arbejdsområder";
+"sidebar.workspace.manage.empty" = "Ingen arbejdsområder endnu. Opret et fra arbejdsområdemenuen.";
+"sidebar.workspace.manage.done" = "Færdig";
+"sidebar.workspace.add.to" = "Tilføj til arbejdsområde";
+"sidebar.workspace.delete.title" = "Slet arbejdsområde?";
+"sidebar.workspace.delete.confirm" = "Slet";
+"sidebar.workspace.delete.message %@" = ""%@" fjernes. Arkiverne i det slettes ikke.";
+"sidebar.workspace.empty.message" = "Ingen arkiver i dette arbejdsområde.\nHøjreklik på et arkiv i “Alle arkiver” for at tilføje det her.";
 "sidebar.add.button.help" = "Tilføj arkiv";
 "sidebar.empty.message" = "Ingen arkiver tilføjet.\nKlik + for at tilføje et git-arkiv.";
 "sidebar.worktrees.placeholder" = "Worktrees vises her";

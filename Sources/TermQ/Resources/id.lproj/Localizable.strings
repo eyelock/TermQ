@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositori";
+"sidebar.workspace.all" = "Semua repositori";
+"sidebar.workspace.menu.help" = "Filter repositori berdasarkan ruang kerja";
+"sidebar.workspace.new" = "Ruang kerja baru…";
+"sidebar.workspace.new.title" = "Ruang kerja baru";
+"sidebar.workspace.name.label" = "Nama ruang kerja";
+"sidebar.workspace.name.placeholder" = "mis. Pekerjaan, Proyek sampingan";
+"sidebar.workspace.create" = "Buat";
+"sidebar.workspace.manage" = "Kelola ruang kerja…";
+"sidebar.workspace.manage.title" = "Kelola ruang kerja";
+"sidebar.workspace.manage.empty" = "Belum ada ruang kerja. Buat satu dari menu ruang kerja.";
+"sidebar.workspace.manage.done" = "Selesai";
+"sidebar.workspace.add.to" = "Tambahkan ke ruang kerja";
+"sidebar.workspace.delete.title" = "Hapus ruang kerja?";
+"sidebar.workspace.delete.confirm" = "Hapus";
+"sidebar.workspace.delete.message %@" = ""%@" akan dihapus. Repositori di dalamnya tidak akan dihapus.";
+"sidebar.workspace.empty.message" = "Tidak ada repositori di ruang kerja ini.\nKlik kanan repositori di “Semua repositori” untuk menambahkannya di sini.";
 "sidebar.add.button.help" = "Tambah repositori";
 "sidebar.empty.message" = "Tidak ada repositori yang ditambahkan.\nKlik + untuk menambahkan repositori git.";
 "sidebar.worktrees.placeholder" = "Worktree akan muncul di sini";

@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Tietovarastot";
+"sidebar.workspace.all" = "Kaikki tietovarastot";
+"sidebar.workspace.menu.help" = "Suodata tietovarastoja työtilan mukaan";
+"sidebar.workspace.new" = "Uusi työtila…";
+"sidebar.workspace.new.title" = "Uusi työtila";
+"sidebar.workspace.name.label" = "Työtilan nimi";
+"sidebar.workspace.name.placeholder" = "esim. Työ, Sivuprojektit";
+"sidebar.workspace.create" = "Luo";
+"sidebar.workspace.manage" = "Hallitse työtiloja…";
+"sidebar.workspace.manage.title" = "Hallitse työtiloja";
+"sidebar.workspace.manage.empty" = "Ei vielä työtiloja. Luo työtila työtilavalikosta.";
+"sidebar.workspace.manage.done" = "Valmis";
+"sidebar.workspace.add.to" = "Lisää työtilaan";
+"sidebar.workspace.delete.title" = "Poistetaanko työtila?";
+"sidebar.workspace.delete.confirm" = "Poista";
+"sidebar.workspace.delete.message %@" = "“%@” poistetaan. Sen sisältämiä tietovarastoja ei poisteta.";
+"sidebar.workspace.empty.message" = "Tässä työtilassa ei ole tietovarastoja.\nLisää tietovarasto napsauttamalla sitä hiiren kakkospainikkeella kohdassa “Kaikki tietovarastot”.";
 "sidebar.add.button.help" = "Lisää tietovarasto";
 "sidebar.empty.message" = "Ei tietovarastoja lisätty.\nNapsauta + lisätäksesi git-tietovaraston.";
 "sidebar.worktrees.placeholder" = "Työskentelypuut näkyvät tässä";

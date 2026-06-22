@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositoris";
+"sidebar.workspace.all" = "Tots els repositoris";
+"sidebar.workspace.menu.help" = "Filtra els repositoris per àrea de treball";
+"sidebar.workspace.new" = "Nova àrea de treball…";
+"sidebar.workspace.new.title" = "Nova àrea de treball";
+"sidebar.workspace.name.label" = "Nom de l’àrea de treball";
+"sidebar.workspace.name.placeholder" = "p. ex. Treball, Projectes personals";
+"sidebar.workspace.create" = "Crear";
+"sidebar.workspace.manage" = "Gestiona àrees de treball…";
+"sidebar.workspace.manage.title" = "Gestiona àrees de treball";
+"sidebar.workspace.manage.empty" = "Encara no hi ha àrees de treball. Crea-ne una des del menú d'àrees de treball.";
+"sidebar.workspace.manage.done" = "Fet";
+"sidebar.workspace.add.to" = "Afegeix a l'àrea de treball";
+"sidebar.workspace.delete.title" = "Eliminar l'àrea de treball?";
+"sidebar.workspace.delete.confirm" = "Eliminar";
+"sidebar.workspace.delete.message %@" = "«%@» s'eliminarà. Els repositoris que conté no s'esborraran.";
+"sidebar.workspace.empty.message" = "No hi ha repositoris en aquest espai de treball.\nFeu clic dret sobre un repositori a «Tots els repositoris» per afegir-lo aquí.";
 "sidebar.add.button.help" = "Afegir repositori";
 "sidebar.empty.message" = "No s'han afegit repositoris.\nFeu clic a + per afegir un repositori git.";
 "sidebar.worktrees.placeholder" = "Els worktrees apareixeran aquí";

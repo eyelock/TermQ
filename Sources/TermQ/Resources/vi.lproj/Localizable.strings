@@ -576,6 +576,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Kho lưu trữ";
+"sidebar.workspace.all" = "Tất cả kho lưu trữ";
+"sidebar.workspace.menu.help" = "Lọc kho lưu trữ theo không gian làm việc";
+"sidebar.workspace.new" = "Không gian làm việc mới…";
+"sidebar.workspace.new.title" = "Không gian làm việc mới";
+"sidebar.workspace.name.label" = "Tên không gian làm việc";
+"sidebar.workspace.name.placeholder" = "ví dụ: Công việc, Dự án cá nhân";
+"sidebar.workspace.create" = "Tạo";
+"sidebar.workspace.manage" = "Quản lý không gian làm việc…";
+"sidebar.workspace.manage.title" = "Quản lý không gian làm việc";
+"sidebar.workspace.manage.empty" = "Chưa có không gian làm việc nào. Tạo một không gian từ menu không gian làm việc.";
+"sidebar.workspace.manage.done" = "Xong";
+"sidebar.workspace.add.to" = "Thêm vào không gian làm việc";
+"sidebar.workspace.delete.title" = "Xóa không gian làm việc?";
+"sidebar.workspace.delete.confirm" = "Xóa";
+"sidebar.workspace.delete.message %@" = "“%@” sẽ bị xóa. Các kho lưu trữ trong đó sẽ không bị xóa.";
+"sidebar.workspace.empty.message" = "Không có kho lưu trữ nào trong không gian làm việc này.\nNhấp chuột phải vào một kho lưu trữ trong “Tất cả kho lưu trữ” để thêm vào đây.";
 "sidebar.add.button.help" = "Thêm kho lưu trữ";
 "sidebar.empty.message" = "Chưa có kho lưu trữ nào.\nNhấn + để thêm git repository.";
 "sidebar.worktrees.placeholder" = "Worktrees sẽ xuất hiện ở đây";

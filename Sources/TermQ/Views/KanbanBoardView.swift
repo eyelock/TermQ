@@ -26,7 +26,7 @@ struct KanbanBoardView: View {
                     ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
                         ColumnView(
                             column: column,
-                            cards: viewModel.board.cards(for: column),
+                            cards: viewModel.displayedCards(for: column),
                             needsAttention: viewModel.needsAttention,
                             processingCards: viewModel.processingCards,
                             activeSessionCards: viewModel.activeSessionCards,
