@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Diminuer la taille du texte";
 "menu.font.size.reset" = "Réinitialiser la taille du texte";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Espace de travail";
+"menu.workspace.repositories" = "Dépôts";
+"menu.workspace.harnesses" = "Harnais";
+"menu.workspace.marketplaces" = "Places de marché";
+"menu.workspace.add.repository" = "Ajouter un dépôt...";
+"menu.refresh.all" = "Tout actualiser";
+"menu.workspace.prune.all.worktrees" = "Nettoyer tous les arbres de travail...";
+"menu.workspace.repository.settings" = "Réglages du dépôt...";
+"menu.workspace.install.harness" = "Installer un harnais...";
+"menu.workspace.create.harness" = "Créer un nouveau harnais...";
+"menu.workspace.harness.registries" = "Registres de harnais...";
+"menu.workspace.harness.tools" = "Outils de harnais (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Ajouter une place de marché...";
+"menu.workspace.restore.defaults" = "Restaurer les réglages par défaut";
+"menu.workspace.marketplace.settings" = "Réglages de la place de marché...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Mettre le terminal actuel en favori";
+"menu.all.terminals" = "Tous les terminaux...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Activer/désactiver le mode zoom";
+"menu.next.tab" = "Onglet suivant";
+"menu.previous.tab" = "Onglet précédent";
+"menu.command.palette" = "Palette de commandes...";
+
+// MARK: Menu — Edit
+"menu.find" = "Rechercher...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Ouvrir dans Terminal.app";
+"menu.export.session" = "Exporter la session...";
+"menu.close.tab" = "Fermer l'onglet";
+"menu.delete.terminal" = "Supprimer le terminal";
+"menu.show.bin" = "Afficher la corbeille";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Decrease Font Size";
 "menu.font.size.reset" = "Reset Font Size";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Workspace";
+"menu.workspace.repositories" = "Repositories";
+"menu.workspace.harnesses" = "Harnesses";
+"menu.workspace.marketplaces" = "Marketplaces";
+"menu.workspace.add.repository" = "Add Repository...";
+"menu.refresh.all" = "Refresh All";
+"menu.workspace.prune.all.worktrees" = "Prune All Worktrees...";
+"menu.workspace.repository.settings" = "Repository Settings...";
+"menu.workspace.install.harness" = "Install Harness...";
+"menu.workspace.create.harness" = "Create New Harness...";
+"menu.workspace.harness.registries" = "Harness Registries...";
+"menu.workspace.harness.tools" = "Harness Tools (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Add Marketplace...";
+"menu.workspace.restore.defaults" = "Restore Defaults";
+"menu.workspace.marketplace.settings" = "Marketplace Settings...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Favourite Current Terminal";
+"menu.all.terminals" = "All Terminals...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Toggle Zoom Mode";
+"menu.next.tab" = "Next Tab";
+"menu.previous.tab" = "Previous Tab";
+"menu.command.palette" = "Command Palette...";
+
+// MARK: Menu — Edit
+"menu.find" = "Find...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Open in Terminal.app";
+"menu.export.session" = "Export Session...";
+"menu.close.tab" = "Close Tab";
+"menu.delete.terminal" = "Delete Terminal";
+"menu.show.bin" = "Show Bin";
+
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";

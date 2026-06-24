@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "הקטן גודל גופן";
 "menu.font.size.reset" = "אפס גודל גופן";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "סביבת עבודה";
+"menu.workspace.repositories" = "מאגרים";
+"menu.workspace.harnesses" = "רתמות";
+"menu.workspace.marketplaces" = "שווקים";
+"menu.workspace.add.repository" = "הוסף מאגר...";
+"menu.refresh.all" = "רענן הכל";
+"menu.workspace.prune.all.worktrees" = "נקה את כל עצי העבודה...";
+"menu.workspace.repository.settings" = "הגדרות מאגר...";
+"menu.workspace.install.harness" = "התקן רתמה...";
+"menu.workspace.create.harness" = "צור רתמה חדשה...";
+"menu.workspace.harness.registries" = "רשמי רתמות...";
+"menu.workspace.harness.tools" = "כלי רתמה (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "הוסף שוק...";
+"menu.workspace.restore.defaults" = "שחזר ברירות מחדל";
+"menu.workspace.marketplace.settings" = "הגדרות שוק...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "הוסף מסוף נוכחי למועדפים";
+"menu.all.terminals" = "כל המסופים...";
+"menu.terminal.fallback.title" = "מסוף";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "הפעל/כבה מצב זום";
+"menu.next.tab" = "הלשונית הבאה";
+"menu.previous.tab" = "הלשונית הקודמת";
+"menu.command.palette" = "פלטת פקודות...";
+
+// MARK: Menu — Edit
+"menu.find" = "חפש...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "פתח ב-Terminal.app";
+"menu.export.session" = "ייצא סשן...";
+"menu.close.tab" = "סגור לשונית";
+"menu.delete.terminal" = "מחק מסוף";
+"menu.show.bin" = "הצג סל מחזור";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

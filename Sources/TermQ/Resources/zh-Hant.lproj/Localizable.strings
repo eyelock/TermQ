@@ -108,6 +108,44 @@
 "menu.font.size.decrease" = "減小字體大小";
 "menu.font.size.reset" = "重置字體大小";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "工作區";
+"menu.workspace.repositories" = "儲存庫";
+"menu.workspace.harnesses" = "工具集";
+"menu.workspace.marketplaces" = "市集";
+"menu.workspace.add.repository" = "加入儲存庫...";
+"menu.refresh.all" = "重新整理全部";
+"menu.workspace.prune.all.worktrees" = "清理所有工作樹...";
+"menu.workspace.repository.settings" = "儲存庫設定...";
+"menu.workspace.install.harness" = "安裝工具集...";
+"menu.workspace.create.harness" = "建立新工具集...";
+"menu.workspace.harness.registries" = "工具集登錄...";
+"menu.workspace.harness.tools" = "工具集工具 (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "加入市集...";
+"menu.workspace.restore.defaults" = "恢復預設設定";
+"menu.workspace.marketplace.settings" = "市集設定...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "將目前終端機加入最愛";
+"menu.all.terminals" = "所有終端機...";
+"menu.terminal.fallback.title" = "終端機";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "切換縮放模式";
+"menu.next.tab" = "下一個標籤頁";
+"menu.previous.tab" = "上一個標籤頁";
+"menu.command.palette" = "命令選擇區...";
+
+// MARK: Menu — Edit
+"menu.find" = "尋找...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "在 Terminal.app 中開啟";
+"menu.export.session" = "匯出工作階段...";
+"menu.close.tab" = "關閉標籤頁";
+"menu.delete.terminal" = "刪除終端機";
+"menu.show.bin" = "顯示垃圾桶";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

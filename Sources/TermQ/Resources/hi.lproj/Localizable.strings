@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "फ़ॉन्ट आकार घटाएं";
 "menu.font.size.reset" = "फ़ॉन्ट आकार रीसेट करें";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "कार्यक्षेत्र";
+"menu.workspace.repositories" = "रिपॉजिटरी";
+"menu.workspace.harnesses" = "हार्नेस";
+"menu.workspace.marketplaces" = "मार्केटप्लेस";
+"menu.workspace.add.repository" = "रिपॉजिटरी जोड़ें...";
+"menu.refresh.all" = "सब रीफ्रेश करें";
+"menu.workspace.prune.all.worktrees" = "सभी वर्कट्री साफ़ करें...";
+"menu.workspace.repository.settings" = "रिपॉजिटरी सेटिंग्स...";
+"menu.workspace.install.harness" = "हार्नेस इंस्टॉल करें...";
+"menu.workspace.create.harness" = "नया हार्नेस बनाएं...";
+"menu.workspace.harness.registries" = "हार्नेस रजिस्ट्री...";
+"menu.workspace.harness.tools" = "हार्नेस टूल्स (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "मार्केटप्लेस जोड़ें...";
+"menu.workspace.restore.defaults" = "डिफ़ॉल्ट पुनर्स्थापित करें";
+"menu.workspace.marketplace.settings" = "मार्केटप्लेस सेटिंग्स...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "वर्तमान टर्मिनल को पसंदीदा बनाएं";
+"menu.all.terminals" = "सभी टर्मिनल...";
+"menu.terminal.fallback.title" = "टर्मिनल";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "ज़ूम मोड टॉगल करें";
+"menu.next.tab" = "अगला टैब";
+"menu.previous.tab" = "पिछला टैब";
+"menu.command.palette" = "कमांड पैलेट...";
+
+// MARK: Menu — Edit
+"menu.find" = "खोजें...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Terminal.app में खोलें";
+"menu.export.session" = "सत्र निर्यात करें...";
+"menu.close.tab" = "टैब बंद करें";
+"menu.delete.terminal" = "टर्मिनल हटाएं";
+"menu.show.bin" = "बिन दिखाएं";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

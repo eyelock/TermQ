@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Formindsk skriftstørrelse";
 "menu.font.size.reset" = "Nulstil skriftstørrelse";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Arbejdsområde";
+"menu.workspace.repositories" = "Repositories";
+"menu.workspace.harnesses" = "Seler";
+"menu.workspace.marketplaces" = "Markedspladser";
+"menu.workspace.add.repository" = "Tilføj repository...";
+"menu.refresh.all" = "Opdater alle";
+"menu.workspace.prune.all.worktrees" = "Rens alle arbejdstræer...";
+"menu.workspace.repository.settings" = "Repository-indstillinger...";
+"menu.workspace.install.harness" = "Installer sele...";
+"menu.workspace.create.harness" = "Opret ny sele...";
+"menu.workspace.harness.registries" = "Sele-registre...";
+"menu.workspace.harness.tools" = "Sele-værktøjer (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Tilføj markedsplads...";
+"menu.workspace.restore.defaults" = "Gendan standarder";
+"menu.workspace.marketplace.settings" = "Markedspladsindstillinger...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Marker nuværende terminal som favorit";
+"menu.all.terminals" = "Alle terminaler...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Slå zoomtilstand til/fra";
+"menu.next.tab" = "Næste fane";
+"menu.previous.tab" = "Forrige fane";
+"menu.command.palette" = "Kommandopalette...";
+
+// MARK: Menu — Edit
+"menu.find" = "Søg...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Åbn i Terminal.app";
+"menu.export.session" = "Eksporter session...";
+"menu.close.tab" = "Luk fane";
+"menu.delete.terminal" = "Slet terminal";
+"menu.show.bin" = "Vis papirkurv";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

@@ -108,6 +108,44 @@
 "menu.font.size.increase" = "Tăng cỡ chữ";
 "menu.font.size.decrease" = "Giảm cỡ chữ";
 "menu.font.size.reset" = "Đặt lại cỡ chữ";
+
+// MARK: Menu — Workspace
+"menu.workspace" = "Không gian làm việc";
+"menu.workspace.repositories" = "Kho lưu trữ";
+"menu.workspace.harnesses" = "Bộ công cụ";
+"menu.workspace.marketplaces" = "Thị trường";
+"menu.workspace.add.repository" = "Thêm kho lưu trữ...";
+"menu.refresh.all" = "Làm mới tất cả";
+"menu.workspace.prune.all.worktrees" = "Dọn sạch tất cả cây làm việc...";
+"menu.workspace.repository.settings" = "Cài đặt kho lưu trữ...";
+"menu.workspace.install.harness" = "Cài đặt bộ công cụ...";
+"menu.workspace.create.harness" = "Tạo bộ công cụ mới...";
+"menu.workspace.harness.registries" = "Sổ đăng ký bộ công cụ...";
+"menu.workspace.harness.tools" = "Công cụ bộ công cụ (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Thêm thị trường...";
+"menu.workspace.restore.defaults" = "Khôi phục mặc định";
+"menu.workspace.marketplace.settings" = "Cài đặt thị trường...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Đánh dấu terminal hiện tại là yêu thích";
+"menu.all.terminals" = "Tất cả terminal...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Bật/tắt chế độ phóng to";
+"menu.next.tab" = "Tab tiếp theo";
+"menu.previous.tab" = "Tab trước";
+"menu.command.palette" = "Bảng lệnh...";
+
+// MARK: Menu — Edit
+"menu.find" = "Tìm kiếm...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Mở trong Terminal.app";
+"menu.export.session" = "Xuất phiên...";
+"menu.close.tab" = "Đóng tab";
+"menu.delete.terminal" = "Xóa terminal";
+"menu.show.bin" = "Hiển thị thùng rác";
 "menu.toggle.sidebar" = "Bật/tắt thanh bên";
 
 

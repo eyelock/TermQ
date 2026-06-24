@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Betűméret csökkentése";
 "menu.font.size.reset" = "Betűméret visszaállítása";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Munkaterület";
+"menu.workspace.repositories" = "Tárolók";
+"menu.workspace.harnesses" = "Meghajtók";
+"menu.workspace.marketplaces" = "Piacterek";
+"menu.workspace.add.repository" = "Tároló hozzáadása...";
+"menu.refresh.all" = "Összes frissítése";
+"menu.workspace.prune.all.worktrees" = "Összes munkafa tisztítása...";
+"menu.workspace.repository.settings" = "Tároló beállításai...";
+"menu.workspace.install.harness" = "Meghajtó telepítése...";
+"menu.workspace.create.harness" = "Új meghajtó létrehozása...";
+"menu.workspace.harness.registries" = "Meghajtó-nyilvántartások...";
+"menu.workspace.harness.tools" = "Meghajtóeszközök (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Piactér hozzáadása...";
+"menu.workspace.restore.defaults" = "Alapértelmezések visszaállítása";
+"menu.workspace.marketplace.settings" = "Piactér beállításai...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Aktuális terminál hozzáadása kedvencekhez";
+"menu.all.terminals" = "Összes terminál...";
+"menu.terminal.fallback.title" = "Terminál";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Nagyítási mód váltása";
+"menu.next.tab" = "Következő lap";
+"menu.previous.tab" = "Előző lap";
+"menu.command.palette" = "Parancskészlet...";
+
+// MARK: Menu — Edit
+"menu.find" = "Keresés...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Megnyitás Terminal.app-ban";
+"menu.export.session" = "Munkamenet exportálása...";
+"menu.close.tab" = "Lap bezárása";
+"menu.delete.terminal" = "Terminál törlése";
+"menu.show.bin" = "Lomtár megjelenítése";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

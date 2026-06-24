@@ -108,6 +108,44 @@
 "menu.font.size.increase" = "เพิ่มขนาดฟอนต์";
 "menu.font.size.decrease" = "ลดขนาดฟอนต์";
 "menu.font.size.reset" = "รีเซ็ตขนาดฟอนต์";
+
+// MARK: Menu — Workspace
+"menu.workspace" = "พื้นที่ทำงาน";
+"menu.workspace.repositories" = "ที่เก็บโค้ด";
+"menu.workspace.harnesses" = "ชุดเครื่องมือ";
+"menu.workspace.marketplaces" = "ตลาด";
+"menu.workspace.add.repository" = "เพิ่มที่เก็บโค้ด...";
+"menu.refresh.all" = "รีเฟรชทั้งหมด";
+"menu.workspace.prune.all.worktrees" = "ล้างทรีทำงานทั้งหมด...";
+"menu.workspace.repository.settings" = "การตั้งค่าที่เก็บโค้ด...";
+"menu.workspace.install.harness" = "ติดตั้งชุดเครื่องมือ...";
+"menu.workspace.create.harness" = "สร้างชุดเครื่องมือใหม่...";
+"menu.workspace.harness.registries" = "รีจิสทรีชุดเครื่องมือ...";
+"menu.workspace.harness.tools" = "เครื่องมือชุดเครื่องมือ (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "เพิ่มตลาด...";
+"menu.workspace.restore.defaults" = "คืนค่าตั้งต้น";
+"menu.workspace.marketplace.settings" = "การตั้งค่าตลาด...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "ทำให้เทอร์มินัลปัจจุบันเป็นรายการโปรด";
+"menu.all.terminals" = "เทอร์มินัลทั้งหมด...";
+"menu.terminal.fallback.title" = "เทอร์มินัล";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "สลับโหมดซูม";
+"menu.next.tab" = "แท็บถัดไป";
+"menu.previous.tab" = "แท็บก่อนหน้า";
+"menu.command.palette" = "พาเลตคำสั่ง...";
+
+// MARK: Menu — Edit
+"menu.find" = "ค้นหา...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "เปิดใน Terminal.app";
+"menu.export.session" = "ส่งออกเซสชัน...";
+"menu.close.tab" = "ปิดแท็บ";
+"menu.delete.terminal" = "ลบเทอร์มินัล";
+"menu.show.bin" = "แสดงถังขยะ";
 "menu.toggle.sidebar" = "สลับแถบด้านข้าง";
 
 
