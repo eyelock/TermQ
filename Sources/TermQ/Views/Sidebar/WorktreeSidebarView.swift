@@ -826,6 +826,7 @@ extension WorktreeSidebarView {
     fileprivate func consumeMenuRequest() {
         if menuCoordinator.consume(.addRepository) { showAddRepo = true }
         if menuCoordinator.consume(.pruneAllWorktrees) {
+            guard !isPruneAnalysing else { return }
             Task { await analyseAndPruneAll() }
         }
     }
@@ -837,6 +838,7 @@ extension WorktreeSidebarView {
         isPruneAnalysing = true
         defer { isPruneAnalysing = false }
         var candidates: [RepoPruneCandidate] = []
+        var hadError = false
         for repo in viewModel.repositories {
             do {
                 let stale = try await viewModel.pruneWorktreesDryRun(repo: repo)
@@ -845,12 +847,15 @@ extension WorktreeSidebarView {
                 }
             } catch {
                 viewModel.operationError = error.localizedDescription
+                hadError = true
             }
         }
-        if candidates.isEmpty {
-            isShowingPruneNothingAlert = true
-        } else {
+        // Only claim "nothing to prune" when the empty result wasn't caused by
+        // every dry-run failing — otherwise operationError surfaces the cause.
+        if !candidates.isEmpty {
             pruneAllContext = PruneAllContext(candidates: candidates)
+        } else if !hadError {
+            isShowingPruneNothingAlert = true
         }
     }
 }
