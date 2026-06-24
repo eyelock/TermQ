@@ -11,6 +11,7 @@ struct TermQApp: App {
     @StateObject private var urlHandler = URLHandler.shared
     @FocusedValue(\.terminalActions) private var terminalActions
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.openSettings) private var openSettings
 
     // Restore offer state - using IdentifiableURL wrapper for sheet(item:)
     @State private var backupToRestore: IdentifiableURL?
@@ -48,19 +49,81 @@ struct TermQApp: App {
                 }
             #endif
 
-            // Window commands - enable Cmd+W to close window (hides it, preserving session)
+            // Window commands — close the window (hides it, preserving the
+            // session) and favourite the current terminal. The live list of
+            // open terminals (⌘1–⌘9) will be added as a separate group.
             CommandGroup(after: .windowArrangement) {
                 Button(Strings.Common.closeWindow) {
                     // Close the current window (won't quit app due to applicationShouldTerminateAfterLastWindowClosed)
                     NSApp.keyWindow?.close()
                 }
                 .keyboardShortcut("w", modifiers: .command)
+
+                Button("Favourite Current Terminal") {
+                    terminalActions?.toggleFavourite()
+                }
+                .keyboardShortcut("d", modifiers: .command)
+                .disabled(terminalActions == nil)
             }
 
-            // View menu — terminal text-size controls. macOS convention
-            // places these under View (cf. Messages, Safari, Terminal), so
-            // they slot in beside the system "Enter Full Screen" item.
+            // Edit menu — terminal search (Find) in its conventional home,
+            // below the Cut/Copy/Paste section.
+            CommandGroup(after: .pasteboard) {
+                Button("Find...") {
+                    terminalActions?.toggleSearch()
+                }
+                .keyboardShortcut("f", modifiers: .command)
+                .disabled(terminalActions == nil)
+            }
+
+            // View menu — layout, terminal navigation, and text-size controls.
+            // macOS convention places sidebar / zoom / text-size under View
+            // (cf. Messages, Safari, Terminal). Navigation (Back to Board, tab
+            // switching) and the Command Palette live here too, so the File
+            // menu can return to plain new / export / close work.
             CommandGroup(after: .sidebar) {
+                Button(Strings.Sidebar.menuToggle) {
+                    terminalActions?.toggleSidebar()
+                }
+                .keyboardShortcut("l", modifiers: [.command, .shift])
+                .disabled(terminalActions == nil)
+
+                Button("Toggle Zoom Mode") {
+                    terminalActions?.toggleZoom()
+                }
+                .keyboardShortcut("z", modifiers: [.command, .option])
+                .disabled(terminalActions == nil)
+
+                Divider()
+
+                Button(Strings.Menu.back) {
+                    terminalActions?.goBack()
+                }
+                .keyboardShortcut("b", modifiers: .command)
+                .disabled(terminalActions == nil)
+
+                Button("Next Tab") {
+                    terminalActions?.nextTab()
+                }
+                .keyboardShortcut("]", modifiers: .command)
+                .disabled(terminalActions == nil)
+
+                Button("Previous Tab") {
+                    terminalActions?.previousTab()
+                }
+                .keyboardShortcut("[", modifiers: .command)
+                .disabled(terminalActions == nil)
+
+                Divider()
+
+                Button("Command Palette...") {
+                    terminalActions?.showCommandPalette()
+                }
+                .keyboardShortcut("k", modifiers: .command)
+                .disabled(terminalActions == nil)
+
+                Divider()
+
                 Button(Strings.Menu.increaseFontSize) {
                     terminalActions?.increaseFontSize()
                 }
@@ -82,6 +145,11 @@ struct TermQApp: App {
                 Divider()
             }
 
+            // Repositories / Harnesses / Marketplaces top-level menus.
+            // Extracted into their own Commands type so this builder stays
+            // within @CommandsBuilder's 10-element limit.
+            DomainMenuCommands(openSettings: openSettings)
+
             // Utilities menu — developer tools available in all builds
             CommandMenu(Strings.Menu.utilities) {
                 Button(Strings.Menu.utilitiesLogging) {
@@ -98,9 +166,12 @@ struct TermQApp: App {
                 .keyboardShortcut("?", modifiers: .command)
             }
 
-            // Replace entire "New" section to remove default "New Window" command
-            // TermQ only supports single window - multiple windows cause issues
-            // because terminal NSViews can only have one parent
+            // File menu — terminal/document lifecycle only. Navigation, zoom,
+            // sidebar, find, and the command palette moved to View / Edit /
+            // Window, so this reads as plain new / export / close work.
+            // The "New" section is replaced to drop the default "New Window"
+            // command: TermQ is single-window because terminal NSViews can
+            // only have one parent.
             CommandGroup(replacing: .newItem) {
                 Button(Strings.Menu.newTerminalQuick) {
                     terminalActions?.quickNewTerminal()
@@ -119,34 +190,17 @@ struct TermQApp: App {
 
                 Divider()
 
-                Button(Strings.Menu.back) {
-                    terminalActions?.goBack()
-                }
-                .keyboardShortcut("b", modifiers: .command)
-
-                Divider()
-
-                Button("Toggle Favourite") {
-                    terminalActions?.toggleFavourite()
-                }
-                .keyboardShortcut("d", modifiers: .command)
-
-                Button("Next Tab") {
-                    terminalActions?.nextTab()
-                }
-                .keyboardShortcut("]", modifiers: .command)
-
-                Button("Previous Tab") {
-                    terminalActions?.previousTab()
-                }
-                .keyboardShortcut("[", modifiers: .command)
-
-                Divider()
-
                 Button("Open in Terminal.app") {
                     terminalActions?.openInTerminalApp()
                 }
                 .keyboardShortcut("t", modifiers: [.command, .shift])
+
+                Button("Export Session...") {
+                    terminalActions?.exportSession()
+                }
+                .keyboardShortcut("s", modifiers: [.command, .shift])
+
+                Divider()
 
                 Button("Close Tab") {
                     terminalActions?.closeTab()
@@ -161,43 +215,10 @@ struct TermQApp: App {
 
                 Divider()
 
-                Button("Toggle Zoom Mode") {
-                    terminalActions?.toggleZoom()
-                }
-                .keyboardShortcut("z", modifiers: [.command, .option])
-
-                Button("Find...") {
-                    terminalActions?.toggleSearch()
-                }
-                .keyboardShortcut("f", modifiers: .command)
-
-                Divider()
-
-                Button("Export Session...") {
-                    terminalActions?.exportSession()
-                }
-                .keyboardShortcut("s", modifiers: [.command, .shift])
-
-                Divider()
-
-                Button("Command Palette...") {
-                    terminalActions?.showCommandPalette()
-                }
-                .keyboardShortcut("k", modifiers: .command)
-
-                Divider()
-
                 Button("Show Bin") {
                     terminalActions?.showBin()
                 }
                 .keyboardShortcut(.delete, modifiers: [.command, .shift])
-
-                Divider()
-
-                Button(Strings.Sidebar.menuToggle) {
-                    terminalActions?.toggleSidebar()
-                }
-                .keyboardShortcut("l", modifiers: [.command, .shift])
             }
 
             #if DEBUG
@@ -242,6 +263,97 @@ struct TermQApp: App {
     private func checkForOrphanedBackup() {
         if let backupURL = BackupManager.checkAndOfferRestore() {
             backupToRestore = IdentifiableURL(url: backupURL)
+        }
+    }
+}
+
+/// The Repositories / Harnesses / Marketplaces top-level menus.
+///
+/// Extracted from `TermQApp`'s `.commands` builder into its own `Commands`
+/// type so that builder stays within `@CommandsBuilder`'s 10-element limit.
+/// The menus drive `@MainActor` singletons (`SidebarMenuCoordinator`,
+/// `SidebarState`, the sidebar view models) plus the injected `openSettings`
+/// action for the preference-pane deep links.
+@MainActor
+struct DomainMenuCommands: Commands {
+    let openSettings: OpenSettingsAction
+
+    var body: some Commands {
+        // Repositories menu — global repository operations. Selection-
+        // dependent actions (edit, prune one repo, remove) stay in the sidebar
+        // context menus; these are the always-available globals.
+        CommandMenu("Repositories") {
+            Button("Add Repository...") {
+                SidebarMenuCoordinator.shared.request(.addRepository, on: .repositories)
+            }
+
+            Button("Refresh All") {
+                SidebarState.shared.selectedTab = .repositories
+                WorktreeSidebarViewModel.shared.refresh()
+            }
+
+            Divider()
+
+            Button("Repository Settings...") {
+                SettingsCoordinator.shared.openSettings(tab: .general)
+                openSettings()
+            }
+        }
+
+        // Harnesses menu — install, author, and refresh harnesses, plus deep
+        // links to the registry and tool settings.
+        CommandMenu("Harnesses") {
+            Button("Install Harness...") {
+                SidebarMenuCoordinator.shared.request(.installHarness, on: .harnesses)
+            }
+
+            Button("Create New Harness...") {
+                SidebarMenuCoordinator.shared.request(.createHarness, on: .harnesses)
+            }
+
+            Button("Refresh All") {
+                SidebarState.shared.selectedTab = .harnesses
+                Task {
+                    await YNHDetector.shared.detect()
+                    await HarnessRepository.shared.refresh()
+                }
+            }
+
+            Divider()
+
+            Button("Harness Registries...") {
+                SettingsCoordinator.shared.openSettings(tab: .marketplaces)
+                openSettings()
+            }
+
+            Button("Harness Tools (CLI / MCP)...") {
+                SettingsCoordinator.shared.openSettings(tab: .tools)
+                openSettings()
+            }
+        }
+
+        // Marketplaces menu — manage plugin marketplaces. Add / refresh /
+        // restore route through the sidebar tab so they reuse its existing
+        // fetch logic; settings opens the Marketplaces preferences pane.
+        CommandMenu("Marketplaces") {
+            Button("Add Marketplace...") {
+                SidebarMenuCoordinator.shared.request(.addMarketplace, on: .marketplaces)
+            }
+
+            Button("Refresh All") {
+                SidebarMenuCoordinator.shared.request(.refreshMarketplaces, on: .marketplaces)
+            }
+
+            Button("Restore Defaults") {
+                SidebarMenuCoordinator.shared.request(.restoreDefaultMarketplaces, on: .marketplaces)
+            }
+
+            Divider()
+
+            Button("Marketplace Settings...") {
+                SettingsCoordinator.shared.openSettings(tab: .marketplaces)
+                openSettings()
+            }
         }
     }
 }

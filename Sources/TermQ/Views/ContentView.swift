@@ -12,7 +12,7 @@ struct ContentView: View {
     @StateObject var updateAvailabilityService = LiveUpdateAvailabilityService.shared
     @StateObject var migrationCoordinator = HarnessMigrationCoordinator()
     @EnvironmentObject var urlHandler: URLHandler
-    @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
+    @AppStorage(SidebarState.sidebarCollapsedKey) private var isSidebarCollapsed = false
     @State private var isZoomed = false
     @State private var isSearching = false
     @State private var showCommandPalette = false

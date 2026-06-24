@@ -16,6 +16,7 @@ struct WorktreeSidebarView: View {
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @ObservedObject var prService: GitHubPRService = .shared
     @ObservedObject var ghProbe: GhCliProbe = .shared
+    @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
     @Environment(SettingsStore.self) var settings
     // Per-window mode (Local vs Remote). Transient — not persisted.
     @State var sidebarMode: SidebarMode = .local
@@ -58,6 +59,10 @@ struct WorktreeSidebarView: View {
             }
         }
         .sheet(isPresented: $showAddRepo) { AddRepositorySheet(viewModel: viewModel) }
+        .onAppear { if menuCoordinator.consume(.addRepository) { showAddRepo = true } }
+        .onChange(of: menuCoordinator.pending) { _, _ in
+            if menuCoordinator.consume(.addRepository) { showAddRepo = true }
+        }
         .sheet(item: $newWorktreeContext) { ctx in
             NewWorktreeSheet(repo: ctx.repo, initialBaseBranch: ctx.initialBaseBranch, viewModel: viewModel)
         }
