@@ -144,6 +144,9 @@ struct NewWorktreeSheet: View {
         if let initial = initialBaseBranch, !initial.isEmpty {
             baseBranch = initial
         } else {
+            // Sync origin/HEAD first so the default reflects the remote's current default
+            // even if it changed after the repo was added (git never refreshes it on fetch).
+            await viewModel.refreshRemoteHead(for: repo)
             baseBranch = await viewModel.defaultBranch(for: repo)
         }
     }
