@@ -34,6 +34,11 @@ enum SidebarTab: String, CaseIterable, Sendable {
 final class SidebarState: ObservableObject {
     static let shared = SidebarState()
 
+    /// UserDefaults key backing ContentView's sidebar-collapsed `@AppStorage`.
+    /// Exposed so `SidebarMenuCoordinator` can reveal the sidebar without
+    /// duplicating the raw string literal.
+    static let sidebarCollapsedKey = "sidebarCollapsed"
+
     private let defaults: UserDefaults
     private static let selectedTabKey = "sidebar.selectedTab"
 

@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Smanji veličinu fonta";
 "menu.font.size.reset" = "Poništi veličinu fonta";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Radni prostor";
+"menu.workspace.repositories" = "Repozitoriji";
+"menu.workspace.harnesses" = "Pogonski sklopi";
+"menu.workspace.marketplaces" = "Tržišta";
+"menu.workspace.add.repository" = "Dodaj repozitorij...";
+"menu.refresh.all" = "Osvježi sve";
+"menu.workspace.prune.all.worktrees" = "Očisti sva radna stabla...";
+"menu.workspace.repository.settings" = "Postavke repozitorija...";
+"menu.workspace.install.harness" = "Instaliraj pogonski sklop...";
+"menu.workspace.create.harness" = "Stvori novi pogonski sklop...";
+"menu.workspace.harness.registries" = "Registri pogonskih sklopova...";
+"menu.workspace.harness.tools" = "Alati pogonskog sklopa (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Dodaj tržište...";
+"menu.workspace.restore.defaults" = "Vrati zadane postavke";
+"menu.workspace.marketplace.settings" = "Postavke tržišta...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Dodaj trenutni terminal u favorite";
+"menu.all.terminals" = "Svi terminali...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Uključi/isključi način zumiranja";
+"menu.next.tab" = "Sljedeća kartica";
+"menu.previous.tab" = "Prethodna kartica";
+"menu.command.palette" = "Paleta naredbi...";
+
+// MARK: Menu — Edit
+"menu.find" = "Traži...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Otvori u Terminal.app";
+"menu.export.session" = "Izvezi sesiju...";
+"menu.close.tab" = "Zatvori karticu";
+"menu.delete.terminal" = "Obriši terminal";
+"menu.show.bin" = "Prikaži koš za smeće";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

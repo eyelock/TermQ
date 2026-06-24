@@ -108,6 +108,44 @@
 "menu.font.size.decrease" = "Уменьшить размер шрифта";
 "menu.font.size.reset" = "Сбросить размер шрифта";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Рабочая область";
+"menu.workspace.repositories" = "Репозитории";
+"menu.workspace.harnesses" = "Наборы";
+"menu.workspace.marketplaces" = "Маркетплейсы";
+"menu.workspace.add.repository" = "Добавить репозиторий...";
+"menu.refresh.all" = "Обновить всё";
+"menu.workspace.prune.all.worktrees" = "Очистить все рабочие деревья...";
+"menu.workspace.repository.settings" = "Настройки репозитория...";
+"menu.workspace.install.harness" = "Установить набор...";
+"menu.workspace.create.harness" = "Создать новый набор...";
+"menu.workspace.harness.registries" = "Реестры наборов...";
+"menu.workspace.harness.tools" = "Инструменты набора (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Добавить маркетплейс...";
+"menu.workspace.restore.defaults" = "Восстановить настройки по умолчанию";
+"menu.workspace.marketplace.settings" = "Настройки маркетплейса...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Добавить текущий терминал в избранное";
+"menu.all.terminals" = "Все терминалы...";
+"menu.terminal.fallback.title" = "Терминал";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Переключить режим масштабирования";
+"menu.next.tab" = "Следующая вкладка";
+"menu.previous.tab" = "Предыдущая вкладка";
+"menu.command.palette" = "Палитра команд...";
+
+// MARK: Menu — Edit
+"menu.find" = "Найти...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Открыть в Terminal.app";
+"menu.export.session" = "Экспортировать сеанс...";
+"menu.close.tab" = "Закрыть вкладку";
+"menu.delete.terminal" = "Удалить терминал";
+"menu.show.bin" = "Показать корзину";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

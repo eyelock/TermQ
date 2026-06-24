@@ -18,6 +18,7 @@ struct MarketplaceSidebarTab: View {
     @ObservedObject var detector: YNHDetector
     @ObservedObject var harnessRepository: HarnessRepository
     @ObservedObject private var store: MarketplaceStore = .shared
+    @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
 
     @State private var selectedMarketplace: MarketplaceSelection?
     @State private var showAddSheet = false
@@ -54,6 +55,28 @@ struct MarketplaceSidebarTab: View {
             {
                 selectedMarketplace = MarketplaceSelection(id: marketplace.id, marketplace: marketplace)
                 store.preselectedMarketplaceID = nil
+            }
+            consumeMenuRequest()
+        }
+        .onChange(of: menuCoordinator.pending) { _, _ in
+            consumeMenuRequest()
+        }
+    }
+
+    /// Consume a menu-triggered request routed to the Marketplaces tab. Called
+    /// from `onAppear` (after a menu switches to this tab) and from `onChange`
+    /// (when the tab is already frontmost).
+    private func consumeMenuRequest() {
+        if menuCoordinator.consume(.addMarketplace) { showAddSheet = true }
+        if menuCoordinator.consume(.refreshMarketplaces) {
+            Task {
+                for marketplace in store.marketplaces { await refresh(marketplace) }
+            }
+        }
+        if menuCoordinator.consume(.restoreDefaultMarketplaces) {
+            store.restoreDefaults(force: true)
+            Task {
+                for marketplace in store.marketplaces { await refresh(marketplace) }
             }
         }
     }

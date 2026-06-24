@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Tekengrootte verkleinen";
 "menu.font.size.reset" = "Tekengrootte herstellen";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Werkruimte";
+"menu.workspace.repositories" = "Repositories";
+"menu.workspace.harnesses" = "Sets";
+"menu.workspace.marketplaces" = "Marktplaatsen";
+"menu.workspace.add.repository" = "Repository toevoegen...";
+"menu.refresh.all" = "Alles vernieuwen";
+"menu.workspace.prune.all.worktrees" = "Alle werktrees opschonen...";
+"menu.workspace.repository.settings" = "Repository-instellingen...";
+"menu.workspace.install.harness" = "Set installeren...";
+"menu.workspace.create.harness" = "Nieuwe set maken...";
+"menu.workspace.harness.registries" = "Set-registers...";
+"menu.workspace.harness.tools" = "Set-hulpmiddelen (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Marktplaats toevoegen...";
+"menu.workspace.restore.defaults" = "Standaardinstellingen herstellen";
+"menu.workspace.marketplace.settings" = "Marktplaatsinstellingen...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Huidig terminal aan favorieten toevoegen";
+"menu.all.terminals" = "Alle terminals...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Zoomstand in-/uitschakelen";
+"menu.next.tab" = "Volgend tabblad";
+"menu.previous.tab" = "Vorig tabblad";
+"menu.command.palette" = "Opdrachtenpalet...";
+
+// MARK: Menu — Edit
+"menu.find" = "Zoeken...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Openen in Terminal.app";
+"menu.export.session" = "Sessie exporteren...";
+"menu.close.tab" = "Tabblad sluiten";
+"menu.delete.terminal" = "Terminal verwijderen";
+"menu.show.bin" = "Prullenmand tonen";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

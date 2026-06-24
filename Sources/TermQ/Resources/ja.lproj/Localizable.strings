@@ -108,6 +108,44 @@
 "menu.font.size.decrease" = "フォントサイズを縮小";
 "menu.font.size.reset" = "フォントサイズをリセット";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "ワークスペース";
+"menu.workspace.repositories" = "リポジトリ";
+"menu.workspace.harnesses" = "ハーネス";
+"menu.workspace.marketplaces" = "マーケットプレイス";
+"menu.workspace.add.repository" = "リポジトリを追加...";
+"menu.refresh.all" = "すべて更新";
+"menu.workspace.prune.all.worktrees" = "すべてのワークツリーをプルーン...";
+"menu.workspace.repository.settings" = "リポジトリ設定...";
+"menu.workspace.install.harness" = "ハーネスをインストール...";
+"menu.workspace.create.harness" = "新しいハーネスを作成...";
+"menu.workspace.harness.registries" = "ハーネスレジストリ...";
+"menu.workspace.harness.tools" = "ハーネスツール (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "マーケットプレイスを追加...";
+"menu.workspace.restore.defaults" = "デフォルトに戻す";
+"menu.workspace.marketplace.settings" = "マーケットプレイス設定...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "現在のターミナルをお気に入りに追加";
+"menu.all.terminals" = "すべてのターミナル...";
+"menu.terminal.fallback.title" = "ターミナル";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "ズームモードを切り替え";
+"menu.next.tab" = "次のタブ";
+"menu.previous.tab" = "前のタブ";
+"menu.command.palette" = "コマンドパレット...";
+
+// MARK: Menu — Edit
+"menu.find" = "検索...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Terminal.appで開く";
+"menu.export.session" = "セッションをエクスポート...";
+"menu.close.tab" = "タブを閉じる";
+"menu.delete.terminal" = "ターミナルを削除";
+"menu.show.bin" = "ゴミ箱を表示";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

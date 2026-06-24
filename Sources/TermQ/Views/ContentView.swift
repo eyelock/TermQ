@@ -12,7 +12,7 @@ struct ContentView: View {
     @StateObject var updateAvailabilityService = LiveUpdateAvailabilityService.shared
     @StateObject var migrationCoordinator = HarnessMigrationCoordinator()
     @EnvironmentObject var urlHandler: URLHandler
-    @AppStorage("sidebarCollapsed") private var isSidebarCollapsed = false
+    @AppStorage(SidebarState.sidebarCollapsedKey) private var isSidebarCollapsed = false
     @State private var isZoomed = false
     @State private var isSearching = false
     @State private var showCommandPalette = false
@@ -564,6 +564,7 @@ struct ContentView: View {
             }
             .navigationTitle(Strings.appName)
             .focusedSceneValue(\.terminalActions, terminalActions)
+            .focusedSceneValue(\.windowMenu, windowMenu)
             .background { fontZoomShortcutAliases }
         }
         .onAppear {
@@ -662,6 +663,38 @@ extension ContentView {
             decreaseFontSize: { viewModel.adjustSelectedFontSize(by: -1) },
             resetFontSize: { viewModel.resetSelectedFontSize() }
         )
+    }
+
+    /// Snapshot of open terminals for the Window menu's jump list — the five
+    /// most-recently-active terminals, most recent first (an MRU switcher), so
+    /// ⌘1 is the current terminal, ⌘2 the one before, and so on. Terminals not
+    /// activated yet this session fall to the end in board order. Republished
+    /// whenever the board or activation order changes.
+    var windowMenu: WindowMenuModel {
+        let active = viewModel.board.activeCards
+        let recencyRank = Dictionary(
+            viewModel.recentlyActiveCardIds.enumerated().map { ($1, $0) },
+            uniquingKeysWith: { first, _ in first })
+        let ordered = active.sorted {
+            let lhs = recencyRank[$0.id] ?? Int.max
+            let rhs = recencyRank[$1.id] ?? Int.max
+            return lhs != rhs ? lhs < rhs : $0.orderIndex < $1.orderIndex
+        }
+        let items = ordered.prefix(5).map {
+            OpenTerminalItem(
+                id: $0.id,
+                title: $0.title.isEmpty ? Strings.Menu.terminalFallbackTitle : $0.title,
+                isFavourite: $0.isFavourite)
+        }
+        return WindowMenuModel(
+            openTerminals: Array(items),
+            totalOpen: active.count,
+            jumpToTerminal: { id in
+                guard let card = viewModel.board.activeCards.first(where: { $0.id == id })
+                else { return }
+                isZoomed = false
+                viewModel.selectCard(card)
+            })
     }
 
     /// Handle command palette actions

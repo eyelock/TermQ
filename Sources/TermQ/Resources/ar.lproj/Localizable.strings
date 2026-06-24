@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "تصغير حجم الخط";
 "menu.font.size.reset" = "إعادة ضبط حجم الخط";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "مساحة العمل";
+"menu.workspace.repositories" = "المستودعات";
+"menu.workspace.harnesses" = "حزم العمل";
+"menu.workspace.marketplaces" = "الأسواق";
+"menu.workspace.add.repository" = "إضافة مستودع...";
+"menu.refresh.all" = "تحديث الكل";
+"menu.workspace.prune.all.worktrees" = "تنظيف جميع مساحات العمل...";
+"menu.workspace.repository.settings" = "إعدادات المستودع...";
+"menu.workspace.install.harness" = "تثبيت حزمة عمل...";
+"menu.workspace.create.harness" = "إنشاء حزمة عمل جديدة...";
+"menu.workspace.harness.registries" = "سجلات حزم العمل...";
+"menu.workspace.harness.tools" = "أدوات حزمة العمل (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "إضافة سوق...";
+"menu.workspace.restore.defaults" = "استعادة الإعدادات الافتراضية";
+"menu.workspace.marketplace.settings" = "إعدادات السوق...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "إضافة الطرفية الحالية إلى المفضلة";
+"menu.all.terminals" = "جميع الطرفيات...";
+"menu.terminal.fallback.title" = "طرفية";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "تبديل وضع التكبير";
+"menu.next.tab" = "التبويب التالي";
+"menu.previous.tab" = "التبويب السابق";
+"menu.command.palette" = "لوحة الأوامر...";
+
+// MARK: Menu — Edit
+"menu.find" = "بحث...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "فتح في Terminal.app";
+"menu.export.session" = "تصدير الجلسة...";
+"menu.close.tab" = "إغلاق التبويب";
+"menu.delete.terminal" = "حذف الطرفية";
+"menu.show.bin" = "إظهار سلة المهملات";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";
