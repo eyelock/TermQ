@@ -61,6 +61,16 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.13] - 2026-06-24
+
+### Added — Menus
+
+- **A reorganized menu bar that surfaces features that were previously buried.** Repository, harness, and marketplace operations — and terminal navigation — were reachable only from sidebar toolbars and right-click menus. The menu bar is reorganized so they are discoverable and keyboard-accessible: **File** is slimmed to terminal lifecycle (new / open / export / close / delete); **View** gains the sidebar toggle, zoom, board navigation, and the Command Palette; **Edit** gains Find; and a single new **Workspace** menu collects **Repositories**, **Harnesses**, and **Marketplaces** as flyout submenus — each with its global actions (Add, Refresh All, and Settings deep-links) — alongside Logging & Diagnostics. This replaces the separate per-domain menus and the old Utilities menu.
+- **A live "jump to terminal" list in the Window menu.** The five most-recently-active terminals appear with ⌘1–⌘5, most-recent first — so ⌘1 is the current terminal and ⌘2 the one you were just on, like a switcher. "All Terminals…" opens the Command Palette when there are more than five.
+- **Prune All Worktrees.** A single command (Workspace ▸ Repositories) dry-runs a worktree prune across every repository and shows one confirmation listing the stale records per repository, instead of pruning each one individually.
+
+All new menu labels are localized across all 39 supported languages.
+
 ## [0.11.12] - 2026-06-24
 
 ### Fixed — Worktrees
