@@ -61,6 +61,12 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.12] - 2026-06-24
+
+### Fixed — Worktrees
+
+- **The New Worktree sheet now defaults "Base Branch" to the repository's real default branch, even when the remote's default changed after the repo was cloned.** TermQ read the default from the local `refs/remotes/origin/HEAD` symref, which git sets once at clone time and never refreshes on `fetch` or `pull` — so a repository whose remote default later moved (e.g. from `main` to `develop`) kept offering the stale branch as the base for new worktrees. TermQ now refreshes `origin/HEAD` from the remote (`git remote set-head origin --auto`) both when a repository is added and when the New Worktree sheet opens, so the suggested base follows the remote's current default. The refresh is best-effort: if it can't reach the remote it falls back to the last known value rather than failing.
+
 ## [0.11.11] - 2026-06-20
 
 ### Fixed — Terminal
