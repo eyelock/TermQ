@@ -108,6 +108,44 @@
 "menu.font.size.increase" = "Yazı Tipi Boyutunu Artır";
 "menu.font.size.decrease" = "Yazı Tipi Boyutunu Azalt";
 "menu.font.size.reset" = "Yazı Tipi Boyutunu Sıfırla";
+
+// MARK: Menu — Workspace
+"menu.workspace" = "Çalışma Alanı";
+"menu.workspace.repositories" = "Depolar";
+"menu.workspace.harnesses" = "Takım Setleri";
+"menu.workspace.marketplaces" = "Pazaryerleri";
+"menu.workspace.add.repository" = "Depo Ekle...";
+"menu.refresh.all" = "Tümünü Yenile";
+"menu.workspace.prune.all.worktrees" = "Tüm Çalışma Ağaçlarını Temizle...";
+"menu.workspace.repository.settings" = "Depo Ayarları...";
+"menu.workspace.install.harness" = "Takım Seti Kur...";
+"menu.workspace.create.harness" = "Yeni Takım Seti Oluştur...";
+"menu.workspace.harness.registries" = "Takım Seti Kayıt Defterleri...";
+"menu.workspace.harness.tools" = "Takım Seti Araçları (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Pazaryeri Ekle...";
+"menu.workspace.restore.defaults" = "Varsayılanları Geri Yükle";
+"menu.workspace.marketplace.settings" = "Pazaryeri Ayarları...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Mevcut Terminali Favorilere Ekle";
+"menu.all.terminals" = "Tüm Terminaller...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Yakınlaştırma Modunu Aç/Kapat";
+"menu.next.tab" = "Sonraki Sekme";
+"menu.previous.tab" = "Önceki Sekme";
+"menu.command.palette" = "Komut Paleti...";
+
+// MARK: Menu — Edit
+"menu.find" = "Bul...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Terminal.app'te Aç";
+"menu.export.session" = "Oturumu Dışa Aktar...";
+"menu.close.tab" = "Sekmeyi Kapat";
+"menu.delete.terminal" = "Terminali Sil";
+"menu.show.bin" = "Çöp Kutusunu Göster";
 "menu.toggle.sidebar" = "Kenar Çubuğunu Aç/Kapat";
 
 

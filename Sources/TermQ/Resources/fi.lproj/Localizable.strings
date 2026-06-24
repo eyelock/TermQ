@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Pienennä kirjasinkokoa";
 "menu.font.size.reset" = "Palauta kirjasinko";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Työtila";
+"menu.workspace.repositories" = "Tietovarastot";
+"menu.workspace.harnesses" = "Valjaat";
+"menu.workspace.marketplaces" = "Markkinapaikat";
+"menu.workspace.add.repository" = "Lisää tietovarasto...";
+"menu.refresh.all" = "Päivitä kaikki";
+"menu.workspace.prune.all.worktrees" = "Siivoa kaikki työmetsät...";
+"menu.workspace.repository.settings" = "Tietovaraston asetukset...";
+"menu.workspace.install.harness" = "Asenna valjaat...";
+"menu.workspace.create.harness" = "Luo uudet valjaat...";
+"menu.workspace.harness.registries" = "Valjaiden rekisterit...";
+"menu.workspace.harness.tools" = "Valjaiden työkalut (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Lisää markkinapaikka...";
+"menu.workspace.restore.defaults" = "Palauta oletukset";
+"menu.workspace.marketplace.settings" = "Markkinapaikan asetukset...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Lisää nykyinen pääte suosikkeihin";
+"menu.all.terminals" = "Kaikki päätteet...";
+"menu.terminal.fallback.title" = "Pääte";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Vaihda zoomaustila";
+"menu.next.tab" = "Seuraava välilehti";
+"menu.previous.tab" = "Edellinen välilehti";
+"menu.command.palette" = "Komentovalikko...";
+
+// MARK: Menu — Edit
+"menu.find" = "Etsi...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Avaa Terminal.appissa";
+"menu.export.session" = "Vie istunto...";
+"menu.close.tab" = "Sulje välilehti";
+"menu.delete.terminal" = "Poista pääte";
+"menu.show.bin" = "Näytä roskakori";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

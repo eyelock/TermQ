@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Redueix la mida de la lletra";
 "menu.font.size.reset" = "Restableix la mida de la lletra";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Espai de treball";
+"menu.workspace.repositories" = "Repositoris";
+"menu.workspace.harnesses" = "Arnesos";
+"menu.workspace.marketplaces" = "Mercats";
+"menu.workspace.add.repository" = "Afegeix repositori...";
+"menu.refresh.all" = "Actualitza-ho tot";
+"menu.workspace.prune.all.worktrees" = "Elimina tots els arbres de treball...";
+"menu.workspace.repository.settings" = "Configuració del repositori...";
+"menu.workspace.install.harness" = "Instal·la arnes...";
+"menu.workspace.create.harness" = "Crea un nou arnes...";
+"menu.workspace.harness.registries" = "Registres d'arnesos...";
+"menu.workspace.harness.tools" = "Eines d'arnes (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Afegeix mercat...";
+"menu.workspace.restore.defaults" = "Restaura els valors predeterminats";
+"menu.workspace.marketplace.settings" = "Configuració del mercat...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Afegeix el terminal actual als preferits";
+"menu.all.terminals" = "Tots els terminals...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Activa/desactiva el mode zoom";
+"menu.next.tab" = "Pestanya següent";
+"menu.previous.tab" = "Pestanya anterior";
+"menu.command.palette" = "Paleta d'ordres...";
+
+// MARK: Menu — Edit
+"menu.find" = "Cerca...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Obre a Terminal.app";
+"menu.export.session" = "Exporta la sessió...";
+"menu.close.tab" = "Tanca la pestanya";
+"menu.delete.terminal" = "Elimina el terminal";
+"menu.show.bin" = "Mostra la paperera";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

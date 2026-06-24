@@ -11,7 +11,12 @@ class BoardViewModel: ObservableObject {
     static let shared = BoardViewModel()
 
     @Published var board: Board
-    @Published var selectedCard: TerminalCard?
+    @Published var selectedCard: TerminalCard? {
+        didSet { recordActivation(of: selectedCard?.id, previous: oldValue?.id) }
+    }
+    /// Card ids in most-recently-activated order (most recent first), capped.
+    /// Drives the Window menu's MRU jump list; transient, not persisted.
+    @Published private(set) var recentlyActiveCardIds: [UUID] = []
     @Published var isEditingCard: TerminalCard?
     @Published var isEditingNewCard: Bool = false
     @Published var isEditingColumn: Column?
@@ -765,4 +770,18 @@ private func autoTags(
     if let branch { tags.append(Tag(key: "branch", value: branch)) }
     if let repoName { tags.append(Tag(key: "repository", value: repoName)) }
     return tags
+}
+
+extension BoardViewModel {
+    /// Promote a just-activated card to the front of the MRU list backing the
+    /// Window menu jump list. No-op when selection clears or is unchanged.
+    fileprivate func recordActivation(of cardId: UUID?, previous: UUID?) {
+        guard let cardId, cardId != previous else { return }
+        recentlyActiveCardIds.removeAll { $0 == cardId }
+        recentlyActiveCardIds.insert(cardId, at: 0)
+        let cap = 20
+        if recentlyActiveCardIds.count > cap {
+            recentlyActiveCardIds.removeLast(recentlyActiveCardIds.count - cap)
+        }
+    }
 }

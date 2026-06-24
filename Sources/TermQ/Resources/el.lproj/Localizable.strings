@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Μικρότερη γραμματοσειρά";
 "menu.font.size.reset" = "Επαναφορά μεγέθους γραμματοσειράς";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Χώρος εργασίας";
+"menu.workspace.repositories" = "Αποθετήρια";
+"menu.workspace.harnesses" = "Σύνολα";
+"menu.workspace.marketplaces" = "Αγορές";
+"menu.workspace.add.repository" = "Προσθήκη αποθετηρίου...";
+"menu.refresh.all" = "Ανανέωση όλων";
+"menu.workspace.prune.all.worktrees" = "Εκκαθάριση όλων των δέντρων εργασίας...";
+"menu.workspace.repository.settings" = "Ρυθμίσεις αποθετηρίου...";
+"menu.workspace.install.harness" = "Εγκατάσταση συνόλου...";
+"menu.workspace.create.harness" = "Δημιουργία νέου συνόλου...";
+"menu.workspace.harness.registries" = "Μητρώα συνόλων...";
+"menu.workspace.harness.tools" = "Εργαλεία συνόλου (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Προσθήκη αγοράς...";
+"menu.workspace.restore.defaults" = "Επαναφορά προεπιλογών";
+"menu.workspace.marketplace.settings" = "Ρυθμίσεις αγοράς...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Αγαπημένο τρέχον τερματικό";
+"menu.all.terminals" = "Όλα τα τερματικά...";
+"menu.terminal.fallback.title" = "Τερματικό";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Εναλλαγή λειτουργίας ζουμ";
+"menu.next.tab" = "Επόμενη καρτέλα";
+"menu.previous.tab" = "Προηγούμενη καρτέλα";
+"menu.command.palette" = "Παλέτα εντολών...";
+
+// MARK: Menu — Edit
+"menu.find" = "Αναζήτηση...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Άνοιγμα στο Terminal.app";
+"menu.export.session" = "Εξαγωγή συνεδρίας...";
+"menu.close.tab" = "Κλείσιμο καρτέλας";
+"menu.delete.terminal" = "Διαγραφή τερματικού";
+"menu.show.bin" = "Εμφάνιση κάδου";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

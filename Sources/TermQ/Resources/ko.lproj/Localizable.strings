@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "글꼴 크기 줄이기";
 "menu.font.size.reset" = "글꼴 크기 재설정";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "작업 공간";
+"menu.workspace.repositories" = "저장소";
+"menu.workspace.harnesses" = "하네스";
+"menu.workspace.marketplaces" = "마켓플레이스";
+"menu.workspace.add.repository" = "저장소 추가...";
+"menu.refresh.all" = "모두 새로 고침";
+"menu.workspace.prune.all.worktrees" = "모든 작업 트리 정리...";
+"menu.workspace.repository.settings" = "저장소 설정...";
+"menu.workspace.install.harness" = "하네스 설치...";
+"menu.workspace.create.harness" = "새 하네스 만들기...";
+"menu.workspace.harness.registries" = "하네스 레지스트리...";
+"menu.workspace.harness.tools" = "하네스 도구 (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "마켓플레이스 추가...";
+"menu.workspace.restore.defaults" = "기본값 복원";
+"menu.workspace.marketplace.settings" = "마켓플레이스 설정...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "현재 터미널을 즐겨찾기에 추가";
+"menu.all.terminals" = "모든 터미널...";
+"menu.terminal.fallback.title" = "터미널";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "확대 모드 전환";
+"menu.next.tab" = "다음 탭";
+"menu.previous.tab" = "이전 탭";
+"menu.command.palette" = "명령 팔레트...";
+
+// MARK: Menu — Edit
+"menu.find" = "찾기...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Terminal.app에서 열기";
+"menu.export.session" = "세션 내보내기...";
+"menu.close.tab" = "탭 닫기";
+"menu.delete.terminal" = "터미널 삭제";
+"menu.show.bin" = "휴지통 보기";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

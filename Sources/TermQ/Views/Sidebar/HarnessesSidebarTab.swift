@@ -45,6 +45,7 @@ struct HarnessesSidebarTab: View {
     @State private var collapsedGroups: Set<String> = []
     @StateObject private var sampleRunner = MarketplaceAddRunner()
     @StateObject private var marketplaceService = YNHMarketplaceService()
+    @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
 
     var body: some View {
         VStack(spacing: 0) {
@@ -85,6 +86,9 @@ struct HarnessesSidebarTab: View {
         .onAppear {
             if repository.harnesses.isEmpty { Task { await repository.refresh() } }
             refreshRegistryService()
+            // Consume a menu-triggered request that switched to this tab.
+            if menuCoordinator.consume(.createHarness) { showWizard = true }
+            if menuCoordinator.consume(.installHarness) { onInstall?() }
         }
         .onChange(of: detector.status) { _, _ in
             Task { await repository.refresh() }
@@ -92,6 +96,10 @@ struct HarnessesSidebarTab: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { _ in
             refreshRegistryService()
+        }
+        .onChange(of: menuCoordinator.pending) { _, _ in
+            if menuCoordinator.consume(.createHarness) { showWizard = true }
+            if menuCoordinator.consume(.installHarness) { onInstall?() }
         }
     }
 

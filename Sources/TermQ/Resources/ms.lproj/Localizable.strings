@@ -109,6 +109,44 @@
 "menu.font.size.decrease" = "Kecilkan Saiz Fon";
 "menu.font.size.reset" = "Tetapkan Semula Saiz Fon";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Ruang Kerja";
+"menu.workspace.repositories" = "Repositori";
+"menu.workspace.harnesses" = "Harnais";
+"menu.workspace.marketplaces" = "Pasaran";
+"menu.workspace.add.repository" = "Tambah Repositori...";
+"menu.refresh.all" = "Muat Semula Semua";
+"menu.workspace.prune.all.worktrees" = "Bersihkan Semua Pokok Kerja...";
+"menu.workspace.repository.settings" = "Tetapan Repositori...";
+"menu.workspace.install.harness" = "Pasang Harnais...";
+"menu.workspace.create.harness" = "Cipta Harnais Baharu...";
+"menu.workspace.harness.registries" = "Pendaftaran Harnais...";
+"menu.workspace.harness.tools" = "Alat Harnais (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Tambah Pasaran...";
+"menu.workspace.restore.defaults" = "Pulihkan Lalai";
+"menu.workspace.marketplace.settings" = "Tetapan Pasaran...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Tandai Terminal Semasa sebagai Kegemaran";
+"menu.all.terminals" = "Semua Terminal...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Togol Mod Zum";
+"menu.next.tab" = "Tab Seterusnya";
+"menu.previous.tab" = "Tab Sebelumnya";
+"menu.command.palette" = "Palet Arahan...";
+
+// MARK: Menu — Edit
+"menu.find" = "Cari...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Buka di Terminal.app";
+"menu.export.session" = "Eksport Sesi...";
+"menu.close.tab" = "Tutup Tab";
+"menu.delete.terminal" = "Padam Terminal";
+"menu.show.bin" = "Tunjuk Tong Sampah";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

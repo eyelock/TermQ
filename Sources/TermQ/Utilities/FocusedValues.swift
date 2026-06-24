@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 /// Actions available for keyboard shortcuts
@@ -50,5 +51,36 @@ extension FocusedValues {
     var terminalActions: TerminalActions? {
         get { self[TerminalActionsKey.self] }
         set { self[TerminalActionsKey.self] = newValue }
+    }
+}
+
+/// One open terminal as shown in the Window menu's jump list.
+struct OpenTerminalItem: Identifiable {
+    let id: UUID
+    let title: String
+    let isFavourite: Bool
+}
+
+/// Snapshot of open terminals for the Window menu, plus the jump action.
+/// Republished by ContentView whenever the board changes.
+struct WindowMenuModel {
+    /// Up to five terminals — most-recently-active first — each assigned
+    /// ⌘1–⌘5 in the menu.
+    let openTerminals: [OpenTerminalItem]
+    /// Total number of open terminals, so the menu shows "All Terminals…"
+    /// only when the list is actually capped.
+    let totalOpen: Int
+    /// Jump to (select) the terminal with the given id.
+    let jumpToTerminal: (UUID) -> Void
+}
+
+struct WindowMenuModelKey: FocusedValueKey {
+    typealias Value = WindowMenuModel
+}
+
+extension FocusedValues {
+    var windowMenu: WindowMenuModel? {
+        get { self[WindowMenuModelKey.self] }
+        set { self[WindowMenuModelKey.self] = newValue }
     }
 }

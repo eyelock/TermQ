@@ -108,6 +108,44 @@
 "menu.font.size.decrease" = "Micșorare dimensiune font";
 "menu.font.size.reset" = "Resetare dimensiune font";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Spațiu de lucru";
+"menu.workspace.repositories" = "Depozite";
+"menu.workspace.harnesses" = "Seturi";
+"menu.workspace.marketplaces" = "Piețe";
+"menu.workspace.add.repository" = "Adaugă depozit...";
+"menu.refresh.all" = "Reîmprospătează tot";
+"menu.workspace.prune.all.worktrees" = "Curăță toate arborii de lucru...";
+"menu.workspace.repository.settings" = "Setări depozit...";
+"menu.workspace.install.harness" = "Instalează set...";
+"menu.workspace.create.harness" = "Creează set nou...";
+"menu.workspace.harness.registries" = "Registre seturi...";
+"menu.workspace.harness.tools" = "Instrumente set (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Adaugă piață...";
+"menu.workspace.restore.defaults" = "Restaurează valorile implicite";
+"menu.workspace.marketplace.settings" = "Setări piață...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Adaugă terminalul curent la favorite";
+"menu.all.terminals" = "Toate terminalele...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Comută modul zoom";
+"menu.next.tab" = "Fila următoare";
+"menu.previous.tab" = "Fila anterioară";
+"menu.command.palette" = "Paletă de comenzi...";
+
+// MARK: Menu — Edit
+"menu.find" = "Caută...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Deschide în Terminal.app";
+"menu.export.session" = "Exportă sesiunea...";
+"menu.close.tab" = "Închide fila";
+"menu.delete.terminal" = "Șterge terminalul";
+"menu.show.bin" = "Afișează coșul de gunoi";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";
