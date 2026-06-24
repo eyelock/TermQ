@@ -64,8 +64,8 @@ struct OpenTerminalItem: Identifiable {
 /// Snapshot of open terminals for the Window menu, plus the jump action.
 /// Republished by ContentView whenever the board changes.
 struct WindowMenuModel {
-    /// Up to nine terminals — favourites first, then board order — each
-    /// assigned ⌘1–⌘9 in the menu.
+    /// Up to five terminals — most-recently-active first — each assigned
+    /// ⌘1–⌘5 in the menu.
     let openTerminals: [OpenTerminalItem]
     /// Total number of open terminals, so the menu shows "All Terminals…"
     /// only when the list is actually capped.

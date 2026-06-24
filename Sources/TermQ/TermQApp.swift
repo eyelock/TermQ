@@ -168,18 +168,11 @@ struct TermQApp: App {
                 Divider()
             }
 
-            // Repositories / Harnesses / Marketplaces top-level menus.
-            // Extracted into their own Commands type so this builder stays
-            // within @CommandsBuilder's 10-element limit.
-            DomainMenuCommands(openSettings: openSettings)
-
-            // Utilities menu — developer tools available in all builds
-            CommandMenu(Strings.Menu.utilities) {
-                Button(Strings.Menu.utilitiesLogging) {
-                    DiagnosticsWindowController.shared.show()
-                }
-                .keyboardShortcut("d", modifiers: [.command, .option])
-            }
+            // Single "Workspace" menu — Repositories / Harnesses / Marketplaces
+            // as flyout submenus plus Logging & Diagnostics (the old Utilities
+            // menu). Extracted into its own Commands type to keep this builder
+            // small.
+            WorkspaceCommands(openSettings: openSettings)
 
             // Help menu
             CommandGroup(replacing: .help) {
@@ -290,97 +283,95 @@ struct TermQApp: App {
     }
 }
 
-/// The Repositories / Harnesses / Marketplaces top-level menus.
+/// The single "Workspace" menu — Repositories, Harnesses, and Marketplaces as
+/// flyout submenus, plus Logging & Diagnostics.
 ///
-/// Extracted from `TermQApp`'s `.commands` builder into its own `Commands`
-/// type so that builder stays within `@CommandsBuilder`'s 10-element limit.
-/// The menus drive `@MainActor` singletons (`SidebarMenuCoordinator`,
-/// `SidebarState`, the sidebar view models) plus the injected `openSettings`
+/// Collapsed from three separate top-level menus (and the old Utilities menu)
+/// into one so the menu bar doesn't sprawl. Extracted into its own `Commands`
+/// type to keep `TermQApp`'s `.commands` builder small. Drives `@MainActor`
+/// singletons (`SidebarMenuCoordinator`, `SidebarState`, the sidebar view
+/// models, `DiagnosticsWindowController`) plus the injected `openSettings`
 /// action for the preference-pane deep links.
 @MainActor
-struct DomainMenuCommands: Commands {
+struct WorkspaceCommands: Commands {
     let openSettings: OpenSettingsAction
 
     var body: some Commands {
-        // Repositories menu — global repository operations. Selection-
-        // dependent actions (edit, prune one repo, remove) stay in the sidebar
-        // context menus; these are the always-available globals.
-        CommandMenu("Repositories") {
-            Button("Add Repository...") {
-                SidebarMenuCoordinator.shared.request(.addRepository, on: .repositories)
+        CommandMenu("Workspace") {
+            // Repositories — global repository operations. Selection-dependent
+            // actions (edit, prune one repo, remove) stay in the sidebar
+            // context menus; these are the always-available globals.
+            Menu("Repositories") {
+                Button("Add Repository...") {
+                    SidebarMenuCoordinator.shared.request(.addRepository, on: .repositories)
+                }
+                Button("Refresh All") {
+                    SidebarState.shared.selectedTab = .repositories
+                    WorktreeSidebarViewModel.shared.refresh()
+                }
+                Button("Prune All Worktrees...") {
+                    SidebarMenuCoordinator.shared.request(.pruneAllWorktrees, on: .repositories)
+                }
+                Divider()
+                Button("Repository Settings...") {
+                    SettingsCoordinator.shared.openSettings(tab: .general)
+                    openSettings()
+                }
             }
 
-            Button("Refresh All") {
-                SidebarState.shared.selectedTab = .repositories
-                WorktreeSidebarViewModel.shared.refresh()
+            // Harnesses — install, author, and refresh, plus deep links to the
+            // registry and tool settings.
+            Menu("Harnesses") {
+                Button("Install Harness...") {
+                    SidebarMenuCoordinator.shared.request(.installHarness, on: .harnesses)
+                }
+                Button("Create New Harness...") {
+                    SidebarMenuCoordinator.shared.request(.createHarness, on: .harnesses)
+                }
+                Button("Refresh All") {
+                    SidebarState.shared.selectedTab = .harnesses
+                    Task {
+                        await YNHDetector.shared.detect()
+                        await HarnessRepository.shared.refresh()
+                    }
+                }
+                Divider()
+                Button("Harness Registries...") {
+                    SettingsCoordinator.shared.openSettings(tab: .marketplaces)
+                    openSettings()
+                }
+                Button("Harness Tools (CLI / MCP)...") {
+                    SettingsCoordinator.shared.openSettings(tab: .tools)
+                    openSettings()
+                }
             }
 
-            Button("Prune All Worktrees...") {
-                SidebarMenuCoordinator.shared.request(.pruneAllWorktrees, on: .repositories)
-            }
-
-            Divider()
-
-            Button("Repository Settings...") {
-                SettingsCoordinator.shared.openSettings(tab: .general)
-                openSettings()
-            }
-        }
-
-        // Harnesses menu — install, author, and refresh harnesses, plus deep
-        // links to the registry and tool settings.
-        CommandMenu("Harnesses") {
-            Button("Install Harness...") {
-                SidebarMenuCoordinator.shared.request(.installHarness, on: .harnesses)
-            }
-
-            Button("Create New Harness...") {
-                SidebarMenuCoordinator.shared.request(.createHarness, on: .harnesses)
-            }
-
-            Button("Refresh All") {
-                SidebarState.shared.selectedTab = .harnesses
-                Task {
-                    await YNHDetector.shared.detect()
-                    await HarnessRepository.shared.refresh()
+            // Marketplaces — manage plugin marketplaces. Add / refresh /
+            // restore route through the sidebar tab to reuse its fetch logic.
+            Menu("Marketplaces") {
+                Button("Add Marketplace...") {
+                    SidebarMenuCoordinator.shared.request(.addMarketplace, on: .marketplaces)
+                }
+                Button("Refresh All") {
+                    SidebarMenuCoordinator.shared.request(.refreshMarketplaces, on: .marketplaces)
+                }
+                Button("Restore Defaults") {
+                    SidebarMenuCoordinator.shared.request(.restoreDefaultMarketplaces, on: .marketplaces)
+                }
+                Divider()
+                Button("Marketplace Settings...") {
+                    SettingsCoordinator.shared.openSettings(tab: .marketplaces)
+                    openSettings()
                 }
             }
 
             Divider()
 
-            Button("Harness Registries...") {
-                SettingsCoordinator.shared.openSettings(tab: .marketplaces)
-                openSettings()
+            // Logging & Diagnostics — moved here from the removed Utilities menu.
+            Button(Strings.Menu.utilitiesLogging) {
+                DiagnosticsWindowController.shared.show()
             }
-
-            Button("Harness Tools (CLI / MCP)...") {
-                SettingsCoordinator.shared.openSettings(tab: .tools)
-                openSettings()
-            }
-        }
-
-        // Marketplaces menu — manage plugin marketplaces. Add / refresh /
-        // restore route through the sidebar tab so they reuse its existing
-        // fetch logic; settings opens the Marketplaces preferences pane.
-        CommandMenu("Marketplaces") {
-            Button("Add Marketplace...") {
-                SidebarMenuCoordinator.shared.request(.addMarketplace, on: .marketplaces)
-            }
-
-            Button("Refresh All") {
-                SidebarMenuCoordinator.shared.request(.refreshMarketplaces, on: .marketplaces)
-            }
-
-            Button("Restore Defaults") {
-                SidebarMenuCoordinator.shared.request(.restoreDefaultMarketplaces, on: .marketplaces)
-            }
-
-            Divider()
-
-            Button("Marketplace Settings...") {
-                SettingsCoordinator.shared.openSettings(tab: .marketplaces)
-                openSettings()
-            }
+            .keyboardShortcut("d", modifiers: [.command, .option])
         }
     }
 }

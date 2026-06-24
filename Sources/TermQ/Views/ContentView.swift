@@ -656,28 +656,22 @@ extension ContentView {
         )
     }
 
-    /// Snapshot of open terminals for the Window menu's jump list. Favourites
-    /// first (in their saved order), then remaining terminals in board order;
-    /// capped at nine for ⌘1–⌘9, with the total so the menu can offer
-    /// "All Terminals…" when the list overflows.
+    /// Snapshot of open terminals for the Window menu's jump list — the five
+    /// most-recently-active terminals, most recent first (an MRU switcher), so
+    /// ⌘1 is the current terminal, ⌘2 the one before, and so on. Terminals not
+    /// activated yet this session fall to the end in board order. Republished
+    /// whenever the board or activation order changes.
     var windowMenu: WindowMenuModel {
         let active = viewModel.board.activeCards
-        let favRank = Dictionary(
-            viewModel.board.favouriteOrder.enumerated().map { ($1, $0) },
+        let recencyRank = Dictionary(
+            viewModel.recentlyActiveCardIds.enumerated().map { ($1, $0) },
             uniquingKeysWith: { first, _ in first })
-        let favourites = active.filter(\.isFavourite).sorted {
-            (favRank[$0.id] ?? Int.max) < (favRank[$1.id] ?? Int.max)
-        }
-        let favouriteIds = Set(favourites.map(\.id))
-        let columnRank = Dictionary(
-            viewModel.board.columns.map { ($0.id, $0.orderIndex) },
-            uniquingKeysWith: { first, _ in first })
-        let rest = active.filter { !favouriteIds.contains($0.id) }.sorted {
-            let lhs = columnRank[$0.columnId] ?? Int.max
-            let rhs = columnRank[$1.columnId] ?? Int.max
+        let ordered = active.sorted {
+            let lhs = recencyRank[$0.id] ?? Int.max
+            let rhs = recencyRank[$1.id] ?? Int.max
             return lhs != rhs ? lhs < rhs : $0.orderIndex < $1.orderIndex
         }
-        let items = (favourites + rest).prefix(9).map {
+        let items = ordered.prefix(5).map {
             OpenTerminalItem(
                 id: $0.id,
                 title: $0.title.isEmpty ? "Terminal" : $0.title,
