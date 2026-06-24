@@ -186,6 +186,10 @@ final class WorktreeSidebarViewModel: ObservableObject {
         }
         startMonitor(for: repo)
         await initializeSubmodulesIfEnabled(at: path)
+        // Sync origin/HEAD up front so the repo's default branch reflects the remote's
+        // current default rather than whatever it was at clone time. git never refreshes
+        // this symref on fetch/pull, so we do it explicitly when the repo is added.
+        await gitService.updateRemoteHead(repoPath: path)
         await refreshWorktrees(for: repo)
     }
 
@@ -397,11 +401,6 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     func listBranches(for repo: ObservableRepository) async throws -> [String] {
         try await gitService.listBranches(repoPath: repo.path)
-    }
-
-    /// Return the default branch for a repo via `origin/HEAD` symref.
-    func defaultBranch(for repo: ObservableRepository) async -> String {
-        await gitService.defaultBranch(repoPath: repo.path)
     }
 
     func forceDeleteWorktree(repo: ObservableRepository, worktree: GitWorktree) async throws {
