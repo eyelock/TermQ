@@ -10,6 +10,7 @@ struct TermQApp: App {
     @NSApplicationDelegateAdaptor(TermQAppDelegate.self) var appDelegate
     @StateObject private var urlHandler = URLHandler.shared
     @FocusedValue(\.terminalActions) private var terminalActions
+    @FocusedValue(\.windowMenu) private var windowMenu
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openSettings) private var openSettings
 
@@ -64,6 +65,28 @@ struct TermQApp: App {
                 }
                 .keyboardShortcut("d", modifiers: .command)
                 .disabled(terminalActions == nil)
+
+                // Live jump list of open terminals (⌘1–⌘9), favourites first.
+                // Capped at nine; "All Terminals…" routes overflow to the
+                // Command Palette.
+                if let windowMenu, !windowMenu.openTerminals.isEmpty {
+                    Divider()
+
+                    ForEach(Array(windowMenu.openTerminals.enumerated()), id: \.element.id) { index, item in
+                        Button {
+                            windowMenu.jumpToTerminal(item.id)
+                        } label: {
+                            Text(item.isFavourite ? "★ \(item.title)" : item.title)
+                        }
+                        .keyboardShortcut(KeyEquivalent(Character("\(index + 1)")), modifiers: .command)
+                    }
+
+                    if windowMenu.totalOpen > windowMenu.openTerminals.count {
+                        Button("All Terminals...") {
+                            terminalActions?.showCommandPalette()
+                        }
+                    }
+                }
             }
 
             // Edit menu — terminal search (Find) in its conventional home,
@@ -290,6 +313,10 @@ struct DomainMenuCommands: Commands {
             Button("Refresh All") {
                 SidebarState.shared.selectedTab = .repositories
                 WorktreeSidebarViewModel.shared.refresh()
+            }
+
+            Button("Prune All Worktrees...") {
+                SidebarMenuCoordinator.shared.request(.pruneAllWorktrees, on: .repositories)
             }
 
             Divider()

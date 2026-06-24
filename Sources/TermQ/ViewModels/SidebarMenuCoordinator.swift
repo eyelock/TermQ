@@ -18,6 +18,7 @@ final class SidebarMenuCoordinator: ObservableObject {
     /// A menu-triggered request awaiting consumption by the owning tab view.
     enum Request: Equatable {
         case addRepository
+        case pruneAllWorktrees
         case createHarness
         case installHarness
         case addMarketplace

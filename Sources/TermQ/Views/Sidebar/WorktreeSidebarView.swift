@@ -40,6 +40,7 @@ struct WorktreeSidebarView: View {
     @State private var pruneStaleEntries: [String] = []
     @State private var isShowingPruneNothingAlert = false
     @State private var isPruneAnalysing = false
+    @State private var pruneAllContext: PruneAllContext?
     @State private var pruneBranchesSheetFor: ObservableRepository?
     @State private var branchToDelete: (ObservableRepository, String)?
     @State private var isShowingDeleteBranchAlert = false
@@ -59,10 +60,8 @@ struct WorktreeSidebarView: View {
             }
         }
         .sheet(isPresented: $showAddRepo) { AddRepositorySheet(viewModel: viewModel) }
-        .onAppear { if menuCoordinator.consume(.addRepository) { showAddRepo = true } }
-        .onChange(of: menuCoordinator.pending) { _, _ in
-            if menuCoordinator.consume(.addRepository) { showAddRepo = true }
-        }
+        .onAppear { consumeMenuRequest() }
+        .onChange(of: menuCoordinator.pending) { _, _ in consumeMenuRequest() }
         .sheet(item: $newWorktreeContext) { ctx in
             NewWorktreeSheet(repo: ctx.repo, initialBaseBranch: ctx.initialBaseBranch, viewModel: viewModel)
         }
@@ -72,6 +71,9 @@ struct WorktreeSidebarView: View {
         .sheet(item: $showEditRepoFor) { repo in EditRepositorySheet(repo: repo, viewModel: viewModel) }
         .sheet(item: $pruneSheetFor) { repo in
             PruneWorktreesSheet(repo: repo, staleEntries: pruneStaleEntries, viewModel: viewModel)
+        }
+        .sheet(item: $pruneAllContext) { ctx in
+            PruneAllWorktreesSheet(candidates: ctx.candidates, viewModel: viewModel)
         }
         .sheet(item: $pruneBranchesSheetFor) { repo in PruneBranchesSheet(repo: repo, viewModel: viewModel) }
         .sheet(item: $forceUpdatePRContext) { ctx in ForceUpdatePRSheet(context: ctx, viewModel: viewModel) }
@@ -816,6 +818,40 @@ extension WorktreeSidebarView {
 
     fileprivate func analyseAndPruneBranches(repo: ObservableRepository) {
         pruneBranchesSheetFor = repo
+    }
+
+    /// Consume a menu-triggered request routed to the Repositories tab. Called
+    /// from `onAppear` (after a menu switches to this tab) and from `onChange`
+    /// (when the tab is already frontmost).
+    fileprivate func consumeMenuRequest() {
+        if menuCoordinator.consume(.addRepository) { showAddRepo = true }
+        if menuCoordinator.consume(.pruneAllWorktrees) {
+            Task { await analyseAndPruneAll() }
+        }
+    }
+
+    /// Dry-run a worktree prune across every repository, then present one
+    /// aggregated confirmation sheet — the all-repos counterpart to
+    /// `analyseAndPrune(repo:)`.
+    fileprivate func analyseAndPruneAll() async {
+        isPruneAnalysing = true
+        defer { isPruneAnalysing = false }
+        var candidates: [RepoPruneCandidate] = []
+        for repo in viewModel.repositories {
+            do {
+                let stale = try await viewModel.pruneWorktreesDryRun(repo: repo)
+                if !stale.isEmpty {
+                    candidates.append(RepoPruneCandidate(repo: repo, staleEntries: stale))
+                }
+            } catch {
+                viewModel.operationError = error.localizedDescription
+            }
+        }
+        if candidates.isEmpty {
+            isShowingPruneNothingAlert = true
+        } else {
+            pruneAllContext = PruneAllContext(candidates: candidates)
+        }
     }
 }
 
