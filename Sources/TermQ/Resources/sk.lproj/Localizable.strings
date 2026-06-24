@@ -108,6 +108,44 @@
 "menu.font.size.decrease" = "Zmenšiť veľkosť písma";
 "menu.font.size.reset" = "Obnoviť veľkosť písma";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Pracovný priestor";
+"menu.workspace.repositories" = "Repozitáre";
+"menu.workspace.harnesses" = "Súpravy";
+"menu.workspace.marketplaces" = "Trhoviská";
+"menu.workspace.add.repository" = "Pridať repozitár...";
+"menu.refresh.all" = "Obnoviť všetko";
+"menu.workspace.prune.all.worktrees" = "Vyčistiť všetky pracovné stromy...";
+"menu.workspace.repository.settings" = "Nastavenia repozitára...";
+"menu.workspace.install.harness" = "Nainštalovať súpravu...";
+"menu.workspace.create.harness" = "Vytvoriť novú súpravu...";
+"menu.workspace.harness.registries" = "Registre súprav...";
+"menu.workspace.harness.tools" = "Nástroje súpravy (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Pridať trhovisko...";
+"menu.workspace.restore.defaults" = "Obnoviť predvolené nastavenia";
+"menu.workspace.marketplace.settings" = "Nastavenia trhoviska...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Pridať aktuálny terminál do obľúbených";
+"menu.all.terminals" = "Všetky terminály...";
+"menu.terminal.fallback.title" = "Terminál";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Prepnúť režim priblíženia";
+"menu.next.tab" = "Ďalšia karta";
+"menu.previous.tab" = "Predchádzajúca karta";
+"menu.command.palette" = "Paleta príkazov...";
+
+// MARK: Menu — Edit
+"menu.find" = "Hľadať...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Otvoriť v Terminal.app";
+"menu.export.session" = "Exportovať reláciu...";
+"menu.close.tab" = "Zavrieť kartu";
+"menu.delete.terminal" = "Odstrániť terminál";
+"menu.show.bin" = "Zobraziť kôš";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

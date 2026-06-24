@@ -108,6 +108,44 @@
 "menu.font.size.increase" = "Öka teckenstorlek";
 "menu.font.size.decrease" = "Minska teckenstorlek";
 "menu.font.size.reset" = "Återställ teckenstorlek";
+
+// MARK: Menu — Workspace
+"menu.workspace" = "Arbetsyta";
+"menu.workspace.repositories" = "Förvar";
+"menu.workspace.harnesses" = "Sele";
+"menu.workspace.marketplaces" = "Marknadsplatser";
+"menu.workspace.add.repository" = "Lägg till förvar...";
+"menu.refresh.all" = "Uppdatera alla";
+"menu.workspace.prune.all.worktrees" = "Rensa alla arbetsträd...";
+"menu.workspace.repository.settings" = "Förvarsinställningar...";
+"menu.workspace.install.harness" = "Installera sele...";
+"menu.workspace.create.harness" = "Skapa nytt sele...";
+"menu.workspace.harness.registries" = "Seleregister...";
+"menu.workspace.harness.tools" = "Seleverktyg (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Lägg till marknadsplats...";
+"menu.workspace.restore.defaults" = "Återställ standardvärden";
+"menu.workspace.marketplace.settings" = "Marknadsplatsinställningar...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Markera aktuell terminal som favorit";
+"menu.all.terminals" = "Alla terminaler...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Växla zoomiläge";
+"menu.next.tab" = "Nästa flik";
+"menu.previous.tab" = "Föregående flik";
+"menu.command.palette" = "Kommandopalett...";
+
+// MARK: Menu — Edit
+"menu.find" = "Sök...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Öppna i Terminal.app";
+"menu.export.session" = "Exportera session...";
+"menu.close.tab" = "Stäng flik";
+"menu.delete.terminal" = "Ta bort terminal";
+"menu.show.bin" = "Visa papperskorg";
 "menu.toggle.sidebar" = "Växla sidofält";
 
 

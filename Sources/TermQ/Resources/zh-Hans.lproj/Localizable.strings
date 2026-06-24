@@ -108,6 +108,44 @@
 "menu.font.size.decrease" = "减小字体大小";
 "menu.font.size.reset" = "重置字体大小";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "工作区";
+"menu.workspace.repositories" = "仓库";
+"menu.workspace.harnesses" = "工具集";
+"menu.workspace.marketplaces" = "市场";
+"menu.workspace.add.repository" = "添加仓库...";
+"menu.refresh.all" = "刷新全部";
+"menu.workspace.prune.all.worktrees" = "清理所有工作树...";
+"menu.workspace.repository.settings" = "仓库设置...";
+"menu.workspace.install.harness" = "安装工具集...";
+"menu.workspace.create.harness" = "新建工具集...";
+"menu.workspace.harness.registries" = "工具集注册表...";
+"menu.workspace.harness.tools" = "工具集工具 (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "添加市场...";
+"menu.workspace.restore.defaults" = "恢复默认设置";
+"menu.workspace.marketplace.settings" = "市场设置...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "收藏当前终端";
+"menu.all.terminals" = "所有终端...";
+"menu.terminal.fallback.title" = "终端";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "切换缩放模式";
+"menu.next.tab" = "下一个标签";
+"menu.previous.tab" = "上一个标签";
+"menu.command.palette" = "命令面板...";
+
+// MARK: Menu — Edit
+"menu.find" = "查找...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "在 Terminal.app 中打开";
+"menu.export.session" = "导出会话...";
+"menu.close.tab" = "关闭标签";
+"menu.delete.terminal" = "删除终端";
+"menu.show.bin" = "显示废纸篓";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

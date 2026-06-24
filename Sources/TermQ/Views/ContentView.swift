@@ -674,7 +674,7 @@ extension ContentView {
         let items = ordered.prefix(5).map {
             OpenTerminalItem(
                 id: $0.id,
-                title: $0.title.isEmpty ? "Terminal" : $0.title,
+                title: $0.title.isEmpty ? Strings.Menu.terminalFallbackTitle : $0.title,
                 isFavourite: $0.isFavourite)
         }
         return WindowMenuModel(

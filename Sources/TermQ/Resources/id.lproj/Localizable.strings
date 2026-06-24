@@ -108,6 +108,44 @@
 "menu.font.size.decrease" = "Perkecil Ukuran Font";
 "menu.font.size.reset" = "Atur Ulang Ukuran Font";
 
+// MARK: Menu — Workspace
+"menu.workspace" = "Ruang Kerja";
+"menu.workspace.repositories" = "Repositori";
+"menu.workspace.harnesses" = "Harness";
+"menu.workspace.marketplaces" = "Pasar";
+"menu.workspace.add.repository" = "Tambah Repositori...";
+"menu.refresh.all" = "Segarkan Semua";
+"menu.workspace.prune.all.worktrees" = "Bersihkan Semua Pohon Kerja...";
+"menu.workspace.repository.settings" = "Pengaturan Repositori...";
+"menu.workspace.install.harness" = "Pasang Harness...";
+"menu.workspace.create.harness" = "Buat Harness Baru...";
+"menu.workspace.harness.registries" = "Registri Harness...";
+"menu.workspace.harness.tools" = "Alat Harness (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Tambah Pasar...";
+"menu.workspace.restore.defaults" = "Pulihkan Default";
+"menu.workspace.marketplace.settings" = "Pengaturan Pasar...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Favoritkan Terminal Saat Ini";
+"menu.all.terminals" = "Semua Terminal...";
+"menu.terminal.fallback.title" = "Terminal";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Aktifkan/Nonaktifkan Mode Zoom";
+"menu.next.tab" = "Tab Berikutnya";
+"menu.previous.tab" = "Tab Sebelumnya";
+"menu.command.palette" = "Palet Perintah...";
+
+// MARK: Menu — Edit
+"menu.find" = "Cari...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Buka di Terminal.app";
+"menu.export.session" = "Ekspor Sesi...";
+"menu.close.tab" = "Tutup Tab";
+"menu.delete.terminal" = "Hapus Terminal";
+"menu.show.bin" = "Tampilkan Tong Sampah";
+
 
 // MARK: - Command Palette
 "command.palette.new.terminal" = "New Terminal";

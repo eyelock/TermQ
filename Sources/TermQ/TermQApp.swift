@@ -60,7 +60,7 @@ struct TermQApp: App {
                 }
                 .keyboardShortcut("w", modifiers: .command)
 
-                Button("Favourite Current Terminal") {
+                Button(Strings.Menu.favouriteCurrentTerminal) {
                     terminalActions?.toggleFavourite()
                 }
                 .keyboardShortcut("d", modifiers: .command)
@@ -82,7 +82,7 @@ struct TermQApp: App {
                     }
 
                     if windowMenu.totalOpen > windowMenu.openTerminals.count {
-                        Button("All Terminals...") {
+                        Button(Strings.Menu.allTerminals) {
                             terminalActions?.showCommandPalette()
                         }
                     }
@@ -92,7 +92,7 @@ struct TermQApp: App {
             // Edit menu — terminal search (Find) in its conventional home,
             // below the Cut/Copy/Paste section.
             CommandGroup(after: .pasteboard) {
-                Button("Find...") {
+                Button(Strings.Menu.find) {
                     terminalActions?.toggleSearch()
                 }
                 .keyboardShortcut("f", modifiers: .command)
@@ -111,7 +111,7 @@ struct TermQApp: App {
                 .keyboardShortcut("l", modifiers: [.command, .shift])
                 .disabled(terminalActions == nil)
 
-                Button("Toggle Zoom Mode") {
+                Button(Strings.Menu.toggleZoom) {
                     terminalActions?.toggleZoom()
                 }
                 .keyboardShortcut("z", modifiers: [.command, .option])
@@ -125,13 +125,13 @@ struct TermQApp: App {
                 .keyboardShortcut("b", modifiers: .command)
                 .disabled(terminalActions == nil)
 
-                Button("Next Tab") {
+                Button(Strings.Menu.nextTab) {
                     terminalActions?.nextTab()
                 }
                 .keyboardShortcut("]", modifiers: .command)
                 .disabled(terminalActions == nil)
 
-                Button("Previous Tab") {
+                Button(Strings.Menu.previousTab) {
                     terminalActions?.previousTab()
                 }
                 .keyboardShortcut("[", modifiers: .command)
@@ -139,7 +139,7 @@ struct TermQApp: App {
 
                 Divider()
 
-                Button("Command Palette...") {
+                Button(Strings.Menu.commandPalette) {
                     terminalActions?.showCommandPalette()
                 }
                 .keyboardShortcut("k", modifiers: .command)
@@ -206,32 +206,32 @@ struct TermQApp: App {
 
                 Divider()
 
-                Button("Open in Terminal.app") {
+                Button(Strings.Menu.openInTerminalApp) {
                     terminalActions?.openInTerminalApp()
                 }
                 .keyboardShortcut("t", modifiers: [.command, .shift])
 
-                Button("Export Session...") {
+                Button(Strings.Menu.exportSession) {
                     terminalActions?.exportSession()
                 }
                 .keyboardShortcut("s", modifiers: [.command, .shift])
 
                 Divider()
 
-                Button("Close Tab") {
+                Button(Strings.Menu.closeTab) {
                     terminalActions?.closeTab()
                 }
                 .keyboardShortcut("w", modifiers: [.command, .shift])
                 .disabled(terminalActions == nil)
 
-                Button("Delete Terminal") {
+                Button(Strings.Menu.deleteTerminal) {
                     terminalActions?.deleteTerminal()
                 }
                 .keyboardShortcut(.delete, modifiers: .command)
 
                 Divider()
 
-                Button("Show Bin") {
+                Button(Strings.Menu.showBin) {
                     terminalActions?.showBin()
                 }
                 .keyboardShortcut(.delete, modifiers: [.command, .shift])
@@ -297,23 +297,23 @@ struct WorkspaceCommands: Commands {
     let openSettings: OpenSettingsAction
 
     var body: some Commands {
-        CommandMenu("Workspace") {
+        CommandMenu(Strings.Menu.workspace) {
             // Repositories — global repository operations. Selection-dependent
             // actions (edit, prune one repo, remove) stay in the sidebar
             // context menus; these are the always-available globals.
-            Menu("Repositories") {
-                Button("Add Repository...") {
+            Menu(Strings.Menu.workspaceRepositories) {
+                Button(Strings.Menu.addRepository) {
                     SidebarMenuCoordinator.shared.request(.addRepository, on: .repositories)
                 }
-                Button("Refresh All") {
+                Button(Strings.Menu.refreshAll) {
                     SidebarState.shared.selectedTab = .repositories
                     WorktreeSidebarViewModel.shared.refresh()
                 }
-                Button("Prune All Worktrees...") {
+                Button(Strings.Menu.pruneAllWorktrees) {
                     SidebarMenuCoordinator.shared.request(.pruneAllWorktrees, on: .repositories)
                 }
                 Divider()
-                Button("Repository Settings...") {
+                Button(Strings.Menu.repositorySettings) {
                     SettingsCoordinator.shared.openSettings(tab: .general)
                     openSettings()
                 }
@@ -321,14 +321,14 @@ struct WorkspaceCommands: Commands {
 
             // Harnesses — install, author, and refresh, plus deep links to the
             // registry and tool settings.
-            Menu("Harnesses") {
-                Button("Install Harness...") {
+            Menu(Strings.Menu.workspaceHarnesses) {
+                Button(Strings.Menu.installHarness) {
                     SidebarMenuCoordinator.shared.request(.installHarness, on: .harnesses)
                 }
-                Button("Create New Harness...") {
+                Button(Strings.Menu.createHarness) {
                     SidebarMenuCoordinator.shared.request(.createHarness, on: .harnesses)
                 }
-                Button("Refresh All") {
+                Button(Strings.Menu.refreshAll) {
                     SidebarState.shared.selectedTab = .harnesses
                     Task {
                         await YNHDetector.shared.detect()
@@ -336,11 +336,11 @@ struct WorkspaceCommands: Commands {
                     }
                 }
                 Divider()
-                Button("Harness Registries...") {
+                Button(Strings.Menu.harnessRegistries) {
                     SettingsCoordinator.shared.openSettings(tab: .marketplaces)
                     openSettings()
                 }
-                Button("Harness Tools (CLI / MCP)...") {
+                Button(Strings.Menu.harnessTools) {
                     SettingsCoordinator.shared.openSettings(tab: .tools)
                     openSettings()
                 }
@@ -348,18 +348,18 @@ struct WorkspaceCommands: Commands {
 
             // Marketplaces — manage plugin marketplaces. Add / refresh /
             // restore route through the sidebar tab to reuse its fetch logic.
-            Menu("Marketplaces") {
-                Button("Add Marketplace...") {
+            Menu(Strings.Menu.workspaceMarketplaces) {
+                Button(Strings.Menu.addMarketplace) {
                     SidebarMenuCoordinator.shared.request(.addMarketplace, on: .marketplaces)
                 }
-                Button("Refresh All") {
+                Button(Strings.Menu.refreshAll) {
                     SidebarMenuCoordinator.shared.request(.refreshMarketplaces, on: .marketplaces)
                 }
-                Button("Restore Defaults") {
+                Button(Strings.Menu.restoreDefaults) {
                     SidebarMenuCoordinator.shared.request(.restoreDefaultMarketplaces, on: .marketplaces)
                 }
                 Divider()
-                Button("Marketplace Settings...") {
+                Button(Strings.Menu.marketplaceSettings) {
                     SettingsCoordinator.shared.openSettings(tab: .marketplaces)
                     openSettings()
                 }

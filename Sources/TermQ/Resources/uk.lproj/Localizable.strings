@@ -108,6 +108,44 @@
 "menu.font.size.increase" = "Збільшити розмір шрифту";
 "menu.font.size.decrease" = "Зменшити розмір шрифту";
 "menu.font.size.reset" = "Скинути розмір шрифту";
+
+// MARK: Menu — Workspace
+"menu.workspace" = "Робочий простір";
+"menu.workspace.repositories" = "Репозиторії";
+"menu.workspace.harnesses" = "Набори";
+"menu.workspace.marketplaces" = "Маркетплейси";
+"menu.workspace.add.repository" = "Додати репозиторій...";
+"menu.refresh.all" = "Оновити все";
+"menu.workspace.prune.all.worktrees" = "Очистити всі робочі дерева...";
+"menu.workspace.repository.settings" = "Налаштування репозиторію...";
+"menu.workspace.install.harness" = "Встановити набір...";
+"menu.workspace.create.harness" = "Створити новий набір...";
+"menu.workspace.harness.registries" = "Реєстри наборів...";
+"menu.workspace.harness.tools" = "Інструменти набору (CLI / MCP)...";
+"menu.workspace.add.marketplace" = "Додати маркетплейс...";
+"menu.workspace.restore.defaults" = "Відновити налаштування за замовчуванням";
+"menu.workspace.marketplace.settings" = "Налаштування маркетплейсу...";
+
+// MARK: Menu — Window
+"menu.favourite.current.terminal" = "Додати поточний термінал до вибраного";
+"menu.all.terminals" = "Усі термінали...";
+"menu.terminal.fallback.title" = "Термінал";
+
+// MARK: Menu — View
+"menu.toggle.zoom" = "Перемкнути режим масштабування";
+"menu.next.tab" = "Наступна вкладка";
+"menu.previous.tab" = "Попередня вкладка";
+"menu.command.palette" = "Палітра команд...";
+
+// MARK: Menu — Edit
+"menu.find" = "Знайти...";
+
+// MARK: Menu — File
+"menu.open.in.terminal.app" = "Відкрити у Terminal.app";
+"menu.export.session" = "Експортувати сеанс...";
+"menu.close.tab" = "Закрити вкладку";
+"menu.delete.terminal" = "Видалити термінал";
+"menu.show.bin" = "Показати кошик";
 "menu.toggle.sidebar" = "Показати/сховати бічну панель";
 
 
