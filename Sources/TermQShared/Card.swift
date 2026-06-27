@@ -19,6 +19,9 @@ public struct Card: Codable, Sendable, Identifiable {
     /// GUI will detect this flag and create sessions automatically
     public let needsTmuxSession: Bool
 
+    /// The workspace this card belongs to (`nil` = unassigned). View-filter key.
+    public let workspaceId: UUID?
+
     // Custom decoding to handle missing fields for backwards compatibility
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -36,12 +39,14 @@ public struct Card: Codable, Sendable, Identifiable {
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         needsTmuxSession = try container.decodeIfPresent(Bool.self, forKey: .needsTmuxSession) ?? false
+        workspaceId = try container.decodeIfPresent(UUID.self, forKey: .workspaceId)
     }
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex
         case workingDirectory, isFavourite, badge, llmPrompt, llmNextAction, allowAutorun, deletedAt
         case needsTmuxSession
+        case workspaceId
     }
 
     /// Memberwise initializer for programmatic creation and tests
@@ -59,7 +64,8 @@ public struct Card: Codable, Sendable, Identifiable {
         llmNextAction: String = "",
         allowAutorun: Bool = false,
         deletedAt: Date? = nil,
-        needsTmuxSession: Bool = false
+        needsTmuxSession: Bool = false,
+        workspaceId: UUID? = nil
     ) {
         self.id = id
         self.title = title
@@ -75,6 +81,7 @@ public struct Card: Codable, Sendable, Identifiable {
         self.allowAutorun = allowAutorun
         self.deletedAt = deletedAt
         self.needsTmuxSession = needsTmuxSession
+        self.workspaceId = workspaceId
     }
 
     /// Whether this card is in the bin (soft-deleted)

@@ -148,9 +148,12 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
     private func makeVM(
         gitService: MockGitService = MockGitService(),
         persistence: MockRepoPersistence = MockRepoPersistence(),
-        gitConfig: GitConfigStore = GitConfigStore(defaults: makeIsolatedDefaults())
+        gitConfig: GitConfigStore = GitConfigStore(defaults: makeIsolatedDefaults()),
+        workspaceStore: WorkspaceStore = makeIsolatedWorkspaceStore()
     ) -> WorktreeSidebarViewModel {
-        WorktreeSidebarViewModel(gitService: gitService, persistence: persistence, gitConfig: gitConfig)
+        WorktreeSidebarViewModel(
+            gitService: gitService, persistence: persistence, gitConfig: gitConfig,
+            workspaceStore: workspaceStore)
     }
 
     private static func makeIsolatedDefaults() -> UserDefaults {
@@ -158,6 +161,15 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
     }
 
     private func makeIsolatedDefaults() -> UserDefaults { Self.makeIsolatedDefaults() }
+
+    /// A workspace store backed by a throwaway temp file so tests never touch the
+    /// real `workspaces.json`.
+    private static func makeIsolatedWorkspaceStore() -> WorkspaceStore {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "WSVM-WorkspaceStore-\(UUID().uuidString)", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return WorkspaceStore(fileURL: dir.appendingPathComponent("workspaces.json"))
+    }
 
     private func makeRepo(path: String = "/tmp/test-repo") -> ObservableRepository {
         ObservableRepository(name: "test", path: path)
@@ -981,5 +993,90 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
 
         XCTAssertNotNil(vm.operationError)
         XCTAssertTrue(vm.operationError!.contains("ssh: permission denied"))
+    }
+
+    // MARK: - Workspace filtering & membership
+
+    func testAddRepository_withActiveWorkspace_filesIntoIt() async throws {
+        let ws = Self.makeIsolatedWorkspaceStore()
+        let workspace = ws.create(name: "Work")
+        ws.setActive(workspace.id)
+        let mock = MockGitService()
+        mock.isGitRepoResult = true
+        let vm = makeVM(gitService: mock, workspaceStore: ws)
+
+        try await vm.addRepository(path: "/tmp/ws-active")
+
+        let repo = try XCTUnwrap(vm.repositories.first { $0.path == "/tmp/ws-active" })
+        XCTAssertTrue(ws.contains(repoId: repo.id, in: workspace.id))
+    }
+
+    func testAddRepository_inAllView_leavesUnassigned() async throws {
+        let ws = Self.makeIsolatedWorkspaceStore()
+        let workspace = ws.create(name: "Work")  // exists but not active
+        let mock = MockGitService()
+        mock.isGitRepoResult = true
+        let vm = makeVM(gitService: mock, workspaceStore: ws)
+
+        try await vm.addRepository(path: "/tmp/ws-all")
+
+        let repo = try XCTUnwrap(vm.repositories.first { $0.path == "/tmp/ws-all" })
+        XCTAssertFalse(ws.contains(repoId: repo.id, in: workspace.id))
+    }
+
+    func testRemoveRepository_cleansWorkspaceMembership() async throws {
+        let ws = Self.makeIsolatedWorkspaceStore()
+        let workspace = ws.create(name: "Work")
+        ws.setActive(workspace.id)
+        let mock = MockGitService()
+        mock.isGitRepoResult = true
+        let vm = makeVM(gitService: mock, workspaceStore: ws)
+
+        try await vm.addRepository(path: "/tmp/ws-remove")
+        let repo = try XCTUnwrap(vm.repositories.first { $0.path == "/tmp/ws-remove" })
+        XCTAssertTrue(ws.contains(repoId: repo.id, in: workspace.id))
+
+        vm.removeRepository(repo)
+
+        XCTAssertFalse(ws.contains(repoId: repo.id, in: workspace.id))
+    }
+
+    func testDisplayedRepositories_allView_showsEverything() {
+        let persistence = MockRepoPersistence()
+        persistence.config = RepoConfig(repositories: [
+            GitRepository(name: "a", path: "/a"),
+            GitRepository(name: "b", path: "/b"),
+        ])
+        let vm = makeVM(persistence: persistence)
+
+        XCTAssertEqual(vm.displayedRepositories.count, 2)
+    }
+
+    func testDisplayedRepositories_activeWorkspace_showsOnlyMembers() {
+        let repoA = GitRepository(name: "a", path: "/a")
+        let repoB = GitRepository(name: "b", path: "/b")
+        let persistence = MockRepoPersistence()
+        persistence.config = RepoConfig(repositories: [repoA, repoB])
+        let ws = Self.makeIsolatedWorkspaceStore()
+        let workspace = ws.create(name: "Work")
+        ws.add(repoId: repoA.id, to: workspace.id)
+        ws.setActive(workspace.id)
+        let vm = makeVM(persistence: persistence, workspaceStore: ws)
+
+        XCTAssertEqual(vm.displayedRepositories.map(\.path), ["/a"])
+    }
+
+    func testDisplayedRepositories_emptyActiveWorkspace_isEmpty() {
+        let persistence = MockRepoPersistence()
+        persistence.config = RepoConfig(repositories: [
+            GitRepository(name: "a", path: "/a"),
+            GitRepository(name: "b", path: "/b"),
+        ])
+        let ws = Self.makeIsolatedWorkspaceStore()
+        let workspace = ws.create(name: "Empty")  // no members
+        ws.setActive(workspace.id)
+        let vm = makeVM(persistence: persistence, workspaceStore: ws)
+
+        XCTAssertTrue(vm.displayedRepositories.isEmpty)
     }
 }

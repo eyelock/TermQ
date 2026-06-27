@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Dépôts";
+"sidebar.workspace.all" = "Tous les dépôts";
+"sidebar.workspace.menu.help" = "Filtrer les dépôts par espace de travail";
+"sidebar.workspace.new" = "Nouvel espace de travail…";
+"sidebar.workspace.new.title" = "Nouvel espace de travail";
+"sidebar.workspace.name.label" = "Nom de l’espace de travail";
+"sidebar.workspace.name.placeholder" = "p. ex. Travail, Projets personnels";
+"sidebar.workspace.create" = "Créer";
+"sidebar.workspace.manage" = "Gérer les espaces de travail…";
+"sidebar.workspace.manage.title" = "Gérer les espaces de travail";
+"sidebar.workspace.manage.empty" = "Aucun espace de travail pour l'instant. Créez-en un depuis le menu d'espace de travail.";
+"sidebar.workspace.manage.done" = "Terminé";
+"sidebar.workspace.add.to" = "Ajouter à l'espace de travail";
+"sidebar.workspace.delete.title" = "Supprimer l'espace de travail ?";
+"sidebar.workspace.delete.confirm" = "Supprimer";
+"sidebar.workspace.delete.message %@" = "« %@ » sera supprimé. Les dépôts qu'il contient ne seront pas supprimés.";
+"sidebar.workspace.empty.message" = "Aucun dépôt dans cet espace de travail.\nFaites un clic droit sur un dépôt dans « Tous les dépôts » pour l’ajouter ici.";
 "sidebar.add.button.help" = "Ajouter un dépôt";
 "sidebar.empty.message" = "Aucun dépôt ajouté.\nCliquez sur + pour ajouter un dépôt git.";
 "sidebar.worktrees.placeholder" = "Les worktrees apparaîtront ici";

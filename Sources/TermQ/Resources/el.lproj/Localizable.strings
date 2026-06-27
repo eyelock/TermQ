@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Αποθετήρια";
+"sidebar.workspace.all" = "Όλα τα αποθετήρια";
+"sidebar.workspace.menu.help" = "Φιλτράρισμα αποθετηρίων ανά χώρο εργασίας";
+"sidebar.workspace.new" = "Νέος χώρος εργασίας…";
+"sidebar.workspace.new.title" = "Νέος χώρος εργασίας";
+"sidebar.workspace.name.label" = "Όνομα χώρου εργασίας";
+"sidebar.workspace.name.placeholder" = "π.χ. Εργασία, Πλαινά έργα";
+"sidebar.workspace.create" = "Δημιουργία";
+"sidebar.workspace.manage" = "Διαχείριση χώρων εργασίας…";
+"sidebar.workspace.manage.title" = "Διαχείριση χώρων εργασίας";
+"sidebar.workspace.manage.empty" = "Δεν υπάρχουν ακόμα χώροι εργασίας. Δημιουργήστε έναν από το μενού χώρων εργασίας.";
+"sidebar.workspace.manage.done" = "Τέλος";
+"sidebar.workspace.add.to" = "Προσθήκη σε χώρο εργασίας";
+"sidebar.workspace.delete.title" = "Διαγραφή χώρου εργασίας;";
+"sidebar.workspace.delete.confirm" = "Διαγραφή";
+"sidebar.workspace.delete.message %@" = "Το «%@» θα αφαιρεθεί. Τα αποθετήρια σε αυτό δεν θα διαγραφούν.";
+"sidebar.workspace.empty.message" = "Δεν υπάρχουν αποθετήρια σε αυτόν τον χώρο εργασίας.\nΚάντε δεξί κλικ σε ένα αποθετήριο στα «Όλα τα αποθετήρια» για να το προσθέσετε εδώ.";
 "sidebar.add.button.help" = "Προσθήκη αποθετηρίου";
 "sidebar.empty.message" = "Δεν έχουν προστεθεί αποθετήρια.\nΚάντε κλικ στο + για να προσθέσετε ένα αποθετήριο git.";
 "sidebar.worktrees.placeholder" = "Τα worktree θα εμφανιστούν εδώ";

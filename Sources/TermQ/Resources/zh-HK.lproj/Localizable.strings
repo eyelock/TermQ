@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "儲存庫";
+"sidebar.workspace.all" = "所有儲存庫";
+"sidebar.workspace.menu.help" = "依工作區篩選儲存庫";
+"sidebar.workspace.new" = "新增工作區…";
+"sidebar.workspace.new.title" = "新增工作區";
+"sidebar.workspace.name.label" = "工作區名稱";
+"sidebar.workspace.name.placeholder" = "例如：工作、個人專案";
+"sidebar.workspace.create" = "建立";
+"sidebar.workspace.manage" = "管理工作區…";
+"sidebar.workspace.manage.title" = "管理工作區";
+"sidebar.workspace.manage.empty" = "尚無工作區。從工作區選單建立一個。";
+"sidebar.workspace.manage.done" = "完成";
+"sidebar.workspace.add.to" = "加入工作區";
+"sidebar.workspace.delete.title" = "刪除工作區？";
+"sidebar.workspace.delete.confirm" = "刪除";
+"sidebar.workspace.delete.message %@" = "「%@」將會被移除。其中嘅儲存庫唔會被刪除。";
+"sidebar.workspace.empty.message" = "呢個工作區冇任何儲存庫。\n喺「所有儲存庫」度右鍵點擊某個儲存庫，即可將其加入呢度。";
 "sidebar.add.button.help" = "新增儲存庫";
 "sidebar.empty.message" = "未新增任何儲存庫。\n點擊 + 新增 Git 儲存庫。";
 "sidebar.worktrees.placeholder" = "工作樹將顯示喺呢度";

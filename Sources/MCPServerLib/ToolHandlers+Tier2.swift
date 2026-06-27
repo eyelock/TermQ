@@ -53,7 +53,7 @@ extension TermQMCPServer {
         }
         do {
             let restored = try BoardWriter.restoreCard(
-                identifier: identifier, dataDirectory: dataDirectory)
+                identifier: identifier, dataDirectory: dataDirectory, boardFilename: boardFilename)
             let board = try loadBoard()
             let output = TerminalOutput(
                 from: restored, columnName: board.columnName(for: restored.columnId))
@@ -78,7 +78,8 @@ extension TermQMCPServer {
         let color = InputValidator.optionalString("color", from: arguments) ?? "#6B7280"
         do {
             let column = try BoardWriter.createColumn(
-                name: name, description: description, color: color, dataDirectory: dataDirectory)
+                name: name, description: description, color: color,
+                dataDirectory: dataDirectory, boardFilename: boardFilename)
             return CallTool.Result(
                 content: [
                     .text(
@@ -107,7 +108,8 @@ extension TermQMCPServer {
         }
         do {
             let column = try BoardWriter.renameColumn(
-                identifier: identifier, newName: newName, dataDirectory: dataDirectory)
+                identifier: identifier, newName: newName,
+                dataDirectory: dataDirectory, boardFilename: boardFilename)
             return CallTool.Result(
                 content: [
                     .text(
@@ -135,7 +137,8 @@ extension TermQMCPServer {
         let force = InputValidator.optionalBool("force", from: arguments)
         do {
             try BoardWriter.deleteColumn(
-                identifier: identifier, force: force, dataDirectory: dataDirectory)
+                identifier: identifier, force: force,
+                dataDirectory: dataDirectory, boardFilename: boardFilename)
             return CallTool.Result(
                 content: [
                     .text(

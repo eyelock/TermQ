@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "المستودعات";
+"sidebar.workspace.all" = "كل المستودعات";
+"sidebar.workspace.menu.help" = "تصفية المستودعات حسب مساحة العمل";
+"sidebar.workspace.new" = "مساحة عمل جديدة…";
+"sidebar.workspace.new.title" = "مساحة عمل جديدة";
+"sidebar.workspace.name.label" = "اسم مساحة العمل";
+"sidebar.workspace.name.placeholder" = "مثلاً: عمل، مشاريع شخصية";
+"sidebar.workspace.create" = "إنشاء";
+"sidebar.workspace.manage" = "إدارة مساحات العمل…";
+"sidebar.workspace.manage.title" = "إدارة مساحات العمل";
+"sidebar.workspace.manage.empty" = "لا توجد مساحات عمل بعد. أنشئ واحدة من قائمة مساحة العمل.";
+"sidebar.workspace.manage.done" = "تم";
+"sidebar.workspace.add.to" = "إضافة إلى مساحة العمل";
+"sidebar.workspace.delete.title" = "حذف مساحة العمل؟";
+"sidebar.workspace.delete.confirm" = "حذف";
+"sidebar.workspace.delete.message %@" = "سيتم إزالة «%@». المستودعات التي تحتوي عليها لن تُحذف.";
+"sidebar.workspace.empty.message" = "لا توجد مستودعات في مساحة العمل هذه.\nانقر بزر الماوس الأيمن على مستودع في «كل المستودعات» لإضافته هنا.";
 "sidebar.add.button.help" = "إضافة مستودع";
 "sidebar.empty.message" = "لم تتم إضافة مستودعات.\nانقر + لإضافة مستودع git.";
 "sidebar.worktrees.placeholder" = "ستظهر بيئات العمل هنا";

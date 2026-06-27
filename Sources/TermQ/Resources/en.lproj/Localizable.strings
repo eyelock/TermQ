@@ -601,6 +601,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositories";
+"sidebar.workspace.all" = "All Repositories";
+"sidebar.workspace.menu.help" = "Filter repositories by workspace";
+"sidebar.workspace.new" = "New Workspace…";
+"sidebar.workspace.new.title" = "New Workspace";
+"sidebar.workspace.name.label" = "Workspace Name";
+"sidebar.workspace.name.placeholder" = "e.g. Work, Side Projects";
+"sidebar.workspace.create" = "Create";
+"sidebar.workspace.manage" = "Manage Workspaces…";
+"sidebar.workspace.manage.title" = "Manage Workspaces";
+"sidebar.workspace.manage.empty" = "No workspaces yet. Create one from the workspace menu.";
+"sidebar.workspace.manage.done" = "Done";
+"sidebar.workspace.add.to" = "Add to Workspace";
+"sidebar.workspace.delete.title" = "Delete Workspace?";
+"sidebar.workspace.delete.confirm" = "Delete";
+"sidebar.workspace.delete.message %@" = "“%@” will be removed. The repositories in it are not deleted.";
+"sidebar.workspace.empty.message" = "No repositories in this workspace.\nRight-click a repository in “All Repositories” to add it here.";
 "sidebar.add.button.help" = "Add repository";
 "sidebar.empty.message" = "No repositories added.\nClick + to add a git repository.";
 "sidebar.worktrees.placeholder" = "Worktrees will appear here";

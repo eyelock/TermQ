@@ -576,6 +576,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "คลังเก็บโค้ด";
+"sidebar.workspace.all" = "คลังเก็บโค้ดทั้งหมด";
+"sidebar.workspace.menu.help" = "กรองคลังเก็บโค้ดตามพื้นที่ทำงาน";
+"sidebar.workspace.new" = "พื้นที่ทำงานใหม่…";
+"sidebar.workspace.new.title" = "พื้นที่ทำงานใหม่";
+"sidebar.workspace.name.label" = "ชื่อพื้นที่ทำงาน";
+"sidebar.workspace.name.placeholder" = "เช่น งาน, โปรเจกต์ส่วนตัว";
+"sidebar.workspace.create" = "สร้าง";
+"sidebar.workspace.manage" = "จัดการพื้นที่ทำงาน…";
+"sidebar.workspace.manage.title" = "จัดการพื้นที่ทำงาน";
+"sidebar.workspace.manage.empty" = "ยังไม่มีพื้นที่ทำงาน สร้างหนึ่งได้จากเมนูพื้นที่ทำงาน";
+"sidebar.workspace.manage.done" = "เสร็จสิ้น";
+"sidebar.workspace.add.to" = "เพิ่มไปยังพื้นที่ทำงาน";
+"sidebar.workspace.delete.title" = "ลบพื้นที่ทำงาน?";
+"sidebar.workspace.delete.confirm" = "ลบ";
+"sidebar.workspace.delete.message %@" = "“%@” จะถูกลบออก คลังเก็บโค้ดที่อยู่ในนั้นจะไม่ถูกลบ";
+"sidebar.workspace.empty.message" = "ไม่มีคลังเก็บโค้ดในพื้นที่ทำงานนี้\nคลิกขวาที่คลังเก็บโค้ดใน “คลังเก็บโค้ดทั้งหมด” เพื่อเพิ่มที่นี่";
 "sidebar.add.button.help" = "เพิ่มคลังเก็บโค้ด";
 "sidebar.empty.message" = "ยังไม่ได้เพิ่มคลังเก็บโค้ด\nคลิก + เพื่อเพิ่ม git repository";
 "sidebar.worktrees.placeholder" = "Worktrees จะปรากฏที่นี่";

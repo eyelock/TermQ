@@ -17,6 +17,7 @@ struct WorktreeSidebarView: View {
     @ObservedObject var prService: GitHubPRService = .shared
     @ObservedObject var ghProbe: GhCliProbe = .shared
     @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
+    @ObservedObject var workspaceStore: WorkspaceStore = .shared
     @Environment(SettingsStore.self) var settings
     // Per-window mode (Local vs Remote). Transient — not persisted.
     @State var sidebarMode: SidebarMode = .local
@@ -29,6 +30,8 @@ struct WorktreeSidebarView: View {
     @State var pendingToast: SidebarToast?
     @State var runWithFocusContext: RunWithFocusContext?
     @State private var showAddRepo = false
+    // Internal (not private) so the empty-state views in WorktreeSidebarView+Workspace.swift can drive it.
+    @State var showManageWorkspaces = false
     @State private var newWorktreeContext: NewWorktreeContext?
     @State private var convertWorktreeContext: ConvertWorktreeContext?
     @State private var showEditRepoFor: ObservableRepository?
@@ -51,7 +54,7 @@ struct WorktreeSidebarView: View {
         VStack(spacing: 0) {
             header
             Divider()
-            if viewModel.repositories.isEmpty { emptyState } else { repoList }
+            if viewModel.displayedRepositories.isEmpty { emptyState } else { repoList }
         }
         .overlay(alignment: .bottom) {
             if let toast = pendingToast {
@@ -62,6 +65,7 @@ struct WorktreeSidebarView: View {
         .sheet(isPresented: $showAddRepo) { AddRepositorySheet(viewModel: viewModel) }
         .onAppear { consumeMenuRequest() }
         .onChange(of: menuCoordinator.pending) { _, _ in consumeMenuRequest() }
+        .sheet(isPresented: $showManageWorkspaces) { ManageWorkspacesSheet(store: workspaceStore) }
         .sheet(item: $newWorktreeContext) { ctx in
             NewWorktreeSheet(repo: ctx.repo, initialBaseBranch: ctx.initialBaseBranch, viewModel: viewModel)
         }
@@ -186,9 +190,7 @@ struct WorktreeSidebarView: View {
     private var header: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(Strings.Sidebar.title)
-                    .font(.headline)
-                    .foregroundColor(.primary)
+                WorkspaceSwitcher(store: workspaceStore)
 
                 Spacer()
 
@@ -235,32 +237,14 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    // MARK: - Empty State
-
-    private var emptyState: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "shippingbox")
-                .font(.system(size: 32))
-                .foregroundColor(.secondary)
-            Text(Strings.Sidebar.emptyMessage)
-                .font(.callout)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
-    }
-
     // MARK: - Repository List
 
     private var repoList: some View {
         List {
-            ForEach(viewModel.repositories) { repo in
+            ForEach(viewModel.displayedRepositories) { repo in
                 repoRow(repo)
             }
-            .onMove { from, to in
-                viewModel.moveRepository(from: from, to: to)
-            }
+            .onMove(perform: reorderHandler)
         }
         .listStyle(.sidebar)
     }
@@ -294,6 +278,8 @@ struct WorktreeSidebarView: View {
                     } label: {
                         Label(Strings.Sidebar.editRepository, systemImage: "pencil")
                     }
+
+                    addToWorkspaceMenu(for: repo)
 
                     Button {
                         Task { await analyseAndPrune(repo: repo) }

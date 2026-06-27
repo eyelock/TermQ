@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Tárolók";
+"sidebar.workspace.all" = "Minden tároló";
+"sidebar.workspace.menu.help" = "Tárolók szűrése munkaterület szerint";
+"sidebar.workspace.new" = "Új munkaterület…";
+"sidebar.workspace.new.title" = "Új munkaterület";
+"sidebar.workspace.name.label" = "Munkaterület neve";
+"sidebar.workspace.name.placeholder" = "pl. Munka, Mellékprojektek";
+"sidebar.workspace.create" = "Létrehozás";
+"sidebar.workspace.manage" = "Munkaterületek kezelése…";
+"sidebar.workspace.manage.title" = "Munkaterületek kezelése";
+"sidebar.workspace.manage.empty" = "Még nincsenek munkaterületek. Hozzon létre egyet a munkaterület menüből.";
+"sidebar.workspace.manage.done" = "Kész";
+"sidebar.workspace.add.to" = "Hozzáadás munkaterülethez";
+"sidebar.workspace.delete.title" = "Törli a munkaterületet?";
+"sidebar.workspace.delete.confirm" = "Törlés";
+"sidebar.workspace.delete.message %@" = "„%@” el lesz távolítva. A benne lévő tárolók nem törlődnek.";
+"sidebar.workspace.empty.message" = "Nincsenek tárolók ebben a munkaterületen.\nJobb gombbal kattints egy tárolóra a „Minden tároló“ résznél, hogy itt add hozzá.";
 "sidebar.add.button.help" = "Tároló hozzáadása";
 "sidebar.empty.message" = "Nincs hozzáadott tároló.\nKattintson a + gombra egy git tároló hozzáadásához.";
 "sidebar.worktrees.placeholder" = "A munkakönyvtárak itt jelennek meg";

@@ -35,6 +35,26 @@ extension Strings {
         static var addButton: String { localized("sidebar.add.add") }
         static var addAdvanced: String { localized("sidebar.add.advanced") }
         static var menuToggle: String { localized("menu.toggle.sidebar") }
+
+        // Workspaces
+        static var workspaceAll: String { localized("sidebar.workspace.all") }
+        static var workspaceMenuHelp: String { localized("sidebar.workspace.menu.help") }
+        static var workspaceNew: String { localized("sidebar.workspace.new") }
+        static var workspaceNewTitle: String { localized("sidebar.workspace.new.title") }
+        static var workspaceNameLabel: String { localized("sidebar.workspace.name.label") }
+        static var workspaceNamePlaceholder: String { localized("sidebar.workspace.name.placeholder") }
+        static var workspaceCreate: String { localized("sidebar.workspace.create") }
+        static var workspaceManage: String { localized("sidebar.workspace.manage") }
+        static var workspaceManageTitle: String { localized("sidebar.workspace.manage.title") }
+        static var workspaceManageEmpty: String { localized("sidebar.workspace.manage.empty") }
+        static var workspaceManageDone: String { localized("sidebar.workspace.manage.done") }
+        static var workspaceEmptyMessage: String { localized("sidebar.workspace.empty.message") }
+        static var workspaceAddTo: String { localized("sidebar.workspace.add.to") }
+        static var workspaceDeleteTitle: String { localized("sidebar.workspace.delete.title") }
+        static var workspaceDeleteConfirm: String { localized("sidebar.workspace.delete.confirm") }
+        static func workspaceDeleteMessage(_ name: String) -> String {
+            localized("sidebar.workspace.delete.message %@", name)
+        }
         static func errorNotGitRepo(_ path: String) -> String {
             localized("sidebar.error.not.git.repo %@", path)
         }

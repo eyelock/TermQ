@@ -56,6 +56,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
     private let persistence: any RepoPersistenceProtocol
     private let prService: GitHubPRService
     private let gitConfig: GitConfigStore
+    private let workspaceStore: WorkspaceStore
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     var monitors: [UUID: GitRepositoryMonitor] = [:]
@@ -65,12 +66,14 @@ final class WorktreeSidebarViewModel: ObservableObject {
         gitService: any GitServiceProtocol = GitService.shared,
         persistence: any RepoPersistenceProtocol = RepoPersistence(),
         prService: GitHubPRService = .shared,
-        gitConfig: GitConfigStore = .shared
+        gitConfig: GitConfigStore = .shared,
+        workspaceStore: WorkspaceStore = .shared
     ) {
         self.persistence = persistence
         self.gitService = gitService
         self.prService = prService
         self.gitConfig = gitConfig
+        self.workspaceStore = workspaceStore
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
         let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
@@ -157,6 +160,19 @@ final class WorktreeSidebarViewModel: ObservableObject {
         )
     }
 
+    // MARK: - Workspace Filtering
+
+    /// Repositories visible under the active workspace selection.
+    ///
+    /// "All" (`activeWorkspaceId == nil`) shows every repo; an active workspace
+    /// shows only its members, preserving the sidebar's global order. The
+    /// decision logic is the pure `WorkspaceFilter` — this only maps the ids
+    /// back to the observable rows.
+    var displayedRepositories: [ObservableRepository] {
+        let visible = Set(workspaceStore.visibleRepoIds(allRepoIds: repositories.map(\.id)))
+        return repositories.filter { visible.contains($0.id) }
+    }
+
     // MARK: - Repository CRUD
 
     /// Validate the path is a git repo, infer a name, append to the list, and persist.
@@ -181,6 +197,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
         repositories.append(repo)
         setExpanded(repo.id, expanded: true)
         save()
+        // File the new repo into the active workspace, if any. In "All" (no
+        // active workspace) it stays unassigned and shows only under "All".
+        if let activeId = workspaceStore.activeWorkspaceId {
+            workspaceStore.add(repoId: repo.id, to: activeId)
+        }
         if addToGitignore, let base = worktreeBasePath, !base.isEmpty {
             ensureGitignored(repoPath: path, basePath: base)
         }
@@ -241,6 +262,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         stopMonitor(for: repo.id)
         repositories.removeAll { $0.id == repo.id }
         worktrees.removeValue(forKey: repo.id)
+        workspaceStore.removeRepoFromAll(repoId: repo.id)
         save()
     }
 
@@ -617,8 +639,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
         return URL(fileURLWithPath: base).appendingPathComponent("pr-\(prNumber)").path
     }
 
-    // MARK: - Persistence
+}
 
+// MARK: - Persistence
+
+extension WorktreeSidebarViewModel {
     func save() {
         let config = RepoConfig(repositories: repositories.map { $0.toGitRepository() })
         do {

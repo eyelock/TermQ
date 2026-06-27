@@ -576,6 +576,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Depolar";
+"sidebar.workspace.all" = "Tüm depolar";
+"sidebar.workspace.menu.help" = "Depoları çalışma alanına göre filtrele";
+"sidebar.workspace.new" = "Yeni çalışma alanı…";
+"sidebar.workspace.new.title" = "Yeni çalışma alanı";
+"sidebar.workspace.name.label" = "Çalışma alanı adı";
+"sidebar.workspace.name.placeholder" = "örn. İş, Yan Projeler";
+"sidebar.workspace.create" = "Oluştur";
+"sidebar.workspace.manage" = "Çalışma Alanlarını Yönet…";
+"sidebar.workspace.manage.title" = "Çalışma Alanlarını Yönet";
+"sidebar.workspace.manage.empty" = "Henüz çalışma alanı yok. Çalışma alanı menüsünden bir tane oluşturun.";
+"sidebar.workspace.manage.done" = "Bitti";
+"sidebar.workspace.add.to" = "Çalışma Alanına Ekle";
+"sidebar.workspace.delete.title" = "Çalışma Alanı Silinsin mi?";
+"sidebar.workspace.delete.confirm" = "Sil";
+"sidebar.workspace.delete.message %@" = "“%@” kaldırılacak. İçindeki depolar silinmeyecek.";
+"sidebar.workspace.empty.message" = "Bu çalışma alanında depo yok.\nBuraya eklemek için “Tüm depolar” içindeki bir depoya sağ tıklayın.";
 "sidebar.add.button.help" = "Depo ekle";
 "sidebar.empty.message" = "Henüz depo eklenmedi.\nGit deposu eklemek için + düğmesine tıklayın.";
 "sidebar.worktrees.placeholder" = "Çalışma ağaçları burada görünecek";

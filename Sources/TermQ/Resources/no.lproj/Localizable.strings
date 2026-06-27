@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositories";
+"sidebar.workspace.all" = "Alle repositories";
+"sidebar.workspace.menu.help" = "Filtrer repositories etter arbeidsområde";
+"sidebar.workspace.new" = "Nytt arbeidsområde…";
+"sidebar.workspace.new.title" = "Nytt arbeidsområde";
+"sidebar.workspace.name.label" = "Navn på arbeidsområdet";
+"sidebar.workspace.name.placeholder" = "f.eks. Jobb, Sideprosjekter";
+"sidebar.workspace.create" = "Opprett";
+"sidebar.workspace.manage" = "Administrer arbeidsområder…";
+"sidebar.workspace.manage.title" = "Administrer arbeidsområder";
+"sidebar.workspace.manage.empty" = "Ingen arbeidsområder ennå. Opprett ett fra arbeidsområdemenyen.";
+"sidebar.workspace.manage.done" = "Ferdig";
+"sidebar.workspace.add.to" = "Legg til i arbeidsområde";
+"sidebar.workspace.delete.title" = "Slett arbeidsområde?";
+"sidebar.workspace.delete.confirm" = "Slett";
+"sidebar.workspace.delete.message %@" = "“%@” vil bli fjernet. Repositoriene i det slettes ikke.";
+"sidebar.workspace.empty.message" = "Ingen repositories i dette arbeidsområdet.\nHøyreklikk på et repository i “Alle repositories” for å legge det til her.";
 "sidebar.add.button.help" = "Legg til repository";
 "sidebar.empty.message" = "Ingen repositories lagt til.\nKlikk + for å legge til et git-repository.";
 "sidebar.worktrees.placeholder" = "Worktrees vises her";

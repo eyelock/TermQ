@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "מאגרים";
+"sidebar.workspace.all" = "כל המאגרים";
+"sidebar.workspace.menu.help" = "סינון מאגרים לפי סביבת עבודה";
+"sidebar.workspace.new" = "סביבת עבודה חדשה…";
+"sidebar.workspace.new.title" = "סביבת עבודה חדשה";
+"sidebar.workspace.name.label" = "שם סביבת העבודה";
+"sidebar.workspace.name.placeholder" = "לדוגמא: עבודה, פרויקטים צדדיים";
+"sidebar.workspace.create" = "צור";
+"sidebar.workspace.manage" = "ניהול סביבות עבודה…";
+"sidebar.workspace.manage.title" = "ניהול סביבות עבודה";
+"sidebar.workspace.manage.empty" = "אין עדיין סביבות עבודה. צור אחת מתפריט סביבת העבודה.";
+"sidebar.workspace.manage.done" = "סיום";
+"sidebar.workspace.add.to" = "הוסף לסביבת עבודה";
+"sidebar.workspace.delete.title" = "למחוק את סביבת העבודה?";
+"sidebar.workspace.delete.confirm" = "מחיקה";
+"sidebar.workspace.delete.message %@" = "«%@» יוסר. המאגרים שבתוכו לא יימחקו.";
+"sidebar.workspace.empty.message" = "אין מאגרים במרחב עבודה זה.\nלחץ לחיצה ימנית על מאגר ב«כל המאגרים» כדי להוסיפו כאן.";
 "sidebar.add.button.help" = "הוסף מאגר";
 "sidebar.empty.message" = "לא נוספו מאגרים.\nלחץ + להוספת מאגר git.";
 "sidebar.worktrees.placeholder" = "עצי העבודה יופיעו כאן";

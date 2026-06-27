@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repozytoria";
+"sidebar.workspace.all" = "Wszystkie repozytoria";
+"sidebar.workspace.menu.help" = "Filtruj repozytoria według obszaru roboczego";
+"sidebar.workspace.new" = "Nowy obszar roboczy…";
+"sidebar.workspace.new.title" = "Nowy obszar roboczy";
+"sidebar.workspace.name.label" = "Nazwa obszaru roboczego";
+"sidebar.workspace.name.placeholder" = "np. Praca, Projekty poboczne";
+"sidebar.workspace.create" = "Utwórz";
+"sidebar.workspace.manage" = "Zarządzaj obszarami roboczymi…";
+"sidebar.workspace.manage.title" = "Zarządzaj obszarami roboczymi";
+"sidebar.workspace.manage.empty" = "Brak obszarów roboczych. Utwórz jeden z menu obszarów roboczych.";
+"sidebar.workspace.manage.done" = "Gotowe";
+"sidebar.workspace.add.to" = "Dodaj do obszaru roboczego";
+"sidebar.workspace.delete.title" = "Usunąć obszar roboczy?";
+"sidebar.workspace.delete.confirm" = "Usuń";
+"sidebar.workspace.delete.message %@" = "„%@” zostanie usunięty. Repozytoria w nim zawarte nie zostaną usunięte.";
+"sidebar.workspace.empty.message" = "Brak repozytoriów w tym obszarze roboczym.\nKliknij prawym przyciskiem myszy repozytorium w „Wszystkie repozytoria“, aby dodać je tutaj.";
 "sidebar.add.button.help" = "Dodaj repozytorium";
 "sidebar.empty.message" = "Nie dodano żadnych repozytoriów.\nKliknij +, aby dodać repozytorium git.";
 "sidebar.worktrees.placeholder" = "Drzewa robocze pojawią się tutaj";

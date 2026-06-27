@@ -576,6 +576,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositorier";
+"sidebar.workspace.all" = "Alla repon";
+"sidebar.workspace.menu.help" = "Filtrera repon efter arbetsyta";
+"sidebar.workspace.new" = "Ny arbetsyta…";
+"sidebar.workspace.new.title" = "Ny arbetsyta";
+"sidebar.workspace.name.label" = "Arbetsytans namn";
+"sidebar.workspace.name.placeholder" = "t.ex. Arbete, Sidoprojekt";
+"sidebar.workspace.create" = "Skapa";
+"sidebar.workspace.manage" = "Hantera arbetsytor…";
+"sidebar.workspace.manage.title" = "Hantera arbetsytor";
+"sidebar.workspace.manage.empty" = "Inga arbetsytor ännu. Skapa en från arbetsytemenyn.";
+"sidebar.workspace.manage.done" = "Klar";
+"sidebar.workspace.add.to" = "Lägg till i arbetsyta";
+"sidebar.workspace.delete.title" = "Ta bort arbetsyta?";
+"sidebar.workspace.delete.confirm" = "Radera";
+"sidebar.workspace.delete.message %@" = "“%@” tas bort. Repositorierna i den raderas inte.";
+"sidebar.workspace.empty.message" = "Inga repon i den här arbetsytan.\nHögerklicka på ett repo i “Alla repon” för att lägga till det här.";
 "sidebar.add.button.help" = "Lägg till repositorium";
 "sidebar.empty.message" = "Inga repositorier tillagda.\nKlicka på + för att lägga till ett git-repositorium.";
 "sidebar.worktrees.placeholder" = "Arbetsträd visas här";

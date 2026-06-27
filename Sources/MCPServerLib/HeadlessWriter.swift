@@ -72,8 +72,10 @@ public enum HeadlessWriter {
     /// Marks card with needsTmuxSession=true for GUI to create sessions later
     public static func createCard(
         _ options: CardCreationOptions,
+        workspaceId: String? = nil,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Card {
         // Create the card using BoardWriter
         var card = try BoardWriter.createCard(
@@ -81,8 +83,10 @@ public enum HeadlessWriter {
             columnName: options.column,
             workingDirectory: options.workingDirectory,
             description: options.description ?? "",
+            workspaceId: workspaceId,
             dataDirectory: dataDirectory,
-            profile: profile
+            profile: profile,
+            boardFilename: boardFilename
         )
 
         // Build updates for additional MCP fields
@@ -117,7 +121,8 @@ public enum HeadlessWriter {
                 identifier: card.id.uuidString,
                 updates: updates,
                 dataDirectory: dataDirectory,
-                profile: profile
+                profile: profile,
+                boardFilename: boardFilename
             )
         }
 
@@ -129,7 +134,8 @@ public enum HeadlessWriter {
         identifier: String,
         params: UpdateParameters,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Card {
         var updates: [String: Any] = [:]
 
@@ -171,7 +177,8 @@ public enum HeadlessWriter {
                 updates["tags"] = tagDicts
             } else {
                 // Merge with existing tags
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDirectory, profile: profile)
+                let board = try BoardLoader.loadBoard(
+                    dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename)
                 guard let card = board.findTerminal(identifier: identifier) else {
                     throw BoardWriter.WriteError.cardNotFound(identifier: identifier)
                 }
@@ -205,7 +212,8 @@ public enum HeadlessWriter {
             identifier: identifier,
             updates: updates,
             dataDirectory: dataDirectory,
-            profile: profile
+            profile: profile,
+            boardFilename: boardFilename
         )
     }
 
@@ -214,13 +222,15 @@ public enum HeadlessWriter {
         identifier: String,
         toColumn columnName: String,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws -> Card {
         try BoardWriter.moveCard(
             identifier: identifier,
             toColumn: columnName,
             dataDirectory: dataDirectory,
-            profile: profile
+            profile: profile,
+            boardFilename: boardFilename
         )
     }
 
@@ -229,12 +239,14 @@ public enum HeadlessWriter {
         identifier: String,
         permanent: Bool,
         dataDirectory: URL? = nil,
-        profile: AppProfile.Variant = .current
+        profile: AppProfile.Variant = .current,
+        boardFilename: String = "board.json"
     ) throws {
         if permanent {
             // For permanent deletion, load board and remove from array
             // Note: BoardWriter doesn't have permanent delete, so we handle it here
-            let rawBoard = try BoardWriter.loadRawBoard(dataDirectory: dataDirectory, profile: profile)
+            let rawBoard = try BoardWriter.loadRawBoard(
+                dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename)
             let boardURL = rawBoard.url
             var board = rawBoard.data
             guard var cards = board["cards"] as? [[String: Any]] else {
@@ -256,7 +268,8 @@ public enum HeadlessWriter {
                 identifier: identifier,
                 updates: ["deletedAt": now],
                 dataDirectory: dataDirectory,
-                profile: profile
+                profile: profile,
+                boardFilename: boardFilename
             )
         }
     }

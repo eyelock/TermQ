@@ -58,7 +58,8 @@ struct Set: ParsableCommand {
             let profile = resolveProfile(debug)
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
             let board = try BoardLoader.loadBoard(
-                dataDirectory: dataDirURL, profile: profile)
+                dataDirectory: dataDirURL, profile: profile,
+                boardFilename: resolveBoardFilename())
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -101,7 +102,8 @@ struct Set: ParsableCommand {
                         identifier: card.id.uuidString,
                         toColumn: columnName,
                         dataDirectory: dataDirURL,
-                        profile: profile
+                        profile: profile,
+                        boardFilename: resolveBoardFilename()
                     )
                 }
 
@@ -109,7 +111,8 @@ struct Set: ParsableCommand {
                     identifier: card.id.uuidString,
                     params: params,
                     dataDirectory: dataDirURL,
-                    profile: profile
+                    profile: profile,
+                    boardFilename: resolveBoardFilename()
                 )
 
                 if initCommand != nil {
@@ -165,7 +168,8 @@ struct Move: ParsableCommand {
             let profile = resolveProfile(debug)
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
             let board = try BoardLoader.loadBoard(
-                dataDirectory: dataDirURL, profile: profile)
+                dataDirectory: dataDirURL, profile: profile,
+                boardFilename: resolveBoardFilename())
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -179,7 +183,8 @@ struct Move: ParsableCommand {
                     identifier: card.id.uuidString,
                     toColumn: toColumn,
                     dataDirectory: dataDirURL,
-                    profile: profile
+                    profile: profile,
+                    boardFilename: resolveBoardFilename()
                 )
 
                 JSONHelper.printJSON(
@@ -234,7 +239,8 @@ struct Delete: ParsableCommand {
             let profile = resolveProfile(debug)
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
             let board = try BoardLoader.loadBoard(
-                dataDirectory: dataDirURL, profile: profile)
+                dataDirectory: dataDirURL, profile: profile,
+                boardFilename: resolveBoardFilename())
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -248,7 +254,8 @@ struct Delete: ParsableCommand {
                     identifier: card.id.uuidString,
                     permanent: permanent,
                     dataDirectory: dataDirURL,
-                    profile: profile
+                    profile: profile,
+                    boardFilename: resolveBoardFilename()
                 )
 
                 JSONHelper.printJSON(

@@ -573,6 +573,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositories";
+"sidebar.workspace.all" = "Alle repositories";
+"sidebar.workspace.menu.help" = "Repositories filteren op werkruimte";
+"sidebar.workspace.new" = "Nieuwe werkruimte…";
+"sidebar.workspace.new.title" = "Nieuwe werkruimte";
+"sidebar.workspace.name.label" = "Naam werkruimte";
+"sidebar.workspace.name.placeholder" = "bijv. Werk, Zijprojecten";
+"sidebar.workspace.create" = "Aanmaken";
+"sidebar.workspace.manage" = "Werkruimten beheren…";
+"sidebar.workspace.manage.title" = "Werkruimten beheren";
+"sidebar.workspace.manage.empty" = "Nog geen werkruimten. Maak er een aan via het werkruimtemenu.";
+"sidebar.workspace.manage.done" = "Gereed";
+"sidebar.workspace.add.to" = "Toevoegen aan werkruimte";
+"sidebar.workspace.delete.title" = "Werkruimte verwijderen?";
+"sidebar.workspace.delete.confirm" = "Verwijder";
+"sidebar.workspace.delete.message %@" = "“%@” wordt verwijderd. De repositories erin worden niet verwijderd.";
+"sidebar.workspace.empty.message" = "Geen repositories in deze werkruimte.\nKlik met de rechtermuisknop op een repository in “Alle repositories” om het hier toe te voegen.";
 "sidebar.add.button.help" = "Repository toevoegen";
 "sidebar.empty.message" = "Geen repositories toegevoegd.\nKlik op + om een git-repository toe te voegen.";
 "sidebar.worktrees.placeholder" = "Worktrees verschijnen hier";

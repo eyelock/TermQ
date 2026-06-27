@@ -190,6 +190,7 @@ final class HarnessLaunchCoordinator {
             backend: config.backend
         )
         card.allowAutorun = true
+        card.workspaceId = boardViewModel.newCardWorkspaceId
 
         boardViewModel.board.cards.append(card)
         boardViewModel.save()

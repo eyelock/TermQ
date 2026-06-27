@@ -574,6 +574,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositories";
+"sidebar.workspace.all" = "Alle Repositories";
+"sidebar.workspace.menu.help" = "Repositories nach Workspace filtern";
+"sidebar.workspace.new" = "Neuer Workspace…";
+"sidebar.workspace.new.title" = "Neuer Workspace";
+"sidebar.workspace.name.label" = "Workspace-Name";
+"sidebar.workspace.name.placeholder" = "z. B. Arbeit, Nebenprojekte";
+"sidebar.workspace.create" = "Erstellen";
+"sidebar.workspace.manage" = "Workspaces verwalten…";
+"sidebar.workspace.manage.title" = "Workspaces verwalten";
+"sidebar.workspace.manage.empty" = "Noch keine Workspaces vorhanden. Erstellen Sie einen über das Workspace-Menü.";
+"sidebar.workspace.manage.done" = "Fertig";
+"sidebar.workspace.add.to" = "Zu Workspace hinzufügen";
+"sidebar.workspace.delete.title" = "Workspace löschen?";
+"sidebar.workspace.delete.confirm" = "Löschen";
+"sidebar.workspace.delete.message %@" = "„%@" wird entfernt. Die enthaltenen Repositories werden nicht gelöscht.";
+"sidebar.workspace.empty.message" = "Keine Repositories in diesem Arbeitsbereich.\nKlicken Sie mit der rechten Maustaste auf ein Repository unter „Alle Repositories“, um es hier hinzuzufügen.";
 "sidebar.add.button.help" = "Repository hinzufügen";
 "sidebar.empty.message" = "Keine Repositories hinzugefügt.\nAuf + klicken, um ein Git-Repository hinzuzufügen.";
 "sidebar.worktrees.placeholder" = "Worktrees werden hier angezeigt";

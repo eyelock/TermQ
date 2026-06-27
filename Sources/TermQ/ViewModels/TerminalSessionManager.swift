@@ -206,6 +206,15 @@ class TerminalSessionManager: ObservableObject {
         env["TERMQ_TERMINAL_ID"] = card.id.uuidString
         env["TERMQ_BACKEND"] = backend.rawValue
 
+        // Pin anything launched in this terminal (the MCP server, termq-cli) to the
+        // workspace that was active when the terminal was created, so their board
+        // operations target board-<id>.json. A card's session is only created while its
+        // workspace is the active one, so this id is the card's workspace. Unset for the
+        // default "All" board, where it falls back to board.json.
+        if let workspaceId = WorkspaceStore.shared.activeWorkspaceId {
+            env["TERMQ_WORKSPACE_ID"] = workspaceId.uuidString
+        }
+
         // Add tag environment variables (TERMQ_TERMINAL_TAG_<KEY>=value)
         for tag in card.tags {
             let sanitizedKey = ShellEscaper.envVarName(tag.key)
