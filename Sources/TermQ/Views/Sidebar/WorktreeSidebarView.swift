@@ -325,7 +325,12 @@ struct WorktreeSidebarView: View {
             }
 
             Button {
-                Task { await viewModel.refreshRepo(for: repo) }
+                Task {
+                    await viewModel.refreshRepo(for: repo)
+                    if sidebarMode == .remote {
+                        await prService.refresh(repoPath: repo.path, force: true)
+                    }
+                }
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .imageScale(.small)
@@ -817,23 +822,33 @@ extension WorktreeSidebarView {
         }
     }
 
-    /// Dry-run a worktree prune across every repository, then present one
-    /// aggregated confirmation sheet — the all-repos counterpart to
-    /// `analyseAndPrune(repo:)`.
+    /// Dry-run a worktree prune across every repository — both git's orphaned-record
+    /// prune and (when GitHub is available) closed-PR and "Run with Focus" review
+    /// worktrees — then present one aggregated confirmation sheet. The all-repos
+    /// counterpart to `analyseAndPrune(repo:)`.
     fileprivate func analyseAndPruneAll() async {
         isPruneAnalysing = true
         defer { isPruneAnalysing = false }
         var candidates: [RepoPruneCandidate] = []
         var hadError = false
         for repo in viewModel.repositories {
+            var candidate: RepoPruneCandidate
             do {
                 let stale = try await viewModel.pruneWorktreesDryRun(repo: repo)
-                if !stale.isEmpty {
-                    candidates.append(RepoPruneCandidate(repo: repo, staleEntries: stale))
-                }
+                candidate = RepoPruneCandidate(repo: repo, staleEntries: stale)
             } catch {
                 viewModel.operationError = error.localizedDescription
                 hadError = true
+                continue
+            }
+            if case .ready = ghProbe.status {
+                let (closed, focus) = await viewModel.collectPRPruneCandidates(
+                    repo: repo, prService: prService)
+                candidate.closedPRCandidates = closed
+                candidate.focusCandidates = focus
+            }
+            if !candidate.isEmpty {
+                candidates.append(candidate)
             }
         }
         // Only claim "nothing to prune" when the empty result wasn't caused by

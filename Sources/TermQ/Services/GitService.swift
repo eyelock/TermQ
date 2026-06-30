@@ -246,6 +246,19 @@ public class GitService: GitServiceProtocol {
         )
     }
 
+    /// Fetch the latest refs from `origin`, pruning stale remote-tracking branches.
+    ///
+    /// Call this before reading remote state (default branch, ahead/behind counts,
+    /// closed-PR detection) so refresh actually reflects what's on the remote instead
+    /// of whatever was last fetched incidentally by a checkout or pull. Tolerant of
+    /// failure (e.g. offline) — refresh must not hard-fail just because the network is down.
+    public func fetchRemote(repoPath: String) async {
+        _ = try? await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["fetch", "origin", "--prune"]
+        )
+    }
+
     public func defaultBranch(repoPath: String) async -> String {
         // origin/HEAD is set by the remote and doesn't change with local checkouts.
         // --short returns "origin/main" (or "origin/feature/main" for slash-names).

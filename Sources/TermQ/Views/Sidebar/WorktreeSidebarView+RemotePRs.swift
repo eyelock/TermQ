@@ -460,28 +460,12 @@ extension WorktreeSidebarView {
 
     /// Collect closed-PR worktrees and focus worktrees, then open the combined prune sheet.
     private func analyseAndPrune(repo: ObservableRepository) async {
-        await prService.refresh(repoPath: repo.path, force: true)
+        let (closedCandidates, focusCandidates) = await viewModel.collectPRPruneCandidates(
+            repo: repo, prService: prService)
         guard prService.prsByRepo[repo.path] != nil else {
             viewModel.operationError =
                 prService.errorByRepo[repo.path] ?? Strings.RemotePRs.ghAuthCheckFailed
             return
-        }
-        let openNumbers = Set((prService.prsByRepo[repo.path] ?? []).map(\.number))
-        let worktrees = viewModel.worktrees[repo.id] ?? []
-        var closedPRNumbers: Set<Int> = []
-        for wt in worktrees {
-            let last = URL(fileURLWithPath: wt.path).lastPathComponent
-            if last.hasPrefix("pr-"), let prNum = Int(last.dropFirst(3)), !openNumbers.contains(prNum) {
-                closedPRNumbers.insert(prNum)
-            }
-        }
-        let closedCandidates =
-            closedPRNumbers.isEmpty
-            ? []
-            : await viewModel.pruneClosedPRsDryRun(
-                repo: repo, closedPRNumbers: closedPRNumbers, prService: prService)
-        let focusCandidates = (viewModel.focusWorktrees[repo.id] ?? []).map {
-            FocusWorktreeCandidate(path: $0.path)
         }
         guard !closedCandidates.isEmpty || !focusCandidates.isEmpty else {
             viewModel.operationError = Strings.RemotePRs.pruneClosedPRsNothingTitle
