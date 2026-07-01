@@ -129,12 +129,19 @@ final class WorktreeSidebarViewModel: ObservableObject {
         monitors.removeValue(forKey: repoID)
     }
 
-    private func refreshExpandedWorktrees() {
+    /// Refresh worktrees for every expanded repo. `fetch: true` (user-triggered refresh)
+    /// also fetches from `origin`; `fetch: false` (startup) only re-lists local state so
+    /// launching the app doesn't fire a network fetch per expanded repo.
+    private func refreshExpandedWorktrees(fetch: Bool = false) {
         let toRefresh = repositories.filter { expandedRepoIDs.contains($0.id) }
         guard !toRefresh.isEmpty else { return }
         Task {
             for repo in toRefresh {
-                await refreshWorktrees(for: repo)
+                if fetch {
+                    await refreshRepo(for: repo)
+                } else {
+                    await refreshWorktrees(for: repo)
+                }
             }
         }
     }
@@ -280,9 +287,10 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     // MARK: - Worktree Queries
 
-    /// Manual refresh triggered by the user — updates `origin/HEAD` before refreshing
-    /// worktrees so that `defaultBranch` reflects the remote's current default.
+    /// Manual refresh triggered by the user — fetches from `origin`, updates `origin/HEAD`
+    /// so `defaultBranch` reflects the remote's current default, then refreshes worktrees.
     func refreshRepo(for repo: ObservableRepository) async {
+        await gitService.fetchRemote(repoPath: repo.path)
         await gitService.updateRemoteHead(repoPath: repo.path)
         await refreshWorktrees(for: repo)
     }
@@ -631,6 +639,35 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
+    /// Force-refresh `repo`'s PRs, then collect everything in it that's prunable:
+    /// worktrees checked out for PRs that are no longer open, and "Run with Focus"
+    /// review worktrees (always prunable — they're ephemeral by design). Shared by
+    /// the per-repo and all-repos prune flows so they agree on what counts as stale.
+    func collectPRPruneCandidates(
+        repo: ObservableRepository,
+        prService: GitHubPRService
+    ) async -> (closed: [PRPruneCandidate], focus: [FocusWorktreeCandidate]) {
+        await prService.refresh(repoPath: repo.path, force: true)
+        guard let openPRs = prService.prsByRepo[repo.path] else { return ([], []) }
+
+        let openNumbers = Set(openPRs.map(\.number))
+        let wts = worktrees[repo.id] ?? []
+        var closedPRNumbers: Set<Int> = []
+        for wt in wts {
+            let last = URL(fileURLWithPath: wt.path).lastPathComponent
+            if last.hasPrefix("pr-"), let prNum = Int(last.dropFirst(3)), !openNumbers.contains(prNum) {
+                closedPRNumbers.insert(prNum)
+            }
+        }
+
+        let closed =
+            closedPRNumbers.isEmpty
+            ? []
+            : await pruneClosedPRsDryRun(repo: repo, closedPRNumbers: closedPRNumbers, prService: prService)
+        let focus = (focusWorktrees[repo.id] ?? []).map { FocusWorktreeCandidate(path: $0.path) }
+        return (closed, focus)
+    }
+
     /// Derive a PR worktree path: `<worktreeBasePath>/pr-<n>`
     func inferPRWorktreePath(for repo: ObservableRepository, prNumber: Int) -> String {
         let base =
@@ -664,7 +701,7 @@ extension WorktreeSidebarViewModel {
 
     func refresh() {
         reloadRepositories()
-        refreshExpandedWorktrees()
+        refreshExpandedWorktrees(fetch: true)
     }
 
     private func reloadRepositories() {

@@ -35,6 +35,7 @@ final class MockGitService: GitServiceProtocol {
     private(set) var deleteLocalBranchCalls: [String] = []
     private(set) var renameBranchCalls: [(String, String)] = []
     private(set) var updateRemoteHeadCalled = false
+    private(set) var fetchRemoteCalled = false
 
     func isGitRepo(path: String) async throws -> Bool {
         isGitRepoCalled = true
@@ -116,6 +117,10 @@ final class MockGitService: GitServiceProtocol {
         updateRemoteHeadCalled = true
     }
 
+    func fetchRemote(repoPath: String) async {
+        fetchRemoteCalled = true
+    }
+
     func inferRepoName(repoPath: String) async -> String { inferRepoNameResult }
     func remoteURL(repoPath: String) async throws -> String { "" }
 
@@ -148,11 +153,12 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
     private func makeVM(
         gitService: MockGitService = MockGitService(),
         persistence: MockRepoPersistence = MockRepoPersistence(),
+        prService: GitHubPRService = .shared,
         gitConfig: GitConfigStore = GitConfigStore(defaults: makeIsolatedDefaults()),
         workspaceStore: WorkspaceStore = makeIsolatedWorkspaceStore()
     ) -> WorktreeSidebarViewModel {
         WorktreeSidebarViewModel(
-            gitService: gitService, persistence: persistence, gitConfig: gitConfig,
+            gitService: gitService, persistence: persistence, prService: prService, gitConfig: gitConfig,
             workspaceStore: workspaceStore)
     }
 
@@ -931,8 +937,87 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
 
         await vm.refreshRepo(for: repo)
 
+        XCTAssertTrue(mock.fetchRemoteCalled)
         XCTAssertTrue(mock.updateRemoteHeadCalled)
         XCTAssertEqual(vm.worktrees[repo.id]?.count, 1)
+    }
+
+    // MARK: - collectPRPruneCandidates
+
+    private func makeReadyPRService(openPRsJSON: String) -> GitHubPRService {
+        let probe = GhCliProbe()
+        probe.setStatusForTesting(.ready(ghPath: "/usr/bin/gh", login: "alice"))
+        let runner = StubGhCommandRunner(json: openPRsJSON)
+        return GitHubPRService(ghProbe: probe, commandRunner: runner)
+    }
+
+    func testCollectPRPruneCandidates_closedPRWorktree_isReturnedAsCandidate() async {
+        let mock = MockGitService()
+        let prService = makeReadyPRService(openPRsJSON: "[]")
+        let vm = makeVM(gitService: mock, prService: prService)
+        let repo = makeRepo()
+        vm.worktrees[repo.id] = [makeWorktree(path: "/tmp/test-repo/.worktrees/pr-42")]
+
+        let (closed, focus) = await vm.collectPRPruneCandidates(repo: repo, prService: prService)
+
+        XCTAssertEqual(closed.map(\.prNumber), [42])
+        XCTAssertTrue(focus.isEmpty)
+    }
+
+    func testCollectPRPruneCandidates_openPRWorktree_isNotReturnedAsCandidate() async {
+        let mock = MockGitService()
+        let prService = makeReadyPRService(openPRsJSON: openPRJSON(number: 42))
+        let vm = makeVM(gitService: mock, prService: prService)
+        let repo = makeRepo()
+        vm.worktrees[repo.id] = [makeWorktree(path: "/tmp/test-repo/.worktrees/pr-42")]
+
+        let (closed, focus) = await vm.collectPRPruneCandidates(repo: repo, prService: prService)
+
+        XCTAssertTrue(closed.isEmpty)
+        XCTAssertTrue(focus.isEmpty)
+    }
+
+    func testCollectPRPruneCandidates_focusWorktreesAreAlwaysCandidates() async {
+        let mock = MockGitService()
+        let prService = makeReadyPRService(openPRsJSON: "[]")
+        let vm = makeVM(gitService: mock, prService: prService)
+        let repo = makeRepo()
+        vm.focusWorktrees[repo.id] = [makeWorktree(path: "/tmp/.termq/focus-worktrees/termq-focus--x")]
+
+        let (closed, focus) = await vm.collectPRPruneCandidates(repo: repo, prService: prService)
+
+        XCTAssertTrue(closed.isEmpty)
+        XCTAssertEqual(focus.map(\.path), ["/tmp/.termq/focus-worktrees/termq-focus--x"])
+    }
+
+    func testCollectPRPruneCandidates_nothingToPrune_returnsEmpty() async {
+        let mock = MockGitService()
+        let prService = makeReadyPRService(openPRsJSON: "[]")
+        let vm = makeVM(gitService: mock, prService: prService)
+        let repo = makeRepo()
+
+        let (closed, focus) = await vm.collectPRPruneCandidates(repo: repo, prService: prService)
+
+        XCTAssertTrue(closed.isEmpty)
+        XCTAssertTrue(focus.isEmpty)
+    }
+
+    private func openPRJSON(number: Int) -> String {
+        """
+        [
+          {
+            "number": \(number),
+            "title": "Test PR",
+            "headRefName": "feat/test",
+            "headRefOid": "abc1234567890",
+            "author": {"login": "alice"},
+            "isCrossRepository": false,
+            "isDraft": false,
+            "reviewRequests": [],
+            "assignees": []
+          }
+        ]
+        """
     }
 
     // MARK: - Errors
