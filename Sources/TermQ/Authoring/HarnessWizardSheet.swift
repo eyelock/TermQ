@@ -210,6 +210,15 @@ struct HarnessWizardSheet: View {
         }
     }
 
+    /// The canonical `Harness.id` for the harness just created, resolved by
+    /// name against the (now-refreshed) repository. Falls back to the bare
+    /// name if the lookup misses, so the buttons still do *something*
+    /// reasonable rather than silently no-op.
+    private var createdHarnessID: String? {
+        guard let harnessName = author.createdHarnessName else { return nil }
+        return harnessRepository.harnesses.first { $0.name == harnessName }?.id ?? harnessName
+    }
+
     // MARK: - Success overlay
 
     private var successOverlay: some View {
@@ -221,8 +230,8 @@ struct HarnessWizardSheet: View {
 
             VStack(spacing: 8) {
                 Button(Strings.HarnessWizard.successAddPlugins) {
-                    if let harnessName = author.createdHarnessName {
-                        store.preselectedHarnessTarget = harnessName
+                    if let harnessID = createdHarnessID {
+                        store.preselectedHarnessTarget = harnessID
                     }
                     sidebarState.selectedTab = .marketplaces
                     dismiss()
@@ -230,9 +239,9 @@ struct HarnessWizardSheet: View {
                 .buttonStyle(.borderedProminent)
 
                 HStack(spacing: 12) {
-                    if let harnessName = author.createdHarnessName {
+                    if let harnessID = createdHarnessID {
                         Button(Strings.HarnessWizard.successOpen) {
-                            harnessRepository.selectedHarnessId = harnessName
+                            harnessRepository.selectedHarnessId = harnessID
                             dismiss()
                         }
                         .buttonStyle(.bordered)
