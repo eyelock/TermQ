@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.14] - 2026-07-03
+
+### Fixed — Harnesses
+
+- **Installing a plugin immediately after creating a harness no longer fails with "not a valid harness id".** The harness creation wizard's success screen passed the raw harness name (e.g. `media-manager`) to the plugin-install flow instead of the canonical harness id (e.g. `local/media-manager`) that `ynh include add` requires, producing a broken command. The wizard now resolves the canonical id from the freshly-refreshed harness list before handing off, matching the pattern already used by the harness detail page's "Configure from Marketplaces" flow.
+
 ## [0.11.13] - 2026-06-24
 
 ### Added — Menus
