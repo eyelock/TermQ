@@ -21,21 +21,24 @@ struct PruneWorktreesSheet: View {
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
-            VStack(alignment: .leading, spacing: 0) {
-                ForEach(staleEntries, id: \.self) { entry in
-                    Text(entry)
-                        .font(.caption)
-                        .fontDesign(.monospaced)
-                        .foregroundColor(.primary)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(staleEntries, id: \.self) { entry in
+                        Text(entry)
+                            .font(.caption)
+                            .fontDesign(.monospaced)
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if entry != staleEntries.last {
-                        Divider()
+                        if entry != staleEntries.last {
+                            Divider()
+                        }
                     }
                 }
             }
+            .frame(maxHeight: 280)
             .background(Color(nsColor: .textBackgroundColor))
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .overlay(
