@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.15] - 2026-07-09
+
+### Fixed — Sidebar
+
+- **The Prune Local Branches and Prune Worktrees sheets no longer push their header and footer buttons off-screen when the list is long.** Both sheets rendered their branch/entry list in a bare `VStack` with no height constraint, so with many local branches or stale worktree entries the list grew unbounded and the confirm/cancel buttons became unreachable. Both lists are now wrapped in a scrollable container capped at a fixed height, matching the pattern already used by the sibling Prune All Worktrees and Prune Closed PRs sheets.
+
 ## [0.11.14] - 2026-07-03
 
 ### Fixed — Harnesses
