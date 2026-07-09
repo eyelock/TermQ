@@ -80,21 +80,24 @@ struct PruneBranchesSheet: View {
                         .strokeBorder(Color(nsColor: .separatorColor), lineWidth: 1)
                 )
         } else {
-            VStack(alignment: .leading, spacing: 0) {
-                ForEach(mergedBranches, id: \.self) { branch in
-                    Text(branch)
-                        .font(.caption)
-                        .fontDesign(.monospaced)
-                        .foregroundColor(.primary)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(mergedBranches, id: \.self) { branch in
+                        Text(branch)
+                            .font(.caption)
+                            .fontDesign(.monospaced)
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if branch != mergedBranches.last {
-                        Divider()
+                        if branch != mergedBranches.last {
+                            Divider()
+                        }
                     }
                 }
             }
+            .frame(maxHeight: 280)
             .background(Color(nsColor: .textBackgroundColor))
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .overlay(
