@@ -59,8 +59,22 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
     /// True when an update is available from upstream — populated only after a
     /// `--check-updates` probe and only when the harness has registry
     /// provenance. Otherwise nil ("unknown / not checked").
+    ///
+    /// When both SHAs are known and identical, a differing `versionAvailable`
+    /// string is trusted as stale rather than a real update: YNH's
+    /// manifest-version cache can go stale relative to the resolved commit
+    /// (see eyelock/ynh#177), which otherwise surfaces as a bogus "update" to
+    /// an older-looking version string even though the installed and
+    /// available commits are identical. SHA drift with no version string
+    /// change is left alone — that's `hasSourceDrift`'s unversioned-drift
+    /// case, not a maintainer-signalled version bump.
     public var hasVersionUpdate: Bool? {
         guard let versionAvailable, !versionAvailable.isEmpty else { return nil }
+        let installedSHA = installedFrom?.sha ?? ""
+        let availableSHA = shaAvailable ?? ""
+        if !installedSHA.isEmpty, !availableSHA.isEmpty, !hasSourceDrift {
+            return false
+        }
         return versionAvailable != version
     }
 
