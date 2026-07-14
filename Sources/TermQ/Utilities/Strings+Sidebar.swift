@@ -60,6 +60,7 @@ extension Strings {
         }
 
         // Worktree list
+        static var worktreesSectionHeader: String { localized("sidebar.worktrees.section.header") }
         static var worktreesEmpty: String { localized("sidebar.worktrees.empty") }
         static var detachedHead: String { localized("sidebar.worktree.detached.head") }
         static var mainBadge: String { localized("sidebar.worktree.main.badge") }

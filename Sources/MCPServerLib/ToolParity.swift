@@ -64,6 +64,23 @@ public enum ToolParity {
             "remove_worktree",
             "Same reasoning as create_worktree — defer to `git worktree remove`."
         ),
+        (
+            "stack_status",
+            "MCP-only for the provider-neutral graph shape; shell users already have "
+                + "`gs log short --json` first-class."
+        ),
+        (
+            "stack_create_branch",
+            "Same reasoning as create_worktree — `gs branch create` is a first-class CLI."
+        ),
+        (
+            "stack_submit",
+            "Same reasoning as create_worktree — `gs stack submit` is a first-class CLI."
+        ),
+        (
+            "stack_restack",
+            "Same reasoning as create_worktree — `gs stack restack` is a first-class CLI."
+        ),
     ]
 
     /// All names known to the parity registry.

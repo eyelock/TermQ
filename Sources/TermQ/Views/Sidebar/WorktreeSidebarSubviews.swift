@@ -184,20 +184,21 @@ struct BranchSectionDisclosureView<Content: View>: View {
     }
 
     var body: some View {
-        DisclosureGroup(isExpanded: $isExpanded) {
-            content()
-        } label: {
+        // Header and content are SIBLING List rows — see WorktreeSectionDisclosureView.
+        HStack(spacing: StackRowMetrics.chevronSpacing) {
+            StackChevronButton(isExpanded: $isExpanded, help: "")
             Text(Strings.Sidebar.localBranches)
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .textCase(.uppercase)
-                .contextMenu {
-                    Button {
-                        onPruneBranches?()
-                    } label: {
-                        Label(Strings.Sidebar.pruneBranches, systemImage: "scissors")
-                    }
-                }
+            Spacer(minLength: 0)
+        }
+        .contextMenu {
+            Button {
+                onPruneBranches?()
+            } label: {
+                Label(Strings.Sidebar.pruneBranches, systemImage: "scissors")
+            }
         }
         .onChange(of: isExpanded) { _, newValue in
             viewModel.setBranchSectionExpanded(repo.id, expanded: newValue)
@@ -205,6 +206,61 @@ struct BranchSectionDisclosureView<Content: View>: View {
         .onChange(of: viewModel.expandedBranchSectionIDs) { _, ids in
             let should = ids.contains(repo.id)
             if isExpanded != should { isExpanded = should }
+        }
+
+        if isExpanded {
+            content()
+        }
+    }
+}
+
+// MARK: - Worktree Section Disclosure Wrapper
+
+/// Owns the `@State` for a repo's "Worktrees" section expanded/collapsed state, using
+/// the same deferred-mutation pattern as `RepoDisclosureView` to avoid reentrant
+/// NSTableView calls during SwiftUI render. Unlike the Local Branches section, this
+/// one defaults to expanded — the ViewModel persists the COLLAPSED set.
+///
+/// Header and content are emitted as SIBLING List rows (implicit ViewBuilder body,
+/// no wrapping container): nesting the rows inside the header's view collapses the
+/// whole section into ONE List row, breaking per-row selection and context menus.
+/// Collapsed content is simply not emitted — no phantom space either.
+struct WorktreeSectionDisclosureView<Content: View>: View {
+    let repo: ObservableRepository
+    @ObservedObject var viewModel: WorktreeSidebarViewModel
+    @ViewBuilder let content: () -> Content
+    @State private var isExpanded: Bool
+
+    init(
+        repo: ObservableRepository,
+        viewModel: WorktreeSidebarViewModel,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.repo = repo
+        self.viewModel = viewModel
+        self.content = content
+        self._isExpanded = State(initialValue: viewModel.isWorktreeSectionExpanded(repo.id))
+    }
+
+    var body: some View {
+        HStack(spacing: StackRowMetrics.chevronSpacing) {
+            StackChevronButton(isExpanded: $isExpanded, help: "")
+            Text(Strings.Sidebar.worktreesSectionHeader)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .textCase(.uppercase)
+            Spacer(minLength: 0)
+        }
+        .onChange(of: isExpanded) { _, newValue in
+            viewModel.setWorktreeSectionExpanded(repo.id, expanded: newValue)
+        }
+        .onChange(of: viewModel.collapsedWorktreeSectionIDs) { _, _ in
+            let should = viewModel.isWorktreeSectionExpanded(repo.id)
+            if isExpanded != should { isExpanded = should }
+        }
+
+        if isExpanded {
+            content()
         }
     }
 }
@@ -227,6 +283,10 @@ struct WorktreeLeftIcon: View {
     @ObservedObject var boardVM: BoardViewModel
     let isDeleting: Bool
     let isUpdating: Bool
+    /// Bottom branch of the stack this worktree's branch belongs to, or `nil` when it
+    /// isn't stacked — shows the persistent stack glyph in the left slot (same visual
+    /// weight as the Home icon). Home/lock take precedence when they apply.
+    var stackRootName: String?
     @State private var showPopover = false
 
     private var matchingCards: [TerminalCard] {
@@ -262,6 +322,12 @@ struct WorktreeLeftIcon: View {
                     Image(systemName: "lock.fill")
                         .foregroundColor(.orange)
                         .imageScale(.small)
+                } else if let stackRootName {
+                    Image(systemName: "square.stack.3d.up")
+                        .foregroundColor(.secondary)
+                        .imageScale(.small)
+                        .help(Strings.Stacks.partOfStack(stackRootName))
+                        .accessibilityLabel(Strings.Stacks.partOfStack(stackRootName))
                 } else {
                     Color.clear
                 }

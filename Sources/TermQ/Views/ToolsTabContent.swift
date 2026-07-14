@@ -25,6 +25,7 @@ struct ToolsTabContent: View {
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @ObservedObject private var ynhDetector = YNHDetector.shared
     @ObservedObject private var ghProbe = GhCliProbe.shared
+    @ObservedObject var stackService = StackService.shared
 
     var isCLIInstalled: Bool { cliInstalled }
     var isMCPInstalled: Bool { mcpInstalled }
@@ -44,6 +45,7 @@ struct ToolsTabContent: View {
         cliSection
         tmuxSection
         ghSection
+        gitSpiceSection
         ynhSection
     }
 }
@@ -89,6 +91,13 @@ extension ToolsTabContent {
                 label: Strings.Settings.GhCli.title,
                 status: ghStatusIndicator,
                 message: ghStatusMessage
+            )
+
+            StatusIndicator(
+                icon: "square.stack.3d.up",
+                label: Strings.Settings.GitSpice.title,
+                status: gitSpiceStatusIndicator,
+                message: gitSpiceStatusMessage
             )
 
             StatusIndicator(

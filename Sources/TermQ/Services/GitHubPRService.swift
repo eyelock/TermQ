@@ -192,27 +192,41 @@ final class GitHubPRService: ObservableObject {
 
     // MARK: - PR ↔ worktree matching
 
-    /// Match open PRs against a set of local worktrees.
+    /// Match open PRs against a set of local worktrees. Deterministic: PRs are
+    /// processed in ascending number order, and branch-name identity takes precedence
+    /// over commit-hash equality.
     ///
-    /// Primary key: `headRefOid` (SHA). Falls back to `headRefName` / localBranchName()
-    /// when the worktree's commit hasn't been fetched yet and the SHA doesn't match.
+    /// - Branch match: `pr.localBranchName() == worktree.branch` — the authoritative
+    ///   pairing for any checked-out branch.
+    /// - Hash match: kept ONLY as a fallback for the detached-HEAD PR-checkout flow
+    ///   (`git worktree add --detach` + `gh pr checkout`) and for worktrees whose
+    ///   branch name simply isn't the PR head. It is suppressed when `stackGraph`
+    ///   knows the PR's head branch: stacked branches routinely share tips/ancestors
+    ///   with siblings after a restack, and a hash match would nondeterministically
+    ///   attach branch X's PR to a worktree checked out on branch Y.
     static func matchPRsToWorktrees(
         prs: [GitHubPR],
-        worktrees: [GitWorktree]
+        worktrees: [GitWorktree],
+        stackGraph: StackGraph? = nil
     ) -> [Int: String] {
         var result: [Int: String] = [:]
-        for pr in prs {
-            // SHA-first match
+        for pr in prs.sorted(by: { $0.number < $1.number }) {
+            // Branch-name match wins — it's exact and stable.
+            let localBranch = pr.localBranchName()
+            if let wt = worktrees.first(where: { $0.branch == localBranch }) {
+                result[pr.number] = wt.path
+                continue
+            }
+            // A tracked stack branch without a worktree of its own must not be
+            // hash-matched onto a sibling's worktree.
+            if let stackGraph, stackGraph.branch(named: pr.headRefName) != nil {
+                continue
+            }
+            // Hash fallback (detached-HEAD PR checkouts; stale branch names).
             if let wt = worktrees.first(where: {
                 $0.commitHash.hasPrefix(pr.headRefOid.prefix(7))
                     || $0.commitHash == pr.headRefOid
             }) {
-                result[pr.number] = wt.path
-                continue
-            }
-            // Branch name fallback
-            let localBranch = pr.localBranchName()
-            if let wt = worktrees.first(where: { $0.branch == localBranch }) {
                 result[pr.number] = wt.path
             }
         }
@@ -234,7 +248,7 @@ final class GitHubPRService: ObservableObject {
                 "--limit", "100",
                 "--state", "open",
                 "--json",
-                "number,title,headRefName,headRefOid,author,"
+                "number,title,headRefName,headRefOid,baseRefName,author,"
                     + "isCrossRepository,isDraft,reviewRequests,assignees,updatedAt",
             ],
             environment: nil,

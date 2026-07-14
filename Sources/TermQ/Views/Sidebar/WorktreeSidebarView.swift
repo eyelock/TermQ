@@ -16,6 +16,7 @@ struct WorktreeSidebarView: View {
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @ObservedObject var prService: GitHubPRService = .shared
     @ObservedObject var ghProbe: GhCliProbe = .shared
+    @ObservedObject var stackService: StackService = .shared
     @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
     @ObservedObject var workspaceStore: WorkspaceStore = .shared
     @Environment(SettingsStore.self) var settings
@@ -33,7 +34,9 @@ struct WorktreeSidebarView: View {
     // Internal (not private) so the empty-state views in WorktreeSidebarView+Workspace.swift can drive it.
     @State var showManageWorkspaces = false
     @State private var newWorktreeContext: NewWorktreeContext?
-    @State private var convertWorktreeContext: ConvertWorktreeContext?
+    // Internal (not private) so the Stacks section in WorktreeSidebarView+Stacks.swift
+    // can anchor an unanchored stack by converting its bottom branch to a worktree.
+    @State var convertWorktreeContext: ConvertWorktreeContext?
     @State private var showEditRepoFor: ObservableRepository?
     @State private var pendingRemoval: (ObservableRepository, GitWorktree)?
     @State private var isShowingRemoveAlert = false
@@ -49,6 +52,15 @@ struct WorktreeSidebarView: View {
     @State private var isShowingDeleteBranchAlert = false
     @State private var branchToDestroy: (ObservableRepository, String)?
     @State private var isShowingDestroyBranchAlert = false
+    @State var addBranchToStackContext: AddBranchToStackContext?
+    @State var submitStackContext: SubmitStackContext?
+    @State var stackConflictWorking = false
+    /// Worktree row to scroll into view — set by the Stacks section's jump indicator,
+    /// consumed by the ScrollViewReader wrapping the repo list.
+    @State var stackJumpTargetWorktreeID: String?
+    /// Worktree row briefly highlighted after a reveal, so the user sees where the
+    /// jump landed.
+    @State var stackHighlightWorktreeID: String?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -71,6 +83,17 @@ struct WorktreeSidebarView: View {
         }
         .sheet(item: $convertWorktreeContext) { ctx in
             ConvertToWorktreeSheet(repo: ctx.repo, originalBranch: ctx.branch, viewModel: viewModel)
+        }
+        .sheet(item: $addBranchToStackContext) { ctx in
+            AddBranchToStackSheet(repo: ctx.repo, worktree: ctx.worktree, viewModel: viewModel)
+        }
+        .sheet(item: $submitStackContext) { ctx in
+            SubmitStackSheet(
+                repo: ctx.repo, worktree: ctx.worktree, branches: ctx.branches,
+                scope: ctx.scope, viewModel: viewModel,
+                onComplete: { created, updated in
+                    showStackToast(Strings.Stacks.submitDone(created, updated))
+                })
         }
         .sheet(item: $showEditRepoFor) { repo in EditRepositorySheet(repo: repo, viewModel: viewModel) }
         .sheet(item: $pruneSheetFor) { repo in
@@ -170,21 +193,6 @@ struct WorktreeSidebarView: View {
         }
     }
 
-    private func makePruneClosedPRsSheet(repo: ObservableRepository) -> PruneClosedPRsSheet {
-        PruneClosedPRsSheet(
-            repo: repo,
-            candidates: pruneClosedPRsCandidates,
-            focusCandidates: focusPruneCandidates,
-            viewModel: viewModel,
-            prService: prService,
-            onDismiss: {
-                isShowingPruneClosedPRsFor = nil
-                pruneClosedPRsCandidates = []
-                focusPruneCandidates = []
-            }
-        )
-    }
-
     // MARK: - Header
 
     private var header: some View {
@@ -240,13 +248,22 @@ struct WorktreeSidebarView: View {
     // MARK: - Repository List
 
     private var repoList: some View {
-        List {
-            ForEach(viewModel.displayedRepositories) { repo in
-                repoRow(repo)
+        ScrollViewReader { proxy in
+            List {
+                ForEach(viewModel.displayedRepositories) { repo in
+                    repoRow(repo)
+                }
+                .onMove(perform: reorderHandler)
             }
-            .onMove(perform: reorderHandler)
+            .listStyle(.sidebar)
+            .onChange(of: stackJumpTargetWorktreeID) { _, target in
+                guard let target else { return }
+                withAnimation {
+                    proxy.scrollTo(target, anchor: .center)
+                }
+                stackJumpTargetWorktreeID = nil
+            }
         }
-        .listStyle(.sidebar)
     }
 
     @ViewBuilder
@@ -293,6 +310,16 @@ struct WorktreeSidebarView: View {
                         repoDefaultHarnessContextItems(for: repo)
                     }
 
+                    if stackService.isAvailable && !stackService.isStacked(repo: repo.path) {
+                        Divider()
+                        Button {
+                            Task { await viewModel.enableStacking(for: repo) }
+                        } label: {
+                            Label(Strings.Stacks.enableStacking, systemImage: "square.stack.3d.up")
+                        }
+                        .help(Strings.Stacks.enableStackingHelp)
+                    }
+
                     Divider()
 
                     Button(role: .destructive) {
@@ -301,43 +328,6 @@ struct WorktreeSidebarView: View {
                         Label(Strings.Sidebar.removeRepository, systemImage: "trash")
                     }
                 }
-        }
-    }
-
-    @ViewBuilder
-    private func repoLabel(_ repo: ObservableRepository) -> some View {
-        HStack {
-            Label(repo.name, systemImage: "shippingbox")
-                .lineLimit(1)
-
-            Spacer()
-
-            if let harnessId = ynhPersistence.repoDefaultHarness(for: repo.path) {
-                Button {
-                    harnessRepository.selectedHarnessId = harnessId
-                } label: {
-                    Image(systemName: "puzzlepiece.extension")
-                        .imageScale(.small)
-                        .foregroundColor(.green)
-                }
-                .buttonStyle(.plain)
-                .help(Strings.Sidebar.linkedHarness(harnessId))
-            }
-
-            Button {
-                Task {
-                    await viewModel.refreshRepo(for: repo)
-                    if sidebarMode == .remote {
-                        await prService.refresh(repoPath: repo.path, force: true)
-                    }
-                }
-            } label: {
-                Image(systemName: "arrow.clockwise")
-                    .imageScale(.small)
-            }
-            .buttonStyle(.plain)
-            .help(Strings.Sidebar.refreshWorktrees)
-            .opacity(viewModel.expandedRepoIDs.contains(repo.id) ? 1 : 0)
         }
     }
 
@@ -361,30 +351,44 @@ struct WorktreeSidebarView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.vertical, 6)
         } else if let trees = viewModel.worktrees[repo.id] {
-            if trees.isEmpty {
-                Text(Strings.Sidebar.worktreesEmpty)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.leading, 4)
-            } else {
-                ForEach(trees) { worktree in
-                    worktreeRow(worktree, repo: repo, allWorktrees: trees)
+            // Collapsible like the Stacks and Local Branches sections — users working
+            // exclusively in stacks can hide the worktree list entirely. Wraps the
+            // rows AND the "+ New Worktree" affordance; state persists per repo.
+            WorktreeSectionDisclosureView(repo: repo, viewModel: viewModel) {
+                if trees.isEmpty {
+                    Text(Strings.Sidebar.worktreesEmpty)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.leading, 4)
+                } else {
+                    let showChevronSlot = repoHasStackedWorktrees(trees, repo: repo)
+                    ForEach(trees) { worktree in
+                        worktreeRow(
+                            worktree, repo: repo, allWorktrees: trees,
+                            showChevronSlot: showChevronSlot)
+                    }
                 }
+
+                Button {
+                    newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: nil)
+                } label: {
+                    Label(Strings.Sidebar.newWorktree, systemImage: "plus")
+                        .font(.caption)
+                        .foregroundColor(.accentColor)
+                }
+                .buttonStyle(.plain)
+                .padding(.leading, 4)
+                .padding(.top, 2)
             }
 
-            Button {
-                newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: nil)
-            } label: {
-                Label(Strings.Sidebar.newWorktree, systemImage: "plus")
-                    .font(.caption)
-                    .foregroundColor(.accentColor)
-            }
-            .buttonStyle(.plain)
-            .padding(.leading, 4)
-            .padding(.top, 2)
+            // Tracked stacks inventory — hidden when no provider, repo not initialized,
+            // or the graph has no stacks. Branches shown here are excluded from the
+            // Local Branches section below.
+            stacksSection(for: repo)
 
-            // Local branches without worktrees
-            if let branches = viewModel.availableBranches[repo.id], !branches.isEmpty {
+            // Local branches without worktrees (excluding stack members)
+            let branches = viewModel.displayedLocalBranches(for: repo)
+            if !branches.isEmpty {
                 BranchSectionDisclosureView(
                     repo: repo,
                     viewModel: viewModel,
@@ -395,7 +399,7 @@ struct WorktreeSidebarView: View {
                         }
                     }
                 )
-                .padding(.top, 4)
+                // No trailing modifiers: the section emits sibling List rows.
             }
         } else {
             Text(Strings.Sidebar.worktreesPlaceholder)
@@ -411,7 +415,7 @@ struct WorktreeSidebarView: View {
 
 extension WorktreeSidebarView {
     @ViewBuilder
-    fileprivate func worktreeRow(
+    func worktreeRowContent(
         _ worktree: GitWorktree, repo: ObservableRepository, allWorktrees: [GitWorktree]
     ) -> some View {
         let isActive = isActiveTerminalInWorktree(worktree, allWorktrees: allWorktrees)
@@ -421,7 +425,8 @@ extension WorktreeSidebarView {
                 allWorktrees: allWorktrees,
                 boardVM: boardVM,
                 isDeleting: viewModel.deletingWorktreeIDs.contains(worktree.id),
-                isUpdating: viewModel.updatingWorktreeIDs.contains(worktree.id)
+                isUpdating: viewModel.updatingWorktreeIDs.contains(worktree.id),
+                stackRootName: viewModel.stackRootName(for: worktree, repo: repo)
             )
 
             VStack(alignment: .leading, spacing: 1) {
@@ -495,8 +500,6 @@ extension WorktreeSidebarView {
             .buttonStyle(.plain)
             .help(Strings.Sidebar.newTerminal)
         }
-        .padding(.leading, 4)
-        .contextMenu { worktreeContextMenu(worktree, repo: repo) }
     }
 
 }
@@ -580,23 +583,17 @@ extension WorktreeSidebarView {
         }
     }
 
+    /// The worktree conveniences shared between the worktree-row menu and the STACKS
+    /// group-header menu (which delegates to the anchoring worktree): Run with Focus,
+    /// terminals, reveal/copy/open-in. No worktree-lifecycle items (lock/remove/
+    /// destroy/harness assignment) — those stay exclusive to the worktree row.
     @ViewBuilder
-    fileprivate func worktreeContextMenu(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
-        let effectiveHarness =
-            ynhPersistence.harness(for: worktree.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
-
-        // Group 0: Harness actions
-        if let harnessName = effectiveHarness {
-            Button {
-                onLaunchHarness?(harnessName, worktree.path, worktree.branch)
-            } label: {
-                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
-            }
-        }
+    func worktreeConvenienceMenuItems(
+        _ worktree: GitWorktree, repo: ObservableRepository
+    ) -> some View {
         worktreeFocusMenuItems(worktree, repo: repo)
         Divider()
 
-        // Group 1: Terminal actions
         Button {
             boardVM.newTerminal(at: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
         } label: {
@@ -611,7 +608,6 @@ extension WorktreeSidebarView {
 
         Divider()
 
-        // Group 2: Reveal / copy
         Button {
             revealInFinder(path: worktree.path)
         } label: {
@@ -637,6 +633,24 @@ extension WorktreeSidebarView {
         }
 
         Divider()
+    }
+
+    @ViewBuilder
+    func worktreeContextMenu(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
+        let effectiveHarness =
+            ynhPersistence.harness(for: worktree.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
+
+        // Group 0: Harness actions
+        if let harnessName = effectiveHarness {
+            Button {
+                onLaunchHarness?(harnessName, worktree.path, worktree.branch)
+            } label: {
+                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
+            }
+        }
+        // Groups 0b–2 are shared with the stack group-header menu (delegated to the
+        // anchoring worktree) — one implementation, two menus.
+        worktreeConvenienceMenuItems(worktree, repo: repo)
 
         // Group 3: Remote links
         if worktree.branch != nil {
@@ -701,6 +715,9 @@ extension WorktreeSidebarView {
                 }
             }
         }
+
+        // Stack actions (only when a provider is available and the repo is stacked)
+        stackContextMenuItems(worktree, repo: repo)
 
         // Group 4: Main-worktree actions
         if worktree.isMainWorktree {
