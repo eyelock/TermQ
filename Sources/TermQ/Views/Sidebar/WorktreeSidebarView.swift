@@ -623,8 +623,7 @@ extension WorktreeSidebarView {
             Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
         }
         Button {
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(worktree.path, forType: .string)
+            PathActions.copyPathname(worktree.path)
         } label: {
             Label(Strings.Sidebar.copyPathname, systemImage: "doc.on.clipboard")
         }
@@ -932,27 +931,14 @@ extension WorktreeSidebarView {
     }
 
     func openInTerminal(path: String) {
-        guard let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") else {
-            TermQLogger.ui.error("openInTerminal: Terminal.app not found")
-            return
-        }
-        let config = NSWorkspace.OpenConfiguration()
-        config.addsToRecentItems = false
-        NSWorkspace.shared.open(
-            [URL(fileURLWithPath: path)],
-            withApplicationAt: terminalURL,
-            configuration: config
-        )
+        PathActions.openInTerminal(path: path)
     }
 
     func revealInFinder(path: String) {
-        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
+        PathActions.revealInFinder(path: path)
     }
 
     fileprivate func openIn(editor: ExternalEditor, worktree: GitWorktree) {
-        let url = URL(fileURLWithPath: worktree.path)
-        let config = NSWorkspace.OpenConfiguration()
-        config.addsToRecentItems = false
-        NSWorkspace.shared.open([url], withApplicationAt: editor.appURL, configuration: config)
+        PathActions.openIn(editor: editor, path: worktree.path)
     }
 }
