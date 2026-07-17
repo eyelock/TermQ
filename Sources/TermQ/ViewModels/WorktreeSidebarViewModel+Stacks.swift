@@ -86,16 +86,17 @@ struct StackGroup: Identifiable, Equatable {
 // MARK: - Stacks
 
 extension WorktreeSidebarViewModel {
-    /// All tracked stacks in the repo's graph — anchored to a worktree or not — for the
-    /// Stacks inventory section. Groups come from `StackGraph.stackRoots`, which
-    /// excludes the trunk (a fan-out point for multiple stacks, never a member or a
-    /// title) and lone tracked branches sitting directly on trunk (they stay in Local
-    /// Branches). Sorted by root name for stable presentation.
+    /// All tracked stacks in the repo's graph — anchored to a worktree or not, and
+    /// including one-entry stacks (a lone tracked branch is a legitimate stack, not a
+    /// Local Branches entry — e.g. "New Stack…" or "Start a stack with this branch"
+    /// produce exactly that) — for the Stacks inventory section. Groups come from
+    /// `StackGraph.stackRoots`, which excludes only the trunk (a fan-out point for
+    /// multiple stacks, never a member or a title). Sorted by root name for stable
+    /// presentation.
     func stackGroups(for repo: ObservableRepository) -> [StackGroup] {
         guard let graph = stacks[repo.id] else { return [] }
         return graph.stackRoots
             .map { StackGroup(rootName: $0.name, branches: graph.chain(containing: $0.name)) }
-            .filter { $0.branches.count > 1 }
             .sorted { $0.rootName.localizedCaseInsensitiveCompare($1.rootName) == .orderedAscending }
     }
 
@@ -252,6 +253,84 @@ extension WorktreeSidebarViewModel {
         }
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
+    }
+
+    /// "New Stacked Branch Before…/After…": checks `referenceBranch` out in `worktree`
+    /// first (guarded — the same rules as switching), then creates `name` at
+    /// `position` relative to whatever ends up checked out there.
+    func createStackedBranch(
+        repo: ObservableRepository, worktree: GitWorktree, referenceBranch: String,
+        name: String, position: StackBranchPosition
+    ) async throws {
+        if worktree.branch != referenceBranch {
+            try await switchStackBranch(repo: repo, worktree: worktree, to: referenceBranch)
+        }
+        let target = self.worktree(forBranch: referenceBranch, repo: repo) ?? worktree
+        try await stackService.createBranch(
+            repo: repo.path, worktree: target.path, name: name, target: nil, position: position)
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
+    /// "New Stack…" footer on the STACKS section: seeds a worktree-less stack. Creates
+    /// `name` off `base` with plain git — no checkout, no worktree — then tracks it
+    /// onto the stack via the mutation queue. Launching into it later uses the
+    /// implicit-create path (`stackLaunch` in the view).
+    func createStack(repo: ObservableRepository, name: String, base: String) async throws {
+        guard let main = mainWorktree(for: repo) else {
+            throw WorktreeOperationError.mainWorktreeNotFound
+        }
+        try await gitService.createBranch(repoPath: repo.path, name: name, base: base)
+        try await stackService.trackBranch(repo: repo.path, worktree: main.path, name: name, base: base)
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
+    /// "New Stack…" in integration mode: creates an EMPTY `stack/<name>` integration
+    /// branch off `base` (plain git, no checkout, no worktree), tracks it as the stack
+    /// root, and — when `firstBranch` is provided — creates that branch off the
+    /// integration branch and tracks it with the integration branch as parent. gs
+    /// bases change requests on parents automatically, so stacked-branch PRs chain
+    /// into the integration branch; the default branch is only touched by the eventual
+    /// integration→default PR.
+    func createIntegrationStack(
+        repo: ObservableRepository, stackName: String, base: String, firstBranch: String?
+    ) async throws {
+        guard let main = mainWorktree(for: repo) else {
+            throw WorktreeOperationError.mainWorktreeNotFound
+        }
+        let integration = Self.integrationBranchName(for: stackName)
+        try await gitService.createBranch(repoPath: repo.path, name: integration, base: base)
+        try await stackService.trackBranch(
+            repo: repo.path, worktree: main.path, name: integration, base: base)
+        if let firstBranch, !firstBranch.isEmpty {
+            try await gitService.createBranch(repoPath: repo.path, name: firstBranch, base: integration)
+            try await stackService.trackBranch(
+                repo: repo.path, worktree: main.path, name: firstBranch, base: integration)
+        }
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+    }
+
+    /// The derived integration-branch name for a stack — shown as a live preview in
+    /// the New Stack sheet and used verbatim by `createIntegrationStack`.
+    static func integrationBranchName(for stackName: String) -> String {
+        "stack/\(stackName)"
+    }
+
+    /// "Start a stack with this branch" on the New Worktree sheet: after the normal
+    /// worktree + branch creation, tracks the new branch onto the stack so the
+    /// worktree shows as a one-entry stack. Errors surface via `operationError` —
+    /// the worktree itself was already created successfully at this point.
+    func trackNewWorktreeAsStack(repo: ObservableRepository, worktree: GitWorktree, base: String) async {
+        guard let branch = worktree.branch else { return }
+        do {
+            try await stackService.trackBranch(
+                repo: repo.path, worktree: worktree.path, name: branch, base: base)
+            await refreshStack(for: repo)
+        } catch {
+            operationError = Strings.Stacks.enableStackingFailed(error.localizedDescription)
+        }
     }
 
     /// Restack `scope` in `worktree` and report what happened — gs prints nothing

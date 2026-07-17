@@ -77,6 +77,7 @@ extension ToolsTabContent {
 
     @ViewBuilder
     var gitSpiceAvailableContent: some View {
+        @Bindable var settings = settings
         VStack(alignment: .leading, spacing: 8) {
             if case .ready(let version) = stackService.availability {
                 HStack {
@@ -116,6 +117,22 @@ extension ToolsTabContent {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
+
+            Divider()
+
+            Picker(Strings.Settings.GitSpice.newStackMode, selection: $settings.newStackMode) {
+                Text(Strings.Stacks.newStackModeDefault).tag(NewStackMode.branchOffDefault)
+                Text(Strings.Stacks.newStackModeIntegration).tag(NewStackMode.branchOffIntegration)
+            }
+            .pickerStyle(.radioGroup)
+            .font(.caption)
+            .help(Strings.Settings.GitSpice.newStackModeHelp)
+
+            Toggle(
+                Strings.Settings.GitSpice.hideStackedWorktrees, isOn: $settings.hideStackedWorktrees
+            )
+            .font(.caption)
+            .help(Strings.Settings.GitSpice.hideStackedWorktreesHelp)
 
             HStack {
                 Spacer()

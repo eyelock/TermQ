@@ -12,7 +12,7 @@ struct WorktreeSidebarView: View {
     @ObservedObject var boardVM: BoardViewModel = .shared
     @ObservedObject var harnessRepository: HarnessRepository = .shared
     @ObservedObject var ynhPersistence: YNHPersistence = .shared
-    @ObservedObject private var ynhDetector: YNHDetector = .shared
+    @ObservedObject var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @ObservedObject var prService: GitHubPRService = .shared
     @ObservedObject var ghProbe: GhCliProbe = .shared
@@ -33,7 +33,9 @@ struct WorktreeSidebarView: View {
     @State private var showAddRepo = false
     // Internal (not private) so the empty-state views in WorktreeSidebarView+Workspace.swift can drive it.
     @State var showManageWorkspaces = false
-    @State private var newWorktreeContext: NewWorktreeContext?
+    // Internal (not private) so the STACKS group-header menu in
+    // WorktreeSidebarView+Stacks.swift can offer the generic "New Worktree…" action.
+    @State var newWorktreeContext: NewWorktreeContext?
     // Internal (not private) so the Stacks section in WorktreeSidebarView+Stacks.swift
     // can anchor an unanchored stack by converting its bottom branch to a worktree.
     @State var convertWorktreeContext: ConvertWorktreeContext?
@@ -55,6 +57,10 @@ struct WorktreeSidebarView: View {
     @State var addBranchToStackContext: AddBranchToStackContext?
     @State var submitStackContext: SubmitStackContext?
     @State var stackConflictWorking = false
+    /// A guarded switch/launch was blocked (dirty worktree, in-use, checked out
+    /// elsewhere) — the error alert offers "Break Out into Worktree…" as an escape.
+    @State var stackSwitchGuardFailure: StackSwitchGuardFailure?
+    @State var newStackContext: NewStackContext?
     /// Worktree row to scroll into view — set by the Stacks section's jump indicator,
     /// consumed by the ScrollViewReader wrapping the repo list.
     @State var stackJumpTargetWorktreeID: String?
@@ -85,7 +91,11 @@ struct WorktreeSidebarView: View {
             ConvertToWorktreeSheet(repo: ctx.repo, originalBranch: ctx.branch, viewModel: viewModel)
         }
         .sheet(item: $addBranchToStackContext) { ctx in
-            AddBranchToStackSheet(repo: ctx.repo, worktree: ctx.worktree, viewModel: viewModel)
+            AddBranchToStackSheet(
+                repo: ctx.repo, worktree: ctx.worktree, insertion: ctx.insertion, viewModel: viewModel)
+        }
+        .sheet(item: $newStackContext) { ctx in
+            NewStackSheet(repo: ctx.repo, viewModel: viewModel)
         }
         .sheet(item: $submitStackContext) { ctx in
             SubmitStackSheet(
@@ -190,6 +200,22 @@ struct WorktreeSidebarView: View {
             Button(Strings.Common.ok) { viewModel.operationError = nil }
         } message: {
             if let msg = viewModel.operationError { Text(msg) }
+        }
+        .alert(
+            Strings.Alert.error,
+            isPresented: Binding(
+                get: { stackSwitchGuardFailure != nil },
+                set: { if !$0 { stackSwitchGuardFailure = nil } }
+            ),
+            presenting: stackSwitchGuardFailure
+        ) { failure in
+            Button(Strings.Stacks.breakOut) {
+                convertWorktreeContext = ConvertWorktreeContext(repo: failure.repo, branch: failure.branch)
+                stackSwitchGuardFailure = nil
+            }
+            Button(Strings.Common.ok, role: .cancel) { stackSwitchGuardFailure = nil }
+        } message: { failure in
+            Text(failure.message)
         }
     }
 
@@ -354,6 +380,17 @@ struct WorktreeSidebarView: View {
             // Collapsible like the Stacks and Local Branches sections — users working
             // exclusively in stacks can hide the worktree list entirely. Wraps the
             // rows AND the "+ New Worktree" affordance; state persists per repo.
+            //
+            // When `hideStackedWorktrees` is on, worktrees whose branch belongs to a
+            // tracked stack are dropped here — they're already listed under STACKS, so
+            // this avoids showing the same worktree twice. `allWorktrees` on each row
+            // stays the UNFILTERED `trees` so cross-worktree lookups (e.g. "checked out
+            // elsewhere") keep seeing every worktree, not just the visible ones.
+            let displayedTrees =
+                settings.hideStackedWorktrees
+                ? trees.filter { viewModel.stackRootName(for: $0, repo: repo) == nil }
+                : trees
+            let showChevronSlot = repoHasStackedWorktrees(displayedTrees, repo: repo)
             WorktreeSectionDisclosureView(repo: repo, viewModel: viewModel) {
                 if trees.isEmpty {
                     Text(Strings.Sidebar.worktreesEmpty)
@@ -361,8 +398,7 @@ struct WorktreeSidebarView: View {
                         .foregroundColor(.secondary)
                         .padding(.leading, 4)
                 } else {
-                    let showChevronSlot = repoHasStackedWorktrees(trees, repo: repo)
-                    ForEach(trees) { worktree in
+                    ForEach(displayedTrees) { worktree in
                         worktreeRow(
                             worktree, repo: repo, allWorktrees: trees,
                             showChevronSlot: showChevronSlot)
@@ -372,12 +408,18 @@ struct WorktreeSidebarView: View {
                 Button {
                     newWorktreeContext = NewWorktreeContext(repo: repo, initialBaseBranch: nil)
                 } label: {
-                    Label(Strings.Sidebar.newWorktree, systemImage: "plus")
-                        .font(.caption)
-                        .foregroundColor(.accentColor)
+                    // Manual icon + text, NOT `Label` — sidebar-styled Lists auto-align
+                    // `Label` icons into a shared column that ignores surrounding
+                    // padding, which silently defeated leading-padding attempts here.
+                    HStack(spacing: 4) {
+                        Image(systemName: "plus")
+                            .imageScale(.small)
+                        Text(Strings.Sidebar.newWorktree)
+                    }
+                    .font(.caption)
+                    .foregroundColor(.accentColor)
                 }
                 .buttonStyle(.plain)
-                .padding(.leading, 4)
                 .padding(.top, 2)
             }
 
@@ -608,6 +650,16 @@ extension WorktreeSidebarView {
 
         Divider()
 
+        worktreeRevealMenuItems(worktree)
+
+        Divider()
+    }
+
+    /// Reveal/copy/open-in block: path-only actions, independent of which branch is
+    /// checked out. Shared by the worktree-row menu and the STACKS group-header menu
+    /// (where the checked-out branch may not match the action being performed).
+    @ViewBuilder
+    func worktreeRevealMenuItems(_ worktree: GitWorktree) -> some View {
         Button {
             revealInFinder(path: worktree.path)
         } label: {
@@ -631,8 +683,6 @@ extension WorktreeSidebarView {
                 }
             }
         }
-
-        Divider()
     }
 
     @ViewBuilder
@@ -881,7 +931,7 @@ extension WorktreeSidebarView {
 // MARK: - Remote Navigation
 
 extension WorktreeSidebarView {
-    fileprivate func openBranchOnRemote(branch: String, repo: ObservableRepository) {
+    func openBranchOnRemote(branch: String, repo: ObservableRepository) {
         Task {
             guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
                 let base = remoteWebURL(from: raw)
@@ -903,7 +953,7 @@ extension WorktreeSidebarView {
         }
     }
 
-    fileprivate func openRemoteCommit(worktree: GitWorktree, repo: ObservableRepository) {
+    func openRemoteCommit(worktree: GitWorktree, repo: ObservableRepository) {
         Task {
             guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
                 let base = remoteWebURL(from: raw)
@@ -966,7 +1016,7 @@ extension WorktreeSidebarView {
         NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: path)])
     }
 
-    fileprivate func openIn(editor: ExternalEditor, worktree: GitWorktree) {
+    func openIn(editor: ExternalEditor, worktree: GitWorktree) {
         let url = URL(fileURLWithPath: worktree.path)
         let config = NSWorkspace.OpenConfiguration()
         config.addsToRecentItems = false

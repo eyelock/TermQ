@@ -39,6 +39,12 @@ protocol YNHPersistenceProtocol: AnyObject {
     /// Last-used focus name for the Run with Focus sheet, per repo.
     func runFocus(for repoPath: String) -> String?
 
+    /// Explicit harness override for a stack, keyed by its root branch name.
+    /// Independent from worktree/repo overrides — see the resolution order used by
+    /// `WorktreeSidebarView+Stacks`: stack override → owning/anchoring worktree
+    /// override → repo default.
+    func stackHarness(repoPath: String, rootName: String) -> String?
+
     // MARK: - Mutations
 
     /// Sets or clears the repository-level default harness.
@@ -65,4 +71,29 @@ protocol YNHPersistenceProtocol: AnyObject {
 
     /// Removes all worktree and repo-level associations for a harness (called after uninstall).
     func removeAllAssociations(for harnessName: String)
+
+    /// Sets or clears the harness override for a stack, keyed by its root branch name.
+    func setStackHarness(_ harnessId: String?, repoPath: String, rootName: String)
+}
+
+extension YNHPersistenceProtocol {
+    /// Resolves the effective harness for a stack context (group launch items, entry
+    /// launch items, badge, primary click) — Revision 11(c)'s resolution order:
+    /// stack override → owning/anchoring worktree override → repo default.
+    ///
+    /// - Parameters:
+    ///   - repoPath: The repository root path.
+    ///   - rootName: The stack's root branch name (the lookup key for
+    ///     `stackHarness`/`setStackHarness`).
+    ///   - worktreePath: The path of the branch's own worktree, or the stack's
+    ///     anchoring worktree — `nil` when the stack has no worktree anywhere yet.
+    func effectiveStackHarness(repoPath: String, rootName: String, worktreePath: String?) -> String? {
+        if let stackOverride = stackHarness(repoPath: repoPath, rootName: rootName) {
+            return stackOverride
+        }
+        if let worktreePath, let worktreeOverride = harness(for: worktreePath) {
+            return worktreeOverride
+        }
+        return repoDefaultHarness(for: repoPath)
+    }
 }

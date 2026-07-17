@@ -13,7 +13,9 @@ struct ToolsTabContent: View {
     @Binding var cliInstallPath: String
     @Binding var cliInstalled: Bool
 
-    @Environment(SettingsStore.self) private var settings
+    // Internal (not private) so the git-spice section in ToolsTabContent+GitSpice.swift
+    // can bind the New Stack default-mode preference.
+    @Environment(SettingsStore.self) var settings
 
     let installMCPServer: () -> Void
     let uninstallMCPServer: () -> Void

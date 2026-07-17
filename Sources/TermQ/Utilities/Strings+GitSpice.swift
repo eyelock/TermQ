@@ -17,5 +17,11 @@ extension Strings.Settings {
         static func statusUnusable(_ reason: String) -> String {
             localized("settings.gitspice.status.unusable %@", reason)
         }
+        static var newStackMode: String { localized("settings.gitspice.new.stack.mode") }
+        static var newStackModeHelp: String { localized("settings.gitspice.new.stack.mode.help") }
+        static var hideStackedWorktrees: String { localized("settings.gitspice.hide.stacked.worktrees") }
+        static var hideStackedWorktreesHelp: String {
+            localized("settings.gitspice.hide.stacked.worktrees.help")
+        }
     }
 }

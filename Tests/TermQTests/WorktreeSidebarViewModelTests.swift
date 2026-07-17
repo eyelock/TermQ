@@ -93,6 +93,11 @@ final class MockGitService: GitServiceProtocol {
         renameBranchCalls.append((oldName, newName))
     }
 
+    private(set) var createBranchCalls: [(String, String)] = []
+    func createBranch(repoPath: String, name: String, base: String) async throws {
+        createBranchCalls.append((name, base))
+    }
+
     func deleteLocalBranch(repoPath: String, branch: String) async throws {
         deleteLocalBranchCalls.append(branch)
     }
@@ -1291,7 +1296,7 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
                 makeBranch("alpha-base", parent: "develop", children: ["alpha-mid"]),
                 makeBranch("alpha-mid", parent: "alpha-base", children: ["alpha-top"]),
                 makeBranch("alpha-top", parent: "alpha-mid"),
-                // Lone tracked branch on trunk — not a stack
+                // Lone tracked branch on trunk — a one-entry stack (still a group)
                 makeBranch("lone-branch", parent: "develop"),
             ])
         await fake.setGraph(graph, for: "/tmp/test-repo")
@@ -1303,14 +1308,17 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         return (vm, repo)
     }
 
-    func testStackGroups_groupsByRootSortedByName_excludingTrunkAndLoneBranches() async {
+    func testStackGroups_groupsByRootSortedByName_excludingOnlyTrunk() async {
         let (vm, repo) = await makeMultiStackVM()
 
         let groups = vm.stackGroups(for: repo)
 
-        XCTAssertEqual(groups.map(\.rootName), ["alpha-base", "zeta-base"])
+        // lone-branch is a one-entry stack — a legitimate group, not a Local Branches
+        // entry (Round-3 addendum).
+        XCTAssertEqual(groups.map(\.rootName), ["alpha-base", "lone-branch", "zeta-base"])
         XCTAssertEqual(groups[0].branches.map(\.name), ["alpha-base", "alpha-mid", "alpha-top"])
-        XCTAssertEqual(groups[1].branches.map(\.name), ["zeta-base", "zeta-top"])
+        XCTAssertEqual(groups[1].branches.map(\.name), ["lone-branch"])
+        XCTAssertEqual(groups[2].branches.map(\.name), ["zeta-base", "zeta-top"])
         // The trunk is a fan-out point — never a group title, never a member.
         XCTAssertFalse(groups.contains { $0.rootName == "develop" })
         XCTAssertFalse(groups.contains { $0.branches.contains { $0.name == "develop" } })
@@ -1339,9 +1347,9 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         let (vm, repo) = await makeMultiStackVM()
         vm.availableBranches[repo.id] = ["alpha-mid", "lone-branch", "unrelated", "zeta-top"]
 
-        // Stack members are listed in the Stacks section only; lone tracked branches
-        // and untracked branches stay in Local Branches.
-        XCTAssertEqual(vm.displayedLocalBranches(for: repo), ["lone-branch", "unrelated"])
+        // Stack members — including one-entry stacks like lone-branch — are listed in
+        // the Stacks section only; only untracked branches stay in Local Branches.
+        XCTAssertEqual(vm.displayedLocalBranches(for: repo), ["unrelated"])
     }
 
     func testDisplayedLocalBranches_noStacks_passesThrough() {

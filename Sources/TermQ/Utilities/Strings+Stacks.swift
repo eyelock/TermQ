@@ -116,5 +116,45 @@ extension Strings {
         }
         static var anchorHelp: String { localized("stacks.anchor.help") }
         static var groupNewWorktree: String { localized("stacks.group.new.worktree") }
+
+        // Round-3: launch menus
+        static var newBranchBefore: String { localized("stacks.new.branch.before") }
+        static var newBranchAfter: String { localized("stacks.new.branch.after") }
+        static func newBranchInsertBelowNote(_ branch: String) -> String {
+            localized("stacks.new.branch.insert.below.note %@", branch)
+        }
+        static func newBranchInsertAboveNote(_ branch: String) -> String {
+            localized("stacks.new.branch.insert.above.note %@", branch, branch)
+        }
+        static var mainWorktreeNotFound: String { localized("stacks.main.worktree.not.found") }
+
+        // Round-3 addendum: stack creation entry points
+        static var newStack: String { localized("stacks.new.stack") }
+        static var newStackTitle: String { localized("stacks.new.stack.title") }
+        static var newStackNameLabel: String { localized("stacks.new.stack.name.label") }
+        static var newStackNamePlaceholder: String { localized("stacks.new.stack.name.placeholder") }
+        static var newStackBaseLabel: String { localized("stacks.new.stack.base.label") }
+        static var newStackButton: String { localized("stacks.new.stack.button") }
+        static var newStackNote: String { localized("stacks.new.stack.note") }
+        static var startStackCheckbox: String { localized("stacks.start.stack.checkbox") }
+
+        // New Stack modes
+        static var newStackModeDefault: String { localized("stacks.new.stack.mode.default") }
+        static var newStackModeIntegration: String { localized("stacks.new.stack.mode.integration") }
+        static var newStackStackNameLabel: String { localized("stacks.new.stack.stack.name.label") }
+        static func newStackIntegrationPreview(_ branch: String) -> String {
+            localized("stacks.new.stack.integration.preview %@", branch)
+        }
+        static var newStackFirstBranchLabel: String { localized("stacks.new.stack.first.branch.label") }
+        static var newStackFirstBranchEmptyHint: String {
+            localized("stacks.new.stack.first.branch.empty.hint")
+        }
+        static var newStackFirstBranchFilledHint: String {
+            localized("stacks.new.stack.first.branch.filled.hint")
+        }
+        static var newStackIntegrationNote: String { localized("stacks.new.stack.integration.note") }
+        static func newStackNameExists(_ branch: String) -> String {
+            localized("stacks.new.stack.name.exists %@", branch)
+        }
     }
 }

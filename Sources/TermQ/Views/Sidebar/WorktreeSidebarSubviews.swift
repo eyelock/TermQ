@@ -287,24 +287,6 @@ struct WorktreeLeftIcon: View {
     /// isn't stacked — shows the persistent stack glyph in the left slot (same visual
     /// weight as the Home icon). Home/lock take precedence when they apply.
     var stackRootName: String?
-    @State private var showPopover = false
-
-    private var matchingCards: [TerminalCard] {
-        (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
-            .filter { card in
-                guard !card.isDeleted else { return false }
-                let wd = card.workingDirectory
-                let matchesThis = wd == worktree.path || wd.hasPrefix(worktree.path + "/")
-                guard matchesThis else { return false }
-                // Don't count this card if a more-specific sibling worktree owns it
-                // (handles the common case where worktrees live inside the main repo dir)
-                return !allWorktrees.contains { other in
-                    other.id != worktree.id
-                        && other.path.count > worktree.path.count
-                        && (wd == other.path || wd.hasPrefix(other.path + "/"))
-                }
-            }
-    }
 
     var body: some View {
         HStack(spacing: 2) {
@@ -335,53 +317,85 @@ struct WorktreeLeftIcon: View {
             .frame(width: 12)
 
             // Right slot — terminal count (always shown)
-            let cards = matchingCards
-            if cards.isEmpty {
-                Image(systemName: "circle")
-                    .foregroundColor(.secondary)
+            TerminalCountBadge(worktree: worktree, allWorktrees: allWorktrees, boardVM: boardVM)
+        }
+    }
+}
+
+/// Terminal-count badge: an empty circle with no open terminals, or a filled
+/// `N.circle.fill` that opens a popover listing the matching cards. Shared between
+/// `WorktreeLeftIcon`'s right slot and the STACKS inventory rows (Revision 11f) so both
+/// use identical counting/exclusion logic and visual language.
+struct TerminalCountBadge: View {
+    let worktree: GitWorktree
+    let allWorktrees: [GitWorktree]
+    @ObservedObject var boardVM: BoardViewModel
+    @State private var showPopover = false
+
+    private var matchingCards: [TerminalCard] {
+        (boardVM.board.cards + Array(boardVM.tabManager.transientCards.values))
+            .filter { card in
+                guard !card.isDeleted else { return false }
+                let wd = card.workingDirectory
+                let matchesThis = wd == worktree.path || wd.hasPrefix(worktree.path + "/")
+                guard matchesThis else { return false }
+                // Don't count this card if a more-specific sibling worktree owns it
+                // (handles the common case where worktrees live inside the main repo dir)
+                return !allWorktrees.contains { other in
+                    other.id != worktree.id
+                        && other.path.count > worktree.path.count
+                        && (wd == other.path || wd.hasPrefix(other.path + "/"))
+                }
+            }
+    }
+
+    var body: some View {
+        let cards = matchingCards
+        if cards.isEmpty {
+            Image(systemName: "circle")
+                .foregroundColor(.secondary)
+                .imageScale(.small)
+                .frame(width: 14)
+        } else {
+            let iconName = cards.count <= 50 ? "\(cards.count).circle.fill" : "circle.fill"
+            Button {
+                showPopover = true
+            } label: {
+                Image(systemName: iconName)
+                    .foregroundColor(.accentColor)
                     .imageScale(.small)
                     .frame(width: 14)
-            } else {
-                let iconName = cards.count <= 50 ? "\(cards.count).circle.fill" : "circle.fill"
-                Button {
-                    showPopover = true
-                } label: {
-                    Image(systemName: iconName)
-                        .foregroundColor(.accentColor)
-                        .imageScale(.small)
-                        .frame(width: 14)
-                }
-                .buttonStyle(.plain)
-                .help(Strings.Sidebar.terminalBadgeHelp)
-                .popover(isPresented: $showPopover, arrowEdge: .leading) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(cards) { card in
-                            Button {
-                                boardVM.selectCard(card)
-                                showPopover = false
-                            } label: {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "terminal")
-                                        .imageScale(.small)
-                                        .foregroundColor(.secondary)
-                                        .frame(width: 16)
-                                    Text(card.title)
-                                        .lineLimit(1)
-                                }
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 7)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Sidebar.terminalBadgeHelp)
+            .popover(isPresented: $showPopover, arrowEdge: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(cards) { card in
+                        Button {
+                            boardVM.selectCard(card)
+                            showPopover = false
+                        } label: {
+                            HStack(spacing: 8) {
+                                Image(systemName: "terminal")
+                                    .imageScale(.small)
+                                    .foregroundColor(.secondary)
+                                    .frame(width: 16)
+                                Text(card.title)
+                                    .lineLimit(1)
                             }
-                            .buttonStyle(.plain)
-                            if card.id != cards.last?.id {
-                                Divider()
-                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 7)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        if card.id != cards.last?.id {
+                            Divider()
                         }
                     }
-                    .frame(minWidth: 200)
-                    .padding(.vertical, 4)
                 }
+                .frame(minWidth: 200)
+                .padding(.vertical, 4)
             }
         }
     }

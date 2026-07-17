@@ -42,6 +42,26 @@ public struct StackCapabilities: OptionSet, Sendable {
     public static let sync = StackCapabilities(rawValue: 1 << 2)
     public static let trackExisting = StackCapabilities(rawValue: 1 << 3)
     public static let conflictResume = StackCapabilities(rawValue: 1 << 4)
+    /// Provider can create a branch at a position relative to the currently checked-out
+    /// branch (not just "on top of an explicit target") — gates "New Stacked Branch
+    /// Before…/After…" in the UI.
+    public static let branchInsertion = StackCapabilities(rawValue: 1 << 5)
+}
+
+/// Where a newly created branch attaches, relative to the branch currently checked out
+/// in the target worktree. `.onTop` is the original "create on top of an explicit
+/// target" behavior; `.below`/`.above` require `.branchInsertion` support and operate on
+/// whatever is checked out at call time (the caller must check it out first).
+public enum StackBranchPosition: Sendable, Equatable {
+    /// Create stacked on `target` (or the current branch when `target` is nil) —
+    /// the original behavior.
+    case onTop
+    /// Insert below the currently checked-out branch: that branch's parent becomes the
+    /// new branch. git-spice: `gs branch create <name> --below`.
+    case below
+    /// Insert directly above the currently checked-out branch, moving its existing
+    /// children onto the new branch. git-spice: `gs branch create <name> --insert`.
+    case above
 }
 
 // MARK: - Neutral Domain Model
@@ -168,14 +188,15 @@ public struct StackGraph: Codable, Sendable, Equatable {
         return current
     }
 
-    /// The bottom branch of every stack in the graph: non-trunk branches sitting
-    /// directly on trunk (or an unknown parent) with at least one branch above them.
-    /// A trunk with multiple `ups` yields one root per stack.
+    /// The bottom branch of every tracked stack in the graph: non-trunk branches
+    /// sitting directly on trunk (or an unknown parent). A lone tracked branch with
+    /// nothing above it is still a stack (a one-entry one, e.g. "New Stack…" or the
+    /// New Worktree sheet's "Start a stack" checkbox) and IS included — gs tracks it,
+    /// and it's a legitimate, addressable stack. A trunk with multiple `ups` yields one
+    /// root per stack.
     public var stackRoots: [StackBranch] {
         branches.filter { branch in
-            branch.parent != nil
-                && rootBranch(for: branch.name)?.name == branch.name
-                && !branch.children.isEmpty
+            branch.parent != nil && rootBranch(for: branch.name)?.name == branch.name
         }
     }
 
@@ -286,6 +307,13 @@ public protocol StackProvider: Sendable {
     func graph(repo: String) async throws -> StackGraph
 
     func createBranch(name: String, target: String?, in worktree: String) async throws
+    /// Create a branch at `position` relative to whatever is currently checked out in
+    /// `worktree`. Only meaningful when `capabilities` contains `.branchInsertion`;
+    /// providers without it can fall back to the `.onTop` behavior of the 3-arg
+    /// overload (see the protocol extension default).
+    func createBranch(
+        name: String, target: String?, position: StackBranchPosition, in worktree: String
+    ) async throws
     func trackBranch(_ name: String, base: String, in worktree: String) async throws
     func switchBranch(to name: String, in worktree: String) async throws
     func restack(scope: StackScope, in worktree: String) async throws
@@ -294,6 +322,19 @@ public protocol StackProvider: Sendable {
     func continueOperation(in worktree: String) async throws
     func abortOperation(in worktree: String) async throws
     func pausedOperation(repo: String) async -> StackPausedOperation?
+}
+
+// MARK: - Default Implementations
+
+extension StackProvider {
+    /// Providers that don't advertise `.branchInsertion` fall back to `.onTop`,
+    /// ignoring `position` — the UI gates Before/After on the capability, so this only
+    /// runs for providers that never receive a non-`.onTop` position.
+    public func createBranch(
+        name: String, target: String?, position: StackBranchPosition, in worktree: String
+    ) async throws {
+        try await createBranch(name: name, target: target, in: worktree)
+    }
 }
 
 // MARK: - Provider Registry

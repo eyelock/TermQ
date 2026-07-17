@@ -9,6 +9,7 @@ struct NewWorktreeSheet: View {
     let repo: ObservableRepository
     let initialBaseBranch: String?
     @ObservedObject var viewModel: WorktreeSidebarViewModel
+    @ObservedObject var stackService: StackService = .shared
     @Environment(\.dismiss) private var dismiss
 
     @State private var branchName: String = ""
@@ -19,6 +20,14 @@ struct NewWorktreeSheet: View {
     @State private var errorMessage: String?
     @State private var showBranchPopover = false
     @FocusState private var baseBranchFocused: Bool
+    /// "Start a stack with this branch" — only offered when the provider is installed
+    /// AND the repo is already gs-initialized; never runs `gs repo init` as a side
+    /// effect of creating a worktree.
+    @State private var startStack: Bool = false
+
+    private var canStartStack: Bool {
+        stackService.isAvailable && stackService.isStacked(repo: repo.path)
+    }
 
     private var filteredBranches: [String] {
         let query = baseBranch.trimmingCharacters(in: .whitespaces).lowercased()
@@ -74,6 +83,10 @@ struct NewWorktreeSheet: View {
                 placeholder: viewModel.inferWorktreePath(for: repo, branchName: Strings.Sidebar.branchNamePlaceholder),
                 validatePath: false
             )
+
+            if canStartStack {
+                Toggle(Strings.Stacks.startStackCheckbox, isOn: $startStack)
+            }
 
             if let msg = errorMessage {
                 Text(msg)
@@ -156,12 +169,18 @@ struct NewWorktreeSheet: View {
         defer { isCreating = false }
         errorMessage = nil
         do {
+            let base = baseBranch.isEmpty ? nil : baseBranch
             try await viewModel.createWorktree(
                 repo: repo,
                 branchName: branchName,
-                baseBranch: baseBranch.isEmpty ? nil : baseBranch,
+                baseBranch: base,
                 path: path
             )
+            if canStartStack, startStack, let base,
+                let created = viewModel.worktree(forBranch: branchName, repo: repo)
+            {
+                await viewModel.trackNewWorktreeAsStack(repo: repo, worktree: created, base: base)
+            }
             dismiss()
         } catch {
             errorMessage = error.localizedDescription

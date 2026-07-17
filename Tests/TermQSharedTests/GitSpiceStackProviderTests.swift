@@ -210,7 +210,10 @@ final class GitSpiceStackProviderTests: XCTestCase {
             """
         let graph = StackGraph(branches: GitSpiceStackProvider.parseLogShortNDJSON(fixture))
         XCTAssertEqual(graph.branches.count, 6)
-        XCTAssertEqual(graph.stackRoots.map(\.name).sorted(), ["feat/evals", "feat/routing"])
+        // design/adr is a lone tracked branch on trunk — still a legitimate (one-entry)
+        // stack root.
+        XCTAssertEqual(
+            graph.stackRoots.map(\.name).sorted(), ["design/adr", "feat/evals", "feat/routing"])
         XCTAssertEqual(
             graph.chain(containing: "feat/routing-tests").map(\.name),
             ["feat/routing", "feat/routing-tests"])
@@ -495,14 +498,16 @@ final class StackGraphTests: XCTestCase {
         }
     }
 
-    func testStackRoots_multiStackTrunk_oneRootPerStack_excludingTrunkAndLoners() {
+    func testStackRoots_multiStackTrunk_oneRootPerStack_includingLoners() {
         let roots = makeMultiStackGraph().stackRoots.map(\.name).sorted()
-        // design/adr is a lone branch on trunk (no ups) — not a stack root.
-        XCTAssertEqual(roots, ["feat/evals-engine", "feat/skill-routing"])
+        // design/adr is a lone tracked branch on trunk (no ups) — still a legitimate
+        // one-entry stack root (Round-3 addendum: "New Stack…" / "Start a stack"
+        // produce exactly this shape, and gs tracks it).
+        XCTAssertEqual(roots, ["design/adr", "feat/evals-engine", "feat/skill-routing"])
     }
 
-    func testStackRoots_simpleGraph_excludesTrunkAndLoneBranch() {
-        XCTAssertEqual(makeGraph().stackRoots.map(\.name), ["checkout-api"])
+    func testStackRoots_simpleGraph_excludesOnlyTrunk() {
+        XCTAssertEqual(makeGraph().stackRoots.map(\.name).sorted(), ["checkout-api", "lone-on-trunk"])
     }
 
     func testChain_doesNotInfiniteLoopOnCycle() {

@@ -93,6 +93,8 @@ struct StackDisclosureRow<Label: View, HeaderMenu: View>: View {
     let onJumpToWorktree: (StackBranch) -> Void
     /// "Break Out into Worktree…" for entries not checked out anywhere.
     let onBreakOut: (StackBranch) -> Void
+    /// Bundled launch/insertion/remote actions for an entry (Round-3 launch menus).
+    let entryActions: (StackBranch) -> StackEntryActions
     @ViewBuilder let label: () -> Label
     /// The worktree context menu — attached to the header row ONLY; chain entries
     /// carry their own menus.
@@ -130,7 +132,8 @@ struct StackDisclosureRow<Label: View, HeaderMenu: View>: View {
                     onSubmitBranch: { onSubmitBranch(branch) },
                     onJumpToWorktree: elsewhere == nil ? nil : { onJumpToWorktree(branch) },
                     onBreakOut: elsewhere == nil && branch.name != currentBranch
-                        ? { onBreakOut(branch) } : nil
+                        ? { onBreakOut(branch) } : nil,
+                    actions: entryActions(branch)
                 )
                 .padding(.leading, StackRowMetrics.chainEntryIndent)
             }
@@ -167,6 +170,9 @@ struct StackBranchEntryRow: View {
     let onJumpToWorktree: (() -> Void)?
     /// "Break Out into Worktree…" — offered when the branch has no worktree of its own.
     let onBreakOut: (() -> Void)?
+    /// Bundled launch/insertion/remote actions (Round-3 launch menus) — shared by both
+    /// modes, built uniformly by `WorktreeSidebarView+Stacks`'s `stackEntryActions`.
+    let actions: StackEntryActions
 
     /// Working-surface mode (worktree expansion).
     init(
@@ -178,7 +184,8 @@ struct StackBranchEntryRow: View {
         onRestackFromHere: @escaping () -> Void,
         onSubmitBranch: @escaping () -> Void,
         onJumpToWorktree: (() -> Void)?,
-        onBreakOut: (() -> Void)?
+        onBreakOut: (() -> Void)?,
+        actions: StackEntryActions = StackEntryActions()
     ) {
         self.branch = branch
         self.isCurrent = isCurrent
@@ -189,6 +196,7 @@ struct StackBranchEntryRow: View {
         self.worktreePath = checkedOutElsewherePath
         self.onJumpToWorktree = onJumpToWorktree
         self.onBreakOut = onBreakOut
+        self.actions = actions
     }
 
     /// Inventory mode (Stacks section) — read-only entry with a jump-to-worktree
@@ -201,7 +209,8 @@ struct StackBranchEntryRow: View {
         onJumpToWorktree: (() -> Void)?,
         onBreakOut: (() -> Void)? = nil,
         onRestackFromHere: (() -> Void)? = nil,
-        onSubmitBranch: (() -> Void)? = nil
+        onSubmitBranch: (() -> Void)? = nil,
+        actions: StackEntryActions = StackEntryActions()
     ) {
         self.branch = branch
         self.isCurrent = false
@@ -212,6 +221,7 @@ struct StackBranchEntryRow: View {
         self.worktreePath = worktreePath
         self.onJumpToWorktree = onJumpToWorktree
         self.onBreakOut = onBreakOut
+        self.actions = actions
     }
 
     var body: some View {
@@ -277,12 +287,82 @@ struct StackBranchEntryRow: View {
         }
         .font(.caption)
         .contextMenu {
+            // Launch <Harness> / Run with Focus…
+            if let launchHarness = actions.launchHarness {
+                Button {
+                    launchHarness.action()
+                } label: {
+                    Label(Strings.Sidebar.launchHarness(launchHarness.name), systemImage: "play.fill")
+                }
+            }
+            if let onRunWithFocus = actions.runWithFocus {
+                Button {
+                    onRunWithFocus()
+                } label: {
+                    Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
+                }
+            }
+            if !actions.quickLaunchFocuses.isEmpty {
+                Menu(Strings.RemotePRs.quickLaunchFocus) {
+                    ForEach(actions.quickLaunchFocuses, id: \.name) { focus in
+                        Button(Strings.RemotePRs.runFocusItem(focus.name)) {
+                            focus.action()
+                        }
+                    }
+                }
+            }
+
+            // Quick Terminal / Create Terminal…
+            if actions.quickTerminal != nil || actions.createTerminal != nil {
+                Divider()
+            }
+            if let onQuickTerminal = actions.quickTerminal {
+                Button {
+                    onQuickTerminal()
+                } label: {
+                    Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
+                }
+            }
+            if let onCreateTerminal = actions.createTerminal {
+                Button {
+                    onCreateTerminal()
+                } label: {
+                    Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+                }
+            }
+
+            // Switch to <branch>
             if let onSwitch, !isCurrent {
+                Divider()
                 Button {
                     onSwitch()
                 } label: {
                     Label(Strings.Stacks.switchTo(branch.name), systemImage: "arrow.right.circle")
                 }
+            }
+
+            // New Stacked Branch Before…/After…
+            if actions.newBranchBefore != nil || actions.newBranchAfter != nil {
+                Divider()
+            }
+            if let onBefore = actions.newBranchBefore {
+                Button {
+                    onBefore()
+                } label: {
+                    Label(Strings.Stacks.newBranchBefore, systemImage: "square.stack.3d.up.badge.a")
+                }
+            }
+            if let onAfter = actions.newBranchAfter {
+                Button {
+                    onAfter()
+                } label: {
+                    Label(Strings.Stacks.newBranchAfter, systemImage: "square.stack.3d.up.badge.a")
+                }
+            }
+
+            // Open Change Request / Open Branch on Remote
+            if branch.changeRequest?.url != nil || actions.openRemoteBranch != nil {
+                Divider()
             }
             if let urlString = branch.changeRequest?.url, let url = URL(string: urlString) {
                 Button {
@@ -290,6 +370,18 @@ struct StackBranchEntryRow: View {
                 } label: {
                     Label(Strings.Stacks.openChangeRequest, systemImage: "arrow.up.right.square")
                 }
+            }
+            if let onOpenRemoteBranch = actions.openRemoteBranch {
+                Button {
+                    onOpenRemoteBranch()
+                } label: {
+                    Label(Strings.Sidebar.openRemoteBranch, systemImage: "network")
+                }
+            }
+
+            // Restack from Here / Submit This Branch…
+            if onRestackFromHere != nil || onSubmitBranch != nil {
+                Divider()
             }
             if let onRestackFromHere {
                 Button {
@@ -305,12 +397,10 @@ struct StackBranchEntryRow: View {
                     Label(Strings.Stacks.submitBranch, systemImage: "paperplane")
                 }
             }
-            if let onJumpToWorktree {
-                Button {
-                    onJumpToWorktree()
-                } label: {
-                    Label(Strings.Stacks.revealWorktree, systemImage: "arrow.turn.down.left")
-                }
+
+            // Break Out into Worktree… / Reveal Worktree
+            if onBreakOut != nil || onJumpToWorktree != nil {
+                Divider()
             }
             if let onBreakOut {
                 Button {
@@ -319,6 +409,15 @@ struct StackBranchEntryRow: View {
                     Label(Strings.Stacks.breakOut, systemImage: "rectangle.split.2x1")
                 }
             }
+            if let onJumpToWorktree {
+                Button {
+                    onJumpToWorktree()
+                } label: {
+                    Label(Strings.Stacks.revealWorktree, systemImage: "arrow.turn.down.left")
+                }
+            }
+
+            // Copy Branch Name
             Divider()
             Button {
                 NSPasteboard.general.clearContents()
@@ -425,7 +524,7 @@ struct StackConflictBanner: View {
 /// Header and groups are emitted as SIBLING List rows (no wrapping container):
 /// per-row selection and context menus require the List to see each row; collapsed
 /// content is simply not emitted, so no phantom space either.
-struct StacksSectionView<GroupMenu: View>: View {
+struct StacksSectionView<HarnessBadge: View, TerminalBadge: View, GroupMenu: View>: View {
     let groups: [StackGroup]
     /// The worktree a branch is checked out in, if any (view model lookup).
     let worktreeForBranch: (String) -> GitWorktree?
@@ -434,12 +533,25 @@ struct StacksSectionView<GroupMenu: View>: View {
     let onJumpToWorktree: (GitWorktree) -> Void
     /// Anchor an unanchored stack: create a worktree for its bottom branch.
     let onNewWorktree: (StackGroup) -> Void
+    /// "New Stack…" footer: opens the sheet that seeds a worktree-less stack.
+    let onNewStack: () -> Void
+    /// Bundled launch/insertion/remote actions for an entry within `group`.
+    let entryActions: (StackGroup, StackBranch) -> StackEntryActions
     /// "Break Out into Worktree…" for an entry not checked out anywhere.
     let onBreakOutBranch: (StackBranch) -> Void
     /// "Restack from Here" on an entry.
     let onRestackFromHereBranch: (StackBranch) -> Void
     /// "Submit This Branch…" on an entry.
     let onSubmitBranch: (StackBranch) -> Void
+    /// Row-icon parity (Revision 11b): the group header's trailing harness badge.
+    @ViewBuilder let harnessBadge: (StackGroup) -> HarnessBadge
+    /// Row-icon parity (Revision 11f): the group header's open-terminal-count badge,
+    /// same visual language as `WorktreeLeftIcon`'s right slot.
+    @ViewBuilder let terminalBadge: (StackGroup) -> TerminalBadge
+    /// Row-icon parity (Revision 11b): quick-terminal launch at the group's tip.
+    let onQuickTerminal: (StackGroup) -> Void
+    /// Group primary click (Revision 11d): launch at the group's tip.
+    let onPrimaryAction: (StackGroup) -> Void
     /// The group-header context menu, built by the presenting view so every item
     /// routes through the shared worktree/stack action handlers.
     @ViewBuilder let groupContextMenu: (StackGroup) -> GroupMenu
@@ -463,13 +575,42 @@ struct StacksSectionView<GroupMenu: View>: View {
                     baseMismatch: baseMismatch,
                     onJumpToWorktree: onJumpToWorktree,
                     onNewWorktree: { onNewWorktree(group) },
+                    entryActions: { branch in entryActions(group, branch) },
                     onBreakOutBranch: onBreakOutBranch,
                     onRestackFromHereBranch: onRestackFromHereBranch,
                     onSubmitBranch: onSubmitBranch,
+                    harnessBadge: { harnessBadge(group) },
+                    terminalBadge: { terminalBadge(group) },
+                    onQuickTerminal: { onQuickTerminal(group) },
+                    onPrimaryAction: { onPrimaryAction(group) },
                     headerContextMenu: { groupContextMenu(group) }
                 )
-                .padding(.leading, StackRowMetrics.contentColumn)
+                // NOT indented by `contentColumn` — `StackGroupRow` already reserves
+                // its own leading chevron column internally (same shape as a worktree
+                // row's `StackDisclosureRow`). Adding this padding on top double-indented
+                // stack rows relative to worktree rows, throwing off alignment with the
+                // "+ New Worktree"/"+ New Stack…" footers and the section header itself.
             }
+
+            Button {
+                onNewStack()
+            } label: {
+                // Manual icon + text, NOT `Label` — sidebar-styled Lists auto-align
+                // `Label` icons into a shared column that ignores surrounding padding,
+                // which silently defeats leading-padding alignment here.
+                HStack(spacing: 4) {
+                    Image(systemName: "plus")
+                        .imageScale(.small)
+                    Text(Strings.Stacks.newStack)
+                }
+                .font(.caption)
+                .foregroundColor(.accentColor)
+            }
+            .buttonStyle(.plain)
+            // Flush with the row start (0), matching "+ New Worktree" and the STACKS
+            // group rows' own chevron column — NOT `contentColumn`, which is a stale
+            // offset from when group rows were still double-indented.
+            .padding(.top, 2)
         }
     }
 }
@@ -478,15 +619,32 @@ struct StacksSectionView<GroupMenu: View>: View {
 /// rendering the chain upward with the standard entry badges. Same sibling-row rules
 /// as the section: header and entries are separate List rows; collapsed entries are
 /// not emitted.
-struct StackGroupRow<HeaderMenu: View>: View {
+struct StackGroupRow<HarnessBadge: View, TerminalBadge: View, HeaderMenu: View>: View {
     let group: StackGroup
     let worktreeForBranch: (String) -> GitWorktree?
     let baseMismatch: (StackBranch) -> String?
     let onJumpToWorktree: (GitWorktree) -> Void
     let onNewWorktree: () -> Void
+    /// Bundled launch/insertion/remote actions for an entry.
+    let entryActions: (StackBranch) -> StackEntryActions
     let onBreakOutBranch: (StackBranch) -> Void
     let onRestackFromHereBranch: (StackBranch) -> Void
     let onSubmitBranch: (StackBranch) -> Void
+    /// Row-icon parity with worktree rows (Revision 11b): the trailing jigsaw badge
+    /// reflecting the stack's effective harness. Injected so this view stays dumb about
+    /// harness resolution — mirrors how `entryActions` is injected.
+    @ViewBuilder let harnessBadge: () -> HarnessBadge
+    /// Row-icon parity (Revision 11f): the leading open-terminal-count badge, same slot
+    /// worktree rows use next to their left status icon. Injected so this view stays
+    /// dumb about terminal-card lookup — mirrors how `harnessBadge` is injected.
+    @ViewBuilder let terminalBadge: () -> TerminalBadge
+    /// Row-icon parity (Revision 11b): quick-terminal launch at the stack TIP via the
+    /// caller's guarded `stackLaunch` path (implicit worktree creation included).
+    let onQuickTerminal: () -> Void
+    /// Group primary click (Revision 11d): launch at the stack TIP, mirroring
+    /// `primaryAction(worktree:repo:)`. The chevron and anchored badge keep their own
+    /// click targets — only the title text routes through this closure.
+    let onPrimaryAction: () -> Void
     /// Header context menu, injected by the presenting view — zero action logic here.
     @ViewBuilder let headerContextMenu: () -> HeaderMenu
     @State private var isExpanded = false
@@ -508,36 +666,53 @@ struct StackGroupRow<HeaderMenu: View>: View {
             Image(systemName: "square.stack.3d.up")
                 .imageScale(.small)
                 .foregroundColor(.secondary)
-            Text(group.rootName)
-                .font(.subheadline)
-                .lineLimit(1)
-                .foregroundColor(.primary)
+
+            // Row-icon parity (Revision 11f): same terminal-count slot worktree rows
+            // show next to their left status icon.
+            terminalBadge()
+
+            // Title stacked over the anchoring worktree name (Revision 11e) — mirrors
+            // `worktreeRowContent`'s title-over-commit-hash layout, so a stack row
+            // reads the same two-line shape as a worktree row instead of crowding the
+            // worktree name inline next to the title.
+            VStack(alignment: .leading, spacing: 1) {
+                // Plain-style title button (Revision 11d) — mirrors `worktreeRowContent`'s
+                // title button: clicking launches at the stack tip. The chevron and
+                // anchored name below keep their own separate click targets.
+                Button(action: onPrimaryAction) {
+                    Text(group.rootName)
+                        .font(.subheadline)
+                        .lineLimit(1)
+                        .foregroundColor(.primary)
+                }
+                .buttonStyle(.plain)
+                .help(group.rootName)
+
+                if let anchoringWorktree {
+                    // Names the anchoring worktree; clicking reveals its row (same jump
+                    // as the context-menu item).
+                    Button {
+                        onJumpToWorktree(anchoringWorktree)
+                    } label: {
+                        Text(worktreeDisplayName(anchoringWorktree))
+                            .font(.caption2)
+                            .lineLimit(1)
+                            .foregroundColor(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help(Strings.Stacks.anchoredBadgeHelp(worktreeDisplayName(anchoringWorktree)))
+                    .accessibilityLabel(
+                        Strings.Stacks.anchoredBadgeHelp(worktreeDisplayName(anchoringWorktree)))
+                }
+            }
 
             Spacer()
 
-            if let anchoringWorktree {
-                // Anchored badge: names the anchoring worktree; clicking reveals its
-                // row (same jump as the context-menu item). Mirrors the linked-PR
-                // badge's visual language.
-                Button {
-                    onJumpToWorktree(anchoringWorktree)
-                } label: {
-                    Text(worktreeDisplayName(anchoringWorktree))
-                        .font(.caption2)
-                        .lineLimit(1)
-                        .foregroundColor(.accentColor)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 1)
-                        .background(
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.accentColor.opacity(0.1))
-                        )
-                }
-                .buttonStyle(.plain)
-                .help(Strings.Stacks.anchoredBadgeHelp(worktreeDisplayName(anchoringWorktree)))
-                .accessibilityLabel(
-                    Strings.Stacks.anchoredBadgeHelp(worktreeDisplayName(anchoringWorktree)))
-            } else {
+            // Trailing icon cluster reads left-to-right as: (optional) New Worktree,
+            // Harness, Terminal — New Worktree leads because it's the odd one out
+            // (only present when unanchored); Harness/Terminal always appear in that
+            // order, matching worktree rows.
+            if anchoringWorktree == nil {
                 Button(action: onNewWorktree) {
                     Image(systemName: "plus.square.on.square")
                         .imageScale(.small)
@@ -545,6 +720,17 @@ struct StackGroupRow<HeaderMenu: View>: View {
                 .buttonStyle(.plain)
                 .help(Strings.Stacks.anchorHelp)
             }
+
+            harnessBadge()
+
+            Button {
+                onQuickTerminal()
+            } label: {
+                Image(systemName: "terminal")
+                    .imageScale(.small)
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Sidebar.newTerminal)
         }
         .contextMenu { headerContextMenu() }
 
@@ -558,7 +744,8 @@ struct StackGroupRow<HeaderMenu: View>: View {
                     onJumpToWorktree: worktree.map { wt in { onJumpToWorktree(wt) } },
                     onBreakOut: worktree == nil ? { onBreakOutBranch(branch) } : nil,
                     onRestackFromHere: { onRestackFromHereBranch(branch) },
-                    onSubmitBranch: { onSubmitBranch(branch) }
+                    onSubmitBranch: { onSubmitBranch(branch) },
+                    actions: entryActions(branch)
                 )
                 .padding(.leading, StackRowMetrics.contentColumn + StackRowMetrics.indentStep)
             }

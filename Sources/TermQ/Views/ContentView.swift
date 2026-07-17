@@ -30,6 +30,17 @@ struct ContentView: View {
     /// Run-with-Focus sheet context for a card-menu launch (reuse-in-place).
     @State private var runWithFocusCardContext: RunWithFocusContext?
 
+    /// Live window width, tracked via a background `GeometryReader` on the
+    /// `HSplitView` (below) rather than wrapping `body` in one directly — that would
+    /// turn the computed `var body` into something SwiftLint's `function_body_length`
+    /// treats as a function, tripping the 200-line limit on a view this size. Drives
+    /// the sidebar's max drag width so it can reach at least half the window.
+    @State private var windowWidth: CGFloat = 640
+
+    private var sidebarMaxWidth: CGFloat {
+        max(320, windowWidth / 2)
+    }
+
     var body: some View {
         HSplitView {
             if !isSidebarCollapsed {
@@ -82,7 +93,7 @@ struct ContentView: View {
                     onRestoreQuarantine: { name in restoreQuarantine(name: name) },
                     onDropQuarantine: { name in dropQuarantine(name: name) }
                 )
-                .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
+                .frame(minWidth: 180, idealWidth: 220, maxWidth: sidebarMaxWidth)
             }
 
             ZStack {
@@ -495,6 +506,13 @@ struct ContentView: View {
             .focusedSceneValue(\.windowMenu, windowMenu)
             .background { fontZoomShortcutAliases }
         }
+        .background(
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear { windowWidth = geo.size.width }
+                    .onChange(of: geo.size.width) { _, newValue in windowWidth = newValue }
+            }
+        )
         .onAppear {
             let count = NSApplication.shared.windows.count
             TermQLogger.window.notice("ContentView appeared: \(count) window(s)")

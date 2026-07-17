@@ -13,7 +13,7 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
     public static let id = StackProviderID.gitSpice
 
     public var capabilities: StackCapabilities {
-        [.restack, .submit, .sync, .trackExisting, .conflictResume]
+        [.restack, .submit, .sync, .trackExisting, .conflictResume, .branchInsertion]
     }
 
     public init() {}
@@ -94,9 +94,26 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
     // MARK: - Mutations (command construction validated now; not wired into UI until Phase 2)
 
     public func createBranch(name: String, target: String?, in worktree: String) async throws {
+        try await createBranch(name: name, target: target, position: .onTop, in: worktree)
+    }
+
+    /// `position` gates on `.branchInsertion`: `.below`/`.above` act on whatever is
+    /// currently checked out in `worktree` — the caller must check that branch out
+    /// first (guarded). `.onTop` is the original "create on top of an explicit target"
+    /// behavior.
+    public func createBranch(
+        name: String, target: String?, position: StackBranchPosition, in worktree: String
+    ) async throws {
         let gsPath = try Self.requireGsBinary()
         var args = ["branch", "create", name, "--no-prompt"]
-        if let target { args += ["--target", target] }
+        switch position {
+        case .onTop:
+            if let target { args += ["--target", target] }
+        case .below:
+            args.append("--below")
+        case .above:
+            args.append("--insert")
+        }
         let result = try await Self.run(gsPath, args, cwd: worktree)
         try Self.throwIfFailed(result, command: "gs branch create")
     }

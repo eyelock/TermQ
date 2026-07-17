@@ -6,11 +6,14 @@ import TermQShared
 
 enum WorktreeOperationError: Error, LocalizedError, Sendable {
     case removingMainWorktree
+    case mainWorktreeNotFound
 
     var errorDescription: String? {
         switch self {
         case .removingMainWorktree:
             return Strings.Sidebar.removeMainWorktreeError
+        case .mainWorktreeNotFound:
+            return Strings.Stacks.mainWorktreeNotFound
         }
     }
 }
@@ -778,7 +781,20 @@ extension WorktreeSidebarViewModel {
 
     func refresh() {
         reloadRepositories()
-        refreshExpandedWorktrees(fetch: true)
+        // Re-probe the stack provider on every global refresh — cheap (a version
+        // check, no gs invocation on any repo) and the only way TermQ discovers
+        // git-spice being installed while already running (init-time probe + the
+        // Settings > Tools "Check Again" button were previously the only triggers).
+        // Per-repo refresh doesn't re-probe — it runs on timers/monitors too often for
+        // this to matter there; once here is enough.
+        Task {
+            let wasAvailable = stackService.isAvailable
+            await stackService.probe()
+            if !wasAvailable, stackService.isAvailable {
+                await refreshAllStacks()
+            }
+            refreshExpandedWorktrees(fetch: true)
+        }
     }
 
     private func reloadRepositories() {

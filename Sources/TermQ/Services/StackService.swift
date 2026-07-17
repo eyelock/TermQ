@@ -147,10 +147,15 @@ final class StackService: ObservableObject {
         }
     }
 
-    /// Create a new tracked branch stacked on `target` (or the current branch when nil).
-    func createBranch(repo: String, worktree: String, name: String, target: String?) async throws {
+    /// Create a new tracked branch stacked on `target` (or the current branch when nil),
+    /// or — with `position` `.below`/`.above` — relative to whatever is currently
+    /// checked out in `worktree` (the caller must have checked that branch out first).
+    func createBranch(
+        repo: String, worktree: String, name: String, target: String?,
+        position: StackBranchPosition = .onTop
+    ) async throws {
         try await runMutation(repo: repo, worktree: worktree) { provider in
-            try await provider.createBranch(name: name, target: target, in: worktree)
+            try await provider.createBranch(name: name, target: target, position: position, in: worktree)
         }
     }
 
