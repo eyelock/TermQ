@@ -16,6 +16,16 @@ import TermQCore
 /// the four audit-named drift settings (safePaste, fontSize, themeId,
 /// backend); other globals are exposed here too so future migrations can
 /// retire scattered `@AppStorage` / `UserDefaults` reads incrementally.
+/// Which mode the "New Stack…" sheet pre-selects. The sheet always offers both;
+/// this only chooses the starting position.
+public enum NewStackMode: String, CaseIterable, Sendable {
+    /// The named branch is the first stacked branch, parented on the chosen base.
+    case branchOffDefault
+    /// An empty `stack/<name>` integration branch is created off the base and tracked
+    /// as the stack root; stacked branches build on top of it.
+    case branchOffIntegration
+}
+
 @MainActor
 @Observable
 public final class SettingsStore {
@@ -44,6 +54,8 @@ public final class SettingsStore {
         public static let diagnosticsVerboseMode = false
         public static var defaultWorkingDirectory: String { NSHomeDirectory() }
         public static let remotePRFeedCap = 20
+        public static let newStackMode: NewStackMode = .branchOffDefault
+        public static let hideStackedWorktrees = false
     }
 
     private enum Keys {
@@ -63,6 +75,8 @@ public final class SettingsStore {
         static let diagnosticsVerboseMode = "diagnosticsVerboseMode"
         static let defaultWorkingDirectory = "defaultWorkingDirectory"
         static let remotePRFeedCap = "remotePRFeedCap"
+        static let newStackMode = "newStackMode"
+        static let hideStackedWorktrees = "hideStackedWorktrees"
     }
 
     @ObservationIgnored
@@ -189,6 +203,24 @@ public final class SettingsStore {
         }
     }
 
+    /// Which mode the "New Stack…" sheet pre-selects (the sheet always shows both).
+    public var newStackMode: NewStackMode {
+        didSet {
+            guard !isSyncingFromStore else { return }
+            store.set(newStackMode.rawValue, forKey: Keys.newStackMode)
+        }
+    }
+
+    /// When true, worktrees whose branch belongs to a tracked stack are hidden from
+    /// the WORKTREES section — the STACKS inventory already lists them, so this trims
+    /// the duplicate listing for users who work primarily in stacks.
+    public var hideStackedWorktrees: Bool {
+        didSet {
+            guard !isSyncingFromStore else { return }
+            store.set(hideStackedWorktrees, forKey: Keys.hideStackedWorktrees)
+        }
+    }
+
     public init(store: any KeyValueStore = UserDefaults.standard) {
         self.store = store
 
@@ -239,6 +271,14 @@ public final class SettingsStore {
         self.defaultWorkingDirectory =
             (storedWorkingDirectory?.isEmpty == false ? storedWorkingDirectory : nil)
             ?? Defaults.defaultWorkingDirectory
+
+        let storedNewStackMode = store.string(forKey: Keys.newStackMode)
+        self.newStackMode =
+            storedNewStackMode.flatMap(NewStackMode.init(rawValue:)) ?? Defaults.newStackMode
+
+        self.hideStackedWorktrees =
+            (store.object(forKey: Keys.hideStackedWorktrees) as? Bool)
+            ?? Defaults.hideStackedWorktrees
 
         // Bridge external writes (e.g. existing `@AppStorage` Settings UI,
         // CLI/MCP, Sparkle) into the store's @Observable graph. Without
@@ -358,6 +398,18 @@ public final class SettingsStore {
             ?? Defaults.defaultWorkingDirectory
         if defaultWorkingDirectory != newWorkingDirectory {
             defaultWorkingDirectory = newWorkingDirectory
+        }
+
+        let storedNewStackMode = store.string(forKey: Keys.newStackMode)
+        let newNewStackMode =
+            storedNewStackMode.flatMap(NewStackMode.init(rawValue:)) ?? Defaults.newStackMode
+        if newStackMode != newNewStackMode { newStackMode = newNewStackMode }
+
+        let newHideStackedWorktrees =
+            (store.object(forKey: Keys.hideStackedWorktrees) as? Bool)
+            ?? Defaults.hideStackedWorktrees
+        if hideStackedWorktrees != newHideStackedWorktrees {
+            hideStackedWorktrees = newHideStackedWorktrees
         }
     }
 

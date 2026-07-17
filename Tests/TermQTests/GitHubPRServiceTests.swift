@@ -96,6 +96,32 @@ final class GitHubPRServiceDecodeTests: XCTestCase {
         XCTAssertEqual(pr.reviewRequests[0].login, "bob")
     }
 
+    func test_baseRefName_decodesWhenPresent() throws {
+        let json = """
+            [
+              {
+                "number": 7,
+                "title": "Stacked",
+                "headRefName": "feat/upper",
+                "headRefOid": "cafebabe1234",
+                "baseRefName": "feat/lower",
+                "author": {"login": "alice"},
+                "isCrossRepository": false,
+                "isDraft": false,
+                "reviewRequests": [],
+                "assignees": []
+              }
+            ]
+            """
+        let prs = try JSONDecoder().decode([GitHubPR].self, from: Data(json.utf8))
+        XCTAssertEqual(prs[0].baseRefName, "feat/lower")
+    }
+
+    func test_baseRefName_absentDecodesAsNil() throws {
+        let prs = try JSONDecoder().decode([GitHubPR].self, from: Data(singlePRJSON.utf8))
+        XCTAssertNil(prs[0].baseRefName)
+    }
+
     func test_sameRepoPR_localBranchIsHeadRefName() throws {
         let prs = try JSONDecoder().decode([GitHubPR].self, from: Data(singlePRJSON.utf8))
         XCTAssertEqual(prs[0].localBranchName(), "fix/yaml")
@@ -261,6 +287,107 @@ final class PRWorktreeMatchTests: XCTestCase {
         ]
         let matches = GitHubPRService.matchPRsToWorktrees(prs: prs, worktrees: worktrees)
         XCTAssertEqual(matches[99], "/repo/.worktrees/fork-pr")
+    }
+
+    // MARK: - Stacked-PR regression (nondeterministic hash matches)
+
+    /// Two stack PRs sharing the worktree's tip hash. The PR for the checked-out
+    /// branch must win; the sibling stack PR must not attach to this worktree at all
+    /// (its branch is tracked in the graph and has no worktree of its own).
+    private func makeStackedScenario() throws -> (prs: [GitHubPR], worktrees: [GitWorktree], graph: StackGraph) {
+        let json = """
+            [
+              {
+                "number": 692,
+                "title": "Demand and drift fixups",
+                "headRefName": "tier1/demand-and-drift-fixups",
+                "headRefOid": "abc1234deadbeef",
+                "author": {"login": "alice"},
+                "isCrossRepository": false,
+                "isDraft": false,
+                "reviewRequests": [],
+                "assignees": []
+              },
+              {
+                "number": 693,
+                "title": "Questions",
+                "headRefName": "tier1/questions",
+                "headRefOid": "fff9999separate",
+                "author": {"login": "alice"},
+                "isCrossRepository": false,
+                "isDraft": false,
+                "reviewRequests": [],
+                "assignees": []
+              }
+            ]
+            """
+        let prs = try JSONDecoder().decode([GitHubPR].self, from: Data(json.utf8))
+        let worktrees = [
+            // The stacked worktree is checked out on tier1/questions but its tip hash
+            // matches PR #692's head (shared ancestry after a restack).
+            GitWorktree(
+                path: "/repo/.worktrees/tier1-questions",
+                branch: "tier1/questions",
+                commitHash: "abc1234-",
+                isMainWorktree: false,
+                isLocked: false,
+                isDirty: false
+            )
+        ]
+        let graph = StackGraph(
+            branches: [
+                StackBranch(
+                    name: "develop", isCurrent: true, checkedOutElsewhere: nil, parent: nil,
+                    children: ["tier1/demand-and-drift-fixups"], needsRestack: false,
+                    changeRequest: nil, push: nil),
+                StackBranch(
+                    name: "tier1/demand-and-drift-fixups", isCurrent: false,
+                    checkedOutElsewhere: nil, parent: "develop", children: ["tier1/questions"],
+                    needsRestack: false, changeRequest: nil, push: nil),
+                StackBranch(
+                    name: "tier1/questions", isCurrent: false, checkedOutElsewhere: nil,
+                    parent: "tier1/demand-and-drift-fixups", children: [], needsRestack: false,
+                    changeRequest: nil, push: nil),
+            ])
+        return (prs, worktrees, graph)
+    }
+
+    func test_stackedWorktree_branchMatchWins_siblingStackPRNeverAttaches() throws {
+        let (prs, worktrees, graph) = try makeStackedScenario()
+        let matches = GitHubPRService.matchPRsToWorktrees(
+            prs: prs, worktrees: worktrees, stackGraph: graph)
+        // #693 (tier1/questions) matches by branch name; #692 must NOT hash-attach.
+        XCTAssertEqual(matches[693], "/repo/.worktrees/tier1-questions")
+        XCTAssertNil(matches[692])
+    }
+
+    func test_stackedWorktree_matchingIsStableAcrossRepeatedCalls() throws {
+        let (prs, worktrees, graph) = try makeStackedScenario()
+        let first = GitHubPRService.matchPRsToWorktrees(
+            prs: prs, worktrees: worktrees, stackGraph: graph)
+        for _ in 0..<20 {
+            // Shuffle input order — the result must not depend on collection order.
+            let again = GitHubPRService.matchPRsToWorktrees(
+                prs: prs.shuffled(), worktrees: worktrees, stackGraph: graph)
+            XCTAssertEqual(again, first)
+        }
+    }
+
+    func test_detachedHeadWorktree_stillHashMatches_forUntrackedPR() throws {
+        // The gh pr checkout flow: detached worktree, PR branch not in any stack graph.
+        let prs = try JSONDecoder().decode([GitHubPR].self, from: Data(singlePRJSON.utf8))
+        let worktrees = [
+            GitWorktree(
+                path: "/repo/.worktrees/pr-42",
+                branch: nil,
+                commitHash: "abc1234",
+                isMainWorktree: false,
+                isLocked: false,
+                isDirty: false
+            )
+        ]
+        let matches = GitHubPRService.matchPRsToWorktrees(prs: prs, worktrees: worktrees)
+        XCTAssertEqual(matches[42], "/repo/.worktrees/pr-42")
     }
 }
 

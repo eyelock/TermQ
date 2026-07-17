@@ -84,6 +84,12 @@
           "title": "Remote PRs",
           "icon": "arrow.triangle.pull",
           "keywords": ["github", "pr", "pull request", "remote", "review", "focus", "run", "feed", "worktree"]
+        },
+        {
+          "id": "tutorials/stacked-branches",
+          "title": "Stacked Branches & PRs",
+          "icon": "square.stack.3d.up",
+          "keywords": ["stack", "stacked", "stacking", "git-spice", "spice", "gs", "restack", "submit", "sync", "break out", "breakout", "PR chain", "branch", "chain", "dependent", "rebase", "conflict", "trunk", "worktree"]
         }
       ]
     },

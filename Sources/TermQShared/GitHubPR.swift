@@ -8,6 +8,10 @@ public struct GitHubPR: Sendable, Codable, Identifiable {
     public let headRefName: String
     /// The commit SHA at the PR head. Used as the primary match key against local worktrees.
     public let headRefOid: String
+    /// The branch this PR merges into. Used by stacked PRs to show targeting (and
+    /// mismatches after downstack merges, until a provider sync retargets). Optional —
+    /// cached payloads fetched before this field was requested may not carry it.
+    public let baseRefName: String?
     public let author: GitHubUser
     /// True for cross-repository (fork) PRs. `gh pr checkout` uses `<login>-<branch>`
     /// naming for these to avoid collisions with same-named branches upstream.
@@ -29,7 +33,7 @@ public struct GitHubPR: Sendable, Codable, Identifiable {
 
     enum CodingKeys: String, CodingKey {
         case number, title, author, assignees
-        case headRefName, headRefOid, isCrossRepository, isDraft, reviewRequests, updatedAt
+        case headRefName, headRefOid, baseRefName, isCrossRepository, isDraft, reviewRequests, updatedAt
     }
 
     public init(from decoder: Decoder) throws {
@@ -38,6 +42,7 @@ public struct GitHubPR: Sendable, Codable, Identifiable {
         title = try c.decode(String.self, forKey: .title)
         headRefName = try c.decode(String.self, forKey: .headRefName)
         headRefOid = try c.decode(String.self, forKey: .headRefOid)
+        baseRefName = try? c.decode(String.self, forKey: .baseRefName)
         author = try c.decode(GitHubUser.self, forKey: .author)
         isCrossRepository = try c.decode(Bool.self, forKey: .isCrossRepository)
         isDraft = try c.decode(Bool.self, forKey: .isDraft)

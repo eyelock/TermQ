@@ -522,7 +522,7 @@ final class MCPIntegrationTests: XCTestCase {
     func testAvailableToolsSchema() {
         let tools = TermQMCPServer.availableTools
 
-        XCTAssertEqual(tools.count, 19)
+        XCTAssertEqual(tools.count, 23)
 
         let toolNames = Set(tools.map { $0.name })
         XCTAssertTrue(toolNames.contains("pending"))

@@ -73,6 +73,11 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         config.repoRunFocus[repoPath]
     }
 
+    /// Explicit harness override for a stack, keyed by its root branch name.
+    func stackHarness(repoPath: String, rootName: String) -> String? {
+        config.stackHarness[repoPath]?[rootName]
+    }
+
     // MARK: - Mutations
 
     func setRepoDefaultHarness(_ harnessId: String?, for repoPath: String) {
@@ -106,6 +111,15 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
         let vendorKeys = config.harnessVendor.keys.filter(matches)
         for key in vendorKeys {
             config.harnessVendor.removeValue(forKey: key)
+        }
+        for repoPath in Array(config.stackHarness.keys) {
+            let rootNames = config.stackHarness[repoPath]?.compactMap { matches($0.value) ? $0.key : nil } ?? []
+            for rootName in rootNames {
+                config.stackHarness[repoPath]?.removeValue(forKey: rootName)
+            }
+            if config.stackHarness[repoPath]?.isEmpty == true {
+                config.stackHarness.removeValue(forKey: repoPath)
+            }
         }
         save()
     }
@@ -155,6 +169,18 @@ final class YNHPersistence: ObservableObject, YNHPersistenceProtocol {
             config.worktreeHarness[worktreePath] = id
         } else {
             config.worktreeHarness.removeValue(forKey: worktreePath)
+        }
+        save()
+    }
+
+    func setStackHarness(_ harnessId: String?, repoPath: String, rootName: String) {
+        if let id = harnessId {
+            config.stackHarness[repoPath, default: [:]][rootName] = id
+        } else {
+            config.stackHarness[repoPath]?.removeValue(forKey: rootName)
+            if config.stackHarness[repoPath]?.isEmpty == true {
+                config.stackHarness.removeValue(forKey: repoPath)
+            }
         }
         save()
     }

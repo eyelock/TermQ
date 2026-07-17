@@ -82,6 +82,14 @@ extension TermQMCPServer {
             return try await handleRemoveWorktree(params.arguments)
         case "harness_launch":
             return try await handleHarnessLaunch(params.arguments)
+        case "stack_status":
+            return try await handleStackStatus(params.arguments)
+        case "stack_create_branch":
+            return try await handleStackCreateBranch(params.arguments)
+        case "stack_submit":
+            return try await handleStackSubmit(params.arguments)
+        case "stack_restack":
+            return try await handleStackRestack(params.arguments)
         default:
             return nil
         }

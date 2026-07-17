@@ -443,6 +443,17 @@
 "settings.gh.status.signed.in.as %@" = "Signed in as %@";
 "settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
 
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Powers stacked branches and stacked PRs in the sidebar.";
+"settings.gitspice.version" = "Version:";
+"settings.gitspice.path" = "Path:";
+"settings.gitspice.info" = "Stacked-branch features in the sidebar depend on a working git-spice installation. It reuses the gh CLI's authentication.";
+"settings.gitspice.not.installed.description" = "git-spice enables stacked branches and stacked PRs. Without it, TermQ shows only plain worktrees.";
+"settings.gitspice.install.hint" = "Install using Homebrew:";
+"settings.gitspice.check.again" = "Check Again";
+"settings.gitspice.status.unusable %@" = "Detected but unusable: %@";
+
 // Settings - Environment tab
 "settings.tab.environment" = "Environment";
 
@@ -1336,3 +1347,95 @@
 // MARK: - Profile include editor
 "harnesses.profile.include.add.button" = "Add Include";
 "harnesses.profile.include.add.title" = "Add Include";
+
+// MARK: - Stacks
+"stacks.enable" = "Enable Stacking…";
+"stacks.enable.help" = "Track this repository's branches as a stack with git-spice";
+"stacks.enable.failed %@" = "Couldn't enable stacking: %@";
+"stacks.needs.restack" = "Needs restack";
+"stacks.open.change.request" = "Open Change Request";
+"stacks.unpushed.commits %ld" = "↑%ld unpushed";
+"stacks.change.request.merged" = "merged";
+"stacks.change.request.closed" = "closed";
+"stacks.no.change.request" = "no PR";
+"stacks.disclosure.help" = "Show stacked branches";
+"stacks.switch.blocked.dirty" = "Can't switch stacked branch: the worktree has uncommitted changes. Commit or stash first.";
+"stacks.switch.blocked.in.use" = "Can't switch stacked branch: a terminal is open in this worktree. Close it first.";
+"stacks.switch.blocked.elsewhere %@" = "Can't switch stacked branch: it's checked out in another worktree (%@).";
+"stacks.switch.help" = "Double-click to switch this worktree to the branch";
+"stacks.switch.to %@" = "Switch to %@";
+"stacks.add.branch" = "Add Branch to Stack…";
+"stacks.add.branch.title" = "Add Branch to Stack";
+"stacks.add.branch.name.label" = "Branch Name";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Stack On";
+"stacks.add.branch.staged.note" = "Staged changes become the new branch's first commit. With a clean tree, an empty branch is created on top.";
+"stacks.add.branch.track.note" = "This branch already exists — it will be tracked onto the stack instead.";
+"stacks.add.branch.create" = "Create";
+"stacks.add.branch.track" = "Track";
+"stacks.restack.stack" = "Restack Stack";
+"stacks.restack.from.here" = "Restack from Here";
+"stacks.conflict.banner %ld" = "Restack paused — conflicts in %ld files";
+"stacks.conflict.continue" = "Continue";
+"stacks.conflict.abort" = "Abort";
+"stacks.conflict.hint" = "Resolve the conflicts in a terminal, stage the files, then Continue.";
+"stacks.submit.stack" = "Submit Stack…";
+"stacks.submit.branch" = "Submit This Branch…";
+"stacks.submit.title" = "Submit Stack";
+"stacks.submit.button" = "Submit";
+"stacks.submit.draft.toggle" = "Create new pull requests as drafts";
+"stacks.submit.update.only.toggle" = "Update existing pull requests only";
+"stacks.submit.will.create" = "create";
+"stacks.submit.will.update" = "update";
+"stacks.sync.repo" = "Sync Repo";
+"stacks.sync.cleaned %ld %@" = "Sync removed %ld merged branches: %@";
+"stacks.base.mismatch %@ %@" = "PR targets %@, but the stack parent is %@ — Sync Repo will retarget it";
+"stacks.restack.up.to.date" = "Stack already up to date";
+"stacks.restack.done %ld" = "Restacked %ld branches";
+"stacks.sync.clean" = "Everything in sync";
+"stacks.submit.done %ld %ld" = "Submitted: %ld created, %ld updated";
+"sidebar.worktrees.section.header" = "Worktrees";
+"stacks.break.out" = "Break Out into Worktree…";
+"stacks.skipped.notice %@" = "Not restacked: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (checked out in %@ with uncommitted changes)";
+"stacks.skipped.in.use %@ %@" = "%@ (checked out in %@ with an active terminal)";
+"stacks.copy.branch.name" = "Copy Branch Name";
+"stacks.reveal.worktree" = "Reveal Worktree";
+"stacks.anchored.badge.help %@" = "Anchored in worktree %@ — click to reveal it";
+"stacks.part.of.stack %@" = "Part of stack %@";
+"stacks.section.header" = "Stacks";
+"stacks.checked.out.at %@" = "Checked out at %@ — click to reveal the worktree";
+"stacks.anchor.help" = "Create a worktree for this stack";
+"stacks.group.new.worktree" = "New Worktree…";
+
+// Round-3: launch menus
+"stacks.new.branch.before" = "New Stacked Branch Before…";
+"stacks.new.branch.after" = "New Stacked Branch After…";
+"stacks.new.branch.insert.below.note %@" = "The new branch is created below %@ in the stack.";
+"stacks.new.branch.insert.above.note %@" = "The new branch is created above %@ in the stack, taking its place — %@ moves onto it.";
+"stacks.main.worktree.not.found" = "Couldn't find the repository's main worktree.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "New Stack…";
+"stacks.new.stack.title" = "New Stack";
+"stacks.new.stack.name.label" = "Branch Name";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Base Branch";
+"stacks.new.stack.button" = "Create";
+"stacks.new.stack.note" = "Creates the branch off the base with no checkout and no worktree — a one-entry stack you can launch into later.";
+"stacks.start.stack.checkbox" = "Start a stack with this branch";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Branch off default";
+"stacks.new.stack.mode.integration" = "Branch off integration";
+"stacks.new.stack.stack.name.label" = "Stack Name";
+"stacks.new.stack.integration.preview %@" = "Creates %@";
+"stacks.new.stack.first.branch.label" = "First Stacked Branch (optional)";
+"stacks.new.stack.first.branch.empty.hint" = "Left blank: just the empty integration branch is created — add your first stacked branch to it later.";
+"stacks.new.stack.first.branch.filled.hint" = "This branch is created stacked on top of the integration branch, not on the base branch directly.";
+"stacks.new.stack.integration.note" = "Creates an empty integration branch off the base as the stack's root — it never carries code of its own. Stacked branches build on top of it instead of the base, and their pull requests chain into it. Once everything's merged into the integration branch, it's PR'd into the base as one consolidated change — instead of each stacked branch merging into the base individually.";
+"stacks.new.stack.name.exists %@" = "%@ already exists — choose another name.";
+"settings.gitspice.new.stack.mode" = "New Stack starts as:";
+"settings.gitspice.new.stack.mode.help" = "Which mode the New Stack sheet pre-selects — the sheet always offers both.";
+"settings.gitspice.hide.stacked.worktrees" = "Hide stacked worktrees from WORKTREES section";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees whose branch belongs to a tracked stack are already listed under STACKS — hide them from the WORKTREES section to avoid the duplicate listing.";

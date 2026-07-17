@@ -154,6 +154,17 @@ public enum GitServiceShared {
         _ = try await runGitCommand(repoPath: repoPath, args: ["worktree", "add", worktreePath, branch])
     }
 
+    /// Create a local branch off `base` WITHOUT checking it out anywhere
+    /// (`git branch <name> <base>`). Used to seed a worktree-less stacked branch —
+    /// `gs branch track --parent` then tracks it into the stack.
+    public static func createBranch(
+        repoPath: String,
+        name: String,
+        base: String
+    ) async throws {
+        _ = try await runGitCommand(repoPath: repoPath, args: ["branch", name, base])
+    }
+
     /// Rename a local branch (`git branch -m <old> <new>`).
     public static func renameBranch(
         repoPath: String,
@@ -181,6 +192,14 @@ public enum GitServiceShared {
     /// Remove the worktree at `worktreePath` (equivalent to `git worktree remove`).
     public static func removeWorktree(repoPath: String, worktreePath: String) async throws {
         _ = try await runGitCommand(repoPath: repoPath, args: ["worktree", "remove", worktreePath])
+    }
+
+    /// Resolve `ref` (branch name, tag, …) to its full commit hash
+    /// (`git rev-parse <ref>`). Read-only — lets callers link to a branch's commit
+    /// without checking anything out.
+    public static func commitHash(repoPath: String, ref: String) async throws -> String {
+        let output = try await runGitCommand(repoPath: repoPath, args: ["rev-parse", ref])
+        return output.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /// Get the currently checked-out branch name at `path`.

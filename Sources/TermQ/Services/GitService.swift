@@ -75,6 +75,18 @@ public class GitService: GitServiceProtocol {
         )
     }
 
+    /// Resolve `ref` (branch name, tag, …) to its full commit hash without any
+    /// checkout — read-only, e.g. for remote-commit links to a non-checked-out branch.
+    public func commitHash(repoPath: String, ref: String) async throws -> String {
+        try await GitServiceShared.commitHash(repoPath: repoPath, ref: ref)
+    }
+
+    /// Create a local branch off `base` without checking it out anywhere — seeds a
+    /// worktree-less stacked branch (see "New Stack…").
+    public func createBranch(repoPath: String, name: String, base: String) async throws {
+        try await GitServiceShared.createBranch(repoPath: repoPath, name: name, base: base)
+    }
+
     /// Remove the worktree at `worktreePath`.
     public func removeWorktree(repo: GitRepository, path: String) async throws {
         try await GitServiceShared.removeWorktree(repoPath: repo.path, worktreePath: path)

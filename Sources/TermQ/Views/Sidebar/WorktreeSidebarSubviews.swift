@@ -184,20 +184,21 @@ struct BranchSectionDisclosureView<Content: View>: View {
     }
 
     var body: some View {
-        DisclosureGroup(isExpanded: $isExpanded) {
-            content()
-        } label: {
+        // Header and content are SIBLING List rows — see WorktreeSectionDisclosureView.
+        HStack(spacing: StackRowMetrics.chevronSpacing) {
+            StackChevronButton(isExpanded: $isExpanded, help: "")
             Text(Strings.Sidebar.localBranches)
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .textCase(.uppercase)
-                .contextMenu {
-                    Button {
-                        onPruneBranches?()
-                    } label: {
-                        Label(Strings.Sidebar.pruneBranches, systemImage: "scissors")
-                    }
-                }
+            Spacer(minLength: 0)
+        }
+        .contextMenu {
+            Button {
+                onPruneBranches?()
+            } label: {
+                Label(Strings.Sidebar.pruneBranches, systemImage: "scissors")
+            }
         }
         .onChange(of: isExpanded) { _, newValue in
             viewModel.setBranchSectionExpanded(repo.id, expanded: newValue)
@@ -205,6 +206,61 @@ struct BranchSectionDisclosureView<Content: View>: View {
         .onChange(of: viewModel.expandedBranchSectionIDs) { _, ids in
             let should = ids.contains(repo.id)
             if isExpanded != should { isExpanded = should }
+        }
+
+        if isExpanded {
+            content()
+        }
+    }
+}
+
+// MARK: - Worktree Section Disclosure Wrapper
+
+/// Owns the `@State` for a repo's "Worktrees" section expanded/collapsed state, using
+/// the same deferred-mutation pattern as `RepoDisclosureView` to avoid reentrant
+/// NSTableView calls during SwiftUI render. Unlike the Local Branches section, this
+/// one defaults to expanded — the ViewModel persists the COLLAPSED set.
+///
+/// Header and content are emitted as SIBLING List rows (implicit ViewBuilder body,
+/// no wrapping container): nesting the rows inside the header's view collapses the
+/// whole section into ONE List row, breaking per-row selection and context menus.
+/// Collapsed content is simply not emitted — no phantom space either.
+struct WorktreeSectionDisclosureView<Content: View>: View {
+    let repo: ObservableRepository
+    @ObservedObject var viewModel: WorktreeSidebarViewModel
+    @ViewBuilder let content: () -> Content
+    @State private var isExpanded: Bool
+
+    init(
+        repo: ObservableRepository,
+        viewModel: WorktreeSidebarViewModel,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.repo = repo
+        self.viewModel = viewModel
+        self.content = content
+        self._isExpanded = State(initialValue: viewModel.isWorktreeSectionExpanded(repo.id))
+    }
+
+    var body: some View {
+        HStack(spacing: StackRowMetrics.chevronSpacing) {
+            StackChevronButton(isExpanded: $isExpanded, help: "")
+            Text(Strings.Sidebar.worktreesSectionHeader)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .textCase(.uppercase)
+            Spacer(minLength: 0)
+        }
+        .onChange(of: isExpanded) { _, newValue in
+            viewModel.setWorktreeSectionExpanded(repo.id, expanded: newValue)
+        }
+        .onChange(of: viewModel.collapsedWorktreeSectionIDs) { _, _ in
+            let should = viewModel.isWorktreeSectionExpanded(repo.id)
+            if isExpanded != should { isExpanded = should }
+        }
+
+        if isExpanded {
+            content()
         }
     }
 }
@@ -227,6 +283,53 @@ struct WorktreeLeftIcon: View {
     @ObservedObject var boardVM: BoardViewModel
     let isDeleting: Bool
     let isUpdating: Bool
+    /// Bottom branch of the stack this worktree's branch belongs to, or `nil` when it
+    /// isn't stacked — shows the persistent stack glyph in the left slot (same visual
+    /// weight as the Home icon). Home/lock take precedence when they apply.
+    var stackRootName: String?
+
+    var body: some View {
+        HStack(spacing: 2) {
+            // Left slot — spinner during deletion/update, otherwise status badge
+            Group {
+                if isDeleting || isUpdating {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .controlSize(.mini)
+                } else if worktree.isMainWorktree {
+                    Image(systemName: "house.fill")
+                        .foregroundColor(.secondary)
+                        .imageScale(.small)
+                } else if worktree.isLocked {
+                    Image(systemName: "lock.fill")
+                        .foregroundColor(.orange)
+                        .imageScale(.small)
+                } else if let stackRootName {
+                    Image(systemName: "square.stack.3d.up")
+                        .foregroundColor(.secondary)
+                        .imageScale(.small)
+                        .help(Strings.Stacks.partOfStack(stackRootName))
+                        .accessibilityLabel(Strings.Stacks.partOfStack(stackRootName))
+                } else {
+                    Color.clear
+                }
+            }
+            .frame(width: 12)
+
+            // Right slot — terminal count (always shown)
+            TerminalCountBadge(worktree: worktree, allWorktrees: allWorktrees, boardVM: boardVM)
+        }
+    }
+}
+
+/// Terminal-count badge: an empty circle with no open terminals, or a filled
+/// `N.circle.fill` that opens a popover listing the matching cards. Shared between
+/// `WorktreeLeftIcon`'s right slot and the STACKS inventory rows (Revision 11f) so both
+/// use identical counting/exclusion logic and visual language.
+struct TerminalCountBadge: View {
+    let worktree: GitWorktree
+    let allWorktrees: [GitWorktree]
+    @ObservedObject var boardVM: BoardViewModel
     @State private var showPopover = false
 
     private var matchingCards: [TerminalCard] {
@@ -247,75 +350,52 @@ struct WorktreeLeftIcon: View {
     }
 
     var body: some View {
-        HStack(spacing: 2) {
-            // Left slot — spinner during deletion/update, otherwise status badge
-            Group {
-                if isDeleting || isUpdating {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .controlSize(.mini)
-                } else if worktree.isMainWorktree {
-                    Image(systemName: "house.fill")
-                        .foregroundColor(.secondary)
-                        .imageScale(.small)
-                } else if worktree.isLocked {
-                    Image(systemName: "lock.fill")
-                        .foregroundColor(.orange)
-                        .imageScale(.small)
-                } else {
-                    Color.clear
-                }
-            }
-            .frame(width: 12)
-
-            // Right slot — terminal count (always shown)
-            let cards = matchingCards
-            if cards.isEmpty {
-                Image(systemName: "circle")
-                    .foregroundColor(.secondary)
+        let cards = matchingCards
+        if cards.isEmpty {
+            Image(systemName: "circle")
+                .foregroundColor(.secondary)
+                .imageScale(.small)
+                .frame(width: 14)
+        } else {
+            let iconName = cards.count <= 50 ? "\(cards.count).circle.fill" : "circle.fill"
+            Button {
+                showPopover = true
+            } label: {
+                Image(systemName: iconName)
+                    .foregroundColor(.accentColor)
                     .imageScale(.small)
                     .frame(width: 14)
-            } else {
-                let iconName = cards.count <= 50 ? "\(cards.count).circle.fill" : "circle.fill"
-                Button {
-                    showPopover = true
-                } label: {
-                    Image(systemName: iconName)
-                        .foregroundColor(.accentColor)
-                        .imageScale(.small)
-                        .frame(width: 14)
-                }
-                .buttonStyle(.plain)
-                .help(Strings.Sidebar.terminalBadgeHelp)
-                .popover(isPresented: $showPopover, arrowEdge: .leading) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(cards) { card in
-                            Button {
-                                boardVM.selectCard(card)
-                                showPopover = false
-                            } label: {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "terminal")
-                                        .imageScale(.small)
-                                        .foregroundColor(.secondary)
-                                        .frame(width: 16)
-                                    Text(card.title)
-                                        .lineLimit(1)
-                                }
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 7)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Sidebar.terminalBadgeHelp)
+            .popover(isPresented: $showPopover, arrowEdge: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(cards) { card in
+                        Button {
+                            boardVM.selectCard(card)
+                            showPopover = false
+                        } label: {
+                            HStack(spacing: 8) {
+                                Image(systemName: "terminal")
+                                    .imageScale(.small)
+                                    .foregroundColor(.secondary)
+                                    .frame(width: 16)
+                                Text(card.title)
+                                    .lineLimit(1)
                             }
-                            .buttonStyle(.plain)
-                            if card.id != cards.last?.id {
-                                Divider()
-                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 7)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        if card.id != cards.last?.id {
+                            Divider()
                         }
                     }
-                    .frame(minWidth: 200)
-                    .padding(.vertical, 4)
                 }
+                .frame(minWidth: 200)
+                .padding(.vertical, 4)
             }
         }
     }

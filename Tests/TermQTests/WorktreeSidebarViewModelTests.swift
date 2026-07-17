@@ -93,6 +93,11 @@ final class MockGitService: GitServiceProtocol {
         renameBranchCalls.append((oldName, newName))
     }
 
+    private(set) var createBranchCalls: [(String, String)] = []
+    func createBranch(repoPath: String, name: String, base: String) async throws {
+        createBranchCalls.append((name, base))
+    }
+
     func deleteLocalBranch(repoPath: String, branch: String) async throws {
         deleteLocalBranchCalls.append(branch)
     }
@@ -155,11 +160,12 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         persistence: MockRepoPersistence = MockRepoPersistence(),
         prService: GitHubPRService = .shared,
         gitConfig: GitConfigStore = GitConfigStore(defaults: makeIsolatedDefaults()),
-        workspaceStore: WorkspaceStore = makeIsolatedWorkspaceStore()
+        workspaceStore: WorkspaceStore = makeIsolatedWorkspaceStore(),
+        stackService: StackService = StackService()
     ) -> WorktreeSidebarViewModel {
         WorktreeSidebarViewModel(
             gitService: gitService, persistence: persistence, prService: prService, gitConfig: gitConfig,
-            workspaceStore: workspaceStore)
+            workspaceStore: workspaceStore, stackService: stackService)
     }
 
     private static func makeIsolatedDefaults() -> UserDefaults {
@@ -1163,5 +1169,641 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         let vm = makeVM(persistence: persistence, workspaceStore: ws)
 
         XCTAssertTrue(vm.displayedRepositories.isEmpty)
+    }
+
+    // MARK: - Stacks
+
+    private func makeStackGraph(branchName: String = "feat/test") -> StackGraph {
+        StackGraph(
+            branches: [
+                StackBranch(
+                    name: branchName, isCurrent: true, checkedOutElsewhere: nil, parent: nil,
+                    children: [], needsRestack: false, changeRequest: nil, push: nil)
+            ])
+    }
+
+    func testRefreshStack_noProviderAvailable_leavesStacksEmpty() async {
+        let stackService = StackService(registry: StackProviderRegistry(providers: []))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        let repo = makeRepo()
+
+        await vm.refreshStack(for: repo)
+
+        XCTAssertNil(vm.stacks[repo.id])
+    }
+
+    func testRefreshStack_providerAvailable_mirrorsGraphIntoStacksByRepoId() async {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        let repo = makeRepo()
+
+        await vm.refreshStack(for: repo)
+
+        XCTAssertEqual(vm.stacks[repo.id]?.branches.map(\.name), ["feat/test"])
+    }
+
+    func testRefreshWorktrees_alsoRefreshesStack() async {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        mock.listWorktreesResult = [makeWorktree()]
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        let repo = makeRepo()
+
+        await vm.refreshWorktrees(for: repo)
+
+        XCTAssertEqual(vm.stacks[repo.id]?.branches.map(\.name), ["feat/test"])
+    }
+
+    func testEnableStacking_success_populatesStack() async {
+        let fake = FakeStackProvider()
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        mock.defaultBranchResult = "main"
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        let repo = makeRepo()
+
+        await vm.enableStacking(for: repo)
+
+        let calls = await fake.initializeCalls
+        XCTAssertEqual(calls.first?.trunk, "main")
+        XCTAssertTrue(stackService.isStacked(repo: repo.path))
+        XCTAssertNil(vm.operationError)
+    }
+
+    func testEnableStacking_failure_setsOperationError() async {
+        let fake = FakeStackProvider()
+        await fake.setInitializeError(
+            StackProviderError.commandFailed(command: "gs repo init", exitCode: 1, output: "boom"))
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        let repo = makeRepo()
+
+        await vm.enableStacking(for: repo)
+
+        XCTAssertNotNil(vm.operationError)
+        XCTAssertTrue(vm.operationError?.contains("boom") ?? false)
+    }
+
+    func testRemoveRepository_evictsStackState() async {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let persistence = MockRepoPersistence()
+        let repo = makeRepo()
+        persistence.config = RepoConfig(repositories: [repo.toGitRepository()])
+        let vm = makeVM(persistence: persistence, stackService: stackService)
+        await vm.refreshStack(for: repo)
+        XCTAssertNotNil(vm.stacks[repo.id])
+
+        vm.removeRepository(repo)
+
+        XCTAssertNil(vm.stacks[repo.id])
+        XCTAssertFalse(stackService.isStacked(repo: repo.path))
+    }
+
+    // MARK: - Stack groups (inventory section)
+
+    private func makeBranch(
+        _ name: String, parent: String? = nil, children: [String] = [], isCurrent: Bool = false
+    ) -> StackBranch {
+        StackBranch(
+            name: name, isCurrent: isCurrent, checkedOutElsewhere: nil, parent: parent,
+            children: children, needsRestack: false, changeRequest: nil, push: nil)
+    }
+
+    /// Trunk (develop) fanning out to two stacks and a lone branch — the multi-ups
+    /// trunk shape observed live. The trunk is present in the graph (it's the only
+    /// entry without a parent) and must never appear in any group.
+    private func makeMultiStackVM() async -> (WorktreeSidebarViewModel, ObservableRepository) {
+        let fake = FakeStackProvider()
+        let graph = StackGraph(
+            branches: [
+                makeBranch("develop", children: ["zeta-base", "alpha-base", "lone-branch"], isCurrent: true),
+                // Stack 1: zeta-base ← zeta-top (root sorts after stack 2's root)
+                makeBranch("zeta-base", parent: "develop", children: ["zeta-top"]),
+                makeBranch("zeta-top", parent: "zeta-base"),
+                // Stack 2: alpha-base ← alpha-mid ← alpha-top
+                makeBranch("alpha-base", parent: "develop", children: ["alpha-mid"]),
+                makeBranch("alpha-mid", parent: "alpha-base", children: ["alpha-top"]),
+                makeBranch("alpha-top", parent: "alpha-mid"),
+                // Lone tracked branch on trunk — a one-entry stack (still a group)
+                makeBranch("lone-branch", parent: "develop"),
+            ])
+        await fake.setGraph(graph, for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        let repo = makeRepo()
+        await vm.refreshStack(for: repo)
+        return (vm, repo)
+    }
+
+    func testStackGroups_groupsByRootSortedByName_excludingOnlyTrunk() async {
+        let (vm, repo) = await makeMultiStackVM()
+
+        let groups = vm.stackGroups(for: repo)
+
+        // lone-branch is a one-entry stack — a legitimate group, not a Local Branches
+        // entry (Round-3 addendum).
+        XCTAssertEqual(groups.map(\.rootName), ["alpha-base", "lone-branch", "zeta-base"])
+        XCTAssertEqual(groups[0].branches.map(\.name), ["alpha-base", "alpha-mid", "alpha-top"])
+        XCTAssertEqual(groups[1].branches.map(\.name), ["lone-branch"])
+        XCTAssertEqual(groups[2].branches.map(\.name), ["zeta-base", "zeta-top"])
+        // The trunk is a fan-out point — never a group title, never a member.
+        XCTAssertFalse(groups.contains { $0.rootName == "develop" })
+        XCTAssertFalse(groups.contains { $0.branches.contains { $0.name == "develop" } })
+    }
+
+    func testStackGroups_noGraph_returnsEmpty() {
+        let vm = makeVM()
+        XCTAssertTrue(vm.stackGroups(for: makeRepo()).isEmpty)
+    }
+
+    func testWorktreeForBranch_matchesWorktreeByBranchName() async {
+        let (vm, repo) = await makeMultiStackVM()
+        vm.worktrees[repo.id] = [
+            GitWorktree(
+                path: "/tmp/test-repo/.worktrees/alpha-mid", branch: "alpha-mid",
+                commitHash: "abc12345", isMainWorktree: false, isLocked: false)
+        ]
+
+        XCTAssertEqual(
+            vm.worktree(forBranch: "alpha-mid", repo: repo)?.path,
+            "/tmp/test-repo/.worktrees/alpha-mid")
+        XCTAssertNil(vm.worktree(forBranch: "alpha-top", repo: repo))
+    }
+
+    func testDisplayedLocalBranches_excludesStackGroupMembers() async {
+        let (vm, repo) = await makeMultiStackVM()
+        vm.availableBranches[repo.id] = ["alpha-mid", "lone-branch", "unrelated", "zeta-top"]
+
+        // Stack members — including one-entry stacks like lone-branch — are listed in
+        // the Stacks section only; only untracked branches stay in Local Branches.
+        XCTAssertEqual(vm.displayedLocalBranches(for: repo), ["unrelated"])
+    }
+
+    func testDisplayedLocalBranches_noStacks_passesThrough() {
+        let vm = makeVM()
+        let repo = makeRepo()
+        vm.availableBranches[repo.id] = ["a", "b"]
+        XCTAssertEqual(vm.displayedLocalBranches(for: repo), ["a", "b"])
+    }
+
+    // MARK: - Restack outcome
+
+    func testRestack_nothingNeedsRestack_reportsUpToDate() async throws {
+        let (vm, _, repo) = await makeStackedVM()
+
+        let report = try await vm.restack(repo: repo, worktree: makeWorktree(), scope: .stack)
+
+        XCTAssertEqual(report.outcome, .upToDate)
+        XCTAssertTrue(report.skipped.isEmpty)
+    }
+
+    func testRestack_resolvesNeedingBranches_reportsCount() async throws {
+        let fake = FakeStackProvider()
+        let needing = StackGraph(
+            branches: [
+                makeBranch("develop", children: ["feat/a"], isCurrent: true),
+                StackBranch(
+                    name: "feat/a", isCurrent: false, checkedOutElsewhere: nil, parent: "develop",
+                    children: ["feat/b"], needsRestack: true, changeRequest: nil, push: nil),
+                StackBranch(
+                    name: "feat/b", isCurrent: false, checkedOutElsewhere: nil, parent: "feat/a",
+                    children: [], needsRestack: true, changeRequest: nil, push: nil),
+            ])
+        await fake.setGraph(needing, for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        let repo = makeRepo()
+        await vm.refreshStack(for: repo)
+
+        // The provider "restacks": afterwards nothing needs a restack.
+        let clean = StackGraph(
+            branches: [
+                makeBranch("develop", children: ["feat/a"], isCurrent: true),
+                makeBranch("feat/a", parent: "develop", children: ["feat/b"]),
+                makeBranch("feat/b", parent: "feat/a"),
+            ])
+        await fake.setGraph(clean, for: "/tmp/test-repo")
+
+        let report = try await vm.restack(repo: repo, worktree: makeWorktree(), scope: .stack)
+
+        XCTAssertEqual(report.outcome, .restacked(2))
+    }
+
+    func testRestack_conflictPause_reportsPaused() async throws {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeStackGraph(), for: "/tmp/test-repo")
+        await fake.setMutationError(
+            StackProviderError.commandFailed(command: "gs stack restack", exitCode: 1, output: "conflict"))
+        await fake.setPausedOperationResult(
+            StackPausedOperation(kind: .restack, conflictedFiles: ["a.swift"]))
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        let repo = makeRepo()
+        await vm.refreshStack(for: repo)
+
+        let report = try await vm.restack(repo: repo, worktree: makeWorktree(), scope: .stack)
+
+        XCTAssertEqual(report.outcome, .paused)
+    }
+
+    func testMainWorktree_returnsTheMainEntry() {
+        let vm = makeVM()
+        let repo = makeRepo()
+        vm.worktrees[repo.id] = [
+            makeWorktree(path: "/tmp/test-repo/.worktrees/feat", isMain: false),
+            makeWorktree(path: "/tmp/test-repo", isMain: true),
+        ]
+
+        XCTAssertEqual(vm.mainWorktree(for: repo)?.path, "/tmp/test-repo")
+    }
+
+    func testMainWorktree_noWorktrees_returnsNil() {
+        let vm = makeVM()
+        XCTAssertNil(vm.mainWorktree(for: makeRepo()))
+    }
+
+    // MARK: - Reveal preparation
+
+    func testPrepareRevealWorktree_expandsRepoAndWorktreesSection() {
+        let vm = makeVM()
+        let repo = makeRepo()
+        // Start fully collapsed: rows are not emitted, so scrollTo has no target.
+        vm.setExpanded(repo.id, expanded: false)
+        vm.setWorktreeSectionExpanded(repo.id, expanded: false)
+
+        vm.prepareRevealWorktree(for: repo)
+
+        XCTAssertTrue(vm.expandedRepoIDs.contains(repo.id))
+        XCTAssertTrue(vm.isWorktreeSectionExpanded(repo.id))
+    }
+
+    func testPrepareRevealWorktree_alreadyExpanded_isIdempotent() {
+        let vm = makeVM()
+        let repo = makeRepo()
+        vm.setExpanded(repo.id, expanded: true)
+        vm.setWorktreeSectionExpanded(repo.id, expanded: true)
+
+        vm.prepareRevealWorktree(for: repo)
+
+        XCTAssertTrue(vm.expandedRepoIDs.contains(repo.id))
+        XCTAssertTrue(vm.isWorktreeSectionExpanded(repo.id))
+    }
+
+    // MARK: - Stack glyph
+
+    func testStackRootName_stackedWorktree_returnsBottomBranch() async {
+        // develop (trunk) ← feat/base ← feat/broken-out; the glyph names the bottom.
+        let (vm, _, repo, _) = await makeOrchestrationVM()
+        let worktree = GitWorktree(
+            path: "/tmp/test-repo/.worktrees/feat-broken-out", branch: "feat/broken-out",
+            commitHash: "abc12345", isMainWorktree: false, isLocked: false)
+
+        XCTAssertEqual(vm.stackRootName(for: worktree, repo: repo), "feat/base")
+    }
+
+    func testStackRootName_trunkOrUnstackedWorktree_returnsNil() async {
+        let (vm, _, repo, _) = await makeOrchestrationVM()
+        let trunkWorktree = GitWorktree(
+            path: "/tmp/test-repo", branch: "develop",
+            commitHash: "abc12345", isMainWorktree: true, isLocked: false)
+        let plainWorktree = GitWorktree(
+            path: "/tmp/test-repo/.worktrees/plain", branch: "plain-branch",
+            commitHash: "abc12345", isMainWorktree: false, isLocked: false)
+
+        // The trunk fans out to stacks but is never a stack member itself.
+        XCTAssertNil(vm.stackRootName(for: trunkWorktree, repo: repo))
+        XCTAssertNil(vm.stackRootName(for: plainWorktree, repo: repo))
+    }
+
+    // MARK: - Cross-worktree restack orchestration
+
+    /// Stack develop ← feat/base ← feat/broken-out, where feat/broken-out is checked
+    /// out in its own (broken-out) worktree and still needs a restack — the shape gs
+    /// silently skips.
+    private func makeOrchestrationVM() async -> (
+        vm: WorktreeSidebarViewModel, fake: FakeStackProvider, repo: ObservableRepository,
+        ownerPath: String
+    ) {
+        let fake = FakeStackProvider()
+        let graph = StackGraph(
+            branches: [
+                makeBranch("develop", children: ["feat/base"], isCurrent: true),
+                makeBranch("feat/base", parent: "develop", children: ["feat/broken-out"]),
+                StackBranch(
+                    name: "feat/broken-out", isCurrent: false,
+                    checkedOutElsewhere: "/tmp/test-repo/.worktrees/feat-broken-out",
+                    parent: "feat/base", children: [], needsRestack: true,
+                    changeRequest: nil, push: nil),
+            ])
+        await fake.setGraph(graph, for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        vm.worktreeDirtyCheckOverride = { _ in false }
+        vm.worktreeInUseCheckOverride = { _ in false }
+        let repo = makeRepo()
+        let ownerPath = "/tmp/test-repo/.worktrees/feat-broken-out"
+        vm.worktrees[repo.id] = [
+            makeWorktree(path: "/tmp/test-repo", isMain: true),
+            GitWorktree(
+                path: ownerPath, branch: "feat/broken-out", commitHash: "bbb22222",
+                isMainWorktree: false, isLocked: false),
+        ]
+        await vm.refreshStack(for: repo)
+        return (vm, fake, repo, ownerPath)
+    }
+
+    func testOrchestration_eligibleBrokenOutBranch_getsFollowUpRestackInOwningWorktree() async {
+        let (vm, fake, repo, ownerPath) = await makeOrchestrationVM()
+
+        let skipped = await vm.orchestrateCrossWorktreeRestacks(for: repo)
+
+        XCTAssertTrue(skipped.isEmpty)
+        let log = await fake.mutationLog
+        XCTAssertTrue(
+            log.contains("restack:branch(\"feat/broken-out\"):in=\(ownerPath)"),
+            "expected a single-branch follow-up restack in the owning worktree, got \(log)")
+    }
+
+    func testOrchestration_dirtyOwningWorktree_skippedWithReason() async {
+        let (vm, fake, repo, ownerPath) = await makeOrchestrationVM()
+        vm.worktreeDirtyCheckOverride = { path in path == ownerPath }
+
+        let skipped = await vm.orchestrateCrossWorktreeRestacks(for: repo)
+
+        XCTAssertEqual(skipped.count, 1)
+        XCTAssertEqual(skipped.first?.branch, "feat/broken-out")
+        XCTAssertEqual(skipped.first?.worktreePath, ownerPath)
+        XCTAssertEqual(skipped.first?.reason, .dirty)
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty, "dirty worktree must not be touched, got \(log)")
+    }
+
+    func testOrchestration_inUseOwningWorktree_skippedWithReason() async {
+        let (vm, fake, repo, ownerPath) = await makeOrchestrationVM()
+        vm.worktreeInUseCheckOverride = { path in path == ownerPath }
+
+        let skipped = await vm.orchestrateCrossWorktreeRestacks(for: repo)
+
+        XCTAssertEqual(skipped.first?.reason, .inUse)
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty, "in-use worktree must not be touched, got \(log)")
+    }
+
+    func testOrchestration_conflictInFollowUp_pausesOnOwningWorktree() async {
+        let (vm, fake, repo, ownerPath) = await makeOrchestrationVM()
+        await fake.setMutationError(
+            StackProviderError.commandFailed(
+                command: "gs branch restack", exitCode: 1, output: "conflict"))
+        await fake.setPausedOperationResult(
+            StackPausedOperation(kind: .restack, conflictedFiles: ["x.swift"]))
+
+        _ = await vm.orchestrateCrossWorktreeRestacks(for: repo)
+
+        // The banner must attach to the worktree that owns the paused rebase — the
+        // broken-out worktree the follow-up ran in, not the main one.
+        XCTAssertEqual(vm.stackService.conflicts[repo.path]?.worktree, ownerPath)
+    }
+
+    func testOrchestration_sweepsAreCapped() async {
+        let (vm, fake, repo, _) = await makeOrchestrationVM()
+        // The branch never converges: restack "succeeds" but needsRestack stays set.
+        await fake.setClearsNeedsRestackOnBranchRestack(false)
+
+        _ = await vm.orchestrateCrossWorktreeRestacks(for: repo)
+
+        let log = await fake.mutationLog
+        let followUps = log.filter { $0.hasPrefix("restack:branch") }
+        XCTAssertEqual(followUps.count, 2, "sweeps must be capped at 2, got \(log)")
+    }
+
+    func testOrchestration_excludedWorktree_isNeverTouched() async {
+        let (vm, fake, repo, ownerPath) = await makeOrchestrationVM()
+
+        let skipped = await vm.orchestrateCrossWorktreeRestacks(for: repo, excluding: ownerPath)
+
+        XCTAssertTrue(skipped.isEmpty)
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty, "the excluded worktree must not receive follow-ups, got \(log)")
+    }
+
+    // MARK: - Worktrees section expansion
+
+    func testWorktreeSection_defaultsToExpanded() {
+        let vm = makeVM()
+        XCTAssertTrue(vm.isWorktreeSectionExpanded(UUID()))
+    }
+
+    func testWorktreeSection_collapseAndReexpand() {
+        let vm = makeVM()
+        let id = UUID()
+
+        vm.setWorktreeSectionExpanded(id, expanded: false)
+        XCTAssertFalse(vm.isWorktreeSectionExpanded(id))
+        XCTAssertTrue(vm.collapsedWorktreeSectionIDs.contains(id))
+
+        vm.setWorktreeSectionExpanded(id, expanded: true)
+        XCTAssertTrue(vm.isWorktreeSectionExpanded(id))
+        XCTAssertFalse(vm.collapsedWorktreeSectionIDs.contains(id))
+    }
+
+    // MARK: - Guarded stack switch
+
+    private func makeStackedVM() async -> (
+        vm: WorktreeSidebarViewModel, fake: FakeStackProvider, repo: ObservableRepository
+    ) {
+        let fake = FakeStackProvider()
+        let graph = StackGraph(
+            branches: [
+                StackBranch(
+                    name: "feat/test", isCurrent: true, checkedOutElsewhere: nil, parent: nil,
+                    children: ["feat/next"], needsRestack: false, changeRequest: nil, push: nil),
+                StackBranch(
+                    name: "feat/next", isCurrent: false, checkedOutElsewhere: nil, parent: "feat/test",
+                    children: [], needsRestack: false, changeRequest: nil, push: nil),
+                StackBranch(
+                    name: "feat/elsewhere", isCurrent: false, checkedOutElsewhere: "/other/wt",
+                    parent: "feat/test", children: [], needsRestack: false, changeRequest: nil, push: nil),
+            ])
+        await fake.setGraph(graph, for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        vm.worktreeDirtyCheckOverride = { _ in false }
+        vm.worktreeInUseCheckOverride = { _ in false }
+        let repo = makeRepo()
+        await vm.refreshStack(for: repo)
+        return (vm, fake, repo)
+    }
+
+    func testSwitchStackBranch_cleanAndUnused_invokesProvider() async throws {
+        let (vm, fake, repo) = await makeStackedVM()
+
+        try await vm.switchStackBranch(repo: repo, worktree: makeWorktree(), to: "feat/next")
+
+        let log = await fake.mutationLog
+        XCTAssertEqual(log.first, "switch:feat/next")
+    }
+
+    func testSwitchStackBranch_dirtyWorktree_blocksWithoutProviderCall() async {
+        let (vm, fake, repo) = await makeStackedVM()
+        vm.worktreeDirtyCheckOverride = { _ in true }
+
+        do {
+            try await vm.switchStackBranch(repo: repo, worktree: makeWorktree(), to: "feat/next")
+            XCTFail("Expected worktreeDirty")
+        } catch StackSwitchBlockedError.worktreeDirty {
+            // expected
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty)
+    }
+
+    func testSwitchStackBranch_worktreeInUse_blocksWithoutProviderCall() async {
+        let (vm, fake, repo) = await makeStackedVM()
+        vm.worktreeInUseCheckOverride = { _ in true }
+
+        do {
+            try await vm.switchStackBranch(repo: repo, worktree: makeWorktree(), to: "feat/next")
+            XCTFail("Expected worktreeInUse")
+        } catch StackSwitchBlockedError.worktreeInUse {
+            // expected
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty)
+    }
+
+    func testSwitchStackBranch_targetCheckedOutElsewhere_blocksWithPath() async {
+        let (vm, fake, repo) = await makeStackedVM()
+
+        do {
+            try await vm.switchStackBranch(repo: repo, worktree: makeWorktree(), to: "feat/elsewhere")
+            XCTFail("Expected checkedOutElsewhere")
+        } catch StackSwitchBlockedError.checkedOutElsewhere(let path) {
+            XCTAssertEqual(path, "/other/wt")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty)
+    }
+
+    // MARK: - Add branch to stack
+
+    func testAddBranchToStack_newBranch_createsStackedOnTarget() async throws {
+        let (vm, fake, repo) = await makeStackedVM()
+
+        try await vm.addBranchToStack(
+            repo: repo, worktree: makeWorktree(), name: "feat/new", target: "feat/test")
+
+        let log = await fake.mutationLog
+        XCTAssertEqual(log.first, "create:feat/new:target=feat/test")
+    }
+
+    // MARK: - Submit + sync (Phase 3)
+
+    func testSubmitStack_invokesProviderSubmit() async throws {
+        let (vm, fake, repo) = await makeStackedVM()
+
+        try await vm.submitStack(
+            repo: repo, worktree: makeWorktree(), scope: .stack,
+            options: StackSubmitOptions(draft: false, updateOnly: false))
+
+        let log = await fake.mutationLog
+        XCTAssertEqual(log.first, "submit:stack")
+    }
+
+    func testSyncStackRepo_reportsRemovedBranches() async throws {
+        let (vm, fake, repo) = await makeStackedVM()
+        XCTAssertEqual(vm.stacks[repo.id]?.branches.count, 3)
+
+        // Simulate the provider deleting a merged local during sync: the graph the
+        // refresh fetches afterwards no longer contains feat/next.
+        let shrunk = StackGraph(
+            branches: [
+                StackBranch(
+                    name: "feat/test", isCurrent: true, checkedOutElsewhere: nil, parent: nil,
+                    children: [], needsRestack: false, changeRequest: nil, push: nil)
+            ])
+        await fake.setGraph(shrunk, for: "/tmp/test-repo")
+
+        let report = try await vm.syncStackRepo(for: repo, worktree: makeWorktree())
+
+        XCTAssertEqual(report.removedBranches, ["feat/elsewhere", "feat/next"])
+        let log = await fake.mutationLog
+        XCTAssertEqual(log.first, "sync")
+    }
+
+    func testRefreshRepo_stackedRepo_syncsInsteadOfFetching() async {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        mock.listWorktreesResult = [makeWorktree(path: "/tmp/test-repo", isMain: true)]
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        let repo = makeRepo()
+        // Populate worktrees + stack state first (startup refresh).
+        await vm.refreshWorktrees(for: repo)
+
+        await vm.refreshRepo(for: repo)
+
+        let log = await fake.mutationLog
+        XCTAssertEqual(log.first, "sync")
+        XCTAssertFalse(mock.fetchRemoteCalled, "stacked repos must sync, not plain-fetch")
+    }
+
+    func testRefreshRepo_unstackedRepo_plainFetch() async {
+        let fake = FakeStackProvider()  // ready but repo not initialized
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        mock.listWorktreesResult = [makeWorktree(path: "/tmp/test-repo", isMain: true)]
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        let repo = makeRepo()
+        await vm.refreshWorktrees(for: repo)
+
+        await vm.refreshRepo(for: repo)
+
+        XCTAssertTrue(mock.fetchRemoteCalled)
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty)
+    }
+
+    func testAddBranchToStack_existingBranch_tracksWithCurrentBranchBase() async throws {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        mock.listBranchesResult = ["main", "feat/existing"]
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        let repo = makeRepo()
+
+        try await vm.addBranchToStack(
+            repo: repo, worktree: makeWorktree(), name: "feat/existing", target: nil)
+
+        let log = await fake.mutationLog
+        // Base falls back to the worktree's current branch when no target is given.
+        XCTAssertEqual(log.first, "track:feat/existing:base=feat/test")
     }
 }

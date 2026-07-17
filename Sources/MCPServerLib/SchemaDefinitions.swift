@@ -384,6 +384,77 @@ extension TermQMCPServer {
                     readOnlyHint: false, destructiveHint: true,
                     idempotentHint: true, openWorldHint: false)
             ),
+            Tool(
+                name: "stack_status",
+                title: "Stacked-branch status",
+                description: """
+                    Read the stacked-branch graph for a registered repository. Returns a
+                    provider-neutral JSON graph (branches with parent/children edges,
+                    change-request status, restack and push state). Reports
+                    `available: false` when no stacked-PR provider (e.g. git-spice) is
+                    installed, and `initialized: false` when the repo has no stack yet —
+                    neither is an error.
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("repoId", "Repository UUID (from termq://repos)", required: true)
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: true, destructiveHint: false,
+                    idempotentHint: true, openWorldHint: true)
+            ),
+            Tool(
+                name: "stack_create_branch",
+                title: "Create stacked branch",
+                description: """
+                    Create a new tracked branch stacked on `target` (or the worktree's
+                    current branch when omitted). Staged changes in the worktree become the
+                    new branch's first commit; with a clean tree an empty branch is created.
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("repoId", "Repository UUID", required: true),
+                    Schema.string("worktreePath", "Absolute path of the worktree to operate in", required: true),
+                    Schema.string("name", "New branch name", required: true),
+                    Schema.string("target", "Branch to stack on (default: current branch)"),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: false, openWorldHint: true)
+            ),
+            Tool(
+                name: "stack_submit",
+                title: "Submit stack",
+                description: """
+                    Create or update change requests for every branch in the worktree's
+                    stack (idempotent). `draft` opens new CRs as drafts; `updateOnly` skips
+                    creating CRs for branches that don't have one yet.
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("repoId", "Repository UUID", required: true),
+                    Schema.string("worktreePath", "Absolute path of the worktree to operate in", required: true),
+                    Schema.bool("draft", "Create new change requests as drafts (default: false)"),
+                    Schema.bool("updateOnly", "Only update existing change requests (default: false)"),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: true, openWorldHint: true)
+            ),
+            Tool(
+                name: "stack_restack",
+                title: "Restack stack",
+                description: """
+                    Rebase every branch of the worktree's stack onto its updated parent.
+                    If the restack pauses on conflicts, the result reports `paused: true`
+                    with the conflicted files — resolve them in the worktree and continue
+                    with the provider CLI (`gs rebase continue`) or the TermQ sidebar.
+                    """,
+                inputSchema: Schema.objectSchema([
+                    Schema.string("repoId", "Repository UUID", required: true),
+                    Schema.string("worktreePath", "Absolute path of the worktree to operate in", required: true),
+                ]),
+                annotations: Tool.Annotations(
+                    readOnlyHint: false, destructiveHint: false,
+                    idempotentHint: true, openWorldHint: true)
+            ),
         ]
     }
 }

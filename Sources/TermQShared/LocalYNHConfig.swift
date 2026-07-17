@@ -25,6 +25,12 @@ public struct LocalYNHConfig: Codable, Sendable {
     public var repoRunFocus: [String: String]
     /// Per-repo override for the Remote PR feed cap. `nil` means use the global setting.
     public var repoRemotePRFeedCap: [String: Int]
+    /// Per-stack harness override. Keyed by repository root path, then by the stack's
+    /// root branch name (the bottom-most tracked branch) — nested rather than a single
+    /// delimited key to avoid collisions between path separators and branch-name
+    /// slashes. Known limitation: if the root branch merges away and the stack's root
+    /// name changes, the override does not follow.
+    public var stackHarness: [String: [String: String]]
 
     public init(
         worktreeHarness: [String: String] = [:],
@@ -33,7 +39,8 @@ public struct LocalYNHConfig: Codable, Sendable {
         harnessVendor: [String: String] = [:],
         repoRunHarness: [String: String] = [:],
         repoRunFocus: [String: String] = [:],
-        repoRemotePRFeedCap: [String: Int] = [:]
+        repoRemotePRFeedCap: [String: Int] = [:],
+        stackHarness: [String: [String: String]] = [:]
     ) {
         self.worktreeHarness = worktreeHarness
         self.repoHarness = repoHarness
@@ -42,6 +49,7 @@ public struct LocalYNHConfig: Codable, Sendable {
         self.repoRunHarness = repoRunHarness
         self.repoRunFocus = repoRunFocus
         self.repoRemotePRFeedCap = repoRemotePRFeedCap
+        self.stackHarness = stackHarness
     }
 
     // Custom decoder for backward compat: all optional dicts default to empty.
@@ -55,6 +63,8 @@ public struct LocalYNHConfig: Codable, Sendable {
         repoRunFocus = (try? c.decode([String: String].self, forKey: .repoRunFocus)) ?? [:]
         repoRemotePRFeedCap =
             (try? c.decode([String: Int].self, forKey: .repoRemotePRFeedCap)) ?? [:]
+        stackHarness =
+            (try? c.decode([String: [String: String]].self, forKey: .stackHarness)) ?? [:]
     }
 }
 
