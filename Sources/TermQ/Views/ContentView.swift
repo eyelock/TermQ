@@ -136,6 +136,27 @@ struct ContentView: View {
                         onBell: { cardId in
                             viewModel.markNeedsAttention(cardId)
                         },
+                        onLaunchHarnessAtPath: { path in
+                            guard let harnessIdOrName = YNHPersistence.shared.harness(for: path) else { return }
+                            let harness = harnessRepo.harnesses.first {
+                                $0.id == harnessIdOrName || $0.name == harnessIdOrName
+                            }
+                            let config = HarnessLaunchConfig(
+                                harnessID: harness?.id ?? harnessIdOrName,
+                                vendorID: "",
+                                defaultVendor: harness?.defaultVendor ?? "",
+                                focus: nil,
+                                profile: nil,
+                                workingDirectory: path,
+                                prompt: nil,
+                                instructions: nil,
+                                backend: SettingsStore.shared.backend,
+                                branch: nil,
+                                interactive: false,
+                                cardTitle: nil
+                            )
+                            launchCoordinator.launchHarness(config)
+                        },
                         tabCards: viewModel.tabCards,
                         columns: viewModel.board.columns,
                         needsAttention: viewModel.needsAttention,

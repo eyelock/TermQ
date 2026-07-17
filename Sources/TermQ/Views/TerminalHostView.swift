@@ -2,6 +2,7 @@ import AppKit
 import SwiftTerm
 import SwiftUI
 import TermQCore
+import TermQShared
 @preconcurrency import UserNotifications
 
 /// Custom terminal view - using default SwiftTerm behavior
@@ -28,6 +29,15 @@ class TermQTerminalView: LocalProcessTerminalView {
 
     /// Callback when user wants to disable safe paste for this terminal
     var onDisableSafePaste: (() -> Void)?
+
+    /// Callback to launch a harness at a path resolved from the current terminal
+    /// selection. Threaded down from `ContentView` because harness-launch card
+    /// creation lives in `HarnessLaunchCoordinator`, which isn't a singleton.
+    var onLaunchHarnessAtPath: ((String) -> Void)?
+
+    /// Path resolved from the selection at the time the context menu was built —
+    /// read by the path-action selectors below.
+    private var pendingSelectionPath: ResolvedSelectionPath?
 
     /// Flash overlay for visual bell
     private var flashOverlay: NSView?
@@ -289,18 +299,131 @@ class TermQTerminalView: LocalProcessTerminalView {
         let pasteItem = NSMenuItem(title: "Paste", action: #selector(paste(_:)), keyEquivalent: "")
         menu.addItem(pasteItem)
 
+        if let resolved = resolvedSelectionPath() {
+            pendingSelectionPath = resolved
+            appendPathActionItems(to: menu, resolved: resolved)
+        } else {
+            pendingSelectionPath = nil
+        }
+
         return menu
+    }
+
+    /// Resolve the current selection (if any) against the terminal's working
+    /// directory into an existing filesystem path.
+    private func resolvedSelectionPath() -> ResolvedSelectionPath? {
+        guard selectionActive, let selection = getSelection(), !selection.isEmpty else { return nil }
+        let cwd = cardId.flatMap { TerminalSessionManager.shared.getCurrentDirectory(for: $0) }
+        return TerminalSelectionPathResolver.resolveOnDisk(selection: selection, cwd: cwd)
+    }
+
+    /// Append the Launch / Terminal / Open groups — mirrors the worktree sidebar's
+    /// context menu (`WorktreeSidebarView.worktreeContextMenu`) but operating on a
+    /// plain resolved path rather than a `GitWorktree`.
+    private func appendPathActionItems(to menu: NSMenu, resolved: ResolvedSelectionPath) {
+        menu.addItem(.separator())
+
+        if let harnessName = YNHPersistence.shared.harness(for: resolved.directory) {
+            menu.addItem(
+                NSMenuItem(
+                    title: Strings.Sidebar.launchHarness(harnessName),
+                    action: #selector(launchHarnessAtSelection(_:)),
+                    keyEquivalent: ""))
+        }
+
+        menu.addItem(
+            NSMenuItem(
+                title: Strings.Sidebar.newTerminal, action: #selector(quickTerminalAtSelection(_:)),
+                keyEquivalent: ""))
+        menu.addItem(
+            NSMenuItem(
+                title: Strings.Sidebar.createTerminal, action: #selector(createTerminalAtSelection(_:)),
+                keyEquivalent: ""))
+
+        menu.addItem(.separator())
+
+        menu.addItem(
+            NSMenuItem(
+                title: Strings.Sidebar.revealInFinder, action: #selector(revealSelectionInFinder(_:)),
+                keyEquivalent: ""))
+        menu.addItem(
+            NSMenuItem(
+                title: Strings.Sidebar.openInTerminal, action: #selector(openSelectionInTerminal(_:)),
+                keyEquivalent: ""))
+        menu.addItem(
+            NSMenuItem(
+                title: Strings.Sidebar.copyPathname, action: #selector(copySelectionPathname(_:)),
+                keyEquivalent: ""))
+
+        let editors = EditorRegistry.shared.available
+        if !editors.isEmpty {
+            let openInItem = NSMenuItem(title: Strings.Sidebar.openIn, action: nil, keyEquivalent: "")
+            let submenu = NSMenu()
+            for editor in editors {
+                let item = NSMenuItem(
+                    title: editor.displayName, action: #selector(openSelectionInEditor(_:)), keyEquivalent: "")
+                item.representedObject = editor
+                submenu.addItem(item)
+            }
+            openInItem.submenu = submenu
+            menu.addItem(openInItem)
+        }
+    }
+
+    @objc private func launchHarnessAtSelection(_ sender: Any) {
+        guard let resolved = pendingSelectionPath else { return }
+        onLaunchHarnessAtPath?(resolved.directory)
+    }
+
+    @objc private func quickTerminalAtSelection(_ sender: Any) {
+        guard let resolved = pendingSelectionPath else { return }
+        BoardViewModel.shared.newTerminal(at: resolved.directory)
+    }
+
+    @objc private func createTerminalAtSelection(_ sender: Any) {
+        guard let resolved = pendingSelectionPath else { return }
+        BoardViewModel.shared.addTerminal(workingDirectory: resolved.directory)
+    }
+
+    @objc private func revealSelectionInFinder(_ sender: Any) {
+        guard let resolved = pendingSelectionPath else { return }
+        PathActions.revealInFinder(path: resolved.directory)
+    }
+
+    @objc private func openSelectionInTerminal(_ sender: Any) {
+        guard let resolved = pendingSelectionPath else { return }
+        PathActions.openInTerminal(path: resolved.directory)
+    }
+
+    @objc private func copySelectionPathname(_ sender: Any) {
+        guard let resolved = pendingSelectionPath else { return }
+        PathActions.copyPathname(resolved.exactPath)
+    }
+
+    @objc private func openSelectionInEditor(_ sender: NSMenuItem) {
+        guard let resolved = pendingSelectionPath, let editor = sender.representedObject as? ExternalEditor else {
+            return
+        }
+        PathActions.openIn(editor: editor, path: resolved.exactPath)
     }
 
     /// SwiftTerm's implementation returns `false` for any selector it doesn't
     /// recognize, which would leave our custom menu items permanently disabled.
     override func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
-        if item.action == #selector(copyWithoutLineBreaks(_:))
-            || item.action == #selector(copyWithoutIndentation(_:))
-        {
+        switch item.action {
+        case #selector(copyWithoutLineBreaks(_:)), #selector(copyWithoutIndentation(_:)):
             return selectionActive
+        case #selector(launchHarnessAtSelection(_:)),
+            #selector(quickTerminalAtSelection(_:)),
+            #selector(createTerminalAtSelection(_:)),
+            #selector(revealSelectionInFinder(_:)),
+            #selector(openSelectionInTerminal(_:)),
+            #selector(copySelectionPathname(_:)),
+            #selector(openSelectionInEditor(_:)):
+            return pendingSelectionPath != nil
+        default:
+            return super.validateUserInterfaceItem(item)
         }
-        return super.validateUserInterfaceItem(item)
     }
 
     /// Copy the selection as a single line — newlines collapsed to single spaces —
@@ -675,6 +798,7 @@ struct TerminalHostView: NSViewRepresentable {
     let onExit: @Sendable @MainActor () -> Void
     var onBell: (() -> Void)?
     var onActivity: (() -> Void)?
+    var onLaunchHarnessAtPath: ((String) -> Void)?
     var isSearching: Bool = false
     /// Token that changes when session should be restarted - forces view recreation
     var restartToken: Int = 0
@@ -688,10 +812,13 @@ struct TerminalHostView: NSViewRepresentable {
             onBell: { onBell?() },
             onActivity: { onActivity?() }
         )
+        container.terminal.onLaunchHarnessAtPath = onLaunchHarnessAtPath
         return container
     }
 
     func updateNSView(_ nsView: TerminalContainerView, context: Context) {
+        nsView.terminal.onLaunchHarnessAtPath = onLaunchHarnessAtPath
+
         let mouseDown = NSEvent.pressedMouseButtons != 0
         let dragInProgress = TerminalSessionManager.shared.isMouseDragInProgress
         let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
