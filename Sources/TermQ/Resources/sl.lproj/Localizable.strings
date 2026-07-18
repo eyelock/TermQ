@@ -1396,6 +1396,13 @@
 "stacks.submit.will.update" = "posodobiti";
 "stacks.sync.repo" = "Sinhroniziraj Repozitorij";
 "stacks.sync.cleaned %ld %@" = "Sinhronizacija je odstranila %ld združenih vej: %@";
+"stacks.destroy.stack" = "Uniči Sklad…";
+"stacks.destroy.stack.title" = "Uničiti sklad?";
+"stacks.destroy.stack.message %ld %@" = "To trajno izbriše %ld lokalnih vej prek git-spice: %@. Oddaljene veje in morebitne pull requeste ostanejo nedotaknjene.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld teh vej ima še vedno ODPRT pull request.";
+"stacks.destroy.stack.confirm" = "Uniči Sklad";
+"stacks.destroy.stack.done %ld" = "Sklad uničen: izbrisanih %ld vej";
+"stacks.destroy.stack.worktree.skipped %@" = "Ostalo nedotaknjeno (neuveljavljene spremembe): %@";
 "stacks.base.mismatch %@ %@" = "PR cilja na %@, vendar je nadrejena veja sklada %@ — Sinhroniziraj Repozitorij jo bo preusmeril";
 "stacks.restack.up.to.date" = "Sklad je že posodobljen";
 "stacks.restack.done %ld" = "Restackanih %ld vej";

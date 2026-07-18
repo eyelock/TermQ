@@ -1395,6 +1395,13 @@
 "stacks.submit.will.update" = "mettre à jour";
 "stacks.sync.repo" = "Synchroniser le Dépôt";
 "stacks.sync.cleaned %ld %@" = "La synchronisation a supprimé %ld branches fusionnées : %@";
+"stacks.destroy.stack" = "Détruire la Pile…";
+"stacks.destroy.stack.title" = "Détruire la pile ?";
+"stacks.destroy.stack.message %ld %@" = "Cela supprime définitivement %ld branches locales via git-spice : %@. Les branches distantes et les pull requests éventuelles restent intactes.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld de ces branches ont encore une pull request OUVERTE.";
+"stacks.destroy.stack.confirm" = "Détruire la Pile";
+"stacks.destroy.stack.done %ld" = "Pile détruite : %ld branches supprimées";
+"stacks.destroy.stack.worktree.skipped %@" = "Laissé intact (modifications non validées) : %@";
 "stacks.base.mismatch %@ %@" = "La PR cible %@, mais le parent de la pile est %@ — Synchroniser le Dépôt la reciblera";
 "stacks.restack.up.to.date" = "La pile est déjà à jour";
 "stacks.restack.done %ld" = "%ld branches restackées";

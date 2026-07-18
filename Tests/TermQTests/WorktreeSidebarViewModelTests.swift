@@ -30,6 +30,8 @@ final class MockGitService: GitServiceProtocol {
     private(set) var initializeSubmodulesCalls: [String] = []
     var initializeSubmodulesError: Error?
     private(set) var removeWorktreeCalled = false
+    private(set) var removeWorktreeCalls: [String] = []
+    private(set) var checkoutBranchAsWorktreeCalls: [(branch: String, path: String)] = []
     private(set) var lockWorktreeCalled = false
     private(set) var unlockWorktreeCalled = false
     private(set) var deleteLocalBranchCalls: [String] = []
@@ -48,7 +50,9 @@ final class MockGitService: GitServiceProtocol {
         return listWorktreesResult
     }
 
-    func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws {}
+    func checkoutBranchAsWorktree(repo: GitRepository, branch: String, path: String) async throws {
+        checkoutBranchAsWorktreeCalls.append((branch, path))
+    }
 
     func addWorktree(repo: GitRepository, branch: String, path: String, baseBranch: String?) async throws {
         addWorktreeCalled = true
@@ -56,6 +60,7 @@ final class MockGitService: GitServiceProtocol {
 
     func removeWorktree(repo: GitRepository, path: String) async throws {
         removeWorktreeCalled = true
+        removeWorktreeCalls.append(path)
     }
 
     func forceDeleteWorktree(repoPath: String, worktreePath: String) async throws {
@@ -1624,6 +1629,102 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         XCTAssertTrue(skipped.isEmpty)
         let log = await fake.mutationLog
         XCTAssertTrue(log.isEmpty, "the excluded worktree must not receive follow-ups, got \(log)")
+    }
+
+    // MARK: - Destroy Stack
+
+    private func makeDestroyStackGraph() -> StackGraph {
+        StackGraph(
+            branches: [
+                makeBranch("develop", children: ["tier1/a"]),
+                makeBranch("tier1/a", parent: "develop", children: ["tier1/b"]),
+                makeBranch("tier1/b", parent: "tier1/a", isCurrent: true),
+            ])
+    }
+
+    func testDestroyStack_anchoredStack_usesExistingWorktreeAndRemovesItAfter() async throws {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeDestroyStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        vm.worktreeDirtyCheckOverride = { _ in false }
+        let repo = makeRepo()
+        let ownerPath = "/tmp/test-repo/.worktrees/tier1-b"
+        vm.worktrees[repo.id] = [
+            makeWorktree(path: "/tmp/test-repo", isMain: true),
+            GitWorktree(
+                path: ownerPath, branch: "tier1/b", commitHash: "ccc33333",
+                isMainWorktree: false, isLocked: false),
+        ]
+        await vm.refreshStack(for: repo)
+        let group = StackGroup(rootName: "tier1/a", branches: vm.stacks[repo.id]!.chain(containing: "tier1/a"))
+
+        let report = try await vm.destroyStack(repo: repo, group: group)
+
+        let log = await fake.mutationLog
+        XCTAssertEqual(log, ["destroy:in=\(ownerPath)"])
+        XCTAssertTrue(
+            mock.checkoutBranchAsWorktreeCalls.isEmpty,
+            "no scratch worktree needed when one already anchors the stack")
+        XCTAssertEqual(mock.removeWorktreeCalls, [ownerPath])
+        XCTAssertFalse(mock.forceDeleteWorktreeCalled)
+        XCTAssertEqual(report.deletedBranches, ["tier1/a", "tier1/b"])
+        XCTAssertEqual(report.removedWorktrees, [ownerPath])
+        XCTAssertTrue(report.skippedDirtyWorktrees.isEmpty)
+    }
+
+    func testDestroyStack_dirtyAnchoringWorktree_leftUntouchedAndReported() async throws {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeDestroyStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        let ownerPath = "/tmp/test-repo/.worktrees/tier1-b"
+        vm.worktreeDirtyCheckOverride = { path in path == ownerPath }
+        let repo = makeRepo()
+        vm.worktrees[repo.id] = [
+            makeWorktree(path: "/tmp/test-repo", isMain: true),
+            GitWorktree(
+                path: ownerPath, branch: "tier1/b", commitHash: "ccc33333",
+                isMainWorktree: false, isLocked: false),
+        ]
+        await vm.refreshStack(for: repo)
+        let group = StackGroup(rootName: "tier1/a", branches: vm.stacks[repo.id]!.chain(containing: "tier1/a"))
+
+        let report = try await vm.destroyStack(repo: repo, group: group)
+
+        XCTAssertTrue(mock.removeWorktreeCalls.isEmpty, "a dirty worktree must not be removed")
+        XCTAssertEqual(report.removedWorktrees, [])
+        XCTAssertEqual(report.skippedDirtyWorktrees, [ownerPath])
+    }
+
+    func testDestroyStack_noAnchoringWorktree_usesScratchWorktreeAndForceRemovesIt() async throws {
+        let fake = FakeStackProvider()
+        await fake.setGraph(makeDestroyStackGraph(), for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock, stackService: stackService)
+        let repo = makeRepo()
+        vm.worktrees[repo.id] = [makeWorktree(path: "/tmp/test-repo", isMain: true)]
+        await vm.refreshStack(for: repo)
+        let group = StackGroup(rootName: "tier1/a", branches: vm.stacks[repo.id]!.chain(containing: "tier1/a"))
+
+        let report = try await vm.destroyStack(repo: repo, group: group)
+
+        XCTAssertEqual(mock.checkoutBranchAsWorktreeCalls.count, 1)
+        XCTAssertEqual(mock.checkoutBranchAsWorktreeCalls.first?.branch, "tier1/b")
+        XCTAssertTrue(mock.forceDeleteWorktreeCalled, "the scratch worktree must be force-removed afterward")
+        XCTAssertTrue(mock.removeWorktreeCalls.isEmpty, "no anchoring worktree existed to remove")
+        let log = await fake.mutationLog
+        XCTAssertEqual(log.count, 1)
+        XCTAssertTrue(log.first?.hasPrefix("destroy:in=") ?? false)
+        XCTAssertEqual(report.deletedBranches, ["tier1/a", "tier1/b"])
+        XCTAssertTrue(report.removedWorktrees.isEmpty)
+        XCTAssertTrue(report.skippedDirtyWorktrees.isEmpty)
     }
 
     // MARK: - Worktrees section expansion

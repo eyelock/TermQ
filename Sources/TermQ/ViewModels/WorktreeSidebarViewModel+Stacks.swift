@@ -70,6 +70,16 @@ struct StackSyncReport: Equatable {
     let skipped: [StackSkippedRestack]
 }
 
+/// Result of a "Destroy Stack" operation: every branch git-spice deleted, plus what
+/// happened to the worktree(s) that had been anchoring the stack (each is left behind
+/// in a detached-HEAD state by `gs stack delete` — this cleans them up unless they had
+/// uncommitted changes, in which case they're left alone and reported).
+struct StackDestroyReport: Equatable {
+    let deletedBranches: [String]
+    let removedWorktrees: [String]
+    let skippedDirtyWorktrees: [String]
+}
+
 // MARK: - Stack Groups
 
 /// One tracked stack for the sidebar's Stacks inventory section: the chain of branches
@@ -479,5 +489,70 @@ extension WorktreeSidebarViewModel {
         try await stackService.abortPaused(repo: repo.path, worktree: worktree)
         monitors[repo.id]?.resetWatches()
         await refreshWorktrees(for: repo)
+    }
+
+    /// "Destroy Stack": delete every branch in `group` via `gs stack delete --force`.
+    /// Destructive — the view layer confirms with the user (and surfaces any
+    /// still-open PRs) before calling this.
+    ///
+    /// `gs stack delete` must run with one of the stack's branches checked out. If the
+    /// stack already has a worktree, that's used directly; otherwise a scratch
+    /// worktree is created at the tip branch just for the operation and removed
+    /// afterward. Any non-main worktree(s) that had been anchoring the stack are left
+    /// by git-spice in a detached-HEAD state (not removed) — this cleans those up too,
+    /// unless one is dirty, in use (an attached terminal), or fails to remove for some
+    /// other reason, in which case it's left alone and reported rather than silently
+    /// discarding local work. The main worktree is never removed.
+    @discardableResult
+    func destroyStack(repo: ObservableRepository, group: StackGroup) async throws -> StackDestroyReport {
+        let branchNames = group.branches.map(\.name)
+        let existingOwners = branchNames.compactMap { worktree(forBranch: $0, repo: repo) }
+
+        let targetPath: String
+        var scratchWorktreePath: String?
+        if let anchor = existingOwners.first {
+            targetPath = anchor.path
+        } else if let tip = group.branches.last {
+            let path = URL(fileURLWithPath: NSTemporaryDirectory())
+                .appendingPathComponent("termq-destroy-stack-\(UUID().uuidString)").path
+            try await gitService.checkoutBranchAsWorktree(
+                repo: repo.toGitRepository(), branch: tip.name, path: path)
+            targetPath = path
+            scratchWorktreePath = path
+        } else {
+            return StackDestroyReport(deletedBranches: [], removedWorktrees: [], skippedDirtyWorktrees: [])
+        }
+
+        try await stackService.destroyStack(repo: repo.path, worktree: targetPath)
+
+        var removed: [String] = []
+        var skippedDirty: [String] = []
+        // The main worktree is never removed — `gitService.removeWorktree` has no
+        // main-worktree guard of its own (unlike `WorktreeSidebarViewModel.removeWorktree`),
+        // so it must be excluded here explicitly. Left as-is (git-spice already detached
+        // its HEAD onto trunk), matching how a lone tracked branch anchored there behaves
+        // for every other stack mutation.
+        for owner in existingOwners where !owner.isMainWorktree {
+            if await isWorktreeDirtyForSwitch(owner.path) || isWorktreeInUse(owner.path) {
+                skippedDirty.append(owner.path)
+                continue
+            }
+            do {
+                try await gitService.removeWorktree(repo: repo.toGitRepository(), path: owner.path)
+                removed.append(owner.path)
+            } catch {
+                skippedDirty.append(owner.path)
+            }
+        }
+        if let scratchWorktreePath {
+            try? await gitService.forceDeleteWorktree(repoPath: repo.path, worktreePath: scratchWorktreePath)
+        }
+
+        monitors[repo.id]?.resetWatches()
+        await refreshWorktrees(for: repo)
+        await refreshStack(for: repo)
+
+        return StackDestroyReport(
+            deletedBranches: branchNames, removedWorktrees: removed, skippedDirtyWorktrees: skippedDirty)
     }
 }

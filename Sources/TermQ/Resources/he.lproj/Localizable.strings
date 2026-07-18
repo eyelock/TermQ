@@ -1395,6 +1395,13 @@
 "stacks.submit.will.update" = "יעדכן";
 "stacks.sync.repo" = "סנכרן מאגר";
 "stacks.sync.cleaned %ld %@" = "הסנכרון הסיר %ld ענפים ממוזגים: %@";
+"stacks.destroy.stack" = "השמד ערימה…";
+"stacks.destroy.stack.title" = "להשמיד את הערימה?";
+"stacks.destroy.stack.message %ld %@" = "פעולה זו מוחקת לצמיתות %ld ענפים מקומיים באמצעות git-spice: %@. ענפים מרוחקים וכל בקשות משיכה נותרים ללא שינוי.";
+"stacks.destroy.stack.open.pr.warning %ld" = "ל-%ld מהענפים האלה עדיין יש בקשת משיכה פתוחה.";
+"stacks.destroy.stack.confirm" = "השמד ערימה";
+"stacks.destroy.stack.done %ld" = "הערימה הושמדה: נמחקו %ld ענפים";
+"stacks.destroy.stack.worktree.skipped %@" = "נשאר ללא שינוי (שינויים שלא בוצע להם commit): %@";
 "stacks.base.mismatch %@ %@" = "ה-PR מכוון אל %@, אך הענף האב של המחסנית הוא %@ — סנכרן מאגר יכוון אותו מחדש";
 "stacks.restack.up.to.date" = "המחסנית כבר מעודכנת";
 "stacks.restack.done %ld" = "בוצע Restack ל-%ld ענפים";

@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "ενημέρωση";
 "stacks.sync.repo" = "Συγχρονισμός Αποθετηρίου";
 "stacks.sync.cleaned %ld %@" = "Ο συγχρονισμός αφαίρεσε %ld συγχωνευμένους κλάδους: %@";
+"stacks.destroy.stack" = "Καταστροφή Στοίβας…";
+"stacks.destroy.stack.title" = "Καταστροφή στοίβας;";
+"stacks.destroy.stack.message %ld %@" = "Αυτό διαγράφει οριστικά %ld τοπικούς κλάδους μέσω git-spice: %@. Οι απομακρυσμένοι κλάδοι και τυχόν pull request παραμένουν ανέπαφα.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld από αυτούς τους κλάδους εξακολουθούν να έχουν ΑΝΟΙΧΤΟ pull request.";
+"stacks.destroy.stack.confirm" = "Καταστροφή Στοίβας";
+"stacks.destroy.stack.done %ld" = "Η στοίβα καταστράφηκε: διαγράφηκαν %ld κλάδοι";
+"stacks.destroy.stack.worktree.skipped %@" = "Παρέμεινε ανέπαφο (μη δεσμευμένες αλλαγές): %@";
 "stacks.base.mismatch %@ %@" = "Το PR στοχεύει στο %@, αλλά ο γονέας της στοίβας είναι %@ — ο Συγχρονισμός Αποθετηρίου θα το ανακατευθύνει";
 "stacks.restack.up.to.date" = "Η στοίβα είναι ήδη ενημερωμένη";
 "stacks.restack.done %ld" = "Έγινε restack σε %ld κλάδους";

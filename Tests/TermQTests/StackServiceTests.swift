@@ -112,6 +112,10 @@ actor FakeStackProvider: StackProvider {
 
     func pausedOperation(repo: String) async -> StackPausedOperation? { pausedOperationResult }
 
+    func destroyStack(in worktree: String) async throws {
+        try await record("destroy:in=\(worktree)")
+    }
+
     // MARK: - Test helpers
 
     func setAvailability(_ availability: StackProviderAvailability) {
@@ -424,6 +428,15 @@ final class StackServiceTests: XCTestCase {
         try await service.sync(repo: "/repo", worktree: "/repo/wt")
         let log = await fake.mutationLog
         XCTAssertEqual(log, ["sync"])
+        XCTAssertFalse(service.isMutating(repo: "/repo"))
+    }
+
+    func testDestroyStack_invokesProvider() async throws {
+        let fake = FakeStackProvider()
+        let service = await makeReadyService(fake)
+        try await service.destroyStack(repo: "/repo", worktree: "/repo/wt")
+        let log = await fake.mutationLog
+        XCTAssertEqual(log, ["destroy:in=/repo/wt"])
         XCTAssertFalse(service.isMutating(repo: "/repo"))
     }
 

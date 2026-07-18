@@ -1394,6 +1394,13 @@
 "stacks.submit.will.update" = "bijwerken";
 "stacks.sync.repo" = "Repo Synchroniseren";
 "stacks.sync.cleaned %ld %@" = "Synchronisatie heeft %ld samengevoegde branches verwijderd: %@";
+"stacks.destroy.stack" = "Stack Vernietigen…";
+"stacks.destroy.stack.title" = "Stack vernietigen?";
+"stacks.destroy.stack.message %ld %@" = "Dit verwijdert permanent %ld lokale branches via git-spice: %@. Remote branches en eventuele pull requests blijven ongewijzigd.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld van deze branches hebben nog een OPEN pull request.";
+"stacks.destroy.stack.confirm" = "Stack Vernietigen";
+"stacks.destroy.stack.done %ld" = "Stack vernietigd: %ld branches verwijderd";
+"stacks.destroy.stack.worktree.skipped %@" = "Ongewijzigd gelaten (niet-gecommitte wijzigingen): %@";
 "stacks.base.mismatch %@ %@" = "PR richt zich op %@, maar de Stack-parent is %@ — Repo Synchroniseren zal dit herzien";
 "stacks.restack.up.to.date" = "Stack is al up-to-date";
 "stacks.restack.done %ld" = "%ld branches geherstackt";

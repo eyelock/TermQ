@@ -1396,6 +1396,13 @@
 "stacks.submit.will.update" = "อัปเดต";
 "stacks.sync.repo" = "ซิงค์ Repo";
 "stacks.sync.cleaned %ld %@" = "การซิงค์ลบสาขาที่รวมแล้ว %ld สาขา: %@";
+"stacks.destroy.stack" = "ทำลายสแต็ก…";
+"stacks.destroy.stack.title" = "ทำลายสแต็กหรือไม่?";
+"stacks.destroy.stack.message %ld %@" = "การดำเนินการนี้จะลบสาขาโลคัล %ld สาขาอย่างถาวรผ่าน git-spice: %@ สาขาระยะไกลและ pull request ใด ๆ จะไม่ได้รับผลกระทบ";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld จากสาขาเหล่านี้ยังคงมี pull request ที่เปิดอยู่";
+"stacks.destroy.stack.confirm" = "ทำลายสแต็ก";
+"stacks.destroy.stack.done %ld" = "ทำลายสแต็กแล้ว: ลบสาขาไปแล้ว %ld สาขา";
+"stacks.destroy.stack.worktree.skipped %@" = "ปล่อยไว้โดยไม่แตะต้อง (มีการเปลี่ยนแปลงที่ยังไม่ได้ commit): %@";
 "stacks.base.mismatch %@ %@" = "PR กำหนดเป้าหมายไปที่ %@ แต่สาขาแม่ของสแต็กคือ %@ — ซิงค์ Repo จะกำหนดเป้าหมายใหม่ให้";
 "stacks.restack.up.to.date" = "สแต็กเป็นปัจจุบันแล้ว";
 "stacks.restack.done %ld" = "Restack แล้ว %ld สาขา";

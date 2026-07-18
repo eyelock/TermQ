@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "aktualizovať";
 "stacks.sync.repo" = "Synchronizovať repozitár";
 "stacks.sync.cleaned %ld %@" = "Synchronizácia odstránila %ld zlúčených vetiev: %@";
+"stacks.destroy.stack" = "Zničiť Zásobník…";
+"stacks.destroy.stack.title" = "Zničiť zásobník?";
+"stacks.destroy.stack.message %ld %@" = "Týmto natrvalo odstránite %ld lokálnych vetiev pomocou git-spice: %@. Vzdialené vetvy a prípadné pull requesty zostanú nedotknuté.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld z týchto vetiev má stále OTVORENÝ pull request.";
+"stacks.destroy.stack.confirm" = "Zničiť Zásobník";
+"stacks.destroy.stack.done %ld" = "Zásobník zničený: odstránených %ld vetiev";
+"stacks.destroy.stack.worktree.skipped %@" = "Ponechané bez zmeny (neuložené zmeny): %@";
 "stacks.base.mismatch %@ %@" = "PR cieli na %@, ale rodič zásobníka je %@ — Synchronizovať repozitár ho presmeruje";
 "stacks.restack.up.to.date" = "Zásobník je už aktuálny";
 "stacks.restack.done %ld" = "Restackovaných %ld vetiev";

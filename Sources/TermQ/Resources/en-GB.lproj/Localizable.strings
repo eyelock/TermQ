@@ -1388,6 +1388,13 @@
 "stacks.submit.will.update" = "update";
 "stacks.sync.repo" = "Sync Repo";
 "stacks.sync.cleaned %ld %@" = "Sync removed %ld merged branches: %@";
+"stacks.destroy.stack" = "Destroy Stack…";
+"stacks.destroy.stack.title" = "Destroy Stack?";
+"stacks.destroy.stack.message %ld %@" = "This permanently deletes %ld local branches via git-spice: %@. Remote branches and any pull requests are left untouched.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld of these branches still have an OPEN pull request.";
+"stacks.destroy.stack.confirm" = "Destroy Stack";
+"stacks.destroy.stack.done %ld" = "Destroyed stack: deleted %ld branches";
+"stacks.destroy.stack.worktree.skipped %@" = "Left untouched (uncommitted changes): %@";
 "stacks.base.mismatch %@ %@" = "PR targets %@, but the stack parent is %@ — Sync Repo will retarget it";
 "stacks.restack.up.to.date" = "Stack already up to date";
 "stacks.restack.done %ld" = "Restacked %ld branches";

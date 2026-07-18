@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "actualiza";
 "stacks.sync.repo" = "Sincronizează Depozitul";
 "stacks.sync.cleaned %ld %@" = "Sincronizarea a eliminat %ld ramuri îmbinate: %@";
+"stacks.destroy.stack" = "Distruge Stiva…";
+"stacks.destroy.stack.title" = "Distrugi stiva?";
+"stacks.destroy.stack.message %ld %@" = "Aceasta șterge definitiv %ld ramuri locale prin git-spice: %@. Ramurile la distanță și orice pull request-uri rămân neatinse.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld dintre aceste ramuri au încă un pull request DESCHIS.";
+"stacks.destroy.stack.confirm" = "Distruge Stiva";
+"stacks.destroy.stack.done %ld" = "Stivă distrusă: %ld ramuri șterse";
+"stacks.destroy.stack.worktree.skipped %@" = "Lăsat neatins (modificări necommise): %@";
 "stacks.base.mismatch %@ %@" = "PR-ul vizează %@, dar părintele stivei este %@ — Sincronizează Depozitul o va redirecționa";
 "stacks.restack.up.to.date" = "Stiva este deja actualizată";
 "stacks.restack.done %ld" = "%ld ramuri restack-uite";

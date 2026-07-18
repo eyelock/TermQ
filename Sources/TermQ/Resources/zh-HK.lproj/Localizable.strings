@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "更新";
 "stacks.sync.repo" = "同步儲存庫";
 "stacks.sync.cleaned %ld %@" = "同步移除咗 %ld 個已合併分支：%@";
+"stacks.destroy.stack" = "銷毀堆疊…";
+"stacks.destroy.stack.title" = "銷毀堆疊？";
+"stacks.destroy.stack.message %ld %@" = "呢個操作會透過 git-spice 永久刪除 %ld 個本機分支：%@。遠端分支同任何提取請求都唔會受影響。";
+"stacks.destroy.stack.open.pr.warning %ld" = "當中 %ld 個分支仍然有開啟緊嘅提取請求。";
+"stacks.destroy.stack.confirm" = "銷毀堆疊";
+"stacks.destroy.stack.done %ld" = "堆疊已銷毀：已刪除 %ld 個分支";
+"stacks.destroy.stack.worktree.skipped %@" = "保持不變（有未提交嘅變更）：%@";
 "stacks.base.mismatch %@ %@" = "PR 嘅目標係 %@，但堆疊嘅父分支係 %@ — 同步儲存庫會將佢重新導向";
 "stacks.restack.up.to.date" = "堆疊已經係最新";
 "stacks.restack.done %ld" = "已重新堆疊 %ld 個分支";

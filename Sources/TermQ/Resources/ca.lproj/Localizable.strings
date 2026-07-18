@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "actualitzar";
 "stacks.sync.repo" = "Sincronitza el Repositori";
 "stacks.sync.cleaned %ld %@" = "La sincronització ha eliminat %ld branques fusionades: %@";
+"stacks.destroy.stack" = "Destrueix la Pila…";
+"stacks.destroy.stack.title" = "Destruir la pila?";
+"stacks.destroy.stack.message %ld %@" = "Això elimina permanentment %ld branques locals mitjançant git-spice: %@. Les branques remotes i qualsevol pull request romanen intactes.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld d'aquestes branques encara tenen una pull request OBERTA.";
+"stacks.destroy.stack.confirm" = "Destrueix la Pila";
+"stacks.destroy.stack.done %ld" = "Pila destruïda: s'han eliminat %ld branques";
+"stacks.destroy.stack.worktree.skipped %@" = "Deixat intacte (canvis sense confirmar): %@";
 "stacks.base.mismatch %@ %@" = "La PR apunta a %@, però el pare de la pila és %@ — Sincronitza el Repositori la redirigirà";
 "stacks.restack.up.to.date" = "La pila ja està actualitzada";
 "stacks.restack.done %ld" = "%ld branques amb restack fet";

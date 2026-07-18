@@ -1394,6 +1394,13 @@
 "stacks.submit.will.update" = "zaktualizować";
 "stacks.sync.repo" = "Synchronizuj Repo";
 "stacks.sync.cleaned %ld %@" = "Synchronizacja usunęła %ld scalonych gałęzi: %@";
+"stacks.destroy.stack" = "Zniszcz Stos…";
+"stacks.destroy.stack.title" = "Zniszczyć stos?";
+"stacks.destroy.stack.message %ld %@" = "To trwale usuwa %ld lokalnych gałęzi za pomocą git-spice: %@. Gałęzie zdalne i wszelkie pull requesty pozostają nienaruszone.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld z tych gałęzi nadal ma OTWARTY pull request.";
+"stacks.destroy.stack.confirm" = "Zniszcz Stos";
+"stacks.destroy.stack.done %ld" = "Stos zniszczony: usunięto %ld gałęzi";
+"stacks.destroy.stack.worktree.skipped %@" = "Pozostawiono bez zmian (niezatwierdzone zmiany): %@";
 "stacks.base.mismatch %@ %@" = "PR celuje w %@, ale rodzicem stosu jest %@ — Synchronizuj Repo, aby to przekierować";
 "stacks.restack.up.to.date" = "Stos jest już aktualny";
 "stacks.restack.done %ld" = "Wykonano restack %ld gałęzi";
