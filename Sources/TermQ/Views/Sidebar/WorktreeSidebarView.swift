@@ -398,10 +398,12 @@ struct WorktreeSidebarView: View {
             // tracked stack are dropped here — they're already listed under STACKS, so
             // this avoids showing the same worktree twice. `allWorktrees` on each row
             // stays the UNFILTERED `trees` so cross-worktree lookups (e.g. "checked out
-            // elsewhere") keep seeing every worktree, not just the visible ones.
+            // elsewhere") keep seeing every worktree, not just the visible ones. The main
+            // worktree is exempt: it's the repo's anchor entry, not a stack duplicate, so
+            // it stays visible even when its checked-out branch is itself stack-tracked.
             let displayedTrees =
                 settings.hideStackedWorktrees
-                ? trees.filter { viewModel.stackRootName(for: $0, repo: repo) == nil }
+                ? trees.filter { $0.isMainWorktree || viewModel.stackRootName(for: $0, repo: repo) == nil }
                 : trees
             let showChevronSlot = repoHasStackedWorktrees(displayedTrees, repo: repo)
             WorktreeSectionDisclosureView(repo: repo, viewModel: viewModel) {
