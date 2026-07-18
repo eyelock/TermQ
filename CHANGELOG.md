@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.16] - 2026-07-18
+
+### Fixed — Kanban Board
+
+- **Long or numerous tag/badge chips on a card no longer force the card wider than its column, bleeding into neighboring columns and squashing the board layout.** Badge/tag chips used `.fixedSize()`, forcing them to report unbounded ideal width during layout negotiation, fighting the custom FlowLayout's wrapping; FlowLayout's unbounded child measurement also left a single very long unbroken tag/badge value with nothing to truncate against even with `lineLimit` set. Chips no longer use `.fixedSize()`, the card body and FlowLayout containers are bounded to the column's actual width, individual chips are capped at a shared 150pt width with middle truncation, and every text element on a card (and the column header name) now has explicit `lineLimit`/`truncationMode`.
+
 ## [0.11.15] - 2026-07-09
 
 ### Fixed — Sidebar
