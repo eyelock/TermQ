@@ -119,11 +119,13 @@ extension WorktreeSidebarViewModel {
 
     /// The bottom branch of the stack containing `worktree`'s checked-out branch, or
     /// `nil` when it isn't part of a stack — drives the persistent stack glyph on
-    /// worktree rows and its "Part of stack …" help text.
+    /// worktree rows, its "Part of stack …" help text, and the WORKTREES-section
+    /// filter when `hideStackedWorktrees` is on. Mirrors `stackRoots`' membership test
+    /// exactly: a one-entry stack (a lone tracked branch with nothing above it) is
+    /// still a legitimate stack, so it returns non-nil here too — not just for
+    /// multi-branch stacks.
     func stackRootName(for worktree: GitWorktree, repo: ObservableRepository) -> String? {
-        guard let branch = worktree.branch, let graph = stacks[repo.id],
-            graph.isStacked(branch)
-        else { return nil }
+        guard let branch = worktree.branch, let graph = stacks[repo.id] else { return nil }
         return graph.rootBranch(for: branch)?.name
     }
 
