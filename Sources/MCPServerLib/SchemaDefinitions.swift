@@ -406,15 +406,19 @@ extension TermQMCPServer {
                 name: "stack_create_branch",
                 title: "Create stacked branch",
                 description: """
-                    Create a new tracked branch stacked on `target` (or the worktree's
-                    current branch when omitted). Staged changes in the worktree become the
-                    new branch's first commit; with a clean tree an empty branch is created.
+                    Create a new tracked branch stacked on `target`. Staged changes in
+                    `worktreePath` become the new branch's first commit; with a clean tree
+                    an empty branch is created. `worktreePath` only controls where the new
+                    branch is checked out and where staged changes come from — it does not
+                    need to be the worktree that has `target`'s stack checked out. Always
+                    pass the exact branch you intend to extend; call `stack_status` first
+                    if you're not certain which branch that is.
                     """,
                 inputSchema: Schema.objectSchema([
                     Schema.string("repoId", "Repository UUID", required: true),
                     Schema.string("worktreePath", "Absolute path of the worktree to operate in", required: true),
                     Schema.string("name", "New branch name", required: true),
-                    Schema.string("target", "Branch to stack on (default: current branch)"),
+                    Schema.string("target", "Branch to stack on", required: true),
                 ]),
                 annotations: Tool.Annotations(
                     readOnlyHint: false, destructiveHint: false,
