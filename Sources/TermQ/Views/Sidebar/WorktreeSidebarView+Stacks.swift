@@ -620,6 +620,14 @@ extension WorktreeSidebarView {
         }
         .disabled(isMutating)
 
+        Button(role: .destructive) {
+            pendingDestroyStack = (repo, group)
+            isShowingDestroyStackAlert = true
+        } label: {
+            Label(Strings.Stacks.destroyStack, systemImage: "trash")
+        }
+        .disabled(isMutating)
+
         if !harnessRepository.harnesses.isEmpty {
             Divider()
             stackHarnessContextItems(repoPath: repo.path, rootName: group.rootName)
@@ -769,6 +777,40 @@ extension WorktreeSidebarView {
 
     func showStackToast(_ message: String) {
         pendingToast = SidebarToast(message: message, actionLabel: nil, action: nil)
+    }
+
+    /// Confirmation body for "Destroy Stack": lists the branches that will be deleted,
+    /// plus a warning line when any of them still has an open PR — deleting the local
+    /// branch there wouldn't touch the PR, but it's worth flagging before proceeding.
+    func destroyStackAlertMessage(for group: StackGroup) -> String {
+        let names = group.branches.map(\.name).joined(separator: ", ")
+        var lines = [Strings.Stacks.destroyStackMessage(group.branches.count, names)]
+        let openCount = group.branches.filter { $0.changeRequest?.status == .open }.count
+        if openCount > 0 {
+            lines.append(Strings.Stacks.destroyStackOpenPRWarning(openCount))
+        }
+        return lines.joined(separator: "\n\n")
+    }
+
+    /// Runs the confirmed "Destroy Stack" mutation and reports the outcome via toast —
+    /// branches deleted, plus any worktree left untouched because it had uncommitted
+    /// changes (so no local work is silently discarded).
+    func destroyStack(group: StackGroup, repo: ObservableRepository) async {
+        do {
+            let report = try await viewModel.destroyStack(repo: repo, group: group)
+            var lines = [Strings.Stacks.destroyStackDone(report.deletedBranches.count)]
+            if !report.skippedDirtyWorktrees.isEmpty {
+                lines.append(
+                    Strings.Stacks.destroyStackWorktreeSkipped(
+                        report.skippedDirtyWorktrees.joined(separator: ", ")))
+            }
+            showStackToast(lines.joined(separator: "\n"))
+        } catch {
+            if stackService.conflicts[repo.path] != nil {
+                return  // the conflict banner reports it
+            }
+            viewModel.operationError = error.localizedDescription
+        }
     }
 
     /// Context-menu items for stack operations on a worktree. Empty when no provider

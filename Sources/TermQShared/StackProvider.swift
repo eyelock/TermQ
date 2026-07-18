@@ -46,6 +46,9 @@ public struct StackCapabilities: OptionSet, Sendable {
     /// branch (not just "on top of an explicit target") — gates "New Stacked Branch
     /// Before…/After…" in the UI.
     public static let branchInsertion = StackCapabilities(rawValue: 1 << 5)
+    /// Provider can delete every branch in a stack (up and down) in one operation —
+    /// gates "Destroy Stack" in the UI.
+    public static let destroyStack = StackCapabilities(rawValue: 1 << 6)
 }
 
 /// Where a newly created branch attaches, relative to the branch currently checked out
@@ -322,6 +325,10 @@ public protocol StackProvider: Sendable {
     func continueOperation(in worktree: String) async throws
     func abortOperation(in worktree: String) async throws
     func pausedOperation(repo: String) async -> StackPausedOperation?
+    /// Delete every branch in the stack containing whatever is checked out in
+    /// `worktree` — both upstack and downstack from it. Only meaningful when
+    /// `capabilities` contains `.destroyStack`.
+    func destroyStack(in worktree: String) async throws
 }
 
 // MARK: - Default Implementations

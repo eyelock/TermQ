@@ -61,6 +61,8 @@ struct WorktreeSidebarView: View {
     /// elsewhere) — the error alert offers "Break Out into Worktree…" as an escape.
     @State var stackSwitchGuardFailure: StackSwitchGuardFailure?
     @State var newStackContext: NewStackContext?
+    @State var pendingDestroyStack: (ObservableRepository, StackGroup)?
+    @State var isShowingDestroyStackAlert = false
     /// Worktree row to scroll into view — set by the Stacks section's jump indicator,
     /// consumed by the ScrollViewReader wrapping the repo list.
     @State var stackJumpTargetWorktreeID: String?
@@ -159,6 +161,17 @@ struct WorktreeSidebarView: View {
             Button(Strings.Sidebar.cancelButton, role: .cancel) { pendingForceDelete = nil }
         } message: {
             if let (_, worktree) = pendingForceDelete { Text(Strings.Sidebar.deleteWorktreeMessage(worktree.path)) }
+        }
+        .alert(Strings.Stacks.destroyStackTitle, isPresented: $isShowingDestroyStackAlert) {
+            Button(Strings.Stacks.destroyStackConfirm, role: .destructive) {
+                if let (repo, group) = pendingDestroyStack {
+                    Task { await destroyStack(group: group, repo: repo) }
+                    pendingDestroyStack = nil
+                }
+            }
+            Button(Strings.Sidebar.cancelButton, role: .cancel) { pendingDestroyStack = nil }
+        } message: {
+            if let (_, group) = pendingDestroyStack { Text(destroyStackAlertMessage(for: group)) }
         }
         .alert(Strings.Sidebar.deleteBranchTitle, isPresented: $isShowingDeleteBranchAlert) {
             Button(Strings.Sidebar.deleteBranchConfirm, role: .destructive) {

@@ -13,7 +13,7 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
     public static let id = StackProviderID.gitSpice
 
     public var capabilities: StackCapabilities {
-        [.restack, .submit, .sync, .trackExisting, .conflictResume, .branchInsertion]
+        [.restack, .submit, .sync, .trackExisting, .conflictResume, .branchInsertion, .destroyStack]
     }
 
     public init() {}
@@ -164,6 +164,18 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
         let gsPath = try Self.requireGsBinary()
         let result = try await Self.run(gsPath, ["rebase", "abort"], cwd: worktree)
         try Self.throwIfFailed(result, command: "gs rebase abort")
+    }
+
+    /// `gs stack delete --force`: deletes every branch up and down the stack
+    /// containing whatever is checked out in `worktree`. `worktree` must have one of
+    /// the stack's branches checked out — the command targets "the current branch's
+    /// stack" with no positional/`--branch` argument. `--force` is required by
+    /// git-spice itself to confirm the deletion.
+    public func destroyStack(in worktree: String) async throws {
+        let gsPath = try Self.requireGsBinary()
+        let result = try await Self.run(
+            gsPath, ["stack", "delete", "--force", "--no-prompt"], cwd: worktree)
+        try Self.throwIfFailed(result, command: "gs stack delete")
     }
 
     public func pausedOperation(repo: String) async -> StackPausedOperation? {

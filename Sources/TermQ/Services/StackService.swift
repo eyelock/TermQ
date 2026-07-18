@@ -204,6 +204,15 @@ final class StackService: ObservableObject {
         }
     }
 
+    /// Delete every branch in the stack checked out in `worktree` — both upstack and
+    /// downstack from it. Destructive; the caller (view layer) is responsible for
+    /// confirming with the user before calling this.
+    func destroyStack(repo: String, worktree: String) async throws {
+        try await runMutation(repo: repo, worktree: worktree) { provider in
+            try await provider.destroyStack(in: worktree)
+        }
+    }
+
     /// Serialize a mutation on the repo's queue, flag the repo as mutating for the
     /// duration, and map a provider-reported paused operation onto `conflicts` instead
     /// of surfacing it as an error.

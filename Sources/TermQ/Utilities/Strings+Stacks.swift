@@ -70,6 +70,23 @@ extension Strings {
             localized("stacks.sync.cleaned %ld %@", count, names)
         }
 
+        // Destroy
+        static var destroyStack: String { localized("stacks.destroy.stack") }
+        static var destroyStackTitle: String { localized("stacks.destroy.stack.title") }
+        static func destroyStackMessage(_ count: Int, _ names: String) -> String {
+            localized("stacks.destroy.stack.message %ld %@", count, names)
+        }
+        static func destroyStackOpenPRWarning(_ count: Int) -> String {
+            localized("stacks.destroy.stack.open.pr.warning %ld", count)
+        }
+        static var destroyStackConfirm: String { localized("stacks.destroy.stack.confirm") }
+        static func destroyStackDone(_ count: Int) -> String {
+            localized("stacks.destroy.stack.done %ld", count)
+        }
+        static func destroyStackWorktreeSkipped(_ paths: String) -> String {
+            localized("stacks.destroy.stack.worktree.skipped %@", paths)
+        }
+
         // PR targeting
         static func baseMismatch(_ prBase: String, _ parent: String) -> String {
             localized("stacks.base.mismatch %@ %@", prBase, parent)
