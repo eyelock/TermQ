@@ -1,6 +1,10 @@
 import SwiftUI
 import TermQCore
 
+/// Max width for a badge/tag chip, so a single long unbroken value truncates
+/// instead of forcing the card wider than its column.
+private let chipMaxWidth: CGFloat = 150
+
 struct TerminalCardView: View {
     @ObservedObject var card: TerminalCard
     let columnColor: Color
@@ -50,6 +54,7 @@ struct TerminalCardView: View {
                 Text(card.title)
                     .font(.headline)
                     .lineLimit(1)
+                    .truncationMode(.tail)
 
                 Spacer(minLength: 0)
 
@@ -105,6 +110,7 @@ struct TerminalCardView: View {
                         Text(Strings.Card.open)
                             .font(.caption2)
                             .fontWeight(.medium)
+                            .lineLimit(1)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(
@@ -112,7 +118,6 @@ struct TerminalCardView: View {
                                     .fill(columnColor.opacity(0.3))
                             )
                             .foregroundColor(columnColor)
-                            .fixedSize()
                     }
 
                     // Wired indicator - shows when LLM has called get for this terminal
@@ -120,6 +125,7 @@ struct TerminalCardView: View {
                         Text(Strings.Card.wired)
                             .font(.caption2)
                             .fontWeight(.medium)
+                            .lineLimit(1)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(
@@ -128,7 +134,6 @@ struct TerminalCardView: View {
                             )
                             .foregroundColor(.green)
                             .help(Strings.Card.wiredHelp)
-                            .fixedSize()
                     }
 
                     // LIVE indicator - shows when terminal has an active background session
@@ -136,6 +141,7 @@ struct TerminalCardView: View {
                         Text(Strings.Card.live)
                             .font(.caption2)
                             .fontWeight(.bold)
+                            .lineLimit(1)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(
@@ -144,7 +150,6 @@ struct TerminalCardView: View {
                             )
                             .foregroundColor(.red)
                             .help(Strings.Card.liveHelp)
-                            .fixedSize()
                     }
 
                     // TMUX badge - shows when terminal uses tmux backend AND tmux is available
@@ -153,6 +158,7 @@ struct TerminalCardView: View {
                         Text(Strings.Card.tmux)
                             .font(.caption2)
                             .fontWeight(.bold)
+                            .lineLimit(1)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(
@@ -161,7 +167,6 @@ struct TerminalCardView: View {
                             )
                             .foregroundColor(.purple)
                             .help(Strings.Card.tmuxHelp)
-                            .fixedSize()
                     }
 
                     // User badges (after special badges)
@@ -169,6 +174,9 @@ struct TerminalCardView: View {
                         Text(badge)
                             .font(.caption2)
                             .fontWeight(.medium)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                            .frame(maxWidth: chipMaxWidth, alignment: .leading)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(
@@ -176,9 +184,9 @@ struct TerminalCardView: View {
                                     .fill(columnColor.opacity(0.2))
                             )
                             .foregroundColor(columnColor)
-                            .fixedSize()
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             // Description
@@ -187,6 +195,7 @@ struct TerminalCardView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .lineLimit(2)
+                    .truncationMode(.tail)
             }
 
             // Working directory hint
@@ -194,6 +203,7 @@ struct TerminalCardView: View {
                 .font(.caption2)
                 .foregroundColor(.secondary)
                 .lineLimit(1)
+                .truncationMode(.middle)
 
             // Tags (at bottom since they can be verbose)
             if !card.tags.isEmpty {
@@ -202,8 +212,10 @@ struct TerminalCardView: View {
                         TagView(tag: tag)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 8)
@@ -311,17 +323,20 @@ struct TagView: View {
         HStack(spacing: 2) {
             Text(tag.key)
                 .fontWeight(.medium)
+                .lineLimit(1)
             Text(":")
             Text(tag.value)
+                .lineLimit(1)
+                .truncationMode(.middle)
         }
         .font(.caption2)
+        .frame(maxWidth: chipMaxWidth, alignment: .leading)
         .padding(.horizontal, 6)
         .padding(.vertical, 2)
         .background(
             Capsule()
                 .fill(Color.accentColor.opacity(0.2))
         )
-        .fixedSize()
     }
 }
 

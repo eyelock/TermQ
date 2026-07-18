@@ -91,7 +91,7 @@ struct KanbanBoardView: View {
                                 viewModel.moveColumn(droppedColumn, toIndex: targetIndex)
                             }
                         )
-                        .frame(width: columnWidth)
+                        .frame(width: columnWidth, alignment: .leading)
                         .opacity(draggedColumnId == column.id ? 0.5 : 1.0)
                         .draggable("column:\(column.id.uuidString)") {
                             // Drag preview
