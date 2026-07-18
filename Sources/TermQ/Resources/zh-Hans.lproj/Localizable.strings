@@ -1416,3 +1416,34 @@
 "stacks.checked.out.at %@" = "已在 %@ 中检出 — 点击以显示该工作树";
 "stacks.anchor.help" = "为此堆栈创建一个工作树";
 "stacks.group.new.worktree" = "新建工作树…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "在此之前新建堆栈分支…";
+"stacks.new.branch.after" = "在此之后新建堆栈分支…";
+"stacks.new.branch.insert.below.note %@" = "新分支将创建在堆栈中 %@ 的下方。";
+"stacks.new.branch.insert.above.note %@" = "新分支将创建在堆栈中 %@ 的上方，取代其位置 — %@ 将移到其上方。";
+"stacks.main.worktree.not.found" = "未能找到该仓库的主工作树。";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "新建堆栈…";
+"stacks.new.stack.title" = "新建堆栈";
+"stacks.new.stack.name.label" = "分支名称";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "基础分支";
+"stacks.new.stack.button" = "创建";
+"stacks.new.stack.note" = "从基础分支创建该分支，不进行检出也不创建工作树 — 这是一个可稍后启动的单条目堆栈。";
+"stacks.start.stack.checkbox" = "以此分支开始一个堆栈";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "从默认分支分出";
+"stacks.new.stack.mode.integration" = "从集成分支分出";
+"stacks.new.stack.stack.name.label" = "堆栈名称";
+"stacks.new.stack.integration.preview %@" = "创建 %@";
+"stacks.new.stack.first.branch.label" = "首个堆栈分支（可选）";
+"stacks.new.stack.first.branch.empty.hint" = "留空时：仅创建空的集成分支 — 稍后可为其添加首个堆栈分支。";
+"stacks.new.stack.first.branch.filled.hint" = "此分支将创建在集成分支之上并加入堆栈，而不是直接创建在基础分支之上。";
+"stacks.new.stack.integration.note" = "从基础分支创建一个空的集成分支作为堆栈的根 — 它本身永远不携带代码。堆栈分支基于它而非基础分支进行构建，其拉取请求会依次链接到它。一旦所有内容都合并到集成分支，它将作为一个整合后的更改统一提交拉取请求到基础分支 — 而不是每个堆栈分支单独合并到基础分支。";
+"stacks.new.stack.name.exists %@" = "%@ 已存在 — 请选择其他名称。";
+"settings.gitspice.new.stack.mode" = "新建堆栈的起始模式：";
+"settings.gitspice.new.stack.mode.help" = "「新建堆栈」表单预先选择的模式 — 该表单始终同时提供两种模式。";
+"settings.gitspice.hide.stacked.worktrees" = "在工作树部分隐藏已加入堆栈的工作树";
+"settings.gitspice.hide.stacked.worktrees.help" = "分支属于受跟踪堆栈的工作树已在堆栈部分列出 — 请在工作树部分将其隐藏，以避免重复显示。";

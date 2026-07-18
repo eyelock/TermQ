@@ -1420,3 +1420,34 @@
 "stacks.checked.out.at %@" = "נבחר ב-%@ — לחץ כדי לחשוף את ה-worktree";
 "stacks.anchor.help" = "צור worktree עבור מחסנית זו";
 "stacks.group.new.worktree" = "worktree חדש…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "ענף מוערם חדש לפני…";
+"stacks.new.branch.after" = "ענף מוערם חדש אחרי…";
+"stacks.new.branch.insert.below.note %@" = "הענף החדש נוצר מתחת ל-%@ במחסנית.";
+"stacks.new.branch.insert.above.note %@" = "הענף החדש נוצר מעל %@ במחסנית, ותופס את מקומו — %@ עובר מעליו.";
+"stacks.main.worktree.not.found" = "לא ניתן היה למצוא את עץ העבודה הראשי של המאגר.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "מחסנית חדשה…";
+"stacks.new.stack.title" = "מחסנית חדשה";
+"stacks.new.stack.name.label" = "שם הענף";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "ענף בסיס";
+"stacks.new.stack.button" = "צור";
+"stacks.new.stack.note" = "יוצר את הענף מהבסיס ללא checkout וללא עץ עבודה — מחסנית בעלת פריט אחד שניתן יהיה להפעיל בהמשך.";
+"stacks.start.stack.checkbox" = "התחל מחסנית עם ענף זה";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "הסתעף מהברירת המחדל";
+"stacks.new.stack.mode.integration" = "הסתעף מענף האינטגרציה";
+"stacks.new.stack.stack.name.label" = "שם המחסנית";
+"stacks.new.stack.integration.preview %@" = "יוצר %@";
+"stacks.new.stack.first.branch.label" = "ענף מוערם ראשון (אופציונלי)";
+"stacks.new.stack.first.branch.empty.hint" = "אם נשאר ריק: רק ענף האינטגרציה הריק נוצר — ניתן להוסיף אליו את הענף המוערם הראשון מאוחר יותר.";
+"stacks.new.stack.first.branch.filled.hint" = "ענף זה נוצר מוערם מעל ענף האינטגרציה, ולא ישירות מעל ענף הבסיס.";
+"stacks.new.stack.integration.note" = "יוצר ענף אינטגרציה ריק מהבסיס כשורש המחסנית — הוא לעולם לא נושא קוד משלו. ענפים מוערמים נבנים מעליו במקום מעל הבסיס, ובקשות המשיכה שלהם משתרשרות אליו. ברגע שהכול מוזג לענף האינטגרציה, הוא מוגש כבקשת משיכה אחת מאוחדת לבסיס — במקום שכל ענף מוערם ימוזג בנפרד לבסיס.";
+"stacks.new.stack.name.exists %@" = "%@ כבר קיים — בחר שם אחר.";
+"settings.gitspice.new.stack.mode" = "מחסנית חדשה מתחילה כ:";
+"settings.gitspice.new.stack.mode.help" = "איזה מצב גיליון מחסנית חדשה בוחר מראש — הגיליון תמיד מציע את שניהם.";
+"settings.gitspice.hide.stacked.worktrees" = "הסתר עצי עבודה מוערמים מהקטע עצי עבודה";
+"settings.gitspice.hide.stacked.worktrees.help" = "עצי עבודה שהענף שלהם שייך למחסנית עוקבת כבר מופיעים תחת מחסניות — הסתר אותם מהקטע עצי עבודה כדי למנוע רישום כפול.";

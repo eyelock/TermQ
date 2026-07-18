@@ -1420,3 +1420,34 @@
 "stacks.checked.out.at %@" = "Preuzeta u %@ — kliknite za prikaz radnog stabla";
 "stacks.anchor.help" = "Stvori radno stablo za ovaj stog";
 "stacks.group.new.worktree" = "Novo Radno Stablo…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nova grana stoga prije…";
+"stacks.new.branch.after" = "Nova grana stoga poslije…";
+"stacks.new.branch.insert.below.note %@" = "Nova grana se stvara ispod %@ u stogu.";
+"stacks.new.branch.insert.above.note %@" = "Nova grana se stvara iznad %@ u stogu, zauzimajući njezino mjesto — %@ se pomiče na nju.";
+"stacks.main.worktree.not.found" = "Nije moguće pronaći glavno radno stablo repozitorija.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Novi stog…";
+"stacks.new.stack.title" = "Novi stog";
+"stacks.new.stack.name.label" = "Naziv grane";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Osnovna grana";
+"stacks.new.stack.button" = "Stvori";
+"stacks.new.stack.note" = "Stvara granu iz osnovne bez checkouta i bez radnog stabla — stog s jednim unosom koji možete pokrenuti kasnije.";
+"stacks.start.stack.checkbox" = "Započni stog ovom granom";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Granaj iz zadane";
+"stacks.new.stack.mode.integration" = "Granaj iz integracijske";
+"stacks.new.stack.stack.name.label" = "Naziv stoga";
+"stacks.new.stack.integration.preview %@" = "Stvara %@";
+"stacks.new.stack.first.branch.label" = "Prva grana stoga (neobavezno)";
+"stacks.new.stack.first.branch.empty.hint" = "Ostavljeno prazno: stvara se samo prazna integracijska grana — svoju prvu granu stoga možete dodati kasnije.";
+"stacks.new.stack.first.branch.filled.hint" = "Ova grana se stvara u stogu iznad integracijske grane, a ne izravno iznad osnovne grane.";
+"stacks.new.stack.integration.note" = "Stvara praznu integracijsku granu iz osnovne kao korijen stoga — nikada ne nosi vlastiti kod. Grane stoga grade se na njoj umjesto na osnovnoj, a njihovi pull requestovi se lančano nastavljaju na nju. Kada se sve spoji u integracijsku granu, ona se kao jedna objedinjena promjena šalje kao pull request u osnovnu — umjesto da se svaka grana stoga zasebno spaja u osnovnu.";
+"stacks.new.stack.name.exists %@" = "%@ već postoji — odaberite drugi naziv.";
+"settings.gitspice.new.stack.mode" = "Novi stog počinje kao:";
+"settings.gitspice.new.stack.mode.help" = "Koji način rada list Novi stog unaprijed odabire — list uvijek nudi oba.";
+"settings.gitspice.hide.stacked.worktrees" = "Sakrij grane stoga iz odjeljka Radna Stabla";
+"settings.gitspice.hide.stacked.worktrees.help" = "Radna stabla čija grana pripada praćenom stogu već su navedena pod Stogovi — sakrijte ih iz odjeljka Radna Stabla kako biste izbjegli dvostruki popis.";

@@ -1419,3 +1419,34 @@
 "stacks.checked.out.at %@" = "Extraído em %@ — clique para revelar o worktree";
 "stacks.anchor.help" = "Criar um worktree para este Stack";
 "stacks.group.new.worktree" = "Novo Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Novo Branch da Stack Antes…";
+"stacks.new.branch.after" = "Novo Branch da Stack Depois…";
+"stacks.new.branch.insert.below.note %@" = "O novo branch é criado abaixo de %@ na stack.";
+"stacks.new.branch.insert.above.note %@" = "O novo branch é criado acima de %@ na stack, ocupando o seu lugar — %@ move-se para cima dele.";
+"stacks.main.worktree.not.found" = "Não foi possível encontrar o worktree principal do repositório.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Novo Stack…";
+"stacks.new.stack.title" = "Novo Stack";
+"stacks.new.stack.name.label" = "Nome do branch";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Ramo Base";
+"stacks.new.stack.button" = "Criar";
+"stacks.new.stack.note" = "Cria o branch a partir do ramo base sem checkout e sem worktree — um stack de uma entrada que pode iniciar mais tarde.";
+"stacks.start.stack.checkbox" = "Iniciar um stack com este branch";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Ramificar a partir do predefinido";
+"stacks.new.stack.mode.integration" = "Ramificar a partir da integração";
+"stacks.new.stack.stack.name.label" = "Nome do Stack";
+"stacks.new.stack.integration.preview %@" = "Cria %@";
+"stacks.new.stack.first.branch.label" = "Primeiro Branch da Stack (opcional)";
+"stacks.new.stack.first.branch.empty.hint" = "Deixado em branco: apenas o branch de integração vazio é criado — pode adicionar o seu primeiro branch da stack mais tarde.";
+"stacks.new.stack.first.branch.filled.hint" = "Este branch é criado empilhado sobre o branch de integração, e não diretamente sobre o ramo base.";
+"stacks.new.stack.integration.note" = "Cria um branch de integração vazio a partir do ramo base como raiz do stack — nunca contém código próprio. Os branches do stack são construídos sobre ele em vez do ramo base, e os seus pull requests encadeiam-se nele. Assim que tudo for fundido no branch de integração, é submetido como pull request único e consolidado para o ramo base — em vez de cada branch do stack ser fundido individualmente no ramo base.";
+"stacks.new.stack.name.exists %@" = "%@ já existe — escolha outro nome.";
+"settings.gitspice.new.stack.mode" = "Novo Stack começa como:";
+"settings.gitspice.new.stack.mode.help" = "Que modo a folha Novo Stack pré-seleciona — a folha oferece sempre ambos.";
+"settings.gitspice.hide.stacked.worktrees" = "Ocultar worktrees da stack na secção Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Os worktrees cujo branch pertence a um stack seguido já estão listados em Stacks — oculte-os da secção Worktrees para evitar a listagem duplicada.";

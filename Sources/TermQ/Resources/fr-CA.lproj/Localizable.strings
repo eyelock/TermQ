@@ -1420,3 +1420,34 @@
 "stacks.checked.out.at %@" = "Extraite dans %@ — cliquez pour révéler le worktree";
 "stacks.anchor.help" = "Créer un worktree pour cette pile";
 "stacks.group.new.worktree" = "Nouveau Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nouvelle Branche Empilée Avant…";
+"stacks.new.branch.after" = "Nouvelle Branche Empilée Après…";
+"stacks.new.branch.insert.below.note %@" = "La nouvelle branche est créée en dessous de %@ dans la pile.";
+"stacks.new.branch.insert.above.note %@" = "La nouvelle branche est créée au-dessus de %@ dans la pile, prenant sa place — %@ se déplace dessus.";
+"stacks.main.worktree.not.found" = "Impossible de trouver le worktree principal du dépôt.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nouvelle Pile…";
+"stacks.new.stack.title" = "Nouvelle Pile";
+"stacks.new.stack.name.label" = "Nom de la branche";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branche de base";
+"stacks.new.stack.button" = "Créer";
+"stacks.new.stack.note" = "Crée la branche à partir de la base sans checkout et sans worktree — une pile à une seule entrée que vous pourrez lancer plus tard.";
+"stacks.start.stack.checkbox" = "Démarrer une pile avec cette branche";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Créer à partir de la branche par défaut";
+"stacks.new.stack.mode.integration" = "Créer à partir de la branche d'intégration";
+"stacks.new.stack.stack.name.label" = "Nom de la Pile";
+"stacks.new.stack.integration.preview %@" = "Crée %@";
+"stacks.new.stack.first.branch.label" = "Première Branche Empilée (facultatif)";
+"stacks.new.stack.first.branch.empty.hint" = "Laissé vide : seule la branche d'intégration vide est créée — vous pourrez y ajouter votre première branche empilée plus tard.";
+"stacks.new.stack.first.branch.filled.hint" = "Cette branche est créée empilée sur la branche d'intégration, et non directement sur la branche de base.";
+"stacks.new.stack.integration.note" = "Crée une branche d'intégration vide à partir de la base comme racine de la pile — elle ne porte jamais de code propre. Les branches empilées se construisent sur elle plutôt que sur la base, et leurs pull requests s'y enchaînent. Une fois que tout est fusionné dans la branche d'intégration, elle est proposée en pull request vers la base comme un seul changement consolidé — plutôt que chaque branche empilée soit fusionnée individuellement dans la base.";
+"stacks.new.stack.name.exists %@" = "%@ existe déjà — choisissez un autre nom.";
+"settings.gitspice.new.stack.mode" = "Nouvelle Pile démarre en tant que :";
+"settings.gitspice.new.stack.mode.help" = "Le mode que la feuille Nouvelle Pile présélectionne — la feuille propose toujours les deux.";
+"settings.gitspice.hide.stacked.worktrees" = "Masquer les worktrees empilés de la section Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Les worktrees dont la branche appartient à une pile suivie sont déjà listés dans Piles — masquez-les de la section Worktrees pour éviter le doublon.";

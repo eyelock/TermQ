@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "%@ でチェックアウト中 — クリックしてワークツリーを表示";
 "stacks.anchor.help" = "このスタック用のワークツリーを作成";
 "stacks.group.new.worktree" = "新規ワークツリー…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "新しいスタックブランチ（前に追加）…";
+"stacks.new.branch.after" = "新しいスタックブランチ（後に追加）…";
+"stacks.new.branch.insert.below.note %@" = "新しいブランチはスタック内の%@の下に作成されます。";
+"stacks.new.branch.insert.above.note %@" = "新しいブランチはスタック内の%@の上に作成され、その位置を引き継ぎます — %@はその上に移動します。";
+"stacks.main.worktree.not.found" = "リポジトリのメインワークツリーが見つかりませんでした。";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "新しいスタック…";
+"stacks.new.stack.title" = "新しいスタック";
+"stacks.new.stack.name.label" = "ブランチ名";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "ベースブランチ";
+"stacks.new.stack.button" = "作成";
+"stacks.new.stack.note" = "チェックアウトやワークツリーを作成せずにベースからブランチを作成します — 後で開始できる1件のみのスタックです。";
+"stacks.start.stack.checkbox" = "このブランチでスタックを開始";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "デフォルトから分岐";
+"stacks.new.stack.mode.integration" = "統合ブランチから分岐";
+"stacks.new.stack.stack.name.label" = "スタック名";
+"stacks.new.stack.integration.preview %@" = "%@を作成";
+"stacks.new.stack.first.branch.label" = "最初のスタックブランチ（任意）";
+"stacks.new.stack.first.branch.empty.hint" = "空欄の場合: 空の統合ブランチのみが作成されます — 最初のスタックブランチは後で追加できます。";
+"stacks.new.stack.first.branch.filled.hint" = "このブランチはベースブランチの直接上ではなく、統合ブランチの上にスタックされて作成されます。";
+"stacks.new.stack.integration.note" = "ベースから空の統合ブランチをスタックのルートとして作成します — 統合ブランチ自体がコードを持つことはありません。スタックブランチはベースの代わりにこの統合ブランチの上に構築され、そのプルリクエストはここに連鎖します。すべてが統合ブランチにマージされると、統合ブランチはひとつのまとまった変更としてベースへプルリクエストされます — 各スタックブランチが個別にベースへマージされる代わりに。";
+"stacks.new.stack.name.exists %@" = "%@はすでに存在します — 別の名前を選んでください。";
+"settings.gitspice.new.stack.mode" = "新しいスタックの開始モード:";
+"settings.gitspice.new.stack.mode.help" = "「新しいスタック」シートが事前に選択するモード — シートは常に両方を提供します。";
+"settings.gitspice.hide.stacked.worktrees" = "スタックされたワークツリーをワークツリーセクションから非表示にする";
+"settings.gitspice.hide.stacked.worktrees.help" = "ブランチが追跡中のスタックに属するワークツリーは、すでにスタックの下に表示されています — 重複を避けるため、ワークツリーセクションから非表示にします。";

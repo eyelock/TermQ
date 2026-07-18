@@ -1412,3 +1412,34 @@
 "stacks.checked.out.at %@" = "Checked out at %@ — click to reveal the worktree";
 "stacks.anchor.help" = "Create a worktree for this stack";
 "stacks.group.new.worktree" = "New Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "New Stacked Branch Before…";
+"stacks.new.branch.after" = "New Stacked Branch After…";
+"stacks.new.branch.insert.below.note %@" = "The new branch is created below %@ in the stack.";
+"stacks.new.branch.insert.above.note %@" = "The new branch is created above %@ in the stack, taking its place — %@ moves onto it.";
+"stacks.main.worktree.not.found" = "Couldn't find the repository's main worktree.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "New Stack…";
+"stacks.new.stack.title" = "New Stack";
+"stacks.new.stack.name.label" = "Branch Name";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Base Branch";
+"stacks.new.stack.button" = "Create";
+"stacks.new.stack.note" = "Creates the branch off the base with no checkout and no worktree — a one-entry stack you can launch into later.";
+"stacks.start.stack.checkbox" = "Start a stack with this branch";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Branch off default";
+"stacks.new.stack.mode.integration" = "Branch off integration";
+"stacks.new.stack.stack.name.label" = "Stack Name";
+"stacks.new.stack.integration.preview %@" = "Creates %@";
+"stacks.new.stack.first.branch.label" = "First Stacked Branch (optional)";
+"stacks.new.stack.first.branch.empty.hint" = "Left blank: just the empty integration branch is created — add your first stacked branch to it later.";
+"stacks.new.stack.first.branch.filled.hint" = "This branch is created stacked on top of the integration branch, not on the base branch directly.";
+"stacks.new.stack.integration.note" = "Creates an empty integration branch off the base as the stack's root — it never carries code of its own. Stacked branches build on top of it instead of the base, and their pull requests chain into it. Once everything's merged into the integration branch, it's PR'd into the base as one consolidated change — instead of each stacked branch merging into the base individually.";
+"stacks.new.stack.name.exists %@" = "%@ already exists — choose another name.";
+"settings.gitspice.new.stack.mode" = "New Stack starts as:";
+"settings.gitspice.new.stack.mode.help" = "Which mode the New Stack sheet pre-selects — the sheet always offers both.";
+"settings.gitspice.hide.stacked.worktrees" = "Hide stacked worktrees from WORKTREES section";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees whose branch belongs to a tracked stack are already listed under STACKS — hide them from the WORKTREES section to avoid the duplicate listing.";

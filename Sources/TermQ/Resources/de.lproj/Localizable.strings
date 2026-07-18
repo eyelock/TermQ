@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Ausgecheckt in %@ — klicken, um den Worktree anzuzeigen";
 "stacks.anchor.help" = "Einen Worktree für diesen Stack erstellen";
 "stacks.group.new.worktree" = "Neuer Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Neuer Stack-Branch davor…";
+"stacks.new.branch.after" = "Neuer Stack-Branch danach…";
+"stacks.new.branch.insert.below.note %@" = "Der neue Branch wird unterhalb von %@ im Stack erstellt.";
+"stacks.new.branch.insert.above.note %@" = "Der neue Branch wird oberhalb von %@ im Stack erstellt und nimmt dessen Platz ein — %@ rückt darüber.";
+"stacks.main.worktree.not.found" = "Das Haupt-Worktree des Repositorys wurde nicht gefunden.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Neuer Stack…";
+"stacks.new.stack.title" = "Neuer Stack";
+"stacks.new.stack.name.label" = "Branch-Name";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Basis-Branch";
+"stacks.new.stack.button" = "Erstellen";
+"stacks.new.stack.note" = "Erstellt den Branch von der Basis aus, ohne Checkout und ohne Worktree — ein Stack mit einem Eintrag, den du später starten kannst.";
+"stacks.start.stack.checkbox" = "Mit diesem Branch einen Stack starten";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Vom Standard abzweigen";
+"stacks.new.stack.mode.integration" = "Von Integration abzweigen";
+"stacks.new.stack.stack.name.label" = "Stack-Name";
+"stacks.new.stack.integration.preview %@" = "Erstellt %@";
+"stacks.new.stack.first.branch.label" = "Erster Stack-Branch (optional)";
+"stacks.new.stack.first.branch.empty.hint" = "Leer gelassen: Es wird nur der leere Integrations-Branch erstellt — den ersten Stack-Branch kannst du später hinzufügen.";
+"stacks.new.stack.first.branch.filled.hint" = "Dieser Branch wird oberhalb des Integrations-Branch gestapelt erstellt, nicht direkt auf dem Basis-Branch.";
+"stacks.new.stack.integration.note" = "Erstellt einen leeren Integrations-Branch von der Basis als Wurzel des Stacks — er trägt nie eigenen Code. Stack-Branches bauen auf ihm statt auf der Basis auf, und ihre Pull Requests reihen sich in ihn ein. Sobald alles in den Integrations-Branch gemergt ist, wird er als eine konsolidierte Änderung in die Basis gepullrequestet — statt dass jeder Stack-Branch einzeln in die Basis gemergt wird.";
+"stacks.new.stack.name.exists %@" = "%@ existiert bereits — wähle einen anderen Namen.";
+"settings.gitspice.new.stack.mode" = "Neuer Stack startet als:";
+"settings.gitspice.new.stack.mode.help" = "Welcher Modus im Blatt „Neuer Stack“ vorausgewählt ist — das Blatt bietet immer beide an.";
+"settings.gitspice.hide.stacked.worktrees" = "Gestapelte Worktrees aus dem Bereich Worktrees ausblenden";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees, deren Branch zu einem verfolgten Stack gehört, werden bereits unter Stacks angezeigt — blende sie aus dem Bereich Worktrees aus, um doppelte Einträge zu vermeiden.";

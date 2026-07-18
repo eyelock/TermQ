@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Vybraná v %@ — kliknutím zobrazíte pracovný strom";
 "stacks.anchor.help" = "Vytvoriť pracovný strom pre tento zásobník";
 "stacks.group.new.worktree" = "Nový pracovný strom…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nová vetva zásobníka pred…";
+"stacks.new.branch.after" = "Nová vetva zásobníka za…";
+"stacks.new.branch.insert.below.note %@" = "Nová vetva sa vytvorí pod %@ v zásobníku.";
+"stacks.new.branch.insert.above.note %@" = "Nová vetva sa vytvorí nad %@ v zásobníku a zaujme jej miesto — %@ sa presunie na ňu.";
+"stacks.main.worktree.not.found" = "Nepodarilo sa nájsť hlavný pracovný strom repozitára.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nový zásobník…";
+"stacks.new.stack.title" = "Nový zásobník";
+"stacks.new.stack.name.label" = "Názov vetvy";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Základná vetva";
+"stacks.new.stack.button" = "Vytvoriť";
+"stacks.new.stack.note" = "Vytvorí vetvu zo základnej vetvy bez checkoutu a bez pracovného stromu — jednopoložkový zásobník, ktorý môžete neskôr spustiť.";
+"stacks.start.stack.checkbox" = "Začať zásobník touto vetvou";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Vetviť z predvolenej";
+"stacks.new.stack.mode.integration" = "Vetviť z integračnej";
+"stacks.new.stack.stack.name.label" = "Názov zásobníka";
+"stacks.new.stack.integration.preview %@" = "Vytvorí %@";
+"stacks.new.stack.first.branch.label" = "Prvá vetva zásobníka (voliteľné)";
+"stacks.new.stack.first.branch.empty.hint" = "Ponechané prázdne: vytvorí sa iba prázdna integračná vetva — prvú vetvu zásobníka môžete pridať neskôr.";
+"stacks.new.stack.first.branch.filled.hint" = "Táto vetva sa vytvorí ako súčasť zásobníka nad integračnou vetvou, nie priamo nad základnou vetvou.";
+"stacks.new.stack.integration.note" = "Vytvorí prázdnu integračnú vetvu zo základnej vetvy ako koreň zásobníka — nikdy nenesie vlastný kód. Vetvy zásobníka sa stavajú na nej namiesto základnej vetvy a ich pull requesty sa reťazia do nej. Keď je všetko zlúčené do integračnej vetvy, odošle sa ako jeden konsolidovaný pull request do základnej vetvy — namiesto toho, aby sa každá vetva zásobníka zlučovala do základnej vetvy samostatne.";
+"stacks.new.stack.name.exists %@" = "%@ už existuje — zvoľte iný názov.";
+"settings.gitspice.new.stack.mode" = "Nový zásobník začína ako:";
+"settings.gitspice.new.stack.mode.help" = "Ktorý režim hárok Nový zásobník predvyberie — hárok vždy ponúka oba.";
+"settings.gitspice.hide.stacked.worktrees" = "Skryť vetvy zásobníka z časti Pracovné stromy";
+"settings.gitspice.hide.stacked.worktrees.help" = "Pracovné stromy, ktorých vetva patrí do sledovaného zásobníka, sú už uvedené v Zásobníkoch — skryte ich z časti Pracovné stromy, aby ste predišli duplicitnému zobrazeniu.";

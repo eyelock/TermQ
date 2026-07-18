@@ -1420,3 +1420,34 @@
 "stacks.checked.out.at %@" = "%@ में चेक आउट — worktree दिखाने के लिए क्लिक करें";
 "stacks.anchor.help" = "इस स्टैक के लिए एक worktree बनाएं";
 "stacks.group.new.worktree" = "नया Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "नई स्टैक शाखा पहले…";
+"stacks.new.branch.after" = "नई स्टैक शाखा बाद में…";
+"stacks.new.branch.insert.below.note %@" = "नई शाखा स्टैक में %@ के नीचे बनाई जाती है।";
+"stacks.new.branch.insert.above.note %@" = "नई शाखा स्टैक में %@ के ऊपर बनाई जाती है, उसकी जगह लेते हुए — %@ उसके ऊपर चली जाती है।";
+"stacks.main.worktree.not.found" = "रिपॉज़िटरी की मुख्य worktree नहीं मिली।";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "नया स्टैक…";
+"stacks.new.stack.title" = "नया स्टैक";
+"stacks.new.stack.name.label" = "शाखा का नाम";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "आधार ब्रांच";
+"stacks.new.stack.button" = "बनाएं";
+"stacks.new.stack.note" = "आधार से बिना checkout और बिना worktree के शाखा बनाता है — एक-प्रविष्टि वाला स्टैक जिसे आप बाद में शुरू कर सकते हैं।";
+"stacks.start.stack.checkbox" = "इस शाखा के साथ स्टैक शुरू करें";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "डिफ़ॉल्ट से शाखा बनाएं";
+"stacks.new.stack.mode.integration" = "इंटीग्रेशन से शाखा बनाएं";
+"stacks.new.stack.stack.name.label" = "स्टैक का नाम";
+"stacks.new.stack.integration.preview %@" = "%@ बनाता है";
+"stacks.new.stack.first.branch.label" = "पहली स्टैक शाखा (वैकल्पिक)";
+"stacks.new.stack.first.branch.empty.hint" = "खाली छोड़ने पर: केवल खाली इंटीग्रेशन शाखा बनाई जाती है — आप बाद में अपनी पहली स्टैक शाखा उसमें जोड़ सकते हैं।";
+"stacks.new.stack.first.branch.filled.hint" = "यह शाखा इंटीग्रेशन शाखा के ऊपर स्टैक की हुई बनाई जाती है, सीधे आधार शाखा के ऊपर नहीं।";
+"stacks.new.stack.integration.note" = "आधार से एक खाली इंटीग्रेशन शाखा को स्टैक की जड़ के रूप में बनाता है — इसमें कभी अपना कोड नहीं होता। स्टैक शाखाएं आधार के बजाय इसके ऊपर बनती हैं, और उनके pull request इसमें जुड़ते चले जाते हैं। जब सब कुछ इंटीग्रेशन शाखा में मर्ज हो जाता है, तो इसे एक समेकित बदलाव के रूप में आधार में pull request किया जाता है — हर स्टैक शाखा को अलग-अलग आधार में मर्ज करने के बजाय।";
+"stacks.new.stack.name.exists %@" = "%@ पहले से मौजूद है — कोई और नाम चुनें।";
+"settings.gitspice.new.stack.mode" = "नया स्टैक इस रूप में शुरू होता है:";
+"settings.gitspice.new.stack.mode.help" = "नया स्टैक शीट कौन-सा मोड पहले से चुनती है — शीट हमेशा दोनों विकल्प देती है।";
+"settings.gitspice.hide.stacked.worktrees" = "स्टैक शाखाओं वाली worktrees को Worktrees अनुभाग से छिपाएं";
+"settings.gitspice.hide.stacked.worktrees.help" = "जिन worktrees की शाखा किसी ट्रैक किए गए स्टैक से संबंधित है वे पहले से ही स्टैक्स के अंतर्गत सूचीबद्ध हैं — दोहराव से बचने के लिए उन्हें Worktrees अनुभाग से छिपाएं।";

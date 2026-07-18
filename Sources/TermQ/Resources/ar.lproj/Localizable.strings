@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "تم إخراجه في %@ — انقر لإظهار بيئة العمل";
 "stacks.anchor.help" = "إنشاء بيئة عمل لهذا المكدس";
 "stacks.group.new.worktree" = "بيئة عمل جديدة…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "فرع مُكدَّس جديد قبل…";
+"stacks.new.branch.after" = "فرع مُكدَّس جديد بعد…";
+"stacks.new.branch.insert.below.note %@" = "يتم إنشاء الفرع الجديد أسفل %@ في المكدس.";
+"stacks.new.branch.insert.above.note %@" = "يتم إنشاء الفرع الجديد أعلى %@ في المكدس، ليحل محله — وينتقل %@ فوقه.";
+"stacks.main.worktree.not.found" = "تعذّر العثور على بيئة العمل الرئيسية للمستودع.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "مكدّس جديد…";
+"stacks.new.stack.title" = "مكدّس جديد";
+"stacks.new.stack.name.label" = "اسم الفرع";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "الفرع الأساسي";
+"stacks.new.stack.button" = "إنشاء";
+"stacks.new.stack.note" = "ينشئ الفرع من الفرع الأساسي دون تسجيل خروج ودون بيئة عمل — مكدّس بعنصر واحد يمكنك بدء العمل عليه لاحقًا.";
+"stacks.start.stack.checkbox" = "ابدأ مكدّسًا بهذا الفرع";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "التفرع من الافتراضي";
+"stacks.new.stack.mode.integration" = "التفرع من فرع التكامل";
+"stacks.new.stack.stack.name.label" = "اسم المكدس";
+"stacks.new.stack.integration.preview %@" = "سينشئ %@";
+"stacks.new.stack.first.branch.label" = "أول فرع مكدّس (اختياري)";
+"stacks.new.stack.first.branch.empty.hint" = "إذا تُرك فارغًا: يُنشأ فرع التكامل الفارغ فقط — يمكنك إضافة أول فرع مكدّس إليه لاحقًا.";
+"stacks.new.stack.first.branch.filled.hint" = "يُنشأ هذا الفرع مكدّسًا فوق فرع التكامل، وليس فوق الفرع الأساسي مباشرة.";
+"stacks.new.stack.integration.note" = "ينشئ فرع تكامل فارغًا من الفرع الأساسي كجذر للمكدس — لا يحمل أي كود خاص به أبدًا. تُبنى الفروع المكدّسة فوقه بدلاً من الفرع الأساسي، وتتسلسل طلبات السحب الخاصة بها إليه. وبمجرد دمج كل شيء في فرع التكامل، يُقدَّم كطلب سحب واحد موحّد إلى الفرع الأساسي — بدلاً من دمج كل فرع مكدّس في الفرع الأساسي على حدة.";
+"stacks.new.stack.name.exists %@" = "%@ موجود بالفعل — اختر اسمًا آخر.";
+"settings.gitspice.new.stack.mode" = "المكدس الجديد يبدأ كـ:";
+"settings.gitspice.new.stack.mode.help" = "الوضع الذي تختاره ورقة (مكدّس جديد) مسبقًا — تعرض الورقة الخيارين دائمًا.";
+"settings.gitspice.hide.stacked.worktrees" = "إخفاء بيئات العمل المكدّسة من قسم بيئات العمل";
+"settings.gitspice.hide.stacked.worktrees.help" = "بيئات العمل التي ينتمي فرعها إلى مكدّس متتبَع مُدرجة بالفعل ضمن المكدسات — أخفِها من قسم بيئات العمل لتفادي التكرار.";

@@ -1420,3 +1420,34 @@
 "stacks.checked.out.at %@" = "Kiválasztva itt: %@ — kattintson a munkakönyvtár megjelenítéséhez";
 "stacks.anchor.help" = "Munkakönyvtár létrehozása ehhez a veremhez";
 "stacks.group.new.worktree" = "Új Munkakönyvtár…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Új Verem Ág Előtte…";
+"stacks.new.branch.after" = "Új Verem Ág Utána…";
+"stacks.new.branch.insert.below.note %@" = "Az új ág a(z) %@ alá jön létre a veremben.";
+"stacks.new.branch.insert.above.note %@" = "Az új ág a(z) %@ fölé jön létre a veremben, átvéve a helyét — a(z) %@ ráköltözik.";
+"stacks.main.worktree.not.found" = "Nem sikerült megtalálni a tároló fő worktree-jét.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Új Verem…";
+"stacks.new.stack.title" = "Új Verem";
+"stacks.new.stack.name.label" = "Ág neve";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Alapág";
+"stacks.new.stack.button" = "Létrehozás";
+"stacks.new.stack.note" = "Létrehozza az ágat az alapágból checkout és worktree nélkül — egyelemű verem, amelyet később indíthat el.";
+"stacks.start.stack.checkbox" = "Verem indítása ezzel az ággal";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Elágazás az alapértelmezettből";
+"stacks.new.stack.mode.integration" = "Elágazás az integrációsból";
+"stacks.new.stack.stack.name.label" = "Verem neve";
+"stacks.new.stack.integration.preview %@" = "Létrehozza: %@";
+"stacks.new.stack.first.branch.label" = "Első verem ág (opcionális)";
+"stacks.new.stack.first.branch.empty.hint" = "Üresen hagyva: csak az üres integrációs ág jön létre — az első verem ágat később adhatja hozzá.";
+"stacks.new.stack.first.branch.filled.hint" = "Ez az ág az integrációs ág tetejére kerül a verembe, nem közvetlenül az alapág fölé.";
+"stacks.new.stack.integration.note" = "Létrehoz egy üres integrációs ágat az alapágból a verem gyökereként — soha nem hordoz saját kódot. A verem ágai erre épülnek az alapág helyett, és a pull requestjeik ebbe láncolódnak. Amint minden egyesült az integrációs ágba, egyetlen összevont változásként kerül pull requestbe az alapágba — ahelyett, hogy minden verem ág külön-külön egyesülne az alapággal.";
+"stacks.new.stack.name.exists %@" = "A(z) %@ már létezik — válasszon másik nevet.";
+"settings.gitspice.new.stack.mode" = "Az Új Verem indítási módja:";
+"settings.gitspice.new.stack.mode.help" = "Melyik módot választja ki előre az Új Verem lap — a lap mindig mindkettőt felkínálja.";
+"settings.gitspice.hide.stacked.worktrees" = "Verem ágak elrejtése a Munkakönyvtárak szakaszból";
+"settings.gitspice.hide.stacked.worktrees.help" = "Azok a munkakönyvtárak, amelyek ága egy követett veremhez tartozik, már megjelennek a Vermek alatt — rejtse el őket a Munkakönyvtárak szakaszból, hogy elkerülje a duplikált listázást.";

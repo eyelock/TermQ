@@ -1421,3 +1421,34 @@
 "stacks.checked.out.at %@" = "Utcheckad i %@ — klicka för att visa arbetsträdet";
 "stacks.anchor.help" = "Skapa ett arbetsträd för denna stapel";
 "stacks.group.new.worktree" = "Nytt Arbetsträd…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Ny stapelgren före…";
+"stacks.new.branch.after" = "Ny stapelgren efter…";
+"stacks.new.branch.insert.below.note %@" = "Den nya grenen skapas under %@ i stapeln.";
+"stacks.new.branch.insert.above.note %@" = "Den nya grenen skapas ovanför %@ i stapeln och tar dess plats — %@ flyttas upp på den.";
+"stacks.main.worktree.not.found" = "Kunde inte hitta repositoriets huvudsakliga worktree.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Ny stapel…";
+"stacks.new.stack.title" = "Ny stapel";
+"stacks.new.stack.name.label" = "Grennamn";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Basgren";
+"stacks.new.stack.button" = "Skapa";
+"stacks.new.stack.note" = "Skapar grenen från basen utan checkout och utan worktree — en stapel med en post som du kan starta senare.";
+"stacks.start.stack.checkbox" = "Starta en stapel med denna gren";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Grena från standard";
+"stacks.new.stack.mode.integration" = "Grena från integration";
+"stacks.new.stack.stack.name.label" = "Stapelns namn";
+"stacks.new.stack.integration.preview %@" = "Skapar %@";
+"stacks.new.stack.first.branch.label" = "Första stapelgrenen (valfritt)";
+"stacks.new.stack.first.branch.empty.hint" = "Lämnas tomt: endast den tomma integrationsgrenen skapas — du kan lägga till din första stapelgren senare.";
+"stacks.new.stack.first.branch.filled.hint" = "Denna gren skapas staplad ovanpå integrationsgrenen, inte direkt ovanpå basgrenen.";
+"stacks.new.stack.integration.note" = "Skapar en tom integrationsgren från basen som stapelns rot — den bär aldrig egen kod. Stapelgrenar byggs ovanpå den istället för basen, och deras pull requests kedjas in i den. När allt har slagits samman till integrationsgrenen skickas den som en enda konsoliderad pull request till basen — i stället för att varje stapelgren slås samman separat i basen.";
+"stacks.new.stack.name.exists %@" = "%@ finns redan — välj ett annat namn.";
+"settings.gitspice.new.stack.mode" = "Ny stapel startar som:";
+"settings.gitspice.new.stack.mode.help" = "Vilket läge arket Ny stapel förväljer — arket erbjuder alltid båda.";
+"settings.gitspice.hide.stacked.worktrees" = "Dölj staplade worktrees från sektionen Arbetsträd";
+"settings.gitspice.hide.stacked.worktrees.help" = "Arbetsträd vars gren tillhör en spårad stapel visas redan under Staplar — dölj dem från sektionen Arbetsträd för att undvika dubblettvisning.";

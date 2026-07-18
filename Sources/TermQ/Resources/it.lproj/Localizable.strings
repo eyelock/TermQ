@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Estratto in %@ — clic per rivelare il worktree";
 "stacks.anchor.help" = "Crea un worktree per questo Stack";
 "stacks.group.new.worktree" = "Nuovo Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nuovo Branch Impilato Prima…";
+"stacks.new.branch.after" = "Nuovo Branch Impilato Dopo…";
+"stacks.new.branch.insert.below.note %@" = "Il nuovo branch viene creato sotto %@ nello stack.";
+"stacks.new.branch.insert.above.note %@" = "Il nuovo branch viene creato sopra %@ nello stack, prendendone il posto — %@ si sposta sopra di esso.";
+"stacks.main.worktree.not.found" = "Impossibile trovare il worktree principale del repository.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nuovo Stack…";
+"stacks.new.stack.title" = "Nuovo Stack";
+"stacks.new.stack.name.label" = "Nome del branch";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branch base";
+"stacks.new.stack.button" = "Crea";
+"stacks.new.stack.note" = "Crea il branch dalla base senza checkout e senza worktree — uno stack a una voce che potrai avviare in seguito.";
+"stacks.start.stack.checkbox" = "Avvia uno stack con questo branch";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Deriva dal branch predefinito";
+"stacks.new.stack.mode.integration" = "Deriva dal branch di integrazione";
+"stacks.new.stack.stack.name.label" = "Nome dello Stack";
+"stacks.new.stack.integration.preview %@" = "Crea %@";
+"stacks.new.stack.first.branch.label" = "Primo Branch Impilato (opzionale)";
+"stacks.new.stack.first.branch.empty.hint" = "Se lasciato vuoto: viene creato solo il branch di integrazione vuoto — potrai aggiungervi il tuo primo branch impilato in seguito.";
+"stacks.new.stack.first.branch.filled.hint" = "Questo branch viene creato impilato sopra il branch di integrazione, non direttamente sopra il branch base.";
+"stacks.new.stack.integration.note" = "Crea un branch di integrazione vuoto dalla base come radice dello stack — non porta mai codice proprio. I branch dello stack si costruiscono su di esso invece che sulla base, e le loro pull request si incatenano ad esso. Una volta che tutto è stato unito nel branch di integrazione, viene proposto come un'unica pull request consolidata verso la base — invece che ogni branch dello stack venga unito singolarmente alla base.";
+"stacks.new.stack.name.exists %@" = "%@ esiste già — scegli un altro nome.";
+"settings.gitspice.new.stack.mode" = "Nuovo Stack inizia come:";
+"settings.gitspice.new.stack.mode.help" = "Quale modalità preseleziona il foglio Nuovo Stack — il foglio offre sempre entrambe.";
+"settings.gitspice.hide.stacked.worktrees" = "Nascondi i worktree impilati dalla sezione Worktree";
+"settings.gitspice.hide.stacked.worktrees.help" = "I worktree il cui branch appartiene a uno stack tracciato sono già elencati in Stack — nascondili dalla sezione Worktree per evitare la duplicazione.";

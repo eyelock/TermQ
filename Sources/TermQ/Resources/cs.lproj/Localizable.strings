@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Vybráno v %@ — kliknutím zobrazíte pracovní strom";
 "stacks.anchor.help" = "Vytvořit pracovní strom pro tento zásobník";
 "stacks.group.new.worktree" = "Nový pracovní strom…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nová větev zásobníku před…";
+"stacks.new.branch.after" = "Nová větev zásobníku za…";
+"stacks.new.branch.insert.below.note %@" = "Nová větev se vytvoří pod %@ v zásobníku.";
+"stacks.new.branch.insert.above.note %@" = "Nová větev se vytvoří nad %@ v zásobníku a zaujme jeho místo — %@ se přesune na ni.";
+"stacks.main.worktree.not.found" = "Nepodařilo se najít hlavní pracovní strom repozitáře.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nový zásobník…";
+"stacks.new.stack.title" = "Nový zásobník";
+"stacks.new.stack.name.label" = "Název větve";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Základní větev";
+"stacks.new.stack.button" = "Vytvořit";
+"stacks.new.stack.note" = "Vytvoří větev ze základní větve bez checkoutu a bez pracovního stromu — jednopoložkový zásobník, který můžete později spustit.";
+"stacks.start.stack.checkbox" = "Začít zásobník touto větví";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Větvit z výchozí";
+"stacks.new.stack.mode.integration" = "Větvit z integrační";
+"stacks.new.stack.stack.name.label" = "Název zásobníku";
+"stacks.new.stack.integration.preview %@" = "Vytvoří %@";
+"stacks.new.stack.first.branch.label" = "První větev zásobníku (volitelné)";
+"stacks.new.stack.first.branch.empty.hint" = "Ponecháno prázdné: vytvoří se pouze prázdná integrační větev — první větev zásobníku k ní můžete přidat později.";
+"stacks.new.stack.first.branch.filled.hint" = "Tato větev se vytvoří jako součást zásobníku nad integrační větví, ne přímo nad základní větví.";
+"stacks.new.stack.integration.note" = "Vytvoří prázdnou integrační větev ze základní větve jako kořen zásobníku — nikdy nenese žádný vlastní kód. Větve zásobníku se staví na ní místo na základní větvi a jejich pull requesty se řetězí do ní. Jakmile je vše sloučeno do integrační větve, je jako jedna konsolidovaná změna odeslána pull requestem do základní větve — místo aby se každá větev zásobníku slučovala do základní větve zvlášť.";
+"stacks.new.stack.name.exists %@" = "%@ už existuje — zvolte jiný název.";
+"settings.gitspice.new.stack.mode" = "Nový zásobník začíná jako:";
+"settings.gitspice.new.stack.mode.help" = "Který režim list Nový zásobník předvybere — list vždy nabízí oba.";
+"settings.gitspice.hide.stacked.worktrees" = "Skrýt větve zásobníku z oddílu Pracovní stromy";
+"settings.gitspice.hide.stacked.worktrees.help" = "Pracovní stromy, jejichž větev patří do sledovaného zásobníku, jsou už uvedeny v Zásobnících — skryjte je z oddílu Pracovní stromy, aby se nezobrazovaly duplicitně.";

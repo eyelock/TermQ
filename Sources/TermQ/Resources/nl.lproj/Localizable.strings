@@ -1419,3 +1419,34 @@
 "stacks.checked.out.at %@" = "Uitgecheckt in %@ — klik om de worktree te tonen";
 "stacks.anchor.help" = "Maak een worktree voor deze Stack";
 "stacks.group.new.worktree" = "Nieuwe Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nieuwe Stack-branch Voor…";
+"stacks.new.branch.after" = "Nieuwe Stack-branch Na…";
+"stacks.new.branch.insert.below.note %@" = "De nieuwe branch wordt onder %@ in de stack gemaakt.";
+"stacks.new.branch.insert.above.note %@" = "De nieuwe branch wordt boven %@ in de stack gemaakt en neemt zijn plaats in — %@ verhuist erboven.";
+"stacks.main.worktree.not.found" = "Kon de hoofdworktree van de repository niet vinden.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nieuwe Stack…";
+"stacks.new.stack.title" = "Nieuwe Stack";
+"stacks.new.stack.name.label" = "Branchnaam";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Basisbranch";
+"stacks.new.stack.button" = "Aanmaken";
+"stacks.new.stack.note" = "Maakt de branch vanaf de basis zonder checkout en zonder worktree — een stack met één item die je later kunt starten.";
+"stacks.start.stack.checkbox" = "Start een stack met deze branch";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Vertakken vanaf standaard";
+"stacks.new.stack.mode.integration" = "Vertakken vanaf integratie";
+"stacks.new.stack.stack.name.label" = "Stacknaam";
+"stacks.new.stack.integration.preview %@" = "Maakt %@";
+"stacks.new.stack.first.branch.label" = "Eerste Stack-branch (optioneel)";
+"stacks.new.stack.first.branch.empty.hint" = "Leeg gelaten: alleen de lege integratiebranch wordt gemaakt — je kunt je eerste stack-branch er later aan toevoegen.";
+"stacks.new.stack.first.branch.filled.hint" = "Deze branch wordt gestapeld boven op de integratiebranch gemaakt, niet direct boven op de basisbranch.";
+"stacks.new.stack.integration.note" = "Maakt een lege integratiebranch vanaf de basis als wortel van de stack — deze bevat zelf nooit code. Stack-branches worden hierop gebouwd in plaats van op de basis, en hun pull requests schakelen hierin. Zodra alles is samengevoegd in de integratiebranch, wordt deze als één geconsolideerde wijziging naar de basis gepullrequest — in plaats van dat elke stack-branch afzonderlijk in de basis wordt samengevoegd.";
+"stacks.new.stack.name.exists %@" = "%@ bestaat al — kies een andere naam.";
+"settings.gitspice.new.stack.mode" = "Nieuwe Stack begint als:";
+"settings.gitspice.new.stack.mode.help" = "Welke modus het venster Nieuwe Stack vooraf selecteert — het venster biedt altijd beide aan.";
+"settings.gitspice.hide.stacked.worktrees" = "Gestapelde worktrees verbergen in de sectie Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees waarvan de branch tot een gevolgde stack behoort, staan al vermeld onder Stacks — verberg ze in de sectie Worktrees om dubbele vermeldingen te voorkomen.";

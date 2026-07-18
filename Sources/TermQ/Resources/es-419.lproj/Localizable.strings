@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Extraída en %@ — clic para revelar el worktree";
 "stacks.anchor.help" = "Crear un worktree para esta pila";
 "stacks.group.new.worktree" = "Nuevo Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nueva Rama Apilada Antes…";
+"stacks.new.branch.after" = "Nueva Rama Apilada Después…";
+"stacks.new.branch.insert.below.note %@" = "La nueva rama se crea debajo de %@ en la pila.";
+"stacks.new.branch.insert.above.note %@" = "La nueva rama se crea encima de %@ en la pila, ocupando su lugar — %@ pasa a estar encima.";
+"stacks.main.worktree.not.found" = "No se pudo encontrar el worktree principal del repositorio.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nueva Pila…";
+"stacks.new.stack.title" = "Nueva Pila";
+"stacks.new.stack.name.label" = "Nombre de la rama";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Rama base";
+"stacks.new.stack.button" = "Crear";
+"stacks.new.stack.note" = "Crea la rama a partir de la base sin checkout y sin worktree — una pila de una sola entrada que puedes lanzar más adelante.";
+"stacks.start.stack.checkbox" = "Iniciar una pila con esta rama";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Ramificar desde la predeterminada";
+"stacks.new.stack.mode.integration" = "Ramificar desde la de integración";
+"stacks.new.stack.stack.name.label" = "Nombre de la Pila";
+"stacks.new.stack.integration.preview %@" = "Crea %@";
+"stacks.new.stack.first.branch.label" = "Primera Rama Apilada (opcional)";
+"stacks.new.stack.first.branch.empty.hint" = "Si se deja en blanco: solo se crea la rama de integración vacía — podrás agregar tu primera rama apilada más adelante.";
+"stacks.new.stack.first.branch.filled.hint" = "Esta rama se crea apilada encima de la rama de integración, no directamente encima de la rama base.";
+"stacks.new.stack.integration.note" = "Crea una rama de integración vacía a partir de la base como raíz de la pila — nunca contiene código propio. Las ramas apiladas se construyen sobre ella en lugar de la base, y sus pull requests se encadenan hacia ella. Una vez que todo se fusiona en la rama de integración, se convierte en una pull request hacia la base como un único cambio consolidado — en lugar de que cada rama apilada se fusione individualmente en la base.";
+"stacks.new.stack.name.exists %@" = "%@ ya existe — elige otro nombre.";
+"settings.gitspice.new.stack.mode" = "Nueva Pila empieza como:";
+"settings.gitspice.new.stack.mode.help" = "Qué modo preselecciona la hoja Nueva Pila — la hoja siempre ofrece ambos.";
+"settings.gitspice.hide.stacked.worktrees" = "Ocultar worktrees apilados de la sección Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Los worktrees cuya rama pertenece a una pila rastreada ya aparecen en Pilas — ocúltalos de la sección Worktrees para evitar el listado duplicado.";

@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Извлечена в %@ — нажмите, чтобы показать рабочее дерево";
 "stacks.anchor.help" = "Создать рабочее дерево для этого стека";
 "stacks.group.new.worktree" = "Новое рабочее дерево…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Новая ветка стека до…";
+"stacks.new.branch.after" = "Новая ветка стека после…";
+"stacks.new.branch.insert.below.note %@" = "Новая ветка создаётся ниже %@ в стеке.";
+"stacks.new.branch.insert.above.note %@" = "Новая ветка создаётся выше %@ в стеке, занимая её место — %@ перемещается над ней.";
+"stacks.main.worktree.not.found" = "Не удалось найти основное рабочее дерево репозитория.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Новый стек…";
+"stacks.new.stack.title" = "Новый стек";
+"stacks.new.stack.name.label" = "Имя ветки";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Базовая ветка";
+"stacks.new.stack.button" = "Создать";
+"stacks.new.stack.note" = "Создаёт ветку от базовой без checkout и без рабочего дерева — стек с одной записью, который можно запустить позже.";
+"stacks.start.stack.checkbox" = "Начать стек с этой ветки";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Ответвить от базовой по умолчанию";
+"stacks.new.stack.mode.integration" = "Ответвить от интеграционной";
+"stacks.new.stack.stack.name.label" = "Имя стека";
+"stacks.new.stack.integration.preview %@" = "Создаёт %@";
+"stacks.new.stack.first.branch.label" = "Первая ветка стека (необязательно)";
+"stacks.new.stack.first.branch.empty.hint" = "Если оставить пустым: создаётся только пустая интеграционная ветка — первую ветку стека можно добавить позже.";
+"stacks.new.stack.first.branch.filled.hint" = "Эта ветка создаётся поверх интеграционной ветки, а не непосредственно поверх базовой.";
+"stacks.new.stack.integration.note" = "Создаёт пустую интеграционную ветку от базовой как корень стека — она никогда не содержит собственного кода. Ветки стека строятся на ней, а не на базовой, и их pull request'ы цепочкой идут в неё. Как только всё объединено в интеграционную ветку, она отправляется как единый консолидированный pull request в базовую — вместо слияния каждой ветки стека по отдельности.";
+"stacks.new.stack.name.exists %@" = "%@ уже существует — выберите другое имя.";
+"settings.gitspice.new.stack.mode" = "Новый стек начинается как:";
+"settings.gitspice.new.stack.mode.help" = "Какой режим лист Новый стек выбирает заранее — лист всегда предлагает оба варианта.";
+"settings.gitspice.hide.stacked.worktrees" = "Скрыть ветки стека из раздела Рабочие деревья";
+"settings.gitspice.hide.stacked.worktrees.help" = "Рабочие деревья, ветка которых принадлежит отслеживаемому стеку, уже отображаются в разделе Стеки — скройте их из раздела Рабочие деревья, чтобы избежать дублирования.";
