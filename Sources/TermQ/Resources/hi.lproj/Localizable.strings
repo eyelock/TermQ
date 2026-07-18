@@ -1395,6 +1395,13 @@
 "stacks.submit.will.update" = "अपडेट करें";
 "stacks.sync.repo" = "रिपॉजिटरी सिंक करें";
 "stacks.sync.cleaned %ld %@" = "सिंक ने %ld मर्ज की गई शाखाओं को हटाया: %@";
+"stacks.destroy.stack" = "स्टैक नष्ट करें…";
+"stacks.destroy.stack.title" = "स्टैक नष्ट करें?";
+"stacks.destroy.stack.message %ld %@" = "यह git-spice के ज़रिए %ld स्थानीय शाखाओं को स्थायी रूप से हटा देता है: %@। रिमोट शाखाएँ और कोई भी pull request अप्रभावित रहती हैं।";
+"stacks.destroy.stack.open.pr.warning %ld" = "इनमें से %ld शाखाओं में अभी भी एक खुला pull request है।";
+"stacks.destroy.stack.confirm" = "स्टैक नष्ट करें";
+"stacks.destroy.stack.done %ld" = "स्टैक नष्ट हुआ: %ld शाखाएँ हटाई गईं";
+"stacks.destroy.stack.worktree.skipped %@" = "अपरिवर्तित छोड़ा गया (अनकमिटेड परिवर्तन): %@";
 "stacks.base.mismatch %@ %@" = "PR का लक्ष्य %@ है, लेकिन स्टैक का मूल %@ है — रिपॉजिटरी सिंक करें इसे फिर से लक्षित करेगा";
 "stacks.restack.up.to.date" = "स्टैक पहले से अद्यतित है";
 "stacks.restack.done %ld" = "%ld शाखाएं restack की गईं";

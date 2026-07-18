@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "تحديث";
 "stacks.sync.repo" = "مزامنة المستودع";
 "stacks.sync.cleaned %ld %@" = "أزالت المزامنة %ld فرعًا مدموجًا: %@";
+"stacks.destroy.stack" = "تدمير المكدس…";
+"stacks.destroy.stack.title" = "تدمير المكدس؟";
+"stacks.destroy.stack.message %ld %@" = "يؤدي هذا إلى حذف %ld فرعًا محليًا نهائيًا عبر git-spice: %@. تبقى الفروع البعيدة وأي طلبات سحب دون تغيير.";
+"stacks.destroy.stack.open.pr.warning %ld" = "لا يزال %ld من هذه الفروع يحتوي على طلب سحب مفتوح.";
+"stacks.destroy.stack.confirm" = "تدمير المكدس";
+"stacks.destroy.stack.done %ld" = "تم تدمير المكدس: تم حذف %ld فرعًا";
+"stacks.destroy.stack.worktree.skipped %@" = "تُرك دون تغيير (تغييرات غير مُثبتة): %@";
 "stacks.base.mismatch %@ %@" = "يستهدف طلب السحب %@، لكن الفرع الأصل للمكدس هو %@ — ستعيد مزامنة المستودع توجيهه";
 "stacks.restack.up.to.date" = "المكدس محدّث بالفعل";
 "stacks.restack.done %ld" = "تمت إعادة تكديس %ld فرعًا";

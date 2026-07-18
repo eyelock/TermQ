@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "обновить";
 "stacks.sync.repo" = "Синхронизировать репозиторий";
 "stacks.sync.cleaned %ld %@" = "Синхронизация удалила %ld слитых веток: %@";
+"stacks.destroy.stack" = "Уничтожить стек…";
+"stacks.destroy.stack.title" = "Уничтожить стек?";
+"stacks.destroy.stack.message %ld %@" = "Это безвозвратно удалит %ld локальных веток через git-spice: %@. Удалённые ветки и любые pull request остаются нетронутыми.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld из этих веток всё ещё имеют ОТКРЫТЫЙ pull request.";
+"stacks.destroy.stack.confirm" = "Уничтожить стек";
+"stacks.destroy.stack.done %ld" = "Стек уничтожен: удалено %ld веток";
+"stacks.destroy.stack.worktree.skipped %@" = "Оставлено без изменений (незафиксированные изменения): %@";
 "stacks.base.mismatch %@ %@" = "PR нацелен на %@, но родитель стека — %@ — синхронизация репозитория перенаправит его";
 "stacks.restack.up.to.date" = "Стек уже актуален";
 "stacks.restack.done %ld" = "Выполнен restack %ld веток";

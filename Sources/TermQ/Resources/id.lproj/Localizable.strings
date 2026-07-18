@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "perbarui";
 "stacks.sync.repo" = "Sinkronkan Repo";
 "stacks.sync.cleaned %ld %@" = "Sinkronisasi menghapus %ld cabang tergabung: %@";
+"stacks.destroy.stack" = "Hancurkan Stack…";
+"stacks.destroy.stack.title" = "Hancurkan stack?";
+"stacks.destroy.stack.message %ld %@" = "Tindakan ini akan menghapus %ld cabang lokal secara permanen melalui git-spice: %@. Cabang remote dan pull request apa pun tetap tidak terpengaruh.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld dari cabang ini masih memiliki pull request yang TERBUKA.";
+"stacks.destroy.stack.confirm" = "Hancurkan Stack";
+"stacks.destroy.stack.done %ld" = "Stack dihancurkan: %ld cabang dihapus";
+"stacks.destroy.stack.worktree.skipped %@" = "Dibiarkan tidak berubah (perubahan belum di-commit): %@";
 "stacks.base.mismatch %@ %@" = "PR menargetkan %@, tetapi induk tumpukan adalah %@ — Sinkronkan Repo akan mengalihkan targetnya";
 "stacks.restack.up.to.date" = "Tumpukan sudah mutakhir";
 "stacks.restack.done %ld" = "%ld cabang telah di-restack";

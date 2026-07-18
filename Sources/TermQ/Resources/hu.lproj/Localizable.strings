@@ -1395,6 +1395,13 @@
 "stacks.submit.will.update" = "frissítés";
 "stacks.sync.repo" = "Tároló Szinkronizálása";
 "stacks.sync.cleaned %ld %@" = "A szinkronizálás %ld egyesített ágat távolított el: %@";
+"stacks.destroy.stack" = "Verem Megsemmisítése…";
+"stacks.destroy.stack.title" = "Megsemmisíted a vermet?";
+"stacks.destroy.stack.message %ld %@" = "Ez véglegesen töröl %ld helyi ágat a git-spice-on keresztül: %@. A távoli ágak és az esetleges pull requestek érintetlenek maradnak.";
+"stacks.destroy.stack.open.pr.warning %ld" = "Ezen ágak közül %ld-nek még mindig NYITOTT pull requestje van.";
+"stacks.destroy.stack.confirm" = "Verem Megsemmisítése";
+"stacks.destroy.stack.done %ld" = "Verem megsemmisítve: %ld ág törölve";
+"stacks.destroy.stack.worktree.skipped %@" = "Érintetlenül hagyva (nem véglegesített módosítások): %@";
 "stacks.base.mismatch %@ %@" = "A PR célja %@, de a verem szülője %@ — a Tároló Szinkronizálása átirányítja";
 "stacks.restack.up.to.date" = "A verem már naprakész";
 "stacks.restack.done %ld" = "%ld ág restack-elve";

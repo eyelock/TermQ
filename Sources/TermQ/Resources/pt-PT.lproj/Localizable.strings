@@ -1394,6 +1394,13 @@
 "stacks.submit.will.update" = "atualizar";
 "stacks.sync.repo" = "Sincronizar Repositório";
 "stacks.sync.cleaned %ld %@" = "A sincronização removeu %ld branches integrados: %@";
+"stacks.destroy.stack" = "Destruir Pilha…";
+"stacks.destroy.stack.title" = "Destruir a pilha?";
+"stacks.destroy.stack.message %ld %@" = "Isto elimina permanentemente %ld branches locais via git-spice: %@. Os branches remotos e quaisquer pull requests permanecem intactos.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld destes branches ainda têm um pull request ABERTO.";
+"stacks.destroy.stack.confirm" = "Destruir Pilha";
+"stacks.destroy.stack.done %ld" = "Pilha destruída: %ld branches eliminados";
+"stacks.destroy.stack.worktree.skipped %@" = "Deixado intacto (alterações não submetidas): %@";
 "stacks.base.mismatch %@ %@" = "A PR aponta para %@, mas o parent do Stack é %@ — Sincronizar Repositório irá redirecioná-la";
 "stacks.restack.up.to.date" = "Stack já está atualizado";
 "stacks.restack.done %ld" = "%ld branches com restack concluído";

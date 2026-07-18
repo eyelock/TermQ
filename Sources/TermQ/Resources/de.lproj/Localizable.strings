@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "aktualisieren";
 "stacks.sync.repo" = "Repo Synchronisieren";
 "stacks.sync.cleaned %ld %@" = "Synchronisation hat %ld gemergte Branches entfernt: %@";
+"stacks.destroy.stack" = "Stack zerstören…";
+"stacks.destroy.stack.title" = "Stack zerstören?";
+"stacks.destroy.stack.message %ld %@" = "Dies löscht dauerhaft %ld lokale Branches via git-spice: %@. Remote-Branches und etwaige Pull Requests bleiben unberührt.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld dieser Branches haben noch einen OFFENEN Pull Request.";
+"stacks.destroy.stack.confirm" = "Stack zerstören";
+"stacks.destroy.stack.done %ld" = "Stack zerstört: %ld Branches gelöscht";
+"stacks.destroy.stack.worktree.skipped %@" = "Unverändert belassen (nicht committete Änderungen): %@";
 "stacks.base.mismatch %@ %@" = "PR zielt auf %@, aber der Stack-Parent ist %@ — Repo Synchronisieren richtet sie neu aus";
 "stacks.restack.up.to.date" = "Stack ist bereits aktuell";
 "stacks.restack.done %ld" = "%ld Branches restackt";

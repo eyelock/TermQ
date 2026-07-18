@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "更新";
 "stacks.sync.repo" = "リポジトリを同期";
 "stacks.sync.cleaned %ld %@" = "同期により %ld 件のマージ済みブランチを削除しました: %@";
+"stacks.destroy.stack" = "スタックを破棄…";
+"stacks.destroy.stack.title" = "スタックを破棄しますか？";
+"stacks.destroy.stack.message %ld %@" = "これにより、git-spice 経由で %ld 件のローカルブランチが完全に削除されます: %@。リモートブランチとプルリクエストはそのまま残ります。";
+"stacks.destroy.stack.open.pr.warning %ld" = "これらのブランチのうち %ld 件には、まだオープン状態のプルリクエストがあります。";
+"stacks.destroy.stack.confirm" = "スタックを破棄";
+"stacks.destroy.stack.done %ld" = "スタックを破棄しました: %ld 件のブランチを削除";
+"stacks.destroy.stack.worktree.skipped %@" = "そのまま残しました（未コミットの変更があるため）: %@";
 "stacks.base.mismatch %@ %@" = "PR の対象は %@ ですが、スタックの親は %@ です — リポジトリを同期すると再ターゲットされます";
 "stacks.restack.up.to.date" = "スタックは既に最新です";
 "stacks.restack.done %ld" = "%ld 件のブランチをリスタックしました";

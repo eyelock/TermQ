@@ -1396,6 +1396,13 @@
 "stacks.submit.will.update" = "uppdatera";
 "stacks.sync.repo" = "Synka Repo";
 "stacks.sync.cleaned %ld %@" = "Synkning tog bort %ld sammanslagna grenar: %@";
+"stacks.destroy.stack" = "Förstör Stack…";
+"stacks.destroy.stack.title" = "Förstöra stacken?";
+"stacks.destroy.stack.message %ld %@" = "Detta tar permanent bort %ld lokala grenar via git-spice: %@. Fjärrgrenar och eventuella pull requests lämnas orörda.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld av dessa grenar har fortfarande en ÖPPEN pull request.";
+"stacks.destroy.stack.confirm" = "Förstör Stack";
+"stacks.destroy.stack.done %ld" = "Stack förstörd: %ld grenar borttagna";
+"stacks.destroy.stack.worktree.skipped %@" = "Lämnad orörd (ej incheckade ändringar): %@";
 "stacks.base.mismatch %@ %@" = "PR riktar sig mot %@, men stapelns förälder är %@ — Synka Repo riktar om den";
 "stacks.restack.up.to.date" = "Stapeln är redan uppdaterad";
 "stacks.restack.done %ld" = "%ld grenar restackade";

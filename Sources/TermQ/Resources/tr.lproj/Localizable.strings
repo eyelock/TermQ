@@ -1396,6 +1396,13 @@
 "stacks.submit.will.update" = "güncelle";
 "stacks.sync.repo" = "Depoyu Senkronize Et";
 "stacks.sync.cleaned %ld %@" = "Senkronizasyon %ld birleştirilmiş dalı kaldırdı: %@";
+"stacks.destroy.stack" = "Yığını Yok Et…";
+"stacks.destroy.stack.title" = "Yığın yok edilsin mi?";
+"stacks.destroy.stack.message %ld %@" = "Bu, git-spice aracılığıyla %ld yerel dalı kalıcı olarak siler: %@. Uzak dallar ve varsa pull request'ler etkilenmez.";
+"stacks.destroy.stack.open.pr.warning %ld" = "Bu dallardan %ld tanesinde hâlâ AÇIK bir pull request var.";
+"stacks.destroy.stack.confirm" = "Yığını Yok Et";
+"stacks.destroy.stack.done %ld" = "Yığın yok edildi: %ld dal silindi";
+"stacks.destroy.stack.worktree.skipped %@" = "Değiştirilmeden bırakıldı (commit edilmemiş değişiklikler): %@";
 "stacks.base.mismatch %@ %@" = "PR %@ hedefliyor, ancak yığının üst öğesi %@ — Depoyu Senkronize Et bunu yeniden hedefleyecek";
 "stacks.restack.up.to.date" = "Yığın zaten güncel";
 "stacks.restack.done %ld" = "%ld dal restack edildi";

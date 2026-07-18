@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "aggiornare";
 "stacks.sync.repo" = "Sincronizza Repo";
 "stacks.sync.cleaned %ld %@" = "La sincronizzazione ha rimosso %ld branch uniti: %@";
+"stacks.destroy.stack" = "Distruggi Stack…";
+"stacks.destroy.stack.title" = "Distruggere lo stack?";
+"stacks.destroy.stack.message %ld %@" = "Questa operazione elimina definitivamente %ld branch locali tramite git-spice: %@. I branch remoti ed eventuali pull request restano intatti.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld di questi branch hanno ancora una pull request APERTA.";
+"stacks.destroy.stack.confirm" = "Distruggi Stack";
+"stacks.destroy.stack.done %ld" = "Stack distrutto: eliminati %ld branch";
+"stacks.destroy.stack.worktree.skipped %@" = "Lasciato invariato (modifiche non salvate): %@";
 "stacks.base.mismatch %@ %@" = "La PR punta a %@, ma il parent dello Stack è %@ — Sincronizza Repo lo reindirizzerà";
 "stacks.restack.up.to.date" = "Stack già aggiornato";
 "stacks.restack.done %ld" = "%ld branch restackati";

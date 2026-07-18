@@ -1391,6 +1391,13 @@
 "stacks.submit.will.update" = "更新";
 "stacks.sync.repo" = "同步仓库";
 "stacks.sync.cleaned %ld %@" = "同步移除了 %ld 个已合并分支：%@";
+"stacks.destroy.stack" = "销毁堆栈…";
+"stacks.destroy.stack.title" = "销毁堆栈？";
+"stacks.destroy.stack.message %ld %@" = "这将通过 git-spice 永久删除 %ld 个本地分支：%@。远程分支和任何拉取请求都不受影响。";
+"stacks.destroy.stack.open.pr.warning %ld" = "其中 %ld 个分支仍有处于开启状态的拉取请求。";
+"stacks.destroy.stack.confirm" = "销毁堆栈";
+"stacks.destroy.stack.done %ld" = "堆栈已销毁：已删除 %ld 个分支";
+"stacks.destroy.stack.worktree.skipped %@" = "保持不变（有未提交的更改）：%@";
 "stacks.base.mismatch %@ %@" = "PR 的目标是 %@，但堆栈的父分支是 %@ — 同步仓库将重新定向它";
 "stacks.restack.up.to.date" = "堆栈已是最新";
 "stacks.restack.done %ld" = "已重新堆叠 %ld 个分支";

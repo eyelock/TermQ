@@ -1395,6 +1395,13 @@
 "stacks.submit.will.update" = "päivittää";
 "stacks.sync.repo" = "Synkronoi Repo";
 "stacks.sync.cleaned %ld %@" = "Synkronointi poisti %ld yhdistettyä haaraa: %@";
+"stacks.destroy.stack" = "Tuhoa Pino…";
+"stacks.destroy.stack.title" = "Tuhotaanko pino?";
+"stacks.destroy.stack.message %ld %@" = "Tämä poistaa pysyvästi %ld paikallista haaraa git-spicen kautta: %@. Etähaarat ja mahdolliset pull requestit jäävät koskemattomiksi.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld näistä haaroista on yhä AVOIN pull request.";
+"stacks.destroy.stack.confirm" = "Tuhoa Pino";
+"stacks.destroy.stack.done %ld" = "Pino tuhottu: %ld haaraa poistettu";
+"stacks.destroy.stack.worktree.skipped %@" = "Jätetty koskemattomaksi (kommitoimattomat muutokset): %@";
 "stacks.base.mismatch %@ %@" = "PR kohdistuu haaraan %@, mutta Stackin parent on %@ — Synkronoi Repo kohdistaa sen uudelleen";
 "stacks.restack.up.to.date" = "Stack on jo ajan tasalla";
 "stacks.restack.done %ld" = "%ld haaraa restackattu";

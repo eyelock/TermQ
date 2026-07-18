@@ -1396,6 +1396,13 @@
 "stacks.submit.will.update" = "оновити";
 "stacks.sync.repo" = "Синхронізувати репозиторій";
 "stacks.sync.cleaned %ld %@" = "Синхронізація видалила %ld злитих гілок: %@";
+"stacks.destroy.stack" = "Знищити стек…";
+"stacks.destroy.stack.title" = "Знищити стек?";
+"stacks.destroy.stack.message %ld %@" = "Це остаточно видалить %ld локальних гілок через git-spice: %@. Віддалені гілки та будь-які pull request залишаться недоторканими.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld із цих гілок усе ще мають ВІДКРИТИЙ pull request.";
+"stacks.destroy.stack.confirm" = "Знищити стек";
+"stacks.destroy.stack.done %ld" = "Стек знищено: видалено %ld гілок";
+"stacks.destroy.stack.worktree.skipped %@" = "Залишено без змін (незафіксовані зміни): %@";
 "stacks.base.mismatch %@ %@" = "PR націлений на %@, але батько стеку — %@ — синхронізація репозиторію перенаправить його";
 "stacks.restack.up.to.date" = "Стек уже актуальний";
 "stacks.restack.done %ld" = "Виконано restack %ld гілок";

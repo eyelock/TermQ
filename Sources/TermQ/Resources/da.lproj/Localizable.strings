@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "opdatere";
 "stacks.sync.repo" = "Synkroniser Repo";
 "stacks.sync.cleaned %ld %@" = "Synkronisering fjernede %ld flettede grene: %@";
+"stacks.destroy.stack" = "Ødelæg Stak…";
+"stacks.destroy.stack.title" = "Ødelægge stakken?";
+"stacks.destroy.stack.message %ld %@" = "Dette sletter permanent %ld lokale grene via git-spice: %@. Fjerngrene og eventuelle pull requests forbliver urørte.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld af disse grene har stadig en ÅBEN pull request.";
+"stacks.destroy.stack.confirm" = "Ødelæg Stak";
+"stacks.destroy.stack.done %ld" = "Stak ødelagt: %ld grene slettet";
+"stacks.destroy.stack.worktree.skipped %@" = "Efterladt urørt (ikke-committede ændringer): %@";
 "stacks.base.mismatch %@ %@" = "PR sigter mod %@, men Stack'ens parent er %@ — Synkroniser Repo vil omdirigere den";
 "stacks.restack.up.to.date" = "Stack er allerede opdateret";
 "stacks.restack.done %ld" = "%ld grene restacket";

@@ -1394,6 +1394,13 @@
 "stacks.submit.will.update" = "kemas kini";
 "stacks.sync.repo" = "Segerakkan Repo";
 "stacks.sync.cleaned %ld %@" = "Penyegerakan mengalih keluar %ld cawangan tergabung: %@";
+"stacks.destroy.stack" = "Musnahkan Stack…";
+"stacks.destroy.stack.title" = "Musnahkan stack?";
+"stacks.destroy.stack.message %ld %@" = "Ini akan memadam %ld cawangan tempatan secara kekal melalui git-spice: %@. Cawangan jauh dan sebarang pull request kekal tidak terjejas.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld daripada cawangan ini masih mempunyai pull request yang TERBUKA.";
+"stacks.destroy.stack.confirm" = "Musnahkan Stack";
+"stacks.destroy.stack.done %ld" = "Stack dimusnahkan: %ld cawangan dipadam";
+"stacks.destroy.stack.worktree.skipped %@" = "Dibiarkan tidak berubah (perubahan belum di-commit): %@";
 "stacks.base.mismatch %@ %@" = "PR menyasarkan %@, tetapi induk tindanan ialah %@ — Segerakkan Repo akan mensasarkan semula";
 "stacks.restack.up.to.date" = "Tindanan sudah terkini";
 "stacks.restack.done %ld" = "%ld cawangan telah di-restack";

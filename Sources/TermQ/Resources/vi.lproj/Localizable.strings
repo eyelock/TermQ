@@ -1397,6 +1397,13 @@
 "stacks.submit.will.update" = "cập nhật";
 "stacks.sync.repo" = "Đồng Bộ Kho Lưu Trữ";
 "stacks.sync.cleaned %ld %@" = "Đồng bộ đã xóa %ld nhánh đã hợp nhất: %@";
+"stacks.destroy.stack" = "Hủy Stack…";
+"stacks.destroy.stack.title" = "Hủy stack?";
+"stacks.destroy.stack.message %ld %@" = "Thao tác này sẽ xóa vĩnh viễn %ld nhánh cục bộ thông qua git-spice: %@. Các nhánh từ xa và mọi pull request vẫn được giữ nguyên.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld trong số các nhánh này vẫn còn pull request đang MỞ.";
+"stacks.destroy.stack.confirm" = "Hủy Stack";
+"stacks.destroy.stack.done %ld" = "Đã hủy stack: đã xóa %ld nhánh";
+"stacks.destroy.stack.worktree.skipped %@" = "Giữ nguyên (có thay đổi chưa commit): %@";
 "stacks.base.mismatch %@ %@" = "PR nhắm đến %@, nhưng nhánh cha của ngăn xếp là %@ — Đồng Bộ Kho Lưu Trữ sẽ nhắm lại mục tiêu";
 "stacks.restack.up.to.date" = "Ngăn xếp đã cập nhật";
 "stacks.restack.done %ld" = "Đã restack %ld nhánh";

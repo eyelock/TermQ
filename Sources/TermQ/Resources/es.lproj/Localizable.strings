@@ -1389,6 +1389,13 @@
 "stacks.submit.will.update" = "actualizar";
 "stacks.sync.repo" = "Sincronizar Repo";
 "stacks.sync.cleaned %ld %@" = "La sincronización eliminó %ld ramas fusionadas: %@";
+"stacks.destroy.stack" = "Destruir Pila…";
+"stacks.destroy.stack.title" = "¿Destruir la pila?";
+"stacks.destroy.stack.message %ld %@" = "Esto elimina permanentemente %ld ramas locales mediante git-spice: %@. Las ramas remotas y cualquier pull request quedan intactas.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld de estas ramas todavía tienen una pull request ABIERTA.";
+"stacks.destroy.stack.confirm" = "Destruir Pila";
+"stacks.destroy.stack.done %ld" = "Pila destruida: se eliminaron %ld ramas";
+"stacks.destroy.stack.worktree.skipped %@" = "Sin modificar (cambios sin confirmar): %@";
 "stacks.base.mismatch %@ %@" = "La PR apunta a %@, pero el padre de la pila es %@ — Sincronizar Repo la redirigirá";
 "stacks.restack.up.to.date" = "La pila ya está actualizada";
 "stacks.restack.done %ld" = "%ld ramas restackeadas";

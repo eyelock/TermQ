@@ -1395,6 +1395,13 @@
 "stacks.submit.will.update" = "ažurirati";
 "stacks.sync.repo" = "Sinkroniziraj Repozitorij";
 "stacks.sync.cleaned %ld %@" = "Sinkronizacija je uklonila %ld spojenih grana: %@";
+"stacks.destroy.stack" = "Uništi Stog…";
+"stacks.destroy.stack.title" = "Uništiti stog?";
+"stacks.destroy.stack.message %ld %@" = "Ovo trajno briše %ld lokalnih grana putem git-spicea: %@. Udaljene grane i svi pull requestovi ostaju netaknuti.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld ovih grana i dalje ima OTVOREN pull request.";
+"stacks.destroy.stack.confirm" = "Uništi Stog";
+"stacks.destroy.stack.done %ld" = "Stog uništen: izbrisano %ld grana";
+"stacks.destroy.stack.worktree.skipped %@" = "Ostavljeno netaknuto (nepredane promjene): %@";
 "stacks.base.mismatch %@ %@" = "PR cilja na %@, ali roditelj stoga je %@ — Sinkroniziraj Repozitorij će ga preusmjeriti";
 "stacks.restack.up.to.date" = "Stog je već ažuran";
 "stacks.restack.done %ld" = "Restackano %ld grana";
