@@ -79,15 +79,22 @@ extension TermQMCPServer {
         let repoId: String
         let worktreePath: String
         let name: String
+        let target: String
         do {
             repoId = try InputValidator.requireString("repoId", from: arguments, tool: "stack_create_branch")
             worktreePath = try InputValidator.requireString(
                 "worktreePath", from: arguments, tool: "stack_create_branch")
             name = try InputValidator.requireString("name", from: arguments, tool: "stack_create_branch")
+            // Required (unlike the UI's own picker-driven calls into the same provider
+            // method): an agent has no pinned context the way a human clicking "New
+            // Stacked Branch After X" does, so an omitted target would silently fall
+            // back to whatever happens to be checked out in `worktreePath` — that
+            // fallback is how a stray call bifurcates into an unrelated new stack
+            // instead of extending the intended one.
+            target = try InputValidator.requireString("target", from: arguments, tool: "stack_create_branch")
         } catch let error as InputValidator.ValidationError {
             return errorResult(error.localizedDescription)
         }
-        let target = InputValidator.optionalString("target", from: arguments)
         do {
             _ = try loadStackRepo(repoId: repoId)
             guard let provider = await resolveStackProvider() else {
