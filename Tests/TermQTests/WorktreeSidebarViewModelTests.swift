@@ -1490,6 +1490,30 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         XCTAssertNil(vm.stackRootName(for: plainWorktree, repo: repo))
     }
 
+    /// Regression test for the WORKTREES/STACKS dual-listing bug: a lone tracked
+    /// branch with nothing above it is still a legitimate one-entry stack (mirrors
+    /// `stackRoots`), so `stackRootName` must return non-nil — not just for
+    /// multi-branch stacks.
+    func testStackRootName_singleBranchStack_returnsOwnName() async {
+        let fake = FakeStackProvider()
+        let graph = StackGraph(
+            branches: [
+                makeBranch("develop", children: ["feat/lone"], isCurrent: true),
+                makeBranch("feat/lone", parent: "develop"),
+            ])
+        await fake.setGraph(graph, for: "/tmp/test-repo")
+        let stackService = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await stackService.probe()
+        let vm = makeVM(stackService: stackService)
+        let repo = makeRepo()
+        await vm.refreshStack(for: repo)
+        let worktree = GitWorktree(
+            path: "/tmp/test-repo/.worktrees/feat-lone", branch: "feat/lone",
+            commitHash: "abc12345", isMainWorktree: false, isLocked: false)
+
+        XCTAssertEqual(vm.stackRootName(for: worktree, repo: repo), "feat/lone")
+    }
+
     // MARK: - Cross-worktree restack orchestration
 
     /// Stack develop ← feat/base ← feat/broken-out, where feat/broken-out is checked
