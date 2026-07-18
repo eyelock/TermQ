@@ -42,9 +42,12 @@ struct ColumnView: View {
 
                 Text(column.name)
                     .font(.headline)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
 
                 Text("\(cards.count)")
                     .font(.caption)
+                    .lineLimit(1)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
                     .background(
@@ -52,7 +55,7 @@ struct ColumnView: View {
                             .fill(Color.secondary.opacity(0.2))
                     )
 
-                Spacer()
+                Spacer(minLength: 0)
 
                 Menu {
                     Button(Strings.Board.editColumn) {
@@ -150,6 +153,7 @@ struct ColumnView: View {
             .help(Strings.Board.addTerminalHelp)
         }
         .frame(minWidth: 200)
+        .clipped()
         .background(Color(nsColor: .windowBackgroundColor))
         .contentShape(RoundedRectangle(cornerRadius: 8))  // Define hit-test area for drop
         .dropDestination(for: String.self) { items, _ in
