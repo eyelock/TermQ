@@ -1415,3 +1415,34 @@
 "stacks.checked.out.at %@" = "Đã checkout ở %@ — nhấp để hiển thị worktree";
 "stacks.anchor.help" = "Tạo worktree cho ngăn xếp này";
 "stacks.group.new.worktree" = "Worktree Mới…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nhánh Ngăn Xếp Mới Trước…";
+"stacks.new.branch.after" = "Nhánh Ngăn Xếp Mới Sau…";
+"stacks.new.branch.insert.below.note %@" = "Nhánh mới được tạo bên dưới %@ trong ngăn xếp.";
+"stacks.new.branch.insert.above.note %@" = "Nhánh mới được tạo bên trên %@ trong ngăn xếp, chiếm vị trí của nó — %@ sẽ chuyển lên trên nó.";
+"stacks.main.worktree.not.found" = "Không tìm thấy worktree chính của kho lưu trữ.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Ngăn Xếp Mới…";
+"stacks.new.stack.title" = "Ngăn Xếp Mới";
+"stacks.new.stack.name.label" = "Tên nhánh";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Nhánh cơ sở";
+"stacks.new.stack.button" = "Tạo";
+"stacks.new.stack.note" = "Tạo nhánh từ nhánh cơ sở mà không checkout và không tạo worktree — một ngăn xếp một mục mà bạn có thể khởi chạy sau.";
+"stacks.start.stack.checkbox" = "Bắt đầu một ngăn xếp với nhánh này";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Tạo nhánh từ nhánh mặc định";
+"stacks.new.stack.mode.integration" = "Tạo nhánh từ nhánh tích hợp";
+"stacks.new.stack.stack.name.label" = "Tên Ngăn Xếp";
+"stacks.new.stack.integration.preview %@" = "Tạo %@";
+"stacks.new.stack.first.branch.label" = "Nhánh Ngăn Xếp Đầu Tiên (tùy chọn)";
+"stacks.new.stack.first.branch.empty.hint" = "Nếu để trống: chỉ nhánh tích hợp trống được tạo — bạn có thể thêm nhánh ngăn xếp đầu tiên vào đó sau.";
+"stacks.new.stack.first.branch.filled.hint" = "Nhánh này được tạo xếp chồng lên trên nhánh tích hợp, không phải trực tiếp trên nhánh cơ sở.";
+"stacks.new.stack.integration.note" = "Tạo một nhánh tích hợp trống từ nhánh cơ sở làm gốc của ngăn xếp — nhánh này không bao giờ mang mã nguồn riêng. Các nhánh ngăn xếp được xây dựng trên nhánh này thay vì trên nhánh cơ sở, và pull request của chúng nối chuỗi vào đó. Khi mọi thứ đã được hợp nhất vào nhánh tích hợp, nó sẽ được gửi pull request tới nhánh cơ sở như một thay đổi hợp nhất duy nhất — thay vì từng nhánh ngăn xếp được hợp nhất riêng lẻ vào nhánh cơ sở.";
+"stacks.new.stack.name.exists %@" = "%@ đã tồn tại — hãy chọn tên khác.";
+"settings.gitspice.new.stack.mode" = "Ngăn Xếp Mới bắt đầu ở chế độ:";
+"settings.gitspice.new.stack.mode.help" = "Chế độ nào bảng Ngăn Xếp Mới chọn sẵn — bảng luôn cung cấp cả hai.";
+"settings.gitspice.hide.stacked.worktrees" = "Ẩn các worktree xếp chồng khỏi mục Worktree";
+"settings.gitspice.hide.stacked.worktrees.help" = "Các worktree có nhánh thuộc về một ngăn xếp đang theo dõi đã được liệt kê trong Ngăn Xếp — hãy ẩn chúng khỏi mục Worktree để tránh liệt kê trùng lặp.";

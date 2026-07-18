@@ -1407,3 +1407,34 @@
 "stacks.checked.out.at %@" = "Di-checkout di %@ — klik untuk menampilkan worktree";
 "stacks.anchor.help" = "Buat worktree untuk tumpukan ini";
 "stacks.group.new.worktree" = "Worktree Baru…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Cabang Tumpukan Baru Sebelum…";
+"stacks.new.branch.after" = "Cabang Tumpukan Baru Setelah…";
+"stacks.new.branch.insert.below.note %@" = "Cabang baru dibuat di bawah %@ dalam tumpukan.";
+"stacks.new.branch.insert.above.note %@" = "Cabang baru dibuat di atas %@ dalam tumpukan, menggantikan posisinya — %@ berpindah ke atasnya.";
+"stacks.main.worktree.not.found" = "Tidak dapat menemukan worktree utama repositori.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Tumpukan Baru…";
+"stacks.new.stack.title" = "Tumpukan Baru";
+"stacks.new.stack.name.label" = "Nama cabang";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branch Dasar";
+"stacks.new.stack.button" = "Buat";
+"stacks.new.stack.note" = "Membuat cabang dari dasar tanpa checkout dan tanpa worktree — tumpukan satu entri yang dapat Anda mulai nanti.";
+"stacks.start.stack.checkbox" = "Mulai tumpukan dengan cabang ini";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Bercabang dari default";
+"stacks.new.stack.mode.integration" = "Bercabang dari integrasi";
+"stacks.new.stack.stack.name.label" = "Nama Tumpukan";
+"stacks.new.stack.integration.preview %@" = "Membuat %@";
+"stacks.new.stack.first.branch.label" = "Cabang Tumpukan Pertama (opsional)";
+"stacks.new.stack.first.branch.empty.hint" = "Jika dikosongkan: hanya cabang integrasi kosong yang dibuat — Anda dapat menambahkan cabang tumpukan pertama nanti.";
+"stacks.new.stack.first.branch.filled.hint" = "Cabang ini dibuat menumpuk di atas cabang integrasi, bukan langsung di atas cabang dasar.";
+"stacks.new.stack.integration.note" = "Membuat cabang integrasi kosong dari dasar sebagai akar tumpukan — cabang ini tidak pernah membawa kode sendiri. Cabang tumpukan dibangun di atasnya, bukan di atas dasar, dan pull request mereka berantai ke sana. Setelah semuanya digabungkan ke cabang integrasi, cabang tersebut di-pull-request ke dasar sebagai satu perubahan gabungan — bukan setiap cabang tumpukan digabungkan satu per satu ke dasar.";
+"stacks.new.stack.name.exists %@" = "%@ sudah ada — pilih nama lain.";
+"settings.gitspice.new.stack.mode" = "Tumpukan Baru dimulai sebagai:";
+"settings.gitspice.new.stack.mode.help" = "Mode mana yang dipilih terlebih dahulu oleh sheet Tumpukan Baru — sheet selalu menawarkan keduanya.";
+"settings.gitspice.hide.stacked.worktrees" = "Sembunyikan worktree bertumpuk dari bagian Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktree yang cabangnya termasuk dalam tumpukan yang dilacak sudah tercantum di Tumpukan — sembunyikan dari bagian Worktrees untuk menghindari duplikasi.";

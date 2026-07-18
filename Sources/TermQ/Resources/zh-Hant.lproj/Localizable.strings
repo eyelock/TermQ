@@ -1407,3 +1407,34 @@
 "stacks.checked.out.at %@" = "已在 %@ 中簽出 — 點選以顯示該工作樹";
 "stacks.anchor.help" = "為此堆疊建立一個工作樹";
 "stacks.group.new.worktree" = "新增工作樹…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "在此之前新增堆疊分支…";
+"stacks.new.branch.after" = "在此之後新增堆疊分支…";
+"stacks.new.branch.insert.below.note %@" = "新分支將建立在堆疊中 %@ 的下方。";
+"stacks.new.branch.insert.above.note %@" = "新分支將建立在堆疊中 %@ 的上方，取代其位置 — %@ 將移到其上方。";
+"stacks.main.worktree.not.found" = "找不到此儲存庫的主要工作樹。";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "新增堆疊…";
+"stacks.new.stack.title" = "新增堆疊";
+"stacks.new.stack.name.label" = "分支名稱";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "基礎分支";
+"stacks.new.stack.button" = "建立";
+"stacks.new.stack.note" = "從基礎分支建立該分支，不進行檢出也不建立工作樹 — 這是一個可稍後啟動的單一項目堆疊。";
+"stacks.start.stack.checkbox" = "以此分支開始一個堆疊";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "從預設分支分出";
+"stacks.new.stack.mode.integration" = "從整合分支分出";
+"stacks.new.stack.stack.name.label" = "堆疊名稱";
+"stacks.new.stack.integration.preview %@" = "建立 %@";
+"stacks.new.stack.first.branch.label" = "第一個堆疊分支（選填）";
+"stacks.new.stack.first.branch.empty.hint" = "留白時：僅會建立空的整合分支 — 稍後可為其新增第一個堆疊分支。";
+"stacks.new.stack.first.branch.filled.hint" = "此分支將建立在整合分支之上並加入堆疊，而非直接建立在基礎分支之上。";
+"stacks.new.stack.integration.note" = "從基礎分支建立一個空的整合分支作為堆疊的根 — 它本身永遠不帶有程式碼。堆疊分支會以它為基礎而非基礎分支進行建構，其拉取請求會依序串連到它。一旦所有內容都合併到整合分支，就會以單一整合後的變更提交拉取請求到基礎分支 — 而不是每個堆疊分支個別合併到基礎分支。";
+"stacks.new.stack.name.exists %@" = "%@ 已存在 — 請選擇其他名稱。";
+"settings.gitspice.new.stack.mode" = "新增堆疊的起始模式：";
+"settings.gitspice.new.stack.mode.help" = "「新增堆疊」表單預先選取的模式 — 該表單一律同時提供兩種模式。";
+"settings.gitspice.hide.stacked.worktrees" = "在工作樹區段隱藏已加入堆疊的工作樹";
+"settings.gitspice.hide.stacked.worktrees.help" = "分支屬於受追蹤堆疊的工作樹已在堆疊區段列出 — 請在工作樹區段將其隱藏，以避免重複顯示。";

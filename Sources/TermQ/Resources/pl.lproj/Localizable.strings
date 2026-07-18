@@ -1412,3 +1412,34 @@
 "stacks.checked.out.at %@" = "Wybrana w %@ — kliknij, aby pokazać drzewo robocze";
 "stacks.anchor.help" = "Utwórz drzewo robocze dla tego stosu";
 "stacks.group.new.worktree" = "Nowe drzewo robocze…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nowa gałąź stosu przed…";
+"stacks.new.branch.after" = "Nowa gałąź stosu po…";
+"stacks.new.branch.insert.below.note %@" = "Nowa gałąź jest tworzona poniżej %@ na stosie.";
+"stacks.new.branch.insert.above.note %@" = "Nowa gałąź jest tworzona powyżej %@ na stosie, zajmując jej miejsce — %@ przenosi się na nią.";
+"stacks.main.worktree.not.found" = "Nie udało się znaleźć głównego drzewa roboczego repozytorium.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nowy stos…";
+"stacks.new.stack.title" = "Nowy stos";
+"stacks.new.stack.name.label" = "Nazwa gałęzi";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Gałąź bazowa";
+"stacks.new.stack.button" = "Utwórz";
+"stacks.new.stack.note" = "Tworzy gałąź z bazy bez checkoutu i bez drzewa roboczego — jednoelementowy stos, który można uruchomić później.";
+"stacks.start.stack.checkbox" = "Rozpocznij stos od tej gałęzi";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Odgałęź od domyślnej";
+"stacks.new.stack.mode.integration" = "Odgałęź od integracyjnej";
+"stacks.new.stack.stack.name.label" = "Nazwa stosu";
+"stacks.new.stack.integration.preview %@" = "Tworzy %@";
+"stacks.new.stack.first.branch.label" = "Pierwsza gałąź stosu (opcjonalnie)";
+"stacks.new.stack.first.branch.empty.hint" = "Pozostawione puste: tworzona jest tylko pusta gałąź integracyjna — pierwszą gałąź stosu można dodać do niej później.";
+"stacks.new.stack.first.branch.filled.hint" = "Ta gałąź jest tworzona na stosie nad gałęzią integracyjną, a nie bezpośrednio nad gałęzią bazową.";
+"stacks.new.stack.integration.note" = "Tworzy pustą gałąź integracyjną z bazy jako korzeń stosu — nigdy nie zawiera własnego kodu. Gałęzie stosu budowane są na niej zamiast na bazie, a ich pull requesty łańcuchowo do niej trafiają. Gdy wszystko zostanie scalone do gałęzi integracyjnej, jest ona zgłaszana jako jeden skonsolidowany pull request do bazy — zamiast scalania każdej gałęzi stosu osobno do bazy.";
+"stacks.new.stack.name.exists %@" = "%@ już istnieje — wybierz inną nazwę.";
+"settings.gitspice.new.stack.mode" = "Nowy stos zaczyna się jako:";
+"settings.gitspice.new.stack.mode.help" = "Który tryb domyślnie wybiera arkusz Nowy stos — arkusz zawsze oferuje oba.";
+"settings.gitspice.hide.stacked.worktrees" = "Ukryj gałęzie stosu z sekcji Drzewa robocze";
+"settings.gitspice.hide.stacked.worktrees.help" = "Drzewa robocze, których gałąź należy do śledzonego stosu, są już wymienione w sekcji Stosy — ukryj je z sekcji Drzewa robocze, aby uniknąć podwójnego wpisu.";

@@ -1412,3 +1412,34 @@
 "stacks.checked.out.at %@" = "Di-checkout dalam %@ — klik untuk menunjukkan worktree";
 "stacks.anchor.help" = "Cipta worktree untuk tindanan ini";
 "stacks.group.new.worktree" = "Worktree Baharu…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Cawangan Tindanan Baharu Sebelum…";
+"stacks.new.branch.after" = "Cawangan Tindanan Baharu Selepas…";
+"stacks.new.branch.insert.below.note %@" = "Cawangan baharu dicipta di bawah %@ dalam tindanan.";
+"stacks.new.branch.insert.above.note %@" = "Cawangan baharu dicipta di atas %@ dalam tindanan, mengambil tempatnya — %@ berpindah ke atasnya.";
+"stacks.main.worktree.not.found" = "Tidak dapat mencari worktree utama repositori.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Tindanan Baharu…";
+"stacks.new.stack.title" = "Tindanan Baharu";
+"stacks.new.stack.name.label" = "Nama cawangan";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Cawangan Asas";
+"stacks.new.stack.button" = "Cipta";
+"stacks.new.stack.note" = "Mencipta cawangan daripada asas tanpa checkout dan tanpa worktree — tindanan satu entri yang boleh anda mulakan kemudian.";
+"stacks.start.stack.checkbox" = "Mula tindanan dengan cawangan ini";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Cabang daripada lalai";
+"stacks.new.stack.mode.integration" = "Cabang daripada integrasi";
+"stacks.new.stack.stack.name.label" = "Nama Tindanan";
+"stacks.new.stack.integration.preview %@" = "Mencipta %@";
+"stacks.new.stack.first.branch.label" = "Cawangan Tindanan Pertama (pilihan)";
+"stacks.new.stack.first.branch.empty.hint" = "Jika dibiarkan kosong: hanya cawangan integrasi kosong dicipta — anda boleh menambah cawangan tindanan pertama anda kemudian.";
+"stacks.new.stack.first.branch.filled.hint" = "Cawangan ini dicipta bertindan di atas cawangan integrasi, bukan terus di atas cawangan asas.";
+"stacks.new.stack.integration.note" = "Mencipta cawangan integrasi kosong daripada asas sebagai punca tindanan — ia tidak pernah membawa kod sendiri. Cawangan tindanan dibina di atasnya dan bukan di atas asas, dan pull request mereka berantai kepadanya. Setelah semuanya digabungkan ke cawangan integrasi, ia di-pull-request ke asas sebagai satu perubahan bersatu — bukannya setiap cawangan tindanan digabungkan secara berasingan ke asas.";
+"stacks.new.stack.name.exists %@" = "%@ sudah wujud — pilih nama lain.";
+"settings.gitspice.new.stack.mode" = "Tindanan Baharu bermula sebagai:";
+"settings.gitspice.new.stack.mode.help" = "Mod mana yang dipilih terlebih dahulu oleh helaian Tindanan Baharu — helaian sentiasa menawarkan kedua-duanya.";
+"settings.gitspice.hide.stacked.worktrees" = "Sembunyikan worktree bertindan daripada bahagian Worktree";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktree yang cawangannya tergolong dalam tindanan yang dijejaki sudah disenaraikan di bawah Tindanan — sembunyikan daripada bahagian Worktree untuk mengelakkan penyenaraian berganda.";

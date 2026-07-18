@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Checkout อยู่ใน %@ — คลิกเพื่อแสดง Worktree";
 "stacks.anchor.help" = "สร้าง Worktree สำหรับสแต็กนี้";
 "stacks.group.new.worktree" = "Worktree ใหม่…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "สาขาสแต็กใหม่ก่อน…";
+"stacks.new.branch.after" = "สาขาสแต็กใหม่หลัง…";
+"stacks.new.branch.insert.below.note %@" = "สาขาใหม่จะถูกสร้างไว้ใต้ %@ ในสแต็ก";
+"stacks.new.branch.insert.above.note %@" = "สาขาใหม่จะถูกสร้างไว้เหนือ %@ ในสแต็ก โดยเข้าแทนที่ตำแหน่งของมัน — %@ จะย้ายไปอยู่ด้านบนมัน";
+"stacks.main.worktree.not.found" = "ไม่พบ worktree หลักของที่เก็บข้อมูล";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "สแต็กใหม่…";
+"stacks.new.stack.title" = "สแต็กใหม่";
+"stacks.new.stack.name.label" = "ชื่อสาขา";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "สาขาฐาน";
+"stacks.new.stack.button" = "สร้าง";
+"stacks.new.stack.note" = "สร้างสาขาจากฐานโดยไม่ต้อง checkout และไม่ต้องมี worktree — สแต็กที่มีรายการเดียวซึ่งคุณสามารถเริ่มใช้งานได้ภายหลัง";
+"stacks.start.stack.checkbox" = "เริ่มสแต็กด้วยสาขานี้";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "แยกสาขาจากค่าเริ่มต้น";
+"stacks.new.stack.mode.integration" = "แยกสาขาจากสาขาการรวม";
+"stacks.new.stack.stack.name.label" = "ชื่อสแต็ก";
+"stacks.new.stack.integration.preview %@" = "สร้าง %@";
+"stacks.new.stack.first.branch.label" = "สาขาสแต็กแรก (ไม่บังคับ)";
+"stacks.new.stack.first.branch.empty.hint" = "หากปล่อยว่างไว้: จะสร้างเฉพาะสาขาการรวมที่ว่างเปล่าเท่านั้น — คุณสามารถเพิ่มสาขาสแต็กแรกของคุณได้ภายหลัง";
+"stacks.new.stack.first.branch.filled.hint" = "สาขานี้จะถูกสร้างซ้อนอยู่เหนือสาขาการรวม ไม่ใช่อยู่เหนือสาขาฐานโดยตรง";
+"stacks.new.stack.integration.note" = "สร้างสาขาการรวมที่ว่างเปล่าจากฐานเป็นรากของสแต็ก — สาขานี้จะไม่มีโค้ดของตัวเองเลย สาขาสแต็กจะถูกสร้างต่อยอดบนสาขานี้แทนที่จะเป็นฐาน และ pull request ของสาขาเหล่านั้นจะเชื่อมโยงเข้ามาที่นี่ เมื่อทุกอย่างถูกผนวกเข้ากับสาขาการรวมแล้ว มันจะถูกส่งเป็น pull request เดียวที่รวมการเปลี่ยนแปลงทั้งหมดไปยังฐาน — แทนที่จะผนวกแต่ละสาขาสแต็กเข้ากับฐานทีละสาขา";
+"stacks.new.stack.name.exists %@" = "%@ มีอยู่แล้ว — เลือกชื่ออื่น";
+"settings.gitspice.new.stack.mode" = "สแต็กใหม่เริ่มต้นเป็น:";
+"settings.gitspice.new.stack.mode.help" = "โหมดใดที่ชีต สแต็กใหม่ เลือกไว้ล่วงหน้า — ชีตจะเสนอทั้งสองโหมดเสมอ";
+"settings.gitspice.hide.stacked.worktrees" = "ซ่อน worktree ที่ทำสแต็กจากส่วน Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "worktree ที่สาขาเป็นส่วนหนึ่งของสแต็กที่ติดตามอยู่จะแสดงอยู่ใน สแต็ก อยู่แล้ว — ซ่อนออกจากส่วน Worktrees เพื่อหลีกเลี่ยงการแสดงซ้ำ";

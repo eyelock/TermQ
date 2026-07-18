@@ -1407,3 +1407,34 @@
 "stacks.checked.out.at %@" = "Extrasă în %@ — clic pentru a dezvălui worktree-ul";
 "stacks.anchor.help" = "Creează un worktree pentru această stivă";
 "stacks.group.new.worktree" = "Worktree Nou…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Ramură Nouă în Stivă Înainte…";
+"stacks.new.branch.after" = "Ramură Nouă în Stivă După…";
+"stacks.new.branch.insert.below.note %@" = "Noua ramură este creată sub %@ în stivă.";
+"stacks.new.branch.insert.above.note %@" = "Noua ramură este creată deasupra %@ în stivă, luându-i locul — %@ se mută deasupra ei.";
+"stacks.main.worktree.not.found" = "Nu s-a putut găsi worktree-ul principal al repository-ului.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Stivă Nouă…";
+"stacks.new.stack.title" = "Stivă Nouă";
+"stacks.new.stack.name.label" = "Nume ramură";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branch de bază";
+"stacks.new.stack.button" = "Creează";
+"stacks.new.stack.note" = "Creează ramura din bază fără checkout și fără worktree — o stivă cu o singură intrare pe care o poți lansa mai târziu.";
+"stacks.start.stack.checkbox" = "Începe o stivă cu această ramură";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Ramifică din cea implicită";
+"stacks.new.stack.mode.integration" = "Ramifică din cea de integrare";
+"stacks.new.stack.stack.name.label" = "Numele Stivei";
+"stacks.new.stack.integration.preview %@" = "Creează %@";
+"stacks.new.stack.first.branch.label" = "Prima Ramură în Stivă (opțional)";
+"stacks.new.stack.first.branch.empty.hint" = "Lăsat gol: se creează doar ramura de integrare goală — poți adăuga prima ta ramură în stivă mai târziu.";
+"stacks.new.stack.first.branch.filled.hint" = "Această ramură este creată stivuită deasupra ramurii de integrare, nu direct deasupra ramurii de bază.";
+"stacks.new.stack.integration.note" = "Creează o ramură de integrare goală din bază ca rădăcină a stivei — nu poartă niciodată cod propriu. Ramurile din stivă se construiesc pe ea în loc de bază, iar pull request-urile lor se înlănțuie în ea. Odată ce totul este îmbinat în ramura de integrare, aceasta este trimisă ca un singur pull request consolidat către bază — în loc ca fiecare ramură din stivă să fie îmbinată individual în bază.";
+"stacks.new.stack.name.exists %@" = "%@ există deja — alege alt nume.";
+"settings.gitspice.new.stack.mode" = "Stivă Nouă începe ca:";
+"settings.gitspice.new.stack.mode.help" = "Ce mod preselectează foaia Stivă Nouă — foaia oferă întotdeauna ambele.";
+"settings.gitspice.hide.stacked.worktrees" = "Ascunde worktree-urile din stivă din secțiunea Worktree-uri";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktree-urile a căror ramură aparține unei stive urmărite sunt deja listate în Stive — ascunde-le din secțiunea Worktree-uri pentru a evita listarea duplicată.";

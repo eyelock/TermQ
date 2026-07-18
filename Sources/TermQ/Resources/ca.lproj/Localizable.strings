@@ -1407,3 +1407,34 @@
 "stacks.checked.out.at %@" = "Extreta a %@ — clica per revelar el worktree";
 "stacks.anchor.help" = "Crea un worktree per a aquesta pila";
 "stacks.group.new.worktree" = "Nou Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nova Branca Apilada Abans…";
+"stacks.new.branch.after" = "Nova Branca Apilada Després…";
+"stacks.new.branch.insert.below.note %@" = "La nova branca es crea per sota de %@ a la pila.";
+"stacks.new.branch.insert.above.note %@" = "La nova branca es crea per sobre de %@ a la pila, ocupant el seu lloc — %@ hi passa a sobre.";
+"stacks.main.worktree.not.found" = "No s'ha pogut trobar el worktree principal del repositori.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nova Pila…";
+"stacks.new.stack.title" = "Nova Pila";
+"stacks.new.stack.name.label" = "Nom de la branca";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branca base";
+"stacks.new.stack.button" = "Crea";
+"stacks.new.stack.note" = "Crea la branca a partir de la base sense agafar-la ni crear worktree — una pila d'una sola entrada que podràs iniciar més endavant.";
+"stacks.start.stack.checkbox" = "Inicia una pila amb aquesta branca";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Branca des de la per defecte";
+"stacks.new.stack.mode.integration" = "Branca des de la d'integració";
+"stacks.new.stack.stack.name.label" = "Nom de la Pila";
+"stacks.new.stack.integration.preview %@" = "Crea %@";
+"stacks.new.stack.first.branch.label" = "Primera Branca Apilada (opcional)";
+"stacks.new.stack.first.branch.empty.hint" = "Si es deixa en blanc: només es crea la branca d'integració buida — hi podràs afegir la primera branca apilada més endavant.";
+"stacks.new.stack.first.branch.filled.hint" = "Aquesta branca es crea apilada sobre la branca d'integració, no directament sobre la branca base.";
+"stacks.new.stack.integration.note" = "Crea una branca d'integració buida a partir de la base com a arrel de la pila — mai porta codi propi. Les branques apilades es construeixen sobre seu en lloc de la base, i les seves pull requests hi encadenen. Un cop tot s'ha fusionat a la branca d'integració, es converteix en una pull request cap a la base com un únic canvi consolidat — en lloc que cada branca apilada es fusioni individualment a la base.";
+"stacks.new.stack.name.exists %@" = "%@ ja existeix — tria un altre nom.";
+"settings.gitspice.new.stack.mode" = "La Nova Pila comença com a:";
+"settings.gitspice.new.stack.mode.help" = "Quin mode preselecciona el full Nova Pila — el full sempre ofereix els dos.";
+"settings.gitspice.hide.stacked.worktrees" = "Amaga els worktrees apilats de la secció Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Els worktrees la branca dels quals pertany a una pila seguida ja apareixen a Piles — amaga'ls de la secció Worktrees per evitar la duplicitat.";

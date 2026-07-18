@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "%@ içinde checkout edilmiş — worktree'yi göstermek için tıklayın";
 "stacks.anchor.help" = "Bu yığın için bir worktree oluştur";
 "stacks.group.new.worktree" = "Yeni Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Önce Yeni Yığın Dalı…";
+"stacks.new.branch.after" = "Sonra Yeni Yığın Dalı…";
+"stacks.new.branch.insert.below.note %@" = "Yeni dal, yığında %@ altında oluşturulur.";
+"stacks.new.branch.insert.above.note %@" = "Yeni dal, yığında %@ üzerinde oluşturulur ve onun yerini alır — %@ onun üzerine taşınır.";
+"stacks.main.worktree.not.found" = "Deponun ana worktree'si bulunamadı.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Yeni Yığın…";
+"stacks.new.stack.title" = "Yeni Yığın";
+"stacks.new.stack.name.label" = "Dal adı";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Temel Dal";
+"stacks.new.stack.button" = "Oluştur";
+"stacks.new.stack.note" = "Dalı, checkout ve worktree olmadan temel daldan oluşturur — daha sonra başlatabileceğiniz tek girişli bir yığın.";
+"stacks.start.stack.checkbox" = "Bu dalla bir yığın başlat";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Varsayılandan dallan";
+"stacks.new.stack.mode.integration" = "Entegrasyondan dallan";
+"stacks.new.stack.stack.name.label" = "Yığın Adı";
+"stacks.new.stack.integration.preview %@" = "%@ oluşturur";
+"stacks.new.stack.first.branch.label" = "İlk Yığın Dalı (isteğe bağlı)";
+"stacks.new.stack.first.branch.empty.hint" = "Boş bırakılırsa: yalnızca boş entegrasyon dalı oluşturulur — ilk yığın dalınızı daha sonra ekleyebilirsiniz.";
+"stacks.new.stack.first.branch.filled.hint" = "Bu dal, doğrudan temel dalın üzerinde değil, entegrasyon dalının üzerinde yığılmış olarak oluşturulur.";
+"stacks.new.stack.integration.note" = "Temel daldan, yığının kökü olarak boş bir entegrasyon dalı oluşturur — bu dal asla kendi koduna sahip olmaz. Yığın dalları temel dal yerine bunun üzerine inşa edilir ve pull request'leri buna zincirlenir. Her şey entegrasyon dalında birleştirildiğinde, tek bir konsolide değişiklik olarak temel dala pull request gönderilir — her yığın dalının ayrı ayrı temel dala birleştirilmesi yerine.";
+"stacks.new.stack.name.exists %@" = "%@ zaten mevcut — başka bir ad seçin.";
+"settings.gitspice.new.stack.mode" = "Yeni Yığın şu şekilde başlar:";
+"settings.gitspice.new.stack.mode.help" = "Yeni Yığın sayfasının önceden seçtiği mod — sayfa her zaman ikisini de sunar.";
+"settings.gitspice.hide.stacked.worktrees" = "Yığınlanmış worktree'leri Worktree'ler bölümünden gizle";
+"settings.gitspice.hide.stacked.worktrees.help" = "Dalı izlenen bir yığına ait olan worktree'ler zaten Yığınlar altında listelenir — yinelenen listelemeyi önlemek için bunları Worktree'ler bölümünden gizleyin.";

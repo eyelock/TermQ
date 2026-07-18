@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Отримана в %@ — натисніть, щоб показати робоче дерево";
 "stacks.anchor.help" = "Створити робоче дерево для цього стеку";
 "stacks.group.new.worktree" = "Нове робоче дерево…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Нова гілка стеку перед…";
+"stacks.new.branch.after" = "Нова гілка стеку після…";
+"stacks.new.branch.insert.below.note %@" = "Нова гілка створюється нижче %@ у стеку.";
+"stacks.new.branch.insert.above.note %@" = "Нова гілка створюється вище %@ у стеку, займаючи її місце — %@ переміщується над нею.";
+"stacks.main.worktree.not.found" = "Не вдалося знайти основне робоче дерево репозиторію.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Новий стек…";
+"stacks.new.stack.title" = "Новий стек";
+"stacks.new.stack.name.label" = "Назва гілки";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Базова гілка";
+"stacks.new.stack.button" = "Створити";
+"stacks.new.stack.note" = "Створює гілку від базової без checkout і без робочого дерева — стек з одним записом, який можна запустити пізніше.";
+"stacks.start.stack.checkbox" = "Почати стек з цією гілкою";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Відгалузити від типової";
+"stacks.new.stack.mode.integration" = "Відгалузити від інтеграційної";
+"stacks.new.stack.stack.name.label" = "Назва стеку";
+"stacks.new.stack.integration.preview %@" = "Створює %@";
+"stacks.new.stack.first.branch.label" = "Перша гілка стеку (необов'язково)";
+"stacks.new.stack.first.branch.empty.hint" = "Якщо залишити порожнім: створюється лише порожня інтеграційна гілка — першу гілку стеку можна додати пізніше.";
+"stacks.new.stack.first.branch.filled.hint" = "Ця гілка створюється поверх інтеграційної гілки, а не безпосередньо поверх базової.";
+"stacks.new.stack.integration.note" = "Створює порожню інтеграційну гілку від базової як корінь стеку — вона ніколи не містить власного коду. Гілки стеку будуються на ній замість базової, а їхні pull request-и ланцюжком ведуть до неї. Щойно все об'єднано в інтеграційну гілку, вона надсилається як єдиний консолідований pull request до базової — замість злиття кожної гілки стеку окремо в базову.";
+"stacks.new.stack.name.exists %@" = "%@ вже існує — виберіть іншу назву.";
+"settings.gitspice.new.stack.mode" = "Новий стек починається як:";
+"settings.gitspice.new.stack.mode.help" = "Який режим аркуш Новий стек обирає заздалегідь — аркуш завжди пропонує обидва.";
+"settings.gitspice.hide.stacked.worktrees" = "Приховати гілки стеку з розділу Робочі дерева";
+"settings.gitspice.hide.stacked.worktrees.help" = "Робочі дерева, гілка яких належить до відстежуваного стеку, вже показані в розділі Стеки — приховайте їх у розділі Робочі дерева, щоб уникнути дублювання.";

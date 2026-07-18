@@ -1413,3 +1413,34 @@
 "stacks.checked.out.at %@" = "Käytössä worktreessä %@ — napsauta näyttääksesi worktreen";
 "stacks.anchor.help" = "Luo worktree tälle Stackille";
 "stacks.group.new.worktree" = "Uusi Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Uusi Stack-haara Ennen…";
+"stacks.new.branch.after" = "Uusi Stack-haara Jälkeen…";
+"stacks.new.branch.insert.below.note %@" = "Uusi haara luodaan kohteen %@ alapuolelle stackissa.";
+"stacks.new.branch.insert.above.note %@" = "Uusi haara luodaan kohteen %@ yläpuolelle stackissa ja ottaa sen paikan — %@ siirtyy sen päälle.";
+"stacks.main.worktree.not.found" = "Repositorion pää-worktreetä ei löytynyt.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Uusi Stack…";
+"stacks.new.stack.title" = "Uusi Stack";
+"stacks.new.stack.name.label" = "Haaran nimi";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Pohjahaara";
+"stacks.new.stack.button" = "Luo";
+"stacks.new.stack.note" = "Luo haaran pohjasta ilman checkoutia ja ilman worktreetä — yhden kohteen stack, jonka voit käynnistää myöhemmin.";
+"stacks.start.stack.checkbox" = "Aloita stack tällä haaralla";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Haaroita oletuksesta";
+"stacks.new.stack.mode.integration" = "Haaroita integraatiosta";
+"stacks.new.stack.stack.name.label" = "Stackin nimi";
+"stacks.new.stack.integration.preview %@" = "Luo %@";
+"stacks.new.stack.first.branch.label" = "Ensimmäinen Stack-haara (valinnainen)";
+"stacks.new.stack.first.branch.empty.hint" = "Tyhjäksi jätettynä: luodaan vain tyhjä integraatiohaara — voit lisätä ensimmäisen stack-haaran siihen myöhemmin.";
+"stacks.new.stack.first.branch.filled.hint" = "Tämä haara luodaan pinottuna integraatiohaaran päälle, ei suoraan pohjahaaran päälle.";
+"stacks.new.stack.integration.note" = "Luo tyhjän integraatiohaaran pohjasta stackin juureksi — se ei koskaan sisällä omaa koodia. Stack-haarat rakentuvat sen päälle pohjahaaran sijaan, ja niiden pull requestit ketjuuntuvat siihen. Kun kaikki on yhdistetty integraatiohaaraan, se viedään pull requestina pohjaan yhtenä koottuna muutoksena — sen sijaan että jokainen stack-haara yhdistettäisiin pohjaan erikseen.";
+"stacks.new.stack.name.exists %@" = "%@ on jo olemassa — valitse toinen nimi.";
+"settings.gitspice.new.stack.mode" = "Uusi Stack alkaa muodossa:";
+"settings.gitspice.new.stack.mode.help" = "Kumman tilan Uusi Stack -lomake esivalitsee — lomake tarjoaa aina molemmat.";
+"settings.gitspice.hide.stacked.worktrees" = "Piilota pinotut worktreet Worktreet-osiosta";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktreet, joiden haara kuuluu seurattuun stackiin, näkyvät jo Stackit-osiossa — piilota ne Worktreet-osiosta, ettei sama asia näy kahdesti.";

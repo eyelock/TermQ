@@ -1414,3 +1414,34 @@
 "stacks.checked.out.at %@" = "Prevzeta v %@ — kliknite za prikaz delovne kopije";
 "stacks.anchor.help" = "Ustvari delovno kopijo za ta sklad";
 "stacks.group.new.worktree" = "Nova Delovna Kopija…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nova veja sklada prej…";
+"stacks.new.branch.after" = "Nova veja sklada pozneje…";
+"stacks.new.branch.insert.below.note %@" = "Nova veja je ustvarjena pod %@ v skladu.";
+"stacks.new.branch.insert.above.note %@" = "Nova veja je ustvarjena nad %@ v skladu in prevzame njeno mesto — %@ se premakne nanjo.";
+"stacks.main.worktree.not.found" = "Glavnega delovnega drevesa repozitorija ni bilo mogoče najti.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nov sklad…";
+"stacks.new.stack.title" = "Nov sklad";
+"stacks.new.stack.name.label" = "Ime veje";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Osnovna veja";
+"stacks.new.stack.button" = "Ustvari";
+"stacks.new.stack.note" = "Ustvari vejo iz osnovne brez checkouta in brez delovnega drevesa — enodelni sklad, ki ga lahko zaženete pozneje.";
+"stacks.start.stack.checkbox" = "Začni sklad s to vejo";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Razveji iz privzete";
+"stacks.new.stack.mode.integration" = "Razveji iz integracijske";
+"stacks.new.stack.stack.name.label" = "Ime sklada";
+"stacks.new.stack.integration.preview %@" = "Ustvari %@";
+"stacks.new.stack.first.branch.label" = "Prva veja sklada (neobvezno)";
+"stacks.new.stack.first.branch.empty.hint" = "Če pustite prazno: ustvari se samo prazna integracijska veja — svojo prvo vejo sklada lahko dodate pozneje.";
+"stacks.new.stack.first.branch.filled.hint" = "Ta veja je ustvarjena zložena nad integracijsko vejo, ne neposredno nad osnovno vejo.";
+"stacks.new.stack.integration.note" = "Ustvari prazno integracijsko vejo iz osnovne kot koren sklada — nikoli ne nosi lastne kode. Veje sklada se gradijo na njej namesto na osnovni, njihove pull request pa se verižijo vanjo. Ko je vse združeno v integracijsko vejo, se kot ena sama združena sprememba pošlje kot pull request v osnovno — namesto da bi se vsaka veja sklada posebej združila v osnovno.";
+"stacks.new.stack.name.exists %@" = "%@ že obstaja — izberite drugo ime.";
+"settings.gitspice.new.stack.mode" = "Nov sklad se začne kot:";
+"settings.gitspice.new.stack.mode.help" = "Kateri način list Nov sklad vnaprej izbere — list vedno ponudi oba.";
+"settings.gitspice.hide.stacked.worktrees" = "Skrij zložene delovne kopije iz razdelka Delovne Kopije";
+"settings.gitspice.hide.stacked.worktrees.help" = "Delovne kopije, katerih veja pripada spremljanemu skladu, so že navedene pod Skladi — skrijte jih iz razdelka Delovne Kopije, da se izognete podvojenemu prikazu.";

@@ -1412,3 +1412,34 @@
 "stacks.checked.out.at %@" = "Sjekket ut i %@ — klikk for å vise worktreet";
 "stacks.anchor.help" = "Opprett et worktree for denne Stacken";
 "stacks.group.new.worktree" = "Nytt Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Ny Stack-gren Før…";
+"stacks.new.branch.after" = "Ny Stack-gren Etter…";
+"stacks.new.branch.insert.below.note %@" = "Den nye grenen opprettes under %@ i stacken.";
+"stacks.new.branch.insert.above.note %@" = "Den nye grenen opprettes over %@ i stacken og tar dens plass — %@ flyttes opp på den.";
+"stacks.main.worktree.not.found" = "Fant ikke repositoriets hoved-worktree.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Ny Stack…";
+"stacks.new.stack.title" = "Ny Stack";
+"stacks.new.stack.name.label" = "Grennavn";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Basisbranch";
+"stacks.new.stack.button" = "Opprett";
+"stacks.new.stack.note" = "Oppretter grenen fra basen uten checkout og uten worktree — en stack med én oppføring du kan starte senere.";
+"stacks.start.stack.checkbox" = "Start en stack med denne grenen";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Forgren fra standard";
+"stacks.new.stack.mode.integration" = "Forgren fra integrasjon";
+"stacks.new.stack.stack.name.label" = "Stack-navn";
+"stacks.new.stack.integration.preview %@" = "Oppretter %@";
+"stacks.new.stack.first.branch.label" = "Første Stack-gren (valgfritt)";
+"stacks.new.stack.first.branch.empty.hint" = "Latt tom: kun den tomme integrasjonsgrenen opprettes — du kan legge til din første stack-gren senere.";
+"stacks.new.stack.first.branch.filled.hint" = "Denne grenen opprettes stablet oppå integrasjonsgrenen, ikke direkte oppå basisgrenen.";
+"stacks.new.stack.integration.note" = "Oppretter en tom integrasjonsgren fra basen som stackens rot — den inneholder aldri egen kode. Stack-grener bygges oppå den i stedet for basen, og deres pull requests kjedes inn i den. Når alt er slått sammen i integrasjonsgrenen, sendes den som én samlet pull request til basen — i stedet for at hver stack-gren slås sammen enkeltvis i basen.";
+"stacks.new.stack.name.exists %@" = "%@ finnes allerede — velg et annet navn.";
+"settings.gitspice.new.stack.mode" = "Ny Stack starter som:";
+"settings.gitspice.new.stack.mode.help" = "Hvilken modus arket Ny Stack forhåndsvelger — arket tilbyr alltid begge.";
+"settings.gitspice.hide.stacked.worktrees" = "Skjul stablede worktrees fra Worktrees-seksjonen";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees hvis gren tilhører en sporet stack, vises allerede under Stacks — skjul dem fra Worktrees-seksjonen for å unngå dobbel oppføring.";

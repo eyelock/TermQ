@@ -1407,3 +1407,34 @@
 "stacks.checked.out.at %@" = "Σε checkout στο %@ — κλικ για εμφάνιση του worktree";
 "stacks.anchor.help" = "Δημιουργία worktree για αυτή τη στοίβα";
 "stacks.group.new.worktree" = "Νέο Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Νέος Κλάδος Στοίβας Πριν…";
+"stacks.new.branch.after" = "Νέος Κλάδος Στοίβας Μετά…";
+"stacks.new.branch.insert.below.note %@" = "Ο νέος κλάδος δημιουργείται κάτω από τον %@ στη στοίβα.";
+"stacks.new.branch.insert.above.note %@" = "Ο νέος κλάδος δημιουργείται πάνω από τον %@ στη στοίβα, παίρνοντας τη θέση του — ο %@ μετακινείται πάνω του.";
+"stacks.main.worktree.not.found" = "Δεν ήταν δυνατή η εύρεση του κύριου worktree του αποθετηρίου.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Νέα Στοίβα…";
+"stacks.new.stack.title" = "Νέα Στοίβα";
+"stacks.new.stack.name.label" = "Όνομα κλάδου";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Βασικός κλάδος";
+"stacks.new.stack.button" = "Δημιουργία";
+"stacks.new.stack.note" = "Δημιουργεί τον κλάδο από τον βασικό κλάδο χωρίς checkout και χωρίς worktree — μια στοίβα ενός στοιχείου που μπορείτε να ξεκινήσετε αργότερα.";
+"stacks.start.stack.checkbox" = "Ξεκινήστε μια στοίβα με αυτόν τον κλάδο";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Διακλάδωση από τον προεπιλεγμένο";
+"stacks.new.stack.mode.integration" = "Διακλάδωση από τον κλάδο ενοποίησης";
+"stacks.new.stack.stack.name.label" = "Όνομα Στοίβας";
+"stacks.new.stack.integration.preview %@" = "Δημιουργεί %@";
+"stacks.new.stack.first.branch.label" = "Πρώτος Κλάδος Στοίβας (προαιρετικό)";
+"stacks.new.stack.first.branch.empty.hint" = "Αν παραμείνει κενό: δημιουργείται μόνο ο κενός κλάδος ενοποίησης — μπορείτε να προσθέσετε τον πρώτο κλάδο στοίβας αργότερα.";
+"stacks.new.stack.first.branch.filled.hint" = "Αυτός ο κλάδος δημιουργείται στοιβαγμένος πάνω στον κλάδο ενοποίησης, όχι απευθείας πάνω στον βασικό κλάδο.";
+"stacks.new.stack.integration.note" = "Δημιουργεί έναν κενό κλάδο ενοποίησης από τον βασικό κλάδο ως ρίζα της στοίβας — δεν φέρει ποτέ δικό του κώδικα. Οι κλάδοι στοίβας χτίζονται πάνω του αντί για τον βασικό κλάδο, και τα pull requests τους αλυσιδώνονται σε αυτόν. Μόλις όλα συγχωνευτούν στον κλάδο ενοποίησης, γίνεται pull request στον βασικό κλάδο ως μία ενοποιημένη αλλαγή — αντί κάθε κλάδος στοίβας να συγχωνεύεται ξεχωριστά στον βασικό κλάδο.";
+"stacks.new.stack.name.exists %@" = "Το %@ υπάρχει ήδη — επιλέξτε άλλο όνομα.";
+"settings.gitspice.new.stack.mode" = "Η Νέα Στοίβα ξεκινά ως:";
+"settings.gitspice.new.stack.mode.help" = "Ποια λειτουργία προεπιλέγει το φύλλο Νέα Στοίβα — το φύλλο προσφέρει πάντα και τις δύο.";
+"settings.gitspice.hide.stacked.worktrees" = "Απόκρυψη στοιβαγμένων worktrees από την ενότητα Worktree";
+"settings.gitspice.hide.stacked.worktrees.help" = "Τα worktrees των οποίων ο κλάδος ανήκει σε παρακολουθούμενη στοίβα εμφανίζονται ήδη στις Στοίβες — αποκρύψτε τα από την ενότητα Worktree για να αποφύγετε τη διπλή καταχώριση.";
