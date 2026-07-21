@@ -13,7 +13,9 @@ struct ToolsTabContent: View {
     @Binding var cliInstallPath: String
     @Binding var cliInstalled: Bool
 
-    @Environment(SettingsStore.self) private var settings
+    // Internal (not private) so the git-spice section in ToolsTabContent+GitSpice.swift
+    // can bind the New Stack default-mode preference.
+    @Environment(SettingsStore.self) var settings
 
     let installMCPServer: () -> Void
     let uninstallMCPServer: () -> Void
@@ -24,6 +26,8 @@ struct ToolsTabContent: View {
     @ObservedObject private var boardViewModel = BoardViewModel.shared
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @ObservedObject private var ynhDetector = YNHDetector.shared
+    @ObservedObject private var ghProbe = GhCliProbe.shared
+    @ObservedObject var stackService = StackService.shared
 
     var isCLIInstalled: Bool { cliInstalled }
     var isMCPInstalled: Bool { mcpInstalled }
@@ -42,6 +46,8 @@ struct ToolsTabContent: View {
         mcpSection
         cliSection
         tmuxSection
+        ghSection
+        gitSpiceSection
         ynhSection
     }
 }
@@ -80,6 +86,20 @@ extension ToolsTabContent {
                     }
                     return Strings.Settings.statusDisabled
                 }()
+            )
+
+            StatusIndicator(
+                icon: "arrow.triangle.branch",
+                label: Strings.Settings.GhCli.title,
+                status: ghStatusIndicator,
+                message: ghStatusMessage
+            )
+
+            StatusIndicator(
+                icon: "square.stack.3d.up",
+                label: Strings.Settings.GitSpice.title,
+                status: gitSpiceStatusIndicator,
+                message: gitSpiceStatusMessage
             )
 
             StatusIndicator(
@@ -446,6 +466,187 @@ extension ToolsTabContent {
                 Task {
                     await tmuxManager.detectTmux()
                 }
+            }
+            .font(.caption)
+        }
+    }
+}
+
+// MARK: - GitHub CLI (gh) Section
+
+extension ToolsTabContent {
+    var ghStatusIndicator: StatusIndicatorState {
+        switch ghProbe.status {
+        case .missing: return .inactive
+        case .unauthenticated, .authCheckFailed: return .disabled
+        case .ready: return .ready
+        }
+    }
+
+    var ghStatusMessage: String {
+        switch ghProbe.status {
+        case .missing:
+            return Strings.Settings.notInstalled
+        case .unauthenticated:
+            return Strings.Settings.GhCli.statusUnauthenticated
+        case .authCheckFailed:
+            return Strings.Settings.GhCli.statusAuthCheckFailed
+        case .ready(_, let login):
+            let version = ghProbe.version.map { "\($0) · " } ?? ""
+            return "\(version)\(Strings.Settings.GhCli.statusSignedInAs(login))"
+        }
+    }
+
+    @ViewBuilder
+    var ghSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Image(systemName: "arrow.triangle.branch")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Strings.Settings.GhCli.title)
+                            .font(.headline)
+                        Text(Strings.Settings.GhCli.description)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    if ghProbe.status.ghPath != nil {
+                        installedBadge
+                    } else {
+                        notInstalledBadge
+                    }
+                }
+
+                Divider()
+
+                if ghProbe.status.ghPath != nil {
+                    ghAvailableContent
+                } else {
+                    ghNotAvailableContent
+                }
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(Strings.Settings.GhCli.section)
+        }
+        .onAppear {
+            Task { await ghProbe.probe() }
+        }
+    }
+
+    @ViewBuilder
+    var ghAvailableContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if let version = ghProbe.version {
+                HStack {
+                    Text(Strings.Settings.GhCli.version)
+                        .foregroundColor(.secondary)
+                    Text(version)
+                        .font(.system(.body, design: .monospaced))
+                }
+                .font(.caption)
+            }
+
+            if let path = ghProbe.status.ghPath {
+                HStack {
+                    Text(Strings.Settings.GhCli.path)
+                        .foregroundColor(.secondary)
+                    Text(path)
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                }
+                .font(.caption)
+            }
+
+            switch ghProbe.status {
+            case .ready(_, let login):
+                HStack {
+                    Image(systemName: "checkmark.seal.fill")
+                        .foregroundColor(.green)
+                    Text(Strings.Settings.GhCli.statusSignedInAs(login))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            case .unauthenticated:
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.orange)
+                        Text(Strings.Settings.GhCli.statusUnauthenticated)
+                            .font(.caption)
+                            .foregroundColor(.orange)
+                    }
+                    Text(Strings.Settings.GhCli.authHint)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            case .authCheckFailed:
+                HStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundColor(.orange)
+                    Text(Strings.Settings.GhCli.statusAuthCheckFailed)
+                        .font(.caption)
+                        .foregroundColor(.orange)
+                }
+            case .missing:
+                EmptyView()
+            }
+
+            HStack {
+                Image(systemName: "info.circle")
+                    .foregroundColor(.blue)
+                Text(Strings.Settings.GhCli.info)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            HStack {
+                Spacer()
+                Button(Strings.Settings.GhCli.checkAgain) {
+                    Task { await ghProbe.reprobe() }
+                }
+                .font(.caption)
+            }
+        }
+    }
+
+    @ViewBuilder
+    var ghNotAvailableContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(Strings.Settings.GhCli.notInstalledDescription)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Text(Strings.Settings.GhCli.installHint)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            HStack {
+                Text("brew install gh")
+                    .font(.system(.body, design: .monospaced))
+                    .padding(6)
+                    .background(Color.secondary.opacity(0.1))
+                    .cornerRadius(4)
+
+                Button {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString("brew install gh", forType: .string)
+                } label: {
+                    Image(systemName: "doc.on.doc")
+                        .font(.caption)
+                }
+                .buttonStyle(.bordered)
+                .help(Strings.Settings.copyToClipboard)
+            }
+
+            Button(Strings.Settings.GhCli.checkAgain) {
+                Task { await ghProbe.reprobe() }
             }
             .font(.caption)
         }

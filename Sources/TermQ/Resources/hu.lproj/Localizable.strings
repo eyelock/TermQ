@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Alapértelmezett háttérrendszer felülbírálása";
@@ -563,6 +578,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Tárolók";
+"sidebar.workspace.all" = "Minden tároló";
+"sidebar.workspace.menu.help" = "Tárolók szűrése munkaterület szerint";
+"sidebar.workspace.new" = "Új munkaterület…";
+"sidebar.workspace.new.title" = "Új munkaterület";
+"sidebar.workspace.name.label" = "Munkaterület neve";
+"sidebar.workspace.name.placeholder" = "pl. Munka, Mellékprojektek";
+"sidebar.workspace.create" = "Létrehozás";
+"sidebar.workspace.manage" = "Munkaterületek kezelése…";
+"sidebar.workspace.manage.title" = "Munkaterületek kezelése";
+"sidebar.workspace.manage.empty" = "Még nincsenek munkaterületek. Hozzon létre egyet a munkaterület menüből.";
+"sidebar.workspace.manage.done" = "Kész";
+"sidebar.workspace.add.to" = "Hozzáadás munkaterülethez";
+"sidebar.workspace.delete.title" = "Törli a munkaterületet?";
+"sidebar.workspace.delete.confirm" = "Törlés";
+"sidebar.workspace.delete.message %@" = "„%@” el lesz távolítva. A benne lévő tárolók nem törlődnek.";
+"sidebar.workspace.empty.message" = "Nincsenek tárolók ebben a munkaterületen.\nJobb gombbal kattints egy tárolóra a „Minden tároló“ résznél, hogy itt add hozzá.";
 "sidebar.add.button.help" = "Tároló hozzáadása";
 "sidebar.empty.message" = "Nincs hozzáadott tároló.\nKattintson a + gombra egy git tároló hozzáadásához.";
 "sidebar.worktrees.placeholder" = "A munkakönyvtárak itt jelennek meg";
@@ -1011,6 +1042,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork helyire";
 "harnesses.fork.to.local.help" = "Szerkeszthető helyi másolat létrehozása erről a harness-ről";
+"harnesses.publish.to.repository" = "Közzététel tárolóba…";
 "harnesses.update.dot.help" = "Frissítés elérhető";
 "harness.fork.title %@" = "\"%@\" fork helyire";
 "harness.fork.explanation" = "Szerkeszthető helyi másolatot hoz létre erről a harness-ről. A másolat nyomkövetéssel rendelkezik, így láthatja, mi változott az upstream-ben.";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.hint" = "Hagyja üresen a forrásnév megtartásához. Az új fork kanonikus id-je local/<név> lesz.";
 "harness.fork.identity.collision" = "Egy telepített harness már rendelkezik ezzel az azonosítóval.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" közzététele tárolóba";
+"harness.publish.explanation" = "Ezt a harness-t egy új munkakönyvtárba másolja a célállomáson, commitálásra készen. A tároló saját konvenciói (regisztrációs szkriptek, manifestek) döntenek a többiről.";
+"harness.publish.button" = "Közzétesz";
+"harness.publish.update.button" = "Meglévő bejegyzés frissítése";
+"harness.publish.progress.title %@" = "\"%@\" közzététele…";
+"harness.publish.repo.label" = "Cél tároló";
+"harness.publish.repo.placeholder" = "Tároló kiválasztása…";
+"harness.publish.parentdir.label" = "Könyvtár a tárolóban";
+"harness.publish.parentdir.hint" = "A tároló meglévő harness-tárolási helye alapján javasolva. Teljesen szerkeszthető.";
+"harness.publish.name.label" = "Név";
+"harness.publish.branch.label" = "Ág";
+"harness.publish.basebranch.label" = "Alapág";
+"harness.publish.worktreepath.label" = "Munkakönyvtár elérési útja";
+"harness.publish.files.label" = "Másolandó fájlok";
+"harness.publish.changes.label" = "Változások a közzétett másolathoz képest";
+"harness.publish.mode.label" = "Másolási mód";
+"harness.publish.mode.entire" = "Teljes könyvtár";
+"harness.publish.mode.enumerated" = "Csak harness fájlok";
+"harness.publish.mode.enumerated.hint" = "A forrásmappa egyben egy projektmappa is — csak a harness által kezelt fájlok másolódnak.";
+"harness.publish.state.new" = "Új bejegyzés — ez a harness még nem szerepel a tárolóban.";
+"harness.publish.state.update %@" = "Frissíti a meglévő bejegyzést itt: %@ (felülírja).";
+"harness.publish.state.clash %@" = "Ez a könyvtár már tartalmaz egy másik harness-t (\"%@\") — válasszon másik nevet.";
+"harness.publish.state.occupied" = "Ez a könyvtár már létezik a tárolóban — válasszon másik nevet vagy helyet.";
+"harness.publish.state.samerepo" = "Ez a harness már a kiválasztott tárolóban van — commitálja ott a változásokat közzététel helyett.";
+"harness.publish.reveal.repository" = "Megjelenítés a tárolókban";
+"harness.publish.preflight.failed" = "A helyi harness nem validálható — javítsa ki közzététel előtt.";
+"harness.publish.composition.unavailable" = "A ynd compose nem sikerült ehhez a harness-hez — a \"csak harness fájlok\" módhoz szükséges, hogy tudja, mely fájlok tartoznak hozzá. Javítsa ki a harness-t, vagy váltson \"teljes könyvtár\" módra.";
+"harness.publish.unresolved %lld" = "%lld hivatkozott fájl hiányzik a forrásból — nem lesznek másolva.";
+"harness.publish.register.disclosure %@" = "Másolás után a tároló %@ szkriptje fut le (tároló által biztosított szkript).";
+"harness.publish.change.added" = "hozzáadva";
+"harness.publish.change.modified" = "módosítva";
+"harness.publish.change.removed" = "eltávolítva";
+"harness.publish.changes.none" = "Nincs különbség — a közzétett másolat megegyezik a helyi fájlokkal.";
+"harness.publish.step.worktree %@" = "Munkakönyvtár létrehozása a(z) %@ ágon…";
+"harness.publish.step.copy %@" = "Harness másolása ide: %@…";
+"harness.publish.step.copied %lld" = "%lld fájlcsoport másolva.";
+"harness.publish.step.validate" = "Másolt harness ellenőrzése (ynd validate)…";
+"harness.publish.step.register %@" = "Futtatás: %@…";
+"harness.publish.step.done %@" = "Kész — a munkakönyvtár itt elérhető: %@.";
+"harness.publish.warning %@" = "Figyelmeztetés: %@";
+"harness.publish.deleted %@" = "Elavult elérési út eltávolítva: %@";
+"harness.publish.validation.failed" = "Az ellenőrzés sikertelen a munkakönyvtárban — semmi sem lett commitálva. A munkakönyvtár megtartva vizsgálathoz.";
+"harness.publish.register.failed" = "A tároló regisztrációs szkriptje sikertelen — a munkakönyvtár megtartva vizsgálathoz.";
+"harness.publish.references.missing %@" = "A manifest által hivatkozott fájlok hiányoznak a másolás után: %@";
+"harness.publish.error.occupied %@" = "A célhely már tartalmaz egy harness-t: %@";
+"harness.publish.error.invaliddest %@" = "A célhely kilép a munkakönyvtárból: %@";
+"harness.publish.error.copy %@" = "Másolás sikertelen: %@";
+"harness.publish.error.rename %@" = "Nem sikerült átírni a manifest nevét: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Frissítés: \"%@\"";
@@ -1265,5 +1347,111 @@
 "remote.prs.worktree.exists" = "A Worktree már létezik";
 "settings.github.feed.cap.help" = "Tárházonként megjelenített pull request-ek maximális száma a Remote oldalsávban. A kivett PR-ek mindig szerepelnek.";
 "settings.github.feed.cap.label" = "PR-ek tárházonként";
-"settings.github.section.feed" = "Remote PR-folyam";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Az egymásra épülő ágakat és egymásra épülő PR-eket biztosítja az oldalsávban.";
+"settings.gitspice.version" = "Verzió:";
+"settings.gitspice.path" = "Elérési út:";
+"settings.gitspice.info" = "Az oldalsáv egymásra épülő ág funkciói működő git-spice telepítést igényelnek. Ugyanazt a hitelesítést használja, mint a gh CLI.";
+"settings.gitspice.not.installed.description" = "A git-spice lehetővé teszi az egymásra épülő ágakat és PR-eket. Nélküle a TermQ csak egyszerű munkakönyvtárakat jelenít meg.";
+"settings.gitspice.install.hint" = "Telepítés Homebrew-val:";
+"settings.gitspice.check.again" = "Ellenőrzés újra";
+"settings.gitspice.status.unusable %@" = "Észlelve, de nem használható: %@";
+"stacks.enable" = "Verem engedélyezése…";
+"stacks.enable.help" = "E tároló ágainak követése veremként a git-spice segítségével";
+"stacks.enable.failed %@" = "Nem sikerült engedélyezni a vermet: %@";
+"stacks.needs.restack" = "Restack szükséges";
+"stacks.open.change.request" = "Változtatási kérelem megnyitása";
+"stacks.unpushed.commits %ld" = "↑%ld nem pushingolt";
+"stacks.change.request.merged" = "egyesítve";
+"stacks.change.request.closed" = "lezárva";
+"stacks.no.change.request" = "nincs PR";
+"stacks.disclosure.help" = "Verem ágainak megjelenítése";
+"stacks.switch.blocked.dirty" = "Nem lehet váltani a verem ágán: a munkakönyvtárban véglegesítetlen módosítások vannak. Előbb véglegesítsen vagy tegye stash-be.";
+"stacks.switch.blocked.in.use" = "Nem lehet váltani a verem ágán: ebben a munkakönyvtárban terminál van nyitva. Előbb zárja be.";
+"stacks.switch.blocked.elsewhere %@" = "Nem lehet váltani a verem ágán: egy másik munkakönyvtárban (%@) van kiválasztva.";
+"stacks.switch.help" = "Kattintson duplán, hogy ezt a munkakönyvtárat erre az ágra váltsa";
+"stacks.switch.to %@" = "Váltás erre: %@";
+"stacks.add.branch" = "Ág hozzáadása a veremhez…";
+"stacks.add.branch.title" = "Ág Hozzáadása a Veremhez";
+"stacks.add.branch.name.label" = "Ág neve";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Verembe helyezés";
+"stacks.add.branch.staged.note" = "Az előkészített (staged) módosítások lesznek az új ág első commitja. Tiszta munkafa esetén egy üres ág jön létre a tetején.";
+"stacks.add.branch.track.note" = "Ez az ág már létezik — helyette a veremben lesz követve.";
+"stacks.add.branch.create" = "Létrehozás";
+"stacks.add.branch.track" = "Követés";
+"stacks.restack.stack" = "Verem Restack-elése";
+"stacks.restack.from.here" = "Restack Innentől";
+"stacks.conflict.banner %ld" = "Restack szüneteltetve — ütközések %ld fájlban";
+"stacks.conflict.continue" = "Folytatás";
+"stacks.conflict.abort" = "Megszakítás";
+"stacks.conflict.hint" = "Oldja fel az ütközéseket egy terminálban, készítse elő (stage) a fájlokat, majd kattintson a Folytatásra.";
+"stacks.submit.stack" = "Verem Beküldése…";
+"stacks.submit.branch" = "Ezen Ág Beküldése…";
+"stacks.submit.title" = "Verem Beküldése";
+"stacks.submit.button" = "Beküldés";
+"stacks.submit.draft.toggle" = "Új pull requestek létrehozása piszkozatként";
+"stacks.submit.update.only.toggle" = "Csak a meglévő pull requestek frissítése";
+"stacks.submit.will.create" = "létrehozás";
+"stacks.submit.will.update" = "frissítés";
+"stacks.sync.repo" = "Tároló Szinkronizálása";
+"stacks.sync.cleaned %ld %@" = "A szinkronizálás %ld egyesített ágat távolított el: %@";
+"stacks.destroy.stack" = "Verem Megsemmisítése…";
+"stacks.destroy.stack.title" = "Megsemmisíted a vermet?";
+"stacks.destroy.stack.message %ld %@" = "Ez véglegesen töröl %ld helyi ágat a git-spice-on keresztül: %@. A távoli ágak és az esetleges pull requestek érintetlenek maradnak.";
+"stacks.destroy.stack.open.pr.warning %ld" = "Ezen ágak közül %ld-nek még mindig NYITOTT pull requestje van.";
+"stacks.destroy.stack.confirm" = "Verem Megsemmisítése";
+"stacks.destroy.stack.done %ld" = "Verem megsemmisítve: %ld ág törölve";
+"stacks.destroy.stack.worktree.skipped %@" = "Érintetlenül hagyva (nem véglegesített módosítások): %@";
+"stacks.base.mismatch %@ %@" = "A PR célja %@, de a verem szülője %@ — a Tároló Szinkronizálása átirányítja";
+"stacks.restack.up.to.date" = "A verem már naprakész";
+"stacks.restack.done %ld" = "%ld ág restack-elve";
+"stacks.sync.clean" = "Minden szinkronizálva";
+"stacks.submit.done %ld %ld" = "Beküldve: %ld létrehozva, %ld frissítve";
+"sidebar.worktrees.section.header" = "Munkakönyvtárak";
+"stacks.break.out" = "Kiválasztás munkakönyvtárba…";
+"stacks.skipped.notice %@" = "Nem restack-elve: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (kiválasztva itt: %@, véglegesítetlen módosításokkal)";
+"stacks.skipped.in.use %@ %@" = "%@ (kiválasztva itt: %@, aktív terminállal)";
+"stacks.copy.branch.name" = "Ág Nevének Másolása";
+"stacks.reveal.worktree" = "Munkakönyvtár Megjelenítése";
+"stacks.anchored.badge.help %@" = "Rögzítve ebben a munkakönyvtárban: %@ — kattintson a megjelenítéshez";
+"stacks.part.of.stack %@" = "A(z) %@ verem része";
+"stacks.section.header" = "Vermek";
+"stacks.checked.out.at %@" = "Kiválasztva itt: %@ — kattintson a munkakönyvtár megjelenítéséhez";
+"stacks.anchor.help" = "Munkakönyvtár létrehozása ehhez a veremhez";
+"stacks.group.new.worktree" = "Új Munkakönyvtár…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Új Verem Ág Előtte…";
+"stacks.new.branch.after" = "Új Verem Ág Utána…";
+"stacks.new.branch.insert.below.note %@" = "Az új ág a(z) %@ alá jön létre a veremben.";
+"stacks.new.branch.insert.above.note %@" = "Az új ág a(z) %@ fölé jön létre a veremben, átvéve a helyét — a(z) %@ ráköltözik.";
+"stacks.main.worktree.not.found" = "Nem sikerült megtalálni a tároló fő worktree-jét.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Új Verem…";
+"stacks.new.stack.title" = "Új Verem";
+"stacks.new.stack.name.label" = "Ág neve";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Alapág";
+"stacks.new.stack.button" = "Létrehozás";
+"stacks.new.stack.note" = "Létrehozza az ágat az alapágból checkout és worktree nélkül — egyelemű verem, amelyet később indíthat el.";
+"stacks.start.stack.checkbox" = "Verem indítása ezzel az ággal";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Elágazás az alapértelmezettből";
+"stacks.new.stack.mode.integration" = "Elágazás az integrációsból";
+"stacks.new.stack.stack.name.label" = "Verem neve";
+"stacks.new.stack.integration.preview %@" = "Létrehozza: %@";
+"stacks.new.stack.first.branch.label" = "Első verem ág (opcionális)";
+"stacks.new.stack.first.branch.empty.hint" = "Üresen hagyva: csak az üres integrációs ág jön létre — az első verem ágat később adhatja hozzá.";
+"stacks.new.stack.first.branch.filled.hint" = "Ez az ág az integrációs ág tetejére kerül a verembe, nem közvetlenül az alapág fölé.";
+"stacks.new.stack.integration.note" = "Létrehoz egy üres integrációs ágat az alapágból a verem gyökereként — soha nem hordoz saját kódot. A verem ágai erre épülnek az alapág helyett, és a pull requestjeik ebbe láncolódnak. Amint minden egyesült az integrációs ágba, egyetlen összevont változásként kerül pull requestbe az alapágba — ahelyett, hogy minden verem ág külön-külön egyesülne az alapággal.";
+"stacks.new.stack.name.exists %@" = "A(z) %@ már létezik — válasszon másik nevet.";
+"settings.gitspice.new.stack.mode" = "Az Új Verem indítási módja:";
+"settings.gitspice.new.stack.mode.help" = "Melyik módot választja ki előre az Új Verem lap — a lap mindig mindkettőt felkínálja.";
+"settings.gitspice.hide.stacked.worktrees" = "Verem ágak elrejtése a Munkakönyvtárak szakaszból";
+"settings.gitspice.hide.stacked.worktrees.help" = "Azok a munkakönyvtárak, amelyek ága egy követett veremhez tartozik, már megjelennek a Vermek alatt — rejtse el őket a Munkakönyvtárak szakaszból, hogy elkerülje a duplikált listázást.";

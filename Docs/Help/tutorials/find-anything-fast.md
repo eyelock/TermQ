@@ -1,4 +1,4 @@
-# Tutorial 3: Find Anything Fast
+# Find Anything Fast
 
 Once your board has more than a handful of cards, you need fast ways to get to the right terminal. TermQ has three: zoom mode for focused work, find-in-buffer for searching terminal output, and the command palette for jumping anywhere instantly.
 
@@ -67,4 +67,4 @@ The new terminal inherits the working directory, so you land in the right place 
 
 ## Next
 
-[Tutorial 4: Organise Your Space](tutorials/organise-your-space.md) — Columns, themes, and defaults.
+[Organise Your Space](organise-your-space.md) — Columns, themes, and defaults.

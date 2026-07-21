@@ -6,11 +6,14 @@ import TermQShared
 
 enum WorktreeOperationError: Error, LocalizedError, Sendable {
     case removingMainWorktree
+    case mainWorktreeNotFound
 
     var errorDescription: String? {
         switch self {
         case .removingMainWorktree:
             return Strings.Sidebar.removeMainWorktreeError
+        case .mainWorktreeNotFound:
+            return Strings.Stacks.mainWorktreeNotFound
         }
     }
 }
@@ -43,38 +46,61 @@ final class WorktreeSidebarViewModel: ObservableObject {
     @Published var worktrees: [UUID: [GitWorktree]] = [:]
     @Published var focusWorktrees: [UUID: [GitWorktree]] = [:]
     @Published var availableBranches: [UUID: [String]] = [:]
+    /// Stack graphs keyed by repo id, mirroring `worktrees`. Populated only for repos
+    /// where a `StackProvider` is available and stacking has been enabled.
+    @Published var stacks: [UUID: StackGraph] = [:]
     @Published private(set) var loadingRepos: Set<UUID> = []
     @Published var isLoading: Bool = false
     @Published var operationError: String?
     @Published var expandedRepoIDs: Set<UUID> = []
     @Published var expandedBranchSectionIDs: Set<UUID> = []
+    /// Repos whose Worktrees section is COLLAPSED. Inverted relative to the other
+    /// expansion sets because the section defaults to expanded — an id absent from
+    /// the set (including every repo the first time) renders expanded.
+    @Published var collapsedWorktreeSectionIDs: Set<UUID> = []
     @Published private(set) var deletingWorktreeIDs: Set<String> = []
     @Published private(set) var updatingWorktreeIDs: Set<String> = []
     @Published private(set) var fetchingBranchNames: Set<String> = []
 
     let gitService: any GitServiceProtocol
     private let persistence: any RepoPersistenceProtocol
-    private let prService: GitHubPRService
+    // Internal (not private) so the stack mutations in
+    // WorktreeSidebarViewModel+Stacks.swift can force a PR refresh after submit/sync.
+    let prService: GitHubPRService
     private let gitConfig: GitConfigStore
+    private let workspaceStore: WorkspaceStore
+    let stackService: StackService
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
+    private static let collapsedWorktreeSectionsKey = "sidebar.collapsedWorktreeSections"
     var monitors: [UUID: GitRepositoryMonitor] = [:]
     private var dirtyPollTimer: Timer?
+    /// Test seams for the guarded-switch checks. `nil` uses the production checks
+    /// (`git status --porcelain` / board-card working directories).
+    var worktreeDirtyCheckOverride: ((String) async -> Bool)?
+    var worktreeInUseCheckOverride: ((String) -> Bool)?
 
     init(
         gitService: any GitServiceProtocol = GitService.shared,
         persistence: any RepoPersistenceProtocol = RepoPersistence(),
         prService: GitHubPRService = .shared,
-        gitConfig: GitConfigStore = .shared
+        gitConfig: GitConfigStore = .shared,
+        workspaceStore: WorkspaceStore = .shared,
+        stackService: StackService = .shared
     ) {
         self.persistence = persistence
         self.gitService = gitService
         self.prService = prService
         self.gitConfig = gitConfig
+        self.workspaceStore = workspaceStore
+        self.stackService = stackService
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
         let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
         expandedBranchSectionIDs = Set(savedBranch.compactMap { UUID(uuidString: $0) })
+        let savedCollapsed =
+            UserDefaults.standard.stringArray(forKey: Self.collapsedWorktreeSectionsKey) ?? []
+        collapsedWorktreeSectionIDs = Set(savedCollapsed.compactMap { UUID(uuidString: $0) })
         loadRepositories()
         refreshExpandedWorktrees()
         startMonitorsForAllRepos()
@@ -83,6 +109,10 @@ final class WorktreeSidebarViewModel: ObservableObject {
             Task { @MainActor in
                 self?.reloadRepositories()
             }
+        }
+        Task { [weak self] in
+            await self?.stackService.probe()
+            await self?.refreshAllStacks()
         }
     }
 
@@ -104,7 +134,9 @@ final class WorktreeSidebarViewModel: ObservableObject {
             Task { @MainActor [weak self] in
                 guard let self else { return }
                 let expanded = self.repositories.filter { self.expandedRepoIDs.contains($0.id) }
-                for repo in expanded {
+                // Skip repos with a stack mutation in flight — concurrent `git status`
+                // runs can break provider operations (known git-spice issue).
+                for repo in expanded where !self.stackService.isMutating(repo: repo.path) {
                     await self.refreshWorktrees(for: repo)
                 }
             }
@@ -117,6 +149,9 @@ final class WorktreeSidebarViewModel: ObservableObject {
         monitors[id] = GitRepositoryMonitor(repoPath: path) { [weak self] in
             Task { @MainActor [weak self] in
                 guard let self, let repo = self.repositories.first(where: { $0.id == id }) else { return }
+                // Provider mutations rewrite refs and would spam this monitor mid-flight;
+                // the mutation path refreshes explicitly when it completes.
+                guard !self.stackService.isMutating(repo: repo.path) else { return }
                 await self.refreshWorktrees(for: repo)
             }
         }
@@ -126,12 +161,19 @@ final class WorktreeSidebarViewModel: ObservableObject {
         monitors.removeValue(forKey: repoID)
     }
 
-    private func refreshExpandedWorktrees() {
+    /// Refresh worktrees for every expanded repo. `fetch: true` (user-triggered refresh)
+    /// also fetches from `origin`; `fetch: false` (startup) only re-lists local state so
+    /// launching the app doesn't fire a network fetch per expanded repo.
+    private func refreshExpandedWorktrees(fetch: Bool = false) {
         let toRefresh = repositories.filter { expandedRepoIDs.contains($0.id) }
         guard !toRefresh.isEmpty else { return }
         Task {
             for repo in toRefresh {
-                await refreshWorktrees(for: repo)
+                if fetch {
+                    await refreshRepo(for: repo)
+                } else {
+                    await refreshWorktrees(for: repo)
+                }
             }
         }
     }
@@ -155,6 +197,35 @@ final class WorktreeSidebarViewModel: ObservableObject {
             expandedBranchSectionIDs.map { $0.uuidString },
             forKey: Self.expandedBranchSectionsKey
         )
+    }
+
+    func setWorktreeSectionExpanded(_ id: UUID, expanded: Bool) {
+        if expanded {
+            collapsedWorktreeSectionIDs.remove(id)
+        } else {
+            collapsedWorktreeSectionIDs.insert(id)
+        }
+        UserDefaults.standard.set(
+            collapsedWorktreeSectionIDs.map { $0.uuidString },
+            forKey: Self.collapsedWorktreeSectionsKey
+        )
+    }
+
+    func isWorktreeSectionExpanded(_ id: UUID) -> Bool {
+        !collapsedWorktreeSectionIDs.contains(id)
+    }
+
+    // MARK: - Workspace Filtering
+
+    /// Repositories visible under the active workspace selection.
+    ///
+    /// "All" (`activeWorkspaceId == nil`) shows every repo; an active workspace
+    /// shows only its members, preserving the sidebar's global order. The
+    /// decision logic is the pure `WorkspaceFilter` — this only maps the ids
+    /// back to the observable rows.
+    var displayedRepositories: [ObservableRepository] {
+        let visible = Set(workspaceStore.visibleRepoIds(allRepoIds: repositories.map(\.id)))
+        return repositories.filter { visible.contains($0.id) }
     }
 
     // MARK: - Repository CRUD
@@ -181,6 +252,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
         repositories.append(repo)
         setExpanded(repo.id, expanded: true)
         save()
+        // File the new repo into the active workspace, if any. In "All" (no
+        // active workspace) it stays unassigned and shows only under "All".
+        if let activeId = workspaceStore.activeWorkspaceId {
+            workspaceStore.add(repoId: repo.id, to: activeId)
+        }
         if addToGitignore, let base = worktreeBasePath, !base.isEmpty {
             ensureGitignored(repoPath: path, basePath: base)
         }
@@ -241,6 +317,9 @@ final class WorktreeSidebarViewModel: ObservableObject {
         stopMonitor(for: repo.id)
         repositories.removeAll { $0.id == repo.id }
         worktrees.removeValue(forKey: repo.id)
+        stacks.removeValue(forKey: repo.id)
+        stackService.evict(repo: repo.path)
+        workspaceStore.removeRepoFromAll(repoId: repo.id)
         save()
     }
 
@@ -258,11 +337,38 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     // MARK: - Worktree Queries
 
-    /// Manual refresh triggered by the user — updates `origin/HEAD` before refreshing
-    /// worktrees so that `defaultBranch` reflects the remote's current default.
-    func refreshRepo(for repo: ObservableRepository) async {
+    /// Manual refresh triggered by the user — fetches from `origin`, updates `origin/HEAD`
+    /// so `defaultBranch` reflects the remote's current default, then refreshes worktrees.
+    /// Returns the provider-sync report (removed merged branches + orchestration
+    /// skips), or `nil` when the plain-fetch path ran instead. Callers that can show
+    /// a toast use the result; everyone else ignores it.
+    @discardableResult
+    func refreshRepo(for repo: ObservableRepository) async -> StackSyncReport? {
+        // No fetches while a stack mutation is in flight — a concurrent `git fetch`
+        // can break provider ref rewrites (known git-spice issue). The mutation path
+        // refreshes when it completes.
+        guard !stackService.isMutating(repo: repo.path) else { return nil }
+        // Stacked repos refresh via provider sync: it pulls trunk, deletes merged
+        // locals, and retargets/restacks upstack CRs — a plain fetch would leave the
+        // stack stale after a downstack merge.
+        if stackService.isAvailable, stackService.isStacked(repo: repo.path),
+            let mainWorktree = worktrees[repo.id]?.first(where: { $0.isMainWorktree })
+        {
+            do {
+                return try await syncStackRepo(for: repo, worktree: mainWorktree)
+            } catch {
+                if TermQLogger.fileLoggingEnabled {
+                    TermQLogger.ui.warning("refreshRepo: stack sync failed, falling back: \(error)")
+                } else {
+                    TermQLogger.ui.warning("refreshRepo: stack sync failed, falling back")
+                }
+                // Fall through to the plain fetch path below.
+            }
+        }
+        await gitService.fetchRemote(repoPath: repo.path)
         await gitService.updateRemoteHead(repoPath: repo.path)
         await refreshWorktrees(for: repo)
+        return nil
     }
 
     func refreshWorktrees(for repo: ObservableRepository) async {
@@ -301,6 +407,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
             worktrees[repo.id] = worktrees[repo.id] ?? []
         }
         await refreshAvailableBranches(for: repo)
+        await refreshStack(for: repo)
     }
 
     /// Refresh the list of local branches that do not already have a worktree checked out.
@@ -498,9 +605,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
             ?? (repo.path + "/.worktrees")
         return URL(fileURLWithPath: base).appendingPathComponent(branchName).path
     }
+}
 
-    // MARK: - PR Operations
+// MARK: - PR Operations
 
+extension WorktreeSidebarViewModel {
     /// Check whether a branch name (as `gh pr checkout` would create it) is already
     /// occupied by an existing worktree. Returns the worktree path if it exists.
     func existingWorktreePath(for branchName: String, repoID: UUID) -> String? {
@@ -568,7 +677,8 @@ final class WorktreeSidebarViewModel: ObservableObject {
         let wts = worktrees[repo.id] ?? []
         let openPRs = prService.prsByRepo[repo.path] ?? []
         let openNumbers = Set(openPRs.map(\.number))
-        let matches = GitHubPRService.matchPRsToWorktrees(prs: openPRs, worktrees: wts)
+        let matches = GitHubPRService.matchPRsToWorktrees(
+            prs: openPRs, worktrees: wts, stackGraph: stacks[repo.id])
 
         // Find PR rows tracked locally but no longer open.
         // "Tracked locally" = they appear in the service's previousHeadOids (fetched before).
@@ -609,6 +719,35 @@ final class WorktreeSidebarViewModel: ObservableObject {
         await refreshWorktrees(for: repo)
     }
 
+    /// Force-refresh `repo`'s PRs, then collect everything in it that's prunable:
+    /// worktrees checked out for PRs that are no longer open, and "Run with Focus"
+    /// review worktrees (always prunable — they're ephemeral by design). Shared by
+    /// the per-repo and all-repos prune flows so they agree on what counts as stale.
+    func collectPRPruneCandidates(
+        repo: ObservableRepository,
+        prService: GitHubPRService
+    ) async -> (closed: [PRPruneCandidate], focus: [FocusWorktreeCandidate]) {
+        await prService.refresh(repoPath: repo.path, force: true)
+        guard let openPRs = prService.prsByRepo[repo.path] else { return ([], []) }
+
+        let openNumbers = Set(openPRs.map(\.number))
+        let wts = worktrees[repo.id] ?? []
+        var closedPRNumbers: Set<Int> = []
+        for wt in wts {
+            let last = URL(fileURLWithPath: wt.path).lastPathComponent
+            if last.hasPrefix("pr-"), let prNum = Int(last.dropFirst(3)), !openNumbers.contains(prNum) {
+                closedPRNumbers.insert(prNum)
+            }
+        }
+
+        let closed =
+            closedPRNumbers.isEmpty
+            ? []
+            : await pruneClosedPRsDryRun(repo: repo, closedPRNumbers: closedPRNumbers, prService: prService)
+        let focus = (focusWorktrees[repo.id] ?? []).map { FocusWorktreeCandidate(path: $0.path) }
+        return (closed, focus)
+    }
+
     /// Derive a PR worktree path: `<worktreeBasePath>/pr-<n>`
     func inferPRWorktreePath(for repo: ObservableRepository, prNumber: Int) -> String {
         let base =
@@ -617,8 +756,11 @@ final class WorktreeSidebarViewModel: ObservableObject {
         return URL(fileURLWithPath: base).appendingPathComponent("pr-\(prNumber)").path
     }
 
-    // MARK: - Persistence
+}
 
+// MARK: - Persistence
+
+extension WorktreeSidebarViewModel {
     func save() {
         let config = RepoConfig(repositories: repositories.map { $0.toGitRepository() })
         do {
@@ -639,7 +781,20 @@ final class WorktreeSidebarViewModel: ObservableObject {
 
     func refresh() {
         reloadRepositories()
-        refreshExpandedWorktrees()
+        // Re-probe the stack provider on every global refresh — cheap (a version
+        // check, no gs invocation on any repo) and the only way TermQ discovers
+        // git-spice being installed while already running (init-time probe + the
+        // Settings > Tools "Check Again" button were previously the only triggers).
+        // Per-repo refresh doesn't re-probe — it runs on timers/monitors too often for
+        // this to matter there; once here is enough.
+        Task {
+            let wasAvailable = stackService.isAvailable
+            await stackService.probe()
+            if !wasAvailable, stackService.isAvailable {
+                await refreshAllStacks()
+            }
+            refreshExpandedWorktrees(fetch: true)
+        }
     }
 
     private func reloadRepositories() {

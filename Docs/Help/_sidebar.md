@@ -15,12 +15,14 @@
   - [9. Marketplace Browser](tutorials/marketplace-browser.md)
   - [10. Harnesses](tutorials/harnesses.md)
   - [11. Remote PRs](tutorials/remote-prs.md)
+  - [12. Stacked Branches & PRs](tutorials/stacked-branches.md)
 
 - **Tutorials: Automation & AI**
-  - [12. CLI Automation](tutorials/cli.md)
-  - [13. Persistent AI Context](tutorials/ai-context.md)
-  - [14. MCP Integration](tutorials/mcp.md)
-  - [15. Queued Actions](tutorials/queued-actions.md)
+  - [13. CLI Automation](tutorials/cli.md)
+  - [14. Persistent AI Context](tutorials/ai-context.md)
+  - [15. MCP Integration](tutorials/mcp.md)
+  - [16. MCP Resource Subscriptions](tutorials/mcp-subscriptions.md)
+  - [17. Queued Actions](tutorials/queued-actions.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)

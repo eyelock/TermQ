@@ -27,13 +27,12 @@ let package = Package(
         .library(name: "MCPServerLib", targets: ["MCPServerLib"])
     ],
     dependencies: [
-        // Pinned post-v1.13.0 (2026-06-10). Includes all v1.13.0 fixes (cursor ghosting DECTCEM,
-        // EV_VANISHED crash, SGR mouse encoding) plus post-tag fixes: LocalProcess retain cycle
-        // (#551), Terminal retain cycle in resetNormalBuffer (#538), PTY read backpressure (#574),
-        // Buffer.resize O(content) (#573), Metal renderer rebind on window reparent (#548),
-        // stale Metal cursor (#547), row-cache invalidation, PTY pixel size from cells (#544).
+        // Pinned 2026-07-10 HEAD. Adds since the 2026-06-10 pin: CoreGraphics renderer dirty-region
+        // clear (fixes restricted-region artifacts, #582), immediate local-input rendering (#553),
+        // full-width (CJK) glyph centering (#578), DECRST 1005/1006/1015/1016 no longer disabling
+        // mouse tracking (#571), Mac word-mode drag selection seed-word fix (#576).
         // Fork eyelock/SwiftTerm archived.
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "24a68bcadc479d945c7ca32f21ac0a8ab895c690"),
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "e0784f4291dcdae078b86f6182f32697b4a51c8d"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.0"),

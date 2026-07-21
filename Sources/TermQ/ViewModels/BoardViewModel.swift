@@ -44,6 +44,14 @@ class BoardViewModel: ObservableObject {
     private let persistence: BoardPersistence
     let tabManager: TabManager
 
+    /// Combine subscriptions (workspace-switch observation).
+    private var cancellables = Set<AnyCancellable>()
+
+    /// Source of the active workspace id for board display + new-card stamping.
+    /// Defaults to the shared store; tests inject a fixed value so the filter and
+    /// stamp paths can be exercised without mutating the singleton.
+    var activeWorkspaceProvider: () -> UUID? = { WorkspaceStore.shared.activeWorkspaceId }
+
     // MARK: - Published Proxies (for backwards compatibility)
 
     /// Session tabs - proxied from TabManager
@@ -60,6 +68,10 @@ class BoardViewModel: ObservableObject {
         self.persistence = persistence
         self.tabManager = TabManager()
         self.board = persistence.loadBoard()
+
+        // Materialise the active board file if it doesn't exist yet (see the
+        // Workspace Board Switching extension below).
+        materialiseBoardFileIfNeeded()
 
         // Configure TabManager callbacks after all properties initialized
         tabManager.configure(
@@ -86,6 +98,10 @@ class BoardViewModel: ObservableObject {
             self?.handleFileChange()
         }
 
+        // Swap the displayed board when the active workspace changes (see the
+        // Workspace Board Switching extension below).
+        observeWorkspaceSwitch()
+
         // Check for recoverable tmux sessions (async)
         Task {
             await checkForRecoverableSessions()
@@ -100,24 +116,6 @@ class BoardViewModel: ObservableObject {
                 self?.refreshProcessingStatus()
             }
         }
-    }
-
-    private func refreshProcessingStatus() {
-        let newProcessing = TerminalSessionManager.shared.processingCardIds()
-        if newProcessing != processingCards {
-            processingCards = newProcessing
-        }
-
-        let newActiveSessions = TerminalSessionManager.shared.activeSessionCardIds()
-        if newActiveSessions != activeSessionCards {
-            activeSessionCards = newActiveSessions
-        }
-    }
-
-    private func handleFileChange() {
-        guard let loaded = persistence.reloadForExternalChanges() else { return }
-        BoardPersistence.mergeExternalChanges(from: loaded, into: board)
-        objectWillChange.send()
     }
 
     func save() {
@@ -181,6 +179,7 @@ class BoardViewModel: ObservableObject {
         )
         let userBackend = SettingsStore.shared.backend
         card.tags = autoTags(source: "card", backend: userBackend, branch: branch, repoName: repoName)
+        card.workspaceId = newCardWorkspaceId
 
         objectWillChange.send()
         save()
@@ -201,6 +200,7 @@ class BoardViewModel: ObservableObject {
             confirmExternalModifications: defaults.confirmExternalModifications,
             backend: nil
         )
+        card.workspaceId = newCardWorkspaceId
         objectWillChange.send()
         save()
 
@@ -237,7 +237,8 @@ class BoardViewModel: ObservableObject {
             allowOscClipboard: source.allowOscClipboard,
             confirmExternalModifications: source.confirmExternalModifications,
             backend: source.backend,
-            environmentVariables: source.environmentVariables
+            environmentVariables: source.environmentVariables,
+            workspaceId: source.workspaceId
         )
 
         board.cards.append(newCard)
@@ -501,7 +502,8 @@ class BoardViewModel: ObservableObject {
             allowAutorun: defaults.allowAutorun,
             allowOscClipboard: defaults.allowOscClipboard,
             confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: nil
+            backend: nil,
+            workspaceId: newCardWorkspaceId
         )
         card.isTransient = true
         tabManager.addTransientCard(card)
@@ -546,7 +548,8 @@ class BoardViewModel: ObservableObject {
             allowAutorun: defaults.allowAutorun,
             allowOscClipboard: defaults.allowOscClipboard,
             confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: nil
+            backend: nil,
+            workspaceId: newCardWorkspaceId
         )
         card.isTransient = true
         tabManager.addTransientCard(card)
@@ -784,4 +787,78 @@ extension BoardViewModel {
             recentlyActiveCardIds.removeLast(recentlyActiveCardIds.count - cap)
         }
     }
+}
+
+// MARK: - Processing Status
+
+extension BoardViewModel {
+    /// Poll the session manager for which cards are processing / have active
+    /// sessions and publish the deltas. Driven by `startProcessingTimer`.
+    fileprivate func refreshProcessingStatus() {
+        let newProcessing = TerminalSessionManager.shared.processingCardIds()
+        if newProcessing != processingCards {
+            processingCards = newProcessing
+        }
+
+        let newActiveSessions = TerminalSessionManager.shared.activeSessionCardIds()
+        if newActiveSessions != activeSessionCards {
+            activeSessionCards = newActiveSessions
+        }
+    }
+}
+
+// MARK: - Board File Monitoring & Workspace Filtering
+
+extension BoardViewModel {
+    /// Merge externally-written board changes (from the file monitor) into the
+    /// in-memory board. Shared by the launch monitor and post-switch monitor.
+    fileprivate func handleFileChange() {
+        guard let loaded = persistence.reloadForExternalChanges() else { return }
+        BoardPersistence.mergeExternalChanges(from: loaded, into: board)
+        objectWillChange.send()
+    }
+
+    /// Materialise `board.json` if it doesn't exist yet, so file monitoring and any
+    /// workspace-pinned agents have a real file to read.
+    fileprivate func materialiseBoardFileIfNeeded() {
+        if !FileManager.default.fileExists(atPath: persistence.saveURL.path) {
+            try? persistence.save(board)
+        }
+    }
+
+    /// Re-render the board when the active workspace changes. There is a single
+    /// `board.json`; switching a workspace is a pure DISPLAY filter change (see
+    /// `displayedCards(for:)`), never a file swap or session teardown — every
+    /// terminal in `TerminalSessionManager` keeps running across switches.
+    fileprivate func observeWorkspaceSwitch() {
+        WorkspaceStore.shared.$activeWorkspaceId
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] _ in
+                Task { @MainActor in self?.objectWillChange.send() }
+            }
+            .store(in: &cancellables)
+    }
+
+    /// Cards to render for `column` under the active workspace filter.
+    ///
+    /// "All" (active == nil) shows every card; a workspace shows only cards tagged
+    /// with it. Unassigned cards (`workspaceId == nil`) appear **only** in "All" —
+    /// the same rule the repository list uses for zero-membership repos. Mutations
+    /// still operate on the full `board.cards`; this is display only.
+    func displayedCards(for column: Column) -> [TerminalCard] {
+        BoardViewModel.cardsInWorkspace(board.cards(for: column), active: activeWorkspaceProvider())
+    }
+
+    /// Pure board-display filter. `active == nil` ("All") → every card; otherwise only
+    /// cards tagged with `active` (unassigned cards show only in "All").
+    static func cardsInWorkspace(_ cards: [TerminalCard], active: UUID?) -> [TerminalCard] {
+        guard let active else { return cards }
+        return cards.filter { $0.workspaceId == active }
+    }
+
+    /// Workspace under which newly-created cards are filed: the active workspace, or
+    /// `nil` in "All" (unassigned). A card's workspace is fixed at creation;
+    /// reassignment is a later feature.
+    var newCardWorkspaceId: UUID? { activeWorkspaceProvider() }
 }

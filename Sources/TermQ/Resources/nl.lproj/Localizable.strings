@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Standaard backend overschrijven";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositories";
+"sidebar.workspace.all" = "Alle repositories";
+"sidebar.workspace.menu.help" = "Repositories filteren op werkruimte";
+"sidebar.workspace.new" = "Nieuwe werkruimte…";
+"sidebar.workspace.new.title" = "Nieuwe werkruimte";
+"sidebar.workspace.name.label" = "Naam werkruimte";
+"sidebar.workspace.name.placeholder" = "bijv. Werk, Zijprojecten";
+"sidebar.workspace.create" = "Aanmaken";
+"sidebar.workspace.manage" = "Werkruimten beheren…";
+"sidebar.workspace.manage.title" = "Werkruimten beheren";
+"sidebar.workspace.manage.empty" = "Nog geen werkruimten. Maak er een aan via het werkruimtemenu.";
+"sidebar.workspace.manage.done" = "Gereed";
+"sidebar.workspace.add.to" = "Toevoegen aan werkruimte";
+"sidebar.workspace.delete.title" = "Werkruimte verwijderen?";
+"sidebar.workspace.delete.confirm" = "Verwijder";
+"sidebar.workspace.delete.message %@" = "“%@” wordt verwijderd. De repositories erin worden niet verwijderd.";
+"sidebar.workspace.empty.message" = "Geen repositories in deze werkruimte.\nKlik met de rechtermuisknop op een repository in “Alle repositories” om het hier toe te voegen.";
 "sidebar.add.button.help" = "Repository toevoegen";
 "sidebar.empty.message" = "Geen repositories toegevoegd.\nKlik op + om een git-repository toe te voegen.";
 "sidebar.worktrees.placeholder" = "Worktrees verschijnen hier";
@@ -1010,6 +1041,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork naar lokaal";
 "harnesses.fork.to.local.help" = "Een bewerkbare lokale kopie van deze harness maken";
+"harnesses.publish.to.repository" = "Publiceren naar repository…";
 "harnesses.update.dot.help" = "Update beschikbaar";
 "harness.fork.title %@" = "Fork \"%@\" naar lokaal";
 "harness.fork.explanation" = "Maakt een bewerkbare lokale kopie van deze harness. De kopie volgt zijn oorsprong zodat je kunt zien wat er bovenstrooms is veranderd.";
@@ -1019,6 +1051,56 @@
 "harness.fork.rename.hint" = "Laat leeg om de bronnaam te behouden. Het canonieke id van de nieuwe fork wordt local/<naam>.";
 "harness.fork.identity.collision" = "Er is al een geïnstalleerd harness met deze identiteit.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" publiceren naar repository";
+"harness.publish.explanation" = "Kopieert deze harness naar een nieuwe worktree van de doelrepository, klaar om te committen. De eigen conventies van de repository (registratiescripts, manifesten) regelen de rest.";
+"harness.publish.button" = "Publiceren";
+"harness.publish.update.button" = "Bestaand item bijwerken";
+"harness.publish.progress.title %@" = "\"%@\" publiceren…";
+"harness.publish.repo.label" = "Doelrepository";
+"harness.publish.repo.placeholder" = "Selecteer een repository…";
+"harness.publish.parentdir.label" = "Map in repository";
+"harness.publish.parentdir.hint" = "Voorgesteld op basis van waar deze repository harnesses al bewaart. Volledig bewerkbaar.";
+"harness.publish.name.label" = "Naam";
+"harness.publish.branch.label" = "Branch";
+"harness.publish.basebranch.label" = "Basisvertakking";
+"harness.publish.worktreepath.label" = "Worktreepad";
+"harness.publish.files.label" = "Te kopiëren bestanden";
+"harness.publish.changes.label" = "Wijzigingen t.o.v. gepubliceerde kopie";
+"harness.publish.mode.label" = "Kopieermodus";
+"harness.publish.mode.entire" = "Volledige map";
+"harness.publish.mode.enumerated" = "Alleen harnessbestanden";
+"harness.publish.mode.enumerated.hint" = "De bronmap fungeert ook als projectrepository — alleen bestanden die de harness bezit worden gekopieerd.";
+"harness.publish.state.new" = "Nieuw item — deze harness bestaat nog niet in de repository.";
+"harness.publish.state.update %@" = "Werkt het bestaande item bij op %@ (overschrijft het).";
+"harness.publish.state.clash %@" = "Die map bevat al een andere harness (\"%@\") — kies een andere naam.";
+"harness.publish.state.occupied" = "Die map bestaat al in de repository — kies een andere naam of locatie.";
+"harness.publish.state.samerepo" = "Deze harness bevindt zich al in de geselecteerde repository — commit je wijzigingen daar in plaats van te publiceren.";
+"harness.publish.reveal.repository" = "Tonen in repositories";
+"harness.publish.preflight.failed" = "De lokale harness valideert niet — herstel dit voor het publiceren.";
+"harness.publish.composition.unavailable" = "ynd compose is mislukt voor deze harness — de modus \"alleen harnessbestanden\" heeft dit nodig om te weten welke bestanden eigendom zijn. Herstel de harness of schakel over naar \"volledige map\".";
+"harness.publish.unresolved %lld" = "%lld gerefereerde bestand(en) ontbreekt in de bron — ze worden niet gekopieerd.";
+"harness.publish.register.disclosure %@" = "Na het kopiëren wordt de %@ van de repository uitgevoerd (door de repository aangeleverd script).";
+"harness.publish.change.added" = "toegevoegd";
+"harness.publish.change.modified" = "gewijzigd";
+"harness.publish.change.removed" = "verwijderd";
+"harness.publish.changes.none" = "Geen verschillen — de gepubliceerde kopie komt overeen met je lokale bestanden.";
+"harness.publish.step.worktree %@" = "Worktree aanmaken op branch %@…";
+"harness.publish.step.copy %@" = "Harness kopiëren naar %@…";
+"harness.publish.step.copied %lld" = "%lld bestandsgroep(en) gekopieerd.";
+"harness.publish.step.validate" = "Gekopieerde harness valideren (ynd validate)…";
+"harness.publish.step.register %@" = "%@ uitvoeren…";
+"harness.publish.step.done %@" = "Klaar — worktree gereed op %@.";
+"harness.publish.warning %@" = "Waarschuwing: %@";
+"harness.publish.deleted %@" = "Verouderd pad verwijderd: %@";
+"harness.publish.validation.failed" = "Validatie mislukt in de worktree — niets is gecommit. De worktree wordt bewaard voor inspectie.";
+"harness.publish.register.failed" = "Het registratiescript van de repository is mislukt — de worktree wordt bewaard voor inspectie.";
+"harness.publish.references.missing %@" = "Bestanden waarnaar het manifest verwijst ontbreken na het kopiëren: %@";
+"harness.publish.error.occupied %@" = "Bestemming bevat al een harness: %@";
+"harness.publish.error.invaliddest %@" = "Bestemming valt buiten de worktree: %@";
+"harness.publish.error.copy %@" = "Kopiëren mislukt: %@";
+"harness.publish.error.rename %@" = "Naam in manifest kon niet worden herschreven: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Bijwerken \"%@\"";
@@ -1264,5 +1346,111 @@
 "remote.prs.worktree.exists" = "Worktree bestaat al";
 "settings.github.feed.cap.help" = "Maximaal aantal pull requests per repository in de Remote-zijbalk. Uitgecheckte PR's worden altijd meegenomen.";
 "settings.github.feed.cap.label" = "PR's per repository";
-"settings.github.section.feed" = "Remote PR-feed";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Maakt gestapelde branches en gestapelde PR's in de zijbalk mogelijk.";
+"settings.gitspice.version" = "Versie:";
+"settings.gitspice.path" = "Pad:";
+"settings.gitspice.info" = "Gestapelde-branchfuncties in de zijbalk vereisen een werkende git-spice-installatie. Deze hergebruikt de authenticatie van de gh CLI.";
+"settings.gitspice.not.installed.description" = "git-spice maakt gestapelde branches en gestapelde PR's mogelijk. Zonder git-spice toont TermQ alleen gewone worktrees.";
+"settings.gitspice.install.hint" = "Installeren met Homebrew:";
+"settings.gitspice.check.again" = "Opnieuw controleren";
+"settings.gitspice.status.unusable %@" = "Gedetecteerd maar onbruikbaar: %@";
+"stacks.enable" = "Stapelen inschakelen…";
+"stacks.enable.help" = "Volg de branches van dit archief als een Stack met git-spice";
+"stacks.enable.failed %@" = "Kan stapelen niet inschakelen: %@";
+"stacks.needs.restack" = "Restack vereist";
+"stacks.open.change.request" = "Wijzigingsverzoek openen";
+"stacks.unpushed.commits %ld" = "↑%ld niet gepusht";
+"stacks.change.request.merged" = "samengevoegd";
+"stacks.change.request.closed" = "gesloten";
+"stacks.no.change.request" = "geen PR";
+"stacks.disclosure.help" = "Stack-branches tonen";
+"stacks.switch.blocked.dirty" = "Kan niet van Stack-branch wisselen: de worktree heeft niet-vastgelegde wijzigingen. Commit of stash ze eerst.";
+"stacks.switch.blocked.in.use" = "Kan niet van Stack-branch wisselen: er is een terminal geopend in deze worktree. Sluit deze eerst.";
+"stacks.switch.blocked.elsewhere %@" = "Kan niet van Stack-branch wisselen: deze is uitgecheckt in een andere worktree (%@).";
+"stacks.switch.help" = "Dubbelklik om deze worktree naar de branch te wisselen";
+"stacks.switch.to %@" = "Wisselen naar %@";
+"stacks.add.branch" = "Branch toevoegen aan Stack…";
+"stacks.add.branch.title" = "Branch Toevoegen aan Stack";
+"stacks.add.branch.name.label" = "Branchnaam";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Stapelen op";
+"stacks.add.branch.staged.note" = "Geënsceneerde wijzigingen worden de eerste commit van de nieuwe branch. Bij een schone werkmap wordt een lege branch bovenop gemaakt.";
+"stacks.add.branch.track.note" = "Deze branch bestaat al — wordt in plaats daarvan gevolgd in de Stack.";
+"stacks.add.branch.create" = "Aanmaken";
+"stacks.add.branch.track" = "Volgen";
+"stacks.restack.stack" = "Stack Restacken";
+"stacks.restack.from.here" = "Restacken vanaf Hier";
+"stacks.conflict.banner %ld" = "Restack gepauzeerd — conflicten in %ld bestanden";
+"stacks.conflict.continue" = "Doorgaan";
+"stacks.conflict.abort" = "Afbreken";
+"stacks.conflict.hint" = "Los de conflicten op in een terminal, stage de bestanden en klik dan op Doorgaan.";
+"stacks.submit.stack" = "Stack Indienen…";
+"stacks.submit.branch" = "Deze Branch Indienen…";
+"stacks.submit.title" = "Stack Indienen";
+"stacks.submit.button" = "Indienen";
+"stacks.submit.draft.toggle" = "Nieuwe pull requests als concept aanmaken";
+"stacks.submit.update.only.toggle" = "Alleen bestaande pull requests bijwerken";
+"stacks.submit.will.create" = "aanmaken";
+"stacks.submit.will.update" = "bijwerken";
+"stacks.sync.repo" = "Repo Synchroniseren";
+"stacks.sync.cleaned %ld %@" = "Synchronisatie heeft %ld samengevoegde branches verwijderd: %@";
+"stacks.destroy.stack" = "Stack Vernietigen…";
+"stacks.destroy.stack.title" = "Stack vernietigen?";
+"stacks.destroy.stack.message %ld %@" = "Dit verwijdert permanent %ld lokale branches via git-spice: %@. Remote branches en eventuele pull requests blijven ongewijzigd.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld van deze branches hebben nog een OPEN pull request.";
+"stacks.destroy.stack.confirm" = "Stack Vernietigen";
+"stacks.destroy.stack.done %ld" = "Stack vernietigd: %ld branches verwijderd";
+"stacks.destroy.stack.worktree.skipped %@" = "Ongewijzigd gelaten (niet-gecommitte wijzigingen): %@";
+"stacks.base.mismatch %@ %@" = "PR richt zich op %@, maar de Stack-parent is %@ — Repo Synchroniseren zal dit herzien";
+"stacks.restack.up.to.date" = "Stack is al up-to-date";
+"stacks.restack.done %ld" = "%ld branches geherstackt";
+"stacks.sync.clean" = "Alles gesynchroniseerd";
+"stacks.submit.done %ld %ld" = "Ingediend: %ld aangemaakt, %ld bijgewerkt";
+"sidebar.worktrees.section.header" = "Worktrees";
+"stacks.break.out" = "Uitsplitsen naar Worktree…";
+"stacks.skipped.notice %@" = "Niet geherstackt: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (uitgecheckt in %@ met niet-vastgelegde wijzigingen)";
+"stacks.skipped.in.use %@ %@" = "%@ (uitgecheckt in %@ met een actieve terminal)";
+"stacks.copy.branch.name" = "Branchnaam Kopiëren";
+"stacks.reveal.worktree" = "Worktree Tonen";
+"stacks.anchored.badge.help %@" = "Verankerd in worktree %@ — klik om te tonen";
+"stacks.part.of.stack %@" = "Onderdeel van Stack %@";
+"stacks.section.header" = "Stacks";
+"stacks.checked.out.at %@" = "Uitgecheckt in %@ — klik om de worktree te tonen";
+"stacks.anchor.help" = "Maak een worktree voor deze Stack";
+"stacks.group.new.worktree" = "Nieuwe Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nieuwe Stack-branch Voor…";
+"stacks.new.branch.after" = "Nieuwe Stack-branch Na…";
+"stacks.new.branch.insert.below.note %@" = "De nieuwe branch wordt onder %@ in de stack gemaakt.";
+"stacks.new.branch.insert.above.note %@" = "De nieuwe branch wordt boven %@ in de stack gemaakt en neemt zijn plaats in — %@ verhuist erboven.";
+"stacks.main.worktree.not.found" = "Kon de hoofdworktree van de repository niet vinden.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nieuwe Stack…";
+"stacks.new.stack.title" = "Nieuwe Stack";
+"stacks.new.stack.name.label" = "Branchnaam";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Basisbranch";
+"stacks.new.stack.button" = "Aanmaken";
+"stacks.new.stack.note" = "Maakt de branch vanaf de basis zonder checkout en zonder worktree — een stack met één item die je later kunt starten.";
+"stacks.start.stack.checkbox" = "Start een stack met deze branch";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Vertakken vanaf standaard";
+"stacks.new.stack.mode.integration" = "Vertakken vanaf integratie";
+"stacks.new.stack.stack.name.label" = "Stacknaam";
+"stacks.new.stack.integration.preview %@" = "Maakt %@";
+"stacks.new.stack.first.branch.label" = "Eerste Stack-branch (optioneel)";
+"stacks.new.stack.first.branch.empty.hint" = "Leeg gelaten: alleen de lege integratiebranch wordt gemaakt — je kunt je eerste stack-branch er later aan toevoegen.";
+"stacks.new.stack.first.branch.filled.hint" = "Deze branch wordt gestapeld boven op de integratiebranch gemaakt, niet direct boven op de basisbranch.";
+"stacks.new.stack.integration.note" = "Maakt een lege integratiebranch vanaf de basis als wortel van de stack — deze bevat zelf nooit code. Stack-branches worden hierop gebouwd in plaats van op de basis, en hun pull requests schakelen hierin. Zodra alles is samengevoegd in de integratiebranch, wordt deze als één geconsolideerde wijziging naar de basis gepullrequest — in plaats van dat elke stack-branch afzonderlijk in de basis wordt samengevoegd.";
+"stacks.new.stack.name.exists %@" = "%@ bestaat al — kies een andere naam.";
+"settings.gitspice.new.stack.mode" = "Nieuwe Stack begint als:";
+"settings.gitspice.new.stack.mode.help" = "Welke modus het venster Nieuwe Stack vooraf selecteert — het venster biedt altijd beide aan.";
+"settings.gitspice.hide.stacked.worktrees" = "Gestapelde worktrees verbergen in de sectie Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees waarvan de branch tot een gevolgde stack behoort, staan al vermeld onder Stacks — verberg ze in de sectie Worktrees om dubbele vermeldingen te voorkomen.";

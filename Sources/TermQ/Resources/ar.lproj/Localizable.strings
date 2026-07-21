@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "تجاوز الخلفية الافتراضية";
@@ -563,6 +578,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "المستودعات";
+"sidebar.workspace.all" = "كل المستودعات";
+"sidebar.workspace.menu.help" = "تصفية المستودعات حسب مساحة العمل";
+"sidebar.workspace.new" = "مساحة عمل جديدة…";
+"sidebar.workspace.new.title" = "مساحة عمل جديدة";
+"sidebar.workspace.name.label" = "اسم مساحة العمل";
+"sidebar.workspace.name.placeholder" = "مثلاً: عمل، مشاريع شخصية";
+"sidebar.workspace.create" = "إنشاء";
+"sidebar.workspace.manage" = "إدارة مساحات العمل…";
+"sidebar.workspace.manage.title" = "إدارة مساحات العمل";
+"sidebar.workspace.manage.empty" = "لا توجد مساحات عمل بعد. أنشئ واحدة من قائمة مساحة العمل.";
+"sidebar.workspace.manage.done" = "تم";
+"sidebar.workspace.add.to" = "إضافة إلى مساحة العمل";
+"sidebar.workspace.delete.title" = "حذف مساحة العمل؟";
+"sidebar.workspace.delete.confirm" = "حذف";
+"sidebar.workspace.delete.message %@" = "سيتم إزالة «%@». المستودعات التي تحتوي عليها لن تُحذف.";
+"sidebar.workspace.empty.message" = "لا توجد مستودعات في مساحة العمل هذه.\nانقر بزر الماوس الأيمن على مستودع في «كل المستودعات» لإضافته هنا.";
 "sidebar.add.button.help" = "إضافة مستودع";
 "sidebar.empty.message" = "لم تتم إضافة مستودعات.\nانقر + لإضافة مستودع git.";
 "sidebar.worktrees.placeholder" = "ستظهر بيئات العمل هنا";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "نسخ محلي";
 "harnesses.fork.to.local.help" = "إنشاء نسخة محلية قابلة للتحرير من هذا الـ harness";
+"harnesses.publish.to.repository" = "نشر في المستودع…";
 "harnesses.update.dot.help" = "تحديث متاح";
 "harness.fork.title %@" = "نسخ \"%@\" محلياً";
 "harness.fork.explanation" = "ينشئ نسخة محلية قابلة للتحرير من هذا الـ harness. تتتبع النسخة أصلها حتى تتمكن من رؤية ما تغيّر في المصدر.";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "اتركه فارغاً للإبقاء على اسم المصدر. سيكون المعرّف الأساسي للـ fork الجديد local/<الاسم>.";
 "harness.fork.identity.collision" = "يوجد بالفعل harness مثبّت بهذه الهوية.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "نشر \"%@\" في المستودع";
+"harness.publish.explanation" = "ينسخ هذا الـ harness إلى فرع عمل جديد من المستودع الهدف، جاهزاً للحفظ. تُحدِّد اصطلاحات المستودع (سكريبتات التسجيل، الملفات التعريفية) ما يتبع ذلك.";
+"harness.publish.button" = "نشر";
+"harness.publish.update.button" = "تحديث الإدخال الموجود";
+"harness.publish.progress.title %@" = "جارٍ نشر \"%@\"…";
+"harness.publish.repo.label" = "المستودع الهدف";
+"harness.publish.repo.placeholder" = "اختر مستودعاً…";
+"harness.publish.parentdir.label" = "المجلد في المستودع";
+"harness.publish.parentdir.hint" = "مقترح من المكان الذي يحفظ فيه هذا المستودع الأطواق بالفعل. قابل للتحرير بالكامل.";
+"harness.publish.name.label" = "الاسم";
+"harness.publish.branch.label" = "الفرع";
+"harness.publish.basebranch.label" = "الفرع الأساسي";
+"harness.publish.worktreepath.label" = "مسار بيئة العمل";
+"harness.publish.files.label" = "الملفات المراد نسخها";
+"harness.publish.changes.label" = "التغييرات مقارنةً بالنسخة المنشورة";
+"harness.publish.mode.label" = "وضع النسخ";
+"harness.publish.mode.entire" = "المجلد بأكمله";
+"harness.publish.mode.enumerated" = "ملفات الـ harness فقط";
+"harness.publish.mode.enumerated.hint" = "يُستخدم المجلد المصدر أيضاً كمستودع مشروع — يُنسخ فقط الملفات التي يملكها الـ harness.";
+"harness.publish.state.new" = "إدخال جديد — هذا الـ harness غير موجود في المستودع بعد.";
+"harness.publish.state.update %@" = "يُحدِّث الإدخال الموجود في %@ (يستبدله).";
+"harness.publish.state.clash %@" = "يحتوي ذلك المجلد بالفعل على harness مختلف (\"%@\") — اختر اسماً آخر.";
+"harness.publish.state.occupied" = "يوجد ذلك المجلد بالفعل في المستودع — اختر اسماً أو موقعاً آخر.";
+"harness.publish.state.samerepo" = "يقطن هذا الـ harness بالفعل في المستودع المحدد — احفظ تغييراتك هناك بدلاً من النشر.";
+"harness.publish.reveal.repository" = "إظهار في المستودعات";
+"harness.publish.preflight.failed" = "الـ harness المحلي لا يُجتاز التحقق — أصلحه قبل النشر.";
+"harness.publish.composition.unavailable" = "فشل ynd compose لهذا الـ harness — يحتاج وضع \"ملفات الـ harness فقط\" إليه لمعرفة الملفات المملوكة. أصلح الـ harness أو انتقل إلى \"المجلد بأكمله\".";
+"harness.publish.unresolved %lld" = "%lld ملف(ملفات) مرجعية مفقودة من المصدر — لن تُنسخ.";
+"harness.publish.register.disclosure %@" = "بعد النسخ، سيتم تشغيل %@ الخاص بالمستودع (سكريبت مقدَّم من المستودع).";
+"harness.publish.change.added" = "مُضاف";
+"harness.publish.change.modified" = "مُعدَّل";
+"harness.publish.change.removed" = "مُزال";
+"harness.publish.changes.none" = "لا فروق — النسخة المنشورة تطابق ملفاتك المحلية.";
+"harness.publish.step.worktree %@" = "إنشاء بيئة عمل على الفرع %@…";
+"harness.publish.step.copy %@" = "نسخ الـ harness إلى %@…";
+"harness.publish.step.copied %lld" = "تم نسخ %lld مجموعة ملفات.";
+"harness.publish.step.validate" = "التحقق من الـ harness المنسوخ (ynd validate)…";
+"harness.publish.step.register %@" = "تشغيل %@…";
+"harness.publish.step.done %@" = "تم — بيئة العمل جاهزة في %@.";
+"harness.publish.warning %@" = "تحذير: %@";
+"harness.publish.deleted %@" = "تمت إزالة المسار القديم: %@";
+"harness.publish.validation.failed" = "فشل التحقق في بيئة العمل — لم يتم الحفظ. يتم الاحتفاظ ببيئة العمل للفحص.";
+"harness.publish.register.failed" = "فشل سكريبت التسجيل الخاص بالمستودع — يتم الاحتفاظ ببيئة العمل للفحص.";
+"harness.publish.references.missing %@" = "الملفات المُشار إليها في الملف التعريفي مفقودة بعد النسخ: %@";
+"harness.publish.error.occupied %@" = "الوجهة تحتوي بالفعل على harness: %@";
+"harness.publish.error.invaliddest %@" = "الوجهة تتجاوز بيئة العمل: %@";
+"harness.publish.error.copy %@" = "فشل النسخ: %@";
+"harness.publish.error.rename %@" = "تعذّر إعادة كتابة اسم الملف التعريفي: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "تحديث \"%@\"";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "Worktree موجود بالفعل";
 "settings.github.feed.cap.help" = "الحد الأقصى لعدد طلبات السحب المعروضة لكل مستودع في الشريط الجانبي Remote. يتم تضمين PRs المستخرجة دائماً.";
 "settings.github.feed.cap.label" = "PRs لكل مستودع";
-"settings.github.section.feed" = "موجز Remote PR";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "يشغّل الفروع المكدّسة وطلبات السحب المكدّسة في الشريط الجانبي.";
+"settings.gitspice.version" = "الإصدار:";
+"settings.gitspice.path" = "المسار:";
+"settings.gitspice.info" = "تعتمد ميزات الفروع المكدّسة في الشريط الجانبي على تثبيت يعمل بشكل صحيح لـ git-spice. يعيد استخدام مصادقة gh CLI.";
+"settings.gitspice.not.installed.description" = "يتيح git-spice الفروع المكدّسة وطلبات السحب المكدّسة. بدونه، يعرض TermQ فقط بيئات عمل عادية.";
+"settings.gitspice.install.hint" = "التثبيت باستخدام Homebrew:";
+"settings.gitspice.check.again" = "تحقق مرة أخرى";
+"settings.gitspice.status.unusable %@" = "تم اكتشافه لكنه غير قابل للاستخدام: %@";
+"stacks.enable" = "تمكين التكديس…";
+"stacks.enable.help" = "تتبع فروع هذا المستودع كمكدس باستخدام git-spice";
+"stacks.enable.failed %@" = "تعذّر تمكين التكديس: %@";
+"stacks.needs.restack" = "يحتاج إلى restack";
+"stacks.open.change.request" = "فتح طلب التغيير";
+"stacks.unpushed.commits %ld" = "↑%ld غير مدفوعة";
+"stacks.change.request.merged" = "مدموج";
+"stacks.change.request.closed" = "مغلق";
+"stacks.no.change.request" = "لا يوجد PR";
+"stacks.disclosure.help" = "إظهار فروع المكدس";
+"stacks.switch.blocked.dirty" = "تعذّر تبديل فرع المكدس: تحتوي بيئة العمل على تغييرات غير ملتزم بها. قم بالالتزام (commit) أو التخزين المؤقت (stash) أولاً.";
+"stacks.switch.blocked.in.use" = "تعذّر تبديل فرع المكدس: توجد نافذة طرفية مفتوحة في بيئة العمل هذه. أغلقها أولاً.";
+"stacks.switch.blocked.elsewhere %@" = "تعذّر تبديل فرع المكدس: تم إخراجه في بيئة عمل أخرى (%@).";
+"stacks.switch.help" = "انقر نقرًا مزدوجًا لتبديل بيئة العمل هذه إلى الفرع";
+"stacks.switch.to %@" = "التبديل إلى %@";
+"stacks.add.branch" = "إضافة فرع إلى المكدس…";
+"stacks.add.branch.title" = "إضافة فرع إلى المكدس";
+"stacks.add.branch.name.label" = "اسم الفرع";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "التكديس على";
+"stacks.add.branch.staged.note" = "تصبح التغييرات المُجهَّزة (staged) أول التزام (commit) للفرع الجديد. مع شجرة نظيفة، يتم إنشاء فرع فارغ فوقها.";
+"stacks.add.branch.track.note" = "هذا الفرع موجود بالفعل — سيتم تتبعه في المكدس بدلاً من ذلك.";
+"stacks.add.branch.create" = "إنشاء";
+"stacks.add.branch.track" = "تتبّع";
+"stacks.restack.stack" = "إعادة تكديس المكدس";
+"stacks.restack.from.here" = "إعادة التكديس من هنا";
+"stacks.conflict.banner %ld" = "تم إيقاف إعادة التكديس مؤقتًا — تعارضات في %ld ملفات";
+"stacks.conflict.continue" = "متابعة";
+"stacks.conflict.abort" = "إجهاض";
+"stacks.conflict.hint" = "حل التعارضات في نافذة طرفية، جهّز الملفات (stage)، ثم اضغط متابعة.";
+"stacks.submit.stack" = "إرسال المكدس…";
+"stacks.submit.branch" = "إرسال هذا الفرع…";
+"stacks.submit.title" = "إرسال المكدس";
+"stacks.submit.button" = "إرسال";
+"stacks.submit.draft.toggle" = "إنشاء طلبات السحب الجديدة كمسودات";
+"stacks.submit.update.only.toggle" = "تحديث طلبات السحب الموجودة فقط";
+"stacks.submit.will.create" = "إنشاء";
+"stacks.submit.will.update" = "تحديث";
+"stacks.sync.repo" = "مزامنة المستودع";
+"stacks.sync.cleaned %ld %@" = "أزالت المزامنة %ld فرعًا مدموجًا: %@";
+"stacks.destroy.stack" = "تدمير المكدس…";
+"stacks.destroy.stack.title" = "تدمير المكدس؟";
+"stacks.destroy.stack.message %ld %@" = "يؤدي هذا إلى حذف %ld فرعًا محليًا نهائيًا عبر git-spice: %@. تبقى الفروع البعيدة وأي طلبات سحب دون تغيير.";
+"stacks.destroy.stack.open.pr.warning %ld" = "لا يزال %ld من هذه الفروع يحتوي على طلب سحب مفتوح.";
+"stacks.destroy.stack.confirm" = "تدمير المكدس";
+"stacks.destroy.stack.done %ld" = "تم تدمير المكدس: تم حذف %ld فرعًا";
+"stacks.destroy.stack.worktree.skipped %@" = "تُرك دون تغيير (تغييرات غير مُثبتة): %@";
+"stacks.base.mismatch %@ %@" = "يستهدف طلب السحب %@، لكن الفرع الأصل للمكدس هو %@ — ستعيد مزامنة المستودع توجيهه";
+"stacks.restack.up.to.date" = "المكدس محدّث بالفعل";
+"stacks.restack.done %ld" = "تمت إعادة تكديس %ld فرعًا";
+"stacks.sync.clean" = "كل شيء متزامن";
+"stacks.submit.done %ld %ld" = "تم الإرسال: تم إنشاء %ld، تم تحديث %ld";
+"sidebar.worktrees.section.header" = "بيئات العمل";
+"stacks.break.out" = "فصل إلى بيئة عمل…";
+"stacks.skipped.notice %@" = "لم يُعاد تكديسه: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (تم إخراجه في %@ بتغييرات غير ملتزم بها)";
+"stacks.skipped.in.use %@ %@" = "%@ (تم إخراجه في %@ بنافذة طرفية نشطة)";
+"stacks.copy.branch.name" = "نسخ اسم الفرع";
+"stacks.reveal.worktree" = "إظهار بيئة العمل";
+"stacks.anchored.badge.help %@" = "مثبَّت في بيئة العمل %@ — انقر لإظهاره";
+"stacks.part.of.stack %@" = "جزء من المكدس %@";
+"stacks.section.header" = "المكدسات";
+"stacks.checked.out.at %@" = "تم إخراجه في %@ — انقر لإظهار بيئة العمل";
+"stacks.anchor.help" = "إنشاء بيئة عمل لهذا المكدس";
+"stacks.group.new.worktree" = "بيئة عمل جديدة…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "فرع مُكدَّس جديد قبل…";
+"stacks.new.branch.after" = "فرع مُكدَّس جديد بعد…";
+"stacks.new.branch.insert.below.note %@" = "يتم إنشاء الفرع الجديد أسفل %@ في المكدس.";
+"stacks.new.branch.insert.above.note %@" = "يتم إنشاء الفرع الجديد أعلى %@ في المكدس، ليحل محله — وينتقل %@ فوقه.";
+"stacks.main.worktree.not.found" = "تعذّر العثور على بيئة العمل الرئيسية للمستودع.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "مكدّس جديد…";
+"stacks.new.stack.title" = "مكدّس جديد";
+"stacks.new.stack.name.label" = "اسم الفرع";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "الفرع الأساسي";
+"stacks.new.stack.button" = "إنشاء";
+"stacks.new.stack.note" = "ينشئ الفرع من الفرع الأساسي دون تسجيل خروج ودون بيئة عمل — مكدّس بعنصر واحد يمكنك بدء العمل عليه لاحقًا.";
+"stacks.start.stack.checkbox" = "ابدأ مكدّسًا بهذا الفرع";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "التفرع من الافتراضي";
+"stacks.new.stack.mode.integration" = "التفرع من فرع التكامل";
+"stacks.new.stack.stack.name.label" = "اسم المكدس";
+"stacks.new.stack.integration.preview %@" = "سينشئ %@";
+"stacks.new.stack.first.branch.label" = "أول فرع مكدّس (اختياري)";
+"stacks.new.stack.first.branch.empty.hint" = "إذا تُرك فارغًا: يُنشأ فرع التكامل الفارغ فقط — يمكنك إضافة أول فرع مكدّس إليه لاحقًا.";
+"stacks.new.stack.first.branch.filled.hint" = "يُنشأ هذا الفرع مكدّسًا فوق فرع التكامل، وليس فوق الفرع الأساسي مباشرة.";
+"stacks.new.stack.integration.note" = "ينشئ فرع تكامل فارغًا من الفرع الأساسي كجذر للمكدس — لا يحمل أي كود خاص به أبدًا. تُبنى الفروع المكدّسة فوقه بدلاً من الفرع الأساسي، وتتسلسل طلبات السحب الخاصة بها إليه. وبمجرد دمج كل شيء في فرع التكامل، يُقدَّم كطلب سحب واحد موحّد إلى الفرع الأساسي — بدلاً من دمج كل فرع مكدّس في الفرع الأساسي على حدة.";
+"stacks.new.stack.name.exists %@" = "%@ موجود بالفعل — اختر اسمًا آخر.";
+"settings.gitspice.new.stack.mode" = "المكدس الجديد يبدأ كـ:";
+"settings.gitspice.new.stack.mode.help" = "الوضع الذي تختاره ورقة (مكدّس جديد) مسبقًا — تعرض الورقة الخيارين دائمًا.";
+"settings.gitspice.hide.stacked.worktrees" = "إخفاء بيئات العمل المكدّسة من قسم بيئات العمل";
+"settings.gitspice.hide.stacked.worktrees.help" = "بيئات العمل التي ينتمي فرعها إلى مكدّس متتبَع مُدرجة بالفعل ضمن المكدسات — أخفِها من قسم بيئات العمل لتفادي التكرار.";

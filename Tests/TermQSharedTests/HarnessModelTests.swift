@@ -226,6 +226,65 @@ final class HarnessModelTests: XCTestCase {
         XCTAssertNil(h.description)
     }
 
+    // MARK: - Harness.hasVersionUpdate
+
+    private func makeHarness(
+        version: String, versionAvailable: String?, installedSHA: String?, availableSHA: String?
+    ) -> Harness {
+        let provenance = installedSHA.map {
+            HarnessProvenance(
+                sourceType: "registry", source: "github.com/org/repo", installedAt: "2024",
+                sha: $0)
+        }
+        return Harness(
+            name: "x", version: version, versionAvailable: versionAvailable,
+            defaultVendor: "claude", path: "/p",
+            installedFrom: provenance,
+            artifacts: HarnessArtifactCounts(skills: 0, agents: 0, rules: 0, commands: 0),
+            shaAvailable: availableSHA)
+    }
+
+    func testHasVersionUpdate_nilWhenNoVersionAvailable() {
+        let h = makeHarness(
+            version: "0.2.0", versionAvailable: nil, installedSHA: "abc", availableSHA: "abc")
+        XCTAssertNil(h.hasVersionUpdate)
+    }
+
+    /// Regression for eyelock/ynh#177: YNH's cached `version_available` string
+    /// can go stale relative to the resolved commit and report an older-looking
+    /// version even though the installed and available SHAs are identical. SHA
+    /// equality must win over the version-string comparison.
+    func testHasVersionUpdate_falseWhenSHAsMatchDespiteOlderVersionString() {
+        let h = makeHarness(
+            version: "0.2.0", versionAvailable: "0.1.0", installedSHA: "abc123",
+            availableSHA: "abc123")
+        XCTAssertEqual(h.hasVersionUpdate, false)
+    }
+
+    func testHasVersionUpdate_trueWhenSHAsDiffer() {
+        let h = makeHarness(
+            version: "0.2.0", versionAvailable: "0.3.0", installedSHA: "abc123",
+            availableSHA: "def456")
+        XCTAssertEqual(h.hasVersionUpdate, true)
+    }
+
+    func testHasVersionUpdate_fallsBackToStringCompareWhenSHAsMissing() {
+        let h = makeHarness(
+            version: "0.2.0", versionAvailable: "0.3.0", installedSHA: nil, availableSHA: nil)
+        XCTAssertEqual(h.hasVersionUpdate, true)
+    }
+
+    /// SHA drift with an unchanged version string is unversioned drift, not a
+    /// maintainer-signalled version bump — `hasVersionUpdate` must stay false so
+    /// `HarnessUpdateBadgeStore.signal(for:)` can classify it as `.unversionedDrift`
+    /// instead of short-circuiting to the trusted `.versioned` banner.
+    func testHasVersionUpdate_falseWhenSHAsDifferButVersionStringUnchanged() {
+        let h = makeHarness(
+            version: "0.2.0", versionAvailable: "0.2.0", installedSHA: "abc123",
+            availableSHA: "def456")
+        XCTAssertEqual(h.hasVersionUpdate, false)
+    }
+
     // MARK: - Harness uninstall provenance
 
     /// A harness with no install record (e.g. a locally-authored harness that was never

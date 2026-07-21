@@ -25,6 +25,17 @@ public struct Board: Codable, Sendable {
         columns.sorted { $0.orderIndex < $1.orderIndex }
     }
 
+    /// Filter cards to those visible to a workspace-pinned consumer.
+    ///
+    /// `workspaceId` nil/empty (a top-level / "All" consumer) → unchanged. Otherwise
+    /// only cards tagged with that workspace; unassigned cards are hidden — the same
+    /// rule the app uses (a workspace shows only its own cards; unassigned cards show
+    /// only in "All").
+    public static func cardsInWorkspace(_ cards: [Card], workspaceId: String?) -> [Card] {
+        guard let id = workspaceId, !id.isEmpty, let uuid = UUID(uuidString: id) else { return cards }
+        return cards.filter { $0.workspaceId == uuid }
+    }
+
     /// Find a terminal by identifier (UUID, name, or path)
     public func findTerminal(identifier: String) -> Card? {
         // Try as UUID first

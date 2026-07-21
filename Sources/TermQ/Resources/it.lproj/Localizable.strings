@@ -452,6 +452,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Sostituisci backend predefinito";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repository";
+"sidebar.workspace.all" = "Tutti i repository";
+"sidebar.workspace.menu.help" = "Filtra i repository per area di lavoro";
+"sidebar.workspace.new" = "Nuova area di lavoro…";
+"sidebar.workspace.new.title" = "Nuova area di lavoro";
+"sidebar.workspace.name.label" = "Nome dell’area di lavoro";
+"sidebar.workspace.name.placeholder" = "es. Lavoro, Progetti personali";
+"sidebar.workspace.create" = "Crea";
+"sidebar.workspace.manage" = "Gestisci aree di lavoro…";
+"sidebar.workspace.manage.title" = "Gestisci aree di lavoro";
+"sidebar.workspace.manage.empty" = "Nessuna area di lavoro ancora. Creane una dal menu area di lavoro.";
+"sidebar.workspace.manage.done" = "Fine";
+"sidebar.workspace.add.to" = "Aggiungi all'area di lavoro";
+"sidebar.workspace.delete.title" = "Eliminare l'area di lavoro?";
+"sidebar.workspace.delete.confirm" = "Elimina";
+"sidebar.workspace.delete.message %@" = "«%@» verrà rimosso. I repository che contiene non saranno eliminati.";
+"sidebar.workspace.empty.message" = "Nessun repository in questo spazio di lavoro.\nFai clic destro su un repository in «Tutti i repository» per aggiungerlo qui.";
 "sidebar.add.button.help" = "Aggiungi repository";
 "sidebar.empty.message" = "Nessun repository aggiunto.\nFai clic su + per aggiungere un repository git.";
 "sidebar.worktrees.placeholder" = "I worktree appariranno qui";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Biforca in locale";
 "harnesses.fork.to.local.help" = "Crea una copia locale modificabile di questo harness";
+"harnesses.publish.to.repository" = "Pubblica nel repository…";
 "harnesses.update.dot.help" = "Aggiornamento disponibile";
 "harness.fork.title %@" = "Biforca \"%@\" in locale";
 "harness.fork.explanation" = "Crea una copia locale modificabile di questo harness. La copia tiene traccia della sua origine in modo che tu possa vedere cosa è cambiato a monte.";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "Lascia vuoto per mantenere il nome sorgente. L'id canonico del nuovo fork sarà local/<nome>.";
 "harness.fork.identity.collision" = "Un harness installato ha già questa identità.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Pubblica \"%@\" nel repository";
+"harness.publish.explanation" = "Copia questo harness in un nuovo worktree del repository di destinazione, pronto per il commit. Le convenzioni del repository (script di registrazione, manifest) decidono il resto.";
+"harness.publish.button" = "Pubblica";
+"harness.publish.update.button" = "Aggiorna voce esistente";
+"harness.publish.progress.title %@" = "Pubblicazione di \"%@\"…";
+"harness.publish.repo.label" = "Repository di destinazione";
+"harness.publish.repo.placeholder" = "Seleziona un repository…";
+"harness.publish.parentdir.label" = "Directory nel repository";
+"harness.publish.parentdir.hint" = "Suggerita in base a dove questo repository conserva già gli harness. Completamente modificabile.";
+"harness.publish.name.label" = "Nome";
+"harness.publish.branch.label" = "Branch";
+"harness.publish.basebranch.label" = "Branch di base";
+"harness.publish.worktreepath.label" = "Percorso worktree";
+"harness.publish.files.label" = "File da copiare";
+"harness.publish.changes.label" = "Modifiche rispetto alla copia pubblicata";
+"harness.publish.mode.label" = "Modalità di copia";
+"harness.publish.mode.entire" = "Intera directory";
+"harness.publish.mode.enumerated" = "Solo file harness";
+"harness.publish.mode.enumerated.hint" = "La directory sorgente funge anche da repository di progetto — vengono copiati solo i file di proprietà dell'harness.";
+"harness.publish.state.new" = "Nuova voce — questo harness non esiste ancora nel repository.";
+"harness.publish.state.update %@" = "Aggiorna la voce esistente in %@ (la sovrascrive).";
+"harness.publish.state.clash %@" = "Quella directory contiene già un harness diverso (\"%@\") — scegli un altro nome.";
+"harness.publish.state.occupied" = "Quella directory esiste già nel repository — scegli un altro nome o posizione.";
+"harness.publish.state.samerepo" = "Questo harness è già nel repository selezionato — esegui il commit delle modifiche lì invece di pubblicare.";
+"harness.publish.reveal.repository" = "Mostra nei repository";
+"harness.publish.preflight.failed" = "L'harness locale non supera la validazione — correggilo prima di pubblicare.";
+"harness.publish.composition.unavailable" = "ynd compose non è riuscito per questo harness — la modalità \"solo file harness\" ne ha bisogno per sapere quali file possiede. Correggi l'harness o passa a \"intera directory\".";
+"harness.publish.unresolved %lld" = "%lld file referenziati mancanti dalla sorgente — non verranno copiati.";
+"harness.publish.register.disclosure %@" = "Dopo la copia, verrà eseguito %@ del repository (script fornito dal repository).";
+"harness.publish.change.added" = "aggiunto";
+"harness.publish.change.modified" = "modificato";
+"harness.publish.change.removed" = "rimosso";
+"harness.publish.changes.none" = "Nessuna differenza — la copia pubblicata corrisponde ai file locali.";
+"harness.publish.step.worktree %@" = "Creazione del worktree sul branch %@…";
+"harness.publish.step.copy %@" = "Copia dell'harness in %@…";
+"harness.publish.step.copied %lld" = "Copiati %lld gruppi di file.";
+"harness.publish.step.validate" = "Validazione dell'harness copiato (ynd validate)…";
+"harness.publish.step.register %@" = "Esecuzione di %@…";
+"harness.publish.step.done %@" = "Fatto — worktree pronto in %@.";
+"harness.publish.warning %@" = "Avviso: %@";
+"harness.publish.deleted %@" = "Percorso obsoleto rimosso: %@";
+"harness.publish.validation.failed" = "Validazione non riuscita nel worktree — nessun commit eseguito. Il worktree è conservato per l'ispezione.";
+"harness.publish.register.failed" = "Lo script di registrazione del repository non è riuscito — il worktree è conservato per l'ispezione.";
+"harness.publish.references.missing %@" = "I file referenziati dal manifest risultano mancanti dopo la copia: %@";
+"harness.publish.error.occupied %@" = "La destinazione contiene già un harness: %@";
+"harness.publish.error.invaliddest %@" = "La destinazione esula dal worktree: %@";
+"harness.publish.error.copy %@" = "Copia non riuscita: %@";
+"harness.publish.error.rename %@" = "Impossibile riscrivere il nome del manifest: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Aggiorna \"%@\"";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "Il worktree esiste già";
 "settings.github.feed.cap.help" = "Numero massimo di pull request mostrate per repository nella barra laterale Remote. Le PR estratte sono sempre incluse.";
 "settings.github.feed.cap.label" = "PR per repository";
-"settings.github.section.feed" = "Feed PR Remote";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Alimenta i branch impilati e le PR impilate nella barra laterale.";
+"settings.gitspice.version" = "Versione:";
+"settings.gitspice.path" = "Percorso:";
+"settings.gitspice.info" = "Le funzionalità di branch impilati nella barra laterale dipendono da un'installazione funzionante di git-spice. Riutilizza l'autenticazione della CLI gh.";
+"settings.gitspice.not.installed.description" = "git-spice abilita branch impilati e PR impilate. Senza di esso, TermQ mostra solo worktree semplici.";
+"settings.gitspice.install.hint" = "Installa con Homebrew:";
+"settings.gitspice.check.again" = "Controlla di nuovo";
+"settings.gitspice.status.unusable %@" = "Rilevato ma inutilizzabile: %@";
+"stacks.enable" = "Attiva impilamento…";
+"stacks.enable.help" = "Traccia i branch di questo repository come uno Stack con git-spice";
+"stacks.enable.failed %@" = "Impossibile attivare l'impilamento: %@";
+"stacks.needs.restack" = "Richiede restack";
+"stacks.open.change.request" = "Apri richiesta di modifica";
+"stacks.unpushed.commits %ld" = "↑%ld non inviati";
+"stacks.change.request.merged" = "unita";
+"stacks.change.request.closed" = "chiusa";
+"stacks.no.change.request" = "nessuna PR";
+"stacks.disclosure.help" = "Mostra i branch dello Stack";
+"stacks.switch.blocked.dirty" = "Impossibile cambiare branch dello Stack: il worktree ha modifiche non salvate. Esegui prima il commit o lo stash.";
+"stacks.switch.blocked.in.use" = "Impossibile cambiare branch dello Stack: un terminale è aperto in questo worktree. Chiudilo prima.";
+"stacks.switch.blocked.elsewhere %@" = "Impossibile cambiare branch dello Stack: è estratto in un altro worktree (%@).";
+"stacks.switch.help" = "Fai doppio clic per passare questo worktree al branch";
+"stacks.switch.to %@" = "Passa a %@";
+"stacks.add.branch" = "Aggiungi branch allo Stack…";
+"stacks.add.branch.title" = "Aggiungi Branch allo Stack";
+"stacks.add.branch.name.label" = "Nome del branch";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Impila su";
+"stacks.add.branch.staged.note" = "Le modifiche in staging diventano il primo commit del nuovo branch. Con un albero pulito, viene creato un branch vuoto sopra.";
+"stacks.add.branch.track.note" = "Questo branch esiste già — verrà invece tracciato nello Stack.";
+"stacks.add.branch.create" = "Crea";
+"stacks.add.branch.track" = "Traccia";
+"stacks.restack.stack" = "Restack dello Stack";
+"stacks.restack.from.here" = "Restack da Qui";
+"stacks.conflict.banner %ld" = "Restack in pausa — conflitti in %ld file";
+"stacks.conflict.continue" = "Continua";
+"stacks.conflict.abort" = "Interrompi";
+"stacks.conflict.hint" = "Risolvi i conflitti in un terminale, esegui lo staging dei file, poi Continua.";
+"stacks.submit.stack" = "Invia Stack…";
+"stacks.submit.branch" = "Invia Questo Branch…";
+"stacks.submit.title" = "Invia Stack";
+"stacks.submit.button" = "Invia";
+"stacks.submit.draft.toggle" = "Crea le nuove pull request come bozze";
+"stacks.submit.update.only.toggle" = "Aggiorna solo le pull request esistenti";
+"stacks.submit.will.create" = "creare";
+"stacks.submit.will.update" = "aggiornare";
+"stacks.sync.repo" = "Sincronizza Repo";
+"stacks.sync.cleaned %ld %@" = "La sincronizzazione ha rimosso %ld branch uniti: %@";
+"stacks.destroy.stack" = "Distruggi Stack…";
+"stacks.destroy.stack.title" = "Distruggere lo stack?";
+"stacks.destroy.stack.message %ld %@" = "Questa operazione elimina definitivamente %ld branch locali tramite git-spice: %@. I branch remoti ed eventuali pull request restano intatti.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld di questi branch hanno ancora una pull request APERTA.";
+"stacks.destroy.stack.confirm" = "Distruggi Stack";
+"stacks.destroy.stack.done %ld" = "Stack distrutto: eliminati %ld branch";
+"stacks.destroy.stack.worktree.skipped %@" = "Lasciato invariato (modifiche non salvate): %@";
+"stacks.base.mismatch %@ %@" = "La PR punta a %@, ma il parent dello Stack è %@ — Sincronizza Repo lo reindirizzerà";
+"stacks.restack.up.to.date" = "Stack già aggiornato";
+"stacks.restack.done %ld" = "%ld branch restackati";
+"stacks.sync.clean" = "Tutto sincronizzato";
+"stacks.submit.done %ld %ld" = "Inviato: %ld creata/e, %ld aggiornata/e";
+"sidebar.worktrees.section.header" = "Worktree";
+"stacks.break.out" = "Estrai in un Worktree…";
+"stacks.skipped.notice %@" = "Non restackato: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (estratto in %@ con modifiche non salvate)";
+"stacks.skipped.in.use %@ %@" = "%@ (estratto in %@ con un terminale attivo)";
+"stacks.copy.branch.name" = "Copia Nome Branch";
+"stacks.reveal.worktree" = "Rivela Worktree";
+"stacks.anchored.badge.help %@" = "Ancorato nel worktree %@ — clic per rivelarlo";
+"stacks.part.of.stack %@" = "Parte dello Stack %@";
+"stacks.section.header" = "Stack";
+"stacks.checked.out.at %@" = "Estratto in %@ — clic per rivelare il worktree";
+"stacks.anchor.help" = "Crea un worktree per questo Stack";
+"stacks.group.new.worktree" = "Nuovo Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nuovo Branch Impilato Prima…";
+"stacks.new.branch.after" = "Nuovo Branch Impilato Dopo…";
+"stacks.new.branch.insert.below.note %@" = "Il nuovo branch viene creato sotto %@ nello stack.";
+"stacks.new.branch.insert.above.note %@" = "Il nuovo branch viene creato sopra %@ nello stack, prendendone il posto — %@ si sposta sopra di esso.";
+"stacks.main.worktree.not.found" = "Impossibile trovare il worktree principale del repository.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nuovo Stack…";
+"stacks.new.stack.title" = "Nuovo Stack";
+"stacks.new.stack.name.label" = "Nome del branch";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branch base";
+"stacks.new.stack.button" = "Crea";
+"stacks.new.stack.note" = "Crea il branch dalla base senza checkout e senza worktree — uno stack a una voce che potrai avviare in seguito.";
+"stacks.start.stack.checkbox" = "Avvia uno stack con questo branch";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Deriva dal branch predefinito";
+"stacks.new.stack.mode.integration" = "Deriva dal branch di integrazione";
+"stacks.new.stack.stack.name.label" = "Nome dello Stack";
+"stacks.new.stack.integration.preview %@" = "Crea %@";
+"stacks.new.stack.first.branch.label" = "Primo Branch Impilato (opzionale)";
+"stacks.new.stack.first.branch.empty.hint" = "Se lasciato vuoto: viene creato solo il branch di integrazione vuoto — potrai aggiungervi il tuo primo branch impilato in seguito.";
+"stacks.new.stack.first.branch.filled.hint" = "Questo branch viene creato impilato sopra il branch di integrazione, non direttamente sopra il branch base.";
+"stacks.new.stack.integration.note" = "Crea un branch di integrazione vuoto dalla base come radice dello stack — non porta mai codice proprio. I branch dello stack si costruiscono su di esso invece che sulla base, e le loro pull request si incatenano ad esso. Una volta che tutto è stato unito nel branch di integrazione, viene proposto come un'unica pull request consolidata verso la base — invece che ogni branch dello stack venga unito singolarmente alla base.";
+"stacks.new.stack.name.exists %@" = "%@ esiste già — scegli un altro nome.";
+"settings.gitspice.new.stack.mode" = "Nuovo Stack inizia come:";
+"settings.gitspice.new.stack.mode.help" = "Quale modalità preseleziona il foglio Nuovo Stack — il foglio offre sempre entrambe.";
+"settings.gitspice.hide.stacked.worktrees" = "Nascondi i worktree impilati dalla sezione Worktree";
+"settings.gitspice.hide.stacked.worktrees.help" = "I worktree il cui branch appartiene a uno stack tracciato sono già elencati in Stack — nascondili dalla sezione Worktree per evitare la duplicazione.";

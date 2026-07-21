@@ -75,6 +75,18 @@ public class GitService: GitServiceProtocol {
         )
     }
 
+    /// Resolve `ref` (branch name, tag, …) to its full commit hash without any
+    /// checkout — read-only, e.g. for remote-commit links to a non-checked-out branch.
+    public func commitHash(repoPath: String, ref: String) async throws -> String {
+        try await GitServiceShared.commitHash(repoPath: repoPath, ref: ref)
+    }
+
+    /// Create a local branch off `base` without checking it out anywhere — seeds a
+    /// worktree-less stacked branch (see "New Stack…").
+    public func createBranch(repoPath: String, name: String, base: String) async throws {
+        try await GitServiceShared.createBranch(repoPath: repoPath, name: name, base: base)
+    }
+
     /// Remove the worktree at `worktreePath`.
     public func removeWorktree(repo: GitRepository, path: String) async throws {
         try await GitServiceShared.removeWorktree(repoPath: repo.path, worktreePath: path)
@@ -243,6 +255,19 @@ public class GitService: GitServiceProtocol {
         _ = try? await GitServiceShared.runGitCommand(
             repoPath: repoPath,
             args: ["remote", "set-head", "origin", "--auto"]
+        )
+    }
+
+    /// Fetch the latest refs from `origin`, pruning stale remote-tracking branches.
+    ///
+    /// Call this before reading remote state (default branch, ahead/behind counts,
+    /// closed-PR detection) so refresh actually reflects what's on the remote instead
+    /// of whatever was last fetched incidentally by a checkout or pull. Tolerant of
+    /// failure (e.g. offline) — refresh must not hard-fail just because the network is down.
+    public func fetchRemote(repoPath: String) async {
+        _ = try? await GitServiceShared.runGitCommand(
+            repoPath: repoPath,
+            args: ["fetch", "origin", "--prune"]
         )
     }
 

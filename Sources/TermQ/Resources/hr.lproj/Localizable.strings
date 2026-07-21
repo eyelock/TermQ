@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Zamijeni zadani backend";
@@ -563,6 +578,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repozitoriji";
+"sidebar.workspace.all" = "Sva repozitorija";
+"sidebar.workspace.menu.help" = "Filtriraj repozitorija po radnom prostoru";
+"sidebar.workspace.new" = "Novi radni prostor…";
+"sidebar.workspace.new.title" = "Novi radni prostor";
+"sidebar.workspace.name.label" = "Naziv radnog prostora";
+"sidebar.workspace.name.placeholder" = "npr. Posao, Sporedni projekti";
+"sidebar.workspace.create" = "Stvori";
+"sidebar.workspace.manage" = "Upravljaj radnim prostorima…";
+"sidebar.workspace.manage.title" = "Upravljaj radnim prostorima";
+"sidebar.workspace.manage.empty" = "Još nema radnih prostora. Stvorite jedan iz izbornika radnih prostora.";
+"sidebar.workspace.manage.done" = "Gotovo";
+"sidebar.workspace.add.to" = "Dodaj u radni prostor";
+"sidebar.workspace.delete.title" = "Obrisati radni prostor?";
+"sidebar.workspace.delete.confirm" = "Obriši";
+"sidebar.workspace.delete.message %@" = "„%@” će biti uklonjen. Repozitoriji u njemu neće biti obrisani.";
+"sidebar.workspace.empty.message" = "Nema repozitorija u ovom radnom prostoru.\nDesnom tipkom miša kliknite na repozitorij u „Sva repozitorija“ da ga dodajte ovdje.";
 "sidebar.add.button.help" = "Dodaj repozitorij";
 "sidebar.empty.message" = "Nema dodanih repozitorija.\nKliknite + za dodavanje git repozitorija.";
 "sidebar.worktrees.placeholder" = "Radni stabli će se prikazati ovdje";
@@ -1011,6 +1042,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork na lokalno";
 "harnesses.fork.to.local.help" = "Stvorite uređivu lokalnu kopiju ovog harness-a";
+"harnesses.publish.to.repository" = "Objavi u repozitorij…";
 "harnesses.update.dot.help" = "Dostupno ažuriranje";
 "harness.fork.title %@" = "Fork \"%@\" na lokalno";
 "harness.fork.explanation" = "Stvara uređivu lokalnu kopiju ovog harness-a. Kopija prati svoje podrijetlo kako biste mogli vidjeti što se promijenilo upstream.";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.hint" = "Ostavite prazno kako biste zadržali izvorno ime. Kanonički id novog forka bit će local/<naziv>.";
 "harness.fork.identity.collision" = "Instalirani harness već ima ovaj identitet.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Objavi \"%@\" u repozitorij";
+"harness.publish.explanation" = "Kopira ovaj harness u novi worktree ciljnog repozitorija, spreman za commit. Konvencije repozitorija (skripte za registraciju, manifesti) određuju ostatak.";
+"harness.publish.button" = "Objavi";
+"harness.publish.update.button" = "Ažuriraj postojeći unos";
+"harness.publish.progress.title %@" = "Objavljujem \"%@\"…";
+"harness.publish.repo.label" = "Ciljni repozitorij";
+"harness.publish.repo.placeholder" = "Odaberite repozitorij…";
+"harness.publish.parentdir.label" = "Direktorij u repozitoriju";
+"harness.publish.parentdir.hint" = "Predloženo prema tome gdje ovaj repozitorij već čuva harness-e. Potpuno uređivo.";
+"harness.publish.name.label" = "Naziv";
+"harness.publish.branch.label" = "Grana";
+"harness.publish.basebranch.label" = "Osnovna grana";
+"harness.publish.worktreepath.label" = "Putanja worktree-a";
+"harness.publish.files.label" = "Datoteke za kopiranje";
+"harness.publish.changes.label" = "Promjene u odnosu na objavljenu kopiju";
+"harness.publish.mode.label" = "Način kopiranja";
+"harness.publish.mode.entire" = "Cijeli direktorij";
+"harness.publish.mode.enumerated" = "Samo datoteke harness-a";
+"harness.publish.mode.enumerated.hint" = "Izvorni direktorij ujedno je projektni repozitorij — kopiraju se samo datoteke koje harness posjeduje.";
+"harness.publish.state.new" = "Novi unos — ovaj harness još ne postoji u repozitoriju.";
+"harness.publish.state.update %@" = "Ažurira postojeći unos na %@ (prepisuje ga).";
+"harness.publish.state.clash %@" = "Taj direktorij već sadrži drugi harness (\"%@\") — odaberite drugi naziv.";
+"harness.publish.state.occupied" = "Taj direktorij već postoji u repozitoriju — odaberite drugi naziv ili lokaciju.";
+"harness.publish.state.samerepo" = "Ovaj harness već se nalazi u odabranom repozitoriju — commitajte promjene tamo umjesto objavljivanja.";
+"harness.publish.reveal.repository" = "Prikaži u repozitorijima";
+"harness.publish.preflight.failed" = "Lokalni harness ne prolazi validaciju — popravite ga prije objavljivanja.";
+"harness.publish.composition.unavailable" = "ynd compose nije uspio za ovaj harness — način \"samo datoteke harness-a\" zahtijeva ga da zna koje datoteke posjeduje. Popravite harness ili prijeđite na \"cijeli direktorij\".";
+"harness.publish.unresolved %lld" = "%lld referencirane datoteke nedostaju iz izvora — neće biti kopirane.";
+"harness.publish.register.disclosure %@" = "Nakon kopiranja, pokrenit će se %@ repozitorija (skripta iz repozitorija).";
+"harness.publish.change.added" = "dodano";
+"harness.publish.change.modified" = "izmijenjeno";
+"harness.publish.change.removed" = "uklonjeno";
+"harness.publish.changes.none" = "Nema razlika — objavljena kopija odgovara vašim lokalnim datotekama.";
+"harness.publish.step.worktree %@" = "Stvaram worktree na grani %@…";
+"harness.publish.step.copy %@" = "Kopiram harness u %@…";
+"harness.publish.step.copied %lld" = "Kopirano %lld grupa datoteka.";
+"harness.publish.step.validate" = "Validiram kopirani harness (ynd validate)…";
+"harness.publish.step.register %@" = "Pokrećem %@…";
+"harness.publish.step.done %@" = "Gotovo — worktree spreman na %@.";
+"harness.publish.warning %@" = "Upozorenje: %@";
+"harness.publish.deleted %@" = "Uklonjen zastarjeli put: %@";
+"harness.publish.validation.failed" = "Validacija nije uspjela u worktree-u — ništa nije commitano. Worktree je zadržan za pregled.";
+"harness.publish.register.failed" = "Skripta za registraciju repozitorija nije uspjela — worktree je zadržan za pregled.";
+"harness.publish.references.missing %@" = "Datoteke navedene u manifestu nedostaju nakon kopiranja: %@";
+"harness.publish.error.occupied %@" = "Odredište već sadrži harness: %@";
+"harness.publish.error.invaliddest %@" = "Odredište izlazi iz worktree-a: %@";
+"harness.publish.error.copy %@" = "Kopiranje nije uspjelo: %@";
+"harness.publish.error.rename %@" = "Nije moguće prepisati naziv manifesta: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Ažuriraj \"%@\"";
@@ -1265,5 +1347,111 @@
 "remote.prs.worktree.exists" = "Worktree već postoji";
 "settings.github.feed.cap.help" = "Maksimalni broj pull request-ova prikazanih po repozitoriju u Remote bočnoj traci. Izvučeni PR-ovi uvijek su uključeni.";
 "settings.github.feed.cap.label" = "PR-ovi po repozitoriju";
-"settings.github.section.feed" = "Remote PR feed";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Omogućuje slaganje grana i slaganih PR-ova na bočnoj traci.";
+"settings.gitspice.version" = "Verzija:";
+"settings.gitspice.path" = "Putanja:";
+"settings.gitspice.info" = "Značajke slaganih grana na bočnoj traci ovise o funkcionalnoj instalaciji git-spice. Ponovno koristi autentifikaciju gh CLI-ja.";
+"settings.gitspice.not.installed.description" = "git-spice omogućuje slaganje grana i slaganje PR-ova. Bez njega, TermQ prikazuje samo obična radna stabla.";
+"settings.gitspice.install.hint" = "Instalirajte pomoću Homebrewa:";
+"settings.gitspice.check.again" = "Provjeri ponovno";
+"settings.gitspice.status.unusable %@" = "Otkriveno, ali neupotrebljivo: %@";
+"stacks.enable" = "Omogući slaganje…";
+"stacks.enable.help" = "Prati grane ovog repozitorija kao stog pomoću git-spice";
+"stacks.enable.failed %@" = "Slaganje nije moguće omogućiti: %@";
+"stacks.needs.restack" = "Potreban restack";
+"stacks.open.change.request" = "Otvori zahtjev za promjenu";
+"stacks.unpushed.commits %ld" = "↑%ld nepogurano";
+"stacks.change.request.merged" = "spojeno";
+"stacks.change.request.closed" = "zatvoreno";
+"stacks.no.change.request" = "nema PR-a";
+"stacks.disclosure.help" = "Prikaži grane stoga";
+"stacks.switch.blocked.dirty" = "Nije moguće promijeniti granu stoga: radno stablo ima nepredane promjene. Prvo napravite commit ili stash.";
+"stacks.switch.blocked.in.use" = "Nije moguće promijeniti granu stoga: u ovom radnom stablu otvoren je terminal. Prvo ga zatvorite.";
+"stacks.switch.blocked.elsewhere %@" = "Nije moguće promijeniti granu stoga: preuzeta je u drugom radnom stablu (%@).";
+"stacks.switch.help" = "Dvaput kliknite za promjenu ovog radnog stabla na tu granu";
+"stacks.switch.to %@" = "Prebaci na %@";
+"stacks.add.branch" = "Dodaj granu u stog…";
+"stacks.add.branch.title" = "Dodaj Granu u Stog";
+"stacks.add.branch.name.label" = "Naziv grane";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Slaži na";
+"stacks.add.branch.staged.note" = "Pripremljene (staged) promjene postat će prvi commit nove grane. Uz čisto stablo, prazna grana se stvara iznad.";
+"stacks.add.branch.track.note" = "Ova grana već postoji — umjesto toga bit će praćena u stogu.";
+"stacks.add.branch.create" = "Stvori";
+"stacks.add.branch.track" = "Prati";
+"stacks.restack.stack" = "Restack Stoga";
+"stacks.restack.from.here" = "Restack Odavde";
+"stacks.conflict.banner %ld" = "Restack pauziran — sukobi u %ld datoteka";
+"stacks.conflict.continue" = "Nastavi";
+"stacks.conflict.abort" = "Prekini";
+"stacks.conflict.hint" = "Riješite sukobe u terminalu, pripremite (stage) datoteke, a zatim kliknite Nastavi.";
+"stacks.submit.stack" = "Pošalji Stog…";
+"stacks.submit.branch" = "Pošalji Ovu Granu…";
+"stacks.submit.title" = "Pošalji Stog";
+"stacks.submit.button" = "Pošalji";
+"stacks.submit.draft.toggle" = "Stvaraj nove pull requestove kao skice";
+"stacks.submit.update.only.toggle" = "Ažuriraj samo postojeće pull requestove";
+"stacks.submit.will.create" = "stvoriti";
+"stacks.submit.will.update" = "ažurirati";
+"stacks.sync.repo" = "Sinkroniziraj Repozitorij";
+"stacks.sync.cleaned %ld %@" = "Sinkronizacija je uklonila %ld spojenih grana: %@";
+"stacks.destroy.stack" = "Uništi Stog…";
+"stacks.destroy.stack.title" = "Uništiti stog?";
+"stacks.destroy.stack.message %ld %@" = "Ovo trajno briše %ld lokalnih grana putem git-spicea: %@. Udaljene grane i svi pull requestovi ostaju netaknuti.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld ovih grana i dalje ima OTVOREN pull request.";
+"stacks.destroy.stack.confirm" = "Uništi Stog";
+"stacks.destroy.stack.done %ld" = "Stog uništen: izbrisano %ld grana";
+"stacks.destroy.stack.worktree.skipped %@" = "Ostavljeno netaknuto (nepredane promjene): %@";
+"stacks.base.mismatch %@ %@" = "PR cilja na %@, ali roditelj stoga je %@ — Sinkroniziraj Repozitorij će ga preusmjeriti";
+"stacks.restack.up.to.date" = "Stog je već ažuran";
+"stacks.restack.done %ld" = "Restackano %ld grana";
+"stacks.sync.clean" = "Sve sinkronizirano";
+"stacks.submit.done %ld %ld" = "Poslano: %ld stvoreno, %ld ažurirano";
+"sidebar.worktrees.section.header" = "Radna Stabla";
+"stacks.break.out" = "Izdvoji u radno stablo…";
+"stacks.skipped.notice %@" = "Bez restacka: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (preuzeta u %@ s nepredanim promjenama)";
+"stacks.skipped.in.use %@ %@" = "%@ (preuzeta u %@ s aktivnim terminalom)";
+"stacks.copy.branch.name" = "Kopiraj Naziv Grane";
+"stacks.reveal.worktree" = "Prikaži Radno Stablo";
+"stacks.anchored.badge.help %@" = "Usidreno u radnom stablu %@ — kliknite za prikaz";
+"stacks.part.of.stack %@" = "Dio stoga %@";
+"stacks.section.header" = "Stogovi";
+"stacks.checked.out.at %@" = "Preuzeta u %@ — kliknite za prikaz radnog stabla";
+"stacks.anchor.help" = "Stvori radno stablo za ovaj stog";
+"stacks.group.new.worktree" = "Novo Radno Stablo…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nova grana stoga prije…";
+"stacks.new.branch.after" = "Nova grana stoga poslije…";
+"stacks.new.branch.insert.below.note %@" = "Nova grana se stvara ispod %@ u stogu.";
+"stacks.new.branch.insert.above.note %@" = "Nova grana se stvara iznad %@ u stogu, zauzimajući njezino mjesto — %@ se pomiče na nju.";
+"stacks.main.worktree.not.found" = "Nije moguće pronaći glavno radno stablo repozitorija.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Novi stog…";
+"stacks.new.stack.title" = "Novi stog";
+"stacks.new.stack.name.label" = "Naziv grane";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Osnovna grana";
+"stacks.new.stack.button" = "Stvori";
+"stacks.new.stack.note" = "Stvara granu iz osnovne bez checkouta i bez radnog stabla — stog s jednim unosom koji možete pokrenuti kasnije.";
+"stacks.start.stack.checkbox" = "Započni stog ovom granom";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Granaj iz zadane";
+"stacks.new.stack.mode.integration" = "Granaj iz integracijske";
+"stacks.new.stack.stack.name.label" = "Naziv stoga";
+"stacks.new.stack.integration.preview %@" = "Stvara %@";
+"stacks.new.stack.first.branch.label" = "Prva grana stoga (neobavezno)";
+"stacks.new.stack.first.branch.empty.hint" = "Ostavljeno prazno: stvara se samo prazna integracijska grana — svoju prvu granu stoga možete dodati kasnije.";
+"stacks.new.stack.first.branch.filled.hint" = "Ova grana se stvara u stogu iznad integracijske grane, a ne izravno iznad osnovne grane.";
+"stacks.new.stack.integration.note" = "Stvara praznu integracijsku granu iz osnovne kao korijen stoga — nikada ne nosi vlastiti kod. Grane stoga grade se na njoj umjesto na osnovnoj, a njihovi pull requestovi se lančano nastavljaju na nju. Kada se sve spoji u integracijsku granu, ona se kao jedna objedinjena promjena šalje kao pull request u osnovnu — umjesto da se svaka grana stoga zasebno spaja u osnovnu.";
+"stacks.new.stack.name.exists %@" = "%@ već postoji — odaberite drugi naziv.";
+"settings.gitspice.new.stack.mode" = "Novi stog počinje kao:";
+"settings.gitspice.new.stack.mode.help" = "Koji način rada list Novi stog unaprijed odabire — list uvijek nudi oba.";
+"settings.gitspice.hide.stacked.worktrees" = "Sakrij grane stoga iz odjeljka Radna Stabla";
+"settings.gitspice.hide.stacked.worktrees.help" = "Radna stabla čija grana pripada praćenom stogu već su navedena pod Stogovi — sakrijte ih iz odjeljka Radna Stabla kako biste izbjegli dvostruki popis.";

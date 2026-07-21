@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Remplacer le backend par défaut";
@@ -563,6 +578,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Dépôts";
+"sidebar.workspace.all" = "Tous les dépôts";
+"sidebar.workspace.menu.help" = "Filtrer les dépôts par espace de travail";
+"sidebar.workspace.new" = "Nouvel espace de travail…";
+"sidebar.workspace.new.title" = "Nouvel espace de travail";
+"sidebar.workspace.name.label" = "Nom de l’espace de travail";
+"sidebar.workspace.name.placeholder" = "p. ex. Travail, Projets personnels";
+"sidebar.workspace.create" = "Créer";
+"sidebar.workspace.manage" = "Gérer les espaces de travail…";
+"sidebar.workspace.manage.title" = "Gérer les espaces de travail";
+"sidebar.workspace.manage.empty" = "Aucun espace de travail pour l'instant. Créez-en un depuis le menu d'espace de travail.";
+"sidebar.workspace.manage.done" = "Terminé";
+"sidebar.workspace.add.to" = "Ajouter à l'espace de travail";
+"sidebar.workspace.delete.title" = "Supprimer l'espace de travail ?";
+"sidebar.workspace.delete.confirm" = "Supprimer";
+"sidebar.workspace.delete.message %@" = "« %@ » sera supprimé. Les dépôts qu'il contient ne seront pas supprimés.";
+"sidebar.workspace.empty.message" = "Aucun dépôt dans cet espace de travail.\nFaites un clic droit sur un dépôt dans « Tous les dépôts » pour l’ajouter ici.";
 "sidebar.add.button.help" = "Ajouter un dépôt";
 "sidebar.empty.message" = "Aucun dépôt ajouté.\nCliquez sur + pour ajouter un dépôt git.";
 "sidebar.worktrees.placeholder" = "Les worktrees apparaîtront ici";
@@ -1011,6 +1042,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Dupliquer en local";
 "harnesses.fork.to.local.help" = "Créer une copie locale modifiable de ce harnais";
+"harnesses.publish.to.repository" = "Publier dans le dépôt…";
 "harnesses.update.dot.help" = "Mise à jour disponible";
 "harness.fork.title %@" = "Dupliquer \"%@\" en local";
 "harness.fork.explanation" = "Crée une copie locale modifiable de ce harnais. La copie suit son origine afin que vous puissiez voir ce qui a changé en amont.";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.hint" = "Laissez vide pour conserver le nom source. L'identifiant canonique du nouveau fork sera local/<nom>.";
 "harness.fork.identity.collision" = "Un harness installé possède déjà cette identité.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publier \"%@\" dans le dépôt";
+"harness.publish.explanation" = "Copie ce harnais dans un nouveau worktree du dépôt cible, prêt à être commis. Les conventions propres au dépôt (scripts d'enregistrement, manifestes) gèrent le reste.";
+"harness.publish.button" = "Publier";
+"harness.publish.update.button" = "Mettre à jour l'entrée existante";
+"harness.publish.progress.title %@" = "Publication de \"%@\"…";
+"harness.publish.repo.label" = "Dépôt cible";
+"harness.publish.repo.placeholder" = "Sélectionner un dépôt…";
+"harness.publish.parentdir.label" = "Répertoire dans le dépôt";
+"harness.publish.parentdir.hint" = "Suggéré d'après l'endroit où ce dépôt conserve déjà ses harnais. Entièrement modifiable.";
+"harness.publish.name.label" = "Nom";
+"harness.publish.branch.label" = "Branche";
+"harness.publish.basebranch.label" = "Branche de base";
+"harness.publish.worktreepath.label" = "Chemin du worktree";
+"harness.publish.files.label" = "Fichiers à copier";
+"harness.publish.changes.label" = "Modifications par rapport à la copie publiée";
+"harness.publish.mode.label" = "Mode de copie";
+"harness.publish.mode.entire" = "Répertoire entier";
+"harness.publish.mode.enumerated" = "Fichiers du harnais uniquement";
+"harness.publish.mode.enumerated.hint" = "Le répertoire source sert également de dépôt de projet — seuls les fichiers appartenant au harnais sont copiés.";
+"harness.publish.state.new" = "Nouvelle entrée — ce harnais n'existe pas encore dans le dépôt.";
+"harness.publish.state.update %@" = "Met à jour l'entrée existante à %@ (l'écrase).";
+"harness.publish.state.clash %@" = "Ce répertoire contient déjà un harnais différent (\"%@\") — choisissez un autre nom.";
+"harness.publish.state.occupied" = "Ce répertoire existe déjà dans le dépôt — choisissez un autre nom ou emplacement.";
+"harness.publish.state.samerepo" = "Ce harnais se trouve déjà dans le dépôt sélectionné — validez vos modifications là-bas plutôt que de publier.";
+"harness.publish.reveal.repository" = "Afficher dans les dépôts";
+"harness.publish.preflight.failed" = "Le harnais local ne valide pas — corrigez-le avant de publier.";
+"harness.publish.composition.unavailable" = "ynd compose a échoué pour ce harnais — le mode \"fichiers du harnais uniquement\" en a besoin pour savoir quels fichiers lui appartiennent. Corrigez le harnais ou passez à \"répertoire entier\".";
+"harness.publish.unresolved %lld" = "%lld fichier(s) référencé(s) manquant(s) dans la source — ils ne seront pas copiés.";
+"harness.publish.register.disclosure %@" = "Après la copie, le %@ du dépôt sera exécuté (script fourni par le dépôt).";
+"harness.publish.change.added" = "ajouté";
+"harness.publish.change.modified" = "modifié";
+"harness.publish.change.removed" = "supprimé";
+"harness.publish.changes.none" = "Aucune différence — la copie publiée correspond à vos fichiers locaux.";
+"harness.publish.step.worktree %@" = "Création du worktree sur la branche %@…";
+"harness.publish.step.copy %@" = "Copie du harnais dans %@…";
+"harness.publish.step.copied %lld" = "%lld groupe(s) de fichiers copié(s).";
+"harness.publish.step.validate" = "Validation du harnais copié (ynd validate)…";
+"harness.publish.step.register %@" = "Exécution de %@…";
+"harness.publish.step.done %@" = "Terminé — worktree prêt à %@.";
+"harness.publish.warning %@" = "Avertissement : %@";
+"harness.publish.deleted %@" = "Chemin obsolète supprimé : %@";
+"harness.publish.validation.failed" = "La validation a échoué dans le worktree — rien n'a été commis. Le worktree est conservé pour inspection.";
+"harness.publish.register.failed" = "Le script d'enregistrement du dépôt a échoué — le worktree est conservé pour inspection.";
+"harness.publish.references.missing %@" = "Des fichiers référencés par le manifeste sont absents après la copie : %@";
+"harness.publish.error.occupied %@" = "La destination contient déjà un harnais : %@";
+"harness.publish.error.invaliddest %@" = "La destination sort du worktree : %@";
+"harness.publish.error.copy %@" = "Échec de la copie : %@";
+"harness.publish.error.rename %@" = "Impossible de réécrire le nom du manifeste : %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Mettre à jour \"%@\"";
@@ -1265,5 +1347,111 @@
 "remote.prs.worktree.exists" = "Le worktree existe déjà";
 "settings.github.feed.cap.help" = "Nombre maximum de pull requests affichées par dépôt dans la barre latérale Remote. Les PRs extraites sont toujours incluses.";
 "settings.github.feed.cap.label" = "PRs par dépôt";
-"settings.github.section.feed" = "Flux de PRs Remote";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Alimente les branches empilées et les PR empilées dans la barre latérale.";
+"settings.gitspice.version" = "Version :";
+"settings.gitspice.path" = "Chemin :";
+"settings.gitspice.info" = "Les fonctionnalités de branches empilées dans la barre latérale dépendent d'une installation fonctionnelle de git-spice. Elle réutilise l'authentification du CLI gh.";
+"settings.gitspice.not.installed.description" = "git-spice permet les branches empilées et les PR empilées. Sans lui, TermQ n'affiche que de simples worktrees.";
+"settings.gitspice.install.hint" = "Installer avec Homebrew :";
+"settings.gitspice.check.again" = "Vérifier à nouveau";
+"settings.gitspice.status.unusable %@" = "Détecté mais inutilisable : %@";
+"stacks.enable" = "Activer l'empilement…";
+"stacks.enable.help" = "Suivre les branches de ce dépôt comme une pile avec git-spice";
+"stacks.enable.failed %@" = "Impossible d'activer l'empilement : %@";
+"stacks.needs.restack" = "Restack nécessaire";
+"stacks.open.change.request" = "Ouvrir la demande de modification";
+"stacks.unpushed.commits %ld" = "↑%ld non poussé(s)";
+"stacks.change.request.merged" = "fusionnée";
+"stacks.change.request.closed" = "fermée";
+"stacks.no.change.request" = "pas de PR";
+"stacks.disclosure.help" = "Afficher les branches de la pile";
+"stacks.switch.blocked.dirty" = "Impossible de changer de branche de la pile : le worktree contient des modifications non validées. Validez ou mettez-les de côté (stash) d'abord.";
+"stacks.switch.blocked.in.use" = "Impossible de changer de branche de la pile : un terminal est ouvert dans ce worktree. Fermez-le d'abord.";
+"stacks.switch.blocked.elsewhere %@" = "Impossible de changer de branche de la pile : elle est extraite dans un autre worktree (%@).";
+"stacks.switch.help" = "Double-cliquez pour basculer ce worktree sur la branche";
+"stacks.switch.to %@" = "Basculer vers %@";
+"stacks.add.branch" = "Ajouter une branche à la pile…";
+"stacks.add.branch.title" = "Ajouter une Branche à la Pile";
+"stacks.add.branch.name.label" = "Nom de la branche";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Empiler sur";
+"stacks.add.branch.staged.note" = "Les modifications indexées deviennent le premier commit de la nouvelle branche. Avec un arbre propre, une branche vide est créée par-dessus.";
+"stacks.add.branch.track.note" = "Cette branche existe déjà — elle sera suivie dans la pile à la place.";
+"stacks.add.branch.create" = "Créer";
+"stacks.add.branch.track" = "Suivre";
+"stacks.restack.stack" = "Restack la Pile";
+"stacks.restack.from.here" = "Restack à partir d'ici";
+"stacks.conflict.banner %ld" = "Restack en pause — conflits dans %ld fichiers";
+"stacks.conflict.continue" = "Continuer";
+"stacks.conflict.abort" = "Abandonner";
+"stacks.conflict.hint" = "Résolvez les conflits dans un terminal, indexez les fichiers, puis Continuer.";
+"stacks.submit.stack" = "Soumettre la Pile…";
+"stacks.submit.branch" = "Soumettre cette Branche…";
+"stacks.submit.title" = "Soumettre la Pile";
+"stacks.submit.button" = "Soumettre";
+"stacks.submit.draft.toggle" = "Créer les nouvelles pull requests en tant que brouillons";
+"stacks.submit.update.only.toggle" = "Mettre à jour uniquement les pull requests existantes";
+"stacks.submit.will.create" = "créer";
+"stacks.submit.will.update" = "mettre à jour";
+"stacks.sync.repo" = "Synchroniser le Dépôt";
+"stacks.sync.cleaned %ld %@" = "La synchronisation a supprimé %ld branches fusionnées : %@";
+"stacks.destroy.stack" = "Détruire la Pile…";
+"stacks.destroy.stack.title" = "Détruire la pile ?";
+"stacks.destroy.stack.message %ld %@" = "Cela supprime définitivement %ld branches locales via git-spice : %@. Les branches distantes et les pull requests éventuelles restent intactes.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld de ces branches ont encore une pull request OUVERTE.";
+"stacks.destroy.stack.confirm" = "Détruire la Pile";
+"stacks.destroy.stack.done %ld" = "Pile détruite : %ld branches supprimées";
+"stacks.destroy.stack.worktree.skipped %@" = "Laissé intact (modifications non validées) : %@";
+"stacks.base.mismatch %@ %@" = "La PR cible %@, mais le parent de la pile est %@ — Synchroniser le Dépôt la reciblera";
+"stacks.restack.up.to.date" = "La pile est déjà à jour";
+"stacks.restack.done %ld" = "%ld branches restackées";
+"stacks.sync.clean" = "Tout est synchronisé";
+"stacks.submit.done %ld %ld" = "Soumis : %ld créée(s), %ld mise(s) à jour";
+"sidebar.worktrees.section.header" = "Worktrees";
+"stacks.break.out" = "Extraire dans un Worktree…";
+"stacks.skipped.notice %@" = "Non restackée : %@";
+"stacks.skipped.dirty %@ %@" = "%@ (extraite dans %@ avec des modifications non validées)";
+"stacks.skipped.in.use %@ %@" = "%@ (extraite dans %@ avec un terminal actif)";
+"stacks.copy.branch.name" = "Copier le Nom de la Branche";
+"stacks.reveal.worktree" = "Révéler le Worktree";
+"stacks.anchored.badge.help %@" = "Ancré dans le worktree %@ — cliquez pour le révéler";
+"stacks.part.of.stack %@" = "Fait partie de la pile %@";
+"stacks.section.header" = "Piles";
+"stacks.checked.out.at %@" = "Extraite dans %@ — cliquez pour révéler le worktree";
+"stacks.anchor.help" = "Créer un worktree pour cette pile";
+"stacks.group.new.worktree" = "Nouveau Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nouvelle Branche Empilée Avant…";
+"stacks.new.branch.after" = "Nouvelle Branche Empilée Après…";
+"stacks.new.branch.insert.below.note %@" = "La nouvelle branche est créée en dessous de %@ dans la pile.";
+"stacks.new.branch.insert.above.note %@" = "La nouvelle branche est créée au-dessus de %@ dans la pile, prenant sa place — %@ se déplace dessus.";
+"stacks.main.worktree.not.found" = "Impossible de trouver le worktree principal du dépôt.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nouvelle Pile…";
+"stacks.new.stack.title" = "Nouvelle Pile";
+"stacks.new.stack.name.label" = "Nom de la branche";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branche de base";
+"stacks.new.stack.button" = "Créer";
+"stacks.new.stack.note" = "Crée la branche à partir de la base sans checkout et sans worktree — une pile à une seule entrée que vous pourrez lancer plus tard.";
+"stacks.start.stack.checkbox" = "Démarrer une pile avec cette branche";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Créer à partir de la branche par défaut";
+"stacks.new.stack.mode.integration" = "Créer à partir de la branche d'intégration";
+"stacks.new.stack.stack.name.label" = "Nom de la Pile";
+"stacks.new.stack.integration.preview %@" = "Crée %@";
+"stacks.new.stack.first.branch.label" = "Première Branche Empilée (facultatif)";
+"stacks.new.stack.first.branch.empty.hint" = "Laissé vide : seule la branche d'intégration vide est créée — vous pourrez y ajouter votre première branche empilée plus tard.";
+"stacks.new.stack.first.branch.filled.hint" = "Cette branche est créée empilée sur la branche d'intégration, et non directement sur la branche de base.";
+"stacks.new.stack.integration.note" = "Crée une branche d'intégration vide à partir de la base comme racine de la pile — elle ne porte jamais de code propre. Les branches empilées se construisent sur elle plutôt que sur la base, et leurs pull requests s'y enchaînent. Une fois que tout est fusionné dans la branche d'intégration, elle est proposée en pull request vers la base comme un seul changement consolidé — plutôt que chaque branche empilée soit fusionnée individuellement dans la base.";
+"stacks.new.stack.name.exists %@" = "%@ existe déjà — choisissez un autre nom.";
+"settings.gitspice.new.stack.mode" = "Nouvelle Pile démarre en tant que :";
+"settings.gitspice.new.stack.mode.help" = "Le mode que la feuille Nouvelle Pile présélectionne — la feuille propose toujours les deux.";
+"settings.gitspice.hide.stacked.worktrees" = "Masquer les worktrees empilés de la section Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Les worktrees dont la branche appartient à une pile suivie sont déjà listés dans Piles — masquez-les de la section Worktrees pour éviter le doublon.";

@@ -454,6 +454,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "แทนที่แบ็กเอนด์เริ่มต้น";
@@ -565,6 +580,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "คลังเก็บโค้ด";
+"sidebar.workspace.all" = "คลังเก็บโค้ดทั้งหมด";
+"sidebar.workspace.menu.help" = "กรองคลังเก็บโค้ดตามพื้นที่ทำงาน";
+"sidebar.workspace.new" = "พื้นที่ทำงานใหม่…";
+"sidebar.workspace.new.title" = "พื้นที่ทำงานใหม่";
+"sidebar.workspace.name.label" = "ชื่อพื้นที่ทำงาน";
+"sidebar.workspace.name.placeholder" = "เช่น งาน, โปรเจกต์ส่วนตัว";
+"sidebar.workspace.create" = "สร้าง";
+"sidebar.workspace.manage" = "จัดการพื้นที่ทำงาน…";
+"sidebar.workspace.manage.title" = "จัดการพื้นที่ทำงาน";
+"sidebar.workspace.manage.empty" = "ยังไม่มีพื้นที่ทำงาน สร้างหนึ่งได้จากเมนูพื้นที่ทำงาน";
+"sidebar.workspace.manage.done" = "เสร็จสิ้น";
+"sidebar.workspace.add.to" = "เพิ่มไปยังพื้นที่ทำงาน";
+"sidebar.workspace.delete.title" = "ลบพื้นที่ทำงาน?";
+"sidebar.workspace.delete.confirm" = "ลบ";
+"sidebar.workspace.delete.message %@" = "“%@” จะถูกลบออก คลังเก็บโค้ดที่อยู่ในนั้นจะไม่ถูกลบ";
+"sidebar.workspace.empty.message" = "ไม่มีคลังเก็บโค้ดในพื้นที่ทำงานนี้\nคลิกขวาที่คลังเก็บโค้ดใน “คลังเก็บโค้ดทั้งหมด” เพื่อเพิ่มที่นี่";
 "sidebar.add.button.help" = "เพิ่มคลังเก็บโค้ด";
 "sidebar.empty.message" = "ยังไม่ได้เพิ่มคลังเก็บโค้ด\nคลิก + เพื่อเพิ่ม git repository";
 "sidebar.worktrees.placeholder" = "Worktrees จะปรากฏที่นี่";
@@ -1012,6 +1043,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "แยกสาขาไปยังเครื่องท้องถิ่น";
 "harnesses.fork.to.local.help" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้";
+"harnesses.publish.to.repository" = "เผยแพร่ไปยังคลังเก็บโค้ด…";
 "harnesses.update.dot.help" = "มีการอัปเดต";
 "harness.fork.title %@" = "แยกสาขา \"%@\" ไปยังท้องถิ่น";
 "harness.fork.explanation" = "สร้างสำเนาท้องถิ่นที่แก้ไขได้ของ harness นี้ สำเนาจะติดตามต้นกำเนิดเพื่อให้คุณเห็นว่ามีการเปลี่ยนแปลงอะไร upstream";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.label" = "ชื่อ (ไม่บังคับ)";
 "harness.fork.rename.hint" = "เว้นว่างเพื่อเก็บชื่อต้นทาง id หลักของ fork ใหม่จะเป็น local/<ชื่อ>";
 "harness.fork.identity.collision" = "มี harness ที่ติดตั้งแล้วใช้ตัวตนนี้อยู่";
+// MARK: - Harness Publish
+"harness.publish.title %@" = "เผยแพร่ \"%@\" ไปยังคลังเก็บโค้ด";
+"harness.publish.explanation" = "คัดลอก harness นี้ไปยัง worktree ใหม่ของคลังเก็บโค้ดเป้าหมาย พร้อมสำหรับการ commit แบบแผนของคลังเก็บโค้ดเอง (สคริปต์การลงทะเบียน, ไฟล์ manifest) จะดูแลส่วนที่เหลือ";
+"harness.publish.button" = "เผยแพร่";
+"harness.publish.update.button" = "อัปเดตรายการที่มีอยู่";
+"harness.publish.progress.title %@" = "กำลังเผยแพร่ \"%@\"…";
+"harness.publish.repo.label" = "คลังเก็บโค้ดเป้าหมาย";
+"harness.publish.repo.placeholder" = "เลือกคลังเก็บโค้ด…";
+"harness.publish.parentdir.label" = "ไดเรกทอรีในคลังเก็บโค้ด";
+"harness.publish.parentdir.hint" = "แนะนำจากตำแหน่งที่คลังเก็บโค้ดนี้เก็บ harness อยู่แล้ว แก้ไขได้อย่างเต็มที่";
+"harness.publish.name.label" = "ชื่อ";
+"harness.publish.branch.label" = "สาขา";
+"harness.publish.basebranch.label" = "สาขาฐาน";
+"harness.publish.worktreepath.label" = "เส้นทาง worktree";
+"harness.publish.files.label" = "ไฟล์ที่จะคัดลอก";
+"harness.publish.changes.label" = "การเปลี่ยนแปลงเทียบกับสำเนาที่เผยแพร่";
+"harness.publish.mode.label" = "โหมดการคัดลอก";
+"harness.publish.mode.entire" = "ทั้งไดเรกทอรี";
+"harness.publish.mode.enumerated" = "เฉพาะไฟล์ harness";
+"harness.publish.mode.enumerated.hint" = "ไดเรกทอรีต้นทางทำหน้าที่เป็นคลังเก็บโค้ดของโปรเจกต์ด้วย — คัดลอกเฉพาะไฟล์ที่ harness เป็นเจ้าของเท่านั้น";
+"harness.publish.state.new" = "รายการใหม่ — harness นี้ยังไม่มีอยู่ในคลังเก็บโค้ด";
+"harness.publish.state.update %@" = "อัปเดตรายการที่มีอยู่ที่ %@ (เขียนทับ)";
+"harness.publish.state.clash %@" = "ไดเรกทอรีนั้นมี harness อื่นอยู่แล้ว (\"%@\") — เลือกชื่ออื่น";
+"harness.publish.state.occupied" = "ไดเรกทอรีนั้นมีอยู่แล้วในคลังเก็บโค้ด — เลือกชื่อหรือตำแหน่งอื่น";
+"harness.publish.state.samerepo" = "harness นี้อยู่ในคลังเก็บโค้ดที่เลือกแล้ว — commit การเปลี่ยนแปลงที่นั่นแทนการเผยแพร่";
+"harness.publish.reveal.repository" = "แสดงในคลังเก็บโค้ด";
+"harness.publish.preflight.failed" = "harness ในเครื่องผ่านการตรวจสอบไม่ผ่าน — แก้ไขก่อนเผยแพร่";
+"harness.publish.composition.unavailable" = "ynd compose ล้มเหลวสำหรับ harness นี้ — โหมด \"เฉพาะไฟล์ harness\" ต้องการเพื่อทราบว่าไฟล์ใดเป็นเจ้าของ แก้ไข harness หรือเปลี่ยนเป็น \"ทั้งไดเรกทอรี\"";
+"harness.publish.unresolved %lld" = "%lld ไฟล์อ้างอิงหายไปจากต้นทาง — จะไม่ถูกคัดลอก";
+"harness.publish.register.disclosure %@" = "หลังการคัดลอก %@ ของคลังเก็บโค้ดจะทำงาน (สคริปต์ที่คลังเก็บโค้ดจัดเตรียม)";
+"harness.publish.change.added" = "เพิ่ม";
+"harness.publish.change.modified" = "แก้ไข";
+"harness.publish.change.removed" = "ลบ";
+"harness.publish.changes.none" = "ไม่มีความแตกต่าง — สำเนาที่เผยแพร่ตรงกับไฟล์ในเครื่องของคุณ";
+"harness.publish.step.worktree %@" = "กำลังสร้าง worktree บนสาขา %@…";
+"harness.publish.step.copy %@" = "กำลังคัดลอก harness ไปยัง %@…";
+"harness.publish.step.copied %lld" = "คัดลอก %lld กลุ่มไฟล์แล้ว";
+"harness.publish.step.validate" = "กำลังตรวจสอบ harness ที่คัดลอก (ynd validate)…";
+"harness.publish.step.register %@" = "กำลังรัน %@…";
+"harness.publish.step.done %@" = "เสร็จสิ้น — worktree พร้อมใช้งานที่ %@";
+"harness.publish.warning %@" = "คำเตือน: %@";
+"harness.publish.deleted %@" = "ลบเส้นทางที่ล้าสมัย: %@";
+"harness.publish.validation.failed" = "การตรวจสอบล้มเหลวใน worktree — ไม่มีอะไรถูก commit ไว้ worktree ถูกเก็บไว้เพื่อตรวจสอบ";
+"harness.publish.register.failed" = "สคริปต์การลงทะเบียนของคลังเก็บโค้ดล้มเหลว — worktree ถูกเก็บไว้เพื่อตรวจสอบ";
+"harness.publish.references.missing %@" = "ไฟล์ที่อ้างอิงโดย manifest หายไปหลังการคัดลอก: %@";
+"harness.publish.error.occupied %@" = "ปลายทางมี harness อยู่แล้ว: %@";
+"harness.publish.error.invaliddest %@" = "ปลายทางอยู่นอก worktree: %@";
+"harness.publish.error.copy %@" = "การคัดลอกล้มเหลว: %@";
+"harness.publish.error.rename %@" = "ไม่สามารถเขียนชื่อ manifest ใหม่ได้: %@";
+
 
 
 // MARK: - Harness Update
@@ -1266,5 +1348,111 @@
 "remote.prs.worktree.exists" = "Worktree มีอยู่แล้ว";
 "settings.github.feed.cap.help" = "จำนวน pull request สูงสุดที่แสดงต่อ repository ในแถบด้านข้าง Remote PR ที่ดึงออกแล้วจะถูกรวมไว้เสมอ";
 "settings.github.feed.cap.label" = "PR ต่อ repository";
-"settings.github.section.feed" = "ฟีด Remote PR";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "รองรับสาขาแบบสแต็กและ PR แบบสแต็กในแถบด้านข้าง";
+"settings.gitspice.version" = "เวอร์ชัน:";
+"settings.gitspice.path" = "เส้นทาง:";
+"settings.gitspice.info" = "ฟีเจอร์สาขาแบบสแต็กในแถบด้านข้างขึ้นอยู่กับการติดตั้ง git-spice ที่ใช้งานได้ โดยจะใช้การยืนยันตัวตนของ gh CLI ร่วมกัน";
+"settings.gitspice.not.installed.description" = "git-spice เปิดใช้งานสาขาแบบสแต็กและ PR แบบสแต็ก หากไม่มี TermQ จะแสดงเฉพาะ Worktree ธรรมดาเท่านั้น";
+"settings.gitspice.install.hint" = "ติดตั้งโดยใช้ Homebrew:";
+"settings.gitspice.check.again" = "ตรวจสอบอีกครั้ง";
+"settings.gitspice.status.unusable %@" = "ตรวจพบแต่ใช้งานไม่ได้: %@";
+"stacks.enable" = "เปิดใช้งานการทำสแต็ก…";
+"stacks.enable.help" = "ติดตามสาขาของที่เก็บนี้เป็นสแต็กด้วย git-spice";
+"stacks.enable.failed %@" = "ไม่สามารถเปิดใช้งานการทำสแต็กได้: %@";
+"stacks.needs.restack" = "ต้อง restack";
+"stacks.open.change.request" = "เปิดคำขอเปลี่ยนแปลง";
+"stacks.unpushed.commits %ld" = "↑%ld รายการยังไม่ได้ push";
+"stacks.change.request.merged" = "รวมแล้ว";
+"stacks.change.request.closed" = "ปิดแล้ว";
+"stacks.no.change.request" = "ไม่มี PR";
+"stacks.disclosure.help" = "แสดงสาขาของสแต็ก";
+"stacks.switch.blocked.dirty" = "ไม่สามารถสลับสาขาสแต็กได้: Worktree มีการเปลี่ยนแปลงที่ยังไม่ได้ commit กรุณา commit หรือ stash ก่อน";
+"stacks.switch.blocked.in.use" = "ไม่สามารถสลับสาขาสแต็กได้: มีเทอร์มินัลเปิดอยู่ใน Worktree นี้ กรุณาปิดก่อน";
+"stacks.switch.blocked.elsewhere %@" = "ไม่สามารถสลับสาขาสแต็กได้: ถูก checkout อยู่ใน Worktree อื่น (%@)";
+"stacks.switch.help" = "ดับเบิลคลิกเพื่อสลับ Worktree นี้ไปยังสาขา";
+"stacks.switch.to %@" = "สลับไปที่ %@";
+"stacks.add.branch" = "เพิ่มสาขาเข้าสแต็ก…";
+"stacks.add.branch.title" = "เพิ่มสาขาเข้าสแต็ก";
+"stacks.add.branch.name.label" = "ชื่อสาขา";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "สแต็กบน";
+"stacks.add.branch.staged.note" = "การเปลี่ยนแปลงที่ stage ไว้จะกลายเป็น commit แรกของสาขาใหม่ หากต้นไม้สะอาด จะสร้างสาขาว่างขึ้นด้านบน";
+"stacks.add.branch.track.note" = "สาขานี้มีอยู่แล้ว — จะถูกติดตามในสแต็กแทน";
+"stacks.add.branch.create" = "สร้าง";
+"stacks.add.branch.track" = "ติดตาม";
+"stacks.restack.stack" = "Restack สแต็ก";
+"stacks.restack.from.here" = "Restack จากจุดนี้";
+"stacks.conflict.banner %ld" = "หยุด Restack ชั่วคราว — มีความขัดแย้งใน %ld ไฟล์";
+"stacks.conflict.continue" = "ดำเนินการต่อ";
+"stacks.conflict.abort" = "ยกเลิก";
+"stacks.conflict.hint" = "แก้ไขความขัดแย้งในเทอร์มินัล, stage ไฟล์ แล้วกดดำเนินการต่อ";
+"stacks.submit.stack" = "ส่งสแต็ก…";
+"stacks.submit.branch" = "ส่งสาขานี้…";
+"stacks.submit.title" = "ส่งสแต็ก";
+"stacks.submit.button" = "ส่ง";
+"stacks.submit.draft.toggle" = "สร้าง pull request ใหม่เป็นฉบับร่าง";
+"stacks.submit.update.only.toggle" = "อัปเดตเฉพาะ pull request ที่มีอยู่";
+"stacks.submit.will.create" = "สร้าง";
+"stacks.submit.will.update" = "อัปเดต";
+"stacks.sync.repo" = "ซิงค์ Repo";
+"stacks.sync.cleaned %ld %@" = "การซิงค์ลบสาขาที่รวมแล้ว %ld สาขา: %@";
+"stacks.destroy.stack" = "ทำลายสแต็ก…";
+"stacks.destroy.stack.title" = "ทำลายสแต็กหรือไม่?";
+"stacks.destroy.stack.message %ld %@" = "การดำเนินการนี้จะลบสาขาโลคัล %ld สาขาอย่างถาวรผ่าน git-spice: %@ สาขาระยะไกลและ pull request ใด ๆ จะไม่ได้รับผลกระทบ";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld จากสาขาเหล่านี้ยังคงมี pull request ที่เปิดอยู่";
+"stacks.destroy.stack.confirm" = "ทำลายสแต็ก";
+"stacks.destroy.stack.done %ld" = "ทำลายสแต็กแล้ว: ลบสาขาไปแล้ว %ld สาขา";
+"stacks.destroy.stack.worktree.skipped %@" = "ปล่อยไว้โดยไม่แตะต้อง (มีการเปลี่ยนแปลงที่ยังไม่ได้ commit): %@";
+"stacks.base.mismatch %@ %@" = "PR กำหนดเป้าหมายไปที่ %@ แต่สาขาแม่ของสแต็กคือ %@ — ซิงค์ Repo จะกำหนดเป้าหมายใหม่ให้";
+"stacks.restack.up.to.date" = "สแต็กเป็นปัจจุบันแล้ว";
+"stacks.restack.done %ld" = "Restack แล้ว %ld สาขา";
+"stacks.sync.clean" = "ซิงค์ทุกอย่างแล้ว";
+"stacks.submit.done %ld %ld" = "ส่งแล้ว: สร้าง %ld, อัปเดต %ld";
+"sidebar.worktrees.section.header" = "Worktrees";
+"stacks.break.out" = "แยกออกเป็น Worktree…";
+"stacks.skipped.notice %@" = "ไม่ได้ restack: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (checkout อยู่ใน %@ พร้อมการเปลี่ยนแปลงที่ยังไม่ได้ commit)";
+"stacks.skipped.in.use %@ %@" = "%@ (checkout อยู่ใน %@ พร้อมเทอร์มินัลที่ใช้งานอยู่)";
+"stacks.copy.branch.name" = "คัดลอกชื่อสาขา";
+"stacks.reveal.worktree" = "แสดง Worktree";
+"stacks.anchored.badge.help %@" = "ยึดอยู่ใน Worktree %@ — คลิกเพื่อแสดง";
+"stacks.part.of.stack %@" = "ส่วนหนึ่งของสแต็ก %@";
+"stacks.section.header" = "สแต็ก";
+"stacks.checked.out.at %@" = "Checkout อยู่ใน %@ — คลิกเพื่อแสดง Worktree";
+"stacks.anchor.help" = "สร้าง Worktree สำหรับสแต็กนี้";
+"stacks.group.new.worktree" = "Worktree ใหม่…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "สาขาสแต็กใหม่ก่อน…";
+"stacks.new.branch.after" = "สาขาสแต็กใหม่หลัง…";
+"stacks.new.branch.insert.below.note %@" = "สาขาใหม่จะถูกสร้างไว้ใต้ %@ ในสแต็ก";
+"stacks.new.branch.insert.above.note %@" = "สาขาใหม่จะถูกสร้างไว้เหนือ %@ ในสแต็ก โดยเข้าแทนที่ตำแหน่งของมัน — %@ จะย้ายไปอยู่ด้านบนมัน";
+"stacks.main.worktree.not.found" = "ไม่พบ worktree หลักของที่เก็บข้อมูล";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "สแต็กใหม่…";
+"stacks.new.stack.title" = "สแต็กใหม่";
+"stacks.new.stack.name.label" = "ชื่อสาขา";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "สาขาฐาน";
+"stacks.new.stack.button" = "สร้าง";
+"stacks.new.stack.note" = "สร้างสาขาจากฐานโดยไม่ต้อง checkout และไม่ต้องมี worktree — สแต็กที่มีรายการเดียวซึ่งคุณสามารถเริ่มใช้งานได้ภายหลัง";
+"stacks.start.stack.checkbox" = "เริ่มสแต็กด้วยสาขานี้";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "แยกสาขาจากค่าเริ่มต้น";
+"stacks.new.stack.mode.integration" = "แยกสาขาจากสาขาการรวม";
+"stacks.new.stack.stack.name.label" = "ชื่อสแต็ก";
+"stacks.new.stack.integration.preview %@" = "สร้าง %@";
+"stacks.new.stack.first.branch.label" = "สาขาสแต็กแรก (ไม่บังคับ)";
+"stacks.new.stack.first.branch.empty.hint" = "หากปล่อยว่างไว้: จะสร้างเฉพาะสาขาการรวมที่ว่างเปล่าเท่านั้น — คุณสามารถเพิ่มสาขาสแต็กแรกของคุณได้ภายหลัง";
+"stacks.new.stack.first.branch.filled.hint" = "สาขานี้จะถูกสร้างซ้อนอยู่เหนือสาขาการรวม ไม่ใช่อยู่เหนือสาขาฐานโดยตรง";
+"stacks.new.stack.integration.note" = "สร้างสาขาการรวมที่ว่างเปล่าจากฐานเป็นรากของสแต็ก — สาขานี้จะไม่มีโค้ดของตัวเองเลย สาขาสแต็กจะถูกสร้างต่อยอดบนสาขานี้แทนที่จะเป็นฐาน และ pull request ของสาขาเหล่านั้นจะเชื่อมโยงเข้ามาที่นี่ เมื่อทุกอย่างถูกผนวกเข้ากับสาขาการรวมแล้ว มันจะถูกส่งเป็น pull request เดียวที่รวมการเปลี่ยนแปลงทั้งหมดไปยังฐาน — แทนที่จะผนวกแต่ละสาขาสแต็กเข้ากับฐานทีละสาขา";
+"stacks.new.stack.name.exists %@" = "%@ มีอยู่แล้ว — เลือกชื่ออื่น";
+"settings.gitspice.new.stack.mode" = "สแต็กใหม่เริ่มต้นเป็น:";
+"settings.gitspice.new.stack.mode.help" = "โหมดใดที่ชีต สแต็กใหม่ เลือกไว้ล่วงหน้า — ชีตจะเสนอทั้งสองโหมดเสมอ";
+"settings.gitspice.hide.stacked.worktrees" = "ซ่อน worktree ที่ทำสแต็กจากส่วน Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "worktree ที่สาขาเป็นส่วนหนึ่งของสแต็กที่ติดตามอยู่จะแสดงอยู่ใน สแต็ก อยู่แล้ว — ซ่อนออกจากส่วน Worktrees เพื่อหลีกเลี่ยงการแสดงซ้ำ";

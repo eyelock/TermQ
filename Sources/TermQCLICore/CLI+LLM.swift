@@ -29,7 +29,9 @@ struct Pending: ParsableCommand {
     func run() throws {
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: shouldUseDebugMode(debug))
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: resolveProfile(debug),
+                boardFilename: resolveBoardFilename())
             let cards = getFilteredAndSortedCards(from: board)
             let output = buildPendingOutput(cards: cards, board: board)
 
@@ -46,7 +48,7 @@ struct Pending: ParsableCommand {
     }
 
     func getFilteredAndSortedCards(from board: Board) -> [Card] {
-        var cards = board.activeCards
+        var cards = Board.cardsInWorkspace(board.activeCards, workspaceId: resolveWorkspaceId())
 
         if actionsOnly {
             cards = cards.filter { !$0.llmNextAction.isEmpty }

@@ -51,7 +51,6 @@ struct SettingsView: View {
         case tools
         case dataAndSecurity
         case marketplaces
-        case gitHub
 
         var title: String {
             switch self {
@@ -60,7 +59,6 @@ struct SettingsView: View {
             case .tools: return Strings.Settings.tabTools
             case .dataAndSecurity: return Strings.Settings.tabDataAndSecurity
             case .marketplaces: return Strings.Settings.tabMarketplaces
-            case .gitHub: return Strings.Settings.tabGitHub
             }
         }
     }
@@ -95,7 +93,8 @@ struct SettingsView: View {
                         selectedLanguage: $selectedLanguage,
                         showUninstallSheet: $showUninstallSheet,
                         protectedBranches: $gitConfig.globalProtectedBranches,
-                        initializeSubmodules: $gitConfig.initializeSubmodules
+                        initializeSubmodules: $gitConfig.initializeSubmodules,
+                        remotePRFeedCap: $settings.remotePRFeedCap
                     )
                 case .environment:
                     SettingsEnvironmentView()
@@ -111,8 +110,6 @@ struct SettingsView: View {
                     )
                 case .marketplaces:
                     SettingsMarketplacesView()
-                case .gitHub:
-                    SettingsGitHubView(remotePRFeedCap: $settings.remotePRFeedCap)
                 }
             }
             .formStyle(.grouped)

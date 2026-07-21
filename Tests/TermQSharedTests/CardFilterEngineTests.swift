@@ -66,62 +66,89 @@ final class CardFilterEngineTests: XCTestCase {
         XCTAssertTrue(result.isEmpty)
     }
 
-    // MARK: - filterByTag (key-only format)
+    // MARK: - filterByTag — literal-by-default, opt-in `re:` regex
 
-    func testFilterByTagNilPassesAll() {
+    func testFilterByTagNilPassesAll() throws {
         let cards = [makeCard(tags: [Tag(key: "env", value: "prod")], columnId: colA.id)]
-        let result = CardFilterEngine.filterByTag(cards, tagFilter: nil)
+        let result = try CardFilterEngine.filterByTag(cards, tagFilter: nil)
         XCTAssertEqual(result.count, 1)
     }
 
-    func testFilterByTagKeyOnly() {
+    /// T7.5 — Key-only match returns any card with that tag key.
+    func testFilterByTagKeyOnly() throws {
         let matching = makeCard(tags: [Tag(key: "env", value: "prod")], columnId: colA.id)
         let nonMatching = makeCard(tags: [Tag(key: "team", value: "platform")], columnId: colA.id)
-        let result = CardFilterEngine.filterByTag([matching, nonMatching], tagFilter: "env")
+        let result = try CardFilterEngine.filterByTag([matching, nonMatching], tagFilter: "env")
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0].tags.first?.key, "env")
     }
 
-    func testFilterByTagKeyOnlyCaseInsensitive() {
+    func testFilterByTagKeyOnlyCaseInsensitive() throws {
         let card = makeCard(tags: [Tag(key: "ENV", value: "prod")], columnId: colA.id)
-        let result = CardFilterEngine.filterByTag([card], tagFilter: "env")
+        let result = try CardFilterEngine.filterByTag([card], tagFilter: "env")
         XCTAssertEqual(result.count, 1)
     }
 
-    func testFilterByTagKeyNoMatch() {
+    func testFilterByTagKeyNoMatch() throws {
         let card = makeCard(tags: [Tag(key: "team", value: "platform")], columnId: colA.id)
-        let result = CardFilterEngine.filterByTag([card], tagFilter: "env")
+        let result = try CardFilterEngine.filterByTag([card], tagFilter: "env")
         XCTAssertTrue(result.isEmpty)
     }
 
-    // MARK: - filterByTag (key=value format, exact)
-
-    func testFilterByTagKeyValueExactMatch() {
+    /// Literal key=value match (default) — case-insensitive exact comparison.
+    func testFilterByTagKeyValueLiteralMatch() throws {
         let matching = makeCard(tags: [Tag(key: "env", value: "prod")], columnId: colA.id)
         let wrong = makeCard(tags: [Tag(key: "env", value: "staging")], columnId: colA.id)
-        let result = CardFilterEngine.filterByTag([matching, wrong], tagFilter: "env=prod", valueMatch: .exact)
+        let result = try CardFilterEngine.filterByTag([matching, wrong], tagFilter: "env=prod")
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0].tags.first?.value, "prod")
     }
 
-    func testFilterByTagKeyValueExactNoPartialMatch() {
+    /// Literal value does NOT do partial match — `env=prod` must not match `env=production`.
+    func testFilterByTagKeyValueLiteralRejectsPartial() throws {
         let card = makeCard(tags: [Tag(key: "env", value: "production")], columnId: colA.id)
-        let result = CardFilterEngine.filterByTag([card], tagFilter: "env=prod", valueMatch: .exact)
+        let result = try CardFilterEngine.filterByTag([card], tagFilter: "env=prod")
         XCTAssertTrue(result.isEmpty)
     }
 
-    // MARK: - filterByTag (key=value format, contains)
-
-    func testFilterByTagKeyValueContainsMatch() {
-        let card = makeCard(tags: [Tag(key: "env", value: "production")], columnId: colA.id)
-        let result = CardFilterEngine.filterByTag([card], tagFilter: "env=prod", valueMatch: .contains)
+    /// T7.4 — Regression test for the rejected regex-by-default design.
+    /// `project=v1.2` matches ONLY the v1.2 card, NOT a v1X2 card (where `.` would be a regex wildcard).
+    func testFilterByTagLiteralDotIsNotWildcard() throws {
+        let exact = makeCard(tags: [Tag(key: "project", value: "v1.2")], columnId: colA.id)
+        let wouldMatchUnderRegex = makeCard(tags: [Tag(key: "project", value: "v1X2")], columnId: colA.id)
+        let result = try CardFilterEngine.filterByTag([exact, wouldMatchUnderRegex], tagFilter: "project=v1.2")
         XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].tags.first?.value, "v1.2")
     }
 
-    func testFilterByTagKeyValueContainsNoMatch() {
-        let card = makeCard(tags: [Tag(key: "env", value: "staging")], columnId: colA.id)
-        let result = CardFilterEngine.filterByTag([card], tagFilter: "env=prod", valueMatch: .contains)
-        XCTAssertTrue(result.isEmpty)
+    /// T7.6 — Opt-in regex via `re:` prefix on value.
+    func testFilterByTagValueRegex() throws {
+        let stale = makeCard(tags: [Tag(key: "staleness", value: "stale")], columnId: colA.id)
+        let ageing = makeCard(tags: [Tag(key: "staleness", value: "ageing")], columnId: colA.id)
+        let fresh = makeCard(tags: [Tag(key: "staleness", value: "fresh")], columnId: colA.id)
+        let result = try CardFilterEngine.filterByTag([stale, ageing, fresh], tagFilter: "staleness=re:(stale|ageing)")
+        XCTAssertEqual(result.count, 2)
+        XCTAssertFalse(result.contains { $0.tags.first?.value == "fresh" })
+    }
+
+    /// T7.7 — Opt-in regex via `re:` prefix on the whole pattern (matches full `key=value`).
+    func testFilterByTagWholePatternRegex() throws {
+        let a = makeCard(tags: [Tag(key: "project", value: "org/repo-a")], columnId: colA.id)
+        let b = makeCard(tags: [Tag(key: "project", value: "org/repo-b")], columnId: colA.id)
+        let other = makeCard(tags: [Tag(key: "project", value: "external/x")], columnId: colA.id)
+        let result = try CardFilterEngine.filterByTag([a, b, other], tagFilter: "re:project=org/.+")
+        XCTAssertEqual(result.count, 2)
+    }
+
+    /// T7.8 — Invalid regex inside `re:` prefix surfaces an error (not silent literal fallback).
+    func testFilterByTagInvalidRegexThrows() {
+        let card = makeCard(tags: [Tag(key: "staleness", value: "stale")], columnId: colA.id)
+        XCTAssertThrowsError(try CardFilterEngine.filterByTag([card], tagFilter: "staleness=re:[invalid")) { error in
+            guard case CardFilterEngine.TagFilterError.invalidRegex = error else {
+                XCTFail("Expected TagFilterError.invalidRegex, got \(error)")
+                return
+            }
+        }
     }
 
     // MARK: - filterByBadge

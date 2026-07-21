@@ -14,6 +14,7 @@ struct ExpandedTerminalView: View {
     let onMoveTab: (UUID, Int) -> Void
     let onNewTab: () -> Void
     let onBell: (UUID) -> Void
+    let onLaunchHarnessAtPath: (String) -> Void
     let tabCards: [TerminalCard]
     let columns: [Column]
     let needsAttention: Set<UUID>
@@ -134,6 +135,7 @@ struct ExpandedTerminalView: View {
                         onBell: {
                             onBell(card.id)
                         },
+                        onLaunchHarnessAtPath: onLaunchHarnessAtPath,
                         isSearching: isSearching,
                         restartToken: restartCounter
                     )

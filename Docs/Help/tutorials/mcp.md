@@ -1,4 +1,4 @@
-# Tutorial 10: MCP Integration
+# MCP Integration
 
 The Model Context Protocol (MCP) lets Claude Code interact with your TermQ board directly — not just reading context you paste in, but querying the board, opening terminals, moving cards, and updating fields, all from within a Claude session.
 
@@ -47,15 +47,15 @@ Once connected, Claude Code has access to these tools:
 
 | Tool | What it does |
 |---|---|
-| `termq_pending` | List terminals needing attention — pending actions, sorted by staleness |
-| `termq_list` | List all terminals, optionally filtered by column |
-| `termq_find` | Smart search across all terminal metadata |
-| `termq_open` | Open a terminal by name, UUID, or path — returns full details including `llmPrompt` |
-| `termq_create` | Create a new terminal card |
-| `termq_set` | Update terminal fields (name, description, tags, llmPrompt, llmNextAction, etc.) |
-| `termq_move` | Move a terminal to a different column |
-| `termq_get` | Get context for the terminal Claude is currently running in (using `$TERMQ_TERMINAL_ID`) |
-| `termq_delete` | Delete a terminal (soft delete to bin by default) |
+| `pending` | List terminals needing attention — pending actions, sorted by staleness |
+| `list` | List all terminals, optionally filtered by column |
+| `find` | Smart search across all terminal metadata |
+| `open` | Open a terminal by name, UUID, or path — returns full details including `llmPrompt` |
+| `create` | Create a new terminal card |
+| `set` | Update terminal fields (name, description, tags, llmPrompt, llmNextAction, etc.) |
+| `move` | Move a terminal to a different column |
+| `get` | Get context for the terminal Claude is currently running in (using `$TERMQ_TERMINAL_ID`) |
+| `delete` | Delete a terminal (soft delete to bin by default) |
 
 ---
 
@@ -64,7 +64,7 @@ Once connected, Claude Code has access to these tools:
 At the start of every Claude Code session in a TermQ terminal, tell it to run:
 
 ```
-termq_pending
+pending
 ```
 
 This surfaces terminals with queued actions and staleness indicators. Claude can then:
@@ -84,10 +84,10 @@ This runs the session start checklist: pending work, summary of active terminals
 
 ## 10.5 — Self-awareness: knowing which terminal you're in
 
-Any Claude Code session running inside a TermQ terminal has access to `$TERMQ_TERMINAL_ID`. Claude can use this with `termq_get` to retrieve its own terminal's context:
+Any Claude Code session running inside a TermQ terminal has access to `$TERMQ_TERMINAL_ID`. Claude can use this with `get` to retrieve its own terminal's context:
 
 ```
-termq_get id="$TERMQ_TERMINAL_ID"
+get id="$TERMQ_TERMINAL_ID"
 ```
 
 The response includes `llmPrompt`, `llmNextAction`, tags, column, and all other metadata for the current terminal. This is how Claude knows what project it's working on, what the standing instructions are, and what to do first — without you needing to explain it.
@@ -104,7 +104,7 @@ Please update this terminal:
 - Set the staleness tag to fresh
 ```
 
-Claude uses `termq_set` to write those fields. The next session — whether it's you or another Claude instance — opens the terminal, calls `termq_get`, and has everything it needs.
+Claude uses `set` to write those fields. The next session — whether it's you or another Claude instance — opens the terminal, calls `get`, and has everything it needs.
 
 ---
 
@@ -112,10 +112,10 @@ Claude uses `termq_set` to write those fields. The next session — whether it's
 
 - `termqmcp` is a standalone MCP server — add it to `~/.claude/mcp.json`
 - Claude Code gets a full set of tools to **read and write** your TermQ board
-- `termq_pending` at session start surfaces what needs attention
-- `termq_get id="$TERMQ_TERMINAL_ID"` gives Claude its own terminal's context automatically
+- `pending` at session start surfaces what needs attention
+- `get id="$TERMQ_TERMINAL_ID"` gives Claude its own terminal's context automatically
 - The end-of-session update pattern creates continuity between Claude sessions
 
 ## Next
 
-[Tutorial 11: Queued Actions](tutorials/queued-actions.md) — Queue actions that execute automatically when a terminal opens.
+[MCP Resource Subscriptions](mcp-subscriptions.md) — Have a long-running assistant react when the board changes, instead of polling for it.

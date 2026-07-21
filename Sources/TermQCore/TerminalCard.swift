@@ -104,7 +104,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// When the card was soft-deleted (nil = active, set = in bin)
     @Published public var deletedAt: Date?
 
-    /// When an LLM last called termq_get for this terminal (nil = never, set = LLM is aware of TermQ)
+    /// When an LLM last called get for this terminal (nil = never, set = LLM is aware of TermQ)
     @Published public var lastLLMGet: Date?
 
     /// Backend override for session management. `nil` means inherit the
@@ -118,6 +118,11 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Terminal-specific environment variables (injected on launch, overrides global)
     @Published public var environmentVariables: [EnvironmentVariable] = []
 
+    /// The workspace this card belongs to. `nil` = unassigned (shows only in "All").
+    /// Set at creation from the active workspace; a pure view-filter key that never
+    /// affects sessions.
+    @Published public var workspaceId: UUID?
+
     // Runtime state (not persisted)
     public var isTransient: Bool = false
 
@@ -126,6 +131,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
         case allowAutorun, allowOscClipboard, confirmExternalModifications
         case deletedAt, lastLLMGet, backend, needsTmuxSession, environmentVariables
+        case workspaceId
     }
 
     public init(
@@ -153,7 +159,8 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         lastLLMGet: Date? = nil,
         backend: TerminalBackend? = nil,
         needsTmuxSession: Bool = false,
-        environmentVariables: [EnvironmentVariable] = []
+        environmentVariables: [EnvironmentVariable] = [],
+        workspaceId: UUID? = nil
     ) {
         self.id = id
         self.title = title
@@ -180,6 +187,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.backend = backend
         self.needsTmuxSession = needsTmuxSession
         self.environmentVariables = environmentVariables
+        self.workspaceId = workspaceId
     }
 
     public required init(from decoder: Decoder) throws {
@@ -220,6 +228,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         environmentVariables =
             try container.decodeIfPresent([EnvironmentVariable].self, forKey: .environmentVariables)
             ?? []
+        workspaceId = try container.decodeIfPresent(UUID.self, forKey: .workspaceId)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -249,6 +258,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encodeIfPresent(backend, forKey: .backend)
         try container.encode(needsTmuxSession, forKey: .needsTmuxSession)
         try container.encode(environmentVariables, forKey: .environmentVariables)
+        try container.encodeIfPresent(workspaceId, forKey: .workspaceId)
     }
 
     /// Whether this card is in the bin (soft-deleted)
@@ -256,7 +266,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         deletedAt != nil
     }
 
-    /// Whether the LLM has recently identified itself via termq_get (within last 10 minutes)
+    /// Whether the LLM has recently identified itself via get (within last 10 minutes)
     public var isWired: Bool {
         guard let lastGet = lastLLMGet else { return false }
         return Date().timeIntervalSince(lastGet) < 600  // 10 minutes

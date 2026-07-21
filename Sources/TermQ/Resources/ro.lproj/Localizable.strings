@@ -452,6 +452,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Suprascriere backend implicit";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Depozite";
+"sidebar.workspace.all" = "Toate depozitele";
+"sidebar.workspace.menu.help" = "Filtrare depozite după spaţiu de lucru";
+"sidebar.workspace.new" = "Spaţiu de lucru nou…";
+"sidebar.workspace.new.title" = "Spaţiu de lucru nou";
+"sidebar.workspace.name.label" = "Numele spaţiului de lucru";
+"sidebar.workspace.name.placeholder" = "ex. Muncă, Proiecte secundare";
+"sidebar.workspace.create" = "Creează";
+"sidebar.workspace.manage" = "Gestionare spaţii de lucru…";
+"sidebar.workspace.manage.title" = "Gestionare spaţii de lucru";
+"sidebar.workspace.manage.empty" = "Niciun spaţiu de lucru încă. Creaţi unul din meniul spaţiilor de lucru.";
+"sidebar.workspace.manage.done" = "Gata";
+"sidebar.workspace.add.to" = "Adaugă la spaţiul de lucru";
+"sidebar.workspace.delete.title" = "Ştergeţi spaţiul de lucru?";
+"sidebar.workspace.delete.confirm" = "Ştergere";
+"sidebar.workspace.delete.message %@" = "„%@" va fi eliminat. Depozitele din el nu vor fi şterse.";
+"sidebar.workspace.empty.message" = "Nu există depozite în acest spațiu de lucru.\nDaţi clic dreapta pe un depozit din „Toate depozitele“ pentru a-l adăuga aici.";
 "sidebar.add.button.help" = "Adaugă depozit";
 "sidebar.empty.message" = "Nu au fost adăugate depozite.\nFă clic pe + pentru a adăuga un depozit git.";
 "sidebar.worktrees.placeholder" = "Arborii de lucru vor apărea aici";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork la local";
 "harnesses.fork.to.local.help" = "Creați o copie locală editabilă a acestui harness";
+"harnesses.publish.to.repository" = "Publică în depozit…";
 "harnesses.update.dot.help" = "Actualizare disponibilă";
 "harness.fork.title %@" = "Fork \"%@\" la local";
 "harness.fork.explanation" = "Creează o copie locală editabilă a acestui harness. Copia îi urmărește originea pentru a putea vedea ce s-a schimbat upstream.";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "Lasă gol pentru a păstra numele sursei. Id-ul canonic al noului fork va fi local/<nume>.";
 "harness.fork.identity.collision" = "Un harness instalat are deja această identitate.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publică \"%@\" în depozit";
+"harness.publish.explanation" = "Copiază acest harness într-un arbore de lucru nou al depozitului țintă, gata de confirmat. Convențiile proprii ale depozitului (scripturi de înregistrare, manifeste) decid restul.";
+"harness.publish.button" = "Publică";
+"harness.publish.update.button" = "Actualizează intrarea existentă";
+"harness.publish.progress.title %@" = "Se publică \"%@\"…";
+"harness.publish.repo.label" = "Depozit țintă";
+"harness.publish.repo.placeholder" = "Selectează un depozit…";
+"harness.publish.parentdir.label" = "Director în depozit";
+"harness.publish.parentdir.hint" = "Sugerat din locul unde depozitul păstrează deja harness-urile. Complet editabil.";
+"harness.publish.name.label" = "Nume";
+"harness.publish.branch.label" = "Ramură";
+"harness.publish.basebranch.label" = "Ramură de bază";
+"harness.publish.worktreepath.label" = "Calea arborelui de lucru";
+"harness.publish.files.label" = "Fișiere de copiat";
+"harness.publish.changes.label" = "Modificări față de copia publicată";
+"harness.publish.mode.label" = "Mod de copiere";
+"harness.publish.mode.entire" = "Întreg directorul";
+"harness.publish.mode.enumerated" = "Doar fișierele harness-ului";
+"harness.publish.mode.enumerated.hint" = "Directorul sursă servește și ca depozit de proiect — se copiază doar fișierele deținute de harness.";
+"harness.publish.state.new" = "Intrare nouă — acest harness nu există încă în depozit.";
+"harness.publish.state.update %@" = "Actualizează intrarea existentă din %@ (o suprascrie).";
+"harness.publish.state.clash %@" = "Acel director conține deja un harness diferit (\"%@\") — alege alt nume.";
+"harness.publish.state.occupied" = "Acel director există deja în depozit — alege alt nume sau altă locație.";
+"harness.publish.state.samerepo" = "Acest harness există deja în depozitul selectat — confirmă modificările acolo în loc să publici.";
+"harness.publish.reveal.repository" = "Dezvăluie în depozite";
+"harness.publish.preflight.failed" = "Harness-ul local nu este valid — corectează-l înainte de a publica.";
+"harness.publish.composition.unavailable" = "ynd compose a eșuat pentru acest harness — modul \"doar fișierele harness-ului\" are nevoie de el pentru a ști ce fișiere îi aparțin. Corectează harness-ul sau treci la \"întreg directorul\".";
+"harness.publish.unresolved %lld" = "%lld fișier(e) referențiate lipsesc din sursă — nu vor fi copiate.";
+"harness.publish.register.disclosure %@" = "După copiere, %@ al depozitului va fi rulat (script furnizat de depozit).";
+"harness.publish.change.added" = "adăugat";
+"harness.publish.change.modified" = "modificat";
+"harness.publish.change.removed" = "eliminat";
+"harness.publish.changes.none" = "Fără diferențe — copia publicată corespunde fișierelor locale.";
+"harness.publish.step.worktree %@" = "Se creează arborele de lucru pe ramura %@…";
+"harness.publish.step.copy %@" = "Se copiază harness-ul în %@…";
+"harness.publish.step.copied %lld" = "Copiat(e) %lld grup(uri) de fișiere.";
+"harness.publish.step.validate" = "Se validează harness-ul copiat (ynd validate)…";
+"harness.publish.step.register %@" = "Se rulează %@…";
+"harness.publish.step.done %@" = "Gata — arborele de lucru este pregătit la %@.";
+"harness.publish.warning %@" = "Avertisment: %@";
+"harness.publish.deleted %@" = "Cale învechită eliminată: %@";
+"harness.publish.validation.failed" = "Validarea a eșuat în arborele de lucru — nimic nu a fost confirmat. Arborele de lucru este păstrat pentru inspecție.";
+"harness.publish.register.failed" = "Scriptul de înregistrare al depozitului a eșuat — arborele de lucru este păstrat pentru inspecție.";
+"harness.publish.references.missing %@" = "Fișierele referențiate de manifest lipsesc după copiere: %@";
+"harness.publish.error.occupied %@" = "Destinația conține deja un harness: %@";
+"harness.publish.error.invaliddest %@" = "Destinația depășește limitele arborelui de lucru: %@";
+"harness.publish.error.copy %@" = "Copierea a eșuat: %@";
+"harness.publish.error.rename %@" = "Nu s-a putut rescrie numele manifestului: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Actualizează \"%@\"";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "Worktree-ul există deja";
 "settings.github.feed.cap.help" = "Numărul maxim de pull request-uri afișate pe depozit în bara laterală Remote. PR-urile extrase sunt întotdeauna incluse.";
 "settings.github.feed.cap.label" = "PR-uri pe depozit";
-"settings.github.section.feed" = "Feed Remote PR";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Activează ramurile stivuite și PR-urile stivuite în bara laterală.";
+"settings.gitspice.version" = "Versiune:";
+"settings.gitspice.path" = "Cale:";
+"settings.gitspice.info" = "Funcțiile de ramuri stivuite din bara laterală depind de o instalare funcțională de git-spice. Reutilizează autentificarea CLI-ului gh.";
+"settings.gitspice.not.installed.description" = "git-spice activează ramurile stivuite și PR-urile stivuite. Fără el, TermQ afișează doar worktree-uri simple.";
+"settings.gitspice.install.hint" = "Instalează cu Homebrew:";
+"settings.gitspice.check.again" = "Verifică din nou";
+"settings.gitspice.status.unusable %@" = "Detectat, dar inutilizabil: %@";
+"stacks.enable" = "Activează stivuirea…";
+"stacks.enable.help" = "Urmărește ramurile acestui depozit ca o stivă cu git-spice";
+"stacks.enable.failed %@" = "Stivuirea nu a putut fi activată: %@";
+"stacks.needs.restack" = "Necesită restack";
+"stacks.open.change.request" = "Deschide cererea de modificare";
+"stacks.unpushed.commits %ld" = "↑%ld netrimise";
+"stacks.change.request.merged" = "îmbinată";
+"stacks.change.request.closed" = "închisă";
+"stacks.no.change.request" = "fără PR";
+"stacks.disclosure.help" = "Afișează ramurile stivei";
+"stacks.switch.blocked.dirty" = "Nu se poate schimba ramura stivei: worktree-ul are modificări nesalvate. Fă commit sau stash mai întâi.";
+"stacks.switch.blocked.in.use" = "Nu se poate schimba ramura stivei: un terminal este deschis în acest worktree. Închide-l mai întâi.";
+"stacks.switch.blocked.elsewhere %@" = "Nu se poate schimba ramura stivei: este extrasă într-un alt worktree (%@).";
+"stacks.switch.help" = "Fă dublu clic pentru a comuta acest worktree pe ramură";
+"stacks.switch.to %@" = "Comută la %@";
+"stacks.add.branch" = "Adaugă ramură la stivă…";
+"stacks.add.branch.title" = "Adaugă Ramură la Stivă";
+"stacks.add.branch.name.label" = "Nume ramură";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Stivuiește pe";
+"stacks.add.branch.staged.note" = "Modificările puse în staging devin primul commit al noii ramuri. Cu un arbore curat, se creează o ramură goală deasupra.";
+"stacks.add.branch.track.note" = "Această ramură există deja — va fi urmărită în stivă în schimb.";
+"stacks.add.branch.create" = "Creează";
+"stacks.add.branch.track" = "Urmărește";
+"stacks.restack.stack" = "Restack la Stivă";
+"stacks.restack.from.here" = "Restack de Aici";
+"stacks.conflict.banner %ld" = "Restack întrerupt — conflicte în %ld fișiere";
+"stacks.conflict.continue" = "Continuă";
+"stacks.conflict.abort" = "Anulează";
+"stacks.conflict.hint" = "Rezolvă conflictele într-un terminal, pune fișierele în staging, apoi apasă Continuă.";
+"stacks.submit.stack" = "Trimite Stiva…";
+"stacks.submit.branch" = "Trimite Această Ramură…";
+"stacks.submit.title" = "Trimite Stiva";
+"stacks.submit.button" = "Trimite";
+"stacks.submit.draft.toggle" = "Creează noile pull request-uri ca ciorne";
+"stacks.submit.update.only.toggle" = "Actualizează doar pull request-urile existente";
+"stacks.submit.will.create" = "crea";
+"stacks.submit.will.update" = "actualiza";
+"stacks.sync.repo" = "Sincronizează Depozitul";
+"stacks.sync.cleaned %ld %@" = "Sincronizarea a eliminat %ld ramuri îmbinate: %@";
+"stacks.destroy.stack" = "Distruge Stiva…";
+"stacks.destroy.stack.title" = "Distrugi stiva?";
+"stacks.destroy.stack.message %ld %@" = "Aceasta șterge definitiv %ld ramuri locale prin git-spice: %@. Ramurile la distanță și orice pull request-uri rămân neatinse.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld dintre aceste ramuri au încă un pull request DESCHIS.";
+"stacks.destroy.stack.confirm" = "Distruge Stiva";
+"stacks.destroy.stack.done %ld" = "Stivă distrusă: %ld ramuri șterse";
+"stacks.destroy.stack.worktree.skipped %@" = "Lăsat neatins (modificări necommise): %@";
+"stacks.base.mismatch %@ %@" = "PR-ul vizează %@, dar părintele stivei este %@ — Sincronizează Depozitul o va redirecționa";
+"stacks.restack.up.to.date" = "Stiva este deja actualizată";
+"stacks.restack.done %ld" = "%ld ramuri restack-uite";
+"stacks.sync.clean" = "Totul este sincronizat";
+"stacks.submit.done %ld %ld" = "Trimis: %ld create, %ld actualizate";
+"sidebar.worktrees.section.header" = "Worktree-uri";
+"stacks.break.out" = "Extrage într-un worktree…";
+"stacks.skipped.notice %@" = "Fără restack: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (extrasă în %@ cu modificări nesalvate)";
+"stacks.skipped.in.use %@ %@" = "%@ (extrasă în %@ cu un terminal activ)";
+"stacks.copy.branch.name" = "Copiază Numele Ramurii";
+"stacks.reveal.worktree" = "Dezvăluie Worktree";
+"stacks.anchored.badge.help %@" = "Ancorat în worktree-ul %@ — clic pentru a-l dezvălui";
+"stacks.part.of.stack %@" = "Parte din stiva %@";
+"stacks.section.header" = "Stive";
+"stacks.checked.out.at %@" = "Extrasă în %@ — clic pentru a dezvălui worktree-ul";
+"stacks.anchor.help" = "Creează un worktree pentru această stivă";
+"stacks.group.new.worktree" = "Worktree Nou…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Ramură Nouă în Stivă Înainte…";
+"stacks.new.branch.after" = "Ramură Nouă în Stivă După…";
+"stacks.new.branch.insert.below.note %@" = "Noua ramură este creată sub %@ în stivă.";
+"stacks.new.branch.insert.above.note %@" = "Noua ramură este creată deasupra %@ în stivă, luându-i locul — %@ se mută deasupra ei.";
+"stacks.main.worktree.not.found" = "Nu s-a putut găsi worktree-ul principal al repository-ului.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Stivă Nouă…";
+"stacks.new.stack.title" = "Stivă Nouă";
+"stacks.new.stack.name.label" = "Nume ramură";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branch de bază";
+"stacks.new.stack.button" = "Creează";
+"stacks.new.stack.note" = "Creează ramura din bază fără checkout și fără worktree — o stivă cu o singură intrare pe care o poți lansa mai târziu.";
+"stacks.start.stack.checkbox" = "Începe o stivă cu această ramură";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Ramifică din cea implicită";
+"stacks.new.stack.mode.integration" = "Ramifică din cea de integrare";
+"stacks.new.stack.stack.name.label" = "Numele Stivei";
+"stacks.new.stack.integration.preview %@" = "Creează %@";
+"stacks.new.stack.first.branch.label" = "Prima Ramură în Stivă (opțional)";
+"stacks.new.stack.first.branch.empty.hint" = "Lăsat gol: se creează doar ramura de integrare goală — poți adăuga prima ta ramură în stivă mai târziu.";
+"stacks.new.stack.first.branch.filled.hint" = "Această ramură este creată stivuită deasupra ramurii de integrare, nu direct deasupra ramurii de bază.";
+"stacks.new.stack.integration.note" = "Creează o ramură de integrare goală din bază ca rădăcină a stivei — nu poartă niciodată cod propriu. Ramurile din stivă se construiesc pe ea în loc de bază, iar pull request-urile lor se înlănțuie în ea. Odată ce totul este îmbinat în ramura de integrare, aceasta este trimisă ca un singur pull request consolidat către bază — în loc ca fiecare ramură din stivă să fie îmbinată individual în bază.";
+"stacks.new.stack.name.exists %@" = "%@ există deja — alege alt nume.";
+"settings.gitspice.new.stack.mode" = "Stivă Nouă începe ca:";
+"settings.gitspice.new.stack.mode.help" = "Ce mod preselectează foaia Stivă Nouă — foaia oferă întotdeauna ambele.";
+"settings.gitspice.hide.stacked.worktrees" = "Ascunde worktree-urile din stivă din secțiunea Worktree-uri";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktree-urile a căror ramură aparține unei stive urmărite sunt deja listate în Stive — ascunde-le din secțiunea Worktree-uri pentru a evita listarea duplicată.";

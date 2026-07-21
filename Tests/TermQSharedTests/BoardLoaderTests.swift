@@ -3,6 +3,31 @@ import XCTest
 
 @testable import TermQShared
 
+/// Sendable accumulator for errors observed inside `DispatchQueue.concurrentPerform`.
+/// NSMutableArray would work but isn't Sendable under Swift 6 strict concurrency.
+private final class ConcurrentErrorBox: @unchecked Sendable {
+    private let lock = NSLock()
+    private var items: [String] = []
+
+    func add(_ s: String) {
+        lock.lock()
+        items.append(s)
+        lock.unlock()
+    }
+
+    var count: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return items.count
+    }
+
+    var all: [String] {
+        lock.lock()
+        defer { lock.unlock() }
+        return items
+    }
+}
+
 final class BoardLoaderTests: XCTestCase {
     var tempDirectory: URL!
 
@@ -78,12 +103,12 @@ final class BoardLoaderTests: XCTestCase {
     }
 
     func testGetDataDirectoryPathDebugMode() {
-        let result = BoardLoader.getDataDirectoryPath(debug: true)
+        let result = BoardLoader.getDataDirectoryPath(profile: .debug)
         XCTAssertTrue(result.path.contains("TermQ-Debug"))
     }
 
     func testGetDataDirectoryPathNonDebugMode() {
-        let result = BoardLoader.getDataDirectoryPath(debug: false)
+        let result = BoardLoader.getDataDirectoryPath(profile: .production)
         XCTAssertTrue(result.path.contains("TermQ"))
         XCTAssertFalse(result.path.contains("TermQ-Debug"))
     }
@@ -677,7 +702,7 @@ final class BoardLoaderTests: XCTestCase {
         let data = try encoder.encode(board)
         try data.write(to: debugDir.appendingPathComponent("board.json"))
 
-        let loaded = try BoardLoader.loadBoard(dataDirectory: debugDir, debug: true)
+        let loaded = try BoardLoader.loadBoard(dataDirectory: debugDir, profile: .debug)
         XCTAssertEqual(loaded.columns.count, 3)
     }
 
@@ -685,7 +710,7 @@ final class BoardLoaderTests: XCTestCase {
         let board = createTestBoard()
         try writeTestBoard(board)
 
-        let (_, data) = try BoardWriter.loadRawBoard(dataDirectory: tempDirectory, debug: true)
+        let (_, data) = try BoardWriter.loadRawBoard(dataDirectory: tempDirectory, profile: .debug)
         XCTAssertNotNil(data["columns"])
     }
 
@@ -827,6 +852,93 @@ final class BoardLoaderTests: XCTestCase {
                 XCTFail("Expected encodingFailed error")
             }
         }
+    }
+
+    // MARK: - Atomic RMW (Fix C) — concurrency tests
+
+    /// T3.12 — Concurrent appends to the same column produce unique `orderIndex` values.
+    /// Pre-fix, the split read+write coordinator pattern let two writers both compute the
+    /// same `max + 1`, producing duplicate `orderIndex` entries. The atomic helper closes
+    /// this race.
+    ///
+    /// Uses `DispatchQueue.concurrentPerform` rather than `async let` because
+    /// `NSFileCoordinator` is synchronous and blocks its thread — Swift concurrency
+    /// would not produce genuine concurrent dispatch here.
+    func testCreateCardConcurrentAppendsProduceUniqueOrderIndex() throws {
+        // Bootstrap board with one column.
+        let columnId = UUID()
+        let json = """
+            {
+              "columns": [{"id": "\(columnId.uuidString)", "name": "To Do", "orderIndex": 0, "color": "#000"}],
+              "cards": []
+            }
+            """
+        try writeRawJSON(json)
+
+        let writerCount = 20
+        let directory = tempDirectory
+        let errorBox = ConcurrentErrorBox()
+        DispatchQueue.concurrentPerform(iterations: writerCount) { iteration in
+            do {
+                _ = try BoardWriter.createCard(
+                    name: "Card-\(iteration)",
+                    columnName: "To Do",
+                    workingDirectory: "/tmp",
+                    dataDirectory: directory
+                )
+            } catch {
+                errorBox.add("\(iteration): \(error)")
+            }
+        }
+        XCTAssertEqual(errorBox.count, 0, "Concurrent creates threw: \(errorBox.all)")
+
+        let loaded = try BoardLoader.loadBoard(dataDirectory: directory)
+        XCTAssertEqual(loaded.cards.count, writerCount, "All concurrent creates should persist")
+
+        let orderIndices = loaded.cards.map { $0.orderIndex }
+        let unique = Set(orderIndices)
+        XCTAssertEqual(
+            unique.count, orderIndices.count,
+            "orderIndex collisions: \(orderIndices.sorted()) — atomic RMW must produce distinct values"
+        )
+    }
+
+    /// T3.10 — Concurrent updates to *different* cards do not lose either change.
+    /// Pre-fix, both writers could read the same baseline, mutate, and one's write would
+    /// silently clobber the other's. Atomic RMW serialises the two read-modify-writes.
+    func testUpdateCardConcurrentDifferentCardsBothSurvive() throws {
+        // Bootstrap two cards under one column.
+        let columnId = UUID()
+        let card1Id = UUID()
+        let card2Id = UUID()
+        let json = """
+            {
+              "columns": [{"id": "\(columnId.uuidString)", "name": "To Do", "orderIndex": 0, "color": "#000"}],
+              "cards": [
+                {"id": "\(card1Id.uuidString)", "title": "A", "description": "",
+                 "columnId": "\(columnId.uuidString)", "orderIndex": 0, "workingDirectory": "/tmp",
+                 "isFavourite": false, "badge": "", "llmPrompt": "", "llmNextAction": "", "tags": []},
+                {"id": "\(card2Id.uuidString)", "title": "B", "description": "",
+                 "columnId": "\(columnId.uuidString)", "orderIndex": 1, "workingDirectory": "/tmp",
+                 "isFavourite": false, "badge": "", "llmPrompt": "", "llmNextAction": "", "tags": []}
+              ]
+            }
+            """
+        try writeRawJSON(json)
+
+        let directory = tempDirectory
+        DispatchQueue.concurrentPerform(iterations: 2) { i in
+            let identifier = i == 0 ? card1Id.uuidString : card2Id.uuidString
+            let badge = i == 0 ? "BADGE-A" : "BADGE-B"
+            _ = try? BoardWriter.updateCard(
+                identifier: identifier, updates: ["badge": badge], dataDirectory: directory)
+        }
+
+        let loaded = try BoardLoader.loadBoard(dataDirectory: directory)
+        let cardA = loaded.cards.first { $0.id == card1Id }
+        let cardB = loaded.cards.first { $0.id == card2Id }
+        XCTAssertEqual(cardA?.badge, "BADGE-A", "Card A's write was clobbered by Card B's write")
+        XCTAssertEqual(cardB?.badge, "BADGE-B", "Card B's write was clobbered by Card A's write")
     }
 
     // MARK: - CreateCard Invalid Columns Format

@@ -12,6 +12,27 @@ final class LocalYNHConfigTests: XCTestCase {
         XCTAssertTrue(config.worktreeHarness.isEmpty)
         XCTAssertTrue(config.repoHarness.isEmpty)
         XCTAssertNil(config.preferredVendor)
+        XCTAssertTrue(config.stackHarness.isEmpty)
+    }
+
+    func testLocalYNHConfig_init_withStackHarness() {
+        let config = LocalYNHConfig(stackHarness: ["/repo": ["stack-root": "harness1"]])
+        XCTAssertEqual(config.stackHarness["/repo"]?["stack-root"], "harness1")
+    }
+
+    func testLocalYNHConfig_stackHarness_codableRoundTrip() throws {
+        let original = LocalYNHConfig(stackHarness: ["/repo": ["stack-root": "h1", "other-root": "h2"]])
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(LocalYNHConfig.self, from: data)
+        XCTAssertEqual(decoded.stackHarness, original.stackHarness)
+    }
+
+    func testLocalYNHConfig_backwardCompat_missingStackHarness() throws {
+        let json = """
+            {"worktreeHarness": {"/path": "h1"}}
+            """
+        let config = try JSONDecoder().decode(LocalYNHConfig.self, from: json.data(using: .utf8)!)
+        XCTAssertTrue(config.stackHarness.isEmpty)
     }
 
     func testLocalYNHConfig_init_withValues() {
@@ -141,6 +162,17 @@ final class LocalYNHConfigTests: XCTestCase {
         XCTAssertEqual(loaded.worktreeHarness, config.worktreeHarness)
         XCTAssertEqual(loaded.repoHarness, config.repoHarness)
         XCTAssertNil(loaded.preferredVendor)
+    }
+
+    func testYNHConfigLoader_save_roundTrip_stackHarness() throws {
+        let dir = tempDir()
+        defer { cleanup(dir) }
+
+        let config = LocalYNHConfig(stackHarness: ["/repo": ["root-branch": "harness-x"]])
+        try YNHConfigLoader.save(config, dataDirectory: dir)
+        let loaded = try YNHConfigLoader.load(dataDirectory: dir)
+
+        XCTAssertEqual(loaded.stackHarness, config.stackHarness)
     }
 
     func testYNHConfigLoader_save_createsDirectoryIfNeeded() throws {

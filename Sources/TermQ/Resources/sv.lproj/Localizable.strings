@@ -454,6 +454,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Åsidosätt standard-backend";
@@ -565,6 +580,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositorier";
+"sidebar.workspace.all" = "Alla repon";
+"sidebar.workspace.menu.help" = "Filtrera repon efter arbetsyta";
+"sidebar.workspace.new" = "Ny arbetsyta…";
+"sidebar.workspace.new.title" = "Ny arbetsyta";
+"sidebar.workspace.name.label" = "Arbetsytans namn";
+"sidebar.workspace.name.placeholder" = "t.ex. Arbete, Sidoprojekt";
+"sidebar.workspace.create" = "Skapa";
+"sidebar.workspace.manage" = "Hantera arbetsytor…";
+"sidebar.workspace.manage.title" = "Hantera arbetsytor";
+"sidebar.workspace.manage.empty" = "Inga arbetsytor ännu. Skapa en från arbetsytemenyn.";
+"sidebar.workspace.manage.done" = "Klar";
+"sidebar.workspace.add.to" = "Lägg till i arbetsyta";
+"sidebar.workspace.delete.title" = "Ta bort arbetsyta?";
+"sidebar.workspace.delete.confirm" = "Radera";
+"sidebar.workspace.delete.message %@" = "“%@” tas bort. Repositorierna i den raderas inte.";
+"sidebar.workspace.empty.message" = "Inga repon i den här arbetsytan.\nHögerklicka på ett repo i “Alla repon” för att lägga till det här.";
 "sidebar.add.button.help" = "Lägg till repositorium";
 "sidebar.empty.message" = "Inga repositorier tillagda.\nKlicka på + för att lägga till ett git-repositorium.";
 "sidebar.worktrees.placeholder" = "Arbetsträd visas här";
@@ -1012,6 +1043,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Forka till lokalt";
 "harnesses.fork.to.local.help" = "Skapa en redigerbar lokal kopia av denna harness";
+"harnesses.publish.to.repository" = "Publicera till repositorium…";
 "harnesses.update.dot.help" = "Uppdatering tillgänglig";
 "harness.fork.title %@" = "Forka \"%@\" till lokalt";
 "harness.fork.explanation" = "Skapar en redigerbar lokal kopia av denna harness. Kopian spårar sitt ursprung så att du kan se vad som ändrats uppströms.";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.label" = "Namn (valfritt)";
 "harness.fork.rename.hint" = "Lämna tomt för att behålla källnamnet. Det nya forkens kanoniska id blir local/<namn>.";
 "harness.fork.identity.collision" = "Ett installerat harness har redan den här identiteten.";
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publicera \"%@\" till repositorium";
+"harness.publish.explanation" = "Kopierar detta harness till ett nytt arbetsträd i målrepositoriet, redo att committa. Repositoriets egna konventioner (registreringsskript, manifest) sköter resten.";
+"harness.publish.button" = "Publicera";
+"harness.publish.update.button" = "Uppdatera befintlig post";
+"harness.publish.progress.title %@" = "Publicerar \"%@\"…";
+"harness.publish.repo.label" = "Målrepositorium";
+"harness.publish.repo.placeholder" = "Välj ett repositorium…";
+"harness.publish.parentdir.label" = "Katalog i repositoriet";
+"harness.publish.parentdir.hint" = "Föreslagen baserat på var detta repositorium redan förvarar harnesses. Fullt redigerbar.";
+"harness.publish.name.label" = "Namn";
+"harness.publish.branch.label" = "Gren";
+"harness.publish.basebranch.label" = "Basgren";
+"harness.publish.worktreepath.label" = "Arbetsträdsökväg";
+"harness.publish.files.label" = "Filer att kopiera";
+"harness.publish.changes.label" = "Ändringar jämfört med publicerad kopia";
+"harness.publish.mode.label" = "Kopieringsläge";
+"harness.publish.mode.entire" = "Hela katalogen";
+"harness.publish.mode.enumerated" = "Endast harness-filer";
+"harness.publish.mode.enumerated.hint" = "Källkatalogen fungerar också som projektrepositorium — bara filer som harness äger kopieras.";
+"harness.publish.state.new" = "Ny post — detta harness finns inte i repositoriet än.";
+"harness.publish.state.update %@" = "Uppdaterar befintlig post på %@ (skriver över den).";
+"harness.publish.state.clash %@" = "Den katalogen innehåller redan ett annat harness (\"%@\") — välj ett annat namn.";
+"harness.publish.state.occupied" = "Den katalogen finns redan i repositoriet — välj ett annat namn eller en annan plats.";
+"harness.publish.state.samerepo" = "Detta harness finns redan i det valda repositoriet — commita dina ändringar där istället för att publicera.";
+"harness.publish.reveal.repository" = "Visa i Repositorier";
+"harness.publish.preflight.failed" = "Det lokala harness validerar inte — åtgärda det innan du publicerar.";
+"harness.publish.composition.unavailable" = "ynd compose misslyckades för detta harness — läget \"endast harness-filer\" behöver det för att veta vilka filer som ägs. Åtgärda harness eller byt till \"hela katalogen\".";
+"harness.publish.unresolved %lld" = "%lld refererad(e) fil(er) saknas i källan — de kopieras inte.";
+"harness.publish.register.disclosure %@" = "Efter kopiering körs repositoriets %@ (skript från repositoriet).";
+"harness.publish.change.added" = "tillagd";
+"harness.publish.change.modified" = "ändrad";
+"harness.publish.change.removed" = "borttagen";
+"harness.publish.changes.none" = "Inga skillnader — den publicerade kopian matchar dina lokala filer.";
+"harness.publish.step.worktree %@" = "Skapar arbetsträd på gren %@…";
+"harness.publish.step.copy %@" = "Kopierar harness till %@…";
+"harness.publish.step.copied %lld" = "Kopierade %lld filgrupp(er).";
+"harness.publish.step.validate" = "Validerar kopierat harness (ynd validate)…";
+"harness.publish.step.register %@" = "Kör %@…";
+"harness.publish.step.done %@" = "Klart — arbetsträdet är redo på %@.";
+"harness.publish.warning %@" = "Varning: %@";
+"harness.publish.deleted %@" = "Tog bort inaktuell sökväg: %@";
+"harness.publish.validation.failed" = "Validering misslyckades i arbetsträdet — inget committades. Arbetsträdet behålls för granskning.";
+"harness.publish.register.failed" = "Repositoriets registreringsskript misslyckades — arbetsträdet behålls för granskning.";
+"harness.publish.references.missing %@" = "Filer som refereras av manifestet saknas efter kopiering: %@";
+"harness.publish.error.occupied %@" = "Destinationen innehåller redan ett harness: %@";
+"harness.publish.error.invaliddest %@" = "Destinationen hamnar utanför arbetsträdet: %@";
+"harness.publish.error.copy %@" = "Kopiering misslyckades: %@";
+"harness.publish.error.rename %@" = "Det gick inte att skriva om manifestnamnet: %@";
+
 
 
 // MARK: - Harness Update
@@ -1266,5 +1348,111 @@
 "remote.prs.worktree.exists" = "Worktree finns redan";
 "settings.github.feed.cap.help" = "Maximalt antal pull requests som visas per databas i Remote-sidofältet. Utcheckade PRs inkluderas alltid.";
 "settings.github.feed.cap.label" = "PRs per databas";
-"settings.github.section.feed" = "Remote PR-flöde";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Driver staplade grenar och staplade PR:ar i sidofältet.";
+"settings.gitspice.version" = "Version:";
+"settings.gitspice.path" = "Sökväg:";
+"settings.gitspice.info" = "Staplade-grenfunktioner i sidofältet kräver en fungerande git-spice-installation. Den återanvänder gh CLI:ns autentisering.";
+"settings.gitspice.not.installed.description" = "git-spice möjliggör staplade grenar och staplade PR:ar. Utan det visar TermQ endast enkla arbetsträd.";
+"settings.gitspice.install.hint" = "Installera med Homebrew:";
+"settings.gitspice.check.again" = "Kontrollera igen";
+"settings.gitspice.status.unusable %@" = "Upptäckt men oanvändbar: %@";
+"stacks.enable" = "Aktivera stapling…";
+"stacks.enable.help" = "Spåra det här arkivets grenar som en stapel med git-spice";
+"stacks.enable.failed %@" = "Kunde inte aktivera stapling: %@";
+"stacks.needs.restack" = "Behöver restack";
+"stacks.open.change.request" = "Öppna ändringsförfrågan";
+"stacks.unpushed.commits %ld" = "↑%ld ej pushad(e)";
+"stacks.change.request.merged" = "sammanslagen";
+"stacks.change.request.closed" = "stängd";
+"stacks.no.change.request" = "ingen PR";
+"stacks.disclosure.help" = "Visa stapelns grenar";
+"stacks.switch.blocked.dirty" = "Kan inte byta stapelgren: arbetsträdet har ej incheckade ändringar. Checka in eller stasha först.";
+"stacks.switch.blocked.in.use" = "Kan inte byta stapelgren: en terminal är öppen i det här arbetsträdet. Stäng den först.";
+"stacks.switch.blocked.elsewhere %@" = "Kan inte byta stapelgren: den är utcheckad i ett annat arbetsträd (%@).";
+"stacks.switch.help" = "Dubbelklicka för att byta det här arbetsträdet till grenen";
+"stacks.switch.to %@" = "Byt till %@";
+"stacks.add.branch" = "Lägg till gren i stapeln…";
+"stacks.add.branch.title" = "Lägg till Gren i Stapeln";
+"stacks.add.branch.name.label" = "Grennamn";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Stapla på";
+"stacks.add.branch.staged.note" = "Köade ändringar blir den nya grenens första commit. Med ett rent träd skapas en tom gren ovanpå.";
+"stacks.add.branch.track.note" = "Den här grenen finns redan — den kommer istället att spåras i stapeln.";
+"stacks.add.branch.create" = "Skapa";
+"stacks.add.branch.track" = "Spåra";
+"stacks.restack.stack" = "Restacka Stapeln";
+"stacks.restack.from.here" = "Restacka Härifrån";
+"stacks.conflict.banner %ld" = "Restack pausad — konflikter i %ld filer";
+"stacks.conflict.continue" = "Fortsätt";
+"stacks.conflict.abort" = "Avbryt";
+"stacks.conflict.hint" = "Lös konflikterna i en terminal, köa filerna och tryck sedan på Fortsätt.";
+"stacks.submit.stack" = "Skicka in Stapel…";
+"stacks.submit.branch" = "Skicka in Denna Gren…";
+"stacks.submit.title" = "Skicka in Stapel";
+"stacks.submit.button" = "Skicka in";
+"stacks.submit.draft.toggle" = "Skapa nya pull requests som utkast";
+"stacks.submit.update.only.toggle" = "Uppdatera endast befintliga pull requests";
+"stacks.submit.will.create" = "skapa";
+"stacks.submit.will.update" = "uppdatera";
+"stacks.sync.repo" = "Synka Repo";
+"stacks.sync.cleaned %ld %@" = "Synkning tog bort %ld sammanslagna grenar: %@";
+"stacks.destroy.stack" = "Förstör Stack…";
+"stacks.destroy.stack.title" = "Förstöra stacken?";
+"stacks.destroy.stack.message %ld %@" = "Detta tar permanent bort %ld lokala grenar via git-spice: %@. Fjärrgrenar och eventuella pull requests lämnas orörda.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld av dessa grenar har fortfarande en ÖPPEN pull request.";
+"stacks.destroy.stack.confirm" = "Förstör Stack";
+"stacks.destroy.stack.done %ld" = "Stack förstörd: %ld grenar borttagna";
+"stacks.destroy.stack.worktree.skipped %@" = "Lämnad orörd (ej incheckade ändringar): %@";
+"stacks.base.mismatch %@ %@" = "PR riktar sig mot %@, men stapelns förälder är %@ — Synka Repo riktar om den";
+"stacks.restack.up.to.date" = "Stapeln är redan uppdaterad";
+"stacks.restack.done %ld" = "%ld grenar restackade";
+"stacks.sync.clean" = "Allt synkat";
+"stacks.submit.done %ld %ld" = "Skickat in: %ld skapad(e), %ld uppdaterad(e)";
+"sidebar.worktrees.section.header" = "Arbetsträd";
+"stacks.break.out" = "Bryt ut till arbetsträd…";
+"stacks.skipped.notice %@" = "Inte restackad: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (utcheckad i %@ med ej incheckade ändringar)";
+"stacks.skipped.in.use %@ %@" = "%@ (utcheckad i %@ med en aktiv terminal)";
+"stacks.copy.branch.name" = "Kopiera Grennamn";
+"stacks.reveal.worktree" = "Visa Arbetsträd";
+"stacks.anchored.badge.help %@" = "Förankrad i arbetsträdet %@ — klicka för att visa det";
+"stacks.part.of.stack %@" = "Del av stapeln %@";
+"stacks.section.header" = "Staplar";
+"stacks.checked.out.at %@" = "Utcheckad i %@ — klicka för att visa arbetsträdet";
+"stacks.anchor.help" = "Skapa ett arbetsträd för denna stapel";
+"stacks.group.new.worktree" = "Nytt Arbetsträd…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Ny stapelgren före…";
+"stacks.new.branch.after" = "Ny stapelgren efter…";
+"stacks.new.branch.insert.below.note %@" = "Den nya grenen skapas under %@ i stapeln.";
+"stacks.new.branch.insert.above.note %@" = "Den nya grenen skapas ovanför %@ i stapeln och tar dess plats — %@ flyttas upp på den.";
+"stacks.main.worktree.not.found" = "Kunde inte hitta repositoriets huvudsakliga worktree.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Ny stapel…";
+"stacks.new.stack.title" = "Ny stapel";
+"stacks.new.stack.name.label" = "Grennamn";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Basgren";
+"stacks.new.stack.button" = "Skapa";
+"stacks.new.stack.note" = "Skapar grenen från basen utan checkout och utan worktree — en stapel med en post som du kan starta senare.";
+"stacks.start.stack.checkbox" = "Starta en stapel med denna gren";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Grena från standard";
+"stacks.new.stack.mode.integration" = "Grena från integration";
+"stacks.new.stack.stack.name.label" = "Stapelns namn";
+"stacks.new.stack.integration.preview %@" = "Skapar %@";
+"stacks.new.stack.first.branch.label" = "Första stapelgrenen (valfritt)";
+"stacks.new.stack.first.branch.empty.hint" = "Lämnas tomt: endast den tomma integrationsgrenen skapas — du kan lägga till din första stapelgren senare.";
+"stacks.new.stack.first.branch.filled.hint" = "Denna gren skapas staplad ovanpå integrationsgrenen, inte direkt ovanpå basgrenen.";
+"stacks.new.stack.integration.note" = "Skapar en tom integrationsgren från basen som stapelns rot — den bär aldrig egen kod. Stapelgrenar byggs ovanpå den istället för basen, och deras pull requests kedjas in i den. När allt har slagits samman till integrationsgrenen skickas den som en enda konsoliderad pull request till basen — i stället för att varje stapelgren slås samman separat i basen.";
+"stacks.new.stack.name.exists %@" = "%@ finns redan — välj ett annat namn.";
+"settings.gitspice.new.stack.mode" = "Ny stapel startar som:";
+"settings.gitspice.new.stack.mode.help" = "Vilket läge arket Ny stapel förväljer — arket erbjuder alltid båda.";
+"settings.gitspice.hide.stacked.worktrees" = "Dölj staplade worktrees från sektionen Arbetsträd";
+"settings.gitspice.hide.stacked.worktrees.help" = "Arbetsträd vars gren tillhör en spårad stapel visas redan under Staplar — dölj dem från sektionen Arbetsträd för att undvika dubblettvisning.";

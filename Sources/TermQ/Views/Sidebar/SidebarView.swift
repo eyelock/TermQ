@@ -20,6 +20,7 @@ struct SidebarView: View {
     var onUpdate: ((String) -> Void)?
     var onExport: ((String, String) -> Void)?
     var onFork: ((String) -> Void)?
+    var onPublish: ((String) -> Void)?
     var onNewHarness: (() -> Void)?
     var quarantinedEntries: [QuarantineEntry] = []
     var onRestoreQuarantine: ((String) -> Void)?
@@ -76,6 +77,7 @@ struct SidebarView: View {
                     onUpdate: onUpdate,
                     onExport: onExport,
                     onFork: onFork,
+                    onPublish: onPublish,
                     onNewHarness: onNewHarness,
                     quarantinedEntries: quarantinedEntries,
                     onRestoreQuarantine: onRestoreQuarantine,

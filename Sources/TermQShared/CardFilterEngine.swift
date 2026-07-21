@@ -4,12 +4,20 @@ import Foundation
 /// Shared between MCP (ToolHandlers) and CLI (CLI+Find) to eliminate duplication.
 public enum CardFilterEngine {
 
-    // MARK: - Tag Value Matching
+    // MARK: - Tag Filter Errors
 
-    /// Controls how tag values are matched. MCP uses exact match; CLI uses partial.
-    public enum TagValueMatch: Sendable {
-        case exact
-        case contains
+    /// Errors that can surface from `filterByTag`. Surfaced to the user — CLI exits non-zero,
+    /// MCP returns `isError: true`. Never silently fall back to literal match when the user
+    /// asked for regex; that would mask a typo and return surprising results.
+    public enum TagFilterError: Error, CustomStringConvertible, Sendable {
+        case invalidRegex(pattern: String, message: String)
+
+        public var description: String {
+            switch self {
+            case .invalidRegex(let pattern, let message):
+                return "Invalid regex in tag filter '\(pattern)': \(message)"
+            }
+        }
     }
 
     // MARK: - Filtering
@@ -30,33 +38,74 @@ public enum CardFilterEngine {
         return cards.filter { matchingIds.contains($0.columnId) }
     }
 
-    /// Filters cards by tag. Accepts `"key"` or `"key=value"` format.
-    /// Returns `cards` unchanged when `tagFilter` is nil.
+    /// Filters cards by tag. Accepts:
+    /// - `"key"`              — key-only literal match
+    /// - `"key=value"`        — exact literal match on both key and value (case-insensitive)
+    /// - `"key=re:pattern"`   — key matches literally; value matches regex pattern
+    /// - `"re:pattern"`       — whole `key=value` string (or `key` alone) matches regex pattern
+    ///
+    /// Literal is the default to avoid the regex-metacharacter footgun (a tag like
+    /// `project=v1.2` would otherwise also match `project=v1X2` because `.` is a metachar).
+    /// Returns `cards` unchanged when `tagFilter` is nil. Throws `TagFilterError.invalidRegex`
+    /// if a `re:`-prefixed pattern fails to compile.
     public static func filterByTag(
         _ cards: [Card],
-        tagFilter: String?,
-        valueMatch: TagValueMatch = .exact
-    ) -> [Card] {
+        tagFilter: String?
+    ) throws -> [Card] {
         guard let tagFilter else { return cards }
+
+        // Whole-pattern regex: `re:...`
+        if let pattern = dropPrefix("re:", from: tagFilter) {
+            let regex = try compileRegex(pattern, original: tagFilter)
+            return cards.filter { card in
+                card.tags.contains { tag in
+                    let fullTag = tag.value.isEmpty ? tag.key : "\(tag.key)=\(tag.value)"
+                    return regex.matches(fullTag)
+                }
+            }
+        }
+
         if tagFilter.contains("=") {
             let parts = tagFilter.split(separator: "=", maxSplits: 1)
             guard parts.count == 2 else { return cards }
             let key = String(parts[0]).lowercased()
-            let value = String(parts[1]).lowercased()
-            return cards.filter { card in
-                card.tags.contains { tag in
-                    let keyMatch = tag.key.lowercased() == key
-                    switch valueMatch {
-                    case .exact: return keyMatch && tag.value.lowercased() == value
-                    case .contains: return keyMatch && tag.value.lowercased().contains(value)
+            let rawValue = String(parts[1])
+
+            // Value-position regex: `key=re:...`
+            if let valuePattern = dropPrefix("re:", from: rawValue) {
+                let regex = try compileRegex(valuePattern, original: tagFilter)
+                return cards.filter { card in
+                    card.tags.contains { tag in
+                        tag.key.lowercased() == key && regex.matches(tag.value)
                     }
                 }
             }
+
+            // Literal exact match
+            let value = rawValue.lowercased()
+            return cards.filter { card in
+                card.tags.contains { $0.key.lowercased() == key && $0.value.lowercased() == value }
+            }
         } else {
+            // Key-only literal match
             let key = tagFilter.lowercased()
             return cards.filter { card in
                 card.tags.contains { $0.key.lowercased() == key }
             }
+        }
+    }
+
+    // MARK: - Tag Filter Helpers
+
+    private static func dropPrefix(_ prefix: String, from string: String) -> String? {
+        string.hasPrefix(prefix) ? String(string.dropFirst(prefix.count)) : nil
+    }
+
+    private static func compileRegex(_ pattern: String, original: String) throws -> NSRegularExpression {
+        do {
+            return try NSRegularExpression(pattern: pattern, options: [.caseInsensitive])
+        } catch {
+            throw TagFilterError.invalidRegex(pattern: original, message: error.localizedDescription)
         }
     }
 
@@ -136,5 +185,12 @@ public enum CardFilterEngine {
         }
 
         return score
+    }
+}
+
+extension NSRegularExpression {
+    fileprivate func matches(_ string: String) -> Bool {
+        let range = NSRange(string.startIndex..., in: string)
+        return firstMatch(in: string, options: [], range: range) != nil
     }
 }

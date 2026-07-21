@@ -44,9 +44,11 @@ struct Find: ParsableCommand {
     func run() throws {
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: shouldUseDebugMode(debug))
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: resolveProfile(debug),
+                boardFilename: resolveBoardFilename())
 
-            var cards = board.activeCards
+            var cards = Board.cardsInWorkspace(board.activeCards, workspaceId: resolveWorkspaceId())
             var relevanceScores: [UUID: Int] = [:]
 
             if let queryStr = query, !queryStr.isEmpty {
@@ -80,9 +82,10 @@ struct Find: ParsableCommand {
                 cards = cards.filter { $0.title.lowercased().contains(filterLower) }
             }
 
-            // CLI uses .contains for tag value matching (partial match)
+            // Tag matching: literal exact match by default; opt-in regex with `re:` prefix.
+            // Converged with MCP — both surfaces use identical semantics via CardFilterEngine.
             cards = CardFilterEngine.filterByColumn(cards, column: column, columns: board.columns)
-            cards = CardFilterEngine.filterByTag(cards, tagFilter: tag, valueMatch: .contains)
+            cards = try CardFilterEngine.filterByTag(cards, tagFilter: tag)
             cards = CardFilterEngine.filterByBadge(cards, badge: badge)
             if favourites { cards = CardFilterEngine.filterFavourites(cards) }
 

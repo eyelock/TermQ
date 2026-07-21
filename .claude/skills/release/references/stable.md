@@ -4,10 +4,16 @@
 
 **NEVER open `develop → main` directly.** Always cut a `release/vX.Y.Z` branch first.
 
-Why: `main` accumulates commits after every release (appcast updates, hotfix forward-ports).
+Why: `main` accumulates commits after every release (appcast updates, prior hotfixes).
 Opening `develop → main` directly forces you to resolve those conflicts inside `develop`, which
-is messy and pollutes its history. A release branch absorbs the conflict once, in isolation,
-and the back-merge to develop is small and clean.
+is messy and pollutes its history. A release branch absorbs the conflict once, in isolation.
+
+**Back-merging: always merge `origin/main`, never the release branch.**
+After the release PR merges and the appcast PR lands, `origin/main` contains everything: the
+release content, CHANGELOG, and appcast updates. Merging `origin/main` into develop pulls all
+of that into develop's ancestry in one step and resets the divergence gap to zero. Merging only
+the release branch (or cherry-picking individual commits) leaves main's merge commit, the appcast
+commits, and any hotfixes outside develop's ancestry — the gap grows with every cycle.
 
 ## Prerequisites
 
@@ -94,41 +100,35 @@ gh release view v{VERSION}
 # Should show: title "TermQ v{VERSION}", assets (DMG, ZIP, checksums), NOT pre-release
 ```
 
-### 7. Back-Merge the Release Branch to Develop — MANDATORY
+### 7. Back-Merge main to Develop — MANDATORY
+
+After the tag is pushed, `update-appcast.yml` opens an auto-merging PR (`hotfix/appcast-update → main`)
+that commits the updated appcast files to `main`. **Wait for that PR to merge before opening the
+back-merge**, so `origin/main` is complete.
 
 ```bash
+# 1. Confirm the appcast PR has merged
+gh pr list --base main --search "appcast in:title" --state merged --limit 1
+
+# 2. Build the back-merge branch from develop
+git fetch origin
 git checkout -b chore/back-merge-v{VERSION} develop
-git merge origin/release/v{VERSION}
+git merge origin/main          # real merge of main — never use origin/release/* or cherry-picks
+# Resolve any conflicts (CHANGELOG is the most common — keep develop's [Unreleased]
+# section and accept main's released version sections below it)
 git push -u origin chore/back-merge-v{VERSION}
+
+# 3. Open the PR
 gh pr create --base develop \
-  --title "chore: back-merge release/v{VERSION} into develop" \
-  --body "Brings CHANGELOG update and any release-branch conflict resolutions back to develop."
+  --title "chore: back-merge v{VERSION} into develop" \
+  --body "Merges main (release v{VERSION}, CHANGELOG, and appcast updates) into develop. Keeps branch histories in sync."
 ```
 
-Merge once CI passes, then delete the release branch:
+Merge once CI passes (true merge, not squash — squashing re-introduces the divergence), then delete the release branch:
 
 ```bash
 git push origin --delete release/v{VERSION}
 ```
-
-### 8. Forward-Port Appcast to Develop — MANDATORY
-
-`update-appcast.yml` commits appcast files directly to `main` after the release. These must
-come to develop separately:
-
-```bash
-git checkout -b chore/sync-appcast-v{VERSION} develop
-git checkout origin/main -- Docs/appcast.xml Docs/appcast-beta.xml
-git commit -m "chore: sync appcast entries for v{VERSION} back to develop"
-git push -u origin chore/sync-appcast-v{VERSION}
-gh pr create --base develop \
-  --title "chore: sync appcast entries for v{VERSION} back to develop"
-```
-
-Merge once CI passes.
-
-> **Note:** Steps 7 and 8 can be combined into one PR if the appcast update workflow
-> has already completed before you open the back-merge.
 
 ## Troubleshooting
 
@@ -155,4 +155,7 @@ git push origin :refs/tags/v{VERSION}
 - NEVER use custom release titles
 - NEVER skip CI verification
 - NEVER tag from branches other than `main`
-- NEVER skip the back-merge (step 7) or appcast sync (step 8)
+- NEVER skip the back-merge (step 7)
+- NEVER merge the release branch back to develop — always merge `origin/main`
+- NEVER use cherry-picks in step 7 — always `git merge origin/main`
+- NEVER squash the back-merge PR — squashing re-introduces divergence

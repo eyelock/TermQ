@@ -452,6 +452,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "デフォルトバックエンドを上書き";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "リポジトリ";
+"sidebar.workspace.all" = "すべてのリポジトリ";
+"sidebar.workspace.menu.help" = "ワークスペースでリポジトリをフィルタ";
+"sidebar.workspace.new" = "新しいワークスペース…";
+"sidebar.workspace.new.title" = "新しいワークスペース";
+"sidebar.workspace.name.label" = "ワークスペース名";
+"sidebar.workspace.name.placeholder" = "例：仕事、個人プロジェクト";
+"sidebar.workspace.create" = "作成";
+"sidebar.workspace.manage" = "ワークスペースを管理…";
+"sidebar.workspace.manage.title" = "ワークスペースを管理";
+"sidebar.workspace.manage.empty" = "まだワークスペースがありません。ワークスペースメニューから作成してください。";
+"sidebar.workspace.manage.done" = "完了";
+"sidebar.workspace.add.to" = "ワークスペースに追加";
+"sidebar.workspace.delete.title" = "ワークスペースを削除しますか？";
+"sidebar.workspace.delete.confirm" = "削除";
+"sidebar.workspace.delete.message %@" = "「%@」が削除されます。含まれているリポジトリは削除されません。";
+"sidebar.workspace.empty.message" = "このワークスペースにはリポジトリがありません。\n「すべてのリポジトリ」内のリポジトリを右クリックして、ここに追加してください。";
 "sidebar.add.button.help" = "リポジトリを追加";
 "sidebar.empty.message" = "リポジトリが追加されていません。\n+ をクリックして Git リポジトリを追加してください。";
 "sidebar.worktrees.placeholder" = "ワークツリーがここに表示されます";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "ローカルにフォーク";
 "harnesses.fork.to.local.help" = "このハーネスの編集可能なローカルコピーを作成";
+"harnesses.publish.to.repository" = "リポジトリに公開…";
 "harnesses.update.dot.help" = "アップデートあり";
 "harness.fork.title %@" = "\"%@\" をローカルにフォーク";
 "harness.fork.explanation" = "このハーネスの編集可能なローカルコピーを作成します。コピーは元のリポジトリを追跡するため、アップストリームの変更を確認できます。";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "空のままにするとソース名を引き継ぎます。新しいフォークの正規 id は local/<名前> になります。";
 "harness.fork.identity.collision" = "この ID を持つハーネスがすでにインストールされています。";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" をリポジトリに公開";
+"harness.publish.explanation" = "このハーネスをターゲットリポジトリの新しいワークツリーにコピーし、コミットできる状態にします。リポジトリ独自の規則（登録スクリプト、マニフェスト）が残りを決定します。";
+"harness.publish.button" = "公開";
+"harness.publish.update.button" = "既存エントリを更新";
+"harness.publish.progress.title %@" = "\"%@\" を公開中…";
+"harness.publish.repo.label" = "ターゲットリポジトリ";
+"harness.publish.repo.placeholder" = "リポジトリを選択…";
+"harness.publish.parentdir.label" = "リポジトリ内のディレクトリ";
+"harness.publish.parentdir.hint" = "このリポジトリが既にハーネスを保存している場所から提案されます。自由に編集できます。";
+"harness.publish.name.label" = "名前";
+"harness.publish.branch.label" = "ブランチ";
+"harness.publish.basebranch.label" = "ベースブランチ";
+"harness.publish.worktreepath.label" = "ワークツリーのパス";
+"harness.publish.files.label" = "コピーするファイル";
+"harness.publish.changes.label" = "公開済みコピーとの差分";
+"harness.publish.mode.label" = "コピーモード";
+"harness.publish.mode.entire" = "ディレクトリ全体";
+"harness.publish.mode.enumerated" = "ハーネスファイルのみ";
+"harness.publish.mode.enumerated.hint" = "ソースディレクトリはプロジェクトリポジトリを兼ねています — ハーネスが所有するファイルのみがコピーされます。";
+"harness.publish.state.new" = "新規エントリ — このハーネスはまだリポジトリに存在しません。";
+"harness.publish.state.update %@" = "%@ にある既存エントリを更新します（上書きされます）。";
+"harness.publish.state.clash %@" = "そのディレクトリには別のハーネス（\"%@\"）が既に存在します — 別の名前を選択してください。";
+"harness.publish.state.occupied" = "そのディレクトリはリポジトリに既に存在します — 別の名前または場所を選択してください。";
+"harness.publish.state.samerepo" = "このハーネスは選択したリポジトリに既に存在します — 公開せずにそこで変更をコミットしてください。";
+"harness.publish.reveal.repository" = "リポジトリで表示";
+"harness.publish.preflight.failed" = "ローカルのハーネスが検証に失敗しました — 公開前に修正してください。";
+"harness.publish.composition.unavailable" = "このハーネスで ynd compose が失敗しました — \"ハーネスファイルのみ\" モードはどのファイルを所有するかを知るために必要です。ハーネスを修正するか \"ディレクトリ全体\" に切り替えてください。";
+"harness.publish.unresolved %lld" = "ソースに %lld 個の参照ファイルが見つかりません — コピーされません。";
+"harness.publish.register.disclosure %@" = "コピー後、リポジトリの %@ が実行されます（リポジトリ提供のスクリプト）。";
+"harness.publish.change.added" = "追加";
+"harness.publish.change.modified" = "変更";
+"harness.publish.change.removed" = "削除";
+"harness.publish.changes.none" = "差分なし — 公開済みコピーはローカルファイルと一致しています。";
+"harness.publish.step.worktree %@" = "ブランチ %@ にワークツリーを作成中…";
+"harness.publish.step.copy %@" = "ハーネスを %@ にコピー中…";
+"harness.publish.step.copied %lld" = "%lld 個のファイルグループをコピーしました。";
+"harness.publish.step.validate" = "コピーされたハーネスを検証中（ynd validate）…";
+"harness.publish.step.register %@" = "%@ を実行中…";
+"harness.publish.step.done %@" = "完了 — ワークツリーが %@ に準備されました。";
+"harness.publish.warning %@" = "警告: %@";
+"harness.publish.deleted %@" = "古いパスを削除しました: %@";
+"harness.publish.validation.failed" = "ワークツリーでの検証に失敗しました — 何もコミットされていません。ワークツリーは検査のために保持されています。";
+"harness.publish.register.failed" = "リポジトリの登録スクリプトが失敗しました — ワークツリーは検査のために保持されています。";
+"harness.publish.references.missing %@" = "マニフェストで参照されているファイルがコピー後に見つかりません: %@";
+"harness.publish.error.occupied %@" = "コピー先にすでにハーネスが存在します: %@";
+"harness.publish.error.invaliddest %@" = "コピー先がワークツリーの外に出ています: %@";
+"harness.publish.error.copy %@" = "コピーに失敗しました: %@";
+"harness.publish.error.rename %@" = "マニフェスト名を書き換えられませんでした: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "「%@」をアップデート";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "Worktreeは既に存在します";
 "settings.github.feed.cap.help" = "リモートサイドバーでリポジトリごとに表示されるプルリクエストの最大数。チェックアウト済みのPRは常に含まれます。";
 "settings.github.feed.cap.label" = "リポジトリごとのPR数";
-"settings.github.section.feed" = "リモートPRフィード";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "サイドバーでのスタックされたブランチとスタックされた PR を実現します。";
+"settings.gitspice.version" = "バージョン:";
+"settings.gitspice.path" = "パス:";
+"settings.gitspice.info" = "サイドバーのスタックされたブランチ機能は、正常に動作する git-spice のインストールに依存します。gh CLI の認証を再利用します。";
+"settings.gitspice.not.installed.description" = "git-spice はスタックされたブランチとスタックされた PR を実現します。インストールされていない場合、TermQ は通常のワークツリーのみを表示します。";
+"settings.gitspice.install.hint" = "Homebrew でインストール:";
+"settings.gitspice.check.again" = "再確認";
+"settings.gitspice.status.unusable %@" = "検出されましたが使用できません: %@";
+"stacks.enable" = "スタックを有効化…";
+"stacks.enable.help" = "git-spice でこのリポジトリのブランチをスタックとして追跡する";
+"stacks.enable.failed %@" = "スタックを有効化できませんでした: %@";
+"stacks.needs.restack" = "リスタックが必要";
+"stacks.open.change.request" = "変更リクエストを開く";
+"stacks.unpushed.commits %ld" = "↑%ld 件未プッシュ";
+"stacks.change.request.merged" = "マージ済み";
+"stacks.change.request.closed" = "クローズ済み";
+"stacks.no.change.request" = "PR なし";
+"stacks.disclosure.help" = "スタックのブランチを表示";
+"stacks.switch.blocked.dirty" = "スタックブランチを切り替えられません: このワークツリーにコミットされていない変更があります。先にコミットまたはスタッシュしてください。";
+"stacks.switch.blocked.in.use" = "スタックブランチを切り替えられません: このワークツリーでターミナルが開いています。先に閉じてください。";
+"stacks.switch.blocked.elsewhere %@" = "スタックブランチを切り替えられません: 別のワークツリー（%@）でチェックアウトされています。";
+"stacks.switch.help" = "ダブルクリックでこのワークツリーをこのブランチに切り替えます";
+"stacks.switch.to %@" = "%@ に切り替え";
+"stacks.add.branch" = "ブランチをスタックに追加…";
+"stacks.add.branch.title" = "ブランチをスタックに追加";
+"stacks.add.branch.name.label" = "ブランチ名";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "スタック先";
+"stacks.add.branch.staged.note" = "ステージされた変更は新しいブランチの最初のコミットになります。クリーンな状態の場合は、その上に空のブランチが作成されます。";
+"stacks.add.branch.track.note" = "このブランチは既に存在します — 代わりにスタックで追跡されます。";
+"stacks.add.branch.create" = "作成";
+"stacks.add.branch.track" = "追跡";
+"stacks.restack.stack" = "スタックをリスタック";
+"stacks.restack.from.here" = "ここからリスタック";
+"stacks.conflict.banner %ld" = "リスタックが一時停止 — %ld 個のファイルで競合";
+"stacks.conflict.continue" = "続行";
+"stacks.conflict.abort" = "中止";
+"stacks.conflict.hint" = "ターミナルで競合を解決し、ファイルをステージしてから続行してください。";
+"stacks.submit.stack" = "スタックを送信…";
+"stacks.submit.branch" = "このブランチを送信…";
+"stacks.submit.title" = "スタックを送信";
+"stacks.submit.button" = "送信";
+"stacks.submit.draft.toggle" = "新しいプルリクエストをドラフトとして作成";
+"stacks.submit.update.only.toggle" = "既存のプルリクエストのみ更新";
+"stacks.submit.will.create" = "作成";
+"stacks.submit.will.update" = "更新";
+"stacks.sync.repo" = "リポジトリを同期";
+"stacks.sync.cleaned %ld %@" = "同期により %ld 件のマージ済みブランチを削除しました: %@";
+"stacks.destroy.stack" = "スタックを破棄…";
+"stacks.destroy.stack.title" = "スタックを破棄しますか？";
+"stacks.destroy.stack.message %ld %@" = "これにより、git-spice 経由で %ld 件のローカルブランチが完全に削除されます: %@。リモートブランチとプルリクエストはそのまま残ります。";
+"stacks.destroy.stack.open.pr.warning %ld" = "これらのブランチのうち %ld 件には、まだオープン状態のプルリクエストがあります。";
+"stacks.destroy.stack.confirm" = "スタックを破棄";
+"stacks.destroy.stack.done %ld" = "スタックを破棄しました: %ld 件のブランチを削除";
+"stacks.destroy.stack.worktree.skipped %@" = "そのまま残しました（未コミットの変更があるため）: %@";
+"stacks.base.mismatch %@ %@" = "PR の対象は %@ ですが、スタックの親は %@ です — リポジトリを同期すると再ターゲットされます";
+"stacks.restack.up.to.date" = "スタックは既に最新です";
+"stacks.restack.done %ld" = "%ld 件のブランチをリスタックしました";
+"stacks.sync.clean" = "すべて同期済み";
+"stacks.submit.done %ld %ld" = "送信済み: 作成 %ld 件、更新 %ld 件";
+"sidebar.worktrees.section.header" = "ワークツリー";
+"stacks.break.out" = "ワークツリーに分離…";
+"stacks.skipped.notice %@" = "リスタックされませんでした: %@";
+"stacks.skipped.dirty %@ %@" = "%@（%@ でチェックアウト中、コミットされていない変更あり）";
+"stacks.skipped.in.use %@ %@" = "%@（%@ でチェックアウト中、ターミナルが使用中）";
+"stacks.copy.branch.name" = "ブランチ名をコピー";
+"stacks.reveal.worktree" = "ワークツリーを表示";
+"stacks.anchored.badge.help %@" = "ワークツリー %@ に固定 — クリックして表示";
+"stacks.part.of.stack %@" = "スタック %@ の一部";
+"stacks.section.header" = "スタック";
+"stacks.checked.out.at %@" = "%@ でチェックアウト中 — クリックしてワークツリーを表示";
+"stacks.anchor.help" = "このスタック用のワークツリーを作成";
+"stacks.group.new.worktree" = "新規ワークツリー…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "新しいスタックブランチ（前に追加）…";
+"stacks.new.branch.after" = "新しいスタックブランチ（後に追加）…";
+"stacks.new.branch.insert.below.note %@" = "新しいブランチはスタック内の%@の下に作成されます。";
+"stacks.new.branch.insert.above.note %@" = "新しいブランチはスタック内の%@の上に作成され、その位置を引き継ぎます — %@はその上に移動します。";
+"stacks.main.worktree.not.found" = "リポジトリのメインワークツリーが見つかりませんでした。";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "新しいスタック…";
+"stacks.new.stack.title" = "新しいスタック";
+"stacks.new.stack.name.label" = "ブランチ名";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "ベースブランチ";
+"stacks.new.stack.button" = "作成";
+"stacks.new.stack.note" = "チェックアウトやワークツリーを作成せずにベースからブランチを作成します — 後で開始できる1件のみのスタックです。";
+"stacks.start.stack.checkbox" = "このブランチでスタックを開始";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "デフォルトから分岐";
+"stacks.new.stack.mode.integration" = "統合ブランチから分岐";
+"stacks.new.stack.stack.name.label" = "スタック名";
+"stacks.new.stack.integration.preview %@" = "%@を作成";
+"stacks.new.stack.first.branch.label" = "最初のスタックブランチ（任意）";
+"stacks.new.stack.first.branch.empty.hint" = "空欄の場合: 空の統合ブランチのみが作成されます — 最初のスタックブランチは後で追加できます。";
+"stacks.new.stack.first.branch.filled.hint" = "このブランチはベースブランチの直接上ではなく、統合ブランチの上にスタックされて作成されます。";
+"stacks.new.stack.integration.note" = "ベースから空の統合ブランチをスタックのルートとして作成します — 統合ブランチ自体がコードを持つことはありません。スタックブランチはベースの代わりにこの統合ブランチの上に構築され、そのプルリクエストはここに連鎖します。すべてが統合ブランチにマージされると、統合ブランチはひとつのまとまった変更としてベースへプルリクエストされます — 各スタックブランチが個別にベースへマージされる代わりに。";
+"stacks.new.stack.name.exists %@" = "%@はすでに存在します — 別の名前を選んでください。";
+"settings.gitspice.new.stack.mode" = "新しいスタックの開始モード:";
+"settings.gitspice.new.stack.mode.help" = "「新しいスタック」シートが事前に選択するモード — シートは常に両方を提供します。";
+"settings.gitspice.hide.stacked.worktrees" = "スタックされたワークツリーをワークツリーセクションから非表示にする";
+"settings.gitspice.hide.stacked.worktrees.help" = "ブランチが追跡中のスタックに属するワークツリーは、すでにスタックの下に表示されています — 重複を避けるため、ワークツリーセクションから非表示にします。";

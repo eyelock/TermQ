@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "기본 백엔드 재정의";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "저장소";
+"sidebar.workspace.all" = "모든 저장소";
+"sidebar.workspace.menu.help" = "워크스페이스별 저장소 필터링";
+"sidebar.workspace.new" = "새 워크스페이스…";
+"sidebar.workspace.new.title" = "새 워크스페이스";
+"sidebar.workspace.name.label" = "워크스페이스 이름";
+"sidebar.workspace.name.placeholder" = "예: 업무, 개인 프로젝트";
+"sidebar.workspace.create" = "생성";
+"sidebar.workspace.manage" = "워크스페이스 관리…";
+"sidebar.workspace.manage.title" = "워크스페이스 관리";
+"sidebar.workspace.manage.empty" = "아직 워크스페이스가 없습니다. 워크스페이스 메뉴에서 만드세요.";
+"sidebar.workspace.manage.done" = "완료";
+"sidebar.workspace.add.to" = "워크스페이스에 추가";
+"sidebar.workspace.delete.title" = "워크스페이스를 삭제하시겠습니까?";
+"sidebar.workspace.delete.confirm" = "삭제";
+"sidebar.workspace.delete.message %@" = "“%@”이(가) 제거됩니다. 그 안의 저장소는 삭제되지 않습니다.";
+"sidebar.workspace.empty.message" = "이 워크스페이스에 저장소가 없습니다.\n“모든 저장소”에서 저장소를 오른쪽 클릭하여 여기에 추가하세요.";
 "sidebar.add.button.help" = "저장소 추가";
 "sidebar.empty.message" = "추가된 저장소가 없습니다.\n+ 버튼을 눌러 git 저장소를 추가하세요.";
 "sidebar.worktrees.placeholder" = "워크트리가 여기에 표시됩니다";
@@ -1010,6 +1041,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "로컬로 포크";
 "harnesses.fork.to.local.help" = "이 harness의 편집 가능한 로컬 사본 만들기";
+"harnesses.publish.to.repository" = "저장소에 게시…";
 "harnesses.update.dot.help" = "업데이트 가능";
 "harness.fork.title %@" = "\"%@\" 을 로컬로 포크";
 "harness.fork.explanation" = "이 harness의 편집 가능한 로컬 사본을 만듭니다. 사본은 업스트림에서 무엇이 변경되었는지 확인할 수 있도록 원본을 추적합니다.";
@@ -1019,6 +1051,56 @@
 "harness.fork.rename.hint" = "비워 두면 소스 이름을 유지합니다. 새 포크의 정식 id는 local/<이름>이 됩니다.";
 "harness.fork.identity.collision" = "이미 이 ID를 가진 하네스가 설치되어 있습니다.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\"을(를) 저장소에 게시";
+"harness.publish.explanation" = "이 harness를 대상 저장소의 새 worktree로 복사하여 커밋할 준비를 합니다. 저장소의 고유 규칙(등록 스크립트, 매니페스트)이 나머지를 처리합니다.";
+"harness.publish.button" = "게시";
+"harness.publish.update.button" = "기존 항목 업데이트";
+"harness.publish.progress.title %@" = "\"%@\" 게시 중…";
+"harness.publish.repo.label" = "대상 저장소";
+"harness.publish.repo.placeholder" = "저장소를 선택하세요…";
+"harness.publish.parentdir.label" = "저장소 내 디렉토리";
+"harness.publish.parentdir.hint" = "이 저장소가 이미 harness를 보관하는 위치에서 제안됩니다. 완전히 수정 가능합니다.";
+"harness.publish.name.label" = "이름";
+"harness.publish.branch.label" = "브랜치";
+"harness.publish.basebranch.label" = "기본 브랜치";
+"harness.publish.worktreepath.label" = "Worktree 경로";
+"harness.publish.files.label" = "복사할 파일";
+"harness.publish.changes.label" = "게시된 사본과의 변경 사항";
+"harness.publish.mode.label" = "복사 모드";
+"harness.publish.mode.entire" = "전체 디렉토리";
+"harness.publish.mode.enumerated" = "Harness 파일만";
+"harness.publish.mode.enumerated.hint" = "소스 디렉토리가 프로젝트 저장소를 겸합니다 — harness가 소유한 파일만 복사됩니다.";
+"harness.publish.state.new" = "새 항목 — 이 harness는 저장소에 아직 존재하지 않습니다.";
+"harness.publish.state.update %@" = "%@에 있는 기존 항목을 업데이트합니다 (덮어씁니다).";
+"harness.publish.state.clash %@" = "해당 디렉토리에 이미 다른 harness(\"%@\")가 있습니다 — 다른 이름을 선택하세요.";
+"harness.publish.state.occupied" = "해당 디렉토리가 저장소에 이미 존재합니다 — 다른 이름이나 위치를 선택하세요.";
+"harness.publish.state.samerepo" = "이 harness는 이미 선택한 저장소에 있습니다 — 게시 대신 변경 사항을 그곳에 커밋하세요.";
+"harness.publish.reveal.repository" = "저장소에서 보기";
+"harness.publish.preflight.failed" = "로컬 harness가 검증되지 않습니다 — 게시하기 전에 수정하세요.";
+"harness.publish.composition.unavailable" = "이 harness에 대해 ynd compose가 실패했습니다 — \"harness 파일만\" 모드는 소유 파일을 파악하기 위해 이것이 필요합니다. harness를 수정하거나 \"전체 디렉토리\"로 전환하세요.";
+"harness.publish.unresolved %lld" = "소스에서 참조된 파일 %lld개가 누락되었습니다 — 복사되지 않습니다.";
+"harness.publish.register.disclosure %@" = "복사 후 저장소의 %@이(가) 실행됩니다 (저장소 제공 스크립트).";
+"harness.publish.change.added" = "추가됨";
+"harness.publish.change.modified" = "수정됨";
+"harness.publish.change.removed" = "제거됨";
+"harness.publish.changes.none" = "차이 없음 — 게시된 사본이 로컬 파일과 일치합니다.";
+"harness.publish.step.worktree %@" = "%@ 브랜치에 worktree 생성 중…";
+"harness.publish.step.copy %@" = "%@에 harness 복사 중…";
+"harness.publish.step.copied %lld" = "%lld개의 파일 그룹을 복사했습니다.";
+"harness.publish.step.validate" = "복사된 harness 검증 중 (ynd validate)…";
+"harness.publish.step.register %@" = "%@ 실행 중…";
+"harness.publish.step.done %@" = "완료 — worktree가 %@에 준비되었습니다.";
+"harness.publish.warning %@" = "경고: %@";
+"harness.publish.deleted %@" = "오래된 경로 제거됨: %@";
+"harness.publish.validation.failed" = "worktree에서 검증 실패 — 아무것도 커밋되지 않았습니다. worktree는 검사를 위해 유지됩니다.";
+"harness.publish.register.failed" = "저장소의 등록 스크립트가 실패했습니다 — worktree는 검사를 위해 유지됩니다.";
+"harness.publish.references.missing %@" = "복사 후 매니페스트에서 참조된 파일이 누락되었습니다: %@";
+"harness.publish.error.occupied %@" = "대상에 이미 harness가 있습니다: %@";
+"harness.publish.error.invaliddest %@" = "대상이 worktree를 벗어납니다: %@";
+"harness.publish.error.copy %@" = "복사 실패: %@";
+"harness.publish.error.rename %@" = "매니페스트 이름을 다시 쓸 수 없습니다: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "\"%@\" 업데이트";
@@ -1266,5 +1348,111 @@
 "remote.prs.worktree.exists" = "워크트리가 이미 존재합니다";
 "settings.github.feed.cap.help" = "원격 사이드바에서 저장소별 최대 표시 풀 리퀘스트 수. 체크아웃된 PR은 항상 포함됩니다.";
 "settings.github.feed.cap.label" = "저장소당 PR 수";
-"settings.github.section.feed" = "원격 PR 피드";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "사이드바에서 스택된 브랜치와 스택된 PR을 지원합니다.";
+"settings.gitspice.version" = "버전:";
+"settings.gitspice.path" = "경로:";
+"settings.gitspice.info" = "사이드바의 스택된 브랜치 기능은 정상적으로 작동하는 git-spice 설치에 의존합니다. gh CLI의 인증을 재사용합니다.";
+"settings.gitspice.not.installed.description" = "git-spice는 스택된 브랜치와 스택된 PR을 지원합니다. 설치되어 있지 않으면 TermQ는 일반 워크트리만 표시합니다.";
+"settings.gitspice.install.hint" = "Homebrew로 설치:";
+"settings.gitspice.check.again" = "다시 확인";
+"settings.gitspice.status.unusable %@" = "감지되었지만 사용할 수 없음: %@";
+"stacks.enable" = "스택 활성화…";
+"stacks.enable.help" = "git-spice로 이 저장소의 브랜치를 스택으로 추적";
+"stacks.enable.failed %@" = "스택을 활성화할 수 없습니다: %@";
+"stacks.needs.restack" = "리스택 필요";
+"stacks.open.change.request" = "변경 요청 열기";
+"stacks.unpushed.commits %ld" = "↑%ld개 미푸시";
+"stacks.change.request.merged" = "병합됨";
+"stacks.change.request.closed" = "닫힘";
+"stacks.no.change.request" = "PR 없음";
+"stacks.disclosure.help" = "스택 브랜치 표시";
+"stacks.switch.blocked.dirty" = "스택 브랜치를 전환할 수 없습니다: 워크트리에 커밋되지 않은 변경 사항이 있습니다. 먼저 커밋하거나 스태시하세요.";
+"stacks.switch.blocked.in.use" = "스택 브랜치를 전환할 수 없습니다: 이 워크트리에서 터미널이 열려 있습니다. 먼저 닫으세요.";
+"stacks.switch.blocked.elsewhere %@" = "스택 브랜치를 전환할 수 없습니다: 다른 워크트리(%@)에서 체크아웃되어 있습니다.";
+"stacks.switch.help" = "이 워크트리를 해당 브랜치로 전환하려면 더블클릭하세요";
+"stacks.switch.to %@" = "%@(으)로 전환";
+"stacks.add.branch" = "스택에 브랜치 추가…";
+"stacks.add.branch.title" = "스택에 브랜치 추가";
+"stacks.add.branch.name.label" = "브랜치 이름";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "스택 대상";
+"stacks.add.branch.staged.note" = "스테이지된 변경 사항은 새 브랜치의 첫 커밋이 됩니다. 클린 상태이면 그 위에 빈 브랜치가 생성됩니다.";
+"stacks.add.branch.track.note" = "이 브랜치는 이미 존재합니다 — 대신 스택에서 추적됩니다.";
+"stacks.add.branch.create" = "생성";
+"stacks.add.branch.track" = "추적";
+"stacks.restack.stack" = "스택 리스택";
+"stacks.restack.from.here" = "여기서부터 리스택";
+"stacks.conflict.banner %ld" = "리스택이 일시 중지됨 — %ld개 파일에서 충돌";
+"stacks.conflict.continue" = "계속";
+"stacks.conflict.abort" = "중단";
+"stacks.conflict.hint" = "터미널에서 충돌을 해결하고 파일을 스테이지한 다음 계속을 누르세요.";
+"stacks.submit.stack" = "스택 제출…";
+"stacks.submit.branch" = "이 브랜치 제출…";
+"stacks.submit.title" = "스택 제출";
+"stacks.submit.button" = "제출";
+"stacks.submit.draft.toggle" = "새 풀 리퀘스트를 초안으로 생성";
+"stacks.submit.update.only.toggle" = "기존 풀 리퀘스트만 업데이트";
+"stacks.submit.will.create" = "생성";
+"stacks.submit.will.update" = "업데이트";
+"stacks.sync.repo" = "저장소 동기화";
+"stacks.sync.cleaned %ld %@" = "동기화로 병합된 브랜치 %ld개를 제거했습니다: %@";
+"stacks.destroy.stack" = "스택 파괴…";
+"stacks.destroy.stack.title" = "스택을 파괴하시겠습니까?";
+"stacks.destroy.stack.message %ld %@" = "이 작업은 git-spice를 통해 %ld개의 로컬 브랜치를 영구적으로 삭제합니다: %@. 원격 브랜치와 풀 리퀘스트는 그대로 유지됩니다.";
+"stacks.destroy.stack.open.pr.warning %ld" = "이 브랜치 중 %ld개에는 아직 열려 있는 풀 리퀘스트가 있습니다.";
+"stacks.destroy.stack.confirm" = "스택 파괴";
+"stacks.destroy.stack.done %ld" = "스택 파괴됨: %ld개 브랜치 삭제됨";
+"stacks.destroy.stack.worktree.skipped %@" = "그대로 유지됨(커밋되지 않은 변경 사항): %@";
+"stacks.base.mismatch %@ %@" = "PR 대상은 %@이지만 스택의 부모는 %@입니다 — 저장소 동기화가 이를 재지정합니다";
+"stacks.restack.up.to.date" = "스택이 이미 최신 상태입니다";
+"stacks.restack.done %ld" = "%ld개 브랜치를 리스택했습니다";
+"stacks.sync.clean" = "모두 동기화됨";
+"stacks.submit.done %ld %ld" = "제출됨: %ld개 생성, %ld개 업데이트";
+"sidebar.worktrees.section.header" = "워크트리";
+"stacks.break.out" = "워크트리로 분리…";
+"stacks.skipped.notice %@" = "리스택되지 않음: %@";
+"stacks.skipped.dirty %@ %@" = "%@(%@에서 체크아웃됨, 커밋되지 않은 변경 사항 있음)";
+"stacks.skipped.in.use %@ %@" = "%@(%@에서 체크아웃됨, 활성 터미널 있음)";
+"stacks.copy.branch.name" = "브랜치 이름 복사";
+"stacks.reveal.worktree" = "워크트리 표시";
+"stacks.anchored.badge.help %@" = "워크트리 %@에 고정됨 — 클릭하면 표시됩니다";
+"stacks.part.of.stack %@" = "스택 %@의 일부";
+"stacks.section.header" = "스택";
+"stacks.checked.out.at %@" = "%@에서 체크아웃됨 — 클릭하면 워크트리가 표시됩니다";
+"stacks.anchor.help" = "이 스택을 위한 워크트리 생성";
+"stacks.group.new.worktree" = "새 워크트리…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "새 스택 브랜치 이전…";
+"stacks.new.branch.after" = "새 스택 브랜치 이후…";
+"stacks.new.branch.insert.below.note %@" = "새 브랜치는 스택에서 %@ 아래에 생성됩니다.";
+"stacks.new.branch.insert.above.note %@" = "새 브랜치는 스택에서 %@ 위에 생성되어 그 자리를 대신합니다 — %@는 그 위로 이동합니다.";
+"stacks.main.worktree.not.found" = "저장소의 메인 워크트리를 찾을 수 없습니다.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "새 스택…";
+"stacks.new.stack.title" = "새 스택";
+"stacks.new.stack.name.label" = "브랜치 이름";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "기반 브랜치";
+"stacks.new.stack.button" = "생성";
+"stacks.new.stack.note" = "체크아웃이나 워크트리 없이 기반 브랜치에서 브랜치를 생성합니다 — 나중에 시작할 수 있는 항목 하나짜리 스택입니다.";
+"stacks.start.stack.checkbox" = "이 브랜치로 스택 시작";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "기본에서 분기";
+"stacks.new.stack.mode.integration" = "통합 브랜치에서 분기";
+"stacks.new.stack.stack.name.label" = "스택 이름";
+"stacks.new.stack.integration.preview %@" = "%@ 생성";
+"stacks.new.stack.first.branch.label" = "첫 번째 스택 브랜치 (선택 사항)";
+"stacks.new.stack.first.branch.empty.hint" = "비워두면: 빈 통합 브랜치만 생성됩니다 — 첫 번째 스택 브랜치는 나중에 추가할 수 있습니다.";
+"stacks.new.stack.first.branch.filled.hint" = "이 브랜치는 기반 브랜치 위가 아니라 통합 브랜치 위에 스택으로 생성됩니다.";
+"stacks.new.stack.integration.note" = "기반 브랜치에서 빈 통합 브랜치를 스택의 루트로 생성합니다 — 통합 브랜치 자체는 코드를 갖지 않습니다. 스택 브랜치는 기반 대신 이 통합 브랜치 위에 구축되며, 해당 pull request는 여기로 연결됩니다. 모든 것이 통합 브랜치로 병합되면, 하나의 통합된 변경 사항으로 기반 브랜치에 pull request됩니다 — 각 스택 브랜치가 개별적으로 기반 브랜치에 병합되는 대신입니다.";
+"stacks.new.stack.name.exists %@" = "%@은(는) 이미 존재합니다 — 다른 이름을 선택하세요.";
+"settings.gitspice.new.stack.mode" = "새 스택 시작 모드:";
+"settings.gitspice.new.stack.mode.help" = "새 스택 시트가 미리 선택하는 모드 — 시트는 항상 두 가지를 모두 제공합니다.";
+"settings.gitspice.hide.stacked.worktrees" = "워크트리 섹션에서 스택 브랜치의 워크트리 숨기기";
+"settings.gitspice.hide.stacked.worktrees.help" = "브랜치가 추적 중인 스택에 속한 워크트리는 이미 스택 아래에 표시됩니다 — 중복 표시를 피하려면 워크트리 섹션에서 숨기세요.";

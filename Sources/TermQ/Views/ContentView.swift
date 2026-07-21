@@ -30,6 +30,17 @@ struct ContentView: View {
     /// Run-with-Focus sheet context for a card-menu launch (reuse-in-place).
     @State private var runWithFocusCardContext: RunWithFocusContext?
 
+    /// Live window width, tracked via a background `GeometryReader` on the
+    /// `HSplitView` (below) rather than wrapping `body` in one directly — that would
+    /// turn the computed `var body` into something SwiftLint's `function_body_length`
+    /// treats as a function, tripping the 200-line limit on a view this size. Drives
+    /// the sidebar's max drag width so it can reach at least half the window.
+    @State private var windowWidth: CGFloat = 640
+
+    private var sidebarMaxWidth: CGFloat {
+        max(320, windowWidth / 2)
+    }
+
     var body: some View {
         HSplitView {
             if !isSidebarCollapsed {
@@ -76,12 +87,13 @@ struct ContentView: View {
                         lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
                     },
                     onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
+                    onPublish: { id in lifecycleCoordinator.publishHarness(id: id) },
                     onNewHarness: {},
                     quarantinedEntries: migrationCoordinator.quarantinedEntries,
                     onRestoreQuarantine: { name in restoreQuarantine(name: name) },
                     onDropQuarantine: { name in dropQuarantine(name: name) }
                 )
-                .frame(minWidth: 180, idealWidth: 220, maxWidth: 320)
+                .frame(minWidth: 180, idealWidth: 220, maxWidth: sidebarMaxWidth)
             }
 
             ZStack {
@@ -123,6 +135,27 @@ struct ContentView: View {
                         },
                         onBell: { cardId in
                             viewModel.markNeedsAttention(cardId)
+                        },
+                        onLaunchHarnessAtPath: { path in
+                            guard let harnessIdOrName = YNHPersistence.shared.harness(for: path) else { return }
+                            let harness = harnessRepo.harnesses.first {
+                                $0.id == harnessIdOrName || $0.name == harnessIdOrName
+                            }
+                            let config = HarnessLaunchConfig(
+                                harnessID: harness?.id ?? harnessIdOrName,
+                                vendorID: "",
+                                defaultVendor: harness?.defaultVendor ?? "",
+                                focus: nil,
+                                profile: nil,
+                                workingDirectory: path,
+                                prompt: nil,
+                                instructions: nil,
+                                backend: SettingsStore.shared.backend,
+                                branch: nil,
+                                interactive: false,
+                                cardTitle: nil
+                            )
+                            launchCoordinator.launchHarness(config)
                         },
                         tabCards: viewModel.tabCards,
                         columns: viewModel.board.columns,
@@ -277,76 +310,16 @@ struct ContentView: View {
             .onChange(of: harnessRepo.listState) { _, _ in
                 launchCoordinator.tryResolvePendingLaunch()
             }
-            .sheet(isPresented: $lifecycleCoordinator.showInstallSheet) {
-                HarnessInstallSheet(
-                    installedNames: Set(harnessRepo.harnesses.map(\.name)),
-                    harnesses: harnessRepo.harnesses
-                ) { config in
-                    lifecycleCoordinator.installHarness(config)
-                }
-                .frame(width: 520, height: 540)
-            }
-            .sheet(isPresented: $lifecycleCoordinator.showInstallProgressSheet) {
-                Group {
-                    if let config = lifecycleCoordinator.harnessConfigToInstall {
-                        HarnessInstallProgressSheet(
-                            config: config,
-                            detector: ynhDetector,
-                            repository: harnessRepo
-                        )
-                    }
-                }
-                .frame(width: 560, height: 420)
-            }
-            .sheet(isPresented: $lifecycleCoordinator.showUninstallSheet) {
-                Group {
-                    if let id = lifecycleCoordinator.harnessIDToUninstall {
-                        let displayName =
-                            harnessRepo.harnesses.first(where: { $0.id == id })?.name ?? id
-                        HarnessUninstallSheet(
-                            canonicalID: id,
-                            harnessName: displayName,
-                            detector: ynhDetector,
-                            repository: harnessRepo
-                        )
-                    }
-                }
-                .frame(width: 560, height: 420)
-            }
-            .sheet(isPresented: $lifecycleCoordinator.showExportSheet) {
-                Group {
-                    if let pending = lifecycleCoordinator.pendingExport {
-                        HarnessExportSheet(
-                            harnessName: pending.harnessName,
-                            harnessPath: pending.harnessPath,
-                            outputDir: pending.outputDir,
-                            detector: ynhDetector
-                        )
-                    }
-                }
-                .frame(width: 560, height: 420)
-            }
-            .sheet(isPresented: $lifecycleCoordinator.showForkSheet) {
-                // Frame applied at the .sheet content closure (the absolute
-                // outermost view NSWindow sees) so the window has a definitive
-                // intrinsic size at first paint. Frame inside the sheet view's
-                // body races against SwiftUI's layout pass and produces a
-                // small placeholder until resolved.
-                Group {
-                    if let id = lifecycleCoordinator.harnessIDToFork {
-                        forkSheet(for: id)
-                    }
-                }
-                .frame(width: 560, height: 420)
-            }
-            .sheet(isPresented: $lifecycleCoordinator.showUpdateSheet) {
-                Group {
-                    if let id = lifecycleCoordinator.harnessIDToUpdate {
-                        updateSheet(for: id)
-                    }
-                }
-                .frame(width: 560, height: 420)
-            }
+            .modifier(
+                HarnessLifecycleSheets(
+                    lifecycleCoordinator: lifecycleCoordinator,
+                    harnessRepo: harnessRepo,
+                    ynhDetector: ynhDetector,
+                    forkSheet: { AnyView(forkSheet(for: $0)) },
+                    updateSheet: { AnyView(updateSheet(for: $0)) },
+                    publishSheetContent: { AnyView(publishSheetContent()) }
+                )
+            )
             .sheet(isPresented: $viewModel.showSessionRecovery) {
                 SessionRecoveryView(viewModel: viewModel)
                     .frame(width: 500, height: 400)
@@ -548,25 +521,19 @@ struct ContentView: View {
                     }
                 }
             }
-            .alert(Strings.Delete.title, isPresented: $viewModel.showDeleteConfirmation) {
-                Button(Strings.Delete.cancel, role: .cancel) {}
-                Button(Strings.Delete.moveToBin, role: .destructive) {
-                    if let selectedCard = viewModel.selectedCard {
-                        viewModel.deleteTabCard(selectedCard)
-                    }
-                }
-            } message: {
-                if let selectedCard = viewModel.selectedCard {
-                    Text(Strings.Delete.binMessage(selectedCard.title))
-                } else {
-                    Text(Strings.Delete.binMessage(""))
-                }
-            }
+            .modifier(DeleteCardConfirmationAlert(viewModel: viewModel))
             .navigationTitle(Strings.appName)
             .focusedSceneValue(\.terminalActions, terminalActions)
             .focusedSceneValue(\.windowMenu, windowMenu)
             .background { fontZoomShortcutAliases }
         }
+        .background(
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear { windowWidth = geo.size.width }
+                    .onChange(of: geo.size.width) { _, newValue in windowWidth = newValue }
+            }
+        )
         .onAppear {
             let count = NSApplication.shared.windows.count
             TermQLogger.window.notice("ContentView appeared: \(count) window(s)")
@@ -907,6 +874,32 @@ extension ContentView {
 
 }
 
+// MARK: - View Modifiers
+
+/// Extracted from `ContentView.body` to keep the struct body under the
+/// `type_body_length` lint threshold.
+private struct DeleteCardConfirmationAlert: ViewModifier {
+    @ObservedObject var viewModel: BoardViewModel
+
+    func body(content: Content) -> some View {
+        content
+            .alert(Strings.Delete.title, isPresented: $viewModel.showDeleteConfirmation) {
+                Button(Strings.Delete.cancel, role: .cancel) {}
+                Button(Strings.Delete.moveToBin, role: .destructive) {
+                    if let selectedCard = viewModel.selectedCard {
+                        viewModel.deleteTabCard(selectedCard)
+                    }
+                }
+            } message: {
+                if let selectedCard = viewModel.selectedCard {
+                    Text(Strings.Delete.binMessage(selectedCard.title))
+                } else {
+                    Text(Strings.Delete.binMessage(""))
+                }
+            }
+    }
+}
+
 // MARK: - Harness sub-views
 
 extension ContentView {
@@ -947,6 +940,21 @@ extension ContentView {
         )
     }
 
+    /// Content for the publish sheet. The view model is held by the
+    /// lifecycle coordinator so ContentView re-renders don't recreate it.
+    @ViewBuilder
+    func publishSheetContent() -> some View {
+        Group {
+            if let publishVM = lifecycleCoordinator.publishViewModel {
+                PublishHarnessSheet(
+                    viewModel: publishVM,
+                    onCompleted: { lifecycleCoordinator.handlePublishCompleted() }
+                )
+            }
+        }
+        .frame(width: 560, height: 620)
+    }
+
     @ViewBuilder
     func forkSheet(for id: String) -> some View {
         if let harness = harnessRepo.harnesses.first(where: { $0.id == id }) {
@@ -960,4 +968,5 @@ extension ContentView {
             )
         }
     }
+
 }

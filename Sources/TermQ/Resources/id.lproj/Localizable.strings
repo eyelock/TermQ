@@ -452,6 +452,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Ganti backend bawaan";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repositori";
+"sidebar.workspace.all" = "Semua repositori";
+"sidebar.workspace.menu.help" = "Filter repositori berdasarkan ruang kerja";
+"sidebar.workspace.new" = "Ruang kerja baru…";
+"sidebar.workspace.new.title" = "Ruang kerja baru";
+"sidebar.workspace.name.label" = "Nama ruang kerja";
+"sidebar.workspace.name.placeholder" = "mis. Pekerjaan, Proyek sampingan";
+"sidebar.workspace.create" = "Buat";
+"sidebar.workspace.manage" = "Kelola ruang kerja…";
+"sidebar.workspace.manage.title" = "Kelola ruang kerja";
+"sidebar.workspace.manage.empty" = "Belum ada ruang kerja. Buat satu dari menu ruang kerja.";
+"sidebar.workspace.manage.done" = "Selesai";
+"sidebar.workspace.add.to" = "Tambahkan ke ruang kerja";
+"sidebar.workspace.delete.title" = "Hapus ruang kerja?";
+"sidebar.workspace.delete.confirm" = "Hapus";
+"sidebar.workspace.delete.message %@" = ""%@" akan dihapus. Repositori di dalamnya tidak akan dihapus.";
+"sidebar.workspace.empty.message" = "Tidak ada repositori di ruang kerja ini.\nKlik kanan repositori di “Semua repositori” untuk menambahkannya di sini.";
 "sidebar.add.button.help" = "Tambah repositori";
 "sidebar.empty.message" = "Tidak ada repositori yang ditambahkan.\nKlik + untuk menambahkan repositori git.";
 "sidebar.worktrees.placeholder" = "Worktree akan muncul di sini";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork ke lokal";
 "harnesses.fork.to.local.help" = "Buat salinan lokal yang dapat diedit dari harness ini";
+"harnesses.publish.to.repository" = "Publikasikan ke Repositori…";
 "harnesses.update.dot.help" = "Pembaruan tersedia";
 "harness.fork.title %@" = "Fork \"%@\" ke lokal";
 "harness.fork.explanation" = "Membuat salinan lokal yang dapat diedit dari harness ini. Salinan melacak asalnya sehingga Anda dapat melihat apa yang berubah di upstream.";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "Biarkan kosong untuk mempertahankan nama sumber. Id kanonik fork baru akan menjadi local/<nama>.";
 "harness.fork.identity.collision" = "Harness yang sudah terpasang sudah memiliki identitas ini.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publikasikan \"%@\" ke Repositori";
+"harness.publish.explanation" = "Menyalin harness ini ke worktree baru dari repositori target, siap untuk di-commit. Konvensi repositori sendiri (skrip registrasi, manifest) menentukan sisanya.";
+"harness.publish.button" = "Publikasikan";
+"harness.publish.update.button" = "Perbarui Entri yang Ada";
+"harness.publish.progress.title %@" = "Memublikasikan \"%@\"…";
+"harness.publish.repo.label" = "Repositori Target";
+"harness.publish.repo.placeholder" = "Pilih repositori…";
+"harness.publish.parentdir.label" = "Direktori di Repositori";
+"harness.publish.parentdir.hint" = "Disarankan dari tempat repositori ini sudah menyimpan harness. Sepenuhnya dapat diedit.";
+"harness.publish.name.label" = "Nama";
+"harness.publish.branch.label" = "Cabang";
+"harness.publish.basebranch.label" = "Cabang Dasar";
+"harness.publish.worktreepath.label" = "Jalur Worktree";
+"harness.publish.files.label" = "File untuk Disalin";
+"harness.publish.changes.label" = "Perubahan vs Salinan yang Dipublikasikan";
+"harness.publish.mode.label" = "Mode Salin";
+"harness.publish.mode.entire" = "Seluruh direktori";
+"harness.publish.mode.enumerated" = "Hanya file harness";
+"harness.publish.mode.enumerated.hint" = "Direktori sumber sekaligus berfungsi sebagai repositori proyek — hanya file yang dimiliki harness yang disalin.";
+"harness.publish.state.new" = "Entri baru — harness ini belum ada di repositori.";
+"harness.publish.state.update %@" = "Memperbarui entri yang ada di %@ (menimpanya).";
+"harness.publish.state.clash %@" = "Direktori tersebut sudah berisi harness lain (\"%@\") — pilih nama lain.";
+"harness.publish.state.occupied" = "Direktori tersebut sudah ada di repositori — pilih nama atau lokasi lain.";
+"harness.publish.state.samerepo" = "Harness ini sudah berada di repositori yang dipilih — commit perubahan Anda di sana, bukan dengan mempublikasikan.";
+"harness.publish.reveal.repository" = "Tampilkan di Repositori";
+"harness.publish.preflight.failed" = "Harness lokal tidak lolos validasi — perbaiki sebelum mempublikasikan.";
+"harness.publish.composition.unavailable" = "ynd compose gagal untuk harness ini — mode \"hanya file harness\" membutuhkannya untuk mengetahui file mana yang dimiliki. Perbaiki harness atau beralih ke \"seluruh direktori\".";
+"harness.publish.unresolved %lld" = "%lld file yang direferensikan tidak ada dari sumber — tidak akan disalin.";
+"harness.publish.register.disclosure %@" = "Setelah menyalin, %@ repositori akan dijalankan (skrip dari repositori).";
+"harness.publish.change.added" = "ditambahkan";
+"harness.publish.change.modified" = "dimodifikasi";
+"harness.publish.change.removed" = "dihapus";
+"harness.publish.changes.none" = "Tidak ada perbedaan — salinan yang dipublikasikan cocok dengan file lokal Anda.";
+"harness.publish.step.worktree %@" = "Membuat worktree di cabang %@…";
+"harness.publish.step.copy %@" = "Menyalin harness ke %@…";
+"harness.publish.step.copied %lld" = "Menyalin %lld grup file.";
+"harness.publish.step.validate" = "Memvalidasi harness yang disalin (ynd validate)…";
+"harness.publish.step.register %@" = "Menjalankan %@…";
+"harness.publish.step.done %@" = "Selesai — worktree siap di %@.";
+"harness.publish.warning %@" = "Peringatan: %@";
+"harness.publish.deleted %@" = "Jalur usang dihapus: %@";
+"harness.publish.validation.failed" = "Validasi gagal di worktree — tidak ada yang di-commit. Worktree disimpan untuk inspeksi.";
+"harness.publish.register.failed" = "Skrip registrasi repositori gagal — worktree disimpan untuk inspeksi.";
+"harness.publish.references.missing %@" = "File yang direferensikan manifest tidak ada setelah penyalinan: %@";
+"harness.publish.error.occupied %@" = "Tujuan sudah berisi harness: %@";
+"harness.publish.error.invaliddest %@" = "Tujuan keluar dari worktree: %@";
+"harness.publish.error.copy %@" = "Penyalinan gagal: %@";
+"harness.publish.error.rename %@" = "Tidak dapat menulis ulang nama manifest: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Perbarui \"%@\"";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "Worktree Sudah Ada";
 "settings.github.feed.cap.help" = "Jumlah maksimum pull request yang ditampilkan per repositori di bilah sisi Remote. PR yang diambil selalu disertakan.";
 "settings.github.feed.cap.label" = "PR per repositori";
-"settings.github.section.feed" = "Umpan Remote PR";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Mendukung cabang bertumpuk dan PR bertumpuk di bilah sisi.";
+"settings.gitspice.version" = "Versi:";
+"settings.gitspice.path" = "Jalur:";
+"settings.gitspice.info" = "Fitur cabang bertumpuk di bilah sisi bergantung pada instalasi git-spice yang berfungsi. Fitur ini menggunakan kembali autentikasi CLI gh.";
+"settings.gitspice.not.installed.description" = "git-spice mengaktifkan cabang bertumpuk dan PR bertumpuk. Tanpanya, TermQ hanya menampilkan worktree biasa.";
+"settings.gitspice.install.hint" = "Instal menggunakan Homebrew:";
+"settings.gitspice.check.again" = "Periksa Lagi";
+"settings.gitspice.status.unusable %@" = "Terdeteksi tetapi tidak dapat digunakan: %@";
+"stacks.enable" = "Aktifkan Penumpukan…";
+"stacks.enable.help" = "Lacak cabang repositori ini sebagai tumpukan dengan git-spice";
+"stacks.enable.failed %@" = "Tidak dapat mengaktifkan penumpukan: %@";
+"stacks.needs.restack" = "Perlu restack";
+"stacks.open.change.request" = "Buka Permintaan Perubahan";
+"stacks.unpushed.commits %ld" = "↑%ld belum di-push";
+"stacks.change.request.merged" = "digabungkan";
+"stacks.change.request.closed" = "ditutup";
+"stacks.no.change.request" = "tidak ada PR";
+"stacks.disclosure.help" = "Tampilkan cabang tumpukan";
+"stacks.switch.blocked.dirty" = "Tidak dapat beralih cabang tumpukan: worktree memiliki perubahan yang belum di-commit. Commit atau stash terlebih dahulu.";
+"stacks.switch.blocked.in.use" = "Tidak dapat beralih cabang tumpukan: ada terminal yang terbuka di worktree ini. Tutup terlebih dahulu.";
+"stacks.switch.blocked.elsewhere %@" = "Tidak dapat beralih cabang tumpukan: sedang di-checkout di worktree lain (%@).";
+"stacks.switch.help" = "Klik dua kali untuk mengalihkan worktree ini ke cabang";
+"stacks.switch.to %@" = "Alihkan ke %@";
+"stacks.add.branch" = "Tambahkan Cabang ke Tumpukan…";
+"stacks.add.branch.title" = "Tambahkan Cabang ke Tumpukan";
+"stacks.add.branch.name.label" = "Nama cabang";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Tumpuk pada";
+"stacks.add.branch.staged.note" = "Perubahan yang di-stage akan menjadi commit pertama cabang baru. Dengan pohon yang bersih, cabang kosong akan dibuat di atasnya.";
+"stacks.add.branch.track.note" = "Cabang ini sudah ada — sebagai gantinya akan dilacak dalam tumpukan.";
+"stacks.add.branch.create" = "Buat";
+"stacks.add.branch.track" = "Lacak";
+"stacks.restack.stack" = "Restack Tumpukan";
+"stacks.restack.from.here" = "Restack dari Sini";
+"stacks.conflict.banner %ld" = "Restack dijeda — konflik di %ld berkas";
+"stacks.conflict.continue" = "Lanjutkan";
+"stacks.conflict.abort" = "Batalkan";
+"stacks.conflict.hint" = "Selesaikan konflik di terminal, stage berkas, lalu klik Lanjutkan.";
+"stacks.submit.stack" = "Kirim Tumpukan…";
+"stacks.submit.branch" = "Kirim Cabang Ini…";
+"stacks.submit.title" = "Kirim Tumpukan";
+"stacks.submit.button" = "Kirim";
+"stacks.submit.draft.toggle" = "Buat pull request baru sebagai draf";
+"stacks.submit.update.only.toggle" = "Hanya perbarui pull request yang sudah ada";
+"stacks.submit.will.create" = "buat";
+"stacks.submit.will.update" = "perbarui";
+"stacks.sync.repo" = "Sinkronkan Repo";
+"stacks.sync.cleaned %ld %@" = "Sinkronisasi menghapus %ld cabang tergabung: %@";
+"stacks.destroy.stack" = "Hancurkan Stack…";
+"stacks.destroy.stack.title" = "Hancurkan stack?";
+"stacks.destroy.stack.message %ld %@" = "Tindakan ini akan menghapus %ld cabang lokal secara permanen melalui git-spice: %@. Cabang remote dan pull request apa pun tetap tidak terpengaruh.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld dari cabang ini masih memiliki pull request yang TERBUKA.";
+"stacks.destroy.stack.confirm" = "Hancurkan Stack";
+"stacks.destroy.stack.done %ld" = "Stack dihancurkan: %ld cabang dihapus";
+"stacks.destroy.stack.worktree.skipped %@" = "Dibiarkan tidak berubah (perubahan belum di-commit): %@";
+"stacks.base.mismatch %@ %@" = "PR menargetkan %@, tetapi induk tumpukan adalah %@ — Sinkronkan Repo akan mengalihkan targetnya";
+"stacks.restack.up.to.date" = "Tumpukan sudah mutakhir";
+"stacks.restack.done %ld" = "%ld cabang telah di-restack";
+"stacks.sync.clean" = "Semua tersinkron";
+"stacks.submit.done %ld %ld" = "Terkirim: %ld dibuat, %ld diperbarui";
+"sidebar.worktrees.section.header" = "Worktree";
+"stacks.break.out" = "Pisahkan ke Worktree…";
+"stacks.skipped.notice %@" = "Tidak di-restack: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (di-checkout di %@ dengan perubahan yang belum di-commit)";
+"stacks.skipped.in.use %@ %@" = "%@ (di-checkout di %@ dengan terminal aktif)";
+"stacks.copy.branch.name" = "Salin Nama Cabang";
+"stacks.reveal.worktree" = "Tampilkan Worktree";
+"stacks.anchored.badge.help %@" = "Berlabuh di worktree %@ — klik untuk menampilkannya";
+"stacks.part.of.stack %@" = "Bagian dari tumpukan %@";
+"stacks.section.header" = "Tumpukan";
+"stacks.checked.out.at %@" = "Di-checkout di %@ — klik untuk menampilkan worktree";
+"stacks.anchor.help" = "Buat worktree untuk tumpukan ini";
+"stacks.group.new.worktree" = "Worktree Baru…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Cabang Tumpukan Baru Sebelum…";
+"stacks.new.branch.after" = "Cabang Tumpukan Baru Setelah…";
+"stacks.new.branch.insert.below.note %@" = "Cabang baru dibuat di bawah %@ dalam tumpukan.";
+"stacks.new.branch.insert.above.note %@" = "Cabang baru dibuat di atas %@ dalam tumpukan, menggantikan posisinya — %@ berpindah ke atasnya.";
+"stacks.main.worktree.not.found" = "Tidak dapat menemukan worktree utama repositori.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Tumpukan Baru…";
+"stacks.new.stack.title" = "Tumpukan Baru";
+"stacks.new.stack.name.label" = "Nama cabang";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Branch Dasar";
+"stacks.new.stack.button" = "Buat";
+"stacks.new.stack.note" = "Membuat cabang dari dasar tanpa checkout dan tanpa worktree — tumpukan satu entri yang dapat Anda mulai nanti.";
+"stacks.start.stack.checkbox" = "Mulai tumpukan dengan cabang ini";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Bercabang dari default";
+"stacks.new.stack.mode.integration" = "Bercabang dari integrasi";
+"stacks.new.stack.stack.name.label" = "Nama Tumpukan";
+"stacks.new.stack.integration.preview %@" = "Membuat %@";
+"stacks.new.stack.first.branch.label" = "Cabang Tumpukan Pertama (opsional)";
+"stacks.new.stack.first.branch.empty.hint" = "Jika dikosongkan: hanya cabang integrasi kosong yang dibuat — Anda dapat menambahkan cabang tumpukan pertama nanti.";
+"stacks.new.stack.first.branch.filled.hint" = "Cabang ini dibuat menumpuk di atas cabang integrasi, bukan langsung di atas cabang dasar.";
+"stacks.new.stack.integration.note" = "Membuat cabang integrasi kosong dari dasar sebagai akar tumpukan — cabang ini tidak pernah membawa kode sendiri. Cabang tumpukan dibangun di atasnya, bukan di atas dasar, dan pull request mereka berantai ke sana. Setelah semuanya digabungkan ke cabang integrasi, cabang tersebut di-pull-request ke dasar sebagai satu perubahan gabungan — bukan setiap cabang tumpukan digabungkan satu per satu ke dasar.";
+"stacks.new.stack.name.exists %@" = "%@ sudah ada — pilih nama lain.";
+"settings.gitspice.new.stack.mode" = "Tumpukan Baru dimulai sebagai:";
+"settings.gitspice.new.stack.mode.help" = "Mode mana yang dipilih terlebih dahulu oleh sheet Tumpukan Baru — sheet selalu menawarkan keduanya.";
+"settings.gitspice.hide.stacked.worktrees" = "Sembunyikan worktree bertumpuk dari bagian Worktrees";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktree yang cabangnya termasuk dalam tumpukan yang dilacak sudah tercantum di Tumpukan — sembunyikan dari bagian Worktrees untuk menghindari duplikasi.";

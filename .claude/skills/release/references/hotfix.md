@@ -72,30 +72,33 @@ git push origin --delete hotfix/v0.6.4
 git branch -d hotfix/v0.6.4
 ```
 
-### 7. Forward-Port to Develop — MANDATORY
+### 7. Back-Merge to Develop — MANDATORY
 
-**This step is not optional.** Every change that lands on `main` via hotfix MUST also land on `develop`. Skipping this causes divergence that creates merge conflicts on the next develop → main promotion.
+**This step is not optional.** Every change that lands on `main` via hotfix MUST also land on `develop`. Skipping this (or substituting cherry-picks) causes permanent branch divergence — main accumulates commits that are never in develop's ancestry, and the gap grows with every release cycle.
 
-**Consolidate everything into a single PR** — do not open multiple PRs for different pieces. One forward-port PR keeps the public history clean. It should include:
+**Use a real `git merge`, not cherry-picks.** Cherry-picks create new commits with different SHAs. Even when the content is identical, git sees main's original commits as absent from develop's history, so the divergence count keeps climbing. A merge commit pulls all of main's history into develop's ancestry in one step.
 
-- Any fix commits not already on `develop` (cherry-picked from `main`)
-- The appcast files auto-updated by `update-appcast.yml` on `main`
-- Any CHANGELOG changes from the hotfix branch
-- Any skill or docs updates made during the hotfix
+Wait for the appcast PR (`hotfix/appcast-update → main`) to merge before opening the back-merge, so the appcast files are included automatically.
 
 ```bash
-git checkout -b chore-forward-port-v0.6.4 develop
-git cherry-pick <fix-commit-sha> <changelog-sha> <skill-sha>
-# Also cherry-pick the appcast update commit from main:
-git cherry-pick <appcast-commit-sha>
-git push -u origin chore-forward-port-v0.6.4
-gh pr create --base develop --title "chore: forward-port v0.6.4 hotfix" \
-  --body "Forward-ports hotfix v0.6.4 commits, appcast update, and CHANGELOG to develop."
+# 1. Confirm the appcast PR has merged
+gh pr list --base main --search "appcast in:title" --state merged --limit 1
+
+# 2. Build the back-merge branch from develop
+git fetch origin
+git checkout -b chore/back-merge-v0.6.4 develop
+git merge origin/main          # real merge — never cherry-pick
+# Resolve any conflicts (CHANGELOG is the most common — keep develop's [Unreleased]
+# section and accept main's released version sections below it)
+git push -u origin chore/back-merge-v0.6.4
+
+# 3. Open the PR
+gh pr create --base develop \
+  --title "chore: back-merge v0.6.4 hotfix into develop" \
+  --body "Merges main (hotfix v0.6.4, CHANGELOG, and appcast updates) into develop. Keeps branch histories in sync."
 ```
 
-Merge once CI passes. If cherry-picks have conflicts (develop has diverged significantly), resolve them before pushing.
-
-**Auto-generated files (appcasts):** The `update-appcast.yml` workflow updates `Docs/appcast.xml` and `Docs/appcast-beta.xml` on `main` automatically after each release. These changes are never automatically forward-ported — include them manually in the forward-port PR.
+Merge once CI passes (true merge, not squash — squashing would re-introduce the divergence).
 
 ## What NOT to Do
 
@@ -104,4 +107,5 @@ Merge once CI passes. If cherry-picks have conflicts (develop has diverged signi
 - NEVER work around failed automation — fix it instead
 - NEVER push unsigned/unnotarized builds
 - NEVER skip step 7 — every main change must flow back to develop
-- NEVER open multiple forward-port PRs — consolidate into one
+- NEVER use cherry-picks in step 7 — always `git merge origin/main`
+- NEVER squash the back-merge PR — squashing re-introduces divergence

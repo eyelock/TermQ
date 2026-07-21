@@ -18,6 +18,26 @@ func shouldUseDebugMode(_ explicitDebug: Bool) -> Bool {
     #endif
 }
 
+/// Resolves the AppProfile variant for a CLI invocation: in a debug build always `.debug`;
+/// in a production build the user's `--debug` flag selects between `.production` and `.debug`.
+/// Use this at every `BoardLoader`/`BoardWriter`/`HeadlessWriter` call site so the long-form
+/// `AppProfile.Variant(debug: shouldUseDebugMode(debug))` doesn't leak everywhere.
+func resolveProfile(_ explicitDebug: Bool) -> AppProfile.Variant {
+    AppProfile.Variant(debug: shouldUseDebugMode(explicitDebug))
+}
+
+/// The CLI always operates on the single `board.json`. Workspace pinning is a
+/// per-card filter (see `resolveWorkspaceId`), not a separate board file.
+func resolveBoardFilename() -> String { "board.json" }
+
+/// The workspace this CLI invocation is pinned to, from `TERMQ_WORKSPACE_ID`. When
+/// run inside a TermQ terminal the CLI inherits it: read ops show only this
+/// workspace's cards and created cards are stamped with it. Unset/empty → "All".
+func resolveWorkspaceId() -> String? {
+    let id = ProcessInfo.processInfo.environment["TERMQ_WORKSPACE_ID"]
+    return (id?.isEmpty == false) ? id : nil
+}
+
 // MARK: - Shared Helpers
 
 func parseTags(_ tagStrings: [String]) -> [(key: String, value: String)] {
@@ -121,7 +141,9 @@ struct New: ParsableCommand {
                         name: cardName,
                         column: column
                     ),
-                    dataDirectory: dataDirURL
+                    workspaceId: resolveWorkspaceId(),
+                    dataDirectory: dataDirURL,
+                    boardFilename: resolveBoardFilename()
                 )
 
                 JSONHelper.printJSON(
@@ -175,7 +197,9 @@ struct Open: ParsableCommand {
 
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: shouldUseDebugMode(debug))
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: resolveProfile(debug),
+                boardFilename: resolveBoardFilename())
 
             guard let card = board.findTerminal(identifier: terminal) else {
                 JSONHelper.printErrorJSON("Terminal not found: \(terminal)")
@@ -268,8 +292,10 @@ struct Create: ParsableCommand {
                         description: description,
                         tags: parsedTags.isEmpty ? nil : parsedTags
                     ),
+                    workspaceId: resolveWorkspaceId(),
                     dataDirectory: dataDirURL,
-                    debug: shouldUseDebugMode(false)
+                    profile: resolveProfile(false),
+                    boardFilename: resolveBoardFilename()
                 )
 
                 JSONHelper.printJSON(
@@ -379,18 +405,23 @@ struct List: ParsableCommand {
     func run() throws {
         do {
             let dataDirURL = dataDirectory.map { URL(fileURLWithPath: $0) }
-            let board = try BoardLoader.loadBoard(dataDirectory: dataDirURL, debug: shouldUseDebugMode(debug))
+            let board = try BoardLoader.loadBoard(
+                dataDirectory: dataDirURL, profile: resolveProfile(debug),
+                boardFilename: resolveBoardFilename())
+
+            let scopedActiveCards = Board.cardsInWorkspace(
+                board.activeCards, workspaceId: resolveWorkspaceId())
 
             if columns {
                 let columnOutput = board.sortedColumns().map { col in
-                    let count = board.activeCards.filter { $0.columnId == col.id }.count
+                    let count = scopedActiveCards.filter { $0.columnId == col.id }.count
                     return ColumnOutput(from: col, terminalCount: count)
                 }
                 JSONHelper.printJSON(columnOutput)
                 return
             }
 
-            var cards = board.activeCards
+            var cards = scopedActiveCards
 
             if let columnFilter = column {
                 let filterLower = columnFilter.lowercased()

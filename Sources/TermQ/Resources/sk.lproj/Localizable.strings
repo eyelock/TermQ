@@ -452,6 +452,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Prepísať predvolený backend";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Repozitáre";
+"sidebar.workspace.all" = "Všetky repozitáre";
+"sidebar.workspace.menu.help" = "Filtrovať repozitáre podľa pracovného priestoru";
+"sidebar.workspace.new" = "Nový pracovný priestor…";
+"sidebar.workspace.new.title" = "Nový pracovný priestor";
+"sidebar.workspace.name.label" = "Názov pracovného priestoru";
+"sidebar.workspace.name.placeholder" = "napr. Práca, Vedlajšie projekty";
+"sidebar.workspace.create" = "Vytvoriť";
+"sidebar.workspace.manage" = "Správa pracovných priestorov…";
+"sidebar.workspace.manage.title" = "Správa pracovných priestorov";
+"sidebar.workspace.manage.empty" = "Zatiaľ žiadne pracovné priestory. Vytvorte jeden z ponuky pracovných priestorov.";
+"sidebar.workspace.manage.done" = "Hotovo";
+"sidebar.workspace.add.to" = "Pridať do pracovného priestoru";
+"sidebar.workspace.delete.title" = "Zmazať pracovný priestor?";
+"sidebar.workspace.delete.confirm" = "Zmazať";
+"sidebar.workspace.delete.message %@" = "„%@" bude odstránený. Repozitáre v ňom nebudú zmazané.";
+"sidebar.workspace.empty.message" = "V tomto pracovnom priestore nie sú žiadne repozitáre.\nKliknite pravým tlačidlom na repozitár v „Všetky repozitáre“ a pridajte ho sem.";
 "sidebar.add.button.help" = "Pridať repozitár";
 "sidebar.empty.message" = "Neboli pridané žiadne repozitáre.\nKliknite na + a pridajte git repozitár.";
 "sidebar.worktrees.placeholder" = "Pracovné stromy sa zobrazia tu";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Vytvoriť fork lokálne";
 "harnesses.fork.to.local.help" = "Vytvoriť upraviteľnú lokálnu kópiu tohto harness";
+"harnesses.publish.to.repository" = "Publikovať do repozitára…";
 "harnesses.update.dot.help" = "Dostupná aktualizácia";
 "harness.fork.title %@" = "Fork \"%@\" do lokálneho";
 "harness.fork.explanation" = "Vytvorí upraviteľnú lokálnu kópiu tohto harness. Kópia sleduje svoj pôvod, aby ste mohli vidieť, čo sa zmenilo upstream.";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "Nechajte prázdne pre zachovanie zdrojového názvu. Kanonické id nového forku bude local/<názov>.";
 "harness.fork.identity.collision" = "Nainštalovaný harness už má túto identitu.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Publikovať \"%@\" do repozitára";
+"harness.publish.explanation" = "Skopíruje tento harness do nového pracovného stromu cieľového repozitára, pripravený na potvrdenie. O zvyšok sa postarajú vlastné konvencie repozitára (registračné skripty, manifesty).";
+"harness.publish.button" = "Publikovať";
+"harness.publish.update.button" = "Aktualizovať existujúci záznam";
+"harness.publish.progress.title %@" = "Publikovanie \"%@\"…";
+"harness.publish.repo.label" = "Cieľový repozitár";
+"harness.publish.repo.placeholder" = "Vyberte repozitár…";
+"harness.publish.parentdir.label" = "Adresár v repozitári";
+"harness.publish.parentdir.hint" = "Navrhnuté podľa miesta, kde tento repozitár už uchováva harness-y. Úplne editovateľné.";
+"harness.publish.name.label" = "Názov";
+"harness.publish.branch.label" = "Vetva";
+"harness.publish.basebranch.label" = "Základná vetva";
+"harness.publish.worktreepath.label" = "Cesta pracovného stromu";
+"harness.publish.files.label" = "Súbory na skopírovanie";
+"harness.publish.changes.label" = "Zmeny oproti publikovanej kópii";
+"harness.publish.mode.label" = "Režim kopírovania";
+"harness.publish.mode.entire" = "Celý adresár";
+"harness.publish.mode.enumerated" = "Iba súbory harness-u";
+"harness.publish.mode.enumerated.hint" = "Zdrojový adresár slúži aj ako repozitár projektu — kopírujú sa iba súbory patriace harness-u.";
+"harness.publish.state.new" = "Nový záznam — tento harness v repozitári ešte neexistuje.";
+"harness.publish.state.update %@" = "Aktualizuje existujúci záznam v %@ (prepíše ho).";
+"harness.publish.state.clash %@" = "Tento adresár už obsahuje iný harness (\"%@\") — vyberte iný názov.";
+"harness.publish.state.occupied" = "Tento adresár v repozitári už existuje — vyberte iný názov alebo umiestnenie.";
+"harness.publish.state.samerepo" = "Tento harness sa už nachádza vo vybranom repozitári — odovzdajte zmeny tam namiesto publikovania.";
+"harness.publish.reveal.repository" = "Zobraziť v repozitároch";
+"harness.publish.preflight.failed" = "Lokálny harness nie je platný — opravte ho pred publikovaním.";
+"harness.publish.composition.unavailable" = "ynd compose zlyhal pre tento harness — režim \"iba súbory harness-u\" ho potrebuje na zistenie, ktoré súbory vlastní. Opravte harness alebo prepnite na \"celý adresár\".";
+"harness.publish.unresolved %lld" = "%lld odkazovaný/odkazovaných súbor(ov) chýba v zdroji — nebudú skopírované.";
+"harness.publish.register.disclosure %@" = "Po skopírovaní sa spustí %@ repozitára (skript poskytnutý repozitárom).";
+"harness.publish.change.added" = "pridané";
+"harness.publish.change.modified" = "zmenené";
+"harness.publish.change.removed" = "odstránené";
+"harness.publish.changes.none" = "Žiadne rozdiely — publikovaná kópia zodpovedá vašim lokálnym súborom.";
+"harness.publish.step.worktree %@" = "Vytváranie pracovného stromu na vetve %@…";
+"harness.publish.step.copy %@" = "Kopírovanie harness-u do %@…";
+"harness.publish.step.copied %lld" = "Skopírovaných %lld skupina/skupín súborov.";
+"harness.publish.step.validate" = "Validácia skopírovaného harness-u (ynd validate)…";
+"harness.publish.step.register %@" = "Spúšťanie %@…";
+"harness.publish.step.done %@" = "Hotovo — pracovný strom je pripravený na %@.";
+"harness.publish.warning %@" = "Upozornenie: %@";
+"harness.publish.deleted %@" = "Zastaraná cesta odstránená: %@";
+"harness.publish.validation.failed" = "Validácia v pracovnom strome zlyhala — nič nebolo potvrdené. Pracovný strom je zachovaný na kontrolu.";
+"harness.publish.register.failed" = "Registračný skript repozitára zlyhal — pracovný strom je zachovaný na kontrolu.";
+"harness.publish.references.missing %@" = "Súbory odkazované v manifeste chýbajú po skopírovaní: %@";
+"harness.publish.error.occupied %@" = "Cieľ už obsahuje harness: %@";
+"harness.publish.error.invaliddest %@" = "Cieľ presahuje hranice pracovného stromu: %@";
+"harness.publish.error.copy %@" = "Kopírovanie zlyhalo: %@";
+"harness.publish.error.rename %@" = "Nepodarilo sa prepísať názov manifestu: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Aktualizovať \"%@\"";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "Worktree už existuje";
 "settings.github.feed.cap.help" = "Maximálny počet pull requestov zobrazených na repozitár v bočnom paneli Remote. Odbočené PR sú vždy zahrnuté.";
 "settings.github.feed.cap.label" = "PR na repozitár";
-"settings.github.section.feed" = "Feed Remote PR";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Umožňuje skladané vetvy a skladané PR na bočnom paneli.";
+"settings.gitspice.version" = "Verzia:";
+"settings.gitspice.path" = "Cesta:";
+"settings.gitspice.info" = "Funkcie skladaných vetiev na bočnom paneli závisia od funkčnej inštalácie git-spice. Využíva rovnaké prihlásenie ako gh CLI.";
+"settings.gitspice.not.installed.description" = "git-spice umožňuje skladané vetvy a skladané PR. Bez neho zobrazuje TermQ len bežné pracovné stromy.";
+"settings.gitspice.install.hint" = "Nainštalujte pomocou Homebrew:";
+"settings.gitspice.check.again" = "Skontrolovať znova";
+"settings.gitspice.status.unusable %@" = "Zistené, ale nepoužiteľné: %@";
+"stacks.enable" = "Povoliť skladanie…";
+"stacks.enable.help" = "Sledovať vetvy tohto repozitára ako zásobník pomocou git-spice";
+"stacks.enable.failed %@" = "Skladanie sa nepodarilo povoliť: %@";
+"stacks.needs.restack" = "Vyžaduje restack";
+"stacks.open.change.request" = "Otvoriť žiadosť o zmenu";
+"stacks.unpushed.commits %ld" = "↑%ld neodoslaných";
+"stacks.change.request.merged" = "zlúčené";
+"stacks.change.request.closed" = "zatvorené";
+"stacks.no.change.request" = "žiadne PR";
+"stacks.disclosure.help" = "Zobraziť vetvy zásobníka";
+"stacks.switch.blocked.dirty" = "Nie je možné prepnúť vetvu zásobníka: pracovný strom obsahuje neuložené zmeny. Najprv vykonajte commit alebo stash.";
+"stacks.switch.blocked.in.use" = "Nie je možné prepnúť vetvu zásobníka: v tomto pracovnom strome je otvorený terminál. Najprv ho zatvorte.";
+"stacks.switch.blocked.elsewhere %@" = "Nie je možné prepnúť vetvu zásobníka: je vybraná v inom pracovnom strome (%@).";
+"stacks.switch.help" = "Dvojitým kliknutím prepnete tento pracovný strom na danú vetvu";
+"stacks.switch.to %@" = "Prepnúť na %@";
+"stacks.add.branch" = "Pridať vetvu do zásobníka…";
+"stacks.add.branch.title" = "Pridať vetvu do zásobníka";
+"stacks.add.branch.name.label" = "Názov vetvy";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Skladať na";
+"stacks.add.branch.staged.note" = "Pripravené (staged) zmeny sa stanú prvým commitom novej vetvy. Pri čistom strome sa navrchu vytvorí prázdna vetva.";
+"stacks.add.branch.track.note" = "Táto vetva už existuje — namiesto toho bude sledovaná v zásobníku.";
+"stacks.add.branch.create" = "Vytvoriť";
+"stacks.add.branch.track" = "Sledovať";
+"stacks.restack.stack" = "Restack zásobníka";
+"stacks.restack.from.here" = "Restack odtiaľto";
+"stacks.conflict.banner %ld" = "Restack pozastavený — konflikty v %ld súboroch";
+"stacks.conflict.continue" = "Pokračovať";
+"stacks.conflict.abort" = "Prerušiť";
+"stacks.conflict.hint" = "Vyriešte konflikty v termináli, pripravte súbory (stage) a potom kliknite na Pokračovať.";
+"stacks.submit.stack" = "Odoslať zásobník…";
+"stacks.submit.branch" = "Odoslať túto vetvu…";
+"stacks.submit.title" = "Odoslať zásobník";
+"stacks.submit.button" = "Odoslať";
+"stacks.submit.draft.toggle" = "Vytvárať nové pull requesty ako koncepty";
+"stacks.submit.update.only.toggle" = "Aktualizovať len existujúce pull requesty";
+"stacks.submit.will.create" = "vytvoriť";
+"stacks.submit.will.update" = "aktualizovať";
+"stacks.sync.repo" = "Synchronizovať repozitár";
+"stacks.sync.cleaned %ld %@" = "Synchronizácia odstránila %ld zlúčených vetiev: %@";
+"stacks.destroy.stack" = "Zničiť Zásobník…";
+"stacks.destroy.stack.title" = "Zničiť zásobník?";
+"stacks.destroy.stack.message %ld %@" = "Týmto natrvalo odstránite %ld lokálnych vetiev pomocou git-spice: %@. Vzdialené vetvy a prípadné pull requesty zostanú nedotknuté.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld z týchto vetiev má stále OTVORENÝ pull request.";
+"stacks.destroy.stack.confirm" = "Zničiť Zásobník";
+"stacks.destroy.stack.done %ld" = "Zásobník zničený: odstránených %ld vetiev";
+"stacks.destroy.stack.worktree.skipped %@" = "Ponechané bez zmeny (neuložené zmeny): %@";
+"stacks.base.mismatch %@ %@" = "PR cieli na %@, ale rodič zásobníka je %@ — Synchronizovať repozitár ho presmeruje";
+"stacks.restack.up.to.date" = "Zásobník je už aktuálny";
+"stacks.restack.done %ld" = "Restackovaných %ld vetiev";
+"stacks.sync.clean" = "Všetko synchronizované";
+"stacks.submit.done %ld %ld" = "Odoslané: vytvorené %ld, aktualizované %ld";
+"sidebar.worktrees.section.header" = "Pracovné stromy";
+"stacks.break.out" = "Vyčleniť do pracovného stromu…";
+"stacks.skipped.notice %@" = "Nerestackované: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (vybraná v %@ s neuloženými zmenami)";
+"stacks.skipped.in.use %@ %@" = "%@ (vybraná v %@ s aktívnym terminálom)";
+"stacks.copy.branch.name" = "Kopírovať názov vetvy";
+"stacks.reveal.worktree" = "Zobraziť pracovný strom";
+"stacks.anchored.badge.help %@" = "Ukotvené v pracovnom strome %@ — kliknutím zobrazíte";
+"stacks.part.of.stack %@" = "Súčasť zásobníka %@";
+"stacks.section.header" = "Zásobníky";
+"stacks.checked.out.at %@" = "Vybraná v %@ — kliknutím zobrazíte pracovný strom";
+"stacks.anchor.help" = "Vytvoriť pracovný strom pre tento zásobník";
+"stacks.group.new.worktree" = "Nový pracovný strom…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nová vetva zásobníka pred…";
+"stacks.new.branch.after" = "Nová vetva zásobníka za…";
+"stacks.new.branch.insert.below.note %@" = "Nová vetva sa vytvorí pod %@ v zásobníku.";
+"stacks.new.branch.insert.above.note %@" = "Nová vetva sa vytvorí nad %@ v zásobníku a zaujme jej miesto — %@ sa presunie na ňu.";
+"stacks.main.worktree.not.found" = "Nepodarilo sa nájsť hlavný pracovný strom repozitára.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Nový zásobník…";
+"stacks.new.stack.title" = "Nový zásobník";
+"stacks.new.stack.name.label" = "Názov vetvy";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Základná vetva";
+"stacks.new.stack.button" = "Vytvoriť";
+"stacks.new.stack.note" = "Vytvorí vetvu zo základnej vetvy bez checkoutu a bez pracovného stromu — jednopoložkový zásobník, ktorý môžete neskôr spustiť.";
+"stacks.start.stack.checkbox" = "Začať zásobník touto vetvou";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Vetviť z predvolenej";
+"stacks.new.stack.mode.integration" = "Vetviť z integračnej";
+"stacks.new.stack.stack.name.label" = "Názov zásobníka";
+"stacks.new.stack.integration.preview %@" = "Vytvorí %@";
+"stacks.new.stack.first.branch.label" = "Prvá vetva zásobníka (voliteľné)";
+"stacks.new.stack.first.branch.empty.hint" = "Ponechané prázdne: vytvorí sa iba prázdna integračná vetva — prvú vetvu zásobníka môžete pridať neskôr.";
+"stacks.new.stack.first.branch.filled.hint" = "Táto vetva sa vytvorí ako súčasť zásobníka nad integračnou vetvou, nie priamo nad základnou vetvou.";
+"stacks.new.stack.integration.note" = "Vytvorí prázdnu integračnú vetvu zo základnej vetvy ako koreň zásobníka — nikdy nenesie vlastný kód. Vetvy zásobníka sa stavajú na nej namiesto základnej vetvy a ich pull requesty sa reťazia do nej. Keď je všetko zlúčené do integračnej vetvy, odošle sa ako jeden konsolidovaný pull request do základnej vetvy — namiesto toho, aby sa každá vetva zásobníka zlučovala do základnej vetvy samostatne.";
+"stacks.new.stack.name.exists %@" = "%@ už existuje — zvoľte iný názov.";
+"settings.gitspice.new.stack.mode" = "Nový zásobník začína ako:";
+"settings.gitspice.new.stack.mode.help" = "Ktorý režim hárok Nový zásobník predvyberie — hárok vždy ponúka oba.";
+"settings.gitspice.hide.stacked.worktrees" = "Skryť vetvy zásobníka z časti Pracovné stromy";
+"settings.gitspice.hide.stacked.worktrees.help" = "Pracovné stromy, ktorých vetva patrí do sledovaného zásobníka, sú už uvedené v Zásobníkoch — skryte ich z časti Pracovné stromy, aby ste predišli duplicitnému zobrazeniu.";

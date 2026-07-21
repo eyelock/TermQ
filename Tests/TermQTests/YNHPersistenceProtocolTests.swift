@@ -16,6 +16,7 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
     var harnessVendor: [String: String] = [:]
     var runHarnessMap: [String: String] = [:]
     var runFocusMap: [String: String] = [:]
+    var stackHarnessMap: [String: [String: String]] = [:]
 
     func harness(for worktreePath: String) -> String? {
         worktreeHarness[worktreePath]
@@ -41,6 +42,10 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
 
     func runFocus(for repoPath: String) -> String? {
         runFocusMap[repoPath]
+    }
+
+    func stackHarness(repoPath: String, rootName: String) -> String? {
+        stackHarnessMap[repoPath]?[rootName]
     }
 
     func setRepoDefaultHarness(_ harnessName: String?, for repoPath: String) {
@@ -96,6 +101,18 @@ final class MockYNHPersistence: YNHPersistenceProtocol {
             id == harnessName || id.hasSuffix("/\(harnessName)")
         }
         for key in vendorKeys { harnessVendor.removeValue(forKey: key) }
+        for repoPath in Array(stackHarnessMap.keys) {
+            let rootNames = stackHarnessMap[repoPath]?.compactMap { $0.value == harnessName ? $0.key : nil } ?? []
+            for rootName in rootNames { stackHarnessMap[repoPath]?.removeValue(forKey: rootName) }
+        }
+    }
+
+    func setStackHarness(_ harnessId: String?, repoPath: String, rootName: String) {
+        if let id = harnessId {
+            stackHarnessMap[repoPath, default: [:]][rootName] = id
+        } else {
+            stackHarnessMap[repoPath]?.removeValue(forKey: rootName)
+        }
     }
 }
 
@@ -258,6 +275,85 @@ final class MockYNHPersistenceMutationTests: XCTestCase {
         mock.removeAllAssociations(for: "my-harness")
         XCTAssertEqual(mock.vendorOverride(for: "other-harness"), "codex")
     }
+
+    // MARK: - Stack harness
+
+    func test_stackHarness_returnsNilWhenNotSet() {
+        let mock = MockYNHPersistence()
+        XCTAssertNil(mock.stackHarness(repoPath: "/repo", rootName: "root-branch"))
+    }
+
+    func test_stackHarness_returnsValueAfterSet() {
+        let mock = MockYNHPersistence()
+        mock.setStackHarness("claude", repoPath: "/repo", rootName: "root-branch")
+        XCTAssertEqual(mock.stackHarness(repoPath: "/repo", rootName: "root-branch"), "claude")
+    }
+
+    func test_stackHarness_returnsNilAfterClear() {
+        let mock = MockYNHPersistence()
+        mock.setStackHarness("claude", repoPath: "/repo", rootName: "root-branch")
+        mock.setStackHarness(nil, repoPath: "/repo", rootName: "root-branch")
+        XCTAssertNil(mock.stackHarness(repoPath: "/repo", rootName: "root-branch"))
+    }
+
+    func test_stackHarness_isolatedPerRootName() {
+        let mock = MockYNHPersistence()
+        mock.setStackHarness("claude", repoPath: "/repo", rootName: "root-a")
+        mock.setStackHarness("gpt4", repoPath: "/repo", rootName: "root-b")
+        XCTAssertEqual(mock.stackHarness(repoPath: "/repo", rootName: "root-a"), "claude")
+        XCTAssertEqual(mock.stackHarness(repoPath: "/repo", rootName: "root-b"), "gpt4")
+    }
+
+    func test_removeAllAssociations_removesStackHarness() {
+        let mock = MockYNHPersistence()
+        mock.setStackHarness("claude", repoPath: "/repo", rootName: "root-a")
+        mock.setStackHarness("gpt4", repoPath: "/repo", rootName: "root-b")
+        mock.removeAllAssociations(for: "claude")
+        XCTAssertNil(mock.stackHarness(repoPath: "/repo", rootName: "root-a"))
+        XCTAssertEqual(mock.stackHarness(repoPath: "/repo", rootName: "root-b"), "gpt4")
+    }
+
+    // MARK: - effectiveStackHarness resolution order
+
+    func test_effectiveStackHarness_prefersStackOverride() {
+        let mock = MockYNHPersistence()
+        mock.setStackHarness("stack-harness", repoPath: "/repo", rootName: "root")
+        mock.setHarness("worktree-harness", for: "/repo/wt")
+        mock.setRepoDefaultHarness("repo-harness", for: "/repo")
+        XCTAssertEqual(
+            mock.effectiveStackHarness(repoPath: "/repo", rootName: "root", worktreePath: "/repo/wt"),
+            "stack-harness")
+    }
+
+    func test_effectiveStackHarness_fallsBackToWorktreeOverride() {
+        let mock = MockYNHPersistence()
+        mock.setHarness("worktree-harness", for: "/repo/wt")
+        mock.setRepoDefaultHarness("repo-harness", for: "/repo")
+        XCTAssertEqual(
+            mock.effectiveStackHarness(repoPath: "/repo", rootName: "root", worktreePath: "/repo/wt"),
+            "worktree-harness")
+    }
+
+    func test_effectiveStackHarness_fallsBackToRepoDefault() {
+        let mock = MockYNHPersistence()
+        mock.setRepoDefaultHarness("repo-harness", for: "/repo")
+        XCTAssertEqual(
+            mock.effectiveStackHarness(repoPath: "/repo", rootName: "root", worktreePath: nil),
+            "repo-harness")
+    }
+
+    func test_effectiveStackHarness_nilWorktreePath_skipsWorktreeOverride() {
+        let mock = MockYNHPersistence()
+        mock.setRepoDefaultHarness("repo-harness", for: "/repo")
+        XCTAssertEqual(
+            mock.effectiveStackHarness(repoPath: "/repo", rootName: "root", worktreePath: nil),
+            "repo-harness")
+    }
+
+    func test_effectiveStackHarness_nilWhenNothingResolves() {
+        let mock = MockYNHPersistence()
+        XCTAssertNil(mock.effectiveStackHarness(repoPath: "/repo", rootName: "root", worktreePath: "/repo/wt"))
+    }
 }
 
 // MARK: - YNHPersistenceProtocol conformance smoke tests
@@ -293,6 +389,16 @@ final class YNHPersistenceConformanceTests: XCTestCase {
         XCTAssertEqual(persistence.repoDefaultHarness(for: path), "repo-harness")
         persistence.setRepoDefaultHarness(nil, for: path)
         XCTAssertNil(persistence.repoDefaultHarness(for: path))
+    }
+
+    func test_concreteType_stackHarnessRoundtrip() {
+        let persistence = YNHPersistence()
+        let repoPath = "/tmp/termq-test-repo-\(UUID().uuidString)"
+        let rootName = "root-branch"
+        persistence.setStackHarness("test-harness", repoPath: repoPath, rootName: rootName)
+        XCTAssertEqual(persistence.stackHarness(repoPath: repoPath, rootName: rootName), "test-harness")
+        persistence.setStackHarness(nil, repoPath: repoPath, rootName: rootName)
+        XCTAssertNil(persistence.stackHarness(repoPath: repoPath, rootName: rootName))
     }
 
     func test_concreteType_removeAllAssociations_clearsLinkedPaths() {

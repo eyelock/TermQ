@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Παράκαμψη προεπιλεγμένου backend";
@@ -563,6 +578,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Αποθετήρια";
+"sidebar.workspace.all" = "Όλα τα αποθετήρια";
+"sidebar.workspace.menu.help" = "Φιλτράρισμα αποθετηρίων ανά χώρο εργασίας";
+"sidebar.workspace.new" = "Νέος χώρος εργασίας…";
+"sidebar.workspace.new.title" = "Νέος χώρος εργασίας";
+"sidebar.workspace.name.label" = "Όνομα χώρου εργασίας";
+"sidebar.workspace.name.placeholder" = "π.χ. Εργασία, Πλαινά έργα";
+"sidebar.workspace.create" = "Δημιουργία";
+"sidebar.workspace.manage" = "Διαχείριση χώρων εργασίας…";
+"sidebar.workspace.manage.title" = "Διαχείριση χώρων εργασίας";
+"sidebar.workspace.manage.empty" = "Δεν υπάρχουν ακόμα χώροι εργασίας. Δημιουργήστε έναν από το μενού χώρων εργασίας.";
+"sidebar.workspace.manage.done" = "Τέλος";
+"sidebar.workspace.add.to" = "Προσθήκη σε χώρο εργασίας";
+"sidebar.workspace.delete.title" = "Διαγραφή χώρου εργασίας;";
+"sidebar.workspace.delete.confirm" = "Διαγραφή";
+"sidebar.workspace.delete.message %@" = "Το «%@» θα αφαιρεθεί. Τα αποθετήρια σε αυτό δεν θα διαγραφούν.";
+"sidebar.workspace.empty.message" = "Δεν υπάρχουν αποθετήρια σε αυτόν τον χώρο εργασίας.\nΚάντε δεξί κλικ σε ένα αποθετήριο στα «Όλα τα αποθετήρια» για να το προσθέσετε εδώ.";
 "sidebar.add.button.help" = "Προσθήκη αποθετηρίου";
 "sidebar.empty.message" = "Δεν έχουν προστεθεί αποθετήρια.\nΚάντε κλικ στο + για να προσθέσετε ένα αποθετήριο git.";
 "sidebar.worktrees.placeholder" = "Τα worktree θα εμφανιστούν εδώ";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Διακλάδωση σε τοπικό";
 "harnesses.fork.to.local.help" = "Δημιουργία επεξεργάσιμου τοπικού αντιγράφου αυτού του harness";
+"harnesses.publish.to.repository" = "Δημοσίευση σε αποθετήριο…";
 "harnesses.update.dot.help" = "Διαθέσιμη ενημέρωση";
 "harness.fork.title %@" = "Διακλάδωση \"%@\" σε τοπικό";
 "harness.fork.explanation" = "Δημιουργεί ένα επεξεργάσιμο τοπικό αντίγραφο αυτού του harness. Το αντίγραφο παρακολουθεί την προέλευσή του ώστε να βλέπετε τι άλλαξε upstream.";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "Αφήστε κενό για να διατηρηθεί το όνομα πηγής. Το κανονικό id του νέου fork θα είναι local/<όνομα>.";
 "harness.fork.identity.collision" = "Ένα εγκατεστημένο harness έχει ήδη αυτήν την ταυτότητα.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Δημοσίευση \"%@\" σε αποθετήριο";
+"harness.publish.explanation" = "Αντιγράφει αυτό το harness σε ένα νέο worktree του αποθετηρίου προορισμού, έτοιμο για commit. Οι ίδιες συμβάσεις του αποθετηρίου (σενάρια εγγραφής, manifests) αποφασίζουν τα υπόλοιπα.";
+"harness.publish.button" = "Δημοσίευση";
+"harness.publish.update.button" = "Ενημέρωση υπάρχουσας καταχώρισης";
+"harness.publish.progress.title %@" = "Δημοσίευση \"%@\"…";
+"harness.publish.repo.label" = "Αποθετήριο προορισμού";
+"harness.publish.repo.placeholder" = "Επιλέξτε αποθετήριο…";
+"harness.publish.parentdir.label" = "Κατάλογος στο αποθετήριο";
+"harness.publish.parentdir.hint" = "Προτείνεται από εκεί που το αποθετήριο ήδη διατηρεί harnesses. Πλήρως επεξεργάσιμο.";
+"harness.publish.name.label" = "Όνομα";
+"harness.publish.branch.label" = "Κλάδος";
+"harness.publish.basebranch.label" = "Βασικός κλάδος";
+"harness.publish.worktreepath.label" = "Διαδρομή worktree";
+"harness.publish.files.label" = "Αρχεία προς αντιγραφή";
+"harness.publish.changes.label" = "Αλλαγές σε σχέση με το δημοσιευμένο αντίγραφο";
+"harness.publish.mode.label" = "Λειτουργία αντιγραφής";
+"harness.publish.mode.entire" = "Ολόκληρος κατάλογος";
+"harness.publish.mode.enumerated" = "Μόνο αρχεία harness";
+"harness.publish.mode.enumerated.hint" = "Ο κατάλογος προέλευσης χρησιμεύει και ως αποθετήριο έργου — αντιγράφονται μόνο τα αρχεία που ανήκουν στο harness.";
+"harness.publish.state.new" = "Νέα καταχώριση — αυτό το harness δεν υπάρχει ακόμα στο αποθετήριο.";
+"harness.publish.state.update %@" = "Ενημερώνει την υπάρχουσα καταχώριση στο %@ (αντικαθιστά το περιεχόμενό της).";
+"harness.publish.state.clash %@" = "Αυτός ο κατάλογος περιέχει ήδη διαφορετικό harness (\"%@\") — επιλέξτε άλλο όνομα.";
+"harness.publish.state.occupied" = "Αυτός ο κατάλογος υπάρχει ήδη στο αποθετήριο — επιλέξτε άλλο όνομα ή τοποθεσία.";
+"harness.publish.state.samerepo" = "Αυτό το harness βρίσκεται ήδη στο επιλεγμένο αποθετήριο — υποβάλετε τις αλλαγές σας εκεί αντί να δημοσιεύσετε.";
+"harness.publish.reveal.repository" = "Εμφάνιση στα αποθετήρια";
+"harness.publish.preflight.failed" = "Το τοπικό harness δεν επικυρώνεται — διορθώστε το πριν δημοσιεύσετε.";
+"harness.publish.composition.unavailable" = "Η εντολή ynd compose απέτυχε για αυτό το harness — η λειτουργία \"μόνο αρχεία harness\" χρειάζεται αυτήν για να γνωρίζει ποια αρχεία ανήκουν στο harness. Διορθώστε το harness ή μεταβείτε σε \"ολόκληρος κατάλογος\".";
+"harness.publish.unresolved %lld" = "%lld αναφερόμενο(-α) αρχείο(-α) λείπουν από την πηγή — δεν θα αντιγραφούν.";
+"harness.publish.register.disclosure %@" = "Μετά την αντιγραφή, θα εκτελεστεί το %@ του αποθετηρίου (σενάριο παρεχόμενο από το αποθετήριο).";
+"harness.publish.change.added" = "προστέθηκε";
+"harness.publish.change.modified" = "τροποποιήθηκε";
+"harness.publish.change.removed" = "αφαιρέθηκε";
+"harness.publish.changes.none" = "Καμία διαφορά — το δημοσιευμένο αντίγραφο ταιριάζει με τα τοπικά σας αρχεία.";
+"harness.publish.step.worktree %@" = "Δημιουργία worktree στον κλάδο %@…";
+"harness.publish.step.copy %@" = "Αντιγραφή harness στο %@…";
+"harness.publish.step.copied %lld" = "Αντιγράφηκαν %lld ομάδα(-ες) αρχείων.";
+"harness.publish.step.validate" = "Επικύρωση αντιγραμμένου harness (ynd validate)…";
+"harness.publish.step.register %@" = "Εκτέλεση %@…";
+"harness.publish.step.done %@" = "Ολοκληρώθηκε — το worktree είναι έτοιμο στο %@.";
+"harness.publish.warning %@" = "Προειδοποίηση: %@";
+"harness.publish.deleted %@" = "Αφαιρέθηκε παρωχημένη διαδρομή: %@";
+"harness.publish.validation.failed" = "Η επικύρωση απέτυχε στο worktree — δεν έγινε κανένα commit. Το worktree διατηρείται για επιθεώρηση.";
+"harness.publish.register.failed" = "Το σενάριο εγγραφής του αποθετηρίου απέτυχε — το worktree διατηρείται για επιθεώρηση.";
+"harness.publish.references.missing %@" = "Αρχεία που αναφέρονται στο manifest λείπουν μετά την αντιγραφή: %@";
+"harness.publish.error.occupied %@" = "Ο προορισμός περιέχει ήδη ένα harness: %@";
+"harness.publish.error.invaliddest %@" = "Ο προορισμός εκφεύγει από το worktree: %@";
+"harness.publish.error.copy %@" = "Η αντιγραφή απέτυχε: %@";
+"harness.publish.error.rename %@" = "Αδύνατη η αναγραφή του ονόματος στο manifest: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Ενημέρωση \"%@\"";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "Το Worktree υπάρχει ήδη";
 "settings.github.feed.cap.help" = "Μέγιστος αριθμός pull requests που εμφανίζονται ανά αποθετήριο στην πλευρική μπάρα Remote. Τα ληφθέντα PR περιλαμβάνονται πάντα.";
 "settings.github.feed.cap.label" = "PR ανά αποθετήριο";
-"settings.github.section.feed" = "Remote PR Feed";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Υποστηρίζει στοιβαγμένους κλάδους και στοιβαγμένα PR στην πλευρική μπάρα.";
+"settings.gitspice.version" = "Έκδοση:";
+"settings.gitspice.path" = "Διαδρομή:";
+"settings.gitspice.info" = "Οι λειτουργίες στοιβαγμένων κλάδων στην πλευρική μπάρα εξαρτώνται από μια λειτουργική εγκατάσταση του git-spice. Επαναχρησιμοποιεί την πιστοποίηση του gh CLI.";
+"settings.gitspice.not.installed.description" = "Το git-spice ενεργοποιεί στοιβαγμένους κλάδους και στοιβαγμένα PR. Χωρίς αυτό, το TermQ εμφανίζει μόνο απλά worktree.";
+"settings.gitspice.install.hint" = "Εγκατάσταση με Homebrew:";
+"settings.gitspice.check.again" = "Έλεγχος ξανά";
+"settings.gitspice.status.unusable %@" = "Εντοπίστηκε αλλά δεν είναι χρησιμοποιήσιμο: %@";
+"stacks.enable" = "Ενεργοποίηση στοίβας…";
+"stacks.enable.help" = "Παρακολούθηση των κλάδων αυτού του αποθετηρίου ως στοίβα με το git-spice";
+"stacks.enable.failed %@" = "Αποτυχία ενεργοποίησης στοίβας: %@";
+"stacks.needs.restack" = "Απαιτείται restack";
+"stacks.open.change.request" = "Άνοιγμα αιτήματος αλλαγής";
+"stacks.unpushed.commits %ld" = "↑%ld μη σταλμένα";
+"stacks.change.request.merged" = "συγχωνεύτηκε";
+"stacks.change.request.closed" = "έκλεισε";
+"stacks.no.change.request" = "χωρίς PR";
+"stacks.disclosure.help" = "Εμφάνιση κλάδων στοίβας";
+"stacks.switch.blocked.dirty" = "Δεν είναι δυνατή η εναλλαγή κλάδου στοίβας: το worktree έχει μη υποβεβλημένες αλλαγές. Κάντε πρώτα commit ή stash.";
+"stacks.switch.blocked.in.use" = "Δεν είναι δυνατή η εναλλαγή κλάδου στοίβας: υπάρχει ανοιχτό τερματικό σε αυτό το worktree. Κλείστε το πρώτα.";
+"stacks.switch.blocked.elsewhere %@" = "Δεν είναι δυνατή η εναλλαγή κλάδου στοίβας: είναι σε checkout σε άλλο worktree (%@).";
+"stacks.switch.help" = "Κάντε διπλό κλικ για εναλλαγή αυτού του worktree στον κλάδο";
+"stacks.switch.to %@" = "Εναλλαγή σε %@";
+"stacks.add.branch" = "Προσθήκη κλάδου στη στοίβα…";
+"stacks.add.branch.title" = "Προσθήκη Κλάδου στη Στοίβα";
+"stacks.add.branch.name.label" = "Όνομα κλάδου";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Στοίβαξη σε";
+"stacks.add.branch.staged.note" = "Οι αλλαγές σε στάδιο (staged) γίνονται το πρώτο commit του νέου κλάδου. Με καθαρό δέντρο, δημιουργείται ένας κενός κλάδος από πάνω.";
+"stacks.add.branch.track.note" = "Αυτός ο κλάδος υπάρχει ήδη — αντ' αυτού θα παρακολουθείται στη στοίβα.";
+"stacks.add.branch.create" = "Δημιουργία";
+"stacks.add.branch.track" = "Παρακολούθηση";
+"stacks.restack.stack" = "Restack Στοίβας";
+"stacks.restack.from.here" = "Restack Από Εδώ";
+"stacks.conflict.banner %ld" = "Το restack τέθηκε σε παύση — συγκρούσεις σε %ld αρχεία";
+"stacks.conflict.continue" = "Συνέχεια";
+"stacks.conflict.abort" = "Ματαίωση";
+"stacks.conflict.hint" = "Επιλύστε τις συγκρούσεις σε ένα τερματικό, προσθέστε τα αρχεία σε στάδιο, μετά πατήστε Συνέχεια.";
+"stacks.submit.stack" = "Υποβολή Στοίβας…";
+"stacks.submit.branch" = "Υποβολή Αυτού του Κλάδου…";
+"stacks.submit.title" = "Υποβολή Στοίβας";
+"stacks.submit.button" = "Υποβολή";
+"stacks.submit.draft.toggle" = "Δημιουργία νέων pull request ως πρόχειρα";
+"stacks.submit.update.only.toggle" = "Ενημέρωση μόνο των υπαρχόντων pull request";
+"stacks.submit.will.create" = "δημιουργία";
+"stacks.submit.will.update" = "ενημέρωση";
+"stacks.sync.repo" = "Συγχρονισμός Αποθετηρίου";
+"stacks.sync.cleaned %ld %@" = "Ο συγχρονισμός αφαίρεσε %ld συγχωνευμένους κλάδους: %@";
+"stacks.destroy.stack" = "Καταστροφή Στοίβας…";
+"stacks.destroy.stack.title" = "Καταστροφή στοίβας;";
+"stacks.destroy.stack.message %ld %@" = "Αυτό διαγράφει οριστικά %ld τοπικούς κλάδους μέσω git-spice: %@. Οι απομακρυσμένοι κλάδοι και τυχόν pull request παραμένουν ανέπαφα.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld από αυτούς τους κλάδους εξακολουθούν να έχουν ΑΝΟΙΧΤΟ pull request.";
+"stacks.destroy.stack.confirm" = "Καταστροφή Στοίβας";
+"stacks.destroy.stack.done %ld" = "Η στοίβα καταστράφηκε: διαγράφηκαν %ld κλάδοι";
+"stacks.destroy.stack.worktree.skipped %@" = "Παρέμεινε ανέπαφο (μη δεσμευμένες αλλαγές): %@";
+"stacks.base.mismatch %@ %@" = "Το PR στοχεύει στο %@, αλλά ο γονέας της στοίβας είναι %@ — ο Συγχρονισμός Αποθετηρίου θα το ανακατευθύνει";
+"stacks.restack.up.to.date" = "Η στοίβα είναι ήδη ενημερωμένη";
+"stacks.restack.done %ld" = "Έγινε restack σε %ld κλάδους";
+"stacks.sync.clean" = "Όλα συγχρονισμένα";
+"stacks.submit.done %ld %ld" = "Υποβλήθηκε: %ld δημιουργήθηκαν, %ld ενημερώθηκαν";
+"sidebar.worktrees.section.header" = "Worktree";
+"stacks.break.out" = "Απομόνωση σε worktree…";
+"stacks.skipped.notice %@" = "Χωρίς restack: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (σε checkout στο %@ με μη υποβεβλημένες αλλαγές)";
+"stacks.skipped.in.use %@ %@" = "%@ (σε checkout στο %@ με ενεργό τερματικό)";
+"stacks.copy.branch.name" = "Αντιγραφή Ονόματος Κλάδου";
+"stacks.reveal.worktree" = "Εμφάνιση Worktree";
+"stacks.anchored.badge.help %@" = "Αγκυρωμένο στο worktree %@ — κλικ για εμφάνιση";
+"stacks.part.of.stack %@" = "Μέρος της στοίβας %@";
+"stacks.section.header" = "Στοίβες";
+"stacks.checked.out.at %@" = "Σε checkout στο %@ — κλικ για εμφάνιση του worktree";
+"stacks.anchor.help" = "Δημιουργία worktree για αυτή τη στοίβα";
+"stacks.group.new.worktree" = "Νέο Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Νέος Κλάδος Στοίβας Πριν…";
+"stacks.new.branch.after" = "Νέος Κλάδος Στοίβας Μετά…";
+"stacks.new.branch.insert.below.note %@" = "Ο νέος κλάδος δημιουργείται κάτω από τον %@ στη στοίβα.";
+"stacks.new.branch.insert.above.note %@" = "Ο νέος κλάδος δημιουργείται πάνω από τον %@ στη στοίβα, παίρνοντας τη θέση του — ο %@ μετακινείται πάνω του.";
+"stacks.main.worktree.not.found" = "Δεν ήταν δυνατή η εύρεση του κύριου worktree του αποθετηρίου.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Νέα Στοίβα…";
+"stacks.new.stack.title" = "Νέα Στοίβα";
+"stacks.new.stack.name.label" = "Όνομα κλάδου";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Βασικός κλάδος";
+"stacks.new.stack.button" = "Δημιουργία";
+"stacks.new.stack.note" = "Δημιουργεί τον κλάδο από τον βασικό κλάδο χωρίς checkout και χωρίς worktree — μια στοίβα ενός στοιχείου που μπορείτε να ξεκινήσετε αργότερα.";
+"stacks.start.stack.checkbox" = "Ξεκινήστε μια στοίβα με αυτόν τον κλάδο";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Διακλάδωση από τον προεπιλεγμένο";
+"stacks.new.stack.mode.integration" = "Διακλάδωση από τον κλάδο ενοποίησης";
+"stacks.new.stack.stack.name.label" = "Όνομα Στοίβας";
+"stacks.new.stack.integration.preview %@" = "Δημιουργεί %@";
+"stacks.new.stack.first.branch.label" = "Πρώτος Κλάδος Στοίβας (προαιρετικό)";
+"stacks.new.stack.first.branch.empty.hint" = "Αν παραμείνει κενό: δημιουργείται μόνο ο κενός κλάδος ενοποίησης — μπορείτε να προσθέσετε τον πρώτο κλάδο στοίβας αργότερα.";
+"stacks.new.stack.first.branch.filled.hint" = "Αυτός ο κλάδος δημιουργείται στοιβαγμένος πάνω στον κλάδο ενοποίησης, όχι απευθείας πάνω στον βασικό κλάδο.";
+"stacks.new.stack.integration.note" = "Δημιουργεί έναν κενό κλάδο ενοποίησης από τον βασικό κλάδο ως ρίζα της στοίβας — δεν φέρει ποτέ δικό του κώδικα. Οι κλάδοι στοίβας χτίζονται πάνω του αντί για τον βασικό κλάδο, και τα pull requests τους αλυσιδώνονται σε αυτόν. Μόλις όλα συγχωνευτούν στον κλάδο ενοποίησης, γίνεται pull request στον βασικό κλάδο ως μία ενοποιημένη αλλαγή — αντί κάθε κλάδος στοίβας να συγχωνεύεται ξεχωριστά στον βασικό κλάδο.";
+"stacks.new.stack.name.exists %@" = "Το %@ υπάρχει ήδη — επιλέξτε άλλο όνομα.";
+"settings.gitspice.new.stack.mode" = "Η Νέα Στοίβα ξεκινά ως:";
+"settings.gitspice.new.stack.mode.help" = "Ποια λειτουργία προεπιλέγει το φύλλο Νέα Στοίβα — το φύλλο προσφέρει πάντα και τις δύο.";
+"settings.gitspice.hide.stacked.worktrees" = "Απόκρυψη στοιβαγμένων worktrees από την ενότητα Worktree";
+"settings.gitspice.hide.stacked.worktrees.help" = "Τα worktrees των οποίων ο κλάδος ανήκει σε παρακολουθούμενη στοίβα εμφανίζονται ήδη στις Στοίβες — αποκρύψτε τα από την ενότητα Worktree για να αποφύγετε τη διπλή καταχώριση.";

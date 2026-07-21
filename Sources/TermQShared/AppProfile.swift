@@ -98,4 +98,58 @@ public enum AppProfile {
         Production.bundleIdentifier,
         Debug.bundleIdentifier,
     ]
+
+    /// Runtime profile selector — Sendable, injectable for tests.
+    ///
+    /// Where the compile-time `AppProfile.Current` is fixed at build time, `Variant` lets
+    /// callers (especially tests) target a specific profile at runtime. `.current` resolves
+    /// to `.debug` in `TERMQ_DEBUG_BUILD` builds and `.production` otherwise.
+    public enum Variant: Sendable {
+        case production
+        case debug
+
+        public static var current: Variant {
+            #if TERMQ_DEBUG_BUILD
+                return .debug
+            #else
+                return .production
+            #endif
+        }
+
+        /// Bridge for callers that still thread a `Bool` debug flag through their API surface
+        /// (CLI argparse flags, HeadlessWriter internal helpers). `true` always resolves to
+        /// `.debug`; `false` resolves to `.production`. Callers that want build-time-aware
+        /// behaviour should pass `.current` directly.
+        public init(debug: Bool) {
+            self = debug ? .debug : .production
+        }
+
+        public var dataDirectoryName: String {
+            switch self {
+            case .production: return Production.dataDirectoryName
+            case .debug: return Debug.dataDirectoryName
+            }
+        }
+
+        public var bundleIdentifier: String {
+            switch self {
+            case .production: return Production.bundleIdentifier
+            case .debug: return Debug.bundleIdentifier
+            }
+        }
+
+        public var appBundleName: String {
+            switch self {
+            case .production: return Production.appBundleName
+            case .debug: return Debug.appBundleName
+            }
+        }
+
+        public var displayName: String {
+            switch self {
+            case .production: return Production.displayName
+            case .debug: return Debug.displayName
+            }
+        }
+    }
 }

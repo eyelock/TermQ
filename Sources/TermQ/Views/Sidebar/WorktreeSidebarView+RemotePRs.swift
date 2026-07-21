@@ -68,7 +68,8 @@ extension WorktreeSidebarView {
                 .padding(.leading, 4)
         } else if let prs = prService.prsByRepo[repo.path] {
             let worktrees = viewModel.worktrees[repo.id] ?? []
-            let matches = GitHubPRService.matchPRsToWorktrees(prs: prs, worktrees: worktrees)
+            let matches = GitHubPRService.matchPRsToWorktrees(
+                prs: prs, worktrees: worktrees, stackGraph: viewModel.stacks[repo.id])
             let cap = ynhPersistence.remotePRFeedCap(for: repo.path) ?? settings.remotePRFeedCap
             let (feed, overflow) = GitHubPRService.prioritisedFeed(
                 prs: prs, login: prService.login(for: repo.path), matches: matches, cap: cap)
@@ -407,13 +408,28 @@ extension WorktreeSidebarView {
 extension WorktreeSidebarView {
     /// Returns the PR number that owns this worktree, if any.
     ///
-    /// Uses SHA-primary matching via `GitHubPRService.matchPRsToWorktrees`.
+    /// For a worktree with a checked-out branch this is ONLY the PR whose head branch
+    /// is that branch — sibling stack PRs can share commit hashes after a restack and
+    /// must not claim the row's header badge (chain entries carry their own badges).
+    /// Detached-HEAD worktrees (the `gh pr checkout` flow) use the deterministic
+    /// hash-based match instead.
     func linkedPRNumber(for worktree: GitWorktree, repo: ObservableRepository) -> Int? {
         let prs = prService.prsByRepo[repo.path] ?? []
         guard !prs.isEmpty else { return nil }
+        if let branch = worktree.branch {
+            return
+                prs
+                .sorted(by: { $0.number < $1.number })
+                .first(where: { $0.localBranchName() == branch })?.number
+        }
+        // Detached HEAD: hash-based matching, restricted by the stack graph.
         let worktrees = viewModel.worktrees[repo.id] ?? []
-        let matches = GitHubPRService.matchPRsToWorktrees(prs: prs, worktrees: worktrees)
-        return matches.first(where: { $0.value == worktree.path })?.key
+        let matches = GitHubPRService.matchPRsToWorktrees(
+            prs: prs, worktrees: worktrees, stackGraph: viewModel.stacks[repo.id])
+        return
+            matches
+            .filter { $0.value == worktree.path }
+            .keys.sorted().first
     }
 
     /// Open the PR web page.
@@ -460,28 +476,12 @@ extension WorktreeSidebarView {
 
     /// Collect closed-PR worktrees and focus worktrees, then open the combined prune sheet.
     private func analyseAndPrune(repo: ObservableRepository) async {
-        await prService.refresh(repoPath: repo.path, force: true)
+        let (closedCandidates, focusCandidates) = await viewModel.collectPRPruneCandidates(
+            repo: repo, prService: prService)
         guard prService.prsByRepo[repo.path] != nil else {
             viewModel.operationError =
                 prService.errorByRepo[repo.path] ?? Strings.RemotePRs.ghAuthCheckFailed
             return
-        }
-        let openNumbers = Set((prService.prsByRepo[repo.path] ?? []).map(\.number))
-        let worktrees = viewModel.worktrees[repo.id] ?? []
-        var closedPRNumbers: Set<Int> = []
-        for wt in worktrees {
-            let last = URL(fileURLWithPath: wt.path).lastPathComponent
-            if last.hasPrefix("pr-"), let prNum = Int(last.dropFirst(3)), !openNumbers.contains(prNum) {
-                closedPRNumbers.insert(prNum)
-            }
-        }
-        let closedCandidates =
-            closedPRNumbers.isEmpty
-            ? []
-            : await viewModel.pruneClosedPRsDryRun(
-                repo: repo, closedPRNumbers: closedPRNumbers, prService: prService)
-        let focusCandidates = (viewModel.focusWorktrees[repo.id] ?? []).map {
-            FocusWorktreeCandidate(path: $0.path)
         }
         guard !closedCandidates.isEmpty || !focusCandidates.isEmpty else {
             viewModel.operationError = Strings.RemotePRs.pruneClosedPRsNothingTitle
@@ -502,5 +502,24 @@ extension WorktreeSidebarView {
         } catch {
             viewModel.operationError = error.localizedDescription
         }
+    }
+}
+
+// MARK: - Prune Closed PRs Sheet Builder
+
+extension WorktreeSidebarView {
+    func makePruneClosedPRsSheet(repo: ObservableRepository) -> PruneClosedPRsSheet {
+        PruneClosedPRsSheet(
+            repo: repo,
+            candidates: pruneClosedPRsCandidates,
+            focusCandidates: focusPruneCandidates,
+            viewModel: viewModel,
+            prService: prService,
+            onDismiss: {
+                isShowingPruneClosedPRsFor = nil
+                pruneClosedPRsCandidates = []
+                focusPruneCandidates = []
+            }
+        )
     }
 }

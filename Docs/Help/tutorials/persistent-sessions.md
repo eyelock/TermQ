@@ -1,4 +1,4 @@
-# Tutorial 5: Persistent Sessions
+# Persistent Sessions
 
 By default, TermQ uses your shell directly. When you quit the app, those sessions end. That's fine for quick one-off commands — but for a dev server you keep running all day, or a migration you need to resume tomorrow, you want something that survives.
 
@@ -104,4 +104,4 @@ From there you can split horizontally or vertically, navigate between panes, zoo
 
 ## Next
 
-[Tutorial 6: Terminal Context](tutorials/terminal-context.md) — Environment variables, secrets, and init commands.
+[Terminal Context](terminal-context.md) — Environment variables, secrets, and init commands.

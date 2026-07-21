@@ -452,6 +452,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "覆盖默认后端";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "仓库";
+"sidebar.workspace.all" = "所有仓库";
+"sidebar.workspace.menu.help" = "按工作区筛选仓库";
+"sidebar.workspace.new" = "新建工作区…";
+"sidebar.workspace.new.title" = "新建工作区";
+"sidebar.workspace.name.label" = "工作区名称";
+"sidebar.workspace.name.placeholder" = "例如：工作、个人项目";
+"sidebar.workspace.create" = "创建";
+"sidebar.workspace.manage" = "管理工作区…";
+"sidebar.workspace.manage.title" = "管理工作区";
+"sidebar.workspace.manage.empty" = "尚无工作区。从工作区菜单创建一个。";
+"sidebar.workspace.manage.done" = "完成";
+"sidebar.workspace.add.to" = "添加到工作区";
+"sidebar.workspace.delete.title" = "删除工作区？";
+"sidebar.workspace.delete.confirm" = "删除";
+"sidebar.workspace.delete.message %@" = ""%@"将被移除。其中的仓库不会被删除。";
+"sidebar.workspace.empty.message" = "此工作区没有仓库。\n在“所有仓库”中右键点击一个仓库以将其添加到此处。";
 "sidebar.add.button.help" = "添加仓库";
 "sidebar.empty.message" = "未添加任何仓库。\n点击 + 添加 Git 仓库。";
 "sidebar.worktrees.placeholder" = "工作树将显示在此处";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork 到本地";
 "harnesses.fork.to.local.help" = "创建此 harness 的可编辑本地副本";
+"harnesses.publish.to.repository" = "发布到仓库…";
 "harnesses.update.dot.help" = "有可用更新";
 "harness.fork.title %@" = "将 \"%@\" Fork 到本地";
 "harness.fork.explanation" = "创建此 harness 的可编辑本地副本。该副本跟踪其来源，以便您查看上游的变更。";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "留空以保留源名称。新 fork 的规范 id 将为 local/<名称>。";
 "harness.fork.identity.collision" = "已有安装的 harness 使用此标识。";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "将\"%@\"发布到仓库";
+"harness.publish.explanation" = "将此 harness 复制到目标仓库的新 worktree 中，准备好进行 commit。仓库自身的规范（注册脚本、manifest）负责其余部分。";
+"harness.publish.button" = "发布";
+"harness.publish.update.button" = "更新现有条目";
+"harness.publish.progress.title %@" = "正在发布\"%@\"…";
+"harness.publish.repo.label" = "目标仓库";
+"harness.publish.repo.placeholder" = "选择仓库…";
+"harness.publish.parentdir.label" = "仓库中的目录";
+"harness.publish.parentdir.hint" = "根据此仓库已存储 harness 的位置建议。可自由编辑。";
+"harness.publish.name.label" = "名称";
+"harness.publish.branch.label" = "分支";
+"harness.publish.basebranch.label" = "基础分支";
+"harness.publish.worktreepath.label" = "Worktree 路径";
+"harness.publish.files.label" = "要复制的文件";
+"harness.publish.changes.label" = "与已发布副本的差异";
+"harness.publish.mode.label" = "复制模式";
+"harness.publish.mode.entire" = "整个目录";
+"harness.publish.mode.enumerated" = "仅 harness 文件";
+"harness.publish.mode.enumerated.hint" = "源目录同时是项目仓库——仅复制 harness 拥有的文件。";
+"harness.publish.state.new" = "新条目——此 harness 尚不存在于仓库中。";
+"harness.publish.state.update %@" = "更新 %@ 处的现有条目（覆盖）。";
+"harness.publish.state.clash %@" = "该目录已包含另一个 harness（\"%@\"）——请选择其他名称。";
+"harness.publish.state.occupied" = "该目录在仓库中已存在——请选择其他名称或位置。";
+"harness.publish.state.samerepo" = "此 harness 已位于所选仓库中——请直接在那里 commit 更改，而不是发布。";
+"harness.publish.reveal.repository" = "在仓库中显示";
+"harness.publish.preflight.failed" = "本地 harness 未通过验证——请在发布前修复问题。";
+"harness.publish.composition.unavailable" = "ynd compose 对此 harness 失败——\"仅 harness 文件\"模式需要它来确定哪些文件属于 harness。请修复 harness 或切换到\"整个目录\"。";
+"harness.publish.unresolved %lld" = "源中缺少 %lld 个被引用文件——这些文件将不会被复制。";
+"harness.publish.register.disclosure %@" = "复制完成后，仓库的 %@ 将运行（仓库提供的脚本）。";
+"harness.publish.change.added" = "已添加";
+"harness.publish.change.modified" = "已修改";
+"harness.publish.change.removed" = "已删除";
+"harness.publish.changes.none" = "无差异——已发布的副本与本地文件一致。";
+"harness.publish.step.worktree %@" = "正在分支 %@ 上创建 worktree…";
+"harness.publish.step.copy %@" = "正在将 harness 复制到 %@…";
+"harness.publish.step.copied %lld" = "已复制 %lld 个文件组。";
+"harness.publish.step.validate" = "正在验证已复制的 harness（ynd validate）…";
+"harness.publish.step.register %@" = "正在运行 %@…";
+"harness.publish.step.done %@" = "完成——worktree 已就绪：%@。";
+"harness.publish.warning %@" = "警告：%@";
+"harness.publish.deleted %@" = "已删除过时路径：%@";
+"harness.publish.validation.failed" = "worktree 中验证失败——未进行任何 commit。worktree 已保留以供检查。";
+"harness.publish.register.failed" = "仓库的注册脚本失败——worktree 已保留以供检查。";
+"harness.publish.references.missing %@" = "复制后 manifest 引用的文件缺失：%@";
+"harness.publish.error.occupied %@" = "目标已包含一个 harness：%@";
+"harness.publish.error.invaliddest %@" = "目标超出 worktree 范围：%@";
+"harness.publish.error.copy %@" = "复制失败：%@";
+"harness.publish.error.rename %@" = "无法重写 manifest 名称：%@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "更新\"%@\"";
@@ -1261,5 +1343,111 @@
 "remote.prs.worktree.exists" = "工作树已存在";
 "settings.github.feed.cap.help" = "远程侧边栏中每个仓库显示的最大拉取请求数。已签出的 PR 始终包含在内。";
 "settings.github.feed.cap.label" = "每个仓库的 PR 数";
-"settings.github.section.feed" = "远程 PR 订阅";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "为侧边栏中的堆叠分支和堆叠 PR 提供支持。";
+"settings.gitspice.version" = "版本：";
+"settings.gitspice.path" = "路径：";
+"settings.gitspice.info" = "侧边栏中的堆叠分支功能依赖于正常工作的 git-spice 安装。它复用 gh CLI 的身份验证。";
+"settings.gitspice.not.installed.description" = "git-spice 支持堆叠分支和堆叠 PR。没有它，TermQ 只会显示普通工作树。";
+"settings.gitspice.install.hint" = "使用 Homebrew 安装：";
+"settings.gitspice.check.again" = "再次检查";
+"settings.gitspice.status.unusable %@" = "已检测到但不可用：%@";
+"stacks.enable" = "启用堆叠…";
+"stacks.enable.help" = "使用 git-spice 将此仓库的分支作为堆栈进行跟踪";
+"stacks.enable.failed %@" = "无法启用堆叠：%@";
+"stacks.needs.restack" = "需要重新堆叠";
+"stacks.open.change.request" = "打开变更请求";
+"stacks.unpushed.commits %ld" = "↑%ld 个未推送";
+"stacks.change.request.merged" = "已合并";
+"stacks.change.request.closed" = "已关闭";
+"stacks.no.change.request" = "无 PR";
+"stacks.disclosure.help" = "显示堆栈分支";
+"stacks.switch.blocked.dirty" = "无法切换堆栈分支：该工作树存在未提交的更改。请先提交或暂存（stash）。";
+"stacks.switch.blocked.in.use" = "无法切换堆栈分支：该工作树中有终端处于打开状态。请先关闭它。";
+"stacks.switch.blocked.elsewhere %@" = "无法切换堆栈分支：它已在另一个工作树（%@）中检出。";
+"stacks.switch.help" = "双击可将此工作树切换到该分支";
+"stacks.switch.to %@" = "切换到 %@";
+"stacks.add.branch" = "向堆栈添加分支…";
+"stacks.add.branch.title" = "向堆栈添加分支";
+"stacks.add.branch.name.label" = "分支名称";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "堆叠于";
+"stacks.add.branch.staged.note" = "已暂存的更改将成为新分支的首个提交。若工作树干净，则会在其上创建一个空分支。";
+"stacks.add.branch.track.note" = "此分支已存在——将改为在堆栈中跟踪它。";
+"stacks.add.branch.create" = "创建";
+"stacks.add.branch.track" = "跟踪";
+"stacks.restack.stack" = "重新堆叠堆栈";
+"stacks.restack.from.here" = "从此处重新堆叠";
+"stacks.conflict.banner %ld" = "重新堆叠已暂停 — %ld 个文件中存在冲突";
+"stacks.conflict.continue" = "继续";
+"stacks.conflict.abort" = "中止";
+"stacks.conflict.hint" = "在终端中解决冲突，暂存文件，然后点击继续。";
+"stacks.submit.stack" = "提交堆栈…";
+"stacks.submit.branch" = "提交此分支…";
+"stacks.submit.title" = "提交堆栈";
+"stacks.submit.button" = "提交";
+"stacks.submit.draft.toggle" = "将新拉取请求创建为草稿";
+"stacks.submit.update.only.toggle" = "仅更新现有拉取请求";
+"stacks.submit.will.create" = "创建";
+"stacks.submit.will.update" = "更新";
+"stacks.sync.repo" = "同步仓库";
+"stacks.sync.cleaned %ld %@" = "同步移除了 %ld 个已合并分支：%@";
+"stacks.destroy.stack" = "销毁堆栈…";
+"stacks.destroy.stack.title" = "销毁堆栈？";
+"stacks.destroy.stack.message %ld %@" = "这将通过 git-spice 永久删除 %ld 个本地分支：%@。远程分支和任何拉取请求都不受影响。";
+"stacks.destroy.stack.open.pr.warning %ld" = "其中 %ld 个分支仍有处于开启状态的拉取请求。";
+"stacks.destroy.stack.confirm" = "销毁堆栈";
+"stacks.destroy.stack.done %ld" = "堆栈已销毁：已删除 %ld 个分支";
+"stacks.destroy.stack.worktree.skipped %@" = "保持不变（有未提交的更改）：%@";
+"stacks.base.mismatch %@ %@" = "PR 的目标是 %@，但堆栈的父分支是 %@ — 同步仓库将重新定向它";
+"stacks.restack.up.to.date" = "堆栈已是最新";
+"stacks.restack.done %ld" = "已重新堆叠 %ld 个分支";
+"stacks.sync.clean" = "一切均已同步";
+"stacks.submit.done %ld %ld" = "已提交：创建 %ld 个，更新 %ld 个";
+"sidebar.worktrees.section.header" = "工作树";
+"stacks.break.out" = "拆分为工作树…";
+"stacks.skipped.notice %@" = "未重新堆叠：%@";
+"stacks.skipped.dirty %@ %@" = "%@（在 %@ 中检出，存在未提交的更改）";
+"stacks.skipped.in.use %@ %@" = "%@（在 %@ 中检出，存在活动终端）";
+"stacks.copy.branch.name" = "复制分支名称";
+"stacks.reveal.worktree" = "显示工作树";
+"stacks.anchored.badge.help %@" = "已锚定在工作树 %@ 中 — 点击以显示它";
+"stacks.part.of.stack %@" = "属于堆栈 %@";
+"stacks.section.header" = "堆栈";
+"stacks.checked.out.at %@" = "已在 %@ 中检出 — 点击以显示该工作树";
+"stacks.anchor.help" = "为此堆栈创建一个工作树";
+"stacks.group.new.worktree" = "新建工作树…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "在此之前新建堆栈分支…";
+"stacks.new.branch.after" = "在此之后新建堆栈分支…";
+"stacks.new.branch.insert.below.note %@" = "新分支将创建在堆栈中 %@ 的下方。";
+"stacks.new.branch.insert.above.note %@" = "新分支将创建在堆栈中 %@ 的上方，取代其位置 — %@ 将移到其上方。";
+"stacks.main.worktree.not.found" = "未能找到该仓库的主工作树。";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "新建堆栈…";
+"stacks.new.stack.title" = "新建堆栈";
+"stacks.new.stack.name.label" = "分支名称";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "基础分支";
+"stacks.new.stack.button" = "创建";
+"stacks.new.stack.note" = "从基础分支创建该分支，不进行检出也不创建工作树 — 这是一个可稍后启动的单条目堆栈。";
+"stacks.start.stack.checkbox" = "以此分支开始一个堆栈";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "从默认分支分出";
+"stacks.new.stack.mode.integration" = "从集成分支分出";
+"stacks.new.stack.stack.name.label" = "堆栈名称";
+"stacks.new.stack.integration.preview %@" = "创建 %@";
+"stacks.new.stack.first.branch.label" = "首个堆栈分支（可选）";
+"stacks.new.stack.first.branch.empty.hint" = "留空时：仅创建空的集成分支 — 稍后可为其添加首个堆栈分支。";
+"stacks.new.stack.first.branch.filled.hint" = "此分支将创建在集成分支之上并加入堆栈，而不是直接创建在基础分支之上。";
+"stacks.new.stack.integration.note" = "从基础分支创建一个空的集成分支作为堆栈的根 — 它本身永远不携带代码。堆栈分支基于它而非基础分支进行构建，其拉取请求会依次链接到它。一旦所有内容都合并到集成分支，它将作为一个整合后的更改统一提交拉取请求到基础分支 — 而不是每个堆栈分支单独合并到基础分支。";
+"stacks.new.stack.name.exists %@" = "%@ 已存在 — 请选择其他名称。";
+"settings.gitspice.new.stack.mode" = "新建堆栈的起始模式：";
+"settings.gitspice.new.stack.mode.help" = "「新建堆栈」表单预先选择的模式 — 该表单始终同时提供两种模式。";
+"settings.gitspice.hide.stacked.worktrees" = "在工作树部分隐藏已加入堆栈的工作树";
+"settings.gitspice.hide.stacked.worktrees.help" = "分支属于受跟踪堆栈的工作树已在堆栈部分列出 — 请在工作树部分将其隐藏，以避免重复显示。";

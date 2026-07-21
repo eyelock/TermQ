@@ -31,6 +31,9 @@ struct SettingsGeneralView: View {
     @Binding var protectedBranches: String
     @Binding var initializeSubmodules: Bool
 
+    // Remote PR feed cap (GitHub)
+    @Binding var remotePRFeedCap: Int
+
     var body: some View {
         // Terminal section
         Section {
@@ -84,6 +87,23 @@ struct SettingsGeneralView: View {
 
             Toggle(Strings.Settings.initializeSubmodulesLabel, isOn: $initializeSubmodules)
             Text(Strings.Settings.initializeSubmodulesHelp)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Stepper(
+                value: $remotePRFeedCap,
+                in: 5...100,
+                step: 5
+            ) {
+                HStack {
+                    Text(Strings.Settings.githubFeedCapLabel)
+                    Spacer()
+                    Text("\(remotePRFeedCap)")
+                        .foregroundColor(.secondary)
+                        .monospacedDigit()
+                }
+            }
+            Text(Strings.Settings.githubFeedCapHelp)
                 .font(.caption)
                 .foregroundColor(.secondary)
         } header: {

@@ -120,7 +120,7 @@ struct TerminalCardView: View {
                             .foregroundColor(columnColor)
                     }
 
-                    // Wired indicator - shows when LLM has called termq_get for this terminal
+                    // Wired indicator - shows when LLM has called get for this terminal
                     if card.isWired {
                         Text(Strings.Card.wired)
                             .font(.caption2)

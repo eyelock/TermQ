@@ -452,6 +452,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "覆寫預設後端";
@@ -562,6 +577,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "儲存庫";
+"sidebar.workspace.all" = "所有儲存庫";
+"sidebar.workspace.menu.help" = "依工作區篩選儲存庫";
+"sidebar.workspace.new" = "新增工作區…";
+"sidebar.workspace.new.title" = "新增工作區";
+"sidebar.workspace.name.label" = "工作區名稱";
+"sidebar.workspace.name.placeholder" = "例如：工作、個人專案";
+"sidebar.workspace.create" = "建立";
+"sidebar.workspace.manage" = "管理工作區…";
+"sidebar.workspace.manage.title" = "管理工作區";
+"sidebar.workspace.manage.empty" = "尚無工作區。從工作區選單建立一個。";
+"sidebar.workspace.manage.done" = "完成";
+"sidebar.workspace.add.to" = "加入工作區";
+"sidebar.workspace.delete.title" = "刪除工作區？";
+"sidebar.workspace.delete.confirm" = "刪除";
+"sidebar.workspace.delete.message %@" = "「%@」將會被移除。其中嘅儲存庫唔會被刪除。";
+"sidebar.workspace.empty.message" = "呢個工作區冇任何儲存庫。\n喺「所有儲存庫」度右鍵點擊某個儲存庫，即可將其加入呢度。";
 "sidebar.add.button.help" = "新增儲存庫";
 "sidebar.empty.message" = "未新增任何儲存庫。\n點擊 + 新增 Git 儲存庫。";
 "sidebar.worktrees.placeholder" = "工作樹將顯示喺呢度";
@@ -1005,6 +1036,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork 到本機";
 "harnesses.fork.to.local.help" = "建立此 harness 的可編輯本機副本";
+"harnesses.publish.to.repository" = "發佈至儲存庫…";
 "harnesses.update.dot.help" = "有可用更新";
 "harness.fork.title %@" = "將 \"%@\" Fork 到本機";
 "harness.fork.explanation" = "建立此 harness 的可編輯本機副本。此副本追蹤其來源，讓您可以查看上游的變更。";
@@ -1014,6 +1046,56 @@
 "harness.fork.rename.hint" = "留空以保留來源名稱。新 fork 嘅標準 id 將為 local/<名稱>。";
 "harness.fork.identity.collision" = "已有已安裝嘅 harness 使用呢個識別碼。";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "將「%@」發佈至儲存庫";
+"harness.publish.explanation" = "將呢個 harness 複製到目標儲存庫嘅新工作樹中，準備好進行 commit。儲存庫自身嘅規範（登錄指令碼、manifest）負責其餘部分。";
+"harness.publish.button" = "發佈";
+"harness.publish.update.button" = "更新現有項目";
+"harness.publish.progress.title %@" = "正在發佈「%@」…";
+"harness.publish.repo.label" = "目標儲存庫";
+"harness.publish.repo.placeholder" = "選擇儲存庫…";
+"harness.publish.parentdir.label" = "儲存庫中的目錄";
+"harness.publish.parentdir.hint" = "根據呢個儲存庫已存放 harness 嘅位置建議。可自由編輯。";
+"harness.publish.name.label" = "名稱";
+"harness.publish.branch.label" = "分支";
+"harness.publish.basebranch.label" = "基礎分支";
+"harness.publish.worktreepath.label" = "工作樹路徑";
+"harness.publish.files.label" = "要複製的檔案";
+"harness.publish.changes.label" = "與已發佈副本嘅差異";
+"harness.publish.mode.label" = "複製模式";
+"harness.publish.mode.entire" = "整個目錄";
+"harness.publish.mode.enumerated" = "僅 harness 檔案";
+"harness.publish.mode.enumerated.hint" = "來源目錄同時係專案儲存庫——僅複製 harness 所擁有嘅檔案。";
+"harness.publish.state.new" = "新項目——呢個 harness 尚未存在於儲存庫中。";
+"harness.publish.state.update %@" = "更新 %@ 處嘅現有項目（覆寫）。";
+"harness.publish.state.clash %@" = "該目錄已包含另一個 harness（「%@」）——請選擇其他名稱。";
+"harness.publish.state.occupied" = "該目錄喺儲存庫中已存在——請選擇其他名稱或位置。";
+"harness.publish.state.samerepo" = "呢個 harness 已位於所選儲存庫中——請直接喺嗰度 commit 變更，而唔係發佈。";
+"harness.publish.reveal.repository" = "喺儲存庫中顯示";
+"harness.publish.preflight.failed" = "本機 harness 未通過驗證——請喺發佈前修正問題。";
+"harness.publish.composition.unavailable" = "ynd compose 對呢個 harness 失敗——「僅 harness 檔案」模式需要佢嚟確定哪些檔案屬於 harness。請修正 harness 或切換至「整個目錄」。";
+"harness.publish.unresolved %lld" = "來源中缺少 %lld 個被參照嘅檔案——呢啲檔案將唔會被複製。";
+"harness.publish.register.disclosure %@" = "複製完成後，儲存庫嘅 %@ 將會執行（儲存庫提供嘅指令碼）。";
+"harness.publish.change.added" = "已新增";
+"harness.publish.change.modified" = "已修改";
+"harness.publish.change.removed" = "已移除";
+"harness.publish.changes.none" = "無差異——已發佈嘅副本與本機檔案一致。";
+"harness.publish.step.worktree %@" = "正在分支 %@ 上建立工作樹…";
+"harness.publish.step.copy %@" = "正在將 harness 複製到 %@…";
+"harness.publish.step.copied %lld" = "已複製 %lld 個檔案群組。";
+"harness.publish.step.validate" = "正在驗證已複製嘅 harness（ynd validate）…";
+"harness.publish.step.register %@" = "正在執行 %@…";
+"harness.publish.step.done %@" = "完成——工作樹已就緒：%@。";
+"harness.publish.warning %@" = "警告：%@";
+"harness.publish.deleted %@" = "已刪除過時路徑：%@";
+"harness.publish.validation.failed" = "工作樹中驗證失敗——未進行任何 commit。工作樹已保留以供檢查。";
+"harness.publish.register.failed" = "儲存庫嘅登錄指令碼失敗——工作樹已保留以供檢查。";
+"harness.publish.references.missing %@" = "複製後 manifest 參照嘅檔案缺失：%@";
+"harness.publish.error.occupied %@" = "目的地已包含一個 harness：%@";
+"harness.publish.error.invaliddest %@" = "目的地超出工作樹範圍：%@";
+"harness.publish.error.copy %@" = "複製失敗：%@";
+"harness.publish.error.rename %@" = "無法重寫 manifest 名稱：%@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "更新「%@」";
@@ -1259,5 +1341,111 @@
 "remote.prs.worktree.exists" = "工作樹已存在";
 "settings.github.feed.cap.help" = "遠端側邊欄中每個儲存庫顯示嘅最大提取請求數。已簽出嘅 PR 始終包含在內。";
 "settings.github.feed.cap.label" = "每個儲存庫嘅 PR 數";
-"settings.github.section.feed" = "遠端 PR 資訊提供";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "為側邊欄嘅堆疊分支同堆疊 PR 提供支援。";
+"settings.gitspice.version" = "版本：";
+"settings.gitspice.path" = "路徑：";
+"settings.gitspice.info" = "側邊欄嘅堆疊分支功能要靠一個正常運作嘅 git-spice 安裝先得。佢會重複使用 gh CLI 嘅身份驗證。";
+"settings.gitspice.not.installed.description" = "git-spice 支援堆疊分支同堆疊 PR。冇咗佢，TermQ 淨係會顯示一般工作樹。";
+"settings.gitspice.install.hint" = "用 Homebrew 安裝：";
+"settings.gitspice.check.again" = "再檢查一次";
+"settings.gitspice.status.unusable %@" = "已偵測到但用唔到：%@";
+"stacks.enable" = "啟用堆疊…";
+"stacks.enable.help" = "用 git-spice 將呢個儲存庫嘅分支當做堆疊嚟追蹤";
+"stacks.enable.failed %@" = "無法啟用堆疊：%@";
+"stacks.needs.restack" = "需要重新堆疊";
+"stacks.open.change.request" = "開啟變更請求";
+"stacks.unpushed.commits %ld" = "↑%ld 個未推送";
+"stacks.change.request.merged" = "已合併";
+"stacks.change.request.closed" = "已關閉";
+"stacks.no.change.request" = "無 PR";
+"stacks.disclosure.help" = "顯示堆疊分支";
+"stacks.switch.blocked.dirty" = "無法切換堆疊分支：呢個工作樹有未提交嘅更改。請先提交或者暫存（stash）。";
+"stacks.switch.blocked.in.use" = "無法切換堆疊分支：呢個工作樹有終端機開緊。請先關閉佢。";
+"stacks.switch.blocked.elsewhere %@" = "無法切換堆疊分支：佢已經喺另一個工作樹（%@）簽出咗。";
+"stacks.switch.help" = "撳兩下即可將呢個工作樹切換到嗰個分支";
+"stacks.switch.to %@" = "切換到 %@";
+"stacks.add.branch" = "將分支加入堆疊…";
+"stacks.add.branch.title" = "將分支加入堆疊";
+"stacks.add.branch.name.label" = "分支名稱";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "堆疊喺";
+"stacks.add.branch.staged.note" = "已暫存嘅更改會成為新分支嘅第一個提交。如果工作樹乾淨，就會喺上面建立一個空分支。";
+"stacks.add.branch.track.note" = "呢個分支已經存在——會改為喺堆疊入面追蹤佢。";
+"stacks.add.branch.create" = "建立";
+"stacks.add.branch.track" = "追蹤";
+"stacks.restack.stack" = "重新堆疊堆疊";
+"stacks.restack.from.here" = "由呢度重新堆疊";
+"stacks.conflict.banner %ld" = "重新堆疊已暫停 — %ld 個檔案有衝突";
+"stacks.conflict.continue" = "繼續";
+"stacks.conflict.abort" = "中止";
+"stacks.conflict.hint" = "喺終端機入面解決衝突，暫存檔案，然後撳繼續。";
+"stacks.submit.stack" = "提交堆疊…";
+"stacks.submit.branch" = "提交呢個分支…";
+"stacks.submit.title" = "提交堆疊";
+"stacks.submit.button" = "提交";
+"stacks.submit.draft.toggle" = "將新提取請求建立為草稿";
+"stacks.submit.update.only.toggle" = "淨係更新現有提取請求";
+"stacks.submit.will.create" = "建立";
+"stacks.submit.will.update" = "更新";
+"stacks.sync.repo" = "同步儲存庫";
+"stacks.sync.cleaned %ld %@" = "同步移除咗 %ld 個已合併分支：%@";
+"stacks.destroy.stack" = "銷毀堆疊…";
+"stacks.destroy.stack.title" = "銷毀堆疊？";
+"stacks.destroy.stack.message %ld %@" = "呢個操作會透過 git-spice 永久刪除 %ld 個本機分支：%@。遠端分支同任何提取請求都唔會受影響。";
+"stacks.destroy.stack.open.pr.warning %ld" = "當中 %ld 個分支仍然有開啟緊嘅提取請求。";
+"stacks.destroy.stack.confirm" = "銷毀堆疊";
+"stacks.destroy.stack.done %ld" = "堆疊已銷毀：已刪除 %ld 個分支";
+"stacks.destroy.stack.worktree.skipped %@" = "保持不變（有未提交嘅變更）：%@";
+"stacks.base.mismatch %@ %@" = "PR 嘅目標係 %@，但堆疊嘅父分支係 %@ — 同步儲存庫會將佢重新導向";
+"stacks.restack.up.to.date" = "堆疊已經係最新";
+"stacks.restack.done %ld" = "已重新堆疊 %ld 個分支";
+"stacks.sync.clean" = "全部已經同步";
+"stacks.submit.done %ld %ld" = "已提交：建立咗 %ld 個，更新咗 %ld 個";
+"sidebar.worktrees.section.header" = "工作樹";
+"stacks.break.out" = "拆分成工作樹…";
+"stacks.skipped.notice %@" = "未重新堆疊：%@";
+"stacks.skipped.dirty %@ %@" = "%@（喺 %@ 簽出咗，有未提交嘅更改）";
+"stacks.skipped.in.use %@ %@" = "%@（喺 %@ 簽出咗，有終端機開緊）";
+"stacks.copy.branch.name" = "複製分支名稱";
+"stacks.reveal.worktree" = "顯示工作樹";
+"stacks.anchored.badge.help %@" = "已錨定喺工作樹 %@ — 撳一下就顯示佢";
+"stacks.part.of.stack %@" = "屬於堆疊 %@";
+"stacks.section.header" = "堆疊";
+"stacks.checked.out.at %@" = "已喺 %@ 簽出 — 撳一下就顯示嗰個工作樹";
+"stacks.anchor.help" = "為呢個堆疊建立一個工作樹";
+"stacks.group.new.worktree" = "新增工作樹…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "喺呢度之前新增堆疊分支…";
+"stacks.new.branch.after" = "喺呢度之後新增堆疊分支…";
+"stacks.new.branch.insert.below.note %@" = "新分支會建立喺堆疊入面 %@ 嘅下面。";
+"stacks.new.branch.insert.above.note %@" = "新分支會建立喺堆疊入面 %@ 嘅上面，取代佢嘅位置 — %@ 會搬去佢上面。";
+"stacks.main.worktree.not.found" = "搵唔到呢個儲存庫嘅主要工作樹。";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "新增堆疊…";
+"stacks.new.stack.title" = "新增堆疊";
+"stacks.new.stack.name.label" = "分支名稱";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "基礎分支";
+"stacks.new.stack.button" = "建立";
+"stacks.new.stack.note" = "由基礎分支建立呢個分支，唔會檢出亦都唔會建立工作樹 — 呢個係一個得一個項目嘅堆疊，你可以遲啲先啟動。";
+"stacks.start.stack.checkbox" = "用呢個分支開始一個堆疊";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "由預設分支分出";
+"stacks.new.stack.mode.integration" = "由整合分支分出";
+"stacks.new.stack.stack.name.label" = "堆疊名稱";
+"stacks.new.stack.integration.preview %@" = "建立 %@";
+"stacks.new.stack.first.branch.label" = "第一個堆疊分支（可揀）";
+"stacks.new.stack.first.branch.empty.hint" = "留空嘅話：淨係會建立空嘅整合分支 — 你可以遲啲先為佢新增第一個堆疊分支。";
+"stacks.new.stack.first.branch.filled.hint" = "呢個分支會建立喺整合分支之上並加入堆疊，而唔係直接建立喺基礎分支之上。";
+"stacks.new.stack.integration.note" = "由基礎分支建立一個空嘅整合分支，作為堆疊嘅根 — 佢本身永遠唔帶任何程式碼。堆疊分支會以佢為基礎嚟建構，而唔係以基礎分支為基礎，佢哋嘅拉取請求會逐個串連到佢度。一旦所有嘢都合併咗去整合分支，就會以單一整合後嘅更改一齊提交拉取請求去基礎分支 — 而唔係每個堆疊分支各自分開合併去基礎分支。";
+"stacks.new.stack.name.exists %@" = "%@ 已經存在 — 請揀第個名。";
+"settings.gitspice.new.stack.mode" = "新增堆疊嘅起始模式：";
+"settings.gitspice.new.stack.mode.help" = "「新增堆疊」表單預先揀嘅模式 — 呢個表單一律會同時提供兩種模式。";
+"settings.gitspice.hide.stacked.worktrees" = "喺工作樹區段隱藏已經加入堆疊嘅工作樹";
+"settings.gitspice.hide.stacked.worktrees.help" = "分支屬於受追蹤堆疊嘅工作樹已經喺堆疊區段列出咗 — 請喺工作樹區段將佢哋隱藏，以避免重複顯示。";

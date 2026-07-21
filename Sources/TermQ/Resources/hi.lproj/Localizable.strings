@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "डिफ़ॉल्ट बैकएंड ओवरराइड करें";
@@ -563,6 +578,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "रिपॉज़िटरी";
+"sidebar.workspace.all" = "सभी रिपॉज़िटरी";
+"sidebar.workspace.menu.help" = "वर्कस्पेस के अनुसार रिपॉज़िटरी फ़िल्टर करें";
+"sidebar.workspace.new" = "नया वर्कस्पेस…";
+"sidebar.workspace.new.title" = "नया वर्कस्पेस";
+"sidebar.workspace.name.label" = "वर्कस्पेस नाम";
+"sidebar.workspace.name.placeholder" = "उदा. काम, साइड प्रोजेक्ट";
+"sidebar.workspace.create" = "बनाएं";
+"sidebar.workspace.manage" = "वर्कस्पेस प्रबंधित करें…";
+"sidebar.workspace.manage.title" = "वर्कस्पेस प्रबंधित करें";
+"sidebar.workspace.manage.empty" = "अभी तक कोई वर्कस्पेस नहीं है। वर्कस्पेस मेनू से एक बनाएं।";
+"sidebar.workspace.manage.done" = "हो गया";
+"sidebar.workspace.add.to" = "वर्कस्पेस में जोड़ें";
+"sidebar.workspace.delete.title" = "वर्कस्पेस हटाएं?";
+"sidebar.workspace.delete.confirm" = "हटाएं";
+"sidebar.workspace.delete.message %@" = "“%@” हटा दिया जाएगा। इसमें मौजूद रिपॉज़िटरी हटाई नहीं जाएंगी।";
+"sidebar.workspace.empty.message" = "इस वर्कस्पेस में कोई रिपॉज़िटरी नहीं है।\n“सभी रिपॉज़िटरी” में किसी रिपॉज़िटरी पर राइट-क्लिक करें और इसे यहाँ जोड़ें।";
 "sidebar.add.button.help" = "रिपॉज़िटरी जोड़ें";
 "sidebar.empty.message" = "कोई रिपॉज़िटरी नहीं जोड़ी गई।\n+ पर क्लिक करके git रिपॉज़िटरी जोड़ें।";
 "sidebar.worktrees.placeholder" = "Worktrees यहाँ दिखाई देंगे";
@@ -1011,6 +1042,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "स्थानीय रूप से फोर्क करें";
 "harnesses.fork.to.local.help" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाएं";
+"harnesses.publish.to.repository" = "रिपॉज़िटरी में प्रकाशित करें…";
 "harnesses.update.dot.help" = "अपडेट उपलब्ध है";
 "harness.fork.title %@" = "\"%@\" को स्थानीय में फोर्क करें";
 "harness.fork.explanation" = "इस harness की एक संपादन योग्य स्थानीय प्रतिलिपि बनाता है। प्रतिलिपि अपने मूल को ट्रैक करती है ताकि आप देख सकें कि upstream में क्या बदला।";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.hint" = "स्रोत नाम बनाए रखने के लिए खाली छोड़ें। नए fork का canonical id local/<नाम> होगा।";
 "harness.fork.identity.collision" = "पहले से स्थापित harness में यह पहचान है।";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "\"%@\" को रिपॉज़िटरी में प्रकाशित करें";
+"harness.publish.explanation" = "इस harness को लक्षित रिपॉज़िटरी के एक नए worktree में कॉपी करता है, commit के लिए तैयार। रिपॉज़िटरी की अपनी परंपराएं (पंजीकरण स्क्रिप्ट, manifests) बाकी काम करती हैं।";
+"harness.publish.button" = "प्रकाशित करें";
+"harness.publish.update.button" = "मौजूदा प्रविष्टि अपडेट करें";
+"harness.publish.progress.title %@" = "\"%@\" प्रकाशित हो रहा है…";
+"harness.publish.repo.label" = "लक्षित रिपॉज़िटरी";
+"harness.publish.repo.placeholder" = "एक रिपॉज़िटरी चुनें…";
+"harness.publish.parentdir.label" = "रिपॉज़िटरी में डायरेक्टरी";
+"harness.publish.parentdir.hint" = "इस रिपॉज़िटरी में harnesses पहले से कहाँ रखे हैं, उसके आधार पर सुझाया गया। पूरी तरह संपादन योग्य।";
+"harness.publish.name.label" = "नाम";
+"harness.publish.branch.label" = "ब्रांच";
+"harness.publish.basebranch.label" = "आधार ब्रांच";
+"harness.publish.worktreepath.label" = "Worktree पथ";
+"harness.publish.files.label" = "कॉपी की जाने वाली फ़ाइलें";
+"harness.publish.changes.label" = "प्रकाशित प्रति के मुकाबले परिवर्तन";
+"harness.publish.mode.label" = "कॉपी मोड";
+"harness.publish.mode.entire" = "पूरी डायरेक्टरी";
+"harness.publish.mode.enumerated" = "केवल harness फ़ाइलें";
+"harness.publish.mode.enumerated.hint" = "स्रोत डायरेक्टरी एक प्रोजेक्ट रिपॉज़िटरी के रूप में भी काम करती है — केवल harness के स्वामित्व वाली फ़ाइलें कॉपी की जाती हैं।";
+"harness.publish.state.new" = "नई प्रविष्टि — यह harness रिपॉज़िटरी में अभी तक मौजूद नहीं है।";
+"harness.publish.state.update %@" = "%@ पर मौजूदा प्रविष्टि अपडेट करता है (उसे ओवरराइट करता है)।";
+"harness.publish.state.clash %@" = "उस डायरेक्टरी में पहले से एक अलग harness (\"%@\") है — कोई और नाम चुनें।";
+"harness.publish.state.occupied" = "वह डायरेक्टरी रिपॉज़िटरी में पहले से मौजूद है — कोई और नाम या स्थान चुनें।";
+"harness.publish.state.samerepo" = "यह harness पहले से चुनी गई रिपॉज़िटरी में है — प्रकाशित करने के बजाय अपने परिवर्तन वहीं commit करें।";
+"harness.publish.reveal.repository" = "रिपॉज़िटरी में दिखाएं";
+"harness.publish.preflight.failed" = "स्थानीय harness मान्य नहीं है — प्रकाशित करने से पहले उसे ठीक करें।";
+"harness.publish.composition.unavailable" = "ynd compose इस harness के लिए विफल रहा — \"केवल harness फ़ाइलें\" मोड को यह जानने के लिए चाहिए कि कौन सी फ़ाइलें harness की हैं। harness को ठीक करें या \"पूरी डायरेक्टरी\" पर स्विच करें।";
+"harness.publish.unresolved %lld" = "स्रोत से %lld संदर्भित फ़ाइलें गायब हैं — वे कॉपी नहीं की जाएंगी।";
+"harness.publish.register.disclosure %@" = "कॉपी करने के बाद, रिपॉज़िटरी का %@ चलाया जाएगा (रिपॉज़िटरी-प्रदत्त स्क्रिप्ट)।";
+"harness.publish.change.added" = "जोड़ा गया";
+"harness.publish.change.modified" = "संशोधित";
+"harness.publish.change.removed" = "हटाया गया";
+"harness.publish.changes.none" = "कोई अंतर नहीं — प्रकाशित प्रति आपकी स्थानीय फ़ाइलों से मेल खाती है।";
+"harness.publish.step.worktree %@" = "ब्रांच %@ पर worktree बनाया जा रहा है…";
+"harness.publish.step.copy %@" = "harness को %@ में कॉपी किया जा रहा है…";
+"harness.publish.step.copied %lld" = "%lld फ़ाइल समूह कॉपी किए गए।";
+"harness.publish.step.validate" = "कॉपी किए गए harness को मान्य किया जा रहा है (ynd validate)…";
+"harness.publish.step.register %@" = "%@ चलाया जा रहा है…";
+"harness.publish.step.done %@" = "पूर्ण — worktree %@ पर तैयार है।";
+"harness.publish.warning %@" = "चेतावनी: %@";
+"harness.publish.deleted %@" = "पुराना पथ हटाया गया: %@";
+"harness.publish.validation.failed" = "worktree में मान्यता विफल रही — कुछ भी commit नहीं किया गया। worktree निरीक्षण के लिए सुरक्षित है।";
+"harness.publish.register.failed" = "रिपॉज़िटरी की पंजीकरण स्क्रिप्ट विफल रही — worktree निरीक्षण के लिए सुरक्षित है।";
+"harness.publish.references.missing %@" = "manifest द्वारा संदर्भित फ़ाइलें कॉपी के बाद गायब हैं: %@";
+"harness.publish.error.occupied %@" = "गंतव्य में पहले से एक harness है: %@";
+"harness.publish.error.invaliddest %@" = "गंतव्य worktree की सीमाओं से बाहर है: %@";
+"harness.publish.error.copy %@" = "कॉपी विफल: %@";
+"harness.publish.error.rename %@" = "manifest नाम पुनः नहीं लिखा जा सका: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "\"%@\" अपडेट करें";
@@ -1265,5 +1347,111 @@
 "remote.prs.worktree.exists" = "Worktree पहले से मौजूद है";
 "settings.github.feed.cap.help" = "Remote साइडबार में प्रति रिपॉजिटरी अधिकतम pull request दिखाए जाते हैं। चेकआउट किए गए PR हमेशा शामिल होते हैं।";
 "settings.github.feed.cap.label" = "PR प्रति रिपॉजिटरी";
-"settings.github.section.feed" = "Remote PR फ़ीड";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "साइडबार में स्टैक की गई शाखाओं और स्टैक किए गए PR को सक्षम करता है।";
+"settings.gitspice.version" = "संस्करण:";
+"settings.gitspice.path" = "पथ:";
+"settings.gitspice.info" = "साइडबार में स्टैक शाखा सुविधाएँ एक काम कर रहे git-spice इंस्टॉलेशन पर निर्भर करती हैं। यह gh CLI के प्रमाणीकरण का पुन: उपयोग करता है।";
+"settings.gitspice.not.installed.description" = "git-spice स्टैक की गई शाखाओं और स्टैक किए गए PR को सक्षम करता है। इसके बिना, TermQ केवल सामान्य worktrees दिखाता है।";
+"settings.gitspice.install.hint" = "Homebrew का उपयोग करके इंस्टॉल करें:";
+"settings.gitspice.check.again" = "फिर से जाँचें";
+"settings.gitspice.status.unusable %@" = "पता चला लेकिन उपयोग करने योग्य नहीं: %@";
+"stacks.enable" = "स्टैकिंग सक्षम करें…";
+"stacks.enable.help" = "git-spice के साथ इस रिपॉजिटरी की शाखाओं को एक स्टैक के रूप में ट्रैक करें";
+"stacks.enable.failed %@" = "स्टैकिंग सक्षम नहीं की जा सकी: %@";
+"stacks.needs.restack" = "restack आवश्यक";
+"stacks.open.change.request" = "परिवर्तन अनुरोध खोलें";
+"stacks.unpushed.commits %ld" = "↑%ld पुश नहीं किए गए";
+"stacks.change.request.merged" = "मर्ज किया गया";
+"stacks.change.request.closed" = "बंद";
+"stacks.no.change.request" = "कोई PR नहीं";
+"stacks.disclosure.help" = "स्टैक शाखाएं दिखाएं";
+"stacks.switch.blocked.dirty" = "स्टैक शाखा नहीं बदली जा सकती: worktree में असंबद्ध (uncommitted) परिवर्तन हैं। पहले commit या stash करें।";
+"stacks.switch.blocked.in.use" = "स्टैक शाखा नहीं बदली जा सकती: इस worktree में एक टर्मिनल खुला है। पहले इसे बंद करें।";
+"stacks.switch.blocked.elsewhere %@" = "स्टैक शाखा नहीं बदली जा सकती: यह किसी अन्य worktree (%@) में चेक आउट है।";
+"stacks.switch.help" = "इस worktree को शाखा में बदलने के लिए डबल-क्लिक करें";
+"stacks.switch.to %@" = "%@ पर स्विच करें";
+"stacks.add.branch" = "स्टैक में शाखा जोड़ें…";
+"stacks.add.branch.title" = "स्टैक में शाखा जोड़ें";
+"stacks.add.branch.name.label" = "शाखा का नाम";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "इस पर स्टैक करें";
+"stacks.add.branch.staged.note" = "स्टेज किए गए परिवर्तन नई शाखा का पहला commit बन जाते हैं। साफ़ ट्री के साथ, ऊपर एक खाली शाखा बनाई जाती है।";
+"stacks.add.branch.track.note" = "यह शाखा पहले से मौजूद है — इसके बजाय इसे स्टैक में ट्रैक किया जाएगा।";
+"stacks.add.branch.create" = "बनाएं";
+"stacks.add.branch.track" = "ट्रैक करें";
+"stacks.restack.stack" = "स्टैक को Restack करें";
+"stacks.restack.from.here" = "यहां से Restack करें";
+"stacks.conflict.banner %ld" = "Restack रोका गया — %ld फ़ाइलों में विरोध";
+"stacks.conflict.continue" = "जारी रखें";
+"stacks.conflict.abort" = "रद्द करें";
+"stacks.conflict.hint" = "टर्मिनल में विरोधों को हल करें, फ़ाइलों को stage करें, फिर जारी रखें पर क्लिक करें।";
+"stacks.submit.stack" = "स्टैक सबमिट करें…";
+"stacks.submit.branch" = "इस शाखा को सबमिट करें…";
+"stacks.submit.title" = "स्टैक सबमिट करें";
+"stacks.submit.button" = "सबमिट करें";
+"stacks.submit.draft.toggle" = "नए pull request को ड्राफ्ट के रूप में बनाएं";
+"stacks.submit.update.only.toggle" = "केवल मौजूदा pull request अपडेट करें";
+"stacks.submit.will.create" = "बनाएं";
+"stacks.submit.will.update" = "अपडेट करें";
+"stacks.sync.repo" = "रिपॉजिटरी सिंक करें";
+"stacks.sync.cleaned %ld %@" = "सिंक ने %ld मर्ज की गई शाखाओं को हटाया: %@";
+"stacks.destroy.stack" = "स्टैक नष्ट करें…";
+"stacks.destroy.stack.title" = "स्टैक नष्ट करें?";
+"stacks.destroy.stack.message %ld %@" = "यह git-spice के ज़रिए %ld स्थानीय शाखाओं को स्थायी रूप से हटा देता है: %@। रिमोट शाखाएँ और कोई भी pull request अप्रभावित रहती हैं।";
+"stacks.destroy.stack.open.pr.warning %ld" = "इनमें से %ld शाखाओं में अभी भी एक खुला pull request है।";
+"stacks.destroy.stack.confirm" = "स्टैक नष्ट करें";
+"stacks.destroy.stack.done %ld" = "स्टैक नष्ट हुआ: %ld शाखाएँ हटाई गईं";
+"stacks.destroy.stack.worktree.skipped %@" = "अपरिवर्तित छोड़ा गया (अनकमिटेड परिवर्तन): %@";
+"stacks.base.mismatch %@ %@" = "PR का लक्ष्य %@ है, लेकिन स्टैक का मूल %@ है — रिपॉजिटरी सिंक करें इसे फिर से लक्षित करेगा";
+"stacks.restack.up.to.date" = "स्टैक पहले से अद्यतित है";
+"stacks.restack.done %ld" = "%ld शाखाएं restack की गईं";
+"stacks.sync.clean" = "सब कुछ सिंक है";
+"stacks.submit.done %ld %ld" = "सबमिट किया गया: %ld बनाए गए, %ld अपडेट किए गए";
+"sidebar.worktrees.section.header" = "Worktrees";
+"stacks.break.out" = "Worktree में अलग करें…";
+"stacks.skipped.notice %@" = "restack नहीं किया गया: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (%@ में चेक आउट, असंबद्ध परिवर्तनों के साथ)";
+"stacks.skipped.in.use %@ %@" = "%@ (%@ में चेक आउट, सक्रिय टर्मिनल के साथ)";
+"stacks.copy.branch.name" = "शाखा का नाम कॉपी करें";
+"stacks.reveal.worktree" = "Worktree दिखाएं";
+"stacks.anchored.badge.help %@" = "worktree %@ में एंकर किया गया — दिखाने के लिए क्लिक करें";
+"stacks.part.of.stack %@" = "स्टैक %@ का हिस्सा";
+"stacks.section.header" = "स्टैक्स";
+"stacks.checked.out.at %@" = "%@ में चेक आउट — worktree दिखाने के लिए क्लिक करें";
+"stacks.anchor.help" = "इस स्टैक के लिए एक worktree बनाएं";
+"stacks.group.new.worktree" = "नया Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "नई स्टैक शाखा पहले…";
+"stacks.new.branch.after" = "नई स्टैक शाखा बाद में…";
+"stacks.new.branch.insert.below.note %@" = "नई शाखा स्टैक में %@ के नीचे बनाई जाती है।";
+"stacks.new.branch.insert.above.note %@" = "नई शाखा स्टैक में %@ के ऊपर बनाई जाती है, उसकी जगह लेते हुए — %@ उसके ऊपर चली जाती है।";
+"stacks.main.worktree.not.found" = "रिपॉज़िटरी की मुख्य worktree नहीं मिली।";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "नया स्टैक…";
+"stacks.new.stack.title" = "नया स्टैक";
+"stacks.new.stack.name.label" = "शाखा का नाम";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "आधार ब्रांच";
+"stacks.new.stack.button" = "बनाएं";
+"stacks.new.stack.note" = "आधार से बिना checkout और बिना worktree के शाखा बनाता है — एक-प्रविष्टि वाला स्टैक जिसे आप बाद में शुरू कर सकते हैं।";
+"stacks.start.stack.checkbox" = "इस शाखा के साथ स्टैक शुरू करें";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "डिफ़ॉल्ट से शाखा बनाएं";
+"stacks.new.stack.mode.integration" = "इंटीग्रेशन से शाखा बनाएं";
+"stacks.new.stack.stack.name.label" = "स्टैक का नाम";
+"stacks.new.stack.integration.preview %@" = "%@ बनाता है";
+"stacks.new.stack.first.branch.label" = "पहली स्टैक शाखा (वैकल्पिक)";
+"stacks.new.stack.first.branch.empty.hint" = "खाली छोड़ने पर: केवल खाली इंटीग्रेशन शाखा बनाई जाती है — आप बाद में अपनी पहली स्टैक शाखा उसमें जोड़ सकते हैं।";
+"stacks.new.stack.first.branch.filled.hint" = "यह शाखा इंटीग्रेशन शाखा के ऊपर स्टैक की हुई बनाई जाती है, सीधे आधार शाखा के ऊपर नहीं।";
+"stacks.new.stack.integration.note" = "आधार से एक खाली इंटीग्रेशन शाखा को स्टैक की जड़ के रूप में बनाता है — इसमें कभी अपना कोड नहीं होता। स्टैक शाखाएं आधार के बजाय इसके ऊपर बनती हैं, और उनके pull request इसमें जुड़ते चले जाते हैं। जब सब कुछ इंटीग्रेशन शाखा में मर्ज हो जाता है, तो इसे एक समेकित बदलाव के रूप में आधार में pull request किया जाता है — हर स्टैक शाखा को अलग-अलग आधार में मर्ज करने के बजाय।";
+"stacks.new.stack.name.exists %@" = "%@ पहले से मौजूद है — कोई और नाम चुनें।";
+"settings.gitspice.new.stack.mode" = "नया स्टैक इस रूप में शुरू होता है:";
+"settings.gitspice.new.stack.mode.help" = "नया स्टैक शीट कौन-सा मोड पहले से चुनती है — शीट हमेशा दोनों विकल्प देती है।";
+"settings.gitspice.hide.stacked.worktrees" = "स्टैक शाखाओं वाली worktrees को Worktrees अनुभाग से छिपाएं";
+"settings.gitspice.hide.stacked.worktrees.help" = "जिन worktrees की शाखा किसी ट्रैक किए गए स्टैक से संबंधित है वे पहले से ही स्टैक्स के अंतर्गत सूचीबद्ध हैं — दोहराव से बचने के लिए उन्हें Worktrees अनुभाग से छिपाएं।";

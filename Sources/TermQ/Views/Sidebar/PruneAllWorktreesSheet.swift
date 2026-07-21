@@ -1,11 +1,19 @@
 import SwiftUI
 import TermQCore
+import TermQShared
 
-/// One repository's stale worktree records, for the aggregated prune sheet.
+/// One repository's prunable worktrees, for the aggregated prune sheet: stale
+/// administrative records, closed-PR checkouts, and "Run with Focus" review worktrees.
 struct RepoPruneCandidate: Identifiable {
     let repo: ObservableRepository
     let staleEntries: [String]
+    var closedPRCandidates: [PRPruneCandidate] = []
+    var focusCandidates: [FocusWorktreeCandidate] = []
     var id: ObservableRepository.ID { repo.id }
+
+    var isEmpty: Bool {
+        staleEntries.isEmpty && closedPRCandidates.isEmpty && focusCandidates.isEmpty
+    }
 }
 
 /// Identifiable wrapper so `sheet(item:)` can present the aggregated prune sheet.
@@ -81,6 +89,12 @@ struct PruneAllWorktreesSheet: View {
 
             Divider()
 
+            // Each loop omits the divider after its own last row only when it's also
+            // the last populated group in the section, so the bottom border doesn't
+            // get a trailing divider butted up against it.
+            let staleIsLastGroup = candidate.closedPRCandidates.isEmpty && candidate.focusCandidates.isEmpty
+            let closedIsLastGroup = candidate.focusCandidates.isEmpty
+
             ForEach(candidate.staleEntries, id: \.self) { entry in
                 Text(entry)
                     .font(.caption)
@@ -89,8 +103,21 @@ struct PruneAllWorktreesSheet: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                if !(staleIsLastGroup && entry == candidate.staleEntries.last) {
+                    Divider()
+                }
+            }
 
-                if entry != candidate.staleEntries.last {
+            ForEach(candidate.closedPRCandidates) { pr in
+                closedPRRow(pr)
+                if !(closedIsLastGroup && pr.id == candidate.closedPRCandidates.last?.id) {
+                    Divider()
+                }
+            }
+
+            ForEach(candidate.focusCandidates) { focus in
+                focusRow(focus)
+                if focus.id != candidate.focusCandidates.last?.id {
                     Divider()
                 }
             }
@@ -103,13 +130,55 @@ struct PruneAllWorktreesSheet: View {
         )
     }
 
+    private func closedPRRow(_ candidate: PRPruneCandidate) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: candidate.canPrune ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                .foregroundColor(candidate.canPrune ? .green : .orange)
+                .imageScale(.small)
+            Text("#\(candidate.prNumber)")
+                .font(.caption)
+            Spacer()
+            if !candidate.canPrune {
+                Text(candidate.isDirty ? Strings.RemotePRs.pruneReasonDirty : Strings.RemotePRs.pruneReasonAhead)
+                    .font(.caption2)
+                    .foregroundColor(.orange)
+            }
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+    }
+
+    private func focusRow(_ candidate: FocusWorktreeCandidate) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+                .imageScale(.small)
+            Text(candidate.displayName)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Spacer()
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+    }
+
     private func prune() async {
         isPruning = true
         defer { isPruning = false }
         errorMessage = nil
         do {
             for candidate in candidates {
-                try await viewModel.pruneWorktrees(repo: candidate.repo)
+                if !candidate.staleEntries.isEmpty {
+                    try await viewModel.pruneWorktrees(repo: candidate.repo)
+                }
+                let toPrune = candidate.closedPRCandidates.filter(\.canPrune)
+                if !toPrune.isEmpty {
+                    await viewModel.pruneClosedPRs(repo: candidate.repo, candidates: toPrune)
+                }
+                if !candidate.focusCandidates.isEmpty {
+                    await viewModel.pruneFocusWorktrees(
+                        repo: candidate.repo, paths: candidate.focusCandidates.map(\.path))
+                }
             }
             dismiss()
         } catch {

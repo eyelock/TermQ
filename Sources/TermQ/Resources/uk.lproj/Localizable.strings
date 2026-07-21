@@ -454,6 +454,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Замінити типовий бекенд";
@@ -565,6 +580,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Репозиторії";
+"sidebar.workspace.all" = "Усі репозиторії";
+"sidebar.workspace.menu.help" = "Фільтрувати репозиторії за робочою областю";
+"sidebar.workspace.new" = "Нова робоча область…";
+"sidebar.workspace.new.title" = "Нова робоча область";
+"sidebar.workspace.name.label" = "Назва робочої області";
+"sidebar.workspace.name.placeholder" = "наприклад: Робота, Особисті проекти";
+"sidebar.workspace.create" = "Створити";
+"sidebar.workspace.manage" = "Керування робочими областями…";
+"sidebar.workspace.manage.title" = "Керування робочими областями";
+"sidebar.workspace.manage.empty" = "Ще немає робочих областей. Створіть одну в меню робочої області.";
+"sidebar.workspace.manage.done" = "Готово";
+"sidebar.workspace.add.to" = "Додати до робочої області";
+"sidebar.workspace.delete.title" = "Видалити робочу область?";
+"sidebar.workspace.delete.confirm" = "Видалити";
+"sidebar.workspace.delete.message %@" = "«%@» буде видалено. Репозиторії всередині не видаляються.";
+"sidebar.workspace.empty.message" = "У цьому робочому просторі немає репозиторіїв.\nНатисніть правою кнопкою миші на репозиторій у розділі «Усі репозиторії», щоб додати його сюди.";
 "sidebar.add.button.help" = "Додати репозиторій";
 "sidebar.empty.message" = "Репозиторії не додано.\nНатисніть +, щоб додати git репозиторій.";
 "sidebar.worktrees.placeholder" = "Робочі дерева зʼявляться тут";
@@ -1012,6 +1043,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Форк до локального";
 "harnesses.fork.to.local.help" = "Створити редаговану локальну копію цього harness";
+"harnesses.publish.to.repository" = "Опублікувати в репозиторій…";
 "harnesses.update.dot.help" = "Доступне оновлення";
 "harness.fork.title %@" = "Форк \"%@\" до локального";
 "harness.fork.explanation" = "Створює редаговану локальну копію цього harness. Копія відстежує своє походження, щоб ви могли бачити, що змінилося у джерелі.";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.label" = "Назва (необов'язково)";
 "harness.fork.rename.hint" = "Залиште порожнім, щоб зберегти вихідну назву. Канонічний id нового форку буде local/<назва>.";
 "harness.fork.identity.collision" = "Встановлений харнес вже має цей ідентифікатор.";
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Опублікувати «%@» в репозиторій";
+"harness.publish.explanation" = "Копіює цей harness у новий worktree цільового репозиторію, готовий до commit. Власні угоди репозиторію (скрипти реєстрації, маніфести) подбають про решту.";
+"harness.publish.button" = "Опублікувати";
+"harness.publish.update.button" = "Оновити наявний запис";
+"harness.publish.progress.title %@" = "Публікація «%@»…";
+"harness.publish.repo.label" = "Цільовий репозиторій";
+"harness.publish.repo.placeholder" = "Виберіть репозиторій…";
+"harness.publish.parentdir.label" = "Директорія в репозиторії";
+"harness.publish.parentdir.hint" = "Запропоновано на основі того, де цей репозиторій вже зберігає harnesses. Повністю редагується.";
+"harness.publish.name.label" = "Назва";
+"harness.publish.branch.label" = "Гілка";
+"harness.publish.basebranch.label" = "Базова гілка";
+"harness.publish.worktreepath.label" = "Шлях worktree";
+"harness.publish.files.label" = "Файли для копіювання";
+"harness.publish.changes.label" = "Зміни порівняно з опублікованою копією";
+"harness.publish.mode.label" = "Режим копіювання";
+"harness.publish.mode.entire" = "Вся директорія";
+"harness.publish.mode.enumerated" = "Лише файли harness";
+"harness.publish.mode.enumerated.hint" = "Вихідна директорія також є репозиторієм проекту — копіюються лише файли, якими володіє harness.";
+"harness.publish.state.new" = "Новий запис — цього harness ще немає в репозиторії.";
+"harness.publish.state.update %@" = "Оновлює наявний запис за адресою %@ (перезаписує його).";
+"harness.publish.state.clash %@" = "Ця директорія вже містить інший harness («%@») — виберіть іншу назву.";
+"harness.publish.state.occupied" = "Ця директорія вже існує в репозиторії — виберіть іншу назву або розташування.";
+"harness.publish.state.samerepo" = "Цей harness вже знаходиться у вибраному репозиторії — зробіть commit змін там, а не публікуйте.";
+"harness.publish.reveal.repository" = "Показати в Репозиторіях";
+"harness.publish.preflight.failed" = "Локальний harness не проходить валідацію — виправте його перед публікацією.";
+"harness.publish.composition.unavailable" = "ynd compose не вдалося для цього harness — режим «лише файли harness» потребує цього, щоб знати, які файли є власністю. Виправте harness або перейдіть на «вся директорія».";
+"harness.publish.unresolved %lld" = "%lld вказаних файлів відсутні в джерелі — вони не будуть скопійовані.";
+"harness.publish.register.disclosure %@" = "Після копіювання запустяться %@ репозиторію (скрипт, наданий репозиторієм).";
+"harness.publish.change.added" = "додано";
+"harness.publish.change.modified" = "змінено";
+"harness.publish.change.removed" = "видалено";
+"harness.publish.changes.none" = "Відмінностей немає — опублікована копія збігається з вашими локальними файлами.";
+"harness.publish.step.worktree %@" = "Створення worktree на гілці %@…";
+"harness.publish.step.copy %@" = "Копіювання harness у %@…";
+"harness.publish.step.copied %lld" = "Скопійовано %lld груп файлів.";
+"harness.publish.step.validate" = "Валідація скопійованого harness (ynd validate)…";
+"harness.publish.step.register %@" = "Запуск %@…";
+"harness.publish.step.done %@" = "Готово — worktree готовий за адресою %@.";
+"harness.publish.warning %@" = "Попередження: %@";
+"harness.publish.deleted %@" = "Видалено застарілий шлях: %@";
+"harness.publish.validation.failed" = "Валідація у worktree не вдалася — нічого не було зроблено commit. Worktree збережено для перевірки.";
+"harness.publish.register.failed" = "Скрипт реєстрації репозиторію не вдався — worktree збережено для перевірки.";
+"harness.publish.references.missing %@" = "Файли, на які посилається маніфест, відсутні після копіювання: %@";
+"harness.publish.error.occupied %@" = "Призначення вже містить harness: %@";
+"harness.publish.error.invaliddest %@" = "Призначення виходить за межі worktree: %@";
+"harness.publish.error.copy %@" = "Копіювання не вдалося: %@";
+"harness.publish.error.rename %@" = "Не вдалося переписати назву маніфесту: %@";
+
 
 
 // MARK: - Harness Update
@@ -1266,5 +1348,111 @@
 "remote.prs.worktree.exists" = "Worktree вже існує";
 "settings.github.feed.cap.help" = "Максимальна кількість pull request, що відображаються на репозиторій у бічній панелі Remote. Отримані PR завжди включені.";
 "settings.github.feed.cap.label" = "PR на репозиторій";
-"settings.github.section.feed" = "Стрічка Remote PR";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Забезпечує стек гілок і стек PR у бічній панелі.";
+"settings.gitspice.version" = "Версія:";
+"settings.gitspice.path" = "Шлях:";
+"settings.gitspice.info" = "Функції стеку гілок у бічній панелі залежать від робочого встановлення git-spice. Використовується та сама автентифікація, що й у gh CLI.";
+"settings.gitspice.not.installed.description" = "git-spice вмикає стек гілок і стек PR. Без нього TermQ показує лише звичайні робочі дерева.";
+"settings.gitspice.install.hint" = "Встановіть за допомогою Homebrew:";
+"settings.gitspice.check.again" = "Перевірити знову";
+"settings.gitspice.status.unusable %@" = "Виявлено, але непридатне для використання: %@";
+"stacks.enable" = "Увімкнути стек…";
+"stacks.enable.help" = "Відстежувати гілки цього репозиторію як стек за допомогою git-spice";
+"stacks.enable.failed %@" = "Не вдалося увімкнути стек: %@";
+"stacks.needs.restack" = "Потрібен restack";
+"stacks.open.change.request" = "Відкрити запит на зміну";
+"stacks.unpushed.commits %ld" = "↑%ld не відправлено";
+"stacks.change.request.merged" = "злито";
+"stacks.change.request.closed" = "закрито";
+"stacks.no.change.request" = "немає PR";
+"stacks.disclosure.help" = "Показати гілки стеку";
+"stacks.switch.blocked.dirty" = "Неможливо перемкнути гілку стеку: у робочому дереві є незакомічені зміни. Спочатку закомітьте або збережіть у stash.";
+"stacks.switch.blocked.in.use" = "Неможливо перемкнути гілку стеку: у цьому робочому дереві відкрито термінал. Спочатку закрийте його.";
+"stacks.switch.blocked.elsewhere %@" = "Неможливо перемкнути гілку стеку: вона отримана в іншому робочому дереві (%@).";
+"stacks.switch.help" = "Двічі клацніть, щоб перемкнути це робоче дерево на цю гілку";
+"stacks.switch.to %@" = "Перемкнути на %@";
+"stacks.add.branch" = "Додати гілку до стеку…";
+"stacks.add.branch.title" = "Додати гілку до стеку";
+"stacks.add.branch.name.label" = "Назва гілки";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Розмістити на";
+"stacks.add.branch.staged.note" = "Індексовані зміни стануть першим комітом нової гілки. Якщо дерево чисте, зверху буде створено порожню гілку.";
+"stacks.add.branch.track.note" = "Ця гілка вже існує — натомість вона буде відстежуватися в стеку.";
+"stacks.add.branch.create" = "Створити";
+"stacks.add.branch.track" = "Відстежувати";
+"stacks.restack.stack" = "Restack стеку";
+"stacks.restack.from.here" = "Restack звідси";
+"stacks.conflict.banner %ld" = "Restack призупинено — конфлікти в %ld файлах";
+"stacks.conflict.continue" = "Продовжити";
+"stacks.conflict.abort" = "Перервати";
+"stacks.conflict.hint" = "Вирішіть конфлікти в терміналі, проіндексуйте файли, потім натисніть Продовжити.";
+"stacks.submit.stack" = "Надіслати стек…";
+"stacks.submit.branch" = "Надіслати цю гілку…";
+"stacks.submit.title" = "Надіслати стек";
+"stacks.submit.button" = "Надіслати";
+"stacks.submit.draft.toggle" = "Створювати нові pull request як чернетки";
+"stacks.submit.update.only.toggle" = "Оновлювати лише наявні pull request";
+"stacks.submit.will.create" = "створити";
+"stacks.submit.will.update" = "оновити";
+"stacks.sync.repo" = "Синхронізувати репозиторій";
+"stacks.sync.cleaned %ld %@" = "Синхронізація видалила %ld злитих гілок: %@";
+"stacks.destroy.stack" = "Знищити стек…";
+"stacks.destroy.stack.title" = "Знищити стек?";
+"stacks.destroy.stack.message %ld %@" = "Це остаточно видалить %ld локальних гілок через git-spice: %@. Віддалені гілки та будь-які pull request залишаться недоторканими.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld із цих гілок усе ще мають ВІДКРИТИЙ pull request.";
+"stacks.destroy.stack.confirm" = "Знищити стек";
+"stacks.destroy.stack.done %ld" = "Стек знищено: видалено %ld гілок";
+"stacks.destroy.stack.worktree.skipped %@" = "Залишено без змін (незафіксовані зміни): %@";
+"stacks.base.mismatch %@ %@" = "PR націлений на %@, але батько стеку — %@ — синхронізація репозиторію перенаправить його";
+"stacks.restack.up.to.date" = "Стек уже актуальний";
+"stacks.restack.done %ld" = "Виконано restack %ld гілок";
+"stacks.sync.clean" = "Усе синхронізовано";
+"stacks.submit.done %ld %ld" = "Надіслано: створено %ld, оновлено %ld";
+"sidebar.worktrees.section.header" = "Робочі дерева";
+"stacks.break.out" = "Виділити в робоче дерево…";
+"stacks.skipped.notice %@" = "Restack не виконано: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (отримана в %@ з незакоміченими змінами)";
+"stacks.skipped.in.use %@ %@" = "%@ (отримана в %@ з активним терміналом)";
+"stacks.copy.branch.name" = "Копіювати назву гілки";
+"stacks.reveal.worktree" = "Показати робоче дерево";
+"stacks.anchored.badge.help %@" = "Закріплено в робочому дереві %@ — натисніть, щоб показати";
+"stacks.part.of.stack %@" = "Частина стеку %@";
+"stacks.section.header" = "Стеки";
+"stacks.checked.out.at %@" = "Отримана в %@ — натисніть, щоб показати робоче дерево";
+"stacks.anchor.help" = "Створити робоче дерево для цього стеку";
+"stacks.group.new.worktree" = "Нове робоче дерево…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Нова гілка стеку перед…";
+"stacks.new.branch.after" = "Нова гілка стеку після…";
+"stacks.new.branch.insert.below.note %@" = "Нова гілка створюється нижче %@ у стеку.";
+"stacks.new.branch.insert.above.note %@" = "Нова гілка створюється вище %@ у стеку, займаючи її місце — %@ переміщується над нею.";
+"stacks.main.worktree.not.found" = "Не вдалося знайти основне робоче дерево репозиторію.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Новий стек…";
+"stacks.new.stack.title" = "Новий стек";
+"stacks.new.stack.name.label" = "Назва гілки";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Базова гілка";
+"stacks.new.stack.button" = "Створити";
+"stacks.new.stack.note" = "Створює гілку від базової без checkout і без робочого дерева — стек з одним записом, який можна запустити пізніше.";
+"stacks.start.stack.checkbox" = "Почати стек з цією гілкою";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Відгалузити від типової";
+"stacks.new.stack.mode.integration" = "Відгалузити від інтеграційної";
+"stacks.new.stack.stack.name.label" = "Назва стеку";
+"stacks.new.stack.integration.preview %@" = "Створює %@";
+"stacks.new.stack.first.branch.label" = "Перша гілка стеку (необов'язково)";
+"stacks.new.stack.first.branch.empty.hint" = "Якщо залишити порожнім: створюється лише порожня інтеграційна гілка — першу гілку стеку можна додати пізніше.";
+"stacks.new.stack.first.branch.filled.hint" = "Ця гілка створюється поверх інтеграційної гілки, а не безпосередньо поверх базової.";
+"stacks.new.stack.integration.note" = "Створює порожню інтеграційну гілку від базової як корінь стеку — вона ніколи не містить власного коду. Гілки стеку будуються на ній замість базової, а їхні pull request-и ланцюжком ведуть до неї. Щойно все об'єднано в інтеграційну гілку, вона надсилається як єдиний консолідований pull request до базової — замість злиття кожної гілки стеку окремо в базову.";
+"stacks.new.stack.name.exists %@" = "%@ вже існує — виберіть іншу назву.";
+"settings.gitspice.new.stack.mode" = "Новий стек починається як:";
+"settings.gitspice.new.stack.mode.help" = "Який режим аркуш Новий стек обирає заздалегідь — аркуш завжди пропонує обидва.";
+"settings.gitspice.hide.stacked.worktrees" = "Приховати гілки стеку з розділу Робочі дерева";
+"settings.gitspice.hide.stacked.worktrees.help" = "Робочі дерева, гілка яких належить до відстежуваного стеку, вже показані в розділі Стеки — приховайте їх у розділі Робочі дерева, щоб уникнути дублювання.";

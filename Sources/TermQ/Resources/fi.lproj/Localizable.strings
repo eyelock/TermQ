@@ -453,6 +453,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Ohita oletustaustaohjelma";
@@ -563,6 +578,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Tietovarastot";
+"sidebar.workspace.all" = "Kaikki tietovarastot";
+"sidebar.workspace.menu.help" = "Suodata tietovarastoja työtilan mukaan";
+"sidebar.workspace.new" = "Uusi työtila…";
+"sidebar.workspace.new.title" = "Uusi työtila";
+"sidebar.workspace.name.label" = "Työtilan nimi";
+"sidebar.workspace.name.placeholder" = "esim. Työ, Sivuprojektit";
+"sidebar.workspace.create" = "Luo";
+"sidebar.workspace.manage" = "Hallitse työtiloja…";
+"sidebar.workspace.manage.title" = "Hallitse työtiloja";
+"sidebar.workspace.manage.empty" = "Ei vielä työtiloja. Luo työtila työtilavalikosta.";
+"sidebar.workspace.manage.done" = "Valmis";
+"sidebar.workspace.add.to" = "Lisää työtilaan";
+"sidebar.workspace.delete.title" = "Poistetaanko työtila?";
+"sidebar.workspace.delete.confirm" = "Poista";
+"sidebar.workspace.delete.message %@" = "“%@” poistetaan. Sen sisältämiä tietovarastoja ei poisteta.";
+"sidebar.workspace.empty.message" = "Tässä työtilassa ei ole tietovarastoja.\nLisää tietovarasto napsauttamalla sitä hiiren kakkospainikkeella kohdassa “Kaikki tietovarastot”.";
 "sidebar.add.button.help" = "Lisää tietovarasto";
 "sidebar.empty.message" = "Ei tietovarastoja lisätty.\nNapsauta + lisätäksesi git-tietovaraston.";
 "sidebar.worktrees.placeholder" = "Työskentelypuut näkyvät tässä";
@@ -1011,6 +1042,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Haaruta paikalliseksi";
 "harnesses.fork.to.local.help" = "Luo muokattava paikallinen kopio tästä harness-ohjelmasta";
+"harnesses.publish.to.repository" = "Julkaise tietovarastoon…";
 "harnesses.update.dot.help" = "Päivitys saatavilla";
 "harness.fork.title %@" = "Haaruta \"%@\" paikalliseksi";
 "harness.fork.explanation" = "Luo muokattavan paikallisen kopion tästä harness-ohjelmasta. Kopio seuraa alkuperäänsä, joten näet mitä ylävirrassa on muuttunut.";
@@ -1020,6 +1052,56 @@
 "harness.fork.rename.hint" = "Jätä tyhjäksi säilyttääksesi lähteen nimen. Uuden forkin kanoninen id on local/<nimi>.";
 "harness.fork.identity.collision" = "Asennetulla harnessilla on jo tämä identiteetti.";
 
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Julkaise \"%@\" tietovarastoon";
+"harness.publish.explanation" = "Kopioi tämän harnessn uuteen työskentelypuuhun kohde-tietovarastossa, valmiina commitoitavaksi. Tietovaraston omat käytännöt (rekisteröintiskriptit, manifestit) hoitavat loput.";
+"harness.publish.button" = "Julkaise";
+"harness.publish.update.button" = "Päivitä olemassa oleva merkintä";
+"harness.publish.progress.title %@" = "Julkaistaan \"%@\"…";
+"harness.publish.repo.label" = "Kohdeovarasto";
+"harness.publish.repo.placeholder" = "Valitse tietovarasto…";
+"harness.publish.parentdir.label" = "Hakemisto tietovarastossa";
+"harness.publish.parentdir.hint" = "Ehdotettu sen perusteella, mihin tietovarasto jo tallentaa harnesseja. Täysin muokattavissa.";
+"harness.publish.name.label" = "Nimi";
+"harness.publish.branch.label" = "Haara";
+"harness.publish.basebranch.label" = "Pohjahaara";
+"harness.publish.worktreepath.label" = "Työskentelypuun polku";
+"harness.publish.files.label" = "Kopioitavat tiedostot";
+"harness.publish.changes.label" = "Muutokset vs. julkaistu kopio";
+"harness.publish.mode.label" = "Kopiointitila";
+"harness.publish.mode.entire" = "Koko hakemisto";
+"harness.publish.mode.enumerated" = "Vain harness-tiedostot";
+"harness.publish.mode.enumerated.hint" = "Lähdetiedosto toimii myös projektihakemistona — kopioidaan vain harnessille kuuluvat tiedostot.";
+"harness.publish.state.new" = "Uusi merkintä — tätä harnessia ei vielä ole tietovarastossa.";
+"harness.publish.state.update %@" = "Päivittää olemassa olevan merkinnän kohteessa %@ (ylikirjoittaa sen).";
+"harness.publish.state.clash %@" = "Kyseisessä hakemistossa on jo eri harness (\"%@\") — valitse toinen nimi.";
+"harness.publish.state.occupied" = "Kyseinen hakemisto on jo tietovarastossa — valitse toinen nimi tai sijainti.";
+"harness.publish.state.samerepo" = "Tämä harness on jo valitussa tietovarastossa — commitoi muutokset siellä julkaisemisen sijaan.";
+"harness.publish.reveal.repository" = "Näytä Tietovarastoissa";
+"harness.publish.preflight.failed" = "Paikallinen harness ei läpäise validointia — korjaa se ennen julkaisemista.";
+"harness.publish.composition.unavailable" = "ynd compose epäonnistui tälle harnessille — \"vain harness-tiedostot\" -tila tarvitsee sen tietääkseen, mitkä tiedostot kuuluvat harnessille. Korjaa harness tai vaihda \"koko hakemisto\" -tilaan.";
+"harness.publish.unresolved %lld" = "%lld viitattu tiedosto puuttuu lähteestä — niitä ei kopioida.";
+"harness.publish.register.disclosure %@" = "Kopioinnin jälkeen tietovaraston %@ suoritetaan (tietovaraston tarjoama skripti).";
+"harness.publish.change.added" = "lisätty";
+"harness.publish.change.modified" = "muokattu";
+"harness.publish.change.removed" = "poistettu";
+"harness.publish.changes.none" = "Ei eroja — julkaistu kopio vastaa paikallisia tiedostoja.";
+"harness.publish.step.worktree %@" = "Luodaan työskentelypuu haaralle %@…";
+"harness.publish.step.copy %@" = "Kopioidaan harness kohteeseen %@…";
+"harness.publish.step.copied %lld" = "Kopioitu %lld tiedostoryhmä(ä).";
+"harness.publish.step.validate" = "Validoidaan kopioitu harness (ynd validate)…";
+"harness.publish.step.register %@" = "Suoritetaan %@…";
+"harness.publish.step.done %@" = "Valmis — työskentelypuu valmiina kohteessa %@.";
+"harness.publish.warning %@" = "Varoitus: %@";
+"harness.publish.deleted %@" = "Poistettu vanhentunut polku: %@";
+"harness.publish.validation.failed" = "Validointi epäonnistui työskentelypuussa — mitään ei commitoitu. Työskentelypuu säilytetään tarkastelua varten.";
+"harness.publish.register.failed" = "Tietovaraston rekisteröintiskripti epäonnistui — työskentelypuu säilytetään tarkastelua varten.";
+"harness.publish.references.missing %@" = "Manifestissa viitatut tiedostot puuttuvat kopioinnin jälkeen: %@";
+"harness.publish.error.occupied %@" = "Kohde sisältää jo harnessn: %@";
+"harness.publish.error.invaliddest %@" = "Kohde on työskentelypuun ulkopuolella: %@";
+"harness.publish.error.copy %@" = "Kopiointi epäonnistui: %@";
+"harness.publish.error.rename %@" = "Manifesti-nimeä ei voitu kirjoittaa uudelleen: %@";
 
 // MARK: - Harness Update
 "harness.update.title %@" = "Päivitä \"%@\"";
@@ -1265,5 +1347,111 @@
 "remote.prs.worktree.exists" = "Worktree on jo olemassa";
 "settings.github.feed.cap.help" = "Enimmäismäärä pull requesteja per tietovarasto Remote-sivupalkissa. Kaivetut PR:t sisällytetään aina.";
 "settings.github.feed.cap.label" = "PR:iä per tietovarasto";
-"settings.github.section.feed" = "Etä-PR-syöte";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Mahdollistaa pinotut haarat ja pinotut PR:t sivupalkissa.";
+"settings.gitspice.version" = "Versio:";
+"settings.gitspice.path" = "Polku:";
+"settings.gitspice.info" = "Pinottujen haarojen ominaisuudet sivupalkissa vaativat toimivan git-spice-asennuksen. Se käyttää gh CLI:n todennusta uudelleen.";
+"settings.gitspice.not.installed.description" = "git-spice mahdollistaa pinotut haarat ja pinotut PR:t. Ilman sitä TermQ näyttää vain tavalliset worktreet.";
+"settings.gitspice.install.hint" = "Asenna Homebrew'lla:";
+"settings.gitspice.check.again" = "Tarkista uudelleen";
+"settings.gitspice.status.unusable %@" = "Havaittu, mutta käyttökelvoton: %@";
+"stacks.enable" = "Ota pinoaminen käyttöön…";
+"stacks.enable.help" = "Seuraa tämän repositorion haaroja Stackina git-spicellä";
+"stacks.enable.failed %@" = "Pinoamisen käyttöönotto epäonnistui: %@";
+"stacks.needs.restack" = "Vaatii restackin";
+"stacks.open.change.request" = "Avaa muutospyyntö";
+"stacks.unpushed.commits %ld" = "↑%ld pushaamatta";
+"stacks.change.request.merged" = "yhdistetty";
+"stacks.change.request.closed" = "suljettu";
+"stacks.no.change.request" = "ei PR:ää";
+"stacks.disclosure.help" = "Näytä Stackin haarat";
+"stacks.switch.blocked.dirty" = "Stack-haaraa ei voi vaihtaa: worktreessä on committoimattomia muutoksia. Committoi tai stashaa ensin.";
+"stacks.switch.blocked.in.use" = "Stack-haaraa ei voi vaihtaa: tässä worktreessä on avoin terminaali. Sulje se ensin.";
+"stacks.switch.blocked.elsewhere %@" = "Stack-haaraa ei voi vaihtaa: se on otettu käyttöön toisessa worktreessä (%@).";
+"stacks.switch.help" = "Kaksoisnapsauta vaihtaaksesi tämän worktreen haaraan";
+"stacks.switch.to %@" = "Vaihda haaraan %@";
+"stacks.add.branch" = "Lisää haara Stackiin…";
+"stacks.add.branch.title" = "Lisää Haara Stackiin";
+"stacks.add.branch.name.label" = "Haaran nimi";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Pinoa kohteeseen";
+"stacks.add.branch.staged.note" = "Stagetut muutokset tulevat uuden haaran ensimmäiseksi commitiksi. Puhtaalla puulla luodaan tyhjä haara päälle.";
+"stacks.add.branch.track.note" = "Tämä haara on jo olemassa — se seurataan sen sijaan Stackissa.";
+"stacks.add.branch.create" = "Luo";
+"stacks.add.branch.track" = "Seuraa";
+"stacks.restack.stack" = "Restack Stack";
+"stacks.restack.from.here" = "Restack Tästä Alkaen";
+"stacks.conflict.banner %ld" = "Restack keskeytetty — ristiriitoja %ld tiedostossa";
+"stacks.conflict.continue" = "Jatka";
+"stacks.conflict.abort" = "Keskeytä";
+"stacks.conflict.hint" = "Ratkaise ristiriidat terminaalissa, stagea tiedostot ja paina sitten Jatka.";
+"stacks.submit.stack" = "Lähetä Stack…";
+"stacks.submit.branch" = "Lähetä Tämä Haara…";
+"stacks.submit.title" = "Lähetä Stack";
+"stacks.submit.button" = "Lähetä";
+"stacks.submit.draft.toggle" = "Luo uudet pull requestit luonnoksina";
+"stacks.submit.update.only.toggle" = "Päivitä vain olemassa olevat pull requestit";
+"stacks.submit.will.create" = "luoda";
+"stacks.submit.will.update" = "päivittää";
+"stacks.sync.repo" = "Synkronoi Repo";
+"stacks.sync.cleaned %ld %@" = "Synkronointi poisti %ld yhdistettyä haaraa: %@";
+"stacks.destroy.stack" = "Tuhoa Pino…";
+"stacks.destroy.stack.title" = "Tuhotaanko pino?";
+"stacks.destroy.stack.message %ld %@" = "Tämä poistaa pysyvästi %ld paikallista haaraa git-spicen kautta: %@. Etähaarat ja mahdolliset pull requestit jäävät koskemattomiksi.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld näistä haaroista on yhä AVOIN pull request.";
+"stacks.destroy.stack.confirm" = "Tuhoa Pino";
+"stacks.destroy.stack.done %ld" = "Pino tuhottu: %ld haaraa poistettu";
+"stacks.destroy.stack.worktree.skipped %@" = "Jätetty koskemattomaksi (kommitoimattomat muutokset): %@";
+"stacks.base.mismatch %@ %@" = "PR kohdistuu haaraan %@, mutta Stackin parent on %@ — Synkronoi Repo kohdistaa sen uudelleen";
+"stacks.restack.up.to.date" = "Stack on jo ajan tasalla";
+"stacks.restack.done %ld" = "%ld haaraa restackattu";
+"stacks.sync.clean" = "Kaikki synkronoitu";
+"stacks.submit.done %ld %ld" = "Lähetetty: %ld luotu, %ld päivitetty";
+"sidebar.worktrees.section.header" = "Worktreet";
+"stacks.break.out" = "Erota worktreeksi…";
+"stacks.skipped.notice %@" = "Ei restackattu: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (käytössä worktreessä %@ committoimattomilla muutoksilla)";
+"stacks.skipped.in.use %@ %@" = "%@ (käytössä worktreessä %@ aktiivisella terminaalilla)";
+"stacks.copy.branch.name" = "Kopioi Haaran Nimi";
+"stacks.reveal.worktree" = "Näytä Worktree";
+"stacks.anchored.badge.help %@" = "Ankkuroitu worktreehen %@ — napsauta näyttääksesi sen";
+"stacks.part.of.stack %@" = "Osa Stackia %@";
+"stacks.section.header" = "Stackit";
+"stacks.checked.out.at %@" = "Käytössä worktreessä %@ — napsauta näyttääksesi worktreen";
+"stacks.anchor.help" = "Luo worktree tälle Stackille";
+"stacks.group.new.worktree" = "Uusi Worktree…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Uusi Stack-haara Ennen…";
+"stacks.new.branch.after" = "Uusi Stack-haara Jälkeen…";
+"stacks.new.branch.insert.below.note %@" = "Uusi haara luodaan kohteen %@ alapuolelle stackissa.";
+"stacks.new.branch.insert.above.note %@" = "Uusi haara luodaan kohteen %@ yläpuolelle stackissa ja ottaa sen paikan — %@ siirtyy sen päälle.";
+"stacks.main.worktree.not.found" = "Repositorion pää-worktreetä ei löytynyt.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Uusi Stack…";
+"stacks.new.stack.title" = "Uusi Stack";
+"stacks.new.stack.name.label" = "Haaran nimi";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Pohjahaara";
+"stacks.new.stack.button" = "Luo";
+"stacks.new.stack.note" = "Luo haaran pohjasta ilman checkoutia ja ilman worktreetä — yhden kohteen stack, jonka voit käynnistää myöhemmin.";
+"stacks.start.stack.checkbox" = "Aloita stack tällä haaralla";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Haaroita oletuksesta";
+"stacks.new.stack.mode.integration" = "Haaroita integraatiosta";
+"stacks.new.stack.stack.name.label" = "Stackin nimi";
+"stacks.new.stack.integration.preview %@" = "Luo %@";
+"stacks.new.stack.first.branch.label" = "Ensimmäinen Stack-haara (valinnainen)";
+"stacks.new.stack.first.branch.empty.hint" = "Tyhjäksi jätettynä: luodaan vain tyhjä integraatiohaara — voit lisätä ensimmäisen stack-haaran siihen myöhemmin.";
+"stacks.new.stack.first.branch.filled.hint" = "Tämä haara luodaan pinottuna integraatiohaaran päälle, ei suoraan pohjahaaran päälle.";
+"stacks.new.stack.integration.note" = "Luo tyhjän integraatiohaaran pohjasta stackin juureksi — se ei koskaan sisällä omaa koodia. Stack-haarat rakentuvat sen päälle pohjahaaran sijaan, ja niiden pull requestit ketjuuntuvat siihen. Kun kaikki on yhdistetty integraatiohaaraan, se viedään pull requestina pohjaan yhtenä koottuna muutoksena — sen sijaan että jokainen stack-haara yhdistettäisiin pohjaan erikseen.";
+"stacks.new.stack.name.exists %@" = "%@ on jo olemassa — valitse toinen nimi.";
+"settings.gitspice.new.stack.mode" = "Uusi Stack alkaa muodossa:";
+"settings.gitspice.new.stack.mode.help" = "Kumman tilan Uusi Stack -lomake esivalitsee — lomake tarjoaa aina molemmat.";
+"settings.gitspice.hide.stacked.worktrees" = "Piilota pinotut worktreet Worktreet-osiosta";
+"settings.gitspice.hide.stacked.worktrees.help" = "Worktreet, joiden haara kuuluu seurattuun stackiin, näkyvät jo Stackit-osiossa — piilota ne Worktreet-osiosta, ettei sama asia näy kahdesti.";

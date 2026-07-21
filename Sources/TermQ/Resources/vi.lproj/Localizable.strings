@@ -454,6 +454,21 @@
 "settings.tmux.enable.button" = "Enable tmux";
 "settings.tmux.auto.reattach" = "Auto-reattach Sessions";
 "settings.tmux.auto.reattach.help" = "Automatically reconnect to tmux sessions when TermQ launches";
+// Settings - Tools - GitHub CLI (gh) section
+"settings.section.gh" = "GitHub CLI";
+"settings.gh.title" = "gh";
+"settings.gh.description" = "GitHub CLI — powers Remote PR browsing, reviews, and repository actions.";
+"settings.gh.version" = "Version:";
+"settings.gh.path" = "Path:";
+"settings.gh.info" = "Remote PR features in the sidebar depend on a working, authenticated gh installation.";
+"settings.gh.not.installed.description" = "gh enables Remote PR browsing and review features. Without it, TermQ shows only local repositories.";
+"settings.gh.install.hint" = "Install using Homebrew:";
+"settings.gh.check.again" = "Check Again";
+"settings.gh.status.unauthenticated" = "Not authenticated";
+"settings.gh.status.auth.check.failed" = "Couldn't verify authentication";
+"settings.gh.status.signed.in.as %@" = "Signed in as %@";
+"settings.gh.auth.hint" = "Run `gh auth login` in a terminal to sign in.";
+
 "editor.section.backend" = "Session Backend";
 "editor.field.backend" = "Backend";
 "editor.field.backend.override" = "Ghi đè backend mặc định";
@@ -565,6 +580,22 @@
 
 // MARK: - Sidebar
 "sidebar.title" = "Kho lưu trữ";
+"sidebar.workspace.all" = "Tất cả kho lưu trữ";
+"sidebar.workspace.menu.help" = "Lọc kho lưu trữ theo không gian làm việc";
+"sidebar.workspace.new" = "Không gian làm việc mới…";
+"sidebar.workspace.new.title" = "Không gian làm việc mới";
+"sidebar.workspace.name.label" = "Tên không gian làm việc";
+"sidebar.workspace.name.placeholder" = "ví dụ: Công việc, Dự án cá nhân";
+"sidebar.workspace.create" = "Tạo";
+"sidebar.workspace.manage" = "Quản lý không gian làm việc…";
+"sidebar.workspace.manage.title" = "Quản lý không gian làm việc";
+"sidebar.workspace.manage.empty" = "Chưa có không gian làm việc nào. Tạo một không gian từ menu không gian làm việc.";
+"sidebar.workspace.manage.done" = "Xong";
+"sidebar.workspace.add.to" = "Thêm vào không gian làm việc";
+"sidebar.workspace.delete.title" = "Xóa không gian làm việc?";
+"sidebar.workspace.delete.confirm" = "Xóa";
+"sidebar.workspace.delete.message %@" = "“%@” sẽ bị xóa. Các kho lưu trữ trong đó sẽ không bị xóa.";
+"sidebar.workspace.empty.message" = "Không có kho lưu trữ nào trong không gian làm việc này.\nNhấp chuột phải vào một kho lưu trữ trong “Tất cả kho lưu trữ” để thêm vào đây.";
 "sidebar.add.button.help" = "Thêm kho lưu trữ";
 "sidebar.empty.message" = "Chưa có kho lưu trữ nào.\nNhấn + để thêm git repository.";
 "sidebar.worktrees.placeholder" = "Worktrees sẽ xuất hiện ở đây";
@@ -1012,6 +1043,7 @@
 // MARK: - Harness Fork (added sync)
 "harnesses.fork.to.local" = "Fork về máy cục bộ";
 "harnesses.fork.to.local.help" = "Tạo bản sao cục bộ có thể chỉnh sửa của harness này";
+"harnesses.publish.to.repository" = "Xuất bản lên Kho Lưu Trữ…";
 "harnesses.update.dot.help" = "Có bản cập nhật";
 "harness.fork.title %@" = "Fork \"%@\" về cục bộ";
 "harness.fork.explanation" = "Tạo bản sao cục bộ có thể chỉnh sửa của harness này. Bản sao theo dõi nguồn gốc để bạn có thể xem những thay đổi ở upstream.";
@@ -1020,6 +1052,57 @@
 "harness.fork.rename.label" = "Tên (không bắt buộc)";
 "harness.fork.rename.hint" = "Để trống để giữ nguyên tên nguồn. Id chính thức của fork mới sẽ là local/<tên>.";
 "harness.fork.identity.collision" = "Đã có một harness được cài đặt với danh tính này.";
+
+
+// MARK: - Harness Publish
+"harness.publish.title %@" = "Xuất bản \"%@\" lên Kho Lưu Trữ";
+"harness.publish.explanation" = "Sao chép harness này vào một worktree mới của kho lưu trữ đích, sẵn sàng để commit. Các quy ước riêng của kho lưu trữ (script đăng ký, manifest) sẽ xử lý phần còn lại.";
+"harness.publish.button" = "Xuất bản";
+"harness.publish.update.button" = "Cập nhật Mục Đã Có";
+"harness.publish.progress.title %@" = "Đang xuất bản \"%@\"…";
+"harness.publish.repo.label" = "Kho Lưu Trữ Đích";
+"harness.publish.repo.placeholder" = "Chọn một kho lưu trữ…";
+"harness.publish.parentdir.label" = "Thư Mục trong Kho Lưu Trữ";
+"harness.publish.parentdir.hint" = "Đề xuất dựa trên vị trí kho lưu trữ đã lưu harness. Có thể chỉnh sửa tự do.";
+"harness.publish.name.label" = "Tên";
+"harness.publish.branch.label" = "Nhánh";
+"harness.publish.basebranch.label" = "Nhánh Cơ Sở";
+"harness.publish.worktreepath.label" = "Đường Dẫn Worktree";
+"harness.publish.files.label" = "Tệp Sẽ Sao Chép";
+"harness.publish.changes.label" = "Thay Đổi So Với Bản Đã Xuất Bản";
+"harness.publish.mode.label" = "Chế Độ Sao Chép";
+"harness.publish.mode.entire" = "Toàn bộ thư mục";
+"harness.publish.mode.enumerated" = "Chỉ các tệp harness";
+"harness.publish.mode.enumerated.hint" = "Thư mục nguồn đồng thời là kho lưu trữ dự án — chỉ sao chép các tệp thuộc sở hữu của harness.";
+"harness.publish.state.new" = "Mục mới — harness này chưa tồn tại trong kho lưu trữ.";
+"harness.publish.state.update %@" = "Cập nhật mục hiện có tại %@ (ghi đè).";
+"harness.publish.state.clash %@" = "Thư mục đó đã chứa một harness khác (\"%@\") — hãy chọn tên khác.";
+"harness.publish.state.occupied" = "Thư mục đó đã tồn tại trong kho lưu trữ — hãy chọn tên hoặc vị trí khác.";
+"harness.publish.state.samerepo" = "Harness này đã ở trong kho lưu trữ đã chọn — hãy commit thay đổi ở đó thay vì xuất bản.";
+"harness.publish.reveal.repository" = "Hiện trong Kho Lưu Trữ";
+"harness.publish.preflight.failed" = "Harness cục bộ không qua kiểm tra — hãy sửa lỗi trước khi xuất bản.";
+"harness.publish.composition.unavailable" = "ynd compose thất bại với harness này — chế độ \"chỉ các tệp harness\" cần lệnh này để biết tệp nào thuộc sở hữu. Hãy sửa harness hoặc chuyển sang \"toàn bộ thư mục\".";
+"harness.publish.unresolved %lld" = "%lld tệp được tham chiếu bị thiếu trong nguồn — các tệp này sẽ không được sao chép.";
+"harness.publish.register.disclosure %@" = "Sau khi sao chép, %@ của kho lưu trữ sẽ chạy (script do kho cung cấp).";
+"harness.publish.change.added" = "đã thêm";
+"harness.publish.change.modified" = "đã sửa đổi";
+"harness.publish.change.removed" = "đã xóa";
+"harness.publish.changes.none" = "Không có sự khác biệt — bản đã xuất bản khớp với các tệp cục bộ của bạn.";
+"harness.publish.step.worktree %@" = "Đang tạo worktree trên nhánh %@…";
+"harness.publish.step.copy %@" = "Đang sao chép harness vào %@…";
+"harness.publish.step.copied %lld" = "Đã sao chép %lld nhóm tệp.";
+"harness.publish.step.validate" = "Đang xác thực harness đã sao chép (ynd validate)…";
+"harness.publish.step.register %@" = "Đang chạy %@…";
+"harness.publish.step.done %@" = "Hoàn tất — worktree sẵn sàng tại %@.";
+"harness.publish.warning %@" = "Cảnh báo: %@";
+"harness.publish.deleted %@" = "Đã xóa đường dẫn lỗi thời: %@";
+"harness.publish.validation.failed" = "Xác thực thất bại trong worktree — không có gì được commit. Worktree được giữ lại để kiểm tra.";
+"harness.publish.register.failed" = "Script đăng ký của kho lưu trữ thất bại — worktree được giữ lại để kiểm tra.";
+"harness.publish.references.missing %@" = "Các tệp được tham chiếu bởi manifest bị thiếu sau khi sao chép: %@";
+"harness.publish.error.occupied %@" = "Đích đến đã chứa một harness: %@";
+"harness.publish.error.invaliddest %@" = "Đích đến vượt ra ngoài worktree: %@";
+"harness.publish.error.copy %@" = "Sao chép thất bại: %@";
+"harness.publish.error.rename %@" = "Không thể ghi lại tên manifest: %@";
 
 
 // MARK: - Harness Update
@@ -1266,5 +1349,111 @@
 "remote.prs.worktree.exists" = "Worktree đã tồn tại";
 "settings.github.feed.cap.help" = "Số lượng pull request tối đa hiển thị mỗi kho lưu trữ trong thanh bên Remote. PR đã lấy về luôn được bao gồm.";
 "settings.github.feed.cap.label" = "PR mỗi kho lưu trữ";
-"settings.github.section.feed" = "Nguồn cấp Remote PR";
-"settings.tab.github" = "GitHub";
+
+// MARK: - Stacks
+"settings.gitspice.section" = "git-spice";
+"settings.gitspice.title" = "git-spice";
+"settings.gitspice.description" = "Hỗ trợ các nhánh xếp chồng và PR xếp chồng trong thanh bên.";
+"settings.gitspice.version" = "Phiên bản:";
+"settings.gitspice.path" = "Đường dẫn:";
+"settings.gitspice.info" = "Các tính năng nhánh xếp chồng trong thanh bên phụ thuộc vào việc cài đặt git-spice hoạt động tốt. Nó tái sử dụng xác thực của gh CLI.";
+"settings.gitspice.not.installed.description" = "git-spice cho phép nhánh xếp chồng và PR xếp chồng. Nếu không có nó, TermQ chỉ hiển thị các worktree đơn giản.";
+"settings.gitspice.install.hint" = "Cài đặt bằng Homebrew:";
+"settings.gitspice.check.again" = "Kiểm tra lại";
+"settings.gitspice.status.unusable %@" = "Đã phát hiện nhưng không sử dụng được: %@";
+"stacks.enable" = "Bật xếp chồng…";
+"stacks.enable.help" = "Theo dõi các nhánh của kho lưu trữ này như một ngăn xếp bằng git-spice";
+"stacks.enable.failed %@" = "Không thể bật xếp chồng: %@";
+"stacks.needs.restack" = "Cần restack";
+"stacks.open.change.request" = "Mở yêu cầu thay đổi";
+"stacks.unpushed.commits %ld" = "↑%ld chưa push";
+"stacks.change.request.merged" = "đã hợp nhất";
+"stacks.change.request.closed" = "đã đóng";
+"stacks.no.change.request" = "không có PR";
+"stacks.disclosure.help" = "Hiển thị các nhánh của ngăn xếp";
+"stacks.switch.blocked.dirty" = "Không thể chuyển nhánh ngăn xếp: worktree có các thay đổi chưa commit. Hãy commit hoặc stash trước.";
+"stacks.switch.blocked.in.use" = "Không thể chuyển nhánh ngăn xếp: có một terminal đang mở trong worktree này. Hãy đóng nó trước.";
+"stacks.switch.blocked.elsewhere %@" = "Không thể chuyển nhánh ngăn xếp: nó đang được checkout ở một worktree khác (%@).";
+"stacks.switch.help" = "Nhấp đúp để chuyển worktree này sang nhánh";
+"stacks.switch.to %@" = "Chuyển sang %@";
+"stacks.add.branch" = "Thêm nhánh vào ngăn xếp…";
+"stacks.add.branch.title" = "Thêm Nhánh vào Ngăn Xếp";
+"stacks.add.branch.name.label" = "Tên nhánh";
+"stacks.add.branch.name.placeholder" = "feat-next-step";
+"stacks.add.branch.target.label" = "Xếp chồng lên";
+"stacks.add.branch.staged.note" = "Các thay đổi đã stage sẽ trở thành commit đầu tiên của nhánh mới. Với cây sạch, một nhánh trống sẽ được tạo phía trên.";
+"stacks.add.branch.track.note" = "Nhánh này đã tồn tại — thay vào đó nó sẽ được theo dõi trong ngăn xếp.";
+"stacks.add.branch.create" = "Tạo";
+"stacks.add.branch.track" = "Theo dõi";
+"stacks.restack.stack" = "Restack Ngăn Xếp";
+"stacks.restack.from.here" = "Restack Từ Đây";
+"stacks.conflict.banner %ld" = "Restack đã tạm dừng — xung đột trong %ld tệp";
+"stacks.conflict.continue" = "Tiếp tục";
+"stacks.conflict.abort" = "Hủy bỏ";
+"stacks.conflict.hint" = "Giải quyết xung đột trong một terminal, stage các tệp, rồi nhấn Tiếp tục.";
+"stacks.submit.stack" = "Gửi Ngăn Xếp…";
+"stacks.submit.branch" = "Gửi Nhánh Này…";
+"stacks.submit.title" = "Gửi Ngăn Xếp";
+"stacks.submit.button" = "Gửi";
+"stacks.submit.draft.toggle" = "Tạo pull request mới dưới dạng bản nháp";
+"stacks.submit.update.only.toggle" = "Chỉ cập nhật pull request hiện có";
+"stacks.submit.will.create" = "tạo";
+"stacks.submit.will.update" = "cập nhật";
+"stacks.sync.repo" = "Đồng Bộ Kho Lưu Trữ";
+"stacks.sync.cleaned %ld %@" = "Đồng bộ đã xóa %ld nhánh đã hợp nhất: %@";
+"stacks.destroy.stack" = "Hủy Stack…";
+"stacks.destroy.stack.title" = "Hủy stack?";
+"stacks.destroy.stack.message %ld %@" = "Thao tác này sẽ xóa vĩnh viễn %ld nhánh cục bộ thông qua git-spice: %@. Các nhánh từ xa và mọi pull request vẫn được giữ nguyên.";
+"stacks.destroy.stack.open.pr.warning %ld" = "%ld trong số các nhánh này vẫn còn pull request đang MỞ.";
+"stacks.destroy.stack.confirm" = "Hủy Stack";
+"stacks.destroy.stack.done %ld" = "Đã hủy stack: đã xóa %ld nhánh";
+"stacks.destroy.stack.worktree.skipped %@" = "Giữ nguyên (có thay đổi chưa commit): %@";
+"stacks.base.mismatch %@ %@" = "PR nhắm đến %@, nhưng nhánh cha của ngăn xếp là %@ — Đồng Bộ Kho Lưu Trữ sẽ nhắm lại mục tiêu";
+"stacks.restack.up.to.date" = "Ngăn xếp đã cập nhật";
+"stacks.restack.done %ld" = "Đã restack %ld nhánh";
+"stacks.sync.clean" = "Mọi thứ đã đồng bộ";
+"stacks.submit.done %ld %ld" = "Đã gửi: tạo %ld, cập nhật %ld";
+"sidebar.worktrees.section.header" = "Worktree";
+"stacks.break.out" = "Tách ra thành Worktree…";
+"stacks.skipped.notice %@" = "Chưa restack: %@";
+"stacks.skipped.dirty %@ %@" = "%@ (đã checkout ở %@ với các thay đổi chưa commit)";
+"stacks.skipped.in.use %@ %@" = "%@ (đã checkout ở %@ với một terminal đang hoạt động)";
+"stacks.copy.branch.name" = "Sao Chép Tên Nhánh";
+"stacks.reveal.worktree" = "Hiển Thị Worktree";
+"stacks.anchored.badge.help %@" = "Được neo trong worktree %@ — nhấp để hiển thị";
+"stacks.part.of.stack %@" = "Một phần của ngăn xếp %@";
+"stacks.section.header" = "Ngăn Xếp";
+"stacks.checked.out.at %@" = "Đã checkout ở %@ — nhấp để hiển thị worktree";
+"stacks.anchor.help" = "Tạo worktree cho ngăn xếp này";
+"stacks.group.new.worktree" = "Worktree Mới…";
+// Round-3: launch menus
+"stacks.new.branch.before" = "Nhánh Ngăn Xếp Mới Trước…";
+"stacks.new.branch.after" = "Nhánh Ngăn Xếp Mới Sau…";
+"stacks.new.branch.insert.below.note %@" = "Nhánh mới được tạo bên dưới %@ trong ngăn xếp.";
+"stacks.new.branch.insert.above.note %@" = "Nhánh mới được tạo bên trên %@ trong ngăn xếp, chiếm vị trí của nó — %@ sẽ chuyển lên trên nó.";
+"stacks.main.worktree.not.found" = "Không tìm thấy worktree chính của kho lưu trữ.";
+
+// Round-3 addendum: stack creation entry points
+"stacks.new.stack" = "Ngăn Xếp Mới…";
+"stacks.new.stack.title" = "Ngăn Xếp Mới";
+"stacks.new.stack.name.label" = "Tên nhánh";
+"stacks.new.stack.name.placeholder" = "feat-next-step";
+"stacks.new.stack.base.label" = "Nhánh cơ sở";
+"stacks.new.stack.button" = "Tạo";
+"stacks.new.stack.note" = "Tạo nhánh từ nhánh cơ sở mà không checkout và không tạo worktree — một ngăn xếp một mục mà bạn có thể khởi chạy sau.";
+"stacks.start.stack.checkbox" = "Bắt đầu một ngăn xếp với nhánh này";
+
+// Round-3: New Stack modes
+"stacks.new.stack.mode.default" = "Tạo nhánh từ nhánh mặc định";
+"stacks.new.stack.mode.integration" = "Tạo nhánh từ nhánh tích hợp";
+"stacks.new.stack.stack.name.label" = "Tên Ngăn Xếp";
+"stacks.new.stack.integration.preview %@" = "Tạo %@";
+"stacks.new.stack.first.branch.label" = "Nhánh Ngăn Xếp Đầu Tiên (tùy chọn)";
+"stacks.new.stack.first.branch.empty.hint" = "Nếu để trống: chỉ nhánh tích hợp trống được tạo — bạn có thể thêm nhánh ngăn xếp đầu tiên vào đó sau.";
+"stacks.new.stack.first.branch.filled.hint" = "Nhánh này được tạo xếp chồng lên trên nhánh tích hợp, không phải trực tiếp trên nhánh cơ sở.";
+"stacks.new.stack.integration.note" = "Tạo một nhánh tích hợp trống từ nhánh cơ sở làm gốc của ngăn xếp — nhánh này không bao giờ mang mã nguồn riêng. Các nhánh ngăn xếp được xây dựng trên nhánh này thay vì trên nhánh cơ sở, và pull request của chúng nối chuỗi vào đó. Khi mọi thứ đã được hợp nhất vào nhánh tích hợp, nó sẽ được gửi pull request tới nhánh cơ sở như một thay đổi hợp nhất duy nhất — thay vì từng nhánh ngăn xếp được hợp nhất riêng lẻ vào nhánh cơ sở.";
+"stacks.new.stack.name.exists %@" = "%@ đã tồn tại — hãy chọn tên khác.";
+"settings.gitspice.new.stack.mode" = "Ngăn Xếp Mới bắt đầu ở chế độ:";
+"settings.gitspice.new.stack.mode.help" = "Chế độ nào bảng Ngăn Xếp Mới chọn sẵn — bảng luôn cung cấp cả hai.";
+"settings.gitspice.hide.stacked.worktrees" = "Ẩn các worktree xếp chồng khỏi mục Worktree";
+"settings.gitspice.hide.stacked.worktrees.help" = "Các worktree có nhánh thuộc về một ngăn xếp đang theo dõi đã được liệt kê trong Ngăn Xếp — hãy ẩn chúng khỏi mục Worktree để tránh liệt kê trùng lặp.";
