@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "التبديل إلى %@";
 "terminal.tab.help %@ %@" = "%@ في %@";
+"terminal.search.placeholder" = "البحث في الطرفية";
+"terminal.search.previous.help" = "التطابق السابق";
+"terminal.search.next.help" = "التطابق التالي";
+"terminal.search.close.help" = "إغلاق البحث";
 
 // MARK: - Toolbar
 "toolbar.back" = "رجوع";

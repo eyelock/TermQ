@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Cambiar a %@";
 "terminal.tab.help %@ %@" = "%@ en %@";
+"terminal.search.placeholder" = "Buscar terminal";
+"terminal.search.previous.help" = "Coincidencia anterior";
+"terminal.search.next.help" = "Coincidencia siguiente";
+"terminal.search.close.help" = "Cerrar búsqueda";
 
 // MARK: - Toolbar
 "toolbar.back" = "Atrás";
