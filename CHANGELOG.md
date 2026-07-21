@@ -71,6 +71,24 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
 
+## [0.11.16] - 2026-07-18
+
+### Fixed — Kanban Board
+
+- **Long or numerous tag/badge chips on a card no longer force the card wider than its column, bleeding into neighboring columns and squashing the board layout.** Badge/tag chips used `.fixedSize()`, forcing them to report unbounded ideal width during layout negotiation, fighting the custom FlowLayout's wrapping; FlowLayout's unbounded child measurement also left a single very long unbroken tag/badge value with nothing to truncate against even with `lineLimit` set. Chips no longer use `.fixedSize()`, the card body and FlowLayout containers are bounded to the column's actual width, individual chips are capped at a shared 150pt width with middle truncation, and every text element on a card (and the column header name) now has explicit `lineLimit`/`truncationMode`.
+
+## [0.11.15] - 2026-07-09
+
+### Fixed — Sidebar
+
+- **The Prune Local Branches and Prune Worktrees sheets no longer push their header and footer buttons off-screen when the list is long.** Both sheets rendered their branch/entry list in a bare `VStack` with no height constraint, so with many local branches or stale worktree entries the list grew unbounded and the confirm/cancel buttons became unreachable. Both lists are now wrapped in a scrollable container capped at a fixed height, matching the pattern already used by the sibling Prune All Worktrees and Prune Closed PRs sheets.
+
+## [0.11.14] - 2026-07-03
+
+### Fixed — Harnesses
+
+- **Installing a plugin immediately after creating a harness no longer fails with "not a valid harness id".** The harness creation wizard's success screen passed the raw harness name (e.g. `media-manager`) to the plugin-install flow instead of the canonical harness id (e.g. `local/media-manager`) that `ynh include add` requires, producing a broken command. The wizard now resolves the canonical id from the freshly-refreshed harness list before handing off, matching the pattern already used by the harness detail page's "Configure from Marketplaces" flow.
+
 ## [0.11.13] - 2026-06-24
 
 ### Added — Menus
