@@ -70,6 +70,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@ に切り替え";
 "terminal.tab.help %@ %@" = "%@ - %@";
+"terminal.search.placeholder" = "ターミナルを検索";
+"terminal.search.previous.help" = "前の一致";
+"terminal.search.next.help" = "次の一致";
+"terminal.search.close.help" = "検索を閉じる";
 
 // MARK: - Toolbar
 "toolbar.back" = "戻る";

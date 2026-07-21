@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.17] - 2026-07-21
+
+### Fixed — Terminal
+
+- **Ctrl+F now performs a real terminal buffer search instead of doing nothing.** The search bar reused the Help window's "Search help..." placeholder, and on submit merely filtered buffer lines into a hidden array — nothing was highlighted, scrolled to, or navigable. It now drives SwiftTerm's built-in search engine (ported from the xterm.js search addon): each keystroke selects and scrolls to the first match, a match counter shows current position and total (e.g. "2/14"), and Enter plus the chevron buttons cycle next/previous. New `terminal.search.*` strings are localized across all 40 languages.
+
 ## [0.11.16] - 2026-07-18
 
 ### Fixed — Kanban Board

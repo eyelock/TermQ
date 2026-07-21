@@ -70,6 +70,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Переключиться на %@";
 "terminal.tab.help %@ %@" = "%@ в %@";
+"terminal.search.placeholder" = "Поиск в терминале";
+"terminal.search.previous.help" = "Предыдущее совпадение";
+"terminal.search.next.help" = "Следующее совпадение";
+"terminal.search.close.help" = "Закрыть поиск";
 
 // MARK: - Toolbar
 "toolbar.back" = "Назад";

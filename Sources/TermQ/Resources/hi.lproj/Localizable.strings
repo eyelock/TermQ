@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@ पर स्विच करें";
 "terminal.tab.help %@ %@" = "%@ में %@";
+"terminal.search.placeholder" = "टर्मिनल खोजें";
+"terminal.search.previous.help" = "पिछला मिलान";
+"terminal.search.next.help" = "अगला मिलान";
+"terminal.search.close.help" = "खोज बंद करें";
 
 // MARK: - Toolbar
 "toolbar.back" = "वापस";

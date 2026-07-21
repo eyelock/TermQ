@@ -70,6 +70,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "切換至 %@";
 "terminal.tab.help %@ %@" = "%@ 喺 %@";
+"terminal.search.placeholder" = "搜尋終端機";
+"terminal.search.previous.help" = "上一個相符項目";
+"terminal.search.next.help" = "下一個相符項目";
+"terminal.search.close.help" = "關閉搜尋";
 
 // MARK: - Toolbar
 "toolbar.back" = "返回";

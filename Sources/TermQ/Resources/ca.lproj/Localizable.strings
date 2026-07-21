@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Canviar a %@";
 "terminal.tab.help %@ %@" = "%@ a %@";
+"terminal.search.placeholder" = "Cerca al terminal";
+"terminal.search.previous.help" = "Coincidència anterior";
+"terminal.search.next.help" = "Coincidència següent";
+"terminal.search.close.help" = "Tanca la cerca";
 
 // MARK: - Toolbar
 "toolbar.back" = "Enrere";

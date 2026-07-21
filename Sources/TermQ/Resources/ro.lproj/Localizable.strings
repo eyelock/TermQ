@@ -70,6 +70,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Comutare la %@";
 "terminal.tab.help %@ %@" = "%@ în %@";
+"terminal.search.placeholder" = "Căutare în terminal";
+"terminal.search.previous.help" = "Potrivire anterioară";
+"terminal.search.next.help" = "Potrivire următoare";
+"terminal.search.close.help" = "Închide căutarea";
 
 // MARK: - Toolbar
 "toolbar.back" = "Înapoi";
