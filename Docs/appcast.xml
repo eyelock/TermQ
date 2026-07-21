@@ -6,6 +6,46 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.11.17</title>
+            <sparkle:version>0.11.17</sparkle:version>
+            <sparkle:shortVersionString>0.11.17</sparkle:shortVersionString>
+            <pubDate>Tue, 21 Jul 2026 09:19:44 +0000</pubDate>
+            <description><![CDATA[<h3 id="fixed--terminal">Fixed — Terminal</h3>
+<ul>
+<li><strong>Ctrl+F now performs a real terminal buffer search instead of doing nothing.</strong> The search bar reused the Help window's "Search help..." placeholder, and on submit merely filtered buffer lines into a hidden array — nothing was highlighted, scrolled to, or navigable. It now drives SwiftTerm's built-in search engine (ported from the xterm.js search addon): each keystroke selects and scrolls to the first match, a match counter shows current position and total (e.g. "2/14"), and Enter plus the chevron buttons cycle next/previous. New <code>terminal.search.*</code> strings are localized across all 40 languages.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.17.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.17.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.17/TermQ-0.11.17.zip"
+                sparkle:edSignature="VfxIbZI/bUlpOP0QNCay8W0JGevIpmaE/5g1Wx0X08mrpOP+Qvr3ejezfvpVSz7+rVVBCq49t3QOe6d3ENDlDg=="
+                length="28920746"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.11.16</title>
             <sparkle:version>0.11.16</sparkle:version>
             <sparkle:shortVersionString>0.11.16</sparkle:shortVersionString>
