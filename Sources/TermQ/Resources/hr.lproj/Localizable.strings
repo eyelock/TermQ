@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Prebaci na %@";
 "terminal.tab.help %@ %@" = "%@ u %@";
+"terminal.search.placeholder" = "Pretraži terminal";
+"terminal.search.previous.help" = "Prethodno podudaranje";
+"terminal.search.next.help" = "Sljedeće podudaranje";
+"terminal.search.close.help" = "Zatvori pretragu";
 
 // MARK: - Toolbar
 "toolbar.back" = "Natrag";

@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Εναλλαγή σε %@";
 "terminal.tab.help %@ %@" = "%@ σε %@";
+"terminal.search.placeholder" = "Αναζήτηση τερματικού";
+"terminal.search.previous.help" = "Προηγούμενη αντιστοίχιση";
+"terminal.search.next.help" = "Επόμενη αντιστοίχιση";
+"terminal.search.close.help" = "Κλείσιμο αναζήτησης";
 
 // MARK: - Toolbar
 "toolbar.back" = "Πίσω";

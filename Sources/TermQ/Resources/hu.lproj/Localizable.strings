@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Váltás ide: %@";
 "terminal.tab.help %@ %@" = "%@ itt: %@";
+"terminal.search.placeholder" = "Keresés a terminálban";
+"terminal.search.previous.help" = "Előző találat";
+"terminal.search.next.help" = "Következő találat";
+"terminal.search.close.help" = "Keresés bezárása";
 
 // MARK: - Toolbar
 "toolbar.back" = "Vissza";

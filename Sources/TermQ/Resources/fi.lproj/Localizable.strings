@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Vaihda kohteeseen %@";
 "terminal.tab.help %@ %@" = "%@ kohteessa %@";
+"terminal.search.placeholder" = "Etsi terminaalista";
+"terminal.search.previous.help" = "Edellinen osuma";
+"terminal.search.next.help" = "Seuraava osuma";
+"terminal.search.close.help" = "Sulje haku";
 
 // MARK: - Toolbar
 "toolbar.back" = "Takaisin";

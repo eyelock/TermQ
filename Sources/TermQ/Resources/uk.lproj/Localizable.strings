@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Перейти до %@";
 "terminal.tab.help %@ %@" = "%@ у %@";
+"terminal.search.placeholder" = "Пошук у терміналі";
+"terminal.search.previous.help" = "Попередній збіг";
+"terminal.search.next.help" = "Наступний збіг";
+"terminal.search.close.help" = "Закрити пошук";
 
 // MARK: - Toolbar
 "toolbar.back" = "Назад";

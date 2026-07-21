@@ -603,6 +603,34 @@ class TermQTerminalView: LocalProcessTerminalView {
     }
 }
 
+// MARK: - Buffer Search
+
+/// Thin wrappers over SwiftTerm's search API so SwiftUI views can drive terminal
+/// search without importing SwiftTerm (its `Color` type collides with SwiftUI's).
+extension TermQTerminalView {
+    /// Select and scroll to the next match. Returns `true` if a match was found.
+    @discardableResult
+    func bufferSearchNext(_ term: String) -> Bool {
+        findNext(term)
+    }
+
+    /// Select and scroll to the previous match. Returns `true` if a match was found.
+    @discardableResult
+    func bufferSearchPrevious(_ term: String) -> Bool {
+        findPrevious(term)
+    }
+
+    /// 1-based index of the current match and total match count for `term`.
+    func bufferSearchSummary(_ term: String) -> (index: Int, total: Int) {
+        searchMatchSummary(term)
+    }
+
+    /// Clear search state and the match selection.
+    func bufferSearchClear() {
+        clearSearch()
+    }
+}
+
 /// Full-proxy `TerminalViewDelegate` that intercepts `requestOpenLink` and forwards
 /// every other method to `LocalProcessTerminalView`'s own implementations.
 ///

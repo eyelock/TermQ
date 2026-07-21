@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Chuyển đến %@";
 "terminal.tab.help %@ %@" = "%@ trong %@";
+"terminal.search.placeholder" = "Tìm kiếm trong terminal";
+"terminal.search.previous.help" = "Kết quả trước";
+"terminal.search.next.help" = "Kết quả tiếp theo";
+"terminal.search.close.help" = "Đóng tìm kiếm";
 
 // MARK: - Toolbar
 "toolbar.back" = "Quay lại";

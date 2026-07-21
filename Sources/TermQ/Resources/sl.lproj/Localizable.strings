@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Preklopi na %@";
 "terminal.tab.help %@ %@" = "%@ v %@";
+"terminal.search.placeholder" = "Iskanje po terminalu";
+"terminal.search.previous.help" = "Prejšnje ujemanje";
+"terminal.search.next.help" = "Naslednje ujemanje";
+"terminal.search.close.help" = "Zapri iskanje";
 
 // MARK: - Toolbar
 "toolbar.back" = "Nazaj";
