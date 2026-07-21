@@ -3,7 +3,7 @@
 In this tutorial you'll break a large piece of work into a stack of small, dependent branches — each with its own pull request — and manage the whole stack from the TermQ sidebar: adding branches, switching between them, restacking after changes, submitting PRs, and syncing after merges.
 
 **Time:** about 20 minutes
-**Requires:** TermQ 0.13 or later, [git-spice](https://abhinav.github.io/git-spice/) installed, `gh` CLI authenticated, a GitHub repository registered in the sidebar
+**Requires:** TermQ 0.12 or later, [git-spice](https://abhinav.github.io/git-spice/) installed, `gh` CLI authenticated, a GitHub repository registered in the sidebar
 
 ---
 
@@ -27,7 +27,11 @@ brew install git-spice
 
 Check **Settings → Tools** — the **git-spice** card shows Installed/Missing status, the detected version and path, and a **Check Again** button after you install. git-spice reuses the `gh` CLI's authentication, so if Remote PRs already work, no extra sign-in is needed.
 
+![git-spice status in Settings → Tools](../Images/stacked-prs-settings-tools.png)
+
 Then enable stacking per repository: right-click the repo row in the sidebar and choose **Enable Stacking…**. TermQ runs `gs repo init` against the repo's default branch. Repos without stacking enabled are completely unaffected — the sidebar looks exactly as before.
+
+![Enable Stacking… in the repository context menu](../Images/stacked-prs-enable-stacking-menu.png)
 
 ---
 
@@ -44,9 +48,13 @@ Once a repo is stacked, two things change in the sidebar:
 - **⚠ base mismatch** — the PR targets a different base than the stack expects (happens after a downstack merge; Sync Repo fixes it)
 - **↩ (jump)** — the entry is checked out in a *different* worktree; click to reveal that worktree's row
 
+![Expanded worktree row showing the stack chain](../Images/stacked-prs-worktree-row-expanded.png)
+
 **A STACKS section appears** between the worktree list and LOCAL BRANCHES. It's the inventory: every tracked stack in the repo, whether or not it's anchored to a worktree, grouped under its bottom branch. Entries here are read-only — the worktree row is where actions live — but each entry shows the same badges, and an unanchored stack offers **New Worktree…** to check its bottom branch out and start working. Branches listed in a stack group are removed from LOCAL BRANCHES so each branch appears in exactly one place.
 
 The WORKTREES header itself is collapsible too — if you work exclusively from the Stacks section, fold the worktree list away.
+
+![The STACKS section listing every tracked stack in the repo](../Images/stacked-prs-stacks-section.png)
 
 ---
 
@@ -54,11 +62,15 @@ The WORKTREES header itself is collapsible too — if you work exclusively from 
 
 All of these live in the worktree row's context menu (right-click):
 
+![Stack actions in the worktree row's context menu](../Images/stacked-prs-context-menu.png)
+
 **Add Branch to Stack…** — creates a new branch stacked on top of the current one (or a target you pick) via `gs branch create`. Anything you have *staged* becomes the new branch's first commit; with a clean tree it creates an empty branch ready for work. If you type the name of a branch that already exists, the sheet switches to *tracking* it onto the stack instead.
 
 **Restack Stack** — rebases every branch in the stack onto its updated parent (`gs stack restack`). Use it after amending or adding commits to a branch lower in the stack, so the branches above incorporate the change. When nothing has diverged, restack is a **no-op** — TermQ tells you "Stack already up to date" rather than staying silent. Individual entries also offer **Restack from Here** for just a branch and everything above it.
 
 **Submit Stack** — opens a confirmation sheet listing exactly what will happen per branch: **create** a new PR or **update** the existing one. A Draft toggle opens new PRs as drafts; *update only* skips creating PRs for branches that don't have one yet. Submits are idempotent — running it again is safe. Entries offer **Submit This Branch…** for a single PR.
+
+![Submit Stack confirmation sheet](../Images/stacked-prs-submit-confirmation.png)
 
 **Sync Repo** — the stack-aware refresh (`gs repo sync`): pulls trunk, deletes local branches whose PRs merged, and retargets/restacks the branches above a merged one. Run it after a downstack PR merges. TermQ lists any branches the sync removed ("Sync removed 2 merged branches: …") — and says "Everything in sync" when there was nothing to do. The repo row's ⟳ refresh button also uses sync automatically for stacked repos.
 
@@ -84,6 +96,8 @@ The guard messages tell you which case you hit. The rules exist so a switch is a
 
 Sometimes you genuinely need two branches of the same stack open at once — a harness churning on `api` while you edit `ui`. Right-click any stack entry that isn't checked out anywhere and choose **Break Out into Worktree…**. The branch gets its own worktree and behaves like any other worktree row: its own terminals, its own cards. Stack entries for it everywhere now show the ↩ indicator that jumps to its row.
 
+![Break Out into Worktree… on a stack entry](../Images/stacked-prs-breakout-worktree.png)
+
 One thing changes behind the scenes: git cannot rebase a branch that's checked out in another worktree, so git-spice quietly *skips* such branches during restack and sync — which would leave them stale. TermQ orchestrates around this: after a restack or sync, it finds skipped branches and runs a follow-up restack *inside* each owning worktree, provided that worktree is clean and has no open terminal (the same guards as switching). If a broken-out worktree is dirty or in use, TermQ leaves it alone and tells you — "Not restacked: feat/ui (checked out in … with uncommitted changes)" — and the orange ⟳ badge stays on that entry until you deal with it.
 
 ---
@@ -91,6 +105,8 @@ One thing changes behind the scenes: git cannot rebase a branch that's checked o
 ## When a restack hits conflicts
 
 A restack or sync can stop on a merge conflict, exactly like a manual rebase. TermQ shows a banner on the affected worktree row: **"Restack paused — conflicts in N files"** with **Continue** and **Abort** buttons.
+
+![Restack-paused conflict banner on a worktree row](../Images/stacked-prs-conflict-banner.png)
 
 This is where TermQ's home advantage kicks in: the conflicted worktree's terminal is one click away. Open it, resolve the conflicts, `git add` the files, then click **Continue** (`gs rebase continue`). If you'd rather back out entirely, **Abort** (`gs rebase abort`) restores the pre-restack state. If the follow-up restack of a broken-out worktree is what conflicted, the banner appears on *that* worktree's row.
 

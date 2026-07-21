@@ -13,7 +13,7 @@ The Repositories sidebar has a **Local / Remote** toggle at the top of the repo 
 
 ![Local / Remote toggle](../Images/remote-prs-local-remote-toggle.png)
 
-- **Local** (default) — the standard worktree view you already know from Tutorial 12.
+- **Local** (default) — the standard worktree view you already know from [Git Worktrees](worktree-sidebar.md).
 - **Remote** — each repository expands to show its open pull requests fetched from GitHub.
 
 Click **Remote** to switch. TermQ calls `gh pr list` for every expanded repository in the background. The first fetch for a repo typically takes a second or two; subsequent opens are instant (the feed is cached for 5 minutes).
@@ -235,4 +235,4 @@ TermQ removes each selected worktree using `git worktree remove`. Dirty or ahead
 
 ## Next
 
-[Tutorial 16: Harness Authoring](16-harness-authoring.md) — Write and publish your own harnesses with `ynh` and the TermQ authoring tools.
+[Stacked Branches & PRs](stacked-branches.md) — Break a large piece of work into a stack of small, dependent branches and manage the whole stack from the sidebar.

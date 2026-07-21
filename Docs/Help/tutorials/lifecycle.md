@@ -1,4 +1,4 @@
-# Tutorial 7: Lifecycle
+# Lifecycle
 
 Not all terminals deserve the same treatment. Some you open ten times a day; others you create for a single task and never need again. TermQ has features for both ends of that spectrum — and for everything that happens in between.
 
@@ -76,4 +76,4 @@ The bin retention setting means you have a configurable safety net. Use it.
 
 ## Next
 
-[Tutorial 8: CLI Automation](tutorials/cli.md) — Control your board from the shell with `termqcli`.
+[Git Worktrees](worktree-sidebar.md) — Connect a git repository to TermQ and manage branches from the worktree sidebar.

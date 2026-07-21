@@ -1,4 +1,4 @@
-# Tutorial: MCP resource subscriptions
+# MCP Resource Subscriptions
 
 A long-running assistant connected to `termqmcp` can subscribe to a TermQ resource and react when the user changes the board in the GUI. This is the spec feature that turns MCP from a polling API into an event-driven one.
 
@@ -158,3 +158,7 @@ If all four tests pass, the subscription stack is healthy end-to-end and any com
 - [MCP spec, resources/subscribe](https://modelcontextprotocol.io/specification/2025-11-25/server/resources/#subscriptions)
 - `Sources/MCPServerLib/SubscriptionManager.swift` — the implementation
 - [MCP Reference](../reference/mcp.md) — full tool / resource catalogue
+
+## Next
+
+[Queued Actions](queued-actions.md) — Queue actions that execute automatically when a terminal opens.
