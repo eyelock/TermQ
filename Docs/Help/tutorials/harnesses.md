@@ -167,7 +167,7 @@ Fields:
 - **Focus** — optionally narrow the launch to a specific profile within the harness. Mutually exclusive with Prompt.
 - **Working Directory** — where the vendor client runs. Pre-filled when launched from a worktree context.
 - **Prompt** — optional text sent directly to the client on launch. Mutually exclusive with Focus.
-- **Backend** — direct shell or tmux session (see Tutorial 5).
+- **Backend** — direct shell or tmux session (see [Persistent Sessions](persistent-sessions.md)).
 
 Click **Launch**. TermQ creates a new transient terminal card running `ynh run \<harness\> …` and immediately focuses it.
 

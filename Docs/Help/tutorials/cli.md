@@ -1,4 +1,4 @@
-# Tutorial 8: CLI Automation
+# CLI Automation
 
 Everything you can do in the TermQ UI, you can also do from the shell with `termqcli`. This opens up scripting, shell aliases, and LLM integration — the same board you manage visually, controllable from any terminal.
 
@@ -46,7 +46,7 @@ termqcli list | jq '.[].name'
 termqcli open "Dev Server"
 ```
 
-Opens the terminal in TermQ and returns its full details as JSON — including its LLM context fields (more on those in [Tutorial 9](ai-context.md)).
+Opens the terminal in TermQ and returns its full details as JSON — including its LLM context fields (more on those in [Persistent AI Context](ai-context.md)).
 
 Partial name matching works:
 
@@ -172,4 +172,4 @@ Call it from inside any git repo: `tq-new "Feature Work"`.
 
 ## Next
 
-[Tutorial 9: Persistent AI Context](ai-context.md) — Give your LLM assistant a memory that survives between sessions.
+[Persistent AI Context](ai-context.md) — Give your LLM assistant a memory that survives between sessions.

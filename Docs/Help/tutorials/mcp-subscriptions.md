@@ -1,4 +1,4 @@
-# Tutorial: MCP resource subscriptions
+# MCP Resource Subscriptions
 
 A long-running assistant connected to `termqmcp` can subscribe to a TermQ resource and react when the user changes the board in the GUI. This is the spec feature that turns MCP from a polling API into an event-driven one.
 

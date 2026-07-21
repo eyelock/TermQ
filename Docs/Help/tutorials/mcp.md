@@ -1,4 +1,4 @@
-# Tutorial 10: MCP Integration
+# MCP Integration
 
 The Model Context Protocol (MCP) lets Claude Code interact with your TermQ board directly — not just reading context you paste in, but querying the board, opening terminals, moving cards, and updating fields, all from within a Claude session.
 

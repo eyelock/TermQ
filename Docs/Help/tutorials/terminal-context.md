@@ -1,4 +1,4 @@
-# Tutorial 6: Terminal Context
+# Terminal Context
 
 Each terminal session can carry its own environment — variables that are set before your shell starts, so tools and scripts always find what they need. You can also configure an init command that runs automatically each time the terminal opens.
 
@@ -98,7 +98,7 @@ npm run dev
 
 For tmux terminals, the init command runs each time the session is attached (not each time the underlying process restarts).
 
-> **LLM use:** The init command is also where you place the `{{NEXT_ACTION}}` token for queued actions. See [Tutorial 11](queued-actions.md).
+> **LLM use:** The init command is also where you place the `{{NEXT_ACTION}}` token for queued actions. See [Queued Actions](queued-actions.md).
 
 ---
 
@@ -113,4 +113,4 @@ For tmux terminals, the init command runs each time the session is attached (not
 
 ## Next
 
-[Tutorial 7: Lifecycle](lifecycle.md) — Pinned terminals, the bin, session export, and keeping your board clean.
+[Lifecycle](lifecycle.md) — Pinned terminals, the bin, session export, and keeping your board clean.

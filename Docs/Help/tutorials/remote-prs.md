@@ -13,7 +13,7 @@ The Repositories sidebar has a **Local / Remote** toggle at the top of the repo 
 
 ![Local / Remote toggle](../Images/remote-prs-local-remote-toggle.png)
 
-- **Local** (default) — the standard worktree view you already know from Tutorial 12.
+- **Local** (default) — the standard worktree view you already know from [Git Worktrees](worktree-sidebar.md).
 - **Remote** — each repository expands to show its open pull requests fetched from GitHub.
 
 Click **Remote** to switch. TermQ calls `gh pr list` for every expanded repository in the background. The first fetch for a repo typically takes a second or two; subsequent opens are instant (the feed is cached for 5 minutes).

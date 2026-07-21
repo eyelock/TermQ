@@ -1,4 +1,4 @@
-# Tutorial 7: Lifecycle
+# Lifecycle
 
 Not all terminals deserve the same treatment. Some you open ten times a day; others you create for a single task and never need again. TermQ has features for both ends of that spectrum — and for everything that happens in between.
 
