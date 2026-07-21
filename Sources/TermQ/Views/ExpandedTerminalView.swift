@@ -26,8 +26,8 @@ struct ExpandedTerminalView: View {
     @Binding var isZoomed: Bool
     @Binding var isSearching: Bool
     @State private var searchText = ""
-    @State private var searchResults: [String] = []
-    @State private var currentResultIndex = 0
+    @State private var matchIndex = 0
+    @State private var matchTotal = 0
     @FocusState private var isSearchFieldFocused: Bool
     @State private var showPaneControls = false
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
@@ -158,10 +158,23 @@ struct ExpandedTerminalView: View {
                 terminalExited = false
             }
         }
+        .onChange(of: isSearching) { _, searching in
+            if searching {
+                // Focus search field after a brief delay for animation
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    isSearchFieldFocused = true
+                }
+            } else {
+                searchTerminalView?.bufferSearchClear()
+                searchText = ""
+                matchIndex = 0
+                matchTotal = 0
+                isSearchFieldFocused = false
+            }
+        }
         .onKeyPress(.escape) {
             if isSearching {
-                isSearching = false
-                searchText = ""
+                closeSearch()
                 return .handled
             }
             if isZoomed {
@@ -172,22 +185,6 @@ struct ExpandedTerminalView: View {
         }
     }
 
-    /// Toggle search mode
-    func toggleSearch() {
-        withAnimation(.easeInOut(duration: 0.15)) {
-            isSearching.toggle()
-            if isSearching {
-                // Focus search field after a brief delay for animation
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    isSearchFieldFocused = true
-                }
-            } else {
-                searchText = ""
-                isSearchFieldFocused = false
-            }
-        }
-    }
-
     // MARK: - Search Bar
 
     private var searchBar: some View {
@@ -195,16 +192,20 @@ struct ExpandedTerminalView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.secondary)
 
-            TextField(Strings.Help.searchPlaceholder, text: $searchText)
+            TextField(Strings.Terminal.searchPlaceholder, text: $searchText)
                 .textFieldStyle(.plain)
                 .focused($isSearchFieldFocused)
+                .onChange(of: searchText) { _, _ in
+                    searchTextChanged()
+                }
                 .onSubmit {
-                    performSearch()
+                    nextResult()
                 }
 
             if !searchText.isEmpty {
-                Text("\(searchResults.count)")
+                Text(verbatim: "\(matchIndex)/\(matchTotal)")
                     .font(.caption)
+                    .monospacedDigit()
                     .foregroundColor(.secondary)
 
                 Button {
@@ -213,7 +214,9 @@ struct ExpandedTerminalView: View {
                     Image(systemName: "chevron.up")
                 }
                 .buttonStyle(.plain)
-                .disabled(searchResults.isEmpty)
+                .disabled(matchTotal == 0)
+                .help(Strings.Terminal.searchPreviousHelp)
+                .accessibilityLabel(Strings.Terminal.searchPreviousHelp)
 
                 Button {
                     nextResult()
@@ -221,17 +224,20 @@ struct ExpandedTerminalView: View {
                     Image(systemName: "chevron.down")
                 }
                 .buttonStyle(.plain)
-                .disabled(searchResults.isEmpty)
+                .disabled(matchTotal == 0)
+                .help(Strings.Terminal.searchNextHelp)
+                .accessibilityLabel(Strings.Terminal.searchNextHelp)
             }
 
             Button {
-                isSearching = false
-                searchText = ""
+                closeSearch()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundColor(.secondary)
             }
             .buttonStyle(.plain)
+            .help(Strings.Terminal.searchCloseHelp)
+            .accessibilityLabel(Strings.Terminal.searchCloseHelp)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -364,32 +370,51 @@ struct ExpandedTerminalView: View {
         }
     }
 
-    private func performSearch() {
+    // MARK: - Search
+
+    private var searchTerminalView: TermQTerminalView? {
+        TerminalSessionManager.shared.getTerminalView(for: card.id)
+    }
+
+    /// Incremental search: re-run from the top whenever the term changes so the
+    /// first match is selected and scrolled into view as the user types.
+    private func searchTextChanged() {
+        guard let terminalView = searchTerminalView else { return }
         guard !searchText.isEmpty else {
-            searchResults = []
+            terminalView.bufferSearchClear()
+            matchIndex = 0
+            matchTotal = 0
             return
         }
-
-        // Get the terminal content and search
-        if let terminalView = TerminalSessionManager.shared.getTerminalView(for: card.id) {
-            let terminal = terminalView.getTerminal()
-            let bufferData = terminal.getBufferAsData()
-            if let content = String(data: bufferData, encoding: .utf8) {
-                let lines = content.components(separatedBy: CharacterSet.newlines)
-                searchResults = lines.filter { $0.localizedCaseInsensitiveContains(searchText) }
-                currentResultIndex = 0
-            }
-        }
+        terminalView.bufferSearchClear()
+        terminalView.bufferSearchNext(searchText)
+        updateMatchSummary(terminalView)
     }
 
     private func nextResult() {
-        guard !searchResults.isEmpty else { return }
-        currentResultIndex = (currentResultIndex + 1) % searchResults.count
+        guard let terminalView = searchTerminalView, !searchText.isEmpty else { return }
+        terminalView.bufferSearchNext(searchText)
+        updateMatchSummary(terminalView)
     }
 
     private func previousResult() {
-        guard !searchResults.isEmpty else { return }
-        currentResultIndex = currentResultIndex > 0 ? currentResultIndex - 1 : searchResults.count - 1
+        guard let terminalView = searchTerminalView, !searchText.isEmpty else { return }
+        terminalView.bufferSearchPrevious(searchText)
+        updateMatchSummary(terminalView)
+    }
+
+    private func updateMatchSummary(_ terminalView: TermQTerminalView) {
+        let summary = terminalView.bufferSearchSummary(searchText)
+        matchIndex = summary.index
+        matchTotal = summary.total
+    }
+
+    /// Close the search bar. State cleanup happens in the `onChange(of: isSearching)`
+    /// handler so externally-driven closes (⌘F toggle, back to board) clean up too.
+    private func closeSearch() {
+        withAnimation(.easeInOut(duration: 0.15)) {
+            isSearching = false
+        }
     }
 
     // MARK: - Tab Bar

@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "สลับไปที่ %@";
 "terminal.tab.help %@ %@" = "%@ ใน %@";
+"terminal.search.placeholder" = "ค้นหาเทอร์มินัล";
+"terminal.search.previous.help" = "รายการที่ตรงกันก่อนหน้า";
+"terminal.search.next.help" = "รายการที่ตรงกันถัดไป";
+"terminal.search.close.help" = "ปิดการค้นหา";
 
 // MARK: - Toolbar
 "toolbar.back" = "ย้อนกลับ";

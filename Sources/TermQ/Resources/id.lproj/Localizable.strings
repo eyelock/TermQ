@@ -70,6 +70,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Beralih ke %@";
 "terminal.tab.help %@ %@" = "%@ di %@";
+"terminal.search.placeholder" = "Cari terminal";
+"terminal.search.previous.help" = "Kecocokan sebelumnya";
+"terminal.search.next.help" = "Kecocokan berikutnya";
+"terminal.search.close.help" = "Tutup pencarian";
 
 // MARK: - Toolbar
 "toolbar.back" = "Kembali";

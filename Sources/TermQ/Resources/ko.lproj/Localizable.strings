@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@(으)로 전환";
 "terminal.tab.help %@ %@" = "%@ - %@";
+"terminal.search.placeholder" = "터미널 검색";
+"terminal.search.previous.help" = "이전 일치 항목";
+"terminal.search.next.help" = "다음 일치 항목";
+"terminal.search.close.help" = "검색 닫기";
 
 // MARK: - Toolbar
 "toolbar.back" = "뒤로";

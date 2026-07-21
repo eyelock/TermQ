@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "%@ öğesine geç";
 "terminal.tab.help %@ %@" = "%@ içinde %@";
+"terminal.search.placeholder" = "Terminalde ara";
+"terminal.search.previous.help" = "Önceki eşleşme";
+"terminal.search.next.help" = "Sonraki eşleşme";
+"terminal.search.close.help" = "Aramayı kapat";
 
 // MARK: - Toolbar
 "toolbar.back" = "Geri";

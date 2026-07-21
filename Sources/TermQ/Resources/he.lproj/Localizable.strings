@@ -71,6 +71,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "מעבר אל %@";
 "terminal.tab.help %@ %@" = "%@ ב-%@";
+"terminal.search.placeholder" = "חיפוש במסוף";
+"terminal.search.previous.help" = "התאמה קודמת";
+"terminal.search.next.help" = "התאמה הבאה";
+"terminal.search.close.help" = "סגירת חיפוש";
 
 // MARK: - Toolbar
 "toolbar.back" = "חזרה";

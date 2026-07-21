@@ -70,6 +70,10 @@
 "terminal.new.tab.help" = "New terminal";
 "terminal.switch.to %@" = "Prepnúť na %@";
 "terminal.tab.help %@ %@" = "%@ v %@";
+"terminal.search.placeholder" = "Hľadať v termináli";
+"terminal.search.previous.help" = "Predchádzajúca zhoda";
+"terminal.search.next.help" = "Nasledujúca zhoda";
+"terminal.search.close.help" = "Zavrieť vyhľadávanie";
 
 // MARK: - Toolbar
 "toolbar.back" = "Späť";
