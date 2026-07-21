@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.17] - 2026-07-21
+
+### Fixed — Terminal
+
+- **Ctrl+F now performs a real terminal buffer search instead of doing nothing.** The search bar reused the Help window's "Search help..." placeholder, and on submit merely filtered buffer lines into a hidden array — nothing was highlighted, scrolled to, or navigable. It now drives SwiftTerm's built-in search engine (ported from the xterm.js search addon): each keystroke selects and scrolls to the first match, a match counter shows current position and total (e.g. "2/14"), and Enter plus the chevron buttons cycle next/previous. New `terminal.search.*` strings are localized across all 40 languages.
+
 ### Added — Workspaces
 
 - **Workspaces — group repositories and scope the board to one context at a time.** A workspace is a named filter over your registered repositories: the sidebar repo list narrows to the active workspace, and "All Repositories" shows every repo. The kanban board is scoped to match — each card carries a `workspaceId`, "All" aggregates every card, and a workspace shows only its own (unassigned cards appear only in "All", the same rule the repo list uses for zero-membership repos). Switching workspaces is a pure display re-filter: there is a single `board.json`, no file is swapped, and **no terminal session is ever torn down** — every running terminal (Direct and tmux) keeps its session across switches. A card's workspace is fixed at creation (the then-active workspace, or unassigned in "All"). Agents launched inside a workspace are pinned to it via the `TERMQ_WORKSPACE_ID` environment variable, so the MCP server and `termqcli` stamp new cards into that workspace and filter their reads to it. Columns remain global across workspaces for now; per-workspace columns and card reassignment are deferred follow-ups.
