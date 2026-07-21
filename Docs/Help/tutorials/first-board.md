@@ -1,4 +1,4 @@
-# Tutorial 1: Your First Board
+# Your First Board
 
 In this tutorial you'll create your first terminals, see them on the board, and experience the core TermQ workflow: organize work in columns, drag cards between stages, and always know where things stand.
 
@@ -104,4 +104,4 @@ This is the core workflow: cards move through stages as your work progresses. Wh
 
 ## Next
 
-[Tutorial 2: Richer Cards](richer-cards.md) — Add tags, badges, and working directories to make your cards carry real context.
+[Richer Cards](richer-cards.md) — Add tags, badges, and working directories to make your cards carry real context.

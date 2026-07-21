@@ -1,4 +1,4 @@
-# Tutorial 4: Organise Your Space
+# Organise Your Space
 
 The default column layout is a starting point, not a prescription. In this tutorial you'll customise your columns to match how you actually work, pick a theme you can live with, and set defaults so new terminals behave the way you expect.
 
@@ -57,7 +57,7 @@ In **Settings > General**, you can set two defaults that apply whenever you crea
 
 **Default Working Directory** — If most of your work lives in one directory (e.g. `~/code`), set it here. New terminals open there unless you specify otherwise.
 
-**Default Backend** — Choose between Direct and tmux. If you've set up tmux integration (see [Tutorial 5](persistent-sessions.md)), set the default to tmux so new terminals use it automatically.
+**Default Backend** — Choose between Direct and tmux. If you've set up tmux integration (see [Persistent Sessions](persistent-sessions.md)), set the default to tmux so new terminals use it automatically.
 
 **Scrollback** — Controls how many lines of output TermQ retains in each terminal's scroll history. The default is 5,000 lines. If you run long-lived sessions — AI assistant conversations, build logs, test runs — raise this to 10,000 or more so you can scroll back further. Changes apply to newly created terminals; existing terminals keep the value they were opened with.
 
@@ -95,4 +95,4 @@ Full reference: [Keyboard Shortcuts](../reference/keyboard-shortcuts.md)
 
 ## Next
 
-[Tutorial 5: Persistent Sessions](persistent-sessions.md) — Keep your terminal sessions alive across app restarts with tmux.
+[Persistent Sessions](persistent-sessions.md) — Keep your terminal sessions alive across app restarts with tmux.
