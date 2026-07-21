@@ -76,4 +76,4 @@ The bin retention setting means you have a configurable safety net. Use it.
 
 ## Next
 
-[Tutorial 8: CLI Automation](tutorials/cli.md) — Control your board from the shell with `termqcli`.
+[Git Worktrees](worktree-sidebar.md) — Connect a git repository to TermQ and manage branches from the worktree sidebar.

@@ -158,3 +158,7 @@ If all four tests pass, the subscription stack is healthy end-to-end and any com
 - [MCP spec, resources/subscribe](https://modelcontextprotocol.io/specification/2025-11-25/server/resources/#subscriptions)
 - `Sources/MCPServerLib/SubscriptionManager.swift` — the implementation
 - [MCP Reference](../reference/mcp.md) — full tool / resource catalogue
+
+## Next
+
+[Queued Actions](queued-actions.md) — Queue actions that execute automatically when a terminal opens.

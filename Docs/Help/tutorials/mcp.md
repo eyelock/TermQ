@@ -118,4 +118,4 @@ Claude uses `set` to write those fields. The next session — whether it's you o
 
 ## Next
 
-[Tutorial 11: Queued Actions](tutorials/queued-actions.md) — Queue actions that execute automatically when a terminal opens.
+[MCP Resource Subscriptions](mcp-subscriptions.md) — Have a long-running assistant react when the board changes, instead of polling for it.
