@@ -21,7 +21,8 @@
   - [13. CLI Automation](tutorials/cli.md)
   - [14. Persistent AI Context](tutorials/ai-context.md)
   - [15. MCP Integration](tutorials/mcp.md)
-  - [16. Queued Actions](tutorials/queued-actions.md)
+  - [16. MCP Resource Subscriptions](tutorials/mcp-subscriptions.md)
+  - [17. Queued Actions](tutorials/queued-actions.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)

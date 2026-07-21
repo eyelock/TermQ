@@ -1,6 +1,6 @@
 # Tutorial 11: Queued Actions
 
-In [Tutorial 9](tutorials/ai-context.md) you learned about the **Next Action** field — a queued instruction an AI assistant can set on a terminal for the next session. Queued Actions takes that one step further: instead of waiting for you to open the terminal and manually start an AI session, the action executes automatically the moment the terminal opens.
+In [Tutorial 9](ai-context.md) you learned about the **Next Action** field — a queued instruction an AI assistant can set on a terminal for the next session. Queued Actions takes that one step further: instead of waiting for you to open the terminal and manually start an AI session, the action executes automatically the moment the terminal opens.
 
 This is an opt-in feature that requires two deliberate permissions — both off by default.
 
@@ -176,7 +176,7 @@ If either permission is off when the terminal opens:
 
 You've reached the end of the tutorials. From here:
 
-- **[CLI Reference](reference/cli.md)** — Complete `termqcli` command reference
-- **[MCP Reference](reference/mcp.md)** — All MCP tools, resources, and prompts
-- **[Keyboard Shortcuts](reference/keyboard-shortcuts.md)** — Full shortcut list
-- **[Security](reference/security.md)** — Safe paste, clipboard, queued action permissions, and data security
+- **[CLI Reference](../reference/cli.md)** — Complete `termqcli` command reference
+- **[MCP Reference](../reference/mcp.md)** — All MCP tools, resources, and prompts
+- **[Keyboard Shortcuts](../reference/keyboard-shortcuts.md)** — Full shortcut list
+- **[Security](../reference/security.md)** — Safe paste, clipboard, queued action permissions, and data security

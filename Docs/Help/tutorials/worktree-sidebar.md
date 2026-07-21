@@ -277,4 +277,4 @@ TermQ constructs the URL from the repo's `origin` remote, converting SSH remotes
 
 ## Next
 
-[Reference: Keyboard Shortcuts](../reference/keyboard-shortcuts.md) — A complete list of all keyboard shortcuts in TermQ.
+[Marketplace Browser](marketplace-browser.md) — Connect TermQ to a community marketplace and browse its plugins.

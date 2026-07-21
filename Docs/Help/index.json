@@ -115,6 +115,12 @@
           "keywords": ["mcp", "model", "context", "protocol", "server", "ai", "claude", "integration"]
         },
         {
+          "id": "tutorials/mcp-subscriptions",
+          "title": "MCP Resource Subscriptions",
+          "icon": "bell.badge",
+          "keywords": ["mcp", "subscribe", "subscription", "resources", "notifications", "watcher", "event-driven"]
+        },
+        {
           "id": "tutorials/queued-actions",
           "title": "Queued Actions",
           "icon": "list.bullet",

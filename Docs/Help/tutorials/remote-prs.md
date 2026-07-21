@@ -235,4 +235,4 @@ TermQ removes each selected worktree using `git worktree remove`. Dirty or ahead
 
 ## Next
 
-[Tutorial 16: Harness Authoring](16-harness-authoring.md) — Write and publish your own harnesses with `ynh` and the TermQ authoring tools.
+[Stacked Branches & PRs](stacked-branches.md) — Break a large piece of work into a stack of small, dependent branches and manage the whole stack from the sidebar.
