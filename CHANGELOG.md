@@ -7,11 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.11.17] - 2026-07-21
+## [0.12.0] - 2026-07-21
 
-### Fixed — Terminal
+### Added — Stacked Branches & PRs
 
-- **Ctrl+F now performs a real terminal buffer search instead of doing nothing.** The search bar reused the Help window's "Search help..." placeholder, and on submit merely filtered buffer lines into a hidden array — nothing was highlighted, scrolled to, or navigable. It now drives SwiftTerm's built-in search engine (ported from the xterm.js search addon): each keystroke selects and scrolls to the first match, a match counter shows current position and total (e.g. "2/14"), and Enter plus the chevron buttons cycle next/previous. New `terminal.search.*` strings are localized across all 40 languages.
+- **Stacked Branches & PRs — manage a chain of dependent branches, each with its own PR, without leaving the sidebar.** Backed by a new provider-neutral `StackProvider` abstraction (git-spice today; other backends later without UI changes). The worktree sidebar gains collapsible WORKTREES/STACKS sections: a stacked worktree's row expands into its chain (base → tip) with per-branch PR/restack/push-status badges, and a repo-wide STACKS inventory lists every tracked stack whether or not it's anchored to a worktree. Everyday operations — Add Branch to Stack, Restack Stack, Submit Stack, and a stack-aware repo Sync — run through a per-repo mutation queue with in-progress spinners and outcome toasts, and a conflict banner offers Continue/Abort when a restack hits a merge conflict. Break-out worktrees let you check out two branches of the same stack at once, with cross-worktree restack orchestration afterward. Settings → Tools gains a git-spice detection card, and MCP gains `stack_status`, `stack_create_branch`, `stack_submit`, and `stack_restack` tools. All new strings are localized across the 39 supported languages.
+- **Destroy Stack** — a destructive action on the STACKS group context menu that wraps git-spice's `gs stack delete --force`, removing every branch in a stack (upstack and downstack) in one operation. Confirms first, listing the branches and warning about any still-open PRs; uses a scratch worktree if the stack has none anchored, and cleans up afterward.
+
+### Fixed — Stacked Branches & PRs
+
+- **The main repo worktree no longer disappears from WORKTREES when its checked-out branch happens to be tracked in a stack.** The hide-stacked-worktrees filter treated it like any other stack member instead of exempting the repo's anchor entry, leaving no way back to the repo root from that section.
+- **Stacked worktrees no longer appear in both WORKTREES and STACKS at once.** A worktree checked out on a lone tracked branch (a legitimate one-entry stack) fell through the WORKTREES filter unfiltered while also correctly showing under STACKS.
+- **MCP's `stack_create_branch` now requires an explicit `target`.** It previously fell back silently to whatever branch happened to be checked out in the given worktree — safe for a human who just checked that branch out via the UI, but a stray omission from an LLM caller could silently start an unrelated new stack instead of extending the intended one.
+
+### Added — Terminal
+
+- **Path-aware context menu on terminal selections.** When the selected text resolves to an existing filesystem path, the right-click menu appends Launch/Quick Terminal/Create Terminal/Reveal in Finder/Open in Terminal/Copy as Pathname/Open in Editor — the same actions the worktree sidebar offers, generalized to any resolved directory.
 
 ### Added — Workspaces
 
@@ -28,6 +39,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`AppProfile` runtime injection point in `BoardLoader` / `BoardWriter`.** Methods now take a `profile: AppProfile.Variant` parameter (default `.current`) instead of `debug: Bool`. `.current` resolves to `.debug` under `TERMQ_DEBUG_BUILD` and `.production` otherwise. Test code can pass `.debug` or `.production` explicitly without recompiling.
 - **Atomic read-modify-write in `BoardWriter`.** `updateCard`, `moveCard`, and `createCard` previously split their read and write across two separate `NSFileCoordinator` claims, leaving a window where two concurrent writers could both finish their reads before either wrote — the second write silently clobbering the first. They now run inside a single `writingItemAt:` claim via the new `BoardWriter.atomicUpdate(...)` helper, closing the lost-update race and the `orderIndex` collision on concurrent appends.
 - **`termqmcp --verbose` logs the resolved profile and data directory at startup**, so a debug-vs-production data-directory mismatch is visible to the operator.
+
+### Fixed — Harnesses
+
+- **The update-available banner no longer offers a stale-looking "update" when the installed and available harness commits are actually identical.** `Harness.hasVersionUpdate` trusted YNH's cached version string blindly, which can drift from the resolved commit; it now only trusts that string when SHAs are unknown or differ, treating a differing version string with matching SHAs as stale metadata rather than a real update.
+
+### Fixed — Sidebar
+
+- **Per-repo refresh now actually refreshes GitHub PRs, not just local worktrees.** Only the global refresh button previously fetched the PR list, so per-repo refresh looked like a no-op.
+- **Both refresh paths now run a real `git fetch`** instead of only updating a local-only ref, via a new `GitService.fetchRemote` (app-launch worktree population stays fetch-free).
+- **Prune All Worktrees now also catches disk usage from closed-PR and Run-with-Focus review worktrees**, not just administrative `git worktree prune` candidates — the detection is shared with the existing per-repo prune link.
 
 ### Added — MCP polish
 
@@ -70,6 +91,12 @@ Deferred from this release: a formal `elicitation/create` flow wired into `harne
 - **`Docs/Help/tutorials/mcp-subscriptions.md`** — new tutorial walking through the resource-subscription feature with worked code and sharp-edges section.
 
 Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (`restore`, `whoami`, `create_column`, `rename_column`, `delete_column`) do not yet have matching `termqcli` subcommands. The parity registry classifies them as `mandatoryCLI` so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.
+
+## [0.11.17] - 2026-07-21
+
+### Fixed — Terminal
+
+- **Ctrl+F now performs a real terminal buffer search instead of doing nothing.** The search bar reused the Help window's "Search help..." placeholder, and on submit merely filtered buffer lines into a hidden array — nothing was highlighted, scrolled to, or navigable. It now drives SwiftTerm's built-in search engine (ported from the xterm.js search addon): each keystroke selects and scrolls to the first match, a match counter shows current position and total (e.g. "2/14"), and Enter plus the chevron buttons cycle next/previous. New `terminal.search.*` strings are localized across all 40 languages.
 
 ## [0.11.16] - 2026-07-18
 
