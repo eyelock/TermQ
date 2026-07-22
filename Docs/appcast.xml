@@ -6,6 +6,283 @@
         <description>Most recent updates to TermQ</description>
         <language>en</language>
         <item>
+            <title>Version 0.12.0</title>
+            <sparkle:version>0.12.0</sparkle:version>
+            <sparkle:shortVersionString>0.12.0</sparkle:shortVersionString>
+            <pubDate>Tue, 21 Jul 2026 23:01:25 +0000</pubDate>
+            <description><![CDATA[<h3 id="added--stacked-branches--prs">Added — Stacked Branches &amp; PRs</h3>
+<ul>
+<li><strong>Stacked Branches &amp; PRs — manage a chain of dependent branches, each with its own PR, without leaving the sidebar.</strong> Backed by a new provider-neutral <code>StackProvider</code> abstraction (git-spice today; other backends later without UI changes). The worktree sidebar gains collapsible WORKTREES/STACKS sections: a stacked worktree's row expands into its chain (base → tip) with per-branch PR/restack/push-status badges, and a repo-wide STACKS inventory lists every tracked stack whether or not it's anchored to a worktree. Everyday operations — Add Branch to Stack, Restack Stack, Submit Stack, and a stack-aware repo Sync — run through a per-repo mutation queue with in-progress spinners and outcome toasts, and a conflict banner offers Continue/Abort when a restack hits a merge conflict. Break-out worktrees let you check out two branches of the same stack at once, with cross-worktree restack orchestration afterward. Settings → Tools gains a git-spice detection card, and MCP gains <code>stack_status</code>, <code>stack_create_branch</code>, <code>stack_submit</code>, and <code>stack_restack</code> tools. All new strings are localized across the 39 supported languages.</li>
+<li><strong>Destroy Stack</strong> — a destructive action on the STACKS group context menu that wraps git-spice's <code>gs stack delete --force</code>, removing every branch in a stack (upstack and downstack) in one operation. Confirms first, listing the branches and warning about any still-open PRs; uses a scratch worktree if the stack has none anchored, and cleans up afterward.</li>
+</ul>
+<h3 id="fixed--stacked-branches--prs">Fixed — Stacked Branches &amp; PRs</h3>
+<ul>
+<li><strong>The main repo worktree no longer disappears from WORKTREES when its checked-out branch happens to be tracked in a stack.</strong> The hide-stacked-worktrees filter treated it like any other stack member instead of exempting the repo's anchor entry, leaving no way back to the repo root from that section.</li>
+<li><strong>Stacked worktrees no longer appear in both WORKTREES and STACKS at once.</strong> A worktree checked out on a lone tracked branch (a legitimate one-entry stack) fell through the WORKTREES filter unfiltered while also correctly showing under STACKS.</li>
+<li><strong>MCP's <code>stack_create_branch</code> now requires an explicit <code>target</code>.</strong> It previously fell back silently to whatever branch happened to be checked out in the given worktree — safe for a human who just checked that branch out via the UI, but a stray omission from an LLM caller could silently start an unrelated new stack instead of extending the intended one.</li>
+</ul>
+<h3 id="added--terminal">Added — Terminal</h3>
+<ul>
+<li><strong>Path-aware context menu on terminal selections.</strong> When the selected text resolves to an existing filesystem path, the right-click menu appends Launch/Quick Terminal/Create Terminal/Reveal in Finder/Open in Terminal/Copy as Pathname/Open in Editor — the same actions the worktree sidebar offers, generalized to any resolved directory.</li>
+</ul>
+<h3 id="added--workspaces">Added — Workspaces</h3>
+<ul>
+<li><strong>Workspaces — group repositories and scope the board to one context at a time.</strong> A workspace is a named filter over your registered repositories: the sidebar repo list narrows to the active workspace, and "All Repositories" shows every repo. The kanban board is scoped to match — each card carries a <code>workspaceId</code>, "All" aggregates every card, and a workspace shows only its own (unassigned cards appear only in "All", the same rule the repo list uses for zero-membership repos). Switching workspaces is a pure display re-filter: there is a single <code>board.json</code>, no file is swapped, and <strong>no terminal session is ever torn down</strong> — every running terminal (Direct and tmux) keeps its session across switches. A card's workspace is fixed at creation (the then-active workspace, or unassigned in "All"). Agents launched inside a workspace are pinned to it via the <code>TERMQ_WORKSPACE_ID</code> environment variable, so the MCP server and <code>termqcli</code> stamp new cards into that workspace and filter their reads to it. Columns remain global across workspaces for now; per-workspace columns and card reassignment are deferred follow-ups.</li>
+</ul>
+<h3 id="changed--breaking-mcp--cli">Changed — BREAKING (MCP / CLI)</h3>
+<ul>
+<li><strong>MCP tool names lose the <code>termq_</code> prefix.</strong> Every TermQ MCP tool is now reachable as <code>mcp__termq__&lt;name&gt;</code> rather than <code>mcp__termq__termq_&lt;name&gt;</code>. Affected tools: <code>pending</code>, <code>context</code>, <code>list</code>, <code>find</code>, <code>open</code>, <code>create</code>, <code>set</code>, <code>move</code>, <code>get</code>, <code>delete</code>. <strong>No alias is provided.</strong> Anyone with <code>mcp__termq__termq_*</code> hardcoded in a CLAUDE.md, hook script, or recorded prompt must update by deleting one prefix.</li>
+<li><strong>Tag filter semantics converge on literal exact-match.</strong> Both <code>find(tag:)</code> (MCP) and <code>find --tag</code> (CLI) now interpret <code>key=value</code> as a literal exact match (case-insensitive). Previously CLI did partial-substring match on the value while MCP did exact — they now behave identically. To regex-match, prefix with <code>re:</code>: <code>find(tag: "staleness=re:(stale|ageing)")</code> matches the value as regex; <code>find(tag: "re:project=org/.+")</code> matches the whole <code>key=value</code> string as regex. Invalid regex patterns surface an error rather than silently falling back to literal. <strong>CLI partial-match users:</strong> rewrite as <code>--tag project=re:.*</code> or just <code>--tag project</code> (key-only still works).</li>
+</ul>
+<h3 id="fixed--mcp--cli">Fixed — MCP / CLI</h3>
+<ul>
+<li><strong>MCP resource reads now surface load errors instead of returning empty arrays.</strong> Previously <code>termq://terminals</code>, <code>termq://columns</code>, and <code>termq://pending</code> silently returned <code>[]</code> or <code>{}</code> if the board could not be loaded — conflating "the board has zero cards" with "the install is broken" and masking the original "empty results" bug. Failures now propagate as MCP errors with descriptive messages.</li>
+<li><strong><code>AppProfile</code> runtime injection point in <code>BoardLoader</code> / <code>BoardWriter</code>.</strong> Methods now take a <code>profile: AppProfile.Variant</code> parameter (default <code>.current</code>) instead of <code>debug: Bool</code>. <code>.current</code> resolves to <code>.debug</code> under <code>TERMQ_DEBUG_BUILD</code> and <code>.production</code> otherwise. Test code can pass <code>.debug</code> or <code>.production</code> explicitly without recompiling.</li>
+<li><strong>Atomic read-modify-write in <code>BoardWriter</code>.</strong> <code>updateCard</code>, <code>moveCard</code>, and <code>createCard</code> previously split their read and write across two separate <code>NSFileCoordinator</code> claims, leaving a window where two concurrent writers could both finish their reads before either wrote — the second write silently clobbering the first. They now run inside a single <code>writingItemAt:</code> claim via the new <code>BoardWriter.atomicUpdate(...)</code> helper, closing the lost-update race and the <code>orderIndex</code> collision on concurrent appends.</li>
+<li><strong><code>termqmcp --verbose</code> logs the resolved profile and data directory at startup</strong>, so a debug-vs-production data-directory mismatch is visible to the operator.</li>
+</ul>
+<h3 id="fixed--harnesses">Fixed — Harnesses</h3>
+<ul>
+<li><strong>The update-available banner no longer offers a stale-looking "update" when the installed and available harness commits are actually identical.</strong> <code>Harness.hasVersionUpdate</code> trusted YNH's cached version string blindly, which can drift from the resolved commit; it now only trusts that string when SHAs are unknown or differ, treating a differing version string with matching SHAs as stale metadata rather than a real update.</li>
+</ul>
+<h3 id="fixed--sidebar">Fixed — Sidebar</h3>
+<ul>
+<li><strong>Per-repo refresh now actually refreshes GitHub PRs, not just local worktrees.</strong> Only the global refresh button previously fetched the PR list, so per-repo refresh looked like a no-op.</li>
+<li><strong>Both refresh paths now run a real <code>git fetch</code></strong> instead of only updating a local-only ref, via a new <code>GitService.fetchRemote</code> (app-launch worktree population stays fetch-free).</li>
+<li><strong>Prune All Worktrees now also catches disk usage from closed-PR and Run-with-Focus review worktrees</strong>, not just administrative <code>git worktree prune</code> candidates — the detection is shared with the existing per-repo prune link.</li>
+</ul>
+<h3 id="added--mcp-polish">Added — MCP polish</h3>
+<ul>
+<li><strong>Tool annotations</strong> on every MCP tool — <code>readOnlyHint</code>, <code>destructiveHint</code>, <code>idempotentHint</code>, <code>openWorldHint</code>. Permissioned clients (e.g. Claude Desktop) use these to auto-allow read-only tools and prompt before destructive ones. Notable: <code>delete</code> is marked destructive (even soft-delete prompts confirmation in strict clients); <code>set</code> and <code>move</code> are marked idempotent.</li>
+<li><strong>Display titles</strong> on every tool, resource, prompt, and prompt argument — human-readable labels surfaced in client UIs alongside the programmatic names.</li>
+<li><strong>Argument completion</strong> (<code>completion/complete</code>) — TermQ now provides autocomplete suggestions for the <code>terminal_summary</code> prompt's <code>terminal</code> argument, matching live board terminal names by case-insensitive substring. Capped at 100 results; clients see <code>total</code> and <code>hasMore</code> so they can prompt the user to refine.</li>
+<li><strong><code>notifications/message</code> log mirror</strong> — <code>termqmcp</code> now emits MCP log notifications (gated by client-configured minimum level via <code>logging/setLevel</code>) for board-load failures and other operationally relevant events. Lets a remote operator observe failures without needing <code>--verbose</code> stderr access.</li>
+<li><strong><code>logging/setLevel</code> honoured properly</strong> — previously the request was accepted and ignored; now the configured threshold actually filters subsequent log emissions.</li>
+</ul>
+<h3 id="added--mcp-structural-tier-1b">Added — MCP structural (Tier 1b)</h3>
+<ul>
+<li><strong>Resource templates</strong> (<code>resources/templates/list</code>) — <code>termq://terminal/{id}</code>, <code>termq://terminal-by-name/{name}</code>, <code>termq://column/{name}</code>. Idiomatic per-card reads via standard <code>resources/read</code> — no per-card tool needed.</li>
+<li><strong>Structured tool output</strong> (<code>outputSchema</code> + <code>structuredContent</code>) on all read tools (<code>pending</code>, <code>list</code>, <code>find</code>, <code>open</code>, <code>get</code>). Clients can codegen types or runtime-validate against the published schema rather than re-parsing <code>text</code> content. Legacy <code>text</code> mirror is retained for one release; payload roughly doubles in the meantime (~80 KB instead of ~40 KB on a 200-card board — acceptable for stdio).</li>
+<li><strong>Resource subscriptions</strong> (<code>resources/subscribe</code> / <code>resources/unsubscribe</code> + <code>notifications/resources/updated</code>) — long-running clients can subscribe to <code>termq://terminals</code>, <code>termq://pending</code>, or any other resource URI and be notified when board.json changes (e.g. the user moves a card in the GUI). Backed by a <code>DispatchSourceFileSystemObject</code> watcher with a 150ms debounce window so atomic writes don't fan out to multiple notifications. The <code>subscribe: true</code> capability TermQ has declared since 0.x is now actually honoured.</li>
+<li><strong><code>record_handshake</code> tool</strong> — explicit, side-effect-only marker that an LLM session has consumed a terminal's context. Idiomatic pair with reading <code>termq://terminal/{id}</code> (pure). <code>get</code> retains the combined read+handshake behaviour for one release as a deprecated alias per the audit's semantic-break policy.</li>
+</ul>
+<h3 id="added--mcp-domain-symmetry-tier-2">Added — MCP domain symmetry (Tier 2)</h3>
+<ul>
+<li><strong><code>whoami</code> tool</strong> — resolves the current card from the <code>TERMQ_TERMINAL_ID</code> environment variable. Returns null (not error) when running outside a TermQ terminal context, so top-level Claude sessions don't see a spurious failure.</li>
+<li><strong><code>restore</code> tool + <code>BoardWriter.restoreCard</code></strong> — restore a soft-deleted (binned) card by clearing its <code>deletedAt</code> timestamp. Permanent deletes remain irrecoverable. Closes the asymmetry where MCP could delete but not undelete.</li>
+<li><strong>Column CRUD</strong> — <code>create_column</code>, <code>rename_column</code>, <code>delete_column</code> tools with matching <code>BoardWriter.createColumn</code> / <code>renameColumn</code> / <code>deleteColumn</code> primitives. <code>delete_column</code> refuses by default if active cards remain; pass <code>force: true</code> to soft-delete them along with the column.</li>
+<li><strong><code>list</code> extended:</strong> <code>includeDeleted: true</code> to include binned cards; <code>cursor</code> + <code>limit</code> for pagination. Unpaginated calls keep returning the bare array — pagination is opt-in.</li>
+<li><strong><code>find</code> extended:</strong> same <code>cursor</code> + <code>limit</code> parameters as <code>list</code>. Pagination cursor is base64-encoded offset, opaque to clients.</li>
+</ul>
+<h3 id="added--mcp-new-domains-tier-3">Added — MCP new domains (Tier 3)</h3>
+<ul>
+<li><strong><code>termq://repos</code> resource</strong> — list of every registered git repository (id, name, path, worktree base, protected branches, addedAt).</li>
+<li><strong><code>termq://worktrees</code> resource</strong> — git worktrees enumerated across every registered repository. Per-repo failures are mirrored to <code>notifications/message</code> rather than killing the whole listing — a misconfigured repo doesn't take the rest down.</li>
+<li><strong><code>termq://harnesses</code> resource</strong> — installed YNH harnesses via <code>ynh ls --format json</code>. Empty array when <code>ynh</code> isn't on PATH; degradation is logged at info level for diagnostics.</li>
+<li><strong><code>create_worktree</code> and <code>remove_worktree</code> tools</strong> — backed by the existing <code>GitServiceShared</code> primitives. Create takes a repo UUID + branch name; remove takes a repo UUID + absolute path. <code>force</code> plumbed onto the wire surface but currently informational (GitServiceShared.removeWorktree doesn't take it yet).</li>
+<li><strong><code>harness_launch</code> tool</strong> — invokes <code>ynh run &lt;harness&gt;</code> in a working directory, optionally seeded with a prompt. Annotated <code>destructiveHint: true</code> so permissioned clients prompt; full <code>elicitation/create</code> integration is a follow-up. Output is truncated to a 4 KB suffix to keep the MCP frame bounded.</li>
+</ul>
+<p>Deferred from this release: a formal <code>elicitation/create</code> flow wired into <code>harness_launch</code> (annotations carry the prompt-hint for now), <code>roots/list</code> boundary enforcement (no filesystem-touching tools currently exceed <code>~/Library/Application Support</code>), and the GitHub-PR resource (<code>termq://prs</code>) which would shell out to <code>gh</code> and needs more design.</p>
+<h3 id="added--tooling-and-docs">Added — Tooling and docs</h3>
+<ul>
+<li><strong><code>ToolParity.swift</code> registry</strong> — single source of truth listing every MCP tool as <code>mandatoryCLI</code> (a matching <code>termqcli</code> subcommand must exist) or <code>omittedCLI</code> (with a stated reason). Five <code>ToolParityTests</code> enforce classification at build time: adding a tool without classifying it fails CI.</li>
+<li><strong><code>Scripts/check-mcp-docs.sh</code></strong> — narrow CI gate that fails when MCP surface files (<code>SchemaDefinitions.swift</code>, <code>ToolParity.swift</code>) change without a matching <code>Docs/Help/reference/mcp.md</code> update. Override via <code>[no-doc]</code> in commit subject for genuine no-surface changes.</li>
+<li><strong><code>Docs/Help/reference/mcp.md</code> rewritten</strong> — reflects the full Tier 0–3 surface, includes a spec-feature support matrix at the top, documents the CLI-parity policy and its enforcement.</li>
+<li><strong><code>Docs/Help/tutorials/mcp-subscriptions.md</code></strong> — new tutorial walking through the resource-subscription feature with worked code and sharp-edges section.</li>
+</ul>
+<p>Known gap: the Tier 2 / Tier 3 tools introduced on the MCP surface (<code>restore</code>, <code>whoami</code>, <code>create_column</code>, <code>rename_column</code>, <code>delete_column</code>) do not yet have matching <code>termqcli</code> subcommands. The parity registry classifies them as <code>mandatoryCLI</code> so the test currently passes by name only — adding the CLI subcommands is a follow-up that will tighten the registry test to verify actual CLI command existence.</p>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.12.0.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.12.0.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.12.0/TermQ-0.12.0.zip"
+                sparkle:edSignature="4kBJrvOfkYSB5RKR0S1sKfGfYZ7U6+PsVHUkALW3tboLOmnZsJvW1A6Ldwvs6JSiU8dGsDvfkE1LoZtYc547Ag=="
+                length="32531076"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.11.17</title>
+            <sparkle:version>0.11.17</sparkle:version>
+            <sparkle:shortVersionString>0.11.17</sparkle:shortVersionString>
+            <pubDate>Tue, 21 Jul 2026 09:19:44 +0000</pubDate>
+            <description><![CDATA[<h3 id="fixed--terminal">Fixed — Terminal</h3>
+<ul>
+<li><strong>Ctrl+F now performs a real terminal buffer search instead of doing nothing.</strong> The search bar reused the Help window's "Search help..." placeholder, and on submit merely filtered buffer lines into a hidden array — nothing was highlighted, scrolled to, or navigable. It now drives SwiftTerm's built-in search engine (ported from the xterm.js search addon): each keystroke selects and scrolls to the first match, a match counter shows current position and total (e.g. "2/14"), and Enter plus the chevron buttons cycle next/previous. New <code>terminal.search.*</code> strings are localized across all 40 languages.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.17.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.17.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.17/TermQ-0.11.17.zip"
+                sparkle:edSignature="VfxIbZI/bUlpOP0QNCay8W0JGevIpmaE/5g1Wx0X08mrpOP+Qvr3ejezfvpVSz7+rVVBCq49t3QOe6d3ENDlDg=="
+                length="28920746"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.11.16</title>
+            <sparkle:version>0.11.16</sparkle:version>
+            <sparkle:shortVersionString>0.11.16</sparkle:shortVersionString>
+            <pubDate>Sat, 18 Jul 2026 08:16:59 +0000</pubDate>
+            <description><![CDATA[<h3 id="fixed--kanban-board">Fixed — Kanban Board</h3>
+<ul>
+<li><strong>Long or numerous tag/badge chips on a card no longer force the card wider than its column, bleeding into neighboring columns and squashing the board layout.</strong> Badge/tag chips used <code>.fixedSize()</code>, forcing them to report unbounded ideal width during layout negotiation, fighting the custom FlowLayout's wrapping; FlowLayout's unbounded child measurement also left a single very long unbroken tag/badge value with nothing to truncate against even with <code>lineLimit</code> set. Chips no longer use <code>.fixedSize()</code>, the card body and FlowLayout containers are bounded to the column's actual width, individual chips are capped at a shared 150pt width with middle truncation, and every text element on a card (and the column header name) now has explicit <code>lineLimit</code>/<code>truncationMode</code>.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.16.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.16.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.16/TermQ-0.11.16.zip"
+                sparkle:edSignature="hILADDXBTxNTKcq+LkIyCkNajLmp25acd6LvXWdKkV/MmZVp/YYJpezA1x+IEyglw9Ad/B6ZzI9dW5JqRA0HCA=="
+                length="28915633"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.11.15</title>
+            <sparkle:version>0.11.15</sparkle:version>
+            <sparkle:shortVersionString>0.11.15</sparkle:shortVersionString>
+            <pubDate>Thu, 09 Jul 2026 10:25:30 +0000</pubDate>
+            <description><![CDATA[<h3 id="fixed--sidebar">Fixed — Sidebar</h3>
+<ul>
+<li><strong>The Prune Local Branches and Prune Worktrees sheets no longer push their header and footer buttons off-screen when the list is long.</strong> Both sheets rendered their branch/entry list in a bare <code>VStack</code> with no height constraint, so with many local branches or stale worktree entries the list grew unbounded and the confirm/cancel buttons became unreachable. Both lists are now wrapped in a scrollable container capped at a fixed height, matching the pattern already used by the sibling Prune All Worktrees and Prune Closed PRs sheets.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.15.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.15.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.15/TermQ-0.11.15.zip"
+                sparkle:edSignature="AOsYo0ezAhmkXJdgigaZDkEuusB/gEYp/NmucCTt2dJYiVhMc0SuQ4dEwnnakmcRpe+K3FqA3KYI7wYmTM6XAg=="
+                length="28910560"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
+            <title>Version 0.11.14</title>
+            <sparkle:version>0.11.14</sparkle:version>
+            <sparkle:shortVersionString>0.11.14</sparkle:shortVersionString>
+            <pubDate>Fri, 03 Jul 2026 10:26:39 +0000</pubDate>
+            <description><![CDATA[<h3 id="fixed--harnesses">Fixed — Harnesses</h3>
+<ul>
+<li><strong>Installing a plugin immediately after creating a harness no longer fails with "not a valid harness id".</strong> The harness creation wizard's success screen passed the raw harness name (e.g. <code>media-manager</code>) to the plugin-install flow instead of the canonical harness id (e.g. <code>local/media-manager</code>) that <code>ynh include add</code> requires, producing a broken command. The wizard now resolves the canonical id from the freshly-refreshed harness list before handing off, matching the pattern already used by the harness detail page's "Configure from Marketplaces" flow.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="macos-app-recommended">macOS App (Recommended)</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.14.dmg</code></li>
+<li>Open the DMG and drag <code>TermQ.app</code> to your Applications folder</li>
+<li>Double-click to launch</li>
+</ol>
+<h3 id="alternative-zip-archive">Alternative: Zip Archive</h3>
+<ol type="1">
+<li>Download <code>TermQ-0.11.14.zip</code></li>
+<li>Unzip and move <code>TermQ.app</code> to your Applications folder</li>
+</ol>
+<h3 id="cli-tool">CLI Tool</h3>
+<p>The <code>termqcli</code> CLI is bundled inside the app. To install it:</p>
+<ol type="1">
+<li>Open TermQ.app</li>
+<li>Go to <strong>TermQ → Settings</strong> (or press ⌘,)</li>
+<li>Click <strong>Install Command Line Tool</strong></li>
+</ol>
+<p>Or manually:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp /Applications/TermQ.app/Contents/Resources/termqcli /usr/local/bin/termqcli</span></code></pre></div>
+<h2 id="checksums">Checksums</h2>
+<p>See <code>checksums.txt</code> for SHA-256 checksums of all release artifacts.</p>]]></description>
+            <enclosure
+                url="https://github.com/eyelock/TermQ/releases/download/v0.11.14/TermQ-0.11.14.zip"
+                sparkle:edSignature="FERjcY3pDax1zrLtl7x23hF8vbJ2M2NxptxX4W/UJ7v3cAswMhqVJBliFRwZeDMpoDAAzKdK0e3mgCAZsD0jCg=="
+                length="28908890"
+                type="application/octet-stream"/>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+        </item>
+        <item>
             <title>Version 0.11.13</title>
             <sparkle:version>0.11.13</sparkle:version>
             <sparkle:shortVersionString>0.11.13</sparkle:shortVersionString>
