@@ -191,6 +191,41 @@ class TermQTerminalView: LocalProcessTerminalView {
         terminal.registerOscHandler(code: 9) { [weak self] data in
             self?.handleSimpleNotificationOsc(data)
         }
+
+        // OSC 10/11/12 - Foreground/background/cursor color.
+        // Some CLIs (e.g. GitHub Copilot CLI) emit a "set" request on startup that
+        // would otherwise silently override TermQ's theme background for the rest
+        // of the session. Queries ("?") still get an honest answer so tools that
+        // probe the color to pick a light/dark palette keep working; only "set"
+        // requests are swallowed so the theme color sticks.
+        terminal.registerOscHandler(code: 10) { [weak self] data in
+            self?.handleColorOsc(code: 10, data: data)
+        }
+        terminal.registerOscHandler(code: 11) { [weak self] data in
+            self?.handleColorOsc(code: 11, data: data)
+        }
+        terminal.registerOscHandler(code: 12) { [weak self] data in
+            self?.handleColorOsc(code: 12, data: data)
+        }
+    }
+
+    /// Answers OSC 10/11/12 color queries with the terminal's current theme
+    /// color; ignores "set" requests so a child process can't override the
+    /// theme background/foreground/cursor color for the session.
+    private func handleColorOsc(code: Int, data: ArraySlice<UInt8>) {
+        guard data.first == UInt8(ascii: "?") else { return }
+
+        let terminal = getTerminal()
+        let color: SwiftTerm.Color
+        switch code {
+        case 10: color = terminal.foregroundColor
+        case 11: color = terminal.backgroundColor
+        default: color = terminal.cursorColor ?? terminal.foregroundColor
+        }
+
+        func hex(_ component: UInt16) -> String { String(format: "%04x", component) }
+        let response = "\u{1B}]\(code);rgb:\(hex(color.red))/\(hex(color.green))/\(hex(color.blue))\u{1B}\\"
+        terminal.sendResponse(text: response)
     }
 
     /// Called when the terminal receives a bell character (ASCII 7 / \a)
