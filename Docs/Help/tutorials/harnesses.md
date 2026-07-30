@@ -171,6 +171,8 @@ Fields:
 
 Click **Launch**. TermQ creates a new transient terminal card running `ynh run \<harness\> …` and immediately focuses it.
 
+> **Local model backends (e.g. Ollama):** the Vendor picker isn't limited to Claude, Cursor, and Codex — if you've configured a local model backend in YNH's `~/.ynh/config.json` (see YNH's [Local Model Backends](https://github.com/eyelock/ynh/blob/develop/docs/vendors.md#local-model-backends) docs), it shows up here too, alongside your other vendors, as an entry like "Claude Code (ollama · qwen3)". Selecting it launches the same vendor CLI redirected at your local model server instead of its cloud API — no TermQ configuration needed; the picker is populated entirely from `ynh vendors --format json`. Response quality then depends on the local model, not on TermQ or YNH.
+
 ---
 
 ## 8 — Updating a harness
