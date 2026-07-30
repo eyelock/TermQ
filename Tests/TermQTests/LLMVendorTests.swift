@@ -54,10 +54,24 @@ final class LLMVendorTests: XCTestCase {
 
     // MARK: - commandTemplate — GitHub Copilot
 
-    func testCopilot_containsSuggestAndTokens() {
-        let template = LLMVendor.copilot.commandTemplate(interactive: false)
-        XCTAssertTrue(template.contains("gh copilot suggest"))
+    func testCopilot_interactive_containsDashICapitalAndTokens() {
+        let template = LLMVendor.copilot.commandTemplate(interactive: true)
+        XCTAssertTrue(template.hasPrefix("copilot "))
+        XCTAssertTrue(template.contains("-i "))
         XCTAssertTrue(template.contains("{{PROMPT}}"))
+        XCTAssertTrue(template.contains("{{NEXT_ACTION}}"))
+    }
+
+    func testCopilot_nonInteractive_containsDashPAndAllowAllTools() {
+        let template = LLMVendor.copilot.commandTemplate(interactive: false)
+        XCTAssertTrue(template.contains("-p "))
+        XCTAssertTrue(template.contains("--allow-all-tools"))
+        XCTAssertTrue(template.contains("{{PROMPT}}"))
+    }
+
+    func testCopilot_interactive_doesNotContainDashP() {
+        let template = LLMVendor.copilot.commandTemplate(interactive: true)
+        XCTAssertFalse(template.contains("-p "))
     }
 
     // MARK: - commandTemplate — Custom
@@ -70,14 +84,14 @@ final class LLMVendorTests: XCTestCase {
 
     // MARK: - supportsInteractiveToggle
 
-    func testSupportsInteractiveToggle_trueForClaudeCodeAndCursor() {
+    func testSupportsInteractiveToggle_trueForClaudeCodeCursorAndCopilot() {
         XCTAssertTrue(LLMVendor.claudeCode.supportsInteractiveToggle)
         XCTAssertTrue(LLMVendor.cursor.supportsInteractiveToggle)
+        XCTAssertTrue(LLMVendor.copilot.supportsInteractiveToggle)
     }
 
     func testSupportsInteractiveToggle_falseForOthers() {
         XCTAssertFalse(LLMVendor.aider.supportsInteractiveToggle)
-        XCTAssertFalse(LLMVendor.copilot.supportsInteractiveToggle)
         XCTAssertFalse(LLMVendor.custom.supportsInteractiveToggle)
     }
 

@@ -29,7 +29,11 @@ enum LLMVendor: String, CaseIterable {
             // Aider is inherently non-interactive with --message
             return "aider --message \"{{PROMPT}} {{NEXT_ACTION}}\""
         case .copilot:
-            return "gh copilot suggest \"{{PROMPT}} {{NEXT_ACTION}}\""
+            if interactive {
+                return "copilot -i \"{{PROMPT}} {{NEXT_ACTION}}\""
+            } else {
+                return "copilot -p \"{{PROMPT}} {{NEXT_ACTION}}\" --allow-all-tools"
+            }
         case .custom:
             return "\"{{PROMPT}} {{NEXT_ACTION}}\""
         }
@@ -46,9 +50,9 @@ enum LLMVendor: String, CaseIterable {
     /// Whether this tool supports interactive mode toggle
     var supportsInteractiveToggle: Bool {
         switch self {
-        case .claudeCode, .cursor:
+        case .claudeCode, .cursor, .copilot:
             return true
-        case .aider, .copilot, .custom:
+        case .aider, .custom:
             return false
         }
     }
