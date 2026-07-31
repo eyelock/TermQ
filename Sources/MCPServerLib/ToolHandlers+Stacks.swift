@@ -42,9 +42,14 @@ extension TermQMCPServer {
             content: [.text(text: text, annotations: nil, _meta: nil)], isError: isError)
     }
 
-    /// Resolve the active provider, or `nil` when none is installed/usable.
-    private func resolveStackProvider() async -> (any StackProvider)? {
-        await StackProviderRegistry.shared.resolveProvider()?.0
+    /// Resolve the provider that owns `repo`, or `nil` when none is installed/usable.
+    ///
+    /// Per-repo rather than global: with two providers installed they own different
+    /// repositories, and answering with the wrong one reports a stacked repo as
+    /// unstacked. No `preferred` is passed — the MCP server has no access to the app's
+    /// Settings, so it relies purely on initialization evidence and registry order.
+    private func resolveStackProvider(forRepo repo: String) async -> (any StackProvider)? {
+        await StackProviderRegistry.shared.resolveProvider(forRepo: repo)?.0
     }
 
     func handleStackStatus(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -56,11 +61,14 @@ extension TermQMCPServer {
         }
         do {
             let repo = try loadStackRepo(repoId: repoId)
-            guard let provider = await resolveStackProvider() else {
+            guard let provider = await resolveStackProvider(forRepo: repo.path) else {
                 return jsonResult(["available": false, "reason": "no stacked-PR provider installed"])
             }
             guard await provider.isInitialized(repo: repo.path) else {
-                return jsonResult(["available": true, "initialized": false])
+                return jsonResult([
+                    "available": true, "initialized": false,
+                    "provider": provider.providerID.rawValue,
+                ])
             }
             let graph = try await provider.graph(repo: repo.path)
             let graphData = try JSONEncoder().encode(graph)
@@ -68,6 +76,10 @@ extension TermQMCPServer {
             return jsonResult([
                 "available": true,
                 "initialized": true,
+                // Which tool is driving this repo. Capabilities differ between providers,
+                // so an agent needs to know which one it is talking to before assuming an
+                // operation exists.
+                "provider": provider.providerID.rawValue,
                 "graph": graphObject,
             ])
         } catch {
@@ -96,8 +108,8 @@ extension TermQMCPServer {
             return errorResult(error.localizedDescription)
         }
         do {
-            _ = try loadStackRepo(repoId: repoId)
-            guard let provider = await resolveStackProvider() else {
+            let repo = try loadStackRepo(repoId: repoId)
+            guard let provider = await resolveStackProvider(forRepo: repo.path) else {
                 return errorResult("no stacked-PR provider installed")
             }
             try await provider.createBranch(name: name, target: target, in: worktreePath)
@@ -120,8 +132,8 @@ extension TermQMCPServer {
         let draft = InputValidator.optionalBool("draft", from: arguments)
         let updateOnly = InputValidator.optionalBool("updateOnly", from: arguments)
         do {
-            _ = try loadStackRepo(repoId: repoId)
-            guard let provider = await resolveStackProvider() else {
+            let repo = try loadStackRepo(repoId: repoId)
+            guard let provider = await resolveStackProvider(forRepo: repo.path) else {
                 return errorResult("no stacked-PR provider installed")
             }
             try await provider.submit(
@@ -146,7 +158,7 @@ extension TermQMCPServer {
         }
         do {
             let repo = try loadStackRepo(repoId: repoId)
-            guard let provider = await resolveStackProvider() else {
+            guard let provider = await resolveStackProvider(forRepo: repo.path) else {
                 return errorResult("no stacked-PR provider installed")
             }
             do {

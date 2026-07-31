@@ -11,7 +11,21 @@ import XCTest
 actor FakeStackProvider: StackProvider {
     static let id = StackProviderID(rawValue: "fake")
 
-    nonisolated var capabilities: StackCapabilities { [.restack, .submit, .sync] }
+    /// Per-instance identity, so a test can register two distinguishable providers and
+    /// assert which one a given repo resolved to.
+    nonisolated let overrideID: StackProviderID
+    nonisolated var providerID: StackProviderID { overrideID }
+
+    nonisolated let overrideCapabilities: StackCapabilities
+    nonisolated var capabilities: StackCapabilities { overrideCapabilities }
+
+    init(
+        id: StackProviderID = StackProviderID(rawValue: "fake"),
+        capabilities: StackCapabilities = [.restack, .submit, .sync]
+    ) {
+        self.overrideID = id
+        self.overrideCapabilities = capabilities
+    }
 
     var availability: StackProviderAvailability = .ready(version: "0.0.0")
     var initializedRepos: Set<String> = []
@@ -451,5 +465,188 @@ final class StackServiceTests: XCTestCase {
         service.evict(repo: "/repo")
         XCTAssertFalse(service.isStacked(repo: "/repo"))
         XCTAssertNil(service.graphsByRepo["/repo"])
+    }
+}
+
+// MARK: - Per-repo provider resolution
+
+/// With two providers installed they own different repositories. A single app-wide
+/// `activeProvider` would hand every repo to whichever probed first — and because an
+/// uninitialized repo is a deliberately silent state, repos owned by the other tool
+/// would report "not stacked" with no warning at all.
+@MainActor
+final class StackServiceProviderResolutionTests: XCTestCase {
+    private let spiceID = StackProviderID.gitSpice
+    private let githubID = StackProviderID.gitHub
+
+    private func makeGraph(_ name: String) -> StackGraph {
+        StackGraph(
+            branches: [
+                StackBranch(
+                    name: name, isCurrent: true, checkedOutElsewhere: nil, parent: nil,
+                    children: [], needsRestack: false, changeRequest: nil, push: nil)
+            ])
+    }
+
+    func testRefreshGraph_resolvesEachRepoToItsOwningProvider() async {
+        let spice = FakeStackProvider(id: spiceID)
+        let github = FakeStackProvider(id: githubID)
+        await spice.setGraph(makeGraph("spice-branch"), for: "/spice-repo")
+        await github.setGraph(makeGraph("github-branch"), for: "/github-repo")
+
+        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
+        await service.probe()
+        await service.refreshGraph(repo: "/spice-repo")
+        await service.refreshGraph(repo: "/github-repo")
+
+        XCTAssertEqual(service.providerIDByRepo["/spice-repo"], spiceID)
+        XCTAssertEqual(service.providerIDByRepo["/github-repo"], githubID)
+        XCTAssertEqual(service.graphsByRepo["/spice-repo"]?.branches.first?.name, "spice-branch")
+        XCTAssertEqual(service.graphsByRepo["/github-repo"]?.branches.first?.name, "github-branch")
+    }
+
+    func testMutation_runsAgainstTheProviderThatOwnsTheRepo() async throws {
+        let spice = FakeStackProvider(id: spiceID)
+        let github = FakeStackProvider(id: githubID)
+        await spice.setGraph(makeGraph("a"), for: "/spice-repo")
+        await github.setGraph(makeGraph("b"), for: "/github-repo")
+
+        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
+        await service.probe()
+        try await service.submit(
+            repo: "/github-repo", worktree: "/github-repo/wt", scope: .stack,
+            options: StackSubmitOptions())
+
+        let spiceLog = await spice.mutationLog
+        let githubLog = await github.mutationLog
+        XCTAssertTrue(spiceLog.isEmpty, "mutation must not reach the non-owning provider")
+        XCTAssertEqual(githubLog, ["submit:stack"])
+    }
+
+    func testResolution_evidenceBeatsPreference() async {
+        let spice = FakeStackProvider(id: spiceID)
+        let github = FakeStackProvider(id: githubID)
+        await spice.setGraph(makeGraph("a"), for: "/repo")
+
+        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
+        service.preferredProviderID = githubID
+        await service.probe()
+        await service.refreshGraph(repo: "/repo")
+
+        XCTAssertEqual(service.providerIDByRepo["/repo"], spiceID)
+    }
+
+    func testEnableStacking_uninitializedRepo_usesPreferredProvider() async throws {
+        let spice = FakeStackProvider(id: spiceID)
+        let github = FakeStackProvider(id: githubID)
+        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
+        service.preferredProviderID = githubID
+        await service.probe()
+
+        try await service.enableStacking(repo: "/fresh", trunk: "develop")
+
+        let spiceCalls = await spice.initializeCalls
+        let githubCalls = await github.initializeCalls
+        XCTAssertTrue(spiceCalls.isEmpty)
+        XCTAssertEqual(githubCalls.count, 1)
+        XCTAssertEqual(githubCalls.first?.trunk, "develop")
+    }
+
+    func testProbe_clearsPerRepoResolution() async {
+        // A provider appearing or vanishing can change who owns a repo, so the cache
+        // must not survive a re-probe.
+        let spice = FakeStackProvider(id: spiceID)
+        await spice.setGraph(makeGraph("a"), for: "/repo")
+        let service = StackService(registry: StackProviderRegistry(providers: [spice]))
+        await service.probe()
+        await service.refreshGraph(repo: "/repo")
+        XCTAssertEqual(service.providerIDByRepo["/repo"], spiceID)
+
+        await service.probe()
+        XCTAssertNil(service.providerIDByRepo["/repo"])
+    }
+
+    func testCapabilities_reportTheOwningProvidersFeatureSet() async {
+        let spice = FakeStackProvider(id: spiceID, capabilities: [.restack, .destroyStack])
+        let github = FakeStackProvider(id: githubID, capabilities: [.restack, .untrackStack, .syncPushes])
+        await spice.setGraph(makeGraph("a"), for: "/spice-repo")
+        await github.setGraph(makeGraph("b"), for: "/github-repo")
+
+        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
+        await service.probe()
+        await service.refreshGraph(repo: "/spice-repo")
+        await service.refreshGraph(repo: "/github-repo")
+
+        XCTAssertTrue(service.capabilities(forRepo: "/spice-repo").contains(.destroyStack))
+        XCTAssertFalse(service.capabilities(forRepo: "/spice-repo").contains(.untrackStack))
+        XCTAssertTrue(service.capabilities(forRepo: "/github-repo").contains(.untrackStack))
+        XCTAssertFalse(service.capabilities(forRepo: "/github-repo").contains(.destroyStack))
+        // Sync force-pushes for one provider and not the other — the flag is what tells
+        // the UI whether to confirm first.
+        XCTAssertTrue(service.capabilities(forRepo: "/github-repo").contains(.syncPushes))
+        XCTAssertFalse(service.capabilities(forRepo: "/spice-repo").contains(.syncPushes))
+    }
+
+    func testCapabilities_unresolvedRepo_isEmpty() async {
+        let service = StackService(registry: StackProviderRegistry(providers: []))
+        await service.probe()
+        XCTAssertTrue(service.capabilities(forRepo: "/unknown").isEmpty)
+    }
+
+    func testAvailability_readyProviderWins_overUnusableOne() async {
+        let unusable = FakeStackProvider(id: spiceID)
+        await unusable.setAvailability(.unusable(reason: "wrong binary"))
+        let ready = FakeStackProvider(id: githubID)
+        let service = StackService(registry: StackProviderRegistry(providers: [unusable, ready]))
+        await service.probe()
+
+        XCTAssertTrue(service.isAvailable)
+        XCTAssertEqual(service.availability, .ready(version: "0.0.0"))
+    }
+
+    func testAvailability_noReadyProvider_prefersUnusableReasonOverMissing() async {
+        // An explanation the user can act on beats a bare "not installed".
+        let missing = FakeStackProvider(id: spiceID)
+        await missing.setAvailability(.missing)
+        let unusable = FakeStackProvider(id: githubID)
+        await unusable.setAvailability(.unusable(reason: "gh is not authenticated"))
+        let service = StackService(registry: StackProviderRegistry(providers: [missing, unusable]))
+        await service.probe()
+
+        XCTAssertFalse(service.isAvailable)
+        XCTAssertEqual(service.availability, .unusable(reason: "gh is not authenticated"))
+    }
+
+    func testAvailabilityForProvider_isReportedIndividually() async {
+        let spice = FakeStackProvider(id: spiceID)
+        await spice.setAvailability(.unusable(reason: "wrong binary"))
+        let github = FakeStackProvider(id: githubID)
+        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
+        await service.probe()
+
+        XCTAssertEqual(service.availability(for: spiceID), .unusable(reason: "wrong binary"))
+        XCTAssertEqual(service.availability(for: githubID), .ready(version: "0.0.0"))
+        XCTAssertEqual(service.availability(for: StackProviderID(rawValue: "nope")), .missing)
+    }
+
+    func testUntrackStack_defaultProviderReportsUnsupported() async {
+        // FakeStackProvider inherits the protocol default — the backstop for a caller
+        // that forgot to gate on .untrackStack.
+        let fake = FakeStackProvider(id: spiceID)
+        await fake.setGraph(makeGraph("a"), for: "/repo")
+        let service = StackService(registry: StackProviderRegistry(providers: [fake]))
+        await service.probe()
+        await service.refreshGraph(repo: "/repo")
+
+        do {
+            try await service.untrackStack(repo: "/repo", worktree: "/repo/wt")
+            XCTFail("expected unsupported error")
+        } catch let error as StackProviderError {
+            guard case .unsupported = error else {
+                return XCTFail("expected .unsupported, got \(error)")
+            }
+        } catch {
+            XCTFail("expected StackProviderError, got \(error)")
+        }
     }
 }

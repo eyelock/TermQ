@@ -527,9 +527,126 @@ final class StackGraphTests: XCTestCase {
     }
 }
 
+// MARK: - gh-stack alias collision
+
+final class GhStackAliasDetectionTests: XCTestCase {
+    /// Exactly what `gh stack alias` writes to ~/.local/bin/gs — the first path
+    /// `binaryCandidates()` looks at.
+    private let wrapper = "#!/bin/sh\n# installed by github/gh-stack\nexec gh stack \"$@\"\n"
+
+    func testWrapper_isDetected() {
+        XCTAssertTrue(GitSpiceStackProvider.isGhStackAliasWrapper(contents: wrapper))
+    }
+
+    func testWrapper_detectedByExecLineAlone() {
+        // A hand-written or older wrapper may lack the marker comment.
+        XCTAssertTrue(
+            GitSpiceStackProvider.isGhStackAliasWrapper(contents: "#!/bin/sh\nexec gh stack \"$@\"\n"))
+    }
+
+    func testUnrelatedScript_isNotDetected() {
+        XCTAssertFalse(
+            GitSpiceStackProvider.isGhStackAliasWrapper(contents: "#!/bin/sh\nexec git-spice \"$@\"\n"))
+    }
+
+    func testEmptyContents_isNotDetected() {
+        XCTAssertFalse(GitSpiceStackProvider.isGhStackAliasWrapper(contents: ""))
+    }
+
+    func testWrapperContents_wouldOtherwiseBeMisreadAsBrokenGitSpice() {
+        // The bug this guards: `gs --version` on the wrapper prints gh-stack's version,
+        // which identifyGitSpice rejects — surfacing "not git-spice" (unusable) when the
+        // truth is git-spice simply isn't installed. Both halves must hold.
+        XCTAssertNil(GitSpiceStackProvider.identifyGitSpice(versionOutput: "gh stack version 1.2.3"))
+        XCTAssertTrue(GitSpiceStackProvider.isGhStackAliasWrapper(contents: wrapper))
+    }
+
+    func testCandidates_searchGitSpiceNameBeforeBareGs() {
+        let candidates = GitSpiceStackProvider.binaryCandidates()
+        guard let firstGitSpice = candidates.firstIndex(where: { $0.hasSuffix("/git-spice") }),
+            let firstBareGs = candidates.firstIndex(where: { $0.hasSuffix("/gs") })
+        else {
+            return XCTFail("expected both binary names among candidates")
+        }
+        XCTAssertLessThan(firstGitSpice, firstBareGs)
+    }
+}
+
+// MARK: - Registry fakes
+
+/// Minimal `StackProvider` double for registry resolution tests. Only `probe` and
+/// `isInitialized` matter here — resolution is decided entirely by those two.
+private struct RegistryFakeProvider: StackProvider {
+    static let id = StackProviderID(rawValue: "fake")
+
+    let overrideID: StackProviderID
+    let availability: StackProviderAvailability
+    let initialized: Set<String>
+
+    var providerID: StackProviderID { overrideID }
+    var capabilities: StackCapabilities { [.submit] }
+
+    init(
+        id: StackProviderID, availability: StackProviderAvailability = .ready(version: "1.0"),
+        initialized: Set<String> = []
+    ) {
+        self.overrideID = id
+        self.availability = availability
+        self.initialized = initialized
+    }
+
+    func probe() async -> StackProviderAvailability { availability }
+    func isInitialized(repo: String) async -> Bool { initialized.contains(repo) }
+    func initialize(repo: String, trunk: String) async throws {}
+    func graph(repo: String) async throws -> StackGraph { StackGraph(branches: []) }
+    func createBranch(name: String, target: String?, in worktree: String) async throws {}
+    func trackBranch(_ name: String, base: String, in worktree: String) async throws {}
+    func switchBranch(to name: String, in worktree: String) async throws {}
+    func restack(scope: StackScope, in worktree: String) async throws {}
+    func submit(scope: StackScope, options: StackSubmitOptions, in worktree: String) async throws {}
+    func sync(repo: String) async throws {}
+    func continueOperation(in worktree: String) async throws {}
+    func abortOperation(in worktree: String) async throws {}
+    func pausedOperation(repo: String) async -> StackPausedOperation? { nil }
+    func destroyStack(in worktree: String) async throws {}
+}
+
+/// Records whether the worktree-scoped graph read was reached, to prove the default
+/// forwarding implementation works for repo-wide providers.
+private struct WorktreeRecordingProvider: StackProvider {
+    static let id = StackProviderID(rawValue: "worktree-recording")
+
+    final class Box: @unchecked Sendable {
+        var repoWideCalls = 0
+    }
+    let box: Box
+
+    var capabilities: StackCapabilities { [] }
+    func probe() async -> StackProviderAvailability { .ready(version: "1.0") }
+    func isInitialized(repo: String) async -> Bool { true }
+    func initialize(repo: String, trunk: String) async throws {}
+    func graph(repo: String) async throws -> StackGraph {
+        box.repoWideCalls += 1
+        return StackGraph(branches: [])
+    }
+    func createBranch(name: String, target: String?, in worktree: String) async throws {}
+    func trackBranch(_ name: String, base: String, in worktree: String) async throws {}
+    func switchBranch(to name: String, in worktree: String) async throws {}
+    func restack(scope: StackScope, in worktree: String) async throws {}
+    func submit(scope: StackScope, options: StackSubmitOptions, in worktree: String) async throws {}
+    func sync(repo: String) async throws {}
+    func continueOperation(in worktree: String) async throws {}
+    func abortOperation(in worktree: String) async throws {}
+    func pausedOperation(repo: String) async -> StackPausedOperation? { nil }
+    func destroyStack(in worktree: String) async throws {}
+}
+
 // MARK: - StackProviderRegistry / error tests
 
 final class StackProviderRegistryTests: XCTestCase {
+    private let spice = StackProviderID.gitSpice
+    private let github = StackProviderID.gitHub
+
     func testResolveProvider_missingBinary_returnsNil() async throws {
         // Ship-safe case: git-spice not installed → registry finds nothing usable.
         guard GitSpiceStackProvider.findGsBinary() == nil else {
@@ -538,6 +655,174 @@ final class StackProviderRegistryTests: XCTestCase {
         let registry = StackProviderRegistry()
         let resolved = await registry.resolveProvider()
         XCTAssertNil(resolved)
+    }
+
+    func testResolveForRepo_noReadyProviders_returnsNil() async {
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, availability: .missing)
+        ])
+        let resolved = await registry.resolveProvider(forRepo: "/repo")
+        XCTAssertNil(resolved)
+    }
+
+    func testResolveForRepo_evidenceBeatsPreference() async {
+        // The whole point of per-repo resolution: a repo already stacked with git-spice
+        // must keep being driven by git-spice even when GitHub is the preferred tool.
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, initialized: ["/repo"]),
+            RegistryFakeProvider(id: github, initialized: []),
+        ])
+        let resolved = await registry.resolveProvider(forRepo: "/repo", preferred: github)
+        XCTAssertEqual(resolved?.0.providerID, spice)
+    }
+
+    func testResolveForRepo_uninitializedRepo_usesPreference() async {
+        // Nobody owns it yet — the caller is about to enable stacking, so preference wins.
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice),
+            RegistryFakeProvider(id: github),
+        ])
+        let resolved = await registry.resolveProvider(forRepo: "/fresh", preferred: github)
+        XCTAssertEqual(resolved?.0.providerID, github)
+    }
+
+    func testResolveForRepo_uninitializedRepo_noPreference_usesRegistryOrder() async {
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice),
+            RegistryFakeProvider(id: github),
+        ])
+        let resolved = await registry.resolveProvider(forRepo: "/fresh")
+        XCTAssertEqual(resolved?.0.providerID, spice)
+    }
+
+    func testResolveForRepo_bothClaim_preferenceBreaksTie() async {
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, initialized: ["/repo"]),
+            RegistryFakeProvider(id: github, initialized: ["/repo"]),
+        ])
+        let resolved = await registry.resolveProvider(forRepo: "/repo", preferred: github)
+        XCTAssertEqual(resolved?.0.providerID, github)
+    }
+
+    func testResolveForRepo_differentReposResolveToDifferentProviders() async {
+        // The regression this prevents: one global provider would report the repo it
+        // does not own as simply "not stacked" — silently, since uninitialized is a
+        // normal state.
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, initialized: ["/spice-repo"]),
+            RegistryFakeProvider(id: github, initialized: ["/github-repo"]),
+        ])
+        let a = await registry.resolveProvider(forRepo: "/spice-repo")
+        let b = await registry.resolveProvider(forRepo: "/github-repo")
+        XCTAssertEqual(a?.0.providerID, spice)
+        XCTAssertEqual(b?.0.providerID, github)
+    }
+
+    func testClaimants_reportsEveryProviderThatOwnsTheRepo() async {
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, initialized: ["/repo"]),
+            RegistryFakeProvider(id: github, initialized: ["/repo"]),
+        ])
+        let claimants = await registry.claimants(forRepo: "/repo")
+        XCTAssertEqual(Set(claimants), [spice, github])
+    }
+
+    func testClaimants_ignoresProvidersThatAreNotReady() async {
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, availability: .unusable(reason: "x"), initialized: ["/repo"])
+        ])
+        let claimants = await registry.claimants(forRepo: "/repo")
+        XCTAssertTrue(claimants.isEmpty)
+    }
+
+    func testProbeAll_includesNonReadyProviders() async {
+        // The Settings tab needs the failure cases in order to explain them.
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, availability: .missing),
+            RegistryFakeProvider(id: github, availability: .unusable(reason: "not authenticated")),
+        ])
+        let all = await registry.probeAll()
+        XCTAssertEqual(all[spice], .missing)
+        XCTAssertEqual(all[github], .unusable(reason: "not authenticated"))
+    }
+
+    func testReadyProviders_excludesMissingAndUnusable() async {
+        let registry = StackProviderRegistry(providers: [
+            RegistryFakeProvider(id: spice, availability: .missing),
+            RegistryFakeProvider(id: github),
+        ])
+        let ready = await registry.readyProviders()
+        XCTAssertEqual(ready.map { $0.0.providerID }, [github])
+    }
+}
+
+// MARK: - Protocol defaults
+
+final class StackProviderDefaultsTests: XCTestCase {
+    func testGraphWithWorktrees_defaultsToRepoWideRead() async throws {
+        // Repo-wide providers (git-spice) must inherit the forwarding default untouched.
+        let provider = WorktreeRecordingProvider(box: .init())
+        _ = try await provider.graph(repo: "/repo", worktrees: ["/wt-a", "/wt-b"])
+        XCTAssertEqual(provider.box.repoWideCalls, 1, "default must forward to graph(repo:)")
+    }
+
+    func testUntrackStack_defaultThrowsUnsupported() async {
+        let provider = WorktreeRecordingProvider(box: .init())
+        do {
+            try await provider.untrackStack(in: "/wt")
+            XCTFail("expected unsupported error")
+        } catch let error as StackProviderError {
+            guard case .unsupported = error else {
+                return XCTFail("expected .unsupported, got \(error)")
+            }
+        } catch {
+            XCTFail("expected StackProviderError, got \(error)")
+        }
+    }
+
+    func testProviderID_matchesStaticID() {
+        XCTAssertEqual(GitSpiceStackProvider().providerID, .gitSpice)
+    }
+
+    func testGitSpiceCapabilities_doNotAdvertiseGitHubOnlyFeatures() {
+        let capabilities = GitSpiceStackProvider().capabilities
+        XCTAssertFalse(capabilities.contains(.untrackStack))
+        XCTAssertFalse(capabilities.contains(.mergeStack))
+        XCTAssertFalse(capabilities.contains(.remoteDiscovery))
+        XCTAssertFalse(capabilities.contains(.linkExisting))
+        // gs repo sync is local-only — it must never trigger the force-push confirmation.
+        XCTAssertFalse(capabilities.contains(.syncPushes))
+    }
+}
+
+// MARK: - StackBranch wire compatibility
+
+final class StackBranchCodingTests: XCTestCase {
+    func testDecode_withoutIsQueued_defaultsToFalse() throws {
+        // A payload encoded before isQueued existed must still decode.
+        let json = """
+            {"name":"feat-a","isCurrent":true,"needsRestack":false,"children":[]}
+            """
+        let branch = try JSONDecoder().decode(StackBranch.self, from: Data(json.utf8))
+        XCTAssertEqual(branch.name, "feat-a")
+        XCTAssertFalse(branch.isQueued)
+    }
+
+    func testDecode_withIsQueued_roundTrips() throws {
+        let original = StackBranch(
+            name: "feat-a", isCurrent: false, checkedOutElsewhere: "/wt", parent: "develop",
+            children: ["feat-b"], needsRestack: true, changeRequest: nil, push: nil, isQueued: true)
+        let decoded = try JSONDecoder().decode(
+            StackBranch.self, from: JSONEncoder().encode(original))
+        XCTAssertEqual(decoded, original)
+        XCTAssertTrue(decoded.isQueued)
+    }
+
+    func testIsQueued_defaultsFalseForProvidersWithoutMergeQueueAwareness() {
+        let branch = StackBranch(
+            name: "feat-a", isCurrent: false, checkedOutElsewhere: nil, parent: nil,
+            children: [], needsRestack: false, changeRequest: nil, push: nil)
+        XCTAssertFalse(branch.isQueued)
     }
 }
 

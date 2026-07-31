@@ -298,20 +298,56 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
     /// Public so the Settings > Tools card can display the detected binary path —
     /// path display is inherently git-spice-specific, like the gh card's path row.
     public static func findGsBinary() -> String? {
+        binaryCandidates().first { FileManager.default.isExecutableFile(atPath: $0) }
+    }
+
+    /// Candidate paths in search order. Homebrew installs the binary as `git-spice` only
+    /// (no `gs` symlink, to avoid colliding with Ghostscript), so that name is searched
+    /// first; a bare `gs` is only trusted after `identifyGitSpice`.
+    ///
+    /// Paths that are a `gh stack alias` wrapper are dropped outright — see
+    /// `isGhStackAliasWrapper`.
+    static func binaryCandidates() -> [String] {
         let home = NSHomeDirectory()
-        // Homebrew installs the binary as `git-spice` only (no `gs` symlink, to avoid
-        // colliding with Ghostscript), so search that name first; a bare `gs` is only
-        // trusted after the identity check in `identifyGitSpice`.
         let directories = [
             "\(home)/.local/bin",
             "/opt/homebrew/bin",
             "/usr/local/bin",
             "/usr/bin",
         ]
-        let candidates = ["git-spice", "gs"].flatMap { name in
-            directories.map { "\($0)/\(name)" }
-        }
-        return candidates.first { FileManager.default.isExecutableFile(atPath: $0) }
+        return ["git-spice", "gs"]
+            .flatMap { name in directories.map { "\($0)/\(name)" } }
+            .filter { !isGhStackAliasWrapper(path: $0) }
+    }
+
+    /// `gh stack alias` installs a shell wrapper named `gs` (by default) into
+    /// `~/.local/bin` — the FIRST directory this provider searches. It is not git-spice,
+    /// and without this check the Settings card reports git-spice as "unusable, not
+    /// git-spice" to anyone who ran that command, when the truth is git-spice simply
+    /// isn't installed.
+    ///
+    /// The wrapper self-identifies with a fixed marker line that gh-stack also uses to
+    /// recognize its own scripts, so matching on it is stable:
+    ///
+    ///     #!/bin/sh
+    ///     # installed by github/gh-stack
+    ///     exec gh stack "$@"
+    ///
+    /// Reads the file rather than executing it — detection must stay cheap and
+    /// side-effect free. Anything unreadable or non-text (i.e. a real binary) is not a
+    /// wrapper.
+    static func isGhStackAliasWrapper(path: String) -> Bool {
+        guard let handle = FileHandle(forReadingAtPath: path) else { return false }
+        defer { try? handle.close() }
+        guard let data = try? handle.read(upToCount: 512), let text = String(data: data, encoding: .utf8)
+        else { return false }
+        return isGhStackAliasWrapper(contents: text)
+    }
+
+    /// Pure form, for tests.
+    static func isGhStackAliasWrapper(contents: String) -> Bool {
+        let lower = contents.lowercased()
+        return lower.contains("installed by github/gh-stack") || lower.contains("exec gh stack")
     }
 
     private static func requireGsBinary() throws -> String {
@@ -348,7 +384,11 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
         let stderr: String
     }
 
-    static func run(_ executable: String, _ arguments: [String], cwd: String?) async throws -> ProcessResult {
+    /// `env` entries are merged over the inherited environment. Callers use it to
+    /// neutralize anything that would make the child interactive or pager-driven.
+    static func run(
+        _ executable: String, _ arguments: [String], cwd: String?, env: [String: String] = [:]
+    ) async throws -> ProcessResult {
         try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
                 let process = Process()
@@ -358,6 +398,18 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
                 process.arguments = arguments
                 process.standardOutput = stdoutPipe
                 process.standardError = stderrPipe
+                // Never inherit the app's stdin. git-spice is safe either way because
+                // every call passes --no-prompt, but a provider that decides
+                // interactivity by sniffing for a TTY (gh-stack does exactly this) would
+                // otherwise be free to block on a prompt nobody can answer. Closing stdin
+                // makes non-interactivity a property of how TermQ spawns processes rather
+                // than a promise each provider has to keep.
+                process.standardInput = FileHandle.nullDevice
+                if !env.isEmpty {
+                    var merged = ProcessInfo.processInfo.environment
+                    for (key, value) in env { merged[key] = value }
+                    process.environment = merged
+                }
                 if let cwd { process.currentDirectoryURL = URL(fileURLWithPath: cwd) }
 
                 do {

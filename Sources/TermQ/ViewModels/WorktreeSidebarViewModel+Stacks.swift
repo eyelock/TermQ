@@ -172,8 +172,20 @@ extension WorktreeSidebarViewModel {
             stacks.removeValue(forKey: repo.id)
             return
         }
-        await stackService.refreshGraph(repo: repo.path)
+        await stackService.refreshGraph(repo: repo.path, worktrees: worktreePaths(for: repo))
         stacks[repo.id] = stackService.graphsByRepo[repo.path]
+    }
+
+    /// Every worktree path the sidebar knows about for `repo`, including the main
+    /// worktree at `repo.path`. Handed to the provider because a provider whose tracking
+    /// state lives inside each worktree's git dir cannot see the repo any other way; a
+    /// repo-wide provider ignores it entirely.
+    func worktreePaths(for repo: ObservableRepository) -> [String] {
+        var paths = [repo.path]
+        for worktree in worktrees[repo.id] ?? [] where !paths.contains(worktree.path) {
+            paths.append(worktree.path)
+        }
+        return paths
     }
 
     /// Enable stacking (`gs repo init`) for `repo` against its default branch, then
@@ -181,7 +193,8 @@ extension WorktreeSidebarViewModel {
     func enableStacking(for repo: ObservableRepository) async {
         let trunk = await gitService.defaultBranch(repoPath: repo.path)
         do {
-            try await stackService.enableStacking(repo: repo.path, trunk: trunk)
+            try await stackService.enableStacking(
+                repo: repo.path, trunk: trunk, worktrees: worktreePaths(for: repo))
             stacks[repo.id] = stackService.graphsByRepo[repo.path]
         } catch {
             operationError = Strings.Stacks.enableStackingFailed(error.localizedDescription)

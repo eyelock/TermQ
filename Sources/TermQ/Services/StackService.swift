@@ -23,11 +23,24 @@ struct StackConflictState: Equatable, Sendable {
 ///
 /// A mutation that pauses on conflicts (provider reports a `StackPausedOperation`) does
 /// not error — the repo enters `conflicts[repo]` and the UI offers Continue/Abort.
+///
+/// ## Provider resolution
+///
+/// More than one provider can be installed, and each repo is owned by exactly one of
+/// them — decided by initialization evidence, not by global preference (see
+/// `StackProviderRegistry.resolveProvider(forRepo:preferred:)`). This service therefore
+/// caches a provider PER REPO rather than holding one app-wide `activeProvider`; every
+/// mutation runs against the provider that actually owns the repo it targets.
 @MainActor
 final class StackService: ObservableObject {
     static let shared = StackService()
 
-    @Published private(set) var availability: StackProviderAvailability = .missing
+    /// Availability of every registered provider, ready or not — the Settings tab needs
+    /// the `.missing`/`.unusable` cases in order to explain them.
+    @Published private(set) var availabilityByProvider: [StackProviderID: StackProviderAvailability] = [:]
+    /// Which provider owns each repo, for repos resolved so far. Published so the UI can
+    /// label a repo's stack with the tool driving it.
+    @Published private(set) var providerIDByRepo: [String: StackProviderID] = [:]
     /// Stack graphs keyed by repo path. Absent entry means "not stacked" or "not yet
     /// fetched" — callers distinguish via `initializedRepos`.
     @Published private(set) var graphsByRepo: [String: StackGraph] = [:]
@@ -41,9 +54,16 @@ final class StackService: ObservableObject {
     @Published private(set) var conflicts: [String: StackConflictState] = [:]
 
     private let registry: StackProviderRegistry
-    private var activeProvider: (any StackProvider)?
+    /// Resolved provider instances keyed by repo path. Mirrors `providerIDByRepo`, which
+    /// is the published (Sendable, comparable) projection of the same thing.
+    private var providersByRepo: [String: any StackProvider] = [:]
     /// Tail of the per-repo mutation chain; each new mutation awaits the previous one.
     private var mutationTail: [String: Task<Void, Never>] = [:]
+
+    /// Which provider to favour when a repo has no initialization evidence either way —
+    /// i.e. when enabling stacking on a fresh repo, or when a repo somehow carries both
+    /// tools' metadata. `nil` means "registry order". Wired to Settings in Phase 4.
+    var preferredProviderID: StackProviderID?
 
     init(registry: StackProviderRegistry = .shared) {
         self.registry = registry
@@ -51,27 +71,85 @@ final class StackService: ObservableObject {
 
     // MARK: - Probe
 
-    /// Detect the active provider. Call once at app launch and on demand (e.g. a
-    /// "re-check" affordance). Ship-safe: leaves `availability == .missing` with zero
-    /// behavior change when no provider is installed.
+    /// Probe every registered provider. Call once at app launch and on demand (e.g. a
+    /// "re-check" affordance). Ship-safe: leaves nothing ready, with zero behavior
+    /// change, when no provider is installed.
+    ///
+    /// Clears the per-repo provider cache — a provider that just appeared (or vanished)
+    /// can change who owns a repo, so resolution has to happen again.
     func probe() async {
-        if let (provider, availability) = await registry.resolveProvider() {
-            activeProvider = provider
-            self.availability = availability
-        } else {
-            activeProvider = nil
-            availability = .missing
+        availabilityByProvider = await registry.probeAll()
+        providersByRepo.removeAll()
+        providerIDByRepo.removeAll()
+    }
+
+    /// Availability of one specific provider — what the Settings card for that tool shows.
+    func availability(for id: StackProviderID) -> StackProviderAvailability {
+        availabilityByProvider[id] ?? .missing
+    }
+
+    /// Summary availability across all providers: ready if any provider is ready,
+    /// otherwise the most informative failure (an `.unusable` reason beats a bare
+    /// `.missing`). Backs the app-wide "is stacking available at all" gates.
+    var availability: StackProviderAvailability {
+        var fallback: StackProviderAvailability = .missing
+        for id in orderedProviderIDs {
+            guard let entry = availabilityByProvider[id] else { continue }
+            switch entry {
+            case .ready:
+                return entry
+            case .unusable:
+                if case .missing = fallback { fallback = entry }
+            case .missing:
+                continue
+            }
         }
+        return fallback
+    }
+
+    /// Registry order, so `availability` and the Settings tab agree on precedence.
+    private var orderedProviderIDs: [StackProviderID] {
+        // Deterministic: preferred first (when set), then the rest sorted by raw value.
+        let all = availabilityByProvider.keys.sorted { $0.rawValue < $1.rawValue }
+        guard let preferredProviderID, all.contains(preferredProviderID) else { return all }
+        return [preferredProviderID] + all.filter { $0 != preferredProviderID }
     }
 
     var isAvailable: Bool { availability.isReady }
 
+    /// Capabilities of the provider that owns `repo`. Empty when the repo has no
+    /// resolved provider — callers gate actions on this rather than assuming any
+    /// particular tool's feature set.
+    func capabilities(forRepo repo: String) -> StackCapabilities {
+        providersByRepo[repo]?.capabilities ?? []
+    }
+
+    /// Resolve (and cache) the provider that owns `repo`.
+    private func provider(forRepo repo: String) async -> (any StackProvider)? {
+        if let cached = providersByRepo[repo] { return cached }
+        guard
+            let (provider, _) = await registry.resolveProvider(
+                forRepo: repo, preferred: preferredProviderID)
+        else {
+            providerIDByRepo.removeValue(forKey: repo)
+            return nil
+        }
+        providersByRepo[repo] = provider
+        providerIDByRepo[repo] = provider.providerID
+        return provider
+    }
+
     // MARK: - Stack graph
 
     /// Refresh the stack graph for `repo`. No-ops (clearing cached state) when no
-    /// provider is active or the repo isn't stack-initialized.
-    func refreshGraph(repo: String) async {
-        guard let provider = activeProvider else {
+    /// provider is available or the repo isn't stack-initialized.
+    ///
+    /// `worktrees` lists the repo's worktree paths. Providers with repo-wide state
+    /// ignore it; a provider whose tracking lives inside each worktree's git dir needs
+    /// it to see the whole repo (see `StackProvider.graph(repo:worktrees:)`). Defaulted
+    /// so callers without a worktree list still get whatever the provider can see.
+    func refreshGraph(repo: String, worktrees: [String] = []) async {
+        guard let provider = await provider(forRepo: repo) else {
             graphsByRepo.removeValue(forKey: repo)
             initializedRepos.remove(repo)
             return
@@ -91,7 +169,7 @@ final class StackService: ObservableObject {
         initializedRepos.insert(repo)
 
         do {
-            let graph = try await provider.graph(repo: repo)
+            let graph = try await provider.graph(repo: repo, worktrees: worktrees)
             graphsByRepo[repo] = graph
             errorByRepo.removeValue(forKey: repo)
         } catch StackProviderError.notInitialized {
@@ -120,12 +198,14 @@ final class StackService: ObservableObject {
     /// Run `gs repo init` (or the active provider's equivalent) for `repo`, then refresh
     /// its graph. Throws `StackProviderError.binaryMissing` if no provider is active —
     /// callers should already be gating this action on `isAvailable`.
-    func enableStacking(repo: String, trunk: String) async throws {
-        guard let provider = activeProvider else {
+    func enableStacking(repo: String, trunk: String, worktrees: [String] = []) async throws {
+        // No repo has evidence yet at this point, so resolution falls through to
+        // `preferredProviderID` / registry order — which is exactly the intent here.
+        guard let provider = await provider(forRepo: repo) else {
             throw StackProviderError.binaryMissing
         }
         try await provider.initialize(repo: repo, trunk: trunk)
-        await refreshGraph(repo: repo)
+        await refreshGraph(repo: repo, worktrees: worktrees)
     }
 
     // MARK: - Mutations
@@ -213,6 +293,14 @@ final class StackService: ObservableObject {
         }
     }
 
+    /// Drop the stack from tracking WITHOUT deleting its branches. Distinct from
+    /// `destroyStack` — gate on `.untrackStack`, not `.destroyStack`.
+    func untrackStack(repo: String, worktree: String) async throws {
+        try await runMutation(repo: repo, worktree: worktree) { provider in
+            try await provider.untrackStack(in: worktree)
+        }
+    }
+
     /// Serialize a mutation on the repo's queue, flag the repo as mutating for the
     /// duration, and map a provider-reported paused operation onto `conflicts` instead
     /// of surfacing it as an error.
@@ -221,7 +309,9 @@ final class StackService: ObservableObject {
         worktree: String,
         _ operation: @escaping @MainActor (any StackProvider) async throws -> Void
     ) async throws {
-        guard let provider = activeProvider else {
+        // Resolved per repo: a mutation must run against the tool that actually owns
+        // this repository, not whichever provider happens to be installed first.
+        guard let provider = await provider(forRepo: repo) else {
             throw StackProviderError.binaryMissing
         }
         let previous = mutationTail[repo]
@@ -257,11 +347,16 @@ final class StackService: ObservableObject {
         mutatingRepos.remove(repo)
         conflicts.removeValue(forKey: repo)
         mutationTail.removeValue(forKey: repo)
+        providersByRepo.removeValue(forKey: repo)
+        providerIDByRepo.removeValue(forKey: repo)
     }
 
     #if DEBUG
-        func setAvailabilityForTesting(_ availability: StackProviderAvailability) {
-            self.availability = availability
+        func setAvailabilityForTesting(
+            _ availability: StackProviderAvailability,
+            for id: StackProviderID = .gitSpice
+        ) {
+            availabilityByProvider[id] = availability
         }
     #endif
 }
