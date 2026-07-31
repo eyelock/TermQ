@@ -599,6 +599,18 @@ final class StackActionAvailabilityTests: XCTestCase {
 /// `activeProvider` would hand every repo to whichever probed first — and because an
 /// uninitialized repo is a deliberately silent state, repos owned by the other tool
 /// would report "not stacked" with no warning at all.
+/// Mutable preference holder for the resolution tests.
+///
+/// `StackService` takes its preference as an escaping `@Sendable` closure, so capturing a
+/// local `var` and mutating it afterwards is a data race the compiler rightly warns
+/// about. A `@MainActor` reference box gives the tests the same "flip it and re-read"
+/// shape with the mutation properly isolated.
+@MainActor
+final class PreferenceBox {
+    var value: PreferredStackProvider
+    init(_ value: PreferredStackProvider) { self.value = value }
+}
+
 @MainActor
 final class StackServiceProviderResolutionTests: XCTestCase {
     private let spiceID = StackProviderID.gitSpice
@@ -733,15 +745,15 @@ final class StackServiceProviderResolutionTests: XCTestCase {
     func testPreference_isReadThroughOnEveryResolution() async {
         // Read through rather than cached: flipping the setting must take effect without
         // anything having to push the new value into the service.
-        var preference = PreferredStackProvider.gitSpice
+        let preference = PreferenceBox(.gitSpice)
         let service = StackService(
-            registry: StackProviderRegistry(providers: []), preference: { preference })
+            registry: StackProviderRegistry(providers: []), preference: { preference.value })
         XCTAssertEqual(service.preferredProviderID, spiceID)
 
-        preference = .gitHub
+        preference.value = .gitHub
         XCTAssertEqual(service.preferredProviderID, githubID)
 
-        preference = .automatic
+        preference.value = .automatic
         XCTAssertNil(service.preferredProviderID, "automatic means registry order, not a provider")
     }
 
@@ -751,15 +763,15 @@ final class StackServiceProviderResolutionTests: XCTestCase {
         let spice = FakeStackProvider(id: spiceID)
         let github = FakeStackProvider(id: githubID)
         await spice.setGraph(makeGraph("a"), for: "/repo")
-        var preference = PreferredStackProvider.automatic
+        let preference = PreferenceBox(.automatic)
         let service = StackService(
             registry: StackProviderRegistry(providers: [spice, github]),
-            preference: { preference })
+            preference: { preference.value })
         await service.probe()
         await service.refreshGraph(repo: "/repo")
         XCTAssertEqual(service.providerIDByRepo["/repo"], spiceID)
 
-        preference = .gitHub
+        preference.value = .gitHub
         await service.preferredProviderDidChange()
 
         XCTAssertEqual(service.providerIDByRepo["/repo"], spiceID)
@@ -770,10 +782,10 @@ final class StackServiceProviderResolutionTests: XCTestCase {
         // it must be re-resolved when the preference moves.
         let spice = FakeStackProvider(id: spiceID)
         let github = FakeStackProvider(id: githubID)
-        var preference = PreferredStackProvider.gitSpice
+        let preference = PreferenceBox(.gitSpice)
         let service = StackService(
             registry: StackProviderRegistry(providers: [spice, github]),
-            preference: { preference })
+            preference: { preference.value })
         await service.probe()
         try? await service.enableStacking(repo: "/fresh", trunk: "develop")
         XCTAssertEqual(service.providerIDByRepo["/fresh"], spiceID)
@@ -781,7 +793,7 @@ final class StackServiceProviderResolutionTests: XCTestCase {
         // `enableStacking` gave the repo evidence, so drop it to model the
         // never-initialized case the fallback path actually covers.
         await spice.setInitialized(false, for: "/fresh")
-        preference = .gitHub
+        preference.value = .gitHub
         await service.preferredProviderDidChange()
 
         XCTAssertNil(service.providerIDByRepo["/fresh"])

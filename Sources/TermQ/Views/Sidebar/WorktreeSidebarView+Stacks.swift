@@ -966,7 +966,8 @@ extension WorktreeSidebarView {
 
             if actions.canSync {
                 Button {
-                    let chain = worktree.branch
+                    let chain =
+                        worktree.branch
                         .flatMap { viewModel.stacks[repo.id]?.chain(containing: $0) } ?? []
                     requestSync(worktree: worktree, repo: repo, branches: chain.map(\.name))
                 } label: {
