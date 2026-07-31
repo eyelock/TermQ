@@ -355,7 +355,7 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
         return path
     }
 
-    private static func throwIfFailed(_ result: ProcessResult, command: String) throws {
+    private static func throwIfFailed(_ result: StackProcessResult, command: String) throws {
         guard result.exitCode == 0 else {
             throw StackProviderError.commandFailed(
                 command: command, exitCode: result.exitCode, output: result.stderr)
@@ -375,61 +375,13 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
 
     // MARK: - Process execution
 
-    /// Minimal Sendable process result. Not shared with `CommandRunner` (TermQ target) —
-    /// this type must stay usable from MCPServerLib and the CLI, which don't depend on
-    /// the app target.
-    struct ProcessResult: Sendable {
-        let exitCode: Int32
-        let stdout: String
-        let stderr: String
-    }
-
-    /// `env` entries are merged over the inherited environment. Callers use it to
-    /// neutralize anything that would make the child interactive or pager-driven.
+    /// Every provider spawns through `StackProcessRunner`, which owns the
+    /// stdin-is-closed guarantee. Kept as a thin alias so the call sites below read the
+    /// same as before the runner was extracted.
     static func run(
         _ executable: String, _ arguments: [String], cwd: String?, env: [String: String] = [:]
-    ) async throws -> ProcessResult {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async {
-                let process = Process()
-                let stdoutPipe = Pipe()
-                let stderrPipe = Pipe()
-                process.executableURL = URL(fileURLWithPath: executable)
-                process.arguments = arguments
-                process.standardOutput = stdoutPipe
-                process.standardError = stderrPipe
-                // Never inherit the app's stdin. git-spice is safe either way because
-                // every call passes --no-prompt, but a provider that decides
-                // interactivity by sniffing for a TTY (gh-stack does exactly this) would
-                // otherwise be free to block on a prompt nobody can answer. Closing stdin
-                // makes non-interactivity a property of how TermQ spawns processes rather
-                // than a promise each provider has to keep.
-                process.standardInput = FileHandle.nullDevice
-                if !env.isEmpty {
-                    var merged = ProcessInfo.processInfo.environment
-                    for (key, value) in env { merged[key] = value }
-                    process.environment = merged
-                }
-                if let cwd { process.currentDirectoryURL = URL(fileURLWithPath: cwd) }
-
-                do {
-                    try process.run()
-                } catch {
-                    continuation.resume(throwing: error)
-                    return
-                }
-                process.waitUntilExit()
-
-                let outData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
-                let errData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
-                continuation.resume(
-                    returning: ProcessResult(
-                        exitCode: process.terminationStatus,
-                        stdout: String(data: outData, encoding: .utf8) ?? "",
-                        stderr: String(data: errData, encoding: .utf8) ?? ""
-                    ))
-            }
-        }
+    ) async throws -> StackProcessResult {
+        try await StackProcessRunner.run(executable, arguments, cwd: cwd, env: env)
     }
 }
 

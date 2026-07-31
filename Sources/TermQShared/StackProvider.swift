@@ -459,7 +459,12 @@ public struct StackProviderRegistry: Sendable {
 
     private let providers: [any StackProvider]
 
-    public init(providers: [any StackProvider] = [GitSpiceStackProvider()]) {
+    /// Order is preference order, used only to break ties for repos with no
+    /// initialization evidence. git-spice stays first so existing installs are
+    /// unaffected by gh-stack appearing on the machine.
+    public init(
+        providers: [any StackProvider] = [GitSpiceStackProvider(), GitHubStackProvider()]
+    ) {
         self.providers = providers
     }
 
