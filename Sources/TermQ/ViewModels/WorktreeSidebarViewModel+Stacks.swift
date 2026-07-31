@@ -131,15 +131,6 @@ struct StackActionAvailability: Equatable {
         canResumeConflict = capabilities.contains(.conflictResume)
     }
 
-    /// Whether Sync can be offered as a one-click action.
-    ///
-    /// A `.syncPushes` provider force-pushes every branch in the stack and rewrites the
-    /// stack object on the remote. That needs a confirmation step naming what will be
-    /// pushed, and until that sheet exists the action is withheld rather than offered
-    /// unguarded — a button labelled "Sync" that silently force-pushes is the trap the
-    /// capability was added to prevent.
-    var canSyncWithoutConfirmation: Bool { canSync && !syncNeedsConfirmation }
-
     /// Whether group-level actions must run in a worktree that has one of the stack's
     /// branches checked out.
     ///
@@ -537,6 +528,18 @@ extension WorktreeSidebarViewModel {
             await refreshStack(for: repo)
         }
         return skipped
+    }
+
+    /// Drop `group`'s stack from tracking, LEAVING EVERY BRANCH IN PLACE.
+    ///
+    /// Deliberately much thinner than `destroyStack`: nothing is deleted, so there is no
+    /// dirty-worktree guard to run, no worktree to remove, and no scratch checkout to
+    /// reach an unanchored stack. `worktree` must have one of the stack's branches
+    /// checked out — the provider command targets whatever is at HEAD — which the caller
+    /// guarantees by only offering the action for an anchored stack.
+    func untrackStack(repo: ObservableRepository, worktree: GitWorktree) async throws {
+        try await stackService.untrackStack(repo: repo.path, worktree: worktree.path)
+        await refreshWorktrees(for: repo)
     }
 
     /// Submit (create/update) change requests for `scope`, then refresh worktrees and

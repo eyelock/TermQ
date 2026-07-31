@@ -676,9 +676,10 @@ extension WorktreeSidebarView {
             .disabled(isMutating)
         }
 
-        if actions.canSyncWithoutConfirmation, let target = operationWorktree {
+        if actions.canSync, let target = operationWorktree {
             Button {
-                Task { await syncStackRepo(worktree: target, repo: repo) }
+                requestSync(
+                    worktree: target, repo: repo, branches: group.branches.map(\.name))
             } label: {
                 Label(Strings.Stacks.syncRepo, systemImage: "arrow.triangle.2.circlepath.circle")
             }
@@ -694,6 +695,19 @@ extension WorktreeSidebarView {
                 isShowingDestroyStackAlert = true
             } label: {
                 Label(Strings.Stacks.destroyStack, systemImage: "trash")
+            }
+            .disabled(isMutating)
+        }
+
+        // Its non-destructive counterpart, and never shown as a substitute for the one
+        // above: untracking leaves every branch exactly where it is. Requires an
+        // anchoring worktree because the command targets whatever is checked out.
+        if actions.canUntrackStack, let target = operationWorktree {
+            Button {
+                pendingUntrackStack = (repo, target, group)
+                isShowingUntrackStackAlert = true
+            } label: {
+                Label(Strings.Stacks.untrackStack, systemImage: "minus.circle")
             }
             .disabled(isMutating)
         }
@@ -883,6 +897,34 @@ extension WorktreeSidebarView {
         }
     }
 
+    /// Runs the confirmed "Untrack Stack" mutation.
+    ///
+    /// No branch is deleted and no worktree is touched, so unlike Destroy there is
+    /// nothing to report beyond "it happened" — the toast says so explicitly, because a
+    /// stack silently vanishing from the sidebar otherwise reads like data loss.
+    func untrackStack(worktree: GitWorktree, repo: ObservableRepository) async {
+        do {
+            try await viewModel.untrackStack(repo: repo, worktree: worktree)
+            showStackToast(Strings.Stacks.untrackStackDone)
+        } catch {
+            viewModel.operationError = error.localizedDescription
+        }
+    }
+
+    /// Start a sync, routing through the confirmation alert when the provider's sync
+    /// reaches the remote. `branches` names what would be force-pushed, so the alert can
+    /// list it rather than asking the user to trust a generic warning.
+    func requestSync(
+        worktree: GitWorktree, repo: ObservableRepository, branches: [String]
+    ) {
+        guard stackActions(for: repo).syncNeedsConfirmation else {
+            Task { await syncStackRepo(worktree: worktree, repo: repo) }
+            return
+        }
+        pendingSyncStack = (repo, worktree, branches)
+        isShowingSyncConfirmAlert = true
+    }
+
     /// Context-menu items for stack operations on a worktree. Empty when no provider
     /// is available or the repo isn't stack-initialized. Mutating actions are disabled
     /// while a stack mutation is already in flight for the repo — the queue serializes
@@ -922,11 +964,27 @@ extension WorktreeSidebarView {
                 }
             }
 
-            if actions.canSyncWithoutConfirmation {
+            if actions.canSync {
                 Button {
-                    Task { await syncStackRepo(worktree: worktree, repo: repo) }
+                    let chain = worktree.branch
+                        .flatMap { viewModel.stacks[repo.id]?.chain(containing: $0) } ?? []
+                    requestSync(worktree: worktree, repo: repo, branches: chain.map(\.name))
                 } label: {
                     Label(Strings.Stacks.syncRepo, systemImage: "arrow.triangle.2.circlepath.circle")
+                }
+                .disabled(isMutating)
+            }
+
+            if actions.canUntrackStack, let branch = worktree.branch,
+                let group = viewModel.stackGroups(for: repo).first(where: { group in
+                    group.branches.contains { $0.name == branch }
+                })
+            {
+                Button {
+                    pendingUntrackStack = (repo, worktree, group)
+                    isShowingUntrackStackAlert = true
+                } label: {
+                    Label(Strings.Stacks.untrackStack, systemImage: "minus.circle")
                 }
                 .disabled(isMutating)
             }
