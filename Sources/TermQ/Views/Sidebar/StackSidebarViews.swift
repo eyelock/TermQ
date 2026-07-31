@@ -79,10 +79,12 @@ struct StackDisclosureRow<Label: View, HeaderMenu: View>: View {
     /// Requested switch to a non-current entry (double-click or context menu). The
     /// guard logic (dirty worktree, attached session) lives in the view model, not here.
     let onSwitch: (StackBranch) -> Void
-    /// Called for "Restack from Here" on an entry.
-    let onRestackFromHere: (StackBranch) -> Void
-    /// Called for "Submit This Branch…" on an entry.
-    let onSubmitBranch: (StackBranch) -> Void
+    /// Called for "Restack from Here" on an entry. `nil` hides the item — the active
+    /// provider can't restack starting from a named branch.
+    let onRestackFromHere: ((StackBranch) -> Void)?
+    /// Called for "Submit This Branch…" on an entry. `nil` hides the item — the active
+    /// provider submits whole stacks only.
+    let onSubmitBranch: ((StackBranch) -> Void)?
     /// Warning text when the entry's CR base doesn't match its stack parent; `nil` when
     /// consistent or unknown. Computed by the caller from PR data — this view stays dumb.
     let baseMismatch: (StackBranch) -> String?
@@ -128,8 +130,8 @@ struct StackDisclosureRow<Label: View, HeaderMenu: View>: View {
                     baseMismatch: baseMismatch(branch),
                     checkedOutElsewherePath: elsewhere,
                     onSwitch: { onSwitch(branch) },
-                    onRestackFromHere: { onRestackFromHere(branch) },
-                    onSubmitBranch: { onSubmitBranch(branch) },
+                    onRestackFromHere: onRestackFromHere.map { action in { action(branch) } },
+                    onSubmitBranch: onSubmitBranch.map { action in { action(branch) } },
                     onJumpToWorktree: elsewhere == nil ? nil : { onJumpToWorktree(branch) },
                     onBreakOut: elsewhere == nil && branch.name != currentBranch
                         ? { onBreakOut(branch) } : nil,
@@ -181,8 +183,10 @@ struct StackBranchEntryRow: View {
         baseMismatch: String?,
         checkedOutElsewherePath: String?,
         onSwitch: @escaping () -> Void,
-        onRestackFromHere: @escaping () -> Void,
-        onSubmitBranch: @escaping () -> Void,
+        // Optional: the provider owning this repo may not support restacking from — or
+        // submitting — a single named branch. Nil omits the menu item entirely.
+        onRestackFromHere: (() -> Void)?,
+        onSubmitBranch: (() -> Void)?,
         onJumpToWorktree: (() -> Void)?,
         onBreakOut: (() -> Void)?,
         actions: StackEntryActions = StackEntryActions()
@@ -547,10 +551,12 @@ struct StacksSectionView<HarnessBadge: View, TerminalBadge: View, GroupMenu: Vie
     let entryActions: (StackGroup, StackBranch) -> StackEntryActions
     /// "Break Out into Worktree…" for an entry not checked out anywhere.
     let onBreakOutBranch: (StackBranch) -> Void
-    /// "Restack from Here" on an entry.
-    let onRestackFromHereBranch: (StackBranch) -> Void
-    /// "Submit This Branch…" on an entry.
-    let onSubmitBranch: (StackBranch) -> Void
+    /// "Restack from Here" on an entry. `nil` hides it — the provider that owns this
+    /// repo can only restack from the branch it has checked out.
+    let onRestackFromHereBranch: ((StackBranch) -> Void)?
+    /// "Submit This Branch…" on an entry. `nil` hides it — the provider submits whole
+    /// stacks only.
+    let onSubmitBranch: ((StackBranch) -> Void)?
     /// Row-icon parity (Revision 11b): the group header's trailing harness badge.
     @ViewBuilder let harnessBadge: (StackGroup) -> HarnessBadge
     /// Row-icon parity (Revision 11f): the group header's open-terminal-count badge,
@@ -636,8 +642,8 @@ struct StackGroupRow<HarnessBadge: View, TerminalBadge: View, HeaderMenu: View>:
     /// Bundled launch/insertion/remote actions for an entry.
     let entryActions: (StackBranch) -> StackEntryActions
     let onBreakOutBranch: (StackBranch) -> Void
-    let onRestackFromHereBranch: (StackBranch) -> Void
-    let onSubmitBranch: (StackBranch) -> Void
+    let onRestackFromHereBranch: ((StackBranch) -> Void)?
+    let onSubmitBranch: ((StackBranch) -> Void)?
     /// Row-icon parity with worktree rows (Revision 11b): the trailing jigsaw badge
     /// reflecting the stack's effective harness. Injected so this view stays dumb about
     /// harness resolution — mirrors how `entryActions` is injected.
@@ -751,8 +757,8 @@ struct StackGroupRow<HarnessBadge: View, TerminalBadge: View, HeaderMenu: View>:
                     worktreePath: worktree?.path,
                     onJumpToWorktree: worktree.map { wt in { onJumpToWorktree(wt) } },
                     onBreakOut: worktree == nil ? { onBreakOutBranch(branch) } : nil,
-                    onRestackFromHere: { onRestackFromHereBranch(branch) },
-                    onSubmitBranch: { onSubmitBranch(branch) },
+                    onRestackFromHere: onRestackFromHereBranch.map { a in { a(branch) } },
+                    onSubmitBranch: onSubmitBranch.map { a in { a(branch) } },
                     actions: entryActions(branch)
                 )
                 .padding(.leading, StackRowMetrics.contentColumn + StackRowMetrics.indentStep)

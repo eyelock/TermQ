@@ -103,6 +103,13 @@ struct StackActionAvailability: Equatable {
     let canSync: Bool
     /// Sync reaches the remote and force-pushes — confirm before running it.
     let syncNeedsConfirmation: Bool
+    /// Restack a NAMED branch — "Restack from Here" and the cross-worktree sweep. A
+    /// provider can restack (`canRestack`) yet only ever pivot on its own checked-out
+    /// branch, in which case those two must not be offered.
+    let canRestackNamedBranch: Bool
+    /// Submit part of a stack — the per-branch Submit action. Whole-stack submit stays
+    /// available via `canSubmit`.
+    let canSubmitNamedBranch: Bool
     let canInsertBranch: Bool
     let canDestroyStack: Bool
     let canUntrackStack: Bool
@@ -113,11 +120,34 @@ struct StackActionAvailability: Equatable {
         canSubmit = capabilities.contains(.submit)
         canSync = capabilities.contains(.sync)
         syncNeedsConfirmation = capabilities.contains(.syncPushes)
+        // Both are conjunctions, not standalone flags: scoping a restack you cannot
+        // perform at all is meaningless, and reading them independently would offer
+        // "Restack from Here" to a provider with no restack.
+        canRestackNamedBranch = capabilities.contains(.restack) && capabilities.contains(.scopedRestack)
+        canSubmitNamedBranch = capabilities.contains(.submit) && capabilities.contains(.scopedSubmit)
         canInsertBranch = capabilities.contains(.branchInsertion)
         canDestroyStack = capabilities.contains(.destroyStack)
         canUntrackStack = capabilities.contains(.untrackStack)
         canResumeConflict = capabilities.contains(.conflictResume)
     }
+
+    /// Whether Sync can be offered as a one-click action.
+    ///
+    /// A `.syncPushes` provider force-pushes every branch in the stack and rewrites the
+    /// stack object on the remote. That needs a confirmation step naming what will be
+    /// pushed, and until that sheet exists the action is withheld rather than offered
+    /// unguarded — a button labelled "Sync" that silently force-pushes is the trap the
+    /// capability was added to prevent.
+    var canSyncWithoutConfirmation: Bool { canSync && !syncNeedsConfirmation }
+
+    /// Whether group-level actions must run in a worktree that has one of the stack's
+    /// branches checked out.
+    ///
+    /// A provider that accepts a branch name resolves the target stack from that name and
+    /// can work from the repo's main worktree with anything checked out. One that always
+    /// pivots on `HEAD` resolves a DIFFERENT stack — or none — when run from a worktree
+    /// standing outside the stack, so the working directory has to be chosen for it.
+    var operatesOnCheckedOutStack: Bool { !canRestackNamedBranch && !canSubmitNamedBranch }
 
     /// Nothing offered — the safe default for a repo with no resolved provider.
     static let none = StackActionAvailability(capabilities: [])
@@ -459,6 +489,12 @@ extension WorktreeSidebarViewModel {
         for repo: ObservableRepository, excluding excludedWorktreePath: String? = nil
     ) async -> [StackSkippedRestack] {
         guard stackService.isAvailable else { return [] }
+        // The sweep exists to restack branches BY NAME from a worktree it doesn't own.
+        // A provider that always pivots on its own checked-out branch would rebase the
+        // wrong range, so it opts out entirely rather than partially — and reports
+        // nothing skipped, because with per-worktree state (gh-stack) each worktree's
+        // stack is independent and there is no cross-worktree staleness to sweep.
+        guard stackActions(for: repo).canRestackNamedBranch else { return [] }
         var skipped: [StackSkippedRestack] = []
         for _ in 0..<2 {
             guard stackService.conflicts[repo.path] == nil else { break }

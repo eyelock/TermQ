@@ -75,12 +75,26 @@ final class StackService: ObservableObject {
     /// "re-check" affordance). Ship-safe: leaves nothing ready, with zero behavior
     /// change, when no provider is installed.
     ///
-    /// Clears the per-repo provider cache — a provider that just appeared (or vanished)
-    /// can change who owns a repo, so resolution has to happen again.
+    /// Re-validates the per-repo provider cache rather than emptying it.
+    ///
+    /// A provider appearing or vanishing can change who owns a repo, so a cached entry is
+    /// kept only while it still holds: the provider is still ready, and it still finds its
+    /// own initialization evidence in that repo. Anything else is dropped and re-resolved
+    /// on next use — which is where a newly installed provider gets its chance to claim a
+    /// repo that nothing had evidence for.
+    ///
+    /// Clearing wholesale would be simpler and is wrong: `capabilities(forRepo:)` answers
+    /// from this cache, and the sidebar gates every stack action on it. An empty cache
+    /// reads as "this provider can do nothing", so a re-probe would blank the stack menus
+    /// until some later graph refresh happened to repopulate them.
     func probe() async {
         availabilityByProvider = await registry.probeAll()
-        providersByRepo.removeAll()
-        providerIDByRepo.removeAll()
+        for (repo, provider) in providersByRepo {
+            let stillReady = availabilityByProvider[provider.providerID]?.isReady ?? false
+            if stillReady, await provider.isInitialized(repo: repo) { continue }
+            providersByRepo.removeValue(forKey: repo)
+            providerIDByRepo.removeValue(forKey: repo)
+        }
     }
 
     /// Availability of one specific provider — what the Settings card for that tool shows.
@@ -265,7 +279,10 @@ final class StackService: ObservableObject {
     /// plain fetch for stacked repos. A conflict pause is recorded like any mutation.
     func sync(repo: String, worktree: String) async throws {
         try await runMutation(repo: repo, worktree: worktree) { provider in
-            try await provider.sync(repo: repo)
+            // Worktree-scoped form: repo-wide providers ignore `worktree` via the protocol
+            // default, but a provider whose sync targets the checked-out stack needs it as
+            // the working directory (see `StackProvider.sync(repo:worktree:)`).
+            try await provider.sync(repo: repo, worktree: worktree)
         }
     }
 
