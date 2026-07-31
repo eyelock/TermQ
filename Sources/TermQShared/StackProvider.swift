@@ -71,6 +71,22 @@ public struct StackCapabilities: OptionSet, Sendable {
     /// creates/updates the stack object on GitHub, where `gs repo sync` touches nothing
     /// remote. Without this flag a one-click "Sync" would silently force-push.
     public static let syncPushes = StackCapabilities(rawValue: 1 << 11)
+    /// `restack` can target a NAMED branch rather than only the one checked out in the
+    /// worktree it runs in — gates "Restack from Here" and the cross-worktree restack
+    /// sweep, both of which name a branch other than the caller's own.
+    ///
+    /// git-spice takes `--branch=NAME` on every restack form. gh-stack's `rebase` always
+    /// pivots on the checked-out branch: its positional argument only picks WHICH STACK
+    /// to load, and `--upstack`/`--downstack` are still measured from `HEAD`. Passing a
+    /// branch name there would rebase a different range than the caller asked for, which
+    /// is worse than not offering the action at all.
+    public static let scopedRestack = StackCapabilities(rawValue: 1 << 12)
+    /// `submit` can target part of a stack (one branch, or a branch and everything above
+    /// it) rather than all of it — gates the per-branch Submit action.
+    ///
+    /// git-spice has `branch`/`upstack`/`stack submit`. gh-stack has a single `submit`
+    /// that always covers the whole stack, with no scoping flag.
+    public static let scopedSubmit = StackCapabilities(rawValue: 1 << 13)
 }
 
 /// Where a newly created branch attaches, relative to the branch currently checked out
@@ -318,6 +334,11 @@ public enum StackProviderError: Error, LocalizedError, Sendable {
     /// The active provider has no equivalent for the requested operation. Callers should
     /// be gating on `capabilities` — this is the backstop for when they don't.
     case unsupported(operation: String)
+    /// The operation is supported, but the repository/worktree is not in a state the
+    /// provider can act on (e.g. gh-stack can only add a branch at the top of a stack).
+    /// Distinct from `.unsupported`: the user can fix this and retry, so the message is
+    /// surfaced verbatim and should say what to do.
+    case preconditionFailed(String)
 
     public var errorDescription: String? {
         switch self {
@@ -327,6 +348,8 @@ public enum StackProviderError: Error, LocalizedError, Sendable {
             return "Stacking is not enabled for \(repo)."
         case .unsupported(let operation):
             return "This stacked-PR provider does not support \(operation)."
+        case .preconditionFailed(let detail):
+            return detail
         case .commandFailed(let command, let exitCode, let output):
             return "\(command) failed (exit \(exitCode)): \(output)"
         case .decodingFailed(let detail):
@@ -399,6 +422,16 @@ public protocol StackProvider: Sendable {
     func restack(scope: StackScope, in worktree: String) async throws
     func submit(scope: StackScope, options: StackSubmitOptions, in worktree: String) async throws
     func sync(repo: String) async throws
+    /// Sync from inside a specific worktree.
+    ///
+    /// Providers with repo-wide state reconcile the whole repository regardless of the
+    /// working directory and inherit the default below, which drops `worktree`.
+    ///
+    /// gh-stack's `sync` operates on THE STACK CONTAINING THE CHECKED-OUT BRANCH, and its
+    /// tracking file lives in the worktree's own git dir — run from the wrong directory it
+    /// either syncs a different stack or reports "not in a stack". Such a provider must
+    /// override this and use `worktree` as the working directory.
+    func sync(repo: String, worktree: String) async throws
     func continueOperation(in worktree: String) async throws
     func abortOperation(in worktree: String) async throws
     func pausedOperation(repo: String) async -> StackPausedOperation?
@@ -432,6 +465,13 @@ extension StackProvider {
     /// state needs to override this.
     public func graph(repo: String, worktrees: [String]) async throws -> StackGraph {
         try await graph(repo: repo)
+    }
+
+    /// Repo-wide providers reconcile the same state from anywhere, so the working
+    /// directory is irrelevant. Only a provider whose sync is scoped to the checked-out
+    /// stack needs to override this.
+    public func sync(repo: String, worktree: String) async throws {
+        try await sync(repo: repo)
     }
 
     /// Untracking is opt-in via `.untrackStack`; the default refuses rather than

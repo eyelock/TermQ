@@ -12,8 +12,20 @@ import Foundation
 public struct GitSpiceStackProvider: StackProvider, Sendable {
     public static let id = StackProviderID.gitSpice
 
+    /// `.scopedRestack`/`.scopedSubmit`: every git-spice restack and submit form accepts
+    /// `--branch=NAME`, so both can target a branch other than the checked-out one.
     public var capabilities: StackCapabilities {
-        [.restack, .submit, .sync, .trackExisting, .conflictResume, .branchInsertion, .destroyStack]
+        [
+            .restack,
+            .submit,
+            .sync,
+            .trackExisting,
+            .conflictResume,
+            .branchInsertion,
+            .destroyStack,
+            .scopedRestack,
+            .scopedSubmit,
+        ]
     }
 
     public init() {}

@@ -47,6 +47,9 @@ public struct GitHubStackProvider: StackProvider, Sendable {
     ///   creates PRs; neither is "track this one branch onto this base"
     /// - no `.destroyStack` — `unstack` leaves every branch in place, so it is
     ///   `.untrackStack`, not the destructive operation of the same shape
+    /// - no `.scopedRestack` — `rebase` always pivots on the checked-out branch; its
+    ///   positional argument picks a stack, not a starting point
+    /// - no `.scopedSubmit` — `submit` has no scoping flag and always covers the whole stack
     /// - `.syncPushes` because `gh stack sync` force-pushes every branch and mutates the
     ///   stack object on GitHub, unlike git-spice's local-only `repo sync`
     public var capabilities: StackCapabilities {
@@ -104,8 +107,35 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         return !Self.trackingFilePaths(commonDirectory: commonDir).isEmpty
     }
 
+    /// `gh stack init --base <trunk> <branch>`.
+    ///
+    /// Unlike `gs repo init` — which only records a trunk and leaves the repo empty of
+    /// stacks — gh-stack has no repo-level "enabled" state at all: the tracking file comes
+    /// into existence when the first stack does. So enabling stacking here means creating
+    /// that first stack, and a stack needs a branch.
+    ///
+    /// The branch is the one already checked out, adopted as the stack's first entry
+    /// (`init` adopts existing branches automatically). Standing ON the trunk there is
+    /// nothing to adopt, and inventing a branch name on the user's behalf would leave them
+    /// with a branch they never asked for — so that case reports what to do instead.
+    ///
+    /// Passing the branch explicitly is also what keeps this non-interactive: with no
+    /// positional argument `init` demands a TTY and exits 5.
     public func initialize(repo: String, trunk: String) async throws {
-        throw StackProviderError.unsupported(operation: "enabling GitHub stacking (not yet wired)")
+        let ghPath = try Self.requireGhBinary()
+        guard let current = await Self.currentBranch(in: repo), !current.isEmpty else {
+            throw StackProviderError.preconditionFailed(
+                "GitHub stacking needs a branch to start the stack from, and \(repo) has a "
+                    + "detached HEAD. Check out a branch and try again.")
+        }
+        guard current != trunk else {
+            throw StackProviderError.preconditionFailed(
+                "GitHub stacking starts from the checked-out branch, but \(repo) is on the "
+                    + "trunk (\(trunk)). Create or check out a branch to stack, then try again.")
+        }
+        let result = try await Self.run(
+            ghPath, ["stack", "init", "--base", trunk, current], cwd: repo)
+        try Self.throwIfFailed(result, command: "gh stack init")
     }
 
     // MARK: - Read
@@ -149,38 +179,99 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         return StackGraph(branches: branches)
     }
 
-    // MARK: - Mutations (Phase 3)
+    // MARK: - Mutations
 
+    /// `gh stack add <name>` — creates `name` on top of the stack containing whatever is
+    /// checked out in `worktree`.
+    ///
+    /// gh-stack can only extend a stack at its top (mid-stack insertion is the interactive
+    /// `modify` TUI, which is why `.branchInsertion` is not advertised). `target` is
+    /// therefore only honoured when it names the branch already checked out; anything else
+    /// would have to check that branch out first, which is the caller's decision to make,
+    /// not a side effect to bury in "create a branch".
+    ///
+    /// No `-m`/`-A`/`-u`: passing an explicit name with no staging flags is the one `add`
+    /// path that neither prompts for a name nor opens an editor.
     public func createBranch(name: String, target: String?, in worktree: String) async throws {
-        throw StackProviderError.unsupported(operation: "creating a branch (not yet wired)")
+        let ghPath = try Self.requireGhBinary()
+        if let target {
+            let current = await Self.currentBranch(in: worktree)
+            guard target == current else {
+                throw StackProviderError.preconditionFailed(
+                    "GitHub stacking adds branches on top of the checked-out branch. "
+                        + "Check out \(target) first, then add the branch.")
+            }
+        }
+        let result = try await Self.run(ghPath, ["stack", "add", name], cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack add")
     }
 
     public func trackBranch(_ name: String, base: String, in worktree: String) async throws {
+        // `init <branches...>` adopts a whole set and `link` also creates PRs; neither is
+        // "track this one branch onto this base". `.trackExisting` is not advertised.
         throw StackProviderError.unsupported(operation: "tracking an existing branch")
     }
 
+    /// Plain `git checkout`. gh-stack's own `switch` is a full-screen picker with no
+    /// non-interactive form, and `next`/`prev` only move one step relative to HEAD.
+    ///
+    /// Checking out with git directly is not a shortcut around gh-stack: the tracking file
+    /// records the stack's branch list, never which one is checked out, so nothing in it
+    /// needs updating. `graph` derives the current branch from git for the same reason.
     public func switchBranch(to name: String, in worktree: String) async throws {
-        throw StackProviderError.unsupported(operation: "switching branches (not yet wired)")
+        guard let gitPath = GitServiceShared.findGitPath() else {
+            throw StackProviderError.binaryMissing
+        }
+        let result = try await Self.run(gitPath, ["checkout", name], cwd: worktree)
+        try Self.throwIfFailed(result, command: "git checkout")
     }
 
     public func restack(scope: StackScope, in worktree: String) async throws {
-        throw StackProviderError.unsupported(operation: "restacking (not yet wired)")
+        let ghPath = try Self.requireGhBinary()
+        let args = try await Self.restackArguments(
+            for: scope, currentBranch: Self.currentBranch(in: worktree))
+        let result = try await Self.run(ghPath, args, cwd: worktree)
+        try Self.throwIfFailed(result, command: args.joined(separator: " "))
     }
 
     public func submit(scope: StackScope, options: StackSubmitOptions, in worktree: String) async throws {
-        throw StackProviderError.unsupported(operation: "submitting (not yet wired)")
+        let ghPath = try Self.requireGhBinary()
+        let args = try Self.submitArguments(for: scope, options: options)
+        let result = try await Self.run(ghPath, args, cwd: worktree)
+        try Self.throwIfFailed(result, command: args.joined(separator: " "))
     }
 
+    /// Repo-level entry point. gh-stack's sync is scoped to the stack that is checked out,
+    /// so "the repo" means the main worktree; `sync(repo:worktree:)` is the form callers
+    /// should reach for.
     public func sync(repo: String) async throws {
-        throw StackProviderError.unsupported(operation: "syncing (not yet wired)")
+        try await sync(repo: repo, worktree: repo)
+    }
+
+    /// `gh stack sync --prune`.
+    ///
+    /// `--prune` is not an extra: without it, sync PROMPTS to delete merged branches when
+    /// it thinks it has a terminal. Passing it makes the answer explicit and matches
+    /// `gs repo sync`, which deletes merged locals unconditionally.
+    ///
+    /// This also force-pushes every branch and updates the stack on GitHub — the reason
+    /// this provider advertises `.syncPushes` and the UI confirms before calling it.
+    public func sync(repo: String, worktree: String) async throws {
+        let ghPath = try Self.requireGhBinary()
+        let result = try await Self.run(ghPath, ["stack", "sync", "--prune"], cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack sync")
     }
 
     public func continueOperation(in worktree: String) async throws {
-        throw StackProviderError.unsupported(operation: "continuing a rebase (not yet wired)")
+        let ghPath = try Self.requireGhBinary()
+        let result = try await Self.run(ghPath, ["stack", "rebase", "--continue"], cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack rebase --continue")
     }
 
     public func abortOperation(in worktree: String) async throws {
-        throw StackProviderError.unsupported(operation: "aborting a rebase (not yet wired)")
+        let ghPath = try Self.requireGhBinary()
+        let result = try await Self.run(ghPath, ["stack", "rebase", "--abort"], cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack rebase --abort")
     }
 
     public func destroyStack(in worktree: String) async throws {
@@ -190,8 +281,17 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         throw StackProviderError.unsupported(operation: "deleting every branch in a stack")
     }
 
+    /// `gh stack unstack --local` — drops the stack from the tracking file and leaves
+    /// every branch exactly where it is.
+    ///
+    /// `--local` is load-bearing, not a conservative default: without it, `unstack` calls
+    /// the GitHub API to dissolve the stack object and unstack its pull requests. That is
+    /// a remote mutation, and this operation is offered as the non-destructive counterpart
+    /// to Destroy Stack.
     public func untrackStack(in worktree: String) async throws {
-        throw StackProviderError.unsupported(operation: "untracking a stack (not yet wired)")
+        let ghPath = try Self.requireGhBinary()
+        let result = try await Self.run(ghPath, ["stack", "unstack", "--local"], cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack unstack --local")
     }
 
     public func pausedOperation(repo: String) async -> StackPausedOperation? {
@@ -317,6 +417,111 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         return result
     }
 
+    /// Map a neutral restack scope onto `gh stack rebase` flags.
+    ///
+    /// The pivot is always `HEAD`. `rebase`'s positional argument only selects WHICH STACK
+    /// to load when a branch belongs to more than one — `--upstack`/`--downstack` are still
+    /// measured from the checked-out branch. So a scope naming some other branch cannot be
+    /// honoured, and is refused rather than silently rebasing a different range. This is
+    /// what `.scopedRestack` gates, and why this provider does not advertise it.
+    ///
+    /// - `.stack` → `rebase` (fetches trunk and rebases the whole stack onto it)
+    /// - `.upstack(from: nil)` → `rebase --upstack` (checked-out branch and everything above)
+    /// - `.upstack(from: x)` → the same, but only when `x` IS the checked-out branch
+    /// - `.branch(x)` → refused: gh-stack has no single-branch rebase. `--no-trunk` skips
+    ///   the trunk, not the other branches, so it is not a substitute.
+    static func restackArguments(for scope: StackScope, currentBranch: String?) throws -> [String] {
+        switch scope {
+        case .stack:
+            return ["stack", "rebase"]
+        case .upstack(let name):
+            guard let name, name != currentBranch else {
+                return ["stack", "rebase", "--upstack"]
+            }
+            throw StackProviderError.preconditionFailed(
+                "GitHub stacking restacks from the checked-out branch. Check out \(name) "
+                    + "first, then restack from there.")
+        case .branch(let name):
+            throw StackProviderError.unsupported(
+                operation: "restacking the single branch \(name) — it rebases whole stacks")
+        }
+    }
+
+    /// Map a neutral submit scope onto `gh stack submit` flags.
+    ///
+    /// `submit` takes no scope flag at all: it always pushes every unmerged branch in the
+    /// stack and creates or updates each one's PR. A partial scope is therefore refused
+    /// rather than quietly widened — `.scopedSubmit` gates that in the UI.
+    ///
+    /// `--auto` skips the PR-authoring TUI and uses generated titles and bodies. On that
+    /// path new PRs are created as drafts, so `--open` is what marks them ready for
+    /// review — which makes it the inverse of `options.draft`, not an extra.
+    static func submitArguments(for scope: StackScope, options: StackSubmitOptions) throws -> [String] {
+        switch scope {
+        case .stack:
+            break
+        case .branch(let name):
+            throw StackProviderError.unsupported(
+                operation: "submitting only \(name) — it submits the whole stack")
+        case .upstack(let name):
+            throw StackProviderError.unsupported(
+                operation: "submitting from \(name ?? "here") upward — it submits the whole stack")
+        }
+        guard !options.updateOnly else {
+            // gh-stack always creates a PR for a branch that lacks one; there is no
+            // "update what exists and skip the rest" mode to map onto.
+            throw StackProviderError.unsupported(
+                operation: "updating existing pull requests without creating new ones")
+        }
+        var args = ["stack", "submit", "--auto"]
+        if !options.draft { args.append("--open") }
+        return args
+    }
+
+    /// Map gh-stack's documented exit codes onto neutral errors.
+    ///
+    /// The extension assigns a distinct code per failure class, which is more reliable
+    /// than matching on message text (git-spice offers no such thing, hence the string
+    /// sniffing in that provider). Codes not listed here fall through to
+    /// `.commandFailed`, which carries the code and stderr for display.
+    static func mapExitCode(_ result: StackProcessResult, command: String) -> StackProviderError {
+        let detail = result.stderr.trimmingCharacters(in: .whitespacesAndNewlines)
+        switch result.exitCode {
+        case 2:  // not in a stack / stack not found
+            return .preconditionFailed(
+                detail.isEmpty
+                    ? "\(command): the branch is not part of a GitHub stack." : detail)
+        case 5:  // invalid arguments or flags — includes "can only add to the top"
+            return .preconditionFailed(
+                detail.isEmpty ? "\(command) rejected the request." : detail)
+        case 6:  // multiple stacks or remotes, cannot auto-select
+            return .preconditionFailed(
+                detail.isEmpty
+                    ? "\(command): more than one stack or remote matched, and TermQ cannot "
+                        + "pick one for you." : detail)
+        case 7:  // a rebase is already in progress
+            return .preconditionFailed(
+                detail.isEmpty
+                    ? "A stack rebase is already in progress. Resolve or abort it first."
+                    : detail)
+        case 9:  // stacked PRs not enabled for this repository
+            return .preconditionFailed(
+                detail.isEmpty
+                    ? "Stacked pull requests are not available for this repository." : detail)
+        case 10:  // interrupted `modify` session needs recovery
+            return .preconditionFailed(
+                detail.isEmpty
+                    ? "An interrupted `gh stack modify` session must be recovered in the "
+                        + "terminal before TermQ can change this stack." : detail)
+        default:
+            // Notably exit 3 (rebase conflict): a conflict is NOT an error here. It is
+            // reported through `pausedOperation`, which the service consults on any
+            // mutation failure, and surfaces as the conflict banner rather than an alert.
+            return .commandFailed(
+                command: command, exitCode: result.exitCode, output: result.stderr)
+        }
+    }
+
     /// Every path that may hold a tracking file: the common dir (main worktree) plus each
     /// linked worktree's private git dir.
     static func gitDirectories(commonDirectory: String) -> [String] {
@@ -435,6 +640,18 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         return result
     }
 
+    /// The branch checked out in `directory`, or nil on a detached HEAD (where
+    /// `--abbrev-ref HEAD` prints "HEAD") or when git is unavailable.
+    static func currentBranch(in directory: String) async -> String? {
+        guard let gitPath = GitServiceShared.findGitPath(),
+            let result = try? await run(
+                gitPath, ["rev-parse", "--abbrev-ref", "HEAD"], cwd: directory),
+            result.exitCode == 0
+        else { return nil }
+        let branch = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
+        return (branch.isEmpty || branch == "HEAD") ? nil : branch
+    }
+
     static func conflictedFiles(repo: String) async -> [String] {
         guard let gitPath = GitServiceShared.findGitPath(),
             let result = try? await run(
@@ -479,6 +696,17 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         _ executable: String, _ arguments: [String], cwd: String?
     ) async throws -> StackProcessResult {
         try await StackProcessRunner.run(executable, arguments, cwd: cwd, env: commandEnvironment)
+    }
+
+    private static func requireGhBinary() throws -> String {
+        guard let path = findGhBinary() else { throw StackProviderError.binaryMissing }
+        return path
+    }
+
+    private static func throwIfFailed(_ result: StackProcessResult, command: String) throws {
+        guard result.exitCode == 0 else {
+            throw mapExitCode(result, command: command)
+        }
     }
 }
 

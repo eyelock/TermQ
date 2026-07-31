@@ -505,6 +505,26 @@ final class GitHubStackCapabilitiesTests: XCTestCase {
         XCTAssertTrue(capabilities.contains(.linkExisting))
     }
 
+    func testDoesNotAdvertiseScopedOperations() {
+        // `rebase` pivots on HEAD and `submit` has no scoping flag, so neither can be
+        // pointed at a named branch. Advertising these would put "Restack from Here" and
+        // per-branch Submit in the menus, where they would either refuse or act on a
+        // wider range than the label promises.
+        XCTAssertFalse(capabilities.contains(.scopedRestack))
+        XCTAssertFalse(capabilities.contains(.scopedSubmit))
+        // The unscoped forms still work — the whole stack is the unit gh-stack operates on.
+        XCTAssertTrue(capabilities.contains(.restack))
+        XCTAssertTrue(capabilities.contains(.submit))
+    }
+
+    func testGitSpiceStillAdvertisesScopedOperations() {
+        // Every git-spice restack/submit form takes --branch=NAME; adding the flags must
+        // not have narrowed the existing provider.
+        let gitSpice = GitSpiceStackProvider().capabilities
+        XCTAssertTrue(gitSpice.contains(.scopedRestack))
+        XCTAssertTrue(gitSpice.contains(.scopedSubmit))
+    }
+
     func testProviderID() {
         XCTAssertEqual(GitHubStackProvider().providerID, .gitHub)
     }
@@ -534,5 +554,171 @@ final class GitHubStackEnvironmentTests: XCTestCase {
         XCTAssertEqual(env["PAGER"], "cat")
         XCTAssertEqual(env["NO_COLOR"], "1")
         XCTAssertNotNil(env["GH_STACK_THEME"], "theme detection must not probe an absent terminal")
+    }
+}
+
+// MARK: - Command Construction
+
+/// `gh stack rebase` always pivots on HEAD: its positional argument selects WHICH STACK
+/// to load, and `--upstack`/`--downstack` are measured from the checked-out branch. These
+/// lock in that a scope naming some other branch is refused rather than silently rebasing
+/// a different range than the caller asked for.
+final class GitHubStackRestackArgumentsTests: XCTestCase {
+    func testStackScope_rebasesTheWholeStack() throws {
+        let args = try GitHubStackProvider.restackArguments(for: .stack, currentBranch: "feat-a")
+        XCTAssertEqual(args, ["stack", "rebase"])
+    }
+
+    func testUpstackFromNil_usesTheUpstackFlag() throws {
+        let args = try GitHubStackProvider.restackArguments(
+            for: .upstack(from: nil), currentBranch: "feat-a")
+        XCTAssertEqual(args, ["stack", "rebase", "--upstack"])
+    }
+
+    func testUpstackFromCurrentBranch_isTheSameAsFromNil() throws {
+        // The pivot gh-stack would use and the pivot the caller asked for agree, so the
+        // command is expressible exactly.
+        let args = try GitHubStackProvider.restackArguments(
+            for: .upstack(from: "feat-a"), currentBranch: "feat-a")
+        XCTAssertEqual(args, ["stack", "rebase", "--upstack"])
+    }
+
+    func testUpstackFromOtherBranch_refusesWithARecoverableError() {
+        // The dangerous case: gh-stack would happily run and rebase from HEAD instead.
+        XCTAssertThrowsError(
+            try GitHubStackProvider.restackArguments(
+                for: .upstack(from: "feat-b"), currentBranch: "feat-a")
+        ) { error in
+            guard case StackProviderError.preconditionFailed(let detail)? = error as? StackProviderError
+            else { return XCTFail("expected .preconditionFailed, got \(error)") }
+            XCTAssertTrue(detail.contains("feat-b"), "the message must name the branch to check out")
+        }
+    }
+
+    func testSingleBranchScope_isUnsupported() {
+        // `--no-trunk` skips the trunk, not the other branches — it is not a substitute
+        // for a single-branch rebase, and there is no other candidate.
+        XCTAssertThrowsError(
+            try GitHubStackProvider.restackArguments(for: .branch("feat-a"), currentBranch: "feat-a")
+        ) { error in
+            guard case StackProviderError.unsupported? = error as? StackProviderError else {
+                return XCTFail("expected .unsupported, got \(error)")
+            }
+        }
+    }
+
+    func testUpstackFromNil_withDetachedHead_stillWorks() {
+        // A detached HEAD yields a nil current branch; "from wherever we are" is still
+        // meaningful, and gh-stack resolves the stack itself.
+        XCTAssertEqual(
+            try GitHubStackProvider.restackArguments(for: .upstack(from: nil), currentBranch: nil),
+            ["stack", "rebase", "--upstack"])
+    }
+}
+
+/// `gh stack submit` has no scoping flag and always covers the whole stack. `--auto`
+/// creates new PRs as drafts, so `--open` is the inverse of `options.draft`.
+final class GitHubStackSubmitArgumentsTests: XCTestCase {
+    func testStackScope_readyForReview_marksPRsOpen() throws {
+        let args = try GitHubStackProvider.submitArguments(
+            for: .stack, options: StackSubmitOptions(draft: false))
+        XCTAssertEqual(args, ["stack", "submit", "--auto", "--open"])
+    }
+
+    func testStackScope_draft_omitsOpen() throws {
+        // Not a missing flag: on the --auto path, no --open IS the draft state.
+        let args = try GitHubStackProvider.submitArguments(
+            for: .stack, options: StackSubmitOptions(draft: true))
+        XCTAssertEqual(args, ["stack", "submit", "--auto"])
+    }
+
+    func testAutoIsAlwaysPassed() throws {
+        // Without --auto, submit opens a full-screen PR editor when it believes it has a
+        // terminal. TermQ must never spawn that.
+        for options in [StackSubmitOptions(draft: true), StackSubmitOptions(draft: false)] {
+            let args = try GitHubStackProvider.submitArguments(for: .stack, options: options)
+            XCTAssertTrue(args.contains("--auto"))
+        }
+    }
+
+    func testUpdateOnly_isUnsupported() {
+        // gh-stack always creates a PR for a branch that lacks one; there is no
+        // update-what-exists mode to map onto.
+        XCTAssertThrowsError(
+            try GitHubStackProvider.submitArguments(
+                for: .stack, options: StackSubmitOptions(updateOnly: true))
+        ) { error in
+            guard case StackProviderError.unsupported? = error as? StackProviderError else {
+                return XCTFail("expected .unsupported, got \(error)")
+            }
+        }
+    }
+
+    func testPartialScopes_areRefusedRatherThanWidened() {
+        // Quietly submitting the whole stack when one branch was asked for would push
+        // and open PRs the user never requested.
+        for scope in [StackScope.branch("feat-a"), .upstack(from: "feat-a"), .upstack(from: nil)] {
+            XCTAssertThrowsError(
+                try GitHubStackProvider.submitArguments(for: scope, options: StackSubmitOptions())
+            ) { error in
+                guard case StackProviderError.unsupported? = error as? StackProviderError else {
+                    return XCTFail("expected .unsupported for \(scope), got \(error)")
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Exit Code Mapping
+
+/// gh-stack assigns a distinct exit code per failure class, which is far more stable than
+/// matching on message text. These pin the classification, especially that a rebase
+/// conflict is NOT an error.
+final class GitHubStackExitCodeTests: XCTestCase {
+    private func result(_ code: Int32, stderr: String = "") -> StackProcessResult {
+        StackProcessResult(exitCode: code, stdout: "", stderr: stderr)
+    }
+
+    func testConflict_isNotClassifiedAsAPreconditionFailure() {
+        // Exit 3 is a paused rebase. It must fall through to .commandFailed so
+        // StackService's `pausedOperation` probe turns it into the conflict banner
+        // rather than an alert the user cannot act on.
+        let error = GitHubStackProvider.mapExitCode(result(3), command: "gh stack rebase")
+        guard case .commandFailed(_, let code, _) = error else {
+            return XCTFail("expected .commandFailed, got \(error)")
+        }
+        XCTAssertEqual(code, 3)
+    }
+
+    func testRecoverableCodes_becomePreconditionFailures() {
+        // 2 not-in-stack, 5 invalid args (includes "can only add to the top"),
+        // 6 ambiguous stack/remote, 7 rebase already running, 9 stacks unavailable,
+        // 10 interrupted modify session — all fixable by the user.
+        for code in [Int32(2), 5, 6, 7, 9, 10] {
+            let error = GitHubStackProvider.mapExitCode(result(code), command: "gh stack add")
+            guard case .preconditionFailed = error else {
+                return XCTFail("exit \(code) should be .preconditionFailed, got \(error)")
+            }
+        }
+    }
+
+    func testStderrIsPreferredOverTheGenericMessage() {
+        // gh-stack's own wording is more specific than anything written here.
+        let error = GitHubStackProvider.mapExitCode(
+            result(5, stderr: "can only add branches to the top of the stack\n"),
+            command: "gh stack add")
+        XCTAssertEqual(
+            error.errorDescription, "can only add branches to the top of the stack")
+    }
+
+    func testUnknownCode_fallsThroughWithItsOutput() {
+        let error = GitHubStackProvider.mapExitCode(
+            result(1, stderr: "boom"), command: "gh stack sync")
+        guard case .commandFailed(let command, let code, let output) = error else {
+            return XCTFail("expected .commandFailed, got \(error)")
+        }
+        XCTAssertEqual(command, "gh stack sync")
+        XCTAssertEqual(code, 1)
+        XCTAssertEqual(output, "boom")
     }
 }
