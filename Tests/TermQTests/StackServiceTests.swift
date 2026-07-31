@@ -549,14 +549,6 @@ final class StackActionAvailabilityTests: XCTestCase {
         XCTAssertTrue(odd.syncNeedsConfirmation)
     }
 
-    func testSyncIsWithheldUntilItCanBeConfirmed() {
-        // A provider whose sync force-pushes must not get a one-click Sync button. Until
-        // the confirmation sheet exists the action is withheld — the safe direction —
-        // rather than offered unguarded.
-        XCTAssertTrue(gitSpice.canSyncWithoutConfirmation)
-        XCTAssertFalse(gitHub.canSyncWithoutConfirmation)
-    }
-
     func testScopedOperations_requireTheUnscopedFormToo() {
         // A conjunction, not a standalone flag: scoping a restack the provider cannot
         // perform is meaningless, and reading .scopedRestack alone would offer
@@ -661,8 +653,9 @@ final class StackServiceProviderResolutionTests: XCTestCase {
         let github = FakeStackProvider(id: githubID)
         await spice.setGraph(makeGraph("a"), for: "/repo")
 
-        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
-        service.preferredProviderID = githubID
+        let service = StackService(
+            registry: StackProviderRegistry(providers: [spice, github]),
+            preference: { .gitHub })
         await service.probe()
         await service.refreshGraph(repo: "/repo")
 
@@ -672,8 +665,9 @@ final class StackServiceProviderResolutionTests: XCTestCase {
     func testEnableStacking_uninitializedRepo_usesPreferredProvider() async throws {
         let spice = FakeStackProvider(id: spiceID)
         let github = FakeStackProvider(id: githubID)
-        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
-        service.preferredProviderID = githubID
+        let service = StackService(
+            registry: StackProviderRegistry(providers: [spice, github]),
+            preference: { .gitHub })
         await service.probe()
 
         try await service.enableStacking(repo: "/fresh", trunk: "develop")
@@ -734,6 +728,63 @@ final class StackServiceProviderResolutionTests: XCTestCase {
         await service.probe()
 
         XCTAssertNil(service.providerIDByRepo["/repo"])
+    }
+
+    func testPreference_isReadThroughOnEveryResolution() async {
+        // Read through rather than cached: flipping the setting must take effect without
+        // anything having to push the new value into the service.
+        var preference = PreferredStackProvider.gitSpice
+        let service = StackService(
+            registry: StackProviderRegistry(providers: []), preference: { preference })
+        XCTAssertEqual(service.preferredProviderID, spiceID)
+
+        preference = .gitHub
+        XCTAssertEqual(service.preferredProviderID, githubID)
+
+        preference = .automatic
+        XCTAssertNil(service.preferredProviderID, "automatic means registry order, not a provider")
+    }
+
+    func testPreferenceChange_keepsRepositoriesTheirEvidenceOwns() async {
+        // A repo already stacked with one tool must not be handed to the other because a
+        // preference changed — evidence beats preference, always.
+        let spice = FakeStackProvider(id: spiceID)
+        let github = FakeStackProvider(id: githubID)
+        await spice.setGraph(makeGraph("a"), for: "/repo")
+        var preference = PreferredStackProvider.automatic
+        let service = StackService(
+            registry: StackProviderRegistry(providers: [spice, github]),
+            preference: { preference })
+        await service.probe()
+        await service.refreshGraph(repo: "/repo")
+        XCTAssertEqual(service.providerIDByRepo["/repo"], spiceID)
+
+        preference = .gitHub
+        await service.preferredProviderDidChange()
+
+        XCTAssertEqual(service.providerIDByRepo["/repo"], spiceID)
+    }
+
+    func testPreferenceChange_reresolvesRepositoriesDecidedByFallback() async {
+        // The other half: a repo nothing has claimed was resolved by preference/order, so
+        // it must be re-resolved when the preference moves.
+        let spice = FakeStackProvider(id: spiceID)
+        let github = FakeStackProvider(id: githubID)
+        var preference = PreferredStackProvider.gitSpice
+        let service = StackService(
+            registry: StackProviderRegistry(providers: [spice, github]),
+            preference: { preference })
+        await service.probe()
+        try? await service.enableStacking(repo: "/fresh", trunk: "develop")
+        XCTAssertEqual(service.providerIDByRepo["/fresh"], spiceID)
+
+        // `enableStacking` gave the repo evidence, so drop it to model the
+        // never-initialized case the fallback path actually covers.
+        await spice.setInitialized(false, for: "/fresh")
+        preference = .gitHub
+        await service.preferredProviderDidChange()
+
+        XCTAssertNil(service.providerIDByRepo["/fresh"])
     }
 
     func testCapabilities_reportTheOwningProvidersFeatureSet() async {

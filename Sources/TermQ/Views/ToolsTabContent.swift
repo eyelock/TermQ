@@ -47,7 +47,7 @@ struct ToolsTabContent: View {
         cliSection
         tmuxSection
         ghSection
-        gitSpiceSection
+        stackProvidersSection
         ynhSection
     }
 }
@@ -97,9 +97,11 @@ extension ToolsTabContent {
 
             StatusIndicator(
                 icon: "square.stack.3d.up",
-                label: Strings.Settings.GitSpice.title,
-                status: gitSpiceStatusIndicator,
-                message: gitSpiceStatusMessage
+                // Feature-level, not tool-level: the summary row says whether stacking
+                // works at all, and either backend can be the one making it work.
+                label: Strings.Settings.Stacking.section,
+                status: stackingStatusIndicator,
+                message: stackingStatusMessage
             )
 
             StatusIndicator(

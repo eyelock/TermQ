@@ -60,13 +60,45 @@ final class StackService: ObservableObject {
     /// Tail of the per-repo mutation chain; each new mutation awaits the previous one.
     private var mutationTail: [String: Task<Void, Never>] = [:]
 
+    /// Reads the user's preferred-provider setting. Injected rather than captured so
+    /// tests can drive resolution without touching `UserDefaults`.
+    private let preference: @MainActor () -> PreferredStackProvider
+
     /// Which provider to favour when a repo has no initialization evidence either way —
     /// i.e. when enabling stacking on a fresh repo, or when a repo somehow carries both
-    /// tools' metadata. `nil` means "registry order". Wired to Settings in Phase 4.
-    var preferredProviderID: StackProviderID?
+    /// tools' metadata. `nil` means "registry order".
+    ///
+    /// Read through on every resolution rather than cached, so changing the setting takes
+    /// effect without anything having to push the new value in here.
+    var preferredProviderID: StackProviderID? {
+        switch preference() {
+        case .automatic: return nil
+        case .gitSpice: return .gitSpice
+        case .gitHub: return .gitHub
+        }
+    }
 
-    init(registry: StackProviderRegistry = .shared) {
+    init(
+        registry: StackProviderRegistry = .shared,
+        preference: @escaping @MainActor () -> PreferredStackProvider = {
+            SettingsStore.shared.preferredStackProvider
+        }
+    ) {
         self.registry = registry
+        self.preference = preference
+    }
+
+    /// Re-resolve the repos whose owner was decided by preference rather than by
+    /// evidence. Call when the preferred-provider setting changes.
+    ///
+    /// A repo with initialization evidence keeps its provider no matter what the setting
+    /// says — evidence beats preference — so those cache entries are deliberately left
+    /// alone. Only fallback resolutions can produce a different answer.
+    func preferredProviderDidChange() async {
+        for (repo, provider) in providersByRepo where !(await provider.isInitialized(repo: repo)) {
+            providersByRepo.removeValue(forKey: repo)
+            providerIDByRepo.removeValue(forKey: repo)
+        }
     }
 
     // MARK: - Probe

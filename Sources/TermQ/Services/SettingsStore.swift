@@ -26,6 +26,20 @@ public enum NewStackMode: String, CaseIterable, Sendable {
     case branchOffIntegration
 }
 
+/// Which stacked-PR backend to favour when a repository carries no initialization
+/// evidence for either — i.e. when enabling stacking on a fresh repo.
+///
+/// This is a tie-breaker, never an override: a repo already stacked with one tool is
+/// always driven by that tool, because evidence on disk beats a preference
+/// (see `StackProviderRegistry.resolveProvider(forRepo:preferred:)`). Picking the wrong
+/// one here cannot take a repo away from the tool that owns it.
+public enum PreferredStackProvider: String, CaseIterable, Sendable {
+    /// Registry order decides. The default, and correct for anyone with one tool installed.
+    case automatic
+    case gitSpice
+    case gitHub
+}
+
 @MainActor
 @Observable
 public final class SettingsStore {
@@ -56,6 +70,7 @@ public final class SettingsStore {
         public static let remotePRFeedCap = 20
         public static let newStackMode: NewStackMode = .branchOffDefault
         public static let hideStackedWorktrees = false
+        public static let preferredStackProvider: PreferredStackProvider = .automatic
     }
 
     private enum Keys {
@@ -77,6 +92,7 @@ public final class SettingsStore {
         static let remotePRFeedCap = "remotePRFeedCap"
         static let newStackMode = "newStackMode"
         static let hideStackedWorktrees = "hideStackedWorktrees"
+        static let preferredStackProvider = "preferredStackProvider"
     }
 
     @ObservationIgnored
@@ -221,6 +237,14 @@ public final class SettingsStore {
         }
     }
 
+    /// Which stacked-PR backend to favour for a repo neither tool has claimed.
+    public var preferredStackProvider: PreferredStackProvider {
+        didSet {
+            guard !isSyncingFromStore else { return }
+            store.set(preferredStackProvider.rawValue, forKey: Keys.preferredStackProvider)
+        }
+    }
+
     public init(store: any KeyValueStore = UserDefaults.standard) {
         self.store = store
 
@@ -279,6 +303,10 @@ public final class SettingsStore {
         self.hideStackedWorktrees =
             (store.object(forKey: Keys.hideStackedWorktrees) as? Bool)
             ?? Defaults.hideStackedWorktrees
+
+        self.preferredStackProvider =
+            store.string(forKey: Keys.preferredStackProvider)
+            .flatMap(PreferredStackProvider.init(rawValue:)) ?? Defaults.preferredStackProvider
 
         // Bridge external writes (e.g. existing `@AppStorage` Settings UI,
         // CLI/MCP, Sparkle) into the store's @Observable graph. Without
@@ -410,6 +438,13 @@ public final class SettingsStore {
             ?? Defaults.hideStackedWorktrees
         if hideStackedWorktrees != newHideStackedWorktrees {
             hideStackedWorktrees = newHideStackedWorktrees
+        }
+
+        let newPreferredStackProvider =
+            store.string(forKey: Keys.preferredStackProvider)
+            .flatMap(PreferredStackProvider.init(rawValue:)) ?? Defaults.preferredStackProvider
+        if preferredStackProvider != newPreferredStackProvider {
+            preferredStackProvider = newPreferredStackProvider
         }
     }
 
