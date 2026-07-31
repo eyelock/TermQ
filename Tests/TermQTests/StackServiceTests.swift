@@ -468,6 +468,87 @@ final class StackServiceTests: XCTestCase {
     }
 }
 
+// MARK: - Capability gating
+
+/// The sidebar offers actions per the ACTIVE provider's capabilities, not per
+/// "stacking is available". These rules guard two traps rather than mere feature gaps.
+final class StackActionAvailabilityTests: XCTestCase {
+    /// What git-spice advertises today.
+    private let gitSpice = StackActionAvailability(
+        capabilities: [
+            .restack, .submit, .sync, .trackExisting, .conflictResume, .branchInsertion,
+            .destroyStack,
+        ])
+    /// What gh-stack advertises today.
+    private let gitHub = StackActionAvailability(
+        capabilities: [
+            .restack, .submit, .sync, .syncPushes, .conflictResume, .untrackStack, .mergeStack,
+            .remoteDiscovery, .linkExisting,
+        ])
+
+    func testNone_offersNothing() {
+        // A repo with no resolved provider must show no stack actions at all.
+        let none = StackActionAvailability.none
+        XCTAssertFalse(none.canRestack)
+        XCTAssertFalse(none.canSubmit)
+        XCTAssertFalse(none.canSync)
+        XCTAssertFalse(none.canInsertBranch)
+        XCTAssertFalse(none.canDestroyStack)
+        XCTAssertFalse(none.canUntrackStack)
+        XCTAssertFalse(none.canResumeConflict)
+        XCTAssertFalse(none.syncNeedsConfirmation)
+    }
+
+    func testDestroyAndUntrack_areNeverImpliedByEachOther() {
+        // The trap: the two actions look alike and have opposite blast radius.
+        // git-spice's `stack delete` removes every branch; gh-stack's `unstack` leaves
+        // them all in place. Neither flag may ever be inferred from the other.
+        XCTAssertTrue(gitSpice.canDestroyStack)
+        XCTAssertFalse(gitSpice.canUntrackStack)
+
+        XCTAssertFalse(gitHub.canDestroyStack)
+        XCTAssertTrue(gitHub.canUntrackStack)
+    }
+
+    func testBranchInsertion_gitSpiceOnly() {
+        // gh-stack can only restructure inside its interactive `modify` TUI, which TermQ
+        // must never spawn — so Before/After disappear rather than failing at click time.
+        XCTAssertTrue(gitSpice.canInsertBranch)
+        XCTAssertFalse(gitHub.canInsertBranch)
+    }
+
+    func testSyncConfirmation_onlyWhenSyncReachesTheRemote() {
+        // gh-stack's sync force-pushes every branch and mutates the stack on GitHub;
+        // git-spice's is local-only. A one-click Sync is only safe for the latter.
+        XCTAssertFalse(gitSpice.syncNeedsConfirmation)
+        XCTAssertTrue(gitHub.syncNeedsConfirmation)
+        XCTAssertTrue(gitSpice.canSync)
+        XCTAssertTrue(gitHub.canSync)
+    }
+
+    func testSyncNeedsConfirmation_isIndependentOfCanSync() {
+        // Defensive: .syncPushes without .sync must not present as a runnable action.
+        let odd = StackActionAvailability(capabilities: [.syncPushes])
+        XCTAssertFalse(odd.canSync)
+        XCTAssertTrue(odd.syncNeedsConfirmation)
+    }
+
+    func testSharedActions_offeredByBothProviders() {
+        for availability in [gitSpice, gitHub] {
+            XCTAssertTrue(availability.canRestack)
+            XCTAssertTrue(availability.canSubmit)
+            XCTAssertTrue(availability.canResumeConflict)
+        }
+    }
+
+    func testEachFlagTracksExactlyItsOwnCapability() {
+        XCTAssertTrue(StackActionAvailability(capabilities: [.restack]).canRestack)
+        XCTAssertFalse(StackActionAvailability(capabilities: [.submit]).canRestack)
+        XCTAssertTrue(StackActionAvailability(capabilities: [.conflictResume]).canResumeConflict)
+        XCTAssertFalse(StackActionAvailability(capabilities: [.restack]).canResumeConflict)
+    }
+}
+
 // MARK: - Per-repo provider resolution
 
 /// With two providers installed they own different repositories. A single app-wide
@@ -591,6 +672,36 @@ final class StackServiceProviderResolutionTests: XCTestCase {
         let service = StackService(registry: StackProviderRegistry(providers: []))
         await service.probe()
         XCTAssertTrue(service.capabilities(forRepo: "/unknown").isEmpty)
+    }
+
+    func testActionAvailability_followsTheProviderThatOwnsTheRepo() async {
+        // End to end: two repos, two providers, two different sets of offered actions.
+        let spice = FakeStackProvider(
+            id: spiceID, capabilities: [.restack, .branchInsertion, .destroyStack])
+        let github = FakeStackProvider(
+            id: githubID, capabilities: [.restack, .untrackStack, .syncPushes, .sync])
+        await spice.setGraph(makeGraph("a"), for: "/spice-repo")
+        await github.setGraph(makeGraph("b"), for: "/github-repo")
+
+        let service = StackService(registry: StackProviderRegistry(providers: [spice, github]))
+        await service.probe()
+        await service.refreshGraph(repo: "/spice-repo")
+        await service.refreshGraph(repo: "/github-repo")
+
+        let spiceActions = StackActionAvailability(
+            capabilities: service.capabilities(forRepo: "/spice-repo"))
+        let githubActions = StackActionAvailability(
+            capabilities: service.capabilities(forRepo: "/github-repo"))
+
+        XCTAssertTrue(spiceActions.canInsertBranch)
+        XCTAssertTrue(spiceActions.canDestroyStack)
+        XCTAssertFalse(spiceActions.canUntrackStack)
+        XCTAssertFalse(spiceActions.syncNeedsConfirmation)
+
+        XCTAssertFalse(githubActions.canInsertBranch)
+        XCTAssertFalse(githubActions.canDestroyStack)
+        XCTAssertTrue(githubActions.canUntrackStack)
+        XCTAssertTrue(githubActions.syncNeedsConfirmation)
     }
 
     func testAvailability_readyProviderWins_overUnusableOne() async {

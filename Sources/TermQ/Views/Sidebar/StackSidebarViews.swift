@@ -474,6 +474,12 @@ struct StackBranchEntryRow: View {
 struct StackConflictBanner: View {
     let conflict: StackConflictState
     let isWorking: Bool
+    /// Whether the active provider can resume/abort a paused operation
+    /// (`StackCapabilities.conflictResume`). When false the banner still reports the
+    /// conflict — it is real and the user needs to know — but offers no controls,
+    /// because pressing them would only produce a refusal. Resolution then happens in the
+    /// worktree's own terminal, which the hint already points at.
+    let canResume: Bool
     let onContinue: () -> Void
     let onAbort: () -> Void
 
@@ -491,15 +497,17 @@ struct StackConflictBanner: View {
                 .font(.caption2)
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
-            HStack(spacing: 8) {
-                Button(Strings.Stacks.conflictContinue, action: onContinue)
-                    .controlSize(.small)
-                Button(Strings.Stacks.conflictAbort, role: .destructive, action: onAbort)
-                    .controlSize(.small)
-                if isWorking {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .controlSize(.mini)
+            if canResume {
+                HStack(spacing: 8) {
+                    Button(Strings.Stacks.conflictContinue, action: onContinue)
+                        .controlSize(.small)
+                    Button(Strings.Stacks.conflictAbort, role: .destructive, action: onAbort)
+                        .controlSize(.small)
+                    if isWorking {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .controlSize(.mini)
+                    }
                 }
             }
         }

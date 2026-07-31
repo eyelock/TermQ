@@ -80,6 +80,49 @@ struct StackDestroyReport: Equatable {
     let skippedDirtyWorktrees: [String]
 }
 
+// MARK: - Action Availability
+
+/// Which stack actions the sidebar may offer for a repo, resolved once from the active
+/// provider's capabilities rather than re-derived at each menu site.
+///
+/// Exists as a value type so the gating rules are testable without driving SwiftUI. The
+/// rules matter: providers differ in more than polish, and two of the differences are
+/// traps rather than gaps.
+///
+/// - Branch insertion is git-spice-specific (`--below` / `--insert`). gh-stack can only
+///   restructure inside its interactive `modify` TUI, which TermQ must never spawn.
+/// - `destroy` and `untrack` look like the same action and are not. git-spice's
+///   `stack delete` removes every branch; gh-stack's `unstack` leaves them all in place.
+///   They are deliberately separate flags so a provider can never inherit the other's
+///   blast radius by implication.
+/// - `syncPushes` marks a sync that force-pushes every branch and mutates remote state,
+///   as gh-stack's does. A one-click Sync is only safe when this is false.
+struct StackActionAvailability: Equatable {
+    let canRestack: Bool
+    let canSubmit: Bool
+    let canSync: Bool
+    /// Sync reaches the remote and force-pushes — confirm before running it.
+    let syncNeedsConfirmation: Bool
+    let canInsertBranch: Bool
+    let canDestroyStack: Bool
+    let canUntrackStack: Bool
+    let canResumeConflict: Bool
+
+    init(capabilities: StackCapabilities) {
+        canRestack = capabilities.contains(.restack)
+        canSubmit = capabilities.contains(.submit)
+        canSync = capabilities.contains(.sync)
+        syncNeedsConfirmation = capabilities.contains(.syncPushes)
+        canInsertBranch = capabilities.contains(.branchInsertion)
+        canDestroyStack = capabilities.contains(.destroyStack)
+        canUntrackStack = capabilities.contains(.untrackStack)
+        canResumeConflict = capabilities.contains(.conflictResume)
+    }
+
+    /// Nothing offered — the safe default for a repo with no resolved provider.
+    static let none = StackActionAvailability(capabilities: [])
+}
+
 // MARK: - Stack Groups
 
 /// One tracked stack for the sidebar's Stacks inventory section: the chain of branches
@@ -180,6 +223,11 @@ extension WorktreeSidebarViewModel {
     /// worktree at `repo.path`. Handed to the provider because a provider whose tracking
     /// state lives inside each worktree's git dir cannot see the repo any other way; a
     /// repo-wide provider ignores it entirely.
+    /// Which stack actions may be offered for `repo`, per the provider driving it.
+    func stackActions(for repo: ObservableRepository) -> StackActionAvailability {
+        StackActionAvailability(capabilities: stackService.capabilities(forRepo: repo.path))
+    }
+
     func worktreePaths(for repo: ObservableRepository) -> [String] {
         var paths = [repo.path]
         for worktree in worktrees[repo.id] ?? [] where !paths.contains(worktree.path) {
