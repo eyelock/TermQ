@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PR на репозиторий";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Обеспечивает стек веток и стек PR в боковой панели.";
-"settings.gitspice.version" = "Версия:";
-"settings.gitspice.path" = "Путь:";
+"settings.stacking.version" = "Версия:";
+"settings.stacking.path" = "Путь:";
 "settings.gitspice.info" = "Функции стека веток в боковой панели зависят от рабочей установки git-spice. Используется та же аутентификация, что и у gh CLI.";
 "settings.gitspice.not.installed.description" = "git-spice включает стек веток и стек PR. Без него TermQ показывает только обычные рабочие деревья.";
 "settings.gitspice.install.hint" = "Установите с помощью Homebrew:";
-"settings.gitspice.check.again" = "Проверить снова";
-"settings.gitspice.status.unusable %@" = "Обнаружено, но непригодно для использования: %@";
+"settings.stacking.check.again" = "Проверить снова";
+"settings.stacking.status.unusable %@" = "Обнаружено, но непригодно для использования: %@";
 "stacks.enable" = "Включить стек…";
 "stacks.enable.help" = "Отслеживать ветки этого репозитория как стек с помощью git-spice";
 "stacks.enable.failed %@" = "Не удалось включить стек: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Эта ветка создаётся поверх интеграционной ветки, а не непосредственно поверх базовой.";
 "stacks.new.stack.integration.note" = "Создаёт пустую интеграционную ветку от базовой как корень стека — она никогда не содержит собственного кода. Ветки стека строятся на ней, а не на базовой, и их pull request'ы цепочкой идут в неё. Как только всё объединено в интеграционную ветку, она отправляется как единый консолидированный pull request в базовую — вместо слияния каждой ветки стека по отдельности.";
 "stacks.new.stack.name.exists %@" = "%@ уже существует — выберите другое имя.";
-"settings.gitspice.new.stack.mode" = "Новый стек начинается как:";
-"settings.gitspice.new.stack.mode.help" = "Какой режим лист Новый стек выбирает заранее — лист всегда предлагает оба варианта.";
-"settings.gitspice.hide.stacked.worktrees" = "Скрыть ветки стека из раздела Рабочие деревья";
-"settings.gitspice.hide.stacked.worktrees.help" = "Рабочие деревья, ветка которых принадлежит отслеживаемому стеку, уже отображаются в разделе Стеки — скройте их из раздела Рабочие деревья, чтобы избежать дублирования.";
+"settings.stacking.new.stack.mode" = "Новый стек начинается как:";
+"settings.stacking.new.stack.mode.help" = "Какой режим лист Новый стек выбирает заранее — лист всегда предлагает оба варианта.";
+"settings.stacking.hide.stacked.worktrees" = "Скрыть ветки стека из раздела Рабочие деревья";
+"settings.stacking.hide.stacked.worktrees.help" = "Рабочие деревья, ветка которых принадлежит отслеживаемому стеку, уже отображаются в разделе Стеки — скройте их из раздела Рабочие деревья, чтобы избежать дублирования.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Стек пул-реквестов";
+"settings.stacking.preferred" = "Предпочитаемый бэкенд:";
+"settings.stacking.preferred.help" = "Используется только для репозиториев, которые ещё не занял ни один бэкенд. Репозиторий, уже отслеживаемый одним инструментом, всегда остаётся за ним.";
+"settings.stacking.preferred.automatic" = "Автоматически";
+"settings.ghstack.title" = "Стек PR в GitHub";
+"settings.ghstack.description" = "Встроенные стеки пул-реквестов GitHub через gh CLI.";
+"settings.ghstack.info" = "Стеки отслеживаются отдельно в каждом worktree. Используется аутентификация gh CLI.";
+"settings.ghstack.not.installed.description" = "Расширение gh stack включает стеки веток и пул-реквестов на основе собственных стеков GitHub.";
+"settings.ghstack.install.hint" = "Установите расширение gh CLI:";
+"settings.ghstack.needs.gh.cli" = "Сначала установите и авторизуйте gh CLI — это расширение работает поверх него.";
+"stacks.untrack.stack" = "Перестать отслеживать стек";
+"stacks.untrack.stack.title" = "Перестать отслеживать стек?";
+"stacks.untrack.stack.message %ld %@" = "TermQ перестанет отслеживать эти %ld веток как стек: %@\n\nНи одна ветка не будет удалена, и никакая работа не пропадёт.";
+"stacks.untrack.stack.confirm" = "Перестать отслеживать";
+"stacks.untrack.stack.done" = "Стек больше не отслеживается. Все ветки остались на месте.";
+"stacks.sync.confirm.title" = "Синхронизировать с принудительной отправкой?";
+"stacks.sync.confirm.message %ld %@" = "Синхронизация принудительно отправит %ld веток и обновит стек на GitHub: %@\n\nВсем, кто работает с этими ветками, придётся сделать сброс.";
+"stacks.sync.confirm.button" = "Синхронизировать и отправить";

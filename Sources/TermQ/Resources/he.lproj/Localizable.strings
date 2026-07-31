@@ -1349,16 +1349,15 @@
 "settings.github.feed.cap.label" = "PRים לכל מאגר";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "מפעיל ענפים מוערמים ו-PR מוערמים בסרגל הצד.";
-"settings.gitspice.version" = "גרסה:";
-"settings.gitspice.path" = "נתיב:";
+"settings.stacking.version" = "גרסה:";
+"settings.stacking.path" = "נתיב:";
 "settings.gitspice.info" = "תכונות הענפים המוערמים בסרגל הצד תלויות בהתקנה תקינה של git-spice. הן משתמשות מחדש באימות של gh CLI.";
 "settings.gitspice.not.installed.description" = "git-spice מאפשר ענפים מוערמים ו-PR מוערמים. בלעדיו, TermQ מציג רק worktree רגילים.";
 "settings.gitspice.install.hint" = "התקן באמצעות Homebrew:";
-"settings.gitspice.check.again" = "בדוק שוב";
-"settings.gitspice.status.unusable %@" = "זוהה אך אינו שמיש: %@";
+"settings.stacking.check.again" = "בדוק שוב";
+"settings.stacking.status.unusable %@" = "זוהה אך אינו שמיש: %@";
 "stacks.enable" = "הפעל ערימה…";
 "stacks.enable.help" = "עקוב אחר הענפים של המאגר הזה כמחסנית באמצעות git-spice";
 "stacks.enable.failed %@" = "לא ניתן היה להפעיל ערימה: %@";
@@ -1451,7 +1450,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "ענף זה נוצר מוערם מעל ענף האינטגרציה, ולא ישירות מעל ענף הבסיס.";
 "stacks.new.stack.integration.note" = "יוצר ענף אינטגרציה ריק מהבסיס כשורש המחסנית — הוא לעולם לא נושא קוד משלו. ענפים מוערמים נבנים מעליו במקום מעל הבסיס, ובקשות המשיכה שלהם משתרשרות אליו. ברגע שהכול מוזג לענף האינטגרציה, הוא מוגש כבקשת משיכה אחת מאוחדת לבסיס — במקום שכל ענף מוערם ימוזג בנפרד לבסיס.";
 "stacks.new.stack.name.exists %@" = "%@ כבר קיים — בחר שם אחר.";
-"settings.gitspice.new.stack.mode" = "מחסנית חדשה מתחילה כ:";
-"settings.gitspice.new.stack.mode.help" = "איזה מצב גיליון מחסנית חדשה בוחר מראש — הגיליון תמיד מציע את שניהם.";
-"settings.gitspice.hide.stacked.worktrees" = "הסתר עצי עבודה מוערמים מהקטע עצי עבודה";
-"settings.gitspice.hide.stacked.worktrees.help" = "עצי עבודה שהענף שלהם שייך למחסנית עוקבת כבר מופיעים תחת מחסניות — הסתר אותם מהקטע עצי עבודה כדי למנוע רישום כפול.";
+"settings.stacking.new.stack.mode" = "מחסנית חדשה מתחילה כ:";
+"settings.stacking.new.stack.mode.help" = "איזה מצב גיליון מחסנית חדשה בוחר מראש — הגיליון תמיד מציע את שניהם.";
+"settings.stacking.hide.stacked.worktrees" = "הסתר עצי עבודה מוערמים מהקטע עצי עבודה";
+"settings.stacking.hide.stacked.worktrees.help" = "עצי עבודה שהענף שלהם שייך למחסנית עוקבת כבר מופיעים תחת מחסניות — הסתר אותם מהקטע עצי עבודה כדי למנוע רישום כפול.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "בקשות משיכה מוערמות";
+"settings.stacking.preferred" = "מנוע מועדף:";
+"settings.stacking.preferred.help" = "משמש רק למאגרים שאף מנוע עדיין לא לקח לאחריותו. מאגר שכלי מסוים כבר מנהל יישאר תמיד אצלו.";
+"settings.stacking.preferred.automatic" = "אוטומטי";
+"settings.ghstack.title" = "בקשות משיכה מוערמות של GitHub";
+"settings.ghstack.description" = "בקשות משיכה מוערמות מובנות של GitHub, דרך gh CLI.";
+"settings.ghstack.info" = "הערימות נרשמות בנפרד בכל worktree. משתמש באימות של gh CLI.";
+"settings.ghstack.not.installed.description" = "ההרחבה gh stack מאפשרת ענפים ובקשות משיכה מוערמים באמצעות הערימות של GitHub עצמה.";
+"settings.ghstack.install.hint" = "התקן את הרחבת gh CLI:";
+"settings.ghstack.needs.gh.cli" = "התקן ואמת קודם את gh CLI — ההרחבה הזו בנויה עליו.";
+"stacks.untrack.stack" = "הפסק מעקב אחר הערימה";
+"stacks.untrack.stack.title" = "להפסיק לעקוב אחר הערימה?";
+"stacks.untrack.stack.message %ld %@" = "‏TermQ יפסיק לעקוב אחר %ld הענפים האלה כערימה: %@\n\nאף ענף לא נמחק ושום עבודה לא הולכת לאיבוד.";
+"stacks.untrack.stack.confirm" = "הפסק מעקב";
+"stacks.untrack.stack.done" = "המעקב אחר הערימה הופסק. כל הענפים נשארו במקומם.";
+"stacks.sync.confirm.title" = "לסנכרן ולדחוף בכפייה?";
+"stacks.sync.confirm.message %ld %@" = "הסנכרון דוחף בכפייה %ld ענפים ומעדכן את הערימה ב‑GitHub: %@\n\nכל מי שעובד על הענפים האלה יצטרך לאפס אותם.";
+"stacks.sync.confirm.button" = "סנכרן ודחוף";

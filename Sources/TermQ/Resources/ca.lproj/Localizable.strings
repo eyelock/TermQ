@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PRs per repositori";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Impulsa les branques apilades i les PR apilades a la barra lateral.";
-"settings.gitspice.version" = "Versió:";
-"settings.gitspice.path" = "Camí:";
+"settings.stacking.version" = "Versió:";
+"settings.stacking.path" = "Camí:";
 "settings.gitspice.info" = "Les funcions de branques apilades a la barra lateral depenen d'una instal·lació funcional de git-spice. Reutilitza l'autenticació de la CLI gh.";
 "settings.gitspice.not.installed.description" = "git-spice habilita branques apilades i PR apilades. Sense ell, TermQ només mostra worktrees senzills.";
 "settings.gitspice.install.hint" = "Instal·la amb Homebrew:";
-"settings.gitspice.check.again" = "Comprova de nou";
-"settings.gitspice.status.unusable %@" = "Detectat però inutilitzable: %@";
+"settings.stacking.check.again" = "Comprova de nou";
+"settings.stacking.status.unusable %@" = "Detectat però inutilitzable: %@";
 "stacks.enable" = "Activa l'apilament…";
 "stacks.enable.help" = "Fes seguiment de les branques d'aquest repositori com una pila amb git-spice";
 "stacks.enable.failed %@" = "No s'ha pogut activar l'apilament: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Aquesta branca es crea apilada sobre la branca d'integració, no directament sobre la branca base.";
 "stacks.new.stack.integration.note" = "Crea una branca d'integració buida a partir de la base com a arrel de la pila — mai porta codi propi. Les branques apilades es construeixen sobre seu en lloc de la base, i les seves pull requests hi encadenen. Un cop tot s'ha fusionat a la branca d'integració, es converteix en una pull request cap a la base com un únic canvi consolidat — en lloc que cada branca apilada es fusioni individualment a la base.";
 "stacks.new.stack.name.exists %@" = "%@ ja existeix — tria un altre nom.";
-"settings.gitspice.new.stack.mode" = "La Nova Pila comença com a:";
-"settings.gitspice.new.stack.mode.help" = "Quin mode preselecciona el full Nova Pila — el full sempre ofereix els dos.";
-"settings.gitspice.hide.stacked.worktrees" = "Amaga els worktrees apilats de la secció Worktrees";
-"settings.gitspice.hide.stacked.worktrees.help" = "Els worktrees la branca dels quals pertany a una pila seguida ja apareixen a Piles — amaga'ls de la secció Worktrees per evitar la duplicitat.";
+"settings.stacking.new.stack.mode" = "La Nova Pila comença com a:";
+"settings.stacking.new.stack.mode.help" = "Quin mode preselecciona el full Nova Pila — el full sempre ofereix els dos.";
+"settings.stacking.hide.stacked.worktrees" = "Amaga els worktrees apilats de la secció Worktrees";
+"settings.stacking.hide.stacked.worktrees.help" = "Els worktrees la branca dels quals pertany a una pila seguida ja apareixen a Piles — amaga'ls de la secció Worktrees per evitar la duplicitat.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull requests apilades";
+"settings.stacking.preferred" = "Backend preferit:";
+"settings.stacking.preferred.help" = "Només s'utilitza en repositoris que cap backend no ha reclamat encara. Un repositori que ja gestiona una eina sempre s'hi queda.";
+"settings.stacking.preferred.automatic" = "Automàtic";
+"settings.ghstack.title" = "PR apilades de GitHub";
+"settings.ghstack.description" = "Les pull requests apilades natives de GitHub, mitjançant la CLI de gh.";
+"settings.ghstack.info" = "Les piles es registren per separat a cada worktree. Fa servir l'autenticació de la CLI de gh.";
+"settings.ghstack.not.installed.description" = "L'extensió gh stack habilita branques i PR apilades amb les piles pròpies de GitHub.";
+"settings.ghstack.install.hint" = "Instal·la l'extensió de la CLI de gh:";
+"settings.ghstack.needs.gh.cli" = "Instal·la i autentica primer la CLI de gh: aquesta extensió s'hi basa.";
+"stacks.untrack.stack" = "Deixa de seguir la pila";
+"stacks.untrack.stack.title" = "Voleu deixar de seguir la pila?";
+"stacks.untrack.stack.message %ld %@" = "El TermQ deixarà de seguir aquestes %ld branques com a pila: %@\n\nNo s'elimina cap branca ni es perd cap feina.";
+"stacks.untrack.stack.confirm" = "Deixa de seguir";
+"stacks.untrack.stack.done" = "Pila sense seguiment. S'han conservat totes les branques.";
+"stacks.sync.confirm.title" = "Voleu sincronitzar i forçar el push?";
+"stacks.sync.confirm.message %ld %@" = "Sincronitzar força el push de %ld branques i actualitza la pila a GitHub: %@\n\nQualsevol altra persona que treballi en aquestes branques haurà de restablir-les.";
+"stacks.sync.confirm.button" = "Sincronitza i envia";

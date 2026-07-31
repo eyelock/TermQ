@@ -1348,16 +1348,15 @@
 "settings.github.feed.cap.label" = "PR's per repository";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Maakt gestapelde branches en gestapelde PR's in de zijbalk mogelijk.";
-"settings.gitspice.version" = "Versie:";
-"settings.gitspice.path" = "Pad:";
+"settings.stacking.version" = "Versie:";
+"settings.stacking.path" = "Pad:";
 "settings.gitspice.info" = "Gestapelde-branchfuncties in de zijbalk vereisen een werkende git-spice-installatie. Deze hergebruikt de authenticatie van de gh CLI.";
 "settings.gitspice.not.installed.description" = "git-spice maakt gestapelde branches en gestapelde PR's mogelijk. Zonder git-spice toont TermQ alleen gewone worktrees.";
 "settings.gitspice.install.hint" = "Installeren met Homebrew:";
-"settings.gitspice.check.again" = "Opnieuw controleren";
-"settings.gitspice.status.unusable %@" = "Gedetecteerd maar onbruikbaar: %@";
+"settings.stacking.check.again" = "Opnieuw controleren";
+"settings.stacking.status.unusable %@" = "Gedetecteerd maar onbruikbaar: %@";
 "stacks.enable" = "Stapelen inschakelen…";
 "stacks.enable.help" = "Volg de branches van dit archief als een Stack met git-spice";
 "stacks.enable.failed %@" = "Kan stapelen niet inschakelen: %@";
@@ -1450,7 +1449,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Deze branch wordt gestapeld boven op de integratiebranch gemaakt, niet direct boven op de basisbranch.";
 "stacks.new.stack.integration.note" = "Maakt een lege integratiebranch vanaf de basis als wortel van de stack — deze bevat zelf nooit code. Stack-branches worden hierop gebouwd in plaats van op de basis, en hun pull requests schakelen hierin. Zodra alles is samengevoegd in de integratiebranch, wordt deze als één geconsolideerde wijziging naar de basis gepullrequest — in plaats van dat elke stack-branch afzonderlijk in de basis wordt samengevoegd.";
 "stacks.new.stack.name.exists %@" = "%@ bestaat al — kies een andere naam.";
-"settings.gitspice.new.stack.mode" = "Nieuwe Stack begint als:";
-"settings.gitspice.new.stack.mode.help" = "Welke modus het venster Nieuwe Stack vooraf selecteert — het venster biedt altijd beide aan.";
-"settings.gitspice.hide.stacked.worktrees" = "Gestapelde worktrees verbergen in de sectie Worktrees";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees waarvan de branch tot een gevolgde stack behoort, staan al vermeld onder Stacks — verberg ze in de sectie Worktrees om dubbele vermeldingen te voorkomen.";
+"settings.stacking.new.stack.mode" = "Nieuwe Stack begint als:";
+"settings.stacking.new.stack.mode.help" = "Welke modus het venster Nieuwe Stack vooraf selecteert — het venster biedt altijd beide aan.";
+"settings.stacking.hide.stacked.worktrees" = "Gestapelde worktrees verbergen in de sectie Worktrees";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktrees waarvan de branch tot een gevolgde stack behoort, staan al vermeld onder Stacks — verberg ze in de sectie Worktrees om dubbele vermeldingen te voorkomen.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Gestapelde pull requests";
+"settings.stacking.preferred" = "Voorkeursbackend:";
+"settings.stacking.preferred.help" = "Wordt alleen gebruikt voor repository's die nog door geen enkele backend zijn opgeëist. Een repository die al door één tool wordt bijgehouden, blijft daar altijd bij.";
+"settings.stacking.preferred.automatic" = "Automatisch";
+"settings.ghstack.title" = "GitHub gestapelde PR's";
+"settings.ghstack.description" = "GitHubs eigen gestapelde pull requests, via de gh-CLI.";
+"settings.ghstack.info" = "Stapels worden per worktree apart bijgehouden. Gebruikt de authenticatie van de gh-CLI.";
+"settings.ghstack.not.installed.description" = "De extensie gh stack maakt gestapelde branches en PR's mogelijk via GitHubs eigen stapels.";
+"settings.ghstack.install.hint" = "Installeer de gh-CLI-extensie:";
+"settings.ghstack.needs.gh.cli" = "Installeer en authenticeer eerst de gh-CLI — deze extensie bouwt daarop voort.";
+"stacks.untrack.stack" = "Stapel niet meer bijhouden";
+"stacks.untrack.stack.title" = "Stapel niet meer bijhouden?";
+"stacks.untrack.stack.message %ld %@" = "TermQ houdt deze %ld branches niet langer bij als stapel: %@\n\nEr wordt geen branch verwijderd en er gaat geen werk verloren.";
+"stacks.untrack.stack.confirm" = "Niet meer bijhouden";
+"stacks.untrack.stack.done" = "Stapel wordt niet meer bijgehouden. Alle branches zijn behouden.";
+"stacks.sync.confirm.title" = "Synchroniseren en force-pushen?";
+"stacks.sync.confirm.message %ld %@" = "Synchroniseren force-pusht %ld branches en werkt de stapel op GitHub bij: %@\n\nIedereen die aan deze branches werkt, moet resetten.";
+"stacks.sync.confirm.button" = "Synchroniseren en pushen";

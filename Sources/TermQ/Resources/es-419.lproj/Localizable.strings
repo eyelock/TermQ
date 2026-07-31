@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PRs por repositorio";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Impulsa las ramas apiladas y las PR apiladas en la barra lateral.";
-"settings.gitspice.version" = "Versión:";
-"settings.gitspice.path" = "Ruta:";
+"settings.stacking.version" = "Versión:";
+"settings.stacking.path" = "Ruta:";
 "settings.gitspice.info" = "Las funciones de ramas apiladas en la barra lateral dependen de una instalación funcional de git-spice. Reutiliza la autenticación del CLI de gh.";
 "settings.gitspice.not.installed.description" = "git-spice habilita ramas apiladas y PR apiladas. Sin él, TermQ solo muestra worktrees simples.";
 "settings.gitspice.install.hint" = "Instalar con Homebrew:";
-"settings.gitspice.check.again" = "Verificar de nuevo";
-"settings.gitspice.status.unusable %@" = "Detectado pero inutilizable: %@";
+"settings.stacking.check.again" = "Verificar de nuevo";
+"settings.stacking.status.unusable %@" = "Detectado pero inutilizable: %@";
 "stacks.enable" = "Activar apilado…";
 "stacks.enable.help" = "Rastrear las ramas de este repositorio como una pila con git-spice";
 "stacks.enable.failed %@" = "No se pudo activar el apilado: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Esta rama se crea apilada encima de la rama de integración, no directamente encima de la rama base.";
 "stacks.new.stack.integration.note" = "Crea una rama de integración vacía a partir de la base como raíz de la pila — nunca contiene código propio. Las ramas apiladas se construyen sobre ella en lugar de la base, y sus pull requests se encadenan hacia ella. Una vez que todo se fusiona en la rama de integración, se convierte en una pull request hacia la base como un único cambio consolidado — en lugar de que cada rama apilada se fusione individualmente en la base.";
 "stacks.new.stack.name.exists %@" = "%@ ya existe — elige otro nombre.";
-"settings.gitspice.new.stack.mode" = "Nueva Pila empieza como:";
-"settings.gitspice.new.stack.mode.help" = "Qué modo preselecciona la hoja Nueva Pila — la hoja siempre ofrece ambos.";
-"settings.gitspice.hide.stacked.worktrees" = "Ocultar worktrees apilados de la sección Worktrees";
-"settings.gitspice.hide.stacked.worktrees.help" = "Los worktrees cuya rama pertenece a una pila rastreada ya aparecen en Pilas — ocúltalos de la sección Worktrees para evitar el listado duplicado.";
+"settings.stacking.new.stack.mode" = "Nueva Pila empieza como:";
+"settings.stacking.new.stack.mode.help" = "Qué modo preselecciona la hoja Nueva Pila — la hoja siempre ofrece ambos.";
+"settings.stacking.hide.stacked.worktrees" = "Ocultar worktrees apilados de la sección Worktrees";
+"settings.stacking.hide.stacked.worktrees.help" = "Los worktrees cuya rama pertenece a una pila rastreada ya aparecen en Pilas — ocúltalos de la sección Worktrees para evitar el listado duplicado.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull requests apilados";
+"settings.stacking.preferred" = "Backend preferido:";
+"settings.stacking.preferred.help" = "Solo se usa en repositorios que ningún backend ha reclamado todavía. Un repositorio ya gestionado por una herramienta siempre se queda con ella.";
+"settings.stacking.preferred.automatic" = "Automático";
+"settings.ghstack.title" = "PR apilados de GitHub";
+"settings.ghstack.description" = "Los pull requests apilados nativos de GitHub, mediante la CLI de gh.";
+"settings.ghstack.info" = "Las pilas se registran por separado en cada worktree. Usa la autenticación de la CLI de gh.";
+"settings.ghstack.not.installed.description" = "La extensión gh stack habilita ramas y PR apilados usando las pilas propias de GitHub.";
+"settings.ghstack.install.hint" = "Instala la extensión de la CLI de gh:";
+"settings.ghstack.needs.gh.cli" = "Instala y autentica primero la CLI de gh: esta extensión se apoya en ella.";
+"stacks.untrack.stack" = "Dejar de seguir la pila";
+"stacks.untrack.stack.title" = "¿Dejar de seguir la pila?";
+"stacks.untrack.stack.message %ld %@" = "TermQ dejará de seguir estas %ld ramas como una pila: %@\n\nNo se elimina ninguna rama ni se pierde ningún trabajo.";
+"stacks.untrack.stack.confirm" = "Dejar de seguir";
+"stacks.untrack.stack.done" = "Pila sin seguimiento. Todas las ramas se conservaron.";
+"stacks.sync.confirm.title" = "¿Sincronizar y forzar el push?";
+"stacks.sync.confirm.message %ld %@" = "Sincronizar fuerza el push de %ld ramas y actualiza la pila en GitHub: %@\n\nQuien más trabaje en estas ramas tendrá que restablecerlas.";
+"stacks.sync.confirm.button" = "Sincronizar y enviar";

@@ -1350,16 +1350,15 @@
 "settings.github.feed.cap.label" = "PRs per databas";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Driver staplade grenar och staplade PR:ar i sidofältet.";
-"settings.gitspice.version" = "Version:";
-"settings.gitspice.path" = "Sökväg:";
+"settings.stacking.version" = "Version:";
+"settings.stacking.path" = "Sökväg:";
 "settings.gitspice.info" = "Staplade-grenfunktioner i sidofältet kräver en fungerande git-spice-installation. Den återanvänder gh CLI:ns autentisering.";
 "settings.gitspice.not.installed.description" = "git-spice möjliggör staplade grenar och staplade PR:ar. Utan det visar TermQ endast enkla arbetsträd.";
 "settings.gitspice.install.hint" = "Installera med Homebrew:";
-"settings.gitspice.check.again" = "Kontrollera igen";
-"settings.gitspice.status.unusable %@" = "Upptäckt men oanvändbar: %@";
+"settings.stacking.check.again" = "Kontrollera igen";
+"settings.stacking.status.unusable %@" = "Upptäckt men oanvändbar: %@";
 "stacks.enable" = "Aktivera stapling…";
 "stacks.enable.help" = "Spåra det här arkivets grenar som en stapel med git-spice";
 "stacks.enable.failed %@" = "Kunde inte aktivera stapling: %@";
@@ -1452,7 +1451,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Denna gren skapas staplad ovanpå integrationsgrenen, inte direkt ovanpå basgrenen.";
 "stacks.new.stack.integration.note" = "Skapar en tom integrationsgren från basen som stapelns rot — den bär aldrig egen kod. Stapelgrenar byggs ovanpå den istället för basen, och deras pull requests kedjas in i den. När allt har slagits samman till integrationsgrenen skickas den som en enda konsoliderad pull request till basen — i stället för att varje stapelgren slås samman separat i basen.";
 "stacks.new.stack.name.exists %@" = "%@ finns redan — välj ett annat namn.";
-"settings.gitspice.new.stack.mode" = "Ny stapel startar som:";
-"settings.gitspice.new.stack.mode.help" = "Vilket läge arket Ny stapel förväljer — arket erbjuder alltid båda.";
-"settings.gitspice.hide.stacked.worktrees" = "Dölj staplade worktrees från sektionen Arbetsträd";
-"settings.gitspice.hide.stacked.worktrees.help" = "Arbetsträd vars gren tillhör en spårad stapel visas redan under Staplar — dölj dem från sektionen Arbetsträd för att undvika dubblettvisning.";
+"settings.stacking.new.stack.mode" = "Ny stapel startar som:";
+"settings.stacking.new.stack.mode.help" = "Vilket läge arket Ny stapel förväljer — arket erbjuder alltid båda.";
+"settings.stacking.hide.stacked.worktrees" = "Dölj staplade worktrees från sektionen Arbetsträd";
+"settings.stacking.hide.stacked.worktrees.help" = "Arbetsträd vars gren tillhör en spårad stapel visas redan under Staplar — dölj dem från sektionen Arbetsträd för att undvika dubblettvisning.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Staplade pull requests";
+"settings.stacking.preferred" = "Föredragen backend:";
+"settings.stacking.preferred.help" = "Används bara för utvecklingskataloger som ingen backend ännu har tagit hand om. Ett repo som redan hanteras av ett verktyg stannar alltid hos det.";
+"settings.stacking.preferred.automatic" = "Automatisk";
+"settings.ghstack.title" = "GitHub staplade PR";
+"settings.ghstack.description" = "GitHubs inbyggda staplade pull requests, via gh-CLI:t.";
+"settings.ghstack.info" = "Staplar spåras separat i varje worktree. Använder gh-CLI:ts autentisering.";
+"settings.ghstack.not.installed.description" = "Tillägget gh stack möjliggör staplade grenar och PR med GitHubs egna staplar.";
+"settings.ghstack.install.hint" = "Installera gh-CLI-tillägget:";
+"settings.ghstack.needs.gh.cli" = "Installera och autentisera gh-CLI:t först – det här tillägget bygger på det.";
+"stacks.untrack.stack" = "Sluta spåra stapeln";
+"stacks.untrack.stack.title" = "Sluta spåra stapeln?";
+"stacks.untrack.stack.message %ld %@" = "TermQ slutar spåra dessa %ld grenar som en stapel: %@\n\nIngen gren tas bort och inget arbete går förlorat.";
+"stacks.untrack.stack.confirm" = "Sluta spåra";
+"stacks.untrack.stack.done" = "Stapeln spåras inte längre. Alla grenar finns kvar.";
+"stacks.sync.confirm.title" = "Synkronisera och tvinga push?";
+"stacks.sync.confirm.message %ld %@" = "Synkronisering tvingar push av %ld grenar och uppdaterar stapeln på GitHub: %@\n\nAlla andra som arbetar med grenarna måste återställa.";
+"stacks.sync.confirm.button" = "Synkronisera och pusha";

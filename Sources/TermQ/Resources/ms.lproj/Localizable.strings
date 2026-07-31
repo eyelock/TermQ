@@ -1348,16 +1348,15 @@
 "settings.github.feed.cap.label" = "PR setiap repositori";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Menyokong cawangan bertindan dan PR bertindan dalam bar sisi.";
-"settings.gitspice.version" = "Versi:";
-"settings.gitspice.path" = "Laluan:";
+"settings.stacking.version" = "Versi:";
+"settings.stacking.path" = "Laluan:";
 "settings.gitspice.info" = "Ciri cawangan bertindan dalam bar sisi bergantung kepada pemasangan git-spice yang berfungsi. Ia menggunakan semula pengesahan CLI gh.";
 "settings.gitspice.not.installed.description" = "git-spice membolehkan cawangan bertindan dan PR bertindan. Tanpanya, TermQ hanya memaparkan worktree biasa.";
 "settings.gitspice.install.hint" = "Pasang menggunakan Homebrew:";
-"settings.gitspice.check.again" = "Semak Semula";
-"settings.gitspice.status.unusable %@" = "Dikesan tetapi tidak boleh digunakan: %@";
+"settings.stacking.check.again" = "Semak Semula";
+"settings.stacking.status.unusable %@" = "Dikesan tetapi tidak boleh digunakan: %@";
 "stacks.enable" = "Aktifkan Penindanan…";
 "stacks.enable.help" = "Jejaki cawangan repositori ini sebagai tindanan menggunakan git-spice";
 "stacks.enable.failed %@" = "Tidak dapat mengaktifkan penindanan: %@";
@@ -1450,7 +1449,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Cawangan ini dicipta bertindan di atas cawangan integrasi, bukan terus di atas cawangan asas.";
 "stacks.new.stack.integration.note" = "Mencipta cawangan integrasi kosong daripada asas sebagai punca tindanan — ia tidak pernah membawa kod sendiri. Cawangan tindanan dibina di atasnya dan bukan di atas asas, dan pull request mereka berantai kepadanya. Setelah semuanya digabungkan ke cawangan integrasi, ia di-pull-request ke asas sebagai satu perubahan bersatu — bukannya setiap cawangan tindanan digabungkan secara berasingan ke asas.";
 "stacks.new.stack.name.exists %@" = "%@ sudah wujud — pilih nama lain.";
-"settings.gitspice.new.stack.mode" = "Tindanan Baharu bermula sebagai:";
-"settings.gitspice.new.stack.mode.help" = "Mod mana yang dipilih terlebih dahulu oleh helaian Tindanan Baharu — helaian sentiasa menawarkan kedua-duanya.";
-"settings.gitspice.hide.stacked.worktrees" = "Sembunyikan worktree bertindan daripada bahagian Worktree";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktree yang cawangannya tergolong dalam tindanan yang dijejaki sudah disenaraikan di bawah Tindanan — sembunyikan daripada bahagian Worktree untuk mengelakkan penyenaraian berganda.";
+"settings.stacking.new.stack.mode" = "Tindanan Baharu bermula sebagai:";
+"settings.stacking.new.stack.mode.help" = "Mod mana yang dipilih terlebih dahulu oleh helaian Tindanan Baharu — helaian sentiasa menawarkan kedua-duanya.";
+"settings.stacking.hide.stacked.worktrees" = "Sembunyikan worktree bertindan daripada bahagian Worktree";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktree yang cawangannya tergolong dalam tindanan yang dijejaki sudah disenaraikan di bawah Tindanan — sembunyikan daripada bahagian Worktree untuk mengelakkan penyenaraian berganda.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull request bertindan";
+"settings.stacking.preferred" = "Backend pilihan:";
+"settings.stacking.preferred.help" = "Hanya digunakan untuk repositori yang belum dituntut oleh mana-mana backend. Repositori yang sudah dijejaki satu alat sentiasa kekal dengannya.";
+"settings.stacking.preferred.automatic" = "Automatik";
+"settings.ghstack.title" = "PR bertindan GitHub";
+"settings.ghstack.description" = "Pull request bertindan asli GitHub, melalui gh CLI.";
+"settings.ghstack.info" = "Tindanan dijejaki secara berasingan dalam setiap worktree. Menggunakan pengesahan gh CLI.";
+"settings.ghstack.not.installed.description" = "Sambungan gh stack membolehkan cabang dan PR bertindan menggunakan tindanan GitHub sendiri.";
+"settings.ghstack.install.hint" = "Pasang sambungan gh CLI:";
+"settings.ghstack.needs.gh.cli" = "Pasang dan sahkan gh CLI dahulu — sambungan ini dibina di atasnya.";
+"stacks.untrack.stack" = "Berhenti menjejak tindanan";
+"stacks.untrack.stack.title" = "Berhenti menjejak tindanan?";
+"stacks.untrack.stack.message %ld %@" = "TermQ akan berhenti menjejak %ld cabang ini sebagai tindanan: %@\n\nTiada cabang dipadam dan tiada kerja hilang.";
+"stacks.untrack.stack.confirm" = "Berhenti menjejak";
+"stacks.untrack.stack.done" = "Tindanan tidak lagi dijejak. Semua cabang kekal di tempatnya.";
+"stacks.sync.confirm.title" = "Segerak dan force-push?";
+"stacks.sync.confirm.message %ld %@" = "Penyegerakan akan force-push %ld cabang dan mengemas kini tindanan di GitHub: %@\n\nSesiapa lain yang bekerja pada cabang ini perlu membuat reset.";
+"stacks.sync.confirm.button" = "Segerak dan hantar";

@@ -1349,16 +1349,15 @@
 "settings.github.feed.cap.label" = "PR:iä per tietovarasto";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Mahdollistaa pinotut haarat ja pinotut PR:t sivupalkissa.";
-"settings.gitspice.version" = "Versio:";
-"settings.gitspice.path" = "Polku:";
+"settings.stacking.version" = "Versio:";
+"settings.stacking.path" = "Polku:";
 "settings.gitspice.info" = "Pinottujen haarojen ominaisuudet sivupalkissa vaativat toimivan git-spice-asennuksen. Se käyttää gh CLI:n todennusta uudelleen.";
 "settings.gitspice.not.installed.description" = "git-spice mahdollistaa pinotut haarat ja pinotut PR:t. Ilman sitä TermQ näyttää vain tavalliset worktreet.";
 "settings.gitspice.install.hint" = "Asenna Homebrew'lla:";
-"settings.gitspice.check.again" = "Tarkista uudelleen";
-"settings.gitspice.status.unusable %@" = "Havaittu, mutta käyttökelvoton: %@";
+"settings.stacking.check.again" = "Tarkista uudelleen";
+"settings.stacking.status.unusable %@" = "Havaittu, mutta käyttökelvoton: %@";
 "stacks.enable" = "Ota pinoaminen käyttöön…";
 "stacks.enable.help" = "Seuraa tämän repositorion haaroja Stackina git-spicellä";
 "stacks.enable.failed %@" = "Pinoamisen käyttöönotto epäonnistui: %@";
@@ -1451,7 +1450,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Tämä haara luodaan pinottuna integraatiohaaran päälle, ei suoraan pohjahaaran päälle.";
 "stacks.new.stack.integration.note" = "Luo tyhjän integraatiohaaran pohjasta stackin juureksi — se ei koskaan sisällä omaa koodia. Stack-haarat rakentuvat sen päälle pohjahaaran sijaan, ja niiden pull requestit ketjuuntuvat siihen. Kun kaikki on yhdistetty integraatiohaaraan, se viedään pull requestina pohjaan yhtenä koottuna muutoksena — sen sijaan että jokainen stack-haara yhdistettäisiin pohjaan erikseen.";
 "stacks.new.stack.name.exists %@" = "%@ on jo olemassa — valitse toinen nimi.";
-"settings.gitspice.new.stack.mode" = "Uusi Stack alkaa muodossa:";
-"settings.gitspice.new.stack.mode.help" = "Kumman tilan Uusi Stack -lomake esivalitsee — lomake tarjoaa aina molemmat.";
-"settings.gitspice.hide.stacked.worktrees" = "Piilota pinotut worktreet Worktreet-osiosta";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktreet, joiden haara kuuluu seurattuun stackiin, näkyvät jo Stackit-osiossa — piilota ne Worktreet-osiosta, ettei sama asia näy kahdesti.";
+"settings.stacking.new.stack.mode" = "Uusi Stack alkaa muodossa:";
+"settings.stacking.new.stack.mode.help" = "Kumman tilan Uusi Stack -lomake esivalitsee — lomake tarjoaa aina molemmat.";
+"settings.stacking.hide.stacked.worktrees" = "Piilota pinotut worktreet Worktreet-osiosta";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktreet, joiden haara kuuluu seurattuun stackiin, näkyvät jo Stackit-osiossa — piilota ne Worktreet-osiosta, ettei sama asia näy kahdesti.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pinotut pull requestit";
+"settings.stacking.preferred" = "Ensisijainen taustajärjestelmä:";
+"settings.stacking.preferred.help" = "Käytetään vain repositorioihin, joita kumpikaan taustajärjestelmä ei ole vielä ottanut haltuunsa. Yhden työkalun jo hallinnoima repositorio pysyy aina sillä.";
+"settings.stacking.preferred.automatic" = "Automaattinen";
+"settings.ghstack.title" = "GitHubin pinotut PR:t";
+"settings.ghstack.description" = "GitHubin natiivit pinotut pull requestit gh-komentorivityökalun kautta.";
+"settings.ghstack.info" = "Pinot seurataan erikseen jokaisessa worktreessä. Käyttää gh-komentorivityökalun todennusta.";
+"settings.ghstack.not.installed.description" = "gh stack -laajennus mahdollistaa pinotut haarat ja PR:t GitHubin omilla pinoilla.";
+"settings.ghstack.install.hint" = "Asenna gh-komentorivityökalun laajennus:";
+"settings.ghstack.needs.gh.cli" = "Asenna ja todenna ensin gh-komentorivityökalu – tämä laajennus rakentuu sen päälle.";
+"stacks.untrack.stack" = "Lopeta pinon seuranta";
+"stacks.untrack.stack.title" = "Lopetetaanko pinon seuranta?";
+"stacks.untrack.stack.message %ld %@" = "TermQ lopettaa näiden %ld haaran seurannan pinona: %@\n\nYhtään haaraa ei poisteta eikä työtä menetetä.";
+"stacks.untrack.stack.confirm" = "Lopeta seuranta";
+"stacks.untrack.stack.done" = "Pinon seuranta lopetettu. Kaikki haarat säilytettiin.";
+"stacks.sync.confirm.title" = "Synkronoidaanko ja pakotetaanko push?";
+"stacks.sync.confirm.message %ld %@" = "Synkronointi pakottaa %ld haaran pushin ja päivittää pinon GitHubissa: %@\n\nMuiden näitä haaroja työstävien on nollattava ne.";
+"stacks.sync.confirm.button" = "Synkronoi ja pushaa";

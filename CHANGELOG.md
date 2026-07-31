@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Stacked Branches & PRs
+
+- **GitHub's native stacked pull requests are now a second stacking backend, alongside git-spice.** Install GitHub's `gh stack` extension (`gh extension install github/gh-stack`) and TermQ detects it, reads its stacks into the same sidebar, and drives the same operations — restack, submit, sync, conflict continue/abort, and enabling stacking on a repo. Both tools can be installed at once: **which one drives a repository is decided by the initialization evidence on disk**, never by a global setting, so a repo already stacked with one tool is never taken over by the other. Settings → Tools gains a **Stacked Pull Requests** section with a card per backend and a **Preferred backend** picker that only breaks ties for repos neither tool has claimed yet.
+- **Untrack Stack** — drops a stack from local tracking and **leaves every branch in place**. Deliberately distinct from Destroy Stack, which deletes them: the two are never offered under the same label, and no backend can inherit the other's blast radius by implication.
+- **Sync now confirms before it force-pushes.** `gh stack sync` force-pushes every branch in the stack and rewrites the stack on GitHub, where `gs repo sync` is local-only. On a GitHub-backed repo, Sync now names the exact branches it will push and asks first.
+
+### Changed — Stacked Branches & PRs
+
+- **Stack menu items follow what the active backend can actually do.** **Restack from Here**, **Submit This Branch…**, and **Destroy Stack** are git-spice-only; **Untrack Stack** is `gh stack`-only. `gh stack rebase` always pivots on the checked-out branch and `gh stack submit` always covers the whole stack, so scoped actions are hidden rather than silently operating on a wider range than the label promises.
+- **The Settings → Tools "git-spice" card is now a "Stacked Pull Requests" section.** Shared rows (version, path, Check Again, New Stack mode, hide-stacked-worktrees) moved to the section; only the tool-specific naming and install text stays per card.
+
+### Fixed — Stacked Branches & PRs
+
+- **Re-checking tool availability no longer blanks the stack menus.** Probing cleared the per-repo backend resolution wholesale, and since menu items are gated on the resolved backend's capabilities, an empty cache read as "this backend can do nothing" until a later refresh repopulated it. Probing now re-validates instead, keeping any resolution that still holds.
+
 ## [0.12.0] - 2026-07-21
 
 ### Added — Stacked Branches & PRs

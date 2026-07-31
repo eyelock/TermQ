@@ -1350,16 +1350,15 @@
 "settings.github.feed.cap.label" = "PR ต่อ repository";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "รองรับสาขาแบบสแต็กและ PR แบบสแต็กในแถบด้านข้าง";
-"settings.gitspice.version" = "เวอร์ชัน:";
-"settings.gitspice.path" = "เส้นทาง:";
+"settings.stacking.version" = "เวอร์ชัน:";
+"settings.stacking.path" = "เส้นทาง:";
 "settings.gitspice.info" = "ฟีเจอร์สาขาแบบสแต็กในแถบด้านข้างขึ้นอยู่กับการติดตั้ง git-spice ที่ใช้งานได้ โดยจะใช้การยืนยันตัวตนของ gh CLI ร่วมกัน";
 "settings.gitspice.not.installed.description" = "git-spice เปิดใช้งานสาขาแบบสแต็กและ PR แบบสแต็ก หากไม่มี TermQ จะแสดงเฉพาะ Worktree ธรรมดาเท่านั้น";
 "settings.gitspice.install.hint" = "ติดตั้งโดยใช้ Homebrew:";
-"settings.gitspice.check.again" = "ตรวจสอบอีกครั้ง";
-"settings.gitspice.status.unusable %@" = "ตรวจพบแต่ใช้งานไม่ได้: %@";
+"settings.stacking.check.again" = "ตรวจสอบอีกครั้ง";
+"settings.stacking.status.unusable %@" = "ตรวจพบแต่ใช้งานไม่ได้: %@";
 "stacks.enable" = "เปิดใช้งานการทำสแต็ก…";
 "stacks.enable.help" = "ติดตามสาขาของที่เก็บนี้เป็นสแต็กด้วย git-spice";
 "stacks.enable.failed %@" = "ไม่สามารถเปิดใช้งานการทำสแต็กได้: %@";
@@ -1452,7 +1451,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "สาขานี้จะถูกสร้างซ้อนอยู่เหนือสาขาการรวม ไม่ใช่อยู่เหนือสาขาฐานโดยตรง";
 "stacks.new.stack.integration.note" = "สร้างสาขาการรวมที่ว่างเปล่าจากฐานเป็นรากของสแต็ก — สาขานี้จะไม่มีโค้ดของตัวเองเลย สาขาสแต็กจะถูกสร้างต่อยอดบนสาขานี้แทนที่จะเป็นฐาน และ pull request ของสาขาเหล่านั้นจะเชื่อมโยงเข้ามาที่นี่ เมื่อทุกอย่างถูกผนวกเข้ากับสาขาการรวมแล้ว มันจะถูกส่งเป็น pull request เดียวที่รวมการเปลี่ยนแปลงทั้งหมดไปยังฐาน — แทนที่จะผนวกแต่ละสาขาสแต็กเข้ากับฐานทีละสาขา";
 "stacks.new.stack.name.exists %@" = "%@ มีอยู่แล้ว — เลือกชื่ออื่น";
-"settings.gitspice.new.stack.mode" = "สแต็กใหม่เริ่มต้นเป็น:";
-"settings.gitspice.new.stack.mode.help" = "โหมดใดที่ชีต สแต็กใหม่ เลือกไว้ล่วงหน้า — ชีตจะเสนอทั้งสองโหมดเสมอ";
-"settings.gitspice.hide.stacked.worktrees" = "ซ่อน worktree ที่ทำสแต็กจากส่วน Worktrees";
-"settings.gitspice.hide.stacked.worktrees.help" = "worktree ที่สาขาเป็นส่วนหนึ่งของสแต็กที่ติดตามอยู่จะแสดงอยู่ใน สแต็ก อยู่แล้ว — ซ่อนออกจากส่วน Worktrees เพื่อหลีกเลี่ยงการแสดงซ้ำ";
+"settings.stacking.new.stack.mode" = "สแต็กใหม่เริ่มต้นเป็น:";
+"settings.stacking.new.stack.mode.help" = "โหมดใดที่ชีต สแต็กใหม่ เลือกไว้ล่วงหน้า — ชีตจะเสนอทั้งสองโหมดเสมอ";
+"settings.stacking.hide.stacked.worktrees" = "ซ่อน worktree ที่ทำสแต็กจากส่วน Worktrees";
+"settings.stacking.hide.stacked.worktrees.help" = "worktree ที่สาขาเป็นส่วนหนึ่งของสแต็กที่ติดตามอยู่จะแสดงอยู่ใน สแต็ก อยู่แล้ว — ซ่อนออกจากส่วน Worktrees เพื่อหลีกเลี่ยงการแสดงซ้ำ";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "พูลรีเควสต์แบบซ้อน";
+"settings.stacking.preferred" = "แบ็กเอนด์ที่ต้องการ:";
+"settings.stacking.preferred.help" = "ใช้เฉพาะกับที่เก็บที่ยังไม่มีแบ็กเอนด์ใดดูแล ที่เก็บซึ่งเครื่องมือหนึ่งติดตามอยู่แล้วจะอยู่กับเครื่องมือนั้นเสมอ";
+"settings.stacking.preferred.automatic" = "อัตโนมัติ";
+"settings.ghstack.title" = "PR แบบซ้อนของ GitHub";
+"settings.ghstack.description" = "พูลรีเควสต์แบบซ้อนดั้งเดิมของ GitHub ผ่าน gh CLI";
+"settings.ghstack.info" = "สแต็กถูกติดตามแยกกันในแต่ละ worktree ใช้การยืนยันตัวตนของ gh CLI";
+"settings.ghstack.not.installed.description" = "ส่วนขยาย gh stack เปิดใช้งานเบรนช์และ PR แบบซ้อนโดยใช้สแต็กของ GitHub เอง";
+"settings.ghstack.install.hint" = "ติดตั้งส่วนขยายของ gh CLI:";
+"settings.ghstack.needs.gh.cli" = "ติดตั้งและยืนยันตัวตน gh CLI ก่อน — ส่วนขยายนี้ทำงานบนพื้นฐานของมัน";
+"stacks.untrack.stack" = "เลิกติดตามสแต็ก";
+"stacks.untrack.stack.title" = "เลิกติดตามสแต็กหรือไม่?";
+"stacks.untrack.stack.message %ld %@" = "TermQ จะเลิกติดตามเบรนช์ %ld รายการนี้ในฐานะสแต็ก: %@\n\nไม่มีเบรนช์ใดถูกลบ และไม่มีงานใดสูญหาย";
+"stacks.untrack.stack.confirm" = "เลิกติดตาม";
+"stacks.untrack.stack.done" = "เลิกติดตามสแต็กแล้ว เบรนช์ทั้งหมดยังคงอยู่ที่เดิม";
+"stacks.sync.confirm.title" = "ซิงค์และบังคับพุชหรือไม่?";
+"stacks.sync.confirm.message %ld %@" = "การซิงค์จะบังคับพุชเบรนช์ %ld รายการและอัปเดตสแต็กบน GitHub: %@\n\nคนอื่นที่ทำงานบนเบรนช์เหล่านี้จะต้องรีเซ็ต";
+"stacks.sync.confirm.button" = "ซิงค์และพุช";

@@ -1350,16 +1350,15 @@
 "settings.github.feed.cap.label" = "PR na repozitorij";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Omogoča zložene veje in zložene PR v stranski vrstici.";
-"settings.gitspice.version" = "Različica:";
-"settings.gitspice.path" = "Pot:";
+"settings.stacking.version" = "Različica:";
+"settings.stacking.path" = "Pot:";
 "settings.gitspice.info" = "Funkcije zloženih vej v stranski vrstici so odvisne od delujoče namestitve git-spice. Ponovno uporablja avtentikacijo gh CLI.";
 "settings.gitspice.not.installed.description" = "git-spice omogoča zložene veje in zložene PR. Brez njega TermQ prikazuje samo navadne delovne kopije.";
 "settings.gitspice.install.hint" = "Namestite s Homebrew:";
-"settings.gitspice.check.again" = "Preveri znova";
-"settings.gitspice.status.unusable %@" = "Zaznano, vendar neuporabno: %@";
+"settings.stacking.check.again" = "Preveri znova";
+"settings.stacking.status.unusable %@" = "Zaznano, vendar neuporabno: %@";
 "stacks.enable" = "Omogoči zlaganje…";
 "stacks.enable.help" = "Sledi vejam tega repozitorija kot sklad z git-spice";
 "stacks.enable.failed %@" = "Zlaganja ni bilo mogoče omogočiti: %@";
@@ -1452,7 +1451,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Ta veja je ustvarjena zložena nad integracijsko vejo, ne neposredno nad osnovno vejo.";
 "stacks.new.stack.integration.note" = "Ustvari prazno integracijsko vejo iz osnovne kot koren sklada — nikoli ne nosi lastne kode. Veje sklada se gradijo na njej namesto na osnovni, njihove pull request pa se verižijo vanjo. Ko je vse združeno v integracijsko vejo, se kot ena sama združena sprememba pošlje kot pull request v osnovno — namesto da bi se vsaka veja sklada posebej združila v osnovno.";
 "stacks.new.stack.name.exists %@" = "%@ že obstaja — izberite drugo ime.";
-"settings.gitspice.new.stack.mode" = "Nov sklad se začne kot:";
-"settings.gitspice.new.stack.mode.help" = "Kateri način list Nov sklad vnaprej izbere — list vedno ponudi oba.";
-"settings.gitspice.hide.stacked.worktrees" = "Skrij zložene delovne kopije iz razdelka Delovne Kopije";
-"settings.gitspice.hide.stacked.worktrees.help" = "Delovne kopije, katerih veja pripada spremljanemu skladu, so že navedene pod Skladi — skrijte jih iz razdelka Delovne Kopije, da se izognete podvojenemu prikazu.";
+"settings.stacking.new.stack.mode" = "Nov sklad se začne kot:";
+"settings.stacking.new.stack.mode.help" = "Kateri način list Nov sklad vnaprej izbere — list vedno ponudi oba.";
+"settings.stacking.hide.stacked.worktrees" = "Skrij zložene delovne kopije iz razdelka Delovne Kopije";
+"settings.stacking.hide.stacked.worktrees.help" = "Delovne kopije, katerih veja pripada spremljanemu skladu, so že navedene pod Skladi — skrijte jih iz razdelka Delovne Kopije, da se izognete podvojenemu prikazu.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Zloženi pull requesti";
+"settings.stacking.preferred" = "Prednostno zaledje:";
+"settings.stacking.preferred.help" = "Uporabi se samo za repozitorije, ki jih nobeno zaledje še ni prevzelo. Repozitorij, ki ga že upravlja eno orodje, vedno ostane pri njem.";
+"settings.stacking.preferred.automatic" = "Samodejno";
+"settings.ghstack.title" = "GitHub zloženi PR-ji";
+"settings.ghstack.description" = "GitHubovi izvorni zloženi pull requesti prek gh CLI.";
+"settings.ghstack.info" = "Skladi se sledijo ločeno v vsakem worktreeju. Uporablja overitev gh CLI.";
+"settings.ghstack.not.installed.description" = "Razširitev gh stack omogoča zložene veje in PR-je z GitHubovimi lastnimi skladi.";
+"settings.ghstack.install.hint" = "Namesti razširitev gh CLI:";
+"settings.ghstack.needs.gh.cli" = "Najprej namesti in overi gh CLI — ta razširitev gradi na njem.";
+"stacks.untrack.stack" = "Prenehaj slediti skladu";
+"stacks.untrack.stack.title" = "Prenehati slediti skladu?";
+"stacks.untrack.stack.message %ld %@" = "TermQ teh %ld vej ne bo več spremljal kot sklad: %@\n\nNobena veja ne bo izbrisana in nobeno delo ne bo izgubljeno.";
+"stacks.untrack.stack.confirm" = "Prenehaj slediti";
+"stacks.untrack.stack.done" = "Skladu se ne sledi več. Vse veje so ostale na mestu.";
+"stacks.sync.confirm.title" = "Sinhroniziraj s prisilnim pushem?";
+"stacks.sync.confirm.message %ld %@" = "Sinhronizacija prisilno pusha %ld vej in posodobi sklad na GitHubu: %@\n\nVsi drugi, ki delajo na teh vejah, jih bodo morali ponastaviti.";
+"stacks.sync.confirm.button" = "Sinhroniziraj in pošlji";

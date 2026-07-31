@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PR na repozitář";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Umožňuje skládané větve a skládané PR na postranním panelu.";
-"settings.gitspice.version" = "Verze:";
-"settings.gitspice.path" = "Cesta:";
+"settings.stacking.version" = "Verze:";
+"settings.stacking.path" = "Cesta:";
 "settings.gitspice.info" = "Funkce skládaných větví na postranním panelu závisí na funkční instalaci git-spice. Využívá stejné přihlášení jako gh CLI.";
 "settings.gitspice.not.installed.description" = "git-spice umožňuje skládané větve a skládané PR. Bez něj zobrazuje TermQ pouze běžné pracovní stromy.";
 "settings.gitspice.install.hint" = "Nainstalujte pomocí Homebrew:";
-"settings.gitspice.check.again" = "Zkontrolovat znovu";
-"settings.gitspice.status.unusable %@" = "Zjištěno, ale nepoužitelné: %@";
+"settings.stacking.check.again" = "Zkontrolovat znovu";
+"settings.stacking.status.unusable %@" = "Zjištěno, ale nepoužitelné: %@";
 "stacks.enable" = "Povolit skládání…";
 "stacks.enable.help" = "Sledovat větve tohoto repozitáře jako zásobník pomocí git-spice";
 "stacks.enable.failed %@" = "Skládání se nepodařilo povolit: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Tato větev se vytvoří jako součást zásobníku nad integrační větví, ne přímo nad základní větví.";
 "stacks.new.stack.integration.note" = "Vytvoří prázdnou integrační větev ze základní větve jako kořen zásobníku — nikdy nenese žádný vlastní kód. Větve zásobníku se staví na ní místo na základní větvi a jejich pull requesty se řetězí do ní. Jakmile je vše sloučeno do integrační větve, je jako jedna konsolidovaná změna odeslána pull requestem do základní větve — místo aby se každá větev zásobníku slučovala do základní větve zvlášť.";
 "stacks.new.stack.name.exists %@" = "%@ už existuje — zvolte jiný název.";
-"settings.gitspice.new.stack.mode" = "Nový zásobník začíná jako:";
-"settings.gitspice.new.stack.mode.help" = "Který režim list Nový zásobník předvybere — list vždy nabízí oba.";
-"settings.gitspice.hide.stacked.worktrees" = "Skrýt větve zásobníku z oddílu Pracovní stromy";
-"settings.gitspice.hide.stacked.worktrees.help" = "Pracovní stromy, jejichž větev patří do sledovaného zásobníku, jsou už uvedeny v Zásobnících — skryjte je z oddílu Pracovní stromy, aby se nezobrazovaly duplicitně.";
+"settings.stacking.new.stack.mode" = "Nový zásobník začíná jako:";
+"settings.stacking.new.stack.mode.help" = "Který režim list Nový zásobník předvybere — list vždy nabízí oba.";
+"settings.stacking.hide.stacked.worktrees" = "Skrýt větve zásobníku z oddílu Pracovní stromy";
+"settings.stacking.hide.stacked.worktrees.help" = "Pracovní stromy, jejichž větev patří do sledovaného zásobníku, jsou už uvedeny v Zásobnících — skryjte je z oddílu Pracovní stromy, aby se nezobrazovaly duplicitně.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Skládané pull requesty";
+"settings.stacking.preferred" = "Preferovaný backend:";
+"settings.stacking.preferred.help" = "Použije se jen u repozitářů, které si dosud nezabral žádný backend. Repozitář, který už spravuje jeden nástroj, u něj vždy zůstane.";
+"settings.stacking.preferred.automatic" = "Automaticky";
+"settings.ghstack.title" = "Skládané PR na GitHubu";
+"settings.ghstack.description" = "Nativní skládané pull requesty GitHubu přes gh CLI.";
+"settings.ghstack.info" = "Zásobníky se sledují samostatně v každém worktree. Používá ověření gh CLI.";
+"settings.ghstack.not.installed.description" = "Rozšíření gh stack umožňuje skládané větve a PR pomocí vlastních zásobníků GitHubu.";
+"settings.ghstack.install.hint" = "Nainstalujte rozšíření gh CLI:";
+"settings.ghstack.needs.gh.cli" = "Nejprve nainstalujte a ověřte gh CLI — toto rozšíření na něm staví.";
+"stacks.untrack.stack" = "Přestat sledovat zásobník";
+"stacks.untrack.stack.title" = "Přestat sledovat zásobník?";
+"stacks.untrack.stack.message %ld %@" = "TermQ přestane sledovat těchto %ld větví jako zásobník: %@\n\nŽádná větev se nesmaže a žádná práce se neztratí.";
+"stacks.untrack.stack.confirm" = "Přestat sledovat";
+"stacks.untrack.stack.done" = "Zásobník se už nesleduje. Všechny větve zůstaly zachovány.";
+"stacks.sync.confirm.title" = "Synchronizovat a vynutit push?";
+"stacks.sync.confirm.message %ld %@" = "Synchronizace vynutí push %ld větví a aktualizuje zásobník na GitHubu: %@\n\nKdokoli další, kdo na těchto větvích pracuje, je bude muset resetovat.";
+"stacks.sync.confirm.button" = "Synchronizovat a odeslat";

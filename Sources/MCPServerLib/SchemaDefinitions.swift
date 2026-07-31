@@ -391,9 +391,11 @@ extension TermQMCPServer {
                     Read the stacked-branch graph for a registered repository. Returns a
                     provider-neutral JSON graph (branches with parent/children edges,
                     change-request status, restack and push state). Reports
-                    `available: false` when no stacked-PR provider (e.g. git-spice) is
-                    installed, and `initialized: false` when the repo has no stack yet —
-                    neither is an error.
+                    `available: false` when no stacked-PR provider is installed, and
+                    `initialized: false` when the repo has no stack yet — neither is an
+                    error. The `provider` field names the backend driving this repo
+                    (`git-spice` or `github`); which one owns a repo is decided by the
+                    initialization evidence on disk, not by a global setting.
                     """,
                 inputSchema: Schema.objectSchema([
                     Schema.string("repoId", "Repository UUID (from termq://repos)", required: true)
@@ -449,7 +451,9 @@ extension TermQMCPServer {
                     Rebase every branch of the worktree's stack onto its updated parent.
                     If the restack pauses on conflicts, the result reports `paused: true`
                     with the conflicted files — resolve them in the worktree and continue
-                    with the provider CLI (`gs rebase continue`) or the TermQ sidebar.
+                    in the TermQ sidebar or with the backend's own CLI
+                    (`gs rebase continue` for git-spice, `gh stack rebase --continue`
+                    for GitHub).
                     """,
                 inputSchema: Schema.objectSchema([
                     Schema.string("repoId", "Repository UUID", required: true),

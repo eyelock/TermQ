@@ -1351,16 +1351,15 @@
 "settings.github.feed.cap.label" = "PR mỗi kho lưu trữ";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Hỗ trợ các nhánh xếp chồng và PR xếp chồng trong thanh bên.";
-"settings.gitspice.version" = "Phiên bản:";
-"settings.gitspice.path" = "Đường dẫn:";
+"settings.stacking.version" = "Phiên bản:";
+"settings.stacking.path" = "Đường dẫn:";
 "settings.gitspice.info" = "Các tính năng nhánh xếp chồng trong thanh bên phụ thuộc vào việc cài đặt git-spice hoạt động tốt. Nó tái sử dụng xác thực của gh CLI.";
 "settings.gitspice.not.installed.description" = "git-spice cho phép nhánh xếp chồng và PR xếp chồng. Nếu không có nó, TermQ chỉ hiển thị các worktree đơn giản.";
 "settings.gitspice.install.hint" = "Cài đặt bằng Homebrew:";
-"settings.gitspice.check.again" = "Kiểm tra lại";
-"settings.gitspice.status.unusable %@" = "Đã phát hiện nhưng không sử dụng được: %@";
+"settings.stacking.check.again" = "Kiểm tra lại";
+"settings.stacking.status.unusable %@" = "Đã phát hiện nhưng không sử dụng được: %@";
 "stacks.enable" = "Bật xếp chồng…";
 "stacks.enable.help" = "Theo dõi các nhánh của kho lưu trữ này như một ngăn xếp bằng git-spice";
 "stacks.enable.failed %@" = "Không thể bật xếp chồng: %@";
@@ -1453,7 +1452,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Nhánh này được tạo xếp chồng lên trên nhánh tích hợp, không phải trực tiếp trên nhánh cơ sở.";
 "stacks.new.stack.integration.note" = "Tạo một nhánh tích hợp trống từ nhánh cơ sở làm gốc của ngăn xếp — nhánh này không bao giờ mang mã nguồn riêng. Các nhánh ngăn xếp được xây dựng trên nhánh này thay vì trên nhánh cơ sở, và pull request của chúng nối chuỗi vào đó. Khi mọi thứ đã được hợp nhất vào nhánh tích hợp, nó sẽ được gửi pull request tới nhánh cơ sở như một thay đổi hợp nhất duy nhất — thay vì từng nhánh ngăn xếp được hợp nhất riêng lẻ vào nhánh cơ sở.";
 "stacks.new.stack.name.exists %@" = "%@ đã tồn tại — hãy chọn tên khác.";
-"settings.gitspice.new.stack.mode" = "Ngăn Xếp Mới bắt đầu ở chế độ:";
-"settings.gitspice.new.stack.mode.help" = "Chế độ nào bảng Ngăn Xếp Mới chọn sẵn — bảng luôn cung cấp cả hai.";
-"settings.gitspice.hide.stacked.worktrees" = "Ẩn các worktree xếp chồng khỏi mục Worktree";
-"settings.gitspice.hide.stacked.worktrees.help" = "Các worktree có nhánh thuộc về một ngăn xếp đang theo dõi đã được liệt kê trong Ngăn Xếp — hãy ẩn chúng khỏi mục Worktree để tránh liệt kê trùng lặp.";
+"settings.stacking.new.stack.mode" = "Ngăn Xếp Mới bắt đầu ở chế độ:";
+"settings.stacking.new.stack.mode.help" = "Chế độ nào bảng Ngăn Xếp Mới chọn sẵn — bảng luôn cung cấp cả hai.";
+"settings.stacking.hide.stacked.worktrees" = "Ẩn các worktree xếp chồng khỏi mục Worktree";
+"settings.stacking.hide.stacked.worktrees.help" = "Các worktree có nhánh thuộc về một ngăn xếp đang theo dõi đã được liệt kê trong Ngăn Xếp — hãy ẩn chúng khỏi mục Worktree để tránh liệt kê trùng lặp.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull request xếp chồng";
+"settings.stacking.preferred" = "Backend ưu tiên:";
+"settings.stacking.preferred.help" = "Chỉ dùng cho các kho mà chưa backend nào tiếp quản. Kho đã được một công cụ theo dõi thì luôn thuộc về công cụ đó.";
+"settings.stacking.preferred.automatic" = "Tự động";
+"settings.ghstack.title" = "PR xếp chồng của GitHub";
+"settings.ghstack.description" = "Pull request xếp chồng gốc của GitHub, thông qua gh CLI.";
+"settings.ghstack.info" = "Các chồng được theo dõi riêng trong từng worktree. Dùng xác thực của gh CLI.";
+"settings.ghstack.not.installed.description" = "Tiện ích mở rộng gh stack bật nhánh và PR xếp chồng bằng chính các chồng của GitHub.";
+"settings.ghstack.install.hint" = "Cài tiện ích mở rộng của gh CLI:";
+"settings.ghstack.needs.gh.cli" = "Hãy cài và xác thực gh CLI trước — tiện ích này dựa trên nó.";
+"stacks.untrack.stack" = "Ngừng theo dõi chồng";
+"stacks.untrack.stack.title" = "Ngừng theo dõi chồng?";
+"stacks.untrack.stack.message %ld %@" = "TermQ sẽ ngừng theo dõi %ld nhánh này như một chồng: %@\n\nKhông nhánh nào bị xóa và không mất công việc nào.";
+"stacks.untrack.stack.confirm" = "Ngừng theo dõi";
+"stacks.untrack.stack.done" = "Đã ngừng theo dõi chồng. Mọi nhánh vẫn còn nguyên.";
+"stacks.sync.confirm.title" = "Đồng bộ và force-push?";
+"stacks.sync.confirm.message %ld %@" = "Đồng bộ sẽ force-push %ld nhánh và cập nhật chồng trên GitHub: %@\n\nNhững người khác đang làm việc trên các nhánh này sẽ phải reset.";
+"stacks.sync.confirm.button" = "Đồng bộ và đẩy";

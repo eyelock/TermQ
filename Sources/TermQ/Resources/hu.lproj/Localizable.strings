@@ -1349,16 +1349,15 @@
 "settings.github.feed.cap.label" = "PR-ek tárházonként";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Az egymásra épülő ágakat és egymásra épülő PR-eket biztosítja az oldalsávban.";
-"settings.gitspice.version" = "Verzió:";
-"settings.gitspice.path" = "Elérési út:";
+"settings.stacking.version" = "Verzió:";
+"settings.stacking.path" = "Elérési út:";
 "settings.gitspice.info" = "Az oldalsáv egymásra épülő ág funkciói működő git-spice telepítést igényelnek. Ugyanazt a hitelesítést használja, mint a gh CLI.";
 "settings.gitspice.not.installed.description" = "A git-spice lehetővé teszi az egymásra épülő ágakat és PR-eket. Nélküle a TermQ csak egyszerű munkakönyvtárakat jelenít meg.";
 "settings.gitspice.install.hint" = "Telepítés Homebrew-val:";
-"settings.gitspice.check.again" = "Ellenőrzés újra";
-"settings.gitspice.status.unusable %@" = "Észlelve, de nem használható: %@";
+"settings.stacking.check.again" = "Ellenőrzés újra";
+"settings.stacking.status.unusable %@" = "Észlelve, de nem használható: %@";
 "stacks.enable" = "Verem engedélyezése…";
 "stacks.enable.help" = "E tároló ágainak követése veremként a git-spice segítségével";
 "stacks.enable.failed %@" = "Nem sikerült engedélyezni a vermet: %@";
@@ -1451,7 +1450,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Ez az ág az integrációs ág tetejére kerül a verembe, nem közvetlenül az alapág fölé.";
 "stacks.new.stack.integration.note" = "Létrehoz egy üres integrációs ágat az alapágból a verem gyökereként — soha nem hordoz saját kódot. A verem ágai erre épülnek az alapág helyett, és a pull requestjeik ebbe láncolódnak. Amint minden egyesült az integrációs ágba, egyetlen összevont változásként kerül pull requestbe az alapágba — ahelyett, hogy minden verem ág külön-külön egyesülne az alapággal.";
 "stacks.new.stack.name.exists %@" = "A(z) %@ már létezik — válasszon másik nevet.";
-"settings.gitspice.new.stack.mode" = "Az Új Verem indítási módja:";
-"settings.gitspice.new.stack.mode.help" = "Melyik módot választja ki előre az Új Verem lap — a lap mindig mindkettőt felkínálja.";
-"settings.gitspice.hide.stacked.worktrees" = "Verem ágak elrejtése a Munkakönyvtárak szakaszból";
-"settings.gitspice.hide.stacked.worktrees.help" = "Azok a munkakönyvtárak, amelyek ága egy követett veremhez tartozik, már megjelennek a Vermek alatt — rejtse el őket a Munkakönyvtárak szakaszból, hogy elkerülje a duplikált listázást.";
+"settings.stacking.new.stack.mode" = "Az Új Verem indítási módja:";
+"settings.stacking.new.stack.mode.help" = "Melyik módot választja ki előre az Új Verem lap — a lap mindig mindkettőt felkínálja.";
+"settings.stacking.hide.stacked.worktrees" = "Verem ágak elrejtése a Munkakönyvtárak szakaszból";
+"settings.stacking.hide.stacked.worktrees.help" = "Azok a munkakönyvtárak, amelyek ága egy követett veremhez tartozik, már megjelennek a Vermek alatt — rejtse el őket a Munkakönyvtárak szakaszból, hogy elkerülje a duplikált listázást.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Egymásra épülő pull requestek";
+"settings.stacking.preferred" = "Előnyben részesített háttér:";
+"settings.stacking.preferred.help" = "Csak olyan tárolóknál számít, amelyeket még egyik háttér sem vett át. Az a tároló, amelyet már egy eszköz kezel, mindig annál marad.";
+"settings.stacking.preferred.automatic" = "Automatikus";
+"settings.ghstack.title" = "GitHub egymásra épülő PR-ek";
+"settings.ghstack.description" = "A GitHub beépített egymásra épülő pull requestjei a gh CLI-n keresztül.";
+"settings.ghstack.info" = "A vermeket minden worktree külön követi. A gh CLI hitelesítését használja.";
+"settings.ghstack.not.installed.description" = "A gh stack bővítmény egymásra épülő ágakat és PR-eket tesz lehetővé a GitHub saját vermeivel.";
+"settings.ghstack.install.hint" = "Telepítsd a gh CLI bővítményt:";
+"settings.ghstack.needs.gh.cli" = "Először telepítsd és hitelesítsd a gh CLI-t — ez a bővítmény arra épül.";
+"stacks.untrack.stack" = "Verem követésének leállítása";
+"stacks.untrack.stack.title" = "Leállítod a verem követését?";
+"stacks.untrack.stack.message %ld %@" = "A TermQ nem követi tovább ezt a(z) %ld ágat veremként: %@\n\nEgyetlen ág sem törlődik, és semmilyen munka nem vész el.";
+"stacks.untrack.stack.confirm" = "Követés leállítása";
+"stacks.untrack.stack.done" = "A verem követése leállt. Minden ág a helyén maradt.";
+"stacks.sync.confirm.title" = "Szinkronizálás kényszerített push-sal?";
+"stacks.sync.confirm.message %ld %@" = "A szinkronizálás %ld ágat kényszerítve push-ol, és frissíti a vermet a GitHubon: %@\n\nMindenki másnak, aki ezeken az ágakon dolgozik, vissza kell állítania őket.";
+"stacks.sync.confirm.button" = "Szinkronizálás és küldés";

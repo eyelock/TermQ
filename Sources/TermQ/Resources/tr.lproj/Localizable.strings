@@ -1350,16 +1350,15 @@
 "settings.github.feed.cap.label" = "Depo başına PR sayısı";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Kenar çubuğunda yığınlanmış dalları ve yığınlanmış PR'leri destekler.";
-"settings.gitspice.version" = "Sürüm:";
-"settings.gitspice.path" = "Yol:";
+"settings.stacking.version" = "Sürüm:";
+"settings.stacking.path" = "Yol:";
 "settings.gitspice.info" = "Kenar çubuğundaki yığınlanmış dal özellikleri, çalışan bir git-spice kurulumuna bağlıdır. gh CLI'nin kimlik doğrulamasını yeniden kullanır.";
 "settings.gitspice.not.installed.description" = "git-spice, yığınlanmış dalları ve yığınlanmış PR'leri etkinleştirir. Olmadan, TermQ yalnızca düz worktree'leri gösterir.";
 "settings.gitspice.install.hint" = "Homebrew ile kurun:";
-"settings.gitspice.check.again" = "Tekrar kontrol et";
-"settings.gitspice.status.unusable %@" = "Algılandı ama kullanılamıyor: %@";
+"settings.stacking.check.again" = "Tekrar kontrol et";
+"settings.stacking.status.unusable %@" = "Algılandı ama kullanılamıyor: %@";
 "stacks.enable" = "Yığınlamayı Etkinleştir…";
 "stacks.enable.help" = "Bu deponun dallarını git-spice ile bir yığın olarak izle";
 "stacks.enable.failed %@" = "Yığınlama etkinleştirilemedi: %@";
@@ -1452,7 +1451,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Bu dal, doğrudan temel dalın üzerinde değil, entegrasyon dalının üzerinde yığılmış olarak oluşturulur.";
 "stacks.new.stack.integration.note" = "Temel daldan, yığının kökü olarak boş bir entegrasyon dalı oluşturur — bu dal asla kendi koduna sahip olmaz. Yığın dalları temel dal yerine bunun üzerine inşa edilir ve pull request'leri buna zincirlenir. Her şey entegrasyon dalında birleştirildiğinde, tek bir konsolide değişiklik olarak temel dala pull request gönderilir — her yığın dalının ayrı ayrı temel dala birleştirilmesi yerine.";
 "stacks.new.stack.name.exists %@" = "%@ zaten mevcut — başka bir ad seçin.";
-"settings.gitspice.new.stack.mode" = "Yeni Yığın şu şekilde başlar:";
-"settings.gitspice.new.stack.mode.help" = "Yeni Yığın sayfasının önceden seçtiği mod — sayfa her zaman ikisini de sunar.";
-"settings.gitspice.hide.stacked.worktrees" = "Yığınlanmış worktree'leri Worktree'ler bölümünden gizle";
-"settings.gitspice.hide.stacked.worktrees.help" = "Dalı izlenen bir yığına ait olan worktree'ler zaten Yığınlar altında listelenir — yinelenen listelemeyi önlemek için bunları Worktree'ler bölümünden gizleyin.";
+"settings.stacking.new.stack.mode" = "Yeni Yığın şu şekilde başlar:";
+"settings.stacking.new.stack.mode.help" = "Yeni Yığın sayfasının önceden seçtiği mod — sayfa her zaman ikisini de sunar.";
+"settings.stacking.hide.stacked.worktrees" = "Yığınlanmış worktree'leri Worktree'ler bölümünden gizle";
+"settings.stacking.hide.stacked.worktrees.help" = "Dalı izlenen bir yığına ait olan worktree'ler zaten Yığınlar altında listelenir — yinelenen listelemeyi önlemek için bunları Worktree'ler bölümünden gizleyin.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Yığın pull request'ler";
+"settings.stacking.preferred" = "Tercih edilen arka uç:";
+"settings.stacking.preferred.help" = "Yalnızca hiçbir arka ucun henüz sahiplenmediği depolar için kullanılır. Zaten bir araç tarafından izlenen bir depo her zaman onda kalır.";
+"settings.stacking.preferred.automatic" = "Otomatik";
+"settings.ghstack.title" = "GitHub yığın PR'leri";
+"settings.ghstack.description" = "GitHub'ın yerel yığın pull request'leri, gh CLI aracılığıyla.";
+"settings.ghstack.info" = "Yığınlar her worktree içinde ayrı ayrı izlenir. gh CLI'nin kimlik doğrulamasını kullanır.";
+"settings.ghstack.not.installed.description" = "gh stack uzantısı, GitHub'ın kendi yığınlarını kullanarak yığın dalları ve PR'leri sağlar.";
+"settings.ghstack.install.hint" = "gh CLI uzantısını kurun:";
+"settings.ghstack.needs.gh.cli" = "Önce gh CLI'yi kurup kimlik doğrulaması yapın — bu uzantı onun üzerine kuruludur.";
+"stacks.untrack.stack" = "Yığını izlemeyi bırak";
+"stacks.untrack.stack.title" = "Yığını izlemeyi bırakılsın mı?";
+"stacks.untrack.stack.message %ld %@" = "TermQ bu %ld dalı artık yığın olarak izlemeyecek: %@\n\nHiçbir dal silinmez ve hiçbir çalışma kaybolmaz.";
+"stacks.untrack.stack.confirm" = "İzlemeyi bırak";
+"stacks.untrack.stack.done" = "Yığın artık izlenmiyor. Tüm dallar yerinde bırakıldı.";
+"stacks.sync.confirm.title" = "Senkronize edilip zorla push yapılsın mı?";
+"stacks.sync.confirm.message %ld %@" = "Senkronizasyon %ld dalı zorla push eder ve GitHub'daki yığını günceller: %@\n\nBu dallarda çalışan herkesin sıfırlama yapması gerekir.";
+"stacks.sync.confirm.button" = "Senkronize et ve gönder";

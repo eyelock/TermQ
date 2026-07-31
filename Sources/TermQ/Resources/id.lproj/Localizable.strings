@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PR per repositori";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Mendukung cabang bertumpuk dan PR bertumpuk di bilah sisi.";
-"settings.gitspice.version" = "Versi:";
-"settings.gitspice.path" = "Jalur:";
+"settings.stacking.version" = "Versi:";
+"settings.stacking.path" = "Jalur:";
 "settings.gitspice.info" = "Fitur cabang bertumpuk di bilah sisi bergantung pada instalasi git-spice yang berfungsi. Fitur ini menggunakan kembali autentikasi CLI gh.";
 "settings.gitspice.not.installed.description" = "git-spice mengaktifkan cabang bertumpuk dan PR bertumpuk. Tanpanya, TermQ hanya menampilkan worktree biasa.";
 "settings.gitspice.install.hint" = "Instal menggunakan Homebrew:";
-"settings.gitspice.check.again" = "Periksa Lagi";
-"settings.gitspice.status.unusable %@" = "Terdeteksi tetapi tidak dapat digunakan: %@";
+"settings.stacking.check.again" = "Periksa Lagi";
+"settings.stacking.status.unusable %@" = "Terdeteksi tetapi tidak dapat digunakan: %@";
 "stacks.enable" = "Aktifkan Penumpukan…";
 "stacks.enable.help" = "Lacak cabang repositori ini sebagai tumpukan dengan git-spice";
 "stacks.enable.failed %@" = "Tidak dapat mengaktifkan penumpukan: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Cabang ini dibuat menumpuk di atas cabang integrasi, bukan langsung di atas cabang dasar.";
 "stacks.new.stack.integration.note" = "Membuat cabang integrasi kosong dari dasar sebagai akar tumpukan — cabang ini tidak pernah membawa kode sendiri. Cabang tumpukan dibangun di atasnya, bukan di atas dasar, dan pull request mereka berantai ke sana. Setelah semuanya digabungkan ke cabang integrasi, cabang tersebut di-pull-request ke dasar sebagai satu perubahan gabungan — bukan setiap cabang tumpukan digabungkan satu per satu ke dasar.";
 "stacks.new.stack.name.exists %@" = "%@ sudah ada — pilih nama lain.";
-"settings.gitspice.new.stack.mode" = "Tumpukan Baru dimulai sebagai:";
-"settings.gitspice.new.stack.mode.help" = "Mode mana yang dipilih terlebih dahulu oleh sheet Tumpukan Baru — sheet selalu menawarkan keduanya.";
-"settings.gitspice.hide.stacked.worktrees" = "Sembunyikan worktree bertumpuk dari bagian Worktrees";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktree yang cabangnya termasuk dalam tumpukan yang dilacak sudah tercantum di Tumpukan — sembunyikan dari bagian Worktrees untuk menghindari duplikasi.";
+"settings.stacking.new.stack.mode" = "Tumpukan Baru dimulai sebagai:";
+"settings.stacking.new.stack.mode.help" = "Mode mana yang dipilih terlebih dahulu oleh sheet Tumpukan Baru — sheet selalu menawarkan keduanya.";
+"settings.stacking.hide.stacked.worktrees" = "Sembunyikan worktree bertumpuk dari bagian Worktrees";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktree yang cabangnya termasuk dalam tumpukan yang dilacak sudah tercantum di Tumpukan — sembunyikan dari bagian Worktrees untuk menghindari duplikasi.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull request bertumpuk";
+"settings.stacking.preferred" = "Backend pilihan:";
+"settings.stacking.preferred.help" = "Hanya dipakai untuk repositori yang belum diklaim backend mana pun. Repositori yang sudah dilacak satu alat selalu tetap di alat itu.";
+"settings.stacking.preferred.automatic" = "Otomatis";
+"settings.ghstack.title" = "PR bertumpuk GitHub";
+"settings.ghstack.description" = "Pull request bertumpuk bawaan GitHub, lewat gh CLI.";
+"settings.ghstack.info" = "Tumpukan dilacak terpisah di setiap worktree. Memakai autentikasi gh CLI.";
+"settings.ghstack.not.installed.description" = "Ekstensi gh stack mengaktifkan branch dan PR bertumpuk memakai tumpukan milik GitHub sendiri.";
+"settings.ghstack.install.hint" = "Pasang ekstensi gh CLI:";
+"settings.ghstack.needs.gh.cli" = "Pasang dan autentikasi gh CLI dulu — ekstensi ini dibangun di atasnya.";
+"stacks.untrack.stack" = "Berhenti melacak tumpukan";
+"stacks.untrack.stack.title" = "Berhenti melacak tumpukan?";
+"stacks.untrack.stack.message %ld %@" = "TermQ akan berhenti melacak %ld branch ini sebagai tumpukan: %@\n\nTidak ada branch yang dihapus dan tidak ada pekerjaan yang hilang.";
+"stacks.untrack.stack.confirm" = "Berhenti melacak";
+"stacks.untrack.stack.done" = "Tumpukan tidak dilacak lagi. Semua branch tetap di tempatnya.";
+"stacks.sync.confirm.title" = "Sinkronkan dan force-push?";
+"stacks.sync.confirm.message %ld %@" = "Sinkronisasi akan force-push %ld branch dan memperbarui tumpukan di GitHub: %@\n\nSiapa pun yang sedang bekerja di branch ini harus melakukan reset.";
+"stacks.sync.confirm.button" = "Sinkronkan dan kirim";

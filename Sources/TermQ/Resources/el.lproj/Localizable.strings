@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PR ανά αποθετήριο";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Υποστηρίζει στοιβαγμένους κλάδους και στοιβαγμένα PR στην πλευρική μπάρα.";
-"settings.gitspice.version" = "Έκδοση:";
-"settings.gitspice.path" = "Διαδρομή:";
+"settings.stacking.version" = "Έκδοση:";
+"settings.stacking.path" = "Διαδρομή:";
 "settings.gitspice.info" = "Οι λειτουργίες στοιβαγμένων κλάδων στην πλευρική μπάρα εξαρτώνται από μια λειτουργική εγκατάσταση του git-spice. Επαναχρησιμοποιεί την πιστοποίηση του gh CLI.";
 "settings.gitspice.not.installed.description" = "Το git-spice ενεργοποιεί στοιβαγμένους κλάδους και στοιβαγμένα PR. Χωρίς αυτό, το TermQ εμφανίζει μόνο απλά worktree.";
 "settings.gitspice.install.hint" = "Εγκατάσταση με Homebrew:";
-"settings.gitspice.check.again" = "Έλεγχος ξανά";
-"settings.gitspice.status.unusable %@" = "Εντοπίστηκε αλλά δεν είναι χρησιμοποιήσιμο: %@";
+"settings.stacking.check.again" = "Έλεγχος ξανά";
+"settings.stacking.status.unusable %@" = "Εντοπίστηκε αλλά δεν είναι χρησιμοποιήσιμο: %@";
 "stacks.enable" = "Ενεργοποίηση στοίβας…";
 "stacks.enable.help" = "Παρακολούθηση των κλάδων αυτού του αποθετηρίου ως στοίβα με το git-spice";
 "stacks.enable.failed %@" = "Αποτυχία ενεργοποίησης στοίβας: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Αυτός ο κλάδος δημιουργείται στοιβαγμένος πάνω στον κλάδο ενοποίησης, όχι απευθείας πάνω στον βασικό κλάδο.";
 "stacks.new.stack.integration.note" = "Δημιουργεί έναν κενό κλάδο ενοποίησης από τον βασικό κλάδο ως ρίζα της στοίβας — δεν φέρει ποτέ δικό του κώδικα. Οι κλάδοι στοίβας χτίζονται πάνω του αντί για τον βασικό κλάδο, και τα pull requests τους αλυσιδώνονται σε αυτόν. Μόλις όλα συγχωνευτούν στον κλάδο ενοποίησης, γίνεται pull request στον βασικό κλάδο ως μία ενοποιημένη αλλαγή — αντί κάθε κλάδος στοίβας να συγχωνεύεται ξεχωριστά στον βασικό κλάδο.";
 "stacks.new.stack.name.exists %@" = "Το %@ υπάρχει ήδη — επιλέξτε άλλο όνομα.";
-"settings.gitspice.new.stack.mode" = "Η Νέα Στοίβα ξεκινά ως:";
-"settings.gitspice.new.stack.mode.help" = "Ποια λειτουργία προεπιλέγει το φύλλο Νέα Στοίβα — το φύλλο προσφέρει πάντα και τις δύο.";
-"settings.gitspice.hide.stacked.worktrees" = "Απόκρυψη στοιβαγμένων worktrees από την ενότητα Worktree";
-"settings.gitspice.hide.stacked.worktrees.help" = "Τα worktrees των οποίων ο κλάδος ανήκει σε παρακολουθούμενη στοίβα εμφανίζονται ήδη στις Στοίβες — αποκρύψτε τα από την ενότητα Worktree για να αποφύγετε τη διπλή καταχώριση.";
+"settings.stacking.new.stack.mode" = "Η Νέα Στοίβα ξεκινά ως:";
+"settings.stacking.new.stack.mode.help" = "Ποια λειτουργία προεπιλέγει το φύλλο Νέα Στοίβα — το φύλλο προσφέρει πάντα και τις δύο.";
+"settings.stacking.hide.stacked.worktrees" = "Απόκρυψη στοιβαγμένων worktrees από την ενότητα Worktree";
+"settings.stacking.hide.stacked.worktrees.help" = "Τα worktrees των οποίων ο κλάδος ανήκει σε παρακολουθούμενη στοίβα εμφανίζονται ήδη στις Στοίβες — αποκρύψτε τα από την ενότητα Worktree για να αποφύγετε τη διπλή καταχώριση.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Στοιβαγμένα pull request";
+"settings.stacking.preferred" = "Προτιμώμενο backend:";
+"settings.stacking.preferred.help" = "Χρησιμοποιείται μόνο για αποθετήρια που δεν έχει αναλάβει ακόμη κανένα backend. Ένα αποθετήριο που ήδη παρακολουθεί ένα εργαλείο παραμένει πάντα σε αυτό.";
+"settings.stacking.preferred.automatic" = "Αυτόματα";
+"settings.ghstack.title" = "Στοιβαγμένα PR του GitHub";
+"settings.ghstack.description" = "Τα εγγενή στοιβαγμένα pull request του GitHub, μέσω του gh CLI.";
+"settings.ghstack.info" = "Οι στοίβες παρακολουθούνται ξεχωριστά σε κάθε worktree. Χρησιμοποιεί την ταυτοποίηση του gh CLI.";
+"settings.ghstack.not.installed.description" = "Η επέκταση gh stack ενεργοποιεί στοιβαγμένους κλάδους και PR με τις δικές του στοίβες του GitHub.";
+"settings.ghstack.install.hint" = "Εγκαταστήστε την επέκταση του gh CLI:";
+"settings.ghstack.needs.gh.cli" = "Εγκαταστήστε και ταυτοποιήστε πρώτα το gh CLI — αυτή η επέκταση βασίζεται σε αυτό.";
+"stacks.untrack.stack" = "Διακοπή παρακολούθησης στοίβας";
+"stacks.untrack.stack.title" = "Διακοπή παρακολούθησης στοίβας;";
+"stacks.untrack.stack.message %ld %@" = "Το TermQ θα σταματήσει να παρακολουθεί αυτούς τους %ld κλάδους ως στοίβα: %@\n\nΚανένας κλάδος δεν διαγράφεται και καμία εργασία δεν χάνεται.";
+"stacks.untrack.stack.confirm" = "Διακοπή παρακολούθησης";
+"stacks.untrack.stack.done" = "Η στοίβα δεν παρακολουθείται πλέον. Όλοι οι κλάδοι παρέμειναν στη θέση τους.";
+"stacks.sync.confirm.title" = "Συγχρονισμός με αναγκαστικό push;";
+"stacks.sync.confirm.message %ld %@" = "Ο συγχρονισμός κάνει αναγκαστικό push σε %ld κλάδους και ενημερώνει τη στοίβα στο GitHub: %@\n\nΌποιος άλλος εργάζεται σε αυτούς τους κλάδους θα χρειαστεί να κάνει επαναφορά.";
+"stacks.sync.confirm.button" = "Συγχρονισμός και αποστολή";
