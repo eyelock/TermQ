@@ -284,6 +284,96 @@ final class GitHubStackBranchMappingTests: XCTestCase {
 
 // MARK: - Union across worktrees
 
+/// Byte-for-byte shape captured from a real `gh stack submit` against a live GitHub
+/// repository, PRs and stack object included.
+///
+/// The other fixtures in this file were written from the extension's Go source before
+/// anything had been run. This one is evidence rather than inference, and it pins the
+/// three details that only appear once a stack actually exists on GitHub.
+final class GitHubStackRealSubmittedFixtureTests: XCTestCase {
+    /// Captured 2026-07-31 from gh-stack v0.1.0. Identifiers are from a throwaway repo.
+    private let submitted = """
+        {
+          "schemaVersion": 1,
+          "repository": "github.com:example/repo",
+          "stacks": [
+            {
+              "id": "91470",
+              "number": 3,
+              "trunk": { "branch": "main", "head": "6c3ca27ffe2ad71e94f64396545dbee0c8bd89d1" },
+              "branches": [
+                {
+                  "branch": "stack-a",
+                  "head": "4a4b9f379c71233dea48fde0d90e94c3806c9440",
+                  "base": "6c3ca27ffe2ad71e94f64396545dbee0c8bd89d1",
+                  "pullRequest": {
+                    "number": 1,
+                    "id": "PR_kwDOTpqvdM75NRGO",
+                    "url": "https://github.com/example/repo/pull/1"
+                  }
+                },
+                {
+                  "branch": "stack-b",
+                  "head": "b77b2813ca998b0c43b1c40778701a9f999fe657",
+                  "base": "4a4b9f379c71233dea48fde0d90e94c3806c9440",
+                  "pullRequest": {
+                    "number": 2,
+                    "id": "PR_kwDOTpqvdM75NRMV",
+                    "url": "https://github.com/example/repo/pull/2"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+        """
+
+    private func branches() throws -> [StackBranch] {
+        let file = try GitHubStackProvider.decodeTrackingFile(Data(submitted.utf8))
+        return GitHubStackProvider.branches(
+            from: file.stacks, currentBranch: "stack-b", checkouts: [])
+    }
+
+    func testChangeRequestUsesThePRNumber_notTheGraphQLNodeID() throws {
+        // `id` is a GraphQL node ID ("PR_kwDO…"), which is meaningless to a user and
+        // useless as a URL fragment. The number is what the UI shows as "#1".
+        let mapped = try branches()
+        XCTAssertEqual(mapped.first { $0.name == "stack-a" }?.changeRequest?.id, "1")
+        XCTAssertEqual(mapped.first { $0.name == "stack-b" }?.changeRequest?.id, "2")
+        XCTAssertEqual(
+            mapped.first { $0.name == "stack-a" }?.changeRequest?.url,
+            "https://github.com/example/repo/pull/1")
+    }
+
+    func testUnmergedPR_omitsTheMergedKeyEntirely_andReadsAsOpen() throws {
+        // `merged` is `omitempty`, so an open PR has NO merged key at all rather than
+        // `false`. Decoding it as a required Bool would fail the whole file.
+        XCTAssertFalse(submitted.contains("\"merged\""))
+        let mapped = try branches()
+        XCTAssertEqual(mapped.first { $0.name == "stack-a" }?.changeRequest?.status, .open)
+    }
+
+    func testBaseIsStillTheParentsSHA_evenOnceSubmitted() throws {
+        // The trap this provider is built around, re-confirmed on submitted data:
+        // stack-b's `base` is stack-a's HEAD SHA, not the string "stack-a".
+        let mapped = try branches()
+        XCTAssertEqual(mapped.first { $0.name == "stack-b" }?.parent, "stack-a")
+        XCTAssertNotEqual(
+            mapped.first { $0.name == "stack-b" }?.parent,
+            "4a4b9f379c71233dea48fde0d90e94c3806c9440")
+    }
+
+    func testSubmittedStackCarriesRemoteIdentity_whichDedupeKeysOn() throws {
+        // Two worktrees can hold the same submitted stack; `number` is what collapses
+        // them to one row in the sidebar.
+        let file = try GitHubStackProvider.decodeTrackingFile(Data(submitted.utf8))
+        XCTAssertEqual(file.stacks.first?.number, 3)
+        XCTAssertEqual(
+            GitHubStackProvider.dedupe(file.stacks + file.stacks).count, 1,
+            "the same submitted stack seen twice must collapse")
+    }
+}
+
 final class GitHubStackDedupeTests: XCTestCase {
     private func stack(number: Int?, trunk: String = "develop", branches: [String]) throws -> GhStackDTO {
         let branchJSON = branches.map { #"{"branch":"\#($0)"}"# }.joined(separator: ",")
@@ -407,6 +497,25 @@ final class GitHubStackWorktreeListTests: XCTestCase {
     func testRestrict_emptyKnownPaths_keepsEverything() {
         let result = GitHubStackProvider.restrict(checkouts, toKnownPaths: [])
         XCTAssertEqual(result.count, 3)
+    }
+
+    func testRestrict_respellsPathsUsingTheCallersOwn() {
+        // `git worktree list` reports resolved paths, so a worktree under a symlinked
+        // root comes back as /private/var/... where the caller recorded /var/... . Both
+        // name the same directory, but every consumer compares them as strings — the
+        // switch guard would refuse a switch and name the user's own worktree as the
+        // obstacle. Survivors must speak the caller's spelling.
+        //
+        // `/var` -> `/private/var` is a fixed macOS symlink, and `resolvingSymlinksInPath`
+        // resolves the part of the path that exists, so this holds without either
+        // directory below it being real.
+        let checkouts = [
+            GitHubStackProvider.WorktreeCheckout(path: "/private/var/repo", branch: "main", isMain: true),
+            GitHubStackProvider.WorktreeCheckout(path: "/private/var/wt", branch: "feat", isMain: false),
+        ]
+        let restricted = GitHubStackProvider.restrict(
+            checkouts, toKnownPaths: ["/var/repo", "/var/wt"])
+        XCTAssertEqual(restricted.map(\.path), ["/var/repo", "/var/wt"])
     }
 
     func testRestrict_normalizesPaths() {

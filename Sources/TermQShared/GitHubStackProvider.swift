@@ -549,18 +549,53 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         let isMain: Bool
     }
 
-    /// Drop non-main worktrees the caller does not know about, so `checkedOutElsewhere`
-    /// can only ever name a worktree the sidebar can actually navigate to. The main
-    /// worktree is always kept — it supplies `isCurrent` and is never a jump target.
-    /// An empty `knownPaths` means the caller has no opinion; keep everything.
+    /// Drop non-main worktrees the caller does not know about, and re-spell the survivors
+    /// using the caller's own paths, so `checkedOutElsewhere` can only ever name a
+    /// worktree the sidebar can actually navigate to. The main worktree is always kept —
+    /// it supplies `isCurrent` and is never a jump target. An empty `knownPaths` means the
+    /// caller has no opinion; keep everything.
+    ///
+    /// The re-spelling is not cosmetic. `git worktree list` reports fully resolved paths,
+    /// so a worktree under a symlinked root comes back as `/private/var/…` where TermQ
+    /// recorded it as `/var/…`. Both name the same directory, but every consumer compares
+    /// these paths as STRINGS: the switch guard would decide a branch is checked out
+    /// somewhere else when it is checked out right here, and refuse the switch while
+    /// naming the user's own worktree as the obstacle.
     static func restrict(
         _ checkouts: [WorktreeCheckout], toKnownPaths knownPaths: [String]
     ) -> [WorktreeCheckout] {
         guard !knownPaths.isEmpty else { return checkouts }
-        let known = Set(knownPaths.map { ($0 as NSString).standardizingPath })
-        return checkouts.filter {
-            $0.isMain || known.contains(($0.path as NSString).standardizingPath)
+        // Two spellings per known path — as written and with symlinks resolved — both
+        // pointing at the caller's own (tidied) spelling. Matching has to consider
+        // resolved forms because git reports them; the RESULT has to use the caller's
+        // because that is the vocabulary every consumer compares against.
+        var canonical: [String: String] = [:]
+        for path in knownPaths {
+            canonical[canonicalPath(path)] = (path as NSString).standardizingPath
         }
+        return checkouts.compactMap { checkout in
+            if let display = canonical[canonicalPath(checkout.path)] {
+                return WorktreeCheckout(
+                    path: display, branch: checkout.branch, isMain: checkout.isMain)
+            }
+            return checkout.isMain ? checkout : nil
+        }
+    }
+
+    /// A comparison-only form of `path`: tidied, symlinks resolved, and with macOS's
+    /// `/private` prefix removed.
+    ///
+    /// Never shown to anyone — it exists purely so two spellings of the same directory
+    /// compare equal. `resolvingSymlinksInPath` alone is not enough: it only rewrites
+    /// paths that actually exist, so a worktree that has since been removed would stop
+    /// matching the moment it was deleted. `/var` and `/tmp` are symlinks into
+    /// `/private` on every macOS install, which is the aliasing that shows up here —
+    /// git reports `/private/var/...` where TermQ recorded `/var/...`.
+    static func canonicalPath(_ path: String) -> String {
+        let resolved = URL(fileURLWithPath: (path as NSString).standardizingPath)
+            .resolvingSymlinksInPath().path
+        guard resolved.hasPrefix("/private/") else { return resolved }
+        return String(resolved.dropFirst("/private".count))
     }
 
     /// Parse `git worktree list --porcelain`. The first record is always the main
