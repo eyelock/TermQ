@@ -166,8 +166,11 @@ format: install-swift-format
 	swift-format format --configuration .swift-format --recursive --in-place Sources/ Tests/
 
 # Check formatting (CI mode - doesn't modify files)
+# --strict is load-bearing: without it swift-format lint reports findings as warnings
+# and still exits 0, so `make check` passed over formatting violations and reported the
+# tree clean. Formatting is part of the gate or it is not; this makes it so.
 format-check: install-swift-format
-	swift-format lint --configuration .swift-format --recursive Sources/ Tests/
+	swift-format lint --strict --configuration .swift-format --recursive Sources/ Tests/
 
 # Run all checks (compile, lint, format-check, test)
 check: compile lint format-check test
