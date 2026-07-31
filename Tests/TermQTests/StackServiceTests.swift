@@ -488,6 +488,57 @@ final class StackServiceTests: XCTestCase {
 
 /// The sidebar offers actions per the ACTIVE provider's capabilities, not per
 /// "stacking is available". These rules guard two traps rather than mere feature gaps.
+@MainActor
+final class StackProviderOptionTests: XCTestCase {
+    private func options(
+        gitSpice: StackProviderAvailability, gitHub: StackProviderAvailability
+    ) -> [StackProviderOption] {
+        StackProviderOption.options { id in
+            switch id {
+            case .gitSpice: return gitSpice
+            case .gitHub: return gitHub
+            default: return .missing
+            }
+        }
+    }
+
+    func testAutomatic_isAlwaysSelectable() {
+        // "Let resolution decide" stays meaningful even with nothing installed — the
+        // stacking section is still reachable, and the setting still records intent.
+        let all = options(gitSpice: .missing, gitHub: .missing)
+        XCTAssertTrue(all.first { $0.preference == .automatic }?.isSelectable ?? false)
+    }
+
+    func testUninstalledBackend_isNotSelectable_andSaysWhy() {
+        // Resolution only considers ready providers, so picking a missing one silently
+        // does nothing. A control that accepts a choice and ignores it is worse than one
+        // that refuses and explains.
+        let all = options(gitSpice: .ready(version: "0.31.0"), gitHub: .missing)
+        let gitHub = all.first { $0.preference == .gitHub }
+        XCTAssertEqual(gitHub?.isSelectable, false)
+        XCTAssertTrue(gitHub?.label.contains(Strings.Settings.notInstalled) ?? false)
+
+        let gitSpice = all.first { $0.preference == .gitSpice }
+        XCTAssertEqual(gitSpice?.isSelectable, true)
+        XCTAssertEqual(gitSpice?.label, "git-spice", "an available backend is named plainly")
+    }
+
+    func testUnusableBackend_isTreatedAsUnselectable() {
+        // Installed but unauthenticated gh cannot own a repository either, so it must not
+        // present as a working choice.
+        let all = options(
+            gitSpice: .missing, gitHub: .unusable(reason: "gh is not authenticated"))
+        XCTAssertEqual(all.first { $0.preference == .gitHub }?.isSelectable, false)
+    }
+
+    func testEveryBackendKeepsItsRow_soASelectedOneNeverVanishes() {
+        // The setting may already name a backend that has since been uninstalled.
+        // Dropping its row would redraw the picker as Automatic and misreport what
+        // happens if the tool reappears.
+        XCTAssertEqual(options(gitSpice: .missing, gitHub: .missing).count, 3)
+    }
+}
+
 final class StackActionAvailabilityTests: XCTestCase {
     /// What git-spice advertises today.
     private let gitSpice = StackActionAvailability(

@@ -2,6 +2,51 @@ import AppKit
 import SwiftUI
 import TermQShared
 
+// MARK: - Preferred Backend Options
+
+/// One row of the preferred-backend picker.
+///
+/// A backend that is not installed must not be silently selectable. Resolution only ever
+/// considers providers that probe `.ready`, so choosing a missing one is harmless — it
+/// falls back — but a control that accepts a choice and then ignores it is a control that
+/// lies. The option is disabled and says why instead.
+///
+/// A plain value type so the rules are testable without driving SwiftUI, matching how
+/// `StackActionAvailability` handles the sidebar's gating.
+struct StackProviderOption: Equatable, Identifiable {
+    let preference: PreferredStackProvider
+    /// The tool's own name — a product name, never localized.
+    let name: String
+    /// Whether the backend is ready to drive a repository. `.unusable` counts as not
+    /// selectable: an installed-but-unauthenticated `gh` cannot own a repo either.
+    let isSelectable: Bool
+
+    var id: String { preference.rawValue }
+
+    /// Names the reason inline rather than leaving a greyed-out row unexplained.
+    var label: String {
+        isSelectable ? name : "\(name) — \(Strings.Settings.notInstalled)"
+    }
+
+    /// The picker's rows, in registry order. Automatic is always available — it means
+    /// "let resolution decide", which stays meaningful with nothing installed at all.
+    static func options(
+        availability: (StackProviderID) -> StackProviderAvailability
+    ) -> [StackProviderOption] {
+        [
+            StackProviderOption(
+                preference: .automatic, name: Strings.Settings.Stacking.preferredAutomatic,
+                isSelectable: true),
+            StackProviderOption(
+                preference: .gitSpice, name: Strings.Settings.Stacking.gitSpiceName,
+                isSelectable: availability(.gitSpice).isReady),
+            StackProviderOption(
+                preference: .gitHub, name: Strings.Settings.Stacking.gitHubName,
+                isSelectable: availability(.gitHub).isReady),
+        ]
+    }
+}
+
 // MARK: - Stacked Pull Requests Section
 
 /// One Settings section covering stacked-PR support, with a card per backend.
@@ -231,9 +276,16 @@ extension ToolsTabContent {
             Picker(
                 Strings.Settings.Stacking.preferred, selection: $settings.preferredStackProvider
             ) {
-                Text(Strings.Settings.Stacking.preferredAutomatic).tag(PreferredStackProvider.automatic)
-                Text(Strings.Settings.Stacking.gitSpiceName).tag(PreferredStackProvider.gitSpice)
-                Text(Strings.Settings.Stacking.gitHubName).tag(PreferredStackProvider.gitHub)
+                // A previously-chosen backend that has since been uninstalled keeps its
+                // row (disabled, and labelled as missing) rather than vanishing — the
+                // setting is still what it is, and silently redrawing it as Automatic
+                // would misreport what happens if the tool comes back.
+                ForEach(StackProviderOption.options(availability: stackService.availability(for:))) {
+                    option in
+                    Text(option.label)
+                        .tag(option.preference)
+                        .disabled(!option.isSelectable)
+                }
             }
             .pickerStyle(.radioGroup)
             .font(.caption)
