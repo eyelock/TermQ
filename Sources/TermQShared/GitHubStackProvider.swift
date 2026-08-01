@@ -294,6 +294,62 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         try Self.throwIfFailed(result, command: "gh stack unstack --local")
     }
 
+    /// `gh stack merge <stack-number> --yes`.
+    ///
+    /// The stack number is always passed. Without an argument `merge` targets "the active
+    /// stack", resolved from the working directory — an unacceptable way to decide which
+    /// pull requests get merged.
+    ///
+    /// `--yes` skips gh-stack's own confirmation. That is not a bypass of review: TermQ
+    /// has already shown the user every pull request with its review and check state, and
+    /// without the flag the command would try to open a full-screen TUI. `--admin` is
+    /// never passed, so branch protection still applies and an unmergeable stack fails.
+    ///
+    /// No method flag when `method` is nil: gh-stack then resolves the repository's own
+    /// default and falls back to the first method the repo allows. Choosing here instead
+    /// would risk naming a method the repository forbids.
+    public func mergeStack(
+        remoteStackID: String, method: StackMergeMethod?, in worktree: String
+    ) async throws {
+        let ghPath = try Self.requireGhBinary()
+        let args = try Self.mergeArguments(remoteStackID: remoteStackID, method: method)
+        let result = try await Self.run(ghPath, args, cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack merge")
+    }
+
+    /// `gh stack link <branch>...`, bottom of the stack first.
+    ///
+    /// Creates a pull request for any branch that lacks one — which is exactly why this is
+    /// not `trackBranch`, and why the UI names it for what it does.
+    ///
+    /// No `--open`: linking adopts existing pull requests, and silently flipping someone's
+    /// draft to ready-for-review is not part of "link these together".
+    public func linkStack(branches: [String], base: String?, in worktree: String) async throws {
+        let ghPath = try Self.requireGhBinary()
+        guard branches.count >= 2 else {
+            throw StackProviderError.preconditionFailed(
+                "Linking a stack needs at least two branches; \(branches.count) selected.")
+        }
+        var args = ["stack", "link"]
+        if let base { args += ["--base", base] }
+        args += branches
+        let result = try await Self.run(ghPath, args, cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack link")
+    }
+
+    /// `gh stack checkout <stack-number>`.
+    ///
+    /// The number is always passed: with no argument `checkout` opens an interactive
+    /// picker of every local and remote stack, which TermQ must never spawn — the same
+    /// hazard as `init` with no branch.
+    public func checkoutStack(remoteStackID: String, in worktree: String) async throws {
+        let ghPath = try Self.requireGhBinary()
+        let number = try Self.stackNumber(from: remoteStackID)
+        let result = try await Self.run(
+            ghPath, ["stack", "checkout", String(number)], cwd: worktree)
+        try Self.throwIfFailed(result, command: "gh stack checkout")
+    }
+
     public func pausedOperation(repo: String) async -> StackPausedOperation? {
         guard let commonDir = await Self.gitCommonDirectory(repo: repo) else { return nil }
         // gh-stack parks interrupted rebases in a sibling of the tracking file. Presence
@@ -393,7 +449,10 @@ public struct GitHubStackProvider: StackProvider, Sendable {
                         push: nil,  // not recorded in the tracking file
                         // `Queued` is json:"-" — transient, populated from the API on
                         // each gh-stack run and never persisted. Always false from disk.
-                        isQueued: false
+                        isQueued: false,
+                        // Present only once the stack has been submitted; every branch of
+                        // one stack reports the same value.
+                        remoteStackID: stack.number.map(String.init)
                     ))
             }
             trunkNames.insert(stack.trunk.branch)
@@ -415,6 +474,28 @@ public struct GitHubStackProvider: StackProvider, Sendable {
                     push: nil))
         }
         return result
+    }
+
+    /// Build `gh stack merge` arguments. Separated out so the flag set is testable
+    /// without a live `gh` — particularly that `--admin` never appears.
+    static func mergeArguments(
+        remoteStackID: String, method: StackMergeMethod?
+    ) throws -> [String] {
+        let number = try stackNumber(from: remoteStackID)
+        var args = ["stack", "merge", String(number), "--yes"]
+        if let method { args += ["--merge-method", method.rawValue] }
+        return args
+    }
+
+    /// gh-stack addresses stacks by an integer number. The neutral model carries the
+    /// identifier opaquely, so this is where it comes back to a number — and where a
+    /// value that never came from this provider is rejected rather than coerced.
+    static func stackNumber(from remoteStackID: String) throws -> Int {
+        guard let number = Int(remoteStackID), number > 0 else {
+            throw StackProviderError.preconditionFailed(
+                "This stack has no GitHub stack number yet — submit it first.")
+        }
+        return number
     }
 
     /// Map a neutral restack scope onto `gh stack rebase` flags.
