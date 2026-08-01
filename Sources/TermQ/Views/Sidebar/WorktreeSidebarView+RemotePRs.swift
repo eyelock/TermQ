@@ -341,6 +341,20 @@ extension WorktreeSidebarView {
                         Label(Strings.RemotePRs.checkoutAsWorktree, systemImage: "square.and.arrow.down")
                     }
                 }
+
+                // Checking out one PR of a stack gives you a branch whose parent isn't
+                // here — the stack UI stays dark and the diff reads against the wrong
+                // base. When the PR belongs to a forge stack, offer to bring the whole
+                // thing down instead.
+                if let stack = stackContaining(pr: pr, repo: repo) {
+                    Button {
+                        Task { await checkoutWholeStack(stack, repo: repo) }
+                    } label: {
+                        Label(
+                            Strings.Stacks.checkoutStack(stack.branchCount),
+                            systemImage: "square.stack.3d.down.right")
+                    }
+                }
             }
         }
 
@@ -499,6 +513,46 @@ extension WorktreeSidebarView {
         do {
             let worktree = try await viewModel.checkoutPRForFocus(pr, repo: repo, ghPath: ghPath)
             runWithFocusContext = RunWithFocusContext(worktree: worktree, repo: repo, prNumber: pr.number)
+        } catch {
+            viewModel.operationError = error.localizedDescription
+        }
+    }
+}
+
+// MARK: - Stacked PR Grouping
+
+/// A forge stack that one of the feed's pull requests belongs to.
+struct RemoteStackTarget: Equatable {
+    let remoteStackID: String
+    let branchCount: Int
+}
+
+extension WorktreeSidebarView {
+    /// The forge stack `pr` belongs to, if the repo's provider models stacks as
+    /// first-class objects and this PR's branch is part of one.
+    ///
+    /// Returns nil for git-spice repos (no forge stack object), for an unsubmitted stack
+    /// (no number yet), and for a single unstacked PR — in all three cases there is
+    /// nothing extra to check out.
+    func stackContaining(pr: GitHubPR, repo: ObservableRepository) -> RemoteStackTarget? {
+        guard stackActions(for: repo).canCheckoutRemoteStack,
+            let graph = viewModel.stacks[repo.id],
+            let branch = graph.branch(named: pr.headRefName),
+            let remoteStackID = branch.remoteStackID
+        else { return nil }
+        let chain = graph.chain(containing: branch.name)
+        guard chain.count > 1 else { return nil }
+        return RemoteStackTarget(remoteStackID: remoteStackID, branchCount: chain.count)
+    }
+
+    /// Fetch every branch of `stack` and establish local tracking, so the sidebar's stack
+    /// UI works for it rather than showing an orphaned branch.
+    func checkoutWholeStack(_ stack: RemoteStackTarget, repo: ObservableRepository) async {
+        guard let main = viewModel.mainWorktree(for: repo) else { return }
+        do {
+            try await viewModel.checkoutStack(
+                repo: repo, worktree: main, remoteStackID: stack.remoteStackID)
+            showStackToast(Strings.Stacks.checkoutStackDone(stack.branchCount))
         } catch {
             viewModel.operationError = error.localizedDescription
         }

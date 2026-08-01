@@ -114,6 +114,17 @@ struct StackActionAvailability: Equatable {
     let canDestroyStack: Bool
     let canUntrackStack: Bool
     let canResumeConflict: Bool
+    /// Merge every change request in the stack in one operation. The only stack action
+    /// that lands code on a real branch, and the only one gated behind a readiness fetch.
+    let canMergeStack: Bool
+    /// Adopt existing branches into a stack on the forge — CREATES change requests for
+    /// any that lack one, which is why it is not folded into `canTrackExisting`.
+    let canLinkStack: Bool
+    /// Check out a stack that exists only on the forge.
+    let canCheckoutRemoteStack: Bool
+    /// Track a single pre-existing branch onto a stack using LOCAL metadata only.
+    /// Deliberately distinct from `canLinkStack`, which creates change requests.
+    let canTrackExisting: Bool
 
     init(capabilities: StackCapabilities) {
         canRestack = capabilities.contains(.restack)
@@ -129,6 +140,10 @@ struct StackActionAvailability: Equatable {
         canDestroyStack = capabilities.contains(.destroyStack)
         canUntrackStack = capabilities.contains(.untrackStack)
         canResumeConflict = capabilities.contains(.conflictResume)
+        canMergeStack = capabilities.contains(.mergeStack)
+        canLinkStack = capabilities.contains(.linkExisting)
+        canCheckoutRemoteStack = capabilities.contains(.remoteDiscovery)
+        canTrackExisting = capabilities.contains(.trackExisting)
     }
 
     /// Whether group-level actions must run in a worktree that has one of the stack's
@@ -539,6 +554,42 @@ extension WorktreeSidebarViewModel {
     /// guarantees by only offering the action for an anchored stack.
     func untrackStack(repo: ObservableRepository, worktree: GitWorktree) async throws {
         try await stackService.untrackStack(repo: repo.path, worktree: worktree.path)
+        await refreshWorktrees(for: repo)
+    }
+
+    /// Merge every pull request in `group`, then refresh so the merged state lands in the
+    /// sidebar. The confirmation — including which pull requests, and whether a blocker
+    /// makes the merge impossible — is the sheet's job, not this method's.
+    func mergeStack(
+        repo: ObservableRepository, worktree: GitWorktree, group: StackGroup
+    ) async throws {
+        guard let remoteStackID = group.branches.compactMap(\.remoteStackID).first else {
+            throw StackProviderError.preconditionFailed(Strings.Stacks.mergeStackNotSubmitted)
+        }
+        try await stackService.mergeStack(
+            repo: repo.path, worktree: worktree.path, remoteStackID: remoteStackID)
+        await refreshWorktrees(for: repo)
+        await prService.refresh(repoPath: repo.path, force: true)
+    }
+
+    /// Adopt `branches` into a stack on the forge. Creates pull requests for branches that
+    /// lack one — the caller must have said so plainly first.
+    func linkStack(
+        repo: ObservableRepository, worktree: GitWorktree, branches: [String], base: String?
+    ) async throws {
+        try await stackService.linkStack(
+            repo: repo.path, worktree: worktree.path, branches: branches, base: base)
+        await refreshWorktrees(for: repo)
+        await prService.refresh(repoPath: repo.path, force: true)
+    }
+
+    /// Check out a stack that exists on the forge, fetching every branch and establishing
+    /// local tracking.
+    func checkoutStack(
+        repo: ObservableRepository, worktree: GitWorktree, remoteStackID: String
+    ) async throws {
+        try await stackService.checkoutStack(
+            repo: repo.path, worktree: worktree.path, remoteStackID: remoteStackID)
         await refreshWorktrees(for: repo)
     }
 

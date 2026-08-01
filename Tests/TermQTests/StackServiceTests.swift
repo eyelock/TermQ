@@ -593,6 +593,28 @@ final class StackActionAvailabilityTests: XCTestCase {
         XCTAssertTrue(gitHub.canSync)
     }
 
+    func testForgeActions_gitHubOnly() {
+        // merge / link / remote checkout have no git-spice equivalent. Offering them
+        // there would produce a refusal at click time.
+        XCTAssertFalse(gitSpice.canMergeStack)
+        XCTAssertFalse(gitSpice.canLinkStack)
+        XCTAssertFalse(gitSpice.canCheckoutRemoteStack)
+
+        XCTAssertTrue(gitHub.canMergeStack)
+        XCTAssertTrue(gitHub.canLinkStack)
+        XCTAssertTrue(gitHub.canCheckoutRemoteStack)
+    }
+
+    func testLinkIsNotImpliedByTrackExisting() {
+        // The pair that could be conflated: git-spice's `branch track` records local
+        // metadata, while gh-stack's `link` CREATES pull requests. Neither flag may
+        // stand in for the other, or "track this branch" would open PRs.
+        XCTAssertTrue(gitSpice.canTrackExisting)
+        XCTAssertFalse(gitSpice.canLinkStack)
+        XCTAssertFalse(gitHub.canTrackExisting)
+        XCTAssertTrue(gitHub.canLinkStack)
+    }
+
     func testSyncNeedsConfirmation_isIndependentOfCanSync() {
         // Defensive: .syncPushes without .sync must not present as a runnable action.
         let odd = StackActionAvailability(capabilities: [.syncPushes])
