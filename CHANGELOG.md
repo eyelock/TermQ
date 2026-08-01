@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Untrack Stack** — drops a stack from local tracking and **leaves every branch in place**. Deliberately distinct from Destroy Stack, which deletes them: the two are never offered under the same label, and no backend can inherit the other's blast radius by implication.
 - **Sync now confirms before it force-pushes.** `gh stack sync` force-pushes every branch in the stack and rewrites the stack on GitHub, where `gs repo sync` is local-only. On a GitHub-backed repo, Sync now names the exact branches it will push and asks first.
 
+### Fixed — Build
+
+- **`make check` now fails on formatting violations instead of only reporting them.** `swift-format lint` emits findings as warnings and exits 0, so the formatting step ran, printed violations, and still reported the tree clean — a violation survived two "clean" gate runs before it was spotted. The gate now runs it with `--strict`.
+
 ### Changed — Stacked Branches & PRs
 
 - **Stack menu items follow what the active backend can actually do.** **Restack from Here**, **Submit This Branch…**, and **Destroy Stack** are git-spice-only; **Untrack Stack** is `gh stack`-only. `gh stack rebase` always pivots on the checked-out branch and `gh stack submit` always covers the whole stack, so scoped actions are hidden rather than silently operating on a wider range than the label promises.
@@ -20,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed — Stacked Branches & PRs
 
+- **The preferred-backend picker no longer offers backends that are not installed.** Choosing one was harmless — repository resolution only ever considers backends that are actually usable, so it fell back silently — but a control that accepts a choice and then ignores it misrepresents what it does. Unavailable backends are now disabled and say why, including one that is installed but unauthenticated.
 - **Re-checking tool availability no longer blanks the stack menus.** Probing cleared the per-repo backend resolution wholesale, and since menu items are gated on the resolved backend's capabilities, an empty cache read as "this backend can do nothing" until a later refresh repopulated it. Probing now re-validates instead, keeping any resolution that still holds.
 
 ## [0.12.0] - 2026-07-21
