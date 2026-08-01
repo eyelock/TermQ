@@ -36,6 +36,29 @@ final class TerminalSelectionDragController {
     /// Whether the current drag started inside our terminal view.
     private(set) var dragStartedInTerminal: Bool = false
 
+    // MARK: - Decision Logic
+
+    /// Whether a mouse-down should clear the live selection before the click is
+    /// forwarded to the inner app.
+    ///
+    /// SwiftTerm's `mouseDown` clears an active selection so the next drag starts
+    /// a fresh one — but only on the branch it reaches when mouse reporting is
+    /// off. When the inner app has mouse tracking on (GitHub Copilot CLI sets
+    /// mode 1003 / `.anyEvent`), `mouseDown` returns early to forward the click
+    /// and never clears it. The next drag then sees `selection.active == true`
+    /// and calls `dragExtend`, growing the *previous* selection from its old
+    /// anchor instead of starting at the new one.
+    ///
+    /// Shift-clicks are left alone: SwiftTerm bypasses mouse reporting for them
+    /// and extends the selection, which is the intended behavior.
+    nonisolated static func shouldClearSelection(
+        selectionActive: Bool,
+        startedInTerminal: Bool,
+        shiftHeld: Bool
+    ) -> Bool {
+        selectionActive && startedInTerminal && !shiftHeld
+    }
+
     // MARK: - Lifecycle
 
     init(view: TerminalView) {
@@ -124,6 +147,17 @@ final class TerminalSelectionDragController {
 
         if dragStartedInTerminal {
             TerminalSessionManager.shared.isMouseDragInProgress = true
+        }
+
+        // Stand in for the selection reset SwiftTerm skips when it forwards the
+        // click to a mouse-tracking app — see `shouldClearSelection`.
+        if Self.shouldClearSelection(
+            selectionActive: view.selectionActive,
+            startedInTerminal: dragStartedInTerminal,
+            shiftHeld: event.modifierFlags.contains(.shift)
+        ) {
+            view.selectNone()
+            view.setNeedsDisplay(view.bounds)
         }
 
         #if TERMQ_DEBUG_BUILD

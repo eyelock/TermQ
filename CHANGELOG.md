@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The preferred-backend picker no longer offers backends that are not installed.** Choosing one was harmless — repository resolution only ever considers backends that are actually usable, so it fell back silently — but a control that accepts a choice and then ignores it misrepresents what it does. Unavailable backends are now disabled and say why, including one that is installed but unauthenticated.
 - **Re-checking tool availability no longer blanks the stack menus.** Probing cleared the per-repo backend resolution wholesale, and since menu items are gated on the resolved backend's capabilities, an empty cache read as "this backend can do nothing" until a later refresh repopulated it. Probing now re-validates instead, keeping any resolution that still holds.
 
+### Fixed — Terminal
+
+- **Text selection now works in GitHub Copilot CLI panes.** Two separate defects made selection unusable there and nowhere else. Copilot enables mouse tracking, and SwiftTerm's `mouseDown` forwards the click to the app before it clears any live selection, so the next drag extended the previous one and the highlight ballooned across the screen — TermQ now performs that reset itself (shift-click still extends). Copilot also scrolls its transcript inside a partial `DECSTBM` region, where SwiftTerm shifted rows in place without translating the selection anchors, so a highlight made during streaming output stayed pinned to the screen while the text scrolled out from under it and Cmd+C returned whatever had scrolled in. That fix is in SwiftTerm itself: TermQ is temporarily pinned to `eyelock/SwiftTerm` (upstream `58915b1` plus the fix, PR pending upstream), which also covers the equivalent `ESC M`, `CSI L` and `CSI M` paths.
+
 ## [0.12.0] - 2026-07-21
 
 ### Added — Stacked Branches & PRs
