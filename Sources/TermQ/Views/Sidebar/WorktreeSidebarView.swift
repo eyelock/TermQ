@@ -15,6 +15,9 @@ struct WorktreeSidebarView: View {
     @ObservedObject var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @ObservedObject var prService: GitHubPRService = .shared
+    /// Stacks as the FORGE sees them — needed because the local stack graph can only
+    /// describe stacks this machine already tracks.
+    @ObservedObject var remoteStackDiscovery: RemoteStackDiscoveryService = .shared
     @ObservedObject var ghProbe: GhCliProbe = .shared
     @ObservedObject var stackService: StackService = .shared
     @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
@@ -132,7 +135,13 @@ struct WorktreeSidebarView: View {
             LinkStackSheet(
                 repo: ctx.repo, worktree: ctx.worktree, branches: ctx.branches, base: ctx.base,
                 viewModel: viewModel,
-                onComplete: { showStackToast(Strings.Stacks.linkStackDone) })
+                onComplete: {
+                    // Link registers the stack on the forge and writes NO local tracking,
+                    // so without rediscovery the sidebar would look entirely unchanged
+                    // after a successful link.
+                    Task { await rediscoverRemoteStacks(for: ctx.repo) }
+                    showStackToast(Strings.Stacks.linkStackDone)
+                })
         }
         .sheet(item: $showEditRepoFor) { repo in EditRepositorySheet(repo: repo, viewModel: viewModel) }
         .sheet(item: $pruneSheetFor) { repo in
