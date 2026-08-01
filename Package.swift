@@ -31,8 +31,13 @@ let package = Package(
         // clear (fixes restricted-region artifacts, #582), immediate local-input rendering (#553),
         // full-width (CJK) glyph centering (#578), DECRST 1005/1006/1015/1016 no longer disabling
         // mouse tracking (#571), Mac word-mode drag selection seed-word fix (#576).
-        // Fork eyelock/SwiftTerm archived.
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "e0784f4291dcdae078b86f6182f32697b4a51c8d"),
+        // Temporarily on the eyelock fork: upstream does not translate selection
+        // anchors when rows move in place (a DECSTBM region scroll, ESC M, CSI L
+        // or CSI M), so a selection made while a full-screen TUI streams output
+        // drifts onto other text. GitHub Copilot CLI hits this on every line.
+        // Fork commit 98087c67 is upstream 58915b1 plus that fix; revert to the
+        // upstream pin once the change is merged there.
+        .package(url: "https://github.com/eyelock/SwiftTerm.git", revision: "98087c67bacb925773d285accd7995771c64ab9d"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.0"),
