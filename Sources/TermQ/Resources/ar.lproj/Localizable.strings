@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PRs لكل مستودع";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "يشغّل الفروع المكدّسة وطلبات السحب المكدّسة في الشريط الجانبي.";
-"settings.gitspice.version" = "الإصدار:";
-"settings.gitspice.path" = "المسار:";
+"settings.stacking.version" = "الإصدار:";
+"settings.stacking.path" = "المسار:";
 "settings.gitspice.info" = "تعتمد ميزات الفروع المكدّسة في الشريط الجانبي على تثبيت يعمل بشكل صحيح لـ git-spice. يعيد استخدام مصادقة gh CLI.";
 "settings.gitspice.not.installed.description" = "يتيح git-spice الفروع المكدّسة وطلبات السحب المكدّسة. بدونه، يعرض TermQ فقط بيئات عمل عادية.";
 "settings.gitspice.install.hint" = "التثبيت باستخدام Homebrew:";
-"settings.gitspice.check.again" = "تحقق مرة أخرى";
-"settings.gitspice.status.unusable %@" = "تم اكتشافه لكنه غير قابل للاستخدام: %@";
+"settings.stacking.check.again" = "تحقق مرة أخرى";
+"settings.stacking.status.unusable %@" = "تم اكتشافه لكنه غير قابل للاستخدام: %@";
 "stacks.enable" = "تمكين التكديس…";
 "stacks.enable.help" = "تتبع فروع هذا المستودع كمكدس باستخدام git-spice";
 "stacks.enable.failed %@" = "تعذّر تمكين التكديس: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "يُنشأ هذا الفرع مكدّسًا فوق فرع التكامل، وليس فوق الفرع الأساسي مباشرة.";
 "stacks.new.stack.integration.note" = "ينشئ فرع تكامل فارغًا من الفرع الأساسي كجذر للمكدس — لا يحمل أي كود خاص به أبدًا. تُبنى الفروع المكدّسة فوقه بدلاً من الفرع الأساسي، وتتسلسل طلبات السحب الخاصة بها إليه. وبمجرد دمج كل شيء في فرع التكامل، يُقدَّم كطلب سحب واحد موحّد إلى الفرع الأساسي — بدلاً من دمج كل فرع مكدّس في الفرع الأساسي على حدة.";
 "stacks.new.stack.name.exists %@" = "%@ موجود بالفعل — اختر اسمًا آخر.";
-"settings.gitspice.new.stack.mode" = "المكدس الجديد يبدأ كـ:";
-"settings.gitspice.new.stack.mode.help" = "الوضع الذي تختاره ورقة (مكدّس جديد) مسبقًا — تعرض الورقة الخيارين دائمًا.";
-"settings.gitspice.hide.stacked.worktrees" = "إخفاء بيئات العمل المكدّسة من قسم بيئات العمل";
-"settings.gitspice.hide.stacked.worktrees.help" = "بيئات العمل التي ينتمي فرعها إلى مكدّس متتبَع مُدرجة بالفعل ضمن المكدسات — أخفِها من قسم بيئات العمل لتفادي التكرار.";
+"settings.stacking.new.stack.mode" = "المكدس الجديد يبدأ كـ:";
+"settings.stacking.new.stack.mode.help" = "الوضع الذي تختاره ورقة (مكدّس جديد) مسبقًا — تعرض الورقة الخيارين دائمًا.";
+"settings.stacking.hide.stacked.worktrees" = "إخفاء بيئات العمل المكدّسة من قسم بيئات العمل";
+"settings.stacking.hide.stacked.worktrees.help" = "بيئات العمل التي ينتمي فرعها إلى مكدّس متتبَع مُدرجة بالفعل ضمن المكدسات — أخفِها من قسم بيئات العمل لتفادي التكرار.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "طلبات السحب المكدّسة";
+"settings.stacking.preferred" = "الواجهة الخلفية المفضّلة:";
+"settings.stacking.preferred.help" = "تُستخدم فقط للمستودعات التي لم تتولَّها أي واجهة خلفية بعد. المستودع الذي تتتبعه أداة معيّنة يبقى دائمًا معها.";
+"settings.stacking.preferred.automatic" = "تلقائي";
+"settings.ghstack.title" = "طلبات السحب المكدّسة في GitHub";
+"settings.ghstack.description" = "طلبات السحب المكدّسة الأصلية من GitHub، عبر واجهة gh.";
+"settings.ghstack.info" = "تُتتبَّع الأكداس بشكل منفصل في كل worktree. يستخدم مصادقة واجهة gh.";
+"settings.ghstack.not.installed.description" = "يتيح امتداد gh stack الفروع وطلبات السحب المكدّسة باستخدام أكداس GitHub نفسها.";
+"settings.ghstack.install.hint" = "ثبِّت امتداد واجهة gh:";
+"settings.ghstack.needs.gh.cli" = "ثبِّت واجهة gh وسجِّل الدخول إليها أولًا — فهذا الامتداد يعتمد عليها.";
+"stacks.untrack.stack" = "إيقاف تتبّع الكدس";
+"stacks.untrack.stack.title" = "إيقاف تتبّع الكدس؟";
+"stacks.untrack.stack.message %ld %@" = "سيتوقف TermQ عن تتبّع هذه الفروع البالغ عددها %ld ككدس: %@\n\nلن يُحذف أي فرع ولن يضيع أي عمل.";
+"stacks.untrack.stack.confirm" = "إيقاف التتبّع";
+"stacks.untrack.stack.done" = "تم إيقاف تتبّع الكدس. بقيت جميع الفروع في مكانها.";
+"stacks.sync.confirm.title" = "مزامنة مع دفع قسري؟";
+"stacks.sync.confirm.message %ld %@" = "تؤدي المزامنة إلى دفع %ld فرعًا قسريًا وتحديث الكدس على GitHub: %@\n\nسيحتاج كل من يعمل على هذه الفروع إلى إعادة الضبط.";
+"stacks.sync.confirm.button" = "مزامنة ودفع";

@@ -80,6 +80,70 @@ struct StackDestroyReport: Equatable {
     let skippedDirtyWorktrees: [String]
 }
 
+// MARK: - Action Availability
+
+/// Which stack actions the sidebar may offer for a repo, resolved once from the active
+/// provider's capabilities rather than re-derived at each menu site.
+///
+/// Exists as a value type so the gating rules are testable without driving SwiftUI. The
+/// rules matter: providers differ in more than polish, and two of the differences are
+/// traps rather than gaps.
+///
+/// - Branch insertion is git-spice-specific (`--below` / `--insert`). gh-stack can only
+///   restructure inside its interactive `modify` TUI, which TermQ must never spawn.
+/// - `destroy` and `untrack` look like the same action and are not. git-spice's
+///   `stack delete` removes every branch; gh-stack's `unstack` leaves them all in place.
+///   They are deliberately separate flags so a provider can never inherit the other's
+///   blast radius by implication.
+/// - `syncPushes` marks a sync that force-pushes every branch and mutates remote state,
+///   as gh-stack's does. A one-click Sync is only safe when this is false.
+struct StackActionAvailability: Equatable {
+    let canRestack: Bool
+    let canSubmit: Bool
+    let canSync: Bool
+    /// Sync reaches the remote and force-pushes — confirm before running it.
+    let syncNeedsConfirmation: Bool
+    /// Restack a NAMED branch — "Restack from Here" and the cross-worktree sweep. A
+    /// provider can restack (`canRestack`) yet only ever pivot on its own checked-out
+    /// branch, in which case those two must not be offered.
+    let canRestackNamedBranch: Bool
+    /// Submit part of a stack — the per-branch Submit action. Whole-stack submit stays
+    /// available via `canSubmit`.
+    let canSubmitNamedBranch: Bool
+    let canInsertBranch: Bool
+    let canDestroyStack: Bool
+    let canUntrackStack: Bool
+    let canResumeConflict: Bool
+
+    init(capabilities: StackCapabilities) {
+        canRestack = capabilities.contains(.restack)
+        canSubmit = capabilities.contains(.submit)
+        canSync = capabilities.contains(.sync)
+        syncNeedsConfirmation = capabilities.contains(.syncPushes)
+        // Both are conjunctions, not standalone flags: scoping a restack you cannot
+        // perform at all is meaningless, and reading them independently would offer
+        // "Restack from Here" to a provider with no restack.
+        canRestackNamedBranch = capabilities.contains(.restack) && capabilities.contains(.scopedRestack)
+        canSubmitNamedBranch = capabilities.contains(.submit) && capabilities.contains(.scopedSubmit)
+        canInsertBranch = capabilities.contains(.branchInsertion)
+        canDestroyStack = capabilities.contains(.destroyStack)
+        canUntrackStack = capabilities.contains(.untrackStack)
+        canResumeConflict = capabilities.contains(.conflictResume)
+    }
+
+    /// Whether group-level actions must run in a worktree that has one of the stack's
+    /// branches checked out.
+    ///
+    /// A provider that accepts a branch name resolves the target stack from that name and
+    /// can work from the repo's main worktree with anything checked out. One that always
+    /// pivots on `HEAD` resolves a DIFFERENT stack — or none — when run from a worktree
+    /// standing outside the stack, so the working directory has to be chosen for it.
+    var operatesOnCheckedOutStack: Bool { !canRestackNamedBranch && !canSubmitNamedBranch }
+
+    /// Nothing offered — the safe default for a repo with no resolved provider.
+    static let none = StackActionAvailability(capabilities: [])
+}
+
 // MARK: - Stack Groups
 
 /// One tracked stack for the sidebar's Stacks inventory section: the chain of branches
@@ -172,8 +236,25 @@ extension WorktreeSidebarViewModel {
             stacks.removeValue(forKey: repo.id)
             return
         }
-        await stackService.refreshGraph(repo: repo.path)
+        await stackService.refreshGraph(repo: repo.path, worktrees: worktreePaths(for: repo))
         stacks[repo.id] = stackService.graphsByRepo[repo.path]
+    }
+
+    /// Every worktree path the sidebar knows about for `repo`, including the main
+    /// worktree at `repo.path`. Handed to the provider because a provider whose tracking
+    /// state lives inside each worktree's git dir cannot see the repo any other way; a
+    /// repo-wide provider ignores it entirely.
+    /// Which stack actions may be offered for `repo`, per the provider driving it.
+    func stackActions(for repo: ObservableRepository) -> StackActionAvailability {
+        StackActionAvailability(capabilities: stackService.capabilities(forRepo: repo.path))
+    }
+
+    func worktreePaths(for repo: ObservableRepository) -> [String] {
+        var paths = [repo.path]
+        for worktree in worktrees[repo.id] ?? [] where !paths.contains(worktree.path) {
+            paths.append(worktree.path)
+        }
+        return paths
     }
 
     /// Enable stacking (`gs repo init`) for `repo` against its default branch, then
@@ -181,7 +262,8 @@ extension WorktreeSidebarViewModel {
     func enableStacking(for repo: ObservableRepository) async {
         let trunk = await gitService.defaultBranch(repoPath: repo.path)
         do {
-            try await stackService.enableStacking(repo: repo.path, trunk: trunk)
+            try await stackService.enableStacking(
+                repo: repo.path, trunk: trunk, worktrees: worktreePaths(for: repo))
             stacks[repo.id] = stackService.graphsByRepo[repo.path]
         } catch {
             operationError = Strings.Stacks.enableStackingFailed(error.localizedDescription)
@@ -398,6 +480,12 @@ extension WorktreeSidebarViewModel {
         for repo: ObservableRepository, excluding excludedWorktreePath: String? = nil
     ) async -> [StackSkippedRestack] {
         guard stackService.isAvailable else { return [] }
+        // The sweep exists to restack branches BY NAME from a worktree it doesn't own.
+        // A provider that always pivots on its own checked-out branch would rebase the
+        // wrong range, so it opts out entirely rather than partially — and reports
+        // nothing skipped, because with per-worktree state (gh-stack) each worktree's
+        // stack is independent and there is no cross-worktree staleness to sweep.
+        guard stackActions(for: repo).canRestackNamedBranch else { return [] }
         var skipped: [StackSkippedRestack] = []
         for _ in 0..<2 {
             guard stackService.conflicts[repo.path] == nil else { break }
@@ -440,6 +528,18 @@ extension WorktreeSidebarViewModel {
             await refreshStack(for: repo)
         }
         return skipped
+    }
+
+    /// Drop `group`'s stack from tracking, LEAVING EVERY BRANCH IN PLACE.
+    ///
+    /// Deliberately much thinner than `destroyStack`: nothing is deleted, so there is no
+    /// dirty-worktree guard to run, no worktree to remove, and no scratch checkout to
+    /// reach an unanchored stack. `worktree` must have one of the stack's branches
+    /// checked out — the provider command targets whatever is at HEAD — which the caller
+    /// guarantees by only offering the action for an anchored stack.
+    func untrackStack(repo: ObservableRepository, worktree: GitWorktree) async throws {
+        try await stackService.untrackStack(repo: repo.path, worktree: worktree.path)
+        await refreshWorktrees(for: repo)
     }
 
     /// Submit (create/update) change requests for `scope`, then refresh worktrees and

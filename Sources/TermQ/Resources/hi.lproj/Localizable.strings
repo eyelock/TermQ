@@ -1349,16 +1349,15 @@
 "settings.github.feed.cap.label" = "PR प्रति रिपॉजिटरी";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "साइडबार में स्टैक की गई शाखाओं और स्टैक किए गए PR को सक्षम करता है।";
-"settings.gitspice.version" = "संस्करण:";
-"settings.gitspice.path" = "पथ:";
+"settings.stacking.version" = "संस्करण:";
+"settings.stacking.path" = "पथ:";
 "settings.gitspice.info" = "साइडबार में स्टैक शाखा सुविधाएँ एक काम कर रहे git-spice इंस्टॉलेशन पर निर्भर करती हैं। यह gh CLI के प्रमाणीकरण का पुन: उपयोग करता है।";
 "settings.gitspice.not.installed.description" = "git-spice स्टैक की गई शाखाओं और स्टैक किए गए PR को सक्षम करता है। इसके बिना, TermQ केवल सामान्य worktrees दिखाता है।";
 "settings.gitspice.install.hint" = "Homebrew का उपयोग करके इंस्टॉल करें:";
-"settings.gitspice.check.again" = "फिर से जाँचें";
-"settings.gitspice.status.unusable %@" = "पता चला लेकिन उपयोग करने योग्य नहीं: %@";
+"settings.stacking.check.again" = "फिर से जाँचें";
+"settings.stacking.status.unusable %@" = "पता चला लेकिन उपयोग करने योग्य नहीं: %@";
 "stacks.enable" = "स्टैकिंग सक्षम करें…";
 "stacks.enable.help" = "git-spice के साथ इस रिपॉजिटरी की शाखाओं को एक स्टैक के रूप में ट्रैक करें";
 "stacks.enable.failed %@" = "स्टैकिंग सक्षम नहीं की जा सकी: %@";
@@ -1451,7 +1450,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "यह शाखा इंटीग्रेशन शाखा के ऊपर स्टैक की हुई बनाई जाती है, सीधे आधार शाखा के ऊपर नहीं।";
 "stacks.new.stack.integration.note" = "आधार से एक खाली इंटीग्रेशन शाखा को स्टैक की जड़ के रूप में बनाता है — इसमें कभी अपना कोड नहीं होता। स्टैक शाखाएं आधार के बजाय इसके ऊपर बनती हैं, और उनके pull request इसमें जुड़ते चले जाते हैं। जब सब कुछ इंटीग्रेशन शाखा में मर्ज हो जाता है, तो इसे एक समेकित बदलाव के रूप में आधार में pull request किया जाता है — हर स्टैक शाखा को अलग-अलग आधार में मर्ज करने के बजाय।";
 "stacks.new.stack.name.exists %@" = "%@ पहले से मौजूद है — कोई और नाम चुनें।";
-"settings.gitspice.new.stack.mode" = "नया स्टैक इस रूप में शुरू होता है:";
-"settings.gitspice.new.stack.mode.help" = "नया स्टैक शीट कौन-सा मोड पहले से चुनती है — शीट हमेशा दोनों विकल्प देती है।";
-"settings.gitspice.hide.stacked.worktrees" = "स्टैक शाखाओं वाली worktrees को Worktrees अनुभाग से छिपाएं";
-"settings.gitspice.hide.stacked.worktrees.help" = "जिन worktrees की शाखा किसी ट्रैक किए गए स्टैक से संबंधित है वे पहले से ही स्टैक्स के अंतर्गत सूचीबद्ध हैं — दोहराव से बचने के लिए उन्हें Worktrees अनुभाग से छिपाएं।";
+"settings.stacking.new.stack.mode" = "नया स्टैक इस रूप में शुरू होता है:";
+"settings.stacking.new.stack.mode.help" = "नया स्टैक शीट कौन-सा मोड पहले से चुनती है — शीट हमेशा दोनों विकल्प देती है।";
+"settings.stacking.hide.stacked.worktrees" = "स्टैक शाखाओं वाली worktrees को Worktrees अनुभाग से छिपाएं";
+"settings.stacking.hide.stacked.worktrees.help" = "जिन worktrees की शाखा किसी ट्रैक किए गए स्टैक से संबंधित है वे पहले से ही स्टैक्स के अंतर्गत सूचीबद्ध हैं — दोहराव से बचने के लिए उन्हें Worktrees अनुभाग से छिपाएं।";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "स्टैक्ड पुल रिक्वेस्ट";
+"settings.stacking.preferred" = "पसंदीदा बैकएंड:";
+"settings.stacking.preferred.help" = "केवल उन रिपॉज़िटरी के लिए जिन्हें अभी तक किसी बैकएंड ने नहीं संभाला है। जिस रिपॉज़िटरी को कोई टूल पहले से ट्रैक कर रहा है, वह हमेशा उसी के पास रहती है।";
+"settings.stacking.preferred.automatic" = "स्वचालित";
+"settings.ghstack.title" = "GitHub स्टैक्ड PR";
+"settings.ghstack.description" = "gh CLI के ज़रिए GitHub की अपनी स्टैक्ड पुल रिक्वेस्ट।";
+"settings.ghstack.info" = "स्टैक हर worktree में अलग-अलग ट्रैक होते हैं। gh CLI का प्रमाणीकरण इस्तेमाल होता है।";
+"settings.ghstack.not.installed.description" = "gh stack एक्सटेंशन GitHub के अपने स्टैक का उपयोग करके स्टैक्ड ब्रांच और PR सक्षम करता है।";
+"settings.ghstack.install.hint" = "gh CLI एक्सटेंशन इंस्टॉल करें:";
+"settings.ghstack.needs.gh.cli" = "पहले gh CLI इंस्टॉल करें और प्रमाणित करें — यह एक्सटेंशन उसी पर बना है।";
+"stacks.untrack.stack" = "स्टैक ट्रैक करना बंद करें";
+"stacks.untrack.stack.title" = "स्टैक ट्रैक करना बंद करें?";
+"stacks.untrack.stack.message %ld %@" = "TermQ इन %ld ब्रांच को स्टैक के रूप में ट्रैक करना बंद कर देगा: %@\n\nकोई ब्रांच नहीं हटाई जाती और कोई काम नहीं खोता।";
+"stacks.untrack.stack.confirm" = "ट्रैक करना बंद करें";
+"stacks.untrack.stack.done" = "स्टैक अब ट्रैक नहीं हो रहा। सभी ब्रांच अपनी जगह पर बनी रहीं।";
+"stacks.sync.confirm.title" = "सिंक करके फ़ोर्स-पुश करें?";
+"stacks.sync.confirm.message %ld %@" = "सिंक करने पर %ld ब्रांच फ़ोर्स-पुश होंगी और GitHub पर स्टैक अपडेट होगा: %@\n\nइन ब्रांच पर काम कर रहे बाकी लोगों को रीसेट करना होगा।";
+"stacks.sync.confirm.button" = "सिंक करें और पुश करें";

@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PRs pro Repository";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Ermöglicht gestapelte Branches und gestapelte PRs in der Seitenleiste.";
-"settings.gitspice.version" = "Version:";
-"settings.gitspice.path" = "Pfad:";
+"settings.stacking.version" = "Version:";
+"settings.stacking.path" = "Pfad:";
 "settings.gitspice.info" = "Gestapelte-Branch-Funktionen in der Seitenleiste erfordern eine funktionierende git-spice-Installation. Sie verwendet die Authentifizierung der gh-CLI.";
 "settings.gitspice.not.installed.description" = "git-spice ermöglicht gestapelte Branches und gestapelte PRs. Ohne git-spice zeigt TermQ nur einfache Worktrees.";
 "settings.gitspice.install.hint" = "Installation mit Homebrew:";
-"settings.gitspice.check.again" = "Erneut prüfen";
-"settings.gitspice.status.unusable %@" = "Erkannt, aber nicht nutzbar: %@";
+"settings.stacking.check.again" = "Erneut prüfen";
+"settings.stacking.status.unusable %@" = "Erkannt, aber nicht nutzbar: %@";
 "stacks.enable" = "Stapeln aktivieren…";
 "stacks.enable.help" = "Die Branches dieses Repositorys mit git-spice als Stack verfolgen";
 "stacks.enable.failed %@" = "Stapeln konnte nicht aktiviert werden: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Dieser Branch wird oberhalb des Integrations-Branch gestapelt erstellt, nicht direkt auf dem Basis-Branch.";
 "stacks.new.stack.integration.note" = "Erstellt einen leeren Integrations-Branch von der Basis als Wurzel des Stacks — er trägt nie eigenen Code. Stack-Branches bauen auf ihm statt auf der Basis auf, und ihre Pull Requests reihen sich in ihn ein. Sobald alles in den Integrations-Branch gemergt ist, wird er als eine konsolidierte Änderung in die Basis gepullrequestet — statt dass jeder Stack-Branch einzeln in die Basis gemergt wird.";
 "stacks.new.stack.name.exists %@" = "%@ existiert bereits — wähle einen anderen Namen.";
-"settings.gitspice.new.stack.mode" = "Neuer Stack startet als:";
-"settings.gitspice.new.stack.mode.help" = "Welcher Modus im Blatt „Neuer Stack“ vorausgewählt ist — das Blatt bietet immer beide an.";
-"settings.gitspice.hide.stacked.worktrees" = "Gestapelte Worktrees aus dem Bereich Worktrees ausblenden";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees, deren Branch zu einem verfolgten Stack gehört, werden bereits unter Stacks angezeigt — blende sie aus dem Bereich Worktrees aus, um doppelte Einträge zu vermeiden.";
+"settings.stacking.new.stack.mode" = "Neuer Stack startet als:";
+"settings.stacking.new.stack.mode.help" = "Welcher Modus im Blatt „Neuer Stack“ vorausgewählt ist — das Blatt bietet immer beide an.";
+"settings.stacking.hide.stacked.worktrees" = "Gestapelte Worktrees aus dem Bereich Worktrees ausblenden";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktrees, deren Branch zu einem verfolgten Stack gehört, werden bereits unter Stacks angezeigt — blende sie aus dem Bereich Worktrees aus, um doppelte Einträge zu vermeiden.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Gestapelte Pull Requests";
+"settings.stacking.preferred" = "Bevorzugtes Backend:";
+"settings.stacking.preferred.help" = "Wird nur für Repositories verwendet, die noch kein Backend beansprucht hat. Ein Repository, das bereits von einem Tool verwaltet wird, bleibt immer bei diesem.";
+"settings.stacking.preferred.automatic" = "Automatisch";
+"settings.ghstack.title" = "GitHub Gestapelte PRs";
+"settings.ghstack.description" = "GitHubs native gestapelte Pull Requests über die gh-CLI.";
+"settings.ghstack.info" = "Stapel werden in jedem Worktree separat verwaltet. Nutzt die Authentifizierung der gh-CLI.";
+"settings.ghstack.not.installed.description" = "Die Erweiterung gh stack ermöglicht gestapelte Branches und PRs über GitHubs eigene Stapel.";
+"settings.ghstack.install.hint" = "Installiere die gh-CLI-Erweiterung:";
+"settings.ghstack.needs.gh.cli" = "Installiere und authentifiziere zuerst die gh-CLI — diese Erweiterung baut darauf auf.";
+"stacks.untrack.stack" = "Stapel nicht mehr verfolgen";
+"stacks.untrack.stack.title" = "Stapel nicht mehr verfolgen?";
+"stacks.untrack.stack.message %ld %@" = "TermQ verfolgt diese %ld Branches nicht mehr als Stapel: %@\n\nEs wird kein Branch gelöscht und keine Arbeit geht verloren.";
+"stacks.untrack.stack.confirm" = "Nicht mehr verfolgen";
+"stacks.untrack.stack.done" = "Stapel wird nicht mehr verfolgt. Alle Branches sind erhalten geblieben.";
+"stacks.sync.confirm.title" = "Synchronisieren und Force-Push?";
+"stacks.sync.confirm.message %ld %@" = "Beim Synchronisieren werden %ld Branches per Force-Push übertragen und der Stapel auf GitHub aktualisiert: %@\n\nAlle anderen, die an diesen Branches arbeiten, müssen zurücksetzen.";
+"stacks.sync.confirm.button" = "Synchronisieren und pushen";

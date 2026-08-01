@@ -1350,16 +1350,15 @@
 "settings.github.feed.cap.label" = "저장소당 PR 수";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "사이드바에서 스택된 브랜치와 스택된 PR을 지원합니다.";
-"settings.gitspice.version" = "버전:";
-"settings.gitspice.path" = "경로:";
+"settings.stacking.version" = "버전:";
+"settings.stacking.path" = "경로:";
 "settings.gitspice.info" = "사이드바의 스택된 브랜치 기능은 정상적으로 작동하는 git-spice 설치에 의존합니다. gh CLI의 인증을 재사용합니다.";
 "settings.gitspice.not.installed.description" = "git-spice는 스택된 브랜치와 스택된 PR을 지원합니다. 설치되어 있지 않으면 TermQ는 일반 워크트리만 표시합니다.";
 "settings.gitspice.install.hint" = "Homebrew로 설치:";
-"settings.gitspice.check.again" = "다시 확인";
-"settings.gitspice.status.unusable %@" = "감지되었지만 사용할 수 없음: %@";
+"settings.stacking.check.again" = "다시 확인";
+"settings.stacking.status.unusable %@" = "감지되었지만 사용할 수 없음: %@";
 "stacks.enable" = "스택 활성화…";
 "stacks.enable.help" = "git-spice로 이 저장소의 브랜치를 스택으로 추적";
 "stacks.enable.failed %@" = "스택을 활성화할 수 없습니다: %@";
@@ -1452,7 +1451,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "이 브랜치는 기반 브랜치 위가 아니라 통합 브랜치 위에 스택으로 생성됩니다.";
 "stacks.new.stack.integration.note" = "기반 브랜치에서 빈 통합 브랜치를 스택의 루트로 생성합니다 — 통합 브랜치 자체는 코드를 갖지 않습니다. 스택 브랜치는 기반 대신 이 통합 브랜치 위에 구축되며, 해당 pull request는 여기로 연결됩니다. 모든 것이 통합 브랜치로 병합되면, 하나의 통합된 변경 사항으로 기반 브랜치에 pull request됩니다 — 각 스택 브랜치가 개별적으로 기반 브랜치에 병합되는 대신입니다.";
 "stacks.new.stack.name.exists %@" = "%@은(는) 이미 존재합니다 — 다른 이름을 선택하세요.";
-"settings.gitspice.new.stack.mode" = "새 스택 시작 모드:";
-"settings.gitspice.new.stack.mode.help" = "새 스택 시트가 미리 선택하는 모드 — 시트는 항상 두 가지를 모두 제공합니다.";
-"settings.gitspice.hide.stacked.worktrees" = "워크트리 섹션에서 스택 브랜치의 워크트리 숨기기";
-"settings.gitspice.hide.stacked.worktrees.help" = "브랜치가 추적 중인 스택에 속한 워크트리는 이미 스택 아래에 표시됩니다 — 중복 표시를 피하려면 워크트리 섹션에서 숨기세요.";
+"settings.stacking.new.stack.mode" = "새 스택 시작 모드:";
+"settings.stacking.new.stack.mode.help" = "새 스택 시트가 미리 선택하는 모드 — 시트는 항상 두 가지를 모두 제공합니다.";
+"settings.stacking.hide.stacked.worktrees" = "워크트리 섹션에서 스택 브랜치의 워크트리 숨기기";
+"settings.stacking.hide.stacked.worktrees.help" = "브랜치가 추적 중인 스택에 속한 워크트리는 이미 스택 아래에 표시됩니다 — 중복 표시를 피하려면 워크트리 섹션에서 숨기세요.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "스택 풀 리퀘스트";
+"settings.stacking.preferred" = "선호하는 백엔드:";
+"settings.stacking.preferred.help" = "어느 백엔드도 아직 맡지 않은 저장소에만 사용됩니다. 이미 한 도구가 추적 중인 저장소는 항상 그 도구가 관리합니다.";
+"settings.stacking.preferred.automatic" = "자동";
+"settings.ghstack.title" = "GitHub 스택 PR";
+"settings.ghstack.description" = "gh CLI를 통해 사용하는 GitHub 기본 스택 풀 리퀘스트입니다.";
+"settings.ghstack.info" = "스택은 워크트리마다 별도로 추적됩니다. gh CLI의 인증을 사용합니다.";
+"settings.ghstack.not.installed.description" = "gh stack 확장은 GitHub 자체 스택을 사용해 스택 브랜치와 스택 PR을 지원합니다.";
+"settings.ghstack.install.hint" = "gh CLI 확장을 설치하세요:";
+"settings.ghstack.needs.gh.cli" = "먼저 gh CLI를 설치하고 인증하세요. 이 확장은 그 위에서 동작합니다.";
+"stacks.untrack.stack" = "스택 추적 해제";
+"stacks.untrack.stack.title" = "스택 추적을 해제할까요?";
+"stacks.untrack.stack.message %ld %@" = "TermQ가 이 %ld개 브랜치를 더 이상 스택으로 추적하지 않습니다: %@\n\n브랜치는 삭제되지 않으며 작업도 사라지지 않습니다.";
+"stacks.untrack.stack.confirm" = "추적 해제";
+"stacks.untrack.stack.done" = "스택 추적을 해제했습니다. 모든 브랜치는 그대로 남아 있습니다.";
+"stacks.sync.confirm.title" = "동기화하고 강제 푸시할까요?";
+"stacks.sync.confirm.message %ld %@" = "동기화하면 %ld개 브랜치가 강제 푸시되고 GitHub의 스택이 업데이트됩니다: %@\n\n이 브랜치에서 작업 중인 다른 사람은 리셋해야 합니다.";
+"stacks.sync.confirm.button" = "동기화 후 푸시";

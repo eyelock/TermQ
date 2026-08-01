@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PR-uri pe depozit";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Activează ramurile stivuite și PR-urile stivuite în bara laterală.";
-"settings.gitspice.version" = "Versiune:";
-"settings.gitspice.path" = "Cale:";
+"settings.stacking.version" = "Versiune:";
+"settings.stacking.path" = "Cale:";
 "settings.gitspice.info" = "Funcțiile de ramuri stivuite din bara laterală depind de o instalare funcțională de git-spice. Reutilizează autentificarea CLI-ului gh.";
 "settings.gitspice.not.installed.description" = "git-spice activează ramurile stivuite și PR-urile stivuite. Fără el, TermQ afișează doar worktree-uri simple.";
 "settings.gitspice.install.hint" = "Instalează cu Homebrew:";
-"settings.gitspice.check.again" = "Verifică din nou";
-"settings.gitspice.status.unusable %@" = "Detectat, dar inutilizabil: %@";
+"settings.stacking.check.again" = "Verifică din nou";
+"settings.stacking.status.unusable %@" = "Detectat, dar inutilizabil: %@";
 "stacks.enable" = "Activează stivuirea…";
 "stacks.enable.help" = "Urmărește ramurile acestui depozit ca o stivă cu git-spice";
 "stacks.enable.failed %@" = "Stivuirea nu a putut fi activată: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Această ramură este creată stivuită deasupra ramurii de integrare, nu direct deasupra ramurii de bază.";
 "stacks.new.stack.integration.note" = "Creează o ramură de integrare goală din bază ca rădăcină a stivei — nu poartă niciodată cod propriu. Ramurile din stivă se construiesc pe ea în loc de bază, iar pull request-urile lor se înlănțuie în ea. Odată ce totul este îmbinat în ramura de integrare, aceasta este trimisă ca un singur pull request consolidat către bază — în loc ca fiecare ramură din stivă să fie îmbinată individual în bază.";
 "stacks.new.stack.name.exists %@" = "%@ există deja — alege alt nume.";
-"settings.gitspice.new.stack.mode" = "Stivă Nouă începe ca:";
-"settings.gitspice.new.stack.mode.help" = "Ce mod preselectează foaia Stivă Nouă — foaia oferă întotdeauna ambele.";
-"settings.gitspice.hide.stacked.worktrees" = "Ascunde worktree-urile din stivă din secțiunea Worktree-uri";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktree-urile a căror ramură aparține unei stive urmărite sunt deja listate în Stive — ascunde-le din secțiunea Worktree-uri pentru a evita listarea duplicată.";
+"settings.stacking.new.stack.mode" = "Stivă Nouă începe ca:";
+"settings.stacking.new.stack.mode.help" = "Ce mod preselectează foaia Stivă Nouă — foaia oferă întotdeauna ambele.";
+"settings.stacking.hide.stacked.worktrees" = "Ascunde worktree-urile din stivă din secțiunea Worktree-uri";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktree-urile a căror ramură aparține unei stive urmărite sunt deja listate în Stive — ascunde-le din secțiunea Worktree-uri pentru a evita listarea duplicată.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull request-uri stivuite";
+"settings.stacking.preferred" = "Backend preferat:";
+"settings.stacking.preferred.help" = "Se folosește doar pentru depozitele pe care niciun backend nu le-a revendicat încă. Un depozit gestionat deja de un instrument rămâne mereu la acesta.";
+"settings.stacking.preferred.automatic" = "Automat";
+"settings.ghstack.title" = "PR-uri stivuite GitHub";
+"settings.ghstack.description" = "Pull request-urile stivuite native GitHub, prin CLI-ul gh.";
+"settings.ghstack.info" = "Stivele sunt urmărite separat în fiecare worktree. Folosește autentificarea CLI-ului gh.";
+"settings.ghstack.not.installed.description" = "Extensia gh stack activează ramuri și PR-uri stivuite folosind stivele proprii GitHub.";
+"settings.ghstack.install.hint" = "Instalează extensia CLI-ului gh:";
+"settings.ghstack.needs.gh.cli" = "Instalează și autentifică mai întâi CLI-ul gh — această extensie se bazează pe el.";
+"stacks.untrack.stack" = "Nu mai urmări stiva";
+"stacks.untrack.stack.title" = "Nu mai urmărești stiva?";
+"stacks.untrack.stack.message %ld %@" = "TermQ va înceta să urmărească aceste %ld ramuri ca stivă: %@\n\nNicio ramură nu este ștearsă și nicio muncă nu se pierde.";
+"stacks.untrack.stack.confirm" = "Nu mai urmări";
+"stacks.untrack.stack.done" = "Stiva nu mai este urmărită. Toate ramurile au rămas la locul lor.";
+"stacks.sync.confirm.title" = "Sincronizezi cu push forțat?";
+"stacks.sync.confirm.message %ld %@" = "Sincronizarea forțează push-ul a %ld ramuri și actualizează stiva pe GitHub: %@\n\nOricine altcineva lucrează pe aceste ramuri va trebui să le reseteze.";
+"stacks.sync.confirm.button" = "Sincronizează și trimite";

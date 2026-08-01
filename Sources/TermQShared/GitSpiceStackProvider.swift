@@ -12,8 +12,20 @@ import Foundation
 public struct GitSpiceStackProvider: StackProvider, Sendable {
     public static let id = StackProviderID.gitSpice
 
+    /// `.scopedRestack`/`.scopedSubmit`: every git-spice restack and submit form accepts
+    /// `--branch=NAME`, so both can target a branch other than the checked-out one.
     public var capabilities: StackCapabilities {
-        [.restack, .submit, .sync, .trackExisting, .conflictResume, .branchInsertion, .destroyStack]
+        [
+            .restack,
+            .submit,
+            .sync,
+            .trackExisting,
+            .conflictResume,
+            .branchInsertion,
+            .destroyStack,
+            .scopedRestack,
+            .scopedSubmit,
+        ]
     }
 
     public init() {}
@@ -298,20 +310,56 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
     /// Public so the Settings > Tools card can display the detected binary path —
     /// path display is inherently git-spice-specific, like the gh card's path row.
     public static func findGsBinary() -> String? {
+        binaryCandidates().first { FileManager.default.isExecutableFile(atPath: $0) }
+    }
+
+    /// Candidate paths in search order. Homebrew installs the binary as `git-spice` only
+    /// (no `gs` symlink, to avoid colliding with Ghostscript), so that name is searched
+    /// first; a bare `gs` is only trusted after `identifyGitSpice`.
+    ///
+    /// Paths that are a `gh stack alias` wrapper are dropped outright — see
+    /// `isGhStackAliasWrapper`.
+    static func binaryCandidates() -> [String] {
         let home = NSHomeDirectory()
-        // Homebrew installs the binary as `git-spice` only (no `gs` symlink, to avoid
-        // colliding with Ghostscript), so search that name first; a bare `gs` is only
-        // trusted after the identity check in `identifyGitSpice`.
         let directories = [
             "\(home)/.local/bin",
             "/opt/homebrew/bin",
             "/usr/local/bin",
             "/usr/bin",
         ]
-        let candidates = ["git-spice", "gs"].flatMap { name in
-            directories.map { "\($0)/\(name)" }
-        }
-        return candidates.first { FileManager.default.isExecutableFile(atPath: $0) }
+        return ["git-spice", "gs"]
+            .flatMap { name in directories.map { "\($0)/\(name)" } }
+            .filter { !isGhStackAliasWrapper(path: $0) }
+    }
+
+    /// `gh stack alias` installs a shell wrapper named `gs` (by default) into
+    /// `~/.local/bin` — the FIRST directory this provider searches. It is not git-spice,
+    /// and without this check the Settings card reports git-spice as "unusable, not
+    /// git-spice" to anyone who ran that command, when the truth is git-spice simply
+    /// isn't installed.
+    ///
+    /// The wrapper self-identifies with a fixed marker line that gh-stack also uses to
+    /// recognize its own scripts, so matching on it is stable:
+    ///
+    ///     #!/bin/sh
+    ///     # installed by github/gh-stack
+    ///     exec gh stack "$@"
+    ///
+    /// Reads the file rather than executing it — detection must stay cheap and
+    /// side-effect free. Anything unreadable or non-text (i.e. a real binary) is not a
+    /// wrapper.
+    static func isGhStackAliasWrapper(path: String) -> Bool {
+        guard let handle = FileHandle(forReadingAtPath: path) else { return false }
+        defer { try? handle.close() }
+        guard let data = try? handle.read(upToCount: 512), let text = String(data: data, encoding: .utf8)
+        else { return false }
+        return isGhStackAliasWrapper(contents: text)
+    }
+
+    /// Pure form, for tests.
+    static func isGhStackAliasWrapper(contents: String) -> Bool {
+        let lower = contents.lowercased()
+        return lower.contains("installed by github/gh-stack") || lower.contains("exec gh stack")
     }
 
     private static func requireGsBinary() throws -> String {
@@ -319,7 +367,7 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
         return path
     }
 
-    private static func throwIfFailed(_ result: ProcessResult, command: String) throws {
+    private static func throwIfFailed(_ result: StackProcessResult, command: String) throws {
         guard result.exitCode == 0 else {
             throw StackProviderError.commandFailed(
                 command: command, exitCode: result.exitCode, output: result.stderr)
@@ -339,45 +387,13 @@ public struct GitSpiceStackProvider: StackProvider, Sendable {
 
     // MARK: - Process execution
 
-    /// Minimal Sendable process result. Not shared with `CommandRunner` (TermQ target) —
-    /// this type must stay usable from MCPServerLib and the CLI, which don't depend on
-    /// the app target.
-    struct ProcessResult: Sendable {
-        let exitCode: Int32
-        let stdout: String
-        let stderr: String
-    }
-
-    static func run(_ executable: String, _ arguments: [String], cwd: String?) async throws -> ProcessResult {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async {
-                let process = Process()
-                let stdoutPipe = Pipe()
-                let stderrPipe = Pipe()
-                process.executableURL = URL(fileURLWithPath: executable)
-                process.arguments = arguments
-                process.standardOutput = stdoutPipe
-                process.standardError = stderrPipe
-                if let cwd { process.currentDirectoryURL = URL(fileURLWithPath: cwd) }
-
-                do {
-                    try process.run()
-                } catch {
-                    continuation.resume(throwing: error)
-                    return
-                }
-                process.waitUntilExit()
-
-                let outData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
-                let errData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
-                continuation.resume(
-                    returning: ProcessResult(
-                        exitCode: process.terminationStatus,
-                        stdout: String(data: outData, encoding: .utf8) ?? "",
-                        stderr: String(data: errData, encoding: .utf8) ?? ""
-                    ))
-            }
-        }
+    /// Every provider spawns through `StackProcessRunner`, which owns the
+    /// stdin-is-closed guarantee. Kept as a thin alias so the call sites below read the
+    /// same as before the runner was extracted.
+    static func run(
+        _ executable: String, _ arguments: [String], cwd: String?, env: [String: String] = [:]
+    ) async throws -> StackProcessResult {
+        try await StackProcessRunner.run(executable, arguments, cwd: cwd, env: env)
     }
 }
 

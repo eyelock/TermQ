@@ -115,14 +115,16 @@ extension WorktreeSidebarView {
                 onSwitch: { branch in
                     Task { await switchStackBranch(to: branch, worktree: worktree, repo: repo) }
                 },
-                onRestackFromHere: { branch in
-                    Task { await restackStack(worktree: worktree, repo: repo, from: branch) }
-                },
-                onSubmitBranch: { branch in
-                    submitStackContext = SubmitStackContext(
-                        repo: repo, worktree: worktree, branches: [branch],
-                        scope: .branch(branch.name))
-                },
+                onRestackFromHere: stackActions(for: repo).canRestackNamedBranch
+                    ? { branch in
+                        Task { await restackStack(worktree: worktree, repo: repo, from: branch) }
+                    } : nil,
+                onSubmitBranch: stackActions(for: repo).canSubmitNamedBranch
+                    ? { branch in
+                        submitStackContext = SubmitStackContext(
+                            repo: repo, worktree: worktree, branches: [branch],
+                            scope: .branch(branch.name))
+                    } : nil,
                 baseMismatch: { branch in
                     stackBaseMismatch(for: branch, repo: repo)
                 },
@@ -229,18 +231,20 @@ extension WorktreeSidebarView {
                 onBreakOutBranch: { branch in
                     convertWorktreeContext = ConvertWorktreeContext(repo: repo, branch: branch.name)
                 },
-                onRestackFromHereBranch: { branch in
-                    if let main = viewModel.mainWorktree(for: repo) {
-                        Task { await restackStack(worktree: main, repo: repo, from: branch) }
-                    }
-                },
-                onSubmitBranch: { branch in
-                    if let main = viewModel.mainWorktree(for: repo) {
-                        submitStackContext = SubmitStackContext(
-                            repo: repo, worktree: main, branches: [branch],
-                            scope: .branch(branch.name))
-                    }
-                },
+                onRestackFromHereBranch: stackActions(for: repo).canRestackNamedBranch
+                    ? { branch in
+                        if let main = viewModel.mainWorktree(for: repo) {
+                            Task { await restackStack(worktree: main, repo: repo, from: branch) }
+                        }
+                    } : nil,
+                onSubmitBranch: stackActions(for: repo).canSubmitNamedBranch
+                    ? { branch in
+                        if let main = viewModel.mainWorktree(for: repo) {
+                            submitStackContext = SubmitStackContext(
+                                repo: repo, worktree: main, branches: [branch],
+                                scope: .branch(branch.name))
+                        }
+                    } : nil,
                 harnessBadge: { group in
                     let anchoring = group.branches
                         .compactMap { viewModel.worktree(forBranch: $0.name, repo: repo) }.first
@@ -505,20 +509,72 @@ extension WorktreeSidebarView {
                 branch: branch.name, repo: repo, anchor: anchor,
                 launch: self.stackLaunchCreateTerminalClosure(repo: repo))
         }
-        if !isFirstAboveTrunk {
-            actions.newBranchBefore = {
-                self.openNewStackedBranchSheet(
-                    insertion: .below(referenceBranch: branch.name), branch: branch, anchor: anchor, repo: repo)
+        // Inserting into the middle of a stack is git-spice-specific (`--below` /
+        // `--insert`). gh-stack can only restructure through its interactive `modify`
+        // TUI, which TermQ must never spawn, so these two entries disappear entirely for
+        // providers that do not advertise the capability — leaving "Add Branch to Stack",
+        // which appends to the top and every provider supports.
+        if stackActions(for: repo).canInsertBranch {
+            if !isFirstAboveTrunk {
+                actions.newBranchBefore = {
+                    self.openNewStackedBranchSheet(
+                        insertion: .below(referenceBranch: branch.name), branch: branch, anchor: anchor,
+                        repo: repo)
+                }
             }
-        }
-        actions.newBranchAfter = {
-            self.openNewStackedBranchSheet(
-                insertion: .above(referenceBranch: branch.name), branch: branch, anchor: anchor, repo: repo)
+            actions.newBranchAfter = {
+                self.openNewStackedBranchSheet(
+                    insertion: .above(referenceBranch: branch.name), branch: branch, anchor: anchor,
+                    repo: repo)
+            }
         }
         actions.openRemoteBranch = {
             self.openBranchOnRemote(branch: branch.name, repo: repo)
         }
         return actions
+    }
+}
+
+// MARK: - Capability Gating
+
+extension WorktreeSidebarView {
+    /// What the provider driving `repo` can actually do.
+    ///
+    /// Every stack action is gated on this rather than on "stacking is available".
+    /// Providers differ in more than polish: gh-stack cannot insert a branch into the
+    /// middle of a stack outside its interactive TUI, and its "unstack" leaves branches
+    /// in place where git-spice's "stack delete" removes them. Showing an action the
+    /// active provider has no equivalent for produces either a confusing refusal or —
+    /// worse, for the delete-shaped pair — an action whose blast radius is not what the
+    /// label implies.
+    ///
+    /// Nothing offered for a repo with no resolved provider, which hides everything. That
+    /// is the safe direction, and in practice cannot be reached from these menus: they are
+    /// all nested under an `isStacked(repo:)` check, which only becomes true once the
+    /// graph has been fetched and the provider resolved.
+    ///
+    /// The rules themselves live in `StackActionAvailability` so they can be tested
+    /// without driving SwiftUI.
+    func stackActions(for repo: ObservableRepository) -> StackActionAvailability {
+        viewModel.stackActions(for: repo)
+    }
+
+    /// Working directory for a group-level stack mutation.
+    ///
+    /// A provider that can be handed a branch name resolves the stack from the name, so
+    /// the repo's main worktree is a fine and stable place to run from. A provider that
+    /// pivots on `HEAD` must run inside `anchoring` — the worktree holding one of the
+    /// group's branches — or it resolves whatever stack that directory happens to be on.
+    ///
+    /// `nil` (an unanchored group under a HEAD-pivoting provider) means there is nowhere
+    /// valid to run, and the caller omits the action rather than guessing.
+    func stackOperationWorktree(
+        anchoring: GitWorktree?, repo: ObservableRepository
+    ) -> GitWorktree? {
+        guard stackActions(for: repo).operatesOnCheckedOutStack else {
+            return viewModel.mainWorktree(for: repo)
+        }
+        return anchoring
     }
 }
 
@@ -543,6 +599,7 @@ extension WorktreeSidebarView {
             .compactMap { viewModel.worktree(forBranch: $0.name, repo: repo) }.first
         let tip = group.branches.last
         let isMutating = stackService.isMutating(repo: repo.path)
+        let actions = stackActions(for: repo)
 
         if let tip {
             stackGroupLaunchMenuItems(tip: tip, anchoring: anchoring, repo: repo, rootName: group.rootName)
@@ -591,42 +648,69 @@ extension WorktreeSidebarView {
         }
 
         Divider()
-        Button {
-            if let main = viewModel.mainWorktree(for: repo), let root = group.branches.first {
-                Task { await restackStack(worktree: main, repo: repo, from: root) }
+        // Where a group-level mutation runs, and how it names its target, both depend on
+        // the provider. `stackOperationWorktree` prefers the anchoring worktree for a
+        // provider that pivots on HEAD; `.stack` is the scope such a provider understands,
+        // since it cannot be handed a branch name (see `StackActionAvailability`).
+        let operationWorktree = stackOperationWorktree(anchoring: anchoring, repo: repo)
+        if actions.canRestack, let target = operationWorktree {
+            Button {
+                let root = actions.canRestackNamedBranch ? group.branches.first : nil
+                Task { await restackStack(worktree: target, repo: repo, from: root) }
+            } label: {
+                Label(Strings.Stacks.restackStack, systemImage: "arrow.triangle.2.circlepath")
             }
-        } label: {
-            Label(Strings.Stacks.restackStack, systemImage: "arrow.triangle.2.circlepath")
+            .disabled(isMutating)
         }
-        .disabled(isMutating)
 
-        Button {
-            if let main = viewModel.mainWorktree(for: repo), let root = group.branches.first {
+        if actions.canSubmit, let target = operationWorktree {
+            Button {
+                let scope: StackScope =
+                    actions.canSubmitNamedBranch && group.branches.first != nil
+                    ? .upstack(from: group.branches.first?.name) : .stack
                 submitStackContext = SubmitStackContext(
-                    repo: repo, worktree: main, branches: group.branches,
-                    scope: .upstack(from: root.name))
+                    repo: repo, worktree: target, branches: group.branches, scope: scope)
+            } label: {
+                Label(Strings.Stacks.submitStack, systemImage: "paperplane")
             }
-        } label: {
-            Label(Strings.Stacks.submitStack, systemImage: "paperplane")
+            .disabled(isMutating)
         }
-        .disabled(isMutating)
 
-        Button {
-            if let main = viewModel.mainWorktree(for: repo) {
-                Task { await syncStackRepo(worktree: main, repo: repo) }
+        if actions.canSync, let target = operationWorktree {
+            Button {
+                requestSync(
+                    worktree: target, repo: repo, branches: group.branches.map(\.name))
+            } label: {
+                Label(Strings.Stacks.syncRepo, systemImage: "arrow.triangle.2.circlepath.circle")
             }
-        } label: {
-            Label(Strings.Stacks.syncRepo, systemImage: "arrow.triangle.2.circlepath.circle")
+            .disabled(isMutating)
         }
-        .disabled(isMutating)
 
-        Button(role: .destructive) {
-            pendingDestroyStack = (repo, group)
-            isShowingDestroyStackAlert = true
-        } label: {
-            Label(Strings.Stacks.destroyStack, systemImage: "trash")
+        // Gated on `.destroyStack` specifically, never on `.untrackStack`. The two look
+        // alike and are not: this one deletes every branch in the stack, and a provider
+        // that can only untrack must not be given a control labelled "Destroy".
+        if actions.canDestroyStack {
+            Button(role: .destructive) {
+                pendingDestroyStack = (repo, group)
+                isShowingDestroyStackAlert = true
+            } label: {
+                Label(Strings.Stacks.destroyStack, systemImage: "trash")
+            }
+            .disabled(isMutating)
         }
-        .disabled(isMutating)
+
+        // Its non-destructive counterpart, and never shown as a substitute for the one
+        // above: untracking leaves every branch exactly where it is. Requires an
+        // anchoring worktree because the command targets whatever is checked out.
+        if actions.canUntrackStack, let target = operationWorktree {
+            Button {
+                pendingUntrackStack = (repo, target, group)
+                isShowingUntrackStackAlert = true
+            } label: {
+                Label(Strings.Stacks.untrackStack, systemImage: "minus.circle")
+            }
+            .disabled(isMutating)
+        }
 
         if !harnessRepository.harnesses.isEmpty {
             Divider()
@@ -813,6 +897,34 @@ extension WorktreeSidebarView {
         }
     }
 
+    /// Runs the confirmed "Untrack Stack" mutation.
+    ///
+    /// No branch is deleted and no worktree is touched, so unlike Destroy there is
+    /// nothing to report beyond "it happened" — the toast says so explicitly, because a
+    /// stack silently vanishing from the sidebar otherwise reads like data loss.
+    func untrackStack(worktree: GitWorktree, repo: ObservableRepository) async {
+        do {
+            try await viewModel.untrackStack(repo: repo, worktree: worktree)
+            showStackToast(Strings.Stacks.untrackStackDone)
+        } catch {
+            viewModel.operationError = error.localizedDescription
+        }
+    }
+
+    /// Start a sync, routing through the confirmation alert when the provider's sync
+    /// reaches the remote. `branches` names what would be force-pushed, so the alert can
+    /// list it rather than asking the user to trust a generic warning.
+    func requestSync(
+        worktree: GitWorktree, repo: ObservableRepository, branches: [String]
+    ) {
+        guard stackActions(for: repo).syncNeedsConfirmation else {
+            Task { await syncStackRepo(worktree: worktree, repo: repo) }
+            return
+        }
+        pendingSyncStack = (repo, worktree, branches)
+        isShowingSyncConfirmAlert = true
+    }
+
     /// Context-menu items for stack operations on a worktree. Empty when no provider
     /// is available or the repo isn't stack-initialized. Mutating actions are disabled
     /// while a stack mutation is already in flight for the repo — the queue serializes
@@ -821,6 +933,7 @@ extension WorktreeSidebarView {
     func stackContextMenuItems(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
         if stackService.isAvailable && stackService.isStacked(repo: repo.path) {
             let isMutating = stackService.isMutating(repo: repo.path)
+            let actions = stackActions(for: repo)
             Divider()
 
             Button {
@@ -831,28 +944,51 @@ extension WorktreeSidebarView {
             .disabled(isMutating)
 
             if let branch = worktree.branch, viewModel.stacks[repo.id]?.isStacked(branch) == true {
-                Button {
-                    Task { await restackStack(worktree: worktree, repo: repo) }
-                } label: {
-                    Label(Strings.Stacks.restackStack, systemImage: "arrow.triangle.2.circlepath")
+                if actions.canRestack {
+                    Button {
+                        Task { await restackStack(worktree: worktree, repo: repo) }
+                    } label: {
+                        Label(Strings.Stacks.restackStack, systemImage: "arrow.triangle.2.circlepath")
+                    }
+                    .disabled(isMutating)
                 }
-                .disabled(isMutating)
+                if actions.canSubmit {
+                    Button {
+                        let chain = viewModel.stacks[repo.id].map { $0.chain(containing: branch) } ?? []
+                        submitStackContext = SubmitStackContext(
+                            repo: repo, worktree: worktree, branches: chain, scope: .stack)
+                    } label: {
+                        Label(Strings.Stacks.submitStack, systemImage: "paperplane")
+                    }
+                    .disabled(isMutating)
+                }
+            }
+
+            if actions.canSync {
                 Button {
-                    let chain = viewModel.stacks[repo.id].map { $0.chain(containing: branch) } ?? []
-                    submitStackContext = SubmitStackContext(
-                        repo: repo, worktree: worktree, branches: chain, scope: .stack)
+                    let chain =
+                        worktree.branch
+                        .flatMap { viewModel.stacks[repo.id]?.chain(containing: $0) } ?? []
+                    requestSync(worktree: worktree, repo: repo, branches: chain.map(\.name))
                 } label: {
-                    Label(Strings.Stacks.submitStack, systemImage: "paperplane")
+                    Label(Strings.Stacks.syncRepo, systemImage: "arrow.triangle.2.circlepath.circle")
                 }
                 .disabled(isMutating)
             }
 
-            Button {
-                Task { await syncStackRepo(worktree: worktree, repo: repo) }
-            } label: {
-                Label(Strings.Stacks.syncRepo, systemImage: "arrow.triangle.2.circlepath.circle")
+            if actions.canUntrackStack, let branch = worktree.branch,
+                let group = viewModel.stackGroups(for: repo).first(where: { group in
+                    group.branches.contains { $0.name == branch }
+                })
+            {
+                Button {
+                    pendingUntrackStack = (repo, worktree, group)
+                    isShowingUntrackStackAlert = true
+                } label: {
+                    Label(Strings.Stacks.untrackStack, systemImage: "minus.circle")
+                }
+                .disabled(isMutating)
             }
-            .disabled(isMutating)
         }
     }
 
@@ -898,6 +1034,7 @@ extension WorktreeSidebarView {
             StackConflictBanner(
                 conflict: conflict,
                 isWorking: stackConflictWorking,
+                canResume: stackActions(for: repo).canResumeConflict,
                 onContinue: {
                     Task { await resumeStackConflict(repo: repo, worktree: conflict.worktree) }
                 },

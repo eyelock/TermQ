@@ -3,7 +3,7 @@
 In this tutorial you'll break a large piece of work into a stack of small, dependent branches — each with its own pull request — and manage the whole stack from the TermQ sidebar: adding branches, switching between them, restacking after changes, submitting PRs, and syncing after merges.
 
 **Time:** about 20 minutes
-**Requires:** TermQ 0.12 or later, [git-spice](https://abhinav.github.io/git-spice/) installed, `gh` CLI authenticated, a GitHub repository registered in the sidebar
+**Requires:** TermQ 0.12 or later, a stacking backend installed ([git-spice](https://abhinav.github.io/git-spice/) or GitHub's [`gh stack`](https://github.com/github/gh-stack) extension), `gh` CLI authenticated, a GitHub repository registered in the sidebar
 
 ---
 
@@ -19,17 +19,26 @@ The one conceptual trap worth internalising up front: **uncommitted changes trav
 
 ## Prerequisites
 
-Stacking is powered by [git-spice](https://abhinav.github.io/git-spice/), a third-party CLI that TermQ detects but never bundles:
+Stacking needs a backend. TermQ supports two, detects both, and bundles neither:
 
 ```
-brew install git-spice
+brew install git-spice              # git-spice
+gh extension install github/gh-stack   # GitHub's native stacked PRs
 ```
 
-Check **Settings → Tools** — the **git-spice** card shows Installed/Missing status, the detected version and path, and a **Check Again** button after you install. git-spice reuses the `gh` CLI's authentication, so if Remote PRs already work, no extra sign-in is needed.
+Check **Settings → Tools → Stacked Pull Requests** — each backend gets its own card showing Installed/Missing status, the detected version and path, and a shared **Check Again** button after you install. Both reuse the `gh` CLI's authentication, so if Remote PRs already work, no extra sign-in is needed.
 
-![git-spice status in Settings → Tools](../Images/stacked-prs-settings-tools.png)
+![Stacking backend status in Settings → Tools](../Images/stacked-prs-settings-tools.png)
 
-Then enable stacking per repository: right-click the repo row in the sidebar and choose **Enable Stacking…**. TermQ runs `gs repo init` against the repo's default branch. Repos without stacking enabled are completely unaffected — the sidebar looks exactly as before.
+### Which backend drives a repository
+
+You can have both installed at once. **TermQ decides per repository, from the evidence on disk** — a repo initialized with git-spice is driven by git-spice, one initialized with `gh stack` is driven by that, and neither can take a repo away from the other.
+
+The **Preferred backend** setting is only a tie-breaker for repos *neither* tool has claimed yet — that is, when you enable stacking on a fresh repo. Leave it on **Automatic** unless you have both installed and want new repos to go a particular way.
+
+Then enable stacking per repository: right-click the repo row in the sidebar and choose **Enable Stacking…**. Repos without stacking enabled are completely unaffected — the sidebar looks exactly as before.
+
+> **A note if you use `gh stack`:** it starts a stack from the branch you have checked out, so check out (or create) the branch you want to stack before enabling. git-spice has no such requirement — it records a trunk and lets you add branches later.
 
 ![Enable Stacking… in the repository context menu](../Images/stacked-prs-enable-stacking-menu.png)
 
@@ -66,13 +75,17 @@ All of these live in the worktree row's context menu (right-click):
 
 **Add Branch to Stack…** — creates a new branch stacked on top of the current one (or a target you pick) via `gs branch create`. Anything you have *staged* becomes the new branch's first commit; with a clean tree it creates an empty branch ready for work. If you type the name of a branch that already exists, the sheet switches to *tracking* it onto the stack instead.
 
-**Restack Stack** — rebases every branch in the stack onto its updated parent (`gs stack restack`). Use it after amending or adding commits to a branch lower in the stack, so the branches above incorporate the change. When nothing has diverged, restack is a **no-op** — TermQ tells you "Stack already up to date" rather than staying silent. Individual entries also offer **Restack from Here** for just a branch and everything above it.
+**Restack Stack** — rebases every branch in the stack onto its updated parent (`gs stack restack` / `gh stack rebase`). Use it after amending or adding commits to a branch lower in the stack, so the branches above incorporate the change. When nothing has diverged, restack is a **no-op** — TermQ tells you "Stack already up to date" rather than staying silent. Individual entries also offer **Restack from Here** for just a branch and everything above it — *git-spice only*, because `gh stack rebase` always starts from the checked-out branch and cannot be pointed at another one.
 
-**Submit Stack** — opens a confirmation sheet listing exactly what will happen per branch: **create** a new PR or **update** the existing one. A Draft toggle opens new PRs as drafts; *update only* skips creating PRs for branches that don't have one yet. Submits are idempotent — running it again is safe. Entries offer **Submit This Branch…** for a single PR.
+**Submit Stack** — opens a confirmation sheet listing exactly what will happen per branch: **create** a new PR or **update** the existing one. A Draft toggle opens new PRs as drafts; *update only* skips creating PRs for branches that don't have one yet. Submits are idempotent — running it again is safe. Entries offer **Submit This Branch…** for a single PR — *git-spice only*; `gh stack submit` has no way to target part of a stack, and *update only* has no equivalent there either.
 
 ![Submit Stack confirmation sheet](../Images/stacked-prs-submit-confirmation.png)
 
-**Sync Repo** — the stack-aware refresh (`gs repo sync`): pulls trunk, deletes local branches whose PRs merged, and retargets/restacks the branches above a merged one. Run it after a downstack PR merges. TermQ lists any branches the sync removed ("Sync removed 2 merged branches: …") — and says "Everything in sync" when there was nothing to do. The repo row's ⟳ refresh button also uses sync automatically for stacked repos.
+**Sync Repo** — the stack-aware refresh: pulls trunk, deletes local branches whose PRs merged, and retargets/restacks the branches above a merged one. Run it after a downstack PR merges. TermQ lists any branches the sync removed ("Sync removed 2 merged branches: …") — and says "Everything in sync" when there was nothing to do. The repo row's ⟳ refresh button also uses sync automatically for stacked repos.
+
+> **Sync is not the same operation on both backends.** `gs repo sync` is local only. `gh stack sync` **force-pushes every branch in the stack** and rewrites the stack on GitHub — so on a `gh stack` repo, TermQ asks you to confirm first and lists exactly which branches will be pushed.
+
+**Untrack Stack** *(`gh stack` only)* — drops a stack from local tracking and **leaves every branch in place**. Use it when you want to stop managing a chain as a stack without losing any work. It is not the same as **Destroy Stack** *(git-spice only)*, which **deletes every branch** in the chain — the two are deliberately never offered under the same label.
 
 While any of these runs, the repo row shows a spinner and the stack actions are disabled — mutations queue one at a time per repository.
 
@@ -100,6 +113,8 @@ Sometimes you genuinely need two branches of the same stack open at once — a h
 
 One thing changes behind the scenes: git cannot rebase a branch that's checked out in another worktree, so git-spice quietly *skips* such branches during restack and sync — which would leave them stale. TermQ orchestrates around this: after a restack or sync, it finds skipped branches and runs a follow-up restack *inside* each owning worktree, provided that worktree is clean and has no open terminal (the same guards as switching). If a broken-out worktree is dirty or in use, TermQ leaves it alone and tells you — "Not restacked: feat/ui (checked out in … with uncommitted changes)" — and the orange ⟳ badge stays on that entry until you deal with it.
 
+This orchestration is git-spice-only, and it isn't a gap on the GitHub side: `gh stack` keeps its tracking state *inside each worktree's git directory*, so every worktree carries its own independent stack and there is no cross-worktree staleness to sweep up.
+
 ---
 
 ## When a restack hits conflicts
@@ -108,14 +123,16 @@ A restack or sync can stop on a merge conflict, exactly like a manual rebase. Te
 
 ![Restack-paused conflict banner on a worktree row](../Images/stacked-prs-conflict-banner.png)
 
-This is where TermQ's home advantage kicks in: the conflicted worktree's terminal is one click away. Open it, resolve the conflicts, `git add` the files, then click **Continue** (`gs rebase continue`). If you'd rather back out entirely, **Abort** (`gs rebase abort`) restores the pre-restack state. If the follow-up restack of a broken-out worktree is what conflicted, the banner appears on *that* worktree's row.
+This is where TermQ's home advantage kicks in: the conflicted worktree's terminal is one click away. Open it, resolve the conflicts, `git add` the files, then click **Continue** (`gs rebase continue` / `gh stack rebase --continue`). If you'd rather back out entirely, **Abort** restores the pre-restack state. If the follow-up restack of a broken-out worktree is what conflicted, the banner appears on *that* worktree's row.
 
 ---
 
 ## What you learned
 
 - A stack is a chain of dependent branches with one PR each; in TermQ a stack lives in **one worktree** and entries share its terminals
-- git-spice powers stacking — `brew install git-spice`, check **Settings → Tools**, then **Enable Stacking…** per repo
+- Two backends power stacking — git-spice or GitHub's `gh stack` extension. Install either, check **Settings → Tools → Stacked Pull Requests**, then **Enable Stacking…** per repo
+- **Which backend drives a repo is decided by the evidence on disk**, not by a setting; **Preferred backend** only breaks ties for repos neither tool has claimed
+- Menu items follow what the backend can actually do — **Restack from Here**, **Submit This Branch…**, and **Destroy Stack** are git-spice-only; **Untrack Stack** is `gh stack`-only; and a `gh stack` **Sync** confirms first because it force-pushes
 - The worktree row expands into the stack chain with PR, restack, and push badges; the **STACKS** section is the repo-wide inventory
 - **Add Branch to Stack**, **Restack Stack**, **Submit Stack**, and **Sync Repo** cover the daily loop — every operation confirms what it did, including "already up to date" no-ops
 - Switching entries is double-click or context menu, and it's **guarded**: dirty worktrees, in-use terminals, and branches owned by other worktrees are refused — because uncommitted changes travel with the worktree, not the branch

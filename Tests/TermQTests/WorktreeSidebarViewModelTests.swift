@@ -1524,11 +1524,13 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
     /// Stack develop ← feat/base ← feat/broken-out, where feat/broken-out is checked
     /// out in its own (broken-out) worktree and still needs a restack — the shape gs
     /// silently skips.
-    private func makeOrchestrationVM() async -> (
+    private func makeOrchestrationVM(
+        capabilities: StackCapabilities = [.restack, .submit, .sync, .scopedRestack, .scopedSubmit]
+    ) async -> (
         vm: WorktreeSidebarViewModel, fake: FakeStackProvider, repo: ObservableRepository,
         ownerPath: String
     ) {
-        let fake = FakeStackProvider()
+        let fake = FakeStackProvider(capabilities: capabilities)
         let graph = StackGraph(
             branches: [
                 makeBranch("develop", children: ["feat/base"], isCurrent: true),
@@ -1567,6 +1569,22 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         XCTAssertTrue(
             log.contains("restack:branch(\"feat/broken-out\"):in=\(ownerPath)"),
             "expected a single-branch follow-up restack in the owning worktree, got \(log)")
+    }
+
+    func testOrchestration_providerWithoutScopedRestack_doesNotSweep() async {
+        // The sweep restacks branches BY NAME from a worktree it does not own. A provider
+        // that always pivots on its own checked-out branch would rebase the wrong range,
+        // so it opts out wholesale — and reports nothing skipped, because with
+        // per-worktree state each worktree's stack is independent and there is no
+        // cross-worktree staleness to sweep in the first place.
+        let (vm, fake, repo, _) = await makeOrchestrationVM(
+            capabilities: [.restack, .submit, .sync])
+
+        let skipped = await vm.orchestrateCrossWorktreeRestacks(for: repo)
+
+        XCTAssertTrue(skipped.isEmpty, "an opted-out provider reports no skips, not fake ones")
+        let log = await fake.mutationLog
+        XCTAssertTrue(log.isEmpty, "no restack may be attempted, got \(log)")
     }
 
     func testOrchestration_dirtyOwningWorktree_skippedWithReason() async {

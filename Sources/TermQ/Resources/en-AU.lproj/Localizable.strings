@@ -1341,16 +1341,15 @@
 "settings.github.feed.cap.label" = "PRs per repository";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Powers stacked branches and stacked PRs in the sidebar.";
-"settings.gitspice.version" = "Version:";
-"settings.gitspice.path" = "Path:";
+"settings.stacking.version" = "Version:";
+"settings.stacking.path" = "Path:";
 "settings.gitspice.info" = "Stacked-branch features in the sidebar depend on a working git-spice installation. It reuses the gh CLI's authentication.";
 "settings.gitspice.not.installed.description" = "git-spice enables stacked branches and stacked PRs. Without it, TermQ shows only plain worktrees.";
 "settings.gitspice.install.hint" = "Install using Homebrew:";
-"settings.gitspice.check.again" = "Check Again";
-"settings.gitspice.status.unusable %@" = "Detected but unusable: %@";
+"settings.stacking.check.again" = "Check Again";
+"settings.stacking.status.unusable %@" = "Detected but unusable: %@";
 "stacks.enable" = "Enable Stacking…";
 "stacks.enable.help" = "Track this repository's branches as a stack with git-spice";
 "stacks.enable.failed %@" = "Couldn't enable stacking: %@";
@@ -1443,7 +1442,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "This branch is created stacked on top of the integration branch, not on the base branch directly.";
 "stacks.new.stack.integration.note" = "Creates an empty integration branch off the base as the stack's root — it never carries code of its own. Stacked branches build on top of it instead of the base, and their pull requests chain into it. Once everything's merged into the integration branch, it's PR'd into the base as one consolidated change — instead of each stacked branch merging into the base individually.";
 "stacks.new.stack.name.exists %@" = "%@ already exists — choose another name.";
-"settings.gitspice.new.stack.mode" = "New Stack starts as:";
-"settings.gitspice.new.stack.mode.help" = "Which mode the New Stack sheet pre-selects — the sheet always offers both.";
-"settings.gitspice.hide.stacked.worktrees" = "Hide stacked worktrees from WORKTREES section";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees whose branch belongs to a tracked stack are already listed under STACKS — hide them from the WORKTREES section to avoid the duplicate listing.";
+"settings.stacking.new.stack.mode" = "New Stack starts as:";
+"settings.stacking.new.stack.mode.help" = "Which mode the New Stack sheet pre-selects — the sheet always offers both.";
+"settings.stacking.hide.stacked.worktrees" = "Hide stacked worktrees from WORKTREES section";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktrees whose branch belongs to a tracked stack are already listed under STACKS — hide them from the WORKTREES section to avoid the duplicate listing.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Stacked Pull Requests";
+"settings.stacking.preferred" = "Preferred backend:";
+"settings.stacking.preferred.help" = "Only used for repositories neither backend has claimed yet. A repository already tracked by one tool always stays with it.";
+"settings.stacking.preferred.automatic" = "Automatic";
+"settings.ghstack.title" = "GitHub Stacked PRs";
+"settings.ghstack.description" = "GitHub's native stacked pull requests, via the gh CLI.";
+"settings.ghstack.info" = "Stacks are tracked separately in each worktree. Uses the gh CLI's authentication.";
+"settings.ghstack.not.installed.description" = "The gh stack extension enables stacked branches and stacked PRs using GitHub's own stacks.";
+"settings.ghstack.install.hint" = "Install the gh CLI extension:";
+"settings.ghstack.needs.gh.cli" = "Install and authenticate the gh CLI first — this extension builds on it.";
+"stacks.untrack.stack" = "Untrack Stack";
+"stacks.untrack.stack.title" = "Untrack Stack?";
+"stacks.untrack.stack.message %ld %@" = "TermQ will stop tracking these %ld branches as a stack: %@\n\nNo branch is deleted and no work is lost.";
+"stacks.untrack.stack.confirm" = "Untrack";
+"stacks.untrack.stack.done" = "Stack untracked. Every branch was left in place.";
+"stacks.sync.confirm.title" = "Sync and Force-Push?";
+"stacks.sync.confirm.message %ld %@" = "Syncing force-pushes %ld branches and updates the stack on GitHub: %@\n\nAnyone else working on these branches will need to reset.";
+"stacks.sync.confirm.button" = "Sync and Push";

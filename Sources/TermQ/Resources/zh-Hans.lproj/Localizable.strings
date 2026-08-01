@@ -1345,16 +1345,15 @@
 "settings.github.feed.cap.label" = "每个仓库的 PR 数";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "为侧边栏中的堆叠分支和堆叠 PR 提供支持。";
-"settings.gitspice.version" = "版本：";
-"settings.gitspice.path" = "路径：";
+"settings.stacking.version" = "版本：";
+"settings.stacking.path" = "路径：";
 "settings.gitspice.info" = "侧边栏中的堆叠分支功能依赖于正常工作的 git-spice 安装。它复用 gh CLI 的身份验证。";
 "settings.gitspice.not.installed.description" = "git-spice 支持堆叠分支和堆叠 PR。没有它，TermQ 只会显示普通工作树。";
 "settings.gitspice.install.hint" = "使用 Homebrew 安装：";
-"settings.gitspice.check.again" = "再次检查";
-"settings.gitspice.status.unusable %@" = "已检测到但不可用：%@";
+"settings.stacking.check.again" = "再次检查";
+"settings.stacking.status.unusable %@" = "已检测到但不可用：%@";
 "stacks.enable" = "启用堆叠…";
 "stacks.enable.help" = "使用 git-spice 将此仓库的分支作为堆栈进行跟踪";
 "stacks.enable.failed %@" = "无法启用堆叠：%@";
@@ -1447,7 +1446,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "此分支将创建在集成分支之上并加入堆栈，而不是直接创建在基础分支之上。";
 "stacks.new.stack.integration.note" = "从基础分支创建一个空的集成分支作为堆栈的根 — 它本身永远不携带代码。堆栈分支基于它而非基础分支进行构建，其拉取请求会依次链接到它。一旦所有内容都合并到集成分支，它将作为一个整合后的更改统一提交拉取请求到基础分支 — 而不是每个堆栈分支单独合并到基础分支。";
 "stacks.new.stack.name.exists %@" = "%@ 已存在 — 请选择其他名称。";
-"settings.gitspice.new.stack.mode" = "新建堆栈的起始模式：";
-"settings.gitspice.new.stack.mode.help" = "「新建堆栈」表单预先选择的模式 — 该表单始终同时提供两种模式。";
-"settings.gitspice.hide.stacked.worktrees" = "在工作树部分隐藏已加入堆栈的工作树";
-"settings.gitspice.hide.stacked.worktrees.help" = "分支属于受跟踪堆栈的工作树已在堆栈部分列出 — 请在工作树部分将其隐藏，以避免重复显示。";
+"settings.stacking.new.stack.mode" = "新建堆栈的起始模式：";
+"settings.stacking.new.stack.mode.help" = "「新建堆栈」表单预先选择的模式 — 该表单始终同时提供两种模式。";
+"settings.stacking.hide.stacked.worktrees" = "在工作树部分隐藏已加入堆栈的工作树";
+"settings.stacking.hide.stacked.worktrees.help" = "分支属于受跟踪堆栈的工作树已在堆栈部分列出 — 请在工作树部分将其隐藏，以避免重复显示。";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "堆叠拉取请求";
+"settings.stacking.preferred" = "首选后端：";
+"settings.stacking.preferred.help" = "仅用于两种后端都尚未接管的仓库。已由某个工具跟踪的仓库始终归它管理。";
+"settings.stacking.preferred.automatic" = "自动";
+"settings.ghstack.title" = "GitHub 堆叠 PR";
+"settings.ghstack.description" = "GitHub 原生的堆叠拉取请求，通过 gh CLI 使用。";
+"settings.ghstack.info" = "每个工作树单独跟踪自己的堆叠。使用 gh CLI 的身份验证。";
+"settings.ghstack.not.installed.description" = "gh stack 扩展基于 GitHub 自有的堆叠功能，提供堆叠分支和堆叠 PR。";
+"settings.ghstack.install.hint" = "安装 gh CLI 扩展：";
+"settings.ghstack.needs.gh.cli" = "请先安装并登录 gh CLI，此扩展基于它运行。";
+"stacks.untrack.stack" = "取消跟踪堆叠";
+"stacks.untrack.stack.title" = "取消跟踪堆叠？";
+"stacks.untrack.stack.message %ld %@" = "TermQ 将不再把这 %ld 个分支作为堆叠跟踪：%@\n\n不会删除任何分支，也不会丢失任何工作。";
+"stacks.untrack.stack.confirm" = "取消跟踪";
+"stacks.untrack.stack.done" = "已取消跟踪堆叠。所有分支均保持原样。";
+"stacks.sync.confirm.title" = "同步并强制推送？";
+"stacks.sync.confirm.message %ld %@" = "同步会强制推送 %ld 个分支，并更新 GitHub 上的堆叠：%@\n\n其他正在这些分支上工作的人需要重置。";
+"stacks.sync.confirm.button" = "同步并推送";

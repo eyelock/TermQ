@@ -87,6 +87,23 @@ extension Strings {
             localized("stacks.destroy.stack.worktree.skipped %@", paths)
         }
 
+        // Untrack — the non-destructive counterpart to Destroy. Deliberately worded so
+        // the two can never be confused: this one leaves every branch in place.
+        static var untrackStack: String { localized("stacks.untrack.stack") }
+        static var untrackStackTitle: String { localized("stacks.untrack.stack.title") }
+        static func untrackStackMessage(_ count: Int, _ names: String) -> String {
+            localized("stacks.untrack.stack.message %ld %@", count, names)
+        }
+        static var untrackStackConfirm: String { localized("stacks.untrack.stack.confirm") }
+        static var untrackStackDone: String { localized("stacks.untrack.stack.done") }
+
+        // Sync confirmation — shown only for a provider whose sync reaches the remote.
+        static var syncConfirmTitle: String { localized("stacks.sync.confirm.title") }
+        static func syncConfirmMessage(_ count: Int, _ names: String) -> String {
+            localized("stacks.sync.confirm.message %ld %@", count, names)
+        }
+        static var syncConfirmButton: String { localized("stacks.sync.confirm.button") }
+
         // PR targeting
         static func baseMismatch(_ prBase: String, _ parent: String) -> String {
             localized("stacks.base.mismatch %@ %@", prBase, parent)

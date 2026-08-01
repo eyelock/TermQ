@@ -1348,16 +1348,15 @@
 "settings.github.feed.cap.label" = "PRs per depot";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Driver stablede grener og stablede PR-er i sidepanelet.";
-"settings.gitspice.version" = "Versjon:";
-"settings.gitspice.path" = "Sti:";
+"settings.stacking.version" = "Versjon:";
+"settings.stacking.path" = "Sti:";
 "settings.gitspice.info" = "Stablede-grener-funksjoner i sidepanelet krever en fungerende git-spice-installasjon. Den gjenbruker autentiseringen til gh CLI-en.";
 "settings.gitspice.not.installed.description" = "git-spice muliggjør stablede grener og stablede PR-er. Uten det viser TermQ bare vanlige worktrees.";
 "settings.gitspice.install.hint" = "Installer med Homebrew:";
-"settings.gitspice.check.again" = "Sjekk igjen";
-"settings.gitspice.status.unusable %@" = "Oppdaget, men ubrukelig: %@";
+"settings.stacking.check.again" = "Sjekk igjen";
+"settings.stacking.status.unusable %@" = "Oppdaget, men ubrukelig: %@";
 "stacks.enable" = "Aktiver stabling…";
 "stacks.enable.help" = "Spor grenene i dette repoet som en Stack med git-spice";
 "stacks.enable.failed %@" = "Kunne ikke aktivere stabling: %@";
@@ -1450,7 +1449,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Denne grenen opprettes stablet oppå integrasjonsgrenen, ikke direkte oppå basisgrenen.";
 "stacks.new.stack.integration.note" = "Oppretter en tom integrasjonsgren fra basen som stackens rot — den inneholder aldri egen kode. Stack-grener bygges oppå den i stedet for basen, og deres pull requests kjedes inn i den. Når alt er slått sammen i integrasjonsgrenen, sendes den som én samlet pull request til basen — i stedet for at hver stack-gren slås sammen enkeltvis i basen.";
 "stacks.new.stack.name.exists %@" = "%@ finnes allerede — velg et annet navn.";
-"settings.gitspice.new.stack.mode" = "Ny Stack starter som:";
-"settings.gitspice.new.stack.mode.help" = "Hvilken modus arket Ny Stack forhåndsvelger — arket tilbyr alltid begge.";
-"settings.gitspice.hide.stacked.worktrees" = "Skjul stablede worktrees fra Worktrees-seksjonen";
-"settings.gitspice.hide.stacked.worktrees.help" = "Worktrees hvis gren tilhører en sporet stack, vises allerede under Stacks — skjul dem fra Worktrees-seksjonen for å unngå dobbel oppføring.";
+"settings.stacking.new.stack.mode" = "Ny Stack starter som:";
+"settings.stacking.new.stack.mode.help" = "Hvilken modus arket Ny Stack forhåndsvelger — arket tilbyr alltid begge.";
+"settings.stacking.hide.stacked.worktrees" = "Skjul stablede worktrees fra Worktrees-seksjonen";
+"settings.stacking.hide.stacked.worktrees.help" = "Worktrees hvis gren tilhører en sporet stack, vises allerede under Stacks — skjul dem fra Worktrees-seksjonen for å unngå dobbel oppføring.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Stablede pull requests";
+"settings.stacking.preferred" = "Foretrukket backend:";
+"settings.stacking.preferred.help" = "Brukes bare for repositorier ingen backend ennå har tatt hånd om. Et repositorium som allerede håndteres av ett verktøy, blir alltid hos det.";
+"settings.stacking.preferred.automatic" = "Automatisk";
+"settings.ghstack.title" = "GitHub stablede PR-er";
+"settings.ghstack.description" = "GitHubs innebygde stablede pull requests, via gh-CLI-en.";
+"settings.ghstack.info" = "Stabler spores separat i hver worktree. Bruker gh-CLI-ens autentisering.";
+"settings.ghstack.not.installed.description" = "Utvidelsen gh stack gir stablede grener og PR-er via GitHubs egne stabler.";
+"settings.ghstack.install.hint" = "Installer gh-CLI-utvidelsen:";
+"settings.ghstack.needs.gh.cli" = "Installer og autentiser gh-CLI-en først – denne utvidelsen bygger på den.";
+"stacks.untrack.stack" = "Slutt å spore stabelen";
+"stacks.untrack.stack.title" = "Slutte å spore stabelen?";
+"stacks.untrack.stack.message %ld %@" = "TermQ slutter å spore disse %ld grenene som en stabel: %@\n\nIngen gren slettes, og ikke noe arbeid går tapt.";
+"stacks.untrack.stack.confirm" = "Slutt å spore";
+"stacks.untrack.stack.done" = "Stabelen spores ikke lenger. Alle grener er beholdt.";
+"stacks.sync.confirm.title" = "Synkronisere og tvinge push?";
+"stacks.sync.confirm.message %ld %@" = "Synkronisering tvinger push av %ld grener og oppdaterer stabelen på GitHub: %@\n\nAlle andre som jobber på grenene, må tilbakestille.";
+"stacks.sync.confirm.button" = "Synkroniser og push";

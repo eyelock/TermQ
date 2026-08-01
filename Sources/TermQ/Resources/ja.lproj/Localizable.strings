@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "リポジトリごとのPR数";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "サイドバーでのスタックされたブランチとスタックされた PR を実現します。";
-"settings.gitspice.version" = "バージョン:";
-"settings.gitspice.path" = "パス:";
+"settings.stacking.version" = "バージョン:";
+"settings.stacking.path" = "パス:";
 "settings.gitspice.info" = "サイドバーのスタックされたブランチ機能は、正常に動作する git-spice のインストールに依存します。gh CLI の認証を再利用します。";
 "settings.gitspice.not.installed.description" = "git-spice はスタックされたブランチとスタックされた PR を実現します。インストールされていない場合、TermQ は通常のワークツリーのみを表示します。";
 "settings.gitspice.install.hint" = "Homebrew でインストール:";
-"settings.gitspice.check.again" = "再確認";
-"settings.gitspice.status.unusable %@" = "検出されましたが使用できません: %@";
+"settings.stacking.check.again" = "再確認";
+"settings.stacking.status.unusable %@" = "検出されましたが使用できません: %@";
 "stacks.enable" = "スタックを有効化…";
 "stacks.enable.help" = "git-spice でこのリポジトリのブランチをスタックとして追跡する";
 "stacks.enable.failed %@" = "スタックを有効化できませんでした: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "このブランチはベースブランチの直接上ではなく、統合ブランチの上にスタックされて作成されます。";
 "stacks.new.stack.integration.note" = "ベースから空の統合ブランチをスタックのルートとして作成します — 統合ブランチ自体がコードを持つことはありません。スタックブランチはベースの代わりにこの統合ブランチの上に構築され、そのプルリクエストはここに連鎖します。すべてが統合ブランチにマージされると、統合ブランチはひとつのまとまった変更としてベースへプルリクエストされます — 各スタックブランチが個別にベースへマージされる代わりに。";
 "stacks.new.stack.name.exists %@" = "%@はすでに存在します — 別の名前を選んでください。";
-"settings.gitspice.new.stack.mode" = "新しいスタックの開始モード:";
-"settings.gitspice.new.stack.mode.help" = "「新しいスタック」シートが事前に選択するモード — シートは常に両方を提供します。";
-"settings.gitspice.hide.stacked.worktrees" = "スタックされたワークツリーをワークツリーセクションから非表示にする";
-"settings.gitspice.hide.stacked.worktrees.help" = "ブランチが追跡中のスタックに属するワークツリーは、すでにスタックの下に表示されています — 重複を避けるため、ワークツリーセクションから非表示にします。";
+"settings.stacking.new.stack.mode" = "新しいスタックの開始モード:";
+"settings.stacking.new.stack.mode.help" = "「新しいスタック」シートが事前に選択するモード — シートは常に両方を提供します。";
+"settings.stacking.hide.stacked.worktrees" = "スタックされたワークツリーをワークツリーセクションから非表示にする";
+"settings.stacking.hide.stacked.worktrees.help" = "ブランチが追跡中のスタックに属するワークツリーは、すでにスタックの下に表示されています — 重複を避けるため、ワークツリーセクションから非表示にします。";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "スタックされたプルリクエスト";
+"settings.stacking.preferred" = "優先するバックエンド:";
+"settings.stacking.preferred.help" = "どちらのバックエンドもまだ管理していないリポジトリにのみ使用されます。すでにいずれかのツールが管理しているリポジトリは、常にそのツールのままです。";
+"settings.stacking.preferred.automatic" = "自動";
+"settings.ghstack.title" = "GitHub スタック PR";
+"settings.ghstack.description" = "GitHub ネイティブのスタックされたプルリクエストを gh CLI 経由で利用します。";
+"settings.ghstack.info" = "スタックはワークツリーごとに個別に管理されます。gh CLI の認証を使用します。";
+"settings.ghstack.not.installed.description" = "gh stack 拡張機能は、GitHub 独自のスタックを使ってスタックされたブランチと PR を有効にします。";
+"settings.ghstack.install.hint" = "gh CLI 拡張機能をインストール:";
+"settings.ghstack.needs.gh.cli" = "先に gh CLI をインストールして認証してください。この拡張機能はその上で動作します。";
+"stacks.untrack.stack" = "スタックの追跡を解除";
+"stacks.untrack.stack.title" = "スタックの追跡を解除しますか？";
+"stacks.untrack.stack.message %ld %@" = "TermQ はこれら %ld 個のブランチをスタックとして追跡しなくなります: %@\n\nブランチは削除されず、作業内容も失われません。";
+"stacks.untrack.stack.confirm" = "追跡を解除";
+"stacks.untrack.stack.done" = "スタックの追跡を解除しました。すべてのブランチはそのまま残っています。";
+"stacks.sync.confirm.title" = "同期して強制プッシュしますか？";
+"stacks.sync.confirm.message %ld %@" = "同期すると %ld 個のブランチが強制プッシュされ、GitHub 上のスタックが更新されます: %@\n\nこれらのブランチで作業している他の人はリセットが必要になります。";
+"stacks.sync.confirm.button" = "同期してプッシュ";

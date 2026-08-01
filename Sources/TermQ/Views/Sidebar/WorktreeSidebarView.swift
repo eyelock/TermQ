@@ -63,6 +63,16 @@ struct WorktreeSidebarView: View {
     @State var newStackContext: NewStackContext?
     @State var pendingDestroyStack: (ObservableRepository, StackGroup)?
     @State var isShowingDestroyStackAlert = false
+    /// Stack to drop from tracking, with the worktree the command runs in. Separate
+    /// state from `pendingDestroyStack` on purpose — the two actions look alike and
+    /// have opposite blast radius, and sharing a slot invites confirming the wrong one.
+    @State var pendingUntrackStack: (ObservableRepository, GitWorktree, StackGroup)?
+    @State var isShowingUntrackStackAlert = false
+    /// Sync awaiting confirmation because the provider's sync force-pushes every branch
+    /// and rewrites the stack on the remote. Carries the branch names so the alert can
+    /// name exactly what gets pushed.
+    @State var pendingSyncStack: (ObservableRepository, GitWorktree, [String])?
+    @State var isShowingSyncConfirmAlert = false
     /// Worktree row to scroll into view — set by the Stacks section's jump indicator,
     /// consumed by the ScrollViewReader wrapping the repo list.
     @State var stackJumpTargetWorktreeID: String?
@@ -172,6 +182,38 @@ struct WorktreeSidebarView: View {
             Button(Strings.Sidebar.cancelButton, role: .cancel) { pendingDestroyStack = nil }
         } message: {
             if let (_, group) = pendingDestroyStack { Text(destroyStackAlertMessage(for: group)) }
+        }
+        .alert(Strings.Stacks.untrackStackTitle, isPresented: $isShowingUntrackStackAlert) {
+            // Not destructive: no branch is deleted, so this is a plain default button
+            // rather than the red one Destroy Stack gets.
+            Button(Strings.Stacks.untrackStackConfirm) {
+                if let (repo, worktree, _) = pendingUntrackStack {
+                    Task { await untrackStack(worktree: worktree, repo: repo) }
+                    pendingUntrackStack = nil
+                }
+            }
+            Button(Strings.Sidebar.cancelButton, role: .cancel) { pendingUntrackStack = nil }
+        } message: {
+            if let (_, _, group) = pendingUntrackStack {
+                Text(
+                    Strings.Stacks.untrackStackMessage(
+                        group.branches.count, group.branches.map(\.name).joined(separator: ", ")))
+            }
+        }
+        .alert(Strings.Stacks.syncConfirmTitle, isPresented: $isShowingSyncConfirmAlert) {
+            Button(Strings.Stacks.syncConfirmButton) {
+                if let (repo, worktree, _) = pendingSyncStack {
+                    Task { await syncStackRepo(worktree: worktree, repo: repo) }
+                    pendingSyncStack = nil
+                }
+            }
+            Button(Strings.Sidebar.cancelButton, role: .cancel) { pendingSyncStack = nil }
+        } message: {
+            if let (_, _, branches) = pendingSyncStack {
+                Text(
+                    Strings.Stacks.syncConfirmMessage(
+                        branches.count, branches.joined(separator: ", ")))
+            }
         }
         .alert(Strings.Sidebar.deleteBranchTitle, isPresented: $isShowingDeleteBranchAlert) {
             Button(Strings.Sidebar.deleteBranchConfirm, role: .destructive) {

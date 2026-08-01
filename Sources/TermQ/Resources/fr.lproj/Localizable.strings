@@ -1349,16 +1349,15 @@
 "settings.github.feed.cap.label" = "PRs par dépôt";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Alimente les branches empilées et les PR empilées dans la barre latérale.";
-"settings.gitspice.version" = "Version :";
-"settings.gitspice.path" = "Chemin :";
+"settings.stacking.version" = "Version :";
+"settings.stacking.path" = "Chemin :";
 "settings.gitspice.info" = "Les fonctionnalités de branches empilées dans la barre latérale dépendent d'une installation fonctionnelle de git-spice. Elle réutilise l'authentification du CLI gh.";
 "settings.gitspice.not.installed.description" = "git-spice permet les branches empilées et les PR empilées. Sans lui, TermQ n'affiche que de simples worktrees.";
 "settings.gitspice.install.hint" = "Installer avec Homebrew :";
-"settings.gitspice.check.again" = "Vérifier à nouveau";
-"settings.gitspice.status.unusable %@" = "Détecté mais inutilisable : %@";
+"settings.stacking.check.again" = "Vérifier à nouveau";
+"settings.stacking.status.unusable %@" = "Détecté mais inutilisable : %@";
 "stacks.enable" = "Activer l'empilement…";
 "stacks.enable.help" = "Suivre les branches de ce dépôt comme une pile avec git-spice";
 "stacks.enable.failed %@" = "Impossible d'activer l'empilement : %@";
@@ -1451,7 +1450,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Cette branche est créée empilée sur la branche d'intégration, et non directement sur la branche de base.";
 "stacks.new.stack.integration.note" = "Crée une branche d'intégration vide à partir de la base comme racine de la pile — elle ne porte jamais de code propre. Les branches empilées se construisent sur elle plutôt que sur la base, et leurs pull requests s'y enchaînent. Une fois que tout est fusionné dans la branche d'intégration, elle est proposée en pull request vers la base comme un seul changement consolidé — plutôt que chaque branche empilée soit fusionnée individuellement dans la base.";
 "stacks.new.stack.name.exists %@" = "%@ existe déjà — choisissez un autre nom.";
-"settings.gitspice.new.stack.mode" = "Nouvelle Pile démarre en tant que :";
-"settings.gitspice.new.stack.mode.help" = "Le mode que la feuille Nouvelle Pile présélectionne — la feuille propose toujours les deux.";
-"settings.gitspice.hide.stacked.worktrees" = "Masquer les worktrees empilés de la section Worktrees";
-"settings.gitspice.hide.stacked.worktrees.help" = "Les worktrees dont la branche appartient à une pile suivie sont déjà listés dans Piles — masquez-les de la section Worktrees pour éviter le doublon.";
+"settings.stacking.new.stack.mode" = "Nouvelle Pile démarre en tant que :";
+"settings.stacking.new.stack.mode.help" = "Le mode que la feuille Nouvelle Pile présélectionne — la feuille propose toujours les deux.";
+"settings.stacking.hide.stacked.worktrees" = "Masquer les worktrees empilés de la section Worktrees";
+"settings.stacking.hide.stacked.worktrees.help" = "Les worktrees dont la branche appartient à une pile suivie sont déjà listés dans Piles — masquez-les de la section Worktrees pour éviter le doublon.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull requests empilées";
+"settings.stacking.preferred" = "Backend préféré :";
+"settings.stacking.preferred.help" = "Utilisé uniquement pour les dépôts qu'aucun backend n'a encore pris en charge. Un dépôt déjà suivi par un outil lui reste toujours attribué.";
+"settings.stacking.preferred.automatic" = "Automatique";
+"settings.ghstack.title" = "PR empilées GitHub";
+"settings.ghstack.description" = "Les pull requests empilées natives de GitHub, via la CLI gh.";
+"settings.ghstack.info" = "Les piles sont suivies séparément dans chaque worktree. Utilise l'authentification de la CLI gh.";
+"settings.ghstack.not.installed.description" = "L'extension gh stack active les branches et les PR empilées à l'aide des piles natives de GitHub.";
+"settings.ghstack.install.hint" = "Installez l'extension de la CLI gh :";
+"settings.ghstack.needs.gh.cli" = "Installez et authentifiez d'abord la CLI gh — cette extension s'appuie dessus.";
+"stacks.untrack.stack" = "Ne plus suivre la pile";
+"stacks.untrack.stack.title" = "Ne plus suivre la pile ?";
+"stacks.untrack.stack.message %ld %@" = "TermQ cessera de suivre ces %ld branches en tant que pile : %@\n\nAucune branche n'est supprimée et aucun travail n'est perdu.";
+"stacks.untrack.stack.confirm" = "Ne plus suivre";
+"stacks.untrack.stack.done" = "Pile plus suivie. Toutes les branches ont été conservées.";
+"stacks.sync.confirm.title" = "Synchroniser et forcer le push ?";
+"stacks.sync.confirm.message %ld %@" = "La synchronisation force le push de %ld branches et met à jour la pile sur GitHub : %@\n\nToute autre personne travaillant sur ces branches devra les réinitialiser.";
+"stacks.sync.confirm.button" = "Synchroniser et pousser";

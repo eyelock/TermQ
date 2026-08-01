@@ -1343,16 +1343,15 @@
 "settings.github.feed.cap.label" = "PR per repository";
 
 // MARK: - Stacks
-"settings.gitspice.section" = "git-spice";
 "settings.gitspice.title" = "git-spice";
 "settings.gitspice.description" = "Alimenta i branch impilati e le PR impilate nella barra laterale.";
-"settings.gitspice.version" = "Versione:";
-"settings.gitspice.path" = "Percorso:";
+"settings.stacking.version" = "Versione:";
+"settings.stacking.path" = "Percorso:";
 "settings.gitspice.info" = "Le funzionalità di branch impilati nella barra laterale dipendono da un'installazione funzionante di git-spice. Riutilizza l'autenticazione della CLI gh.";
 "settings.gitspice.not.installed.description" = "git-spice abilita branch impilati e PR impilate. Senza di esso, TermQ mostra solo worktree semplici.";
 "settings.gitspice.install.hint" = "Installa con Homebrew:";
-"settings.gitspice.check.again" = "Controlla di nuovo";
-"settings.gitspice.status.unusable %@" = "Rilevato ma inutilizzabile: %@";
+"settings.stacking.check.again" = "Controlla di nuovo";
+"settings.stacking.status.unusable %@" = "Rilevato ma inutilizzabile: %@";
 "stacks.enable" = "Attiva impilamento…";
 "stacks.enable.help" = "Traccia i branch di questo repository come uno Stack con git-spice";
 "stacks.enable.failed %@" = "Impossibile attivare l'impilamento: %@";
@@ -1445,7 +1444,27 @@
 "stacks.new.stack.first.branch.filled.hint" = "Questo branch viene creato impilato sopra il branch di integrazione, non direttamente sopra il branch base.";
 "stacks.new.stack.integration.note" = "Crea un branch di integrazione vuoto dalla base come radice dello stack — non porta mai codice proprio. I branch dello stack si costruiscono su di esso invece che sulla base, e le loro pull request si incatenano ad esso. Una volta che tutto è stato unito nel branch di integrazione, viene proposto come un'unica pull request consolidata verso la base — invece che ogni branch dello stack venga unito singolarmente alla base.";
 "stacks.new.stack.name.exists %@" = "%@ esiste già — scegli un altro nome.";
-"settings.gitspice.new.stack.mode" = "Nuovo Stack inizia come:";
-"settings.gitspice.new.stack.mode.help" = "Quale modalità preseleziona il foglio Nuovo Stack — il foglio offre sempre entrambe.";
-"settings.gitspice.hide.stacked.worktrees" = "Nascondi i worktree impilati dalla sezione Worktree";
-"settings.gitspice.hide.stacked.worktrees.help" = "I worktree il cui branch appartiene a uno stack tracciato sono già elencati in Stack — nascondili dalla sezione Worktree per evitare la duplicazione.";
+"settings.stacking.new.stack.mode" = "Nuovo Stack inizia come:";
+"settings.stacking.new.stack.mode.help" = "Quale modalità preseleziona il foglio Nuovo Stack — il foglio offre sempre entrambe.";
+"settings.stacking.hide.stacked.worktrees" = "Nascondi i worktree impilati dalla sezione Worktree";
+"settings.stacking.hide.stacked.worktrees.help" = "I worktree il cui branch appartiene a uno stack tracciato sono già elencati in Stack — nascondili dalla sezione Worktree per evitare la duplicazione.";
+
+/* Stacked pull requests — provider-neutral settings and actions */
+"settings.stacking.section" = "Pull request impilate";
+"settings.stacking.preferred" = "Backend preferito:";
+"settings.stacking.preferred.help" = "Usato solo per i repository che nessun backend ha ancora rivendicato. Un repository già gestito da uno strumento resta sempre a quello.";
+"settings.stacking.preferred.automatic" = "Automatico";
+"settings.ghstack.title" = "PR impilate di GitHub";
+"settings.ghstack.description" = "Le pull request impilate native di GitHub, tramite la CLI gh.";
+"settings.ghstack.info" = "Le pile sono tracciate separatamente in ogni worktree. Usa l'autenticazione della CLI gh.";
+"settings.ghstack.not.installed.description" = "L'estensione gh stack abilita branch e PR impilate usando le pile native di GitHub.";
+"settings.ghstack.install.hint" = "Installa l'estensione della CLI gh:";
+"settings.ghstack.needs.gh.cli" = "Installa e autentica prima la CLI gh: questa estensione si basa su di essa.";
+"stacks.untrack.stack" = "Smetti di tracciare la pila";
+"stacks.untrack.stack.title" = "Smettere di tracciare la pila?";
+"stacks.untrack.stack.message %ld %@" = "TermQ smetterà di tracciare questi %ld branch come pila: %@\n\nNessun branch viene eliminato e nessun lavoro va perso.";
+"stacks.untrack.stack.confirm" = "Smetti di tracciare";
+"stacks.untrack.stack.done" = "Pila non più tracciata. Tutti i branch sono stati mantenuti.";
+"stacks.sync.confirm.title" = "Sincronizzare e forzare il push?";
+"stacks.sync.confirm.message %ld %@" = "La sincronizzazione forza il push di %ld branch e aggiorna la pila su GitHub: %@\n\nChiunque altro lavori su questi branch dovrà reimpostarli.";
+"stacks.sync.confirm.button" = "Sincronizza e invia";
